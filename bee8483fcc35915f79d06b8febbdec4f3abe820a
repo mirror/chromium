@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a4e224e4_37e2d148",
+        "filename": "components/language/core/browser/baseline_language_model.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-13T22:01:53Z",
+      "side": 1,
+      "message": "The histogram logic is relatively sophisticated: language frequencies are cleared when the user deletes their history, and decay over time to reflect recency. The specifics are documented in the UrlLanguageHistogram source files.",
+      "parentUuid": "bbe1a700_41448fad",
+      "range": {
+        "startLine": 23,
+        "startChar": 49,
+        "endLine": 23,
+        "endChar": 56
+      },
+      "revId": "bee8483fcc35915f79d06b8febbdec4f3abe820a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aaf08c56_d1c8183e",
         "filename": "components/language/core/browser/baseline_language_model.h",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "bee8483fcc35915f79d06b8febbdec4f3abe820a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf49202_be2a0a9e",
+        "filename": "components/language/core/browser/baseline_language_model.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-13T22:01:53Z",
+      "side": 1,
+      "message": "See e.g. https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language\nAccept languages tell websites in which languages a user prefers to consume content. It\u0027s the list shown on the language settings page.",
+      "parentUuid": "aaf08c56_d1c8183e",
+      "range": {
+        "startLine": 25,
+        "startChar": 18,
+        "endLine": 25,
+        "endChar": 24
+      },
+      "revId": "bee8483fcc35915f79d06b8febbdec4f3abe820a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -103,6 +151,30 @@
       "revId": "bee8483fcc35915f79d06b8febbdec4f3abe820a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0db68875_002bbdb0",
+        "filename": "components/language/core/browser/language_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-13T22:01:53Z",
+      "side": 1,
+      "message": "The empty string represents an unset language code - it will only be useful when defining a details object that is not immediately populated.\n\nAnother option would be to default to \"und\", but I think an empty string is less ambiguous given that some valid operations (e.g. page language detection) can return \"und\".",
+      "parentUuid": "d0eeb9c8_c0297401",
+      "range": {
+        "startLine": 9,
+        "startChar": 69,
+        "endLine": 9,
+        "endChar": 70
+      },
+      "revId": "bee8483fcc35915f79d06b8febbdec4f3abe820a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
