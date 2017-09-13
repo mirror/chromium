@@ -22,6 +22,30 @@
       "revId": "5218b4a7626d52b5d4787a4fe21fbd6418b5bde8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f78c63_849bbf90",
+        "filename": "chrome/common/extensions/docs/server2/README",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-13T23:45:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0c7bdd6_cf83a838",
+      "range": {
+        "startLine": 196,
+        "startChar": 1,
+        "endLine": 196,
+        "endChar": 2
+      },
+      "revId": "5218b4a7626d52b5d4787a4fe21fbd6418b5bde8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
