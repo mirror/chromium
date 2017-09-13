@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ea83c7c_3d5a74e9",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperty.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-13T23:19:05Z",
+      "side": 0,
+      "message": "hm I like the link to spec here, perhaps move it to the affected_by_all documentation in the json file?",
+      "revId": "885fd1b3e3de47bf8404b4ae949e10ad98e6960e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
