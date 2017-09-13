@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ec61cc28_d08d4456",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-13T15:47:21Z",
+      "side": 1,
+      "message": "As an aside, it seems kind of sad that there\u0027s these extra prefs for the experiment. What\u0027s the reason for having them - rather than just checking the experiment state directly?",
+      "range": {
+        "startLine": 1282,
+        "startChar": 65,
+        "endLine": 1282,
+        "endChar": 0
+      },
+      "revId": "63d5397c5b9e06ccc1f3342a1a60dcf109be33b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14271c59_3c4646c3",
         "filename": "net/ssl/ssl_config.h",
         "patchSetId": 1
@@ -30,6 +53,24 @@
       "writtenOn": "2017-09-12T18:41:31Z",
       "side": 1,
       "message": "Since the most likely thing we launch with at this point is either Experiment2 or Experiment3, should we place one of those at the top? (Although the server deployment hasn\u0027t happened yet...)",
+      "revId": "63d5397c5b9e06ccc1f3342a1a60dcf109be33b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6a999d1_26ab15d9",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3061,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-13T15:47:21Z",
+      "side": 1,
+      "message": "+1 on ordering things such as the most likely one to be launched as at the top. You can even remove the other entries as the server-side analyzer is looking to make sure at least one of the groups is in the testing config.",
+      "parentUuid": "53e96de5_a92c553a",
       "revId": "63d5397c5b9e06ccc1f3342a1a60dcf109be33b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
