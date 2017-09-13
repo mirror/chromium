@@ -46,6 +46,30 @@
       "revId": "8e88b315858e76683589c4e70359cbf9df6239af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3291e6e9_4c4488cc",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-13T00:53:20Z",
+      "side": 0,
+      "message": "I\u0027m not super familiar with why this code is like that so I\u0027d like to wait for reviews from falken@, but I agree with it. As you said, we don\u0027t seem to have a corresponding registration object on the renderer.",
+      "parentUuid": "a8a678db_e966cf30",
+      "range": {
+        "startLine": 922,
+        "startChar": 2,
+        "endLine": 929,
+        "endChar": 77
+      },
+      "revId": "8e88b315858e76683589c4e70359cbf9df6239af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
