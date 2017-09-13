@@ -34,6 +34,24 @@
       "revId": "328d3beea8bbc40028bf0f6b664ec62b36104d29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1735b6c6_e92bec95",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-13T18:49:18Z",
+      "side": 0,
+      "message": "ok, agree. It is restored.",
+      "parentUuid": "cdeb2c6e_1fd1c403",
+      "revId": "328d3beea8bbc40028bf0f6b664ec62b36104d29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

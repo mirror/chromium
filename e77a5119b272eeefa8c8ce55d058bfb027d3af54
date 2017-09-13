@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c6a43230_22970223",
+        "filename": "ash/shell.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-13T18:49:18Z",
+      "side": 1,
+      "message": "Since they are already pretty sorted. I sorted all the getters here.",
+      "parentUuid": "f02a5ba9_429476f3",
+      "revId": "e77a5119b272eeefa8c8ce55d058bfb027d3af54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bceec314_21808be2",
         "filename": "ash/touch/touch_devices_controller.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "726112f2_3bf58210",
+        "filename": "ash/touch/touch_devices_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-13T18:49:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bceec314_21808be2",
+      "revId": "e77a5119b272eeefa8c8ce55d058bfb027d3af54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0824a660_02ded5f6",
         "filename": "ash/touch/touch_devices_controller.cc",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-12T21:17:45Z",
       "side": 1,
       "message": "This will handle enabling the touchpad on first user login. However, there is also a signin screen profile that has prefs. Do you know if the old code in c/b/chromeos/preferences.cc to UpdateTouchDevicesStatusFromPrefs() was applying settings to the login screen?\n\nI\u0027m suspicious that it was, but not 100% sure. If so, you may need to monitor SessionController for OnSigninScreenPrefServiceInitialized().",
+      "revId": "e77a5119b272eeefa8c8ce55d058bfb027d3af54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa09089_8cf24dae",
+        "filename": "ash/touch/touch_devices_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-13T18:49:18Z",
+      "side": 1,
+      "message": "The old code only call UpdateTouchDevicesStatusFromPrefs() inside user sessions (all the three callers of Preferences::ApplyPreferences). I think it is a bug.\n\nBug description: for old code, (1) disable touchpad on signin screen, (2) reboot, (3) touchpad is enabled on signin screen.\n\nSo we are not get persistent state on signin screen.\n\nSo we should have OnSigninScreenPrefServiceInitialized() here. Thanks for pointing this out. \nI also updated the code style a little bit based on accessibility_controller.cc.",
+      "parentUuid": "0824a660_02ded5f6",
       "revId": "e77a5119b272eeefa8c8ce55d058bfb027d3af54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "53d6cff0_0f7e7111",
+        "filename": "ash/touch/touch_devices_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-13T18:49:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8998065a_efd4f431",
+      "revId": "e77a5119b272eeefa8c8ce55d058bfb027d3af54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edbed21b_75bc8883",
         "filename": "chrome/browser/ui/ash/chrome_shell_delegate.cc",
         "patchSetId": 5
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-12T21:17:45Z",
       "side": 1,
       "message": "nit: still needed?",
+      "revId": "e77a5119b272eeefa8c8ce55d058bfb027d3af54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aff0b45_54639841",
+        "filename": "chrome/browser/ui/ash/chrome_shell_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-13T18:49:18Z",
+      "side": 1,
+      "message": "good catch. Deleted.",
+      "parentUuid": "edbed21b_75bc8883",
       "revId": "e77a5119b272eeefa8c8ce55d058bfb027d3af54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

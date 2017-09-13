@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e62ae463_47eef19c",
+        "filename": "ash/shell.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-13T18:49:18Z",
+      "side": 0,
+      "message": "This is no longer used.",
+      "revId": "fa312b778f668d1c9576da18969efcb3576d6f77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
