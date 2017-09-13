@@ -6,9 +6,14 @@
     {
       'target_name': 'index',
       'dependencies': [
+        'externs',
         'line_chart/compiled_resources2.gyp:*',
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
       ],
+      'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
+      'target_name': 'externs',
       'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi'],
     },
   ],
