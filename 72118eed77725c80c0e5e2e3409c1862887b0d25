@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "cf0205e7_3386142a",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-13T17:05:09Z",
+      "side": 1,
+      "message": "I just talked with rockot@ and I don\u0027t think this logic needed.\nOnce we servicify MojoProxyResolverFactory (my CL), we can have that logic implemented in the service itself. Take a look for instance at https://cs.chromium.org/chromium/src/services/data_decoder/data_decoder_service.cc\nWhen the last interface is unbound, it posts a delayed task to quit after 5 seconds if no other new connection is made. When it calls RequestQuit on the context, the service manager terminates the process.\nNote that my CL does not have that logic yet, but it would be super easy to add it.",
+      "parentUuid": "a8bc139d_f37ac95f",
+      "range": {
+        "startLine": 37,
+        "startChar": 43,
+        "endLine": 37,
+        "endChar": 65
+      },
+      "revId": "72118eed77725c80c0e5e2e3409c1862887b0d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "225cf85a_2db5acc0",
         "filename": "net/interfaces/proxy_resolver_service.mojom",
         "patchSetId": 7
