@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fcad9cd0_734a431a",
+        "filename": "components/omnibox/browser/keyword_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-13T22:45:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cea8ec9_16af65f9",
+      "range": {
+        "startLine": 107,
+        "startChar": 56,
+        "endLine": 107,
+        "endChar": 75
+      },
+      "revId": "c96d8834abf1bcb6abbe643826eaa0eee986ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4025316_4331d536",
         "filename": "components/omnibox/browser/keyword_provider.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6a8577d9_3c88283f",
+        "filename": "components/omnibox/browser/keyword_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-13T22:45:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4025316_4331d536",
+      "range": {
+        "startLine": 108,
+        "startChar": 56,
+        "endLine": 108,
+        "endChar": 57
+      },
+      "revId": "c96d8834abf1bcb6abbe643826eaa0eee986ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d1c6afa_e97617f6",
         "filename": "components/omnibox/browser/keyword_provider_unittest.cc",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "c96d8834abf1bcb6abbe643826eaa0eee986ccb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "778ba566_7e5d241c",
+        "filename": "components/omnibox/browser/keyword_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-13T22:45:30Z",
+      "side": 1,
+      "message": "Resolving.",
+      "parentUuid": "4d1c6afa_e97617f6",
+      "revId": "c96d8834abf1bcb6abbe643826eaa0eee986ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "9ce05dd4_9c483886",
+        "filename": "components/omnibox/browser/keyword_provider_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-13T22:45:30Z",
+      "side": 1,
+      "message": "Resolving",
+      "parentUuid": "fb58b673_9bfa9a09",
+      "revId": "c96d8834abf1bcb6abbe643826eaa0eee986ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6aff3dd6_8284ca8f",
         "filename": "components/search_engines/template_url_service.cc",
         "patchSetId": 3
@@ -93,6 +177,47 @@
       "writtenOn": "2017-09-13T22:10:51Z",
       "side": 1,
       "message": "Nit: It seems like this largely restates comments made on the function declaration.  If the motivating example needs to be in that comment to make it clear, I\u0027d add it there; in either case, I\u0027d probably remove most of this as redundant.",
+      "revId": "c96d8834abf1bcb6abbe643826eaa0eee986ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eada750_afb8c8eb",
+        "filename": "components/search_engines/template_url_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-13T22:45:30Z",
+      "side": 1,
+      "message": "Removed all but the first sentence.",
+      "parentUuid": "6aff3dd6_8284ca8f",
+      "revId": "c96d8834abf1bcb6abbe643826eaa0eee986ccb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64176220_a9c2f8c3",
+        "filename": "components/search_engines/template_url_service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-13T22:45:30Z",
+      "side": 1,
+      "message": "I was meaning to ask you.  This function is only used by KeywordProvider.  Should I simply migrate it there (and take a TemplateURLService as a parameter as well)?",
+      "range": {
+        "startLine": 127,
+        "startChar": 76,
+        "endLine": 127,
+        "endChar": 0
+      },
       "revId": "c96d8834abf1bcb6abbe643826eaa0eee986ccb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
