@@ -36,11 +36,11 @@
 #include "platform/mhtml/MHTMLArchive.h"
 #include "platform/mhtml/MHTMLParser.h"
 #include "platform/testing/HistogramTester.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/text/StringBuilder.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
@@ -93,12 +93,14 @@ int MatchSubstring(const String& str, const char* pattern, size_t size) {
 
 class WebFrameSerializerSanitizationTest : public ::testing::Test {
  protected:
-  WebFrameSerializerSanitizationTest() { helper_.Initialize(); }
+  WebFrameSerializerSanitizationTest() {
+    helper_.Initialize();
+    ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+    loader_factory = platform->GetURLLoaderMockFactory();
+  }
 
   ~WebFrameSerializerSanitizationTest() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
-        ->UnregisterAllURLsAndClearMemoryCache();
+    loader_factory->UnregisterAllURLsAndClearMemoryCache();
   }
 
   String GenerateMHTMLFromHtml(const String& url, const String& file_name) {
@@ -178,7 +180,8 @@ class WebFrameSerializerSanitizationTest : public ::testing::Test {
                                  const String& file_path,
                                  const String& mime_type = "image/png") {
     URLTestHelpers::RegisterMockedURLLoad(
-        url, testing::CoreTestDataPath(file_path.Utf8().data()), mime_type);
+        url, testing::CoreTestDataPath(file_path.Utf8().data()), loader_factory,
+        mime_type);
   }
 
   WebViewImpl* WebView() { return helper_.WebView(); }
@@ -190,6 +193,7 @@ class WebFrameSerializerSanitizationTest : public ::testing::Test {
  private:
   FrameTestHelpers::WebViewHelper helper_;
   SimpleMHTMLPartsGenerationDelegate mhtml_delegate_;
+  WebURLLoaderMockFactory* loader_factory;
 };
 
 TEST_F(WebFrameSerializerSanitizationTest, RemoveInlineScriptInAttributes) {

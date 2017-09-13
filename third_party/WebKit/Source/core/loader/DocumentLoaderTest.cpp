@@ -8,10 +8,10 @@
 #include "core/frame/FrameTestHelpers.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/page/Page.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/wtf/AutoReset.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebURLLoaderClient.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -26,18 +26,19 @@ class DocumentLoaderTest : public ::testing::Test {
     web_view_helper_.Initialize();
     URLTestHelpers::RegisterMockedURLLoad(
         URLTestHelpers::ToKURL("https://example.com/foo.html"),
-        testing::CoreTestDataPath("foo.html"));
+        testing::CoreTestDataPath("foo.html"),
+        platform_->GetURLLoaderMockFactory());
   }
 
   void TearDown() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
   WebLocalFrameImpl* MainFrame() { return web_view_helper_.LocalMainFrame(); }
 
   FrameTestHelpers::WebViewHelper web_view_helper_;
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
 };
 
 TEST_F(DocumentLoaderTest, SingleChunk) {
@@ -51,9 +52,9 @@ TEST_F(DocumentLoaderTest, SingleChunk) {
     }
   } delegate;
 
-  Platform::Current()->GetURLLoaderMockFactory()->SetLoaderDelegate(&delegate);
+  platform_->GetURLLoaderMockFactory()->SetLoaderDelegate(&delegate);
   FrameTestHelpers::LoadFrame(MainFrame(), "https://example.com/foo.html");
-  Platform::Current()->GetURLLoaderMockFactory()->SetLoaderDelegate(nullptr);
+  platform_->GetURLLoaderMockFactory()->SetLoaderDelegate(nullptr);
 
   // TODO(dcheng): How should the test verify that the original callback is
   // invoked? The test currently still passes even if the test delegate
@@ -75,9 +76,9 @@ TEST_F(DocumentLoaderTest, MultiChunkNoReentrancy) {
     }
   } delegate;
 
-  Platform::Current()->GetURLLoaderMockFactory()->SetLoaderDelegate(&delegate);
+  platform_->GetURLLoaderMockFactory()->SetLoaderDelegate(&delegate);
   FrameTestHelpers::LoadFrame(MainFrame(), "https://example.com/foo.html");
-  Platform::Current()->GetURLLoaderMockFactory()->SetLoaderDelegate(nullptr);
+  platform_->GetURLLoaderMockFactory()->SetLoaderDelegate(nullptr);
 }
 
 // Finally, test reentrant callbacks to DocumentLoader::dataReceived().
@@ -172,10 +173,9 @@ TEST_F(DocumentLoaderTest, MultiChunkWithReentrancy) {
   FrameTestHelpers::LoadHTMLString(MainFrame(), "<iframe></iframe>",
                                    URLTestHelpers::ToKURL("about:blank"));
 
-  Platform::Current()->GetURLLoaderMockFactory()->SetLoaderDelegate(
-      &child_delegate);
+  platform_->GetURLLoaderMockFactory()->SetLoaderDelegate(&child_delegate);
   FrameTestHelpers::LoadFrame(MainFrame(), "https://example.com/foo.html");
-  Platform::Current()->GetURLLoaderMockFactory()->SetLoaderDelegate(nullptr);
+  platform_->GetURLLoaderMockFactory()->SetLoaderDelegate(nullptr);
 
   EXPECT_TRUE(child_delegate.ServedReentrantly());
 

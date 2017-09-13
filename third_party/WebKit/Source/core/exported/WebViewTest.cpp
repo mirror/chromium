@@ -80,6 +80,7 @@
 #include "platform/graphics/paint/PaintRecordBuilder.h"
 #include "platform/scroll/ScrollTypes.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/wtf/PtrUtil.h"
@@ -238,12 +239,13 @@ class WebViewTest
  public:
   WebViewTest()
       : ScopedRootLayerScrollingForTest(GetParam()),
-        base_url_("http://www.test.com/") {}
+        base_url_("http://www.test.com/") {
+    ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+    loader_factory = platform->GetURLLoaderMockFactory();
+  }
 
   void TearDown() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
-        ->UnregisterAllURLsAndClearMemoryCache();
+    loader_factory->UnregisterAllURLsAndClearMemoryCache();
   }
 
  protected:
@@ -254,7 +256,7 @@ class WebViewTest
   std::string RegisterMockedHttpURLLoad(const std::string& file_name) {
     return URLTestHelpers::RegisterMockedURLLoadFromBase(
                WebString::FromUTF8(base_url_), testing::CoreTestDataPath(),
-               WebString::FromUTF8(file_name))
+               WebString::FromUTF8(file_name), loader_factory)
         .GetString()
         .Utf8();
   }
@@ -278,6 +280,7 @@ class WebViewTest
 
   std::string base_url_;
   FrameTestHelpers::WebViewHelper web_view_helper_;
+  WebURLLoaderMockFactory* loader_factory;
 };
 
 static bool HitTestIsContentEditable(WebView* view, int x, int y) {
@@ -370,7 +373,7 @@ TEST_P(WebViewTest, ImageMapUrls) {
 
 TEST_P(WebViewTest, BrokenImage) {
   URLTestHelpers::RegisterMockedErrorURLLoad(
-      KURL(ToKURL(base_url_), "non_existent.png"));
+      KURL(ToKURL(base_url_), "non_existent.png"), loader_factory);
   std::string url = RegisterMockedHttpURLLoad("image-broken.html");
 
   WebViewImpl* web_view = web_view_helper_.Initialize();
@@ -387,7 +390,7 @@ TEST_P(WebViewTest, BrokenImage) {
 
 TEST_P(WebViewTest, BrokenInputImage) {
   URLTestHelpers::RegisterMockedErrorURLLoad(
-      KURL(ToKURL(base_url_), "non_existent.png"));
+      KURL(ToKURL(base_url_), "non_existent.png"), loader_factory);
   std::string url = RegisterMockedHttpURLLoad("input-image-broken.html");
 
   WebViewImpl* web_view = web_view_helper_.Initialize();
@@ -565,7 +568,8 @@ TEST_P(WebViewTest, ActiveState) {
 TEST_P(WebViewTest, HitTestResultAtWithPageScale) {
   std::string url = base_url_ + "specify_size.html?" + "50px" + ":" + "50px";
   URLTestHelpers::RegisterMockedURLLoad(
-      ToKURL(url), testing::CoreTestDataPath("specify_size.html"));
+      ToKURL(url), testing::CoreTestDataPath("specify_size.html"),
+      loader_factory);
   WebView* web_view = web_view_helper_.InitializeAndLoad(url);
   web_view->Resize(WebSize(100, 100));
   WebPoint hit_point(75, 75);
@@ -586,7 +590,8 @@ TEST_P(WebViewTest, HitTestResultAtWithPageScale) {
 TEST_P(WebViewTest, HitTestResultAtWithPageScaleAndPan) {
   std::string url = base_url_ + "specify_size.html?" + "50px" + ":" + "50px";
   URLTestHelpers::RegisterMockedURLLoad(
-      ToKURL(url), testing::CoreTestDataPath("specify_size.html"));
+      ToKURL(url), testing::CoreTestDataPath("specify_size.html"),
+      loader_factory);
   WebViewImpl* web_view = web_view_helper_.Initialize();
   LoadFrame(web_view->MainFrameImpl(), url);
   web_view->Resize(WebSize(100, 100));
@@ -683,7 +688,8 @@ void WebViewTest::TestAutoResize(
   std::string url =
       base_url_ + "specify_size.html?" + page_width + ":" + page_height;
   URLTestHelpers::RegisterMockedURLLoad(
-      ToKURL(url), testing::CoreTestDataPath("specify_size.html"));
+      ToKURL(url), testing::CoreTestDataPath("specify_size.html"),
+      loader_factory);
   WebViewImpl* web_view =
       web_view_helper_.InitializeAndLoad(url, nullptr, &client);
   client.GetTestData().SetWebView(web_view);
@@ -905,7 +911,7 @@ TEST_P(WebViewTest, TextInputInfoWithReplacedElements) {
   std::string url = RegisterMockedHttpURLLoad("div_with_image.html");
   URLTestHelpers::RegisterMockedURLLoad(
       ToKURL("http://www.test.com/foo.png"),
-      testing::CoreTestDataPath("white-1x1.png"));
+      testing::CoreTestDataPath("white-1x1.png"), loader_factory);
   WebViewImpl* web_view_impl = web_view_helper_.InitializeAndLoad(url);
   web_view_impl->SetInitialFocus(false);
   WebTextInputInfo info = web_view_impl->MainFrameImpl()
@@ -2731,7 +2737,7 @@ TEST_P(WebViewTest, showContextMenuOnLongPressingLinks) {
 
   URLTestHelpers::RegisterMockedURLLoad(
       ToKURL("http://www.test.com/foo.png"),
-      testing::CoreTestDataPath("white-1x1.png"));
+      testing::CoreTestDataPath("white-1x1.png"), loader_factory);
   WebViewImpl* web_view = web_view_helper_.InitializeAndLoad(
       base_url_ + "long_press_links_and_images.html");
 
@@ -4127,7 +4133,8 @@ TEST_P(WebViewTest, AutoResizeSubtreeLayout) {
 TEST_P(WebViewTest, PreferredSize) {
   std::string url = base_url_ + "specify_size.html?100px:100px";
   URLTestHelpers::RegisterMockedURLLoad(
-      ToKURL(url), testing::CoreTestDataPath("specify_size.html"));
+      ToKURL(url), testing::CoreTestDataPath("specify_size.html"),
+      loader_factory);
   WebView* web_view = web_view_helper_.InitializeAndLoad(url);
 
   WebSize size = web_view->ContentsPreferredMinimumSize();
@@ -4153,7 +4160,8 @@ TEST_P(WebViewTest, PreferredSize) {
 
   url = base_url_ + "specify_size.html?1.5px:1.5px";
   URLTestHelpers::RegisterMockedURLLoad(
-      ToKURL(url), testing::CoreTestDataPath("specify_size.html"));
+      ToKURL(url), testing::CoreTestDataPath("specify_size.html"),
+      loader_factory);
   web_view = web_view_helper_.InitializeAndLoad(url);
 
   web_view->SetZoomLevel(WebView::ZoomFactorToZoomLevel(1));
@@ -4165,7 +4173,8 @@ TEST_P(WebViewTest, PreferredSize) {
 TEST_P(WebViewTest, PreferredSizeDirtyLayout) {
   std::string url = base_url_ + "specify_size.html?100px:100px";
   URLTestHelpers::RegisterMockedURLLoad(
-      ToKURL(url), testing::CoreTestDataPath("specify_size.html"));
+      ToKURL(url), testing::CoreTestDataPath("specify_size.html"),
+      loader_factory);
   WebViewImpl* web_view = web_view_helper_.InitializeAndLoad(url);
   WebElement document_element =
       web_view->MainFrameImpl()->GetDocument().DocumentElement();

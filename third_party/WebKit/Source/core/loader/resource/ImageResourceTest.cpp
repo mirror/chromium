@@ -354,7 +354,9 @@ using ScopedClientPlaceholderForServerLoFiForTest =
 TEST(ImageResourceTest, MultipartImage) {
   ResourceFetcher* fetcher = CreateFetcher();
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+  ScopedMockedURLLoad scoped_mocked_url_load(
+      test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
 
   // Emulate starting a real load, but don't expect any "real"
   // WebURLLoaderClient callbacks.
@@ -441,7 +443,9 @@ TEST(ImageResourceTest, MultipartImage) {
 TEST(ImageResourceTest, BitmapMultipartImage) {
   ResourceFetcher* fetcher = CreateFetcher();
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+  ScopedMockedURLLoad scoped_mocked_url_load(
+      test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
   ImageResource* image_resource =
       ImageResource::Create(ResourceRequest(test_url));
   image_resource->SetIdentifier(CreateUniqueIdentifier());
@@ -472,7 +476,9 @@ TEST(ImageResourceTest, BitmapMultipartImage) {
 
 TEST(ImageResourceTest, CancelOnRemoveObserver) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+  ScopedMockedURLLoad scoped_mocked_url_load(
+      test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
 
   ResourceFetcher* fetcher = CreateFetcher();
 
@@ -523,7 +529,9 @@ class MockFinishObserver : public GarbageCollectedFinalized<MockFinishObserver>,
 
 TEST(ImageResourceTest, CancelWithImageAndFinishObserver) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+  ScopedMockedURLLoad scoped_mocked_url_load(
+      test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
 
   ResourceFetcher* fetcher = CreateFetcher();
 
@@ -628,6 +636,9 @@ TEST(ImageResourceTest, UpdateBitmapImages) {
 
 class ImageResourceReloadTest : public ::testing::TestWithParam<bool> {
  public:
+  ImageResourceReloadTest() {
+    loader_factory = platform_->GetURLLoaderMockFactory();
+  }
   ~ImageResourceReloadTest() override {}
 
   bool IsClientPlaceholderForServerLoFiEnabled() const { return GetParam(); }
@@ -637,14 +648,19 @@ class ImageResourceReloadTest : public ::testing::TestWithParam<bool> {
         new ScopedClientPlaceholderForServerLoFiForTest(GetParam()));
   }
 
+  WebURLLoaderMockFactory* loader_factory;
+
  private:
   std::unique_ptr<ScopedClientPlaceholderForServerLoFiForTest>
       scoped_show_placeholder_;
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
 };
 
 TEST_P(ImageResourceReloadTest, ReloadIfLoFiOrPlaceholderAfterFinished) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath(),
+                                             loader_factory);
+
   ImageResource* image_resource = ImageResource::CreateForTest(test_url);
   image_resource->SetStatus(ResourceStatus::kPending);
   image_resource->NotifyStartLoad();
@@ -692,7 +708,8 @@ TEST_P(ImageResourceReloadTest, ReloadIfLoFiOrPlaceholderAfterFinished) {
 TEST_P(ImageResourceReloadTest,
        ReloadIfLoFiOrPlaceholderAfterFinishedWithOldHeaders) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath(),
+                                             loader_factory);
   ImageResource* image_resource = ImageResource::CreateForTest(test_url);
   image_resource->SetStatus(ResourceStatus::kPending);
   image_resource->NotifyStartLoad();
@@ -739,7 +756,8 @@ TEST_P(ImageResourceReloadTest,
 TEST_P(ImageResourceReloadTest,
        ReloadIfLoFiOrPlaceholderAfterFinishedWithoutLoFiHeaders) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath(),
+                                             loader_factory);
   ResourceRequest request(test_url);
   request.SetPreviewsState(WebURLRequest::kServerLoFiOn);
   request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
@@ -786,7 +804,8 @@ TEST_P(ImageResourceReloadTest, ReloadIfLoFiOrPlaceholderViaResourceFetcher) {
   ResourceFetcher* fetcher = CreateFetcher();
 
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath(),
+                                             loader_factory);
 
   ResourceRequest request = ResourceRequest(test_url);
   request.SetPreviewsState(WebURLRequest::kServerLoFiOn);
@@ -826,7 +845,8 @@ TEST_P(ImageResourceReloadTest, ReloadIfLoFiOrPlaceholderViaResourceFetcher) {
 
 TEST_P(ImageResourceReloadTest, ReloadIfLoFiOrPlaceholderBeforeResponse) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath(),
+                                             loader_factory);
 
   ResourceRequest request(test_url);
   request.SetPreviewsState(WebURLRequest::kServerLoFiOn);
@@ -858,7 +878,8 @@ TEST_P(ImageResourceReloadTest, ReloadIfLoFiOrPlaceholderBeforeResponse) {
 
 TEST_P(ImageResourceReloadTest, ReloadIfLoFiOrPlaceholderDuringResponse) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath(),
+                                             loader_factory);
 
   ResourceRequest request(test_url);
   request.SetPreviewsState(WebURLRequest::kServerLoFiOn);
@@ -909,7 +930,8 @@ TEST_P(ImageResourceReloadTest, ReloadIfLoFiOrPlaceholderDuringResponse) {
 
 TEST_P(ImageResourceReloadTest, ReloadIfLoFiOrPlaceholderForPlaceholder) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath(),
+                                             loader_factory);
 
   ResourceFetcher* fetcher = CreateFetcher();
   FetchParameters params{ResourceRequest(test_url)};
@@ -933,7 +955,8 @@ TEST_P(ImageResourceReloadTest, ReloadIfLoFiOrPlaceholderForPlaceholder) {
 
 TEST_P(ImageResourceReloadTest, ReloadLoFiImagesWithDuplicateURLs) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath(),
+                                             loader_factory);
   ResourceFetcher* fetcher = CreateFetcher();
 
   FetchParameters placeholder_params{ResourceRequest(test_url)};
@@ -1278,7 +1301,9 @@ TEST(ImageResourceTest, AddClientAfterPrune) {
 
 TEST(ImageResourceTest, CancelOnDecodeError) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+  ScopedMockedURLLoad scoped_mocked_url_load(
+      test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
 
   ResourceFetcher* fetcher = CreateFetcher();
   FetchParameters params{ResourceRequest(test_url)};
@@ -1305,7 +1330,9 @@ TEST(ImageResourceTest, CancelOnDecodeError) {
 
 TEST(ImageResourceTest, DecodeErrorWithEmptyBody) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+  ScopedMockedURLLoad scoped_mocked_url_load(
+      test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
 
   ResourceFetcher* fetcher = CreateFetcher();
   FetchParameters params{ResourceRequest(test_url)};
@@ -1336,7 +1363,9 @@ TEST(ImageResourceTest, DecodeErrorWithEmptyBody) {
 // This is similar to DecodeErrorWithEmptyBody, but with non-empty body.
 TEST(ImageResourceTest, PartialContentWithoutDimensions) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+  ScopedMockedURLLoad scoped_mocked_url_load(
+      test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
 
   ResourceRequest resource_request(test_url);
   resource_request.SetHTTPHeaderField("range", "bytes=0-2");
@@ -1380,7 +1409,9 @@ TEST(ImageResourceTest, PartialContentWithoutDimensions) {
 
 TEST(ImageResourceTest, FetchDisallowPlaceholder) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+  ScopedMockedURLLoad scoped_mocked_url_load(
+      test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
 
   FetchParameters params{ResourceRequest(test_url)};
   ImageResource* image_resource = ImageResource::Fetch(params, CreateFetcher());
@@ -1410,7 +1441,9 @@ TEST(ImageResourceTest, FetchAllowPlaceholderDataURL) {
 
 TEST(ImageResourceTest, FetchAllowPlaceholderPostRequest) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+  ScopedMockedURLLoad scoped_mocked_url_load(
+      test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
   ResourceRequest resource_request(test_url);
   resource_request.SetHTTPMethod("POST");
   FetchParameters params(resource_request);
@@ -1427,7 +1460,9 @@ TEST(ImageResourceTest, FetchAllowPlaceholderPostRequest) {
 
 TEST(ImageResourceTest, FetchAllowPlaceholderExistingRangeHeader) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+  ScopedMockedURLLoad scoped_mocked_url_load(
+      test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
   ResourceRequest resource_request(test_url);
   resource_request.SetHTTPHeaderField("range", "bytes=128-255");
   FetchParameters params(resource_request);
@@ -1444,7 +1479,9 @@ TEST(ImageResourceTest, FetchAllowPlaceholderExistingRangeHeader) {
 
 TEST(ImageResourceTest, FetchAllowPlaceholderSuccessful) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+  ScopedMockedURLLoad scoped_mocked_url_load(
+      test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
 
   FetchParameters params{ResourceRequest(test_url)};
   params.SetAllowImagePlaceholder();
@@ -1460,7 +1497,9 @@ TEST(ImageResourceTest, FetchAllowPlaceholderSuccessful) {
 
 TEST(ImageResourceTest, FetchAllowPlaceholderUnsuccessful) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+  ScopedMockedURLLoad scoped_mocked_url_load(
+      test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
 
   FetchParameters params{ResourceRequest(test_url)};
   params.SetAllowImagePlaceholder();
@@ -1501,7 +1540,9 @@ TEST(ImageResourceTest, FetchAllowPlaceholderUnsuccessful) {
 
 TEST(ImageResourceTest, FetchAllowPlaceholderUnsuccessfulClientLoFi) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+  ScopedMockedURLLoad scoped_mocked_url_load(
+      test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
 
   ResourceRequest request = ResourceRequest(test_url);
   request.SetPreviewsState(WebURLRequest::kClientLoFiOn);
@@ -1561,7 +1602,9 @@ TEST(ImageResourceTest, FetchAllowPlaceholderPartialContentWithoutDimensions) {
 
   for (const auto& test : tests) {
     KURL test_url(kParsedURLString, kTestURL);
-    ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+    ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+    ScopedMockedURLLoad scoped_mocked_url_load(
+        test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
 
     ResourceRequest resource_request(test_url);
     resource_request.SetPreviewsState(test.initial_previews_state);
@@ -1616,7 +1659,9 @@ TEST(ImageResourceTest, FetchAllowPlaceholderPartialContentWithoutDimensions) {
 
 TEST(ImageResourceTest, FetchAllowPlaceholderThenDisallowPlaceholder) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+  ScopedMockedURLLoad scoped_mocked_url_load(
+      test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
 
   ResourceFetcher* fetcher = CreateFetcher();
 
@@ -1667,7 +1712,9 @@ TEST(ImageResourceTest, FetchAllowPlaceholderThenDisallowPlaceholder) {
 TEST(ImageResourceTest,
      FetchAllowPlaceholderThenDisallowPlaceholderAfterLoaded) {
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+  ScopedMockedURLLoad scoped_mocked_url_load(
+      test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
 
   ResourceFetcher* fetcher = CreateFetcher();
   FetchParameters placeholder_params{ResourceRequest(test_url)};
@@ -1715,7 +1762,9 @@ TEST(ImageResourceTest, FetchAllowPlaceholderFullResponseDecodeSuccess) {
   };
   for (const auto& test : tests) {
     KURL test_url(kParsedURLString, kTestURL);
-    ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+    ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+    ScopedMockedURLLoad scoped_mocked_url_load(
+        test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
 
     FetchParameters params{ResourceRequest(test_url)};
     params.SetAllowImagePlaceholder();
@@ -1774,7 +1823,9 @@ TEST(ImageResourceTest,
   };
   for (const auto& test : tests) {
     KURL test_url(kParsedURLString, kTestURL);
-    ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+    ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+    ScopedMockedURLLoad scoped_mocked_url_load(
+        test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
 
     FetchParameters params{ResourceRequest(test_url)};
     params.SetAllowImagePlaceholder();
@@ -1807,7 +1858,9 @@ TEST(ImageResourceTest,
   const int kStatusCodes[] = {404, 500};
   for (int status_code : kStatusCodes) {
     KURL test_url(kParsedURLString, kTestURL);
-    ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+    ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+    ScopedMockedURLLoad scoped_mocked_url_load(
+        test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
 
     FetchParameters params{ResourceRequest(test_url)};
     params.SetAllowImagePlaceholder();
@@ -1844,8 +1897,10 @@ TEST(ImageResourceTest,
 TEST(ImageResourceTest, PeriodicFlushTest) {
   ScopedTestingPlatformSupport<TestingPlatformSupportWithMockScheduler>
       platform;
+
   KURL test_url(kParsedURLString, kTestURL);
-  ScopedMockedURLLoad scoped_mocked_url_load(test_url, GetTestFilePath());
+  ScopedMockedURLLoad scoped_mocked_url_load(
+      test_url, GetTestFilePath(), platform->GetURLLoaderMockFactory());
   ImageResource* image_resource = ImageResource::CreateForTest(test_url);
   image_resource->SetStatus(ResourceStatus::kPending);
   image_resource->NotifyStartLoad();

@@ -29,9 +29,9 @@
  */
 
 #include "core/frame/FrameTestHelpers.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "public/web/WebView.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -89,18 +89,18 @@ class ListenerLeakTest : public ::testing::Test {
     std::string file_name(filename);
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url), blink::testing::CoreTestDataPath(),
-        WebString::FromUTF8(file_name));
+        WebString::FromUTF8(file_name), platform_->GetURLLoaderMockFactory());
     web_view_helper.InitializeAndLoad(base_url + file_name);
   }
 
   void TearDown() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
  protected:
   FrameTestHelpers::WebViewHelper web_view_helper;
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
 };
 
 // This test tries to create a reference cycle between node and its listener.

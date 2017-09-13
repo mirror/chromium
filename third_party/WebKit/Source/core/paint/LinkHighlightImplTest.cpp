@@ -38,10 +38,10 @@
 #include "core/page/TouchDisambiguation.h"
 #include "platform/geometry/IntRect.h"
 #include "platform/graphics/GraphicsLayer.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/wtf/PtrUtil.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebContentLayer.h"
 #include "public/platform/WebFloatPoint.h"
 #include "public/platform/WebInputEvent.h"
@@ -56,6 +56,8 @@ namespace blink {
 
 namespace {
 
+WebURLLoaderMockFactory* loader_factory;
+
 GestureEventWithHitTestResults GetTargetedEvent(WebViewImpl* web_view_impl,
                                                 WebGestureEvent& touch_event) {
   WebGestureEvent scaled_event = TransformWebGestureEvent(
@@ -67,9 +69,11 @@ GestureEventWithHitTestResults GetTargetedEvent(WebViewImpl* web_view_impl,
 }
 
 std::string LinkRegisterMockedURLLoad() {
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
+  loader_factory = platform_->GetURLLoaderMockFactory();
   WebURL url = URLTestHelpers::RegisterMockedURLLoadFromBase(
       WebString::FromUTF8("http://www.test.com/"), testing::CoreTestDataPath(),
-      WebString::FromUTF8("test_touch_link_highlight.html"));
+      WebString::FromUTF8("test_touch_link_highlight.html"), loader_factory);
   return url.GetString().Utf8();
 }
 
@@ -127,9 +131,7 @@ TEST(LinkHighlightImplTest, verifyWebViewImplIntegration) {
       GetTargetedEvent(web_view_impl, touch_event));
   ASSERT_EQ(0U, web_view_impl->NumLinkHighlights());
 
-  Platform::Current()
-      ->GetURLLoaderMockFactory()
-      ->UnregisterAllURLsAndClearMemoryCache();
+  loader_factory->UnregisterAllURLsAndClearMemoryCache();
 }
 
 TEST(LinkHighlightImplTest, resetDuringNodeRemoval) {
@@ -166,9 +168,7 @@ TEST(LinkHighlightImplTest, resetDuringNodeRemoval) {
   web_view_impl->UpdateAllLifecyclePhases();
   ASSERT_EQ(0U, highlight_layer->NumLinkHighlights());
 
-  Platform::Current()
-      ->GetURLLoaderMockFactory()
-      ->UnregisterAllURLsAndClearMemoryCache();
+  loader_factory->UnregisterAllURLsAndClearMemoryCache();
 }
 
 // A lifetime test: delete LayerTreeView while running LinkHighlights.
@@ -202,9 +202,7 @@ TEST(LinkHighlightImplTest, resetLayerTreeView) {
   ASSERT_TRUE(highlight_layer);
   EXPECT_TRUE(highlight_layer->GetLinkHighlight(0));
 
-  Platform::Current()
-      ->GetURLLoaderMockFactory()
-      ->UnregisterAllURLsAndClearMemoryCache();
+  loader_factory->UnregisterAllURLsAndClearMemoryCache();
 }
 
 TEST(LinkHighlightImplTest, multipleHighlights) {
@@ -234,9 +232,7 @@ TEST(LinkHighlightImplTest, multipleHighlights) {
   web_view_impl->EnableTapHighlights(highlight_nodes);
   EXPECT_EQ(2U, web_view_impl->NumLinkHighlights());
 
-  Platform::Current()
-      ->GetURLLoaderMockFactory()
-      ->UnregisterAllURLsAndClearMemoryCache();
+  loader_factory->UnregisterAllURLsAndClearMemoryCache();
 }
 
 }  // namespace blink

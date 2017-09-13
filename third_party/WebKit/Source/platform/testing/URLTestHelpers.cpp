@@ -36,7 +36,6 @@
 #include "platform/HTTPNames.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "public/platform/FilePathConversion.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebURLError.h"
 #include "public/platform/WebURLLoadTiming.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
@@ -47,6 +46,7 @@ namespace URLTestHelpers {
 WebURL RegisterMockedURLLoadFromBase(const WebString& base_url,
                                      const WebString& base_path,
                                      const WebString& file_name,
+                                     WebURLLoaderMockFactory* loader_factory,
                                      const WebString& mime_type) {
   // fullURL = baseURL + fileName.
   std::string full_url = std::string(base_url.Utf8().data()) +
@@ -57,12 +57,14 @@ WebURL RegisterMockedURLLoadFromBase(const WebString& base_url,
       WebStringToFilePath(base_path).Append(WebStringToFilePath(file_name));
 
   KURL url = ToKURL(full_url);
-  RegisterMockedURLLoad(url, FilePathToWebString(file_path), mime_type);
+  RegisterMockedURLLoad(url, FilePathToWebString(file_path), loader_factory,
+                        mime_type);
   return WebURL(url);
 }
 
 void RegisterMockedURLLoad(const WebURL& full_url,
                            const WebString& file_path,
+                           WebURLLoaderMockFactory* loader_factory,
                            const WebString& mime_type) {
   WebURLLoadTiming timing;
   timing.Initialize();
@@ -73,10 +75,12 @@ void RegisterMockedURLLoad(const WebURL& full_url,
   response.SetHTTPStatusCode(200);
   response.SetLoadTiming(timing);
 
-  RegisterMockedURLLoadWithCustomResponse(full_url, file_path, response);
+  RegisterMockedURLLoadWithCustomResponse(full_url, file_path, response,
+                                          loader_factory);
 }
 
-void RegisterMockedErrorURLLoad(const WebURL& full_url) {
+void RegisterMockedErrorURLLoad(const WebURL& full_url,
+                                WebURLLoaderMockFactory* loader_factory) {
   WebURLLoadTiming timing;
   timing.Initialize();
 
@@ -89,15 +93,15 @@ void RegisterMockedErrorURLLoad(const WebURL& full_url) {
   WebURLError error;
   error.domain = WebURLError::Domain::kTest;
   error.reason = 404;
-  Platform::Current()->GetURLLoaderMockFactory()->RegisterErrorURL(
-      full_url, response, error);
+  loader_factory->RegisterErrorURL(full_url, response, error);
 }
 
-void RegisterMockedURLLoadWithCustomResponse(const WebURL& full_url,
-                                             const WebString& file_path,
-                                             WebURLResponse response) {
-  Platform::Current()->GetURLLoaderMockFactory()->RegisterURL(
-      full_url, response, file_path);
+void RegisterMockedURLLoadWithCustomResponse(
+    const WebURL& full_url,
+    const WebString& file_path,
+    WebURLResponse response,
+    WebURLLoaderMockFactory* loader_factory) {
+  loader_factory->RegisterURL(full_url, response, file_path);
 }
 
 }  // namespace URLTestHelpers

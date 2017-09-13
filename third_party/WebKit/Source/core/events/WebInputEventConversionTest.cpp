@@ -46,6 +46,7 @@
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/page/Page.h"
 #include "platform/geometry/IntSize.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "public/web/WebFrame.h"
@@ -73,9 +74,10 @@ int GetModifiersForKeyLocationCode(KeyboardEvent::KeyLocationCode location) {
 
 void RegisterMockedURL(const std::string& base_url,
                        const std::string& file_name) {
-  URLTestHelpers::RegisterMockedURLLoadFromBase(WebString::FromUTF8(base_url),
-                                                testing::CoreTestDataPath(),
-                                                WebString::FromUTF8(file_name));
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
+  URLTestHelpers::RegisterMockedURLLoadFromBase(
+      WebString::FromUTF8(base_url), testing::CoreTestDataPath(),
+      WebString::FromUTF8(file_name), platform_->GetURLLoaderMockFactory());
 }
 
 }  // namespace

@@ -8,9 +8,9 @@
 #include "core/frame/FrameTestHelpers.h"
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/html/HTMLElement.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebCoalescedInputEvent.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "public/web/WebDocument.h"
@@ -43,12 +43,13 @@ class ImeRequestTrackingWebViewClient
 
 class ImeOnFocusTest : public ::testing::Test {
  public:
-  ImeOnFocusTest() : base_url_("http://www.test.com/") {}
+  ImeOnFocusTest() : base_url_("http://www.test.com/") {
+    ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+    loader_factory_ = platform->GetURLLoaderMockFactory();
+  }
 
   void TearDown() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
-        ->UnregisterAllURLsAndClearMemoryCache();
+    loader_factory_->UnregisterAllURLsAndClearMemoryCache();
   }
 
  protected:
@@ -63,6 +64,7 @@ class ImeOnFocusTest : public ::testing::Test {
   std::string base_url_;
   FrameTestHelpers::WebViewHelper web_view_helper_;
   Persistent<Document> document_;
+  WebURLLoaderMockFactory* loader_factory_;
 };
 
 void ImeOnFocusTest::SendGestureTap(WebView* web_view, IntPoint client_point) {
@@ -94,9 +96,9 @@ void ImeOnFocusTest::RunImeOnFocusTest(
     const AtomicString& focus_element,
     std::string frame) {
   ImeRequestTrackingWebViewClient client;
-  RegisterMockedURLLoadFromBase(WebString::FromUTF8(base_url_),
-                                testing::CoreTestDataPath(),
-                                WebString::FromUTF8(file_name));
+  RegisterMockedURLLoadFromBase(
+      WebString::FromUTF8(base_url_), testing::CoreTestDataPath(),
+      WebString::FromUTF8(file_name), loader_factory_);
   WebViewImpl* web_view =
       web_view_helper_.Initialize(nullptr, nullptr, &client);
   web_view->Resize(WebSize(800, 1200));
@@ -116,7 +118,7 @@ void ImeOnFocusTest::RunImeOnFocusTest(
   if (!frame.empty()) {
     RegisterMockedURLLoadFromBase(WebString::FromUTF8(base_url_),
                                   testing::CoreTestDataPath(),
-                                  WebString::FromUTF8(frame));
+                                  WebString::FromUTF8(frame), loader_factory_);
     WebLocalFrame* child_frame =
         web_view->MainFrame()->FirstChild()->ToWebLocalFrame();
     LoadFrame(child_frame, base_url_ + frame);

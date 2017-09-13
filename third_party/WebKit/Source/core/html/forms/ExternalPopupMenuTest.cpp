@@ -14,6 +14,7 @@
 #include "core/layout/LayoutMenuList.h"
 #include "core/page/Page.h"
 #include "core/testing/DummyPageHolder.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "public/platform/Platform.h"
@@ -97,7 +98,10 @@ class ExternalPopupMenuWebFrameClient
 
 class ExternalPopupMenuTest : public ::testing::Test {
  public:
-  ExternalPopupMenuTest() : base_url_("http://www.test.com") {}
+  ExternalPopupMenuTest() : base_url_("http://www.test.com") {
+    ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+    loader_factory = platform->GetURLLoaderMockFactory();
+  }
 
  protected:
   void SetUp() override {
@@ -105,15 +109,14 @@ class ExternalPopupMenuTest : public ::testing::Test {
     WebView()->SetUseExternalPopupMenus(true);
   }
   void TearDown() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
-        ->UnregisterAllURLsAndClearMemoryCache();
+    loader_factory->UnregisterAllURLsAndClearMemoryCache();
   }
 
   void RegisterMockedURLLoad(const std::string& file_name) {
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url_), testing::CoreTestDataPath("popup"),
-        WebString::FromUTF8(file_name), WebString::FromUTF8("text/html"));
+        WebString::FromUTF8(file_name), loader_factory,
+        WebString::FromUTF8("text/html"));
   }
 
   void LoadFrame(const std::string& file_name) {
@@ -132,6 +135,7 @@ class ExternalPopupMenuTest : public ::testing::Test {
   std::string base_url_;
   ExternalPopupMenuWebFrameClient web_frame_client_;
   FrameTestHelpers::WebViewHelper helper_;
+  WebURLLoaderMockFactory* loader_factory;
 };
 
 TEST_F(ExternalPopupMenuTest, PopupAccountsForVisualViewportTransform) {

@@ -34,6 +34,7 @@
 #include "platform/weborigin/KURL.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
+#include "public/platform/WebURLLoaderMockFactory.h"
 #include "public/platform/WebURLResponse.h"
 
 namespace blink {
@@ -60,21 +61,26 @@ WebURL RegisterMockedURLLoadFromBase(
     const WebString& base_url,
     const WebString& base_path,
     const WebString& file_name,
+    WebURLLoaderMockFactory* loader_factory,
     const WebString& mime_type = WebString::FromUTF8("text/html"));
 
 // Registers from a full URL and a full file path.
 void RegisterMockedURLLoad(
     const WebURL& full_url,
     const WebString& file_path,
+    WebURLLoaderMockFactory* loader_factory,
     const WebString& mime_type = WebString::FromUTF8("text/html"));
 
 // Registers with a custom response.
-void RegisterMockedURLLoadWithCustomResponse(const WebURL& full_url,
-                                             const WebString& file_path,
-                                             WebURLResponse);
+void RegisterMockedURLLoadWithCustomResponse(
+    const WebURL& full_url,
+    const WebString& file_path,
+    WebURLResponse,
+    WebURLLoaderMockFactory* loader_factory);
 
 // Registers a mock URL that returns a 404 error.
-void RegisterMockedErrorURLLoad(const WebURL& full_url);
+void RegisterMockedErrorURLLoad(const WebURL& full_url,
+                                WebURLLoaderMockFactory* loader_factory);
 
 }  // namespace URLTestHelpers
 }  // namespace blink

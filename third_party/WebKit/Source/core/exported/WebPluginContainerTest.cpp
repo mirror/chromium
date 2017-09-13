@@ -51,6 +51,7 @@
 #include "platform/graphics/paint/PaintController.h"
 #include "platform/graphics/paint/PaintRecorder.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "public/platform/Platform.h"
@@ -77,12 +78,13 @@ namespace blink {
 
 class WebPluginContainerTest : public ::testing::Test {
  public:
-  WebPluginContainerTest() : base_url_("http://www.test.com/") {}
+  WebPluginContainerTest() : base_url_("http://www.test.com/") {
+    ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+    loader_factory = platform->GetURLLoaderMockFactory();
+  }
 
   void TearDown() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
-        ->UnregisterAllURLsAndClearMemoryCache();
+    loader_factory->UnregisterAllURLsAndClearMemoryCache();
   }
 
   void CalculateGeometry(WebPluginContainerImpl* plugin_container_impl,
@@ -98,11 +100,13 @@ class WebPluginContainerTest : public ::testing::Test {
       const std::string& mime_type = std::string("text/html")) {
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url_), testing::CoreTestDataPath(),
-        WebString::FromUTF8(file_name), WebString::FromUTF8(mime_type));
+        WebString::FromUTF8(file_name), loader_factory,
+        WebString::FromUTF8(mime_type));
   }
 
  protected:
   std::string base_url_;
+  WebURLLoaderMockFactory* loader_factory;
 };
 
 namespace {
