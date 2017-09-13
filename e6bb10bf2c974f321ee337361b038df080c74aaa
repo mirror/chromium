@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "211fcd69_59cc9cc2",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-09-13T02:22:24Z",
+      "side": 1,
+      "message": "Since we do change the selection outside the superclass\u0027s function (see my reply to the comment below), I\u0027m not sure if it is better coding style to keep beginChange/endChange here or not - what do you think?",
+      "parentUuid": "11064e50_8f466f54",
+      "revId": "e6bb10bf2c974f321ee337361b038df080c74aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca7e8a00_356bb39c",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
         "patchSetId": 15
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "The new code can still be simplified by using arrow function.\n\nWhen you are suggested actual code snippet, please follow it asap or choose different style with a rationale.",
       "parentUuid": "16be74bc_3f4daf54",
+      "revId": "e6bb10bf2c974f321ee337361b038df080c74aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e8b687d2_14542e40",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-09-13T02:22:24Z",
+      "side": 1,
+      "message": "Sorry for that - won\u0027t happen again!",
+      "parentUuid": "9fbddcf5_0e7e741e",
       "revId": "e6bb10bf2c974f321ee337361b038df080c74aaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -158,6 +194,24 @@
       "revId": "e6bb10bf2c974f321ee337361b038df080c74aaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "546d4fd2_cd7374ae",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1241182
+      },
+      "writtenOn": "2017-09-13T02:22:24Z",
+      "side": 1,
+      "message": "The latest update on the bug 742689 by mcirimele@:\n\"In touch mode focus should not exist, so we should always remove selection and focus after deleting a file there. For now, we should do the same outside of touch mode. If a selected file is deleted, selection and focus is removed.\" \u003c-- so we need to remove focus \u003d empty selectedIndexes",
+      "parentUuid": "b8cce854_105194fc",
+      "revId": "e6bb10bf2c974f321ee337361b038df080c74aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
