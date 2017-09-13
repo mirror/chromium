@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bff8f656_d46ae915",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-13T01:38:30Z",
+      "side": 1,
+      "message": "Regrettably Utf8Value does copy into a heap-allocated buffer. In some narrow cases it could possibly do better, but let me give you a few reasons why it\u0027s complicated:\n\n1. String is not ASCII, or not 8-bit.\n\nV8, like Blink, stores strings as either 8-bit or 16-bit character sequences. A conversion to UTF-8 requires a copy if the string is outside ASCII (because then multi-byte UTF-8 sequences are required, but not present in the source), or if the representation is 16-bit.\n\n2. String is not contiguous.\n\nV8 has a number of representations of strings, and not all of them mean the string exists in memory as a contiguous buffer. For instance, V8 has \"cons strings\", which simply represent the concatenation of two other strings. This makes string concatenation cheap, but it means that unless the string is explicitly flattened (this notion is not surfaced through the public API), it may not exist as a contiguous buffer in memory (so what could we return without copying?).\n\n3. Garbage collection.\n\n\"Normal\" V8 strings have the string data allocated in the V8 heap, and so it is eligible to be relocated when garbage collection runs. If v8::String::Utf8Value pointed directly into the string buffer (modulo the above points), the Utf8Value pointer might become invalid if an allocation on the V8 heap causes a GC. This isn\u0027t totally unworkable, but it requires extra care on the part of the V8 API user. V8 has generally preferred to provide safer APIs that don\u0027t expose this sort of concern (similarly, V8 does use raw pointers to heap objects internally, but only exposes APIs that use handles, which can tolerate object relocation due to GC).\n\n\nIn this particular case, whenever the message is going to be valid JSON (presumably almost all the time), you\u0027re going to make an std::string anyway, so it\u0027s not really harmful to just pull the V8ToString earlier.",
+      "parentUuid": "04ad308e_13746356",
+      "revId": "17ce5211efdbc0c9afb792f148808e9436994c69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7652ee07_ef3ea95c",
         "filename": "extensions/renderer/gin_port_unittest.cc",
         "patchSetId": 3
