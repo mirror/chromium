@@ -375,6 +375,10 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
         return mRoot;
     }
 
+    public SuggestionsCarousel getSuggesitonsCarousel() {
+        return mSuggestionsCarousel;
+    }
+
     private class RemoteSuggestionsStatusObserver
             extends SuggestionsSource.EmptyObserver implements DestructionObserver {
         public RemoteSuggestionsStatusObserver() {

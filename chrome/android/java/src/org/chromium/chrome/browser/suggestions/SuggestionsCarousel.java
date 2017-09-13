@@ -83,12 +83,17 @@ public class SuggestionsCarousel extends OptionalLeaf implements ImpressionTrack
         // Do nothing if there are already suggestions in the carousel for the new context.
         if (UrlUtilities.urlsMatchIgnoringFragments(newUrl, mCurrentContextUrl)) return;
 
-        String text = "Fetching contextual suggestions...";
-        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+        if (context != null) {
+            String text = "Fetching contextual suggestions...";
+            Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+        }
+
+        // Context has changed, so we want to remove any old suggestions from the carousel.
+        clearSuggestions();
+        mCurrentContextUrl = newUrl;
 
         mUiDelegate.getSuggestionsSource().fetchContextualSuggestions(
                 newUrl, (contextualSuggestions) -> {
-                    mCurrentContextUrl = newUrl;
                     mAdapter.setSuggestions(contextualSuggestions);
 
                     String toastText = String.format(Locale.US,
