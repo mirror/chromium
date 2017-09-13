@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae12e00b_ba7df3d1",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-09-13T15:42:03Z",
+      "side": 1,
+      "message": "See comment below. We should probably fix the union access here as well.",
+      "revId": "77d851cfede570516086348cfc28b68719fd1599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "493f2992_85811c9f",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-09-13T15:42:03Z",
+      "side": 1,
+      "message": "The DCHECK lets GesturePinchEnd events through and we\u0027ll end up accessing the scroll_update member.\n\nIt looks like the DCHECK was previously extended to allow GesturePinchEnd events without updating the union access. Indeed, at first glance, it\u0027s not all that clear that the DCHECK is for the union access.\n\nPerhaps it would be clearer to switch on the event type and have a |NOTREACHED()| for the default case, instead of having a separate DCHECK.",
+      "revId": "77d851cfede570516086348cfc28b68719fd1599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
