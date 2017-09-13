@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dd8f29c_ab257e22",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-13T17:55:49Z",
+      "side": 1,
+      "message": "This should be changed to only target Mac minis  (os Mac-10.12.6 mac_model Macmini7,1) and VMs (os Mac-10.12.6 mac_model VMware7,1)",
+      "revId": "b5c0a8fe2c780f1396fdd17a8482cff2fbd9fb75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
