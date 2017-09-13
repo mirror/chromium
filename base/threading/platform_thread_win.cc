@@ -10,6 +10,7 @@
 #include "base/debug/alias.h"
 #include "base/debug/profiler.h"
 #include "base/logging.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_id_name_manager.h"
 #include "base/threading/thread_restrictions.h"
@@ -113,6 +114,8 @@ bool CreateThreadInternal(size_t stack_size,
   params->delegate = delegate;
   params->joinable = out_thread_handle != nullptr;
   params->priority = priority;
+
+  SCOPED_UMA_HISTOGRAM_TIMER("Windows.CreateThreadTime");
 
   // Using CreateThread here vs _beginthreadex makes thread creation a bit
   // faster and doesn't require the loader lock to be available.  Our code will
