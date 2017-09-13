@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e3af519_3b3ecd52",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-13T22:36:47Z",
+      "side": 1,
+      "message": "This code doesn\u0027t do what this comment says; it centers it horizontally, but not vertically.  You might want something like:\n\n  gfx::Rect bounds;\n  GetWidgetBounds(\u0026bounds);\n  bounds.ClampToCenteredSize(view()-\u003eGetPreferredSize());\n  return bounds;",
+      "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e29d268_3ff2de68",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-13T22:36:47Z",
+      "side": 1,
+      "message": "Nit: Perhaps HandleFullscreenControlVisibility() should start like this?:\n\n  if (IsAnimating() || (input_entry_method_ !\u003d NOT_ACTIVE \u0026\u0026 input_entry_method_ !\u003d input_entry_method))\n    return;\n\nThen we wouldn\u0027t need the conditional checks here and below.",
+      "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f373725b_7f3f2a34",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-13T22:36:47Z",
+      "side": 1,
+      "message": "Nit: I wonder if it makes sense to have a helper method whose implementation is:\n\n  input_entry_method_ \u003d method;\n  Show(true);\n\n...and then use this anywhere we want to Show().  This might discourage people from Show()ing without remembering to set this member.",
+      "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed438514_260d6049",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-13T22:36:47Z",
+      "side": 1,
+      "message": "Nit: Maybe if this was \"|| event-\u003etype() \u003d\u003d ui::ET_GESTURE_LONG_TAP\" then OnGestureEvent() could just unconditionally call this function instead of reimplementing its conditions.",
+      "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a963e049_edcc686f",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-13T22:36:47Z",
+      "side": 1,
+      "message": "Nit: Or put these comments on the ends of the lines.",
+      "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9304db68_1bbb5856",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-13T22:36:47Z",
+      "side": 1,
+      "message": "Nit: Comment adds nothing to variable name",
+      "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5213c735_0dafdfad",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-13T22:36:47Z",
+      "side": 1,
+      "message": "Nit: I\u0027d just use 0 below.",
+      "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc4b9e9_788e5fa4",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-13T22:36:47Z",
+      "side": 1,
+      "message": "To be clear, you\u0027re intentionally not trying to make hittesting correct for now, because this is just a prototype, right?  But if we moved forward, you\u0027d want to adjust that too.",
+      "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
