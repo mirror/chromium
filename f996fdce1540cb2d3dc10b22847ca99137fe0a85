@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "193a9106_863fd450",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/Converters.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-13T16:31:10Z",
+      "side": 1,
+      "message": "\u003e This is the only usage of Converters left in the branch, but it\u0027s called at around 20 different places.\n\u003e Should we keep this around, or inline it at all 20 call sites?\n\nObviously don\u0027t inline this if it\u0027s called from multiple places. DRY principle and all that",
+      "parentUuid": "8eb02c37_e8b45646",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 57
+      },
+      "revId": "f996fdce1540cb2d3dc10b22847ca99137fe0a85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8252f70_14a18da5",
         "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewContentsClientAdapter.java",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-12T23:10:33Z",
       "side": 1,
       "message": "This actually breaks things downstream (I had to make the following patch:\n\nhttp://paste.googleplex.com/4849925665849344?raw\n\nBut without it, we can\u0027t completely remove ValueCallback from AwContents and friends, because this method overrides AwContentsClient.onSafeBrowsingHit.\n\nWhat\u0027s the best way forward?",
+      "range": {
+        "startLine": 640,
+        "startChar": 12,
+        "endLine": 640,
+        "endChar": 20
+      },
+      "revId": "f996fdce1540cb2d3dc10b22847ca99137fe0a85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a024b594_5fd7dfc6",
+        "filename": "android_webview/glue/java/src/com/android/webview/chromium/WebViewContentsClientAdapter.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-13T16:31:10Z",
+      "side": 1,
+      "message": "\u003e This actually breaks things downstream (I had to make the following patch:\n\u003e \n\u003e http://paste.googleplex.com/4849925665849344?raw\n\u003e \n\u003e But without it, we can\u0027t completely remove ValueCallback from AwContents and friends, because this method overrides AwContentsClient.onSafeBrowsingHit.\n\u003e \n\u003e What\u0027s the best way forward?\n\nHmm, how about just leave all the safe browsing stuff alone for now. +ntsfchr to fix all of them",
+      "parentUuid": "d8252f70_14a18da5",
       "range": {
         "startLine": 640,
         "startChar": 12,
