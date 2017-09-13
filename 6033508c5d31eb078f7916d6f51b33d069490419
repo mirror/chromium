@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "601af331_189ac80a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Toolbar.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-13T22:43:46Z",
+      "side": 1,
+      "message": "...addEventListener(\u0027focus\u0027, showOtherItemsInSecion.bind(this, false), false);",
+      "revId": "6033508c5d31eb078f7916d6f51b33d069490419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e8507a1_d37774c3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/softDropDownButton.css",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-13T22:43:46Z",
+      "side": 1,
+      "message": "Don\u0027t we have more instances of this, not only in console?",
+      "revId": "6033508c5d31eb078f7916d6f51b33d069490419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
