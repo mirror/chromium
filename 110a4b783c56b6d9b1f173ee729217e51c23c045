@@ -22,6 +22,30 @@
       "revId": "110a4b783c56b6d9b1f173ee729217e51c23c045",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b732be_8b8f74bb",
+        "filename": "chrome/browser/password_manager/password_manager_util_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T11:35:22Z",
+      "side": 1,
+      "message": "I\u0027d prefer a DCHECK indeed.",
+      "parentUuid": "51fc37ac_ae113696",
+      "range": {
+        "startLine": 403,
+        "startChar": 9,
+        "endLine": 403,
+        "endChar": 12
+      },
+      "revId": "110a4b783c56b6d9b1f173ee729217e51c23c045",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
