@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4885ee3_ae1b41a9",
+        "filename": "content/renderer/media/user_media_processor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-13T10:52:26Z",
+      "side": 1,
+      "message": "Add a comment saying the UMP/WebMediaStreamSource takes ownership of the returned pointer.",
+      "revId": "d029e803363d3a67813d009329af968f378b44ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

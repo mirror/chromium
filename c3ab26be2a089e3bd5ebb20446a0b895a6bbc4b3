@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "01093b54_51fb7d3d",
+        "filename": "content/renderer/media/user_media_client_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-13T10:52:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8f9c62ba_02ed073e",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2fea420_68df6897",
         "filename": "content/renderer/media/user_media_client_impl.cc",
         "patchSetId": 3
@@ -317,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "de8a45e5_2505495c",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-13T10:52:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "45aea340_5644b057",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c686cdda_fa6ec61e",
         "filename": "content/renderer/media/user_media_processor.cc",
         "patchSetId": 3
@@ -346,6 +382,24 @@
       "side": 1,
       "message": "If the request was cancelled it no longer exists in Blink, so there is no callback to invoke. The MediaStream never got to exist and the only thing to do is clean up if necessary.\nClean up in this context means closing the device on the server if no other streams/tracks are using it.",
       "parentUuid": "c686cdda_fa6ec61e",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "91e6b7ab_96fd1918",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-13T10:52:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3a35111c_6f60763a",
       "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -384,6 +438,24 @@
       "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e692ca54_c22017c3",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-13T10:52:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "13b3a48f_d38296d0",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -457,6 +529,24 @@
     },
     {
       "key": {
+        "uuid": "91d2eb41_479916a6",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-13T10:52:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fa37f274_8fc281ec",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6c50f2a_41c5940d",
         "filename": "content/renderer/media/user_media_processor.cc",
         "patchSetId": 3
@@ -492,6 +582,24 @@
     },
     {
       "key": {
+        "uuid": "49062a9b_d7245309",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1083,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-13T10:52:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "17f089d5_de9e084a",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "320f7a52_7039c2f6",
         "filename": "content/renderer/media/user_media_processor.cc",
         "patchSetId": 3
@@ -521,6 +629,24 @@
       "side": 1,
       "message": "|ready_callback_| does not manage the lifetime of |RequestInfo| by contract, but |ready_callback_| goes up to Blink and it might result in the whole frame being destroyed with everything in it, including RequestInfo, UMP and UMCI, so it\u0027s important not to do anything right after ready_callback_ runs.",
       "parentUuid": "320f7a52_7039c2f6",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7fe876e5_0a44d1de",
+        "filename": "content/renderer/media/user_media_processor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1156,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-13T10:52:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3ef7e8bc_2a053d7d",
       "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
