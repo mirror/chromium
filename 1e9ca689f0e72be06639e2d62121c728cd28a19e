@@ -16,6 +16,24 @@
       "revId": "1e9ca689f0e72be06639e2d62121c728cd28a19e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1845aa12_5c332d64",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-13T20:04:03Z",
+      "side": 1,
+      "message": "Wow good call. Turns out it does give me the good value here (3) but the math is bad. I meant ^ as power.... very dumb mistake.\n\nI\u0027ll replace it with (1 \u003c\u003c bits_per_type) - 1\n\nThanks a bunch!",
+      "parentUuid": "bfc66f66_30a3021d",
+      "revId": "1e9ca689f0e72be06639e2d62121c728cd28a19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
