@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba7e5e29_257c2c06",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuItemDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-13T05:16:04Z",
+      "side": 1,
+      "message": "I have a broader design question around the messages.  Any reason we need the openTabInBackground call in this class at all?\n\nI\u0027m wondering if we should just send ACTION_TAB_CREATION and have the service do all the heavy lifting.  That would allow the service to load the native library if needed to prevent blocking the dialog with the progress bar.  (Also, I don\u0027t think the service should necessarily have the code for tab creation -- that should be in a separate helper, but triggered by the service).\n\nWhen we want to start saving tab state to disk, do we want to do that in the service or are we going to do it in this class?  I could imagine we might need to do a fair amount of I/O, so I don\u0027t know if the progress dialog vs the service is best.\n\nBut yeah, I\u0027m still thinking that sending a single message should be cleaner here.",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 29
+      },
+      "revId": "9f466c4b76de7742fb787d168435b0d7df997449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "871b66d7_db84fda7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-13T05:16:04Z",
+      "side": 1,
+      "message": "this looks to be API24+, so I think we need an api to use across all versions",
+      "range": {
+        "startLine": 102,
+        "startChar": 12,
+        "endLine": 102,
+        "endChar": 26
+      },
+      "revId": "9f466c4b76de7742fb787d168435b0d7df997449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c68456dc_db63eb75",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-13T05:16:04Z",
+      "side": 1,
+      "message": "should this just be a static or even a local variable...if the service hasn\u0027t been killed then a local var should be valid I believe?  since the service can be killed at anytime, it seems prefs might not reflect the current running state.",
+      "range": {
+        "startLine": 153,
+        "startChar": 16,
+        "endLine": 153,
+        "endChar": 53
+      },
+      "revId": "9f466c4b76de7742fb787d168435b0d7df997449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43b213dd_cacb813b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-13T05:16:04Z",
+      "side": 1,
+      "message": "we should probably ensure the intent here is signed to chrome.  I don\u0027t know if we use the trusted intent extras for any other notification, but if that is possible then it would be good for only browser actions to trigger the overview.",
+      "range": {
+        "startLine": 188,
+        "startChar": 26,
+        "endLine": 188,
+        "endChar": 46
+      },
+      "revId": "9f466c4b76de7742fb787d168435b0d7df997449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be6ff42_00365152",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelSelectorImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-13T05:16:04Z",
+      "side": 1,
+      "message": "If the actions service managed the tab creation, then it could add it\u0027s own observer for this and not need to be told here.  We should try to keep this selector as unaware of browser actions as possible.\n\nIs this creation finished event needed to ensure the tab state has been saved to disk?  The above call adds it to the save queue, but I don\u0027t think it actually guarantees it is persisted.  We actually probably want a callback that the tab state has been written to disk (might need to add an observer to the persistent store for that though), which could be a TODO for this.",
+      "range": {
+        "startLine": 105,
+        "startChar": 16,
+        "endLine": 105,
+        "endChar": 29
+      },
+      "revId": "9f466c4b76de7742fb787d168435b0d7df997449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
