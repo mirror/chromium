@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c55fc68_caa08fb5",
+        "filename": "ios/chrome/browser/ui/authentication/account_control_item.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-13T09:13:32Z",
+      "side": 1,
+      "message": "It looks like you are not resetting the tintColor of the accessoryView in -prepareForReuse. Would this cause the color to be incorrect if the cell is reused for a different accessoryType?\n\nI also do not really like the fact that we have to add the same check to all -configureCell: implementation. Could we move this to a category on MDCCollectionViewCell? Or even sub-class it. This way, we\u0027ll only put the check in a single location (and won\u0027t have to go back to all those location if we need another tint color for another type of accessory).\n\nSo, either:\n\n  @implementation MDCCollectionViewCell (ChromeAccessoryTypeCategory)\n\n  - (void)cr_setAccessoryType:(MDCCollectionViewCellAccessoryType)accessoryType {\n    self.accessoryType \u003d accessoryType;\n    if (accessoryType \u003d\u003d MDCCollectionViewCellAccessoryDisclosureIndicator)\n      self.accessoryView.tintColor \u003d [[MDCPalette greyPalette] tint400];\n  }\n\n  @end\n\nor:\n\n  @interface ChromeCollectionViewCell : MDCCollectionViewCell\n  @end\n\n  @implementation ChromeCollectionViewCell\n\n  - (void)setAccessoryType:(MDCCollectionViewCellAccessoryType)accessoryType {\n    [super setAccessoryType:accessoryType];\n    if (accessoryType \u003d\u003d MDCCollectionViewCellAccessoryDisclosureIndicator)\n      self.accessoryView.tintColor \u003d [[MDCPalette greyPalette] tint400];\n  }\n\n  @end",
+      "revId": "b07a8ed6c8c8e9754923ae286d5eb80aa78a117f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
