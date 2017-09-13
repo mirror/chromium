@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ae53ced_49c0b02c",
+        "filename": "ui/views/cocoa/drag_drop_client_mac_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-13T04:37:03Z",
+      "side": 1,
+      "message": "The indenting here is off by one. (git cl format?)",
+      "revId": "4820e93588100d05bdb348bc839f5b058d515d87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
