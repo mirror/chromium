@@ -16,6 +16,24 @@
       "revId": "14ce4cb88a76350e86b09b376c34dcd4cdd0b083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c171c09_00bbb914",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-09-13T13:37:49Z",
+      "side": 1,
+      "message": "Done.\n\nI\u0027m pretty sure it was grammatically correct before, but hopefully the new wording is nicer :)",
+      "parentUuid": "e89ba3d7_f7835bea",
+      "revId": "14ce4cb88a76350e86b09b376c34dcd4cdd0b083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
