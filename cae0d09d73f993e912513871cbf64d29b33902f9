@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aef9457_b90c9b1b",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-13T00:13:09Z",
+      "side": 1,
+      "message": "I think we don\u0027t have to reset it. If the current context is tainted, the inherited context should be tainted too? (It won\u0027t change the result because if the current context is tainted, we already +1\u0027d the use count.)\n\nDitto for similar lines below.",
+      "revId": "cae0d09d73f993e912513871cbf64d29b33902f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "614eb7f4_b6a9abbb",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1259,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-13T00:13:09Z",
+      "side": 1,
+      "message": "context.fixed_position\n\nActually we can de-dupe the code by just checking context.current.containing_block_changed_under_filter at line #1267.",
+      "revId": "cae0d09d73f993e912513871cbf64d29b33902f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8465e24e_2ade1dc2",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilderTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 3835,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-13T00:13:09Z",
+      "side": 1,
+      "message": "Shouldn\u0027t it be EXPECT_TRUE?",
+      "revId": "cae0d09d73f993e912513871cbf64d29b33902f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
