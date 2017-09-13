@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "678c039d_8da799f9",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-13T03:57:51Z",
+      "side": 1,
+      "message": "How about extract method setTextPercentage(), setTextMemory()?",
+      "range": {
+        "startLine": 494,
+        "startChar": 2,
+        "endLine": 494,
+        "endChar": 13
+      },
+      "revId": "d7569cdc417077fe570d5d1afdda4ba500a8f71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72cb8f09_9024df0e",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1179424
+      },
+      "writtenOn": "2017-09-13T03:57:51Z",
+      "side": 1,
+      "message": "setTextByID(), toPercentageString(), getValueWithUnit() are only used by updateInfoPage(), can be moved inside updateInfoPage().",
+      "range": {
+        "startLine": 541,
+        "startChar": 9,
+        "endLine": 541,
+        "endChar": 20
+      },
+      "revId": "d7569cdc417077fe570d5d1afdda4ba500a8f71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
