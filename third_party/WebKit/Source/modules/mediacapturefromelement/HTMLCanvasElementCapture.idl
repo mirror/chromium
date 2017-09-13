@@ -3,8 +3,6 @@
 // found in the LICENSE file.
 
 // https://w3c.github.io/mediacapture-fromelement/#html-canvas-element-media-capture-extensions
-[
-    RuntimeEnabled=MediaCaptureFromCanvas
-] partial interface HTMLCanvasElement {
+partial interface HTMLCanvasElement {
     [RaisesException, CallWith=ScriptState] MediaStream captureStream (optional double frameRate);
 };

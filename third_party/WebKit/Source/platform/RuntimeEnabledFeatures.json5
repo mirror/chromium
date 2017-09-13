@@ -596,10 +596,6 @@
       status: "experimental",
     },
     {
-      name: "MediaCaptureFromCanvas",
-      status: "stable",
-    },
-    {
       name: "MediaCaptureFromVideo",
       status: "stable",
     },
