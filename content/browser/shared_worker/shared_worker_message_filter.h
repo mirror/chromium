@@ -11,8 +11,8 @@
 
 namespace content {
 
-// Handles SharedWorker related IPC messages for one renderer process by
-// forwarding them to the SharedWorkerServiceImpl singleton.
+// TODO(darin): Delete this class as it is no longer actually needed to filter
+// messages.
 class CONTENT_EXPORT SharedWorkerMessageFilter : public BrowserMessageFilter {
  public:
   using NextRoutingIDCallback = base::Callback<int(void)>;
