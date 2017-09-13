@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0781e422_5c569d84",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-13T21:25:06Z",
+      "side": 1,
+      "message": "I guess the idea behind that is that PaintRecordBuilder below clips as well?",
+      "revId": "f6d02aed69586617491e21377d62fd75e893be09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
