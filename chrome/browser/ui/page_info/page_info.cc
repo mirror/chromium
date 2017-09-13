@@ -37,6 +37,7 @@
 #include "chrome/browser/permissions/permission_uma_util.h"
 #include "chrome/browser/permissions/permission_util.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/safe_browsing/chrome_password_protection_service.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/ssl/chrome_ssl_host_state_delegate.h"
 #include "chrome/browser/ssl/chrome_ssl_host_state_delegate_factory.h"
@@ -296,12 +297,8 @@ PageInfo::PageInfo(PageInfoUI* ui,
 #endif
       show_change_password_buttons_(false) {
 #if defined(SAFE_BROWSING_DB_LOCAL)
-  safe_browsing::SafeBrowsingService* sb_service =
-      g_browser_process->safe_browsing_service();
-  if (sb_service && sb_service->enabled_by_prefs()) {
-    password_protection_service_ =
-        sb_service->GetPasswordProtectionService(profile_);
-  }
+  password_protection_service_ = safe_browsing::
+      ChromePasswordProtectionService::GetPasswordProtectionService(profile_);
 #endif
 
   Init(url, security_info);
@@ -474,20 +471,22 @@ void PageInfo::OpenSiteSettingsView() {
 void PageInfo::OnChangePasswordButtonPressed(
     content::WebContents* web_contents) {
 #if defined(SAFE_BROWSING_DB_LOCAL)
-  DCHECK(password_protection_service_);
-  password_protection_service_->OnWarningDone(
-      web_contents, safe_browsing::PasswordProtectionService::PAGE_INFO,
-      safe_browsing::PasswordProtectionService::CHANGE_PASSWORD);
+  if (password_protection_service_) {
+    password_protection_service_->OnWarningDone(
+        web_contents, safe_browsing::PasswordProtectionService::PAGE_INFO,
+        safe_browsing::PasswordProtectionService::CHANGE_PASSWORD);
+  }
 #endif
 }
 
 void PageInfo::OnWhitelistPasswordReuseButtonPressed(
     content::WebContents* web_contents) {
 #if defined(SAFE_BROWSING_DB_LOCAL)
-  DCHECK(password_protection_service_);
-  password_protection_service_->OnWarningDone(
-      web_contents, safe_browsing::PasswordProtectionService::PAGE_INFO,
-      safe_browsing::PasswordProtectionService::MARK_AS_LEGITIMATE);
+  if (password_protection_service_) {
+    password_protection_service_->OnWarningDone(
+        web_contents, safe_browsing::PasswordProtectionService::PAGE_INFO,
+        safe_browsing::PasswordProtectionService::MARK_AS_LEGITIMATE);
+  }
 #endif
 }
 
