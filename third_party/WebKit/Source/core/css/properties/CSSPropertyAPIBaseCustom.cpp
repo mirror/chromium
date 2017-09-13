@@ -20,7 +20,6 @@
 #include "core/css/properties/CSSPropertyPositionUtils.h"
 #include "core/css/properties/CSSPropertyTextDecorationLineUtils.h"
 #include "core/css/properties/CSSPropertyTransitionPropertyUtils.h"
-#include "platform/RuntimeEnabledFeatures.h"
 
 namespace blink {
 
