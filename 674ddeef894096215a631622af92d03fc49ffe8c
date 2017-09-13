@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "0868aad8_6d6ccb42",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/types/scripted/SVGLength-px.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-13T12:03:17Z",
+      "side": 1,
+      "message": "This will just parse \"12px\", so is just a lengthy way of saying ... \u003d 12; Consider using computed style here (and see below for what value.)",
+      "range": {
+        "startLine": 10,
+        "startChar": 20,
+        "endLine": 10,
+        "endChar": 55
+      },
+      "revId": "674ddeef894096215a631622af92d03fc49ffe8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be831ec0_9cd12f44",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/types/scripted/SVGLength-px.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-13T12:03:17Z",
+      "side": 1,
+      "message": "Value would be a number (float), so this ought to be just 2.",
+      "range": {
+        "startLine": 28,
+        "startChar": 30,
+        "endLine": 28,
+        "endChar": 33
+      },
+      "revId": "674ddeef894096215a631622af92d03fc49ffe8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e087f2a_7f7e076c",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/types/scripted/SVGLength-px.html",
         "patchSetId": 2
@@ -17,6 +63,53 @@
         "startLine": 37,
         "startChar": 34,
         "endLine": 37,
+        "endChar": 42
+      },
+      "revId": "674ddeef894096215a631622af92d03fc49ffe8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ee31b2_2f7a6c70",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/types/scripted/SVGLength-px.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-13T12:03:17Z",
+      "side": 1,
+      "message": "Yes, using a pre-computed font-size seems like a good thing to do, note that it says \"initial value\" though, while you are using 12px here. I guess it would also be using the \"initial font\", which begs for more trouble I suppose. You should probably also consider using assert_approx_equals instead of toFixed(...) where it makes sense.",
+      "parentUuid": "5e087f2a_7f7e076c",
+      "range": {
+        "startLine": 37,
+        "startChar": 34,
+        "endLine": 37,
+        "endChar": 42
+      },
+      "revId": "674ddeef894096215a631622af92d03fc49ffe8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b97831c7_3ce73481",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/types/scripted/SVGLength-px.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-13T12:03:17Z",
+      "side": 1,
+      "message": "For Ahem this might work (I guess x-height would equal the em unit in that font.) Maybe use a similar method to the ...-with-context.html.",
+      "range": {
+        "startLine": 48,
+        "startChar": 30,
+        "endLine": 48,
         "endChar": 42
       },
       "revId": "674ddeef894096215a631622af92d03fc49ffe8c",
