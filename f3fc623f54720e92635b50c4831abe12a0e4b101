@@ -22,6 +22,30 @@
       "revId": "f3fc623f54720e92635b50c4831abe12a0e4b101",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c7eb43_4dacb9fd",
+        "filename": "ios/chrome/browser/ui/external_file_remover.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-13T14:28:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df2f2e9e_fb2817c8",
+      "range": {
+        "startLine": 129,
+        "startChar": 9,
+        "endLine": 129,
+        "endChar": 14
+      },
+      "revId": "f3fc623f54720e92635b50c4831abe12a0e4b101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
