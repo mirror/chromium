@@ -11,8 +11,8 @@
 #include "base/memory/ref_counted.h"
 #include "base/strings/string16.h"
 #include "base/values.h"
-#include "chrome/browser/notifications/notification_delegate.h"
 #include "ui/message_center/notification.h"
+#include "ui/message_center/notification_delegate.h"
 #include "ui/message_center/notification_types.h"
 #include "url/gurl.h"
 
@@ -26,6 +26,7 @@ class Notification : public message_center::Notification {
   // TODO(estade): remove this constructor and NotificationDelegate.
   Notification(
       message_center::NotificationType type,
+      const std::string& id,
       const base::string16& title,
       const base::string16& body,
       const gfx::Image& icon,
@@ -34,7 +35,7 @@ class Notification : public message_center::Notification {
       const GURL& origin_url,
       const std::string& tag,
       const message_center::RichNotificationData& rich_notification_data,
-      scoped_refptr<NotificationDelegate> delegate);
+      scoped_refptr<message_center::NotificationDelegate> delegate);
 
   Notification(
       message_center::NotificationType type,
