@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "78e4c70e_882f70c1",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-13T08:01:02Z",
+      "side": 1,
+      "message": "It is an enum, I can\u0027t forward declare.",
+      "parentUuid": "0e20bab1_772ff8e6",
+      "range": {
+        "startLine": 22,
+        "startChar": 39,
+        "endLine": 22,
+        "endChar": 51
+      },
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80f26dae_b8603070",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button_factory.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "881e78fd_b2ffd9ef",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-13T08:01:02Z",
+      "side": 1,
+      "message": "It makes more sense to have the configuration part of the factory as the factory is using the configuration (to configure the color of the buttons\u0027 title).",
+      "parentUuid": "80f26dae_b8603070",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 46
+      },
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2b4ddf5f_9b90e9b3",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button_factory.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-13T08:01:02Z",
+      "side": 1,
+      "message": "Because it is used as array index.",
+      "parentUuid": "3d723d06_36f2e494",
+      "range": {
+        "startLine": 23,
+        "startChar": 1,
+        "endLine": 28,
+        "endChar": 2
+      },
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "221b8a15_baef3d2d",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button_factory.mm",
         "patchSetId": 6
@@ -85,6 +157,24 @@
       "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3270ab2b_cb283b9d",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button_factory.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-13T08:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "221b8a15_baef3d2d",
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "ec6b9d5e_9e2d0429",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_configuration.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-13T08:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38b7cff6_a874fbe8",
+      "range": {
+        "startLine": 15,
+        "startChar": 16,
+        "endLine": 15,
+        "endChar": 29
+      },
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98209ee8_f94d9a00",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_configuration.h",
         "patchSetId": 6
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "fced5b47_c9cef6e2",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_configuration.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-13T08:01:02Z",
+      "side": 1,
+      "message": "I would have done it if the arguments were complicated. As it is only an enum I prefer to have it explicitly passed.",
+      "parentUuid": "98209ee8_f94d9a00",
+      "range": {
+        "startLine": 16,
+        "startChar": 16,
+        "endLine": 16,
+        "endChar": 20
+      },
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd41daed_e8c3745a",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_configuration.h",
         "patchSetId": 6
@@ -148,6 +286,24 @@
       "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a44389e6_8675ad50",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_configuration.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-13T08:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd41daed_e8c3745a",
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "cfebc05b_32bb80b6",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_style.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-13T08:01:02Z",
+      "side": 1,
+      "message": "I can use this as an enum and have a function associating the enum value with the corresponding int value, but it is only adding boilerplate.",
+      "parentUuid": "8b2b7b58_ff0e518a",
+      "range": {
+        "startLine": 8,
+        "startChar": 55,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf54d568_a80bc3ea",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h",
         "patchSetId": 6
@@ -197,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "4d649f70_de98f83f",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-13T08:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf54d568_a80bc3ea",
+      "range": {
+        "startLine": 48,
+        "startChar": 32,
+        "endLine": 48,
+        "endChar": 42
+      },
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ac82d3f_29b0cdfd",
         "filename": "ios/clean/chrome/browser/ui/tools/menu_overflow_controls_stackview.h",
         "patchSetId": 6
@@ -217,6 +421,30 @@
       "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0428c07_4106eac3",
+        "filename": "ios/clean/chrome/browser/ui/tools/menu_overflow_controls_stackview.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-13T08:01:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ac82d3f_29b0cdfd",
+      "range": {
+        "startLine": 17,
+        "startChar": 33,
+        "endLine": 17,
+        "endChar": 40
+      },
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
