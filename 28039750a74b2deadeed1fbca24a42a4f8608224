@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcaf717f_5aedb539",
+        "filename": "chrome/browser/chromeos/login/ui/login_feedback_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T19:58:23Z",
+      "side": 1,
+      "message": "Scott, should we prefer to use BaseWindow over aura::Window in these cases? It seems okay to me, but I thought we might want the opposite (ie. aura::Window is more canonical). FYI, I\u0027ve hit snags converting shelf code from BaseWindow to aura::Window, since aura::Window and ui/wm/core/window_util.h don\u0027t offer minimize/restore/maximize info or controls, so yeah, I guess BaseWindow is fine?",
+      "revId": "28039750a74b2deadeed1fbca24a42a4f8608224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
