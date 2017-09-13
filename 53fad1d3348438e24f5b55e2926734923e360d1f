@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "817d079c_4272044f",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-13T20:12:13Z",
+      "side": 1,
+      "message": "Got rid of the typedef and tried to use the correct vectors types where possible. So code here mostly deals with Vector\u003cMessagePortChannel\u003e, stuff in public/ deals with WebVector\u003cMessagePortChannel\u003e and code in common/ and content/ deals mostly with std::vector. Of course other than for the conversions between them, although most of those are implicit.",
+      "parentUuid": "60df2852_b1def98e",
+      "revId": "53fad1d3348438e24f5b55e2926734923e360d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f70a49d_f8618a4b",
         "filename": "third_party/WebKit/common/message_port/message_port.h",
         "patchSetId": 5
@@ -39,6 +57,30 @@
       "revId": "53fad1d3348438e24f5b55e2926734923e360d1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de13ea04_a336233c",
+        "filename": "third_party/WebKit/common/message_port/message_port.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-13T20:12:13Z",
+      "side": 1,
+      "message": "Changed this class to blink::MessagePortChannel",
+      "parentUuid": "4f70a49d_f8618a4b",
+      "range": {
+        "startLine": 18,
+        "startChar": 10,
+        "endLine": 18,
+        "endChar": 22
+      },
+      "revId": "53fad1d3348438e24f5b55e2926734923e360d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
