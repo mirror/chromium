@@ -34,6 +34,23 @@
       "revId": "9b1d0f8f722f295673ee1d74f768185cfddef546",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a58e207_4f2a9f68",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-09-13T17:22:13Z",
+      "side": 1,
+      "message": "How about resetting GRC\u0027s property to false, like your other patch for network idleness?",
+      "revId": "9b1d0f8f722f295673ee1d74f768185cfddef546",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
