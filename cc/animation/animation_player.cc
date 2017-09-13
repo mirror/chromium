@@ -306,6 +306,8 @@ void AnimationPlayer::SetNeedsCommit() {
 }
 
 void AnimationPlayer::SetNeedsPushProperties() {
+  if (needs_push_properties_)
+    return;
   needs_push_properties_ = true;
 
   DCHECK(animation_timeline_);
