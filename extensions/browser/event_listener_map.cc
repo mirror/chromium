@@ -90,7 +90,8 @@ bool EventListener::IsLazy() const {
 }
 
 void EventListener::MakeLazy() {
-  DCHECK_EQ(worker_thread_id_, kNonWorkerThreadId);
+  if (is_for_service_worker_)
+    worker_thread_id_ = kNonWorkerThreadId;
   process_ = nullptr;
 }
 

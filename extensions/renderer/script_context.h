@@ -224,6 +224,11 @@ class ScriptContext : public RequestSender::Source {
       v8::Local<v8::String> code,
       const RunScriptExceptionHandler& exception_handler);
 
+  // Returns the routing id to use for matching filtered events.
+  // Currently all service worker contexts return same routing id, hence the
+  // routing ids are ignored for matching filters.
+  int GetRoutingIDForFilteredEvents();
+
  private:
   // DEPRECATED.
   v8::Local<v8::Value> CallFunction(const v8::Local<v8::Function>& function,

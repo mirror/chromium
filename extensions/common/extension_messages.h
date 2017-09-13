@@ -61,6 +61,11 @@ IPC_STRUCT_BEGIN(ExtensionHostMsg_APIActionOrEvent_Params)
   IPC_STRUCT_MEMBER(std::string, extra)
 IPC_STRUCT_END()
 
+IPC_STRUCT_BEGIN(ExtensionHostMsg_ServiceWorkerIdentifier)
+  IPC_STRUCT_MEMBER(GURL, scope)
+  IPC_STRUCT_MEMBER(int, thread_id)
+IPC_STRUCT_END()
+
 // Parameters structure for ExtensionHostMsg_AddDOMActionToActivityLog.
 IPC_STRUCT_BEGIN(ExtensionHostMsg_DOMAction_Params)
   // URL of the page.
@@ -724,17 +729,19 @@ IPC_MESSAGE_CONTROL3(ExtensionHostMsg_RemoveLazyServiceWorkerListener,
 
 // Notify the browser that the given extension added a listener to instances of
 // the named event that satisfy the filter.
-IPC_MESSAGE_CONTROL4(ExtensionHostMsg_AddFilteredListener,
+IPC_MESSAGE_CONTROL5(ExtensionHostMsg_AddFilteredListener,
                      std::string /* extension_id */,
                      std::string /* name */,
+                     base::Optional<ExtensionHostMsg_ServiceWorkerIdentifier> /* sw_identifier */,
                      base::DictionaryValue /* filter */,
                      bool /* lazy */)
 
 // Notify the browser that the given extension is no longer interested in
 // instances of the named event that satisfy the filter.
-IPC_MESSAGE_CONTROL4(ExtensionHostMsg_RemoveFilteredListener,
+IPC_MESSAGE_CONTROL5(ExtensionHostMsg_RemoveFilteredListener,
                      std::string /* extension_id */,
                      std::string /* name */,
+                     base::Optional<ExtensionHostMsg_ServiceWorkerIdentifier> /* sw_identifier */,
                      base::DictionaryValue /* filter */,
                      bool /* lazy */)
 
