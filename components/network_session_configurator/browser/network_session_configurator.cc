@@ -66,8 +66,11 @@ const std::string& GetVariationParam(
   return it->second;
 }
 
-void ConfigureTCPFastOpenParams(base::StringPiece tfo_trial_group,
+void ConfigureTCPFastOpenParams(const base::CommandLine& command_line,
+                                base::StringPiece tfo_trial_group,
                                 net::HttpNetworkSession::Params* params) {
+  if (command_line.HasSwitch(switches::kEnableTcpFastOpen))
+    params->enable_tcp_fast_open = true;
   if (tfo_trial_group == kTCPFastOpenHttpsEnabledGroupName)
     params->enable_tcp_fast_open_for_ssl = true;
 }
@@ -363,7 +366,7 @@ void ParseCommandLineAndFieldTrials(const base::CommandLine& command_line,
 
   const std::string tfo_trial_group =
       base::FieldTrialList::FindFullName(kTCPFastOpenFieldTrialName);
-  ConfigureTCPFastOpenParams(tfo_trial_group, params);
+  ConfigureTCPFastOpenParams(command_line, tfo_trial_group, params);
 
   // Command line flags override field trials.
   if (command_line.HasSwitch(switches::kDisableHttp2))
