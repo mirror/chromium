@@ -5,9 +5,13 @@
 #include <stddef.h>
 #include <string.h>
 
+#include "base/command_line.h"
 #include "base/files/file_util.h"
 #include "base/macros.h"
 #include "base/path_service.h"
+#include "base/strings/string_split.h"
+#include "base/test/scoped_command_line.h"
+#include "base/test/scoped_feature_list.h"
 #include "chrome/browser/after_startup_task_utils.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
@@ -17,6 +21,7 @@
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
+#include "content/public/common/content_switches.h"
 #include "net/base/filename_util.h"
 #include "net/base/net_errors.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -148,6 +153,34 @@ IN_PROC_BROWSER_TEST_F(
 
   // Error should NOT be empty on failure.
   EXPECT_NE("", test_result);
+}
+
+const base::Feature kTestFeatureForBrowserTest1{
+    "TestFeatureForBrowserTest1", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kTestFeatureForBrowserTest2{
+    "TestFeatureForBrowserTest2", base::FEATURE_ENABLED_BY_DEFAULT};
+const base::Feature kTestFeatureForBrowserTest3{
+    "TestFeatureForBrowserTest3", base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kTestFeatureForBrowserTest4{
+    "TestFeatureForBrowserTest4", base::FEATURE_ENABLED_BY_DEFAULT};
+
+class BrowserTestScopedFeatureListTest : public InProcessBrowserTest {
+ public:
+  void SetUp() override {
+    scoped_feature_list_.InitWithFeatures({kTestFeatureForBrowserTest3},
+                                          {kTestFeatureForBrowserTest4});
+    InProcessBrowserTest::SetUp();
+  }
+
+ private:
+  base::test::ScopedFeatureList scoped_feature_list_;
+};
+
+IN_PROC_BROWSER_TEST_F(BrowserTestScopedFeatureListTest, FeatureListTest) {
+  EXPECT_TRUE(base::FeatureList::IsEnabled(kTestFeatureForBrowserTest1));
+  EXPECT_FALSE(base::FeatureList::IsEnabled(kTestFeatureForBrowserTest2));
+  EXPECT_TRUE(base::FeatureList::IsEnabled(kTestFeatureForBrowserTest3));
+  EXPECT_FALSE(base::FeatureList::IsEnabled(kTestFeatureForBrowserTest4));
 }
 
 }  // namespace
