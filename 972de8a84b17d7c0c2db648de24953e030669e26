@@ -22,6 +22,30 @@
       "revId": "972de8a84b17d7c0c2db648de24953e030669e26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5f0e71_d00958d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1230128
+      },
+      "writtenOn": "2017-09-13T18:13:02Z",
+      "side": 1,
+      "message": "Sounds good, even easier then. Simpler logic now in ViewHighlighter to preserve and reset the view\u0027s padding.",
+      "parentUuid": "aa140f85_ffd639b2",
+      "range": {
+        "startLine": 194,
+        "startChar": 8,
+        "endLine": 194,
+        "endChar": 66
+      },
+      "revId": "972de8a84b17d7c0c2db648de24953e030669e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
