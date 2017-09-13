@@ -37,7 +37,7 @@ class AudioPlayerBuffer : public AudioStreamConsumer,
 
   // Audio Stream Consumer
   void AddAudioPacket(std::unique_ptr<AudioPacket> packet) override;
-  base::WeakPtr<AudioStreamConsumer> AudioConsumerAsWeakPtr() override;
+  base::WeakPtr<AudioStreamConsumer> AudioStreamConsumerAsWeakPtr() override;
 
   // Async Audio Frame Supplier
   void AsyncGetAudioFrame(uint32_t buffer_size,
