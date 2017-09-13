@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e89e1663_70cf1831",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T23:21:52Z",
+      "side": 1,
+      "message": "Hmm, it may not be clear to users that part of the dialog is hidden, I wonder if it would be better to make the minimum size fit a few pixels or something? I\u0027ll leave it up to you and other folks.",
+      "parentUuid": "ae61a424_74e897d6",
+      "revId": "84abc3313cd9749e627fa3cb74153b3f6a9c1290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3371be46_992d96c9",
         "filename": "chrome/browser/ui/views/device_chooser_content_view.h",
         "patchSetId": 3

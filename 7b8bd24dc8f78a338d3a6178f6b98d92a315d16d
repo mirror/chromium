@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f35475e7_d5123ec9",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T23:21:52Z",
+      "side": 1,
+      "message": "nit: sorry, I should have asked before... can you add a comment here like \"// Let the dialog shrink when the parent is smaller than the preferred size.\"",
+      "revId": "7b8bd24dc8f78a338d3a6178f6b98d92a315d16d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
