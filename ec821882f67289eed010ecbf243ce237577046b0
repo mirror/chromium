@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59c19e16_aff69c35",
+        "filename": "third_party/WebKit/Source/core/css/invalidation/StyleInvalidator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-13T20:41:26Z",
+      "side": 1,
+      "message": "Most people usually ask for {}s if the conditional expression spans multiple lines, to avoid potential confusion.",
+      "revId": "ec821882f67289eed010ecbf243ce237577046b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
