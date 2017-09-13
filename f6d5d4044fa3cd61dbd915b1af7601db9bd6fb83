@@ -22,6 +22,30 @@
       "revId": "f6d5d4044fa3cd61dbd915b1af7601db9bd6fb83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5146e69_0dc5b971",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_memory.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-13T16:09:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ee03b13_50732c66",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 12,
+        "endChar": 28
+      },
+      "revId": "f6d5d4044fa3cd61dbd915b1af7601db9bd6fb83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
