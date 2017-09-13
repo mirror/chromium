@@ -5883,20 +5883,9 @@ void Document::InitSecurityContext(const DocumentInit& initializer) {
     return;
   }
 
-  SandboxFlags sandbox_flags = initializer.GetSandboxFlags();
-  if (fetcher_->Archive()) {
-    // The URL of a Document loaded from a MHTML archive is controlled by the
-    // Content-Location header. This would allow UXSS, since Content-Location
-    // can be arbitrarily controlled to control the Document's URL and origin.
-    // Instead, force a Document loaded from a MHTML archive to be sandboxed,
-    // providing exceptions only for creating new windows.
-    sandbox_flags |=
-        kSandboxAll &
-        ~(kSandboxPopups | kSandboxPropagatesToAuxiliaryBrowsingContexts);
-  }
   // In the common case, create the security context from the currently
   // loading URL with a fresh content security policy.
-  EnforceSandboxFlags(sandbox_flags);
+  EnforceSandboxFlags(initializer.GetSandboxFlags());
   SetInsecureRequestPolicy(initializer.GetInsecureRequestPolicy());
   if (initializer.InsecureNavigationsToUpgrade()) {
     for (auto to_upgrade : *initializer.InsecureNavigationsToUpgrade())
@@ -6402,7 +6391,8 @@ ScriptedAnimationController& Document::EnsureScriptedAnimationController() {
   return *scripted_animation_controller_;
 }
 
-int Document::RequestAnimationFrame(FrameRequestCallback* callback) {
+int Document::RequestAnimationFrame(
+    FrameRequestCallbackCollection::FrameCallback* callback) {
   return EnsureScriptedAnimationController().RegisterCallback(callback);
 }
 

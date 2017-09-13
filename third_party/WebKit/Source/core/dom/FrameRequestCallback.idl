@@ -30,8 +30,9 @@
 
 // TODO(foolip): FrameRequestCallback should not be a callback interface.
 // https://www.w3.org/Bugs/Public/show_bug.cgi?id=28152
-callback interface FrameRequestCallback {
+//callback interface FrameRequestCallback {
     // highResTime is passed as high resolution timestamp, see
     // https://w3c.github.io/hr-time/ for details.
-    void handleEvent(double highResTime);
-};
+//    void handleEvent(double highResTime);
+//};
+callback FrameRequestCallback = void(DOMHighResTimeStamp highResTime);

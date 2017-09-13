@@ -28,6 +28,7 @@
 #define LocalDOMWindow_h
 
 #include "core/CoreExport.h"
+#include "core/dom/FrameRequestCallbackCollection.h"
 #include "core/dom/events/EventTarget.h"
 #include "core/frame/DOMWindow.h"
 #include "core/frame/LocalFrame.h"
@@ -57,7 +58,7 @@ class EventQueue;
 class ExceptionState;
 class External;
 class FrameConsole;
-class FrameRequestCallback;
+class V8FrameRequestCallback;
 class History;
 class IdleRequestOptions;
 class MediaQueryList;
@@ -220,8 +221,8 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
   CSSRuleList* getMatchedCSSRules(Element*, const String& pseudo_elt) const;
 
   // WebKit animation extensions
-  int requestAnimationFrame(FrameRequestCallback*);
-  int webkitRequestAnimationFrame(FrameRequestCallback*);
+  int requestAnimationFrame(V8FrameRequestCallback*);
+  int webkitRequestAnimationFrame(V8FrameRequestCallback*);
   void cancelAnimationFrame(int id);
 
   // Idle callback extensions
