@@ -69,6 +69,24 @@
       "revId": "2c47f86bf50f14090bd0342003379a6e88624692",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5298afc_694041db",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 11
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-13T13:58:21Z",
+      "side": 1,
+      "message": "\u003e TODO(noel): this symbol is extern now, add it to names.h\n\nDone, I think.  Added a #if defined(ADLER32_SIMD_SSSE3) around it and a FIXME note related the Intel\u0027s original deflate simd.patch and the new symbol x86_cpu_enable_ssse3 added in this CL.",
+      "parentUuid": "ff801919_0e3f19b4",
+      "revId": "2c47f86bf50f14090bd0342003379a6e88624692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
