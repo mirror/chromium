@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81e2a177_c8c409cc",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-13T16:16:17Z",
+      "side": 1,
+      "message": "Should we update the comment (here and in other methods) to indicate to pass in None for gtest_filter if you don\u0027t want to use one?",
+      "revId": "a9f25e1b936af3e7df602b076772927b0b5b85b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d616aec_1dfa47c4",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-13T16:16:17Z",
+      "side": 1,
+      "message": "If the URL is on a newline, do we avoid going \u003e80 chars?",
+      "revId": "a9f25e1b936af3e7df602b076772927b0b5b85b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
