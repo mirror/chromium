@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36f8a0fa_66221345",
+        "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetector.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-13T22:38:37Z",
+      "side": 1,
+      "message": "I understand what you are trying to achieve here, but since FMPDetector should not control fetch/ResourceScheduler, we should not cut corners. Let\u0027s fix network quiet detection in performance monitor to accommodate for nested frames and emit this signal from there. Wdyt?",
+      "revId": "d18114b3e463caf888f4f0eef727f32b6b2ca028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
