@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3e4f466_6b002b75",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPaths.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-13T00:51:34Z",
+      "side": 1,
+      "message": "please update comment too",
+      "revId": "c9b97e4d686f9be7fc3d0fc218a07ff45843c5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eae2e65c_2c656e48",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserFastPaths.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-13T00:51:34Z",
+      "side": 1,
+      "message": "and here",
+      "revId": "c9b97e4d686f9be7fc3d0fc218a07ff45843c5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
