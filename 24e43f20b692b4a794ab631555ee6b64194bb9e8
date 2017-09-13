@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5ec3272_af2ad006",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 751,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-09-13T22:37:51Z",
+      "side": 1,
+      "message": "kGesturePinchBegin",
+      "revId": "24e43f20b692b4a794ab631555ee6b64194bb9e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c912da_400ecc07",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-09-13T22:37:51Z",
+      "side": 1,
+      "message": "Missing break.",
+      "revId": "24e43f20b692b4a794ab631555ee6b64194bb9e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ac7712_37128042",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-09-13T22:37:51Z",
+      "side": 1,
+      "message": "nit: Remove the return.\n\nAs per the style guide, we should not handle assertion failures.\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#check_dcheck_and-notreached",
+      "revId": "24e43f20b692b4a794ab631555ee6b64194bb9e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c156fde0_d6aabd2d",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 790,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-09-13T22:37:51Z",
+      "side": 1,
+      "message": "Ditto: Missing break.",
+      "revId": "24e43f20b692b4a794ab631555ee6b64194bb9e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "828a1f78_56ac4fac",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-09-13T22:37:51Z",
+      "side": 1,
+      "message": "Ditto: Remove the return.",
+      "revId": "24e43f20b692b4a794ab631555ee6b64194bb9e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
