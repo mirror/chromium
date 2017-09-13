@@ -466,6 +466,7 @@ void ShelfLayoutManager::OnWindowActivated(ActivationReason reason,
 }
 
 void ShelfLayoutManager::OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) {
+  // return;
   bool keyboard_is_about_to_hide = false;
   if (new_bounds.IsEmpty() && !keyboard_bounds_.IsEmpty())
     keyboard_is_about_to_hide = true;
@@ -651,7 +652,7 @@ void ShelfLayoutManager::UpdateBoundsAndOpacity(
     gfx::Rect shelf_bounds = target_bounds.shelf_bounds_in_root;
     ::wm::ConvertRectToScreen(shelf_widget_->GetNativeWindow()->parent(),
                               &shelf_bounds);
-    shelf_widget_->SetBounds(shelf_bounds);
+    // shelf_widget_->SetBounds(shelf_bounds);
 
     GetLayer(status_widget)->SetOpacity(target_bounds.status_opacity);
 
