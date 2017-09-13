@@ -122,6 +122,29 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
   void DidDismissDownloadInProductHelp();
   MediaDownloadInProductHelpManager* DownloadInProductHelp();
 
+  // Track the state of the controls.
+  enum ControlsState {
+    // There is no video source.
+    kNoSource,
+
+    // Metadata has not been loaded.
+    kNotLoaded,
+
+    // Metadata is being loaded.
+    kLoadingMetadata,
+
+    // Metadata is loaded and the media is ready to play.
+    kStopped,
+
+    // The media is playing.
+    kPlaying,
+
+    // Playback has stopped to buffer.
+    kBuffering,
+  };
+
+  ControlsState State() const { return state_; }
+
   DECLARE_VIRTUAL_TRACE();
 
  private:
@@ -151,6 +174,10 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
 
   // Notify us that our controls enclosure has changed size.
   void NotifyElementSizeChanged(DOMRectReadOnly* new_size);
+
+  // Internal state methods.
+  void TransitionToState(ControlsState);
+  void UpdateCSSClassFromState();
 
   explicit MediaControlsImpl(HTMLMediaElement&);
 
@@ -213,6 +240,7 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
   void OnExitedFullscreen();
   void OnPanelKeypress();
   void OnMediaKeyboardEvent(Event* event) { DefaultEventHandler(event); }
+  void OnWaiting();
 
   // Media control elements.
   Member<MediaControlOverlayEnclosureElement> overlay_enclosure_;
@@ -257,6 +285,7 @@ class MODULES_EXPORT MediaControlsImpl final : public HTMLDivElement,
 
   TaskRunnerTimer<MediaControlsImpl> element_size_changed_timer_;
   IntSize size_;
+  ControlsState state_ = ControlsState::kNoSource;
 
   bool keep_showing_until_timer_fires_ : 1;
 

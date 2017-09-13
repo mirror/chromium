@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<title>Test that player source state is reflected in CSS classes.</title>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<script src="../../../media-resources/media-controls.js"></script>
+<script src="../../../media-resources/media-file.js"></script>
+<video controls width=400 preload=metadata></video>
+<script>
+async_test(t => {
+  // This test will start playing the "counting" video,
+  // then pause it, then play it again and wait for it
+  // to finish.
+  const video = document.querySelector('video');
+  let paused = false;
+
+  checkControlsClassName(video, "phase-pre-ready state-no-source");
+
+  video.onstalled = t.step_func(() => {
+    checkControlsClassName(video, "state-loading-metadata");
+  });
+
+  video.onplay = t.step_func(() => {
+    checkControlsClassName(video, "phase-ready state-buffering");
+  });
+
+  video.onwaiting = t.step_func(() => {
+    checkControlsClassName(video, "phase-ready state-buffering");
+  });
+
+  video.playing = t.step_func(() => {
+    checkControlsClassName(video, "phase-ready state-playing");
+
+    if (!paused) {
+      video.pause();
+      paused = true;
+    }
+  });
+
+  video.onpause = t.step_func(() => {
+    checkControlsClassName(video, "phase-ready state-stopped");
+    video.play();
+  });
+
+  video.onended = t.step_func_done(() => {
+    checkControlsClassName(video, "phase-ready state-stopped");
+  });
+
+  // Use a .webm to ensure metadata is near the beginning of the file.
+  var mediaFile = "resources/media-source/webm/test.webm";
+  video.src = "http://127.0.0.1:8000/media/video-throttled-load.cgi?" +
+      "nph=1&name=" + mediaFile + "&throttle=40&type=video/webm";
+  video.play();
+});
+</script>
+</html>
