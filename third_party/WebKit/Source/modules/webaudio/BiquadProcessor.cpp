@@ -81,6 +81,12 @@ void BiquadProcessor::CheckForDirtyCoefficients() {
       filter_coefficients_dirty_ = true;
       has_just_reset_ = false;
     } else {
+      // TODO: With dezippering removed, we don't want to use these methods.
+      // We need to implement another way of noticing if one of the
+      // parameters has changed.  We do this as an optimization because
+      // computing the filter coefficients from these parameters is fairly
+      // expensive.
+      //
       // Smooth all of the filter parameters. If they haven't yet converged to
       // their target value then mark coefficients as dirty.
       bool is_stable1 = parameter1_->Smooth();
