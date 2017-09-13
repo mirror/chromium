@@ -50,8 +50,10 @@ bool FixedBackgroundPaintsInLocalCoordinates(
   if (!root_layer || root_layer->GetCompositingState() == kNotComposited)
     return false;
 
-  return root_layer->GetCompositedLayerMapping()
-      ->BackgroundLayerPaintsFixedRootBackground();
+  CompositedLayerMapping* mapping = root_layer->GetCompositedLayerMapping();
+  if (RuntimeEnabledFeatures::RootLayerScrollingEnabled())
+    return !mapping->BackgroundPaintsOntoScrollingContentsLayer();
+  return mapping->BackgroundLayerPaintsFixedRootBackground();
 }
 
 LayoutSize CalculateFillTileSize(const LayoutBoxModelObject& obj,
@@ -427,21 +429,26 @@ bool ShouldUseFixedAttachment(const FillLayer& fill_layer) {
 LayoutRect FixedAttachmentPositioningArea(const LayoutBoxModelObject& obj,
                                           const LayoutBoxModelObject* container,
                                           const GlobalPaintFlags flags) {
-  LayoutRect rect = obj.ViewRect();
-  if (FixedBackgroundPaintsInLocalCoordinates(obj, flags)) {
-    rect.SetLocation(LayoutPoint());
-  } else {
-    if (LocalFrameView* frame_view = obj.View()->GetFrameView())
-      rect.SetLocation(IntPoint(frame_view->ScrollOffsetInt()));
+  LocalFrameView* frame_view = obj.View()->GetFrameView();
+  if (!frame_view)
+    return LayoutRect();
+
+  ScrollableArea* layout_viewport = frame_view->LayoutViewportScrollableArea();
+  DCHECK(layout_viewport);
+
+  LayoutPoint location;
+  if (!FixedBackgroundPaintsInLocalCoordinates(obj, flags)) {
+    location = IntPoint(layout_viewport->ScrollOffsetInt());
     // Compensate the translations created by ScrollRecorders.
     // TODO(trchen): Fix this for SP phase 2. crbug.com/529963.
-    rect.MoveBy(AccumulatedScrollOffsetForFixedBackground(obj, container));
+    location.MoveBy(AccumulatedScrollOffsetForFixedBackground(obj, container));
   }
 
   if (container)
-    rect.MoveBy(LayoutPoint(-container->LocalToAbsolute(FloatPoint())));
+    location.MoveBy(LayoutPoint(-container->LocalToAbsolute(FloatPoint())));
 
-  return rect;
+  return LayoutRect(location,
+                    LayoutSize(layout_viewport->VisibleContentRect().Size()));
 }
 
 }  // Anonymous namespace
