@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b06da120_7a518018",
+        "filename": "ui/events/event_processor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-09-13T19:45:28Z",
+      "side": 1,
+      "message": "Did you still want it to be pure virtual? I indicated in the bug this class isn\u0027t.",
+      "parentUuid": "a1b02584_5bb4caa8",
+      "range": {
+        "startLine": 19,
+        "startChar": 20,
+        "endLine": 19,
+        "endChar": 35
+      },
+      "revId": "843b1ded109b1497f8113d6f83a7b9c4c9cca42b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f42eb241_1acfa191",
         "filename": "ui/events/event_processor.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-08T21:17:20Z",
       "side": 1,
       "message": "Making this static and take a weak-ptr is just as error prone. I prefer keeping the implementation in OnEventFromSource and checking the weakptr there.",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 8
+      },
+      "revId": "843b1ded109b1497f8113d6f83a7b9c4c9cca42b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd554187_ec634605",
+        "filename": "ui/events/event_processor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-09-13T19:45:28Z",
+      "side": 1,
+      "message": "I thought that it prevented someone from using a variable that this class defines blinding without checking that *this* is valid.",
+      "parentUuid": "f42eb241_1acfa191",
       "range": {
         "startLine": 57,
         "startChar": 2,
