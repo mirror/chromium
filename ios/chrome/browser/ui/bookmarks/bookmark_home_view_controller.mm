@@ -416,6 +416,11 @@ const CGFloat kSpacer = 50;
   }
 
   if (nodes.size() == 0) {
+    // if nothing to select, exit edit mode.
+    if (![self.bookmarksTableView hasBookmarksOrFolders]) {
+      [self setContextBarState:BookmarksContextBarDefault];
+      return;
+    }
     [self setContextBarState:BookmarksContextBarBeginSelection];
     return;
   }
@@ -488,6 +493,14 @@ const CGFloat kSpacer = 50;
                toPosition:(int)position {
   bookmark_utils_ios::UpdateBookmarkPositionWithUndoToast(
       node, _rootNode, position, self.bookmarks, self.browserState);
+}
+
+- (void)bookmarkTableViewRefreshContextBar:(BookmarkTableView*)view {
+  // At default state, the enable state of context bar buttons could change
+  // during refresh.
+  if (self.contextBarState == BookmarksContextBarDefault) {
+    [self setBookmarksContextBarButtonsDefaultState];
+  }
 }
 
 #pragma mark - BookmarkFolderViewControllerDelegate
@@ -1219,7 +1232,8 @@ const CGFloat kSpacer = 50;
                                       IDS_IOS_BOOKMARK_CONTEXT_BAR_NEW_FOLDER)
                         forButton:ContextBarLeadingButton];
   [self.contextBar setButtonVisibility:YES forButton:ContextBarLeadingButton];
-  [self.contextBar setButtonEnabled:YES forButton:ContextBarLeadingButton];
+  [self.contextBar setButtonEnabled:[self.bookmarksTableView allowsNewFolder]
+                          forButton:ContextBarLeadingButton];
   [self.contextBar setButtonStyle:ContextBarButtonStyleDefault
                         forButton:ContextBarLeadingButton];
 
@@ -1231,7 +1245,9 @@ const CGFloat kSpacer = 50;
       setButtonTitle:l10n_util::GetNSString(IDS_IOS_BOOKMARK_CONTEXT_BAR_SELECT)
            forButton:ContextBarTrailingButton];
   [self.contextBar setButtonVisibility:YES forButton:ContextBarTrailingButton];
-  [self.contextBar setButtonEnabled:YES forButton:ContextBarTrailingButton];
+  [self.contextBar
+      setButtonEnabled:[self.bookmarksTableView hasBookmarksOrFolders]
+             forButton:ContextBarTrailingButton];
 }
 
 - (void)setBookmarksContextBarSelectionStartState {
