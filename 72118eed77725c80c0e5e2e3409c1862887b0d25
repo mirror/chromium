@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "253c9498_db339009",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-13T04:04:45Z",
+      "side": 1,
+      "message": "Removed.  Copy-paste error.",
+      "parentUuid": "00ba165d_752d18d3",
+      "revId": "72118eed77725c80c0e5e2e3409c1862887b0d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f548b1a_88c0567e",
         "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
         "patchSetId": 7
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "d1c92bf8_5ec817b0",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-13T04:04:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f548b1a_88c0567e",
+      "range": {
+        "startLine": 78,
+        "startChar": 11,
+        "endLine": 78,
+        "endChar": 19
+      },
+      "revId": "72118eed77725c80c0e5e2e3409c1862887b0d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7c86ff2_6677f3d2",
         "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.h",
         "patchSetId": 7
@@ -53,6 +95,30 @@
       "writtenOn": "2017-09-13T01:09:01Z",
       "side": 1,
       "message": "This is quite hard to follow: this class is a factory that creates factories.\nMaybe there could be a better name for it that is not factory?\n\nActually naive question, is there any reason we couldn\u0027t bind all mojom::ProxyResolver to a unique MojoProxyResolverFactoryImpl (using a mojo::BindingSet)?",
+      "range": {
+        "startLine": 37,
+        "startChar": 43,
+        "endLine": 37,
+        "endChar": 65
+      },
+      "revId": "72118eed77725c80c0e5e2e3409c1862887b0d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8bc139d_f37ac95f",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-13T04:04:45Z",
+      "side": 1,
+      "message": "Open to other naming ideas.  I think it may make more sense to rename this class itself, as it\u0027s no longer a factory.  I agree it\u0027s silly...This create ProxyResolverFactories which act as proxies to another ProxyResolverFactory...  Maybe ChromeMojoProxyResolverFactory -\u003e ProxyResolverFactoryManager?\n\nIf we used mojo::BindingSet, we\u0027d be unable to shut down the utility process, because we can\u0027t track how many ProxyResolvers are live.  When a NetworkContext is torn down, there\u0027s no guarantee we\u0027ll be told of all its resolvers being torn down.  Same is true when the network service crashes.",
+      "parentUuid": "a7c86ff2_6677f3d2",
       "range": {
         "startLine": 37,
         "startChar": 43,
@@ -111,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "3f5acad1_cd316def",
+        "filename": "net/proxy/test_mojo_proxy_resolver_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-13T04:04:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01da186a_d77bf58d",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 23
+      },
+      "revId": "72118eed77725c80c0e5e2e3409c1862887b0d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e937de8a_8ba3b5dc",
         "filename": "net/url_request/url_request_context_builder_mojo.h",
         "patchSetId": 7
@@ -122,6 +212,30 @@
       "writtenOn": "2017-09-13T01:09:01Z",
       "side": 1,
       "message": "Nit: I thought the preference was to capitalize acronyms, e.g  SetDHCPFetcherFactory",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 28
+      },
+      "revId": "72118eed77725c80c0e5e2e3409c1862887b0d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "219c1c26_de577994",
+        "filename": "net/url_request/url_request_context_builder_mojo.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-13T04:04:45Z",
+      "side": 1,
+      "message": "That\u0027s not the case.  Per the style guide, \"Prefer to capitalize acronyms as single words (i.e. StartRpc(), not StartRPC()).\"  Also, this matches the class name \"DhcpProxyScriptFetcherFactory\".",
+      "parentUuid": "e937de8a_8ba3b5dc",
       "range": {
         "startLine": 36,
         "startChar": 7,
