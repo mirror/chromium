@@ -15,6 +15,7 @@
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
+#include "base/metrics/statistics_recorder.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
@@ -129,6 +130,8 @@ BrowserTestBase::BrowserTestBase()
   // TODO(fdoray): Remove this once the SequencedWorkerPool to TaskScheduler
   // redirection experiment concludes https://crbug.com/622400.
   base::SequencedWorkerPool::DisableForProcessForTesting();
+
+  base::StatisticsRecorder::SetRecordCheckerEnabled(false);
 }
 
 BrowserTestBase::~BrowserTestBase() {
