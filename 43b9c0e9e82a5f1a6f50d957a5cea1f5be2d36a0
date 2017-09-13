@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5314dc30_0394f994",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-09-13T01:30:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3e76050_e239d74e",
+      "revId": "43b9c0e9e82a5f1a6f50d957a5cea1f5be2d36a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f35ebcf2_24258cf6",
         "filename": "components/arc/net/arc_net_host_impl.cc",
         "patchSetId": 5
@@ -153,6 +171,24 @@
       "writtenOn": "2017-09-13T01:10:12Z",
       "side": 1,
       "message": "shouldn\u0027t these be VpnConnected etc. as they are always called from the Instance/Android . Adding an Android prefix is inconsistent IMO",
+      "revId": "43b9c0e9e82a5f1a6f50d957a5cea1f5be2d36a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abf6ea45_50b38a92",
+        "filename": "components/arc/net/arc_net_host_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-09-13T01:30:09Z",
+      "side": 1,
+      "message": "The Android prefix is intended to make it clear that it refers to an Android VPN, not a CrOS VPN.  arc_net_host_impl deals with both types of VPNs.",
+      "parentUuid": "16d2ca81_8e6b73fc",
       "revId": "43b9c0e9e82a5f1a6f50d957a5cea1f5be2d36a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
