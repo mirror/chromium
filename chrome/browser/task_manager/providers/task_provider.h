@@ -49,11 +49,8 @@ class TaskProvider {
   // StartUpdating() has been called and before StopUpdating() is called.
   void NotifyObserverTaskAdded(Task* task) const;
   void NotifyObserverTaskRemoved(Task* task) const;
+  void NotifyObserverTaskReplaced(Task* old_task, Task* new_task) const;
   void NotifyObserverTaskUnresponsive(Task* task) const;
-  void UpdateTaskProcessInfoAndNotifyObserver(
-      Task* existing_task,
-      base::ProcessHandle new_process_handle,
-      base::ProcessId new_process_id) const;
 
  private:
   // This will be called once an observer is set for this provider. When it is
