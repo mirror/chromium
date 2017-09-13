@@ -45,6 +45,30 @@
       "revId": "474066f9f20e8a768e4bca0743c0d859878f061a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f73f34_2d80ffb6",
+        "filename": "content/common/input/ime_text_span_conversions.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-13T23:17:43Z",
+      "side": 1,
+      "message": "Sorry, can you please clarify? I called both the parameters \"type\" in the definitions and omitted the names in the declarations (since otherwise the lint rule would complain that they\u0027re useless).",
+      "parentUuid": "cc5d5733_316ec087",
+      "range": {
+        "startLine": 15,
+        "startChar": 53,
+        "endLine": 15,
+        "endChar": 74
+      },
+      "revId": "474066f9f20e8a768e4bca0743c0d859878f061a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
