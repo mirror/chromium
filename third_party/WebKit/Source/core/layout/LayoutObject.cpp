@@ -3472,6 +3472,32 @@ void LayoutObject::InvalidatePaintForSelection() {
   }
 }
 
+// TODO(smcgruer): Find the right place in the .cc to put this.
+Node& LayoutObject::AncestorOverflowNode() const {
+  Persistent<Node> ancestor_overflow_node = StyleRef().NearestOverflowNode();
+
+  // Some elements do not have an ancestor overflow node set by StyleAdjuster,
+  // including the #document and LayoutFullScreen. For such elements we consider
+  // the root #document to be the ancestor overflow node (including for the
+  // #document itself).
+  if (!ancestor_overflow_node) {
+    return GetDocument();
+  }
+
+  // ComputedStyle tracks our nearest overflow, which could be ourselves. If
+  // that is the case, we have to ask our parent node so that we definitely get
+  // our ancestor overflow.
+  if (ancestor_overflow_node == GetNode()) {
+    ancestor_overflow_node = GetNode()
+                                 ->parentNode()
+                                 ->GetLayoutObject()
+                                 ->StyleRef()
+                                 .NearestOverflowNode();
+  }
+  DCHECK(ancestor_overflow_node);
+  return *ancestor_overflow_node;
+}
+
 // Note about ::first-letter pseudo-element:
 //   When an element has ::first-letter pseudo-element, first letter characters
 //   are taken from |Text| node and first letter characters are considered

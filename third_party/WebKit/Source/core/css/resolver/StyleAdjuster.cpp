@@ -604,6 +604,23 @@ void StyleAdjuster::AdjustComputedStyle(StyleResolverState& state,
       style.SetJustifyItems(parent_style.JustifyItems());
   }
 
+  // Calculate the nearest overflow object information. The root overflow object
+  // is the document object. Underneath that any element with non-visible
+  // overflow specifies a new overflow object, except for <html> and <body>.
+  //
+  // Since the document object itself never passes through the style adjuster,
+  // we use the <html> element to set the root overflow object.
+  if (isHTMLHtmlElement(element)) {
+    style.SetNearestOverflowNode(element->GetDocument());
+  } else if (style.OverflowX() != EOverflow::kVisible ||
+             style.OverflowY() != EOverflow::kVisible) {
+    if (isHTMLBodyElement(element)) {
+      style.SetNearestOverflowNode(element->GetDocument());
+    } else {
+      style.SetNearestOverflowNode(element);
+    }
+  }
+
   AdjustEffectiveTouchAction(style, parent_style, element);
 
   bool is_media_control =

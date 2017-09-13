@@ -64,6 +64,7 @@
 #include "core/html/HTMLSelectElement.h"
 #include "core/html/TextControlElement.h"
 #include "core/input/EventHandler.h"
+#include "core/layout/LayoutBoxModelObject.h"
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/LayoutFlexibleBox.h"
 #include "core/layout/LayoutScrollbar.h"
@@ -901,6 +902,13 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
   Node* node = Box().GetNode();
   if (isHTMLSelectElement(node))
     toHTMLSelectElement(node)->ScrollToOptionAfterLayout(*this);
+
+  if (PaintLayerScrollableAreaRareData* d = RareData()) {
+    Vector<PaintLayer*> registered_stickys;
+    CopyKeysToVector(d->sticky_constraints_map_, registered_stickys);
+    for (auto sticky_layer : registered_stickys)
+      sticky_layer->GetLayoutObject().UpdateStickyPositionConstraints();
+  }
 }
 
 void PaintLayerScrollableArea::ClampScrollOffsetAfterOverflowChange() {
@@ -1628,6 +1636,17 @@ void PaintLayerScrollableArea::UpdateResizerStyle() {
     resizer_->Destroy();
     resizer_ = nullptr;
   }
+}
+
+void PaintLayerScrollableArea::RegisterStickyElement(LayoutBoxModelObject* o) {
+  // If the sticky element doesn't have any anchors, there is no point in ever
+  // computing constraints for it.
+  if (!o->StyleRef().HasStickyConstrainedPosition())
+    return;
+
+  StickyConstraintsMap& constraints_map = GetStickyConstraintsMap();
+  if (!constraints_map.Contains(o->Layer()))
+    constraints_map.Set(o->Layer(), StickyPositionScrollingConstraints());
 }
 
 void PaintLayerScrollableArea::InvalidateAllStickyConstraints() {

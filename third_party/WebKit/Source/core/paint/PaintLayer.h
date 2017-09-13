@@ -727,9 +727,6 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
     return needs_ancestor_dependent_compositing_inputs_update_;
   }
 
-  void UpdateAncestorOverflowLayer(const PaintLayer* ancestor_overflow_layer) {
-    ancestor_overflow_layer_ = ancestor_overflow_layer;
-  }
   void UpdateAncestorDependentCompositingInputs(
       const AncestorDependentCompositingInputs&,
       bool has_ancestor_with_clip_path);
@@ -767,9 +764,7 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
     DCHECK(!needs_ancestor_dependent_compositing_inputs_update_);
     return ancestor_dependent_compositing_inputs_->clipping_container;
   }
-  const PaintLayer* AncestorOverflowLayer() const {
-    return ancestor_overflow_layer_;
-  }
+  const PaintLayer* AncestorOverflowLayer() const;
   const PaintLayer* AncestorScrollingLayer() const {
     DCHECK(!needs_ancestor_dependent_compositing_inputs_update_);
     return ancestor_dependent_compositing_inputs_
@@ -1141,8 +1136,6 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
   void UpdateTransform(const ComputedStyle* old_style,
                        const ComputedStyle& new_style);
 
-  void RemoveAncestorOverflowLayer(const PaintLayer* removed_layer);
-
   void UpdatePaginationRecursive(bool needs_pagination_update = false);
   void ClearPaginationRecursive();
 
@@ -1265,9 +1258,6 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
   // left/top values.
   LayoutUnit static_inline_position_;
   LayoutUnit static_block_position_;
-
-  // The first ancestor having a non visible overflow.
-  const PaintLayer* ancestor_overflow_layer_;
 
   std::unique_ptr<AncestorDependentCompositingInputs>
       ancestor_dependent_compositing_inputs_;

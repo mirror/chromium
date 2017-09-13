@@ -99,7 +99,7 @@ static CompositingQueryMode g_compositing_query_mode =
 
 struct SameSizeAsPaintLayer : DisplayItemClient {
   int bit_fields;
-  void* pointers[11];
+  void* pointers[10];
   LayoutUnit layout_units[4];
   IntSize size;
   Persistent<PaintLayerScrollableArea> scrollable_area;
@@ -167,8 +167,7 @@ PaintLayer::PaintLayer(LayoutBoxModelObject& layout_object)
       first_(0),
       last_(0),
       static_inline_position_(0),
-      static_block_position_(0),
-      ancestor_overflow_layer_(nullptr) {
+      static_block_position_(0) {
   UpdateStackingNode();
 
   is_self_painting_layer_ = ShouldBeSelfPaintingLayer();
@@ -1087,6 +1086,13 @@ void PaintLayer::DidUpdateCompositingInputs() {
     scrollable_area_->UpdateNeedsCompositedScrolling();
 }
 
+const PaintLayer* PaintLayer::AncestorOverflowLayer() const {
+  return GetLayoutObject()
+      .AncestorOverflowNode()
+      .GetLayoutBoxModelObject()
+      ->Layer();
+}
+
 bool PaintLayer::HasNonIsolatedDescendantWithBlendMode() const {
   if (has_non_isolated_descendant_with_blend_mode_)
     return true;
@@ -1289,10 +1295,6 @@ void PaintLayer::AddChild(PaintLayer* child, PaintLayer* before_child) {
 
   child->parent_ = this;
 
-  // The ancestor overflow layer is calculated during compositing inputs update
-  // and should not be set yet.
-  CHECK(!child->AncestorOverflowLayer());
-
   SetNeedsCompositingInputsUpdate();
 
   if (Compositor()) {
@@ -1354,10 +1356,6 @@ PaintLayer* PaintLayer::RemoveChild(PaintLayer* old_child) {
   old_child->SetPreviousSibling(0);
   old_child->SetNextSibling(0);
   old_child->parent_ = 0;
-
-  // Remove any ancestor overflow layers which descended into the removed child.
-  if (old_child->AncestorOverflowLayer())
-    old_child->RemoveAncestorOverflowLayer(old_child->AncestorOverflowLayer());
 
   DirtyAncestorChainHasSelfPaintingLayerDescendantStatus();
 
@@ -3220,29 +3218,6 @@ PaintLayerResourceInfo& PaintLayer::EnsureResourceInfo() {
   if (!rare_data.resource_info)
     rare_data.resource_info = new PaintLayerResourceInfo(this);
   return *rare_data.resource_info;
-}
-
-void PaintLayer::RemoveAncestorOverflowLayer(const PaintLayer* removed_layer) {
-  // If the current ancestor overflow layer does not match the removed layer
-  // the ancestor overflow layer has changed so we can stop searching.
-  if (AncestorOverflowLayer() && AncestorOverflowLayer() != removed_layer)
-    return;
-
-  if (AncestorOverflowLayer()) {
-    if (PaintLayerScrollableArea* ancestor_scrollable_area =
-            AncestorOverflowLayer()->GetScrollableArea()) {
-      // TODO(pdr): When slimming paint v2 is enabled, we will need to
-      // invalidate the scroll paint property subtree for this so main
-      // thread scroll reasons are recomputed.
-      ancestor_scrollable_area->InvalidateStickyConstraintsFor(this);
-    }
-  }
-  UpdateAncestorOverflowLayer(nullptr);
-  PaintLayer* current = first_;
-  while (current) {
-    current->RemoveAncestorOverflowLayer(removed_layer);
-    current = current->NextSibling();
-  }
 }
 
 FilterEffect* PaintLayer::LastFilterEffect() const {

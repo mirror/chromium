@@ -1074,6 +1074,10 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   // 'width' set to auto.
   virtual void UpdateLayout() = 0;
   virtual bool UpdateImageLoadingPriorities() { return false; }
+  virtual void UpdateAfterLayout() {}
+
+  // TODO(smcgruer): Find the right place in the header to put this.
+  Node& AncestorOverflowNode() const;
 
   void HandleSubtreeModifications();
   virtual void SubtreeDidChange() {}

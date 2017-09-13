@@ -400,6 +400,9 @@ void LayoutBoxModelObject::StyleDidChange(StyleDifference diff,
   }
 
   if (LocalFrameView* frame_view = View()->GetFrameView()) {
+    // position:fixed objects are always viewport constrained. position:sticky
+    // objects are viewport constrained only if their ancestor overflow is the
+    // document scroller.
     bool new_style_is_viewport_constained =
         Style()->GetPosition() == EPosition::kFixed;
     bool old_style_is_viewport_constrained =
@@ -408,32 +411,22 @@ void LayoutBoxModelObject::StyleDidChange(StyleDifference diff,
     bool old_style_is_sticky =
         old_style && old_style->HasStickyConstrainedPosition();
 
+    // TODO(smcgruer): I think this misses the case where you have:
+    // <html>
+    //   <div class='outer'>
+    //     <div class='sticky'>
+    //
+    // And outer goes from non-overflow to overflow. The sticky style won't
+    // change but we need to stop being viewport constrained.
     if (new_style_is_sticky != old_style_is_sticky) {
       if (new_style_is_sticky) {
-        // During compositing inputs update we'll have the scroll ancestor
-        // without having to walk up the tree and can compute the sticky
-        // position constraints then.
-        if (Layer())
-          Layer()->SetNeedsCompositingInputsUpdate();
-
-        // TODO(pdr): When slimming paint v2 is enabled, we will need to
-        // invalidate the scroll paint property subtree for this so main thread
-        // scroll reasons are recomputed.
+        new_style_is_viewport_constained =
+            AncestorOverflowNode() == GetNode()->GetDocument();
       } else {
         // This may get re-added to viewport constrained objects if the object
         // went from sticky to fixed.
         frame_view->RemoveViewportConstrainedObject(*this);
 
-        // Remove sticky constraints for this layer.
-        if (Layer()) {
-          DisableCompositingQueryAsserts disabler;
-          if (const PaintLayer* ancestor_overflow_layer =
-                  Layer()->AncestorOverflowLayer()) {
-            if (PaintLayerScrollableArea* scrollable_area =
-                    ancestor_overflow_layer->GetScrollableArea())
-              scrollable_area->InvalidateStickyConstraintsFor(Layer());
-          }
-        }
 
         // TODO(pdr): When slimming paint v2 is enabled, we will need to
         // invalidate the scroll paint property subtree for this so main thread
@@ -463,16 +456,13 @@ void LayoutBoxModelObject::InvalidateStickyConstraints() {
       return;
   }
 
-  // This intentionally uses the stale ancestor overflow layer compositing input
-  // as if we have saved constraints for this layer they were saved in the
-  // previous frame.
-  DisableCompositingQueryAsserts disabler;
-  if (const PaintLayer* ancestor_overflow_layer =
-          enclosing->AncestorOverflowLayer()) {
-    if (PaintLayerScrollableArea* ancestor_scrollable_area =
-            ancestor_overflow_layer->GetScrollableArea())
-      ancestor_scrollable_area->InvalidateAllStickyConstraints();
-  }
+  // TODO(smcgruer): This likely doesn't work like it used to. We were intending
+  // to clear the constraints on the previous overflow in the case where the
+  // ancestor overflow changed, but now that overflow calculation would already
+  // have updated by this time.
+  if (PaintLayerScrollableArea* ancestor_scrollable_area =
+          enclosing->AncestorOverflowLayer()->GetScrollableArea())
+    ancestor_scrollable_area->InvalidateAllStickyConstraints();
 }
 
 void LayoutBoxModelObject::CreateLayerAfterStyleChange() {
@@ -484,6 +474,13 @@ void LayoutBoxModelObject::CreateLayerAfterStyleChange() {
 
 void LayoutBoxModelObject::DestroyLayer() {
   DCHECK(HasLayer() && Layer());
+  // TODO(smcgruer): This is a hack imo, we need to work out how to handle the
+  // sticky constraints map lifecycle properly.
+  if (PaintLayerScrollableArea* scrollable_area = AncestorOverflowNode()
+                                                      .GetLayoutBoxModelObject()
+                                                      ->GetScrollableArea()) {
+    scrollable_area->InvalidateStickyConstraintsFor(Layer(), false);
+  }
   SetHasLayer(false);
   GetRarePaintData()->SetLayer(nullptr);
 }
@@ -821,10 +818,9 @@ void LayoutBoxModelObject::UpdateStickyPositionConstraints() const {
                           FloatQuad(), containing_block, flags)
                       .BoundingBox()
                       .Location());
-  LayoutBox* scroll_ancestor =
-      Layer()->AncestorOverflowLayer()->IsRootLayer()
-          ? nullptr
-          : &ToLayoutBox(Layer()->AncestorOverflowLayer()->GetLayoutObject());
+  LayoutBox* scroll_ancestor = Layer()->AncestorOverflowLayer()->IsRootLayer()
+                                   ? nullptr
+                                   : AncestorOverflowNode().GetLayoutBox();
 
   LayoutUnit max_container_width =
       containing_block->IsLayoutView()
@@ -926,9 +922,8 @@ void LayoutBoxModelObject::UpdateStickyPositionConstraints() const {
   // We cannot use |scrollAncestor| here as it disregards the root
   // ancestorOverflowLayer(), which we should include.
   constraints.SetNearestStickyLayerShiftingContainingBlock(
-      FindFirstStickyBetween(
-          containing_block,
-          &Layer()->AncestorOverflowLayer()->GetLayoutObject()));
+      FindFirstStickyBetween(containing_block,
+                             AncestorOverflowNode().GetLayoutObject()));
 
   // We skip the right or top sticky offset if there is not enough space to
   // honor both the left/right or top/bottom offsets.
@@ -1005,8 +1000,7 @@ FloatRect LayoutBoxModelObject::ComputeStickyConstrainingRect() const {
   if (Layer()->AncestorOverflowLayer()->IsRootLayer())
     return View()->GetFrameView()->VisibleContentRect();
 
-  LayoutBox* enclosing_clipping_box =
-      Layer()->AncestorOverflowLayer()->GetLayoutBox();
+  LayoutBox* enclosing_clipping_box = AncestorOverflowNode().GetLayoutBox();
   DCHECK(enclosing_clipping_box);
   FloatRect constraining_rect;
   constraining_rect = FloatRect(
@@ -1026,10 +1020,8 @@ FloatRect LayoutBoxModelObject::ComputeStickyConstrainingRect() const {
 
 LayoutSize LayoutBoxModelObject::StickyPositionOffset() const {
   const PaintLayer* ancestor_overflow_layer = Layer()->AncestorOverflowLayer();
-  // TODO: Force compositing input update if we ask for offset before
-  // compositing inputs have been computed?
-  if (!ancestor_overflow_layer || !ancestor_overflow_layer->GetScrollableArea())
-    return LayoutSize();
+  DCHECK(ancestor_overflow_layer &&
+         ancestor_overflow_layer->GetScrollableArea());
 
   StickyConstraintsMap& constraints_map =
       ancestor_overflow_layer->GetScrollableArea()->GetStickyConstraintsMap();
@@ -1412,6 +1404,18 @@ bool LayoutBoxModelObject::BackgroundStolenForBeingBody(
     return false;
 
   return true;
+}
+
+void LayoutBoxModelObject::UpdateAfterLayout() {
+  // Register ourselves if we're sticky.
+  if (IsStickyPositioned()) {
+    LayoutBoxModelObject* ancestor_overflow_object =
+        AncestorOverflowNode().GetLayoutBoxModelObject();
+    DCHECK(ancestor_overflow_object->Layer());
+    ancestor_overflow_object->Layer()
+        ->GetScrollableArea()
+        ->RegisterStickyElement(this);
+  }
 }
 
 }  // namespace blink
