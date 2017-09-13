@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8a4ead7_f68da255",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T14:38:30Z",
+      "side": 1,
+      "message": "This seems pretty imprecise and makes me think that this is the wrong approach. Yes, this content view should be able to shrink to a smaller size (perhaps we need to implement GetMinimumSize here). But really, it seems like constrained_window_views.cc\u0027s UpdateWebContentsModalDialogPosition (or maybe ChooserDialogView and/or ChooserBubbleUiViewDelegate, or their callers/users?) should be constraining the overall dialog window bounds within the bounds of the parent. Is that function called at all? What\u0027s preventing the existing mechanisms from sizing this window correctly? We shouldn\u0027t need a one-off solution here.",
+      "revId": "45a0fef5822a38100408038c0ff0e81021216378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95686065_5ea9e417",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T14:38:30Z",
+      "side": 1,
+      "message": "nit: maybe name the argument or member in some way to denote that it\u0027s the parent of this dialog? A comment describing the ctor args (and/or) class member would also suffice.",
+      "revId": "45a0fef5822a38100408038c0ff0e81021216378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
