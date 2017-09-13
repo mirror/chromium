@@ -1017,11 +1017,17 @@ void ChromeClientImpl::DidChangeValueInTextField(
   if (auto* fill_client = AutofillClientFromFrame(doc.GetFrame()))
     fill_client->TextFieldDidChange(WebFormControlElement(&element));
 
-  UseCounter::Count(doc, doc.IsSecureContext()
-                             ? WebFeature::kFieldEditInSecureContext
-                             : WebFeature::kFieldEditInNonSecureContext);
-  doc.MaybeQueueSendDidEditFieldInInsecureContext();
-  web_view_->PageImportanceSignals()->SetHadFormInteraction();
+  // To prevent |document.execCommand| calls from being intepreted as a user
+  // action, only treat as a user-initiated edit if |IsProcessingUserGesture|
+  // or the page load has completed. See https://crbug.com/764760.
+  if (doc.IsLoadCompleted() ||
+      WebUserGestureIndicator::IsProcessingUserGesture()) {
+    UseCounter::Count(doc, doc.IsSecureContext()
+                               ? WebFeature::kFieldEditInSecureContext
+                               : WebFeature::kFieldEditInNonSecureContext);
+    doc.MaybeQueueSendDidEditFieldInInsecureContext();
+    web_view_->PageImportanceSignals()->SetHadFormInteraction();
+  }
 }
 
 void ChromeClientImpl::DidEndEditingOnTextField(
