@@ -78,8 +78,12 @@ class NET_EXPORT CookieStore {
   typedef base::CallbackList<void(const CanonicalCookie& cookie,
                                   ChangeCause cause)>
       CookieChangedCallbackList;
-  typedef CookieChangedCallbackList::Subscription CookieChangedSubscription;
   typedef base::Callback<bool(const CanonicalCookie& cookie)> CookiePredicate;
+
+  class CookieChangedSubscription {
+   public:
+    virtual ~CookieChangedSubscription() = 0;
+  };
 
   virtual ~CookieStore();
 
