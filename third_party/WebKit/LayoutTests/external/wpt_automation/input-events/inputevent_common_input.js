@@ -10,9 +10,39 @@ function keyDown(key, modifiers) {
   });
 }
 
+function selectTarget(selector) {
+  const target = document.querySelector(selector);
+  if (target.select) {
+    target.select();
+  } else {
+    const selection = window.getSelection();
+    selection.collapse(target, 0);
+    selection.extend(target, 1);
+  }
+}
+
+// Combined convenient methods.
+
 function focusAndKeyDown(selector, key, modifiers) {
   document.querySelector(selector).focus();
   return keyDown(key, modifiers);
+}
+
+function collapseEndAndKeyDown(selector, key, modifiers) {
+  const target = document.querySelector(selector);
+  window.getSelection().collapse(target.lastElementChild || target, 1);
+  return keyDown(key, modifiers);
+}
+
+function selectAndKeyDown(selector, key, modifiers) {
+  selectTarget(selector);
+  return keyDown(key, modifiers);
+}
+
+function selectAndExecCommand(selector, command) {
+  assert_not_equals(window.testRunner, undefined, 'This test requires testRunner.');
+  selectTarget(selector);
+  testRunner.execCommand(command);
 }
 
 {
