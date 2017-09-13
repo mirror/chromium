@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e8abfa88_22e169a2",
+        "filename": "third_party/WebKit/LayoutTests/fast/forms/suggested-value-after-empty-suggested-value.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-13T18:22:18Z",
+      "side": 1,
+      "message": "Thanks for the suggestion. I tried to do it but I feel like I need the html dump in this test, including the ShadowRoot, to make sure everything works. I was not able to replicate the test in JS since the ShadowRoot is not accessible.\n\nI could try to do it again and update the other existing tests in a floow-up CL if you want?",
+      "parentUuid": "c5eab49d_023471f5",
+      "revId": "6bb61a7230aba63c22923be60f571b7dd7c6dbe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebc98052_84109a1b",
         "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "6bb61a7230aba63c22923be60f571b7dd7c6dbe2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0560e2_5424a970",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-13T18:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebc98052_84109a1b",
+      "revId": "6bb61a7230aba63c22923be60f571b7dd7c6dbe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8e3ede91_dba767fa",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-13T18:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b973594_33c1b107",
+      "revId": "6bb61a7230aba63c22923be60f571b7dd7c6dbe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de594fa9_77010517",
         "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-11T04:11:34Z",
       "side": 1,
       "message": "nit: s/String/const String/",
+      "revId": "6bb61a7230aba63c22923be60f571b7dd7c6dbe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d73448b4_6de5a9d7",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1032,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-13T18:22:18Z",
+      "side": 1,
+      "message": "This one can be modified at line 1043.",
+      "parentUuid": "de594fa9_77010517",
       "revId": "6bb61a7230aba63c22923be60f571b7dd7c6dbe2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
