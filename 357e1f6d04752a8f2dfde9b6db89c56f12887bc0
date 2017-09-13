@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "597740ee_5171fd20",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T12:49:41Z",
+      "side": 1,
+      "message": "const autofill::PasswordForm\u0026 ? Same below.",
+      "range": {
+        "startLine": 273,
+        "startChar": 2,
+        "endLine": 273,
+        "endChar": 30
+      },
+      "revId": "357e1f6d04752a8f2dfde9b6db89c56f12887bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf15cad_f0e7f9b8",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T12:49:41Z",
+      "side": 1,
+      "message": "used?",
+      "range": {
+        "startLine": 20,
+        "startChar": 26,
+        "endLine": 20,
+        "endChar": 40
+      },
+      "revId": "357e1f6d04752a8f2dfde9b6db89c56f12887bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be73f21f_951e1332",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T12:49:41Z",
+      "side": 1,
+      "message": "So you mean a blacklisted site?",
+      "range": {
+        "startLine": 71,
+        "startChar": 39,
+        "endLine": 71,
+        "endChar": 48
+      },
+      "revId": "357e1f6d04752a8f2dfde9b6db89c56f12887bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
