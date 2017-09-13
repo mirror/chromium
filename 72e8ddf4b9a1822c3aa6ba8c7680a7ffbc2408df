@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac9b64dd_ef6ac9cc",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3757,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-13T14:54:22Z",
+      "side": 1,
+      "message": "Plz expand this test to include masked and unmasked server cards.\n\nUnmasked cards should (in principle) behave just like the local cards you\u0027re currently testing.\n\nMasked cards have no known prefix for us to match against, so we\u0027ll have to show them once the user starts typing.",
+      "revId": "72e8ddf4b9a1822c3aa6ba8c7680a7ffbc2408df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a5e937_1a834d02",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3765,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-13T14:54:22Z",
+      "side": 1,
+      "message": "This is a good thing to test. I didn\u0027t do this in the Address version of this CL. Mea culpa! I relied on the default being tested by the other pre-existing tests... but what you\u0027ve done here is better.\n\nThat said, instead of asserting, I would suggesting creating a ScopedFeatlureList here to explicitly disable the feature in this scope.\n\nYou can separately add a one liner test to assert that it\u0027s disabled by default.",
+      "revId": "72e8ddf4b9a1822c3aa6ba8c7680a7ffbc2408df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
