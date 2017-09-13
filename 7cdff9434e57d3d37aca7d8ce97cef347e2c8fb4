@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78d5f4f3_dfed2a9e",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-13T19:27:57Z",
+      "side": 1,
+      "message": "this looks like it was accidentally pulled in. it wasn\u0027t part of the original change.",
+      "revId": "7cdff9434e57d3d37aca7d8ce97cef347e2c8fb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
