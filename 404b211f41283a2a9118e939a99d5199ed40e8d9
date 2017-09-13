@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ee33b04b_d6a6dc2a",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-13T20:42:07Z",
+      "side": 1,
+      "message": "I\u0027ve changed things to make it more clear, I hope. I wanted to avoid having the RunLoop bleed out of the static Show() method into the rest of the class.",
+      "parentUuid": "25f51831_c50e50cf",
+      "range": {
+        "startLine": 134,
+        "startChar": 26,
+        "endLine": 134,
+        "endChar": 52
+      },
+      "revId": "404b211f41283a2a9118e939a99d5199ed40e8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97036144_856db32a",
         "filename": "chrome/browser/ui/views/try_chrome_dialog.h",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-13T15:51:44Z",
       "side": 1,
       "message": "Wouldn\u0027t a real interface be a better fit here too? Running the closure twice and assuming the consumer can differentiate the two is error prone.",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 36
+      },
+      "revId": "404b211f41283a2a9118e939a99d5199ed40e8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1add20a4_9118ee7d",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-13T20:42:07Z",
+      "side": 1,
+      "message": "Since I\u0027m retaining the existing design here, I\u0027d rather not shave a yak by changing it. I think it would logically boil down to a single-method interface, which I understood to be discouraged in favor of a callback:\n\nclass GoodNameHere {\n public:\n  // Sets |handler| as the callback to be invoked to close an active modal\n  // dialog upon rendezvous from another browser process. Each call to set the\n  // handler must be followed by another to clear the handler when the modal\n  // event loop terminates.\n  virtual void SetModalDialogNotificationHandler(base::Closure handler) \u003d 0;\n};",
+      "parentUuid": "97036144_856db32a",
       "range": {
         "startLine": 57,
         "startChar": 5,
