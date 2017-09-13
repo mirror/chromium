@@ -457,6 +457,11 @@ crbug.com/660492 storage/indexeddb/structured-clone.html [ Slow ]
 crbug.com/678498 external/wpt/service-workers/service-worker/foreign-fetch-cors.https.html [ Slow ]
 crbug.com/678496 external/wpt/service-workers/service-worker/foreign-fetch-basics.https.html [ Slow ]
 
+# This test needs a timeout to detect that page load failed, since the failure
+# page is considered cross-origin and can't be touched. Mozilla requires the
+# timeout to over 5 sec or else they get flaky failures.
+crbug.com/758892 external/wpt/service-workers/service-worker/fetch-frame-resource.https.html [ Slow ]
+
 # Media controls tests have to wait for panel to fade out.
 crbug.com/722825 media/controls/video-enter-exit-fullscreen-while-hovering-shows-controls.html [ Slow ]
 crbug.com/722825 media/controls/video-enter-exit-fullscreen-without-hovering-doesnt-show-controls.html [ Slow ]
