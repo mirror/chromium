@@ -71,6 +71,7 @@
         'android_ndk_next_release_bot_minimal_symbols_x64',
       'NDK Next x86 Builder':
         'android_ndk_next_release_bot_minimal_symbols_x86',
+      'Oreo Phone Tester': 'android_release_bot_minimal_symbols',
       'x64 Device Tester': 'android_shared_release_bot_x64',
       'x86 Cloud Tester': 'android_debug_static_bot_x86',
       'x86 Emulator Tester': 'android_debug_static_bot_x86',
