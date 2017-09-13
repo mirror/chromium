@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54a8695c_60b018f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-13T20:21:58Z",
+      "side": 1,
+      "message": "nit: Can you also mention 764486 here? This CL also fixes touch input being broken on mash.",
+      "revId": "02838dda3168a85eda70826e8dbde9e1e93847a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2652f9a6_a6d9038b",
+        "filename": "ash/touch/touch_devices_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-13T20:21:58Z",
+      "side": 1,
+      "message": "I think it would be useful to move this method to SessionController and call it from AccessibilityController. I suspect other pieces of ash will need this same code.\n\nCan you also update the comment on SessionController::GetLastActiveUserPrefService(), to remove the mention of signin screen profile? The comment is wrong.",
+      "revId": "02838dda3168a85eda70826e8dbde9e1e93847a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f31254f_5d39f8eb",
+        "filename": "ash/touch/touch_devices_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-13T20:21:58Z",
+      "side": 1,
+      "message": "Thanks for adding tests!",
+      "revId": "02838dda3168a85eda70826e8dbde9e1e93847a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00594934_0ef2edc4",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-13T20:21:58Z",
+      "side": 1,
+      "message": "I\u0027m sorry, I gave you bad advice before. I think these should be removed. They are no longer being \"migrated\" (they aren\u0027t being copied from local state to user profile). This is just cleaning out old values that aren\u0027t being read anymore. I think it\u0027s OK to remove these lines a little earlier than 1 year, especially because it clarifies the code significantly.\n\n(In particular, it\u0027s pretty confusing that InputDeviceSettings::RegisterProfilePrefs actually registers local state prefs. Also, this CL would make it so there are two copies of the kTouchscreenEnabled constant string, one in ash and one in chrome, and I don\u0027t think that\u0027s desirable. The ones in chrome/common/pref_names.cc need to go away.)\n\nI think the worst case is that someone who hasn\u0027t updated their Chromebook in 10 months has an extra string in their saved local state prefs JSON. I think that\u0027s OK.",
+      "revId": "02838dda3168a85eda70826e8dbde9e1e93847a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
