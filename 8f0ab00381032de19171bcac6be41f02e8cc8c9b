@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "043bb081_32b20e48",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T17:17:31Z",
+      "side": 1,
+      "message": "nit: CAPTURE_INTERVAL_MS",
+      "revId": "8f0ab00381032de19171bcac6be41f02e8cc8c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f3a475_0afdb6eb",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T17:17:31Z",
+      "side": 1,
+      "message": "nit: _MS",
+      "revId": "8f0ab00381032de19171bcac6be41f02e8cc8c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd826034_77708d7a",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T17:17:31Z",
+      "side": 1,
+      "message": "nit: COLOR :)",
+      "revId": "8f0ab00381032de19171bcac6be41f02e8cc8c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c61f12a_4bf15684",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T17:17:31Z",
+      "side": 1,
+      "message": "Wow. All this is a lot. Can we move it to a separate behavior? You can look at cr_scrollable_behavior.html/js for an example of a Polymer behavior and import it in the Polymer object below with something like:\n\nbehaviors: [CrCaptureBehavior]",
+      "revId": "8f0ab00381032de19171bcac6be41f02e8cc8c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1567331_6ce05d9d",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T17:17:31Z",
+      "side": 1,
+      "message": "This really ought to be a separate method (preferably part of a behavior as suggested).",
+      "revId": "8f0ab00381032de19171bcac6be41f02e8cc8c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea057b4_8dde8656",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T17:17:31Z",
+      "side": 1,
+      "message": "Rather than toggling classes, we should be able to set reflectToAttribute\u003dtrue on videoMode and use:\n\n#userImageStreamCrop.capture[videoMode] {\n  ...\n}\n\nI forget whether camelCase gets converted to html-case, but you can avoid that by calling it \u0027videomode\u0027. I would also drop the trailing _ when using it as an attribute.",
+      "revId": "8f0ab00381032de19171bcac6be41f02e8cc8c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c696c5_31d5030d",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_camera.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T17:17:31Z",
+      "side": 1,
+      "message": "nit: getCaptureSize_() or calcCaptureSize_()",
+      "revId": "8f0ab00381032de19171bcac6be41f02e8cc8c9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
