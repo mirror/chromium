@@ -16,6 +16,24 @@
       "revId": "dcecd3c901a7250b348d00515dfc64b4d587929c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73e9a4f4_a5ddb997",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSLazyPropertyParserImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-09-13T11:50:27Z",
+      "side": 1,
+      "message": "parsed_properties_ is currently stored as a HeapVector, so the value returned is a HeapVector.",
+      "parentUuid": "985ba0c4_632df408",
+      "revId": "dcecd3c901a7250b348d00515dfc64b4d587929c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
