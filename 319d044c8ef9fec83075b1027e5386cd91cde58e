@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df919c5f_963a989a",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-13T01:02:50Z",
+      "side": 1,
+      "message": "Should we delete this, and just keep the multiple URLs one? Dont have to do it in this CL, we can consider it later.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 66
+      },
+      "revId": "319d044c8ef9fec83075b1027e5386cd91cde58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb628965_e26b018f",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-13T01:02:50Z",
+      "side": 1,
+      "message": "nit: desired*",
+      "range": {
+        "startLine": 249,
+        "startChar": 64,
+        "endLine": 249,
+        "endChar": 70
+      },
+      "revId": "319d044c8ef9fec83075b1027e5386cd91cde58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
