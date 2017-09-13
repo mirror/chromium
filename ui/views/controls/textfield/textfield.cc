@@ -495,7 +495,7 @@ void Textfield::SetHorizontalAlignment(gfx::HorizontalAlignment alignment) {
 
 void Textfield::ShowImeIfNeeded() {
   if (enabled() && !read_only())
-    GetInputMethod()->ShowImeIfNeeded();
+    GetInputMethod()->ShowImeIfNeeded(false);
 }
 
 bool Textfield::IsIMEComposing() const {

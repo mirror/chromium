@@ -55,7 +55,7 @@ class UI_BASE_IME_EXPORT InputMethodBase
   TextInputMode GetTextInputMode() const override;
   int GetTextInputFlags() const override;
   bool CanComposeInline() const override;
-  void ShowImeIfNeeded() override;
+  void ShowImeIfNeeded(bool transient_blur_check) override;
 
   void AddObserver(InputMethodObserver* observer) override;
   void RemoveObserver(InputMethodObserver* observer) override;

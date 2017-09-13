@@ -305,7 +305,7 @@ gfx::Size FindBarView::CalculatePreferredSize() const {
 
 void FindBarView::SetFocusAndSelection(bool select_all) {
   find_text_->RequestFocus();
-  GetWidget()->GetInputMethod()->ShowImeIfNeeded();
+  GetWidget()->GetInputMethod()->ShowImeIfNeeded(false);
   if (select_all && !find_text_->text().empty())
     find_text_->SelectAll(true);
 }

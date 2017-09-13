@@ -102,9 +102,9 @@ bool InputMethodBase::CanComposeInline() const {
   return client ? client->CanComposeInline() : true;
 }
 
-void InputMethodBase::ShowImeIfNeeded() {
+void InputMethodBase::ShowImeIfNeeded(bool transient_blur_check) {
   for (InputMethodObserver& observer : observer_list_)
-    observer.OnShowImeIfNeeded();
+    observer.OnShowImeIfNeeded(transient_blur_check);
 }
 
 void InputMethodBase::AddObserver(InputMethodObserver* observer) {

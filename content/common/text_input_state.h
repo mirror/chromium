@@ -56,6 +56,10 @@ struct CONTENT_EXPORT TextInputState {
 
   // Whether or not this is a reply to a request from IME.
   bool reply_to_request;
+
+  // This state change should only invoke the keyboard if it seems that the
+  // focus was lost only briefly.
+  bool suppress_transient_blur;
 };
 
 }  // namespace content
