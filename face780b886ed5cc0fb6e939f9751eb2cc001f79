@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c750980e_cfb1ca3e",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-13T07:29:54Z",
+      "side": 1,
+      "message": "Should this be called tab_is_visible_?",
+      "revId": "face780b886ed5cc0fb6e939f9751eb2cc001f79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
