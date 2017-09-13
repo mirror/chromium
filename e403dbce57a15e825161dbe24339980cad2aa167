@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a3dee037_f0a58dde",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-13T12:54:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "165c70fd_68e2e05b",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "e403dbce57a15e825161dbe24339980cad2aa167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41a969c8_e5a3f68f",
         "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
         "patchSetId": 4
@@ -57,6 +81,24 @@
       "revId": "e403dbce57a15e825161dbe24339980cad2aa167",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68769db3_87c796d8",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-13T12:54:44Z",
+      "side": 1,
+      "message": "A NOTREACHED() would check for the \"opposite\" use case, but, it is a good idea nevertheless.",
+      "parentUuid": "7a81aa02_9fe663b3",
+      "revId": "e403dbce57a15e825161dbe24339980cad2aa167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
