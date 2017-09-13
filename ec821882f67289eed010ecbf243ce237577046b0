@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7aaa02a5_412e30ad",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-13T21:16:24Z",
+      "side": 1,
+      "message": "Nit: instead of removing \u0027fragment\u0027, can you refactor this line to use it?\n\nIn other words:\nif (auto* fragment_data \u003d target_element.GetLayoutObject()-\u003eFirstFragment()) {\n  const auto* paint_properties \u003d fragment_data-\u003ePaintProperties();\n  ...\n}",
+      "revId": "ec821882f67289eed010ecbf243ce237577046b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59c19e16_aff69c35",
         "filename": "third_party/WebKit/Source/core/css/invalidation/StyleInvalidator.cpp",
         "patchSetId": 1
