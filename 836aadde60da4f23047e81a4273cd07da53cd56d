@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "960eee6c_a127ec4f",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-13T09:09:58Z",
+      "side": 1,
+      "message": "This is the only user of VoidNoOp, so you can use a lambda function here.",
+      "range": {
+        "startLine": 97,
+        "startChar": 36,
+        "endLine": 97,
+        "endChar": 44
+      },
+      "revId": "836aadde60da4f23047e81a4273cd07da53cd56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c87f71_4e92cf0d",
+        "filename": "content/browser/devtools/service_worker_devtools_agent_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-13T09:09:58Z",
+      "side": 1,
+      "message": "NoOpClosure might be better.",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 13
+      },
+      "revId": "836aadde60da4f23047e81a4273cd07da53cd56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44eb44a3_5ad44f0b",
+        "filename": "content/browser/service_worker/service_worker_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-13T09:09:58Z",
+      "side": 1,
+      "message": "I prefer |has_stopped| since it no longer indicates the status.",
+      "range": {
+        "startLine": 596,
+        "startChar": 9,
+        "endLine": 596,
+        "endChar": 20
+      },
+      "revId": "836aadde60da4f23047e81a4273cd07da53cd56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b1d8df2_2aedb652",
+        "filename": "content/browser/service_worker/service_worker_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-13T09:09:58Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 715,
+        "startChar": 9,
+        "endLine": 715,
+        "endChar": 20
+      },
+      "revId": "836aadde60da4f23047e81a4273cd07da53cd56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "891c63e5_81d015f6",
+        "filename": "content/browser/service_worker/service_worker_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-13T09:09:58Z",
+      "side": 1,
+      "message": "ditoo",
+      "range": {
+        "startLine": 947,
+        "startChar": 7,
+        "endLine": 947,
+        "endChar": 18
+      },
+      "revId": "836aadde60da4f23047e81a4273cd07da53cd56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "924c0fd7_9cfe97a3",
+        "filename": "content/browser/service_worker/service_worker_context_core.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-13T09:09:58Z",
+      "side": 1,
+      "message": "OnVoid seems a bit wired. I think you can have \"NoOpCallback\" in the anonymous namespace, or you can use base::BindOnce([](){}).",
+      "range": {
+        "startLine": 148,
+        "startChar": 54,
+        "endLine": 148,
+        "endChar": 60
+      },
+      "revId": "836aadde60da4f23047e81a4273cd07da53cd56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd6b6ab7_41b9bdbf",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-13T09:09:58Z",
+      "side": 1,
+      "message": "has_stopped",
+      "range": {
+        "startLine": 415,
+        "startChar": 2,
+        "endLine": 415,
+        "endChar": 14
+      },
+      "revId": "836aadde60da4f23047e81a4273cd07da53cd56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b209431_cb425395",
+        "filename": "content/common/service_worker/service_worker_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-13T09:09:58Z",
+      "side": 1,
+      "message": "NoOpClosure() might be better.",
+      "range": {
+        "startLine": 29,
+        "startChar": 14,
+        "endLine": 29,
+        "endChar": 31
+      },
+      "revId": "836aadde60da4f23047e81a4273cd07da53cd56d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

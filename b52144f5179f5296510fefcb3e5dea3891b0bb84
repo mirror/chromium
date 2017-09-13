@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "839d7951_9c6dc315",
+        "filename": "content/browser/service_worker/service_worker_internals_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-13T09:09:58Z",
+      "side": 0,
+      "message": "Is this really no problem to change the status?",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 84,
+        "endChar": 49
+      },
+      "revId": "b52144f5179f5296510fefcb3e5dea3891b0bb84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
