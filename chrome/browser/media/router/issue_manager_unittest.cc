@@ -9,7 +9,6 @@
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/media/router/issue_manager.h"
-#include "chrome/browser/media/router/mock_media_router.h"
 #include "chrome/browser/media/router/test_helper.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -41,7 +40,6 @@ class IssueManagerTest : public ::testing::Test {
   scoped_refptr<base::TestMockTimeTaskRunner> task_runner_;
   base::ThreadTaskRunnerHandle runner_handler_;
   IssueManager manager_;
-  MockMediaRouter router_;
 };
 
 TEST_F(IssueManagerTest, AddAndClearIssue) {
@@ -51,7 +49,7 @@ TEST_F(IssueManagerTest, AddAndClearIssue) {
   manager_.AddIssue(issue_info1);
 
   Issue issue1((IssueInfo()));
-  MockIssuesObserver observer(&router_);
+  MockIssuesObserver observer(&manager_);
   EXPECT_CALL(observer, OnIssue(_)).WillOnce(SaveArg<0>(&issue1));
   manager_.RegisterObserver(&observer);
   EXPECT_EQ(issue_info1, issue1.info());
@@ -84,7 +82,7 @@ TEST_F(IssueManagerTest, AddAndClearIssue) {
 TEST_F(IssueManagerTest, AddSameIssueInfoHasNoEffect) {
   IssueInfo issue_info = CreateTestIssue(IssueInfo::Severity::WARNING);
 
-  MockIssuesObserver observer(&router_);
+  MockIssuesObserver observer(&manager_);
   manager_.RegisterObserver(&observer);
 
   Issue issue((IssueInfo()));
@@ -101,7 +99,7 @@ TEST_F(IssueManagerTest, AddSameIssueInfoHasNoEffect) {
 }
 
 TEST_F(IssueManagerTest, NonBlockingIssuesGetAutoDismissed) {
-  MockIssuesObserver observer(&router_);
+  MockIssuesObserver observer(&manager_);
   manager_.RegisterObserver(&observer);
 
   EXPECT_CALL(observer, OnIssue(_)).Times(1);
@@ -127,7 +125,7 @@ TEST_F(IssueManagerTest, NonBlockingIssuesGetAutoDismissed) {
 }
 
 TEST_F(IssueManagerTest, IssueAutoDismissNoopsIfAlreadyCleared) {
-  MockIssuesObserver observer(&router_);
+  MockIssuesObserver observer(&manager_);
   manager_.RegisterObserver(&observer);
 
   Issue issue1((IssueInfo()));
@@ -147,7 +145,7 @@ TEST_F(IssueManagerTest, IssueAutoDismissNoopsIfAlreadyCleared) {
 }
 
 TEST_F(IssueManagerTest, BlockingIssuesDoNotGetAutoDismissed) {
-  MockIssuesObserver observer(&router_);
+  MockIssuesObserver observer(&manager_);
   manager_.RegisterObserver(&observer);
 
   EXPECT_CALL(observer, OnIssue(_)).Times(1);
@@ -168,6 +166,38 @@ TEST_F(IssueManagerTest, BlockingIssuesDoNotGetAutoDismissed) {
   timeout = IssueManager::GetAutoDismissTimeout(issue_info2);
   EXPECT_TRUE(timeout.is_zero());
   EXPECT_FALSE(task_runner_->HasPendingTask());
+}
+
+TEST_F(IssueManagerTest, ClearNonBlockingIssues) {
+  MockIssuesObserver observer(&manager_);
+  manager_.RegisterObserver(&observer);
+
+  EXPECT_CALL(observer, OnIssue(_)).Times(1);
+  manager_.AddIssue(CreateTestIssue(IssueInfo::Severity::NOTIFICATION));
+  manager_.AddIssue(CreateTestIssue(IssueInfo::Severity::WARNING));
+
+  EXPECT_CALL(observer, OnIssuesCleared()).Times(1);
+  manager_.ClearNonBlockingIssues();
+}
+
+TEST_F(IssueManagerTest, ClearNonBlockingIssuesDoesNotClearBlockingIssue) {
+  MockIssuesObserver observer(&manager_);
+  manager_.RegisterObserver(&observer);
+
+  // Add a blocking issue and a couple of non-blocking issues.
+  Issue blocking_issue((IssueInfo()));
+  EXPECT_CALL(observer, OnIssue(_))
+      .Times(1)
+      .WillOnce(SaveArg<0>(&blocking_issue));
+  manager_.AddIssue(CreateTestIssue(IssueInfo::Severity::FATAL));
+
+  manager_.AddIssue(CreateTestIssue(IssueInfo::Severity::NOTIFICATION));
+  manager_.AddIssue(CreateTestIssue(IssueInfo::Severity::WARNING));
+
+  EXPECT_CALL(observer, OnIssuesCleared()).Times(0);
+
+  // The blocking issue remains.
+  manager_.ClearNonBlockingIssues();
 }
 
 }  // namespace media_router
