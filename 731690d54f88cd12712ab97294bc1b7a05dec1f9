@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3a54a5f9_1b746091",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-13T19:36:06Z",
+      "side": 1,
+      "message": "One thing we need to be careful of is how stable other structs we depend on are. AFAIK, there\u0027s no good way of expressing this in Mojo--and if the struct definitions were to ever change, serialization would just suddenly stop working (since the other structs aren\u0027t versioned)",
+      "parentUuid": "433663c5_e1b9b753",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 12
+      },
+      "revId": "731690d54f88cd12712ab97294bc1b7a05dec1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2522ff5_c71d5440",
         "filename": "content/common/page_state.mojom",
         "patchSetId": 9
