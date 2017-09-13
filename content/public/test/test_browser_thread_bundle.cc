@@ -151,8 +151,6 @@ void TestBrowserThreadBundle::CreateBrowserThreads() {
         BrowserThread::FILE, base::MessageLoop::current());
   }
 
-  file_user_blocking_thread_ = base::MakeUnique<TestBrowserThread>(
-      BrowserThread::FILE_USER_BLOCKING, base::MessageLoop::current());
   process_launcher_thread_ = base::MakeUnique<TestBrowserThread>(
       BrowserThread::PROCESS_LAUNCHER, base::MessageLoop::current());
   cache_thread_ = base::MakeUnique<TestBrowserThread>(

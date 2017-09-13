@@ -69,7 +69,7 @@ class WebThread {
     DB,
 
     // This is the thread that processes non-blocking IO, i.e. IPC and network.
-    // Blocking IO should happen in TaskScheduler.
+    // Blocking IO should happen on TaskScheduler.
     IO,
 
     // NOTE: do not add new threads here that are only used by a small number of
