@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bf0d85e1_af76010a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-13T19:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33314033_7fcb59fd",
+      "range": {
+        "startLine": 925,
+        "startChar": 8,
+        "endLine": 925,
+        "endChar": 18
+      },
+      "revId": "a1841139f63d446d361a813bee02f65ae3a0bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95cd83ee_5ad3bfba",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "a1841139f63d446d361a813bee02f65ae3a0bfb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c337c400_283f1c05",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-13T19:48:49Z",
+      "side": 1,
+      "message": "Done, though a trailing empty line is returned by split(\u0027\\n\u0027) if the last char is a \u0027\\n\u0027, but splitlines() doesn\u0027t give that extra line (regardless, we drop empty lines below); and splitlines() allows for splitting at \\r, \\r\\n also.",
+      "parentUuid": "95cd83ee_5ad3bfba",
+      "revId": "a1841139f63d446d361a813bee02f65ae3a0bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "67c28159_024fb72b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-13T19:48:49Z",
+      "side": 1,
+      "message": "Agreed, though I\u0027m less clear myself on the *why*. I\u0027ll at least move this logic closer to where such a *why* might be more self-explanatory, and leave it to script owners to clarify as needed later (with a new TODO in this CL).\nDetail: Since that rstrip(\u0027/\u0027) isn\u0027t needed at all in the SmokeTests case, I\u0027ll move this rstrip to the skips_perf_test(..) function, below. I\u0027m less clear on all the contexts of that function, but at least l.998 in this patch set could vary its result based on whether or not \u0027/\u0027 were stripped (eg test_name could otherwise begin with test_or_category if \u0027/\u0027 were stripped in some case, I guess).",
+      "parentUuid": "3bf9bbc6_60b23b4c",
+      "range": {
+        "startLine": 928,
+        "startChar": 0,
+        "endLine": 928,
+        "endChar": 107
+      },
+      "revId": "a1841139f63d446d361a813bee02f65ae3a0bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "67ec9b44_140a6759",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
         "patchSetId": 1
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "422fb43f_a53c67eb",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-13T19:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67ec9b44_140a6759",
+      "revId": "a1841139f63d446d361a813bee02f65ae3a0bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86f50cec_f43f7be8",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
         "patchSetId": 1
@@ -96,6 +180,24 @@
       "revId": "a1841139f63d446d361a813bee02f65ae3a0bfb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358feea5_c676c970",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-13T19:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86f50cec_f43f7be8",
+      "revId": "a1841139f63d446d361a813bee02f65ae3a0bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -136,6 +238,48 @@
       "revId": "a1841139f63d446d361a813bee02f65ae3a0bfb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ead3c83_96534753",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-13T19:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6050148f_82ebd5b3",
+      "revId": "a1841139f63d446d361a813bee02f65ae3a0bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c15e3d3d_41596929",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-13T19:48:49Z",
+      "side": 1,
+      "message": "see the @memoized comment.. IIUC, that leverages caching (using decoration, rather than explicit). I\u0027ll go with @memoized here, and leave more major refactorings to the script owners later.",
+      "parentUuid": "4249480f_6ab90b10",
+      "range": {
+        "startLine": 945,
+        "startChar": 8,
+        "endLine": 946,
+        "endChar": 79
+      },
+      "revId": "a1841139f63d446d361a813bee02f65ae3a0bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
