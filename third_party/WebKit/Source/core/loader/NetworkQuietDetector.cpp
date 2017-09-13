@@ -6,7 +6,6 @@
 
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/LocalFrame.h"
-#include "platform/instrumentation/resource_coordinator/FrameResourceCoordinator.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 
 namespace blink {
@@ -69,15 +68,8 @@ void NetworkQuietDetector::NetworkQuietTimerFired(TimerBase*) {
       ActiveConnections() > kNetworkQuietMaximumConnections)
     return;
   network_quiet_reached_ = true;
-  if (FrameResourceCoordinator::IsEnabled()) {
-    auto frame_resource_coordinator =
-        GetSupplementable()->GetFrame()->GetFrameResourceCoordinator();
-    if (frame_resource_coordinator) {
-      frame_resource_coordinator->SetProperty(
-          resource_coordinator::mojom::PropertyType::kNetworkIdle, true);
-    }
-  }
-
+  // TODO(lpy): Remove NetworkQuietDetector once the below line
+  // is moved to FMPDetector.
   GetSupplementable()->Fetcher()->OnNetworkQuiet();
 }
 
