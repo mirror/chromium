@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "31a36e63_6deacbb4",
+        "filename": "components/arc/common/power.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-13T21:47:13Z",
+      "side": 1,
+      "message": "Can this be replaced by adding a new entry to DisplayWakeLockType?",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 45
+      },
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98aefb68_4b1acb9b",
         "filename": "components/arc/power/arc_power_bridge.h",
         "patchSetId": 10
