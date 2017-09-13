@@ -41,6 +41,7 @@ class GURL;
 @class TabModel;
 @protocol TabSnapshottingDelegate;
 @protocol FindInPageControllerDelegate;
+@protocol RepostFormTabHelperDelegate;
 
 namespace ios {
 class ChromeBrowserState;
@@ -127,6 +128,8 @@ extern NSString* const kProxyPassthroughHeaderValue;
 // Whether or not desktop user agent is used for the currently visible page.
 @property(nonatomic, readonly) BOOL usesDesktopUserAgent;
 
+@property(nonatomic) id<RepostFormTabHelperDelegate>
+    repostFormTabHelperDelegate;
 @property(nonatomic, weak) id<IOSCaptivePortalBlockingPageDelegate>
     iOSCaptivePortalBlockingPageDelegate;
 @property(nonatomic, weak) id<FullScreenControllerDelegate>
