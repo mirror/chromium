@@ -7,8 +7,9 @@
 
 #include <memory>
 
-#include "components/webdata/common/web_data_results.h"
 #include "components/webdata/common/web_data_service_base.h"
+
+class WDTypedResult;
 
 // All requests to the web data service are asynchronous. When the request has
 // been performed, the data consumer is notified using the following interface.
@@ -24,6 +25,5 @@ class WebDataServiceConsumer {
  protected:
   virtual ~WebDataServiceConsumer() {}
 };
-
 
 #endif  // COMPONENTS_WEBDATA_COMMON_WEB_DATA_SERVICE_CONSUMER_H_

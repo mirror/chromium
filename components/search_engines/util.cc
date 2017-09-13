@@ -20,6 +20,7 @@
 #include "components/search_engines/template_url.h"
 #include "components/search_engines/template_url_prepopulate_data.h"
 #include "components/search_engines/template_url_service.h"
+#include "components/webdata/common/web_data_results.h"
 
 base::string16 GetDefaultSearchEngineName(TemplateURLService* service) {
   DCHECK(service);
@@ -92,7 +93,7 @@ void RemoveDuplicatePrepopulateIDs(
       // more like the value we will end up with in the end.
       if (default_search_provider &&
           (default_search_provider->prepopulate_id() ==
-              i->second->prepopulate_id()) &&
+           i->second->prepopulate_id()) &&
           default_search_provider->HasSameKeywordAs(i->second->data(),
                                                     search_terms_data)) {
         best = i;
@@ -139,7 +140,8 @@ TemplateURL* GetTemplateURLByID(
     const TemplateURLService::TemplateURLVector& template_urls,
     int64_t id) {
   for (TemplateURLService::TemplateURLVector::const_iterator i(
-       template_urls.begin()); i != template_urls.end(); ++i) {
+           template_urls.begin());
+       i != template_urls.end(); ++i) {
     if ((*i)->id() == id) {
       return *i;
     }
@@ -278,7 +280,7 @@ ActionsFromPrepopulateData CreateActionsFromCurrentPrepopulateData(
     if ((template_url->safe_for_autoreplace()) &&
         (!default_search_provider ||
          (template_url->prepopulate_id() !=
-             default_search_provider->prepopulate_id()) ||
+          default_search_provider->prepopulate_id()) ||
          (template_url->keyword() != default_search_provider->keyword())))
       actions.removed_engines.push_back(template_url);
   }
@@ -300,8 +302,8 @@ void GetSearchProvidersUsingKeywordResult(
   DCHECK_EQ(KEYWORDS_RESULT, result.GetType());
   DCHECK(new_resource_keyword_version);
 
-  WDKeywordsResult keyword_result = reinterpret_cast<
-      const WDResult<WDKeywordsResult>*>(&result)->GetValue();
+  WDKeywordsResult keyword_result =
+      reinterpret_cast<const WDResult<WDKeywordsResult>*>(&result)->GetValue();
 
   for (auto& keyword : keyword_result.keywords) {
     // Fix any duplicate encodings in the local database.  Note that we don't
@@ -319,11 +321,9 @@ void GetSearchProvidersUsingKeywordResult(
   }
 
   *new_resource_keyword_version = keyword_result.builtin_keyword_version;
-  GetSearchProvidersUsingLoadedEngines(service, prefs, template_urls,
-                                       default_search_provider,
-                                       search_terms_data,
-                                       new_resource_keyword_version,
-                                       removed_keyword_guids);
+  GetSearchProvidersUsingLoadedEngines(
+      service, prefs, template_urls, default_search_provider, search_terms_data,
+      new_resource_keyword_version, removed_keyword_guids);
 }
 
 void GetSearchProvidersUsingLoadedEngines(
