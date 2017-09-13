@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef72a107_98823680",
+        "filename": "third_party/WebKit/LayoutTests/fragmentation/nested-repeating-thead.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-13T07:48:58Z",
+      "side": 1,
+      "message": "The test will probably be more reliable if you use line-height instead.",
+      "revId": "ca160a7b767af286ba5783e678028b3cca308143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a8cbbd_0ec04af2",
+        "filename": "third_party/WebKit/LayoutTests/fragmentation/nested-repeating-thead.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-13T07:48:58Z",
+      "side": 1,
+      "message": "Is this necessary?",
+      "revId": "ca160a7b767af286ba5783e678028b3cca308143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33cf5cf2_251492f8",
+        "filename": "third_party/WebKit/LayoutTests/fragmentation/nested-repeating-thead.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-13T07:48:58Z",
+      "side": 1,
+      "message": "Broken HTML",
+      "revId": "ca160a7b767af286ba5783e678028b3cca308143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e44bdae7_b44bd1b7",
+        "filename": "third_party/WebKit/LayoutTests/fragmentation/nested-repeating-thead.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-13T07:48:58Z",
+      "side": 1,
+      "message": "Could \"width\u003d200px;\" be part of the style attribute (if it\u0027s needed at all)?",
+      "revId": "ca160a7b767af286ba5783e678028b3cca308143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63a14827_ba5bae59",
+        "filename": "third_party/WebKit/LayoutTests/fragmentation/nested-repeating-thead.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-13T07:48:58Z",
+      "side": 1,
+      "message": "Do the widths make any relevant difference here?",
+      "revId": "ca160a7b767af286ba5783e678028b3cca308143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbb960aa_67922da8",
+        "filename": "third_party/WebKit/LayoutTests/fragmentation/nested-repeating-thead.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-13T07:48:58Z",
+      "side": 1,
+      "message": "Unexpected EOF. ;)",
+      "revId": "ca160a7b767af286ba5783e678028b3cca308143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1d34f83_eb3252db",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-13T07:48:58Z",
+      "side": 1,
+      "message": "Do we need to do this (and the next line) if headers aren\u0027t repeated?",
+      "revId": "ca160a7b767af286ba5783e678028b3cca308143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3247ebc9_3d9b0e2e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 698,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-13T07:48:58Z",
+      "side": 1,
+      "message": "Do we need to do this if footers aren\u0027t repeated?",
+      "revId": "ca160a7b767af286ba5783e678028b3cca308143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3297595d_b9502d8c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1963,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-13T07:48:58Z",
+      "side": 1,
+      "message": "layout_state only needed in the second branch. Suggest that you move this down, or just omit the variable.",
+      "revId": "ca160a7b767af286ba5783e678028b3cca308143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ec6f094_882828ba",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-13T07:48:58Z",
+      "side": 1,
+      "message": "Deserves some documentation.",
+      "revId": "ca160a7b767af286ba5783e678028b3cca308143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
