@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76cc6d2b_240ef794",
+        "filename": "testing/libfuzzer/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-09-13T23:51:53Z",
+      "side": 1,
+      "message": "a fuzzer with Protocol Buffer as input",
+      "range": {
+        "startLine": 33,
+        "startChar": 22,
+        "endLine": 33,
+        "endChar": 48
+      },
+      "revId": "b479261acd062fb6c8714f7eef727c7d40e540c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bfe7edb_2e16b7b3",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-09-13T23:51:53Z",
+      "side": 1,
+      "message": "Maybe **Note**?",
+      "range": {
+        "startLine": 4,
+        "startChar": 2,
+        "endLine": 4,
+        "endChar": 9
+      },
+      "revId": "b479261acd062fb6c8714f7eef727c7d40e540c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c3eb56_d2e2071c",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-09-13T23:51:53Z",
+      "side": 1,
+      "message": "Maybe bullet points to highlight proper use-cases. \n* accepts protobufs....\n* accepts highly structured inputs...\n* accepts multiple arguments...",
+      "range": {
+        "startLine": 23,
+        "startChar": 1,
+        "endLine": 23,
+        "endChar": 80
+      },
+      "revId": "b479261acd062fb6c8714f7eef727c7d40e540c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3faaca3e_782444e6",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-09-13T23:51:53Z",
+      "side": 1,
+      "message": "Maybe reference to the trivial example could be useful as well?\nhttps://github.com/google/libprotobuf-mutator/blob/master/examples/libfuzzer/libfuzzer_example.cc",
+      "revId": "b479261acd062fb6c8714f7eef727c7d40e540c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3cc8ca8_42aea2b3",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-09-13T23:51:53Z",
+      "side": 1,
+      "message": "Some note that DEFINE_TEXT_PROTO_FUZZER is slower but more readable and can  be useful for debugging?",
+      "revId": "b479261acd062fb6c8714f7eef727c7d40e540c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
