@@ -2410,8 +2410,8 @@ void TestRunner::OverridePreference(const std::string& key,
     prefs->plugins_enabled = value->BooleanValue();
   } else if (key == "WebKitTabToLinksPreferenceKey") {
     prefs->tabs_to_links = value->BooleanValue();
-  } else if (key == "WebKitWebGLEnabled") {
-    prefs->experimental_webgl_enabled = value->BooleanValue();
+  } else if (key == "WebKitDisable3DAPIs") {
+    prefs->disable_3d_apis = value->BooleanValue();
   } else if (key == "WebKitCSSGridLayoutEnabled") {
     prefs->experimental_css_grid_layout_enabled = value->BooleanValue();
   } else if (key == "WebKitHyperlinkAuditingEnabled") {

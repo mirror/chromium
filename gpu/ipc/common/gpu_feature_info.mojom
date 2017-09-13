@@ -8,6 +8,7 @@ module gpu.mojom;
 // gpu::GpuFeatureStatus
 enum GpuFeatureStatus {
   Enabled,
+  EnabledSoftware,
   Blacklisted,
   Disabled,
   Undefined,

@@ -322,18 +322,23 @@ bool HTMLCanvasElement::IsAccelerated() const {
   return context_ && context_->IsAccelerated();
 }
 
-bool HTMLCanvasElement::IsWebGLAllowed() const {
+bool HTMLCanvasElement::IsWebGLDisabled() const {
   Document& document = GetDocument();
   LocalFrame* frame = document.GetFrame();
-  if (!frame)
-    return false;
-  Settings* settings = frame->GetSettings();
-  // The LocalFrameClient might block creation of a new WebGL context despite
-  // the page settings; in particular, if WebGL contexts were lost one or more
-  // times via the GL_ARB_robustness extension.
-  if (!frame->Client()->AllowWebGL(settings && settings->GetWebGLEnabled()))
-    return false;
-  return true;
+  if (frame) {
+    Settings* settings = frame->GetSettings();
+    if (settings && settings->GetDisable3DAPIs())
+      return true;
+  }
+  return false;
+}
+
+bool HTMLCanvasElement::IsWebGLBlocked() const {
+  Document& document = GetDocument();
+  LocalFrame* frame = document.GetFrame();
+  if (frame && frame->Client()->BlockWebGL())
+    return true;
+  return false;
 }
 
 void HTMLCanvasElement::DidDraw(const FloatRect& rect) {

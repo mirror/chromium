@@ -2449,7 +2449,7 @@ void ChromeContentBrowserClient::OverrideWebkitPrefs(
       prefs->GetBoolean(prefs::kWebKitLoadsImagesAutomatically);
 
   if (prefs->GetBoolean(prefs::kDisable3DAPIs))
-    web_prefs->experimental_webgl_enabled = false;
+    web_prefs->disable_3d_apis = true;
 
   web_prefs->allow_running_insecure_content =
       prefs->GetBoolean(prefs::kWebKitAllowRunningInsecureContent);
