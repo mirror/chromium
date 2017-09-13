@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e3de375_8f106ecf",
+        "filename": "chrome/browser/permissions/permission_request_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1003044
+      },
+      "writtenOn": "2017-09-13T06:12:22Z",
+      "side": 1,
+      "message": "technically not needed right now, but I added it for consistency.",
+      "range": {
+        "startLine": 306,
+        "startChar": 29,
+        "endLine": 306,
+        "endChar": 0
+      },
+      "revId": "f3a9b84a5afe28d4f76cb0ad5ba0507a03f18baf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
