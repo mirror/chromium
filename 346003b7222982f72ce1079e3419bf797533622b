@@ -16,6 +16,24 @@
       "revId": "346003b7222982f72ce1079e3419bf797533622b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ca103f_0227a2a1",
+        "filename": "chrome/browser/resources/print_preview/data/print_ticket_store.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-13T19:24:07Z",
+      "side": 0,
+      "message": "Previously, we printed a warning to the console but did not otherwise notify the user that the destination\u0027s capabilities were invalid until we got \"invalid settings\" back from the renderer. This meant that we had to send a preview request and have it go all the way to PrintRenderFrameHelper even though the PrintPreviewHandler (and Print Preview) already knew the destination was bad from the failed capabilities fetch. Since we aren\u0027t sending these preview requests any more, I needed to add a way to notify the user instead of just having the Preview load forever and logging a warning in the console. The loading forever behavior seems to confuse users whenever it happens, because they cannot tell what has gone wrong unless they open dev tools which most users don\u0027t do. The SELECTED_DESTINATION_INVALID is the mechanism for doing this - LMK if you think there is a better alternative.",
+      "parentUuid": "5e2e17a5_0e88caf4",
+      "revId": "346003b7222982f72ce1079e3419bf797533622b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

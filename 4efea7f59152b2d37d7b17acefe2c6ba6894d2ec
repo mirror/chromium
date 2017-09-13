@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b782fb02_3995d61c",
+        "filename": "chrome/browser/resources/print_preview/data/destination_store.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-13T19:24:07Z",
+      "side": 1,
+      "message": "Should be okay. Once the new destination\u0027s capabilities are fetched, we get a SELECTED_DESTINATION_CAPABILITIES_READY. This is picked up by the print ticket store, which then sends CAPABILITIES_CHANGE to the PreviewArea, which will ultimately then request a preview and update the right pane.\n\nAdmittedly, the path to SELECTED_DESTINATION_CAPABILTIES_READY is quite convoluted. It works as follows AFAICT, let me know if I am missing something:\n1. selectDefaultDestination_() calls either fetchPreselectedDestination or selectPdfDestination\n2. selectPdfDestination calls selectDestination which fires the event since PDF capabilities are known.\n3. fetchPreselectedDestination calls either:\na) Get capabilities for local or cros printers -\u003e calls onLocalDestinationCapabilitiesSet which fires the event\nb) cloudPrintInterface_.printer() for cloud -\u003e sends to CP, calls onPrinterDone_ on response -\u003e fires PRINTER_DONE -\u003e triggers destination store\u0027s onCloudPrinterDone_ -\u003e calls updateDestination_ -\u003e fires event\nc) getPrivetPrinters() for Privet -\u003e triggers privet-printer-added events -\u003e calls onPrivetPrinterAdded_ -\u003e calls insertDestinations-\u003e calls destinationsInserted -\u003e calls selectDestination -\u003e fires the event since capabilities are retrieved.\nd) startLoadExtensionDestinations() for extension -\u003e getExtensionPrinters() -\u003e extension-printers-added webui event -\u003e onExtensionPrintersAdded_ -\u003e insertDestinations_-\u003e destinationsInserted_ -\u003e selectDestination -\u003e event.",
+      "parentUuid": "ec88332c_6a92d9dd",
+      "revId": "4efea7f59152b2d37d7b17acefe2c6ba6894d2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e5ea696_de57452b",
         "filename": "chrome/browser/resources/print_preview/print_preview.js",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "4efea7f59152b2d37d7b17acefe2c6ba6894d2ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80e6c991_837d0043",
+        "filename": "chrome/browser/resources/print_preview/print_preview.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-13T19:24:07Z",
+      "side": 1,
+      "message": "I was trying to avoid adding a function, but you may be right that that would be cleaner. Fixed.",
+      "parentUuid": "2e5ea696_de57452b",
+      "revId": "4efea7f59152b2d37d7b17acefe2c6ba6894d2ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
