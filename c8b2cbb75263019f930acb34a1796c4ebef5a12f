@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e03609b3_c11e090e",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsTypes.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-13T06:27:03Z",
+      "side": 1,
+      "message": "I think the enum values should make it clear what\npositive and negative mean, something like:\n\nkApplyHighContrastFilter\nkDoNotApplyHighContrastFilter\n\n(similar to the enums above and below this one)",
+      "revId": "c8b2cbb75263019f930acb34a1796c4ebef5a12f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a416f87c_c6dcdf5a",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-13T06:27:03Z",
+      "side": 1,
+      "message": "Since we just want to sample some pixels from the image, I\nwonder if it\u0027s ever possible to do that without copying the\nentire image first.",
+      "revId": "c8b2cbb75263019f930acb34a1796c4ebef5a12f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01323cf8_6d859f38",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-13T06:27:03Z",
+      "side": 1,
+      "message": "define this constant at the top\n\nconst int kPixelsToSample",
+      "revId": "c8b2cbb75263019f930acb34a1796c4ebef5a12f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a2233ee_f81f2cca",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-13T06:27:03Z",
+      "side": 1,
+      "message": "Move this to the source file if it\u0027s not needed outside\nthis class.",
+      "revId": "c8b2cbb75263019f930acb34a1796c4ebef5a12f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
