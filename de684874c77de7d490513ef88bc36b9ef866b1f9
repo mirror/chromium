@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b5ccb17_53bee806",
+        "filename": "chrome/browser/ui/toolbar/back_forward_menu_model_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-13T15:51:07Z",
+      "side": 1,
+      "message": "This is definitely a real issue for all tests, but this is the only one that seems to rely on the title, which is why I was doing a one-off for it.",
+      "parentUuid": "4f00520a_7c86b193",
+      "revId": "de684874c77de7d490513ef88bc36b9ef866b1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b892d0b_0b97a441",
         "filename": "content/browser/frame_host/navigation_controller_impl.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-12T23:37:03Z",
       "side": 1,
       "message": "Hmm, how could is_same_document be true here?  I thought RenderereDidNavigateToSamePage was the case that you hit enter in the address bar, which necessarily is a new document.  Are there any repro steps where it\u0027s possible for it to be true?",
+      "revId": "de684874c77de7d490513ef88bc36b9ef866b1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5b82da_9de4610a",
+        "filename": "content/browser/frame_host/navigation_controller_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1479,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-09-13T15:51:07Z",
+      "side": 1,
+      "message": "I made this change a while ago, and it must have made sense to me at the time, but now that I think about it again, I don\u0027t know.",
+      "parentUuid": "0b892d0b_0b97a441",
       "revId": "de684874c77de7d490513ef88bc36b9ef866b1f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
