@@ -126,6 +126,7 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
 
   // Largest number of running requests seen so far.
   unsigned maximum_running_requests_seen_ = 0;
+  bool had_network_quiet_ = false;
 
   enum class ThrottlingHistory {
     kInitial,
