@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "d873c3f7_0713d60f",
+        "filename": "content/child/service_worker/controller_service_worker_connector.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-13T01:13:03Z",
+      "side": 1,
+      "message": "Thanks a lot for detailed explanation! The race case sounds a bit scary and seems difficult to manage the restarting logic. It\u0027d be better to have an additional ping-pong IPC for the controller to tell the controllee that it\u0027s about to shutting down and wait for all of the reply. However, it also seems a bit unsafe because the controller cannot be shutted down if a bad controllee doesn\u0027t reply to it...\nAnyway, that\u0027s just my curious and I think this doesn\u0027t block this CL. We can work it on later.",
+      "parentUuid": "c975c72d_19803e89",
+      "revId": "554f788d13945d71974c78bc91bf4f490e5ec819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d4e01621_8dd9f0a8",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 11
