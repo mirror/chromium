@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de950d18_9217f77e",
+        "filename": "ios/clean/chrome/browser/ui/web_contents/web_contents_mediator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-13T12:21:47Z",
+      "side": 1,
+      "message": "ApplicationCommands is an old-architecture protocol. Not a blocker immediately, but very soon we will need to sort out all of the details around bridging old and new protocols.",
+      "range": {
+        "startLine": 31,
+        "startChar": 30,
+        "endLine": 31,
+        "endChar": 49
+      },
+      "revId": "ff86aef11810b23fca1ce8272f54a578b9a85f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
