@@ -160,14 +160,14 @@ void ServiceWorkerProviderContext::SetController(
     mojom::ServiceWorkerEventDispatcherPtr event_dispatcher_ptr;
     event_dispatcher_ptr.Bind(std::move(event_dispatcher_ptr_info));
     auto event_dispatcher = base::MakeRefCounted<
-        base::RefCountedData<mojom::ServiceWorkerEventDispatcherPtr>>();
-    event_dispatcher->data = std::move(event_dispatcher_ptr);
+        base::RefCountedData<mojom::ServiceWorkerEventDispatcherPtr>>(
+        std::move(event_dispatcher_ptr));
     storage::mojom::BlobRegistryPtr blob_registry_ptr;
     ChildThreadImpl::current()->GetConnector()->BindInterface(
         mojom::kBrowserServiceName, mojo::MakeRequest(&blob_registry_ptr));
     auto blob_registry = base::MakeRefCounted<
-        base::RefCountedData<storage::mojom::BlobRegistryPtr>>();
-    blob_registry->data = std::move(blob_registry_ptr);
+        base::RefCountedData<storage::mojom::BlobRegistryPtr>>(
+        std::move(blob_registry_ptr));
     mojo::MakeStrongBinding(
         base::MakeUnique<ServiceWorkerSubresourceLoaderFactory>(
             std::move(event_dispatcher), state->default_loader_factory_getter,

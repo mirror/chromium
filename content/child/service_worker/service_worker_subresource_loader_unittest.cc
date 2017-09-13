@@ -151,8 +151,8 @@ class ServiceWorkerSubresourceLoaderTest : public ::testing::Test {
     mojom::ServiceWorkerEventDispatcherPtr event_dispatcher_ptr;
     event_dispatcher_.AddBinding(mojo::MakeRequest(&event_dispatcher_ptr));
     auto shared_event_dispatcher = base::MakeRefCounted<
-        base::RefCountedData<mojom::ServiceWorkerEventDispatcherPtr>>();
-    shared_event_dispatcher->data = std::move(event_dispatcher_ptr);
+        base::RefCountedData<mojom::ServiceWorkerEventDispatcherPtr>>(
+        std::move(event_dispatcher_ptr));
 
     ServiceWorkerSubresourceLoaderFactory loader_factory(
         std::move(shared_event_dispatcher), loader_factory_getter,
