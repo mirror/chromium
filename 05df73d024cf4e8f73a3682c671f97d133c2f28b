@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aebf1afb_ad60c779",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/app.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-13T06:56:49Z",
+      "side": 1,
+      "message": "If retainEntry doesn\u0027t work then the zip unpacker cannot work at all in incognito. If the extension is closed (and it\u0027s done automatically after idling), we\u0027ll lose access to the source files permanently.\n\nMaybe we should fix retainEntry to allow it in incognito?",
+      "revId": "05df73d024cf4e8f73a3682c671f97d133c2f28b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
