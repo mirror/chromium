@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b0382a5_4d0a5c64",
+        "filename": "ios/chrome/browser/ui/metrics/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-13T11:10:23Z",
+      "side": 1,
+      "message": "These should be in a separate target, marked testonly.",
+      "range": {
+        "startLine": 8,
+        "startChar": 5,
+        "endLine": 8,
+        "endChar": 22
+      },
+      "revId": "b00da939abdd5fd4cabb3423ebad4c3a23885687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e8fa07_4ced4b73",
+        "filename": "ios/chrome/browser/ui/metrics/metrics_test_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-13T11:10:23Z",
+      "side": 1,
+      "message": "We\u0027re not using per-feature namespaces by default any more.",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 27
+      },
+      "revId": "b00da939abdd5fd4cabb3423ebad4c3a23885687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da44c6f_93c60b2c",
+        "filename": "ios/chrome/browser/ui/metrics/metrics_test_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-13T11:10:23Z",
+      "side": 1,
+      "message": "Comments should document all function parameters. What does |isRequiredMethod| do?",
+      "range": {
+        "startLine": 13,
+        "startChar": 28,
+        "endLine": 13,
+        "endChar": 0
+      },
+      "revId": "b00da939abdd5fd4cabb3423ebad4c3a23885687",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
