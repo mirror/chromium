@@ -32,7 +32,8 @@ class VideoFrame;
 // and wraps a media::VideoDecoder.
 class MojoVideoDecoderService : public mojom::VideoDecoder {
  public:
-  explicit MojoVideoDecoderService(MojoMediaClient* mojo_media_client);
+  explicit MojoVideoDecoderService(MojoMediaClient* mojo_media_client,
+                                   const std::string& decoder_name);
   ~MojoVideoDecoderService() final;
 
   // mojom::VideoDecoder implementation
@@ -67,6 +68,7 @@ class MojoVideoDecoderService : public mojom::VideoDecoder {
   std::unique_ptr<MojoDecoderBufferReader> mojo_decoder_buffer_reader_;
 
   MojoMediaClient* mojo_media_client_;
+  std::string decoder_name_;
   std::unique_ptr<media::VideoDecoder> decoder_;
   std::map<base::UnguessableToken, MojoMediaClient::ReleaseMailboxCB>
       release_mailbox_cbs_;

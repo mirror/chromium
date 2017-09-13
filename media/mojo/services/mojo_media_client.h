@@ -68,7 +68,8 @@ class MEDIA_MOJO_EXPORT MojoMediaClient {
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
       MediaLog* media_log,
       mojom::CommandBufferIdPtr command_buffer_id,
-      OutputWithReleaseMailboxCB output_cb);
+      OutputWithReleaseMailboxCB output_cb,
+      const std::string& decoder_name);
 
   // Returns the output sink used for rendering audio on |audio_device_id|.
   // May be null if the RendererFactory doesn't need an audio sink.
