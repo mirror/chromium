@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b86e00b_4d1ca643",
+        "filename": "ui/app_list/views/app_list_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-13T03:40:05Z",
+      "side": 1,
+      "message": "nit: too generic, if possible please be more concrete.",
+      "range": {
+        "startLine": 119,
+        "startChar": 46,
+        "endLine": 119,
+        "endChar": 59
+      },
+      "revId": "85a424f6ca2e735fdf67b2ab5de8e0da53383683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
