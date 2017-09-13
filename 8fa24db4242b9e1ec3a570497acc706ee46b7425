@@ -16,6 +16,24 @@
       "revId": "8fa24db4242b9e1ec3a570497acc706ee46b7425",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85f126d6_328861f1",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_bidi_paragraph.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-13T18:58:05Z",
+      "side": 1,
+      "message": "This doesn\u0027t store, a static method to compute the base direction for a string and return the value. The block\u0027s base direction is stored, and there\u0027s a getter above.\n\nThis one is when a block contains multiple \u003cbr\u003e or newline, and we need to compute the base direction for each logical lines. NGLineBreaker stores this as the base direction of the current line.\n\nThat said, maybe I should consider renaming since this looks confusing. |ComputeBaseDirectionForString|?",
+      "parentUuid": "c2771adc_24130fd4",
+      "revId": "8fa24db4242b9e1ec3a570497acc706ee46b7425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
