@@ -512,6 +512,18 @@ void FormStructure::ParseQueryResponse(
         heuristics_detected_fillable_field = true;
 
       field->set_server_type(field_type);
+      std::vector<AutofillQueryResponseContents::Field::FieldPrediction>
+          server_types;
+      if (current_field->predictions_size() == 0) {
+        AutofillQueryResponseContents::Field::FieldPrediction field_prediction;
+        field_prediction.set_autofill_type(field_type);
+        server_types.push_back(field_prediction);
+      } else {
+        for (auto const& field_prediction : current_field->predictions())
+          server_types.push_back(field_prediction);
+      }
+      field->set_server_types(server_types);
+
       if (heuristic_type != field->Type().GetStorableType())
         query_response_overrode_heuristics = true;
 

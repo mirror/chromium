@@ -124,6 +124,16 @@ class AutofillField : public FormFieldData {
     return username_vote_type_;
   }
 
+  void set_server_types(
+      std::vector<AutofillQueryResponseContents::Field::FieldPrediction>
+          types) {
+    server_types_ = types;
+  }
+  std::vector<AutofillQueryResponseContents::Field::FieldPrediction>
+  server_types() const {
+    return server_types_;
+  }
+
   // Set |field_data|'s value to |value|. Uses |field|, |address_language_code|,
   // and |app_locale| as hints when filling exceptional cases like phone number
   // values and <select> fields. Returns |true| if the field has been filled,
@@ -204,6 +214,10 @@ class AutofillField : public FormFieldData {
   // The username vote type, if the autofill type is USERNAME. Otherwise, the
   // field is ignored.
   AutofillUploadContents::Field::UsernameVoteType username_vote_type_;
+
+  // The possible types of the field, as determined by the Autofill server.
+  std::vector<AutofillQueryResponseContents::Field::FieldPrediction>
+      server_types_;
 
   DISALLOW_COPY_AND_ASSIGN(AutofillField);
 };

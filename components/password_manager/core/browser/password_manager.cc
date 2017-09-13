@@ -83,27 +83,33 @@ bool IsSignupForm(const PasswordForm& form) {
   return !form.new_password_element.empty() && form.password_element.empty();
 }
 
-// Tries to convert the |server_field_type| to a PasswordFormFieldPredictionType
+// Tries to find if at least one of the values from |server_field_types| can be
+// converted from ServerFieldType to a PasswordFormFieldPredictionType
 // stored in |type|. Returns true if the conversion was made.
-bool ServerTypeToPrediction(autofill::ServerFieldType server_field_type,
-                            autofill::PasswordFormFieldPredictionType* type) {
-  switch (server_field_type) {
-    case autofill::USERNAME:
-    case autofill::USERNAME_AND_EMAIL_ADDRESS:
-      *type = autofill::PREDICTION_USERNAME;
-      return true;
+bool ServerTypesToPrediction(
+    std::vector<autofill::AutofillQueryResponseContents::Field::FieldPrediction>
+        server_field_types,
+    autofill::PasswordFormFieldPredictionType* type) {
+  for (auto const& server_field_type : server_field_types) {
+    switch (server_field_type.autofill_type()) {
+      case autofill::USERNAME:
+      case autofill::USERNAME_AND_EMAIL_ADDRESS:
+        *type = autofill::PREDICTION_USERNAME;
+        return true;
 
-    case autofill::PASSWORD:
-      *type = autofill::PREDICTION_CURRENT_PASSWORD;
-      return true;
+      case autofill::PASSWORD:
+        *type = autofill::PREDICTION_CURRENT_PASSWORD;
+        return true;
 
-    case autofill::ACCOUNT_CREATION_PASSWORD:
-      *type = autofill::PREDICTION_NEW_PASSWORD;
-      return true;
+      case autofill::ACCOUNT_CREATION_PASSWORD:
+        *type = autofill::PREDICTION_NEW_PASSWORD;
+        return true;
 
-    default:
-      return false;
+      default:
+        break;
+    }
   }
+  return false;
 }
 
 // Returns true if the |field_type| is known to be possibly
@@ -919,7 +925,7 @@ void PasswordManager::ProcessAutofillPredictions(
       logger->LogFormStructure(Logger::STRING_SERVER_PREDICTIONS, *form);
     for (const auto& field : *form) {
       autofill::PasswordFormFieldPredictionType prediction_type;
-      if (ServerTypeToPrediction(field->server_type(), &prediction_type)) {
+      if (ServerTypesToPrediction(field->server_types(), &prediction_type)) {
         predictions[form->ToFormData()][*field] = prediction_type;
       }
       // Certain fields are annotated by the browsers as "not passwords" i.e.
