@@ -189,6 +189,7 @@ class CastChannelSendFunction : public CastChannelAsyncApiFunction {
   ~CastChannelSendFunction() override;
 
   // AsyncApiFunction:
+  bool PrePrepare() override;
   bool Prepare() override;
   void AsyncWorkStart() override;
 
@@ -198,6 +199,7 @@ class CastChannelSendFunction : public CastChannelAsyncApiFunction {
   void OnSend(int result);
 
   std::unique_ptr<api::cast_channel::Send::Params> params_;
+  CastChannelAPI* api_;
 
   DISALLOW_COPY_AND_ASSIGN(CastChannelSendFunction);
 };
