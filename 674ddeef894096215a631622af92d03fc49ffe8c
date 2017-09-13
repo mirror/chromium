@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e087f2a_7f7e076c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/types/scripted/SVGLength-px.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-09-13T07:50:46Z",
+      "side": 1,
+      "message": "Modified the TCs based on the spec.\n\n \" Otherwise, if unitType is SVG_LENGTHTYPE_EMS or SVG_LENGTHTYPE_EXS, then:\nLet font size be a basis to resolve font size values against, based on the SVGLength\u0027s associated element:\nhas no associated element\nfont size is the absolute length of the initial value of the font-size property\"\n\nPlease correct me if the test is not correct.",
+      "range": {
+        "startLine": 37,
+        "startChar": 34,
+        "endLine": 37,
+        "endChar": 42
+      },
+      "revId": "674ddeef894096215a631622af92d03fc49ffe8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
