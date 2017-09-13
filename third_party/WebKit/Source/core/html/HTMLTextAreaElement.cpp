@@ -474,16 +474,9 @@ void HTMLTextAreaElement::setDefaultValue(const String& default_value) {
     SetNonDirtyValue(value);
 }
 
-String HTMLTextAreaElement::SuggestedValue() const {
-  return suggested_value_;
-}
-
 void HTMLTextAreaElement::SetSuggestedValue(const String& value) {
-  suggested_value_ = value;
-
-  if (!value.IsNull())
-    SetInnerEditorValue(suggested_value_);
-  else
+  TextControlElement::SetSuggestedValue(value);
+  if (value.IsEmpty())
     SetInnerEditorValue(value_);
   UpdatePlaceholderVisibility();
   SetNeedsStyleRecalc(
@@ -592,25 +585,8 @@ void HTMLTextAreaElement::SetPlaceholderVisibility(bool visible) {
   is_placeholder_visible_ = visible;
 }
 
-void HTMLTextAreaElement::UpdatePlaceholderText() {
-  HTMLElement* placeholder = PlaceholderElement();
-  const AtomicString& placeholder_text = FastGetAttribute(placeholderAttr);
-  if (placeholder_text.IsEmpty()) {
-    if (placeholder)
-      UserAgentShadowRoot()->RemoveChild(placeholder);
-    return;
-  }
-  if (!placeholder) {
-    HTMLDivElement* new_element = HTMLDivElement::Create(GetDocument());
-    placeholder = new_element;
-    placeholder->SetShadowPseudoId(AtomicString("-webkit-input-placeholder"));
-    placeholder->setAttribute(idAttr, ShadowElementNames::Placeholder());
-    placeholder->SetInlineStyleProperty(
-        CSSPropertyDisplay,
-        IsPlaceholderVisible() ? CSSValueBlock : CSSValueNone, true);
-    UserAgentShadowRoot()->InsertBefore(placeholder, InnerEditorElement());
-  }
-  placeholder->setTextContent(placeholder_text);
+String HTMLTextAreaElement::GetPlaceholderValue() const {
+  return FastGetAttribute(placeholderAttr);
 }
 
 bool HTMLTextAreaElement::IsInteractiveContent() const {

@@ -599,7 +599,7 @@ class FormAutofillTest : public ChromeRenderViewTest {
     // Verify preview selection.
     WebInputElement firstname = GetInputElementById("firstname");
     EXPECT_EQ(0, firstname.SelectionStart());
-    EXPECT_EQ(19, firstname.SelectionEnd());
+    EXPECT_EQ(0, firstname.SelectionEnd());
   }
 
   void TestUnmatchedUnownedForm(const char* html, const char* url_override) {
