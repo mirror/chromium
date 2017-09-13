@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c603a39_55e57649",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 15
+      },
+      "lineNbr": 55746,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-13T23:42:16Z",
+      "side": 1,
+      "message": "nit: The current session of what?  The browser process?  It would be helpful to clarify here.",
+      "range": {
+        "startLine": 55746,
+        "startChar": 60,
+        "endLine": 55746,
+        "endChar": 75
+      },
+      "revId": "b8a0f35f9b9034bd4dd5f8e480adb05c0757da43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
