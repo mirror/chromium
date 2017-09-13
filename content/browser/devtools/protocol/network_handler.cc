@@ -21,6 +21,9 @@
 #include "content/browser/devtools/protocol/security.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/render_frame_host_impl.h"
+#include "content/common/devtools/devtools_network_conditions.h"
+#include "content/common/devtools/devtools_network_controller.h"
+#include "content/common/devtools/devtools_network_transaction.h"
 #include "content/common/navigation_params.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
@@ -30,6 +33,7 @@
 #include "content/public/browser/navigation_handle.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/resource_context.h"
+#include "content/public/browser/service_worker_context.h"
 #include "content/public/browser/site_instance.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
@@ -579,14 +583,25 @@ class NetworkNavigationThrottle : public content::NavigationThrottle {
   DISALLOW_COPY_AND_ASSIGN(NetworkNavigationThrottle);
 };
 
+void ConfigureServiceWorkerContextOnIO() {
+  std::set<std::string> headers;
+  headers.insert(
+      DevToolsNetworkTransaction::kDevToolsEmulateNetworkConditionsClientId);
+  content::ServiceWorkerContext::AddExcludedHeadersForFetchEvent(headers);
+}
+
 }  // namespace
 
-NetworkHandler::NetworkHandler()
+NetworkHandler::NetworkHandler(const std::string& host_id)
     : DevToolsDomainHandler(Network::Metainfo::domainName),
       host_(nullptr),
       enabled_(false),
       interception_enabled_(false),
-      weak_factory_(this) {}
+      host_id_(host_id),
+      weak_factory_(this) {
+  BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                          base::BindOnce(&ConfigureServiceWorkerContextOnIO));
+}
 
 NetworkHandler::~NetworkHandler() {
 }
@@ -617,6 +632,10 @@ Response NetworkHandler::Disable() {
   enabled_ = false;
   user_agent_ = std::string();
   SetRequestInterceptionEnabled(false, Maybe<protocol::Array<String>>());
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&DevToolsNetworkController::SetNetworkState, host_id_,
+                     nullptr));
   return Response::FallThrough();
 }
 
@@ -776,8 +795,26 @@ Response NetworkHandler::SetUserAgentOverride(const std::string& user_agent) {
 }
 
 Response NetworkHandler::CanEmulateNetworkConditions(bool* result) {
-  *result = false;
+  *result = true;
   return Response::OK();
+}
+
+Response NetworkHandler::EmulateNetworkConditions(
+    bool offline,
+    double latency,
+    double download_throughput,
+    double upload_throughput,
+    Maybe<protocol::Network::ConnectionType>) {
+  std::unique_ptr<DevToolsNetworkConditions> conditions(
+      new DevToolsNetworkConditions(offline, std::max(latency, 0.0),
+                                    std::max(download_throughput, 0.0),
+                                    std::max(upload_throughput, 0.0)));
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&DevToolsNetworkController::SetNetworkState, host_id_,
+                     std::move(conditions)));
+
+  return Response::FallThrough();
 }
 
 void NetworkHandler::NavigationPreloadRequestSent(
