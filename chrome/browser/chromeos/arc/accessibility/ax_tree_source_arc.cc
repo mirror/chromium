@@ -6,12 +6,14 @@
 
 #include <string>
 
+#include "ash/public/cpp/scale_utility.h"
 #include "chrome/browser/extensions/api/automation_internal/automation_event_router.h"
 #include "chrome/browser/ui/aura/accessibility/automation_manager_aura.h"
 #include "chrome/common/extensions/chrome_extension_messages.h"
 #include "components/exo/wm_helper.h"
 #include "ui/accessibility/platform/ax_android_constants.h"
 #include "ui/aura/window.h"
+#include "ui/aura/window_tree_host.h"
 #include "ui/views/focus/focus_manager.h"
 #include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
@@ -69,9 +71,11 @@ const gfx::Rect GetBounds(arc::mojom::AccessibilityNodeInfoData* node) {
   gfx::Rect bounds_in_screen = node->bounds_in_screen;
   if (focused_window) {
     aura::Window* toplevel_window = focused_window->GetToplevelWindow();
-    return gfx::ScaleToEnclosingRect(
-        bounds_in_screen,
-        1.0f / toplevel_window->layer()->device_scale_factor());
+    auto transform =
+        toplevel_window->GetRootWindow()->GetHost()->GetRootTransform();
+    float scale_factor = ash::GetScaleFactorForTransform(transform);
+
+    return gfx::ScaleToEnclosingRect(bounds_in_screen, scale_factor);
   }
   return bounds_in_screen;
 }
