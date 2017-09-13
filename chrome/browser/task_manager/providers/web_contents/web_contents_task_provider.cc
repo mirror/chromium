@@ -60,17 +60,29 @@ class WebContentsEntry : public content::WebContentsObserver {
       content::NavigationHandle* navigation_handle) override;
   void TitleWasSet(content::NavigationEntry* entry, bool explicit_set) override;
 
-  void RenderFrameReady(int process_routing_id, int frame_routing_id);
+  void ReplaceTaskForSiteInstance(content::SiteInstance* site_instance);
 
  private:
-  // Defines a callback for WebContents::ForEachFrame() to create a
-  // corresponding task for the given |render_frame_host| and notifying the
-  // provider's observer of the new task.
-  void CreateTaskForFrame(RenderFrameHost* render_frame_host);
+  // Ensures that a RendererTask exists for |render_frame_host|, creating one if
+  // necessary. If a new task is created, a reference to it is returned -- it is
+  // the caller's responsibility to notify the TaskProviderObserver of the
+  // result.
+  RendererTask* CreateTaskForFrame(RenderFrameHost* render_frame_host)
+      WARN_UNUSED_RESULT;
 
-  // Clears the task that corresponds to the given |render_frame_host| and
-  // notifies the provider's observer of the tasks removal.
-  void ClearTaskForFrame(RenderFrameHost* render_frame_host);
+  // Clears references to |render_frame_host| from our maps. If doing so
+  // results in a RendererTask with no remaining associated RenderFrameHost,
+  // ownership of that RendererTask passes to the caller., in which case it
+  // is the caller's responsibility to notify the TaskProviderObserver of
+  // the removal.
+  std::unique_ptr<RendererTask> ClearTaskForFrame(
+      RenderFrameHost* render_frame_host) WARN_UNUSED_RESULT;
+
+  // Notify observers that a task was added, removed, or replaced. An "Added" or
+  // "Removed" event occurs if one of |old_task| and |new_task| is null. If both
+  // are non-null, a "Replaced" event occurs.
+  void NotifyObservers(std::unique_ptr<RendererTask> old_task,
+                       RendererTask* new_task);
 
   // Calls |on_task| for each task managed by this WebContentsEntry.
   void ForEachTask(const base::Callback<void(RendererTask*)>& on_task);
@@ -114,8 +126,9 @@ WebContentsEntry::~WebContentsEntry() {
 
 void WebContentsEntry::CreateAllTasks() {
   DCHECK(web_contents()->GetMainFrame());
-  web_contents()->ForEachFrame(base::Bind(&WebContentsEntry::CreateTaskForFrame,
-                                          base::Unretained(this)));
+  web_contents()->ForEachFrame(
+      base::Bind(&WebContentsEntry::RenderFrameHostChanged,
+                 base::Unretained(this), nullptr));
 }
 
 void WebContentsEntry::ClearAllTasks(bool notify_observer) {
@@ -159,14 +172,15 @@ RenderFrameHost* WebContentsEntry::FindLocalRoot(
 }
 
 void WebContentsEntry::RenderFrameDeleted(RenderFrameHost* render_frame_host) {
-  ClearTaskForFrame(render_frame_host);
+  NotifyObserver(ClearTaskForFrame(render_frame_host), nullptr);
 }
 
 void WebContentsEntry::RenderFrameHostChanged(RenderFrameHost* old_host,
                                               RenderFrameHost* new_host) {
   DCHECK(new_host->IsCurrent());
-  ClearTaskForFrame(old_host);
-  CreateTaskForFrame(new_host);
+  std::unique_ptr<RendererTask> old_task = ClearTaskForFrame(old_host);
+  RendererTask* new_task = CreateTaskForFrame(new_host);
+  NotifyObserver(std::move(old_task), new_task);
 }
 
 void WebContentsEntry::RenderFrameCreated(RenderFrameHost* render_frame_host) {
@@ -177,27 +191,31 @@ void WebContentsEntry::RenderFrameCreated(RenderFrameHost* render_frame_host) {
   if (!render_frame_host->IsCurrent())
     return;
 
-  CreateTaskForFrame(render_frame_host);
+  NotifyObserver(nullptr, CreateTaskForFrame(render_frame_host));
 }
 
-void WebContentsEntry::RenderFrameReady(int render_process_id,
-                                        int render_frame_id) {
-  // We get here when a RenderProcessHost we are tracking transitions to the
-  // IsReady state. This might mean we know its process ID.
-  content::RenderFrameHost* render_frame_host =
-      content::RenderFrameHost::FromID(render_process_id, render_frame_id);
-  if (!render_frame_host)
+void WebContentsEntry::ReplaceTaskForSiteInstance(
+    content::SiteInstance* site_instance) {
+  auto frames_it = frames_by_site_instance_.find(site_instance);
+  if (frames_it == frames_by_site_instance_.end())
     return;
 
-  Task* task = GetTaskForFrame(render_frame_host);
+  const FramesList& render_frame_hosts = frames_it->second;
+  std::unique_ptr<RendererTask> existing_task(
+      GetTaskForFrame(render_frame_hosts[0]));
 
-  if (!task)
-    return;
+  // Recreate this task.
+  RendererTask* new_task =
+      (main_frame_site_instance_ == site_instance)
+          ? WebContentsTag::FromWebContents(web_contents())->CreateTask()
+          : new SubframeTask(render_frame_hosts[0], web_contents(),
+                             GetTaskForFrame(web_contents()->GetMainFrame()));
 
-  const base::ProcessId determine_pid_from_handle = base::kNullProcessId;
-  provider_->UpdateTaskProcessInfoAndNotifyObserver(
-      task, render_frame_host->GetProcess()->GetHandle(),
-      determine_pid_from_handle);
+  for (RenderFrameHost* render_frame_host : render_frame_hosts) {
+    DCHECK_EQ(existing_task.get(), tasks_by_frames_[render_frame_host]);
+    tasks_by_frames_[render_frame_host] = new_task;
+  }
+  NotifyObserver(std::move(existing_task), new_task);
 }
 
 void WebContentsEntry::WebContentsDestroyed() {
@@ -257,7 +275,18 @@ void WebContentsEntry::TitleWasSet(content::NavigationEntry* entry,
   }));
 }
 
-void WebContentsEntry::CreateTaskForFrame(RenderFrameHost* render_frame_host) {
+void WebContentsEntry::NotifyObserver(std::unique_ptr<RendererTask> old_task,
+                                      RendererTask* new_task) {
+  if (old_task && new_task)
+    provider_->NotifyObserverTaskReplaced(old_task.get(), new_task);
+  else if (old_task)
+    provider_->NotifyObserverTaskRemoved(old_task.get());
+  else if (new_task)
+    provider_->NotifyObserverTaskAdded(new_task);
+}
+
+RendererTask* WebContentsEntry::CreateTaskForFrame(
+    RenderFrameHost* render_frame_host) {
   // Currently we do not track pending hosts, or pending delete hosts.
   DCHECK(render_frame_host->IsCurrent());
   DCHECK(render_frame_host);
@@ -267,13 +296,13 @@ void WebContentsEntry::CreateTaskForFrame(RenderFrameHost* render_frame_host) {
 
   // Exclude sad tabs and sad oopifs.
   if (!render_frame_host->IsRenderFrameLive())
-    return;
+    return nullptr;
 
   // Exclude frames in the same SiteInstance as their parent; |tasks_by_frames_|
   // only contains local roots.
   if (render_frame_host->GetParent() &&
       site_instance == render_frame_host->GetParent()->GetSiteInstance()) {
-    return;
+    return nullptr;
   }
 
   bool site_instance_exists =
@@ -315,8 +344,11 @@ void WebContentsEntry::CreateTaskForFrame(RenderFrameHost* render_frame_host) {
       for (RenderFrameHost* frame : existing_frames_for_site_instance)
         tasks_by_frames_[frame] = new_task;
 
-      provider_->NotifyObserverTaskRemoved(old_task);
-      delete old_task;
+      // Subtle: deliberately do not pass |new_task| as the second parameter
+      // below. We want selection to follow the frame tree node, not the site
+      // instance, which means that we'll leave it to the caller to announce
+      // |new_task|.
+      NotifyObserver(base::WrapUnique(old_task), nullptr);
     }
   }
 
@@ -324,23 +356,24 @@ void WebContentsEntry::CreateTaskForFrame(RenderFrameHost* render_frame_host) {
 
   if (new_task) {
     tasks_by_frames_[render_frame_host] = new_task;
-    provider_->NotifyObserverTaskAdded(new_task);
 
     // If we don't know the OS process handle yet (e.g., because this task is
     // still launching), update the task when it becomes available.
     if (new_task->process_id() == base::kNullProcessId) {
-      render_frame_host->GetProcess()->PostTaskWhenProcessIsReady(base::Bind(
-          &WebContentsEntry::RenderFrameReady, weak_factory_.GetWeakPtr(),
-          render_frame_host->GetProcess()->GetID(),
-          render_frame_host->GetRoutingID()));
+      render_frame_host->GetProcess()->PostTaskWhenProcessIsReady(
+          base::Bind(&WebContentsEntry::ReplaceTaskForSiteInstance,
+                     weak_factory_.GetWeakPtr(),
+                     base::RetainedRef(render_frame_host->GetSiteInstance())));
     }
   }
+  return new_task;
 }
 
-void WebContentsEntry::ClearTaskForFrame(RenderFrameHost* render_frame_host) {
+std::unique_ptr<RendererTask> WebContentsEntry::ClearTaskForFrame(
+    RenderFrameHost* render_frame_host) {
   auto itr = tasks_by_frames_.find(render_frame_host);
   if (itr == tasks_by_frames_.end())
-    return;
+    return nullptr;
 
   RendererTask* task = itr->second;
   tasks_by_frames_.erase(itr);
@@ -350,15 +383,13 @@ void WebContentsEntry::ClearTaskForFrame(RenderFrameHost* render_frame_host) {
 
   if (frames.empty()) {
     frames_by_site_instance_.erase(site_instance);
-    provider_->NotifyObserverTaskRemoved(task);
-    delete task;
 
     if (site_instance == main_frame_site_instance_)
       main_frame_site_instance_ = nullptr;
+    return std::unique_ptr<RendererTask>(task);
   }
 
-  // Whenever we have a task, we should have a main frame site instance.
-  DCHECK(tasks_by_frames_.empty() == (main_frame_site_instance_ == nullptr));
+  return nullptr;
 }
 
 void WebContentsEntry::ForEachTask(
