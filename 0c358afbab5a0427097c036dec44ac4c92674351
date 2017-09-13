@@ -16,6 +16,24 @@
       "revId": "0c358afbab5a0427097c036dec44ac4c92674351",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d22928_48116fbe",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-09-13T21:05:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfe3f906_c55d5927",
+      "revId": "0c358afbab5a0427097c036dec44ac4c92674351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
