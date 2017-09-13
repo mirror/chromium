@@ -22,6 +22,30 @@
       "revId": "28e3c66582bef326723f8644893a8957c5748318",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69141665_b0f15cdd",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-09-13T23:35:39Z",
+      "side": 0,
+      "message": "Thanks for the heads up! I will do that, will follow up in separate CLs.",
+      "parentUuid": "cfa9a092_2880c8ea",
+      "range": {
+        "startLine": 126,
+        "startChar": 20,
+        "endLine": 126,
+        "endChar": 39
+      },
+      "revId": "28e3c66582bef326723f8644893a8957c5748318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
