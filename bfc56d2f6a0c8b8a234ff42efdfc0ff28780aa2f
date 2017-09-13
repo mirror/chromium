@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3b86baa2_93ba10b2",
+        "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2017-09-13T08:36:30Z",
+      "side": 1,
+      "message": "Thanks Juan. I felt it is better to get the name and inject it back, so I updated the implementation to do that. If this does not look clean I can revert back to the earlier approach. Also added a comment and fixed the formatting issue.",
+      "parentUuid": "312e05a3_0f4f1dbe",
+      "revId": "bfc56d2f6a0c8b8a234ff42efdfc0ff28780aa2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41e1a3a2_3efedc8a",
         "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "bfc56d2f6a0c8b8a234ff42efdfc0ff28780aa2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e671c06_456c1844",
+        "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1145189
+      },
+      "writtenOn": "2017-09-13T08:36:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fa98d38_6d893d23",
+      "revId": "bfc56d2f6a0c8b8a234ff42efdfc0ff28780aa2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
