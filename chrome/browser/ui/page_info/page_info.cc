@@ -120,18 +120,21 @@ ContentSettingsType kPermissionType[] = {
     CONTENT_SETTINGS_TYPE_MIDI_SYSEX,
 };
 
+bool IsPermissionFactoryDefault(HostContentSettingsMap* content_settings,
+                                const PageInfoUI::PermissionInfo& info) {
+  return ((info.source == content_settings::SETTING_SOURCE_NONE ||
+           info.source == content_settings::SETTING_SOURCE_USER) &&
+          content_settings->GetFactoryDefaultContentSetting(info.type) ==
+              info.default_setting &&
+          info.setting == CONTENT_SETTING_DEFAULT);
+}
+
 // Determines whether to show permission |type| in the Page Info UI. Only
 // applies to permissions listed in |kPermissionType|.
-bool ShouldShowPermission(ContentSettingsType type,
+bool ShouldShowPermission(const PageInfoUI::PermissionInfo& info,
                           const GURL& site_url,
                           HostContentSettingsMap* content_settings) {
-#if !defined(OS_ANDROID)
-  // Autoplay is Android-only at the moment.
-  if (type == CONTENT_SETTINGS_TYPE_AUTOPLAY)
-    return false;
-#endif
-
-  if (type == CONTENT_SETTINGS_TYPE_ADS) {
+  if (info.type == CONTENT_SETTINGS_TYPE_ADS) {
     if (!base::FeatureList::IsEnabled(
             subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI)) {
       return false;
@@ -144,7 +147,21 @@ bool ShouldShowPermission(ContentSettingsType type,
                nullptr) != nullptr;
   }
 
-  if (type == CONTENT_SETTINGS_TYPE_SOUND)
+  // Note |CONTENT_SETTINGS_TYPE_ADS| (above) will show up regardless of its
+  // default value when it has been activated on the current origin.
+  if ((base::CommandLine::ForCurrentProcess()->HasSwitch(
+           switches::kEnableSiteSettings) ||
+       base::FeatureList::IsEnabled(features::kSiteDetails)) &&
+      IsPermissionFactoryDefault(content_settings, info))
+    return false;
+
+#if !defined(OS_ANDROID)
+  // Autoplay is Android-only at the moment.
+  if (info.type == CONTENT_SETTINGS_TYPE_AUTOPLAY)
+    return false;
+#endif
+
+  if (info.type == CONTENT_SETTINGS_TYPE_SOUND)
     return base::FeatureList::IsEnabled(features::kSoundContentSetting);
 
   return true;
@@ -752,11 +769,6 @@ void PageInfo::PresentSitePermissions() {
   for (size_t i = 0; i < arraysize(kPermissionType); ++i) {
     permission_info.type = kPermissionType[i];
 
-    if (!ShouldShowPermission(permission_info.type, site_url_,
-                              content_settings_)) {
-      continue;
-    }
-
     content_settings::SettingInfo info;
     std::unique_ptr<base::Value> value = content_settings_->GetWebsiteSetting(
         site_url_, site_url_, permission_info.type, std::string(), &info);
@@ -803,7 +815,8 @@ void PageInfo::PresentSitePermissions() {
         permission_info.setting = permission_result.content_setting;
     }
 
-    permission_info_list.push_back(permission_info);
+    if (ShouldShowPermission(permission_info, site_url_, content_settings_))
+      permission_info_list.push_back(permission_info);
   }
 
   for (const ChooserUIInfo& ui_info : kChooserUIInfo) {

@@ -102,6 +102,11 @@ class HostContentSettingsMap : public content_settings::Observer,
   ContentSetting GetDefaultContentSetting(ContentSettingsType content_type,
                                           std::string* provider_id) const;
 
+  // Returns the original default setting set by Chrome for a particular content
+  // type.
+  ContentSetting GetFactoryDefaultContentSetting(
+      ContentSettingsType content_type) const;
+
   // Returns a single |ContentSetting| which applies to the given URLs.  Note
   // that certain internal schemes are whitelisted. For |CONTENT_TYPE_COOKIES|,
   // |CookieSettings| should be used instead. For content types that can't be
