@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "a4fafdb7_f52bf7c3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-must-not-contain-cookie.htm",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-13T11:21:37Z",
+      "side": 1,
+      "message": "let\u0027s name this setupCookie",
+      "revId": "63745d3cd569e4d696eabfd7162363a4c0a2078c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b54a921c_b8eb229e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-must-not-contain-cookie.htm",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-13T11:21:37Z",
+      "side": 1,
+      "message": "let\u0027s name this sendPreflightedRequest",
+      "revId": "63745d3cd569e4d696eabfd7162363a4c0a2078c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1826b72a_571bedda",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-must-not-contain-cookie.htm",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-13T11:21:37Z",
+      "side": 1,
+      "message": "let\u0027s name this cleanupCookies",
+      "revId": "63745d3cd569e4d696eabfd7162363a4c0a2078c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e1f20c6_03762d49",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-cookie.py",
         "patchSetId": 4
@@ -34,6 +85,40 @@
       "revId": "63745d3cd569e4d696eabfd7162363a4c0a2078c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0ce3af8b_17f296cd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-cookie.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-13T11:21:37Z",
+      "side": 1,
+      "message": "it looks response.set_cookie() of wptserve switches its behavior based on the type of the expires argument. so, we can omit datetime.datetime.now()?",
+      "revId": "63745d3cd569e4d696eabfd7162363a4c0a2078c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d640e467_60af8931",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-cookie.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-13T11:21:37Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "63745d3cd569e4d696eabfd7162363a4c0a2078c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

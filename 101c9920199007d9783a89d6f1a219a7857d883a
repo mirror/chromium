@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b075c315_3cfe7243",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-cookie.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-13T11:21:37Z",
+      "side": 1,
+      "message": "time is not used?",
+      "revId": "101c9920199007d9783a89d6f1a219a7857d883a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -177,6 +177,23 @@
     },
     {
       "key": {
+        "uuid": "4adfbea7_9d88a08e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-must-not-contain-cookie.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-13T11:21:37Z",
+      "side": 1,
+      "message": "step_func_done",
+      "revId": "2931db2e66ee2de23df4d322f87086272738c022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80ed56cb_c5aef4f3",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-cookie.py",
         "patchSetId": 3
