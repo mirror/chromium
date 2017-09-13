@@ -88,6 +88,24 @@
       "revId": "1cafdbd840310975880c30cf86976ca9543766be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e3eb222_638ec856",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1118279
+      },
+      "writtenOn": "2017-09-13T17:33:05Z",
+      "side": 1,
+      "message": "Ack - removed the dependency on chrome feature from here. If we move the feature to arc_features that could be done in a separate cl (not related to the \"pref\" which is what this cl concerns itself with)",
+      "parentUuid": "2b063423_b2a4455e",
+      "revId": "1cafdbd840310975880c30cf86976ca9543766be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
