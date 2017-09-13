@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e89fc6b2_4c58cb12",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-13T22:07:33Z",
+      "side": 1,
+      "message": "Instead of symbol, let\u0027s use empty filter to \u0027All\u0027 group. When we converge sidebar with regular filter, All will just mean empty filter and default levels.",
+      "revId": "ee0a780bacfaf431b31962ad0a873de2a7e81934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bc08807_01eceab0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-13T22:07:33Z",
+      "side": 1,
+      "message": "I think it\u0027s time to introduce struct-like Console.ConsoleFilter, and use it here and in ConsoleView. I\u0027d say it should have parsedFilter, name, levelsMask, and info/warning/error counters. WDYT?",
+      "revId": "ee0a780bacfaf431b31962ad0a873de2a7e81934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
