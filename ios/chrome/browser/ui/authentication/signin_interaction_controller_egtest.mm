@@ -56,6 +56,7 @@ void TapButtonWithAccessibilityLabel(NSString* label) {
 void TapButtonWithLabelId(int message_id) {
   id<GREYMatcher> matcher =
       chrome_test_util::ButtonWithAccessibilityLabelId(message_id);
+  WaitForMatcher(matcher);
   [[EarlGrey selectElementWithMatcher:matcher] performAction:grey_tap()];
 }
 
