@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f6474e6_9edaee5b",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-13T18:43:07Z",
+      "side": 1,
+      "message": "Please initialize the match_in fields here, else someone may wonder why you initialize some of the fields but not others.",
+      "range": {
+        "startLine": 143,
+        "startChar": 5,
+        "endLine": 143,
+        "endChar": 36
+      },
+      "revId": "3dc1de57c31dd2c5e74e532a49f1f6315a74faf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "182355cb_436f49bd",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-13T18:43:07Z",
+      "side": 1,
+      "message": "nit: please consider explicitly including autocomplete_match in this file instead of relying that you happen to get it transitively.",
+      "range": {
+        "startLine": 327,
+        "startChar": 14,
+        "endLine": 327,
+        "endChar": 31
+      },
+      "revId": "3dc1de57c31dd2c5e74e532a49f1f6315a74faf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
