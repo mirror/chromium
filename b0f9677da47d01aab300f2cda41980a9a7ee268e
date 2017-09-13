@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97ec98aa_ffc887d4",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T16:20:39Z",
+      "side": 1,
+      "message": "Remove the header for set. Rename the variable as it contains all the passwords.",
+      "range": {
+        "startLine": 398,
+        "startChar": 7,
+        "endLine": 398,
+        "endChar": 13
+      },
+      "revId": "b0f9677da47d01aab300f2cda41980a9a7ee268e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f569e3b_adfab91b",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T16:20:39Z",
+      "side": 1,
+      "message": "std::move(element)",
+      "range": {
+        "startLine": 542,
+        "startChar": 43,
+        "endLine": 542,
+        "endChar": 50
+      },
+      "revId": "b0f9677da47d01aab300f2cda41980a9a7ee268e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa25374_26f92d93",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T16:20:39Z",
+      "side": 1,
+      "message": "std::move(other_possible_passwords)",
+      "range": {
+        "startLine": 550,
+        "startChar": 48,
+        "endLine": 550,
+        "endChar": 72
+      },
+      "revId": "b0f9677da47d01aab300f2cda41980a9a7ee268e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
