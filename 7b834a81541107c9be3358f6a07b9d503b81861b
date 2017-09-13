@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86c90b35_13382042",
+        "filename": "chrome/browser/ssl/security_state_tab_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-09-13T22:44:21Z",
+      "side": 1,
+      "message": "nit: Drop else?\n\nif (...) {\n  return security_state::MALICIOUS_CONTENT_STATUS_PASSWORD_REUSE;\n}\nreturn security_state::MALICIOUS_CONTENT_STATUS_SOCIAL_ENGINEERING;",
+      "revId": "7b834a81541107c9be3358f6a07b9d503b81861b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0075a04_c9869c3a",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browser_tests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-09-13T22:44:21Z",
+      "side": 1,
+      "message": "nit: \"unused-token\"?",
+      "revId": "7b834a81541107c9be3358f6a07b9d503b81861b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
