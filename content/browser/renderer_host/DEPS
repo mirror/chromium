@@ -4,6 +4,7 @@ include_rules = [
   "+components/viz/host",
   "+components/viz/service",
   "+services/ui/public",
+  "+third_party/WebKit/public/platform/WebGestureCurve.h",
   "+third_party/zlib",
   "+ui/latency",
 

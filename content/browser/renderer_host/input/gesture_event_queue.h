@@ -73,6 +73,7 @@ class CONTENT_EXPORT GestureEventQueue {
   // Both |client| and |touchpad_client| must outlive the GestureEventQueue.
   GestureEventQueue(GestureEventQueueClient* client,
                     TouchpadTapSuppressionControllerClient* touchpad_client,
+                    FlingControllerClient* fling_client,
                     const Config& config);
   ~GestureEventQueue();
 
@@ -106,6 +107,8 @@ class CONTENT_EXPORT GestureEventQueue {
   // as unnecessary.
   bool ShouldDiscardFlingCancelEvent(
       const GestureEventWithLatencyInfo& gesture_event) const;
+
+  void ProgressFling(base::TimeTicks time);
 
   void set_debounce_interval_time_ms_for_testing(int interval_ms) {
     debounce_interval_ = base::TimeDelta::FromMilliseconds(interval_ms);
@@ -166,8 +169,8 @@ class CONTENT_EXPORT GestureEventQueue {
   // The receiver of all forwarded gesture events.
   GestureEventQueueClient* client_;
 
-  // True if a GestureFlingStart is in progress on the renderer or
-  // queued without a subsequent queued GestureFlingCancel event.
+  // True if a GestureFlingStart is in progress or queued without a subsequent
+  // queued GestureFlingCancel event.
   bool fling_in_progress_;
 
   // True if a GestureScrollUpdate sequence is in progress.

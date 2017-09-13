@@ -51,6 +51,7 @@ class CONTENT_EXPORT InputRouterImplClient : public InputRouterClient {
 class CONTENT_EXPORT InputRouterImpl
     : public InputRouter,
       public GestureEventQueueClient,
+      public FlingControllerClient,
       public MouseWheelEventQueueClient,
       public TouchEventQueueClient,
       public TouchpadTapSuppressionControllerClient,
@@ -73,6 +74,7 @@ class CONTENT_EXPORT InputRouterImpl
   void NotifySiteIsMobileOptimized(bool is_mobile_optimized) override;
   bool HasPendingEvents() const override;
   void SetDeviceScaleFactor(float device_scale_factor) override;
+  void ProgressFling(base::TimeTicks time) override;
   void SetFrameTreeNodeId(int frame_tree_node_id) override;
   void SetForceEnableZoom(bool enabled) override;
   cc::TouchAction AllowedTouchAction() override;
@@ -110,11 +112,15 @@ class CONTENT_EXPORT InputRouterImpl
                        InputEventAckState ack_result) override;
   void OnFilteringTouchEvent(const blink::WebTouchEvent& touch_event) override;
 
-  // GestureEventFilterClient
+  // GestureEventQueueClient
   void SendGestureEventImmediately(
       const GestureEventWithLatencyInfo& gesture_event) override;
   void OnGestureEventAck(const GestureEventWithLatencyInfo& event,
                          InputEventAckState ack_result) override;
+
+  // FlingControllerClient
+  void SendGeneratedWheelEvent(
+      const MouseWheelEventWithLatencyInfo& wheel_event) override;
 
   // MouseWheelEventQueueClient
   void SendMouseWheelEventImmediately(
