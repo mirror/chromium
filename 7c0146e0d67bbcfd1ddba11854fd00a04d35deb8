@@ -204,6 +204,24 @@
       "revId": "7c0146e0d67bbcfd1ddba11854fd00a04d35deb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "723cd513_1a1ca999",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2_worker/Audits2Service.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-09-13T04:50:56Z",
+      "side": 1,
+      "message": "Yeah that sounds good I\u0027ll give it a shot",
+      "parentUuid": "53312c23_113c3df6",
+      "revId": "7c0146e0d67bbcfd1ddba11854fd00a04d35deb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
