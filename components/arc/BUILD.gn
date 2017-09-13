@@ -244,6 +244,7 @@ source_set("unit_tests") {
     "intent_helper/intent_filter_unittest.cc",
     "intent_helper/link_handler_model_unittest.cc",
     "intent_helper/page_transition_util_unittest.cc",
+    "power/arc_power_bridge_unittest.cc",
   ]
 
   deps = [
