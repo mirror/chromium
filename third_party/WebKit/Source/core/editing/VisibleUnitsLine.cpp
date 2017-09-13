@@ -85,6 +85,11 @@ ContainerNode* HighestEditableRoot(const Position& position,
   return HighestEditableRoot(position);
 }
 
+ContainerNode* HighestEditableRoot(const PositionInFlatTree& position,
+                                   EditableType editable_type) {
+  return HighestEditableRoot(ToPositionInDOMTree(position), editable_type);
+}
+
 ContainerNode* HighestEditableRootOfNode(const Node& node,
                                          EditableType editable_type) {
   // TODO(editing-dev): We should introduce |const Node&| version of
@@ -260,17 +265,22 @@ LayoutPoint AbsoluteLineDirectionPointToLocalPointInBlock(
       LayoutUnit(line_direction_point - absolute_block_point.Y()));
 }
 
-bool InSameLine(const Node& node, const VisiblePosition& visible_position) {
+template <typename Strategy>
+bool InSameLine(const Node& node,
+                const VisiblePositionTemplate<Strategy>& visible_position) {
   if (!node.GetLayoutObject())
     return true;
   return InSameLine(CreateVisiblePosition(
-                        FirstPositionInOrBeforeNode(const_cast<Node*>(&node))),
+                        PositionTemplate<Strategy>::FirstPositionInOrBeforeNode(
+                            const_cast<Node*>(&node))),
                     visible_position);
 }
 
-Node* FindNodeInPreviousLine(const Node& start_node,
-                             const VisiblePosition& visible_position,
-                             EditableType editable_type) {
+template <typename Strategy>
+Node* FindNodeInPreviousLine(
+    const Node& start_node,
+    const VisiblePositionTemplate<Strategy>& visible_position,
+    EditableType editable_type) {
   for (Node* runner =
            PreviousLeafWithSameEditability(start_node, editable_type);
        runner;
@@ -284,9 +294,10 @@ Node* FindNodeInPreviousLine(const Node& start_node,
 }  // namespace
 
 // FIXME: consolidate with code in previousLinePosition.
-Position PreviousRootInlineBoxCandidatePosition(
+template <typename Strategy>
+PositionTemplate<Strategy> PreviousRootInlineBoxCandidatePositionAlgorithm(
     Node* node,
-    const VisiblePosition& visible_position,
+    const VisiblePositionTemplate<Strategy>& visible_position,
     EditableType editable_type) {
   DCHECK(visible_position.IsValid()) << visible_position;
   ContainerNode* highest_root =
@@ -298,14 +309,31 @@ Position PreviousRootInlineBoxCandidatePosition(
     if (HighestEditableRootOfNode(*runner, editable_type) != highest_root)
       break;
 
-    const Position& candidate =
+    const PositionTemplate<Strategy>& candidate =
         isHTMLBRElement(*runner)
-            ? Position::BeforeNode(*runner)
-            : Position::EditingPositionOf(runner, CaretMaxOffset(runner));
+            ? PositionTemplate<Strategy>::BeforeNode(*runner)
+            : PositionTemplate<Strategy>::EditingPositionOf(
+                  runner, CaretMaxOffset(runner));
     if (IsVisuallyEquivalentCandidate(candidate))
       return candidate;
   }
-  return Position();
+  return PositionTemplate<Strategy>();
+}
+
+Position PreviousRootInlineBoxCandidatePosition(
+    Node* node,
+    const VisiblePosition& visible_position,
+    EditableType editable_type) {
+  return PreviousRootInlineBoxCandidatePositionAlgorithm(node, visible_position,
+                                                         editable_type);
+}
+
+PositionInFlatTree PreviousRootInlineBoxCandidatePosition(
+    Node* node,
+    const VisiblePositionInFlatTree& visible_position,
+    EditableType editable_type) {
+  return PreviousRootInlineBoxCandidatePositionAlgorithm(node, visible_position,
+                                                         editable_type);
 }
 
 Position NextRootInlineBoxCandidatePosition(
