@@ -37,12 +37,6 @@ QUIC_FLAG(bool,
 // If true, disable pacing in QUIC.
 QUIC_FLAG(bool, FLAGS_quic_disable_pacing_for_perf_tests, false)
 
-// If true, QUIC public reset packets will have the \"pre-v33\" public header
-// flags.
-QUIC_FLAG(bool,
-          FLAGS_quic_reloadable_flag_quic_use_old_public_reset_packets,
-          true)
-
 // If true, QUIC will use cheap stateless rejects without creating a full
 // connection.
 QUIC_FLAG(bool,
