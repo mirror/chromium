@@ -335,6 +335,9 @@ are exported to translation interchange files (e.g. XMB files), etc.
 
     formatter = GetFormatter(output_node.GetType())
     formatted = formatter(node, output_node.GetLanguage(), output_dir=base_dir)
+    if output_node.GetType() == 'data_package':
+      with open(output_node.GetOutputFilename() + '.info', 'w') as infofile:
+        infofile.writelines('\n'.join(node.info))
     outfile.writelines(formatted)
 
 
