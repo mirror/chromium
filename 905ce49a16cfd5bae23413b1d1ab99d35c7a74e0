@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ae1dba5_fd5b26ca",
+        "filename": "chrome/browser/vr/elements/vector_icon.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-13T16:28:25Z",
+      "side": 1,
+      "message": "nit: s/pixel_size/size_px/?",
+      "range": {
+        "startLine": 20,
+        "startChar": 26,
+        "endLine": 20,
+        "endChar": 36
+      },
+      "revId": "905ce49a16cfd5bae23413b1d1ab99d35c7a74e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
