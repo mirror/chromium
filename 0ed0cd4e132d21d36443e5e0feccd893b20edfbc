@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3d12aa3_f67d585c",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-13T12:50:40Z",
+      "side": 1,
+      "message": "Would it make sense to define these states based on the MediaElement state? Instead of having parts of the code setting the new state, there could be a method computing the current state. That way, we could have event handlers updating the state without having to know if the state actually changed. It would help situations where the new state isn\u0027t obvious (for example, when playback starts). WDYT?",
+      "revId": "0ed0cd4e132d21d36443e5e0feccd893b20edfbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
