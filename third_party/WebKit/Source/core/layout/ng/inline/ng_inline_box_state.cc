@@ -50,6 +50,9 @@ NGInlineBoxState* NGInlineLayoutStateStack::OnBeginPlaceItems(
     // For the following lines, clear states that are not shared across lines.
     for (auto& box : stack_) {
       box.fragment_start = 0;
+      // The line height quirk resets metrics on every new line
+      if (!no_quirks_mode_)
+        box.text_metrics = NGLineHeightMetrics();
       box.metrics = box.text_metrics;
       if (box.needs_box_fragment) {
         box.line_left_position = LayoutUnit();
@@ -67,7 +70,9 @@ NGInlineBoxState* NGInlineLayoutStateStack::OnBeginPlaceItems(
   // Use a "strut" (a zero-width inline box with the element's font and
   // line height properties) as the initial metrics for the line box.
   // https://drafts.csswg.org/css2/visudet.html#strut
-  line_box.ComputeTextMetrics(*line_style, baseline_type);
+  // The line height quirk omits this.
+  if (no_quirks_mode_)
+    line_box.ComputeTextMetrics(*line_style, baseline_type);
 
   return &stack_.back();
 }
@@ -89,6 +94,7 @@ NGInlineBoxState* NGInlineLayoutStateStack::OnOpenTag(
       position + item_result.margins.LineLeft(item.Style()->Direction());
   box->borders_paddings_block_start = item_result.borders_paddings_block_start;
   box->borders_paddings_block_end = item_result.borders_paddings_block_end;
+
   return box;
 }
 
@@ -118,8 +124,13 @@ void NGInlineLayoutStateStack::OnEndPlaceItems(
   if (!box_placeholders_.IsEmpty())
     CreateBoxFragments(line_box);
 
-  DCHECK(!LineBoxState().metrics.IsEmpty());
-  line_box->SetMetrics(LineBoxState().metrics);
+  NGInlineBoxState& box = LineBoxState();
+  if (box.metrics.IsEmpty()) {
+    // Line height quirk: set metrics if line is empty (eg. only contains BR)
+    DCHECK(!no_quirks_mode_);
+    box.ComputeTextMetrics(*box.style, baseline_type);
+  }
+  line_box->SetMetrics(box.metrics);
 }
 
 void NGInlineLayoutStateStack::EndBoxState(NGInlineBoxState* box,
