@@ -4,6 +4,22 @@
       "all"
     ]
   },
+  "Android O tests": {
+    "instrumentation_tests": [
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "android_devices": "1",
+              "device_type": "coho"
+            }
+          ]
+        },
+        "test": "chrome_public_test_apk"
+      }
+    ]
+  },
   "Android VR Tests": {
     "gtest_tests": [
       {
