@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b5febfb3_0d86f82c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-13T19:53:50Z",
+      "side": 1,
+      "message": "I think I prefer to keep it as it is for now. Both for the sake of the method name length and in order to be consistent with the one further down, which I\u0027m going to name IsFragmentainerOutOfSpace(), per your request. I\u0027ll improve the documentation a little, though.",
+      "parentUuid": "ea8034f5_f84df237",
+      "revId": "0c5ffc9a0e325fcd613d212c9894fa8cd42db67c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a9bd648_1a0f0a6e",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "0c5ffc9a0e325fcd613d212c9894fa8cd42db67c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21227d1f_7232615d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-13T19:53:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a9bd648_1a0f0a6e",
+      "revId": "0c5ffc9a0e325fcd613d212c9894fa8cd42db67c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
