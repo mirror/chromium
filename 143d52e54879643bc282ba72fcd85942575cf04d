@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "0e20bab1_772ff8e6",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-13T00:19:15Z",
+      "side": 1,
+      "message": "Please comment and forward declare ToolbarStyle. Also, I think you can get the style from the toolbarConfiguration, right? So this might not be needed.",
+      "range": {
+        "startLine": 22,
+        "startChar": 39,
+        "endLine": 22,
+        "endChar": 51
+      },
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80f26dae_b8603070",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-13T00:19:15Z",
+      "side": 1,
+      "message": "I think it makes more sense for the Factory to be a property of the toolbarConfiguration instead of the other way around. The configuration is not really part of the factory (not being created by the factory), but a custom factory sounds like something that could live inside the configuration. WDYT?",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 46
+      },
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d723d06_36f2e494",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button_factory.mm",
         "patchSetId": 6
@@ -36,6 +82,52 @@
       "writtenOn": "2017-09-12T16:01:29Z",
       "side": 1,
       "message": "nit: Please comment.",
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38b7cff6_a874fbe8",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_configuration.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-13T00:19:15Z",
+      "side": 1,
+      "message": "nit: Please add a small comment.",
+      "range": {
+        "startLine": 15,
+        "startChar": 16,
+        "endLine": 15,
+        "endChar": 29
+      },
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98209ee8_f94d9a00",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_configuration.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-13T00:19:15Z",
+      "side": 1,
+      "message": "Maybe we can allow -(instancetype) init and use the Designate initializer with NORMAL. That would allow us to set the style later on if needed, since the style property is public.",
+      "range": {
+        "startLine": 16,
+        "startChar": 16,
+        "endLine": 16,
+        "endChar": 20
+      },
       "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
