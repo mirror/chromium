@@ -324,11 +324,15 @@ bool Animation::PreCommit(
   if (should_start) {
     compositor_group_ = compositor_group;
     if (start_on_compositor) {
-      if (CheckCanStartAnimationOnCompositor(composited_element_ids).Ok()) {
+      CompositorAnimations::FailureCode failure_code =
+          CheckCanStartAnimationOnCompositor(composited_element_ids);
+      if (failure_code.Ok()) {
         CreateCompositorPlayer();
         StartAnimationOnCompositor(composited_element_ids);
         compositor_state_ = WTF::WrapUnique(new CompositorState(*this));
       } else {
+        if (failure_code.element_does_not_paint_into_own_backing)
+          is_non_composited_compositable_ = true;
         CancelIncompatibleAnimationsOnCompositor();
       }
     }
