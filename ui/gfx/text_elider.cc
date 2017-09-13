@@ -205,7 +205,7 @@ base::string16 ElideText(const base::string16& text,
   // performance purposes. This matches the behavior of Canvas::SizeStringFloat.
   render_text->set_truncate_length(5000);
   render_text->SetFontList(font_list);
-  available_pixel_width = std::ceil(available_pixel_width);
+  available_pixel_width = std::floor(available_pixel_width);
   render_text->SetDisplayRect(
       gfx::ToEnclosingRect(gfx::RectF(gfx::SizeF(available_pixel_width, 1))));
   render_text->SetElideBehavior(behavior);
