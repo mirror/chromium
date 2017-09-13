@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "cd52b527_d7c2505d",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-13T06:07:06Z",
+      "side": 1,
+      "message": "We can do paint invalidation node in RemoveMarkerByTag(). It isn\u0027t\nspecific to DMC.\n\n* Idea 1\nWe have two classes: DMC and NodeMarkerMap.\n- DMC provides API and GetXXXList() which returns specific list impl\n- NodeMarkerMap is {MarkerMap makers_, and possibly_existing_marker_types_}\nand AddMarker() and RemoveMarker()\n\nXXXListImpl should have pointer to NodeMarkerMap.\n\n* Idea 2\nIntroduce stack allocated SuggetionMarkerController which provides\nSuggetionMarker specific functions.\n\nclass SuggetionMarkerController {\n STACK_ALLOCATED();\n\npublic:\n  SuggetionMarkeController(DocumentMarkerController*);\n\n  void AddSuggestionMakrer(...);\n  void RemoveMarkerByTag(...);\n\nprivatge:\n  // Using |controller_| to call updating MarkerMap + \n  // possibly_existing_marker_types_\n  DocumentMarkerController\u0026 controller_;\n};\n\n\nclass DocumentMarkerController {\n private:\n  // We may not make SMC as friend of DMC.\n  friend class SuggetionMarkerController;\n  ...\n};\n\nSo, SuggetionMarkerController is an extension of DMC.",
+      "parentUuid": "444ee9b3_9dcc2baf",
+      "revId": "1d19cdda0df0cb21a455263d76e090833821e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8874c3f8_6a42a781",
         "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
         "patchSetId": 3
