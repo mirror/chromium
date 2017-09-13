@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "906ffc67_98467f24",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-13T11:14:55Z",
+      "side": 1,
+      "message": "Done. Yes. Thank you! Good catch.",
+      "parentUuid": "f0a77c59_fc9992d0",
+      "revId": "0bb571170c5c63f5fe2b9b59cad72991e2aede1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8921b27_d3d8fa52",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d869b281_ce792c94",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-13T11:14:55Z",
+      "side": 1,
+      "message": "As far as I tested, the ax node seems to be removed correctly, i.e. unable to navigate to removed notification. I don\u0027t think we need it as far as I tested.",
+      "parentUuid": "c8921b27_d3d8fa52",
+      "revId": "0bb571170c5c63f5fe2b9b59cad72991e2aede1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ed2ee4a_3806ecdd",
         "filename": "ui/arc/notification/arc_notification_content_view.cc",
         "patchSetId": 7
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-12T18:43:15Z",
       "side": 1,
       "message": "You do this as well in the observer in ArcAccessibilityHelperBridge.",
+      "revId": "0bb571170c5c63f5fe2b9b59cad72991e2aede1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf63f125_c94324e2",
+        "filename": "ui/arc/notification/arc_notification_content_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-13T11:14:55Z",
+      "side": 1,
+      "message": "Yes, I\u0027m dispatching the event in 2 places intentionally.\n\nProblem is that order of OnNotificationSurfaceAdded is undefined. (Maybe defined but it\u0027s not guaranteed in the future).\n\nTo make ArcNotificationContentView populate AXNodeData properly, we need to dispatch the event after\n\n1. AXTreeId is set to ArcNotificationSurface. (Happen in ArcAccessibilityHelperBridge::OnNotificationSurfaceAdded)\n2. ArcNotificationSurface is set to ArcNotificationContentView. (Happen in ArcNotificationContentView::OnNotificationSurfaceAdded)",
+      "parentUuid": "3ed2ee4a_3806ecdd",
       "revId": "0bb571170c5c63f5fe2b9b59cad72991e2aede1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
