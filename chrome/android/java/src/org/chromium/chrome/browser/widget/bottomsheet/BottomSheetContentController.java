@@ -102,7 +102,7 @@ public class BottomSheetContentController extends BottomNavigationView
             if (!mDefaultContentInitialized) initializeDefaultContent();
             if (mHighlightItemId != null) {
                 mHighlightedView = mActivity.findViewById(mHighlightItemId);
-                ViewHighlighter.turnOnHighlight(mHighlightedView, false);
+                turnOnHighlight(mHighlightedView, false);
             }
         }
 
@@ -118,7 +118,7 @@ public class BottomSheetContentController extends BottomNavigationView
             UiUtils.hideKeyboard((View) BottomSheetContentController.this);
             // TODO(twellington): determine a policy for destroying the
             //                    SuggestionsBottomSheetContent.
-            ViewHighlighter.turnOffHighlight(mHighlightedView);
+            turnOffHighlight(mHighlightedView);
             mHighlightedView = null;
             mHighlightItemId = null;
         }
@@ -168,6 +168,41 @@ public class BottomSheetContentController extends BottomNavigationView
 
     public void setHighlightItemId(@Nullable Integer highlightItemId) {
         mHighlightItemId = highlightItemId;
+    }
+
+    /**
+     * Updates the menu item padding to match the other menu items in the event that the padding
+     * is reset somehow, such as through the in-product help highlighting.
+     *
+     * @param highlightedView The View associated with the menu item.
+     */
+    private void updateMenuItemPadding(View highlightedView) {
+        int padding = getMenuView().getMenuItemPadding();
+        highlightedView.setPadding(padding, highlightedView.getPaddingTop(), padding,
+                highlightedView.getPaddingBottom());
+    }
+
+    /**
+     * Enables highlighting for a menu item.
+     *
+     * @param highlightedView The View associated with the menu item.
+     * @param circular Whether or not the highlighting should be circular. Otherwise it's
+     * rectangular.
+     */
+    private void turnOnHighlight(View highlightedView, boolean circular) {
+        if (highlightedView == null) return;
+        ViewHighlighter.turnOnHighlight(highlightedView, circular);
+        updateMenuItemPadding(highlightedView);
+    }
+
+    /** Disable highlighting for the menu item.
+     *
+     * @param highlightedView The View associated with the menu item.
+     */
+    private void turnOffHighlight(View highlightedView) {
+        if (highlightedView == null) return;
+        ViewHighlighter.turnOffHighlight(highlightedView);
+        updateMenuItemPadding(highlightedView);
     }
 
     /** Called when the activity containing the bottom sheet is destroyed. */
@@ -314,7 +349,7 @@ public class BottomSheetContentController extends BottomNavigationView
             return false;
         }
 
-        ViewHighlighter.turnOffHighlight(mHighlightedView);
+        turnOffHighlight(mHighlightedView);
         mHighlightedView = null;
         mHighlightItemId = null;
 

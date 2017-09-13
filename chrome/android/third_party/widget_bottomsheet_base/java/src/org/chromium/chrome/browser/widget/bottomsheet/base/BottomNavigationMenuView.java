@@ -49,6 +49,7 @@ public class BottomNavigationMenuView extends LinearLayout implements MenuView {
     private ColorStateList mItemTextColor;
     private int mItemBackgroundRes;
     private int mMenuWidth;
+    private int mMenuItemPadding;
 
     private BottomNavigationPresenter mPresenter;
     private MenuBuilder mMenu;
@@ -244,9 +245,21 @@ public class BottomNavigationMenuView extends LinearLayout implements MenuView {
             mMenuWidth = menuWidth;
             int iconWidths = iconWidth * mButtons.length;
             int padding = (menuWidth - iconWidths) / (mButtons.length * 2);
+            mMenuItemPadding = padding;
             for (BottomNavigationItemView item : mButtons) {
-                item.setPadding(padding, item.getPaddingTop(), padding, item.getPaddingBottom());
+                item.setPadding(mMenuItemPadding, item.getPaddingTop(), mMenuItemPadding,
+                        item.getPaddingBottom());
             }
         }
+    }
+
+    /**
+     * Returns the current menu item left/right padding, in case an external class needs to modify
+     * menu items, such as for in-product help.
+     *
+     * @return The left/right padding of menu items.
+     */
+    public int getMenuItemPadding() {
+        return mMenuItemPadding;
     }
 }
