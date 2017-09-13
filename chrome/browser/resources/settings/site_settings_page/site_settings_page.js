@@ -115,11 +115,15 @@ Polymer({
       if (key == settings.ContentSettingsTypes.USB_DEVICES ||
           key == settings.ContentSettingsTypes.ZOOM_LEVELS)
         continue;
-      // Some values are not available (and will DCHECK) in guest mode.
+      // Some values are not available (and will DCHECK) in guest mode/non-CrOS.
       if (this.isGuest_ &&
           key == settings.ContentSettingsTypes.PROTOCOL_HANDLERS) {
         continue;
       }
+      // <if expr="not chromeos">
+      if (key == settings.ContentSettingsTypes.PROTECTED_CONTENT)
+        continue;
+      // </if>
       this.updateDefaultValueLabel_(key);
     }
 
