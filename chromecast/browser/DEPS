@@ -22,6 +22,7 @@ include_rules = [
   "+gpu/command_buffer/service/gpu_switches.h",
   "+media/audio",
   "+media/base",
+  "+media/media_features.h",
   "+media/mojo",
   "+mojo/public",
   "+net",
