@@ -22,6 +22,30 @@
       "revId": "a6ffb919edbcd6fb0b46c85b8381f15ee745f25a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b8b24be_040a8339",
+        "filename": "base/android/jni_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-13T13:08:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "889e97aa_47592cae",
+      "range": {
+        "startLine": 289,
+        "startChar": 17,
+        "endLine": 289,
+        "endChar": 21
+      },
+      "revId": "a6ffb919edbcd6fb0b46c85b8381f15ee745f25a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
