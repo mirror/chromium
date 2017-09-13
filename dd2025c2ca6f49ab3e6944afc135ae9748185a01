@@ -22,6 +22,30 @@
       "revId": "dd2025c2ca6f49ab3e6944afc135ae9748185a01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77bea426_e6c714d3",
+        "filename": "third_party/WebKit/Source/platform/scroll/SmoothScrollSequencer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-13T23:10:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31ce9c6e_7c182737",
+      "range": {
+        "startLine": 53,
+        "startChar": 32,
+        "endLine": 53,
+        "endChar": 46
+      },
+      "revId": "dd2025c2ca6f49ab3e6944afc135ae9748185a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
