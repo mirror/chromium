@@ -57,22 +57,6 @@ inline bool IsChromeOS() {
 #endif
 }
 
-inline bool IsArchitectureX86_64() {
-#if defined(__x86_64__)
-  return true;
-#else
-  return false;
-#endif
-}
-
-inline bool IsArchitectureI386() {
-#if defined(__i386__)
-  return true;
-#else
-  return false;
-#endif
-}
-
 inline bool IsArchitectureArm() {
 #if defined(__arm__) || defined(__aarch64__)
   return true;
@@ -95,17 +79,6 @@ inline bool UseLibV4L2() {
 #else
   return false;
 #endif
-}
-
-bool IsAcceleratedVaapiVideoEncodeEnabled() {
-  bool accelerated_encode_enabled = false;
-#if defined(OS_CHROMEOS)
-  const base::CommandLine& command_line =
-      *base::CommandLine::ForCurrentProcess();
-  accelerated_encode_enabled =
-      !command_line.HasSwitch(switches::kDisableVaapiAcceleratedVideoEncode);
-#endif
-  return accelerated_encode_enabled;
 }
 
 bool IsAcceleratedVideoDecodeEnabled() {
@@ -294,33 +267,6 @@ bool GpuProcessPolicy::PreSandboxHook() {
   InitGpuBrokerProcess(
       GpuBrokerProcessPolicy::Create,
       std::vector<BrokerFilePermission>());  // No extra files in whitelist.
-
-  if (IsArchitectureX86_64() || IsArchitectureI386()) {
-    // Accelerated video dlopen()'s some shared objects
-    // inside the sandbox, so preload them now.
-    if (IsAcceleratedVaapiVideoEncodeEnabled() ||
-        IsAcceleratedVideoDecodeEnabled()) {
-      const char* I965DrvVideoPath = NULL;
-      const char* I965HybridDrvVideoPath = NULL;
-
-      if (IsArchitectureX86_64()) {
-        I965DrvVideoPath = "/usr/lib64/va/drivers/i965_drv_video.so";
-        I965HybridDrvVideoPath = "/usr/lib64/va/drivers/hybrid_drv_video.so";
-      } else if (IsArchitectureI386()) {
-        I965DrvVideoPath = "/usr/lib/va/drivers/i965_drv_video.so";
-      }
-
-      dlopen(I965DrvVideoPath, RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
-      if (I965HybridDrvVideoPath)
-        dlopen(I965HybridDrvVideoPath, RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
-      dlopen("libva.so.1", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
-#if defined(USE_OZONE)
-      dlopen("libva-drm.so.1", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
-#elif defined(USE_X11)
-      dlopen("libva-x11.so.1", RTLD_NOW | RTLD_GLOBAL | RTLD_NODELETE);
-#endif
-    }
-  }
 
   return true;
 }
