@@ -5,6 +5,7 @@
 #ifndef DocumentXSLT_h
 #define DocumentXSLT_h
 
+#include "core/CoreExport.h"
 #include "core/dom/Document.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/RefPtr.h"
@@ -14,8 +15,8 @@ namespace blink {
 class Document;
 class ProcessingInstruction;
 
-class DocumentXSLT final : public GarbageCollected<DocumentXSLT>,
-                           public Supplement<Document> {
+class CORE_EXPORT DocumentXSLT final : public GarbageCollected<DocumentXSLT>,
+                                       public Supplement<Document> {
   WTF_MAKE_NONCOPYABLE(DocumentXSLT);
   USING_GARBAGE_COLLECTED_MIXIN(DocumentXSLT);
 
