@@ -15,6 +15,7 @@ import android.view.MotionEvent;
 import android.view.TouchDelegate;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
@@ -287,7 +288,14 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         assert ChromeFeatureList.isEnabled(ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL);
 
         Tab activeTab = mSheet.getActiveTab();
-        final String currentUrl = activeTab == null ? null : activeTab.getUrl();
+
+        // We pass null as the current URL if there is no active tab or the scheme is not HTTP or
+        // HTTPS.
+        String currentUrl = (activeTab != null
+                                    && (URLUtil.isHttpUrl(activeTab.getUrl())
+                                               || URLUtil.isHttpsUrl(activeTab.getUrl())))
+                ? activeTab.getUrl()
+                : null;
 
         mSuggestionsCarousel.refresh(mSheet.getContext(), currentUrl);
     }

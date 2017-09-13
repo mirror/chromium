@@ -23,6 +23,7 @@ import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder;
 import org.chromium.chrome.browser.ntp.cards.NodeVisitor;
 import org.chromium.chrome.browser.ntp.cards.OptionalLeaf;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
+import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 import org.chromium.ui.widget.Toast;
 
@@ -78,7 +79,7 @@ public class SuggestionsCarousel extends OptionalLeaf implements ImpressionTrack
         mWasScrolledSinceShown = false;
 
         // Do nothing if there are already suggestions in the carousel for the new context.
-        if (TextUtils.equals(newUrl, mCurrentContextUrl)) return;
+        if (UrlUtilities.urlsMatchIgnoringFragments(newUrl, mCurrentContextUrl)) return;
 
         String text = "Fetching contextual suggestions...";
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
