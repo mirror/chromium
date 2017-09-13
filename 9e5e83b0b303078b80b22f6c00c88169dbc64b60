@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a28009b_ce657387",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-13T14:07:08Z",
+      "side": 1,
+      "message": "CodecBuffers?  i.e., the object not the int, right?",
+      "range": {
+        "startLine": 77,
+        "startChar": 49,
+        "endLine": 77,
+        "endChar": 62
+      },
+      "revId": "9e5e83b0b303078b80b22f6c00c88169dbc64b60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b4681f8_972ce240",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-13T14:07:08Z",
+      "side": 1,
+      "message": "in some later CL, i\u0027ll probably move CodecSurfacePair out of CodecWrapper and make the codec allocator use it too.",
+      "revId": "9e5e83b0b303078b80b22f6c00c88169dbc64b60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
