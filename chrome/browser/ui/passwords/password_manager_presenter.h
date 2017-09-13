@@ -13,10 +13,10 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "chrome/browser/ui/passwords/password_manager_porter.h"
 #include "components/password_manager/core/browser/password_store.h"
 #include "components/password_manager/core/browser/password_store_consumer.h"
 #include "components/prefs/pref_member.h"
-#include "ui/shell_dialogs/select_file_dialog.h"
 
 namespace autofill {
 struct PasswordForm;
@@ -28,6 +28,7 @@ using DuplicatesMap =
 
 enum class PasswordEntryType { SAVED, BLACKLISTED };
 
+class PasswordManagerPorter;
 class PasswordUIView;
 
 // Contains the common logic used by a PasswordUIView to
@@ -53,7 +54,8 @@ class PasswordManagerPresenter
   const autofill::PasswordForm* GetPassword(size_t index);
 
   // Gets all password entries.
-  std::vector<std::unique_ptr<autofill::PasswordForm>> GetAllPasswords();
+  virtual std::vector<std::unique_ptr<autofill::PasswordForm>>
+  GetAllPasswords();
 
   // Gets the password exception entry at |index|.
   const autofill::PasswordForm* GetPasswordException(size_t index);
@@ -72,6 +74,10 @@ class PasswordManagerPresenter
 
   // Returns true if the user is authenticated.
   virtual bool IsUserAuthenticated();
+
+  void ImportPasswords(content::WebContents* web_contents);
+
+  void ExportPasswords(content::WebContents* web_contents);
 
  private:
   friend class PasswordManagerPresenterTest;
@@ -151,6 +157,8 @@ class PasswordManagerPresenter
 
   // UI view that owns this presenter.
   PasswordUIView* password_view_;
+
+  PasswordManagerPorter password_manager_porter_;
 
   DISALLOW_COPY_AND_ASSIGN(PasswordManagerPresenter);
 };

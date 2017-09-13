@@ -74,6 +74,10 @@ class PasswordsPrivateDelegate : public KeyedService {
   virtual void RequestShowPassword(const std::string& origin_url,
                                    const std::string& username,
                                    content::WebContents* web_contents) = 0;
+
+  virtual void ShowImportExportButtons() = 0;
+  virtual void ImportPasswords(content::WebContents* web_contents) = 0;
+  virtual void ExportPasswords(content::WebContents* web_contents) = 0;
 };
 
 }  // namespace extensions

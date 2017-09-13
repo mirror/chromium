@@ -88,6 +88,15 @@ void PasswordsPrivateEventRouter::OnPlaintextPasswordFetched(
   event_router_->BroadcastEvent(std::move(extension_event));
 }
 
+void PasswordsPrivateEventRouter::OnShowImportExportButtons() {
+  std::unique_ptr<base::ListValue> event_value(new base::ListValue);
+  std::unique_ptr<Event> extension_event(
+      new Event(events::PASSWORDS_PRIVATE_ON_SHOW_IMPORT_EXPORT_BUTTONS,
+                api::passwords_private::OnShowImportExportButtons::kEventName,
+                std::move(event_value)));
+  event_router_->BroadcastEvent(std::move(extension_event));
+}
+
 PasswordsPrivateEventRouter* PasswordsPrivateEventRouter::Create(
     content::BrowserContext* context) {
   return new PasswordsPrivateEventRouter(context);
