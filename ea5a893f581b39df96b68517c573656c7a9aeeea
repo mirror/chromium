@@ -139,6 +139,24 @@
       "revId": "ea5a893f581b39df96b68517c573656c7a9aeeea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f492796d_28f40be1",
+        "filename": "chrome/test/v8/wasm-trap-handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-09-13T23:07:18Z",
+      "side": 1,
+      "message": "I decided to go ahead and add a testing hook in V8 to do this. There\u0027s a CL out for review here: https://chromium-review.googlesource.com/c/v8/v8/+/665968\n\nI\u0027ve also updated this CL to use the test hook, but obviously this means we can\u0027t land it until the V8 change propagates.",
+      "parentUuid": "72523222_dc0ecabe",
+      "revId": "ea5a893f581b39df96b68517c573656c7a9aeeea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
