@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1efb4810_aed29f03",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-09-13T14:12:37Z",
+      "side": 1,
+      "message": "We probably shouldn\u0027t DCHECK here yet, for now people can pass any string for units* so until we convert that to an enum or something we probably don\u0027t want to crash here just because somebody typo\u0027d \"bytes\" somewhere else in the codebase. We can probably LOG and ignore things for now. \n\n*Although I had a quick look and I think everyone does use kObjects or kBytes so far.",
+      "revId": "157a9d59d72b0295aa54077f964c6d64adbfd7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4c61b9_7e167f61",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-09-13T14:12:37Z",
+      "side": 1,
+      "message": "break;",
+      "revId": "157a9d59d72b0295aa54077f964c6d64adbfd7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "583eb0ef_8ad0a085",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-09-13T14:12:37Z",
+      "side": 1,
+      "message": "break;\n\n+maybe a regression test that would have caught this.",
+      "revId": "157a9d59d72b0295aa54077f964c6d64adbfd7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e202cd3_26e6f127",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-09-13T14:12:37Z",
+      "side": 1,
+      "message": "Maybe also the negative case? (node.GetChild(\"no child of this name\") \u003d\u003d nullptr)",
+      "revId": "157a9d59d72b0295aa54077f964c6d64adbfd7f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
