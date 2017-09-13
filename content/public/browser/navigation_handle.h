@@ -239,6 +239,11 @@ class CONTENT_EXPORT NavigationHandle {
   // NavigationHandle.
   virtual const GlobalRequestID& GetGlobalRequestID() = 0;
 
+  // Returns true if this navigation resulted in a download. Can only be called
+  // after starting to process the response, such as in the WebContentsObserver
+  // ReadyToCommitNavigation or DidFinishNavigation callbacks.
+  virtual bool IsDownload() = 0;
+
   // Testing methods ----------------------------------------------------------
   //
   // The following methods should be used exclusively for writing unit tests.
