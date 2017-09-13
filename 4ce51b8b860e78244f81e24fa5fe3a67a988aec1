@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e2d39a53_4e15a84f",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-13T22:43:41Z",
+      "side": 1,
+      "message": "Managing parallel hierarchy of objects is known to cause greater complexity and is an anti-pattern. I did not look deep into how you manage that parallel universe, but regardless, this is much bigger risk than putting a field on web_contents that does what you need. That is assuming what capabilities of the coordination unit are essential to web contents operation. Performance is.",
+      "parentUuid": "8a5b1b2b_f8305670",
+      "revId": "4ce51b8b860e78244f81e24fa5fe3a67a988aec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31eb99d8_7a727b63",
         "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
         "patchSetId": 12
