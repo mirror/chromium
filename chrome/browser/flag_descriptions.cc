@@ -1863,6 +1863,12 @@ const char kOfflinePagesPrefetchingUIDescription[] =
     "Enables prefetched offline pages to raise notifications and be shown in "
     "download home UI.";
 
+const char kOfflinePagesResourceBasedSnapshotName[] =
+    "Enables offline page snapshots to be based on percentage of page loaded.";
+const char kOfflinePagesResourceBasedSnapshotDescription[] =
+    "Enables offline page snapshots to use a resource percentage approach for "
+    "determining when the page is loaded as opposed to a time based approach";
+
 const char kOfflinePagesRenovationsName[] = "Enables offline page renovations.";
 const char kOfflinePagesRenovationsDescription[] =
     "Enables offline page renovations which correct issues with dynamic "
