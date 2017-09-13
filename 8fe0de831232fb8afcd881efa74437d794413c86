@@ -16,6 +16,24 @@
       "revId": "8fe0de831232fb8afcd881efa74437d794413c86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf8ee9b_9ec43170",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-13T14:41:20Z",
+      "side": 1,
+      "message": "Good catch! We shouldn\u0027t change it here. Fixed.\n\n(off topic): BTW, in general, this kind of metrics should not include the callback run time IMO, because it could include more operations, like sending another D-Bus method or some heavier operations which client code needs.\nShould we fix it somehow (surely separately)?",
+      "parentUuid": "207e231d_ce4b6fb7",
+      "revId": "8fe0de831232fb8afcd881efa74437d794413c86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
