@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd4de03e_cf8e4a60",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-09-13T17:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd780554_48e70502",
+      "revId": "91cbee8be8a90e1822d6633111d2bc005e2d7096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd6a1828_334654bc",
         "filename": "build/android/diff_resource_sizes.py",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "91cbee8be8a90e1822d6633111d2bc005e2d7096",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccd95a84_a9bbd076",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-09-13T17:16:55Z",
+      "side": 1,
+      "message": "Woops.",
+      "parentUuid": "fd6a1828_334654bc",
+      "revId": "91cbee8be8a90e1822d6633111d2bc005e2d7096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "451257c2_01f5c9b3",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-09-13T17:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11ef53b8_598d3e17",
+      "revId": "91cbee8be8a90e1822d6633111d2bc005e2d7096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff9ce3ed_2d15b42e",
         "filename": "build/android/diff_resource_sizes.py",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "91cbee8be8a90e1822d6633111d2bc005e2d7096",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f398eb0_3c6440d7",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-09-13T17:16:55Z",
+      "side": 1,
+      "message": "Done. Thought I\u0027d cleared all of those out with the last patch :/",
+      "parentUuid": "ff9ce3ed_2d15b42e",
+      "revId": "91cbee8be8a90e1822d6633111d2bc005e2d7096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
