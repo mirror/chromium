@@ -386,6 +386,11 @@ bool LinuxSandbox::LimitAddressSpace(const std::string& process_type) {
   if (SandboxTypeFromCommandLine(*command_line) == SANDBOX_TYPE_NO_SANDBOX)
     return false;
 
+  if (SandboxTypeFromCommandLine(*command_line) == SANDBOX_TYPE_NETWORK) {
+    LOG(ERROR) << "DJENT!!!!!\n";
+  }
+
+
   // Limit the address space to 4GB.
   // This is in the hope of making some kernel exploits more complex and less
   // reliable. It also limits sprays a little on 64-bit.

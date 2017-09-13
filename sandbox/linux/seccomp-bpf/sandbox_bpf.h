@@ -33,7 +33,7 @@ class SANDBOX_EXPORT SandboxBPF {
 
   // Ownership of |policy| is transfered here to the sandbox object.
   // nullptr is allowed for unit tests.
-  explicit SandboxBPF(bpf_dsl::Policy* policy);
+  explicit SandboxBPF(std::unique_ptr<bpf_dsl::Policy> policy);
   // NOTE: Setting a policy and starting the sandbox is a one-way operation.
   // The kernel does not provide any option for unloading a loaded sandbox. The
   // sandbox remains engaged even when the object is destructed.
