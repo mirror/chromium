@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55703a10_8dbf4c3c",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-13T23:46:09Z",
+      "side": 1,
+      "message": "We also need to persist this post_body in leveldb. \n\nHowever it feels like this is only meant for uploading strings and not files.\nAre files convertible to strings?\n\nAlso I think we would need a stream if the files are bigger than a few MB?\n\nIn that case we have to get a UploadDataStream from the client and set it on URLRequest.\nnet::URLRequest::set_upload(std::unique_ptr\u003cUploadDataStream\u003e upload)\n\nFor that, we would have to add this field in DownloadURLParameters and probably make some changes in this function.\nhttps://cs.chromium.org/chromium/src/content/browser/download/download_utils.cc?rcl\u003dc6f0b5099fb2f3207dbdd919211943677c2f5068\u0026l\u003d236",
+      "revId": "4c8dda6131d0dd0411152133a59e0aa26873d07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
