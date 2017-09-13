@@ -351,13 +351,21 @@ void ArcAccessibilityHelperBridge::OnWindowActivated(
 
   if (!found_entry && GetFilterTypeForProfile(profile_) ==
                           arc::mojom::AccessibilityFilterType::ALL) {
+    gained_active->SetProperty(
+        aura::client::kAccessibilityTouchExplorationPassThrough, false);
     fallback_tree_->Focus(gained_active);
     return;
   }
 
   auto it = package_name_to_tree_.find(found_entry->first);
-  if (it != package_name_to_tree_.end())
+  if (it != package_name_to_tree_.end()) {
+    gained_active->SetProperty(
+        aura::client::kAccessibilityTouchExplorationPassThrough, false);
     it->second->Focus(gained_active);
+  } else {
+    gained_active->SetProperty(
+        aura::client::kAccessibilityTouchExplorationPassThrough, true);
+  }
 }
 
 void ArcAccessibilityHelperBridge::OnTaskCreated(
