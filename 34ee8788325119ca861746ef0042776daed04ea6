@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6807206_53b6ce5b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-09-13T10:06:47Z",
+      "side": 1,
+      "message": "Please update to current behavior.",
+      "revId": "34ee8788325119ca861746ef0042776daed04ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
