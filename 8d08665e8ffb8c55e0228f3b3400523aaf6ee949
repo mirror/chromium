@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a2acfb1_dcddb0c0",
+        "filename": "third_party/WebKit/LayoutTests/presentation/presentation-onreceiverconnection.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-13T23:01:54Z",
+      "side": 0,
+      "message": "This is setting a value on WebSettings, not passing a flag to enable the API.  That\u0027s why the layout tests are failing on the trybots.  Please revert this and the other layout test changes.",
+      "revId": "8d08665e8ffb8c55e0228f3b3400523aaf6ee949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
