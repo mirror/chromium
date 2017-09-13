@@ -387,6 +387,13 @@ StylePropertySet* CSSParserImpl::ParseDeclarationListForLazyStyle(
   return CreateStylePropertySet(parser.parsed_properties_, context->Mode());
 }
 
+HeapVector<CSSProperty> CSSParserImpl::ParseContentValuesForLazyStyle(
+    CSSParserTokenRange block,
+    const CSSParserContext* context) {
+  CSSParserImpl parser(context);
+  return parser.ConsumeContentValues(std::move(block), StyleRule::kStyle);
+}
+
 static CSSParserImpl::AllowedRulesType ComputeNewAllowedRules(
     CSSParserImpl::AllowedRulesType allowed_rules,
     StyleRuleBase* rule) {
@@ -917,8 +924,7 @@ StyleRule* CSSParserImpl::ConsumeStyleRule(CSSParserTokenRange prelude,
   // TODO(csharrison): How should we lazily parse css that needs the observer?
   if (observer_wrapper_) {
     ObserveSelectors(*observer_wrapper_, prelude);
-  } else if (lazy_state_ &&
-             lazy_state_->ShouldLazilyParseProperties(selector_list, block)) {
+  } else if (lazy_state_ && !lazy_state_->IsEmptyBlock(block)) {
     DCHECK(style_sheet_);
     return StyleRule::CreateLazy(std::move(selector_list),
                                  lazy_state_->CreateLazyParser(block));
@@ -991,6 +997,75 @@ void CSSParserImpl::ConsumeDeclarationList(CSSParserTokenStream& stream,
     observer_wrapper_->Observer().EndRuleBody(
         observer_wrapper_->EndOffset(stream));
   }
+}
+
+HeapVector<CSSProperty> CSSParserImpl::ConsumeContentValues(
+    CSSParserTokenRange range,
+    StyleRule::RuleType rule_type) {
+  DCHECK(parsed_properties_.IsEmpty());
+  bool use_observer = observer_wrapper_ && (rule_type == StyleRule::kStyle ||
+                                            rule_type == StyleRule::kKeyframe);
+  if (use_observer) {
+    observer_wrapper_->Observer().StartRuleBody(
+        observer_wrapper_->PreviousTokenStartOffset(range));
+    observer_wrapper_->SkipCommentsBefore(range, true);
+  }
+
+  while (!range.AtEnd()) {
+    switch (range.Peek().GetType()) {
+      case kWhitespaceToken:
+      case kSemicolonToken:
+        range.Consume();
+        break;
+      case kIdentToken: {
+        const CSSParserToken* declaration_start = &range.Peek();
+
+        if (use_observer)
+          observer_wrapper_->YieldCommentsBefore(range);
+
+        bool is_content_property =
+            declaration_start->ParseAsUnresolvedCSSPropertyID() ==
+            CSSPropertyContent;
+
+        while (!range.AtEnd() && range.Peek().GetType() != kSemicolonToken)
+          range.ConsumeComponentValue();
+
+        if (is_content_property) {
+          // TODO(shend): Use ranges instead of ranges
+          ConsumeDeclaration(
+              range.MakeSubRange(declaration_start, &range.Peek()), rule_type);
+        }
+
+        if (use_observer)
+          observer_wrapper_->SkipCommentsBefore(range, false);
+        break;
+      }
+      case kAtKeywordToken: {
+        AllowedRulesType allowed_rules =
+            rule_type == StyleRule::kStyle &&
+                    RuntimeEnabledFeatures::CSSApplyAtRulesEnabled()
+                ? kApplyRules
+                : kNoRules;
+
+        StyleRuleBase* rule = ConsumeAtRule(range, allowed_rules);
+        DCHECK(!rule);
+        break;
+      }
+      default:  // Parse error, unexpected token in declaration list
+        while (!range.AtEnd() && range.Peek().GetType() != kSemicolonToken)
+          range.ConsumeComponentValue();
+        break;
+    }
+  }
+
+  // Yield remaining comments
+  if (use_observer) {
+    observer_wrapper_->YieldCommentsBefore(range);
+    observer_wrapper_->Observer().EndRuleBody(
+        observer_wrapper_->EndOffset(range));
+  }
+
+  return parsed_properties_;
 }
 
 void CSSParserImpl::ConsumeDeclarationList(CSSParserTokenRange range,

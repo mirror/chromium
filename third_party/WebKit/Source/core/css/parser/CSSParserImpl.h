@@ -106,6 +106,10 @@ class CSSParserImpl {
       CSSParserTokenRange block,
       const CSSParserContext*);
 
+  static HeapVector<CSSProperty> ParseContentValuesForLazyStyle(
+      CSSParserTokenRange block,
+      const CSSParserContext*);
+
  private:
   enum RuleListType { kTopLevelRuleList, kRegularRuleList, kKeyframesRuleList };
 
@@ -148,6 +152,8 @@ class CSSParserImpl {
 
   void ConsumeDeclarationList(CSSParserTokenStream&, StyleRule::RuleType);
   // TODO(shend): Remove this overload once we switch over to streams.
+  HeapVector<CSSProperty> ConsumeContentValues(CSSParserTokenRange,
+                                               StyleRule::RuleType);
   void ConsumeDeclarationList(CSSParserTokenRange, StyleRule::RuleType);
   void ConsumeDeclaration(CSSParserTokenRange, StyleRule::RuleType);
   void ConsumeDeclarationValue(CSSParserTokenRange,
