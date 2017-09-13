@@ -73,6 +73,8 @@ class TaskManagerTableModel
   // task_manager::TaskManagerObserver:
   void OnTaskAdded(TaskId id) override;
   void OnTaskToBeRemoved(TaskId id) override;
+  void OnTaskReplaced(TaskId old_task_id, TaskId new_task_id) override;
+
   void OnTasksRefreshed(const TaskIdList& task_ids) override;
 
   // Gets the start index and length of the group to which the task at
@@ -103,6 +105,8 @@ class TaskManagerTableModel
 
   void ToggleColumnVisibility(int column_id);
 
+  void MoveTasks(int old_index, int length, int new_index);
+
   // Returns the row index corresponding to a particular WebContents. Returns -1
   // if |web_contents| is nullptr, or is not currently found in the model (for
   // example, if the tab is currently crashed).
@@ -120,6 +124,9 @@ class TaskManagerTableModel
   // Checks whether the task at |row_index| is the first task in its process
   // group of tasks.
   bool IsTaskFirstInGroup(int row_index) const;
+
+  int FindInsertionRow(TaskId id);
+  int FindExistingRow(TaskId id);
 
   // The delegate that will be used to communicate with the platform-specific
   // TableView.
