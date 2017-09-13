@@ -554,9 +554,6 @@ void LocalFrameView::InvalidateRect(const IntRect& rect) {
   paint_invalidation_rect.Move(
       (layout_item.BorderLeft() + layout_item.PaddingLeft()).ToInt(),
       (layout_item.BorderTop() + layout_item.PaddingTop()).ToInt());
-  // FIXME: We should not allow paint invalidation out of paint invalidation
-  // state. crbug.com/457415
-  DisablePaintInvalidationStateAsserts paint_invalidation_assert_disabler;
   layout_item.InvalidatePaintRectangle(LayoutRect(paint_invalidation_rect));
 }
 
@@ -1831,9 +1828,6 @@ void LocalFrameView::ScrollContentsSlowPath() {
   if (ContentsInCompositedLayer()) {
     IntRect update_rect = VisibleContentRect();
     DCHECK(!GetLayoutViewItem().IsNull());
-    // FIXME: We should not allow paint invalidation out of paint invalidation
-    // state. crbug.com/457415
-    DisablePaintInvalidationStateAsserts disabler;
     GetLayoutViewItem().InvalidatePaintRectangle(LayoutRect(update_rect));
   }
   LayoutEmbeddedContentItem frame_layout_item = frame_->OwnerLayoutItem();
@@ -1843,9 +1837,6 @@ void LocalFrameView::ScrollContentsSlowPath() {
           frame_layout_item.BorderLeft() + frame_layout_item.PaddingLeft(),
           frame_layout_item.BorderTop() + frame_layout_item.PaddingTop(),
           LayoutUnit(VisibleWidth()), LayoutUnit(VisibleHeight()));
-      // FIXME: We should not allow paint invalidation out of paint invalidation
-      // state. crbug.com/457415
-      DisablePaintInvalidationStateAsserts disabler;
       frame_layout_item.InvalidatePaintRectangle(rect);
       return;
     }
