@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62d70d83_3fc51fbd",
+        "filename": "build/linux/sysroot_scripts/sysroot-creator-stretch.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-13T19:06:53Z",
+      "side": 1,
+      "message": "does Jessie need this too?  We currently use the Jessie sysroot, not Stretch",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 19
+      },
+      "revId": "ec199d86a2bdcc540999bf62b21926b9aaa829e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
