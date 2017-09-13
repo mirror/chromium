@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a81b699f_a76e8d26",
+        "filename": "gpu/ipc/common/mailbox_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-09-13T09:36:35Z",
+      "side": 1,
+      "message": "\u003e What are the compile errors? What version of gcc? \n\nMy gcc version is 5.4.0, And the compile errors were as below,\n\nIn file included from ../../gpu/ipc/common/mailbox_holder_struct_traits.h:10:0,\n                 from ../../cc/ipc/texture_mailbox_struct_traits.h:10,\n                 from gen/cc/ipc/copy_output_result.mojom.cc:29:\n../../gpu/ipc/common/mailbox_struct_traits.h: In static member function ‘static base::span\u003cconst signed char\u003e mojo::StructTraits\u003cgpu::mojom::MailboxDataView, gpu::Mailbox\u003e::name(const gpu::Mailbox\u0026)’:\n../../gpu/ipc/common/mailbox_struct_traits.h:18:20: error: could not convert ‘(const int8_t*)(\u0026 mailbox.gpu::Mailbox::name)’ from ‘const int8_t* {aka const signed char*}’ to ‘base::span\u003cconst signed char\u003e’\n     return mailbox.name;\n                    ^\n\nIn file included from ../../services/viz/public/cpp/compositing/quads_struct_traits.h:19:0,\n                 from ../../services/viz/public/cpp/compositing/render_pass_struct_traits.h:12,\n                 from ../../services/viz/public/cpp/compositing/compositor_frame_struct_traits.cc:9:\n../../services/viz/public/cpp/compositing/filter_operation_struct_traits.h: In static member function ‘static base::span\u003cconst float\u003e mojo::StructTraits\u003cviz::mojom::FilterOperationDataView, cc::FilterOperation\u003e::matrix(const cc::FilterOperation\u0026)’:\n../../services/viz/public/cpp/compositing/filter_operation_struct_traits.h:137:29: error: could not convert ‘(const SkScalar*)(\u0026 operation)-\u003ecc::FilterOperation::matrix()’ from ‘const SkScalar* {aka const float*}’ to ‘base::span\u003cconst float\u003e’\n     return operation.matrix();\n                             ^\n\n\n\n\u003e Is there a workaround we could make directly in span?\n\nBelow code also works on the gcc version. Do you think we can use this ?\n\n\"return base::span\u003cconst int8_t\u003e(mailbox.name);\"",
+      "parentUuid": "c6976685_ec5d53ae",
+      "revId": "da404c5d50aeb7e98b8177cb4fd3c49729cd6776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a32e213_4dcbaee0",
         "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "da404c5d50aeb7e98b8177cb4fd3c49729cd6776",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bf615b8_d2ca5ac9",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1233284
+      },
+      "writtenOn": "2017-09-13T09:36:35Z",
+      "side": 1,
+      "message": "ah, looks like that. Let me fix it. thanks.",
+      "parentUuid": "6a32e213_4dcbaee0",
+      "revId": "da404c5d50aeb7e98b8177cb4fd3c49729cd6776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
