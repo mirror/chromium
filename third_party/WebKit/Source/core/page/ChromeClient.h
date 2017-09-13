@@ -345,7 +345,8 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
   virtual void DidObserveNonGetFetchFromScript() const {}
 
   virtual std::unique_ptr<WebFrameScheduler> CreateFrameScheduler(
-      BlameContext*) = 0;
+      BlameContext*,
+      bool is_main_frame) = 0;
 
   // Returns the time of the beginning of the last beginFrame, in seconds, if
   // any, and 0.0 otherwise.

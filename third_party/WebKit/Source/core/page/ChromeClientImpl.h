@@ -222,7 +222,8 @@ class CORE_EXPORT ChromeClientImpl final : public ChromeClient {
   void DidObserveNonGetFetchFromScript() const override;
 
   std::unique_ptr<WebFrameScheduler> CreateFrameScheduler(
-      BlameContext*) override;
+      BlameContext*,
+      bool is_main_frame) override;
 
   double LastFrameTimeMonotonic() const override;
 

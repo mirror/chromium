@@ -68,6 +68,12 @@ class WebFrameScheduler {
   // frames.
   virtual void SetCrossOrigin(bool) {}
 
+  // Returns whether this frame is cross origin w.r.t. the top level frame.
+  virtual bool IsCrossOrigin() { return false; }
+
+  // Returns whether this frame is the top level frame, i.e. a main frame.
+  virtual bool IsMainFrame() { return false; }
+
   // The tasks runners below are listed in increasing QoS order.
   // - throttleable task queue. Designed for custom user-provided javascript
   //   tasks. Lowest guarantees. Can be paused, blocked during user gesture,
