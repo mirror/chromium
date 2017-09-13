@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71cd3e08_e1d38c81",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-13T16:51:17Z",
+      "side": 1,
+      "message": "Think the prevailing style to define a string literal is:\n  constexpr char kLockContentsViewName[] \u003d \"LockContentsView\";",
+      "revId": "54ce6f6cc4f86927428f82e96b10a15528d331f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42559e64_92d364ae",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-13T16:51:17Z",
+      "side": 1,
+      "message": "ditto, constexpr char kStringConstName[] ...",
+      "revId": "54ce6f6cc4f86927428f82e96b10a15528d331f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48624026_3a8b5732",
+        "filename": "ash/login/ui/login_password_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-13T16:51:17Z",
+      "side": 1,
+      "message": "nit: // views::Separator:",
+      "revId": "54ce6f6cc4f86927428f82e96b10a15528d331f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09c2657f_148543f2",
+        "filename": "ash/login/ui/login_pin_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-13T16:51:17Z",
+      "side": 1,
+      "message": "nit: let\u0027s fix this too\n  constexpr char kLoginPinViewClassName[] \u003d ...",
+      "revId": "54ce6f6cc4f86927428f82e96b10a15528d331f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edc2690a_ed1256cc",
+        "filename": "ash/login/ui/non_accessible_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-13T16:51:17Z",
+      "side": 1,
+      "message": "constexpr char kDefaultName[]",
+      "revId": "54ce6f6cc4f86927428f82e96b10a15528d331f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3446df1_646ca0a2",
+        "filename": "ash/login/ui/non_accessible_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-13T16:51:17Z",
+      "side": 1,
+      "message": "Not necessary since FocusBehavior::NEVER is the default of views::View.",
+      "revId": "54ce6f6cc4f86927428f82e96b10a15528d331f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b403387_e1ddd93b",
+        "filename": "ash/login/ui/non_accessible_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-13T16:51:17Z",
+      "side": 1,
+      "message": "nit: const std::string",
+      "revId": "54ce6f6cc4f86927428f82e96b10a15528d331f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
