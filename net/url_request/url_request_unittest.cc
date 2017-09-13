@@ -11340,10 +11340,12 @@ TEST_F(HTTPSCRLSetTest, CRLSetRevoked) {
 }
 #endif  // !defined(OS_IOS)
 
-#if !BUILDFLAG(DISABLE_FTP_SUPPORT) && !defined(OS_ANDROID)
-// These tests aren't passing on Android.  Either the RemoteTestServer isn't
-// starting up successfully, or it can't access the test files.
-// TODO(mmenke):  Fix this.  See http://crbug.com/495220
+#if !BUILDFLAG(DISABLE_FTP_SUPPORT) && !defined(OS_ANDROID) && \
+    !defined(OS_FUCHSIA)
+// FTP uses a second TCP connection with the port number allocated dynamically
+// on the server side, so it would be hard to make RemoteTestServer proxy FTP
+// connections reliably. FTP tests are disabled on platforms that use
+// RemoteTestServer. See http://crbug.com/495220
 class URLRequestTestFTP : public URLRequestTest {
  public:
   URLRequestTestFTP()
