@@ -244,6 +244,8 @@ const char* const* g_dump_provider_whitelist_for_summary =
     kDumpProviderSummaryWhitelist;
 const char* const* g_allocator_dump_name_whitelist =
     kAllocatorDumpNameWhitelist;
+const char* g_global_prefix = "global";
+const int kGlobalPrefixSize = 6;
 
 bool IsMemoryDumpProviderInList(const char* mdp_name, const char* const* list) {
   for (size_t i = 0; list[i] != nullptr; ++i) {
@@ -265,6 +267,11 @@ bool IsMemoryDumpProviderWhitelistedForSummary(const char* mdp_name) {
 }
 
 bool IsMemoryAllocatorDumpNameWhitelisted(const std::string& name) {
+  // Global dumps are explicitly whitelisted for background use.
+  if (name.substr(0, kGlobalPrefixSize) == g_global_prefix) {
+    return true;
+  }
+
   // Remove special characters, numbers (including hexadecimal which are marked
   // by '0x') from the given string.
   const size_t length = name.size();
