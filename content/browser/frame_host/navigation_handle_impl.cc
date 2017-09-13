@@ -283,6 +283,12 @@ bool NavigationHandleImpl::IsPost() {
   return method_ == "POST";
 }
 
+bool NavigationHandleImpl::IsDownload() {
+  CHECK_NE(INITIAL, state_)
+      << "This accessor should not be called before the request is started.";
+  return is_download_;
+}
+
 const Referrer& NavigationHandleImpl::GetReferrer() {
   CHECK_NE(INITIAL, state_)
       << "This accessor should not be called before the request is started.";
