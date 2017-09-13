@@ -628,12 +628,14 @@ class NSSInitSingleton {
                   "nss version check failed");
     // Also check the run-time NSS version.
     // NSS_VersionCheck is a >= check, not strict equality.
+#if 0
     if (!NSS_VersionCheck("3.26")) {
       LOG(FATAL) << "NSS_VersionCheck(\"3.26\") failed. NSS >= 3.26 is "
                     "required. Please upgrade to the latest NSS, and if you "
                     "still get this error, contact your distribution "
                     "maintainer.";
     }
+#endif
 
     SECStatus status = SECFailure;
     base::FilePath database_dir = GetInitialConfigDirectory();
