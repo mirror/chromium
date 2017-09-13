@@ -24,9 +24,13 @@ class TaskProviderObserver {
   // the observer and references to it must not be kept.
   virtual void TaskRemoved(Task* task) = 0;
 
+  // Optional atomic add/remove. If a TaskProviderObserver chooses not to
+  // override this method, they'll just see TaskAdded and TaskReplaced calls.
+  virtual void TaskReplaced(Task* old_task, Task* new_task);
+
   // This notifies of the event that |task| has become unresponsive. This event
   // is only for tasks representing renderer processes.
-  virtual void TaskUnresponsive(Task* task) {}
+  virtual void TaskUnresponsive(Task* task);
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TaskProviderObserver);

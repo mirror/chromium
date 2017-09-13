@@ -36,18 +36,15 @@ void TaskProvider::NotifyObserverTaskRemoved(Task* task) const {
   observer_->TaskRemoved(task);
 }
 
+void TaskProvider::NotifyObserverTaskReplaced(Task* old_task,
+                                              Task* new_task) const {
+  DCHECK(observer_);
+  observer_->TaskReplaced(old_task, new_task);
+}
+
 void TaskProvider::NotifyObserverTaskUnresponsive(Task* task) const {
   DCHECK(observer_);
   observer_->TaskUnresponsive(task);
-}
-
-void TaskProvider::UpdateTaskProcessInfoAndNotifyObserver(
-    Task* existing_task,
-    base::ProcessHandle new_process_handle,
-    base::ProcessId new_process_id) const {
-  DCHECK(observer_);
-  existing_task->UpdateProcessInfo(new_process_handle, new_process_id,
-                                   observer_);
 }
 
 }  // namespace task_manager
