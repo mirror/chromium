@@ -829,6 +829,25 @@ void ParamTraits<base::File::Info>::Log(const param_type& p,
   l->append(")");
 }
 
+void ParamTraits<base::File::Error>::Write(base::Pickle* m,
+                                           const param_type& p) {
+  ParamTraits<int>::Write(m, p);
+}
+
+bool ParamTraits<base::File::Error>::Read(const base::Pickle* m,
+                                          base::PickleIterator* iter,
+                                          param_type* r) {
+  int value;
+  if (!ParamTraits<int>::Read(m, iter, &value))
+    return false;
+  *r = static_cast<base::File::Error>(value);
+  return true;
+}
+
+void ParamTraits<base::File::Error>::Log(const param_type& p, std::string* l) {
+  ParamTraits<int>::Log(p, l);
+}
+
 void ParamTraits<base::Time>::Write(base::Pickle* m, const param_type& p) {
   ParamTraits<int64_t>::Write(m, p.ToInternalValue());
 }

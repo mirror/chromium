@@ -577,8 +577,13 @@ struct IPC_EXPORT ParamTraits<base::File::Info> {
 };
 
 template <>
-struct SimilarTypeTraits<base::File::Error> {
-  typedef int Type;
+struct IPC_EXPORT ParamTraits<base::File::Error> {
+  typedef base::File::Error param_type;
+  static void Write(base::Pickle* m, const param_type& p);
+  static bool Read(const base::Pickle* m,
+                   base::PickleIterator* iter,
+                   param_type* r);
+  static void Log(const param_type& p, std::string* l);
 };
 
 #if defined(OS_WIN)
