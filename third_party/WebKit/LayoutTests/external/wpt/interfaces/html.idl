@@ -1748,6 +1748,7 @@ Navigator implements NavigatorContentUtils;
 Navigator implements NavigatorCookies;
 Navigator implements NavigatorPlugins;
 Navigator implements NavigatorConcurrentHardware;
+Navigator implements NavigatorAutomationInformation;
 
 [NoInterfaceObject, Exposed=(Window,Worker)]
 interface NavigatorID {
