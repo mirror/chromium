@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4feb1b00_2b47fdaa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-13T21:21:49Z",
+      "side": 1,
+      "message": "I suggest changing the summary to describe the means instead of the ends. Something like:\n\n  [Views] Tab capture fullscreen UI: Render page at video resolution.\n\n...kinda hard to summarize within 72 chars! ;-)",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 44
+      },
+      "revId": "76a8c3147053d5ed8e6e1a8f932a53b8b07ba803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3cb3173_fb6c5d0a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-13T21:21:49Z",
+      "side": 1,
+      "message": "Suggest adding: 1) What the user-perceived impact will be (how the browser UI changes). 2) Mention this drives huge quality improvement in the captured video.",
+      "range": {
+        "startLine": 11,
+        "startChar": 41,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "76a8c3147053d5ed8e6e1a8f932a53b8b07ba803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
