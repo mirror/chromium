@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "4141cba8_a94dc36c",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-13T14:04:20Z",
+      "side": 1,
+      "message": "\u003e Yeah, conditional deps sounds sensible, or just use source_set instead of static_library?\n\nDropped the stub code, the source_set idea worked well with a conditional deps. Compilation succeeded with some code rejiggering to match.",
+      "parentUuid": "45fc5850_c0054520",
+      "revId": "2c47f86bf50f14090bd0342003379a6e88624692",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff801919_0e3f19b4",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 11
