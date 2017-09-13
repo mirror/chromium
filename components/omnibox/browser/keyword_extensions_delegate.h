@@ -51,6 +51,10 @@ class KeywordExtensionsDelegate {
   // the omnibox popup.
   virtual void MaybeEndExtensionKeywordMode();
 
+  // Deletes a KeywordProvider's suggestion/match.
+  virtual void DeleteSuggestion(const TemplateURL* template_url,
+                                const base::string16& suggestion_text);
+
  private:
   DISALLOW_COPY_AND_ASSIGN(KeywordExtensionsDelegate);
 };
