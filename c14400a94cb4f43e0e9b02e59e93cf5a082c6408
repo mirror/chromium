@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42e1812a_eb47b87b",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-09-13T11:58:57Z",
+      "side": 1,
+      "message": "kConfigured are passed as kAutomatic?\nIf this is really what should happen I\u0027d put a comment here.",
+      "revId": "c14400a94cb4f43e0e9b02e59e93cf5a082c6408",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
