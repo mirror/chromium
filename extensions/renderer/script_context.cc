@@ -494,6 +494,12 @@ v8::Local<v8::Value> ScriptContext::RunScript(
   return handle_scope.Escape(result);
 }
 
+int ScriptContext::GetRoutingIDForFilteredEvents() {
+  return context_type() == Feature::SERVICE_WORKER_CONTEXT
+             ? kIgnoreRoutingId
+             : GetRenderFrame()->GetRoutingID();
+}
+
 ScriptContext::Runner::Runner(ScriptContext* context) : context_(context) {
 }
 
