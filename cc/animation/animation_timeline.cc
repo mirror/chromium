@@ -73,9 +73,11 @@ void AnimationTimeline::ClearPlayers() {
 }
 
 void AnimationTimeline::SetNeedsPushProperties() {
-  needs_push_properties_ = true;
-  if (animation_host_)
-    animation_host_->SetNeedsPushProperties();
+  if (!needs_push_properties_) {
+    needs_push_properties_ = true;
+    if (animation_host_)
+      animation_host_->SetNeedsPushProperties();
+  }
 }
 
 void AnimationTimeline::PushPropertiesTo(AnimationTimeline* timeline_impl) {
