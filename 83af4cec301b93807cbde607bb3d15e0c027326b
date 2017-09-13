@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2e123c0_5a24411f",
+        "filename": "chrome/browser/resources/settings/multidevice_page/multidevice_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T19:57:44Z",
+      "side": 1,
+      "message": "needed?",
+      "revId": "83af4cec301b93807cbde607bb3d15e0c027326b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c6ac472_8c73581c",
+        "filename": "chrome/browser/resources/settings/multidevice_page/multidevice_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T19:57:44Z",
+      "side": 1,
+      "message": "Above two needed?",
+      "revId": "83af4cec301b93807cbde607bb3d15e0c027326b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
