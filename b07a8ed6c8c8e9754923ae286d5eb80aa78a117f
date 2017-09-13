@@ -16,6 +16,24 @@
       "revId": "b07a8ed6c8c8e9754923ae286d5eb80aa78a117f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6514317d_071c0a4a",
+        "filename": "ios/chrome/browser/ui/authentication/account_control_item.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-13T09:14:43Z",
+      "side": 1,
+      "message": "BTW, if you do either, then you can also set the blue tint for the other accessoryType values so we won\u0027t break if MDC decide to change the default color to something else.",
+      "parentUuid": "9c55fc68_caa08fb5",
+      "revId": "b07a8ed6c8c8e9754923ae286d5eb80aa78a117f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
