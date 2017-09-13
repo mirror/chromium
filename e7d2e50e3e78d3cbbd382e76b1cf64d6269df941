@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "06f91380_a93020cb",
+        "filename": "chrome/browser/resources/sys_internals/index.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-13T08:08:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f50bba9_15e7e6b6",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d9f0013_f7a349bd",
         "filename": "chrome/browser/resources/sys_internals/index.html",
         "patchSetId": 2
@@ -195,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "153eec3a_3ce6a59e",
+        "filename": "chrome/browser/resources/sys_internals/index.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-13T08:08:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d9f0013_f7a349bd",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fdf9770_8a70c086",
         "filename": "chrome/browser/resources/sys_internals/index.js",
         "patchSetId": 2
@@ -209,6 +245,24 @@
       "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7428dc47_23050b7c",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-13T08:08:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fdf9770_8a70c086",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -367,6 +421,24 @@
       "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ca272c_ee78b492",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-13T08:08:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "782ef3bc_d6ba0fa4",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -891,6 +963,24 @@
     },
     {
       "key": {
+        "uuid": "fb4217fd_40e10d14",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-13T08:08:45Z",
+      "side": 1,
+      "message": "This is the JSDOC type annotation, to help Closure Compiler to do type checking.",
+      "parentUuid": "542e1cf5_119e2b52",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05d7cf22_9065d5e2",
         "filename": "chrome/browser/resources/sys_internals/index.js",
         "patchSetId": 2
@@ -1376,6 +1466,24 @@
     },
     {
       "key": {
+        "uuid": "8322b2ca_1bb60974",
+        "filename": "chrome/test/data/webui/sys_internals/page_switch_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-13T08:08:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56733925_c2d71fc3",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11e56b52_aa57d07b",
         "filename": "chrome/test/data/webui/sys_internals/page_switch_test.js",
         "patchSetId": 2
@@ -1437,6 +1545,24 @@
       "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028d257e_1d3af4d1",
+        "filename": "chrome/test/data/webui/sys_internals/page_switch_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-13T08:08:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc8c79b2_6c7af1a9",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
