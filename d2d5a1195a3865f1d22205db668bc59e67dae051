@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "a4ab580c_9e6313ab",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDataStorage.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-13T04:57:05Z",
+      "side": 1,
+      "message": "This function does not write to disk at all. It just returns the file path and sets the SharedPreference",
+      "parentUuid": "9fecb46e_1182fa0b",
+      "range": {
+        "startLine": 521,
+        "startChar": 7,
+        "endLine": 521,
+        "endChar": 14
+      },
+      "revId": "d2d5a1195a3865f1d22205db668bc59e67dae051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ab39898_50273970",
         "filename": "chrome/browser/android/webapk/webapk_install_service.h",
         "patchSetId": 12
@@ -82,6 +106,30 @@
       "writtenOn": "2017-09-11T01:13:43Z",
       "side": 1,
       "message": "The update request code seems to create the temporary directory if it doesn\u0027t exist. Can you test that?",
+      "range": {
+        "startLine": 404,
+        "startChar": 2,
+        "endLine": 404,
+        "endChar": 13
+      },
+      "revId": "d2d5a1195a3865f1d22205db668bc59e67dae051",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29c0b5c6_65ec86fb",
+        "filename": "chrome/browser/android/webapk/webapk_installer_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-13T04:57:05Z",
+      "side": 1,
+      "message": "I have added StoreUpdateRequestToFileCreatesDirectories to test this",
+      "parentUuid": "7a311cc5_6bd11e81",
       "range": {
         "startLine": 404,
         "startChar": 2,

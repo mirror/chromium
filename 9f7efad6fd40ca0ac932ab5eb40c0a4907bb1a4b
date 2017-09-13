@@ -193,6 +193,24 @@
     },
     {
       "key": {
+        "uuid": "0b53657c_78c4c6a8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDataStorage.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-13T04:57:05Z",
+      "side": 1,
+      "message": "You are right, if Chrome crashes in the middle of an update we might keep the \"update file\" around for a while. I see two scenarios:\n\nScenario #1: User uses the WebAPK a lot. Another update will be requested soon (12 hours). No problem here in my opinion\nScenario #2: User uses the WebAPK rarely. The \"update file\" will be kept around till the user launches the WebAPK again. I assume that this is the scenario that you are concerned about? I think I am ok with the behaviour because I think that it should not occur often.\n\nIt is important to note that if user clears browsing data from history, that this will delete the WebAPK \"update file\" even for installed WebAPKs.",
+      "parentUuid": "818e6ac9_cd82527f",
+      "revId": "9f7efad6fd40ca0ac932ab5eb40c0a4907bb1a4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8b40bbc_0d1cc4eb",
         "filename": "chrome/browser/android/webapk/webapk_install_service.cc",
         "patchSetId": 8
