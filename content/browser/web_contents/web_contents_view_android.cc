@@ -9,6 +9,7 @@
 #include "base/logging.h"
 #include "cc/layers/layer.h"
 #include "content/browser/accessibility/browser_accessibility_manager_android.h"
+#include "content/browser/android/content_destruction_observer.h"
 #include "content/browser/android/content_view_core.h"
 #include "content/browser/frame_host/interstitial_page_impl.h"
 #include "content/browser/renderer_host/render_view_host_factory.h"
@@ -102,7 +103,7 @@ void WebContentsViewAndroid::SetContentViewCore(
   content_view_core_ = content_view_core;
   RenderWidgetHostViewAndroid* rwhv = GetRenderWidgetHostViewAndroid();
   if (rwhv)
-    rwhv->SetContentViewCore(content_view_core_);
+    LinkRenderWidgetHostView(rwhv);
 
   if (web_contents_->ShowingInterstitialPage()) {
     rwhv = static_cast<RenderWidgetHostViewAndroid*>(
@@ -112,8 +113,14 @@ void WebContentsViewAndroid::SetContentViewCore(
             ->GetWidget()
             ->GetView());
     if (rwhv)
-      rwhv->SetContentViewCore(content_view_core_);
+      LinkRenderWidgetHostView(rwhv);
   }
+}
+
+void WebContentsViewAndroid::LinkRenderWidgetHostView(
+    RenderWidgetHostViewAndroid* rwhv) {
+  if (rwhv->UpdateContentViewCore(content_view_core_))
+    ContentDestructionObserver::Create(web_contents_, rwhv);
 }
 
 void WebContentsViewAndroid::SetOverscrollRefreshHandler(
@@ -250,8 +257,10 @@ RenderWidgetHostViewBase* WebContentsViewAndroid::CreateViewForWidget(
   // order to paint it. See ContentView::GetRenderWidgetHostViewAndroid for an
   // example of how this is achieved for InterstitialPages.
   RenderWidgetHostImpl* rwhi = RenderWidgetHostImpl::From(render_widget_host);
-  RenderWidgetHostViewAndroid* rwhv =
-      new RenderWidgetHostViewAndroid(rwhi, content_view_core_);
+  RenderWidgetHostViewAndroid* rwhv = new RenderWidgetHostViewAndroid(rwhi);
+  if (content_view_core_)
+    LinkRenderWidgetHostView(rwhv);
+
   rwhv->SetSynchronousCompositorClient(synchronous_compositor_client_);
   return rwhv;
 }
@@ -259,7 +268,7 @@ RenderWidgetHostViewBase* WebContentsViewAndroid::CreateViewForWidget(
 RenderWidgetHostViewBase* WebContentsViewAndroid::CreateViewForPopupWidget(
     RenderWidgetHost* render_widget_host) {
   RenderWidgetHostImpl* rwhi = RenderWidgetHostImpl::From(render_widget_host);
-  return new RenderWidgetHostViewAndroid(rwhi, NULL);
+  return new RenderWidgetHostViewAndroid(rwhi);
 }
 
 void WebContentsViewAndroid::RenderViewCreated(RenderViewHost* host) {
