@@ -456,6 +456,10 @@ void MultiplexRouter::CloseEndpointHandle(
   if (!IsMasterInterfaceId(id) || reason) {
     MayAutoUnlock unlocker(&lock_);
     control_message_proxy_.NotifyPeerEndpointClosed(id, reason);
+
+
+
+
   }
 
   ProcessTasks(NO_DIRECT_CLIENT_CALLS, nullptr);
