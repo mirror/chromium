@@ -369,12 +369,11 @@ class BitmapImageTestWithMockDecoder : public BitmapImageTest,
   TimeDelta duration_;
   int repetition_count_;
   size_t frame_count_;
-  ImageFrame::Status status_;
   bool last_frame_complete_;
 };
 
 TEST_F(BitmapImageTestWithMockDecoder, AnimatedImage) {
-  RuntimeEnabledFeatures::SetCompositorDrivenImageAnimationsEnabled(true);
+  RuntimeEnabledFeatures::SetCompositorImageAnimationsEnabled(true);
 
   // For a zero duration, we should make it non-zero when creating a PaintImage.
   repetition_count_ = kAnimationLoopOnce;
@@ -418,6 +417,21 @@ TEST_F(BitmapImageTestWithMockDecoder, AnimatedImage) {
     EXPECT_TRUE(data.complete);
   }
 };
+
+TEST_F(BitmapImageTestWithMockDecoder, PaintImageForStaticBitmapImage) {
+  repetition_count_ = kAnimationLoopInfinite;
+  frame_count_ = 5;
+  last_frame_complete_ = true;
+  image_->SetData(SharedBuffer::Create("data", sizeof("data")), false);
+
+  // PaintImage for the original image is animated.
+  EXPECT_TRUE(image_->PaintImageForCurrentFrame().ShouldAnimate());
+
+  // But the StaticBitmapImage is not.
+  EXPECT_FALSE(image_->ImageForDefaultFrame()
+                   ->PaintImageForCurrentFrame()
+                   .ShouldAnimate());
+}
 
 template <typename HistogramEnumType>
 struct HistogramTestParams {

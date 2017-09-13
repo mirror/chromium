@@ -399,9 +399,10 @@ PaintImage BitmapImage::PaintImageForCurrentFrame() {
 
 PassRefPtr<Image> BitmapImage::ImageForDefaultFrame() {
   if (FrameCount() > 1) {
-    // TODO(khushalsagar): Set the repetition policy to kAnimationNone on this
-    // image so cc doesn't animate it.
-    return StaticBitmapImage::Create(FrameAtIndex(0u));
+    PaintImage paint_image = FrameAtIndex(PaintImage::kDefaultFrameIndex);
+    if (paint_image.ShouldAnimate())
+      paint_image = paint_image.MakeStatic();
+    return StaticBitmapImage::Create(std::move(paint_image));
   }
 
   return Image::ImageForDefaultFrame();
