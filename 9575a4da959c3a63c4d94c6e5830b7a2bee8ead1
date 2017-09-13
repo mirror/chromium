@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "dbcae805_75493d9d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-13T16:59:12Z",
+      "side": 1,
+      "message": "nit: LayerTreeHostImpl here, for clarity.\n\nYou\u0027re making the destructor empty, but are there members of the ImageController that might also need to be specially handled to avoid destructors touching things?",
+      "revId": "9575a4da959c3a63c4d94c6e5830b7a2bee8ead1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b16cc74a_9779d72a",
         "filename": "cc/tiles/image_controller.cc",
         "patchSetId": 3
