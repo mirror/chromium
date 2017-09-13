@@ -19,7 +19,7 @@ template <typename OffsetMappingBuilder>
 class NGInlineItemsBuilderTemplate;
 
 class EmptyOffsetMappingBuilder;
-class LayoutNGBlockFlow;
+class LayoutBlockFlow;
 struct MinMaxSize;
 class NGConstraintSpace;
 class NGInlineItem;
@@ -36,10 +36,10 @@ class NGOffsetMappingUnit;
 // inline nodes and their descendants.
 class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
  public:
-  NGInlineNode(LayoutNGBlockFlow*);
+  NGInlineNode(LayoutBlockFlow*);
 
-  LayoutNGBlockFlow* GetLayoutBlockFlow() const {
-    return ToLayoutNGBlockFlow(box_);
+  LayoutBlockFlow* GetLayoutBlockFlow() const {
+    return ToLayoutBlockFlow(box_);
   }
   NGLayoutInputNode NextSibling();
 
@@ -117,10 +117,10 @@ class CORE_EXPORT NGInlineNode : public NGLayoutInputNode {
   void ShapeTextForFirstLineIfNeeded();
 
   NGInlineNodeData* MutableData() {
-    return ToLayoutNGBlockFlow(box_)->GetNGInlineNodeData();
+    return GetNGData(box_)->GetNGInlineNodeData();
   }
   const NGInlineNodeData& Data() const {
-    return *ToLayoutNGBlockFlow(box_)->GetNGInlineNodeData();
+    return *GetNGData(box_)->GetNGInlineNodeData();
   }
 
   friend class NGLineBreakerTest;

@@ -490,6 +490,9 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   bool IsLayoutNGBlockFlow() const {
     return IsOfType(kLayoutObjectNGBlockFlow);
   }
+  bool IsLayoutNGTableCell() const {
+    return IsOfType(kLayoutObjectNGTableCell);
+  }
   bool IsLayoutTableCol() const {
     return IsOfType(kLayoutObjectLayoutTableCol);
   }
@@ -1910,6 +1913,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
     kLayoutObjectMedia,
     kLayoutObjectMenuList,
     kLayoutObjectNGBlockFlow,
+    kLayoutObjectNGTableCell,
     kLayoutObjectProgress,
     kLayoutObjectQuote,
     kLayoutObjectLayoutButton,

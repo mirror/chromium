@@ -121,18 +121,18 @@ RefPtr<NGLayoutResult> NGBlockNode::Layout(
     return RunOldLayout(constraint_space);
   }
   RefPtr<NGLayoutResult> layout_result;
-  if (box_->IsLayoutNGBlockFlow()) {
-    layout_result = ToLayoutNGBlockFlow(box_)->CachedLayoutResult(
-        constraint_space, break_token);
+  if (box_->IsLayoutNGBlockFlow() || box_->IsLayoutNGTableCell()) {
+    layout_result = GetNGData(box_)->CachedLayoutResult(box_, constraint_space,
+                                                        break_token);
     if (layout_result)
       return layout_result;
   }
 
   layout_result =
       LayoutWithAlgorithm(Style(), *this, constraint_space, break_token);
-  if (box_->IsLayoutNGBlockFlow()) {
-    ToLayoutNGBlockFlow(box_)->SetCachedLayoutResult(
-        constraint_space, break_token, layout_result);
+  if (box_->IsLayoutNGBlockFlow() || box_->IsLayoutNGTableCell()) {
+    GetNGData(box_)->SetCachedLayoutResult(constraint_space, break_token,
+                                           layout_result);
   }
 
   if (layout_result->Status() == NGLayoutResult::kSuccess &&
@@ -225,7 +225,7 @@ NGLayoutInputNode NGBlockNode::NextSibling() const {
 }
 
 NGLayoutInputNode NGBlockNode::FirstChild() {
-  auto* block = ToLayoutNGBlockFlow(box_);
+  auto* block = ToLayoutBlockFlow(box_);
   auto* child = GetLayoutObjectForFirstChildNode(block);
   if (!child)
     return nullptr;
@@ -235,7 +235,7 @@ NGLayoutInputNode NGBlockNode::FirstChild() {
 }
 
 bool NGBlockNode::CanUseNewLayout() const {
-  if (!box_->IsLayoutNGBlockFlow())
+  if (!box_->IsLayoutNGBlockFlow() && !box_->IsLayoutNGTableCell())
     return false;
 
   return RuntimeEnabledFeatures::LayoutNGEnabled();
@@ -481,8 +481,9 @@ RefPtr<NGLayoutResult> NGBlockNode::RunOldLayout(
         box_->BorderAndPaddingLogicalHeight());
   }
 
-  if (box_->IsLayoutNGBlockFlow() && box_->NeedsLayout()) {
-    ToLayoutNGBlockFlow(box_)->LayoutBlockFlow::UpdateBlockLayout(true);
+  if ((box_->IsLayoutNGBlockFlow() || box_->IsLayoutNGTableCell()) &&
+      box_->NeedsLayout()) {
+    ToLayoutBlockFlow(box_)->LayoutBlockFlow::UpdateBlockLayout(true);
   } else {
     box_->ForceLayout();
   }
@@ -549,7 +550,7 @@ void NGBlockNode::AddAtomicInlineBaselineFromOldLayout(
   // Some form controls return 0 for BaselinePosition() if 'display:block'.
   // Blocks without line boxes should not produce baselines.
   if (!position && !box_->IsAtomicInlineLevel() &&
-      !box_->IsLayoutNGBlockFlow() &&
+      !box_->IsLayoutNGBlockFlow() && !box_->IsLayoutNGTableCell() &&
       box_->InlineBlockBaseline(line_direction) == -1) {
     return;
   }

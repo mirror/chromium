@@ -64,7 +64,7 @@ TEST_F(NGOutOfFlowLayoutPartTest, FixedInsideAbs) {
 
   // Test whether the oof fragments have been collected at NG->Legacy boundary.
   Element* rel = GetDocument().getElementById("rel");
-  LayoutNGBlockFlow* block_flow = ToLayoutNGBlockFlow(rel->GetLayoutObject());
+  LayoutBlockFlow* block_flow = ToLayoutBlockFlow(rel->GetLayoutObject());
   RefPtr<NGConstraintSpace> space =
       NGConstraintSpace::CreateFromLayoutObject(*block_flow);
   NGBlockNode node(block_flow);
@@ -103,8 +103,8 @@ TEST_F(NGOutOfFlowLayoutPartTest, OrthogonalWritingMode1) {
     </div>
     )HTML");
 
-  LayoutNGBlockFlow* block_flow =
-      ToLayoutNGBlockFlow(GetLayoutObjectByElementId("container"));
+  LayoutBox* block_flow =
+      ToLayoutBlockFlow(GetLayoutObjectByElementId("container"));
   NGBlockNode node(block_flow);
   RefPtr<NGConstraintSpace> space =
       NGConstraintSpace::CreateFromLayoutObject(*block_flow);
@@ -142,8 +142,8 @@ TEST_F(NGOutOfFlowLayoutPartTest, OrthogonalWritingMode2) {
     </div>
     )HTML");
 
-  LayoutNGBlockFlow* block_flow =
-      ToLayoutNGBlockFlow(GetLayoutObjectByElementId("container"));
+  LayoutBlockFlow* block_flow =
+      ToLayoutBlockFlow(GetLayoutObjectByElementId("container"));
   NGBlockNode node(block_flow);
   RefPtr<NGConstraintSpace> space =
       NGConstraintSpace::CreateFromLayoutObject(*block_flow);

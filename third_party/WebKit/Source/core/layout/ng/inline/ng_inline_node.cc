@@ -270,7 +270,7 @@ void AppendTextTransformedOffsetMapping<NGOffsetMappingBuilder>(
 // for condition checking and branching.
 template <typename OffsetMappingBuilder>
 LayoutBox* CollectInlinesInternal(
-    LayoutNGBlockFlow* block,
+    LayoutBlockFlow* block,
     NGInlineItemsBuilderTemplate<OffsetMappingBuilder>* builder) {
   builder->EnterBlock(block->Style());
   LayoutObject* node = GetLayoutObjectForFirstChildNode(block);
@@ -351,11 +351,11 @@ LayoutBox* CollectInlinesInternal(
 
 }  // namespace
 
-NGInlineNode::NGInlineNode(LayoutNGBlockFlow* block)
+NGInlineNode::NGInlineNode(LayoutBlockFlow* block)
     : NGLayoutInputNode(block, kInline) {
   DCHECK(block);
-  if (!block->HasNGInlineNodeData())
-    block->ResetNGInlineNodeData();
+  if (!GetNGData(block)->HasNGInlineNodeData())
+    GetNGData(block)->ResetNGInlineNodeData();
 }
 
 const Vector<NGInlineItem>& NGInlineNode::Items(bool is_first_line) const {
@@ -370,7 +370,7 @@ NGInlineItemRange NGInlineNode::Items(unsigned start, unsigned end) {
 }
 
 void NGInlineNode::InvalidatePrepareLayout() {
-  GetLayoutBlockFlow()->ResetNGInlineNodeData();
+  GetNGData(GetLayoutBlockFlow())->ResetNGInlineNodeData();
   DCHECK(!IsPrepareLayoutFinished());
 }
 
@@ -622,7 +622,7 @@ NGLayoutInputNode NGInlineNode::NextSibling() {
 void NGInlineNode::CopyFragmentDataToLayoutBox(
     const NGConstraintSpace& constraint_space,
     NGLayoutResult* layout_result) {
-  LayoutNGBlockFlow* block_flow = GetLayoutBlockFlow();
+  LayoutBlockFlow* block_flow = GetLayoutBlockFlow();
   block_flow->DeleteLineBoxTree();
 
   const Vector<NGInlineItem>& items = Data().items_;
@@ -630,7 +630,8 @@ void NGInlineNode::CopyFragmentDataToLayoutBox(
   GetLayoutTextOffsets(&text_offsets);
 
   NGBoxStrut border_padding = ComputeBorders(constraint_space, Style()) +
-                              ComputePadding(constraint_space, Style());
+                              ComputePadding(constraint_space, Style()) +
+                              GetTableCellIntrinsicPadding(box_);
 
   FontBaseline baseline_type =
       IsHorizontalWritingMode(constraint_space.WritingMode())
@@ -762,11 +763,11 @@ Optional<NGInlineNode> GetNGInlineNodeFor(const Node& node, unsigned offset) {
   if (!layout_object || !layout_object->IsInline())
     return WTF::nullopt;
   LayoutBox* box = layout_object->EnclosingBox();
-  if (!box->IsLayoutNGBlockFlow())
+  if (!box->IsLayoutNGBlockFlow() && !box->IsLayoutNGTableCell())
     return WTF::nullopt;
   DCHECK(box);
   DCHECK(box->ChildrenInline());
-  return NGInlineNode(ToLayoutNGBlockFlow(box));
+  return NGInlineNode(ToLayoutBlockFlow(box));
 }
 
 const NGOffsetMappingUnit* NGInlineNode::GetMappingUnitForDOMOffset(

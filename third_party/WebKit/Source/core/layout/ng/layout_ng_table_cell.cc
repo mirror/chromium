@@ -14,69 +14,28 @@
 
 namespace blink {
 
-LayoutNGBlockFlow::LayoutNGBlockFlow(Element* element)
-    : LayoutBlockFlow(element) {}
+LayoutNGTableCell::LayoutNGTableCell(Element* element)
+    : LayoutTableCell(element) {}
 
-LayoutNGBlockFlow::~LayoutNGBlockFlow() {}
+LayoutNGTableCell::~LayoutNGTableCell() {}
 
-bool LayoutNGBlockFlow::IsOfType(LayoutObjectType type) const {
-  return type == kLayoutObjectNGBlockFlow || LayoutBlockFlow::IsOfType(type);
+bool LayoutNGTableCell::IsOfType(LayoutObjectType type) const {
+  return type == kLayoutObjectNGTableCell || LayoutTableCell::IsOfType(type);
 }
 
-void LayoutNGBlockFlow::UpdateBlockLayout(bool relayout_children) {
+void LayoutNGTableCell::UpdateBlockLayout(bool relayout_children) {
   LayoutAnalyzer::BlockScope analyzer(*this);
 
   Optional<LayoutUnit> override_logical_width;
   Optional<LayoutUnit> override_logical_height;
 
-  if (IsOutOfFlowPositioned()) {
-    // LegacyLayout and LayoutNG use different strategies to set size of
-    // an OOF positioned child. In Legacy lets child computes the size,
-    // in NG size is "forced" from parent to child.
-    // This is a compat layer that "forces" size computed by Legacy
-    // on an NG child.
-    LogicalExtentComputedValues computed_values;
-    const ComputedStyle& style = StyleRef();
-    bool logical_width_is_shrink_to_fit =
-        style.LogicalWidth().IsAuto() &&
-        (style.LogicalLeft().IsAuto() || style.LogicalRight().IsAuto());
-    // When logical_width_is_shrink_to_fit is true, correct size will be
-    // computed by standard layout, so there is no need to compute it here.
-    // This happens because NGConstraintSpace::CreateFromLayoutObject will
-    // always set shrink-to-fit flag to true if
-    // LayoutObject::SizesLogicalWidthToFitContent() is true.
-    if (!logical_width_is_shrink_to_fit) {
-      ComputeLogicalWidth(computed_values);
-      override_logical_width =
-          computed_values.extent_ - BorderAndPaddingLogicalWidth();
-    }
-    if (!style.LogicalHeight().IsAuto()) {
-      ComputeLogicalHeight(computed_values);
-      override_logical_height =
-          computed_values.extent_ - BorderAndPaddingLogicalHeight();
-    }
-  }
+  override_logical_width = LogicalWidth() - BorderAndPaddingLogicalWidth();
 
   RefPtr<NGConstraintSpace> constraint_space =
       NGConstraintSpace::CreateFromLayoutObject(*this, override_logical_width,
                                                 override_logical_height);
 
   RefPtr<NGLayoutResult> result = NGBlockNode(this).Layout(*constraint_space);
-
-  if (IsOutOfFlowPositioned()) {
-    // In legacy layout, abspos differs from regular blocks in that abspos
-    // blocks position themselves in their own layout, instead of getting
-    // positioned by their parent. So it we are a positioned block in a legacy-
-    // layout containing block, we have to emulate this positioning.
-    // Additionally, until we natively support abspos in LayoutNG, this code
-    // will also be reached though the layoutPositionedObjects call in
-    // NGBlockNode::CopyFragmentDataToLayoutBox.
-    LogicalExtentComputedValues computed_values;
-    ComputeLogicalWidth(computed_values);
-    SetLogicalLeft(computed_values.position_);
-    ComputeLogicalHeight(LogicalHeight(), LogicalTop(), computed_values);
-    SetLogicalTop(computed_values.position_);
-  }
 
   // We need to update our margins as these are calculated once and stored in
   // LayoutBox::margin_box_outsets_. Typically this happens within
@@ -110,7 +69,7 @@ void LayoutNGBlockFlow::UpdateBlockLayout(bool relayout_children) {
   physical_root_fragment_ = fragment;
 }
 
-void LayoutNGBlockFlow::UpdateMargins(
+void LayoutNGTableCell::UpdateMargins(
     const NGConstraintSpace& constraint_space) {
   NGBoxStrut margins =
       ComputeMargins(constraint_space, StyleRef(),
@@ -121,27 +80,27 @@ void LayoutNGBlockFlow::UpdateMargins(
   SetMarginEnd(margins.inline_end);
 }
 
-LayoutUnit LayoutNGBlockFlow::FirstLineBoxBaseline() const {
+LayoutUnit LayoutNGTableCell::FirstLineBoxBaseline() const {
   // TODO(kojii): Implement. This will stop working once we stop creating line
   // boxes.
-  return LayoutBlockFlow::FirstLineBoxBaseline();
+  return LayoutTableCell::FirstLineBoxBaseline();
 }
 
-LayoutUnit LayoutNGBlockFlow::InlineBlockBaseline(
+LayoutUnit LayoutNGTableCell::InlineBlockBaseline(
     LineDirectionMode line_direction) const {
   // TODO(kojii): Implement. This will stop working once we stop creating line
   // boxes.
-  return LayoutBlockFlow::InlineBlockBaseline(line_direction);
+  return LayoutTableCell::InlineBlockBaseline(line_direction);
 }
 
-void LayoutNGBlockFlow::PaintObject(const PaintInfo& paint_info,
+void LayoutNGTableCell::PaintObject(const PaintInfo& paint_info,
                                     const LayoutPoint& paint_offset) const {
   // TODO(eae): This logic should go in Paint instead and it should drive the
   // full paint logic for LayoutNGBlockFlow.
   if (RuntimeEnabledFeatures::LayoutNGPaintFragmentsEnabled())
     NGBlockFlowPainter(*this).PaintContents(paint_info, paint_offset);
   else
-    LayoutBlockFlow::PaintObject(paint_info, paint_offset);
+    LayoutTableCell::PaintObject(paint_info, paint_offset);
 }
 
 }  // namespace blink

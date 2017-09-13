@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include "core/layout/LayoutBox.h"
+#include "core/layout/LayoutTableCell.h"
 #include "core/layout/ng/ng_constraint_space.h"
 #include "core/layout/ng/ng_constraint_space_builder.h"
 #include "core/style/ComputedStyle.h"
@@ -277,9 +278,14 @@ LayoutUnit ComputeBlockSizeForFragment(
   if (constraint_space.IsFixedSizeBlock())
     return constraint_space.AvailableSize().block_size;
 
-  LayoutUnit extent =
-      ResolveBlockLength(constraint_space, style, style.LogicalHeight(),
-                         content_size, LengthResolveType::kContentSize);
+  LayoutUnit extent;
+
+  if (style.Display() != EDisplay::kTableCell) {
+    extent = ResolveBlockLength(constraint_space, style, style.LogicalHeight(),
+                                content_size, LengthResolveType::kContentSize);
+  } else {
+    extent = content_size;
+  }
   if (extent == NGSizeIndefinite) {
     DCHECK_EQ(content_size, NGSizeIndefinite);
     return extent;
@@ -517,6 +523,16 @@ NGBoxStrut CalculateBorderScrollbarPadding(
     const NGBlockNode node) {
   return ComputeBorders(constraint_space, style) +
          ComputePadding(constraint_space, style) + node.GetScrollbarSizes();
+}
+
+NGBoxStrut GetTableCellIntrinsicPadding(const LayoutObject* layout_object) {
+  NGBoxStrut intrinsic_padding;
+  if (layout_object->IsTableCell()) {
+    const LayoutTableCell* cell = ToLayoutTableCell(layout_object);
+    intrinsic_padding.block_start = LayoutUnit(cell->IntrinsicPaddingBefore());
+    intrinsic_padding.block_end = LayoutUnit(cell->IntrinsicPaddingAfter());
+  }
+  return intrinsic_padding;
 }
 
 NGLogicalSize CalculateContentBoxSize(

@@ -205,6 +205,8 @@ LayoutObject* LayoutObject::CreateObject(Element* element,
     case EDisplay::kTableColumn:
       return new LayoutTableCol(element);
     case EDisplay::kTableCell:
+      if (RuntimeEnabledFeatures::LayoutNGEnabled())
+        return new LayoutNGTableCell(element);
       return new LayoutTableCell(element);
     case EDisplay::kTableCaption:
       return new LayoutTableCaption(element);
