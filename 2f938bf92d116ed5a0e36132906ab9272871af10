@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "72556850_8ca211f3",
+        "filename": "remoting/host/input_injector_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-09-13T23:37:42Z",
+      "side": 1,
+      "message": "Modified this so the factory so this is passed in through the ChromotingHostContext.",
+      "parentUuid": "a9a06aec_98eed861",
+      "range": {
+        "startLine": 149,
+        "startChar": 14,
+        "endLine": 149,
+        "endChar": 45
+      },
+      "revId": "2f938bf92d116ed5a0e36132906ab9272871af10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bad0517_cfa8f76f",
         "filename": "ui/aura/mus/system_input_injector_mus.h",
         "patchSetId": 8
