@@ -11340,9 +11340,12 @@ TEST_F(HTTPSCRLSetTest, CRLSetRevoked) {
 }
 #endif  // !defined(OS_IOS)
 
-#if !BUILDFLAG(DISABLE_FTP_SUPPORT) && !defined(OS_ANDROID)
+#if !BUILDFLAG(DISABLE_FTP_SUPPORT) && !defined(OS_ANDROID) && \
+    !defined(OS_FUCHSIA)
 // These tests aren't passing on Android.  Either the RemoteTestServer isn't
 // starting up successfully, or it can't access the test files.
+// RemoteTestServer currently forwards only one TCP connection, but FTP uses a
+// separate TCP connection for data transfers.
 // TODO(mmenke):  Fix this.  See http://crbug.com/495220
 class URLRequestTestFTP : public URLRequestTest {
  public:

@@ -5,7 +5,6 @@
 -PythonUtils*
 -UDPSocketTest.PartialRecv
 -UnixDomain*Socket*
--URLRequest*FTP*
 -URLRequestQuic*
 
 # Following tests pass locally, but flake on bots.
