@@ -80,6 +80,7 @@ class PowerSteadyStatePages(perf_benchmark.PerfBenchmark):
     return StoryExpectations()
 
 
+@benchmark.Owner(emails=['charliea@chromium.org', 'rnephew@chromium.org'])
 class IdlePlatformBenchmark(perf_benchmark.PerfBenchmark):
   """Idle platform benchmark.
 
@@ -118,4 +119,3 @@ class IdlePlatformBenchmark(perf_benchmark.PerfBenchmark):
       def SetExpectations(self):
         pass # Nothing disabled.
     return StoryExpectations()
-
