@@ -12,6 +12,7 @@
 #import "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
 #import "chrome/browser/ui/cocoa/location_bar/manage_passwords_decoration.h"
 #import "chrome/browser/ui/cocoa/location_bar/page_info_bubble_decoration.h"
+#import "chrome/browser/ui/cocoa/location_bar/save_credit_card_decoration.h"
 #include "ui/views/bubble/bubble_dialog_delegate.h"
 #include "ui/views/widget/widget_observer.h"
 
@@ -72,6 +73,13 @@ LocationBarDecoration* GetPageInfoDecoration(gfx::NativeWindow window) {
       [BrowserWindowController browserWindowControllerForWindow:window];
   LocationBarViewMac* location_bar = [window_controller locationBarBridge];
   return location_bar ? location_bar->page_info_decoration() : nullptr;
+}
+
+LocationBarDecoration* GetSaveCreditCardDecoration(gfx::NativeWindow window) {
+  BrowserWindowController* window_controller =
+      [BrowserWindowController browserWindowControllerForWindow:window];
+  LocationBarViewMac* location_bar = [window_controller locationBarBridge];
+  return location_bar ? location_bar->save_credit_card_decoration() : nullptr;
 }
 
 void KeepBubbleAnchored(views::BubbleDialogDelegateView* bubble,

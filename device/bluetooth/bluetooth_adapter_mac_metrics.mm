@@ -46,10 +46,10 @@ MacOSBluetoothOperationsResult GetMacOSOperationResultFromNSError(
       case CBErrorAlreadyAdvertising:
         return MacOSBluetoothOperationsResult::CBERROR_ALREADY_ADVERTISING;
       default:
-        if (@available(macOS 10.11, *)) {
-          if (CBErrorMaxConnection == cb_error_code)
-            return MacOSBluetoothOperationsResult::CBERROR_MAX_CONNECTION;
-        }
+//        if (@available(macOS 10.11, *)) {
+//          if (CBErrorMaxConnection == cb_error_code)
+//            return MacOSBluetoothOperationsResult::CBERROR_MAX_CONNECTION;
+//        }
         NOTREACHED();
     }
     return MacOSBluetoothOperationsResult::CBATT_ERROR_UNKNOWN_ERROR_CODE;

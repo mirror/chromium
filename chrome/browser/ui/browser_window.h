@@ -233,7 +233,7 @@ class BrowserWindow : public ui::BaseWindow {
   // |already_bookmarked| is true if the url is already bookmarked.
   virtual void ShowBookmarkBubble(const GURL& url, bool already_bookmarked) = 0;
 
-  // Shows the "Save credit card" bubble.
+  // Show the "Save credit card" bubble.
   virtual autofill::SaveCardBubbleView* ShowSaveCreditCardBubble(
       content::WebContents* contents,
       autofill::SaveCardBubbleController* controller,

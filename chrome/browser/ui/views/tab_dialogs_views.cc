@@ -6,11 +6,18 @@
 
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/ui/passwords/manage_passwords_bubble_model.h"
+#include "chrome/browser/ui/views/autofill/save_card_bubble_views.h"
+#include "chrome/browser/ui/views/autofill/save_card_icon_view.h"
 #include "chrome/browser/ui/views/collected_cookies_views.h"
+#include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/hung_renderer_view.h"
+#include "chrome/browser/ui/views/location_bar/location_bar_view.h"
 #include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"
+#include "chrome/browser/ui/views/toolbar/app_menu_button.h"
+#include "chrome/browser/ui/views/toolbar/toolbar_view.h"
 #include "chrome/browser/ui/views/validation_message_bubble_view.h"
 #include "content/public/browser/web_contents.h"
+#include "ui/base/material_design/material_design_controller.h"
 
 #if !defined(OS_CHROMEOS)
 #include "chrome/browser/ui/views/sync/profile_signin_confirmation_dialog_views.h"

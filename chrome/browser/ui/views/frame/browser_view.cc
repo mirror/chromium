@@ -22,6 +22,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "chrome/app/chrome_command_ids.h"
+#include "chrome/browser/ui/autofill/save_card_bubble_view.h"
 #include "chrome/browser/app_mode/app_mode_utils.h"
 #include "chrome/browser/bookmarks/bookmark_stats.h"
 #include "chrome/browser/browser_process.h"
@@ -59,6 +60,8 @@
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/browser/ui/views/accelerator_table.h"
 #include "chrome/browser/ui/views/accessibility/invert_bubble_view.h"
+#include "chrome/browser/ui/views/autofill/save_card_bubble_views.h"
+#include "chrome/browser/ui/views/autofill/save_card_icon_view.h"
 #include "chrome/browser/ui/views/bookmarks/bookmark_bar_view.h"
 #include "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.h"
 #include "chrome/browser/ui/views/download/download_in_progress_dialog_view.h"
@@ -121,6 +124,7 @@
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/base/hit_test.h"
 #include "ui/base/l10n/l10n_util.h"
+#include "ui/base/material_design/material_design_controller.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/theme_provider.h"
 #include "ui/content_accelerators/accelerator_util.h"
@@ -1177,9 +1181,25 @@ void BrowserView::ShowBookmarkBubble(const GURL& url, bool already_bookmarked) {
 autofill::SaveCardBubbleView* BrowserView::ShowSaveCreditCardBubble(
     content::WebContents* web_contents,
     autofill::SaveCardBubbleController* controller,
-    bool is_user_gesture) {
-  return toolbar_->ShowSaveCreditCardBubble(web_contents, controller,
-                                            is_user_gesture);
+    bool user_gesture) {
+  LocationBarView* location_bar = GetLocationBarView();
+  BubbleIconView* card_view = location_bar->save_credit_card_icon_view();
+
+  views::View* anchor_view = location_bar;
+  if (!ui::MaterialDesignController::IsSecondaryUiMaterial()) {
+    if (card_view && card_view->visible())
+      anchor_view = card_view;
+    else
+      anchor_view = toolbar()->app_menu_button();
+  }
+
+  autofill::SaveCardBubbleViews* bubble = new autofill::SaveCardBubbleViews(
+      anchor_view, gfx::Point(), web_contents, controller);
+  if (card_view)
+    bubble->GetWidget()->AddObserver(card_view);
+  bubble->Show(user_gesture ? autofill::SaveCardBubbleViews::USER_GESTURE
+                            : autofill::SaveCardBubbleViews::AUTOMATIC);
+  return bubble;
 }
 
 ShowTranslateBubbleResult BrowserView::ShowTranslateBubble(

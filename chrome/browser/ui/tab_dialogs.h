@@ -17,6 +17,11 @@
 class Browser;
 class Profile;
 
+namespace autofill {
+class SaveCardBubbleController;
+class SaveCardBubbleView;
+}  // namespace autofill
+
 namespace content {
 class WebContents;
 struct WebContentsUnresponsiveState;
