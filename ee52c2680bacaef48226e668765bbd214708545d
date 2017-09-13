@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72fb88ba_9d555525",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-09-13T15:38:32Z",
+      "side": 1,
+      "message": "You also need to send enabled\u003d\"1\" or enabled\u003d\"0\" in \u003capp\u003e.",
+      "range": {
+        "startLine": 319,
+        "startChar": 35,
+        "endLine": 319,
+        "endChar": 0
+      },
+      "revId": "ee52c2680bacaef48226e668765bbd214708545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13f64bfe_23922ad2",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-09-13T15:38:32Z",
+      "side": 1,
+      "message": "disabled",
+      "range": {
+        "startLine": 323,
+        "startChar": 41,
+        "endLine": 323,
+        "endChar": 42
+      },
+      "revId": "ee52c2680bacaef48226e668765bbd214708545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcaf7f59_2cb95f14",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-09-13T15:38:32Z",
+      "side": 1,
+      "message": "If there are multiple disable reasons, we should serialize this as:\n\u003capp ...\u003e\n  \u003cdisabled reason\u003d\"4\"/\u003e\n  \u003cdisabled reason\u003d\"8\"/\u003e\n  \u003cdisabled reason\u003d\"16\"/\u003e\n\u003c/app\u003e\n\n(Duplicate attributes are not allowed in the same tag: use multiple tags.)",
+      "range": {
+        "startLine": 325,
+        "startChar": 30,
+        "endLine": 325,
+        "endChar": 0
+      },
+      "revId": "ee52c2680bacaef48226e668765bbd214708545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92bba0ec_1c0bce65",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-09-13T15:38:32Z",
+      "side": 1,
+      "message": "If a or ad are sent, we assume active\u003d\"1\", there\u0027s no need to serialize it.",
+      "range": {
+        "startLine": 342,
+        "startChar": 49,
+        "endLine": 342,
+        "endChar": 0
+      },
+      "revId": "ee52c2680bacaef48226e668765bbd214708545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "811b11a0_1012b686",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-09-13T15:38:32Z",
+      "side": 1,
+      "message": "(Nit: put the more common case in the if, not the else. Same for the rollcall.)",
+      "range": {
+        "startLine": 349,
+        "startChar": 66,
+        "endLine": 349,
+        "endChar": 0
+      },
+      "revId": "ee52c2680bacaef48226e668765bbd214708545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
