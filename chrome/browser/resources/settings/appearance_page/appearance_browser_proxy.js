@@ -18,6 +18,9 @@ cr.define('settings', function() {
     isSupervised() {}
 
     // <if expr="chromeos">
+    /**
+     * @return {!Promise<boolean>}
+     */
     openWallpaperManager() {}
 
     // </if>
@@ -62,7 +65,7 @@ cr.define('settings', function() {
     // <if expr="chromeos">
     /** @override */
     openWallpaperManager() {
-      chrome.send('openWallpaperManager');
+      return cr.sendWithPromise('openWallpaperManager');
     }
 
     // </if>
