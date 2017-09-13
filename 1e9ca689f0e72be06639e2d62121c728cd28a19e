@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfc66f66_30a3021d",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-13T19:40:21Z",
+      "side": 1,
+      "message": "Is this correct? This is doing 2 ^ (bits_per_type - 1), which is a bitwise xor.\n\nMaybe this should be \u003c\u003c?",
+      "revId": "1e9ca689f0e72be06639e2d62121c728cd28a19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
