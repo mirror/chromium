@@ -19,8 +19,10 @@
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/sync/user_event_service_factory.h"
 #include "chrome/common/pref_names.h"
+#include "chrome/common/url_constants.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
+#include "components/google/core/browser/google_util.h"
 #include "components/password_manager/core/common/password_manager_pref_names.h"
 #include "components/prefs/pref_change_registrar.h"
 #include "components/prefs/pref_service.h"
@@ -87,6 +89,31 @@ int64_t GetLastCommittedNavigationID(const content::WebContents* web_contents) {
              : 0;
 }
 
+// Opens a URL in a new foreground tab.
+void OpenUrlInNewTab(const GURL& url, content::WebContents* web_contents) {
+  content::OpenURLParams params(url, content::Referrer(),
+                                WindowOpenDisposition::NEW_FOREGROUND_TAB,
+                                ui::PAGE_TRANSITION_LINK,
+                                /*is_renderer_initiated=*/false);
+  web_contents->OpenURL(params);
+}
+
+GURL GetChangePasswordURL(AccountInfo* account_info) {
+  std::string account_email =
+      account_info ? account_info->email : std::string();
+  std::string account_url =
+      " https://myaccount.google.com/signinoptions/"
+      "password?utm_source=Google&utm_campaign=PhishGuard";
+  GURL change_password_url =
+      account_email.empty() ? GURL(account_url)
+                            : GURL(base::StringPrintf(
+                                  "https://accounts.google.com/"
+                                  "AccountChooser?Email=%s&continue=%s",
+                                  account_email.c_str(), account_url.c_str()));
+  return google_util::AppendGoogleLocaleParam(
+      change_password_url, g_browser_process->GetApplicationLocale());
+}
+
 }  // namespace
 
 ChromePasswordProtectionService::ChromePasswordProtectionService(
@@ -108,6 +135,7 @@ ChromePasswordProtectionService::ChromePasswordProtectionService(
       password_manager::prefs::kSyncPasswordHash,
       base::Bind(&ChromePasswordProtectionService::OnGaiaPasswordChanged,
                  base::Unretained(this)));
+  InitializeAccountInfo();
 }
 
 ChromePasswordProtectionService::~ChromePasswordProtectionService() {
@@ -178,7 +206,7 @@ void ChromePasswordProtectionService::ShowModalWarning(
   ShowPasswordReuseModalWarningDialog(
       web_contents, this,
       base::BindOnce(&ChromePasswordProtectionService::OnWarningDone,
-                     GetWeakPtr(), web_contents,
+                     base::Unretained(this), web_contents,
                      PasswordProtectionService::MODAL_DIALOG));
 #endif  // !OS_MACOSX || MAC_VIEWS_BROWSER
   OnWarningShown(web_contents, PasswordProtectionService::MODAL_DIALOG);
@@ -186,8 +214,69 @@ void ChromePasswordProtectionService::ShowModalWarning(
     unhandled_password_reuses_[Origin(web_contents->GetLastCommittedURL())] =
         GetLastCommittedNavigationID(web_contents);
   }
-  // TODO(jialiul): Remove entry from unhandled_password_reuses_ when user marks
-  // site as legitimate in |OnWarningShown()| function.
+}
+
+void ChromePasswordProtectionService::OnWarningDone(
+    content::WebContents* web_contents,
+    PasswordProtectionService::WarningUIType ui_type,
+    PasswordProtectionService::WarningAction action) {
+  RecordWarningAction(ui_type, action);
+  switch (ui_type) {
+    case PasswordProtectionService::PAGE_INFO:
+      switch (action) {
+        case PasswordProtectionService::CHANGE_PASSWORD:
+          // Opens chrome://settings page in a new tab.
+          OpenUrlInNewTab(GURL(chrome::kChromeUISettingsURL), web_contents);
+          break;
+        case PasswordProtectionService::MARK_AS_LEGITIMATE: {
+          UpdateSecurityState(SB_THREAT_TYPE_SAFE, web_contents);
+          // Removes the corresponding entry in |unhandled_password_reuses_|.
+          url::Origin whitelisted_origin(web_contents->GetLastCommittedURL());
+          auto it = unhandled_password_reuses_.find(whitelisted_origin);
+          if (it != unhandled_password_reuses_.end())
+            unhandled_password_reuses_.erase(it);
+          break;
+        }
+        default:
+          NOTREACHED();
+          break;
+      }
+      break;
+    case PasswordProtectionService::MODAL_DIALOG:
+      switch (action) {
+        case PasswordProtectionService::CHANGE_PASSWORD:
+          // Opens chrome://settings page in a new tab.
+          OpenUrlInNewTab(GURL(chrome::kChromeUISettingsURL), web_contents);
+          break;
+        case PasswordProtectionService::IGNORE_WARNING:
+        case PasswordProtectionService::CLOSE:
+          // No need to change state.
+          break;
+        default:
+          NOTREACHED();
+          break;
+      }
+      // TODO(jialiul): Sends post warning reporting.
+      break;
+    case PasswordProtectionService::CHROME_SETTINGS:
+      // Note that chrome://settings page's WebContents is different from
+      switch (action) {
+        case PasswordProtectionService::CHANGE_PASSWORD:
+          // Opens https://account.google.com for user to change password.
+          OpenUrlInNewTab(GetChangePasswordURL(account_info_.get()),
+                          web_contents);
+          for (auto& observer : observer_list_)
+            observer.OnStartingGaiaPasswordChange();
+          break;
+        default:
+          NOTREACHED();
+          break;
+      }
+      break;
+    default:
+      NOTREACHED();
+      break;
+  }
 }
 
 void ChromePasswordProtectionService::AddObserver(Observer* observer) {
@@ -291,22 +380,14 @@ void ChromePasswordProtectionService::MaybeLogPasswordReuseDetectedEvent(
 
 PasswordProtectionService::SyncAccountType
 ChromePasswordProtectionService::GetSyncAccountType() {
-  DCHECK(profile_);
-  SigninManagerBase* signin_manager =
-      SigninManagerFactory::GetForProfileIfExists(profile_);
-
-  if (!signin_manager)
-    return LoginReputationClientRequest::PasswordReuseEvent::NOT_SIGNED_IN;
-
-  AccountInfo account_info = signin_manager->GetAuthenticatedAccountInfo();
-
-  if (account_info.account_id.empty() || account_info.hosted_domain.empty()) {
+  if (!account_info_ || account_info_->account_id.empty() ||
+      account_info_->hosted_domain.empty()) {
     return LoginReputationClientRequest::PasswordReuseEvent::NOT_SIGNED_IN;
   }
 
   // For gmail or googlemail account, the hosted_domain will always be
   // kNoHostedDomainFound.
-  return account_info.hosted_domain ==
+  return account_info_->hosted_domain ==
                  std::string(AccountTrackerService::kNoHostedDomainFound)
              ? LoginReputationClientRequest::PasswordReuseEvent::GMAIL
              : LoginReputationClientRequest::PasswordReuseEvent::GSUITE;
@@ -472,6 +553,16 @@ void ChromePasswordProtectionService::OnGaiaPasswordChanged() {
     observer.OnGaiaPasswordChanged();
 }
 
+void ChromePasswordProtectionService::InitializeAccountInfo() {
+  SigninManagerBase* signin_manager =
+      SigninManagerFactory::GetForProfileIfExists(profile_);
+
+  if (signin_manager) {
+    account_info_ = base::MakeUnique<AccountInfo>(
+        signin_manager->GetAuthenticatedAccountInfo());
+  }
+}
+
 ChromePasswordProtectionService::ChromePasswordProtectionService(
     Profile* profile,
     scoped_refptr<HostContentSettingsMap> content_setting_map,
@@ -481,6 +572,8 @@ ChromePasswordProtectionService::ChromePasswordProtectionService(
                                 nullptr,
                                 content_setting_map.get()),
       ui_manager_(ui_manager),
-      profile_(profile) {}
+      profile_(profile) {
+  InitializeAccountInfo();
+}
 
 }  // namespace safe_browsing

@@ -147,4 +147,27 @@ void PasswordReuseModalWarningDialog::OnMarkingSiteAsLegitimate(
     GetWidget()->Close();
 }
 
+void PasswordReuseModalWarningDialog::IncokeActionForTesting(
+    ChromePasswordProtectionService::WarningAction action) {
+  switch (action) {
+    case PasswordProtectionService::CHANGE_PASSWORD:
+      Accept();
+      break;
+    case PasswordProtectionService::IGNORE_WARNING:
+      Cancel();
+      break;
+    case PasswordProtectionService::CLOSE:
+      Close();
+      break;
+    default:
+      NOTREACHED();
+      break;
+  }
+}
+
+ChromePasswordProtectionService::WarningUIType
+PasswordReuseModalWarningDialog::GetObserverType() {
+  return ChromePasswordProtectionService::MODAL_DIALOG;
+}
+
 }  // namespace safe_browsing
