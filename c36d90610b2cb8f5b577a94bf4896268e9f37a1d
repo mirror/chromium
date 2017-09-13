@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "4266cd3a_f2bbb262",
+        "filename": "chrome/browser/ui/webui/interventions/interventions_ui.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-13T17:13:50Z",
+      "side": 1,
+      "message": "From the style guide:\n\n\"You should include all the headers that define the symbols you rely upon, except in the unusual case of forward declaration. If you rely on symbols from bar.h, don\u0027t count on the fact that you included foo.h which (currently) includes bar.h: include bar.h yourself, unless foo.h explicitly demonstrates its intent to provide you the symbols of bar.h. However, any includes present in the related header do not need to be included again in the related cc (i.e., foo.cc can rely on foo.h\u0027s includes).\"\n\nhttps://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes\n\n\nThe relevant part is \"unless foo.h explicitly demonstrates its intent to provide you the symbols of bar.h\", which in this specific instance is demonstrated by UseGzip accepting an unordered_set and therefore it should include unordered_set. In general, I prefer to add headers for cases like these because if WebUIDataSource changed to forward declaring unordered_set (which it would never do), the constructor of unordered_set would not be accessible here without the include.\n\nIn this case, it seems pretty safe to leave off the extra include.",
+      "parentUuid": "339c122f_e4fb0b7e",
+      "revId": "c36d90610b2cb8f5b577a94bf4896268e9f37a1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "912ddec0_62398491",
         "filename": "chrome/browser/ui/webui/interventions/interventions_ui.cc",
         "patchSetId": 13
@@ -104,6 +122,23 @@
       "revId": "c36d90610b2cb8f5b577a94bf4896268e9f37a1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "739afeab_6aa582f9",
+        "filename": "chrome/common/url_constants.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-13T17:13:50Z",
+      "side": 1,
+      "message": "As discussed offline, this should now be interventions-internals.",
+      "revId": "c36d90610b2cb8f5b577a94bf4896268e9f37a1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
