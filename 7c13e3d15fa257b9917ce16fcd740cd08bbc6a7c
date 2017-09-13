@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cb47b6f_a27609f5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 55740,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-13T07:11:05Z",
+      "side": 1,
+      "message": "I think the units appropriate for this histogram are probably \"reuses\".  However, I\u0027m not understanding what \"per session\" means here.  Could you please clarify that in the histogram description?",
+      "range": {
+        "startLine": 55740,
+        "startChar": 30,
+        "endLine": 55740,
+        "endChar": 0
+      },
+      "revId": "7c13e3d15fa257b9917ce16fcd740cd08bbc6a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c25a0f0f_9412bb9f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 55744,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-13T07:11:05Z",
+      "side": 1,
+      "message": "nit: s/warning/warnings",
+      "range": {
+        "startLine": 55744,
+        "startChar": 38,
+        "endLine": 55744,
+        "endChar": 45
+      },
+      "revId": "7c13e3d15fa257b9917ce16fcd740cd08bbc6a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0b0bd8_e782177d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 13
+      },
+      "lineNbr": 55745,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-13T07:11:05Z",
+      "side": 1,
+      "message": "nit: s/it/their password",
+      "range": {
+        "startLine": 55745,
+        "startChar": 4,
+        "endLine": 55745,
+        "endChar": 6
+      },
+      "revId": "7c13e3d15fa257b9917ce16fcd740cd08bbc6a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
