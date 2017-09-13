@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "fbb17fdc_1569724f",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-13T09:37:14Z",
+      "side": 1,
+      "message": "Added a comment.\n\nNote that this runs not for headers and data, but for the data pipe (HTTP data) and the message pipe.",
+      "parentUuid": "33cde89a_1535a12b",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4ce333e_c9462a51",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 23
@@ -47,6 +65,24 @@
       "writtenOn": "2017-09-13T08:53:57Z",
       "side": 1,
       "message": "The thing we need to do in this ctor looks getting larger. I prefer moving them to some methods and add a static method to clarify it starts network loading and caching (SWScriptURLLoader::CreateAndStartCaching(...), for example).\nWDYT?",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "601835fd_e3e3465e",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-13T09:37:14Z",
+      "side": 1,
+      "message": "Sounds good. Let me consider it in a separate CL to minimize this complicated CL. I added a TODO comment.",
+      "parentUuid": "b4ce333e_c9462a51",
       "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -73,6 +109,30 @@
       "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a594d4a7_b5eeb241",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-13T09:37:14Z",
+      "side": 1,
+      "message": "get() is necessary for accessing an internal instance.",
+      "parentUuid": "c64beb16_496afa6a",
+      "range": {
+        "startLine": 53,
+        "startChar": 46,
+        "endLine": 53,
+        "endChar": 53
+      },
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +205,24 @@
     },
     {
       "key": {
+        "uuid": "fdd73cc9_5a89c131",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-13T09:37:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0220c440_5f98bd1e",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65780956_3434062e",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 23
@@ -185,6 +263,30 @@
     },
     {
       "key": {
+        "uuid": "21e87c85_b56b95e7",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-13T09:37:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc5b3fb5_b7380d6f",
+      "range": {
+        "startLine": 217,
+        "startChar": 24,
+        "endLine": 217,
+        "endChar": 34
+      },
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d2a5a5e_dde2698c",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 23
@@ -196,6 +298,24 @@
       "writtenOn": "2017-09-13T08:43:31Z",
       "side": 1,
       "message": "numeric_limits\u003csize_t\u003e is just too big, could we use a realistic number here?",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d1e4c0b_a41cf8a5",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-13T09:37:14Z",
+      "side": 1,
+      "message": "32768 bytes is used by the appcache (\"max(int16_t)+1\" for array index???). Does this work?:\nhttps://chromium.googlesource.com/chromium/src/+/0ff18909e38d1cd242978ea082196c9881e212aa/content/browser/appcache/appcache_update_job.cc#30",
+      "parentUuid": "7d2a5a5e_dde2698c",
       "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -219,6 +339,24 @@
     },
     {
       "key": {
+        "uuid": "427b1047_f132e0c7",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-13T09:37:14Z",
+      "side": 1,
+      "message": "Because we need to limit the size to be read if kBufferSize is smaller than |available|. After the kBufferSize is changed, this could happen.",
+      "parentUuid": "cad670e9_0ec97454",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3625b8ca_e98a4198",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 23
@@ -233,6 +371,24 @@
       "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4baa7f2_09900b22",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-13T09:37:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3625b8ca_e98a4198",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -253,6 +409,24 @@
     },
     {
       "key": {
+        "uuid": "2c5d30a2_30acd8d3",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-13T09:37:14Z",
+      "side": 1,
+      "message": "Added a comment.\n\nI forgot to run the callback when MaybeWrite*Headers*() finishes synchronously. I fixed it.",
+      "parentUuid": "a9fdb7b4_e51ca0dd",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a58917b_33e55893",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 23
@@ -264,6 +438,24 @@
       "writtenOn": "2017-09-13T08:53:57Z",
       "side": 1,
       "message": "Is it possible to reach to here without |pending_read_|? If not, I think it could be DCHECK.",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be3e98c3_845efa4d",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-13T09:37:14Z",
+      "side": 1,
+      "message": "Probably not. Added DCHECK instead of the if-statement.",
+      "parentUuid": "5a58917b_33e55893",
       "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -321,6 +513,24 @@
         "endLine": 28,
         "endChar": 58
       },
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf695261_e36912e5",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-13T09:37:14Z",
+      "side": 1,
+      "message": "\"SW context\" sounds good. Replaced.",
+      "parentUuid": "ee6a1705_1f75e0cf",
       "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -395,6 +605,24 @@
     },
     {
       "key": {
+        "uuid": "5ec581bd_e783add8",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-13T09:37:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "026aba7a_e185b193",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92847dc0_89f4df6a",
         "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
         "patchSetId": 23
@@ -406,6 +634,24 @@
       "writtenOn": "2017-09-13T08:53:57Z",
       "side": 1,
       "message": "Is it possible to have big body which can be split into chunks by mojo?",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "699387a9_dd6cf47c",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-13T09:37:14Z",
+      "side": 1,
+      "message": "I think it\u0027s easier to implement it after the TODO comment at line 27 is addressed. I\u0027ll work on it in a following CL. Added a TODO comment here.",
+      "parentUuid": "92847dc0_89f4df6a",
       "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
