@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "daa57ae5_d149acbc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadManagerUi.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-13T19:13:58Z",
+      "side": 1,
+      "message": "Actually this is needed in order to initialize and register DownloadUIAdapter to OfflineContentAggregator. However we don\u0027t need to keep the mOfflinePageBridge.\n\nI have added a comment.",
+      "parentUuid": "92251eb3_e70f31b3",
+      "range": {
+        "startLine": 74,
+        "startChar": 12,
+        "endLine": 74,
+        "endChar": 30
+      },
+      "revId": "c24630aa8df6e790e0140baf8653953f2d7051ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74899ac5_9cd07970",
         "filename": "chrome/browser/offline_pages/android/downloads/offline_page_download_bridge.h",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "c24630aa8df6e790e0140baf8653953f2d7051ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a6a35a2_77c97357",
+        "filename": "chrome/browser/offline_pages/android/downloads/offline_page_download_bridge.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-13T19:13:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74899ac5_9cd07970",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 20
+      },
+      "revId": "c24630aa8df6e790e0140baf8653953f2d7051ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "837285b9_1284b9f7",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-13T19:13:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e835729_9990fc81",
+      "range": {
+        "startLine": 291,
+        "startChar": 24,
+        "endLine": 291,
+        "endChar": 38
+      },
+      "revId": "c24630aa8df6e790e0140baf8653953f2d7051ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6008d73_ed083b48",
         "filename": "components/offline_pages/core/downloads/offline_item_conversions.cc",
         "patchSetId": 9
@@ -85,6 +157,24 @@
       "revId": "c24630aa8df6e790e0140baf8653953f2d7051ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da53d4ad_85fff599",
+        "filename": "components/offline_pages/core/downloads/offline_item_conversions.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-13T19:13:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6008d73_ed083b48",
+      "revId": "c24630aa8df6e790e0140baf8653953f2d7051ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -108,6 +198,30 @@
       "revId": "c24630aa8df6e790e0140baf8653953f2d7051ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a439380_601cbaca",
+        "filename": "components/offline_pages/core/downloads/offline_item_conversions.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-13T19:13:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e69e7c76_68cccd50",
+      "range": {
+        "startLine": 20,
+        "startChar": 12,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "c24630aa8df6e790e0140baf8653953f2d7051ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
