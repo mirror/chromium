@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f964ec03_23b90dd6",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T14:34:05Z",
+      "side": 1,
+      "message": "pass by value and move",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6b9ead3_8d941767",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T14:34:05Z",
+      "side": 1,
+      "message": "pass by value and move",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8110357_9c671e55",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T14:34:05Z",
+      "side": 1,
+      "message": "Why do we need a weak pointer here, if |power_observer_| is a member of AliveChecker?",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89030c6e_cdc5439a",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T14:34:05Z",
+      "side": 1,
+      "message": "A combination of IsSuspending() and OnResume() is a bit confusing, since it\u0027s not symmetrical, and also redundant.\n\nHow about:\n\nOnPowerNofication(bool suspended) {\nDCHECK(task_runner_-\u003eRunsTasksInCurrentSequence());\nDCHECK_NE(suspended_, suspended);\nsuspended_ \u003d suspended;\nif (!suspended_)\n  last_alive_notification_time_ \u003d base::TimeTicks::Now();\n}\n\nand here:\nif (suspended_) return;",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f58192_6debccff",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T14:34:05Z",
+      "side": 1,
+      "message": "What is the contract regarding how many times |dead_callback_| is called?",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a33973_e0b9dd61",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T14:34:05Z",
+      "side": 1,
+      "message": "No need to introduce \"OnTaskRunner\" versions, just post if we are on a wrong task runner",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f56ec408_4263ab0d",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T14:34:05Z",
+      "side": 1,
+      "message": "Not sure if it deserves a dedicated method.",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a75187fe_e77bc4ec",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T14:34:05Z",
+      "side": 1,
+      "message": "If we already have  SetLastAliveNotificationTimeToNowOnTaskRunner(), why do we need OnResume()?",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "634d6584_d67f26cf",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T14:34:05Z",
+      "side": 1,
+      "message": "Called by whom?\nIs it \"should be called by the client to confirm it\u0027s alive\"?\nIt\u0027s not quite clear from the name who is notified. I would call it something like \"IAmAlive()\" or \"NotifyAlive()\" or \"ConfitmAlive()\"",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f59962_ab65dfa1",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T14:34:05Z",
+      "side": 1,
+      "message": "\"Can be called on any thread\" instead?",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b6be851_dbeb0c48",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T14:34:05Z",
+      "side": 1,
+      "message": "Use base::Optional instead? (https://chromium.googlesource.com/chromium/src/+/master/docs/optional.md#when-to-use)",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76a7da20_021a8b8c",
+        "filename": "media/audio/audio_input_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T14:34:05Z",
+      "side": 1,
+      "message": "Hmm, it possible that |alive_checker_| has not been created, right?\n\n\nOverall, I\u0027m not sure I like this method. On one hand, it saves having a member flag in AID; on the other hand, it decreases readability. Setting a flag in DetectedDeadInputStream()  would be more straightforward; otherwise correlation between DetectedDeadInputStream() and alive_checker_-\u003eDetectedDead() is not obvious. Up to you though.",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9811381_4ef024e8",
+        "filename": "media/audio/power_observer_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T14:34:05Z",
+      "side": 1,
+      "message": "Pass all three by value",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "537463ae_f554798f",
+        "filename": "media/audio/power_observer_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T14:34:05Z",
+      "side": 1,
+      "message": "and move |task_runner|?",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd88ae3_c9336e0c",
+        "filename": "media/audio/power_observer_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T14:34:05Z",
+      "side": 1,
+      "message": "Just \nif (task_runner_-\u003eRunsTasksInCurrentSequence()) {\n // post PowerObserverHelper::OnSuspend();\n // return\n}\n\nis_suspending_ \u003d true;\n suspend_callback_.Run();\n?\n\nAnd same for Resume(), and drop \"OnTaskRunner\" versions",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1003e1a8_e6f6e1e3",
+        "filename": "media/audio/power_observer_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T14:34:05Z",
+      "side": 1,
+      "message": "Maybe have one boolean callback instead for these two?",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
