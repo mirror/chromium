@@ -30,6 +30,7 @@ buildflag_header("media_features") {
     "ENABLE_MEDIA_REMOTING_RPC=$enable_media_remoting_rpc",
     "ENABLE_WEBRTC=$enable_webrtc",
     "USE_PROPRIETARY_CODECS=$proprietary_codecs",
+    "CAN_USE_SECURE_CODEC=$can_use_secure_codec",
   ]
 }
 

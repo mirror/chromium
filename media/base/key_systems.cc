@@ -591,10 +591,10 @@ EmeConfigRule KeySystemsImpl::GetContentTypeConfigRule(
 
   SupportedCodecs key_system_codec_mask =
       key_system_iter->second->GetSupportedCodecs();
-#if defined(OS_ANDROID)
+#if BUILDFLAG(CAN_USE_SECURE_CODEC)
   SupportedCodecs key_system_secure_codec_mask =
       key_system_iter->second->GetSupportedSecureCodecs();
-#endif  // defined(OS_ANDROID)
+#endif  // BUILDFLAG(CAN_USE_SECURE_CODEC)
 
   // Check that the container is supported by the key system. (This check is
   // necessary because |codecs| may be empty.)
@@ -615,7 +615,7 @@ EmeConfigRule KeySystemsImpl::GetContentTypeConfigRule(
                << codecs[i] << ") not supported by " << key_system;
       return EmeConfigRule::NOT_SUPPORTED;
     }
-#if defined(OS_ANDROID)
+#if BUILDFLAG(CAN_USE_SECURE_CODEC)
     // Check whether the codec supports a hardware-secure mode. The goal is to
     // prevent mixing of non-hardware-secure codecs with hardware-secure codecs,
     // since the mode is fixed at CDM creation.
@@ -626,7 +626,7 @@ EmeConfigRule KeySystemsImpl::GetContentTypeConfigRule(
     // that hardware-secure-only codecs actually exist and are useful.
     if ((codec & key_system_secure_codec_mask) == 0)
       support = EmeConfigRule::HW_SECURE_CODECS_NOT_ALLOWED;
-#endif  // defined(OS_ANDROID)
+#endif  // BUILDFLAG(CAN_USE_SECURE_CODEC)
   }
 
   return support;
