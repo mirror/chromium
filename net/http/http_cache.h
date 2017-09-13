@@ -243,8 +243,10 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
   class Transaction;
   class WorkItem;
   class Writers;
-  friend class WritersTest;  // To access ActiveEntry in the test class.
-  friend class MockHttpCacheTransaction;
+
+  friend class WritersTest;
+  friend class TestHttpCacheTransaction;
+  friend class TestHttpCache;
   friend class Transaction;
   friend class ViewCacheHelper;
   struct PendingOp;  // Info for an entry under construction.
@@ -266,17 +268,20 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
   //
   // A transaction goes through these state transitions.
   //
-  // Write mode transactions:
-  // add_to_entry_queue-> headers_transaction -> writer
+  // Write mode transactions eligible for shared writing:
+  // add_to_entry_queue-> headers_transaction -> writers (first writer)
+  // add_to_entry_queue-> headers_transaction -> done_headers_queue -> writers
+  // (subsequent writers)
   // add_to_entry_queue-> headers_transaction -> done_headers_queue -> readers
-  // (once the data is written to the cache by another writer)
+  // (transactions not eligible for shared writing - once the data is written to
+  // the cache by writers)
   //
   // Read only transactions:
   // add_to_entry_queue-> headers_transaction -> done_headers_queue -> readers
-  // (once the data is written to the cache by the writer)
+  // (once the data is written to the cache by writers)
 
   struct ActiveEntry {
-    explicit ActiveEntry(disk_cache::Entry* entry);
+    explicit ActiveEntry(disk_cache::Entry* entry, HttpCache* cache);
     ~ActiveEntry();
     size_t EstimateMemoryUsage() const;
 
@@ -290,18 +295,18 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
 
     // Transaction currently in the headers phase, either validating the
     // response or getting new headers. This can exist simultaneously with
-    // writer or readers while validating existing headers.
+    // writers or readers while validating existing headers.
     Transaction* headers_transaction = nullptr;
 
     // Transactions that have completed their headers phase and are waiting
     // to read the response body or write the response body.
     TransactionList done_headers_queue;
 
-    // Transaction currently reading from the network and writing to the cache.
-    Transaction* writer = nullptr;
+    // Transactions currently reading from the network and writing to the cache.
+    std::unique_ptr<Writers> writers;
 
-    // Transactions that can only read from the cache. Only one of writer or
-    // readers can exist at a time.
+    // Transactions that can only read from the cache. Only one of writers or
+    // readers can be non-empty at a time.
     TransactionSet readers;
 
     // The following variables are true if OnProcessQueuedTransactions is posted
@@ -417,10 +422,36 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
                      bool is_partial);
 
   // Called when the transaction has finished writing to this entry. |success|
-  // is false if the cache entry should be deleted.
+  // is false if the cache entry should be deleted. Removes reference to this
+  // |transaction| from |entry| and if there are other transactions in the entry
+  // they are:
+  // - Processed via ProcessQueuedTransactions in case of success and
+  // - Removed from the entry and restarted in case of failure.
   void DoneWritingToEntry(ActiveEntry* entry,
                           bool success,
                           Transaction* transaction);
+
+  // Helper function for working on one transaction's impact on other
+  // transactions based on whether it was a success or not.
+  // - Processed via ProcessQueuedTransactions in case of success and
+  // - Removed from the entry and restarted in case of failure.
+  void ImpactQueuedTransactions(ActiveEntry* entry, bool success);
+
+  // Invoked when writers has completed writing to the cache. It may be
+  // successful completion of the response or failure as given by |success|.
+  // |entry| is the owner of writers.
+  //
+  // Impacts the queued transactions in one of the following ways:
+  // - restart them but do not doom the entry since entry can be saved in its
+  // truncated form.
+  // - restart them and doom/destroy the entry since entry does not have valid
+  // contents.
+  // - let them continue by invoking their callback since entry is successfully
+  // written.
+  // Virtual so that it can be extended in tests.
+  virtual void WritersDoneWritingToEntry(ActiveEntry* entry,
+                                         bool success,
+                                         TransactionSet make_readers);
 
   // Called when the transaction has finished reading from this entry.
   void DoneReadingFromEntry(ActiveEntry* entry, Transaction* transaction);
@@ -438,11 +469,10 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
 
   // Processes either writer's failure to write response body or
   // headers_transactions's failure to write headers.
-  void ProcessEntryFailure(ActiveEntry* entry, Transaction* transaction);
+  void ProcessEntryFailure(ActiveEntry* entry);
 
   // Restarts headers_transaction and done_headers_queue transactions.
-  void RestartHeadersPhaseTransactions(ActiveEntry* entry,
-                                       Transaction* transaction);
+  void RestartHeadersPhaseTransactions(ActiveEntry* entry);
 
   // Restarts the headers_transaction by setting its state. Since the
   // headers_transaction is awaiting an asynchronous operation completion,
@@ -465,6 +495,9 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
   // OnProcessQueuedTransactions.
   void ProcessDoneHeadersQueue(ActiveEntry* entry);
 
+  // Adds a transaction to writers.
+  void AddTransactionToWriters(Transaction* transaction, ActiveEntry* entry);
+
   // Returns true if this transaction can write headers to the entry.
   bool CanTransactionWriteResponseHeaders(ActiveEntry* entry,
                                           Transaction* transaction,
@@ -475,10 +508,6 @@ class NET_EXPORT HttpCache : public HttpTransactionFactory {
   // transaction to complete writing to the cache.
   bool HasDependentTransactions(ActiveEntry* entry,
                                 Transaction* transaction) const;
-
-  // Check the sanity of response code for a writer transaction.
-  bool IsValidResponseForWriter(Transaction* transaction,
-                                bool is_partial) const;
 
   // Returns true if a transaction is currently writing the response body.
   bool IsWritingInProgress(ActiveEntry* entry) const;

@@ -25,6 +25,7 @@
 #include "net/base/net_error_details.h"
 #include "net/base/request_priority.h"
 #include "net/http/http_cache.h"
+#include "net/http/http_cache_transaction_writers_common.h"
 #include "net/http/http_request_headers.h"
 #include "net/http/http_response_headers.h"
 #include "net/http/http_response_info.h"
@@ -40,6 +41,9 @@ class PartialData;
 struct HttpRequestInfo;
 struct LoadTimingInfo;
 class SSLPrivateKey;
+
+using http_cache_transaction_util::WritersTransactionContext;
+using http_cache_transaction_util::NetworkTransactionInfo;
 
 // This is the transaction that is returned by the HttpCache transaction
 // factory.
@@ -78,7 +82,8 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
               HttpCache* cache);
   ~Transaction() override;
 
-  Mode mode() const { return mode_; }
+  // Virtual so it can be extended for testing.
+  virtual Mode mode() const;
 
   std::string& method() { return method_; }
 
@@ -102,14 +107,6 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   int WriteMetadata(IOBuffer* buf,
                     int buf_len,
                     const CompletionCallback& callback);
-
-  // This transaction is being deleted and we are not done writing to the cache.
-  // We need to indicate that the response data was truncated.  Returns true on
-  // success. Keep in mind that this operation may have side effects, such as
-  // deleting the active entry. This also returns success if the response was
-  // completely written, |*did_truncate| will be set to true if it was actually
-  // truncated.
-  bool AddTruncatedFlag(bool* did_truncate);
 
   HttpCache::ActiveEntry* entry() { return entry_; }
 
@@ -173,6 +170,7 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   void SetResponseHeadersCallback(ResponseHeadersCallback callback) override;
   int ResumeNetworkStart() override;
   void GetConnectionAttempts(ConnectionAttempts* out) const override;
+  // HttpTransaction methods end.
 
   // Invoked when parallel validation cannot proceed due to response failure
   // and this transaction needs to be restarted.
@@ -186,10 +184,15 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   size_t EstimateMemoryUsage() const;
 
   // Sets fail state such that a future Read fails with |error_code|.
-  void SetSharedWritingFailState(int error_code);
+  // Virtual so it can be extended for testing.
+  virtual void SetSharedWritingFailState(int error_code);
 
   RequestPriority priority() const { return priority_; }
   PartialData* partial() { return partial_.get(); }
+
+  // Fills in pointers/copies of members in WritersTransactionContext. The
+  // pointers are only valid while the Transaction is alive.
+  std::unique_ptr<WritersTransactionContext> GetWritersTransactionContext();
 
  private:
   static const size_t kNumValidationHeaders = 2;
@@ -254,15 +257,15 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
     STATE_FINISH_HEADERS,
     STATE_FINISH_HEADERS_COMPLETE,
 
-    // These states are entered from Read/AddTruncatedFlag.
-    STATE_NETWORK_READ,
-    STATE_NETWORK_READ_COMPLETE,
+    // These states are entered from Read.
+    STATE_NETWORK_READ_CACHE_WRITE,
+    STATE_NETWORK_READ_CACHE_WRITE_COMPLETE,
     STATE_CACHE_READ_DATA,
     STATE_CACHE_READ_DATA_COMPLETE,
-    STATE_CACHE_WRITE_DATA,
-    STATE_CACHE_WRITE_DATA_COMPLETE,
-    STATE_CACHE_WRITE_TRUNCATED_RESPONSE,
-    STATE_CACHE_WRITE_TRUNCATED_RESPONSE_COMPLETE
+    // These states are entered if the request should be handled exclusively
+    // by the network layer (skipping the cache entirely).
+    STATE_NETWORK_READ,
+    STATE_NETWORK_READ_COMPLETE,
   };
 
   // Used for categorizing validation triggers in histograms.
@@ -325,14 +328,12 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   int DoHeadersPhaseCannotProceed(int result);
   int DoFinishHeaders(int result);
   int DoFinishHeadersComplete(int result);
-  int DoNetworkRead();
-  int DoNetworkReadComplete(int result);
+  int DoNetworkReadCacheWrite();
+  int DoNetworkReadCacheWriteComplete(int result);
   int DoCacheReadData();
   int DoCacheReadDataComplete(int result);
-  int DoCacheWriteData(int num_bytes);
-  int DoCacheWriteDataComplete(int result);
-  int DoCacheWriteTruncatedResponse();
-  int DoCacheWriteTruncatedResponseComplete(int result);
+  int DoNetworkRead();
+  int DoNetworkReadComplete(int result);
 
   // Adds time out handling while waiting to be added to entry or after headers
   // phase is complete.
@@ -418,8 +419,27 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   // is always "OK".
   int OnWriteResponseInfoToEntryComplete(int result);
 
-  // Called when we are done writing to the cache entry.
+  // Called when the transaction doesn't have to write to the cache anymore.
+  // If its a member of entry_->writers, it will invoke
+  // entry_->writers->MayBeSetNetworkReadOnly which implies the response will
+  // not be subsequently written to the cache else
+  // HeadersPhaseContinueWithoutEntry will be invoked.
+  // If |keep_entry| is false, entry will also be doomed.
+  void ContinueInNetworkReadOnlyMode(bool keep_entry);
+
+  // Called when the transaction doesn't have to write to the cache anymore
+  // during the headers phase.
+  // For a headers phase transaction, remove the transaction from entry_ and
+  // impact other queued transactions via DoneWritingToEntry.
+  // If |keep_entry| is false, entry will also be doomed.
+  void HeadersPhaseContinueWithoutEntry(bool keep_entry);
+
+  // Called when the request is complete and |this| needs to be removed fromi
+  // entry.
   void DoneWritingToEntry(bool success);
+
+  // Resets member variables when no longer writing to the entry.
+  void ResetStateDoneWritingToEntry();
 
   // Returns an error to signal the caller that the current read failed. The
   // current operation |result| is also logged. If |restart| is true, the
@@ -436,6 +456,10 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   // Performs the needed work after receiving data from the network, when
   // working with range requests.
   int DoPartialNetworkReadCompleted(int result);
+
+  // Helper function for partial transactions when network read/ cache write is
+  // completed.
+  int CheckAndProcessPartialCompletion(int result);
 
   // Performs the needed work after receiving data from the cache, when
   // working with range requests.
@@ -454,6 +478,10 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   // |old_network_trans_load_timing_|, which must be NULL when this is called.
   void ResetNetworkTransaction();
 
+  // Returns the currently active network transaction.
+  const HttpTransaction* network_transaction() const;
+  HttpTransaction* network_transaction();
+
   // Returns true if we should bother attempting to resume this request if it is
   // aborted while in progress. If |has_data| is true, the size of the stored
   // data is considered for the result.
@@ -469,7 +497,14 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
 
   // Sets the response.cache_entry_status to the current cache_entry_status_.
   void SyncCacheEntryStatusToResponse();
+
+  // Logs histograms for this transaction. It is invoked when the transaction is
+  // either complete or is done writing to entry and will continue in
+  // network-only mode.
   void RecordHistograms();
+
+  // Returns true if this transaction is a member of entry_->writers.
+  bool InWriters() const;
 
   // Called to signal completion of asynchronous IO. Note that this callback is
   // used in the conventional sense where one layer calls the callback of the
@@ -482,6 +517,9 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   // When in a DoLoop, use this to set the next state as it verifies that the
   // state isn't set twice.
   void TransitionToState(State state);
+
+  // Helper function to decide the next reading state.
+  int TransitionToReadingState();
 
   State next_state_;
 
@@ -515,7 +553,6 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   bool range_requested_;  // The user requested a byte range.
   bool handling_206_;  // We must deal with this 206 response.
   bool cache_pending_;  // We are waiting for the HttpCache.
-  bool done_reading_;  // All available data was read.
 
   // Headers have been received from the network and it's not a match with the
   // existing entry.
@@ -531,9 +568,12 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   int io_buf_len_;
   int read_offset_;
   int effective_load_flags_;
-  int write_len_;
   std::unique_ptr<PartialData> partial_;  // We are dealing with range requests.
   CompletionCallback io_callback_;
+
+  // Error code to be returned from a subsequent Read call if shared writing
+  // failed in a separate transaction.
+  int shared_writing_error_;
 
   // Members used to track data for histograms.
   // This cache_entry_status_ takes precedence over
@@ -549,16 +589,7 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   base::TimeDelta stale_entry_freshness_;
   base::TimeDelta stale_entry_age_;
 
-  int64_t total_received_bytes_;
-  int64_t total_sent_bytes_;
-
-  // Load timing information for the last network request, if any.  Set in the
-  // 304 and 206 response cases, as the network transaction may be destroyed
-  // before the caller requests load timing information.
-  std::unique_ptr<LoadTimingInfo> old_network_trans_load_timing_;
-
-  ConnectionAttempts old_connection_attempts_;
-  IPEndPoint old_remote_endpoint_;
+  NetworkTransactionInfo network_transaction_info_;
 
   // The helper object to use to create WebSocketHandshakeStreamBase
   // objects. Only relevant when establishing a WebSocket connection.
