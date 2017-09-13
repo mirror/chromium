@@ -435,6 +435,20 @@ cr.define('print_preview', function() {
           this.advancedOptionsSettings_,
           print_preview.AdvancedOptionsSettings.EventType.BUTTON_ACTIVATED,
           this.onAdvancedOptionsButtonActivated_.bind(this));
+
+      /* Ticket items that may be invalid. */
+      this.tracker.add(
+          this.printTicketStore_.copies,
+          print_preview.ticket_items.TicketItem.EventType.CHANGE,
+          this.onTicketChange_.bind(this));
+      this.tracker.add(
+          this.printTicketStore_.pageRange,
+          print_preview.ticket_items.TicketItem.EventType.CHANGE,
+          this.onTicketChange_.bind(this));
+      this.tracker.add(
+          this.printTicketStore_.scaling,
+          print_preview.ticket_items.TicketItem.EventType.CHANGE,
+          this.onTicketChange_.bind(this));
     },
 
     /** @override */
@@ -920,6 +934,21 @@ cr.define('print_preview', function() {
       this.uiState_ = PrintPreviewUiState_.ERROR;
       this.isPreviewGenerationInProgress_ = false;
       this.printHeader_.isPrintButtonEnabled = false;
+    },
+
+    /**
+     * Called when a ticket item that can be invalid is updated. Updates the
+     * enabled state of the system dialog link on Windows and the open pdf in
+     * preview link on Mac.
+     * @private
+     */
+    onTicketChange_: function() {
+      this.printHeader_.onTicketChange();
+      var disable = !this.printHeader_.isPrintButtonEnabled;
+      if (cr.isWindows && $('system-dialog-link'))
+        $('system-dialog-link').classList.toggle('disabled', disable);
+      if ($('open-pdf-in-preview-link'))
+        $('open-pdf-in-preview-link').classList.toggle('disabled', disable);
     },
 
     /**
