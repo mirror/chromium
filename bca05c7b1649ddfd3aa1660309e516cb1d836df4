@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92204c44_9e1e6dd6",
+        "filename": "components/viz/common/quads/release_callback_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-13T03:22:17Z",
+      "side": 1,
+      "message": "Is there a good reason to keep this type def in it\u0027s own file? Are there other classes that use it outside the context of SingleReleaseCallbackImpl?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 7
+      },
+      "revId": "bca05c7b1649ddfd3aa1660309e516cb1d836df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
