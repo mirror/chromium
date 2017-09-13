@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d4fadc3_f24f93bf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Toolbar.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-09-13T05:26:00Z",
+      "side": 1,
+      "message": "You should be able to just add a `focus` or `blur` listener to the toolbar-input-prompt element. This avoids making new TextPrompt events.",
+      "revId": "b7d0482f1f26fb9c52323d51eb31c0b43801ebb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
