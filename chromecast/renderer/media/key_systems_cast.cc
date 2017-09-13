@@ -146,7 +146,10 @@ void AddCmaKeySystems(
   using Robustness = cdm::WidevineKeySystemProperties::Robustness;
 
   key_systems_properties->emplace_back(new cdm::WidevineKeySystemProperties(
-      codecs,                     // Regular codecs.
+      codecs,  // Regular codecs.
+#if BUILDFLAG(CAN_USE_SECURE_CODEC)
+      codecs,                     // Secured codecs.
+#endif                            // BUILDFLAG(CAN_USE_SECURE_CODEC)
       Robustness::HW_SECURE_ALL,  // Max audio robustness.
       Robustness::HW_SECURE_ALL,  // Max video robustness.
       enable_persistent_license_support

@@ -40,9 +40,9 @@ Robustness ConvertRobustness(const std::string& robustness) {
 
 WidevineKeySystemProperties::WidevineKeySystemProperties(
     media::SupportedCodecs supported_codecs,
-#if defined(OS_ANDROID)
+#if BUILDFLAG(CAN_USE_SECURE_CODEC)
     media::SupportedCodecs supported_secure_codecs,
-#endif  // defined(OS_ANDROID)
+#endif  // BUILDFLAG(CAN_USE_SECURE_CODEC)
     Robustness max_audio_robustness,
     Robustness max_video_robustness,
     media::EmeSessionTypeSupport persistent_license_support,
@@ -50,9 +50,9 @@ WidevineKeySystemProperties::WidevineKeySystemProperties(
     media::EmeFeatureSupport persistent_state_support,
     media::EmeFeatureSupport distinctive_identifier_support)
     : supported_codecs_(supported_codecs),
-#if defined(OS_ANDROID)
+#if BUILDFLAG(CAN_USE_SECURE_CODEC)
       supported_secure_codecs_(supported_secure_codecs),
-#endif  // defined(OS_ANDROID)
+#endif  // BUILDFLAG(CAN_USE_SECURE_CODEC)
       max_audio_robustness_(max_audio_robustness),
       max_video_robustness_(max_video_robustness),
       persistent_license_support_(persistent_license_support),
@@ -84,7 +84,7 @@ SupportedCodecs WidevineKeySystemProperties::GetSupportedCodecs() const {
   return supported_codecs_;
 }
 
-#if defined(OS_ANDROID)
+#if BUILDFLAG(CAN_USE_SECURE_CODEC)
 SupportedCodecs WidevineKeySystemProperties::GetSupportedSecureCodecs() const {
   return supported_secure_codecs_;
 }
@@ -132,7 +132,7 @@ EmeConfigRule WidevineKeySystemProperties::GetRobustnessConfigRule(
       max_robustness == Robustness::HW_SECURE_ALL) {
     return EmeConfigRule::IDENTIFIER_RECOMMENDED;
   }
-#elif defined(OS_ANDROID)
+#elif BUILDFLAG(CAN_USE_SECURE_CODEC)
   // Require hardware secure codecs when SW_SECURE_DECODE or above is specified.
   if (robustness >= Robustness::SW_SECURE_DECODE) {
     return EmeConfigRule::HW_SECURE_CODECS_REQUIRED;
