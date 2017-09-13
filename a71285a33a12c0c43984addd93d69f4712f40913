@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f867cae3_018d2ae9",
+        "filename": "components/cronet/android/test/proguard.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-13T12:15:04Z",
+      "side": 1,
+      "message": "I don\u0027t think this comment was addressed.",
+      "parentUuid": "184fb216_d6f9355c",
+      "revId": "a71285a33a12c0c43984addd93d69f4712f40913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a120697c_e4160d78",
         "filename": "components/cronet/android/test/proguard.cfg",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "4490 09-12 15:43:40.630 E/AndroidRuntime(12903): Process: org.chromium.net, PID: 12903\n4491 09-12 15:43:40.630 E/AndroidRuntime(12903): java.lang.NoSuchMethodError: junit.framework.Assert.install\n4492 09-12 15:43:40.630 E/AndroidRuntime(12903):     at org.chromium.base.test.BaseChromiumAndroidJUnitRunner.newApplication(BaseChromiumAndroidJUnitRunner.java:68)\n4493 09-12 15:43:40.630 E/AndroidRuntime(12903):     at android.app.LoadedApk.makeApplication(LoadedApk.java:511)\n4494 09-12 15:43:40.630 E/AndroidRuntime(12903):     at android.app.ActivityThread.handleBindApplication(ActivityThread.java:4317)\n4495 09-12 15:43:40.630 E/AndroidRuntime(12903):     at android.app.ActivityThread.access$1500(ActivityThread.java:135)\n4496 09-12 15:43:40.630 E/AndroidRuntime(12903):     at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1256)\n4497 09-12 15:43:40.630 E/AndroidRuntime(12903):     at android.os.Handler.dispatchMessage(Handler.java:102)\n4498 09-12 15:43:40.630 E/AndroidRuntime(12903):     at android.os.Looper.loop(Looper.java:136)\n4499 09-12 15:43:40.630 E/AndroidRuntime(12903):     at android.app.ActivityThread.main(ActivityThread.java:5017)\n4500 09-12 15:43:40.630 E/AndroidRuntime(12903):     at java.lang.reflect.Method.invokeNative(Native Method)\n4501 09-12 15:43:40.630 E/AndroidRuntime(12903):     at java.lang.reflect.Method.invoke(Method.java:515)\n4502 09-12 15:43:40.630 E/AndroidRuntime(12903):     at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:779)\n4503 09-12 15:43:40.630 E/AndroidRuntime(12903):     at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:595)\n4504 09-12 15:43:40.630 E/AndroidRuntime(12903):     at dalvik.system.NativeStart.main(Native Method)\n4505 09-12 15:43:40.630 W/ActivityManager(  758): Error in app org.chromium.net running instrumentation ComponentInfo{org.chromium.net.tests/org.chromium.base.test.BaseChromiumAndroidJUnitRunner}:\n4506 09-12 15:43:40.630 W/ActivityManager(  758):   java.lang.NoSuchMethodError      \n4507 09-12 15:43:40.630 W/ActivityManager(  758):   java.lang.NoSuchMethodError: junit.framework.Assert.install",
       "parentUuid": "a120697c_e4160d78",
+      "revId": "a71285a33a12c0c43984addd93d69f4712f40913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c6959b_3f0639ca",
+        "filename": "components/cronet/android/test/proguard.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-13T12:15:04Z",
+      "side": 1,
+      "message": "Hmm that line of code calls ChromiumMultiDexInstaller.install(), and there is no Assert.install() defined anywhere...  I\u0027m very confused.",
+      "parentUuid": "7fdb45ab_cc98d66c",
       "revId": "a71285a33a12c0c43984addd93d69f4712f40913",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
