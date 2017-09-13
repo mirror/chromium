@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9124d7d0_b2515a11",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-13T21:41:38Z",
+      "side": 1,
+      "message": "nit: you should use the variant where you pass a size.",
+      "range": {
+        "startLine": 59,
+        "startChar": 11,
+        "endLine": 59,
+        "endChar": 27
+      },
+      "revId": "0712db25651885981b72795975d919f6136b323e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0db9029_3f4d4a8b",
+        "filename": "chrome/browser/ui/views/exit_fullscreen_indicator_view.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-13T21:41:38Z",
+      "side": 1,
+      "message": "can you just use a fill layout on |this|? that should center the image in the image view",
+      "range": {
+        "startLine": 77,
+        "startChar": 21,
+        "endLine": 77,
+        "endChar": 34
+      },
+      "revId": "0712db25651885981b72795975d919f6136b323e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
