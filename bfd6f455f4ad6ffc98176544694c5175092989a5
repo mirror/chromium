@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "caae833b_e438a349",
+        "filename": "media/remoting/courier_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-13T22:42:16Z",
+      "side": 1,
+      "message": "Some significant amount of time may have passed between when we got the HAVE_NOTHING RPC in OnBufferingStateChange() and this check here. It seems we should account for that: If a demuxer read completes (and the full frame was sent via the mojo interface), we should ResetMeasurements() and clear the flag.",
+      "range": {
+        "startLine": 753,
+        "startChar": 6,
+        "endLine": 753,
+        "endChar": 39
+      },
+      "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e076ed7_7cb0c606",
+        "filename": "media/remoting/courier_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-13T22:42:16Z",
+      "side": 1,
+      "message": "While audio and video are usually multiplexed in the same stream, I\u0027m not sure we want to depend on the assumption that we are not blocked if just video is not blocked. Can we logical-OR the checks on the two streams? How about:\n\n  return ((video_demuxer_stream_adapter_ \u0026\u0026\n           video_demuxer_stream_adapter_-\u003eIsProcessingReadRequest() \u0026\u0026\n           !video_demuxer_stream_adapter_-\u003eIsDataPending()) ||\n          (audio_demuxer_stream_adapter_ \u0026\u0026\n           audio_demuxer_stream_adapter_-\u003eIsProcessingReadRequest() \u0026\u0026\n           !audio_demuxer_stream_adapter_-\u003eIsDataPending()));",
+      "range": {
+        "startLine": 894,
+        "startChar": 0,
+        "endLine": 910,
+        "endChar": 15
+      },
+      "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "535d18b9_d4545d0f",
+        "filename": "media/remoting/courier_renderer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-13T22:42:16Z",
+      "side": 1,
+      "message": "s/Demuxer/the Demuxers/",
+      "range": {
+        "startLine": 144,
+        "startChar": 54,
+        "endLine": 144,
+        "endChar": 61
+      },
+      "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b3736bc_d5287c50",
+        "filename": "media/remoting/courier_renderer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-13T22:42:16Z",
+      "side": 1,
+      "message": "nit: naming suggestion: IsWaitingForDataFromDemuxers()",
+      "range": {
+        "startLine": 147,
+        "startChar": 7,
+        "endLine": 147,
+        "endChar": 35
+      },
+      "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30771b70_d72d1f14",
+        "filename": "media/remoting/courier_renderer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-13T22:42:16Z",
+      "side": 1,
+      "message": "naming nit: This flag is really about state at the receiver AND that we\u0027re blocked on the sender side. How about: receiver_is_blocked_on_local_demuxers_",
+      "range": {
+        "startLine": 219,
+        "startChar": 7,
+        "endLine": 219,
+        "endChar": 40
+      },
+      "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84aba79a_9b817ccf",
+        "filename": "media/remoting/courier_renderer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-13T22:42:16Z",
+      "side": 1,
+      "message": "Nice refactoring! :)",
+      "range": {
+        "startLine": 358,
+        "startChar": 2,
+        "endLine": 358,
+        "endChar": 54
+      },
+      "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946fb926_579c5357",
+        "filename": "media/remoting/demuxer_stream_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-13T22:42:16Z",
+      "side": 1,
+      "message": "style nit: Simple one-liner inlined functions should use lowercase: is_processing_read_request()",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b90946fc_38ed2103",
+        "filename": "media/remoting/demuxer_stream_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-13T22:42:16Z",
+      "side": 1,
+      "message": "typo: Indicates",
+      "range": {
+        "startLine": 92,
+        "startChar": 5,
+        "endLine": 92,
+        "endChar": 13
+      },
+      "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf38760_5079b002",
+        "filename": "media/remoting/demuxer_stream_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-13T22:42:16Z",
+      "side": 1,
+      "message": "style nit: lower case for simple one-liners.",
+      "range": {
+        "startLine": 93,
+        "startChar": 7,
+        "endLine": 93,
+        "endChar": 20
+      },
+      "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
