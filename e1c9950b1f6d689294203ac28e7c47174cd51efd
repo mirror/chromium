@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f301215b_48c4616d",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-13T20:38:59Z",
+      "side": 1,
+      "message": "why \"active_frame_callbacks_.empty() \u0026\u0026\" ? wouldn\u0027t it still be a problem if \"!frame_callbacks_.empty()\" ?",
+      "range": {
+        "startLine": 242,
+        "startChar": 6,
+        "endLine": 242,
+        "endChar": 40
+      },
+      "revId": "e1c9950b1f6d689294203ac28e7c47174cd51efd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
