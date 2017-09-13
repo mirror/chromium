@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ca259723_bb3ca691",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_grid.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-09-13T06:00:11Z",
+      "side": 1,
+      "message": "Hmm. Don\u0027t mind if it\u0027s generated with git cl format.",
+      "parentUuid": "0647ad95_3ad0cddf",
+      "revId": "608ea671d372ca504cfc050d4ce7a69ebe68778f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d4f88e2_640a9db6",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_table.js",
         "patchSetId": 15
