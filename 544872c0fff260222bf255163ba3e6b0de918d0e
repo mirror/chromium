@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "ca57ebc3_3e776399",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-13T18:27:38Z",
+      "side": 1,
+      "message": "move this up into the anonymous namespace",
+      "range": {
+        "startLine": 455,
+        "startChar": 0,
+        "endLine": 455,
+        "endChar": 26
+      },
+      "revId": "544872c0fff260222bf255163ba3e6b0de918d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0f7bdf_501d6665",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-13T18:27:38Z",
+      "side": 1,
+      "message": "I think these two are also PODs and should be zero initialized (kNullProcessId)",
+      "range": {
+        "startLine": 456,
+        "startChar": 1,
+        "endLine": 457,
+        "endChar": 34
+      },
+      "revId": "544872c0fff260222bf255163ba3e6b0de918d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dfb2b8c_7ca8b3a8",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 4
@@ -94,6 +140,29 @@
     },
     {
       "key": {
+        "uuid": "d057e9aa_76cc03a2",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-13T18:27:38Z",
+      "side": 1,
+      "message": "just bool valid \u003d has_raw_os_dump?",
+      "range": {
+        "startLine": 532,
+        "startChar": 3,
+        "endLine": 533,
+        "endChar": 37
+      },
+      "revId": "544872c0fff260222bf255163ba3e6b0de918d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48451054_317b44d2",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 4
@@ -156,6 +225,53 @@
         "startChar": 47,
         "endLine": 638,
         "endChar": 64
+      },
+      "revId": "544872c0fff260222bf255163ba3e6b0de918d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ff3026d_c2246303",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-13T18:27:38Z",
+      "side": 1,
+      "message": "Yeah I am trying to figure out if we really need two differnt things (wants and should return).\nCan they be collapsed into one WantsMmaps { return DETAILED | VM_REGIONS_ONLY) ?",
+      "parentUuid": "2a98427f_37d1bfda",
+      "range": {
+        "startLine": 638,
+        "startChar": 47,
+        "endLine": 638,
+        "endChar": 64
+      },
+      "revId": "544872c0fff260222bf255163ba3e6b0de918d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78dc578c_59016cf5",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-13T18:27:38Z",
+      "side": 1,
+      "message": "can you add some comments here? When opening this file is not immediate to grasp the difference  between WantsX and ShouldReturnX",
+      "range": {
+        "startLine": 80,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 19
       },
       "revId": "544872c0fff260222bf255163ba3e6b0de918d0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
