@@ -7,6 +7,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/PerformanceMonitor.h"
+#include "core/frame/Settings.h"
 #include "core/layout/LayoutObject.h"
 #include "core/testing/DummyPageHolder.h"
 #include "core/timing/Performance.h"
@@ -21,6 +22,7 @@ class DataTransferTest : public ::testing::Test {
   ~DataTransferTest() override = default;
 
   Document& GetDocument() const { return dummy_page_holder_->GetDocument(); }
+  Page& GetPage() const { return dummy_page_holder_->GetPage(); }
   LocalFrame& GetFrame() const { return *GetDocument().GetFrame(); }
   Performance* GetPerformance() const { return performance_; }
 
@@ -123,6 +125,67 @@ TEST_F(DataTransferTest, nodeImageWithChangingLayoutObject) {
   EXPECT_EQ(Color(0, 0, 255),
             sample->GetLayoutObject()->ResolveColor(CSSPropertyColor))
       << "#sample doesn't have :-webkit-drag.";
+}
+
+TEST_F(DataTransferTest, NodeImageExceedsWindowBounds) {
+  SetBodyContent(
+      "<style>"
+      "  * { margin: 0; } "
+      "  #sample { width: 2000px; height: 2000px; }"
+      "</style>"
+      "<div id=sample></div>");
+  Element& sample = *GetDocument().getElementById("sample");
+  const std::unique_ptr<DragImage> image =
+      DataTransfer::NodeImage(GetFrame(), sample);
+  EXPECT_EQ(IntSize(800, 600), image->Size());
+}
+
+TEST_F(DataTransferTest, NodeImageUnderScrollOffset) {
+  SetBodyContent(
+      "<style>"
+      "  * { margin: 0; } "
+      "  #first { width: 500px; height: 500px; }"
+      "  #second { width: 500px; height: 500px; }"
+      "</style>"
+      "<div id=first></div>"
+      "<div id=second></div>");
+  LocalFrameView* frame_view = GetDocument().View();
+  frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
+      ScrollOffset(0, 72), kProgrammaticScroll);
+
+  Element& first = *GetDocument().getElementById("first");
+  const std::unique_ptr<DragImage> first_image =
+      DataTransfer::NodeImage(GetFrame(), first);
+  EXPECT_EQ(IntSize(500, 500 - 72), first_image->Size());
+
+  Element& second = *GetDocument().getElementById("second");
+  const std::unique_ptr<DragImage> second_image =
+      DataTransfer::NodeImage(GetFrame(), second);
+  EXPECT_EQ(IntSize(500, 600 - 500 + 72), second_image->Size());
+}
+
+TEST_F(DataTransferTest, NodeImageWithPageScaleFactor) {
+  SetBodyContent(
+      "<style>"
+      "  * { margin: 0; } "
+      "  html, body { height: 2000px; }"
+      "  #sample { width: 200px; height: 141px; }"
+      "</style>"
+      "<div id=sample></div>");
+  GetPage().SetPageScaleFactor(2);
+  Element& sample = *GetDocument().getElementById("sample");
+  const std::unique_ptr<DragImage> image =
+      DataTransfer::NodeImage(GetFrame(), sample);
+  EXPECT_EQ(IntSize(400, 282), image->Size());
+
+  // Check that a scroll offset of 10px is scaled to device coordinates which
+  // includes page scale factor.
+  LocalFrameView* frame_view = GetDocument().View();
+  frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
+      ScrollOffset(0, 10), kProgrammaticScroll);
+  const std::unique_ptr<DragImage> image_with_scroll_offset =
+      DataTransfer::NodeImage(GetFrame(), sample);
+  EXPECT_EQ(IntSize(400, 262), image_with_scroll_offset->Size());
 }
 
 }  // namespace blink

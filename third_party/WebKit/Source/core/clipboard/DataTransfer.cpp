@@ -351,17 +351,22 @@ void DataTransfer::SetDragImageElement(Node* node, const IntPoint& loc) {
 }
 
 // static
-// Converts from bounds in CSS space to device space based on the given
-// frame.
+// Converts from bounds in CSS space to device space based on the given frame.
 FloatRect DataTransfer::DeviceSpaceBounds(const FloatRect css_bounds,
                                           const LocalFrame& frame) {
   float device_scale_factor = frame.GetPage()->DeviceScaleFactorDeprecated();
   float page_scale_factor = frame.GetPage()->GetVisualViewport().Scale();
   FloatRect device_bounds(css_bounds);
-  device_bounds.SetWidth(css_bounds.Width() * device_scale_factor *
+
+  // Exclude content not in the visual viewport.
+  auto viewport = frame.GetPage()->GetVisualViewport().VisibleRectInDocument();
+  device_bounds.Intersect(viewport);
+
+  device_bounds.SetWidth(device_bounds.Width() * device_scale_factor *
                          page_scale_factor);
-  device_bounds.SetHeight(css_bounds.Height() * device_scale_factor *
+  device_bounds.SetHeight(device_bounds.Height() * device_scale_factor *
                           page_scale_factor);
+
   return device_bounds;
 }
 

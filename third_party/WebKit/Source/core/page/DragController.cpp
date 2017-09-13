@@ -1098,6 +1098,7 @@ std::unique_ptr<DragImage> DragController::DragImageForSelection(
   frame.View()->UpdateAllLifecyclePhasesExceptPaint();
   DCHECK(frame.GetDocument()->IsActive());
 
+  // TODO(pdr): Should this use UnclippedBounds instead of Bounds?
   FloatRect painting_rect = FloatRect(frame.Selection().Bounds());
   GlobalPaintFlags paint_flags =
       kGlobalPaintSelectionOnly | kGlobalPaintFlattenCompositingLayers;
