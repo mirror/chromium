@@ -38,6 +38,18 @@ namespace {
 base::LazyInstance<TaskManagerImpl>::DestructorAtExit
     lazy_task_manager_instance = LAZY_INSTANCE_INITIALIZER;
 
+// Deletes each |TaskGroup| exactly once, even if |container| lists them
+// multiple times.
+void DeleteAllTaskGroups(std::vector<TaskGroup*>* container) {
+  // Use sort/unique to deduplicate pointers.
+  std::sort(container->begin(), container->end());
+  auto unique_end = std::unique(container->begin(), container->end());
+  for (auto it = container->begin(); it != unique_end; ++it) {
+    delete *it;
+  }
+  container->clear();
+}
+
 }  // namespace
 
 TaskManagerImpl::TaskManagerImpl()
@@ -221,6 +233,15 @@ Task::Type TaskManagerImpl::GetType(TaskId task_id) const {
   return GetTaskByTaskId(task_id)->GetType();
 }
 
+bool TaskManagerImpl::HasParentTask(TaskId task_id) const {
+  return GetTaskByTaskId(task_id)->HasParentTask();
+}
+
+const TaskManagerInterface::ProcessSortKey& TaskManagerImpl::GetProcessSortKey(
+    TaskId task_id) const {
+  return GetTaskGroupByTaskId(task_id)->sort_key();
+}
+
 int TaskManagerImpl::GetTabId(TaskId task_id) const {
   return GetTaskByTaskId(task_id)->GetTabId();
 }
@@ -291,102 +312,15 @@ int TaskManagerImpl::GetKeepaliveCount(TaskId task_id) const {
 
 const TaskIdList& TaskManagerImpl::GetTaskIdsList() const {
   DCHECK(is_running_) << "Task manager is not running. You must observe the "
-      "task manager for it to start running";
+                         "task manager for it to start running";
 
-  if (sorted_task_ids_.empty()) {
-    // |comparator| groups and sorts by subtask-ness (to push all subtasks to be
-    // last), then by process type (e.g. the browser process should be first;
-    // renderer processes should be together), then tab id (processes used by
-    // the same tab should be kept together, and a tab should have a stable
-    // position in the list as it cycles through processes, and tab creation
-    // order is meaningful), and finally by task id (when all else is equal, put
-    // the oldest tasks first).
-    auto comparator = [](const Task* a, const Task* b) -> bool {
-      return std::make_tuple(a->HasParentTask(), a->GetType(), a->GetTabId(),
-                             a->task_id()) <
-             std::make_tuple(b->HasParentTask(), b->GetType(), b->GetTabId(),
-                             b->task_id());
-    };
-
-    const size_t num_groups = task_groups_by_proc_id_.size();
-    const size_t num_tasks = task_groups_by_task_id_.size();
-
-    // Populate |tasks_to_visit| with one task from each group.
-    std::vector<const Task*> tasks_to_visit;
-    tasks_to_visit.reserve(num_groups);
-    std::unordered_map<const Task*, std::vector<const Task*>> children;
-    for (const auto& groups_pair : task_groups_by_proc_id_) {
-      // The first task in the group (per |comparator|) is the one used for
-      // sorting the group relative to other groups.
-      const std::vector<Task*>& tasks = groups_pair.second->tasks();
-      Task* group_task =
-          *std::min_element(tasks.begin(), tasks.end(), comparator);
-      tasks_to_visit.push_back(group_task);
-
-      // Build the parent-to-child map, for use later.
-      for (const Task* task : tasks) {
-        if (task->HasParentTask())
-          children[task->GetParentTask()].push_back(task);
-        else
-          DCHECK(!group_task->HasParentTask());
-      }
-    }
-
-    // Now sort |tasks_to_visit| in reverse order (putting the browser process
-    // at back()). We will treat it as a stack from now on.
-    std::sort(tasks_to_visit.rbegin(), tasks_to_visit.rend(), comparator);
-    DCHECK_EQ(Task::BROWSER, tasks_to_visit.back()->GetType());
-
-    // Using |tasks_to_visit| as a stack, and |visited_groups| to track which
-    // groups we've already added, add groups to |sorted_task_ids_| until all
-    // groups have been added.
-    sorted_task_ids_.reserve(num_tasks);
-    std::unordered_set<TaskGroup*> visited_groups;
-    visited_groups.reserve(num_groups);
-    std::vector<Task*> current_group_tasks;  // Outside loop for fewer mallocs.
-    while (visited_groups.size() < num_groups) {
-      DCHECK(!tasks_to_visit.empty());
-      TaskGroup* current_group =
-          GetTaskGroupByTaskId(tasks_to_visit.back()->task_id());
-      tasks_to_visit.pop_back();
-
-      // Mark |current_group| as visited. If this fails, we've already added
-      // the group, and should skip over it.
-      if (!visited_groups.insert(current_group).second)
-        continue;
-
-      // Make a copy of |current_group->tasks()|, sort it, and append the ids.
-      current_group_tasks = current_group->tasks();
-      std::sort(current_group_tasks.begin(), current_group_tasks.end(),
-                comparator);
-      for (Task* task : current_group_tasks)
-        sorted_task_ids_.push_back(task->task_id());
-
-      // Find the children of the tasks we just added, and push them into
-      // |tasks_to_visit|, so that we visit them soon. Work in reverse order,
-      // so that we visit them in forward order.
-      for (Task* parent : base::Reversed(current_group_tasks)) {
-        auto children_of_parent = children.find(parent);
-        if (children_of_parent != children.end()) {
-          // Sort children[parent], and then append in reversed order.
-          std::sort(children_of_parent->second.begin(),
-                    children_of_parent->second.end(), comparator);
-          tasks_to_visit.insert(tasks_to_visit.end(),
-                                children_of_parent->second.rbegin(),
-                                children_of_parent->second.rend());
-        }
-      }
-    }
-    DCHECK_EQ(num_tasks, sorted_task_ids_.size());
-  }
-
-  return sorted_task_ids_;
+  return task_ids_;
 }
 
 TaskIdList TaskManagerImpl::GetIdsOfTasksSharingSameProcess(
     TaskId task_id) const {
   DCHECK(is_running_) << "Task manager is not running. You must observe the "
-      "task manager for it to start running";
+                         "task manager for it to start running";
 
   TaskIdList result;
   TaskGroup* group = GetTaskGroupByTaskId(task_id);
@@ -415,46 +349,19 @@ TaskId TaskManagerImpl::GetTaskIdForWebContents(
 }
 
 void TaskManagerImpl::TaskAdded(Task* task) {
-  DCHECK(task);
-
-  const base::ProcessId proc_id = task->process_id();
-  const TaskId task_id = task->task_id();
-
-  std::unique_ptr<TaskGroup>& task_group = task_groups_by_proc_id_[proc_id];
-  if (!task_group)
-    task_group.reset(new TaskGroup(task->process_handle(), proc_id,
-                                   on_background_data_ready_callback_,
-                                   shared_sampler_, blocking_pool_runner_));
-
-  task_group->AddTask(task);
-
-  task_groups_by_task_id_[task_id] = task_group.get();
-
-  // Invalidate the cached sorted IDs by clearing the list.
-  sorted_task_ids_.clear();
-
-  NotifyObserversOnTaskAdded(task_id);
+  DoAddTask(task);
+  NotifyObserversOnTaskAdded(task->task_id());
 }
 
 void TaskManagerImpl::TaskRemoved(Task* task) {
-  DCHECK(task);
+  NotifyObserversOnTaskToBeRemoved(task->task_id());
+  DoRemoveTask(task);
+}
 
-  const base::ProcessId proc_id = task->process_id();
-  const TaskId task_id = task->task_id();
-
-  DCHECK(task_groups_by_proc_id_.count(proc_id));
-
-  NotifyObserversOnTaskToBeRemoved(task_id);
-
-  TaskGroup* task_group = GetTaskGroupByTaskId(task_id);
-  task_group->RemoveTask(task);
-  task_groups_by_task_id_.erase(task_id);
-
-  if (task_group->empty())
-    task_groups_by_proc_id_.erase(proc_id);  // Deletes |task_group|.
-
-  // Invalidate the cached sorted IDs by clearing the list.
-  sorted_task_ids_.clear();
+void TaskManagerImpl::TaskReplaced(Task* old_task, Task* new_task) {
+  DoAddTask(new_task);
+  NotifyObserversOnTaskReplaced(old_task->task_id(), new_task->task_id());
+  DoRemoveTask(old_task);
 }
 
 void TaskManagerImpl::TaskUnresponsive(Task* task) {
@@ -504,7 +411,7 @@ void TaskManagerImpl::Refresh() {
                    weak_ptr_factory_.GetWeakPtr()));
   }
 
-  for (auto& groups_itr : task_groups_by_proc_id_) {
+  for (const auto& groups_itr : task_groups_by_proc_id_) {
     groups_itr.second->Refresh(gpu_memory_stats_,
                                GetCurrentRefreshTime(),
                                enabled_resources_flags());
@@ -518,6 +425,10 @@ void TaskManagerImpl::StartUpdating() {
     return;
 
   is_running_ = true;
+
+  on_background_data_ready_callback_ =
+      base::Bind(&TaskManagerImpl::OnTaskGroupBackgroundCalculationsDone,
+                 weak_ptr_factory_.GetWeakPtr());
 
   for (const auto& provider : task_providers_)
     provider->SetObserver(this);
@@ -534,12 +445,14 @@ void TaskManagerImpl::StopUpdating() {
 
   io_thread_helper_manager_.reset();
 
+  task_groups_by_proc_id_.clear();
+  task_ids_.clear();
+  DeleteAllTaskGroups(&task_groups_);
+
   for (const auto& provider : task_providers_)
     provider->ClearObserver();
 
-  task_groups_by_proc_id_.clear();
-  task_groups_by_task_id_.clear();
-  sorted_task_ids_.clear();
+  weak_ptr_factory_.InvalidateWeakPtrs();
 }
 
 Task* TaskManagerImpl::GetTaskByPidOrRoute(int origin_pid,
@@ -571,9 +484,10 @@ bool TaskManagerImpl::UpdateTasksWithBytesTransferred(
 }
 
 TaskGroup* TaskManagerImpl::GetTaskGroupByTaskId(TaskId task_id) const {
-  auto it = task_groups_by_task_id_.find(task_id);
-  DCHECK(it != task_groups_by_task_id_.end());
-  return it->second;
+  auto it = std::lower_bound(task_ids_.begin(), task_ids_.end(), task_id);
+  DCHECK(it != task_ids_.end());
+  DCHECK(*it == task_id);
+  return task_groups_[it - task_ids_.begin()];
 }
 
 Task* TaskManagerImpl::GetTaskByTaskId(TaskId task_id) const {
@@ -591,6 +505,101 @@ void TaskManagerImpl::OnTaskGroupBackgroundCalculationsDone() {
     NotifyObserversOnRefreshWithBackgroundCalculations(GetTaskIdsList());
     for (const auto& groups_itr : task_groups_by_proc_id_)
       groups_itr.second->ClearCurrentBackgroundCalculationsFlags();
+  }
+}
+
+void TaskManagerImpl::DoAddTask(Task* task) {
+  DCHECK(task);
+  const base::ProcessId proc_id = task->process_id();
+  const TaskId task_id = task->task_id();
+
+  TaskGroup* task_group = nullptr;
+  auto existing_group = task_groups_by_proc_id_.find(proc_id);
+  if (existing_group != task_groups_by_proc_id_.end()) {
+    task_group = existing_group->second;
+  } else {
+    task_group =
+        new TaskGroup(task->process_handle(), proc_id, MakeSortKey(task),
+                      on_background_data_ready_callback_, shared_sampler_,
+                      blocking_pool_runner_);
+    if (proc_id != base::kNullProcessId)
+      task_groups_by_proc_id_[proc_id] = task_group;
+  }
+
+  task_group->AddTask(task);
+
+  DCHECK_EQ(task_groups_.size(), task_ids_.size());
+
+  // Because Tasks are created in order with increasing ID values, |task_id|
+  // almost certainly goes onto the back of the |task_ids_| list, so check that
+  // first. However, it's possible that a TaskProvider holds onto a Task for a
+  // while before registering it, or temporarily unregisters a Task -- in that
+  // case, do a binary search.
+  auto insertion_index =
+      (task_ids_.empty() || task_ids_.back() < task_id)
+          ? task_ids_.size()
+          : std::lower_bound(task_ids_.begin(), task_ids_.end(), task_id) -
+                task_ids_.begin();
+
+  task_ids_.insert(task_ids_.begin() + insertion_index, task_id);
+  task_groups_.insert(task_groups_.begin() + insertion_index, task_group);
+
+  DCHECK(std::is_sorted(task_ids_.begin(), task_ids_.end()));
+}
+
+void TaskManagerImpl::DoRemoveTask(Task* task) {
+  const base::ProcessId proc_id = task->process_id();
+  const TaskId task_id = task->task_id();
+
+  DCHECK(proc_id == base::kNullProcessId ||
+         task_groups_by_proc_id_.count(proc_id));
+
+  // Remove the Task from the TaskGroup.
+  auto index = std::find(task_ids_.begin(), task_ids_.end(), task_id) -
+               task_ids_.begin();
+  TaskGroup* task_group = task_groups_[index];
+
+  task_ids_.erase(task_ids_.begin() + index);
+  task_groups_.erase(task_groups_.begin() + index);
+
+  task_group->RemoveTask(task);
+
+  // If the TaskGroup is now empty, delete it.
+  if (task_group->empty()) {
+    DCHECK(std::find(task_groups_.begin(), task_groups_.end(), task_group) ==
+           task_groups_.end());
+    if (proc_id != base::kNullProcessId)
+      task_groups_by_proc_id_.erase(proc_id);
+    delete task_group;
+  }
+}
+
+TaskManagerImpl::ProcessSortKey TaskManagerImpl::MakeSortKey(Task* task) const {
+  // Compute the sort key for a TaskGroup being created to hold |task|. This is
+  // only called when initially creating a TaskGroup.
+  if (task->HasParentTask()) {
+    // Derive the first part of the sort key from the sort key of the group of
+    // the parent task. This will group child processes to be after their
+    // parents.
+    TaskId parent_id = task->GetParentTask()->task_id();
+    TaskGroup* parent_group = GetTaskGroupByTaskId(parent_id);
+    TaskGroup::SortKey base_key = parent_group->sort_key();
+
+    // Inherit the first half of the sort key from the parent group -- this
+    // ensures that our position is be someplace after it. Among other subtasks
+    // of the same parent, our order is determined by the final three
+    // tiebreakers: Tab ID, Task type, and finally the TaskId (i.e., Task
+    // creation order) itself.
+    return std::make_tuple(std::get<0>(base_key), std::get<1>(base_key),
+                           std::get<2>(base_key), task->GetTabId(),
+                           task->GetType(), task->task_id());
+
+  } else {
+    // Generate group ID from task itself. Sort by task type, then by tab ID
+    // (which corresponds to tab creation order) and keeps cross-process
+    // navigations same-tab.
+    return std::make_tuple(task->GetType(), task->GetTabId(), task->task_id(),
+                           -1, Task::Type::UNKNOWN, -1);
   }
 }
 
