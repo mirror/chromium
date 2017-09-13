@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f9c5b58_f93f7696",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/MediaSource.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-13T08:55:26Z",
+      "side": 1,
+      "message": "As mentioned in the bug, I wonder why this isn\u0027t \"cast://app-id\" instead of \"cast:appid\".",
+      "revId": "b0d0f71f66df065066bc6da2dd09f1167ee9d95f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
