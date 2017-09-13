@@ -765,3 +765,9 @@ if (!is_ios) {
     ]
   }
 }
+
+group("fuzzers") {
+  deps = [
+    "tools/fuzzers",
+  ]
+}
