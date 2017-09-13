@@ -189,6 +189,30 @@
       "revId": "b5ce672ef24159e5cd0679e68986e84ae4d5b7c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95a669a9_e909cc96",
+        "filename": "net/disk_cache/simple/simple_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-13T17:07:31Z",
+      "side": 1,
+      "message": "We changed it so that we could do an actual A/B field trial comparison starting with clean caches. That\u0027s life when doing an experiment that deals with persistent data.\n\nNow that we don\u0027t need the field trial anymore, we can remove the experiment code. The question is whether we want to leave a feature flag behind in case we need to disable this after it has launched. Since it\u0027s simple to do, it seems reasonable to me.",
+      "parentUuid": "6018b796_fabb604c",
+      "range": {
+        "startLine": 359,
+        "startChar": 6,
+        "endLine": 359,
+        "endChar": 7
+      },
+      "revId": "b5ce672ef24159e5cd0679e68986e84ae4d5b7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
