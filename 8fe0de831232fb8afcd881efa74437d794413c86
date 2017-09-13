@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "207e231d_ce4b6fb7",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-13T09:40:01Z",
+      "side": 1,
+      "message": "Now the time spent for calling the callback is not included.\nIs this intended?",
+      "revId": "8fe0de831232fb8afcd881efa74437d794413c86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
