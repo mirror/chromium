@@ -32,6 +32,7 @@ void NavigationHandleObserver::DidStartNavigation(
   is_same_document_ = navigation_handle->IsSameDocument();
   was_redirected_ = navigation_handle->WasServerRedirect();
   frame_tree_node_id_ = navigation_handle->GetFrameTreeNodeId();
+  navigation_id_ = navigation_handle->GetNavigationId();
 }
 
 void NavigationHandleObserver::DidFinishNavigation(
