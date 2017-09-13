@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.MediumTest;
+import android.support.v7.content.res.AppCompatResources;
 import android.text.format.DateUtils;
 import android.util.TypedValue;
 import android.view.ViewGroup;
@@ -43,11 +44,15 @@ import org.chromium.chrome.browser.favicon.LargeIconBridge;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.ContextMenuManager.TouchEnabledDelegate;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageAdapter;
+import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder;
 import org.chromium.chrome.browser.ntp.cards.SignInPromo;
 import org.chromium.chrome.browser.ntp.cards.SuggestionsCategoryInfo;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.signin.DisplayableProfileData;
+import org.chromium.chrome.browser.signin.SigninAccessPoint;
+import org.chromium.chrome.browser.signin.SigninPromoController;
 import org.chromium.chrome.browser.suggestions.ContentSuggestionsAdditionalAction;
 import org.chromium.chrome.browser.suggestions.DestructionObserver;
 import org.chromium.chrome.browser.suggestions.ImageFetcher;
@@ -117,7 +122,7 @@ public class ArticleSnippetsTest {
 
     private FrameLayout mContentView;
     private SnippetArticleViewHolder mSuggestion;
-    private SignInPromo.GenericPromoViewHolder mSigninPromo;
+    private NewTabPageViewHolder mSigninPromo;
 
     private UiConfig mUiConfig;
 
@@ -264,9 +269,12 @@ public class ArticleSnippetsTest {
     @Test
     @MediumTest
     @Feature({"ArticleSnippets", "RenderTest"})
-    @CommandLineParameter({"", "enable-features=" + ChromeFeatureList.CHROME_HOME + ","
-                    + ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT})
+    @CommandLineParameter({"",
+            "enable-features=" + ChromeFeatureList.CHROME_HOME + ","
+                    + ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT + ","
+                    + ChromeFeatureList.ANDROID_SIGNIN_PROMOS})
     public void testSigninPromo() throws IOException {
+        boolean personalizedPromosEnabled = true;
         ThreadUtils.runOnUiThreadBlocking(() -> {
             mContentView = new FrameLayout(mActivityTestRule.getActivity());
             mUiConfig = new UiConfig(mContentView);
@@ -282,13 +290,24 @@ public class ArticleSnippetsTest {
             mRecyclerView.init(mUiConfig, contextMenuManager);
             mRecyclerView.setAdapter(mAdapter);
 
-            mSigninPromo = new SignInPromo.GenericPromoViewHolder(
-                    mRecyclerView, contextMenuManager, mUiConfig);
-            mSigninPromo.onBindViewHolder(new SignInPromo.GenericSigninPromoData());
+            if (!personalizedPromosEnabled) {
+                mSigninPromo = new SignInPromo.GenericPromoViewHolder(
+                        mRecyclerView, contextMenuManager, mUiConfig);
+                ((SignInPromo.GenericPromoViewHolder) mSigninPromo)
+                        .onBindViewHolder(new SignInPromo.GenericSigninPromoData());
+            } else {
+                SigninPromoController signinPromoController =
+                        new SigninPromoController(SigninAccessPoint.NTP_CONTENT_SUGGESTIONS);
+                mSigninPromo = new SignInPromo.PersonalizedPromoViewHolder(
+                        mRecyclerView, mUiConfig, contextMenuManager, null, signinPromoController);
+                ((SignInPromo.PersonalizedPromoViewHolder) mSigninPromo).configureView(null);
+            }
             mContentView.addView(mSigninPromo.itemView);
         });
 
-        mRenderTestRule.render(mSigninPromo.itemView, "signin_promo");
+        String fileId =
+                personalizedPromosEnabled ? "hot_state_personalized_signin_promo" : "signin_promo";
+        mRenderTestRule.render(mSigninPromo.itemView, fileId);
     }
 
     private void setupTestData(Bitmap thumbnail) {
@@ -372,6 +391,16 @@ public class ArticleSnippetsTest {
     private Bitmap getBitmap(@DrawableRes int resId) {
         return BitmapFactory.decodeResource(
                 mActivityTestRule.getInstrumentation().getTargetContext().getResources(), resId);
+    }
+
+    private DisplayableProfileData getTestProfileData() {
+        String accountId = "test@gmail.com";
+        Drawable image = AppCompatResources.getDrawable(
+                mActivityTestRule.getInstrumentation().getTargetContext(),
+                R.drawable.logo_avatar_anonymous);
+        String fullName = "Test Account";
+        String givenName = "Test";
+        return new DisplayableProfileData(accountId, image, fullName, givenName);
     }
 
     /**

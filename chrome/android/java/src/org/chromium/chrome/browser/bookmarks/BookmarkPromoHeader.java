@@ -20,6 +20,7 @@ import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.signin.DisplayableProfileData;
 import org.chromium.chrome.browser.signin.ProfileDataCache;
 import org.chromium.chrome.browser.signin.SigninAccessPoint;
 import org.chromium.chrome.browser.signin.SigninAndSyncView;
@@ -97,8 +98,7 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver, SignInStateObs
             mProfileDataCache =
                     new ProfileDataCache(mContext, Profile.getLastUsedProfile(), imageSize);
             mProfileDataCache.addObserver(this);
-            mSigninPromoController = new SigninPromoController(
-                    mProfileDataCache, SigninAccessPoint.BOOKMARK_MANAGER);
+            mSigninPromoController = new SigninPromoController(SigninAccessPoint.BOOKMARK_MANAGER);
             AccountManagerFacade.get().addObserver(this);
         }
 
@@ -180,7 +180,13 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver, SignInStateObs
             mProfileDataCache.update(Collections.singletonList(defaultAccountName));
         }
 
-        mSigninPromoController.setAccountName(defaultAccountName);
+        DisplayableProfileData profileData = null;
+        if (defaultAccountName != null) {
+            mProfileDataCache.update(Collections.singletonList(defaultAccountName));
+            profileData = mProfileDataCache.getProfileData(defaultAccountName);
+        }
+        mSigninPromoController.setProfileData(profileData);
+
         if (!mIsNewPromoShowing) {
             mIsNewPromoShowing = true;
             mSigninPromoController.recordSigninPromoImpression();
