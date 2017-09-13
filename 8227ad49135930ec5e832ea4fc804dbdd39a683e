@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "484641ae_51e567f3",
+        "filename": "tools/gritsettings/resource_ids",
+        "patchSetId": 5
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-13T22:39:18Z",
+      "side": 1,
+      "message": "I don\u0027t understand, blink_image_resources.grd doesn\u0027t have any includes?",
+      "revId": "8227ad49135930ec5e832ea4fc804dbdd39a683e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
