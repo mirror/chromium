@@ -22,6 +22,30 @@
       "revId": "104bdb3f4565abe9e70e7a4fe04cc9844f418ff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19213473_e5e16c22",
+        "filename": "base/allocator/partition_allocator/spin_lock.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-13T14:18:57Z",
+      "side": 1,
+      "message": "did you test this?\nI just tried from the clang (which is the default compiler) with the default build options and I don\u0027t see this macro.\nI even tried to remove -mthumb and replace with -marm but I don\u0027t see this\n\n\n../../third_party/llvm-build/Release+Asserts/bin/clang++ -E -dM -I../.. -Igen -fno-strict-aliasing --param\u003dssp-buffer-size\u003d4 -fstack-protector -Wno-builtin-macro-redefined -D__DATE__\u003d -D__TIME__\u003d -D__TIMESTAMP__\u003d -funwind-tables -fPIC -pipe -fcolor-diagnostics -ffunction-sections -fno-short-enums --target\u003darm-linux-androideabi -march\u003darmv7-a -mfloat-abi\u003dsoftfp -mtune\u003dgeneric-armv7-a -mfpu\u003dneon -Wall -Werror -Wextra -Wno-missing-field-initializers -Wno-unused-parameter -Wno-c++11-narrowing -Wno-covered-switch-default -Wno-unneeded-internal-declaration -Wno-inconsistent-missing-override -Wno-undefined-var-template -Wno-nonportable-include-path -Wno-address-of-packed-member -Wno-unused-lambda-capture -Wno-user-defined-warnings -Wno-enum-compare-switch -Oz -fno-ident -fdata-sections -ffunction-sections -fomit-frame-pointer -gdwarf-3 -g1 -fdebug-info-for-profiling -fvisibility\u003dhidden -fPIE -std\u003dgnu++14 -fno-rtti -isystem../../third_party/android_tools/ndk/sources/cxx-stl/llvm-libc++/libcxx/include -isystem../../third_party/android_tools/ndk/sources/cxx-stl/llvm-libc++abi/libcxxabi/include -isystem../../third_party/android_tools/ndk/sources/android/support/include --sysroot\u003d../../third_party/android_tools/ndk/platforms/android-16/arch-arm -fno-exceptions -fvisibility-inlines-hidden -c ../../tools/android/memdump/memdump.cc  | grep -i ARM\n\n#define ARCH_CPU_ARMEL 1\n#define ARCH_CPU_ARM_FAMILY 1\n#define BASE_NUMERICS_SAFE_CONVERSIONS_ARM_IMPL_H_\n#define BASE_NUMERICS_SAFE_MATH_ARM_IMPL_H_\n#define CLOCK_BOOTTIME_ALARM 9\n#define CLOCK_REALTIME_ALARM 8\n#define _ARCH_ARM_KERNEL_H\n#define _ARM32_LIMITS_H_\n#define _ARM_ERRNO_H\n#define _ARM_FCNTL_H\n#define _ARM_INTERNAL_TYPES_H_\n#define _ARM__TYPES_H_\n#define _ASMARM_PAGE_H\n#define _ASMARM_SIGCONTEXT_H\n#define _ASMARM_SIGINFO_H\n#define _ASMARM_SIGNAL_H\n#define __ARCH_ARM_POSIX_TYPES_H\n#define __ARMEL__ 1\n#define __ARM_32BIT_STATE 1\n#define __ARM_ACLE 200\n#define __ARM_ARCH 7\n#define __ARM_ARCH_7A__ 1\n#define __ARM_ARCH_ISA_ARM 1\n#define __ARM_ARCH_ISA_THUMB 2\n#define __ARM_ARCH_PROFILE \u0027A\u0027\n#define __ARM_EABI__ 1\n#define __ARM_FEATURE_CLZ 1\n#define __ARM_FEATURE_DSP 1\n#define __ARM_FEATURE_LDREX 0xF\n#define __ARM_FEATURE_QBIT 1\n#define __ARM_FEATURE_SAT 1\n#define __ARM_FEATURE_SIMD32 1\n#define __ARM_FEATURE_UNALIGNED 1\n#define __ARM_FP 0xC\n#define __ARM_FP16_ARGS 1\n#define __ARM_FP16_FORMAT_IEEE 1\n#define __ARM_NEON 1\n#define __ARM_NEON_FP 0x4\n#define __ARM_NEON__ 1\n#define __ARM_PCS 1\n#define __ARM_SIZEOF_MINIMAL_ENUM 4\n#define __ARM_SIZEOF_WCHAR_T 4\n#define __ARM_VFPV3__ 1\n#define __ASM_ARM_TYPES_H\n#define __arm 1\n#define __arm__ 1",
+      "parentUuid": "71fb8c3c_6128d84c",
+      "range": {
+        "startLine": 30,
+        "startChar": 24,
+        "endLine": 30,
+        "endChar": 53
+      },
+      "revId": "104bdb3f4565abe9e70e7a4fe04cc9844f418ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
