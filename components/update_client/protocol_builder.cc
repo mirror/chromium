@@ -13,6 +13,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/sys_info.h"
 #include "build/build_config.h"
+#include "components/update_client/activity_data_service.h"
 #include "components/update_client/component.h"
 #include "components/update_client/configurator.h"
 #include "components/update_client/persisted_data.h"
@@ -288,15 +289,16 @@ std::string BuildUpdateCheckRequest(
   std::string app_elements;
   for (const auto& id : ids_checked) {
     DCHECK_EQ(1u, components.count(id));
-    const Component& component = *components.at(id);
+    const auto& component = *components.at(id);
+    const auto& crx_component = component.crx_component();
+    const auto& component_id = component.id();
 
     const update_client::InstallerAttributes installer_attributes(
-        SanitizeInstallerAttributes(
-            component.crx_component().installer_attributes));
+        SanitizeInstallerAttributes(crx_component.installer_attributes));
     std::string app("<app ");
     base::StringAppendF(&app, "appid=\"%s\" version=\"%s\"",
-                        component.id().c_str(),
-                        component.crx_component().version.GetString().c_str());
+                        component_id.c_str(),
+                        crx_component.version.GetString().c_str());
     if (!brand.empty())
       base::StringAppendF(&app, " brand=\"%s\"", brand.c_str());
     if (component.on_demand())
@@ -305,9 +307,9 @@ std::string BuildUpdateCheckRequest(
       base::StringAppendF(&app, " %s=\"%s\"", attr.first.c_str(),
                           attr.second.c_str());
     }
-    const std::string cohort = metadata->GetCohort(component.id());
-    const std::string cohort_name = metadata->GetCohortName(component.id());
-    const std::string cohort_hint = metadata->GetCohortHint(component.id());
+    const auto& cohort = metadata->GetCohort(component_id);
+    const auto& cohort_name = metadata->GetCohortName(component_id);
+    const auto& cohort_hint = metadata->GetCohortHint(component_id);
     if (!cohort.empty())
       base::StringAppendF(&app, " cohort=\"%s\"", cohort.c_str());
     if (!cohort_name.empty())
@@ -316,23 +318,54 @@ std::string BuildUpdateCheckRequest(
       base::StringAppendF(&app, " cohorthint=\"%s\"", cohort_hint.c_str());
     base::StringAppendF(&app, ">");
 
+    const auto& disable_reasons = crx_component.disable_reasons;
+    if (disable_reasons.reasons) {
+      base::StringAppendF(&app, "<disable");
+      for (int enum_value = 1; enum_value < disable_reasons.last_reason;
+           enum_value <<= 1) {
+        if (disable_reasons.reasons & enum_value) {
+          base::StringAppendF(&app, " reason=\"%d\"", enum_value);
+        }
+      }
+      base::StringAppendF(&app, "/>");
+    }
+
     base::StringAppendF(&app, "<updatecheck");
-    if (component.crx_component()
-            .supports_group_policy_enable_component_updates &&
+    if (crx_component.supports_group_policy_enable_component_updates &&
         !enabled_component_updates) {
       base::StringAppendF(&app, " updatedisabled=\"true\"");
     }
     base::StringAppendF(&app, "/>");
 
-    base::StringAppendF(&app, "<ping rd=\"%d\" ping_freshness=\"%s\"/>",
-                        metadata->GetDateLastRollCall(component.id()),
-                        metadata->GetPingFreshness(component.id()).c_str());
-    if (!component.crx_component().fingerprint.empty()) {
+    base::StringAppendF(&app, "<ping");
+    if (metadata->GetActiveBit(component_id)) {
+      base::StringAppendF(&app, " active=\"1\"");
+      int date_last_active = metadata->GetDateLastActive(component_id);
+      if (date_last_active == kDateUnknown) {
+        // Fallback to "day" if "date" is not available.
+        base::StringAppendF(&app, " a=\"%d\"",
+                            metadata->GetDaysSinceLastActive(component_id));
+      } else {
+        base::StringAppendF(&app, " ad=\"%d\"", date_last_active);
+      }
+    }
+    int date_last_rollcall = metadata->GetDateLastRollCall(component_id);
+    if (date_last_rollcall == kDateUnknown) {
+      // Fallback to "day" if "date" is not available.
+      base::StringAppendF(&app, " r=\"%d\"",
+                          metadata->GetDaysSinceLastRollCall(component_id));
+    } else {
+      base::StringAppendF(&app, " rd=\"%d\"", date_last_rollcall);
+    }
+    base::StringAppendF(&app, " ping_freshness=\"%s\"/>",
+                        metadata->GetPingFreshness(component_id).c_str());
+
+    if (!crx_component.fingerprint.empty()) {
       base::StringAppendF(&app,
                           "<packages>"
                           "<package fp=\"%s\"/>"
                           "</packages>",
-                          component.crx_component().fingerprint.c_str());
+                          crx_component.fingerprint.c_str());
     }
     base::StringAppendF(&app, "</app>");
     app_elements.append(app);
