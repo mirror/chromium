@@ -57,6 +57,8 @@ NGInlineLayoutAlgorithm::NGInlineLayoutAlgorithm(
           // lays out in visual order.
           TextDirection::kLtr,
           break_token),
+      box_states_(
+          inline_node.GetLayoutObject()->GetDocument().InNoQuirksMode()),
       is_horizontal_writing_mode_(
           blink::IsHorizontalWritingMode(space.WritingMode())) {
   unpositioned_floats_ = ConstraintSpace().UnpositionedFloats();
@@ -170,12 +172,14 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
     if (item.Type() == NGInlineItem::kText ||
         item.Type() == NGInlineItem::kControl) {
       DCHECK(item.GetLayoutObject()->IsText());
-      DCHECK(!box->text_metrics.IsEmpty());
       DCHECK(item.Style());
       text_builder.SetStyle(item.Style());
-      text_builder.SetSize(
-          {item_result.inline_size, box->text_metrics.LineHeight()});
       if (item_result.shape_result) {
+        // Metrics might not be in place due to the line height quirk
+        if (box->text_metrics.IsEmpty())
+          box->ComputeTextMetrics(*item.Style(), baseline_type_);
+        text_builder.SetSize(
+            {item_result.inline_size, box->text_metrics.LineHeight()});
         // Take all used fonts into account if 'line-height: normal'.
         if (box->include_used_fonts && item.Type() == NGInlineItem::kText) {
           box->AccumulateUsedFonts(item_result.shape_result.Get(),
@@ -193,11 +197,8 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
                                       item_result.end_offset);
       line_box.AddChild(std::move(text_fragment), {position, box->text_top});
     } else if (item.Type() == NGInlineItem::kOpenTag) {
-      box = box_states_.OnOpenTag(item, item_result, &line_box, position);
-      // Compute text metrics for all inline boxes since even empty inlines
-      // influence the line height.
-      // https://drafts.csswg.org/css2/visudet.html#line-height
-      box->ComputeTextMetrics(*item.Style(), baseline_type_);
+      box = box_states_.OnOpenTag(item, item_result, &line_box, position,
+                                  baseline_type_);
       if (ShouldCreateBoxFragment(item, item_result))
         box->SetNeedsBoxFragment(item_result.needs_box_when_empty);
     } else if (item.Type() == NGInlineItem::kCloseTag) {
@@ -293,8 +294,8 @@ NGInlineBoxState* NGInlineLayoutAlgorithm::PlaceAtomicInline(
   const ComputedStyle& style = *item.Style();
   position += item_result->margins.LineLeft(style.Direction());
 
-  NGInlineBoxState* box =
-      box_states_.OnOpenTag(item, *item_result, line_box, position);
+  NGInlineBoxState* box = box_states_.OnOpenTag(item, *item_result, line_box,
+                                                position, baseline_type_);
 
   NGBoxFragment fragment(
       ConstraintSpace().WritingMode(),

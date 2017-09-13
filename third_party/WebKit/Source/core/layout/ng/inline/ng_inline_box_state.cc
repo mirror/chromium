@@ -50,6 +50,9 @@ NGInlineBoxState* NGInlineLayoutStateStack::OnBeginPlaceItems(
     // For the following lines, clear states that are not shared across lines.
     for (auto& box : stack_) {
       box.fragment_start = 0;
+      // The line height quirk resets metrics on every new line
+      if (!no_quirks_mode_)
+        box.text_metrics = NGLineHeightMetrics();
       box.metrics = box.text_metrics;
       if (box.needs_box_fragment) {
         box.line_left_position = LayoutUnit();
@@ -67,7 +70,9 @@ NGInlineBoxState* NGInlineLayoutStateStack::OnBeginPlaceItems(
   // Use a "strut" (a zero-width inline box with the element's font and
   // line height properties) as the initial metrics for the line box.
   // https://drafts.csswg.org/css2/visudet.html#strut
-  line_box.ComputeTextMetrics(*line_style, baseline_type);
+  // The line height quirk omits this.
+  if (no_quirks_mode_)
+    line_box.ComputeTextMetrics(*line_style, baseline_type);
 
   return &stack_.back();
 }
@@ -76,7 +81,8 @@ NGInlineBoxState* NGInlineLayoutStateStack::OnOpenTag(
     const NGInlineItem& item,
     const NGInlineItemResult& item_result,
     NGLineBoxFragmentBuilder* line_box,
-    LayoutUnit position) {
+    LayoutUnit position,
+    FontBaseline baseline_type) {
   stack_.resize(stack_.size() + 1);
   NGInlineBoxState* box = &stack_.back();
   box->fragment_start = line_box->Children().size();
@@ -89,6 +95,14 @@ NGInlineBoxState* NGInlineLayoutStateStack::OnOpenTag(
       position + item_result.margins.LineLeft(item.Style()->Direction());
   box->borders_paddings_block_start = item_result.borders_paddings_block_start;
   box->borders_paddings_block_end = item_result.borders_paddings_block_end;
+
+  // Compute text metrics for all inline boxes since even empty inlines
+  // influence the line height, line height quirk only does this when
+  // object has border or padding.
+  // https://drafts.csswg.org/css2/visudet.html#line-height
+  if (no_quirks_mode_ || box->borders_paddings_block_start)
+    box->ComputeTextMetrics(*item.Style(), baseline_type);
+
   return box;
 }
 
@@ -97,6 +111,10 @@ NGInlineBoxState* NGInlineLayoutStateStack::OnCloseTag(
     NGLineBoxFragmentBuilder* line_box,
     NGInlineBoxState* box,
     FontBaseline baseline_type) {
+  // Line height quirk: set the metrics if the box has border or padding
+  if (!no_quirks_mode_ && box->borders_paddings_block_end)
+    box->ComputeTextMetrics(*item.Style(), baseline_type);
+
   EndBoxState(box, line_box, baseline_type);
   // TODO(kojii): When the algorithm restarts from a break token, the stack may
   // underflow. We need either synthesize a missing box state, or push all
@@ -118,8 +136,13 @@ void NGInlineLayoutStateStack::OnEndPlaceItems(
   if (!box_placeholders_.IsEmpty())
     CreateBoxFragments(line_box);
 
-  DCHECK(!LineBoxState().metrics.IsEmpty());
-  line_box->SetMetrics(LineBoxState().metrics);
+  NGInlineBoxState& box = LineBoxState();
+  if (box.metrics.IsEmpty()) {
+    // Line height quirk: set metrics if line is empty (eg. only contains BR)
+    DCHECK(!no_quirks_mode_);
+    box.ComputeTextMetrics(*box.style, baseline_type);
+  }
+  line_box->SetMetrics(box.metrics);
 }
 
 void NGInlineLayoutStateStack::EndBoxState(NGInlineBoxState* box,

@@ -81,6 +81,9 @@ struct NGInlineBoxState {
 // 3) Cache common values for a box.
 class NGInlineLayoutStateStack {
  public:
+  NGInlineLayoutStateStack(bool no_quirks_mode)
+      : no_quirks_mode_(no_quirks_mode) {}
+
   // The box state for the line box.
   NGInlineBoxState& LineBoxState() { return stack_.front(); }
 
@@ -92,7 +95,8 @@ class NGInlineLayoutStateStack {
   NGInlineBoxState* OnOpenTag(const NGInlineItem&,
                               const NGInlineItemResult&,
                               NGLineBoxFragmentBuilder*,
-                              LayoutUnit position);
+                              LayoutUnit position,
+                              FontBaseline baseline_type);
 
   // Pop a box state stack.
   NGInlineBoxState* OnCloseTag(const NGInlineItem&,
@@ -136,6 +140,8 @@ class NGInlineLayoutStateStack {
     NGLogicalSize size;
     NGBorderEdges border_edges;
   };
+
+  bool no_quirks_mode_;
 
   Vector<NGInlineBoxState, 4> stack_;
   Vector<BoxFragmentPlaceholder, 4> box_placeholders_;
