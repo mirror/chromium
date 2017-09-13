@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "12e973d2_55eeb9de",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-13T01:39:12Z",
+      "side": 1,
+      "message": "Yeah, this is not so useful. Removed.",
+      "parentUuid": "0bb4b68a_df381123",
+      "revId": "74dc57c84955bf7e01650239ac478d88147dcceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf3caf7f_ba00fe45",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "74dc57c84955bf7e01650239ac478d88147dcceb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf85439b_aa0c2dc7",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-13T01:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf3caf7f_ba00fe45",
+      "revId": "74dc57c84955bf7e01650239ac478d88147dcceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
