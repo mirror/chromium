@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "1d53f285_de611bdd",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-09-13T16:15:59Z",
+      "side": 1,
+      "message": "For version max?\n\nWe do it there, since we want to let enterprise policy for version max override the max version setting, while still letting us have users test by using flags/command-lines to test the variants.",
+      "parentUuid": "0ed842f9_17ac7115",
+      "range": {
+        "startLine": 1282,
+        "startChar": 65,
+        "endLine": 1282,
+        "endChar": 0
+      },
+      "revId": "63d5397c5b9e06ccc1f3342a1a60dcf109be33b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14271c59_3c4646c3",
         "filename": "net/ssl/ssl_config.h",
         "patchSetId": 1
