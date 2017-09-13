@@ -119,6 +119,7 @@ class MockInputRouter : public InputRouter {
   void SetFrameTreeNodeId(int frameTreeNodeId) override {}
   cc::TouchAction AllowedTouchAction() override { return cc::kTouchActionAuto; }
   void SetForceEnableZoom(bool enabled) override {}
+  void ProgressFling(base::TimeTicks time) override {}
   void BindHost(mojom::WidgetInputHandlerHostRequest request) override {}
 
   // IPC::Listener

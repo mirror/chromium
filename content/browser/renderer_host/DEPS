@@ -3,6 +3,7 @@ include_rules = [
   "+components/viz/common",
   "+components/viz/host",
   "+components/viz/service",
+  "+public/platform/WebGestureCurve.h",
   "+services/ui/public",
   "+third_party/zlib",
   "+ui/latency",
