@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce909e6a_908407cd",
+        "filename": "chrome/browser/resources/sys_internals/constants.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-13T17:16:35Z",
+      "side": 1,
+      "message": "Can the constants in this file be under the SysInternals namespace?",
+      "revId": "3e4cf170fac8c3a6149092989af8534d4239721e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da3aef0e_2b0d1816",
+        "filename": "chrome/browser/resources/sys_internals/constants.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-13T17:16:35Z",
+      "side": 1,
+      "message": "!Array\u003cstring\u003e, here and elsewhere.",
+      "revId": "3e4cf170fac8c3a6149092989af8534d4239721e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c072c2b1_39366f07",
+        "filename": "chrome/test/data/webui/sys_internals/page_switch_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-13T17:16:35Z",
+      "side": 1,
+      "message": "See follow up comment.",
+      "revId": "3e4cf170fac8c3a6149092989af8534d4239721e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb102ae_d1c3797d",
+        "filename": "chrome/test/data/webui/sys_internals/page_switch_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-13T17:16:35Z",
+      "side": 1,
+      "message": "Here and elsewhere, no need for new Promise.\n\nif (hash \u003d\u003d PAGE_HASH.INFO) {\n  checkInfoPage();\n} else {\n  checkChartPage(hash);\n}\nreturn Promise.resolve();",
+      "revId": "3e4cf170fac8c3a6149092989af8534d4239721e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -981,6 +981,24 @@
     },
     {
       "key": {
+        "uuid": "5c663daa_2b906b7b",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-13T17:16:35Z",
+      "side": 1,
+      "message": "Can you point to the docs that say that this is a valid type annotation? AFAIK this is simply ignored by the compiler, only annotations that look like \"@type {TypeGoesHere}\" or \"@private {TypeGoesHere}\" are valid type annotations.\n\nCan you paste an example compiler error that is fixed by adding these annotations here?",
+      "parentUuid": "fb4217fd_40e10d14",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05d7cf22_9065d5e2",
         "filename": "chrome/browser/resources/sys_internals/index.js",
         "patchSetId": 2
