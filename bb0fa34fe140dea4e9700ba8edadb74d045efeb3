@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a583f7b0_00afe10c",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T17:32:09Z",
+      "side": 1,
+      "message": "nit: I think this would be clearer now as:\n\nauto id \u003d service_is_available_ ? base::make_optional(GetStubSanitizedUsername(cryptohome_id)) : base::nullopt;\n\n... PostTask(FROM_HERE, base::BindOnce(std::move(callback), id);",
+      "revId": "bb0fa34fe140dea4e9700ba8edadb74d045efeb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
