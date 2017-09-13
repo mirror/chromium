@@ -16,6 +16,24 @@
       "revId": "64c215e2e5c3ff2e12146eea6f659084bb99fd99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4518c07_468dcfda",
+        "filename": "ui/events/blink/input_handler_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1590,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-09-13T16:01:50Z",
+      "side": 1,
+      "message": "Yes, it could be a different target, and this part of the code is here until we shift the touchpad fling to the browser side.",
+      "parentUuid": "0dd4cf4c_9ee0af64",
+      "revId": "64c215e2e5c3ff2e12146eea6f659084bb99fd99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
