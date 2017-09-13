@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "218266b4_a0bfa6db",
+        "filename": "components/language/core/browser/baseline_language_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-09-13T05:48:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e0fd34b1_02d444fe",
+      "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8b3fa2e_c616263c",
         "filename": "components/language/core/browser/baseline_language_model.h",
         "patchSetId": 4
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "fa68de54_8ae93c0e",
+        "filename": "components/language/core/browser/baseline_language_model_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-09-13T05:48:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f0871e7a_93477b13",
+      "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edf5cba0_a9ea9179",
         "filename": "components/language/core/browser/baseline_language_model_unittest.cc",
         "patchSetId": 4
@@ -177,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "034bb456_57e98173",
+        "filename": "components/language/core/browser/baseline_language_model_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-09-13T05:48:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2f5ef3a8_eae45016",
+      "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15239679_a40d2bca",
         "filename": "components/language/core/browser/language_model.h",
         "patchSetId": 4
@@ -206,6 +260,24 @@
       "side": 1,
       "message": "Sorry, forgot to add file to branch. Fixed.",
       "parentUuid": "15239679_a40d2bca",
+      "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "912c4b25_2b90c292",
+        "filename": "components/language/core/browser/language_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-09-13T05:48:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d824dcf4_6c5a961c",
       "revId": "aa53b9affced104bfa82645037b28ad51c0428a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

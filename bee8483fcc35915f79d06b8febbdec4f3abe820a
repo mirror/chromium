@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e547aad_9789a97d",
+        "filename": "components/language/core/browser/language_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1212429
+      },
+      "writtenOn": "2017-09-13T05:48:38Z",
+      "side": 1,
+      "message": "Or maybe:\n\nLanguageModel::LanguageDetails::LanguageDetails() : score(0.0f) {}\n\nseems a bit cleaner.",
+      "revId": "bee8483fcc35915f79d06b8febbdec4f3abe820a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
