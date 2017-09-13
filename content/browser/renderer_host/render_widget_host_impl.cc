@@ -2818,4 +2818,9 @@ void RenderWidgetHostImpl::SetWidget(mojom::WidgetPtr widget) {
   }
 }
 
+void RenderWidgetHostImpl::ProgressFling(base::TimeTicks time) {
+  if (input_router_)
+    input_router_->ProgressFling(time);
+}
+
 }  // namespace content
