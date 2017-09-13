@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25f51831_c50e50cf",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-13T15:51:44Z",
+      "side": 1,
+      "message": "It\u0027s mildly mysterious that this class is also responsible for quitting the nested message loop. The name doesn\u0027t convey that and it\u0027s easy to miss. Is there a reason you need this class to do that?",
+      "range": {
+        "startLine": 134,
+        "startChar": 26,
+        "endLine": 134,
+        "endChar": 52
+      },
+      "revId": "404b211f41283a2a9118e939a99d5199ed40e8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97036144_856db32a",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-13T15:51:44Z",
+      "side": 1,
+      "message": "Wouldn\u0027t a real interface be a better fit here too? Running the closure twice and assuming the consumer can differentiate the two is error prone.",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 36
+      },
+      "revId": "404b211f41283a2a9118e939a99d5199ed40e8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
