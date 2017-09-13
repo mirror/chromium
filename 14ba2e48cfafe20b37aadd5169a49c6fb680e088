@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c1e1adbe_d1ff4b52",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-13T04:31:38Z",
+      "side": 1,
+      "message": "Since we should only see this on Mac when this is true, we can do a wholesale revert of r370819  (i.e. delete src/chrome/browser/resource_delegate_mac.* - it\u0027s not used for anything else).",
+      "revId": "14ba2e48cfafe20b37aadd5169a49c6fb680e088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5620c0c1_d0e834b8",
         "filename": "ui/views/controls/tree/tree_view.cc",
         "patchSetId": 1
