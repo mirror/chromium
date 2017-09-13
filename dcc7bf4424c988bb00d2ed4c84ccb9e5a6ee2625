@@ -34,6 +34,24 @@
       "revId": "dcc7bf4424c988bb00d2ed4c84ccb9e5a6ee2625",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0e67c8f_03e7f417",
+        "filename": "third_party/WebKit/Source/core/loader/NetworkQuietDetector.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-09-13T17:32:45Z",
+      "side": 0,
+      "message": "Oh, you mean the OnNetworkQuiet()? I see. Can you add a TODO to remove this file after that line is removed?\n\nOr just remove this file if that CL lands first.",
+      "parentUuid": "e28248c0_54a1d766",
+      "revId": "dcc7bf4424c988bb00d2ed4c84ccb9e5a6ee2625",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
