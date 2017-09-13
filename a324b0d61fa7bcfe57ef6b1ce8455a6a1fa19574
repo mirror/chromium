@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f12a880_d7fb05c3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/layout_ng_block_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-09-13T16:55:52Z",
+      "side": 1,
+      "message": "Now that the override_width/height are gone, I do not think anyone else uses that them for CreateFromLayoutObject. wdyt about ripping it out in this patch?",
+      "revId": "a324b0d61fa7bcfe57ef6b1ce8455a6a1fa19574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
