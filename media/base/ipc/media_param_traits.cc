@@ -10,6 +10,7 @@
 #include "media/base/audio_point.h"
 #include "media/base/encryption_scheme.h"
 #include "media/base/limits.h"
+#include "media/base/output_device_info.h"
 #include "ui/gfx/ipc/geometry/gfx_param_traits.h"
 #include "ui/gfx/ipc/gfx_param_traits.h"
 #include "ui/gfx/ipc/skia/gfx_skia_param_traits.h"
@@ -17,6 +18,7 @@
 using media::AudioParameters;
 using media::AudioLatency;
 using media::ChannelLayout;
+using media::OutputDeviceInfo;
 
 namespace IPC {
 
@@ -120,6 +122,36 @@ bool ParamTraits<media::EncryptionScheme::Pattern>::Read(
 void ParamTraits<media::EncryptionScheme::Pattern>::Log(const param_type& p,
                                                         std::string* l) {
   l->append(base::StringPrintf("<Pattern>"));
+}
+
+void ParamTraits<OutputDeviceInfo>::Write(base::Pickle* m,
+                                          const OutputDeviceInfo& p) {
+  WriteParam(m, p.device_id());
+  WriteParam(m, p.device_status());
+  WriteParam(m, p.output_params());
+}
+
+bool ParamTraits<OutputDeviceInfo>::Read(const base::Pickle* m,
+                                         base::PickleIterator* iter,
+                                         OutputDeviceInfo* r) {
+  std::string device_id;
+  media::OutputDeviceStatus device_status;
+  AudioParameters output_params;
+
+  if (!ReadParam(m, iter, &device_id) || !ReadParam(m, iter, &device_status) ||
+      !ReadParam(m, iter, &output_params)) {
+    return false;
+  }
+
+  OutputDeviceInfo info(device_id, device_status, output_params);
+
+  *r = info;
+  return true;
+}
+
+void ParamTraits<OutputDeviceInfo>::Log(const OutputDeviceInfo& p,
+                                        std::string* l) {
+  l->append(base::StringPrintf("<OutputDeviceInfo>"));
 }
 
 }  // namespace IPC
