@@ -73,10 +73,6 @@ QuicStringPiece NullDecrypter::GetNoncePrefix() const {
   return QuicStringPiece();
 }
 
-const char* NullDecrypter::cipher_name() const {
-  return "NULL";
-}
-
 uint32_t NullDecrypter::cipher_id() const {
   return 0;
 }
