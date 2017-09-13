@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2a13f3d_cda8f6b5",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-09-13T19:42:24Z",
+      "side": 1,
+      "message": "Can you think of any other event types that should do this? I skimmed events.h and the only thing other than KeyEvent that I noticed was CancelMode, which appears to be dispatched to all windows in a hierarchy. Does that also need to be free of a target?",
+      "range": {
+        "startLine": 157,
+        "startChar": 23,
+        "endLine": 157,
+        "endChar": 37
+      },
+      "revId": "273ee818307b155aa54710ebbc8badc3a8290dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
