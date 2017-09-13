@@ -1105,7 +1105,7 @@ void ServiceWorkerDispatcherHost::OnTerminateWorker(int handle_id) {
     return;
   }
   handle->version()->StopWorker(
-      base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+      base::Bind(&ServiceWorkerUtils::NoOpVoidCallBack));
 }
 
 }  // namespace content

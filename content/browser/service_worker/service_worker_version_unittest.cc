@@ -390,6 +390,8 @@ TEST_F(ServiceWorkerVersionTest, ConcurrentStartAndStop) {
   ServiceWorkerStatusCode status1 = SERVICE_WORKER_ERROR_FAILED;
   ServiceWorkerStatusCode status2 = SERVICE_WORKER_ERROR_FAILED;
   ServiceWorkerStatusCode status3 = SERVICE_WORKER_ERROR_FAILED;
+  bool stop_status1 = false;
+  bool stop_status2 = false;
   version_->StartWorker(ServiceWorkerMetrics::EventType::UNKNOWN,
                         CreateReceiverOnCurrentThread(&status1));
   version_->StartWorker(ServiceWorkerMetrics::EventType::UNKNOWN,
@@ -410,23 +412,23 @@ TEST_F(ServiceWorkerVersionTest, ConcurrentStartAndStop) {
   EXPECT_EQ(SERVICE_WORKER_OK, status3);
 
   // Call StopWorker() multiple times.
-  status1 = SERVICE_WORKER_ERROR_FAILED;
-  status2 = SERVICE_WORKER_ERROR_FAILED;
-  version_->StopWorker(CreateReceiverOnCurrentThread(&status1));
-  version_->StopWorker(CreateReceiverOnCurrentThread(&status2));
+  stop_status1 = false;
+  stop_status2 = false;
+  version_->StopWorker(base::BindOnce(&VerifyCalled, &stop_status1));
+  version_->StopWorker(base::BindOnce(&VerifyCalled, &stop_status2));
 
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPING, version_->running_status());
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPED, version_->running_status());
 
   // All StopWorker should just succeed.
-  EXPECT_EQ(SERVICE_WORKER_OK, status1);
-  EXPECT_EQ(SERVICE_WORKER_OK, status2);
+  EXPECT_TRUE(stop_status1);
+  EXPECT_TRUE(stop_status2);
 
   // Start worker again.
   status1 = SERVICE_WORKER_ERROR_FAILED;
   status2 = SERVICE_WORKER_ERROR_FAILED;
-  status3 = SERVICE_WORKER_ERROR_FAILED;
+  stop_status1 = false;
 
   version_->StartWorker(ServiceWorkerMetrics::EventType::UNKNOWN,
                         CreateReceiverOnCurrentThread(&status1));
@@ -436,12 +438,12 @@ TEST_F(ServiceWorkerVersionTest, ConcurrentStartAndStop) {
   EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, version_->running_status());
 
   // Call StopWorker()
-  status2 = SERVICE_WORKER_ERROR_FAILED;
-  version_->StopWorker(CreateReceiverOnCurrentThread(&status2));
+  stop_status1 = false;
+  version_->StopWorker(base::BindOnce(&VerifyCalled, &stop_status1));
 
   // And try calling StartWorker while StopWorker is in queue.
   version_->StartWorker(ServiceWorkerMetrics::EventType::UNKNOWN,
-                        CreateReceiverOnCurrentThread(&status3));
+                        CreateReceiverOnCurrentThread(&status2));
 
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPING, version_->running_status());
   base::RunLoop().RunUntilIdle();
@@ -450,7 +452,7 @@ TEST_F(ServiceWorkerVersionTest, ConcurrentStartAndStop) {
   // All should just succeed.
   EXPECT_EQ(SERVICE_WORKER_OK, status1);
   EXPECT_EQ(SERVICE_WORKER_OK, status2);
-  EXPECT_EQ(SERVICE_WORKER_OK, status3);
+  EXPECT_TRUE(stop_status1);
 }
 
 TEST_F(ServiceWorkerVersionTest, DispatchEventToStoppedWorker) {
@@ -464,10 +466,10 @@ TEST_F(ServiceWorkerVersionTest, DispatchEventToStoppedWorker) {
   EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, version_->running_status());
 
   // Stop the worker, and then dispatch an event immediately after that.
-  ServiceWorkerStatusCode stop_status = SERVICE_WORKER_ERROR_FAILED;
-  version_->StopWorker(CreateReceiverOnCurrentThread(&stop_status));
+  bool stop_status = false;
+  version_->StopWorker(base::BindOnce(&VerifyCalled, &stop_status));
   SimulateDispatchEvent(ServiceWorkerMetrics::EventType::INSTALL);
-  EXPECT_EQ(SERVICE_WORKER_OK, stop_status);
+  EXPECT_TRUE(stop_status);
 
   // The worker should be now started again.
   EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, version_->running_status());
@@ -494,10 +496,10 @@ TEST_F(ServiceWorkerVersionTest, StartUnregisteredButStillLiveWorker) {
   ASSERT_TRUE(registration_->is_deleted());
 
   // Stop the worker.
-  ServiceWorkerStatusCode stop_status = SERVICE_WORKER_ERROR_FAILED;
-  version_->StopWorker(CreateReceiverOnCurrentThread(&stop_status));
+  bool stop_status = false;
+  version_->StopWorker(base::BindOnce(&VerifyCalled, &stop_status));
   base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(SERVICE_WORKER_OK, stop_status);
+  EXPECT_TRUE(stop_status);
 
   // Dispatch an event on the unregistered and stopped but still live worker.
   status = SERVICE_WORKER_ERROR_FAILED;
@@ -611,12 +613,12 @@ TEST_F(ServiceWorkerVersionTest, IdleTimeout) {
 
   // The idle time should be reset if the worker is restarted without
   // controllee.
-  status = SERVICE_WORKER_ERROR_FAILED;
+  bool stop_status = false;
   version_->idle_time_ -= kOneSecond;
   base::TimeTicks idle_time = version_->idle_time_;
-  version_->StopWorker(CreateReceiverOnCurrentThread(&status));
+  version_->StopWorker(base::BindOnce(&VerifyCalled, &stop_status));
   base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(SERVICE_WORKER_OK, status);
+  EXPECT_TRUE(stop_status);
   status = SERVICE_WORKER_ERROR_FAILED;
   version_->StartWorker(ServiceWorkerMetrics::EventType::UNKNOWN,
                         CreateReceiverOnCurrentThread(&status));
@@ -731,7 +733,7 @@ TEST_F(ServiceWorkerVersionTest, StaleUpdate_NonActiveWorker) {
 
 // Test that staleness is detected when starting a worker.
 TEST_F(ServiceWorkerVersionTest, StaleUpdate_StartWorker) {
-  ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_FAILED;
+  bool stop_status = false;
 
   // Starting the worker marks it as stale.
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
@@ -742,9 +744,9 @@ TEST_F(ServiceWorkerVersionTest, StaleUpdate_StartWorker) {
   EXPECT_FALSE(version_->update_timer_.IsRunning());
 
   // Update is actually scheduled after the worker stops.
-  version_->StopWorker(CreateReceiverOnCurrentThread(&status));
+  version_->StopWorker(base::BindOnce(&VerifyCalled, &stop_status));
   base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(SERVICE_WORKER_OK, status);
+  EXPECT_TRUE(stop_status);
   EXPECT_TRUE(version_->stale_time_.is_null());
   EXPECT_TRUE(version_->update_timer_.IsRunning());
 }
@@ -1154,8 +1156,8 @@ TEST_F(ServiceWorkerStallInStoppingTest, DetachThenStart) {
   EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, version_->running_status());
 
   // Try to stop the worker.
-  status = SERVICE_WORKER_ERROR_FAILED;
-  version_->StopWorker(CreateReceiverOnCurrentThread(&status));
+  bool stop_status = false;
+  version_->StopWorker(base::BindOnce(&VerifyCalled, &stop_status));
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPING, version_->running_status());
   base::RunLoop().RunUntilIdle();
 
@@ -1170,7 +1172,7 @@ TEST_F(ServiceWorkerStallInStoppingTest, DetachThenStart) {
                          base::TimeDelta::FromSeconds(1);
   version_->timeout_timer_.user_task().Run();
   base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(SERVICE_WORKER_OK, status);
+  EXPECT_TRUE(stop_status);
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPED, version_->running_status());
 
   // Try to start the worker again. It should work.
@@ -1199,8 +1201,8 @@ TEST_F(ServiceWorkerStallInStoppingTest, DetachThenRestart) {
   EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, version_->running_status());
 
   // Try to stop the worker.
-  status = SERVICE_WORKER_ERROR_FAILED;
-  version_->StopWorker(CreateReceiverOnCurrentThread(&status));
+  bool stop_status = false;
+  version_->StopWorker(base::BindOnce(&VerifyCalled, &stop_status));
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPING, version_->running_status());
 
   // Worker is now stalled in stopping. Add a start worker request.
@@ -1215,7 +1217,7 @@ TEST_F(ServiceWorkerStallInStoppingTest, DetachThenRestart) {
                          base::TimeDelta::FromSeconds(1);
   version_->timeout_timer_.user_task().Run();
   base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(SERVICE_WORKER_OK, status);
+  EXPECT_TRUE(stop_status);
   EXPECT_EQ(SERVICE_WORKER_OK, start_status);
 }
 
@@ -1344,7 +1346,7 @@ TEST_F(ServiceWorkerFailToStartTest, FailingWorkerUsesNewRendererProcess) {
   EXPECT_EQ(SERVICE_WORKER_OK, status);
   EXPECT_EQ(helper_->mock_render_process_id(),
             version_->embedded_worker()->process_id());
-  version_->StopWorker(CreateReceiverOnCurrentThread(&status));
+  version_->StopWorker(base::BindOnce(&ServiceWorkerUtils::NoOpVoidCallBack));
   base::RunLoop().RunUntilIdle();
 
   // Fail once.
@@ -1371,7 +1373,7 @@ TEST_F(ServiceWorkerFailToStartTest, FailingWorkerUsesNewRendererProcess) {
   EXPECT_EQ(helper_->new_render_process_id(),
             version_->embedded_worker()->process_id());
   EXPECT_EQ(0, context->GetVersionFailureCount(id));
-  version_->StopWorker(CreateReceiverOnCurrentThread(&status));
+  version_->StopWorker(base::BindOnce(&ServiceWorkerUtils::NoOpVoidCallBack));
   base::RunLoop().RunUntilIdle();
 
   // Start again. It should choose the "existing process" again as we no longer
@@ -1382,13 +1384,13 @@ TEST_F(ServiceWorkerFailToStartTest, FailingWorkerUsesNewRendererProcess) {
   EXPECT_EQ(SERVICE_WORKER_OK, status);
   EXPECT_EQ(helper_->mock_render_process_id(),
             version_->embedded_worker()->process_id());
-  version_->StopWorker(CreateReceiverOnCurrentThread(&status));
+  version_->StopWorker(base::BindOnce(&ServiceWorkerUtils::NoOpVoidCallBack));
   base::RunLoop().RunUntilIdle();
 }
 
 TEST_F(ServiceWorkerFailToStartTest, RestartStalledWorker) {
   ServiceWorkerStatusCode status1 = SERVICE_WORKER_ERROR_MAX_VALUE;
-  ServiceWorkerStatusCode status2 = SERVICE_WORKER_ERROR_MAX_VALUE;
+  bool stop_status = false;
   version_->StartWorker(ServiceWorkerMetrics::EventType::FETCH_MAIN_FRAME,
                         CreateReceiverOnCurrentThread(&status1));
   base::RunLoop().RunUntilIdle();
@@ -1401,11 +1403,11 @@ TEST_F(ServiceWorkerFailToStartTest, RestartStalledWorker) {
 
   // StartWorker message will be sent again because OnStopped is called before
   // OnStarted.
-  version_->StopWorker(CreateReceiverOnCurrentThread(&status2));
+  version_->StopWorker(base::BindOnce(&VerifyCalled, &stop_status));
   base::RunLoop().RunUntilIdle();
 
   EXPECT_EQ(SERVICE_WORKER_OK, status1);
-  EXPECT_EQ(SERVICE_WORKER_OK, status2);
+  EXPECT_TRUE(stop_status);
   EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, version_->running_status());
 }
 
@@ -1421,10 +1423,10 @@ class ServiceWorkerNavigationHintUMATest : public ServiceWorkerVersionTest {
   }
 
   void StopWorker() {
-    ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
-    version_->StopWorker(CreateReceiverOnCurrentThread(&status));
+    bool stop_status = false;
+    version_->StopWorker(base::BindOnce(&VerifyCalled, &stop_status));
     base::RunLoop().RunUntilIdle();
-    EXPECT_EQ(SERVICE_WORKER_OK, status);
+    EXPECT_TRUE(stop_status);
   }
 
   static const char kStartHintPrecision[];
@@ -1498,15 +1500,15 @@ TEST_F(ServiceWorkerNavigationHintUMATest, ConcurrentStart) {
 
 TEST_F(ServiceWorkerNavigationHintUMATest, StartWhileStopping) {
   StartWorker(ServiceWorkerMetrics::EventType::NAVIGATION_HINT);
-  ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
-  version_->StopWorker(CreateReceiverOnCurrentThread(&status));
+  bool stop_status = false;
+  version_->StopWorker(base::BindOnce(&VerifyCalled, &stop_status));
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPING, version_->running_status());
   histogram_tester_.ExpectTotalCount(kStartHintPrecision, 0);
 
   StartWorker(ServiceWorkerMetrics::EventType::NAVIGATION_HINT);
   // The UMA must be recorded while restarting.
   histogram_tester_.ExpectTotalCount(kStartHintPrecision, 1);
-  EXPECT_EQ(SERVICE_WORKER_OK, status);
+  EXPECT_TRUE(stop_status);
   StopWorker();
   // The UMA must be recorded when the worker stopped.
   histogram_tester_.ExpectTotalCount(kStartHintPrecision, 2);

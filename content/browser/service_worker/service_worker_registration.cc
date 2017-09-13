@@ -354,7 +354,7 @@ void ServiceWorkerRegistration::ActivateWaitingVersion(bool delay) {
     // This is already handled by IsReadyToActivate().
     // "2. Terminate exitingWorker."
     exiting_version->StopWorker(
-        base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+        base::Bind(&ServiceWorkerUtils::NoOpVoidCallBack));
     // "3. Run the [[UpdateState]] algorithm passing exitingWorker and
     // "redundant" as the arguments."
     exiting_version->SetStatus(ServiceWorkerVersion::REDUNDANT);

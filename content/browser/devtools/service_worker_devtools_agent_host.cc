@@ -16,6 +16,7 @@ namespace content {
 
 namespace {
 
+void VoidNoOp() {}
 void StatusNoOp(ServiceWorkerStatusCode status) {}
 
 void TerminateServiceWorkerOnIO(
@@ -23,7 +24,7 @@ void TerminateServiceWorkerOnIO(
     int64_t version_id) {
   if (ServiceWorkerContextCore* context = context_weak.get()) {
     if (ServiceWorkerVersion* version = context->GetLiveVersion(version_id))
-      version->StopWorker(base::Bind(&StatusNoOp));
+      version->StopWorker(base::Bind(&VoidNoOp));
   }
 }
 
@@ -32,9 +33,9 @@ void UnregisterServiceWorkerOnIO(
     int64_t version_id) {
   if (ServiceWorkerContextCore* context = context_weak.get()) {
     if (ServiceWorkerVersion* version = context->GetLiveVersion(version_id)) {
-        version->StopWorker(base::Bind(&StatusNoOp));
-        context->UnregisterServiceWorker(
-            version->scope(), base::Bind(&StatusNoOp));
+      version->StopWorker(base::Bind(&VoidNoOp));
+      context->UnregisterServiceWorker(version->scope(),
+                                       base::Bind(&StatusNoOp));
     }
   }
 }

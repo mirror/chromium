@@ -122,6 +122,8 @@ class ClearAllServiceWorkersHelper
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
   }
 
+  void OnVoid() {}
+
   void OnResult(ServiceWorkerStatusCode) {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     // We do nothing in this method. We use this class to wait for all callbacks
@@ -143,7 +145,7 @@ class ClearAllServiceWorkersHelper
       if (version->running_status() == EmbeddedWorkerStatus::STARTING ||
           version->running_status() == EmbeddedWorkerStatus::RUNNING) {
         version->StopWorker(
-            base::Bind(&ClearAllServiceWorkersHelper::OnResult, this));
+            base::Bind(&ClearAllServiceWorkersHelper::OnVoid, this));
       }
     }
     for (const auto& registration_info : registrations) {

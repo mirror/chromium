@@ -593,14 +593,14 @@ class ServiceWorkerVersionBrowserTest : public ServiceWorkerBrowserTest {
     ASSERT_EQ(expected_status, status);
 
     // Stop the worker.
-    status = SERVICE_WORKER_ERROR_FAILED;
+    bool stop_status = false;
     base::RunLoop stop_run_loop;
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(&self::StopOnIOThread, base::Unretained(this),
-                       stop_run_loop.QuitClosure(), &status));
+                       stop_run_loop.QuitClosure(), &stop_status));
     stop_run_loop.Run();
-    ASSERT_EQ(SERVICE_WORKER_OK, status);
+    ASSERT_TRUE(stop_status);
   }
 
   void ActivateTestHelper(
@@ -710,16 +710,16 @@ class ServiceWorkerVersionBrowserTest : public ServiceWorkerBrowserTest {
     ASSERT_EQ(expected_status, status);
   }
 
-  void StopWorker(ServiceWorkerStatusCode expected_status) {
+  void StopWorker() {
     ASSERT_TRUE(BrowserThread::CurrentlyOn(BrowserThread::UI));
-    ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_FAILED;
+    bool stop_status = false;
     base::RunLoop stop_run_loop;
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(&self::StopOnIOThread, base::Unretained(this),
-                       stop_run_loop.QuitClosure(), &status));
+                       stop_run_loop.QuitClosure(), &stop_status));
     stop_run_loop.Run();
-    ASSERT_EQ(expected_status, status);
+    ASSERT_TRUE(stop_status);
   }
 
   void StoreRegistration(int64_t version_id,
@@ -913,10 +913,10 @@ class ServiceWorkerVersionBrowserTest : public ServiceWorkerBrowserTest {
                       base::RetainedRef(blob_context), result);
   }
 
-  void StopOnIOThread(const base::Closure& done,
-                      ServiceWorkerStatusCode* result) {
+  void StopOnIOThread(const base::Closure& done, bool* result) {
     ASSERT_TRUE(version_.get());
-    version_->StopWorker(CreateReceiver(BrowserThread::UI, done, result));
+    version_->StopWorker(
+        base::BindOnce(CreateReceiver(BrowserThread::UI, done, result), true));
   }
 
  protected:
@@ -944,14 +944,14 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerVersionBrowserTest, StartAndStop) {
   ASSERT_EQ(SERVICE_WORKER_OK, status);
 
   // Stop the worker.
-  status = SERVICE_WORKER_ERROR_FAILED;
+  bool stop_status = false;
   base::RunLoop stop_run_loop;
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&self::StopOnIOThread, base::Unretained(this),
-                     stop_run_loop.QuitClosure(), &status));
+                     stop_run_loop.QuitClosure(), &stop_status));
   stop_run_loop.Run();
-  ASSERT_EQ(SERVICE_WORKER_OK, status);
+  ASSERT_TRUE(stop_status);
 }
 
 IN_PROC_BROWSER_TEST_F(ServiceWorkerVersionBrowserTest, StartNotFound) {
@@ -1031,7 +1031,7 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerVersionBrowserTest,
 
   // Start the broken worker. We'll fail to read from disk and the worker should
   // be doomed.
-  StopWorker(SERVICE_WORKER_OK);  // in case it's already running
+  StopWorker();  // in case it's already running
   StartWorker(SERVICE_WORKER_ERROR_DISK_CACHE);
   EXPECT_EQ(ServiceWorkerVersion::REDUNDANT, version_->status());
 
@@ -2612,11 +2612,11 @@ IN_PROC_BROWSER_TEST_F(ServiceWorkerVersionBrowserV8CacheTest, Restart) {
   cached_metadata_run_loop.Run();
 
   // Stop the worker.
-  StopWorker(SERVICE_WORKER_OK);
+  StopWorker();
   // Restart the worker.
   StartWorker(SERVICE_WORKER_OK);
   // Stop the worker.
-  StopWorker(SERVICE_WORKER_OK);
+  StopWorker();
 }
 
 class CacheStorageSideDataSizeChecker

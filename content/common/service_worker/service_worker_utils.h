@@ -24,8 +24,9 @@ class ServiceWorkerUtils {
     return IsResourceTypeFrame(type) || type == RESOURCE_TYPE_SHARED_WORKER;
   }
 
-  // A helper for creating a do-nothing status callback.
+  // Helpers for creating a do-nothing callback.
   static void NoOpStatusCallback(ServiceWorkerStatusCode status) {}
+  static void NoOpVoidCallBack() {}
 
   // Returns true if |scope| matches |url|.
   CONTENT_EXPORT static bool ScopeMatches(const GURL& scope, const GURL& url);

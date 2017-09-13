@@ -523,7 +523,7 @@ void ServiceWorkerRegisterJob::OnStoreRegistrationComplete(
     // 1. Set redundantWorker to registration’s waiting worker.
     // 2. Terminate redundantWorker.
     registration()->waiting_version()->StopWorker(
-        base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+        base::Bind(&ServiceWorkerUtils::NoOpVoidCallBack));
     // TODO(falken): Move this further down. The spec says to set status to
     // 'redundant' after promoting the new version to .waiting attribute and
     // 'installed' status.

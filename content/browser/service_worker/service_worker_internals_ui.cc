@@ -69,22 +69,22 @@ void CallServiceWorkerVersionMethodWithVersionID(
     ServiceWorkerInternalsUI::ServiceWorkerVersionMethod method,
     scoped_refptr<ServiceWorkerContextWrapper> context,
     int64_t version_id,
-    const ServiceWorkerInternalsUI::StatusCallback& callback) {
+    base::OnceClosure callback) {
   if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(CallServiceWorkerVersionMethodWithVersionID, method,
-                       context, version_id, callback));
+                       context, version_id, std::move(callback)));
     return;
   }
 
   scoped_refptr<ServiceWorkerVersion> version =
       context->GetLiveVersion(version_id);
   if (!version.get()) {
-    callback.Run(SERVICE_WORKER_ERROR_NOT_FOUND);
+    std::move(callback).Run();
     return;
   }
-  (*version.get().*method)(callback);
+  (*version.get().*method)(std::move(callback));
 }
 
 std::vector<const Value*> ConvertToRawPtrVector(
@@ -518,10 +518,11 @@ void ServiceWorkerInternalsUI::CallServiceWorkerVersionMethod(
     return;
   }
 
-  base::Callback<void(ServiceWorkerStatusCode)> callback =
-      base::Bind(OperationCompleteCallback, AsWeakPtr(), callback_id);
-  CallServiceWorkerVersionMethodWithVersionID(
-      method, context, version_id, callback);
+  base::OnceClosure callback =
+      base::BindOnce(OperationCompleteCallback, AsWeakPtr(), callback_id,
+                     ServiceWorkerStatusCode::SERVICE_WORKER_OK);
+  CallServiceWorkerVersionMethodWithVersionID(method, context, version_id,
+                                              std::move(callback));
 }
 
 void ServiceWorkerInternalsUI::InspectWorker(const ListValue* args) {
