@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c905abb6_148c5be8",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventTarget.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-13T12:17:17Z",
+      "side": 1,
+      "message": "should call GetAttributeRegisteredEventListener() instead of GetAttributeEventListener() to avoid to find the same listener twice.",
+      "revId": "c095b0ea50411ae18f00a2aa5bd958887e7112eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38788c30_f61ccc17",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventTarget.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-13T12:17:17Z",
+      "side": 1,
+      "message": "This function should be private.",
+      "revId": "c095b0ea50411ae18f00a2aa5bd958887e7112eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
