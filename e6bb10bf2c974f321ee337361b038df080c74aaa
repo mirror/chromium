@@ -215,6 +215,24 @@
     },
     {
       "key": {
+        "uuid": "69699322_aecd579e",
+        "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-09-13T06:13:44Z",
+      "side": 1,
+      "message": "Oops, I didn\u0027t notice it.\nIf we can clear the selection, this CL can be even simpler.\nBut I have a concern about the new hehavior.\n\nLet\u0027s wait Maria\u0027s response on the bug.",
+      "parentUuid": "546d4fd2_cd7374ae",
+      "revId": "e6bb10bf2c974f321ee337361b038df080c74aaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc2d4804_7b783930",
         "filename": "ui/file_manager/file_manager/foreground/js/ui/file_list_selection_model_unittest.html",
         "patchSetId": 15
