@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a02ebc07_80e40409",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-13T12:50:41Z",
+      "side": 1,
+      "message": "Is it OK to be together with kRequestContextEmbed and kRequestContextObject, or it needs a separate annotation?",
+      "parentUuid": "40629b9e_e1c23250",
+      "range": {
+        "startLine": 1055,
+        "startChar": 24,
+        "endLine": 1055,
+        "endChar": 45
+      },
+      "revId": "eba65e5dd9f1d69f9c24ece6d6167679eacff0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb80414b_3e0d66f6",
         "filename": "content/child/web_url_loader_impl.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-13T12:19:43Z",
       "side": 1,
       "message": "I\u0027m not sure how much this construction costs, but how about returning a static instance instead? Actually, I did so in some places before, e.g. at https://cs.chromium.org/chromium/src/content/renderer/mojo_context_state.cc?q\u003dmojo_context_state\u0026dr\u003dC\u0026l\u003d190\n\nThe code for the annotation looks something magical, and I may miss something.",
+      "range": {
+        "startLine": 1067,
+        "startChar": 18,
+        "endLine": 1067,
+        "endChar": 48
+      },
+      "revId": "eba65e5dd9f1d69f9c24ece6d6167679eacff0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe3a846_c9c27697",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-13T12:50:41Z",
+      "side": 1,
+      "message": "The construction has no cost in run-time. The unique id is converted into an int hashcode during compile, and the rest of the text is stripped off the binary.\nTherefore I think using static has no effect.",
+      "parentUuid": "fb80414b_3e0d66f6",
       "range": {
         "startLine": 1067,
         "startChar": 18,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4d370181_10bfc32c",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-13T12:50:41Z",
+      "side": 1,
+      "message": "It\u0027s updated, I moved Plugin here as well. Is it correct now?",
+      "parentUuid": "7f60fdc1_59e561f1",
+      "range": {
+        "startLine": 1096,
+        "startChar": 13,
+        "endLine": 1096,
+        "endChar": 23
+      },
+      "revId": "eba65e5dd9f1d69f9c24ece6d6167679eacff0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5822548a_ab4b930b",
         "filename": "content/child/web_url_loader_impl.cc",
         "patchSetId": 3
@@ -82,6 +154,24 @@
       "writtenOn": "2017-09-13T12:19:43Z",
       "side": 1,
       "message": "I prefer not to have default here.\nThat encourages developers to update this implementation at compile time when people adds a new context type to the RequestContext.",
+      "revId": "eba65e5dd9f1d69f9c24ece6d6167679eacff0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "029bbd83_38c72009",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-13T12:50:41Z",
+      "side": 1,
+      "message": "Do you have any suggestion for an alternative solution? We cannot have a default annotation in case a new enum is added and the developer forgets to add it here.\nAnd there is a check to ensure that the \u0027default\u0027 value is \u0027kRequestContextFavicon\u0027.",
+      "parentUuid": "5822548a_ab4b930b",
       "revId": "eba65e5dd9f1d69f9c24ece6d6167679eacff0e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
