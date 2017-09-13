@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bdcc424_88c95150",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.cpp.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-13T04:39:11Z",
+      "side": 1,
+      "message": "Could you add a TODO comment to remove this hack once we get to use a tuple of (getter, setter, descriptor, deleter, enumerator, definer) for both of indexed and named property handlers.",
+      "revId": "e20c815cf108437ca986ef840dafbfb5de015f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aed4858_4dec1692",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface.cpp.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-13T04:39:11Z",
+      "side": 1,
+      "message": "Could you add a TODO comment to remove this hack once we get to use a tuple of (getter, setter, descriptor, deleter, enumerator, definer) for both of indexed and named property handlers.",
+      "revId": "e20c815cf108437ca986ef840dafbfb5de015f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dcd1362_45de7eb9",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-13T04:39:11Z",
+      "side": 1,
+      "message": "nit: Maybe we might want to group named_property_xxx first and indexed_property_xxx next?",
+      "revId": "e20c815cf108437ca986ef840dafbfb5de015f46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
