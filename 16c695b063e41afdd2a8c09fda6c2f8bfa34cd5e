@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edd92c6a_e0809004",
+        "filename": "gin/v8_initializer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-09-13T10:04:03Z",
+      "side": 1,
+      "message": "As with the other CL, I think this API of returning the same pointer as is passed as an argument is a bit confusing. Since StartupData is only struct with two values, how about just returning one by value from this function (and using that value to initialize a StartupData in the caller). This should be pretty much as efficient as what\u0027s here once the compiler optimizes it. WDYT?",
+      "range": {
+        "startLine": 35,
+        "startChar": 13,
+        "endLine": 35,
+        "endChar": 24
+      },
+      "revId": "16c695b063e41afdd2a8c09fda6c2f8bfa34cd5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
