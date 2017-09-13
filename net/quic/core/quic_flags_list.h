@@ -112,9 +112,7 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_bbr_rate_recovery, false)
 
 // If true, allow trailing headers with duplicate keys, and combine the values
 // from duplicate keys into a single delimted header.
-QUIC_FLAG(bool,
-          FLAGS_quic_reloadable_flag_quic_handle_duplicate_trailers,
-          false)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_handle_duplicate_trailers, true)
 
 // If true, disables support for the packets-based QUIC congestion control
 // algorithms.
@@ -130,7 +128,7 @@ QUIC_FLAG(bool, FLAGS_quic_enable_version_41, false)
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_handle_acks, true)
 
 // When true, respect configured limits on header list size.
-QUIC_FLAG(bool, FLAGS_quic_restart_flag_quic_header_list_size, false)
+QUIC_FLAG(bool, FLAGS_quic_restart_flag_quic_header_list_size, true)
 
 // When true, allows the LRTT connection option to cause QUIC BBR to exit
 // STARTUP when in recovery and there has been no bandwidth increase for 1RTT.
@@ -159,14 +157,14 @@ QUIC_FLAG(bool,
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_ack_decimation, false)
 
 // Enables using the ConsumeDataFastPath more often for large transfers.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_consuming_data_faster, false)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_consuming_data_faster, true)
 
 // If true, in QUIC, set dispatcher framer\'s version to client packet's
 // version in QuicDispatcher::OnStatelessRejectorProcessDone.
 QUIC_FLAG(
     bool,
     FLAGS_quic_reloadable_flag_quic_set_version_on_async_get_proof_returns,
-    false)
+    true)
 
 // If true, check for packet number underflow when reading ack blocks.
 QUIC_FLAG(bool,
@@ -182,7 +180,7 @@ QUIC_FLAG(bool,
 
 // If true, QUIC v40 is enabled which includes changes to RST_STREAM, ACK
 // and STREAM frames match IETF format.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_version_40, true)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_enable_version_40, false)
 
 // If true, QUIC can take ownership of data provided in a reference counted
 // memory to avoid data copy.
