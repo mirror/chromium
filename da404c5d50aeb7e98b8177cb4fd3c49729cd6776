@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c9946503_3c8b1a03",
+        "filename": "gpu/ipc/common/mailbox_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-13T20:34:55Z",
+      "side": 1,
+      "message": "I did some local investigations, and it seems like it\u0027s a bug in gcc-5.\n\n1) Is it a lot of pain to maintain these locally? Fixing these one by one isn\u0027t very scalable anyway, since we have no waterfall coverage for gcc bugs.\n2) Since it\u0027s a gcc bug that\u0027s already fixed in gcc-6, I\u0027d prefer not to land this. It goes against the usage guidelines for base::span and sets a bad example for other code.\n\nIf this is causing a lot of pain, I would strongly prefer we figure out how to work around this in base::span itself rather than fixing various things that use it.",
+      "parentUuid": "a81b699f_a76e8d26",
+      "revId": "da404c5d50aeb7e98b8177cb4fd3c49729cd6776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a32e213_4dcbaee0",
         "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
         "patchSetId": 2
