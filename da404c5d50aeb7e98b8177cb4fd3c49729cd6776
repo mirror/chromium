@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6976685_ec5d53ae",
+        "filename": "gpu/ipc/common/mailbox_struct_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-13T05:42:35Z",
+      "side": 1,
+      "message": "What are the compile errors? What version of gcc? The whole point of span\u0027s implicit conversions is that you shouldn\u0027t have to do this.\n\nIs there a workaround we could make directly in span?",
+      "revId": "da404c5d50aeb7e98b8177cb4fd3c49729cd6776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a32e213_4dcbaee0",
+        "filename": "third_party/WebKit/Source/platform/exported/WebCORS.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-13T05:42:35Z",
+      "side": 1,
+      "message": "This should just be return WebString(); while this should never be reached, it\u0027s going to leak if it is ever hit.",
+      "revId": "da404c5d50aeb7e98b8177cb4fd3c49729cd6776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
