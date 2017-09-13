@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf0db279_8370dd98",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-09-13T15:59:00Z",
+      "side": 1,
+      "message": "Not sure I follow, we need this hooked up through the flags so that we can ask users reporting bugs to try the other variants as well.",
+      "parentUuid": "ec61cc28_d08d4456",
+      "range": {
+        "startLine": 1282,
+        "startChar": 65,
+        "endLine": 1282,
+        "endChar": 0
+      },
+      "revId": "63d5397c5b9e06ccc1f3342a1a60dcf109be33b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14271c59_3c4646c3",
         "filename": "net/ssl/ssl_config.h",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "63d5397c5b9e06ccc1f3342a1a60dcf109be33b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67697df3_5abd1952",
+        "filename": "net/ssl/ssl_config.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-09-13T15:59:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "14271c59_3c4646c3",
+      "revId": "63d5397c5b9e06ccc1f3342a1a60dcf109be33b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -74,6 +116,24 @@
       "revId": "63d5397c5b9e06ccc1f3342a1a60dcf109be33b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2943bd02_e56b7e1f",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3061,
+      "author": {
+        "id": 1135189
+      },
+      "writtenOn": "2017-09-13T15:59:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6a999d1_26ab15d9",
+      "revId": "63d5397c5b9e06ccc1f3342a1a60dcf109be33b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
