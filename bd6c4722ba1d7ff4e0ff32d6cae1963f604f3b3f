@@ -16,6 +16,24 @@
       "revId": "bd6c4722ba1d7ff4e0ff32d6cae1963f604f3b3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63855872_249faf5a",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/runtime_enabled_features.h.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-13T08:45:07Z",
+      "side": 1,
+      "message": "I don\u0027t think we need to change include guards now. We\u0027ll change them to Chromium style, PLATFORM_RUNTIME_ENABLED_FEATURES_H_, after the great Blink mv.\nGenerated union types also have CamelCase_h include guards though file names are snake_cases.",
+      "parentUuid": "b5c31556_743c748e",
+      "revId": "bd6c4722ba1d7ff4e0ff32d6cae1963f604f3b3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
