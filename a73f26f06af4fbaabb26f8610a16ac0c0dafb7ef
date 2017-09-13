@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50a8d65b_baee24f4",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-13T12:39:27Z",
+      "side": 1,
+      "message": "I may miss other reviewers\u0027 comments on this, but do you have any reason to have static factory methods rather than to expose constructors?",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
