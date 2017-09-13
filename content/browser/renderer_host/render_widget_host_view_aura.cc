@@ -605,6 +605,7 @@ void RenderWidgetHostViewAura::SetNeedsBeginFrames(bool needs_begin_frames) {
 }
 
 void RenderWidgetHostViewAura::OnBeginFrame() {
+  host_->ProgressFling(base::TimeTicks::Now());
   UpdateNeedsBeginFramesInternal();
 }
 

@@ -272,6 +272,12 @@ class FakeWebGestureCurve : public blink::WebGestureCurve {
     return target->ScrollBy(increment, velocity_);
   }
 
+  bool Progress(double time,
+                gfx::Vector2dF& out_current_velocity,
+                gfx::Vector2dF& out_delta_to_scroll) override {
+    return false;
+  }
+
  private:
   blink::WebFloatSize velocity_;
   blink::WebFloatSize cumulative_scroll_;
