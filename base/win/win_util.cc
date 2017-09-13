@@ -42,10 +42,12 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_restrictions.h"
+#include "base/win/com_base_util.h"
 #include "base/win/registry.h"
 #include "base/win/scoped_co_mem.h"
 #include "base/win/scoped_comptr.h"
 #include "base/win/scoped_handle.h"
+#include "base/win/scoped_hstring.h"
 #include "base/win/scoped_propvariant.h"
 #include "base/win/windows_version.h"
 
@@ -100,40 +102,22 @@ bool IsWindows10TabletMode(HWND hwnd) {
   if (GetVersion() < VERSION_WIN10)
     return false;
 
-  using RoGetActivationFactoryFunction = decltype(&RoGetActivationFactory);
-  using WindowsCreateStringFunction = decltype(&WindowsCreateString);
+  HMODULE combase_dll = ::LoadLibrary(L"combase.dll");
+  if (!combase_dll)
+    return false;
 
-  static RoGetActivationFactoryFunction get_factory = nullptr;
-  static WindowsCreateStringFunction create_string = nullptr;
-
-  if (!get_factory) {
-    DCHECK_EQ(create_string, static_cast<WindowsCreateStringFunction>(
-        nullptr));
-
-    HMODULE combase_dll = ::LoadLibrary(L"combase.dll");
-    if (!combase_dll)
-      return false;
-
-    get_factory = reinterpret_cast<RoGetActivationFactoryFunction>(
-        ::GetProcAddress(combase_dll, "RoGetActivationFactory"));
-    if (!get_factory) {
-      CHECK(false);
-      return false;
-    }
-
-    create_string = reinterpret_cast<WindowsCreateStringFunction>(
-        ::GetProcAddress(combase_dll, "WindowsCreateString"));
-    if (!create_string) {
-      CHECK(false);
-      return false;
-    }
+  bool preload_success = base::win::com_base_util::PreloadRequiredFunctions() &&
+                         base::win::ScopedHString::PreloadRequiredFunctions();
+  if (!preload_success) {
+    CHECK(false);
+    return false;
   }
 
   HRESULT hr = E_FAIL;
   // This HSTRING is allocated on the heap and is leaked.
   static HSTRING view_settings_guid = NULL;
   if (!view_settings_guid) {
-    hr = create_string(
+    hr = WindowsCreateString(
         RuntimeClass_Windows_UI_ViewManagement_UIViewSettings,
         static_cast<UINT32>(
             wcslen(RuntimeClass_Windows_UI_ViewManagement_UIViewSettings)),
@@ -143,7 +127,8 @@ bool IsWindows10TabletMode(HWND hwnd) {
   }
 
   base::win::ScopedComPtr<IUIViewSettingsInterop> view_settings_interop;
-  hr = get_factory(view_settings_guid, IID_PPV_ARGS(&view_settings_interop));
+  hr = RoGetActivationFactory(view_settings_guid,
+                              IID_PPV_ARGS(&view_settings_interop));
   if (FAILED(hr))
     return false;
 

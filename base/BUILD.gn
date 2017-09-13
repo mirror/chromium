@@ -70,6 +70,13 @@ if (is_win) {
   # ldflags in GN aren't automatically inherited.
   config("base_win_linker_flags") {
     ldflags = [
+      "/DELAYLOAD:api-ms-win-core-heap-l1-2-0.dll",
+      "/DELAYLOAD:api-ms-win-core-heap-l2-1-0.dll",
+      "/DELAYLOAD:api-ms-win-core-processenvironment-l1-2-0.dll",
+      "/DELAYLOAD:api-ms-win-core-synch-l1-2-0.dll",
+      "/DELAYLOAD:api-ms-win-core-winrt-l1-1-0.dll",
+      "/DELAYLOAD:api-ms-win-core-winrt-string-l1-1-0.dll",
+      "/DELAYLOAD:api-ms-win-power-base-l1-1-0.dll",
       "/DELAYLOAD:cfgmgr32.dll",
       "/DELAYLOAD:powrprof.dll",
       "/DELAYLOAD:setupapi.dll",
@@ -1020,6 +1027,8 @@ component("base") {
     "version.h",
     "vlog.cc",
     "vlog.h",
+    "win/com_base_util.cc",
+    "win/com_base_util.h",
     "win/com_init_check_hook.cc",
     "win/com_init_check_hook.h",
     "win/com_init_util.cc",
@@ -1060,6 +1069,8 @@ component("base") {
     "win/scoped_handle.h",
     "win/scoped_hdc.h",
     "win/scoped_hglobal.h",
+    "win/scoped_hstring.cc",
+    "win/scoped_hstring.h",
     "win/scoped_process_information.cc",
     "win/scoped_process_information.h",
     "win/scoped_propvariant.h",
@@ -1468,6 +1479,7 @@ component("base") {
 
     libs = [
       "cfgmgr32.lib",
+      "mincore.lib",
       "powrprof.lib",
       "setupapi.lib",
       "userenv.lib",
@@ -2236,6 +2248,7 @@ test("base_unittests") {
     "values_unittest.cc",
     "version_unittest.cc",
     "vlog_unittest.cc",
+    "win/com_base_util_unittest.cc",
     "win/com_init_check_hook_unittest.cc",
     "win/com_init_util_unittest.cc",
     "win/dllmain.cc",
@@ -2251,6 +2264,7 @@ test("base_unittests") {
     "win/registry_unittest.cc",
     "win/scoped_bstr_unittest.cc",
     "win/scoped_handle_unittest.cc",
+    "win/scoped_hstring_unittest.cc",
     "win/scoped_process_information_unittest.cc",
     "win/scoped_variant_unittest.cc",
     "win/shortcut_unittest.cc",
