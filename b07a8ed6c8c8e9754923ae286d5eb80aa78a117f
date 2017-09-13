@@ -34,6 +34,24 @@
       "revId": "b07a8ed6c8c8e9754923ae286d5eb80aa78a117f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b66172e_5d0ac2ea",
+        "filename": "ios/chrome/browser/ui/authentication/account_control_item.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-13T22:51:36Z",
+      "side": 1,
+      "message": "The accessoryView get set to nil by the super implementation of -prepareForReuse, so there shouldn\u0027t be any problems. Just to be sure I did some experiments to confirm this is the case.\n\nI went with the category option since we already have a Chrome category for MDCCollectionViewCell.\n\nI don\u0027t think setting the other accessoryType values to blue would be a good idea since they are actually using UIKit\u0027s default tint color, and MDC should never override that. On the other hand there\u0027s no programmatic color for that, and I wouldn\u0027t like using an RGB combination that approaches that blue. Finally in the case we want to fix that color value we can easily do it on the category method.",
+      "parentUuid": "6514317d_071c0a4a",
+      "revId": "b07a8ed6c8c8e9754923ae286d5eb80aa78a117f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
