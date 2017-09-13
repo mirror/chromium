@@ -273,6 +273,24 @@
     },
     {
       "key": {
+        "uuid": "80c2ec10_6256c46a",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-13T01:28:53Z",
+      "side": 1,
+      "message": "Yeah, thanks, we can\u0027t do the observer/callback now, and actually it seems we also can\u0027t have WebServiceWorkerProviderImpl pointer in ControlleeState? \nI made a patch: define WebServiceWorkerProviderImpl::SetController to deal with this line 187-197 things.\nAnd test locally, it has problems, 1) no proper time to set the WebServiceWorkerProviderImpl pointer; 2) we can\u0027t do the test in ServiceWorkerProviderContextTest.SetController.\n\nAm I miss something? Or is there other solution?",
+      "parentUuid": "bbce2439_ec60d6d5",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e1b99b5_a2fe8118",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 3
