@@ -8,9 +8,9 @@
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoader.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebInputEvent.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "public/web/WebFrame.h"
@@ -28,8 +28,7 @@ class ProgrammaticScrollTest : public ::testing::Test {
   ProgrammaticScrollTest() : base_url_("http://www.test.com/") {}
 
   void TearDown() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
@@ -37,10 +36,11 @@ class ProgrammaticScrollTest : public ::testing::Test {
   void RegisterMockedHttpURLLoad(const std::string& file_name) {
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url_), testing::CoreTestDataPath(),
-        WebString::FromUTF8(file_name));
+        WebString::FromUTF8(file_name), platform_->GetURLLoaderMockFactory());
   }
 
   std::string base_url_;
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
 };
 
 TEST_F(ProgrammaticScrollTest, RestoreScrollPositionAndViewStateWithScale) {

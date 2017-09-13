@@ -16,10 +16,10 @@
 #include "platform/graphics/CompositorMutation.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/wtf/PtrUtil.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebLayer.h"
 #include "public/platform/WebLayerTreeView.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
@@ -47,8 +47,7 @@ class CompositorWorkerTest
   }
 
   ~CompositorWorkerTest() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
@@ -63,7 +62,8 @@ class CompositorWorkerTest
 
   void RegisterMockedHttpURLLoad(const std::string& file_name) {
     URLTestHelpers::RegisterMockedURLLoadFromBase(
-        base_url_, testing::CoreTestDataPath(), WebString::FromUTF8(file_name));
+        base_url_, testing::CoreTestDataPath(), WebString::FromUTF8(file_name),
+        platform_->GetURLLoaderMockFactory());
   }
 
   WebLayer* GetRootScrollLayer() {
@@ -104,6 +104,7 @@ class CompositorWorkerTest
 
   FrameTestHelpers::WebViewHelper helper_;
   FrameTestHelpers::UseMockScrollbarSettings mock_scrollbar_settings_;
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
 };
 
 INSTANTIATE_TEST_CASE_P(All, CompositorWorkerTest, ::testing::Bool());

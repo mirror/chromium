@@ -33,11 +33,11 @@
 #include "core/exported/WebViewImpl.h"
 #include "core/frame/FrameTestHelpers.h"
 #include "core/frame/WebLocalFrameImpl.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/text/StringBuilder.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
@@ -69,8 +69,7 @@ class WebFrameSerializerTest : public ::testing::Test {
   WebFrameSerializerTest() { helper_.Initialize(); }
 
   ~WebFrameSerializerTest() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
@@ -85,7 +84,8 @@ class WebFrameSerializerTest : public ::testing::Test {
                                  const String& file_path,
                                  const String& mime_type = "image/png") {
     URLTestHelpers::RegisterMockedURLLoad(
-        url, testing::CoreTestDataPath(file_path.Utf8().data()), mime_type);
+        url, testing::CoreTestDataPath(file_path.Utf8().data()),
+        platform_->GetURLLoaderMockFactory(), mime_type);
   }
 
   class SingleLinkRewritingDelegate
@@ -128,6 +128,7 @@ class WebFrameSerializerTest : public ::testing::Test {
 
  private:
   FrameTestHelpers::WebViewHelper helper_;
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
 };
 
 TEST_F(WebFrameSerializerTest, URLAttributeValues) {
