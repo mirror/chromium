@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abb83976_ea60148c",
+        "filename": "third_party/WebKit/Source/modules/vr/latest/VR.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-13T14:40:35Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be a separate origin trial from the 1.1 API so we can run the trial separately and have both active at once?",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 28
+      },
+      "revId": "b88baba7e447131e7e6d952416cd2d60002b6079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
