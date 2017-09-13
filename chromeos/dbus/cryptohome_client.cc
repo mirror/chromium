@@ -756,12 +756,12 @@ class CryptohomeClientImpl : public CryptohomeClient {
   }
 
   // CryptohomeClient override.
-  void TpmGetVersion(StringDBusMethodCallback callback) override {
+  void TpmGetVersion(TpmGetVersionCallback callback) override {
     dbus::MethodCall method_call(cryptohome::kCryptohomeInterface,
                                  cryptohome::kCryptohomeTpmGetVersion);
     proxy_->CallMethod(
         &method_call, kTpmDBusTimeoutMs,
-        base::BindOnce(&CryptohomeClientImpl::OnStringMethod,
+        base::BindOnce(&CryptohomeClientImpl::OnTpmGetVersion,
                        weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
   }
 
@@ -1163,6 +1163,28 @@ class CryptohomeClientImpl : public CryptohomeClient {
       return;
     }
     callback.Run(DBUS_METHOD_CALL_SUCCESS, label, user_pin, slot);
+  }
+
+  // Handles responses for TpmGetVersion.
+  void OnTpmGetVersion(TpmGetVersionCallback callback,
+                       dbus::Response* response) {
+    if (!response) {
+      std::move(callback).Run(DBUS_METHOD_CALL_FAILURE, TpmVersionInfo());
+      return;
+    }
+    dbus::MessageReader reader(response);
+    TpmVersionInfo version;
+    if (!reader.PopUint32(&version.family) ||
+        !reader.PopUint64(&version.spec_level) ||
+        !reader.PopUint32(&version.manufacturer) ||
+        !reader.PopUint32(&version.tpm_model) ||
+        !reader.PopUint64(&version.firmware_version) ||
+        !reader.PopString(&version.vendor_specific)) {
+      std::move(callback).Run(DBUS_METHOD_CALL_FAILURE, TpmVersionInfo());
+      LOG(ERROR) << "Invalid response: " << response->ToString();
+      return;
+    }
+    std::move(callback).Run(DBUS_METHOD_CALL_SUCCESS, version);
   }
 
   // Handles AsyncCallStatus signal.
