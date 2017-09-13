@@ -14,6 +14,9 @@ import sys
 import extract_histograms
 import merge_xml
 
+_DATE_FILEPATH = "chrome/MAJOR_BRANCH_DATE"
+_DATE_FILE_PATTERN = r".*MAJOR_BRANCH_DATE=(.+).*"
+
 _SCRIPT_NAME = "generate_expired_histograms_array.py"
 _HASH_DATATYPE = "uint64_t"
 _HEADER = """// Generated from {script_name}. Do not edit!
@@ -71,6 +74,32 @@ def _GetExpiredHistograms(histograms, base_date):
       expired_histograms_names.append(name)
   return expired_histograms_names
 
+def _GetBaseDate(content, pattern):
+  """Fetches base date from |content| to compare expiry dates with.
+
+  Args:
+   content: A string with the base date.
+   pattern(str): A regular expression that matches the base date.
+
+  Returns:
+   A base date as datetime.date object.
+
+  Raises:
+    Error if |content| doesn't match |pattern| or the matched date has invalid
+    format.
+  """
+  match_result = re.search(pattern, content)
+  if not match_result:
+    raise Error("Unable to match {pattern} with provided content: {content}".
+                format(pattern=pattern, content=content))
+  base_date_str = match_result.group(1)
+  try:
+    base_date = datetime.datetime.strptime(
+        base_date_str, extract_histograms.EXPIRY_DATE_PATTERN).date()
+    return base_date
+  except ValueError:
+    raise Error("Unable to parse base date {date} in file {filepath}.".
+                format(date=base_date_str, filepath=_DATE_FILEPATH))
 
 def _HashName(name):
   """Returns hash for the given histogram |name|."""
@@ -134,8 +163,10 @@ def _GenerateFile(arguments):
       extract_histograms.ExtractHistogramsFromDom(descriptions))
   if had_errors:
     raise Error("Error parsing inputs.")
-  today = datetime.datetime.now().date()
-  expired_histograms_names = _GetExpiredHistograms(histograms, today)
+  with open(_DATE_FILEPATH, "r") as date_file:
+    file_content = date_file.read()
+  base_date = _GetBaseDate(file_content, _DATE_FILE_PATTERN)
+  expired_histograms_names = _GetExpiredHistograms(histograms, base_date)
   expired_histograms_map = _GetHashToNameMap(expired_histograms_names)
   header_file_content = _GenerateHeaderFileContent(
       arguments.header_filename, arguments.namespace,

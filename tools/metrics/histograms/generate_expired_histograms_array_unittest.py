@@ -90,6 +90,33 @@ class ExpiredHistogramsTest(unittest.TestCase):
         str(error.exception))
 
 
+  def testGetBaseDate(self):
+    pattern = r".*TEST_DATE=([0-9|/|-|.|]+).*"
+
+    # Does not match the pattern
+    content = "TEST_FAKE_DATE=2017/09/09"
+    with self.assertRaises(generate_expired_histograms_array.Error):
+        generate_expired_histograms_array._GetBaseDate(content, pattern)
+
+    # Has invalid format
+    content = "TEST_DATE=2010-01-01"
+    with self.assertRaises(generate_expired_histograms_array.Error):
+        generate_expired_histograms_array._GetBaseDate(content, pattern)
+
+    # Has invalid format
+    content = "TEST_DATE=2010/20/02"
+    with self.assertRaises(generate_expired_histograms_array.Error):
+        generate_expired_histograms_array._GetBaseDate(content, pattern)
+
+    # Has invalid date
+    content = "TEST_DATE=2017/02/29"
+    with self.assertRaises(generate_expired_histograms_array.Error):
+        generate_expired_histograms_array._GetBaseDate(content, pattern)
+
+    content = "!!FOO!\nTEST_DATE=2010/01/01\n!FOO!!"
+    base_date = generate_expired_histograms_array._GetBaseDate(content, pattern)
+    self.assertEqual(base_date, datetime.date(2010, 01, 01))
+
   def testGenerateHeaderFileContent(self):
     header_filename = "test/test.h"
     namespace = "some_namespace"
