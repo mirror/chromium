@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35d3944a_a94c69c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-13T21:11:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54a8695c_60b018f5",
+      "revId": "02838dda3168a85eda70826e8dbde9e1e93847a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2652f9a6_a6d9038b",
         "filename": "ash/touch/touch_devices_controller.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "02838dda3168a85eda70826e8dbde9e1e93847a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7816284a_24fa7f84",
+        "filename": "ash/touch/touch_devices_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-13T21:11:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2652f9a6_a6d9038b",
+      "revId": "02838dda3168a85eda70826e8dbde9e1e93847a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -67,6 +103,24 @@
       "revId": "02838dda3168a85eda70826e8dbde9e1e93847a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d8da4b_9c17aea9",
+        "filename": "chrome/browser/prefs/browser_prefs.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-13T21:11:42Z",
+      "side": 1,
+      "message": "np at all, yes, let us remove them.",
+      "parentUuid": "00594934_0ef2edc4",
+      "revId": "02838dda3168a85eda70826e8dbde9e1e93847a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

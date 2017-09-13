@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75ba436d_ef202f99",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-13T21:11:42Z",
+      "side": 1,
+      "message": "I am not sure which is preferred:\n\nif (GetLastActiveUserPrefService())\n  return GetLastActiveUserPrefService();\nreturn GetSigninScreenPrefService();",
+      "revId": "c999412404e06eafdc3c7ae8ed0353b7ad22ac5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
