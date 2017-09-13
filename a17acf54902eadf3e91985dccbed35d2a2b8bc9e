@@ -16,6 +16,24 @@
       "revId": "a17acf54902eadf3e91985dccbed35d2a2b8bc9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83dc640a_c39cae07",
+        "filename": "components/exo/keyboard_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-13T23:47:53Z",
+      "side": 1,
+      "message": "This isn\u0027t threading issue (and parallel mode just spawns processes). The same test fails even if you run sequentially.\nThe test passed when you run KeyboardTest, so some of exo test must be changing the state of DataDeviceManager (or another object that DviceDataManager depends on)",
+      "parentUuid": "c3d08972_07eb5c46",
+      "revId": "a17acf54902eadf3e91985dccbed35d2a2b8bc9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
