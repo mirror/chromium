@@ -908,6 +908,12 @@ Resource* ResourceFetcher::MatchPreload(const FetchParameters& params,
 
   Resource* resource = it->value;
 
+  // A preload does not usually have integrity metadata. But if our current
+  // fetch does, and the preload doesn't, and we still have the original byte
+  // data, then we can simply make the preloaded resource "adopt" the fetch's
+  // integrity metadata.
+  resource->TrySetIntegrityMetadata(params.IntegrityMetadata());
+
   if (resource->MustRefetchDueToIntegrityMetadata(params))
     return nullptr;
 

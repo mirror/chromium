@@ -80,14 +80,21 @@ CSSStyleSheetResource::~CSSStyleSheetResource() {}
 
 void CSSStyleSheetResource::SetParsedStyleSheetCache(
     StyleSheetContents* new_sheet) {
-  if (parsed_style_sheet_cache_)
+  size_t old_parsed_style_sheet_size = 0;
+  size_t new_parsed_style_sheet_size = 0;
+  if (parsed_style_sheet_cache_) {
+    old_parsed_style_sheet_size =
+        parsed_style_sheet_cache_->EstimatedSizeInBytes();
     parsed_style_sheet_cache_->ClearReferencedFromResource();
+  }
   parsed_style_sheet_cache_ = new_sheet;
-  if (parsed_style_sheet_cache_)
+  if (parsed_style_sheet_cache_) {
     parsed_style_sheet_cache_->SetReferencedFromResource(this);
-
-  // Updates the decoded size to take parsed stylesheet cache into account.
-  UpdateDecodedSize();
+    new_parsed_style_sheet_size =
+        parsed_style_sheet_cache_->EstimatedSizeInBytes();
+  }
+  SetDecodedSize(DecodedSize() - old_parsed_style_sheet_size +
+                 new_parsed_style_sheet_size);
 }
 
 DEFINE_TRACE(CSSStyleSheetResource) {
@@ -127,19 +134,13 @@ const String CSSStyleSheetResource::SheetText(
   if (!CanUseSheet(mime_type_check))
     return String();
 
-  // Use cached decoded sheet text when available
-  if (!decoded_sheet_text_.IsNull()) {
-    // We should have the decoded sheet text cached when the resource is fully
-    // loaded.
-    DCHECK_EQ(GetStatus(), ResourceStatus::kCached);
+  // The CSSPreloadScanner may request the resource's text before the resource
+  // has finished loading. To satisfy this, we will return the current (and
+  // potentially incomplete) resource text in this case.
+  if (!IsLoaded())
+    return CurrentDecodedText();
 
-    return decoded_sheet_text_;
-  }
-
-  if (!Data() || Data()->IsEmpty())
-    return String();
-
-  return DecodedText();
+  return CachedDecodedText();
 }
 
 void CSSStyleSheetResource::AppendData(const char* data, size_t length) {
@@ -154,10 +155,6 @@ void CSSStyleSheetResource::AppendData(const char* data, size_t length) {
 
 void CSSStyleSheetResource::NotifyFinished() {
   TriggerNotificationForFinishObservers();
-
-  // Decode the data to find out the encoding and cache the decoded sheet text.
-  if (Data())
-    SetDecodedSheetText(DecodedText());
 
   ReferrerPolicy referrer_policy = kReferrerPolicyDefault;
   String referrer_policy_header =
@@ -174,13 +171,6 @@ void CSSStyleSheetResource::NotifyFinished() {
     c->SetCSSStyleSheet(GetResourceRequest().Url(), GetResponse().Url(),
                         referrer_policy, Encoding(), this);
   }
-
-  // Clear raw bytes as now we have the full decoded sheet text.
-  // We wait for all LinkStyle::setCSSStyleSheet to run (at least once)
-  // as SubresourceIntegrity checks require raw bytes.
-  // Note that LinkStyle::setCSSStyleSheet can be called from didAddClient too,
-  // but is safe as we should have a cached ResourceIntegrityDisposition.
-  ClearData();
 }
 
 void CSSStyleSheetResource::DestroyDecodedDataIfPossible() {
@@ -191,7 +181,7 @@ void CSSStyleSheetResource::DestroyDecodedDataIfPossible() {
 }
 
 void CSSStyleSheetResource::DestroyDecodedDataForFailedRevalidation() {
-  SetDecodedSheetText(String());
+  ClearDecodedTextCache();
   DestroyDecodedDataIfPossible();
 }
 
@@ -246,19 +236,6 @@ void CSSStyleSheetResource::SaveParsedStyleSheet(StyleSheetContents* sheet) {
     return;
   }
   SetParsedStyleSheetCache(sheet);
-}
-
-void CSSStyleSheetResource::SetDecodedSheetText(
-    const String& decoded_sheet_text) {
-  decoded_sheet_text_ = decoded_sheet_text;
-  UpdateDecodedSize();
-}
-
-void CSSStyleSheetResource::UpdateDecodedSize() {
-  size_t decoded_size = decoded_sheet_text_.CharactersSizeInBytes();
-  if (parsed_style_sheet_cache_)
-    decoded_size += parsed_style_sheet_cache_->EstimatedSizeInBytes();
-  SetDecodedSize(decoded_size);
 }
 
 }  // namespace blink
