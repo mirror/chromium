@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4145d463_fdc0d536",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-13T22:30:28Z",
+      "side": 1,
+      "message": "typo?",
+      "range": {
+        "startLine": 523,
+        "startChar": 1,
+        "endLine": 523,
+        "endChar": 19
+      },
+      "revId": "383d1d9b40a27d84453db57ec1c39eb594f4c9bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
