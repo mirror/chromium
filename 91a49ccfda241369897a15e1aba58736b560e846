@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78bd8dcc_ef516c80",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-09-13T22:10:11Z",
+      "side": 1,
+      "message": "It\u0027s out of the scope of this patch, thus ACK :)\n\nI would lean towards to having a separate resource_coordinator/ directory inside platform/, I will bring this topic up in our weekly meeting.",
+      "parentUuid": "2062c565_9e4049a6",
+      "revId": "91a49ccfda241369897a15e1aba58736b560e846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34d51cd2_b0fc53a9",
         "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "91a49ccfda241369897a15e1aba58736b560e846",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18b5a39b_fafdebf9",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-09-13T22:10:11Z",
+      "side": 1,
+      "message": "Yes.\n\nThe stateful signal serves our use cases because we need to persist a value to tell us \"frame reaches network idleness\" or \"frame reaches long task idleness\" any way, so we make it as stateful signal.",
+      "parentUuid": "34d51cd2_b0fc53a9",
+      "revId": "91a49ccfda241369897a15e1aba58736b560e846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2968f8e7_c9341324",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-09-13T22:10:11Z",
+      "side": 1,
+      "message": "We treat 2-quiet as idle in resource coordinator. I think we may want to have a kNetworkAlmostIdle in next iteration.",
+      "parentUuid": "e60f4da2_bf3a802e",
+      "revId": "91a49ccfda241369897a15e1aba58736b560e846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41db58c1_02deb01b",
         "filename": "third_party/WebKit/Source/core/loader/NetworkQuietDetector.cpp",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "91a49ccfda241369897a15e1aba58736b560e846",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85fa2a8b_23d31a9b",
+        "filename": "third_party/WebKit/Source/core/loader/NetworkQuietDetector.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-09-13T22:10:11Z",
+      "side": 1,
+      "message": "It will also collect histograms for non-root local frames, thus PerformanceMonitor won\u0027t work. Sakamoto-san already sent out a patch to move this line to FMPDetector.",
+      "parentUuid": "41db58c1_02deb01b",
+      "revId": "91a49ccfda241369897a15e1aba58736b560e846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
