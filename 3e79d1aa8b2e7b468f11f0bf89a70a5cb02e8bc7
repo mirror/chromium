@@ -216,6 +216,47 @@
       "revId": "3e79d1aa8b2e7b468f11f0bf89a70a5cb02e8bc7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a854a68a_c9926b26",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-13T00:42:46Z",
+      "side": 1,
+      "message": "Not forcing it onto descendants sgtm but that means that we will instead have to walk the tree and set this on all layers for animations to get the behavior we need.",
+      "parentUuid": "a4f32151_41f631f0",
+      "revId": "3e79d1aa8b2e7b468f11f0bf89a70a5cb02e8bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32d66766_8cb2a969",
+        "filename": "ui/compositor/scoped_layer_animation_settings.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-13T00:42:46Z",
+      "side": 1,
+      "message": "this should be handled by SetPaintDeferred",
+      "range": {
+        "startLine": 75,
+        "startChar": 14,
+        "endLine": 75,
+        "endChar": 26
+      },
+      "revId": "3e79d1aa8b2e7b468f11f0bf89a70a5cb02e8bc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
