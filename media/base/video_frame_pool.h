@@ -45,6 +45,8 @@ class MEDIA_EXPORT VideoFramePool {
                                         const gfx::Size& natural_size,
                                         base::TimeDelta timestamp);
 
+  const VideoFrameProvider* provider() { return video_frame_provider_.get(); }
+
  protected:
   friend class VideoFramePoolTest;
 
