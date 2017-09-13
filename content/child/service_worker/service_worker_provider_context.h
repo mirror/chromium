@@ -31,7 +31,6 @@ class URLLoaderFactory;
 }
 
 class ServiceWorkerHandleReference;
-class ServiceWorkerRegistrationHandleReference;
 struct ServiceWorkerProviderContextDeleter;
 
 // ServiceWorkerProviderContext stores common state for service worker
@@ -88,7 +87,7 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // the setup for service worker startup, so it is guaranteed to be called
   // before GetRegistration().
   void SetRegistration(
-      std::unique_ptr<ServiceWorkerRegistrationHandleReference> registration,
+      blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration,
       std::unique_ptr<ServiceWorkerHandleReference> installing,
       std::unique_ptr<ServiceWorkerHandleReference> waiting,
       std::unique_ptr<ServiceWorkerHandleReference> active);

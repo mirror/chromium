@@ -37,4 +37,14 @@ struct ServiceWorkerRegistrationObjectInfo {
   // The registration options attached with this registration object, including
   // some information such as scope of this registration.
   ServiceWorkerRegistrationOptions options;
+
+  associated ServiceWorkerRegistrationHost host_ptr_info;
+};
+
+interface ServiceWorkerRegistrationHost {
+  Clone(associated ServiceWorkerRegistrationHost& request);
+
+  // TODO(leonhsl): Implement all methods.
+  // Update() => (ServiceWorkerErrorType error, string? error_msg);
+  // Unregister() => (ServiceWorkerErrorType error, string? error_msg);
 };

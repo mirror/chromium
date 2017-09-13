@@ -16,7 +16,6 @@
 #include "base/trace_event/trace_event.h"
 #include "content/child/service_worker/service_worker_handle_reference.h"
 #include "content/child/service_worker/service_worker_provider_context.h"
-#include "content/child/service_worker/service_worker_registration_handle_reference.h"
 #include "content/child/service_worker/web_service_worker_impl.h"
 #include "content/child/service_worker/web_service_worker_registration_impl.h"
 #include "content/child/thread_safe_sender.h"
@@ -250,9 +249,7 @@ ServiceWorkerDispatcher::GetOrCreateRegistration(
   // WebServiceWorkerRegistrationImpl constructor calls
   // AddServiceWorkerRegistration.
   scoped_refptr<WebServiceWorkerRegistrationImpl> registration(
-      new WebServiceWorkerRegistrationImpl(
-          ServiceWorkerRegistrationHandleReference::Create(
-              std::move(info), thread_safe_sender_.get())));
+      new WebServiceWorkerRegistrationImpl(std::move(info)));
 
   registration->SetInstalling(
       GetOrCreateServiceWorker(ServiceWorkerHandleReference::Create(
@@ -272,8 +269,6 @@ ServiceWorkerDispatcher::GetOrAdoptRegistration(
     const ServiceWorkerVersionAttributes& attrs) {
   int32_t registration_handle_id = info->handle_id;
 
-  std::unique_ptr<ServiceWorkerRegistrationHandleReference> registration_ref =
-      Adopt(std::move(info));
   std::unique_ptr<ServiceWorkerHandleReference> installing_ref =
       Adopt(attrs.installing);
   std::unique_ptr<ServiceWorkerHandleReference> waiting_ref =
@@ -289,7 +284,7 @@ ServiceWorkerDispatcher::GetOrAdoptRegistration(
   // WebServiceWorkerRegistrationImpl constructor calls
   // AddServiceWorkerRegistration.
   scoped_refptr<WebServiceWorkerRegistrationImpl> registration(
-      new WebServiceWorkerRegistrationImpl(std::move(registration_ref)));
+      new WebServiceWorkerRegistrationImpl(std::move(info)));
   registration->SetInstalling(
       GetOrCreateServiceWorker(std::move(installing_ref)));
   registration->SetWaiting(GetOrCreateServiceWorker(std::move(waiting_ref)));
@@ -625,13 +620,6 @@ void ServiceWorkerDispatcher::RemoveServiceWorkerRegistration(
     int registration_handle_id) {
   DCHECK(base::ContainsKey(registrations_, registration_handle_id));
   registrations_.erase(registration_handle_id);
-}
-
-std::unique_ptr<ServiceWorkerRegistrationHandleReference>
-ServiceWorkerDispatcher::Adopt(
-    blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info) {
-  return ServiceWorkerRegistrationHandleReference::Adopt(
-      std::move(info), thread_safe_sender_.get());
 }
 
 std::unique_ptr<ServiceWorkerHandleReference> ServiceWorkerDispatcher::Adopt(

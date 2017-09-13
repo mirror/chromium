@@ -14,7 +14,6 @@
 #include "content/child/child_thread_impl.h"
 #include "content/child/service_worker/service_worker_dispatcher.h"
 #include "content/child/service_worker/service_worker_handle_reference.h"
-#include "content/child/service_worker/service_worker_registration_handle_reference.h"
 #include "content/child/service_worker/service_worker_subresource_loader.h"
 #include "content/child/thread_safe_sender.h"
 #include "content/child/worker_thread_registry.h"
@@ -66,7 +65,7 @@ struct ServiceWorkerProviderContext::ControlleeState {
 struct ServiceWorkerProviderContext::ControllerState {
   ControllerState() = default;
   ~ControllerState() = default;
-  std::unique_ptr<ServiceWorkerRegistrationHandleReference> registration;
+  blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration;
   std::unique_ptr<ServiceWorkerHandleReference> installing;
   std::unique_ptr<ServiceWorkerHandleReference> waiting;
   std::unique_ptr<ServiceWorkerHandleReference> active;
@@ -106,7 +105,7 @@ ServiceWorkerProviderContext::~ServiceWorkerProviderContext() {
 }
 
 void ServiceWorkerProviderContext::SetRegistration(
-    std::unique_ptr<ServiceWorkerRegistrationHandleReference> registration,
+    blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration,
     std::unique_ptr<ServiceWorkerHandleReference> installing,
     std::unique_ptr<ServiceWorkerHandleReference> waiting,
     std::unique_ptr<ServiceWorkerHandleReference> active) {
@@ -128,7 +127,16 @@ void ServiceWorkerProviderContext::GetRegistration(
   ControllerState* state = controller_state_.get();
   DCHECK(state);
   DCHECK(state->registration);
-  *info = state->registration->info().Clone();
+
+  blink::mojom::ServiceWorkerRegistrationHostAssociatedPtr reg_host;
+  blink::mojom::ServiceWorkerRegistrationHostAssociatedPtrInfo reg_host_clone;
+  reg_host.Bind(std::move(state->registration->host_ptr_info));
+  reg_host->Clone(mojo::MakeRequest(&reg_host_clone));
+  state->registration->host_ptr_info = reg_host.PassInterface();
+  *info = blink::mojom::ServiceWorkerRegistrationObjectInfo::New(
+      state->registration->registration_id, state->registration->handle_id,
+      state->registration->options->Clone(), std::move(reg_host_clone));
+
   if (state->installing)
     attrs->installing = state->installing->info();
   if (state->waiting)

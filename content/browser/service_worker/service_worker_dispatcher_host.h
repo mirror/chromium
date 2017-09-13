@@ -95,6 +95,8 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
   virtual void RegisterServiceWorkerRegistrationHandle(
       std::unique_ptr<ServiceWorkerRegistrationHandle> handle);
 
+  void RemoveServiceWorkerRegistrationHandle(int handle_id);
+
   ServiceWorkerHandle* FindServiceWorkerHandle(int provider_id,
                                                int64_t version_id);
 
@@ -166,8 +168,6 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
   void OnCountFeature(int64_t version_id, uint32_t feature);
   void OnIncrementServiceWorkerRefCount(int handle_id);
   void OnDecrementServiceWorkerRefCount(int handle_id);
-  void OnIncrementRegistrationRefCount(int registration_handle_id);
-  void OnDecrementRegistrationRefCount(int registration_handle_id);
   void OnPostMessageToWorker(
       int handle_id,
       int provider_id,
@@ -212,7 +212,7 @@ class CONTENT_EXPORT ServiceWorkerDispatcherHost
 
   ServiceWorkerRegistrationHandle* FindRegistrationHandle(
       int provider_id,
-      int64_t registration_handle_id);
+      int64_t registration_id);
 
   // Callbacks from ServiceWorkerContextCore
   void UpdateComplete(int thread_id,

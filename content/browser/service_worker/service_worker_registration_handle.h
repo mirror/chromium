@@ -14,12 +14,16 @@
 #include "content/browser/service_worker/service_worker_version.h"
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker_types.h"
+#include "mojo/public/cpp/bindings/associated_binding_set.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace content {
 
 class ServiceWorkerContextCore;
+class ServiceWorkerDispatcherHost;
 class ServiceWorkerVersion;
+
+// TODO(leonhsl): Merge this class into ServiceWorkerRegistration.
 
 // Roughly corresponds to one WebServiceWorkerRegistration object in the
 // renderer process.
@@ -33,19 +37,17 @@ class ServiceWorkerVersion;
 // Has a reference to the corresponding ServiceWorkerRegistration in order to
 // ensure that the registration is alive while this handle is around.
 class CONTENT_EXPORT ServiceWorkerRegistrationHandle
-    : public ServiceWorkerRegistration::Listener {
+    : public blink::mojom::ServiceWorkerRegistrationHost,
+      public ServiceWorkerRegistration::Listener {
  public:
   ServiceWorkerRegistrationHandle(
       base::WeakPtr<ServiceWorkerContextCore> context,
+      base::WeakPtr<ServiceWorkerDispatcherHost> dispatcher_host,
       base::WeakPtr<ServiceWorkerProviderHost> provider_host,
       ServiceWorkerRegistration* registration);
-  virtual ~ServiceWorkerRegistrationHandle();
+  ~ServiceWorkerRegistrationHandle() override;
 
-  blink::mojom::ServiceWorkerRegistrationObjectInfoPtr GetObjectInfo();
-
-  bool HasNoRefCount() const { return ref_count_ <= 0; }
-  void IncrementRefCount();
-  void DecrementRefCount();
+  blink::mojom::ServiceWorkerRegistrationObjectInfoPtr CreateObjectInfo();
 
   int provider_id() const { return provider_id_; }
   int handle_id() const { return handle_id_; }
@@ -53,6 +55,10 @@ class CONTENT_EXPORT ServiceWorkerRegistrationHandle
   ServiceWorkerRegistration* registration() { return registration_.get(); }
 
  private:
+  // Implements blink::mojom::ServiceWorkerRegistrationHost.
+  void Clone(blink::mojom::ServiceWorkerRegistrationHostAssociatedRequest
+                 request) override;
+
   // ServiceWorkerRegistration::Listener overrides.
   void OnVersionAttributesChanged(
       ServiceWorkerRegistration* registration,
@@ -69,11 +75,14 @@ class CONTENT_EXPORT ServiceWorkerRegistrationHandle
       ServiceWorkerVersion* waiting_version,
       ServiceWorkerVersion* active_version);
 
-  base::WeakPtr<ServiceWorkerContextCore> context_;
+  void OnConnectionError();
+
+  base::WeakPtr<ServiceWorkerDispatcherHost> dispatcher_host_;
   base::WeakPtr<ServiceWorkerProviderHost> provider_host_;
   const int provider_id_;
   const int handle_id_;
-  int ref_count_;  // Created with 1.
+  mojo::AssociatedBindingSet<blink::mojom::ServiceWorkerRegistrationHost>
+      bindings_;
 
   // This handle is the primary owner of this registration.
   scoped_refptr<ServiceWorkerRegistration> registration_;
