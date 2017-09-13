@@ -244,6 +244,8 @@ enum PasswordFormSourceType {
   PasswordFormInPageNavigation,
 };
 
+enum class FieldChangeSource { USER, AUTOFILL, USER_AUTOFILL };
+
 }  // namespace
 
 namespace autofill {
@@ -434,6 +436,29 @@ class PasswordAutofillAgentTest : public ChromeRenderViewTest {
 
   void SimulatePasswordChange(const std::string& password) {
     SimulateUserInputChangeForElement(&password_element_, password);
+  }
+
+  void SimulateUsernameFieldAutofill(const std::string& text) {
+    // Simulate set |username_element_| in focus.
+    static_cast<content::RenderFrameObserver*>(autofill_agent_)
+        ->FocusedNodeChanged(username_element_);
+    // Fill focused element (i.e. |username_element_|).
+    autofill_agent_->FillFieldWithValue(ASCIIToUTF16(text));
+  }
+
+  void SimulateUsernameFieldChange(FieldChangeSource change_source) {
+    switch (change_source) {
+      case FieldChangeSource::USER:
+        SimulateUsernameChange("Alice");
+        break;
+      case FieldChangeSource::AUTOFILL:
+        SimulateUsernameFieldAutofill("Alice");
+        break;
+      case FieldChangeSource::USER_AUTOFILL:
+        SimulateUsernameChange("A");
+        SimulateUsernameFieldAutofill("Alice");
+        break;
+    }
   }
 
   void CheckTextFieldsStateForElements(const WebInputElement& username_element,
@@ -2758,32 +2783,38 @@ TEST_F(PasswordAutofillAgentTest, ShowSuggestionForNonUsernameFieldForms) {
   CheckSuggestions(std::string(), false);
 }
 
+// Tests that password manager sees both autofill assisted and user entered
+// data on saving that is triggered by AJAX succeeded.
 TEST_F(PasswordAutofillAgentTest,
-       UsernameChangedAfterPasswordInput_InPageNavigation) {
-  LoadHTML(kNoFormHTML);
-  UpdateUsernameAndPasswordElements();
+       UsernameChangedAfterPasswordInput_AJAXSucceeded) {
+  for (auto change_source :
+       {FieldChangeSource::USER, FieldChangeSource::AUTOFILL,
+        FieldChangeSource::USER_AUTOFILL}) {
+    LoadHTML(kNoFormHTML);
+    UpdateUsernameAndPasswordElements();
 
-  SimulateUsernameChange("Bob");
-  SimulatePasswordChange("mypassword");
-  SimulateUsernameChange("Alice");
+    SimulateUsernameChange("Bob");
+    SimulatePasswordChange("mypassword");
+    SimulateUsernameFieldChange(change_source);
 
-  // Hide form elements to simulate successful login.
-  std::string hide_elements =
-      "var password = document.getElementById('password');"
-      "password.style = 'display:none';"
-      "var username = document.getElementById('username');"
-      "username.style = 'display:none';";
-  ExecuteJavaScriptForTests(hide_elements.c_str());
+    // Hide form elements to simulate successful login.
+    std::string hide_elements =
+        "var password = document.getElementById('password');"
+        "password.style = 'display:none';"
+        "var username = document.getElementById('username');"
+        "username.style = 'display:none';";
+    ExecuteJavaScriptForTests(hide_elements.c_str());
 
-  password_autofill_agent_->AJAXSucceeded();
+    password_autofill_agent_->AJAXSucceeded();
 
-  ExpectInPageNavigationWithUsernameAndPasswords(
-      "Alice", "mypassword", "",
-      PasswordForm::SubmissionIndicatorEvent::XHR_SUCCEEDED);
+    ExpectInPageNavigationWithUsernameAndPasswords(
+        "Alice", "mypassword", "",
+        PasswordForm::SubmissionIndicatorEvent::XHR_SUCCEEDED);
+  }
 }
 
 TEST_F(PasswordAutofillAgentTest,
-       UsernameChangedAfterPasswordInput_InPageNavigation_2) {
+       UsernameChangedAfterPasswordInput_AJAXSucceeded_2) {
   LoadHTML(kNoFormHTML);
   UpdateUsernameAndPasswordElements();
 
@@ -2807,18 +2838,23 @@ TEST_F(PasswordAutofillAgentTest,
       PasswordForm::SubmissionIndicatorEvent::DOM_MUTATION_AFTER_XHR);
 }
 
+// Tests that password manager sees both autofill assisted and user entered
+// data on saving that is triggered by form submission.
 TEST_F(PasswordAutofillAgentTest,
        UsernameChangedAfterPasswordInput_FormSubmitted) {
-  SimulateUsernameChange("Bob");
-  SimulatePasswordChange("mypassword");
-  SimulateUsernameChange("Alice");
+  for (auto change_source :
+       {FieldChangeSource::USER, FieldChangeSource::AUTOFILL}) {
+    SimulateUsernameChange("Bob");
+    SimulatePasswordChange("mypassword");
+    SimulateUsernameFieldChange(change_source);
 
-  static_cast<content::RenderFrameObserver*>(password_autofill_agent_)
-      ->WillSendSubmitEvent(username_element_.Form());
-  static_cast<content::RenderFrameObserver*>(password_autofill_agent_)
-      ->WillSubmitForm(username_element_.Form());
+    static_cast<content::RenderFrameObserver*>(password_autofill_agent_)
+        ->WillSendSubmitEvent(username_element_.Form());
+    static_cast<content::RenderFrameObserver*>(password_autofill_agent_)
+        ->WillSubmitForm(username_element_.Form());
 
-  ExpectFormSubmittedWithUsernameAndPasswords("Alice", "mypassword", "");
+    ExpectFormSubmittedWithUsernameAndPasswords("Alice", "mypassword", "");
+  }
 }
 
 // Tests that a suggestion dropdown is shown on a password field even if a
