@@ -16,6 +16,24 @@
       "revId": "068da3458ce07eecfe5bf2dd6a5b7a4edaf24dd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd699da3_b77a8c27",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-09-13T12:57:43Z",
+      "side": 1,
+      "message": "There\u0027s a performance tradeoff here, for a case that is very common (probably the most common case): a database hit. For each of those, there would be a round trip between threads, plus a database lookup to map icon URLs to database icon IDs.\n\nI assume UpdateFaviconMappingsAndFetch() was introduced as a single function for the very same purpose. WDYT?",
+      "parentUuid": "50ab5aed_60a14152",
+      "revId": "068da3458ce07eecfe5bf2dd6a5b7a4edaf24dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
