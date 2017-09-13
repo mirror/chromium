@@ -191,6 +191,12 @@
       valid_type: "bool",
     },
 
+    // TODO(rjwright): Put in a comment
+    affected_by_all: {
+      default: true,
+      valid_type: "bool",
+    },
+
     // The remaining arguments are used for the StyleBuilder and allow us to
     // succinctly describe how to apply properties. When default handlers are not
     // sufficient, we should prefer to use converter, and failing that define
@@ -416,7 +422,8 @@
     },
     {
       name: "direction",
-      api_class: "CSSPropertyAPIInherited",
+      api_class: true,
+      affected_by_all: false,
       custom_value: true,
       type_name: "TextDirection",
       inherited: true,
@@ -2867,6 +2874,8 @@
     },
     {
       name: "unicode-bidi",
+      api_class: true,
+      affected_by_all: false,
       include_paths: ["platform/text/UnicodeBidi.h"],
       default_value: "normal",
       field_template: "keyword",
@@ -3764,6 +3773,8 @@
 
     {
       name: "all",
+      api_class: true,
+      affected_by_all: false,
       builder_skip: true,
     },
     {
