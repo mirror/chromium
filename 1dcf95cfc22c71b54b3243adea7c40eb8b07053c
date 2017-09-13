@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "eaa96e5b_6e1f6254",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-13T23:54:48Z",
+      "side": 1,
+      "message": "Are you saying we should call SetNeedsPaintOffsetAndVisualRectUpdate() instead of setting doc_dirty \u003d true? Can you please clarify?\n\nLet\u0027s do that in a separate CL.",
+      "parentUuid": "fe704bf0_336a9f56",
+      "revId": "1dcf95cfc22c71b54b3243adea7c40eb8b07053c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "453804b4_e83b4faf",
         "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
         "patchSetId": 2
