@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "52425a24_eeb3de5c",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-13T19:38:16Z",
+      "side": 1,
+      "message": "Good point - can we prevent this with a regression test that verifies that the serialization result doesn\u0027t change (and so indirectly verifies that the structs we depend on didn\u0027t change)?",
+      "parentUuid": "3a54a5f9_1b746091",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 12
+      },
+      "revId": "731690d54f88cd12712ab97294bc1b7a05dec1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2522ff5_c71d5440",
         "filename": "content/common/page_state.mojom",
         "patchSetId": 9
