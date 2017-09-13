@@ -12,6 +12,7 @@
 
 namespace ntp_snippets {
 class ContentSuggestionsService;
+class Logger
 }  // namespace ntp_snippets
 
 namespace ntp_snippets {
@@ -23,7 +24,8 @@ CreateChromeContentSuggestionsServiceWithProviders(
 
 // Returns a new ContentSuggestionsService with no provider registered.
 std::unique_ptr<KeyedService> CreateChromeContentSuggestionsService(
-    web::BrowserState* browser_state);
+    web::BrowserState* browser_state,
+    std::unique_ptr<Logger> debug_logger);
 
 // Registers the Reading List provider.
 void RegisterReadingListProvider(ContentSuggestionsService* service,
@@ -31,7 +33,8 @@ void RegisterReadingListProvider(ContentSuggestionsService* service,
 
 // Registers the RemoteSuggestionsProvider (articles provider).
 void RegisterRemoteSuggestionsProvider(ContentSuggestionsService* service,
-                                       web::BrowserState* browser_state);
+                                       web::BrowserState* browser_state,
+                                       Logger* debug_logger);
 
 }  // namespace ntp_snippets
 
