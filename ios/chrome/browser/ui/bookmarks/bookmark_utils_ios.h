@@ -17,6 +17,7 @@
 @class BookmarkCell;
 @class BookmarkMenuItem;
 @class BookmarkPositionCache;
+@class BookmarkPathCache;
 class GURL;
 
 namespace bookmarks {
@@ -32,6 +33,10 @@ namespace bookmark_utils_ios {
 
 typedef std::vector<const bookmarks::BookmarkNode*> NodeVector;
 typedef std::set<const bookmarks::BookmarkNode*> NodeSet;
+
+//
+const bookmarks::BookmarkNode* FindFolderById(bookmarks::BookmarkModel* model,
+                                              int64_t id);
 
 // The iOS code is doing some munging of the bookmark folder names in order
 // to display a slighly different wording for the default folders.
@@ -189,6 +194,15 @@ BOOL GetPositionCache(bookmarks::BookmarkModel* model,
                       CGFloat* position);
 // Method exists for testing.
 void ClearPositionCache();
+
+//
+void CacheBookmarkUIStack(BookmarkPathCache* cache);
+
+//
+BookmarkPathCache* GetBookmarkUIStackCache(bookmarks::BookmarkModel* model);
+
+//
+void ClearStackCache();
 
 }  // namespace bookmark_utils_ios
 

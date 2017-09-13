@@ -67,6 +67,9 @@ class BookmarkNode;
 // cases.
 @property(nonatomic, weak) id<BookmarkHomeViewControllerDelegate> homeDelegate;
 
+// Holds the
+@property(nonatomic, strong) NSArray* bookmarkPath;
+
 // Dismisses any modal interaction elements. Note that this
 // method is currently used in case of handset only. In the future it
 // will be used by both cases.

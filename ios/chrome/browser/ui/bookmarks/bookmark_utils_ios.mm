@@ -23,6 +23,7 @@
 #include "ios/chrome/browser/experimental_flags.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_collection_cells.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_menu_item.h"
+#import "ios/chrome/browser/ui/bookmarks/bookmark_path_cache.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_position_cache.h"
 #include "ios/chrome/browser/ui/bookmarks/undo_manager_wrapper.h"
 #include "ios/chrome/browser/ui/ui_util.h"
@@ -43,18 +44,6 @@ using bookmarks::BookmarkNode;
 namespace bookmark_utils_ios {
 
 namespace {
-
-const BookmarkNode* FindFolderById(bookmarks::BookmarkModel* model,
-                                   int64_t id) {
-  ui::TreeNodeIterator<const BookmarkNode> iterator(model->root_node());
-  while (iterator.has_next()) {
-    const BookmarkNode* bookmark = iterator.Next();
-    if (bookmark->id() == id && bookmark->is_folder())
-      return bookmark;
-  }
-  return NULL;
-}
-
 const SkColor colors[] = {
     0xE64A19, 0xF09300, 0xAFB42B, 0x689F38,
     0x0B8043, 0x0097A7, 0x7B1FA2, 0xC2185B,
@@ -76,7 +65,19 @@ const CGFloat titleMargin = 73;
 const CGFloat titleToIconDistance = 33;
 const CGFloat menuAnimationDuration = 0.2;
 NSString* const kPositionCacheKey = @"BookmarksStarsPositionCacheKey";
+NSString* const kStackCacheKey = @"BookmarksStackCacheKey";
 NSString* const kBookmarksSnackbarCategory = @"BookmarksSnackbarCategory";
+
+const BookmarkNode* FindFolderById(bookmarks::BookmarkModel* model,
+                                   int64_t id) {
+  ui::TreeNodeIterator<const BookmarkNode> iterator(model->root_node());
+  while (iterator.has_next()) {
+    const BookmarkNode* bookmark = iterator.Next();
+    if (bookmark->id() == id && bookmark->is_folder())
+      return bookmark;
+  }
+  return NULL;
+}
 
 NSString* TitleForBookmarkNode(const BookmarkNode* node) {
   NSString* title;
@@ -640,6 +641,38 @@ void CachePosition(CGFloat position, BookmarkMenuItem* item) {
                                             forKey:kPositionCacheKey];
 }
 
+void CacheBookmarkUIStack(BookmarkPathCache* cache) {
+  NSData* data = [NSKeyedArchiver archivedDataWithRootObject:cache];
+  [[NSUserDefaults standardUserDefaults] setObject:data forKey:kStackCacheKey];
+}
+
+BookmarkPathCache* GetBookmarkUIStackCache(bookmarks::BookmarkModel* model) {
+  NSData* data =
+      [[NSUserDefaults standardUserDefaults] objectForKey:kStackCacheKey];
+  if (!data || ![data isKindOfClass:[NSData class]])
+    return nil;
+  BookmarkPathCache* cache = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+  if (!cache)
+    return nil;
+
+  NSArray* bookmarkPath = cache.bookmarkPath;
+  if (!bookmarkPath)
+    return nil;
+
+  // Validate bookmark path
+  for (NSNumber* bookmarkId in bookmarkPath) {
+    if (model->root_node()->id() == bookmarkId.longLongValue)
+      continue;
+
+    const BookmarkNode* bookmark =
+        FindFolderById(model, bookmarkId.longLongValue);
+    // The bookmark node is gone from model, maybe deleted remotely.
+    if (!bookmark)
+      return nil;
+  }
+  return cache;
+}
+
 BOOL GetPositionCache(bookmarks::BookmarkModel* model,
                       BookmarkMenuItem** item,
                       CGFloat* position) {
@@ -683,4 +716,7 @@ void ClearPositionCache() {
   [[NSUserDefaults standardUserDefaults] removeObjectForKey:kPositionCacheKey];
 }
 
+void ClearStackCache() {
+  [[NSUserDefaults standardUserDefaults] removeObjectForKey:kStackCacheKey];
+}
 }  // namespace bookmark_utils_ios

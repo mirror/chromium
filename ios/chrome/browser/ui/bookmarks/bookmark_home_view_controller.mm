@@ -30,6 +30,7 @@
 #include "ios/chrome/browser/ui/bookmarks/bookmark_model_bridge_observer.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_navigation_controller.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_panel_view.h"
+#import "ios/chrome/browser/ui/bookmarks/bookmark_path_cache.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_promo_controller.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_table_view.h"
 #import "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h"
@@ -91,6 +92,8 @@ const CGFloat kSpacer = 50;
 @synthesize bookmarksTableView = _bookmarksTableView;
 @synthesize contextBar = _contextBar;
 @synthesize contextBarState = _contextBarState;
+@synthesize bookmarkPath = _bookmarkPath;
+@synthesize cachedContentPosition = _cachedContentPosition;
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -162,6 +165,10 @@ const CGFloat kSpacer = 50;
   }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+  [self setUpUIStackCacheIfApplicable];
+}
+
 #pragma mark - Public
 
 - (void)dismissModals {
@@ -217,8 +224,17 @@ const CGFloat kSpacer = 50;
     bookmark_utils_ios::CachePosition(
         [self.folderView contentPositionInPortraitOrientation],
         [self primaryMenuItem]);
+    return;
   }
-  // TODO(crbug.com/695749): Cache position for BookmarkTableView in new UI.
+
+  if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
+    // Cache position for BookmarkTableView in new UI.
+    BookmarkPathCache* cache = [BookmarkPathCache
+        cacheForBookmarkPath:self.bookmarkPath
+                    position:self.bookmarksTableView.contentPosition];
+    bookmark_utils_ios::CacheBookmarkUIStack(cache);
+    return;
+  }
 }
 
 - (BOOL)shouldShowBackButtonOnNavigationBar {
@@ -382,14 +398,8 @@ const CGFloat kSpacer = 50;
 
 - (void)bookmarkTableView:(BookmarkTableView*)view
     selectedFolderForNavigation:(const bookmarks::BookmarkNode*)folder {
-  BookmarkControllerFactory* bookmarkControllerFactory =
-      [[BookmarkControllerFactory alloc] init];
   BookmarkHomeViewController* controller =
-      (BookmarkHomeViewController*)[bookmarkControllerFactory
-          bookmarkControllerWithBrowserState:self.browserState
-                                      loader:_loader];
-  [controller setRootNode:folder];
-  controller.homeDelegate = self.homeDelegate;
+      [self createControllerWithRootFolder:folder];
   [self.navigationController pushViewController:controller animated:YES];
 }
 
@@ -923,10 +933,43 @@ const CGFloat kSpacer = 50;
       setAutoresizingMask:UIViewAutoresizingFlexibleWidth |
                           UIViewAutoresizingFlexibleHeight];
   [self.bookmarksTableView setTranslatesAutoresizingMaskIntoConstraints:NO];
+  if (self.cachedContentPosition) {
+    [self.bookmarksTableView
+        setContentPosition:self.cachedContentPosition.floatValue];
+  }
   [self.view addSubview:self.bookmarksTableView];
 
   if (_rootNode != self.bookmarks->root_node()) {
     [self setupContextBar];
+  }
+}
+
+- (void)setUpUIStackCacheIfApplicable {
+  BookmarkPathCache* pathCache =
+      bookmark_utils_ios::GetBookmarkUIStackCache(self.bookmarks);
+  if (!pathCache) {
+    return;
+  }
+
+  NSMutableArray* bookmarkPath = [pathCache.bookmarkPath mutableCopy];
+  if (![bookmarkPath isEqualToArray:self.bookmarkPath]) {
+    [bookmarkPath removeObjectsInArray:self.bookmarkPath];
+    const BookmarkNode* node = bookmark_utils_ios::FindFolderById(
+        self.bookmarks, [[bookmarkPath firstObject] longLongValue]);
+    DCHECK(node);
+    if (node) {
+      BookmarkHomeViewController* controller =
+          [self createControllerWithRootFolder:node];
+      if (bookmarkPath.count == 1 && pathCache.position) {
+        [controller
+            setCachedContentPosition:[NSNumber
+                                         numberWithFloat:pathCache.position]];
+      }
+      [self.navigationController pushViewController:controller animated:NO];
+    }
+  } else {
+    // Done using the cache, now clear it.
+    bookmark_utils_ios::ClearStackCache();
   }
 }
 
@@ -1085,6 +1128,23 @@ const CGFloat kSpacer = 50;
     }
   }
   [super updateViewConstraints];
+}
+
+- (BookmarkHomeViewController*)createControllerWithRootFolder:
+    (const bookmarks::BookmarkNode*)folder {
+  BookmarkControllerFactory* bookmarkControllerFactory =
+      [[BookmarkControllerFactory alloc] init];
+  BookmarkHomeViewController* controller =
+      (BookmarkHomeViewController*)[bookmarkControllerFactory
+          bookmarkControllerWithBrowserState:self.browserState
+                                      loader:_loader];
+  [controller setRootNode:folder];
+  NSMutableArray* bookmarkPath = [self.bookmarkPath mutableCopy];
+  [bookmarkPath addObject:[NSNumber numberWithLongLong:folder->id()]];
+  [controller setBookmarkPath:[bookmarkPath copy]];
+
+  controller.homeDelegate = self.homeDelegate;
+  return controller;
 }
 
 #pragma mark - ContextBarDelegate implementation
