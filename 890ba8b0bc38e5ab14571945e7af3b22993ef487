@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d655207_d09b9709",
+        "filename": "components/exo/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-13T15:54:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d460685d_28f6286a",
+      "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d256f09_a2463732",
         "filename": "components/exo/exo_perftests.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5071d93c_766adf69",
+        "filename": "components/exo/exo_perftests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-13T15:54:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d256f09_a2463732",
+      "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "77f07e26_430971d0",
+        "filename": "components/exo/exo_perftests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-13T15:54:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "007909f1_231921b5",
+      "range": {
+        "startLine": 53,
+        "startChar": 42,
+        "endLine": 53,
+        "endChar": 57
+      },
+      "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4aa2194b_37673403",
         "filename": "components/exo/surface_tree_host.cc",
         "patchSetId": 5
@@ -70,6 +130,24 @@
       "writtenOn": "2017-09-12T23:36:08Z",
       "side": 1,
       "message": "how is this related?",
+      "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f2da0c7_86e71b4a",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-13T15:54:24Z",
+      "side": 1,
+      "message": "Remove it. Done",
+      "parentUuid": "4aa2194b_37673403",
       "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "9f7472d3_ce4d43c2",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-13T15:54:24Z",
+      "side": 1,
+      "message": "I think it can happen in normal client usage. In normal case, we use a begin frame source which frequency is not more than 60hz. SurfaceTreeHost submits compositor frame much earlier than the next begin frame. So it is very unlikely the SurfaceTreeHost::OnBeginFrameDerivedImpl() is called just between calling SubmitCompositorFrame() and SurfaceTreeHost::DidReceivedCompositorFrameAck().\n\nIn perftest, we uses BackToBackBeginFrameSource(See [1]). The BackToBackBeginFrameSource calls BeginFrame (at the next possible time) as soon as an observer acknowledges the prior BeginFrame. So SurfaceTreeHost::OnBeginFrameDerivedImpl() can be called just before SurfaceTreeHost::DidReceivedCompositorFrameAck(). When it happen, the registered wl_frame will not be signaled. And then the client will not submit new content. \n\n[1] https://cs.chromium.org/chromium/src/components/viz/common/frame_sinks/begin_frame_source.h?type\u003dcs\u0026q\u003dBackToBackBegin\u0026l\u003d163",
+      "parentUuid": "629fb859_e481cec4",
+      "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9742513_fdc404ed",
         "filename": "components/exo/test/exo_perftest.cc",
         "patchSetId": 5
@@ -107,6 +203,24 @@
       "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52993382_47af5623",
+        "filename": "components/exo/test/exo_perftest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-13T15:54:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9742513_fdc404ed",
+      "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "5b5326c6_78985ff4",
+        "filename": "components/exo/test/exo_perftest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-13T15:54:24Z",
+      "side": 1,
+      "message": "What\u0027s the single buffer rendering?\n\nWe want to compare exo performance in cash and mus. So I use this flag to let the test use the BackToBackBeginFrameSource to generate begin frame singles as fast as possible. So we can measure fps. On my workstation, the simple client can get 1200 FPS.",
+      "parentUuid": "bf8ef221_8f88d930",
+      "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9ffc4b0_601bfaa0",
         "filename": "components/exo/test/exo_perftest.cc",
         "patchSetId": 5
@@ -138,6 +270,24 @@
       "writtenOn": "2017-09-12T23:36:08Z",
       "side": 1,
       "message": "can we just do\n\nRUN_ALL_TESTS();\n\nhere? and remove the client entry stuff?",
+      "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702eb730_c72855ac",
+        "filename": "components/exo/test/exo_perftest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-13T15:54:24Z",
+      "side": 1,
+      "message": "We need setup (calling AshTestBase::SetUp()) the ash in main thread, and run client_entry_ on a child test thread. I think RUN_ALL_TESTS() not only include running the test method, but also calling SetUp() and TearDown(). So probable we can not use it.",
+      "parentUuid": "b9ffc4b0_601bfaa0",
       "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -167,6 +317,30 @@
     },
     {
       "key": {
+        "uuid": "e607ac96_d62916e8",
+        "filename": "components/exo/test/exo_perftest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-13T15:54:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f24d4e8_3de272e3",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 17
+      },
+      "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fa08c69_a1700b05",
         "filename": "components/exo/test/exo_perftest.h",
         "patchSetId": 5
@@ -181,6 +355,24 @@
       "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a050f834_958f24ae",
+        "filename": "components/exo/test/exo_perftest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-13T15:54:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fa08c69_a1700b05",
+      "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +399,30 @@
     },
     {
       "key": {
+        "uuid": "66b5c6bf_ac11f540",
+        "filename": "components/exo/test/exo_perftest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-13T15:54:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86168477_b9831775",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 16
+      },
+      "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a96555c_755c4bf9",
         "filename": "components/exo/test/exo_perftest.h",
         "patchSetId": 5
@@ -230,6 +446,30 @@
     },
     {
       "key": {
+        "uuid": "c0505f37_ffa159b6",
+        "filename": "components/exo/test/exo_perftest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-13T15:54:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a96555c_755c4bf9",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6432331_524873ec",
         "filename": "components/exo/test/exo_perftest.h",
         "patchSetId": 5
@@ -241,6 +481,24 @@
       "writtenOn": "2017-09-12T23:36:08Z",
       "side": 1,
       "message": "do we need this?",
+      "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ab412b4_489f4b55",
+        "filename": "components/exo/test/exo_perftest.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-13T15:54:24Z",
+      "side": 1,
+      "message": "We need it to pass the result to main thread. And in the main thread, we will use GTEST_ASSERT_* to check it.",
+      "parentUuid": "e6432331_524873ec",
       "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -293,6 +551,24 @@
       "writtenOn": "2017-09-12T23:36:08Z",
       "side": 1,
       "message": "how is this related?",
+      "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c86d936_f709ae8b",
+        "filename": "components/exo/test/run_all_unittests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000050
+      },
+      "writtenOn": "2017-09-13T15:54:24Z",
+      "side": 1,
+      "message": "Done. Remove it.",
+      "parentUuid": "ceb66cc2_e6e88222",
       "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
