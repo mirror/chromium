@@ -167,7 +167,8 @@ DispatchEventResult EventDispatcher::Dispatch() {
     }
   }
 
-  event_->SetTarget(EventPath::EventTargetRespectingTargetRules(*node_));
+  UpdateLastEventTarget(EventPath::EventTargetRespectingTargetRules(*node_));
+  event_->SetTarget(GetLastEventTarget());
 #if DCHECK_IS_ON()
   DCHECK(!EventDispatchForbiddenScope::IsEventDispatchForbidden());
 #endif
@@ -185,10 +186,9 @@ DispatchEventResult EventDispatcher::Dispatch() {
   }
   DispatchEventPostProcess(activation_target,
                            pre_dispatch_event_handler_result);
-
-  // Ensure that after event dispatch, the event's target object is the
-  // outermost shadow DOM boundary.
-  event_->SetTarget(event_->GetEventPath().GetWindowEventContext().Target());
+  // According to the spec, event.target should be restored after the bubbling
+  // process.
+  event_->SetTarget(GetLastEventTarget());
   event_->SetCurrentTarget(nullptr);
 
   return EventTarget::GetDispatchEventResult(*event_);
@@ -243,6 +243,7 @@ inline void EventDispatcher::DispatchEventAtBubbling() {
   size_t size = event_->GetEventPath().size();
   for (size_t i = 1; i < size; ++i) {
     const NodeEventContext& event_context = event_->GetEventPath()[i];
+    UpdateLastEventTarget(event_context.Target());
     if (event_context.CurrentTargetSameAsTarget()) {
       event_->SetEventPhase(Event::kAtTarget);
     } else if (event_->bubbles() && !event_->cancelBubble()) {
