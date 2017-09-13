@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9a6adb9_65ee5bf7",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2497,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-13T15:23:51Z",
+      "side": 1,
+      "message": "ACK\n\nI am actually strongly against that requirement.\n\n1) I did not know about it before and I\u0027ve added multiple features into \"our\" #ifdef and nothing went wrong.\n2) I find it nice to keep our features together, then I don\u0027t have to jump all over the place on device trying to enable features I need.\n3) It is impossible to find this requirement (who looks at the top of that huge array?).\n4) The requirement itself is from 2010 (http://codereview.chromium.org/5451003).\n\nI\u0027d rather land this as it is and remove that requirement in a separate CL.",
+      "parentUuid": "8977c68c_8718bc70",
+      "range": {
+        "startLine": 2497,
+        "startChar": 68,
+        "endLine": 2497,
+        "endChar": 0
+      },
+      "revId": "6351959b036907daa4099bf2ed025e44821ebd28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07944ebf_7dbe48bd",
         "filename": "components/ntp_snippets/content_suggestions_service.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "6351959b036907daa4099bf2ed025e44821ebd28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e506029b_6a3cd4a4",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-13T15:23:51Z",
+      "side": 1,
+      "message": "Done.\n\nstd::string()",
+      "parentUuid": "07944ebf_7dbe48bd",
+      "range": {
+        "startLine": 84,
+        "startChar": 48,
+        "endLine": 84,
+        "endChar": 0
+      },
+      "revId": "6351959b036907daa4099bf2ed025e44821ebd28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

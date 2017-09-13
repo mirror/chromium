@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "ed4b2441_9e4b4f46",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-13T15:23:51Z",
+      "side": 1,
+      "message": "Done. Deleted.",
+      "parentUuid": "228de848_69f63cc2",
+      "range": {
+        "startLine": 83,
+        "startChar": 24,
+        "endLine": 83,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36e69d4e_0e82ba3b",
         "filename": "components/ntp_snippets/logger.cc",
         "patchSetId": 3
@@ -235,6 +259,30 @@
       "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beaac703_64d82d83",
+        "filename": "components/ntp_snippets/logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-13T15:23:51Z",
+      "side": 1,
+      "message": "Somewhat done.\n\nI added a constructor taking all members.",
+      "parentUuid": "00bba0ce_3cdb78be",
+      "range": {
+        "startLine": 32,
+        "startChar": 32,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
