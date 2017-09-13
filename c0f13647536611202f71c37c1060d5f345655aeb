@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1ff084da_b2db334a",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-09-13T18:08:26Z",
+      "side": 1,
+      "message": "We\u0027re trending toward requiring canonical CBOR at agl\u0027s encouragement (https://github.com/fido-alliance/fido-2-specs/pull/294), but it\u0027s not quite merged yet. That ordering is by length and then lexicographic, rather than just lexicographic, which is dumb, but oh well. It\u0027d be straightforward to order this flat_map in CBOR order, since it takes a Compare argument.",
+      "parentUuid": "3e2ccb54_96a9135c",
+      "revId": "c0f13647536611202f71c37c1060d5f345655aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b761369a_5c017977",
         "filename": "content/browser/webauth/cbor/cbor_values.h",
         "patchSetId": 21
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Yep, that\u0027s right.",
       "parentUuid": "b761369a_5c017977",
+      "revId": "c0f13647536611202f71c37c1060d5f345655aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1e54a13_f827ebec",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-09-13T18:08:26Z",
+      "side": 1,
+      "message": "Yeah, there are integers-up-to-64-bits, floats-up-to-64-bits, big integers, and big binary and decimal floats, all with their own distinct representations.",
+      "parentUuid": "4e3fcb96_0ffd1389",
       "revId": "c0f13647536611202f71c37c1060d5f345655aeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -136,6 +172,24 @@
       "side": 1,
       "message": "It does seem like it might be possible to have ambiguous data, but the burden of validation lies largely on the decoder.\n\nI\u0027m not entirely sure what the needs of other components will be for CBOR and whether they would be met by canonical CBOR or not. Jeffrey Yasskin might have some comments about that. But I can add a statement that this currently is not canonical and only guarantees well-formed values.",
       "parentUuid": "bf7af54f_0732a04e",
+      "revId": "c0f13647536611202f71c37c1060d5f345655aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "063d8999_6d484f3b",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001949
+      },
+      "writtenOn": "2017-09-13T18:08:26Z",
+      "side": 1,
+      "message": "Like with JSON, repeated map keys are invalid, and different decoders might treat them differently. A decoder that enforces canonical CBOR has an easier time detecting and rejecting repeated keys.\n\nDo we want the encoder to guarantee that things it emits as utf-8 strings are valid utf-8?\n\nWhen we extend this to a decoder (likely for web packaging), we will want to detect and reject invalid utf-8, but there\u0027s nothing for Kim to do about that now.\n\nI can only think of one situation where we might want to emit non-canonical CBOR: if the CBORbis RFC changes the required map ordering, then we\u0027d need to select between the two versions of canonical CBOR. I think it\u0027s fine for now for this encoder to guarantee it emits canonical CBOR.",
+      "parentUuid": "1830957d_75665b14",
       "revId": "c0f13647536611202f71c37c1060d5f345655aeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
