@@ -610,6 +610,8 @@ class CONTENT_EXPORT RenderWidgetHostImpl
       mojom::WidgetInputHandlerAssociatedPtr widget_input_handler);
   void SetWidget(mojom::WidgetPtr widget);
 
+  void ProgressFling(base::TimeTicks time);
+
   // InputRouterImplClient overrides.
   mojom::WidgetInputHandler* GetWidgetInputHandler() override;
   void OnImeCompositionRangeChanged(
