@@ -161,6 +161,30 @@
     },
     {
       "key": {
+        "uuid": "a09af16e_bc9a0abb",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-13T23:58:46Z",
+      "side": 1,
+      "message": "Yup, that\u0027s what we\u0027re doing.",
+      "parentUuid": "f7f73679_657d42f6",
+      "range": {
+        "startLine": 365,
+        "startChar": 33,
+        "endLine": 365,
+        "endChar": 0
+      },
+      "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd4d2db0_e26cda60",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_test.cc",
         "patchSetId": 6
@@ -328,6 +352,24 @@
       "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3295562_939543b0",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_test.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-13T23:58:46Z",
+      "side": 1,
+      "message": "Unfortunately InvokeArgument doesn\u0027t work with base::Callback.",
+      "parentUuid": "2f3ef39d_57f4314a",
+      "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
