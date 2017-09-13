@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "242e54a8_7724569e",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-13T08:19:47Z",
+      "side": 1,
+      "message": "Yes! I was testing something, and accidentally committed this, sorry :/",
+      "parentUuid": "e9e0aac8_d40364ad",
+      "range": {
+        "startLine": 304,
+        "startChar": 78,
+        "endLine": 304,
+        "endChar": 0
+      },
+      "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bceb8aea_b740e922",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98890701_b5719e39",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-13T08:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bceb8aea_b740e922",
+      "range": {
+        "startLine": 547,
+        "startChar": 18,
+        "endLine": 547,
+        "endChar": 0
+      },
+      "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bff5921d_30ef2f00",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-13T08:19:47Z",
+      "side": 1,
+      "message": "Well.. yes, you\u0027re probably right.",
+      "parentUuid": "cb50fcc7_0a27e59e",
+      "range": {
+        "startLine": 723,
+        "startChar": 51,
+        "endLine": 723,
+        "endChar": 0
+      },
+      "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e515143_f05dc801",
         "filename": "chrome/browser/resources/local_ntp/voice.js",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b84e69f7_12905c20",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1654,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-13T08:19:47Z",
+      "side": 1,
+      "message": "No, that was supposed to contain CLOSE_OVERLAY, but then I moved it to speech.onClick_ and forgot this here.",
+      "parentUuid": "9e515143_f05dc801",
+      "range": {
+        "startLine": 1654,
+        "startChar": 3,
+        "endLine": 1654,
+        "endChar": 0
+      },
+      "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "055b4a69_2826d22c",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-13T08:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0901da85_1eeb33d7",
+      "range": {
+        "startLine": 142,
+        "startChar": 63,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5e2f5e2_50c887ea",
         "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
         "patchSetId": 3
@@ -131,6 +251,24 @@
       "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ecaa95b_e824e728",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-13T08:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5e2f5e2_50c887ea",
+      "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "90537734_33b1bd93",
+        "filename": "chrome/renderer/searchbox/searchbox_extension.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-13T08:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10ab43c1_1230c880",
+      "range": {
+        "startLine": 838,
+        "startChar": 80,
+        "endLine": 838,
+        "endChar": 0
+      },
+      "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f95fd811_20981638",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 3
@@ -171,6 +333,24 @@
       "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e7f45ce_23f2b85b",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 27577,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-13T08:19:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f95fd811_20981638",
+      "revId": "80a74bc2f5a723a2c5c090a9bb4f2921a38880e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

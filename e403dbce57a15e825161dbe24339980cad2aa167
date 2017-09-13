@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41a969c8_e5a3f68f",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-09-13T08:19:47Z",
+      "side": 1,
+      "message": "Both of these functions have a default case - but I would argue that it makes sense here (and like you pointed out previously, it makes sense to *not* have one in the switch statement that calls this function).",
+      "revId": "e403dbce57a15e825161dbe24339980cad2aa167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
