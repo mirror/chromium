@@ -5,15 +5,14 @@
 #include "chrome/browser/ui/views/bookmarks/bookmark_bubble_view.h"
 
 #include "base/command_line.h"
+#include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "chrome/browser/signin/fake_signin_manager_builder.h"
 #include "chrome/browser/signin/signin_manager_factory.h"
+#include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/test/test_browser_dialog.h"
-#include "chrome/browser/ui/views/frame/browser_view.h"
-#include "chrome/browser/ui/views/location_bar/star_view.h"
-#include "chrome/browser/ui/views/toolbar/toolbar_view.h"
 #include "chrome/common/chrome_switches.h"
-#include "chrome/test/base/testing_profile.h"
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/browser/bookmark_utils.h"
 #include "components/bookmarks/test/bookmark_test_helpers.h"
@@ -21,7 +20,7 @@
 
 namespace {
 
-const char kTestBookmarkURL[] = "http://www.google.com";
+const char kTestBookmarkURL[] = "https://www.google.com";
 const char kTestGaiaID[] = "test";
 const char kTestUserEmail[] = "testuser@gtest.com";
 
@@ -31,43 +30,26 @@ class BookmarkBubbleViewBrowserTest : public DialogBrowserTest {
  public:
   BookmarkBubbleViewBrowserTest() {}
 
-  void SetUpOnMainThread() override {
-    TestingProfile::Builder builder;
-    builder.AddTestingFactory(SigninManagerFactory::GetInstance(),
-                              BuildFakeSigninManagerBase);
-    profile_ = builder.Build();
-    profile_->CreateBookmarkModel(true);
-    bookmarks::BookmarkModel* bookmark_model =
-        BookmarkModelFactory::GetForBrowserContext(profile_.get());
-    bookmarks::test::WaitForBookmarkModelToLoad(bookmark_model);
-    // Don't persist bookmark changes to disk. BookmarkStorage does its writes
-    // on the UI thread, which violates base::ThreadRestrictions.
-    bookmark_model->ClearStore();
-    bookmarks::AddIfNotBookmarked(bookmark_model, GURL(kTestBookmarkURL),
-                                  base::string16());
-  }
-
-  void TearDownOnMainThread() override { profile_.reset(); }
-
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {
     if (name == "bookmark_details") {
 #if !defined(OS_CHROMEOS)
-      SigninManagerFactory::GetForProfile(profile_.get())
+      SigninManagerFactory::GetForProfile(browser()->profile())
           ->SignOut(signin_metrics::SIGNOUT_TEST,
                     signin_metrics::SignoutDelete::IGNORE_METRIC);
 #endif
     } else {
-      SigninManagerFactory::GetForProfile(profile_.get())
+      SigninManagerFactory::GetForProfile(browser()->profile())
           ->SetAuthenticatedAccountInfo(kTestGaiaID, kTestUserEmail);
     }
 
-    BrowserView* browser_view =
-        BrowserView::GetBrowserViewForBrowser(browser());
-    BookmarkBubbleView::ShowBubble(
-        browser_view->toolbar()->location_bar()->star_view(), gfx::Rect(),
-        nullptr, nullptr, nullptr, profile_.get(), GURL(kTestBookmarkURL),
-        true);
+    bookmarks::BookmarkModel* bookmark_model =
+        BookmarkModelFactory::GetForBrowserContext(browser()->profile());
+    bookmarks::test::WaitForBookmarkModelToLoad(bookmark_model);
+    bookmarks::AddIfNotBookmarked(bookmark_model, GURL(kTestBookmarkURL),
+                                  base::ASCIIToUTF16("Title"));
+    browser()->window()->ShowBookmarkBubble(GURL(kTestBookmarkURL), true);
+
     if (name == "ios_promotion") {
       BookmarkBubbleView::bookmark_bubble()
           ->GetWidget()
@@ -78,7 +60,9 @@ class BookmarkBubbleViewBrowserTest : public DialogBrowserTest {
   }
 
  private:
-  std::unique_ptr<TestingProfile> profile_;
+  // BookmarkStorage does its writes on the UI thread, which violates
+  // base::ThreadRestrictions.
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
 
   DISALLOW_COPY_AND_ASSIGN(BookmarkBubbleViewBrowserTest);
 };
