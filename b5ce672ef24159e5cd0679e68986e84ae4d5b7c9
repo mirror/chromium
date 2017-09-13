@@ -141,6 +141,30 @@
       "revId": "b5ce672ef24159e5cd0679e68986e84ae4d5b7c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8736393_881e0ced",
+        "filename": "net/disk_cache/simple/simple_index.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-13T14:49:50Z",
+      "side": 1,
+      "message": "Is there a reason to keep the EVICT_WITH_SIZE experiment around? If not, I\u0027m inclined to treat this as a normal default-enabled feature at this point.",
+      "parentUuid": "ac93b6d6_ae91db35",
+      "range": {
+        "startLine": 359,
+        "startChar": 6,
+        "endLine": 359,
+        "endChar": 7
+      },
+      "revId": "b5ce672ef24159e5cd0679e68986e84ae4d5b7c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
