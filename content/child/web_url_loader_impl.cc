@@ -420,6 +420,9 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
   bool CanHandleDataURLRequestLocally(const WebURLRequest& request) const;
   void HandleDataURL();
 
+  net::NetworkTrafficAnnotationTag GetTrafficAnnotationTag(
+      const blink::WebURLRequest& request);
+
   WebURLLoaderImpl* loader_;
 
   WebURL url_;
@@ -682,8 +685,8 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
 
     resource_dispatcher_->StartSync(
         std::move(resource_request), request.RequestorID(),
-        extra_data->frame_origin(), sync_load_response,
-        request.GetLoadingIPCType(), url_loader_factory_,
+        extra_data->frame_origin(), GetTrafficAnnotationTag(request),
+        sync_load_response, request.GetLoadingIPCType(), url_loader_factory_,
         extra_data->TakeURLLoaderThrottles());
     return;
   }
@@ -692,7 +695,8 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
                          TRACE_EVENT_FLAG_FLOW_OUT);
   request_id_ = resource_dispatcher_->StartAsync(
       std::move(resource_request), request.RequestorID(), task_runner_,
-      extra_data->frame_origin(), false /* is_sync */,
+      extra_data->frame_origin(), GetTrafficAnnotationTag(request),
+      false /* is_sync */,
       base::MakeUnique<WebURLLoaderImpl::RequestPeerImpl>(this),
       request.GetLoadingIPCType(), url_loader_factory_,
       extra_data->TakeURLLoaderThrottles(), std::move(consumer_handle));
@@ -1023,6 +1027,118 @@ void WebURLLoaderImpl::Context::HandleDataURL() {
 
   OnCompletedRequest(error_code, false, base::TimeTicks::Now(), 0, data.size(),
                      data.size());
+}
+
+net::NetworkTrafficAnnotationTag
+WebURLLoaderImpl::Context::GetTrafficAnnotationTag(
+    const blink::WebURLRequest& request) {
+  switch (request.GetRequestContext()) {
+    case WebURLRequest::kRequestContextUnspecified:
+    case WebURLRequest::kRequestContextAudio:
+    case WebURLRequest::kRequestContextBeacon:
+    case WebURLRequest::kRequestContextCSPReport:
+    case WebURLRequest::kRequestContextDownload:
+    case WebURLRequest::kRequestContextEventSource:
+    case WebURLRequest::kRequestContextFetch:
+    case WebURLRequest::kRequestContextFont:
+    case WebURLRequest::kRequestContextForm:
+    case WebURLRequest::kRequestContextFrame:
+    case WebURLRequest::kRequestContextHyperlink:
+    case WebURLRequest::kRequestContextIframe:
+    case WebURLRequest::kRequestContextImage:
+    case WebURLRequest::kRequestContextImageSet:
+    case WebURLRequest::kRequestContextImport:
+    case WebURLRequest::kRequestContextInternal:
+    case WebURLRequest::kRequestContextLocation:
+    case WebURLRequest::kRequestContextManifest:
+    case WebURLRequest::kRequestContextPing:
+    case WebURLRequest::kRequestContextPlugin:
+    case WebURLRequest::kRequestContextPrefetch:
+    case WebURLRequest::kRequestContextScript:
+    case WebURLRequest::kRequestContextServiceWorker:
+    case WebURLRequest::kRequestContextSharedWorker:
+    case WebURLRequest::kRequestContextSubresource:
+    case WebURLRequest::kRequestContextStyle:
+    case WebURLRequest::kRequestContextTrack:
+    case WebURLRequest::kRequestContextVideo:
+    case WebURLRequest::kRequestContextWorker:
+    case WebURLRequest::kRequestContextXMLHttpRequest:
+    case WebURLRequest::kRequestContextXSLT:
+      return net::DefineNetworkTrafficAnnotation("blink_resource_loader", R"(
+        semantics {
+          sender: "Blink Resource Loader"
+          description:
+            "Blink initiated request, which includes all resources for "
+            "normal page loads, chrome URLs, and downloads."
+          trigger:
+            "Navigating to a URL or downloading a file. A webpage, "
+            "ServiceWorker, or chrome:// page."
+          data: "Anything the initiator wants to send."
+          destination: OTHER
+        }
+        policy {
+          cookies_allowed: YES
+          cookies_store: "user"
+          setting: "These requests cannot be disabled in settings."
+          policy_exception_justification:
+            "Not implemented. Without these requests, Chrome will be unable "
+            "to load any webpage."
+        })");
+
+    case WebURLRequest::kRequestContextEmbed:
+    case WebURLRequest::kRequestContextObject:
+      return net::DefineNetworkTrafficAnnotation(
+          "blink_extension_resource_loader", R"(
+        semantics {
+          sender: "Blink Resource Loader"
+          description:
+            "Blink initiated request for resources required for installed "
+            "extensions."
+          trigger:
+            "An extension may initiate request at any time, even in the "
+            "background."
+          data: "Anything the initiator wants to send."
+          destination: OTHER
+        }
+        policy {
+          cookies_allowed: YES
+          cookies_store: "user"
+          setting:
+            "These requests cannot be disabled in settings, but they are "
+            "sent only if user installs extensions."
+          chrome_policy {
+            ExtensionInstallBlacklist {
+              ExtensionInstallBlacklist: {
+                entries: '*'
+              }
+            }
+          }
+        })");
+
+    default:
+      // Annotations cannot have an undefined or default value and this function
+      // should return an annotation in any case. Hence default and 'Favicon'
+      // are together.
+      CHECK_EQ(request.GetRequestContext(),
+               WebURLRequest::kRequestContextFavicon);
+      return net::DefineNetworkTrafficAnnotation("favicon_loader", R"(
+        semantics {
+          sender: "Blink Resource Loader"
+          description:
+            "Chrome sends a request to download favicon for a URL."
+          trigger:
+            "Navigating to a URL."
+          data: "Anything the initiator wants to send."
+          destination: WEBSITE
+        }
+        policy {
+          cookies_allowed: YES
+          cookies_store: "user"
+          setting: "These requests cannot be disabled in settings."
+          policy_exception_justification:
+            "Not implemented."
+        })");
+  }
 }
 
 // WebURLLoaderImpl::RequestPeerImpl ------------------------------------------
