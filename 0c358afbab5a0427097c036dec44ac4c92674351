@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfe3f906_c55d5927",
+        "filename": "extensions/browser/api/cast_channel/cast_channel_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-13T20:24:24Z",
+      "side": 1,
+      "message": "Maybe add a comment here on why we\u0027re doing this?",
+      "revId": "0c358afbab5a0427097c036dec44ac4c92674351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
