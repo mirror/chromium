@@ -2162,6 +2162,7 @@ test("browser_tests") {
           "../browser/ui/views/session_crashed_bubble_view_browsertest.cc",
           "../browser/ui/views/task_manager_view_browsertest.cc",
           "../browser/ui/views/toolbar/browser_actions_container_browsertest.cc",
+          "../browser/ui/views/toolbar/outdated_upgrade_bubble_view_browsertest.cc",
           "../browser/ui/views/translate/translate_bubble_view_browsertest.cc",
           "../browser/ui/views/web_dialog_view_browsertest.cc",
         ]
