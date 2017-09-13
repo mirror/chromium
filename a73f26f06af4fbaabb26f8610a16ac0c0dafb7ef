@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "cb91d5f7_76790ae3",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T15:19:35Z",
+      "side": 1,
+      "message": "\u003e on second thought, is this namespace even needed?\n\nYou mean ResolveCoreWinRTDelayload should just be part of base/win namespace?\n\n\u003e the other two functions can go away altogether, can they not?\n\nWell, they are there to contain the spreading of the mincore.lib+delayload dance to other modules. This way media/ and chrome/ can just call this through here.",
+      "parentUuid": "ea198217_1005085e",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92be5d77_3dd8669a",
         "filename": "base/win/com_base_util_unittest.cc",
         "patchSetId": 13
@@ -70,6 +88,24 @@
       "writtenOn": "2017-09-13T14:25:05Z",
       "side": 1,
       "message": "is there a reason not to test on win7 as well? are there cases where the preload would succeed on win7?",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47cec873_178b4be1",
+        "filename": "base/win/com_base_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T15:19:35Z",
+      "side": 1,
+      "message": "The documentation for the two functions used (RoGetActivationFactory and RoActivateInstance) state a minimum on Win8, according to the documentation. Also, the DLL loaded is not present on my Win7 box (outside of an SDK/Web Tools directory).",
+      "parentUuid": "92be5d77_3dd8669a",
       "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
