@@ -241,8 +241,14 @@ PrefService* SessionController::GetUserPrefServiceForUser(
   return nullptr;
 }
 
-PrefService* SessionController::GetLastActiveUserPrefService() {
+PrefService* SessionController::GetLastActiveUserPrefService() const {
   return last_active_user_prefs_;
+}
+
+PrefService* SessionController::GetActivePrefService() const {
+  if (last_active_user_prefs_)
+    return last_active_user_prefs_;
+  return GetSigninScreenPrefService();
 }
 
 void SessionController::AddObserver(SessionObserver* observer) {
