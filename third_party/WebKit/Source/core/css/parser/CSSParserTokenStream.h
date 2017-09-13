@@ -11,6 +11,7 @@
 
 namespace blink {
 
+class CSSParserRangeBuffer;
 class CSSParserObserverWrapper;
 
 // A streaming interface to CSSTokenizer that tokenizes on demand.
@@ -26,13 +27,6 @@ class CORE_EXPORT CSSParserTokenStream {
   WTF_MAKE_NONCOPYABLE(CSSParserTokenStream);
 
  public:
-  class Iterator {
-    explicit Iterator(size_t index) : index_(index) {}
-
-    size_t index_;
-    friend class CSSParserTokenStream;
-  };
-
   // Instantiate this to start reading from a block. When the guard is out of
   // scope, the rest of the block is consumed.
   class BlockGuard {
@@ -52,9 +46,7 @@ class CORE_EXPORT CSSParserTokenStream {
   };
 
   explicit CSSParserTokenStream(CSSTokenizer& tokenizer)
-      : tokenizer_(tokenizer), next_(kEOFToken), next_index_(0) {
-    DCHECK_EQ(tokenizer.CurrentSize(), 0U);
-  }
+      : buffer_(512), tokenizer_(tokenizer), next_(kEOFToken) {}
 
   CSSParserTokenStream(CSSParserTokenStream&&) = default;
 
@@ -97,21 +89,6 @@ class CORE_EXPORT CSSParserTokenStream {
 
   bool AtEnd() { return Peek().IsEOF(); }
 
-  // Range represents all tokens that were consumed between begin and end.
-  CSSParserTokenRange MakeSubRange(Iterator begin, Iterator end) {
-    DCHECK_LE(begin.index_, tokenizer_.CurrentSize());
-    DCHECK_LE(end.index_, tokenizer_.CurrentSize());
-    DCHECK_LE(begin.index_, end.index_);
-    const auto tokens_begin = tokenizer_.tokens_.begin();
-    return CSSParserTokenRange(tokenizer_.tokens_)
-        .MakeSubRange(tokens_begin + begin.index_, tokens_begin + end.index_);
-  }
-
-  Iterator Position() const {
-    DCHECK_LE(next_index_, tokenizer_.CurrentSize());
-    return Iterator(next_index_);
-  }
-
   // Get the index of the character in the original string to be consumed next.
   size_t Offset() const { return offset_; }
 
@@ -124,12 +101,16 @@ class CORE_EXPORT CSSParserTokenStream {
   void ConsumeWhitespace();
   CSSParserToken ConsumeIncludingWhitespace();
   void UncheckedConsumeComponentValue(unsigned nesting_level = 0);
-  void UncheckedConsumeComponentValueWithOffsets(CSSParserObserverWrapper&);
+  void UncheckedConsumeComponentValue(CSSParserRangeBuffer&);
+  void UncheckedConsumeComponentValueWithOffsets(CSSParserObserverWrapper&,
+                                                 CSSParserRangeBuffer&);
   // Either consumes a comment token and returns true, or peeks at the next
   // token and return false.
   bool ConsumeCommentOrNothing();
 
  private:
+  friend class CSSParserRangeBuffer;
+
   const CSSParserToken& PeekInternal() {
     EnsureLookAhead();
     return UncheckedPeekInternal();
@@ -148,16 +129,15 @@ class CORE_EXPORT CSSParserTokenStream {
   const CSSParserToken& UncheckedConsumeInternal() {
     DCHECK(HasLookAhead());
     has_look_ahead_ = false;
-    next_index_++;
     offset_ = tokenizer_.Offset();
     return next_;
   }
 
   void UncheckedSkipToEndOfBlock() { UncheckedConsumeComponentValue(1); }
 
+  CSSTokenizerBuffer buffer_;
   CSSTokenizer& tokenizer_;
   CSSParserToken next_;
-  size_t next_index_;  // Index of next token to be consumed.
   size_t offset_ = 0;
   bool has_look_ahead_ = false;
 };
