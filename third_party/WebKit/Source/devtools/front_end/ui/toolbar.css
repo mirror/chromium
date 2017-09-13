@@ -257,6 +257,17 @@ select.toolbar-item[data-keyboard-focus="true"]:focus > * {
     display: none;
 }
 
+.toolbar-prompt-proxy {
+    flex: 1;
+}
+
+.toolbar-input-prompt {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: auto;
+}
+
 /* Separator */
 
 .toolbar-divider {
