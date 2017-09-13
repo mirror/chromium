@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "964bd2a0_b82aa5eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-13T16:46:38Z",
+      "side": 1,
+      "message": "nit: This wording is a bit hard to grok - can we split the long sentence in two \u0026 reword, e.g. second sentence \"Removing the flag therefore improved code size but requires emission of full unwind tables, significantly impacting overall binary size.\"?",
+      "revId": "d2905e1c11df2aa8f7a55a3da23cbaffacee87d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc0d5cea_4931e270",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-13T16:46:38Z",
+      "side": 1,
+      "message": "nit: This comment is (1) out-of-date (we use Crashpad on most platforms now :) and (2) doesn\u0027t really express what we mean - isn\u0027t the key point here that for official builds we just dump the stack and unwindw \u0026 symbolize it \"offline\" in the crash server, rather than on the client?",
+      "revId": "d2905e1c11df2aa8f7a55a3da23cbaffacee87d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9e92d2_f7fca7e1",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-13T16:46:38Z",
+      "side": 1,
+      "message": "nit: Do these two actually need to be args? Do we ever override them?",
+      "revId": "d2905e1c11df2aa8f7a55a3da23cbaffacee87d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da45684_209e5f86",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-13T16:46:38Z",
+      "side": 1,
+      "message": "Is brettw@\u0027s TODO still relevant? The conditional here seems to just special-case Android \u0026 iOS?",
+      "revId": "d2905e1c11df2aa8f7a55a3da23cbaffacee87d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c500403d_a8430b34",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-13T16:46:38Z",
+      "side": 1,
+      "message": "Can we move this comment to appear immediately before the \"arm64\" case, below, to match what you have done with x86?\n\nAlternatively, keep the comment here for both cases, e.g:\n\n# Ensure that stacks from arm64 .... (see crbug.com/..)\n# Avoid emission of unwind tables on x86 (see crbug.com/...)",
+      "revId": "d2905e1c11df2aa8f7a55a3da23cbaffacee87d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2b8e12_1cc4ac9a",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-13T16:46:38Z",
+      "side": 1,
+      "message": "Please include a link to the bug # for the size regression, similar to the preceding comment. :)",
+      "revId": "d2905e1c11df2aa8f7a55a3da23cbaffacee87d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
