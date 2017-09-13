@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc0414fa_b0ecfa51",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T08:02:09Z",
+      "side": 1,
+      "message": "\"javascript\" -\u003e \"JavaScript\"\n\"contexts(\" -\u003e \"contexts\"\n\"sservice worker\" -\u003e \"service worker\"\n\nSuggest adding more detail like: \"Blink either mints a new ServiceWorkerRegistration object or reuses an existing one based on |handle_id|. This allows ServiceWorkerRegistration objects in different execution contexts to be different, even if they represent the same registration entity (registration_id is equal). They must be different since they should have different prototypes.\"\n\n(In reprospect, I think handle_id could have just been provider_id... but anyway these should all go away eventually.)",
+      "range": {
+        "startLine": 28,
+        "startChar": 14,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "7d2567050060c7e98dc108e1a98af615662ff5f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
