@@ -2,6 +2,194 @@
   "comments": [
     {
       "key": {
+        "uuid": "7f1c4447_29723e2e",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-13T14:25:05Z",
+      "side": 1,
+      "message": "i think it would be good to have a comment explaining why these are needed.",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf641e08_8e48cf1d",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-13T14:25:05Z",
+      "side": 1,
+      "message": "is this comment correct? it\u0027s not combase but a bunch of other dlls that contain the symbols, no?",
+      "range": {
+        "startLine": 18,
+        "startChar": 35,
+        "endLine": 18,
+        "endChar": 46
+      },
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea198217_1005085e",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-13T14:25:05Z",
+      "side": 1,
+      "message": "on second thought, is this namespace even needed? how about changing the Preload function to something like ResolveCoreWinRTDelayload? the other two functions can go away altogether, can they not?",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92be5d77_3dd8669a",
+        "filename": "base/win/com_base_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-13T14:25:05Z",
+      "side": 1,
+      "message": "is there a reason not to test on win7 as well? are there cases where the preload would succeed on win7?",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f2a93c_838b2088",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-13T14:25:05Z",
+      "side": 1,
+      "message": "i think it\u0027s cleaner for this to take a base::StringPiece16 so that wcslen isn\u0027t needed.",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a338b523_9ccbda0a",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-13T14:25:05Z",
+      "side": 1,
+      "message": "?ResolveCoreWinRTStringDelayload?",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ca203bf_c6fddf5a",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-13T14:25:05Z",
+      "side": 1,
+      "message": "implement this in terms of GetString16() to avoid duplicating code?",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9518620f_3d788e69",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-13T14:25:05Z",
+      "side": 1,
+      "message": "return std::string() here and below",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ceb585b_528952d9",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-13T14:25:05Z",
+      "side": 1,
+      "message": "grab the length here and use it to construct the StringPiece16 to avoid another strlen",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d20af55d_a9d1f93c",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-13T14:25:05Z",
+      "side": 1,
+      "message": "nix BASE_EXPORT on the methods",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 13
+      },
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50a8d65b_baee24f4",
         "filename": "base/win/scoped_hstring.h",
         "patchSetId": 13
@@ -31,6 +219,40 @@
       "side": 1,
       "message": "Robert made the argument that the API can fail and handling that in the constructor isn\u0027t ideal. Better to do so in a static Create method.",
       "parentUuid": "50a8d65b_baee24f4",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c15f663a_990535de",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-13T14:25:05Z",
+      "side": 1,
+      "message": "since the native format of an HString is a wide string, i think the API looks nice with:\n  const base::StringPiece16 Get() const;\n  std::string GetAsUTF8() const;",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "938e9af2_aa38a423",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-13T14:25:05Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN?",
       "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
