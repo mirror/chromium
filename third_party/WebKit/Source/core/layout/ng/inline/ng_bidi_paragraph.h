@@ -44,6 +44,11 @@ class NGBidiParagraph {
   // The base direction (a.k.a. paragraph direction) of this block.
   TextDirection BaseDirection() const { return base_direction_; }
 
+  // Compute the paragraph direction using the heuristic rules in UAX#9.
+  // This is generally determined by the first strong character of the
+  // paragraph. http://unicode.org/reports/tr9/#The_Paragraph_Level
+  static TextDirection ComputeBaseDirection(const StringView&);
+
   // Returns the end offset of a logical run that starts from the |start|
   // offset.
   unsigned GetLogicalRun(unsigned start, UBiDiLevel*) const;
