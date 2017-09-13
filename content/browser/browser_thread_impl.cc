@@ -36,7 +36,6 @@ static const char* const g_browser_thread_names[BrowserThread::ID_COUNT] = {
   "",  // UI (name assembled in browser_main.cc).
   "Chrome_DBThread",  // DB
   "Chrome_FileThread",  // FILE
-  "Chrome_FileUserBlockingThread",  // FILE_USER_BLOCKING
   "Chrome_ProcessLauncherThread",  // PROCESS_LAUNCHER
   "Chrome_CacheThread",  // CACHE
   "Chrome_IOThread",  // IO
@@ -213,7 +212,6 @@ void BrowserThreadImpl::Init() {
 
   if (identifier_ == BrowserThread::DB ||
       identifier_ == BrowserThread::FILE ||
-      identifier_ == BrowserThread::FILE_USER_BLOCKING ||
       identifier_ == BrowserThread::PROCESS_LAUNCHER ||
       identifier_ == BrowserThread::CACHE) {
     // Nesting and task observers are not allowed on redirected threads.
@@ -247,13 +245,6 @@ NOINLINE void BrowserThreadImpl::DBThreadRun(base::RunLoop* run_loop) {
 }
 
 NOINLINE void BrowserThreadImpl::FileThreadRun(base::RunLoop* run_loop) {
-  volatile int line_number = __LINE__;
-  Thread::Run(run_loop);
-  CHECK_GT(line_number, 0);
-}
-
-NOINLINE void BrowserThreadImpl::FileUserBlockingThreadRun(
-    base::RunLoop* run_loop) {
   volatile int line_number = __LINE__;
   Thread::Run(run_loop);
   CHECK_GT(line_number, 0);
@@ -302,8 +293,6 @@ void BrowserThreadImpl::Run(base::RunLoop* run_loop) {
       return DBThreadRun(run_loop);
     case BrowserThread::FILE:
       return FileThreadRun(run_loop);
-    case BrowserThread::FILE_USER_BLOCKING:
-      return FileUserBlockingThreadRun(run_loop);
     case BrowserThread::PROCESS_LAUNCHER:
       return ProcessLauncherThreadRun(run_loop);
     case BrowserThread::CACHE:

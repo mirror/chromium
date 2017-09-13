@@ -31,7 +31,6 @@ struct CallStackProfileParams {
     // Browser process threads, some of which occur in other processes as well.
     UI_THREAD,
     FILE_THREAD,
-    FILE_USER_BLOCKING_THREAD,
     PROCESS_LAUNCHER_THREAD,
     CACHE_THREAD,
     IO_THREAD,
