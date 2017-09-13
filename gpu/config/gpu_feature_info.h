@@ -20,6 +20,7 @@ namespace gpu {
 // Flags indicating the status of a GPU feature (see gpu_feature_type.h).
 enum GpuFeatureStatus {
   kGpuFeatureStatusEnabled,
+  kGpuFeatureStatusEnabledSoftware,
   kGpuFeatureStatusBlacklisted,
   kGpuFeatureStatusDisabled,
   kGpuFeatureStatusUndefined,
@@ -36,6 +37,9 @@ struct GPU_EXPORT GpuFeatureInfo {
   void ApplyToGLContext(gl::GLContext* context) const;
 
   bool IsWorkaroundEnabled(int32_t workaround) const;
+
+  bool IsFeatureEnabled(GpuFeatureType feature) const;
+  std::string GetFeatureStatusString(GpuFeatureType feature) const;
 
   GpuFeatureInfo& operator=(const GpuFeatureInfo&);
   GpuFeatureInfo& operator=(GpuFeatureInfo&&);

@@ -129,7 +129,7 @@ struct CONTENT_EXPORT WebPreferences {
   bool hyperlink_auditing_enabled;
   bool allow_universal_access_from_file_urls;
   bool allow_file_access_from_file_urls;
-  bool experimental_webgl_enabled;
+  bool disable_3d_apis;
   bool pepper_3d_enabled;
   bool flash_3d_enabled;
   bool flash_stage3d_enabled;
