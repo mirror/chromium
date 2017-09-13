@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33637977_9d381c59",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T00:34:51Z",
+      "side": 1,
+      "message": "// Describes a ServiceWorkerRegistration:\n// https://w3c.github.io/ServiceWorker/#serviceworkerregistration-interface\n//\n// This struct is mostly internal metadata about the ServiceWorkerRegistration.",
+      "revId": "11c51297feea0d6f292c7d1a0eb64faf61c73618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a171c97e_fa203afa",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T00:34:51Z",
+      "side": 1,
+      "message": "nit: add comments for these?",
+      "revId": "11c51297feea0d6f292c7d1a0eb64faf61c73618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
