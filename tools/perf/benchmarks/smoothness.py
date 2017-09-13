@@ -489,7 +489,9 @@ class SmoothnessDesktopToughPinchZoomCases(_Smoothness):
   def GetExpectations(self):
     class StoryExpectations(story_module.expectations.StoryExpectations):
       def SetExpectations(self):
-        pass
+        self.DisableBenchmark([story_module.expectations.ALL_WIN,
+                               story_module.expectations.ALL_LINUX],
+                              'crbug.com/764523')
     return StoryExpectations()
 
 
