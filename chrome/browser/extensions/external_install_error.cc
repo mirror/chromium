@@ -428,7 +428,6 @@ void ExternalInstallError::OnFetchComplete() {
   install_ui_.reset(
       new ExtensionInstallPrompt(Profile::FromBrowserContext(browser_context_),
                                  NULL));  // NULL native window.
-
   install_ui_->ShowDialog(base::Bind(&ExternalInstallError::OnInstallPromptDone,
                                      weak_factory_.GetWeakPtr()),
                           GetExtension(),
