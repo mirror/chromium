@@ -143,9 +143,13 @@ cr.define('extensions', function() {
      * @private
      */
     computeText_: function() {
+      let shortcutString;
       if (this.capturing_)
-        return this.pendingShortcut_;
-      return this.shortcut;
+        shortcutString = this.pendingShortcut_;
+      else
+        shortcutString = this.shortcut;
+
+      return shortcutString.split('+').join(' + ');
     },
 
     /**

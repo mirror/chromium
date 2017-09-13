@@ -20,8 +20,8 @@
 
       #input {
         --paper-input-container: {
-          color: var(--paper-grey-900);
-          margin-bottom: 12px;
+          margin-bottom: 0px;
+          margin-top: 2px; /* Offset underline spacing. */
           padding: 0;
         };
       }
@@ -35,7 +35,8 @@
     </style>
     <div id="main">
       <paper-input id="input" placeholder="$i18n{shortcutTypeAShortcut}"
-        value="[[computeText_(capturing_, shortcut, pendingShortcut_)]]">
+        value="[[computeText_(capturing_, shortcut, pendingShortcut_)]]"
+        no-label-float>
       </paper-input>
       <button id="clear" is="paper-icon-button-light"
           class="icon-clear no-overlap" on-tap="onClearTap_"
