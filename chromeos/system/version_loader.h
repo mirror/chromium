@@ -19,7 +19,13 @@ enum VersionFormat {
   VERSION_FULL,
 };
 
-using StringCallback = base::Callback<void(const std::string&)>;
+using GetTpmVersionCallback =
+    base::Callback<void(uint32_t family,
+                        uint64_t spec_level,
+                        uint32_t manufacturer,
+                        uint32_t tpm_model,
+                        uint64_t firmware_version,
+                        const std::string& vendor_specific)>;
 
 // Gets the version.
 // If |full_version| is true version string with extra info is extracted,
@@ -28,8 +34,8 @@ using StringCallback = base::Callback<void(const std::string&)>;
 CHROMEOS_EXPORT std::string GetVersion(VersionFormat format);
 
 // Gets the TPM version information. Asynchronous, result is passed on to
-// callback as a string.
-CHROMEOS_EXPORT void GetTpmVersion(StringCallback callback);
+// callback.
+CHROMEOS_EXPORT void GetTpmVersion(GetTpmVersionCallback callback);
 
 // Gets the ARC version.
 // May block.

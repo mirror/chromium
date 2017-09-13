@@ -756,12 +756,12 @@ class CryptohomeClientImpl : public CryptohomeClient {
   }
 
   // CryptohomeClient override.
-  void TpmGetVersion(StringDBusMethodCallback callback) override {
+  void TpmGetVersion(TpmGetVersionCallback callback) override {
     dbus::MethodCall method_call(cryptohome::kCryptohomeInterface,
                                  cryptohome::kCryptohomeTpmGetVersion);
     proxy_->CallMethod(
         &method_call, kTpmDBusTimeoutMs,
-        base::BindOnce(&CryptohomeClientImpl::OnStringMethod,
+        base::BindOnce(&CryptohomeClientImpl::OnTpmGetVersion,
                        weak_ptr_factory_.GetWeakPtr(), std::move(callback)));
   }
 
@@ -1163,6 +1163,35 @@ class CryptohomeClientImpl : public CryptohomeClient {
       return;
     }
     callback.Run(DBUS_METHOD_CALL_SUCCESS, label, user_pin, slot);
+  }
+
+  // Handles responses for TpmGetVersion.
+  void OnTpmGetVersion(TpmGetVersionCallback callback,
+                       dbus::Response* response) {
+    if (!response) {
+      std::move(callback).Run(DBUS_METHOD_CALL_FAILURE, 0, 0, 0, 0, 0,
+                              std::string());
+      return;
+    }
+    dbus::MessageReader reader(response);
+    uint32_t family;
+    uint64_t spec_level;
+    uint32_t manufacturer;
+    uint32_t tpm_model;
+    uint64_t firmware_version;
+    std::string vendor_specific;
+    if (!reader.PopUint32(&family) || !reader.PopUint64(&spec_level) ||
+        !reader.PopUint32(&manufacturer) || !reader.PopUint32(&tpm_model) ||
+        !reader.PopUint64(&firmware_version) ||
+        !reader.PopString(&vendor_specific)) {
+      std::move(callback).Run(DBUS_METHOD_CALL_FAILURE, 0, 0, 0, 0, 0,
+                              std::string());
+      LOG(ERROR) << "Invalid response: " << response->ToString();
+      return;
+    }
+    std::move(callback).Run(DBUS_METHOD_CALL_SUCCESS, family, spec_level,
+                            manufacturer, tpm_model, firmware_version,
+                            vendor_specific);
   }
 
   // Handles AsyncCallStatus signal.

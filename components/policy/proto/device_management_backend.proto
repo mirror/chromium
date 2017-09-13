@@ -729,8 +729,13 @@ message DeviceStatusReportRequest {
   // Sound output volume level in range [0,100].
   optional int32 sound_volume = 19;
 
-  // String containing TPM version information.
-  optional string tpm_version = 20;
+  // TPM version information.
+  optional uint32 tpm_family = 20;
+  optional uint64 tpm_spec_level = 21;
+  optional uint32 tpm_manufacturer = 22;
+  optional uint32 tpm_tpm_model = 23;
+  optional uint64 tpm_firmware_version = 24;
+  optional string tpm_vendor_specific = 25;
 }
 
 message OsUpdateStatus {

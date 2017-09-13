@@ -827,7 +827,12 @@ bool DeviceStatusCollector::GetVersionInfo(
   status->set_browser_version(version_info::GetVersionNumber());
   status->set_os_version(os_version_);
   status->set_firmware_version(firmware_version_);
-  status->set_tpm_version(tpm_version_);
+  status->set_tpm_family(tpm_family_);
+  status->set_tpm_spec_level(tpm_spec_level_);
+  status->set_tpm_manufacturer(tpm_manufacturer_);
+  status->set_tpm_tpm_model(tpm_tpm_model_);
+  status->set_tpm_firmware_version(tpm_firmware_version_);
+  status->set_tpm_vendor_specific(tpm_vendor_specific_);
   return true;
 }
 
@@ -1276,8 +1281,18 @@ void DeviceStatusCollector::OnOSFirmware(const std::string& version) {
   firmware_version_ = version;
 }
 
-void DeviceStatusCollector::OnTpmVersion(const std::string& version) {
-  tpm_version_ = version;
+void DeviceStatusCollector::OnTpmVersion(uint32_t family,
+                                         uint64_t spec_level,
+                                         uint32_t manufacturer,
+                                         uint32_t tpm_model,
+                                         uint64_t firmware_version,
+                                         const std::string& vendor_specific) {
+  tpm_family_           = family;
+  tpm_spec_level_       = spec_level;
+  tpm_manufacturer_     = manufacturer;
+  tpm_tpm_model_        = tpm_model;
+  tpm_firmware_version_ = firmware_version;
+  tpm_vendor_specific_  = vendor_specific;
 }
 
 }  // namespace policy
