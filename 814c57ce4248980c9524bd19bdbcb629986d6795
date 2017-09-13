@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "027f0f83_7deccd96",
+        "filename": "chromeos/dbus/dbus_method_call_status.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-13T06:26:48Z",
+      "side": 1,
+      "message": "Ok, rephrased.\nHere, \"result\" means the expected return value for success case, respecting your suggestion just below. Maybe string, bool or whatever. \"response\" in the comment means the message from the service corresponding to a method call, respecting Response class in dbus/messages.h.\nSo response (may) has a result.",
+      "parentUuid": "5a9e8b47_44823f9f",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "814c57ce4248980c9524bd19bdbcb629986d6795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ededf7d_454c2620",
         "filename": "chromeos/dbus/dbus_method_call_status.h",
         "patchSetId": 4
@@ -42,6 +66,47 @@
         "endLine": 32,
         "endChar": 60
       },
+      "revId": "814c57ce4248980c9524bd19bdbcb629986d6795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de2935ef_58225d23",
+        "filename": "chromeos/dbus/dbus_method_call_status.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-13T06:26:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ededf7d_454c2620",
+      "range": {
+        "startLine": 32,
+        "startChar": 57,
+        "endLine": 32,
+        "endChar": 60
+      },
+      "revId": "814c57ce4248980c9524bd19bdbcb629986d6795",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9e5daec_06fb9ccf",
+        "filename": "chromeos/dbus/dbus_method_call_status.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-13T06:26:48Z",
+      "side": 1,
+      "message": "Note: My bad. Forgot to remove in previous PS.",
       "revId": "814c57ce4248980c9524bd19bdbcb629986d6795",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
