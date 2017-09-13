@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "5fe33abf_52b416a0",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-13T21:21:10Z",
+      "side": 1,
+      "message": "I don\u0027t think we should expose list impls outside DMC -- that\u0027s breaking the encapsulation.\n\nHaving a bunch of XXXMarkerController classes seems a good idea to keep DMC clean without breaking the encapsulation. Not sure if we are making it stack_allocated, though.\n\nI\u0027m thinking about making it an owned member of DMC, like the relationship between TextIterator and TextIteratorTextNodeHandler:\n\nclass DMC {\n public:\n  SuggestionMarkerController\u0026 GetSuggestionMarkerController() {\n    return *suggestion_marker_controller_;\n  }\n private:\n  Member\u003cSuggestionMarkerController\u003e suggestion_marker_controller_;\n};\n\nIn this way we can also store some suggestion-specific states in SuggestionMarkerController. One of them can be whether we are doing a suggestion replacement (although we have done it in another way which is arguably better?)",
+      "parentUuid": "cd52b527_d7c2505d",
+      "revId": "1d19cdda0df0cb21a455263d76e090833821e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8874c3f8_6a42a781",
         "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
         "patchSetId": 3
