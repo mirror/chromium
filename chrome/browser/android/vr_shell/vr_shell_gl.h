@@ -180,12 +180,18 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
                          const gfx::RectF& left_bounds,
                          const gfx::RectF& right_bounds,
                          const gfx::Size& source_size) override;
+  void SetSessionClient(
+      device::mojom::VRSessionClientPtr session_client) override;
 
   void ForceExitVr();
 
   void SendVSync(base::TimeTicks time, GetVSyncCallback callback);
 
   void closePresentationBindings();
+
+  device::mojom::VRControllerInfoPtr GetGazeVRControllerInfoPtr();
+  device::mojom::VRControllerStatePtr GetGazeVRControllerStatePtr(
+      bool triggered);
 
   // samplerExternalOES texture data for main content image.
   int content_texture_id_ = 0;
@@ -250,6 +256,7 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   GetVSyncCallback callback_;
   mojo::Binding<device::mojom::VRPresentationProvider> binding_;
   device::mojom::VRSubmitFrameClientPtr submit_client_;
+  device::mojom::VRSessionClientPtr session_client_;
 
   GlBrowserInterface* browser_;
 

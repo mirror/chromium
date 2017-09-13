@@ -1,0 +1,181 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "modules/vr/latest/VRDevice.h"
+
+#include "bindings/core/v8/ScriptPromiseResolver.h"
+#include "core/dom/DOMException.h"
+#include "core/dom/UserGestureIndicator.h"
+#include "modules/EventTargetModules.h"
+#include "modules/vr/latest/VR.h"
+#include "modules/vr/latest/VRFrameProvider.h"
+#include "modules/vr/latest/VRSession.h"
+#include "modules/webgl/WebGLRenderingContext.h"
+
+namespace blink {
+
+namespace {
+
+const char kExclusiveNotSupported[] =
+    "VRDevice does not support the creation of exclusive sessions.";
+
+const char kNoOutputContext[] =
+    "Non-exclusive sessions must be created with an outputContext.";
+
+const char kActiveExclusiveSession[] =
+    "VRDevice already has an active, exclusive session";
+
+const char kRequestNotInUserGesture[] =
+    "Exclusive sessions can only be requested during a user gesture.";
+
+}  // namespace
+
+VRDevice::VRDevice(VR* vr,
+                   device::mojom::blink::VRDisplayPtr display,
+                   device::mojom::blink::VRDisplayClientRequest client_request)
+    : vr_(vr),
+      display_(std::move(display)),
+      display_client_binding_(this, std::move(client_request)) {}
+
+ExecutionContext* VRDevice::GetExecutionContext() const {
+  return vr_->GetExecutionContext();
+}
+
+const AtomicString& VRDevice::InterfaceName() const {
+  return EventTargetNames::VRDevice;
+}
+
+const char* VRDevice::checkSessionSupport(
+    const VRSessionCreationOptions& options) const {
+  if (options.exclusive()) {
+    // Validation for exclusive sessions.
+    if (!supports_exclusive_) {
+      return kExclusiveNotSupported;
+    }
+  } else {
+    // Validation for non-exclusive sessions.
+    if (!options.hasOutputContext()) {
+      return kNoOutputContext;
+    }
+  }
+
+  return nullptr;
+}
+
+ScriptPromise VRDevice::supportsSession(
+    ScriptState* script_state,
+    const VRSessionCreationOptions& options) const {
+  // Check to see if the device is capable of supporting the requested session
+  // options. Note that reporting support here does not guarantee that creating
+  // a session with those options will succeed, as other external and
+  // time-sensitve factors (focus state, existance of another exclusive session,
+  // etc.) may prevent the creation of a session as well.
+  const char* reject_reason = checkSessionSupport(options);
+  if (reject_reason) {
+    return ScriptPromise::RejectWithDOMException(
+        script_state, DOMException::Create(kNotSupportedError, reject_reason));
+  }
+
+  // If  the above checks pass resolve without a value. Future API iterations
+  // may specify a value to be returned here.
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+  resolver->Resolve();
+  return promise;
+}
+
+ScriptPromise VRDevice::requestSession(
+    ScriptState* script_state,
+    const VRSessionCreationOptions& options) {
+  // Check first to see if the device is capable of supporting the requested
+  // options.
+  const char* reject_reason = checkSessionSupport(options);
+  if (reject_reason) {
+    return ScriptPromise::RejectWithDOMException(
+        script_state, DOMException::Create(kNotSupportedError, reject_reason));
+  }
+
+  // Check if the current page state prevents the requested session from being
+  // created.
+  if (options.exclusive()) {
+    if (frameProvider()->exclusive_session()) {
+      return ScriptPromise::RejectWithDOMException(
+          script_state,
+          DOMException::Create(kInvalidStateError, kActiveExclusiveSession));
+    }
+
+    if (!UserGestureIndicator::ProcessingUserGesture()) {
+      return ScriptPromise::RejectWithDOMException(
+          script_state,
+          DOMException::Create(kInvalidStateError, kRequestNotInUserGesture));
+    }
+  }
+
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+
+  VRPresentationContext* output_context = nullptr;
+  if (options.hasOutputContext()) {
+    output_context = options.outputContext();
+  }
+
+  VRSession* session = new VRSession(this, options.exclusive(), output_context);
+
+  if (options.exclusive()) {
+    frameProvider()->BeginExclusiveSession(session, resolver);
+  } else {
+    resolver->Resolve(session);
+  }
+
+  return promise;
+}
+
+ScriptPromise VRDevice::ensureContextCompatibility(
+    ScriptState* script_state,
+    const WebGLRenderingContextOrWebGL2RenderingContext& context) const {
+  return ScriptPromise::RejectWithDOMException(
+      script_state,
+      DOMException::Create(kNotSupportedError, "Method not implemented yet"));
+}
+
+void VRDevice::OnChanged(device::mojom::blink::VRDisplayInfoPtr) {}
+void VRDevice::OnExitPresent() {}
+void VRDevice::OnBlur() {
+  // TODO: Forward this on to the sessions
+}
+void VRDevice::OnFocus() {
+  // TODO: Forward this on to the sessions
+}
+void VRDevice::OnActivate(device::mojom::blink::VRDisplayEventReason,
+                          OnActivateCallback on_handled) {}
+void VRDevice::OnDeactivate(device::mojom::blink::VRDisplayEventReason) {}
+
+VRFrameProvider* VRDevice::frameProvider() {
+  if (!frame_provider_)
+    frame_provider_ = new VRFrameProvider(this);
+
+  return frame_provider_;
+}
+
+void VRDevice::Dispose() {
+  display_client_binding_.Close();
+  if (frame_provider_)
+    frame_provider_->Dispose();
+}
+
+void VRDevice::SetVRDisplayInfo(
+    device::mojom::blink::VRDisplayInfoPtr display_info) {
+  display_info_ = std::move(display_info);
+  device_name_ = display_info_->displayName;
+  is_external_ = display_info_->capabilities->hasExternalDisplay;
+  supports_exclusive_ = (display_info_->capabilities->canPresent);
+}
+
+DEFINE_TRACE(VRDevice) {
+  visitor->Trace(vr_);
+  visitor->Trace(frame_provider_);
+  EventTargetWithInlineData::Trace(visitor);
+}
+
+}  // namespace blink
