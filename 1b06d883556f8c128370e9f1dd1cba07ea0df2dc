@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "23df9df1_cd7119aa",
+        "filename": "components/autofill/content/renderer/DEPS",
+        "patchSetId": 16
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-09-13T13:49:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cd8c2f1_830f6aa1",
+      "range": {
+        "startLine": 5,
+        "startChar": 3,
+        "endLine": 5,
+        "endChar": 38
+      },
+      "revId": "1b06d883556f8c128370e9f1dd1cba07ea0df2dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbb936d3_7eda67c4",
         "filename": "components/autofill/content/renderer/password_generation_agent.cc",
         "patchSetId": 16
@@ -45,6 +69,30 @@
       "revId": "1b06d883556f8c128370e9f1dd1cba07ea0df2dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8587ab5_ae08d1b3",
+        "filename": "components/autofill/content/renderer/password_generation_agent.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-09-13T13:49:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbb936d3_7eda67c4",
+      "range": {
+        "startLine": 14,
+        "startChar": 9,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "1b06d883556f8c128370e9f1dd1cba07ea0df2dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "decc30d3_7fee50e0",
+        "filename": "components/autofill/content/renderer/password_generation_agent.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-09-13T13:49:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33524ff6_3bb0d6cd",
+      "range": {
+        "startLine": 20,
+        "startChar": 10,
+        "endLine": 20,
+        "endChar": 63
+      },
+      "revId": "1b06d883556f8c128370e9f1dd1cba07ea0df2dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4540ea1_fbc0eb7c",
         "filename": "components/autofill/content/renderer/password_generation_agent.h",
         "patchSetId": 16
@@ -91,6 +163,30 @@
       "revId": "1b06d883556f8c128370e9f1dd1cba07ea0df2dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "513a5f76_866bec84",
+        "filename": "components/autofill/content/renderer/password_generation_agent.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-09-13T13:49:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4540ea1_fbc0eb7c",
+      "range": {
+        "startLine": 111,
+        "startChar": 7,
+        "endLine": 111,
+        "endChar": 12
+      },
+      "revId": "1b06d883556f8c128370e9f1dd1cba07ea0df2dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
