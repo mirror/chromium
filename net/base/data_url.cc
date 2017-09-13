@@ -109,6 +109,7 @@ bool DataURL::Parse(const GURL& url, std::string* mime_type,
 
   // Strip whitespace.
   if (base64_encoded || !(mime_type->compare(0, 5, "text/") == 0 ||
+                          mime_type->compare(0, 6, "image/") == 0 ||
                           mime_type->find("xml") != std::string::npos)) {
     base::EraseIf(temp_data, base::IsAsciiWhitespace<wchar_t>);
   }

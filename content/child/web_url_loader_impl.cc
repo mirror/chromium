@@ -395,6 +395,7 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
   WebURLLoaderImpl* loader_;
 
   WebURL url_;
+  std::string method_;
   bool use_stream_on_response_;
   // Controls SetSecurityStyleAndDetails() in PopulateURLResponse(). Initially
   // set to WebURLRequest::ReportRawHeaders() in Start() and gets updated in
@@ -527,6 +528,7 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
   DCHECK(request_id_ == -1);
 
   url_ = request.Url();
+  method_ = request.HttpMethod().Latin1();
   use_stream_on_response_ = request.UseStreamOnResponse();
   report_raw_headers_ = request.ReportRawHeaders();
 
@@ -537,6 +539,8 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
       sync_load_response->error_code =
           GetInfoFromDataURL(sync_load_response->url, sync_load_response,
                              &sync_load_response->data);
+      if (method_ == "HEAD")
+        sync_load_response->data = nullptr;
     } else {
       task_runner_->PostTask(FROM_HERE,
                              base::BindOnce(&Context::HandleDataURL, this));
@@ -989,9 +993,11 @@ void WebURLLoaderImpl::Context::HandleDataURL() {
 
   if (error_code == net::OK) {
     OnReceivedResponse(info);
-    auto size = data.size();
-    if (size != 0)
-      OnReceivedData(base::MakeUnique<FixedReceivedData>(data.data(), size));
+    if (method_ != "HEAD") {
+      auto size = data.size();
+      if (size != 0)
+        OnReceivedData(base::MakeUnique<FixedReceivedData>(data.data(), size));
+    }
   }
 
   OnCompletedRequest(error_code, false, base::TimeTicks::Now(), 0, data.size(),

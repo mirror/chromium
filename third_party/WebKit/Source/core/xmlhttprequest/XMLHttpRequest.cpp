@@ -1086,7 +1086,8 @@ void XMLHttpRequest::CreateRequest(RefPtr<EncodedFormData> http_body,
 
   ThreadableLoaderOptions options;
   options.timeout_milliseconds = timeout_milliseconds_;
-
+  if (url_.ProtocolIs("data"))
+    options.preflight_policy = kPreventPreflight;
   ResourceLoaderOptions resource_loader_options;
   resource_loader_options.security_origin = GetSecurityOrigin();
   resource_loader_options.initiator_info.name =
