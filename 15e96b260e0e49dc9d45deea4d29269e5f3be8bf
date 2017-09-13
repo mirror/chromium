@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d4c1a044_a4de5667",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-13T23:39:12Z",
+      "side": 1,
+      "message": "Tried to describe them a bit better, hopefully a bit closer to hitting the nail on the head.",
+      "parentUuid": "35e474c1_da29ea38",
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bc4402ae_305858ef",
         "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-13T18:59:44Z",
       "side": 1,
       "message": "I wonder if it would be worth a quick line like \"There are two types of \u003c...*\u003e: Event pages and persistent background pages.\" just so we make it clear that we\u0027re differentiating between two things?\n\n...* - I don\u0027t know what a good term encompassing both event pages and background pages is.  Any thoughts?",
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85fcef97_307e17ad",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-13T23:39:12Z",
+      "side": 1,
+      "message": "An event page is still a script that runs in the background of an extension - so instead I\u0027ve tried to work the doc as the preferred method of background pages is \"non-persistent event pages\". If its too confusing I can work on some different terminology. I also had \"Script Pages\" in mind, but I was afraid that might get too confusing with Content Scrips. Another possibility was \"Action Pages\" - but again, confusing with \"Browser Actions.\" Keeping possible name in the back of my mine...",
+      "parentUuid": "bc4402ae_305858ef",
       "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1dec6d15_0b917bd4",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-13T23:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc42d791_a7c20ec6",
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f197db2_d333e34e",
         "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f639b0d1_9906802c",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-13T23:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f197db2_d333e34e",
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4adf0a9b_4b380332",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-13T23:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d54fb02f_872ee660",
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a945a9c4_b137cca1",
         "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa1ee75_a086aef9",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-13T23:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a945a9c4_b137cca1",
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +235,30 @@
     },
     {
       "key": {
+        "uuid": "668e5da1_6c5bb926",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-13T23:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f70c49a5_a19646b3",
+      "range": {
+        "startLine": 61,
+        "startChar": 36,
+        "endLine": 61,
+        "endChar": 42
+      },
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ffbbae7_9ff3cd86",
         "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
         "patchSetId": 1
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "63fc7af3_9926a560",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-13T23:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ffbbae7_9ff3cd86",
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aed10d22_fb0610c7",
         "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
         "patchSetId": 1
@@ -158,6 +308,24 @@
       "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b208c4d4_68545abc",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-13T23:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aed10d22_fb0610c7",
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -184,6 +352,30 @@
     },
     {
       "key": {
+        "uuid": "33d80441_d5e7699d",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-13T23:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c262635e_cb201bab",
+      "range": {
+        "startLine": 142,
+        "startChar": 63,
+        "endLine": 142,
+        "endChar": 67
+      },
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96fe903d_93e4a0f0",
         "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
         "patchSetId": 1
@@ -204,6 +396,30 @@
       "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12dbf2d_5912f38c",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-13T23:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96fe903d_93e4a0f0",
+      "range": {
+        "startLine": 144,
+        "startChar": 10,
+        "endLine": 144,
+        "endChar": 11
+      },
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -230,6 +446,30 @@
     },
     {
       "key": {
+        "uuid": "a0eecf99_098f9456",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-13T23:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d104c302_a89ed533",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 4
+      },
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7372501a_49be491e",
         "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
         "patchSetId": 1
@@ -250,6 +490,30 @@
       "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa9d185_dc46f6a0",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-13T23:39:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7372501a_49be491e",
+      "range": {
+        "startLine": 250,
+        "startChar": 10,
+        "endLine": 250,
+        "endChar": 36
+      },
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
