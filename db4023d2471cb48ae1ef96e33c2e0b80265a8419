@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cb2af3b_2ad64ba0",
+        "filename": "cc/animation/animation_curve.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-13T03:26:26Z",
+      "side": 1,
+      "message": "this is confusing. what does it mean to animate a value between the same value? that doesn\u0027t seem like a valid animation to me",
+      "revId": "db4023d2471cb48ae1ef96e33c2e0b80265a8419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
