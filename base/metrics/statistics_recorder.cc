@@ -35,6 +35,8 @@ bool HistogramNameLesser(const base::HistogramBase* a,
 
 namespace base {
 
+bool StatisticsRecorder::record_checker_enabled_ = true;
+
 StatisticsRecorder::~StatisticsRecorder() {
   DCHECK(histograms_);
   DCHECK(ranges_);
@@ -439,12 +441,15 @@ void StatisticsRecorder::UninitializeForTesting() {
 // static
 void StatisticsRecorder::SetRecordChecker(
     std::unique_ptr<RecordHistogramChecker> record_checker) {
-  record_checker_ = record_checker.release();
+  if (!record_checker_) {
+    record_checker_ = record_checker.release();
+  }
 }
 
 // static
 bool StatisticsRecorder::ShouldRecordHistogram(uint64_t histogram_hash) {
-  return !record_checker_ || record_checker_->ShouldRecord(histogram_hash);
+  return !(record_checker_enabled_ && record_checker_ &&
+           !record_checker_->ShouldRecord(histogram_hash));
 }
 
 // static

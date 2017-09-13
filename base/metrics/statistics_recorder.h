@@ -248,6 +248,8 @@ class BASE_EXPORT StatisticsRecorder {
 
   bool vlog_initialized_ = false;
 
+  static bool record_checker_enabled_;
+
   static void Reset();
   static void DumpHistogramsToVlog(void* instance);
 
