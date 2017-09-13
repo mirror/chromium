@@ -37,6 +37,45 @@ namespace protocol {
 
 namespace {
 
+// This class provides a barrier feature used in StopAllServiceWorkersOnIO(),
+// run |callback_| after all ServiceWorkerVersion::StopWorker() completed.
+class StopWorkerBarrierCallback
+    : public base::RefCounted<StopWorkerBarrierCallback> {
+ public:
+  StopWorkerBarrierCallback(
+      ServiceWorkerContext::ResultCallback callback,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner_for_callback)
+      : callback_(std::move(callback)),
+        task_runner_for_callback_(task_runner_for_callback) {}
+
+  base::Callback<void(ServiceWorkerStatusCode)> WaitForOneWorker() {
+    CHECK(num_callbacks_left_ < std::numeric_limits<int>::max());
+    DCHECK_GE(num_callbacks_left_, 0);
+    num_callbacks_left_++;
+    return base::Bind(&StopWorkerBarrierCallback::OnStopWorkerFinished, this);
+  }
+
+ private:
+  friend class base::RefCounted<StopWorkerBarrierCallback>;
+  ~StopWorkerBarrierCallback() = default;
+
+  void OnStopWorkerFinished(ServiceWorkerStatusCode stop_worker_result) {
+    DCHECK_GE(num_callbacks_left_, 1);
+    num_worker_errors_ += (stop_worker_result != SERVICE_WORKER_OK);
+    --num_callbacks_left_;
+    if (num_callbacks_left_ == 0)
+      task_runner_for_callback_->PostTask(
+          FROM_HERE,
+          base::BindOnce(std::move(callback_), num_worker_errors_ == 0));
+  }
+
+  int num_callbacks_left_ = 0;
+  int num_worker_errors_ = 0;
+  std::vector<ServiceWorkerStatusCode> results_;
+  ServiceWorkerContext::ResultCallback callback_;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner_for_callback_;
+};
+
 void ResultNoOp(bool success) {
 }
 
@@ -94,6 +133,37 @@ void StopServiceWorkerOnIO(scoped_refptr<ServiceWorkerContextWrapper> context,
           context->GetLiveVersion(version_id)) {
     version->StopWorker(base::Bind(&StatusNoOp));
   }
+}
+
+void StopAllServiceWorkersOnIO(
+    ServiceWorkerContext::ResultCallback callback,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner_for_callback,
+    scoped_refptr<ServiceWorkerContextWrapper> context) {
+  std::vector<content::ServiceWorkerVersionInfo> live_versions =
+      context->GetAllLiveVersionInfo();
+  if (live_versions.empty()) {
+    task_runner_for_callback->PostTask(
+        FROM_HERE, base::BindOnce(std::move(callback), true));
+    return;
+  }
+  scoped_refptr<StopWorkerBarrierCallback> barrier =
+      base::MakeRefCounted<StopWorkerBarrierCallback>(
+          std::move(callback), std::move(task_runner_for_callback));
+  for (const content::ServiceWorkerVersionInfo& info : live_versions) {
+    content::ServiceWorkerVersion* version =
+        context->GetLiveVersion(info.version_id);
+    if (version)
+      version->StopWorker(barrier->WaitForOneWorker());
+  }
+}
+
+void DidStopWorkersForOrigin(
+    std::unique_ptr<ServiceWorkerHandler::StopAllWorkersCallback> callback,
+    bool success) {
+  if (!success)
+    callback->sendFailure(Response::Error("Unable to stop service workers"));
+  else
+    callback->sendSuccess();
 }
 
 void GetDevToolsRouteInfoOnIO(
@@ -255,6 +325,24 @@ Response ServiceWorkerHandler::StopWorker(const std::string& version_id) {
   BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
                           base::BindOnce(&StopServiceWorkerOnIO, context_, id));
   return Response::OK();
+}
+
+void ServiceWorkerHandler::StopAllWorkers(
+    std::unique_ptr<StopAllWorkersCallback> callback) {
+  if (!enabled_) {
+    callback->sendFailure(CreateDomainNotEnabledErrorResponse());
+    return;
+  }
+  if (!context_) {
+    callback->sendFailure(CreateContextErrorResponse());
+    return;
+  }
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&StopAllServiceWorkersOnIO,
+                     base::BindOnce(&DidStopWorkersForOrigin,
+                                    base::Passed(std::move(callback))),
+                     base::ThreadTaskRunnerHandle::Get(), context_));
 }
 
 Response ServiceWorkerHandler::UpdateRegistration(
