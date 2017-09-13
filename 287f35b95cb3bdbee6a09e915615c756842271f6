@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "290b3155_d30501f2",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3014,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-13T16:28:25Z",
+      "side": 1,
+      "message": "Sorry, looks like I changed this out from underneath you during one of your rebases.  The value is just the string; if you want a sandbox type other than utility (i.e. failry strict sandboxing), this now goes into the manifest itself.",
+      "range": {
+        "startLine": 3014,
+        "startChar": 1,
+        "endLine": 3014,
+        "endChar": 2
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85e3690e_1452a5ce",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 3018,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-13T16:28:25Z",
+      "side": 1,
+      "message": "See above.",
+      "range": {
+        "startLine": 3018,
+        "startChar": 1,
+        "endLine": 3018,
+        "endChar": 2
+      },
+      "revId": "287f35b95cb3bdbee6a09e915615c756842271f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d4aa966_e454d84f",
         "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
         "patchSetId": 8
