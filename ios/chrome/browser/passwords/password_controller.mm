@@ -48,6 +48,10 @@
 #import "ios/web/public/web_state/web_state.h"
 #include "url/gurl.h"
 
+#include "ios/chrome/grit/ios_strings.h"
+#import "ios/third_party/material_components_ios/src/components/Snackbar/src/MaterialSnackbar.h"
+#include "ui/base/l10n/l10n_util.h"
+
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
@@ -127,7 +131,8 @@ enum class PasswordInfoBarType { SAVE, UPDATE };
 
 // Displays infobar for |form| with |type|. If |type| is UPDATE, the user
 // is prompted to update the password. If |type| is SAVE, the user is prompted
-// to save the password.
+// to save the password. If |type| is AUTOSIGNIN, the user is notified about
+// auto-signin that has happened.
 - (void)showInfoBarForForm:(std::unique_ptr<PasswordFormManager>)form
                infoBarType:(PasswordInfoBarType)type;
 
@@ -705,6 +710,23 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
                infoBarType:PasswordInfoBarType::UPDATE];
 }
 
+- (void)showAutosigninSnackBar:
+    (std::unique_ptr<autofill::PasswordForm>)formSignedIn {
+  if (!webStateObserverBridge_ || !webStateObserverBridge_->web_state())
+    return;
+
+  NSString* text = [NSString
+      stringWithFormat:@"%@ %@",
+                       l10n_util::GetNSString(
+                           IDS_IOS_CREDENTIAL_MANAGER_AUTO_SIGNIN),
+                       base::SysUTF16ToNSString(formSignedIn->username_value)];
+  MDCSnackbarMessage* message = [MDCSnackbarMessage messageWithText:text];
+  message.category = @"PasswordsSnackbarCategory";
+  message.duration = 3.; // seconds
+  message.accessibilityLabel = text;
+  [MDCSnackbarManager showMessage:message];
+}
+
 #pragma mark -
 #pragma mark WebPasswordFormData Adaptation
 
@@ -887,6 +909,10 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 
 - (PasswordManagerDriver*)passwordManagerDriver {
   return passwordManagerDriver_.get();
+}
+
+- (CredentialManager*)credentialManager {
+  return credentialManager_.get();
 }
 
 - (PasswordManager*)passwordManager {
