@@ -291,6 +291,9 @@ void AutofillManager::RegisterProfilePrefs(
   registry->RegisterIntegerPref(
       prefs::kAutofillAcceptSaveCreditCardPromptState,
       prefs::PREVIOUS_SAVE_CREDIT_CARD_PROMPT_USER_DECISION_NONE);
+  registry->RegisterBooleanPref(
+      prefs::kAutofillCreditCardEnabled, true,
+      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
 }
 
 void AutofillManager::SetExternalDelegate(AutofillExternalDelegate* delegate) {
@@ -411,7 +414,8 @@ bool AutofillManager::OnWillSubmitFormImpl(const FormData& form,
   autocomplete_history_manager_->OnWillSubmitForm(form_for_autocomplete);
 
   address_form_event_logger_->OnWillSubmitForm();
-  credit_card_form_event_logger_->OnWillSubmitForm();
+  if (client_->GetPrefs()->GetBoolean(prefs::kAutofillCreditCardEnabled))
+    credit_card_form_event_logger_->OnWillSubmitForm();
 
   StartUploadProcess(std::move(submitted_form), timestamp, true);
 
@@ -429,7 +433,8 @@ bool AutofillManager::OnFormSubmitted(const FormData& form) {
   }
 
   address_form_event_logger_->OnFormSubmitted();
-  credit_card_form_event_logger_->OnFormSubmitted();
+  if (client_->GetPrefs()->GetBoolean(prefs::kAutofillCreditCardEnabled))
+    credit_card_form_event_logger_->OnFormSubmitted();
 
   // Update Personal Data with the form's submitted data.
   if (submitted_form->IsAutofillable())
