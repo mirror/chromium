@@ -26,7 +26,6 @@
 #include "net/log/net_log_capture_mode.h"
 #include "net/log/net_log_event_type.h"
 #include "net/log/net_log_with_source.h"
-#include "net/proxy/mojo_proxy_resolver_factory.h"
 #include "net/proxy/proxy_info.h"
 #include "net/proxy/proxy_resolver.h"
 #include "net/proxy/proxy_resolver_error_observer.h"
@@ -111,14 +110,11 @@ class ProxyResolverMojo : public ProxyResolver {
   // Constructs a ProxyResolverMojo that connects to a mojo proxy resolver
   // implementation using |resolver_ptr|. The implementation uses
   // |host_resolver| as the DNS resolver, using |host_resolver_binding| to
-  // communicate with it. When deleted, the closure contained within
-  // |on_delete_callback_runner| will be run.
-  ProxyResolverMojo(
-      interfaces::ProxyResolverPtr resolver_ptr,
-      HostResolver* host_resolver,
-      std::unique_ptr<base::ScopedClosureRunner> on_delete_callback_runner,
-      std::unique_ptr<ProxyResolverErrorObserver> error_observer,
-      NetLog* net_log);
+  // communicate with it.
+  ProxyResolverMojo(interfaces::ProxyResolverPtr resolver_ptr,
+                    HostResolver* host_resolver,
+                    std::unique_ptr<ProxyResolverErrorObserver> error_observer,
+                    NetLog* net_log);
   ~ProxyResolverMojo() override;
 
   // ProxyResolver implementation:
@@ -144,8 +140,6 @@ class ProxyResolverMojo : public ProxyResolver {
   std::unique_ptr<ProxyResolverErrorObserver> error_observer_;
 
   NetLog* net_log_;
-
-  std::unique_ptr<base::ScopedClosureRunner> on_delete_callback_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(ProxyResolverMojo);
 };
@@ -241,14 +235,12 @@ void ProxyResolverMojo::Job::ReportResult(int32_t error,
 ProxyResolverMojo::ProxyResolverMojo(
     interfaces::ProxyResolverPtr resolver_ptr,
     HostResolver* host_resolver,
-    std::unique_ptr<base::ScopedClosureRunner> on_delete_callback_runner,
     std::unique_ptr<ProxyResolverErrorObserver> error_observer,
     NetLog* net_log)
     : mojo_proxy_resolver_ptr_(std::move(resolver_ptr)),
       host_resolver_(host_resolver),
       error_observer_(std::move(error_observer)),
-      net_log_(net_log),
-      on_delete_callback_runner_(std::move(on_delete_callback_runner)) {
+      net_log_(net_log) {
   mojo_proxy_resolver_ptr_.set_connection_error_handler(base::Bind(
       &ProxyResolverMojo::OnConnectionError, base::Unretained(this)));
 }
@@ -308,7 +300,7 @@ class ProxyResolverFactoryMojo::Job
         error_observer_(std::move(error_observer)) {
     interfaces::ProxyResolverFactoryRequestClientPtr client;
     binding_.Bind(mojo::MakeRequest(&client));
-    on_delete_callback_runner_ = factory_->mojo_proxy_factory_->CreateResolver(
+    factory_->mojo_proxy_factory_->CreateResolver(
         base::UTF16ToUTF8(pac_script->utf16()),
         mojo::MakeRequest(&resolver_ptr_), std::move(client));
     resolver_ptr_.set_connection_error_handler(
@@ -328,10 +320,8 @@ class ProxyResolverFactoryMojo::Job
     if (error == OK) {
       resolver_->reset(new ProxyResolverMojo(
           std::move(resolver_ptr_), factory_->host_resolver_,
-          std::move(on_delete_callback_runner_), std::move(error_observer_),
-          factory_->net_log_));
+          std::move(error_observer_), factory_->net_log_));
     }
-    on_delete_callback_runner_.reset();
     callback_.Run(error);
   }
 
@@ -340,21 +330,21 @@ class ProxyResolverFactoryMojo::Job
   const CompletionCallback callback_;
   interfaces::ProxyResolverPtr resolver_ptr_;
   mojo::Binding<interfaces::ProxyResolverFactoryRequestClient> binding_;
-  std::unique_ptr<base::ScopedClosureRunner> on_delete_callback_runner_;
   std::unique_ptr<ProxyResolverErrorObserver> error_observer_;
 };
 
 ProxyResolverFactoryMojo::ProxyResolverFactoryMojo(
-    MojoProxyResolverFactory* mojo_proxy_factory,
+    interfaces::ProxyResolverFactoryPtr mojo_proxy_factory,
     HostResolver* host_resolver,
     const base::Callback<std::unique_ptr<ProxyResolverErrorObserver>()>&
         error_observer_factory,
     NetLog* net_log)
     : ProxyResolverFactory(true),
-      mojo_proxy_factory_(mojo_proxy_factory),
+      mojo_proxy_factory_(std::move(mojo_proxy_factory)),
       host_resolver_(host_resolver),
       error_observer_factory_(error_observer_factory),
-      net_log_(net_log) {}
+      net_log_(net_log),
+      weak_ptr_factory_(this) {}
 
 ProxyResolverFactoryMojo::~ProxyResolverFactoryMojo() = default;
 

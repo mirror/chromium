@@ -7,12 +7,12 @@
 
 #include <memory>
 
+#include "net/interfaces/proxy_resolver_service.mojom.h"
 #include "net/proxy/dhcp_proxy_script_fetcher.h"
 
 namespace net {
 
 class HostResolver;
-class MojoProxyResolverFactory;
 class NetLog;
 class NetworkDelegate;
 class ProxyConfigService;
@@ -33,7 +33,7 @@ class ProxyService;
 // should use for any DNS queries. It must remain valid throughout the
 // lifetime of the ProxyService.
 std::unique_ptr<ProxyService> CreateProxyServiceUsingMojoFactory(
-    MojoProxyResolverFactory* mojo_proxy_factory,
+    interfaces::ProxyResolverFactoryPtr mojo_proxy_factory,
     std::unique_ptr<ProxyConfigService> proxy_config_service,
     ProxyScriptFetcher* proxy_script_fetcher,
     std::unique_ptr<DhcpProxyScriptFetcher> dhcp_proxy_script_fetcher,
