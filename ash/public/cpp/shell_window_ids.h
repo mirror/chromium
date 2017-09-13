@@ -33,10 +33,10 @@ enum ShellWindowId {
   kShellWindowId_LockScreenContainersContainer,
 
   // A higher-level container that holds containers that hold
-  // lock-screen-related
-  // windows (which we want to display while the screen is locked, effectively
-  // containers stacked above kShellWindowId_LockSystemModalContainer).  Only
-  // used by PowerButtonController for animating lower-level containers.
+  // lock-screen-related windows (which are displayed regardless of the screen
+  // lock state, effectively containers stacked above
+  // kShellWindowId_LockSystemModalContainer). Used by login shelf and
+  // PowerButtonController for animating lower-level containers.
   kShellWindowId_LockScreenRelatedContainersContainer,
 
   // A container used for windows of WINDOW_TYPE_CONTROL that have no parent.
