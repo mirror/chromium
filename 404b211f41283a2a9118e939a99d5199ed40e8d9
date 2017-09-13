@@ -93,6 +93,30 @@
       "revId": "404b211f41283a2a9118e939a99d5199ed40e8d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0d9dd1_1af4df03",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-13T21:30:16Z",
+      "side": 1,
+      "message": "I would actually prefer an interface with OnWillStartRunLoop and OnCompletedRunLoop (or something like that).\nBut, as you say, this is existing code so I\u0027m fine leaving.\nPlease fix the leading \u0027|\u0027 on 58 though.",
+      "parentUuid": "1add20a4_9118ee7d",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 36
+      },
+      "revId": "404b211f41283a2a9118e939a99d5199ed40e8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
