@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c027194a_f0f97693",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-13T10:05:08Z",
+      "side": 1,
+      "message": "Ugh we still need to check this? I\u0027ll try to see if we can get rid of this flag everywhere.",
+      "range": {
+        "startLine": 50,
+        "startChar": 58,
+        "endLine": 50,
+        "endChar": 88
+      },
+      "revId": "e93ec5c7f1cfa6bd7e76213bed1a616fee04b133",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
