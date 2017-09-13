@@ -23,6 +23,7 @@
 #include "extensions/browser/event_router_factory.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
+#include "extensions/common/extension_messages.h"
 #include "extensions/common/manifest_constants.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -352,6 +353,7 @@ TEST_F(MDnsAPITest, ExtensionRespectsWhitelist) {
   ExtensionRegistry::Get(browser_context())->AddEnabled(extension);
   ASSERT_EQ(Manifest::TYPE_EXTENSION, extension->GetType());
 
+  base::Optional<ExtensionHostMsg_ServiceWorkerIdentifier> empty_identifier;
   // There is a whitelist of mdns service types extensions may access, which
   // includes "_testing._tcp.local" and exludes "_trex._tcp.local"
   {
@@ -364,15 +366,15 @@ TEST_F(MDnsAPITest, ExtensionRespectsWhitelist) {
         .Times(0);
     EventRouter::Get(browser_context())
         ->AddFilteredEventListener(api::mdns::OnServiceList::kEventName,
-                                   render_process_host(), kExtId, filter,
-                                   false);
+                                   render_process_host(), kExtId,
+                                   empty_identifier, filter, false);
 
     EXPECT_CALL(*dns_sd_registry(), UnregisterDnsSdListener("_trex._tcp.local"))
         .Times(0);
     EventRouter::Get(browser_context())
         ->RemoveFilteredEventListener(api::mdns::OnServiceList::kEventName,
-                                      render_process_host(), kExtId, filter,
-                                      false);
+                                      render_process_host(), kExtId,
+                                      empty_identifier, filter, false);
   }
   {
     base::DictionaryValue filter;
@@ -384,15 +386,15 @@ TEST_F(MDnsAPITest, ExtensionRespectsWhitelist) {
                 RegisterDnsSdListener("_testing._tcp.local"));
     EventRouter::Get(browser_context())
         ->AddFilteredEventListener(api::mdns::OnServiceList::kEventName,
-                                   render_process_host(), kExtId, filter,
-                                   false);
+                                   render_process_host(), kExtId,
+                                   empty_identifier, filter, false);
 
     EXPECT_CALL(*dns_sd_registry(),
                 UnregisterDnsSdListener("_testing._tcp.local"));
     EventRouter::Get(browser_context())
         ->RemoveFilteredEventListener(api::mdns::OnServiceList::kEventName,
-                                      render_process_host(), kExtId, filter,
-                                      false);
+                                      render_process_host(), kExtId,
+                                      empty_identifier, filter, false);
   }
 }
 
@@ -408,15 +410,19 @@ TEST_F(MDnsAPITest, PlatformAppsNotSubjectToWhitelist) {
   ASSERT_TRUE(dns_sd_registry());
   // Test that the extension is able to listen to a non-whitelisted service
   EXPECT_CALL(*dns_sd_registry(), RegisterDnsSdListener("_trex._tcp.local"));
+
+  base::Optional<ExtensionHostMsg_ServiceWorkerIdentifier> empty_identifier;
+
   EventRouter::Get(browser_context())
       ->AddFilteredEventListener(api::mdns::OnServiceList::kEventName,
-                                 render_process_host(), kExtId, filter, false);
+                                 render_process_host(), kExtId,
+                                 empty_identifier, filter, false);
 
   EXPECT_CALL(*dns_sd_registry(), UnregisterDnsSdListener("_trex._tcp.local"));
   EventRouter::Get(browser_context())
       ->RemoveFilteredEventListener(api::mdns::OnServiceList::kEventName,
-                                    render_process_host(), kExtId, filter,
-                                    false);
+                                    render_process_host(), kExtId,
+                                    empty_identifier, filter, false);
 }
 
 }  // namespace extensions
