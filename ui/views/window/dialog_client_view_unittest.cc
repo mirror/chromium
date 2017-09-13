@@ -70,6 +70,10 @@ class DialogClientViewTest : public test::WidgetTest,
   }
 
   int GetDialogButtons() const override { return dialog_buttons_; }
+  int GetDefaultDialogButton() const override {
+    return default_button_.value_or(
+        DialogDelegateView::GetDefaultDialogButton());
+  }
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override {
     return button == ui::DIALOG_BUTTON_CANCEL && !cancel_label_.empty()
                ? cancel_label_
@@ -142,6 +146,8 @@ class DialogClientViewTest : public test::WidgetTest,
   DialogClientView* client_view() { return client_view_; }
 
   Widget* widget() { return widget_; }
+
+  base::Optional<int> default_button_;
 
  private:
   // The dialog Widget.
@@ -369,6 +375,10 @@ TEST_F(DialogClientViewTest, LinkedWidths) {
   layout_provider.SetDistanceMetric(DISTANCE_BUTTON_MAX_LINKABLE_WIDTH, 200);
   SetLongCancelLabel();
 
+  // Ensure there is no default button since getting a bold font can throw off
+  // the cached sizes.
+  default_button_ = ui::DIALOG_BUTTON_NONE;
+
   SetDialogButtons(ui::DIALOG_BUTTON_OK);
   CheckContentsIsSetToPreferredSize();
   const int ok_button_only_width = client_view()->ok_button()->width();
@@ -384,6 +394,9 @@ TEST_F(DialogClientViewTest, LinkedWidths) {
 
   SetDialogButtons(ui::DIALOG_BUTTON_CANCEL | ui::DIALOG_BUTTON_OK);
   CheckContentsIsSetToPreferredSize();
+
+  // Cancel button shouldn't have changed widths.
+  EXPECT_EQ(cancel_button_width, client_view()->cancel_button()->width());
 
   // OK button should now match the bigger, cancel button.
   EXPECT_EQ(cancel_button_width, client_view()->ok_button()->width());
