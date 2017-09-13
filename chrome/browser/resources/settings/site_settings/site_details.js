@@ -238,7 +238,8 @@ Polymer({
       if (element.category == settings.ContentSettingsTypes.PROTECTED_CONTENT)
         return;
       // </if>
-      categoryList.push(element.category);
+      if (!element.hidden)
+        categoryList.push(element.category);
     });
     return categoryList;
   },
