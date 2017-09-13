@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b55c98d4_ef693277",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-09-13T08:43:33Z",
+      "side": 1,
+      "message": "Maybe create a variable for password_element.Value(), then if statement will be shorter and easier to read.",
+      "range": {
+        "startLine": 538,
+        "startChar": 11,
+        "endLine": 538,
+        "endChar": 27
+      },
+      "revId": "126646219adce0d11dde3136dbf19ffb54c3ed71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
