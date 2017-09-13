@@ -16,6 +16,24 @@
       "revId": "0ed0cd4e132d21d36443e5e0feccd893b20edfbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19bcaeff_17eaeaab",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-13T15:19:30Z",
+      "side": 1,
+      "message": "Sounds good. Updated the CL.",
+      "parentUuid": "f3d12aa3_f67d585c",
+      "revId": "0ed0cd4e132d21d36443e5e0feccd893b20edfbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
