@@ -11,8 +11,12 @@
 #include "ash/public/interfaces/user_info.mojom.h"
 #include "ash/session/session_observer.h"
 #include "ash/shell.h"
+#include "ash/strings/grit/ash_strings.h"
 #include "ash/system/power/power_event_observer.h"
+#include "ash/system/screen_security/screen_tray_item.h"
+#include "ash/system/tray/system_tray.h"
 #include "ash/wm/lock_state_controller.h"
+#include "ash/wm/overview/window_selector_controller.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "ash/wm/wm_event.h"
@@ -27,6 +31,10 @@
 #include "services/preferences/public/cpp/pref_service_factory.h"
 #include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
+#include "ui/base/l10n/l10n_util.h"
+#include "ui/views/controls/message_box_view.h"
+#include "ui/views/layout/fill_layout.h"
+#include "ui/views/window/dialog_delegate.h"
 
 using session_manager::SessionState;
 
@@ -50,6 +58,43 @@ SessionState GetDefaultSessionState() {
           chromeos::switches::kLoginUser);
   return start_with_user ? SessionState::ACTIVE : SessionState::UNKNOWN;
 }
+
+class CancelCastingDialog : public views::DialogDelegateView {
+ public:
+  explicit CancelCastingDialog(
+      SessionController::TrySwitchingActiveUserCallback callback)
+      : callback_(std::move(callback)) {
+    AddChildView(new views::MessageBoxView(views::MessageBoxView::InitParams(
+        l10n_util::GetStringUTF16(IDS_DESKTOP_CASTING_ACTIVE_MESSAGE))));
+    SetLayoutManager(new views::FillLayout());
+  }
+  ~CancelCastingDialog() override = default;
+
+  base::string16 GetWindowTitle() const override {
+    return l10n_util::GetStringUTF16(IDS_DESKTOP_CASTING_ACTIVE_TITLE);
+  }
+
+  int GetDialogButtons() const override {
+    return ui::DIALOG_BUTTON_OK | ui::DIALOG_BUTTON_CANCEL;
+  }
+
+  bool Accept() override {
+    // Stop screen sharing and capturing.
+    ash::SystemTray* system_tray = ash::Shell::Get()->GetPrimarySystemTray();
+    if (system_tray->GetScreenShareItem()->is_started())
+      system_tray->GetScreenShareItem()->Stop();
+    if (system_tray->GetScreenCaptureItem()->is_started())
+      system_tray->GetScreenCaptureItem()->Stop();
+
+    std::move(callback_).Run();
+    return true;
+  }
+
+ private:
+  SessionController::TrySwitchingActiveUserCallback callback_;
+
+  DISALLOW_COPY_AND_ASSIGN(CancelCastingDialog);
+};
 
 }  // namespace
 
@@ -381,6 +426,29 @@ void SessionController::SetSessionLengthLimit(base::TimeDelta length_limit,
   session_start_time_ = start_time;
   for (auto& observer : observers_)
     observer.OnSessionLengthLimitChanged();
+}
+
+void SessionController::TrySwitchingActiveUser(
+    TrySwitchingActiveUserCallback callback) {
+  // Cancel overview mode when switching user profiles.
+  WindowSelectorController* controller =
+      Shell::Get()->window_selector_controller();
+  if (controller->IsSelecting())
+    controller->ToggleOverview();
+
+  // If neither screen sharing nor capturing is going on we can immediately
+  // switch users.
+  SystemTray* system_tray = Shell::Get()->GetPrimarySystemTray();
+  if (!system_tray->GetScreenShareItem()->is_started() &&
+      !system_tray->GetScreenCaptureItem()->is_started()) {
+    std::move(callback).Run();
+    return;
+  }
+
+  views::DialogDelegate::CreateDialogWidget(
+      new CancelCastingDialog(std::move(callback)),
+      Shell::GetPrimaryRootWindow(), nullptr)
+      ->Show();
 }
 
 void SessionController::ClearUserSessionsForTest() {

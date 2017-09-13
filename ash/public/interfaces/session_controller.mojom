@@ -160,6 +160,10 @@ interface SessionController {
   // http://crbug.com/729808
   SetSessionLengthLimit(mojo.common.mojom.TimeDelta length_limit,
                         mojo.common.mojom.TimeTicks start_time);
+
+  // Checks whether it's ok to switch the active user; if so, the callback is
+  // invoked.
+  TrySwitchingActiveUser() => ();
 };
 
 // Interface for ash to request session service from its client (e.g. Chrome).

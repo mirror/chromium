@@ -29,7 +29,6 @@
 #include "chrome/browser/supervised_user/supervised_user_service.h"
 #include "chrome/browser/supervised_user/supervised_user_service_factory.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
-#include "chrome/browser/ui/ash/multi_user/user_switch_util.h"
 #include "chrome/common/pref_names.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/session_manager_client.h"
@@ -382,7 +381,8 @@ void SessionControllerClient::DoSwitchActiveUser(const AccountId& account_id) {
   if (account_id == UserManager::Get()->GetActiveUser()->GetAccountId())
     return;
 
-  TrySwitchingActiveUser(base::Bind(&DoSwitchUser, account_id));
+  SessionControllerClient::Get()->session_controller_->TrySwitchingActiveUser(
+      base::Bind(&DoSwitchUser, account_id));
 }
 
 // static

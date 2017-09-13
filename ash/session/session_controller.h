@@ -172,6 +172,7 @@ class ASH_EXPORT SessionController : public mojom::SessionController {
   void NotifyChromeTerminating() override;
   void SetSessionLengthLimit(base::TimeDelta length_limit,
                              base::TimeTicks start_time) override;
+  void TrySwitchingActiveUser(TrySwitchingActiveUserCallback) override;
 
   // Test helpers.
   void ClearUserSessionsForTest();
