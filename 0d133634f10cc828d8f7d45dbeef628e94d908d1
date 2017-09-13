@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6491d43a_ddb203f7",
+        "filename": "cc/quads/render_pass.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-13T07:05:56Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem you\u0027ve updated render_pass.mojom. https://cs.chromium.org/chromium/src/services/viz/public/interfaces/compositing/render_pass.mojom?q\u003drender_pass.mojom\u0026sq\u003dpackage:chromium\u0026l\u003d1\n\nPlease do so! Thanks!",
+      "revId": "0d133634f10cc828d8f7d45dbeef628e94d908d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
