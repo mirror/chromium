@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bb4b68a_df381123",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T00:51:33Z",
+      "side": 1,
+      "message": "Is this DCHECK useful? We con\u0027t use context() in the ctor.",
+      "revId": "74dc57c84955bf7e01650239ac478d88147dcceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf3caf7f_ba00fe45",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T00:51:33Z",
+      "side": 1,
+      "message": "\"should be\" -\u003e \"is\"",
+      "revId": "74dc57c84955bf7e01650239ac478d88147dcceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
