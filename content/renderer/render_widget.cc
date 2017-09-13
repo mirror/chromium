@@ -1114,7 +1114,7 @@ void RenderWidget::SetInputHandler(RenderWidgetInputHandler* input_handler) {
 }
 
 void RenderWidget::ShowVirtualKeyboard() {
-  UpdateTextInputStateInternal(true, false);
+  UpdateTextInputStateInternal(true, false, false);
 }
 
 void RenderWidget::ClearTextInputState() {
@@ -1127,10 +1127,11 @@ void RenderWidget::ClearTextInputState() {
 }
 
 void RenderWidget::UpdateTextInputState() {
-  UpdateTextInputStateInternal(false, false);
+  UpdateTextInputStateInternal(false, false, false);
 }
 
 void RenderWidget::UpdateTextInputStateInternal(bool show_virtual_keyboard,
+                                                bool suppress_transient_blur,
                                                 bool reply_to_request) {
   TRACE_EVENT0("renderer", "RenderWidget::UpdateTextInputState");
 
@@ -1187,6 +1188,7 @@ void RenderWidget::UpdateTextInputStateInternal(bool show_virtual_keyboard,
     params.composition_start = new_info.composition_start;
     params.composition_end = new_info.composition_end;
     params.can_compose_inline = new_can_compose_inline;
+    params.suppress_transient_blur = suppress_transient_blur;
     // TODO(changwan): change instances of show_ime_if_needed to
     // show_virtual_keyboard.
     params.show_ime_if_needed = show_virtual_keyboard;
@@ -1894,7 +1896,7 @@ void RenderWidget::ShowVirtualKeyboardOnElementFocus() {
   // On ChromeOS, virtual keyboard is triggered only when users leave the
   // mouse button or the finger and a text input element is focused at that
   // time. Focus event itself shouldn't trigger virtual keyboard.
-  UpdateTextInputState();
+  UpdateTextInputStateInternal(true, true, false);
 #else
   ShowVirtualKeyboard();
 #endif
@@ -1985,7 +1987,7 @@ void RenderWidget::OnRequestTextInputStateUpdate() {
 #if defined(OS_ANDROID)
   DCHECK(!ime_event_guard_);
   UpdateSelectionBounds();
-  UpdateTextInputStateInternal(false, true /* reply_to_request */);
+  UpdateTextInputStateInternal(false, false, true /* reply_to_request */);
 #endif
 }
 

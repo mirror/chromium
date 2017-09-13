@@ -226,7 +226,7 @@ class MagnificationControllerImpl : public MagnificationController,
   void OnBlur() override {}
   void OnTextInputStateChanged(const ui::TextInputClient* client) override {}
   void OnInputMethodDestroyed(const ui::InputMethod* input_method) override {}
-  void OnShowImeIfNeeded() override {}
+  void OnShowImeIfNeeded(bool transient_blur_check) override {}
   void OnCaretBoundsChanged(const ui::TextInputClient* client) override;
 
   // Target root window. This must not be NULL.

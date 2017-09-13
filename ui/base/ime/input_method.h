@@ -157,7 +157,7 @@ class InputMethod {
   virtual bool IsCandidatePopupOpen() const = 0;
 
   // Displays an on screen keyboard if enabled.
-  virtual void ShowImeIfNeeded() = 0;
+  virtual void ShowImeIfNeeded(bool transient_blur_check) = 0;
 
   // Management of the observer list.
   virtual void AddObserver(InputMethodObserver* observer) = 0;

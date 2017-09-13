@@ -62,7 +62,7 @@ class AccessibilityHighlightManager
   void OnFocus() override {}
   void OnBlur() override {}
   void OnInputMethodDestroyed(const ui::InputMethod* input_method) override {}
-  void OnShowImeIfNeeded() override {}
+  void OnShowImeIfNeeded(bool transient_blur_check) override {}
   void OnTextInputStateChanged(const ui::TextInputClient* client) override;
   void OnCaretBoundsChanged(const ui::TextInputClient* client) override;
 
