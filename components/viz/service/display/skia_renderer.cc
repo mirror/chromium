@@ -222,7 +222,7 @@ bool SkiaRenderer::BindFramebufferToTexture(const cc::ScopedResource* texture) {
   current_framebuffer_surface_lock_ = nullptr;
   current_framebuffer_lock_ = nullptr;
   current_framebuffer_lock_ =
-      base::WrapUnique(new cc::ResourceProvider::ScopedWriteLockGL(
+      base::WrapUnique(new cc::ResourceProvider::ScopedLocalWriteLockGL(
           resource_provider_, texture->id()));
 
   current_framebuffer_surface_lock_ =
