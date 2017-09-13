@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4c54a14_5fb79985",
+        "filename": "net/disk_cache/simple/simple_experiment.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-13T20:49:21Z",
+      "side": 0,
+      "message": "Might want to keep this around with some sort of deprecated-type name since I think we write this out to disk (to ensure the next one uses 3)?",
+      "revId": "e2b952bc55ebec49ebd5c0e43a4ef28c29a6a249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
