@@ -628,20 +628,6 @@ void QuicSpdySession::OnConfigNegotiated() {
   if (config()->HasClientSentConnectionOption(kDHDT, perspective())) {
     DisableHpackDynamicTable();
   }
-  const QuicVersion version = connection()->version();
-  if (!use_stream_notifier() &&
-      version == QUIC_VERSION_36 && config()->ForceHolBlocking(perspective())) {
-    force_hol_blocking_ = true;
-    // Since all streams are tunneled through the headers stream, it
-    // is important that headers stream never flow control blocks.
-    // Otherwise, busy-loop behaviour can ensue where data streams
-    // data try repeatedly to write data not realizing that the
-    // tunnel through the headers stream is blocked.
-    headers_stream_->flow_controller()->UpdateReceiveWindowSize(
-        kStreamReceiveWindowLimit);
-    headers_stream_->flow_controller()->UpdateSendWindowOffset(
-        kStreamReceiveWindowLimit);
-  }
 }
 
 void QuicSpdySession::OnStreamFrameData(QuicStreamId stream_id,
