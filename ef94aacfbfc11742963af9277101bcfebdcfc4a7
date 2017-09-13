@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bc988f0d_3ff303ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-09-13T04:35:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "854bc3a6_33bbc039",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 2
+      },
+      "revId": "ef94aacfbfc11742963af9277101bcfebdcfc4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86312f24_b10503a4",
         "filename": "chrome/browser/chromeos/arc/arc_auth_notification.cc",
         "patchSetId": 1
