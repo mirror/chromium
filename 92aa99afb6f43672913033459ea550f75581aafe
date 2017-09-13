@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2adf6ed8_9de724a4",
+        "filename": "components/safe_browsing/browser/browser_url_loader_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-13T22:26:41Z",
+      "side": 1,
+      "message": "nit: Tri-states here would be pretty awesome, but it\u0027s probably worth adding a comment that in this case, the |proceed| and |showed_interstitial| shouldn\u0027t be consumed.",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 80
+      },
+      "revId": "92aa99afb6f43672913033459ea550f75581aafe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c9b070_069a6ba5",
+        "filename": "components/safe_browsing/renderer/websocket_sb_handshake_throttle_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-13T22:26:41Z",
+      "side": 1,
+      "message": "is it possible to add a test with non-nullptr?",
+      "range": {
+        "startLine": 135,
+        "startChar": 42,
+        "endLine": 135,
+        "endChar": 49
+      },
+      "revId": "92aa99afb6f43672913033459ea550f75581aafe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
