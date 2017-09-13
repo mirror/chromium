@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "33cde89a_1535a12b",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-13T08:43:31Z",
+      "side": 1,
+      "message": "nit: /* runs twice for headers and then data */",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0220c440_5f98bd1e",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 23
@@ -13,6 +30,74 @@
       "writtenOn": "2017-09-13T06:02:44Z",
       "side": 1,
       "message": "TODO(nhiroki): Move this function after OnWriteHeadersComplete() for the declaration order.",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d2a5a5e_dde2698c",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-13T08:43:31Z",
+      "side": 1,
+      "message": "numeric_limits\u003csize_t\u003e is just too big, could we use a realistic number here?",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3625b8ca_e98a4198",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-13T08:43:31Z",
+      "side": 1,
+      "message": "...asynchronously ?",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee6a1705_1f75e0cf",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-13T08:43:31Z",
+      "side": 1,
+      "message": "nit: \u0027a controller\u0027 -\u003e \u0027the controller\u0027 ?\n\n\u0027controller\u0027 in this context feels slightly weird to me (though we\u0027re trying to converge on to the word)... just \u0027to the service worker context in a renderer process\" work?",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026aba7a_e185b193",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-13T08:43:31Z",
+      "side": 1,
+      "message": "...returns kDummyHeaders with kDummyBody to any request.",
       "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
