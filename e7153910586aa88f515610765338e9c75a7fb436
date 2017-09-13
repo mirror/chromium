@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "2e5ee531_1ac95880",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-13T14:23:22Z",
+      "side": 1,
+      "message": "Ah true, and whatever we do it\u0027s always possible that first sequence in queue runs last (i.e. gets assigned to a thread which happens to get descheduled for a while)",
+      "parentUuid": "96ac0b34_3d0fad36",
+      "revId": "e7153910586aa88f515610765338e9c75a7fb436",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff1e759c_3ae6ee98",
         "filename": "base/task_scheduler/task_tracker.h",
         "patchSetId": 6
