@@ -38,6 +38,7 @@ def main():
       else:
         p = list(p)[0]
       csv_writer.writerow([s.name, p, s.GetStoryDescription()])
+    print "Updated the csv file"
   return 0
 
 
