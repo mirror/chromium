@@ -22,6 +22,30 @@
       "revId": "5605a3d70df5978a0609bd5b4dfedb8421aaffa7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be43d269_9da6ed2e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetMetrics.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-13T22:09:14Z",
+      "side": 0,
+      "message": "Or we could check \u003d\u003d TYPE_PLACEHOLDER || TYPE_OTHER if we want to keep the assert",
+      "parentUuid": "9c6814ec_7d30ada0",
+      "range": {
+        "startLine": 129,
+        "startChar": 42,
+        "endLine": 129,
+        "endChar": 88
+      },
+      "revId": "5605a3d70df5978a0609bd5b4dfedb8421aaffa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
