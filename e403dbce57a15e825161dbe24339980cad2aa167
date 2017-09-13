@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "165c70fd_68e2e05b",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-13T11:27:34Z",
+      "side": 1,
+      "message": "nit: Either make this an enum class (which gives it a scope, so its members will be referenced as \"VoiceAction::ACTIVATE_FAKEBOX\" etc), or give them a common prefix like \"VOICE_ACTION_ACTIVATE_FAKEBOX\". (Generally I find enum class preferable, but I think that doesn\u0027t work very well with the histogram macros - you might have to explicitly cast to int.)",
+      "range": {
+        "startLine": 45,
+        "startChar": 18,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "e403dbce57a15e825161dbe24339980cad2aa167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41a969c8_e5a3f68f",
         "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
         "patchSetId": 4
@@ -16,6 +39,24 @@
       "revId": "e403dbce57a15e825161dbe24339980cad2aa167",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a81aa02_9fe663b3",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-13T11:27:34Z",
+      "side": 1,
+      "message": "Yeah, listing all the other cases here would be super inconvenient.\nUnfortunately it\u0027s now possible to add a new enum entry and forget to add it here, but I don\u0027t see any good way around that. Maybe add a NOTREACHED() so we\u0027ll at least get some runtime checks? (This shouldn\u0027t ever be called with a value that\u0027s not a voice action, right?)",
+      "parentUuid": "41a969c8_e5a3f68f",
+      "revId": "e403dbce57a15e825161dbe24339980cad2aa167",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
