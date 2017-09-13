@@ -77,11 +77,6 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
     const base::trace_event::MemoryDumpRequestArgs args;
     const RequestGlobalMemoryDumpCallback callback;
 
-    bool WantsMmaps() const;
-    bool WantsChromeDumps() const;
-    bool ShouldReturnMmaps() const;
-    bool ShouldReturnSummaries() const;
-
     struct PendingResponse {
       enum Type {
         kChromeDump,
@@ -101,7 +96,7 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
 
       base::ProcessId process_id;
       mojom::ProcessType process_type;
-      std::unique_ptr<base::trace_event::ProcessMemoryDump> chrome_dump;
+      mojom::ChromeMemDumpPtr chrome_dump_ptr;
       OSMemDumpMap os_dumps;
     };
 
@@ -131,11 +126,10 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   };
 
   // Callback of RequestChromeMemoryDump.
-  void OnChromeMemoryDumpResponse(
-      mojom::ClientProcess*,
-      bool success,
-      uint64_t dump_guid,
-      std::unique_ptr<base::trace_event::ProcessMemoryDump> chrome_memory_dump);
+  void OnChromeMemoryDumpResponse(mojom::ClientProcess*,
+                                  bool success,
+                                  uint64_t dump_guid,
+                                  mojom::ChromeMemDumpPtr chrome_memory_dump);
 
   // Callback of RequestOSMemoryDump.
   void OnOSMemoryDumpResponse(mojom::ClientProcess*,
