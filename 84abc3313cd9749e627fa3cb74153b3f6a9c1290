@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad55f066_a944037d",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T21:38:48Z",
+      "side": 1,
+      "message": "Maybe post a screenshot to the bug showing what happens when this dialog is absurdly small? Will the user still see the titlebar and close buttons?",
+      "revId": "84abc3313cd9749e627fa3cb74153b3f6a9c1290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3371be46_992d96c9",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T21:38:48Z",
+      "side": 1,
+      "message": "nit: match override order with base class order (put GetMinimumSize at top), ditto in cc.",
+      "revId": "84abc3313cd9749e627fa3cb74153b3f6a9c1290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
