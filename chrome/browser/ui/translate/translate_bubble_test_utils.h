@@ -15,10 +15,13 @@ namespace translate {
 namespace test_utils {
 
 // Obtain the TranslateModel associated with the current bubble.
-const TranslateBubbleModel* GetCurrentModel(Browser* browser);
+TranslateBubbleModel* GetCurrentModel(Browser* browser);
 
 // Presses 'Translate' on the currently open translate bubble.
 void PressTranslate(Browser* browser);
+
+// Presses 'Revert' on the currently opened translate bubble.
+void PressRevert(Browser* browser);
 
 }  // namespace test_utils
 

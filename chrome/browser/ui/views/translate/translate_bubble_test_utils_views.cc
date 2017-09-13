@@ -12,7 +12,7 @@ namespace translate {
 
 namespace test_utils {
 
-const TranslateBubbleModel* GetCurrentModel(Browser* browser) {
+TranslateBubbleModel* GetCurrentModel(Browser* browser) {
   DCHECK(browser);
   TranslateBubbleView* view = TranslateBubbleView::GetCurrentBubble();
   return view ? view->model() : nullptr;
@@ -23,6 +23,13 @@ void PressTranslate(Browser* browser) {
   TranslateBubbleView* bubble = TranslateBubbleView::GetCurrentBubble();
   DCHECK(bubble);
   bubble->HandleButtonPressed(TranslateBubbleView::BUTTON_ID_TRANSLATE);
+}
+
+void PressRevert(Browser* browser) {
+  DCHECK(browser);
+  TranslateBubbleView* bubble = TranslateBubbleView::GetCurrentBubble();
+  DCHECK(bubble);
+  bubble->HandleButtonPressed(TranslateBubbleView::BUTTON_ID_SHOW_ORIGINAL);
 }
 
 }  // namespace test_utils
