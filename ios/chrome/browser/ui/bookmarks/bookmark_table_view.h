@@ -91,6 +91,12 @@ class PrefRegistrySyncable;
 // Returns the currently selected edit nodes.
 - (const std::set<const bookmarks::BookmarkNode*>&)editNodes;
 
+// Returns the row position that is visible.
+- (CGFloat)contentPosition;
+
+// Scrolls the table view to the desired row position.
+- (void)setContentPosition:(CGFloat)position;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_BOOKMARKS_BOOKMARK_TABLE_VIEW_H_

@@ -244,6 +244,26 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
   return _editNodes;
 }
 
+- (CGFloat)contentPosition {
+  UITableViewCell* cell = [[self.tableView visibleCells] firstObject];
+  if (cell) {
+    NSIndexPath* indexPath = [self.tableView indexPathForCell:cell];
+    if (indexPath.section == self.bookmarksSection) {
+      // Cache the content position only if the bookmakrs section is visible.
+      return indexPath.row;
+    }
+  }
+  return 0;
+}
+
+- (void)setContentPosition:(CGFloat)position {
+  NSIndexPath* path =
+      [NSIndexPath indexPathForRow:position inSection:self.bookmarksSection];
+  [self.tableView scrollToRowAtIndexPath:path
+                        atScrollPosition:UITableViewScrollPositionTop
+                                animated:NO];
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView {
