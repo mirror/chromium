@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59df9ffe_087cac68",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-13T20:40:54Z",
+      "side": 1,
+      "message": "My understanding is that the scope should never be empty. I suggest returning the start URL from the meta data if the scope URL is empty",
+      "revId": "fe3672e5e0f7d651c30692eefcda2e7e9477e83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "184360fe_7b3c6cc7",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-13T20:40:54Z",
+      "side": 1,
+      "message": "TextUtils#isEmpty() checks whether the parameter is null :) (https://cs.corp.google.com/android/frameworks/base/core/java/android/text/TextUtils.java?q\u003dTextUtils\u0026dr\u003dCSs\u0026l\u003d78)",
+      "revId": "fe3672e5e0f7d651c30692eefcda2e7e9477e83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80bbb95f_d2be8ef3",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-13T20:40:54Z",
+      "side": 1,
+      "message": "Nit: You might as well combine lines 145 and 146 into one line",
+      "revId": "fe3672e5e0f7d651c30692eefcda2e7e9477e83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32672be7_e061006a",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-13T20:40:54Z",
+      "side": 1,
+      "message": "Can we delete lines 152 - 165 and just\n\nreturn intentStartUrl;\n\nhere?\n\nThis would mean that we don\u0027t do any URL rewriting unless WebApkMetaDataKeys.LOGGED_INTENT_URL_PARAM is specified\n\nI talked to Yaron and he is ok with this idea",
+      "revId": "fe3672e5e0f7d651c30692eefcda2e7e9477e83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25292121_bdf514e5",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-13T20:40:54Z",
+      "side": 1,
+      "message": "Should we check the scheme as well? Realistically, we could instead check\n\nreturn url.startsWith(scopeUrl)\n\nBased on my understanding of Uri#parse(), Uri#parse() is really dumb. (https://cs.corp.google.com/aosp-master/frameworks/base/core/java/android/net/Uri.java?q\u003dandroid.net.Uri.java\u0026dr) For instance, your implementation will return false for\nurl \u003d \"https://www.google.com\" scopeUrl \u003d \"https://www.google.com/\"\n\n(gurl.h is much much smarter)",
+      "revId": "fe3672e5e0f7d651c30692eefcda2e7e9477e83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
