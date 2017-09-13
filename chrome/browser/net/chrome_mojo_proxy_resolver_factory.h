@@ -5,13 +5,11 @@
 #ifndef CHROME_BROWSER_NET_CHROME_MOJO_PROXY_RESOLVER_FACTORY_H_
 #define CHROME_BROWSER_NET_CHROME_MOJO_PROXY_RESOLVER_FACTORY_H_
 
-#include <stddef.h>
-
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
-#include "base/timer/timer.h"
-#include "net/proxy/mojo_proxy_resolver_factory.h"
+#include "mojo/public/cpp/bindings/binding_set.h"
+#include "net/interfaces/proxy_resolver_service.mojom.h"
 
 #if !defined(OS_ANDROID)
 namespace content {
@@ -24,49 +22,48 @@ template <typename Type>
 struct DefaultSingletonTraits;
 }  // namespace base
 
-// A factory used to create connections to Mojo proxy resolver services.  On
-// Android, the proxy resolvers will run in the browser process, and on other
-// platforms, they'll all be run in the same utility process. Utility process
-// crashes are detected and the utility process is automatically restarted.
-class ChromeMojoProxyResolverFactory : public net::MojoProxyResolverFactory {
+// A ProxyResolverFactory that acts as a proxy for another ProxyResolverFactory
+// that does the actual work.  On Android, the proxy resolvers will run in the
+// browser process, and on other platforms, they'll all be run in the same
+// utility process. The utility process is started as needed. The main purpose
+// of this class is so that the utility process will only be run when needed.
+class ChromeMojoProxyResolverFactory
+    : public net::interfaces::ProxyResolverFactory {
  public:
   static ChromeMojoProxyResolverFactory* GetInstance();
 
-  // Overridden from net::MojoProxyResolverFactory:
-  std::unique_ptr<base::ScopedClosureRunner> CreateResolver(
-      const std::string& pac_script,
-      mojo::InterfaceRequest<net::interfaces::ProxyResolver> req,
-      net::interfaces::ProxyResolverFactoryRequestClientPtr client) override;
+  // Binds a factory request to |this|.
+  void BindRequest(
+      net::interfaces::ProxyResolverFactoryRequest factory_request);
 
  private:
   friend struct base::DefaultSingletonTraits<ChromeMojoProxyResolverFactory>;
+
   ChromeMojoProxyResolverFactory();
-  ~ChromeMojoProxyResolverFactory() override;
+  ~ChromeMojoProxyResolverFactory();
 
   // Creates the proxy resolver factory. On desktop, creates a new utility
   // process before creating it out of process. On Android, creates it on the
   // current thread.
   void CreateFactory();
 
-  // Destroys |resolver_factory_|.
-  void DestroyFactory();
+  // net::interfaces::ProxyResolverFactory implementation:
+  void CreateResolver(
+      const std::string& pac_script,
+      mojo::InterfaceRequest<net::interfaces::ProxyResolver> req,
+      net::interfaces::ProxyResolverFactoryRequestClientPtr client) override;
 
-  // Invoked each time a proxy resolver is destroyed.
-  void OnResolverDestroyed();
-
-  // Invoked once an idle timeout has elapsed after all proxy resolvers are
-  // destroyed.
-  void OnIdleTimeout();
+  mojo::BindingSet<net::interfaces::ProxyResolverFactory> binding_set_;
 
   net::interfaces::ProxyResolverFactoryPtr resolver_factory_;
+
+  // The real ProxyResolverFactory that, on desktop platforms, lives in the
+  // utility process.
+  net::interfaces::ProxyResolverFactoryPtr utility_process_resolver_factory_;
 
 #if !defined(OS_ANDROID)
   base::WeakPtr<content::UtilityProcessHost> weak_utility_process_host_;
 #endif
-
-  size_t num_proxy_resolvers_ = 0;
-
-  base::OneShotTimer idle_timer_;
 
   base::ThreadChecker thread_checker_;
 
