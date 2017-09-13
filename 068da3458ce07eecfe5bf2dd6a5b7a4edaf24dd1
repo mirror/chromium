@@ -34,6 +34,24 @@
       "revId": "068da3458ce07eecfe5bf2dd6a5b7a4edaf24dd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6db45f0a_0791b426",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-13T18:15:37Z",
+      "side": 1,
+      "message": "Doing the change that I am suggesting does not increase the amount of SQL calls. Your current code does all of the SQL as part of one function. I am suggesting doing it as part of two. The additional thread hopping is ok in my opinion",
+      "parentUuid": "bd699da3_b77a8c27",
+      "revId": "068da3458ce07eecfe5bf2dd6a5b7a4edaf24dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
