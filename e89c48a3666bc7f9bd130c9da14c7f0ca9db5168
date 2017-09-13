@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31f1db68_f27e52a5",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-13T06:00:25Z",
+      "side": 0,
+      "message": "IIUC, we mistakenly leaked the obtained HSTRING reference here.\n(I can not find a clear document to know if get_Id increases the reference internally or not, but calling WindowsDeleteString at the last line seems to work fine.\n\nProbably, I want to rewrite the last line as follows;\n\n  ScopedHString string(result);\n  return string::GetString();\n\nYou need to have another explicit constructor to take HSTRING and it\u0027s fine to call WindowsDeleteString for the HSTRING in the destructor.",
+      "revId": "e89c48a3666bc7f9bd130c9da14c7f0ca9db5168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e073e56_5492104f",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-13T06:00:25Z",
+      "side": 0,
+      "message": "ditto",
+      "revId": "e89c48a3666bc7f9bd130c9da14c7f0ca9db5168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f02f762_a399a124",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-13T06:00:25Z",
+      "side": 0,
+      "message": "ditto",
+      "revId": "e89c48a3666bc7f9bd130c9da14c7f0ca9db5168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "575fba72_b9ce8133",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-13T06:00:25Z",
+      "side": 1,
+      "message": "Having this static method here does not sound natural.\n\nHow about adding a constructor that takes HSTRING, making this non-static method, and change the signature to GetString() or ToString()?\n\nAlso, my caller side code in media/midi may have leaked HSTRING reference until today. See my comments in media/midi.",
+      "range": {
+        "startLine": 34,
+        "startChar": 33,
+        "endLine": 34,
+        "endChar": 48
+      },
+      "revId": "54a25749711ede6b0a6e6d0467e65f865e652b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
