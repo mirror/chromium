@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18409e6e_e37f5ca3",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-13T20:25:30Z",
+      "side": 1,
+      "message": "It looks like the text is now both an overlay element and viewport aware element. This might explain the text flashing as we are drawing the same element twice pre frame.",
+      "revId": "b3d0fa3880c6b269c27a670e68d917366e115564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ad08c4_7a28eb44",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-13T20:25:30Z",
+      "side": 1,
+      "message": "There is currently a bug and it is tracked in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d764090.\nIn short, we need to manually call\nbg-\u003eset_viewport_aware(true);\nbefore we add it as a child of viewport aware element.",
+      "revId": "b3d0fa3880c6b269c27a670e68d917366e115564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
