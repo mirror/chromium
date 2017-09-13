@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "530bcacc_4f61f343",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-13T22:38:20Z",
+      "side": 1,
+      "message": "Let\u0027s also attribute to a throttling bug which talks about other content embedders, as this CL should fix it.",
+      "revId": "674ed9eb6c8e9853e0aa34505e7641b2b155d1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d6d787d_b8ae2422",
+        "filename": "content/browser/devtools/protocol/network_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-13T22:38:20Z",
+      "side": 1,
+      "message": "You are doing this for every page, while I think it should be done once. Let\u0027s move to a singleton place or guard with a flag?",
+      "revId": "674ed9eb6c8e9853e0aa34505e7641b2b155d1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b0aef7c_71b53c9e",
+        "filename": "content/common/devtools/devtools_network_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-13T22:38:20Z",
+      "side": 1,
+      "message": "Use base::Singleton\u003c\u003e instead?",
+      "revId": "674ed9eb6c8e9853e0aa34505e7641b2b155d1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a2fde3_4e322099",
+        "filename": "content/common/devtools/devtools_network_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-13T22:38:20Z",
+      "side": 1,
+      "message": "Modern guidance is map or flat_map.",
+      "range": {
+        "startLine": 44,
+        "startChar": 11,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "674ed9eb6c8e9853e0aa34505e7641b2b155d1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8821f197_f5f4c56c",
+        "filename": "content/common/devtools/devtools_network_transaction.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-13T22:38:20Z",
+      "side": 1,
+      "message": "explicit",
+      "revId": "674ed9eb6c8e9853e0aa34505e7641b2b155d1aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
