@@ -58,6 +58,10 @@ import org.chromium.ui.display.VirtualDisplayAndroid;
 @JNINamespace("vr_shell")
 public class VrShellImpl
         extends GvrLayout implements VrShell, SurfaceHolder.Callback, FullscreenListener {
+//    static {
+//        System.loadLibrary("gvr_audio");
+//    }
+
     private static final String TAG = "VrShellImpl";
     private static final float INCHES_TO_METERS = 0.0254f;
 

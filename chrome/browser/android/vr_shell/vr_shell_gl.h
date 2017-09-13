@@ -16,6 +16,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/single_thread_task_runner.h"
 #include "chrome/browser/android/vr_shell/android_vsync_helper.h"
+#include "chrome/browser/android/vr_shell/gvr_keyboard.h"
 #include "chrome/browser/android/vr_shell/vr_controller.h"
 #include "chrome/browser/vr/content_input_delegate.h"
 #include "chrome/browser/vr/ui_input_manager.h"
@@ -90,6 +91,11 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   void OnTriggerEvent();
   void OnPause();
   void OnResume();
+  void DrawKeyboard(const gvr::Mat4f& head_pose,
+                    const gfx::Size& render_size,
+                    int viewport_offset,
+                    gvr::ClockTimePoint target_time);
+  void CreateKeyboard();
 
   scoped_refptr<base::SingleThreadTaskRunner> GetTaskRunner() {
     return task_runner_;
@@ -242,6 +248,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   bool is_exiting_ = false;
 
   std::unique_ptr<VrController> controller_;
+  gvr_keyboard_context* gvr_keyboard_;
+  std::mutex mutex_;
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
@@ -281,6 +289,8 @@ class VrShellGl : public device::mojom::VRPresentationProvider,
   AndroidVSyncHelper vsync_helper_;
 
   base::CancelableCallback<void()> webvr_frame_timeout_;
+
+  bool keyboard_enabled_ = false;
 
   base::WeakPtrFactory<VrShellGl> weak_ptr_factory_;
 

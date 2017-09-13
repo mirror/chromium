@@ -5,6 +5,7 @@
 #ifndef CHROME_BROWSER_VR_UI_RENDERER_H_
 #define CHROME_BROWSER_VR_UI_RENDERER_H_
 
+#include "chrome/browser/android/vr_shell/gvr_util.h"
 #include "chrome/browser/vr/ui_input_manager.h"
 #include "ui/gfx/geometry/rect_f.h"
 #include "ui/gfx/transform.h"
@@ -35,6 +36,7 @@ struct RenderInfo {
     gfx::Transform view_matrix;
     gfx::Transform proj_matrix;
     gfx::Transform view_proj_matrix;
+    gvr::Recti pixel_rect;
   };
 
   gfx::Transform head_pose;
