@@ -772,19 +772,25 @@ if (!is_ios) {
       "//build/win:default_exe_manifest",
     ]
   }
+}
 
-  executable("filter_fuzz_stub") {
-    testonly = true
-    sources = [
-      "tools/filter_fuzz_stub/filter_fuzz_stub.cc",
-    ]
+executable("filter_fuzz_stub") {
+  testonly = true
+  sources = [
+    "tools/filter_fuzz_stub/filter_fuzz_stub.cc",
+  ]
 
-    deps = [
-      ":skia",
-      "//base",
-      "//base/test:test_support",
-      "//build/config:exe_and_shlib_deps",
-      "//build/win:default_exe_manifest",
-    ]
-  }
+  deps = [
+    ":skia",
+    "//base",
+    "//base/test:test_support",
+    "//build/config:exe_and_shlib_deps",
+    "//build/win:default_exe_manifest",
+  ]
+}
+
+group("fuzzers") {
+  deps = [
+    "tools/fuzzers",
+  ]
 }
