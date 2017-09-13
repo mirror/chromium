@@ -339,13 +339,6 @@ NOINLINE void ResetThread_FILE() {
   BrowserThreadImpl::StopRedirectionOfThreadID(BrowserThread::FILE);
 }
 
-NOINLINE void ResetThread_FILE_USER_BLOCKING() {
-  volatile int inhibit_comdat = __LINE__;
-  ALLOW_UNUSED_LOCAL(inhibit_comdat);
-  BrowserThreadImpl::StopRedirectionOfThreadID(
-      BrowserThread::FILE_USER_BLOCKING);
-}
-
 #if defined(OS_ANDROID)
 NOINLINE void ResetThread_PROCESS_LAUNCHER(
     std::unique_ptr<BrowserProcessSubThread> thread) {
@@ -1056,12 +1049,6 @@ int BrowserMainLoop::CreateThreads() {
             "Thread", "BrowserThread::DB");
         non_ui_non_io_task_runner_traits = kUserVisibleTraits;
         break;
-      case BrowserThread::FILE_USER_BLOCKING:
-        TRACE_EVENT_BEGIN1("startup",
-            "BrowserMainLoop::CreateThreads:start",
-            "Thread", "BrowserThread::FILE_USER_BLOCKING");
-        non_ui_non_io_task_runner_traits = kUserBlockingTraits;
-        break;
       case BrowserThread::FILE:
         TRACE_EVENT_BEGIN1("startup",
             "BrowserMainLoop::CreateThreads:start",
@@ -1312,12 +1299,6 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
           if (save_file_manager_)
             save_file_manager_->Shutdown();
           ResetThread_FILE();
-          break;
-        }
-        case BrowserThread::FILE_USER_BLOCKING: {
-          TRACE_EVENT0("shutdown",
-                       "BrowserMainLoop::Subsystem:FileUserBlockingThread");
-          ResetThread_FILE_USER_BLOCKING();
           break;
         }
         case BrowserThread::PROCESS_LAUNCHER: {

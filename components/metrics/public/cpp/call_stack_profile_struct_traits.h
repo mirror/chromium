@@ -232,8 +232,6 @@ struct EnumTraits<metrics::mojom::Thread,
         return metrics::mojom::Thread::UI_THREAD;
       case metrics::CallStackProfileParams::Thread::FILE_THREAD:
         return metrics::mojom::Thread::FILE_THREAD;
-      case metrics::CallStackProfileParams::Thread::FILE_USER_BLOCKING_THREAD:
-        return metrics::mojom::Thread::FILE_USER_BLOCKING_THREAD;
       case metrics::CallStackProfileParams::Thread::PROCESS_LAUNCHER_THREAD:
         return metrics::mojom::Thread::PROCESS_LAUNCHER_THREAD;
       case metrics::CallStackProfileParams::Thread::CACHE_THREAD:
@@ -264,10 +262,6 @@ struct EnumTraits<metrics::mojom::Thread,
         return true;
       case metrics::mojom::Thread::FILE_THREAD:
         *out = metrics::CallStackProfileParams::Thread::FILE_THREAD;
-        return true;
-      case metrics::mojom::Thread::FILE_USER_BLOCKING_THREAD:
-        *out =
-            metrics::CallStackProfileParams::Thread::FILE_USER_BLOCKING_THREAD;
         return true;
       case metrics::mojom::Thread::PROCESS_LAUNCHER_THREAD:
         *out = metrics::CallStackProfileParams::Thread::PROCESS_LAUNCHER_THREAD;
