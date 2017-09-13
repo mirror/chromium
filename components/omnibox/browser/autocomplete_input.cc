@@ -496,13 +496,14 @@ int AutocompleteInput::NumNonHostComponents(const url::Parsed& parts) {
 }
 
 // static
-bool AutocompleteInput::HasHTTPScheme(const base::string16& input) {
+bool AutocompleteInput::ShouldPreserveSchemes(const base::string16& input) {
   std::string utf8_input(base::UTF16ToUTF8(input));
   url::Component scheme;
   if (url::FindAndCompareScheme(utf8_input, kViewSourceScheme, &scheme)) {
     utf8_input.erase(0, scheme.end() + 1);
   }
-  return url::FindAndCompareScheme(utf8_input, url::kHttpScheme, NULL);
+  return url::FindAndCompareScheme(utf8_input, url::kHttpScheme, nullptr) ||
+         url::FindAndCompareScheme(utf8_input, url::kHttpsScheme, nullptr);
 }
 
 void AutocompleteInput::UpdateText(const base::string16& text,

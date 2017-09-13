@@ -313,3 +313,19 @@ TEST(AutocompleteInputTest, InputTypeWithCursorPosition) {
               input.cursor_position());
   }
 }
+
+TEST(AutocompleteInput, ShouldPreserveSchemes) {
+  struct test_data {
+    const std::string input;
+    bool expected_should_preserve_schemes;
+  } input_cases[] = {
+      {"", false}, {"foobar", false},
+  };
+
+  for (auto& input_case : input_cases) {
+    SCOPED_TRACE(input_case.input);
+    EXPECT_EQ(input_case.expected_should_preserve_schemes,
+              AutocompleteInput::ShouldPreserveSchemes(
+                  base::ASCIIToUTF16(input_case.input)));
+  }
+}
