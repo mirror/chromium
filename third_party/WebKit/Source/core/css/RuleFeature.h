@@ -178,6 +178,7 @@ class CORE_EXPORT RuleFeatureSet {
 
   void UpdateInvalidationSets(const RuleData&);
   void UpdateInvalidationSetsForContentAttribute(const RuleData&);
+  void EnsureContentAttributeInvalidationSet(const CSSValue& content_value);
 
   struct InvalidationSetFeatures {
     DISALLOW_NEW();

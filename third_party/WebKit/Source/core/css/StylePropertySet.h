@@ -165,6 +165,7 @@ class CSSLazyPropertyParser
   CSSLazyPropertyParser() {}
   virtual ~CSSLazyPropertyParser() {}
   virtual StylePropertySet* ParseProperties() = 0;
+  virtual HeapVector<CSSProperty> ParseContentValues() = 0;
   DECLARE_VIRTUAL_TRACE();
 };
 
