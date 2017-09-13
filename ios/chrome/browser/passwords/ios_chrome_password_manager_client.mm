@@ -59,6 +59,9 @@ IOSChromePasswordManagerClient::IOSChromePasswordManagerClient(
       helper_(this) {
   saving_passwords_enabled_.Init(
       password_manager::prefs::kCredentialsEnableService, GetPrefs());
+  first_run_experience_shown_.Init(
+      password_manager::prefs::kWasAutoSignInFirstRunExperienceShown,
+      GetPrefs());
 }
 
 IOSChromePasswordManagerClient::~IOSChromePasswordManagerClient() = default;
@@ -133,7 +136,7 @@ void IOSChromePasswordManagerClient::NotifyUserAutoSignin(
     const GURL& origin) {
   DCHECK(!local_forms.empty());
   helper_.NotifyUserAutoSignin();
-  // TODO(crbug.com/435048): Show dialog to inform user about auto sign-in.
+  [delegate_ showAutosigninSnackBar:std::move(local_forms[0])];
 }
 
 void IOSChromePasswordManagerClient::NotifyUserCouldBeAutoSignedIn(
