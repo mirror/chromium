@@ -16,6 +16,24 @@
       "revId": "63e2ee31da295a9ffa463c0c3dc7fc7098d7f356",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df435825_3c062d53",
+        "filename": "build/android/pylib/android/logdog_logcat_monitor.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-13T14:51:49Z",
+      "side": 1,
+      "message": "I think that\u0027s already checked by the \"if data\" line. \n\nIf deobfuscate_func returned an empty list here, that would be a bug, so probably best not to add a check for it or else risk legitimizing this behavour :P",
+      "parentUuid": "4552a602_5b7b019c",
+      "revId": "63e2ee31da295a9ffa463c0c3dc7fc7098d7f356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
