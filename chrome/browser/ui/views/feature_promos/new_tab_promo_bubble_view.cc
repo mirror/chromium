@@ -9,15 +9,29 @@
 #include "components/variations/variations_associated_data.h"
 
 // static
+NewTabPromoBubbleView* NewTabPromoBubbleView::new_tab_bubble_ = nullptr;
+
+// static
 NewTabPromoBubbleView* NewTabPromoBubbleView::CreateOwned(
-    const gfx::Rect& anchor_rect) {
-  return new NewTabPromoBubbleView(anchor_rect);
+    views::View* anchor_view) {
+  new_tab_bubble_ = new NewTabPromoBubbleView(anchor_view);
+  return new_tab_bubble_;
 }
 
-NewTabPromoBubbleView::NewTabPromoBubbleView(const gfx::Rect& anchor_rect)
-    : FeaturePromoBubbleView(anchor_rect,
+// static
+bool NewTabPromoBubbleView::CloseCurrentBubble() {
+  if (new_tab_bubble_) {
+    new_tab_bubble_->CloseBubble();
+    return true;
+  }
+  return false;
+}
+
+NewTabPromoBubbleView::NewTabPromoBubbleView(views::View* anchor_view)
+    : FeaturePromoBubbleView(anchor_view,
                              views::BubbleBorder::LEFT_TOP,
-                             GetStringSpecifier()) {}
+                             GetStringSpecifier(),
+                             false) {}
 
 NewTabPromoBubbleView::~NewTabPromoBubbleView() = default;
 
