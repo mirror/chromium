@@ -145,12 +145,6 @@ int WebMainLoop::CreateThreads(
     base::Thread::Options options;
 
     switch (thread_id) {
-      // TODO(rohitrao): We probably do not need all of these threads.  Remove
-      // the ones that serve no purpose.  http://crbug.com/365909
-      case WebThread::DB:
-        thread_to_start = &db_thread_;
-        options.timer_slack = base::TIMER_SLACK_MAXIMUM;
-        break;
       case WebThread::IO:
         thread_to_start = &io_thread_;
         options = io_message_loop_options;
@@ -222,9 +216,6 @@ void WebMainLoop::ShutdownThreadsAndCleanUp() {
     //
     // - (Not sure why DB stops last.)
     switch (thread_id) {
-      case WebThread::DB:
-        db_thread_.reset();
-        break;
       case WebThread::IO:
         io_thread_.reset();
         break;
