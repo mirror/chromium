@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d19d6568_663a55cc",
+        "filename": "components/favicon/content/content_favicon_driver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-09-13T11:24:32Z",
+      "side": 1,
+      "message": "I could not reproduce the issue you describe. Can you elaborate the steps?\n\nI did once achieve to observe https://webapk-test.appspot.com/favicon.ico as reported icon (i.e. default path) by manually stopping the load (with simulated slow 3G network), but I can no longer reproduce. This is a problematic scenario because it could lead to a 404 (and assuming no favicon was cached for the page URL or expired, and assuming that content reports a 404 despite an stopped navigation) and hence the removal of the favicon. Having said that, if this is the only problem we have, isn\u0027t it corner-case enough to live with it?\n\nFrom what I read in the code, in most circumstances, if \"Stop\" is used while the page is loading, DidUpdateFaviconURL() will *not* be called, because of WebLocalFrameImpl::IconURLs() returning an empty icon list (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp?dr\u003dCSs\u0026l\u003d552) and hence RenderFrameImpl::SendUpdateFaviconURL() returning early (https://cs.chromium.org/chromium/src/content/renderer/render_frame_impl.cc?type\u003dcs\u0026l\u003d3910).\n\nI would be happier if we could capture this in a browser test, but it seems tricky.",
+      "parentUuid": "8185ae46_88abbbbe",
+      "revId": "7523cc6ce00be6fa9854297e2997276d22539d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a48a8c2_7228e6b0",
         "filename": "components/favicon/core/favicon_handler.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-12T19:45:41Z",
       "side": 1,
       "message": "For http and https URLs |candidates_| will never be empty because Document::IconURLs() will append /favicon.ico as a candidate",
+      "revId": "7523cc6ce00be6fa9854297e2997276d22539d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c910d2_730b4fcf",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-09-13T11:24:32Z",
+      "side": 1,
+      "message": "Your observation is not accurate because |candidates_| contains the filtered list per type, so it\u0027s perfectly possible that the list is empty.",
+      "parentUuid": "8a48a8c2_7228e6b0",
       "revId": "7523cc6ce00be6fa9854297e2997276d22539d1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
