@@ -37,6 +37,7 @@ class DeviceChooserContentView : public views::View,
   // views::View:
   void Layout() override;
   gfx::Size CalculatePreferredSize() const override;
+  gfx::Size GetMinimumSize() const override;
 
   // ui::TableModel:
   int RowCount() override;

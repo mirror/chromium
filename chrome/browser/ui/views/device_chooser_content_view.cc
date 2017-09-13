@@ -115,6 +115,10 @@ gfx::Size DeviceChooserContentView::CalculatePreferredSize() const {
   return gfx::Size(402, 320);
 }
 
+gfx::Size DeviceChooserContentView::GetMinimumSize() const {
+  return gfx::Size();
+}
+
 int DeviceChooserContentView::RowCount() {
   // When there are no devices, the table contains a message saying there
   // are no devices, so the number of rows is always at least 1.
