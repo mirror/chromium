@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3151ab08_b95fd683",
+        "filename": "chrome/profiling/json_exporter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-13T00:05:44Z",
+      "side": 1,
+      "message": "can you allocate some differently sized objects with the same stack trace to confirm the new logic??\n\nAlso, this would be good to check via our memlog_browsertest.",
+      "revId": "d735c1b2222c18b2f86524bdecf841820bb23eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
