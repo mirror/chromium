@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa140f85_ffd639b2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-13T17:44:46Z",
+      "side": 1,
+      "message": "I think this is something we can do for the ViewHighlighter. Before the highlight logic occurs, get the current padding in all directions. After highlighting is done, reapply it. I imagine this won\u0027t be the only case where padding breaks.",
+      "range": {
+        "startLine": 194,
+        "startChar": 8,
+        "endLine": 194,
+        "endChar": 66
+      },
+      "revId": "972de8a84b17d7c0c2db648de24953e030669e26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
