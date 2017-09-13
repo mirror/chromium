@@ -4,6 +4,7 @@
 
 import("//build/config/ui.gni")
 import("//components/viz/viz.gni")
+import("//gpu/vulkan/features.gni")
 
 config("viz_service_implementation") {
 }
@@ -101,6 +102,9 @@ viz_component("service") {
   ]
 
   defines = [ "VIZ_SERVICE_IMPLEMENTATION" ]
+  if (enable_vulkan) {
+    defines += [ "SK_VULKAN=1" ]
+  }
 
   configs = [ "//build/config/compiler:no_size_t_to_int_warning" ]
 
@@ -146,6 +150,10 @@ viz_component("service") {
       "display_embedder/compositor_overlay_candidate_validator_android.cc",
       "display_embedder/compositor_overlay_candidate_validator_android.h",
     ]
+  }
+
+  if (enable_vulkan) {
+    deps += [ "//gpu/vulkan" ]
   }
 
   if (use_ozone) {

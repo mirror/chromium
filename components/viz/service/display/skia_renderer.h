@@ -9,7 +9,19 @@
 #include "cc/cc_export.h"
 #include "cc/output/direct_renderer.h"
 #include "components/viz/service/viz_service_export.h"
+#include "gpu/vulkan/features.h"
 #include "ui/latency/latency_info.h"
+
+#if BUILDFLAG(ENABLE_VULKAN)
+#include "components/viz/common/gpu/vulkan_in_process_context_provider.h"
+#include "gpu/vulkan/vulkan_device_queue.h"
+#include "gpu/vulkan/vulkan_implementation.h"
+#include "gpu/vulkan/vulkan_surface.h"
+#include "gpu/vulkan/vulkan_swap_chain.h"
+#include "third_party/skia/include/gpu/GrContext.h"
+#include "third_party/skia/include/gpu/vk/GrVkBackendContext.h"
+#include "third_party/skia/include/gpu/vk/GrVkTypes.h"
+#endif
 
 class SkNWayCanvas;
 
@@ -108,6 +120,9 @@ class VIZ_SERVICE_EXPORT SkiaRenderer : public cc::DirectRenderer {
 
   gfx::Rect swap_buffer_rect_;
   std::vector<gfx::Rect> swap_content_bounds_;
+#if BUILDFLAG(ENABLE_VULKAN)
+  GrContext* gr_context;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(SkiaRenderer);
 };

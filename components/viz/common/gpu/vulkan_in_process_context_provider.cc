@@ -8,7 +8,11 @@
 #if BUILDFLAG(ENABLE_VULKAN)
 #include "gpu/vulkan/vulkan_device_queue.h"
 #include "gpu/vulkan/vulkan_implementation.h"
+#include "third_party/skia/include/gpu/vk/GrVkInterface.h"
 #endif  // BUILDFLAG(ENABLE_VULKAN)
+
+#define GET_PROC(F) f##F = (PFN_vk##F)vkGetInstanceProcAddr(instance, "vk" #F)
+#define GET_DEV_PROC(F) f##F = (PFN_vk##F)vkGetDeviceProcAddr(device, "vk" #F)
 
 namespace viz {
 
@@ -28,6 +32,20 @@ VulkanInProcessContextProvider::Create() {
 #endif
 }
 
+#if BUILDFLAG(ENABLE_VULKAN)
+GrVkInterface::GetProc make_unified_getter(
+    const GrVkInterface::GetInstanceProc& iproc,
+    const GrVkInterface::GetDeviceProc& dproc) {
+  return [&iproc, &dproc](const char* proc_name, VkInstance instance,
+                          VkDevice device) {
+    if (device != VK_NULL_HANDLE) {
+      return dproc(device, proc_name);
+    }
+    return iproc(instance, proc_name);
+  };
+}
+#endif
+
 bool VulkanInProcessContextProvider::Initialize() {
 #if BUILDFLAG(ENABLE_VULKAN)
   DCHECK(!device_queue_);
@@ -41,10 +59,47 @@ bool VulkanInProcessContextProvider::Initialize() {
   }
 
   device_queue_ = std::move(device_queue);
+  uint32_t featureFlags = 0;
+  featureFlags = featureFlags | kGeometryShader_GrVkFeatureFlag |
+                 kDualSrcBlend_GrVkFeatureFlag |
+                 kSampleRateShading_GrVkFeatureFlag;
+  uint32_t extensionFlags = 0;
+#if !defined(USE_WAYLAND)
+  extensionFlags = extensionFlags | kEXT_debug_report_GrVkExtensionFlag |
+                   kKHR_surface_GrVkExtensionFlag |
+                   kKHR_swapchain_GrVkExtensionFlag |
+                   kKHR_xcb_surface_GrVkExtensionFlag;
+#else
+  extensionFlags = extensionFlags | kEXT_debug_report_GrVkExtensionFlag |
+                   kKHR_surface_GrVkExtensionFlag |
+                   kKHR_xcb_surface_GrVkExtensionFlag;
+#endif
+  GrVkBackendContext* backend_context = new GrVkBackendContext();
+  backend_context->fInstance = device_queue_->GetVulkanInstance();
+  backend_context->fPhysicalDevice = device_queue_->GetVulkanPhysicalDevice();
+  backend_context->fDevice = device_queue_->GetVulkanDevice();
+  backend_context->fQueue = device_queue_->GetVulkanQueue();
+  backend_context->fGraphicsQueueIndex = device_queue_->GetVulkanQueueIndex();
+  backend_context->fMinAPIVersion = VK_MAKE_VERSION(1, 0, 8);
+  backend_context->fExtensions = extensionFlags;
+  backend_context->fFeatures = featureFlags;
+  auto interface = sk_make_sp<GrVkInterface>(
+      make_unified_getter(vkGetInstanceProcAddr, vkGetDeviceProcAddr),
+      backend_context->fInstance, backend_context->fDevice,
+      backend_context->fExtensions);
+  backend_context->fInterface.reset(interface.release());
+  backend_context->fOwnsInstanceAndDevice = false;
+  fBackendContext_.reset(backend_context);
+  gr_context = GrContext::Create(kVulkan_GrBackend,
+                                 (GrBackendContext)fBackendContext_.get());
   return true;
 #else
   return false;
 #endif
+}
+
+GrContext* VulkanInProcessContextProvider::getGrContext() {
+  return gr_context;
 }
 
 void VulkanInProcessContextProvider::Destroy() {

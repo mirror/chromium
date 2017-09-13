@@ -39,6 +39,7 @@ class ClientLayerTreeFrameSink : public cc::LayerTreeFrameSink,
 
   ClientLayerTreeFrameSink(
       scoped_refptr<VulkanContextProvider> vulkan_context_provider,
+      SharedBitmapManager* shared_bitmap_manager,
       std::unique_ptr<SyntheticBeginFrameSource> synthetic_begin_frame_source,
       mojom::CompositorFrameSinkPtrInfo compositor_frame_sink_info,
       mojom::CompositorFrameSinkClientRequest client_request,

@@ -541,6 +541,7 @@ skip_child_includes = [
   'testing',
   'v8',
   'win8',
+  'components',
 ]
 
 
