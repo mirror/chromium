@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1f9cebd_bce1886e",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T19:21:57Z",
+      "side": 1,
+      "message": "I think the recent request was to remove the button completely.",
+      "range": {
+        "startLine": 537,
+        "startChar": 18,
+        "endLine": 537,
+        "endChar": 28
+      },
+      "revId": "0519abfd61c943da90b1526251e7588850efd03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f97aaa1c_2c8960f7",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T19:21:57Z",
+      "side": 1,
+      "message": "Seems like OnUsernameEdited and OnPasswordSelected are better be merged.",
+      "range": {
+        "startLine": 550,
+        "startChar": 24,
+        "endLine": 550,
+        "endChar": 40
+      },
+      "revId": "0519abfd61c943da90b1526251e7588850efd03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
