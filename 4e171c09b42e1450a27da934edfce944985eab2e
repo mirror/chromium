@@ -16,6 +16,24 @@
       "revId": "4e171c09b42e1450a27da934edfce944985eab2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01e1184_0ef5a86a",
+        "filename": "third_party/blink/tools/move_blink_source.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-13T00:57:15Z",
+      "side": 1,
+      "message": "You\u0027re right, applying to_snake_case() in bindings scripts is more reliable, and we don\u0027t need fragile special handling like this. I confirmed all updated basenames in bindings/scripts/*.py are for #includes, so we can apply to_snake_case in normalize_and_sort_includes().\n\nMy concern was that we should not rewrite generated header files other than V8*.h, such as OriginTrials.h and RuntimeEnabledFeatures.h. move_blink_source.py won\u0027t rename them.\n\nI changed my mind so that bindings code modifies header basenames at runtime, and we hard-code exceptions for OriginTrials.h and RuntimeEnabledFeatures.h.  Also, we should snake them before the great mv and remove the exceptions.",
+      "parentUuid": "b4acc23e_c2490822",
+      "revId": "4e171c09b42e1450a27da934edfce944985eab2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
