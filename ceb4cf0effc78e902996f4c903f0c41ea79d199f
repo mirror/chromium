@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8b96fbf9_bef34ae1",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T09:03:53Z",
+      "side": 1,
+      "message": "Could you add basic documentation describing the flow of the load, maybe here or in the .h file?\n\n1. Make a network request.\n2. OnReceiveResponse is called. Write the headers to storage and forward to the client.\n3. OnStartLoadingResponseBody is called. Read from the data pipe. As data is read, write to storage and forward to the client. (of course that\u0027s not true: talk about the byte-to-byte check, etc)",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33cde89a_1535a12b",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 23
@@ -59,6 +76,40 @@
     },
     {
       "key": {
+        "uuid": "8b1aa4d6_7b70b437",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T09:03:53Z",
+      "side": 1,
+      "message": "Probably won\u0027t need to do this, that\u0027s only done for UMA and we can find a better way to log it.",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dab3a079_044b727c",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T09:03:53Z",
+      "side": 1,
+      "message": "mention where we continue in this case",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0220c440_5f98bd1e",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 23
@@ -70,6 +121,41 @@
       "writtenOn": "2017-09-13T06:02:44Z",
       "side": 1,
       "message": "TODO(nhiroki): Move this function after OnWriteHeadersComplete() for the declaration order.",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0bf958a_97213a54",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T09:03:53Z",
+      "side": 1,
+      "message": "If it works, suggest also adding headers like:\n\n/////////////////////////////////////////////\n// URLLoaderClient implementation\n//\n// .....\n//\n// end of URLLoaderClient implemetnation\n////////////////////////////////////////////",
+      "parentUuid": "0220c440_5f98bd1e",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65780956_3434062e",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T09:03:53Z",
+      "side": 1,
+      "message": "would it be nicer to make this a param to the constructor? decouples a bit.",
       "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -184,6 +270,23 @@
     },
     {
       "key": {
+        "uuid": "8d5bfb9c_9b128e27",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T09:03:53Z",
+      "side": 1,
+      "message": "I think this also will be helped by yhirano\u0027s work of providing an error code mechanism. AddMessageToConsole() to the embedded worker instead of something to the URLLoaderClient seems like a really hacky way to convey network error.",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee6a1705_1f75e0cf",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
         "patchSetId": 23
@@ -195,6 +298,80 @@
       "writtenOn": "2017-09-13T08:43:31Z",
       "side": 1,
       "message": "nit: \u0027a controller\u0027 -\u003e \u0027the controller\u0027 ?\n\n\u0027controller\u0027 in this context feels slightly weird to me (though we\u0027re trying to converge on to the word)... just \u0027to the service worker context in a renderer process\" work?",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911f119c_82b20b8d",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T09:03:53Z",
+      "side": 1,
+      "message": "does \"controller\" mean \"service worker\" here? Prefer just saying service worker.",
+      "range": {
+        "startLine": 28,
+        "startChar": 48,
+        "endLine": 28,
+        "endChar": 58
+      },
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf0cf27_dcdf5c18",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T09:03:53Z",
+      "side": 1,
+      "message": "I think we can remove lines 30-31 now",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a18cc2ad_0952e485",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T09:03:53Z",
+      "side": 1,
+      "message": "prefer Complete() or CommitCompleted() for this for consistency with SWURLLoader and SWSubresourceLoader. Finalize also sounds like a GC thing.",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00abcd0b_dd1b6945",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T09:03:53Z",
+      "side": 1,
+      "message": "I don\u0027t know if the \"forwarding\" is very helpful here. This URLLoader used to just forward a network response. Now it\u0027s looking like a normal URLLoader with a client. Seems it should just be called |client_|.",
       "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
