@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb3fbce7_4a7826e3",
+        "filename": "components/autofill/content/renderer/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-13T21:12:06Z",
+      "side": 1,
+      "message": "the reason I said this looks iffy is because renderer code is reaching into browser code; aren\u0027t those supposed to live in different processes? if you need code in both I believe it belongs in common.",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 42,
+        "endChar": 39
+      },
+      "revId": "c067cd5356935e0eb745fbf63e4d3230de6ec6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "badd9ce2_b7464215",
+        "filename": "components/autofill/content/renderer/password_generation_agent.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-13T21:12:06Z",
+      "side": 1,
+      "message": "could you add docs?",
+      "range": {
+        "startLine": 111,
+        "startChar": 7,
+        "endLine": 111,
+        "endChar": 35
+      },
+      "revId": "c067cd5356935e0eb745fbf63e4d3230de6ec6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
