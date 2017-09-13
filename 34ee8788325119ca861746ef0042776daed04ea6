@@ -16,6 +16,29 @@
       "revId": "34ee8788325119ca861746ef0042776daed04ea6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98466bcf_61f16bc9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-13T10:11:42Z",
+      "side": 1,
+      "message": "You can use URLUtil.isNetworkUrl: https://android.googlesource.com/platform/frameworks/base/+/refs/heads/master/core/java/android/webkit/URLUtil.java#248\n\nI also think that\u0027s the kind of check I\u0027d let the carousel do, the bottom sheet should not be responsible for things like that.",
+      "range": {
+        "startLine": 295,
+        "startChar": 40,
+        "endLine": 296,
+        "endChar": 88
+      },
+      "revId": "34ee8788325119ca861746ef0042776daed04ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
