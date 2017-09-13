@@ -34,6 +34,24 @@
       "revId": "c73379d1a241a238c7022bcefc7e777d1df4063d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bee93c08_6b017202",
+        "filename": "media/audio/alsa/alsa_input.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T14:46:31Z",
+      "side": 1,
+      "message": "My understanding is that at the moment ReadAudio() is called we estimate the delay by the number of frames queued up to this moment. When we popped first n frames from the queue and called OnData(), the delay for the next portion and next OnData() is \"n frames\" smaller (they were queued later).\nIf new frames arrive while we are going through the queue, it should not affect the delay of already queued frames.\nSo if alsa can get new frames asynchronously it\u0027s even more the reason to not call PcmAvailUpdate() on each iteration.",
+      "parentUuid": "5108bb99_11cf9301",
+      "revId": "c73379d1a241a238c7022bcefc7e777d1df4063d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
