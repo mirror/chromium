@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "6cdb61a0_9e1f61f5",
+        "filename": "components/offline_pages/core/model/get_pages_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-13T00:39:59Z",
+      "side": 1,
+      "message": "Is there a reason why this method has the transaction wrapping the db query but not the other ReadPages?",
+      "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b451bc50_21083ff6",
+        "filename": "components/offline_pages/core/model/get_pages_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-13T00:39:59Z",
+      "side": 1,
+      "message": "by adding a wildcard at the end, will \u0027www.wikipedia.org\u0027 and \u0027www.wikipedia.org/foo/bar/a.html\u0027 be matched? I think currently we\u0027re only doing exact matching between urls after removing fragment, am i missing anything?",
+      "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79970e32_dc659d10",
+        "filename": "components/offline_pages/core/model/get_pages_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-13T00:39:59Z",
+      "side": 1,
+      "message": "will \u0027\u003d default\u0027 do the same?",
+      "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5532382_ba77f5f5",
+        "filename": "components/offline_pages/core/model/get_pages_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-13T00:39:59Z",
+      "side": 1,
+      "message": "i was seeing \u0027std::move(callback_).Run(result)\u0027 somewhere else, is the std::move() preferred to have? I feel like it\u0027s not necessary.",
+      "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4373db28_cbf9518b",
         "filename": "components/offline_pages/core/model/get_pages_task.h",
         "patchSetId": 2
