@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "509832e6_05a0201b",
+        "filename": "skia/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-09-13T14:14:51Z",
+      "side": 1,
+      "message": "The following headers looks suffice.\n    \"//third_party/skia/include/utils\",\n    \"//third_party/skia/third_party/vulkan\",",
+      "parentUuid": "bf5e624b_7878ae1b",
+      "range": {
+        "startLine": 48,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 35
+      },
+      "revId": "9d6b5ba42f0628a91a391aaeccc2de1a4412156a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32f84c63_d50cc3e8",
         "filename": "skia/BUILD.gn",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "9d6b5ba42f0628a91a391aaeccc2de1a4412156a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75bc2b6e_3ba2995c",
+        "filename": "skia/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1242053
+      },
+      "writtenOn": "2017-09-13T14:14:51Z",
+      "side": 1,
+      "message": "Yes, its not needed.",
+      "parentUuid": "32f84c63_d50cc3e8",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 5
+      },
+      "revId": "9d6b5ba42f0628a91a391aaeccc2de1a4412156a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
