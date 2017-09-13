@@ -183,6 +183,7 @@ class ResourceFetcherImpl::ClientImpl : public mojom::URLLoaderClient {
   }
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
                          const ResourceResponseHead& response_head) override {
+    LOG(ERROR) << "ResourceFetcherImpl::ClientImpl::OnReceiveRedirect";
     DCHECK_EQ(Status::kStarted, status_);
     loader_->FollowRedirect();
     response_.SetURL(redirect_info.new_url);

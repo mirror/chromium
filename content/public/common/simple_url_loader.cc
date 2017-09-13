@@ -389,6 +389,7 @@ void SimpleURLLoaderImpl::OnReceiveResponse(
 void SimpleURLLoaderImpl::OnReceiveRedirect(
     const net::RedirectInfo& redirect_info,
     const ResourceResponseHead& response_head) {
+  LOG(ERROR) << "SimpleURLLoaderImpl::OnReceiveRedirect";
   if (response_info_) {
     // If the headers have already been received, the URLLoader is violating the
     // API contract.

@@ -137,10 +137,30 @@ void ServiceWorkerSubresourceLoader::StartResponse(
     const ServiceWorkerResponse& response,
     storage::mojom::BlobPtr body_as_blob,
     blink::mojom::ServiceWorkerStreamHandlePtr body_as_stream) {
+  LOG(ERROR) << "ServiceWorkerSubresourceLoader::StartResponse";
   ServiceWorkerLoaderHelpers::SaveResponseInfo(response, &response_head_);
   ServiceWorkerLoaderHelpers::SaveResponseHeaders(
       response.status_code, response.status_text, response.headers,
       &response_head_);
+
+  if (net::HttpResponseHeaders::IsRedirectResponseCode(response.status_code)) {
+    const auto& location_it = response.headers.find("location");
+    if (location_it != response.headers.end()) {
+      LOG(ERROR) << "IsRedirectResponseCode";
+      // See URLRequestJob::ComputeRedirectInfo().
+      net::RedirectInfo redirect_info;
+      redirect_info.status_code = response.status_code;
+      redirect_info.new_method = "GET";  // TODO: ComputeMethodForRedirect.
+      redirect_info.new_url =
+          resource_request_.url.Resolve(location_it->second);
+      // TODO: Check site_for_cookies.
+      redirect_info.new_site_for_cookies = redirect_info.new_url;
+
+      response_head_.encoded_data_length = 0;
+      url_loader_client_->OnReceiveRedirect(redirect_info, response_head_);
+      return;
+    }
+  }
 
   // Handle a stream response body.
   if (!body_as_stream.is_null() && body_as_stream->stream.is_valid()) {
@@ -214,6 +234,7 @@ void ServiceWorkerSubresourceLoader::DeliverErrorResponse() {
 // ServiceWorkerSubresourceLoader: URLLoader implementation -----------------
 
 void ServiceWorkerSubresourceLoader::FollowRedirect() {
+  LOG(ERROR) << "ServiceWorkerSubresourceLoader::FollowRedirect";
   // TODO(kinuko): Need to implement for the cases where a redirect is returned
   // by a ServiceWorker and the page determined to follow the redirect.
   NOTIMPLEMENTED();

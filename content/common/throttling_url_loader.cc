@@ -88,6 +88,7 @@ std::unique_ptr<ThrottlingURLLoader> ThrottlingURLLoader::CreateLoaderAndStart(
 ThrottlingURLLoader::~ThrottlingURLLoader() {}
 
 void ThrottlingURLLoader::FollowRedirect() {
+  LOG(ERROR) << "ThrottlingURLLoader::FollowRedirect";
   if (url_loader_)
     url_loader_->FollowRedirect();
 }
