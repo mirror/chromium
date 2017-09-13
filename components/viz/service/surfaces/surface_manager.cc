@@ -567,9 +567,9 @@ void SurfaceManager::SurfaceReferencesToStringImpl(const SurfaceId& surface_id,
   Surface* surface = GetSurfaceForId(surface_id);
   if (surface) {
     *str << surface->surface_id().ToString();
-    auto& label = valid_frame_sink_labels_[surface_id.frame_sink_id()];
-    if (!label.empty())
-      *str << " " << label;
+    auto it = valid_frame_sink_labels_.find(surface_id.frame_sink_id());
+    if (!it->second.empty())
+      *str << " " << it->second;
     *str << (IsMarkedForDestruction(surface_id) ? " destroyed" : " live");
 
     if (surface->HasPendingFrame()) {
