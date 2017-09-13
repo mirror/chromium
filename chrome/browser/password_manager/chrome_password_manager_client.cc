@@ -175,7 +175,8 @@ ChromePasswordManagerClient::ChromePasswordManagerClient(
       observer_(nullptr),
       credentials_filter_(this,
                           base::Bind(&GetSyncService, profile_),
-                          base::Bind(&GetSigninManager, profile_)) {
+                          base::Bind(&GetSigninManager, profile_)),
+      helper_(this) {
   ContentPasswordManagerDriverFactory::CreateForWebContents(web_contents, this,
                                                             autofill_client);
   driver_factory_ =
@@ -337,9 +338,9 @@ bool ChromePasswordManagerClient::PromptUserToChooseCredentials(
     const CredentialsCallback& callback) {
   // Set up an intercept callback if the prompt is zero-clickable (e.g. just one
   // form provided).
-  CredentialsCallback intercept =
-      base::Bind(&ChromePasswordManagerClient::OnCredentialsChosen,
-                 base::Unretained(this), callback, local_forms.size() == 1);
+  CredentialsCallback intercept = base::Bind(
+      &password_manager::PasswordManagerClientHelper::OnCredentialsChosen,
+      base::Unretained(&helper_), callback, local_forms.size() == 1);
 #if defined(OS_ANDROID)
   // Deletes itself on the event from Java counterpart, when user interacts with
   // dialog.
@@ -352,19 +353,6 @@ bool ChromePasswordManagerClient::PromptUserToChooseCredentials(
   return PasswordsClientUIDelegateFromWebContents(web_contents())
       ->OnChooseCredentials(std::move(local_forms), origin, intercept);
 #endif
-}
-
-void ChromePasswordManagerClient::OnCredentialsChosen(
-    const CredentialsCallback& callback,
-    bool one_local_credential,
-    const autofill::PasswordForm* form) {
-  callback.Run(form);
-  // If a site gets back a credential some navigations are likely to occur. They
-  // shouldn't trigger the autofill password manager.
-  if (form)
-    password_manager_.DropFormManagers();
-  if (form && one_local_credential)
-    PromptUserToEnableAutosigninIfNecessary();
 }
 
 void ChromePasswordManagerClient::ForceSavePassword() {
@@ -383,9 +371,7 @@ void ChromePasswordManagerClient::NotifyUserAutoSignin(
     std::vector<std::unique_ptr<autofill::PasswordForm>> local_forms,
     const GURL& origin) {
   DCHECK(!local_forms.empty());
-  // If a site gets back a credential some navigations are likely to occur. They
-  // shouldn't trigger the autofill password manager.
-  password_manager_.DropFormManagers();
+  helper_.NotifyUserAutoSignin();
 #if defined(OS_ANDROID)
   ShowAutoSigninPrompt(web_contents(), local_forms[0]->username_value);
 #else
@@ -396,26 +382,16 @@ void ChromePasswordManagerClient::NotifyUserAutoSignin(
 
 void ChromePasswordManagerClient::NotifyUserCouldBeAutoSignedIn(
     std::unique_ptr<autofill::PasswordForm> form) {
-  possible_auto_sign_in_ = std::move(form);
+  helper_.NotifyUserCouldBeAutoSignedIn(std::move(form));
 }
 
 void ChromePasswordManagerClient::NotifySuccessfulLoginWithExistingPassword(
     const autofill::PasswordForm& form) {
-  if (!possible_auto_sign_in_)
-    return;
-
-  if (possible_auto_sign_in_->username_value == form.username_value &&
-      possible_auto_sign_in_->password_value == form.password_value &&
-      possible_auto_sign_in_->origin == form.origin) {
-    PromptUserToEnableAutosigninIfNecessary();
-  }
-  possible_auto_sign_in_.reset();
+  helper_.NotifySuccessfulLoginWithExistingPassword(form);
 }
 
 void ChromePasswordManagerClient::NotifyStorePasswordCalled() {
-  // If a site stores a credential the autofill password manager shouldn't kick
-  // in.
-  password_manager_.DropFormManagers();
+  helper_.NotifyStorePasswordCalled();
   was_store_ever_called_ = true;
 }
 
@@ -690,24 +666,6 @@ void ChromePasswordManagerClient::ShowPasswordEditingPopup(
   popup_controller_->Show(false /* display_password */);
 }
 
-void ChromePasswordManagerClient::PromptUserToEnableAutosigninIfNecessary() {
-  if (!password_bubble_experiment::ShouldShowAutoSignInPromptFirstRunExperience(
-          GetPrefs()) ||
-      !GetPrefs()->GetBoolean(
-          password_manager::prefs::kCredentialsEnableAutosignin) ||
-      IsIncognito())
-    return;
-
-#if defined(OS_ANDROID)
-  // Dialog is deleted by the Java counterpart after user interacts with it.
-  AutoSigninFirstRunDialogAndroid* auto_signin_first_run_dialog =
-      new AutoSigninFirstRunDialogAndroid(web_contents());
-  auto_signin_first_run_dialog->ShowDialog();
-#else
-  PasswordsClientUIDelegateFromWebContents(web_contents())
-      ->OnPromptEnableAutoSignin();
-#endif
-}
 
 void ChromePasswordManagerClient::GenerationAvailableForForm(
     const autofill::PasswordForm& form) {
@@ -820,4 +778,21 @@ bool ChromePasswordManagerClient::CanShowBubbleOnURL(const GURL& url) {
           scheme != extensions::kExtensionScheme &&
 #endif
           scheme != content::kChromeDevToolsScheme);
+}
+
+void ChromePasswordManagerClient::PromptUserToEnableAutosignin() {
+#if defined(OS_ANDROID)
+  // Dialog is deleted by the Java counterpart after user interacts with it.
+  AutoSigninFirstRunDialogAndroid* auto_signin_first_run_dialog =
+      new AutoSigninFirstRunDialogAndroid(web_contents());
+  auto_signin_first_run_dialog->ShowDialog();
+#else
+  PasswordsClientUIDelegateFromWebContents(web_contents())
+      ->OnPromptEnableAutoSignin();
+#endif
+}
+
+password_manager::PasswordManager*
+ChromePasswordManagerClient::GetPasswordManager() {
+  return &password_manager_;
 }
