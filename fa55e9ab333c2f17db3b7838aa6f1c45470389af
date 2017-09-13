@@ -22,6 +22,30 @@
       "revId": "fa55e9ab333c2f17db3b7838aa6f1c45470389af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0d02058_96f386c4",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-13T08:03:42Z",
+      "side": 1,
+      "message": "I don\u0027t want to go through the dispatcher as those methods should be called by the TabGridContainer, its parent, and not by a child coordinator",
+      "parentUuid": "73a4e719_97950628",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "fa55e9ab333c2f17db3b7838aa6f1c45470389af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
