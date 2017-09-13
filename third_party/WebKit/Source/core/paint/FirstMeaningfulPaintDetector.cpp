@@ -161,8 +161,12 @@ void FirstMeaningfulPaintDetector::Network0QuietTimerFired(TimerBase*) {
 }
 
 void FirstMeaningfulPaintDetector::Network2QuietTimerFired(TimerBase*) {
-  if (!GetDocument() || network2_quiet_reached_ || ActiveConnections() > 2 ||
-      !paint_timing_->FirstContentfulPaintRendered())
+  if (!GetDocument() || network2_quiet_reached_ || ActiveConnections() > 2)
+    return;
+
+  GetDocument()->Fetcher()->OnNetworkQuiet();
+
+  if (!paint_timing_->FirstContentfulPaintRendered())
     return;
   network2_quiet_reached_ = true;
 

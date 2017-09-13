@@ -77,8 +77,6 @@ void NetworkQuietDetector::NetworkQuietTimerFired(TimerBase*) {
           resource_coordinator::mojom::PropertyType::kNetworkIdle, true);
     }
   }
-
-  GetSupplementable()->Fetcher()->OnNetworkQuiet();
 }
 
 DEFINE_TRACE(NetworkQuietDetector) {
