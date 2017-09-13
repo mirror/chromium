@@ -23,7 +23,8 @@ class CompositorTimingHistory::UMAReporter {
   virtual void AddBeginMainFrameIntervalNotCritical(
       base::TimeDelta interval) = 0;
   virtual void AddCommitInterval(base::TimeDelta interval) = 0;
-  virtual void AddDrawInterval(base::TimeDelta interval) = 0;
+  virtual void AddDrawInterval(base::TimeDelta interval,
+                               bool has_image_animations) = 0;
 
   // Latency measurements
   virtual void AddBeginImplFrameLatency(base::TimeDelta delta) = 0;
@@ -113,13 +114,16 @@ const int kUMADurationBuckets[] = {
     2000000, 4000000, 8000000, 16000000, 32000000,
 };
 
-#define UMA_HISTOGRAM_CUSTOM_TIMES_VSYNC_ALIGNED(name, sample)             \
-  do {                                                                     \
-    UMA_HISTOGRAM_CUSTOM_ENUMERATION(                                      \
-        name "2", sample.InMicroseconds(),                                 \
-        std::vector<int>(kUMAVSyncBuckets,                                 \
-                         kUMAVSyncBuckets + arraysize(kUMAVSyncBuckets))); \
+#define UMA_HISTOGRAM_CUSTOM_TIMES_VSYNC_ALIGNED_SUFFIX(name, suffix, sample) \
+  do {                                                                        \
+    UMA_HISTOGRAM_CUSTOM_ENUMERATION(                                         \
+        name "2" suffix, sample.InMicroseconds(),                             \
+        std::vector<int>(kUMAVSyncBuckets,                                    \
+                         kUMAVSyncBuckets + arraysize(kUMAVSyncBuckets)));    \
   } while (false)
+
+#define UMA_HISTOGRAM_CUSTOM_TIMES_VSYNC_ALIGNED(name, sample) \
+  UMA_HISTOGRAM_CUSTOM_TIMES_VSYNC_ALIGNED_SUFFIX(name, "", sample)
 
 #define UMA_HISTOGRAM_CUSTOM_TIMES_DURATION_SUFFIX(name, suffix, sample) \
   do {                                                                   \
@@ -170,9 +174,13 @@ class RendererUMAReporter : public CompositorTimingHistory::UMAReporter {
         "Scheduling.Renderer.CommitInterval", interval);
   }
 
-  void AddDrawInterval(base::TimeDelta interval) override {
+  void AddDrawInterval(base::TimeDelta interval,
+                       bool has_image_animations) override {
     UMA_HISTOGRAM_CUSTOM_TIMES_VSYNC_ALIGNED("Scheduling.Renderer.DrawInterval",
                                              interval);
+    if (has_image_animations)
+      UMA_HISTOGRAM_CUSTOM_TIMES_VSYNC_ALIGNED_SUFFIX(
+          "Scheduling.Renderer.DrawInterval", "HasImageAnimations", interval);
   }
 
   void AddBeginImplFrameLatency(base::TimeDelta delta) override {
@@ -276,9 +284,13 @@ class BrowserUMAReporter : public CompositorTimingHistory::UMAReporter {
         "Scheduling.Browser.CommitInterval", interval);
   }
 
-  void AddDrawInterval(base::TimeDelta interval) override {
+  void AddDrawInterval(base::TimeDelta interval,
+                       bool has_image_animations) override {
     UMA_HISTOGRAM_CUSTOM_TIMES_VSYNC_ALIGNED("Scheduling.Browser.DrawInterval",
                                              interval);
+    if (has_image_animations)
+      UMA_HISTOGRAM_CUSTOM_TIMES_VSYNC_ALIGNED_SUFFIX(
+          "Scheduling.Browser.DrawInterval", "HasImageAnimations", interval);
   }
 
   void AddBeginImplFrameLatency(base::TimeDelta delta) override {
@@ -370,7 +382,8 @@ class NullUMAReporter : public CompositorTimingHistory::UMAReporter {
   void AddBeginMainFrameIntervalNotCritical(base::TimeDelta interval) override {
   }
   void AddCommitInterval(base::TimeDelta interval) override {}
-  void AddDrawInterval(base::TimeDelta interval) override {}
+  void AddDrawInterval(base::TimeDelta interval,
+                       bool has_image_animations) override {}
   void AddBeginImplFrameLatency(base::TimeDelta delta) override {}
   void AddBeginMainFrameQueueDurationCriticalDuration(
       base::TimeDelta duration) override {}
@@ -823,7 +836,7 @@ void CompositorTimingHistory::DidDraw(bool used_new_active_tree,
   SetCompositorDrawingContinuously(true);
   if (!draw_end_time_prev_.is_null()) {
     base::TimeDelta draw_interval = draw_end_time - draw_end_time_prev_;
-    uma_reporter_->AddDrawInterval(draw_interval);
+    uma_reporter_->AddDrawInterval(draw_interval, has_image_animations_);
   }
   draw_end_time_prev_ = draw_end_time;
 

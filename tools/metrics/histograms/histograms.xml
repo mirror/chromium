@@ -93964,6 +93964,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="CloudPrint.UrlFetcherUploadSize"/>
 </histogram_suffixes>
 
+<histogram_suffixes name="CompositorImageAnimations" separator=".">
+  <suffix name="HasImageAnimations"
+      label="Impl thread has recordings with animated images"/>
+  <affected-histogram name="Scheduling.Browser.DrawInterval2"/>
+  <affected-histogram name="Scheduling.Renderer.DrawInterval2"/>
+</histogram_suffixes>
+
 <histogram_suffixes name="CompositorPendingTreeType" separator=".">
   <suffix name="Main" label="Commit initiated pending tree"/>
   <suffix name="Impl" label="Impl side invalidation initiated pending tree"/>

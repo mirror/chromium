@@ -849,4 +849,8 @@ viz::BeginFrameAck Scheduler::CurrentBeginFrameAckForActiveTree() const {
                             begin_main_frame_args_.sequence_number, true);
 }
 
+void Scheduler::SetHasImageAnimations(bool has_image_animations) {
+  compositor_timing_history_->set_has_image_animations(has_image_animations);
+}
+
 }  // namespace cc

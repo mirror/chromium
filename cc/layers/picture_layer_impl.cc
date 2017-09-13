@@ -1536,13 +1536,16 @@ void PictureLayerImpl::RegisterAnimatedImages() {
   if (!raster_source_ || !raster_source_->display_list())
     return;
 
+  const auto& metadata = raster_source_->display_list()
+                             ->discardable_image_map()
+                             .animated_images_metadata();
+  if (!metadata.empty())
+    layer_tree_impl()->AddLayerHasAnimatedImages();
+
   auto* controller = layer_tree_impl()->image_animation_controller();
   if (!controller)
     return;
 
-  const auto& metadata = raster_source_->display_list()
-                             ->discardable_image_map()
-                             .animated_images_metadata();
   for (const auto& data : metadata) {
     // Only update the metadata from updated recordings received from a commit.
     if (layer_tree_impl()->IsSyncTree())
@@ -1555,13 +1558,16 @@ void PictureLayerImpl::UnregisterAnimatedImages() {
   if (!raster_source_ || !raster_source_->display_list())
     return;
 
+  const auto& metadata = raster_source_->display_list()
+                             ->discardable_image_map()
+                             .animated_images_metadata();
+  if (!metadata.empty())
+    layer_tree_impl()->RemoveLayerHasAnimatedImages();
+
   auto* controller = layer_tree_impl()->image_animation_controller();
   if (!controller)
     return;
 
-  const auto& metadata = raster_source_->display_list()
-                             ->discardable_image_map()
-                             .animated_images_metadata();
   for (const auto& data : metadata)
     controller->UnregisterAnimationDriver(data.paint_image_id, this);
 }

@@ -555,6 +555,11 @@ void ProxyImpl::ScheduledActionCommit() {
   blocked_main_commit().layer_tree_host->FinishCommitOnImplThread(
       host_impl_.get());
 
+  // Set the new state of image animations now that new recordings have been
+  // committed.
+  scheduler_->SetHasImageAnimations(
+      host_impl_->sync_tree()->HasAnimatedImages());
+
   // Remove the LayerTreeHost reference before the completion event is signaled
   // and cleared. This is necessary since blocked_main_commit() allows access
   // only while we have the completion event to ensure the main thread is

@@ -2100,4 +2100,17 @@ void LayerTreeImpl::ResetAllChangeTracking() {
   property_trees_.ResetAllChangeTracking();
 }
 
+void LayerTreeImpl::AddLayerHasAnimatedImages() {
+  picture_layers_with_animated_images_++;
+}
+
+void LayerTreeImpl::RemoveLayerHasAnimatedImages() {
+  picture_layers_with_animated_images_--;
+  DCHECK_GT(picture_layers_with_animated_images_, 0);
+}
+
+bool LayerTreeImpl::HasAnimatedImages() const {
+  return picture_layers_with_animated_images_ > 0;
+}
+
 }  // namespace cc

@@ -555,6 +555,10 @@ class CC_EXPORT LayerTreeImpl {
 
   LayerTreeLifecycle& lifecycle() { return lifecycle_; }
 
+  void AddLayerHasAnimatedImages();
+  void RemoveLayerHasAnimatedImages();
+  bool HasAnimatedImages() const;
+
  protected:
   float ClampPageScaleFactorToLimits(float page_scale_factor) const;
   void PushPageScaleFactorAndLimits(const float* page_scale_factor,
@@ -677,6 +681,8 @@ class CC_EXPORT LayerTreeImpl {
   // Tracks the lifecycle which is used for enforcing dependencies between
   // lifecycle states. See: |LayerTreeLifecycle|.
   LayerTreeLifecycle lifecycle_;
+
+  int picture_layers_with_animated_images_ = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(LayerTreeImpl);

@@ -166,6 +166,8 @@ class CC_EXPORT Scheduler : public viz::BeginFrameObserverBase {
 
   viz::BeginFrameAck CurrentBeginFrameAckForActiveTree() const;
 
+  void SetHasImageAnimations(bool has_image_animations);
+
  protected:
   // Virtual for testing.
   virtual base::TimeTicks Now() const;

@@ -82,6 +82,10 @@ class CC_EXPORT CompositorTimingHistory {
   void WillInvalidateOnImplSide();
   void SetTreePriority(TreePriority priority);
 
+  void set_has_image_animations(bool has_image_animations) {
+    has_image_animations_ = has_image_animations;
+  }
+
  protected:
   void DidBeginMainFrame(base::TimeTicks begin_main_frame_end_time);
 
@@ -135,6 +139,9 @@ class CC_EXPORT CompositorTimingHistory {
   RenderingStatsInstrumentation* rendering_stats_instrumentation_;
 
   TreePriority tree_priority_ = SAME_PRIORITY_FOR_BOTH_TREES;
+
+  // Set if the impl thread has any recordings with animated images.
+  bool has_image_animations_ = false;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(CompositorTimingHistory);
