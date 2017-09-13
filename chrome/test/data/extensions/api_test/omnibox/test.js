@@ -13,9 +13,14 @@ chrome.omnibox.onInputChanged.addListener(
       var desc = 'Description with style: <match>&lt;match&gt;</match>, ' +
                  '<dim>[dim]</dim>, <url>(url till end)</url>';
       suggest([
-        {content: text + "n1", description: desc},
-        {content: text + "n2", description: "description2"},
+        {content: text + "n1", description: desc, deletable: true},
+        {content: text + "n2", description: "description2", deletable: false},
         {content: text + "n3" + incognitoSuffix, description: "description3"},
+      ]);
+    } else if("d") {
+      suggest([
+        {content: "n1", description: "des1", deletable: true},
+        {content: "n2", description: "des2", deletable: false},
       ]);
     } else {
       // Other tests, just provide a simple suggestion.
@@ -34,5 +39,12 @@ chrome.omnibox.onInputEntered.addListener(
     }
   });
 
+chrome.omnibox.onDeleteSuggestion.addListener(
+  function(text) {
+    chrome.test.sendMessage("onDeleteSuggestion: " + text);
+    chrome.test.notifyPass();
+  });
+
 // Now we wait for the input events to fire.
+chrome.test.sendMessage("loaded");
 chrome.test.notifyPass();

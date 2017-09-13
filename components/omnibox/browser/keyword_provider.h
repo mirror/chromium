@@ -23,6 +23,8 @@
 #include "components/omnibox/browser/autocomplete_provider.h"
 #include "components/omnibox/browser/keyword_extensions_delegate.h"
 
+#include "components/omnibox/browser/base_search_provider.h"
+
 class AutocompleteProviderClient;
 class AutocompleteProviderListener;
 class KeywordExtensionsDelegate;
@@ -51,7 +53,7 @@ class TemplateURLService;
 // action "[keyword] %s".  If the user has typed a (possibly partial) keyword
 // but no search terms, the suggested result is shown greyed out, with
 // "<enter term(s)>" as the substituted input, and does nothing when selected.
-class KeywordProvider : public AutocompleteProvider {
+class KeywordProvider : public BaseSearchProvider {
  public:
   KeywordProvider(AutocompleteProviderClient* client,
                   AutocompleteProviderListener* listener);
@@ -92,9 +94,17 @@ class KeywordProvider : public AutocompleteProvider {
                                         const AutocompleteInput& input);
 
   // AutocompleteProvider:
+  void DeleteMatch(const AutocompleteMatch& match) override;
   void Start(const AutocompleteInput& input, bool minimal_changes) override;
   void Stop(bool clear_cached_results,
             bool due_to_user_inactivity) override;
+
+  // BaseSearchProvider:
+  const TemplateURL* GetTemplateURL(bool is_keyword) const override;
+  const AutocompleteInput GetInput(bool is_keyword) const override;
+  bool ShouldAppendExtraParams(
+      const SearchSuggestionParser::SuggestResult& result) const override;
+  void RecordDeletionResult(bool success) override;
 
  private:
   friend class KeywordExtensionsDelegateImpl;
@@ -133,7 +143,8 @@ class KeywordProvider : public AutocompleteProvider {
       size_t prefix_length,
       const base::string16& remaining_input,
       bool allowed_to_be_default_match,
-      int relevance);
+      int relevance,
+      bool deletable);
 
   // Fills in the "destination_url" and "contents" fields of |match| with the
   // provided user input and keyword data.
@@ -144,6 +155,9 @@ class KeywordProvider : public AutocompleteProvider {
   TemplateURLService* GetTemplateURLService() const;
 
   AutocompleteProviderListener* listener_;
+
+  // Input when searching against the keyword provider.
+  AutocompleteInput keyword_input_;
 
   // Model for the keywords.
   TemplateURLService* model_;

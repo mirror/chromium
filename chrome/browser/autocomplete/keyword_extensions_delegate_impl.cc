@@ -47,6 +47,10 @@ KeywordExtensionsDelegateImpl::KeywordExtensionsDelegateImpl(
 KeywordExtensionsDelegateImpl::~KeywordExtensionsDelegateImpl() {
 }
 
+Profile* KeywordExtensionsDelegateImpl::profile() {
+  return profile_;
+}
+
 void  KeywordExtensionsDelegateImpl::IncrementInputId() {
   current_input_id_ = ++global_input_uid_;
 }
@@ -189,16 +193,17 @@ void KeywordExtensionsDelegateImpl::Observe(
         // Because these matches are async, we should never let them become the
         // default match, lest we introduce race conditions in the omnibox user
         // interaction.
-        extension_suggest_matches_.push_back(
-            provider_->CreateAutocompleteMatch(
-                template_url, keyword.length(), input, keyword.length(),
-                base::UTF8ToUTF16(suggestion.content), false,
-                first_relevance - (i + 1)));
+        bool deletable = suggestion.deletable ? *suggestion.deletable : false;
+        extension_suggest_matches_.push_back(provider_->CreateAutocompleteMatch(
+            template_url, keyword.length(), input, keyword.length(),
+            base::UTF8ToUTF16(suggestion.content), false,
+            first_relevance - (i + 1), deletable));
 
         AutocompleteMatch* match = &extension_suggest_matches_.back();
         match->contents.assign(base::UTF8ToUTF16(suggestion.description));
         match->contents_class =
             extensions::StyleTypesToACMatchClassifications(suggestion);
+        match->deletable = deletable;
       }
 
       set_done(true);
