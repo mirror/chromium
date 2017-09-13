@@ -57,7 +57,7 @@ public class BottomSheetContentController extends BottomNavigationView
         implements OnNavigationItemSelectedListener {
     /** The different types of content that may be displayed in the bottom sheet. */
     @IntDef({TYPE_SUGGESTIONS, TYPE_DOWNLOADS, TYPE_BOOKMARKS, TYPE_HISTORY, TYPE_INCOGNITO_HOME,
-            TYPE_PLACEHOLDER})
+            TYPE_PLACEHOLDER, OMNIBOX_SUGGESTIONS_ID})
     @Retention(RetentionPolicy.SOURCE)
     public @interface ContentType {}
     public static final int TYPE_SUGGESTIONS = 0;
@@ -74,6 +74,9 @@ public class BottomSheetContentController extends BottomNavigationView
     // Since the placeholder content cannot be triggered by a navigation item like the others, this
     // value must also be an invalid ID.
     private static final int PLACEHOLDER_ID = -2;
+
+    // ID for the omnibox suggestions.
+    public static final int OMNIBOX_SUGGESTIONS_ID = -3;
 
     private final Map<Integer, BottomSheetContent> mBottomSheetContents = new HashMap<>();
 
@@ -138,6 +141,11 @@ public class BottomSheetContentController extends BottomNavigationView
             if (mBottomSheet.getSheetState() == BottomSheet.SHEET_STATE_PEEK) {
                 clearBottomSheetContents(false);
             }
+
+            if (newContent.getType() < -1) {
+                if (mSelectedItemId > 0) getMenu().findItem(mSelectedItemId).setChecked(false);
+                mSelectedItemId = newContent.getType();
+            }
         }
 
         @Override
@@ -159,6 +167,7 @@ public class BottomSheetContentController extends BottomNavigationView
     private TabModelSelectorObserver mTabModelSelectorObserver;
     private Integer mHighlightItemId;
     private View mHighlightedView;
+    private boolean mNavItemSelectedWhileOmniboxFocused;
 
     public BottomSheetContentController(Context context, AttributeSet atts) {
         super(context, atts);
@@ -305,10 +314,17 @@ public class BottomSheetContentController extends BottomNavigationView
             if (mSelectedItemId > 0) getMenu().findItem(mSelectedItemId).setChecked(false);
             mSelectedItemId = PLACEHOLDER_ID;
         }
+
+        if (!mNavItemSelectedWhileOmniboxFocused && !mOmniboxHasFocus) {
+            showBottomSheetContent(R.id.action_home);
+        }
+        mNavItemSelectedWhileOmniboxFocused = false;
     }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        if (mOmniboxHasFocus) mNavItemSelectedWhileOmniboxFocused = true;
+
         if (mBottomSheet.getSheetState() == BottomSheet.SHEET_STATE_PEEK
                 && !mShouldOpenSheetOnNextContentChange) {
             return false;
