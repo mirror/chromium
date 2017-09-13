@@ -429,6 +429,47 @@ TEST_F(EventHandlerTest, InputFieldsCanStartSelection) {
                                                                          hit));
 }
 
+TEST_F(EventHandlerTest, ReadOnlyInputDoesNotInheritUserSelect) {
+  SetHtmlInnerHTML(
+      "<div style='user-select: none'>"
+      "<input readonly value='blabla'>"
+      "</div>");
+  Element* const field =
+      ToElement(GetDocument().body()->firstChild()->firstChild());
+  LayoutPoint location = field->GetLayoutObject()->VisualRect().Center();
+  HitTestResult hit =
+      GetDocument().GetFrame()->GetEventHandler().HitTestResultAtPoint(
+          location);
+  EXPECT_TRUE(field->CanStartSelection());
+
+  // TODO(crbug.com/764661): Show I-beam when field is selectable.
+  // EXPECT_TRUE(
+  //   GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(field,
+  //                                                                      hit));
+}
+
+TEST_F(EventHandlerTest, DisabledInputDoesNotInheritUserSelect) {
+  SetHtmlInnerHTML(
+      "<div style='user-select: none'>"
+      "<input disabled value='blabla'>"
+      "</div>");
+  Element* const field =
+      ToElement(GetDocument().body()->firstChild()->firstChild());
+  LayoutPoint location = field->GetLayoutObject()->VisualRect().Center();
+  HitTestResult hit =
+      GetDocument().GetFrame()->GetEventHandler().HitTestResultAtPoint(
+          location);
+
+  // If we in crbug.com/764316 decide to implement Firefox's behavior,
+  // the following two asserts will change to EXCEPT_FALSE.
+  EXPECT_TRUE(field->CanStartSelection());
+
+  // TODO(crbug.com/764661): Show I-beam for selectable fields.
+  // EXPECT_TRUE(
+  //   GetDocument().GetFrame()->GetEventHandler().ShouldShowIBeamForNode(field,
+  //                                                                      hit));
+}
+
 TEST_F(EventHandlerTest, ImagesCannotStartSelection) {
   SetHtmlInnerHTML("<img>");
   Element* const img = ToElement(GetDocument().body()->firstChild());
