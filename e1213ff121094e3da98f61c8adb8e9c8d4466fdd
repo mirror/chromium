@@ -337,6 +337,24 @@
     },
     {
       "key": {
+        "uuid": "c2c388a1_d25456f0",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T23:06:52Z",
+      "side": 1,
+      "message": "That test should only check the non-login shelfview behavior. Seems like the setup override for that test suite (and other existing test suites) should ensure that we get into the right state to test the active user session\u0027s shelfview. Please audit existing tests.",
+      "parentUuid": "a4240560_b25ca10b",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd6d7b03_b1a2fc77",
         "filename": "ash/shelf/login_shelf_view.h",
         "patchSetId": 12

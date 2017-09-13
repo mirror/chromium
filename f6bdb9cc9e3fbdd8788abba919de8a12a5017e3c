@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "14354592_1fc36b4e",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T23:06:52Z",
+      "side": 1,
+      "message": "Ah, I guess that\u0027s a fair point, since we don\u0027t re-create the loginshelfview (or update the shutdown/restart buttons) each time its shown.",
+      "parentUuid": "41d5a6bd_e1eea6fb",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3c6a6fc_4cb09501",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 14
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "I tried but it doesn\u0027t work. Because the ctor of LoginShelfView calls UpdateUi() first, and then ShelfWidget notifies the session state (which hides the LoginShelfView). So it will crash at startup.\n\nUnless we want to set LoginShelfView invisible in ctor, or initialize the session state to some other states except ACTIVE or UNKNOWN in login_shelf_view.h.",
       "parentUuid": "c3c6a6fc_4cb09501",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "957ed26c_cfcbb316",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T23:06:52Z",
+      "side": 1,
+      "message": "Hmmm, what if UpdateUi toggled the LoginShelfView visibility based on these session state values?",
+      "parentUuid": "3b0e4474_aa4dbdc3",
       "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -317,6 +353,24 @@
     },
     {
       "key": {
+        "uuid": "218bb874_91c4949a",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T23:06:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cb6f4d50_565c4def",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de7783d3_84e03071",
         "filename": "ash/shelf/login_shelf_view_unittest.cc",
         "patchSetId": 14
@@ -381,6 +435,24 @@
       "side": 1,
       "message": "Please see the above related reply.",
       "parentUuid": "eebccc69_254d537b",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "658469d2_de539a70",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T23:06:52Z",
+      "side": 1,
+      "message": "I\u0027d like to see this addressed if we get the other tests working as expected.\nSetting all the child views to not be visible is a bit silly (but okay if really needed).",
+      "parentUuid": "3ad4a48f_d8a39c5f",
       "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
