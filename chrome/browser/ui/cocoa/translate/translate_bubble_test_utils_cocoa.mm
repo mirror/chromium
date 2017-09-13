@@ -23,7 +23,7 @@ namespace translate {
 
 namespace test_utils {
 
-const TranslateBubbleModel* GetCurrentModel(Browser* browser) {
+TranslateBubbleModel* GetCurrentModel(Browser* browser) {
   DCHECK(browser);
   NSWindow* native_window = browser->window()->GetNativeWindow();
   BrowserWindowController* controller =
@@ -32,6 +32,14 @@ const TranslateBubbleModel* GetCurrentModel(Browser* browser) {
 }
 
 void PressTranslate(Browser* browser) {
+  DCHECK(browser);
+  NSWindow* native_window = browser->window()->GetNativeWindow();
+  BrowserWindowController* controller =
+      [BrowserWindowController browserWindowControllerForWindow:native_window];
+  [[controller translateBubbleController] handleTranslateButtonPressed:nil];
+}
+
+void PressRevert(Browser* browser) {
   DCHECK(browser);
   NSWindow* native_window = browser->window()->GetNativeWindow();
   BrowserWindowController* controller =
