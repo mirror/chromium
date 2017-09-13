@@ -52,6 +52,24 @@
       "revId": "c73379d1a241a238c7022bcefc7e777d1df4063d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b1cd94_dbb2ced5",
+        "filename": "media/audio/alsa/alsa_input.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001872
+      },
+      "writtenOn": "2017-09-13T17:10:26Z",
+      "side": 1,
+      "message": "Technically you are right. However, if new frames will arrive asynchronously, getting accurate number of frames will lead to more accurate timestamp for the next read.\nLet\u0027s work this example, we read 4 chunks and new frames will arrive async after chunk 2.\navail_frames \u003d 1000\nread chunk \u003d 100\nsample rate \u003d 10000 --\u003e 0.1 ms per sample\nOnData() called every 5ms\n\n1. OnData(), Now() \u003d 5555 ms, Now() - delay(1000fr) \u003d 5455, start of recording \u003d 5455 - data_read(100) \u003d 5445\n2. OnData(), Now() \u003d 5560 ms, Now() - delay(900fr) \u003d 5470, start of recording \u003d 5470 - data_read(200) \u003d 5450\n\n\u003e\u003e Async data arrived, +200 frames, avail frames \u003d 1000 again, already read data \u003d 200 frames\n\n3. OnData(), Now() \u003d 5565 ms, Now() - delay(1000) \u003d 5465, start of recording \u003d 5465 - data_read(300) \u003d 5435\n4. OnData(), Now() \u003d 5570 ms, Now() - delay(900) \u003d 5480, start of recording \u003d 5480 - data_read(400) \u003d 5440\n\nIn my task, I need to get the most accurate timestamp for the start of the recording. This means getting the minimal \"start of the recording\" time from the list (because I don\u0027t exactly know internal audio delay, I am just picking one that is the most accurate).\n\nIf we don\u0027t update number of available frames in the loop, all subsequent OnData() calls will have less and less accurate data (assuming we read faster then sampling rate*data) which is always the case for me.\n\nHowever, if data get asynchronously updated, new avail_frames will give us sudden boost in accuracy of the recording start. In my practice, number of avail frames usually gives range of 10ms. Using the technique above (calculating and selecting minimal start of the recording timestamp) I can improve accuracy to about 1ms.\n\nOf course all of the above make sense only if audio stack (alsa) can update frames asynchronously in the background.\n\nLet me know if this sounds confusing :). I \u0027ll be happy to jump on VC and explain.",
+      "parentUuid": "bee93c08_6b017202",
+      "revId": "c73379d1a241a238c7022bcefc7e777d1df4063d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
