@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c914cfc7_b68c7af3",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-13T15:34:31Z",
+      "side": 1,
+      "message": "Done\nNow I directly use the helper method PasswordManagerClientHelper::OnCredentialsChosen, is that what you mean?",
+      "parentUuid": "08fb4a66_3de49dd2",
+      "range": {
+        "startLine": 358,
+        "startChar": 34,
+        "endLine": 358,
+        "endChar": 53
+      },
+      "revId": "1c2aa999f525cf78d48955b14918b7e7a5bff020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57c10d84_dfe9d90e",
         "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "1c2aa999f525cf78d48955b14918b7e7a5bff020",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a32fb8a1_dd35912b",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 733,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-13T15:34:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57c10d84_dfe9d90e",
+      "range": {
+        "startLine": 733,
+        "startChar": 1,
+        "endLine": 733,
+        "endChar": 0
+      },
+      "revId": "1c2aa999f525cf78d48955b14918b7e7a5bff020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e652dc8b_7ae3c826",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-13T15:34:31Z",
+      "side": 1,
+      "message": "Done\nRemoved the method (see other comment)",
+      "parentUuid": "868159ef_0380604f",
+      "range": {
+        "startLine": 195,
+        "startChar": 7,
+        "endLine": 195,
+        "endChar": 26
+      },
+      "revId": "1c2aa999f525cf78d48955b14918b7e7a5bff020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac68f825_14a8a293",
         "filename": "components/password_manager/core/browser/password_manager_client_helper.cc",
         "patchSetId": 12
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-12T14:38:34Z",
       "side": 1,
       "message": "Can we just do what the current code does?",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 41
+      },
+      "revId": "1c2aa999f525cf78d48955b14918b7e7a5bff020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd10748a_abbc732f",
+        "filename": "components/password_manager/core/browser/password_manager_client_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-13T15:34:31Z",
+      "side": 1,
+      "message": "Done\nMoved the check because here the early return prevented from resetting possible_auto_sign_in_.",
+      "parentUuid": "ac68f825_14a8a293",
       "range": {
         "startLine": 33,
         "startChar": 6,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "fae7cdf4_902673e2",
+        "filename": "components/password_manager/core/browser/password_manager_client_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-13T15:34:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b28914a2_804c0241",
+      "range": {
+        "startLine": 73,
+        "startChar": 34,
+        "endLine": 73,
+        "endChar": 69
+      },
+      "revId": "1c2aa999f525cf78d48955b14918b7e7a5bff020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91fb4ac9_2434e922",
         "filename": "components/password_manager/core/browser/password_manager_client_helper.h",
         "patchSetId": 12
@@ -128,6 +248,30 @@
       "writtenOn": "2017-09-12T14:38:34Z",
       "side": 1,
       "message": "Apply \u0027const\u0027 to the methods where applicable.",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 33
+      },
+      "revId": "1c2aa999f525cf78d48955b14918b7e7a5bff020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67c933ab_2f416afd",
+        "filename": "components/password_manager/core/browser/password_manager_client_helper.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-13T15:34:31Z",
+      "side": 1,
+      "message": "Done (only ShouldPromptToEnableAutoSignIn, other methods either drop form managers or modify possible_auto_sign_in_)",
+      "parentUuid": "91fb4ac9_2434e922",
       "range": {
         "startLine": 31,
         "startChar": 6,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "4f68ced7_c67e9911",
+        "filename": "components/password_manager/core/browser/password_manager_client_helper.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-13T15:34:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7298b9c_f84a6c81",
+      "range": {
+        "startLine": 70,
+        "startChar": 7,
+        "endLine": 70,
+        "endChar": 42
+      },
+      "revId": "1c2aa999f525cf78d48955b14918b7e7a5bff020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f51287d4_cec69cf2",
         "filename": "ios/chrome/browser/passwords/ios_chrome_password_manager_client.h",
         "patchSetId": 12
@@ -183,6 +351,30 @@
       "revId": "1c2aa999f525cf78d48955b14918b7e7a5bff020",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc846380_03e45ce6",
+        "filename": "ios/chrome/browser/passwords/ios_chrome_password_manager_client.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-13T15:34:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f51287d4_cec69cf2",
+      "range": {
+        "startLine": 90,
+        "startChar": 59,
+        "endLine": 90,
+        "endChar": 73
+      },
+      "revId": "1c2aa999f525cf78d48955b14918b7e7a5bff020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
