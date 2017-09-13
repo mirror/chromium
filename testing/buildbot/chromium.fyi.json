@@ -177,6 +177,22 @@
       }
     ]
   },
+  "Android O tests": {
+    "gtest_tests": [
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "android_devices": "1",
+              "device_type": "coho"
+            }
+          ]
+        },
+        "test": "chrome_public_test_apk"
+      },
+    ]
+  },
   "Browser Side Navigation Linux": {
     "gtest_tests": [
       {
