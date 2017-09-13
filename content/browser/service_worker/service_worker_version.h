@@ -46,13 +46,16 @@
 #include "url/gurl.h"
 #include "url/origin.h"
 
+namespace blink_common {
+class MessagePort;
+}
+
 namespace net {
 class HttpResponseInfo;
 }
 
 namespace content {
 
-class MessagePort;
 class ServiceWorkerContextCore;
 class ServiceWorkerInstalledScriptsSender;
 class ServiceWorkerProviderHost;
@@ -591,7 +594,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
   void OnPostMessageToClient(
       const std::string& client_uuid,
       const base::string16& message,
-      const std::vector<MessagePort>& sent_message_ports);
+      const std::vector<blink_common::MessagePort>& sent_message_ports);
   void OnFocusClient(int request_id, const std::string& client_uuid);
   void OnNavigateClient(int request_id,
                         const std::string& client_uuid,

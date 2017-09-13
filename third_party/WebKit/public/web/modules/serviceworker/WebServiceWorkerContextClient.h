@@ -33,7 +33,6 @@
 
 #include <memory>
 
-#include "public/platform/WebMessagePortChannel.h"
 #include "public/platform/WebURL.h"
 #include "public/platform/WebWorkerFetchContext.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerClientsClaimCallbacks.h"
@@ -43,6 +42,10 @@
 #include "public/platform/modules/serviceworker/WebServiceWorkerStreamHandle.h"
 #include "public/web/WebDevToolsAgentClient.h"
 #include "v8/include/v8.h"
+
+namespace blink_common {
+class MessagePort;
+}
 
 namespace blink {
 
@@ -318,7 +321,7 @@ class WebServiceWorkerContextClient {
   // crbug.com/351753
   virtual void PostMessageToClient(const WebString& uuid,
                                    const WebString&,
-                                   WebMessagePortChannelArray) = 0;
+                                   WebVector<blink_common::MessagePort>) = 0;
 
   // For WindowClient#focus(). Requests the embedder to focus a window.
   virtual void Focus(const WebString& uuid,

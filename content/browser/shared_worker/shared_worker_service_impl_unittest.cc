@@ -32,6 +32,8 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using blink_common::MessagePort;
+
 namespace content {
 
 class SharedWorkerServiceImplTest : public testing::Test {

@@ -198,7 +198,7 @@ bool SharedWorkerHost::IsAvailable() const {
 void SharedWorkerHost::AddClient(mojom::SharedWorkerClientPtr client,
                                  int process_id,
                                  int frame_id,
-                                 const MessagePort& port) {
+                                 const blink_common::MessagePort& port) {
   clients_.emplace_back(std::move(client), next_connection_request_id_++,
                         process_id, frame_id);
   ClientInfo& info = clients_.back();

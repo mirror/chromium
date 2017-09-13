@@ -15,11 +15,11 @@
 #include "base/strings/string16.h"
 #include "content/common/content_export.h"
 #include "content/common/content_param_traits.h"
-#include "content/common/message_port.h"
 #include "ipc/ipc_message_macros.h"
 #include "ipc/ipc_message_utils.h"
 #include "mojo/public/cpp/system/handle.h"
 #include "mojo/public/cpp/system/message_pipe.h"
+#include "third_party/WebKit/common/message_port/message_port.h"
 #include "url/gurl.h"
 
 #undef IPC_MESSAGE_EXPORT
@@ -53,7 +53,7 @@ IPC_MESSAGE_ROUTED0(WorkerMsg_TerminateWorkerContext)
 
 IPC_MESSAGE_ROUTED2(WorkerMsg_Connect,
                     int /* connection_request_id */,
-                    content::MessagePort /* sent_message_port */)
+                    blink_common::MessagePort /* sent_message_port */)
 
 IPC_MESSAGE_ROUTED0(WorkerMsg_WorkerObjectDestroyed)
 

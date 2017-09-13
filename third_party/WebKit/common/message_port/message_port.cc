@@ -2,17 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/common/message_port.h"
+#include "third_party/WebKit/common/message_port/message_port.h"
 
 #include "base/bind.h"
 #include "base/containers/span.h"
 #include "base/logging.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "content/common/message_port.mojom.h"
-#include "content/common/message_port_message_struct_traits.h"
 #include "mojo/public/cpp/system/message_pipe.h"
+#include "third_party/WebKit/common/message_port/message_port.mojom.h"
+#include "third_party/WebKit/common/message_port/message_port_message_struct_traits.h"
 
-namespace content {
+namespace blink_common {
 
 MessagePort::~MessagePort() {}
 
@@ -46,6 +46,15 @@ std::vector<mojo::ScopedMessagePipeHandle> MessagePort::ReleaseHandles(
   return handles;
 }
 
+// static
+std::vector<MessagePort> MessagePort::BindHandles(
+    std::vector<mojo::ScopedMessagePipeHandle> handles) {
+  std::vector<MessagePort> ports(handles.size());
+  for (size_t i = 0; i < handles.size(); ++i)
+    ports[i] = MessagePort(std::move(handles[i]));
+  return ports;
+}
+
 void MessagePort::PostMessage(const uint8_t* encoded_message,
                               size_t encoded_message_size,
                               std::vector<MessagePort> ports) {
@@ -56,9 +65,7 @@ void MessagePort::PostMessage(const uint8_t* encoded_message,
 
   MessagePortMessage msg;
   msg.encoded_message = base::make_span(encoded_message, encoded_message_size);
-  msg.ports.resize(ports.size());
-  for (size_t i = 0; i < ports.size(); ++i)
-    msg.ports[i] = ports[i].ReleaseHandle();
+  msg.ports = ReleaseHandles(ports);
   mojo::Message mojo_message =
       mojom::MessagePortMessage::SerializeAsMessage(&msg);
   mojo::WriteMessageNew(state_->handle().get(), mojo_message.TakeMojoMessage(),
@@ -82,9 +89,7 @@ bool MessagePort::GetMessage(std::vector<uint8_t>* encoded_message,
     return false;
 
   *encoded_message = std::move(msg.owned_encoded_message);
-  ports->resize(msg.ports.size());
-  for (size_t i = 0; i < ports->size(); ++i)
-    ports->at(i) = MessagePort(std::move(msg.ports[i]));
+  *ports = BindHandles(std::move(msg.ports));
 
   return true;
 }
@@ -206,4 +211,4 @@ void MessagePort::State::CallOnHandleReady(uintptr_t context,
   }
 }
 
-}  // namespace content
+}  // namespace blink_common

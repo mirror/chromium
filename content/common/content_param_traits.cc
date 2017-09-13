@@ -7,10 +7,10 @@
 #include <stddef.h>
 
 #include "base/strings/string_number_conversions.h"
-#include "content/common/message_port.h"
 #include "ipc/ipc_mojo_message_helper.h"
 #include "ipc/ipc_mojo_param_traits.h"
 #include "net/base/ip_endpoint.h"
+#include "third_party/WebKit/common/message_port/message_port.h"
 #include "ui/accessibility/ax_modes.h"
 #include "ui/events/blink/web_input_event_traits.h"
 
@@ -61,25 +61,23 @@ void ParamTraits<WebInputEventPointer>::Log(const param_type& p,
   l->append(")");
 }
 
-void ParamTraits<content::MessagePort>::Write(base::Pickle* m,
-                                              const param_type& p) {
+void ParamTraits<blink_common::MessagePort>::Write(base::Pickle* m,
+                                                   const param_type& p) {
   ParamTraits<mojo::MessagePipeHandle>::Write(m, p.ReleaseHandle().release());
 }
 
-bool ParamTraits<content::MessagePort>::Read(
-    const base::Pickle* m,
-    base::PickleIterator* iter,
-    param_type* r) {
+bool ParamTraits<blink_common::MessagePort>::Read(const base::Pickle* m,
+                                                  base::PickleIterator* iter,
+                                                  param_type* r) {
   mojo::MessagePipeHandle handle;
   if (!ParamTraits<mojo::MessagePipeHandle>::Read(m, iter, &handle))
     return false;
-  *r = content::MessagePort(mojo::ScopedMessagePipeHandle(handle));
+  *r = blink_common::MessagePort(mojo::ScopedMessagePipeHandle(handle));
   return true;
 }
 
-void ParamTraits<content::MessagePort>::Log(const param_type& p,
-                                            std::string* l) {
-}
+void ParamTraits<blink_common::MessagePort>::Log(const param_type& p,
+                                                 std::string* l) {}
 
 void ParamTraits<ui::AXMode>::Write(base::Pickle* m, const param_type& p) {
   IPC::WriteParam(m, p.mode());

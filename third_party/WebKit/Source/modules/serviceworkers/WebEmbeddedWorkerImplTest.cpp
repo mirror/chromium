@@ -23,6 +23,7 @@
 #include "public/web/modules/serviceworker/WebServiceWorkerContextClient.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/common/message_port/message_port.h"
 
 namespace blink {
 namespace {
@@ -72,7 +73,7 @@ class MockServiceWorkerContextClient : public WebServiceWorkerContextClient {
   }
   void PostMessageToClient(const WebString& uuid,
                            const WebString&,
-                           WebMessagePortChannelArray) override {
+                           WebVector<blink_common::MessagePort>) override {
     NOTREACHED();
   }
   void SkipWaiting(
