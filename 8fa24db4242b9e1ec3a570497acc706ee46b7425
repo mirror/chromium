@@ -34,6 +34,24 @@
       "revId": "8fa24db4242b9e1ec3a570497acc706ee46b7425",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89afd87c_88b74838",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_bidi_paragraph.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-13T19:00:00Z",
+      "side": 1,
+      "message": "Or |BaseDirectionForString| maybe better?",
+      "parentUuid": "85f126d6_328861f1",
+      "revId": "8fa24db4242b9e1ec3a570497acc706ee46b7425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
