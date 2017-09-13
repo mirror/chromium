@@ -65,6 +65,22 @@ const char kPrefKeyUsageCorporate[] = "corporate";
 
 const char kPolicyAllowCorporateKeyUsage[] = "allowCorporateKeyUsage";
 
+const base::DictionaryValue* GetPrefsEntry(
+    const std::string& public_key_spki_der_b64,
+    const PrefService* const profile_prefs) {
+  if (!profile_prefs) {
+    return nullptr;
+  }
+
+  const base::DictionaryValue* platform_keys =
+      profile_prefs->GetDictionary(prefs::kPlatformKeys);
+
+  const base::DictionaryValue* key_entry = nullptr;
+  platform_keys->GetDictionaryWithoutPathExpansion(public_key_spki_der_b64,
+                                                   &key_entry);
+  return key_entry;
+}
+
 }  // namespace
 
 struct KeyPermissions::PermissionsForExtension::KeyEntry {
@@ -202,33 +218,8 @@ void KeyPermissions::PermissionsForExtension::SetUserGrantedPermission(
 
 bool KeyPermissions::PermissionsForExtension::PolicyAllowsCorporateKeyUsage()
     const {
-  const policy::PolicyMap& policies = profile_policies_->GetPolicies(
-      policy::PolicyNamespace(policy::POLICY_DOMAIN_CHROME, std::string()));
-  const base::Value* policy_value =
-      policies.GetValue(policy::key::kKeyPermissions);
-  if (!policy_value)
-    return false;
-
-  const base::DictionaryValue* key_permissions_map = nullptr;
-  policy_value->GetAsDictionary(&key_permissions_map);
-  if (!key_permissions_map) {
-    LOG(ERROR) << "Expected policy to be a dictionary.";
-    return false;
-  }
-
-  const base::DictionaryValue* key_permissions_for_ext = nullptr;
-  key_permissions_map->GetDictionaryWithoutPathExpansion(
-      extension_id_, &key_permissions_for_ext);
-  if (!key_permissions_for_ext)
-    return false;
-
-  bool allow_corporate_key_usage = false;
-  key_permissions_for_ext->GetBooleanWithoutPathExpansion(
-      kPolicyAllowCorporateKeyUsage, &allow_corporate_key_usage);
-
-  VLOG_IF(allow_corporate_key_usage, 2)
-      << "Policy allows usage of corporate keys by extension " << extension_id_;
-  return allow_corporate_key_usage;
+  return KeyPermissions::PolicyAllowsCorporateKeyUsage(extension_id_,
+                                                       profile_policies_);
 }
 
 void KeyPermissions::PermissionsForExtension::WriteToStateStore() {
@@ -348,16 +339,55 @@ bool KeyPermissions::CanUserGrantPermissionFor(
   return !IsCorporateKey(public_key_spki_der_b64);
 }
 
-bool KeyPermissions::IsCorporateKey(
-    const std::string& public_key_spki_der_b64) const {
+// static
+bool KeyPermissions::IsCorporateKey(const std::string& public_key_spki_der_b64,
+                                    const PrefService* const profile_prefs) {
   const base::DictionaryValue* prefs_entry =
-      GetPrefsEntry(public_key_spki_der_b64);
+      GetPrefsEntry(public_key_spki_der_b64, profile_prefs);
   if (prefs_entry) {
     std::string key_usage;
     prefs_entry->GetStringWithoutPathExpansion(kPrefKeyUsage, &key_usage);
     return key_usage == kPrefKeyUsageCorporate;
   }
   return false;
+}
+
+// static
+bool KeyPermissions::PolicyAllowsCorporateKeyUsage(
+    const std::string& extension_id,
+    policy::PolicyService* const profile_policies) {
+  const policy::PolicyMap& policies = profile_policies->GetPolicies(
+      policy::PolicyNamespace(policy::POLICY_DOMAIN_CHROME, std::string()));
+  const base::Value* policy_value =
+      policies.GetValue(policy::key::kKeyPermissions);
+  if (!policy_value)
+    return false;
+
+  const base::DictionaryValue* key_permissions_map = nullptr;
+  policy_value->GetAsDictionary(&key_permissions_map);
+  if (!key_permissions_map) {
+    LOG(ERROR) << "Expected policy to be a dictionary.";
+    return false;
+  }
+
+  const base::DictionaryValue* key_permissions_for_ext = nullptr;
+  key_permissions_map->GetDictionaryWithoutPathExpansion(
+      extension_id, &key_permissions_for_ext);
+  if (!key_permissions_for_ext)
+    return false;
+
+  bool allow_corporate_key_usage = false;
+  key_permissions_for_ext->GetBooleanWithoutPathExpansion(
+      kPolicyAllowCorporateKeyUsage, &allow_corporate_key_usage);
+
+  VLOG_IF(allow_corporate_key_usage, 2)
+      << "Policy allows usage of corporate keys by extension " << extension_id;
+  return allow_corporate_key_usage;
+}
+
+bool KeyPermissions::IsCorporateKey(
+    const std::string& public_key_spki_der_b64) const {
+  return IsCorporateKey(public_key_spki_der_b64, profile_prefs_);
 }
 
 void KeyPermissions::RegisterProfilePrefs(
@@ -379,17 +409,6 @@ void KeyPermissions::SetPlatformKeysOfExtension(
     std::unique_ptr<base::Value> value) {
   extensions_state_store_->SetExtensionValue(
       extension_id, kStateStorePlatformKeys, std::move(value));
-}
-
-const base::DictionaryValue* KeyPermissions::GetPrefsEntry(
-    const std::string& public_key_spki_der_b64) const {
-  const base::DictionaryValue* platform_keys =
-      profile_prefs_->GetDictionary(prefs::kPlatformKeys);
-
-  const base::DictionaryValue* key_entry = nullptr;
-  platform_keys->GetDictionaryWithoutPathExpansion(public_key_spki_der_b64,
-                                                   &key_entry);
-  return key_entry;
 }
 
 }  // namespace chromeos
