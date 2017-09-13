@@ -115,6 +115,7 @@ class CastChannelAPITest : public ExtensionApiTest {
               })));
       EXPECT_CALL(*mock_cast_socket_, ready_state())
           .WillOnce(Return(ReadyState::OPEN));
+      EXPECT_CALL(*mock_cast_socket_, AddObserver(_));
       EXPECT_CALL(*mock_cast_socket_->mock_transport(),
                   SendMessage(A<const CastMessage&>(), _))
           .WillOnce(InvokeCompletionCallback<1>(net::OK));

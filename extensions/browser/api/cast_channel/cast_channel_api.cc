@@ -321,6 +321,11 @@ CastChannelSendFunction::CastChannelSendFunction() { }
 
 CastChannelSendFunction::~CastChannelSendFunction() { }
 
+bool CastChannelSendFunction::PrePrepare() {
+  api_ = CastChannelAPI::Get(browser_context());
+  return CastChannelAsyncApiFunction::PrePrepare();
+}
+
 bool CastChannelSendFunction::Prepare() {
   params_ = Send::Params::Create(*args_);
   EXTENSION_FUNCTION_VALIDATE(params_.get());
@@ -356,6 +361,15 @@ void CastChannelSendFunction::AsyncWorkStart() {
     AsyncWorkCompleted();
     return;
   }
+
+  // Need to add message observer to socket, if socket is not opened by
+  // chrome.cast.channel.open extension function.
+  // It is a workaround for in-browser Cast discovery: browser side opens and
+  // closes cast channel, while extension side reuses the channel to send and
+  // receive messages.
+  socket->AddObserver(
+      api_->GetObserver(extension_->id(), cast_socket_service_->GetLogger()));
+
   CastMessage message_to_send;
   if (!MessageInfoToCastMessage(params_->message, &message_to_send)) {
     SetResultFromError(params_->channel.channel_id,
