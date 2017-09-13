@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b9f01d9_1fcd9411",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-13T11:38:57Z",
+      "side": 1,
+      "message": "nit: s/interim/any/ ? (final results also count :) )",
+      "range": {
+        "startLine": 770,
+        "startChar": 28,
+        "endLine": 770,
+        "endChar": 0
+      },
+      "revId": "395d32c7580087ea8e5645d722c8b2323b8ef562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f188a1_75a482b0",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-13T11:38:57Z",
+      "side": 1,
+      "message": "nit: Nothing\u0027s actually \"incorrect\" here. Maybe\nbut results were already received\n?",
+      "range": {
+        "startLine": 216,
+        "startChar": 30,
+        "endLine": 216,
+        "endChar": 0
+      },
+      "revId": "395d32c7580087ea8e5645d722c8b2323b8ef562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc365d16_b27e2dbb",
+        "filename": "chrome/test/data/local_ntp/voice_text_browsertest.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-13T11:38:57Z",
+      "side": 1,
+      "message": "Maybe add a comment: The message was *not* changed to \"Listening\".",
+      "range": {
+        "startLine": 232,
+        "startChar": 51,
+        "endLine": 232,
+        "endChar": 0
+      },
+      "revId": "395d32c7580087ea8e5645d722c8b2323b8ef562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
