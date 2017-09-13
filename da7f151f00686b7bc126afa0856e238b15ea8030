@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38951f99_f917f86f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/ViewHighlighter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-13T18:18:02Z",
+      "side": 1,
+      "message": "nit: mention that this is necessary only because of android J devices.",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 83
+      },
+      "revId": "da7f151f00686b7bc126afa0856e238b15ea8030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
