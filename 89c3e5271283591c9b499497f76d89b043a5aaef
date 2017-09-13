@@ -197,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "d32e81ef_0bdee5cb",
+        "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-13T15:37:58Z",
+      "side": 1,
+      "message": "Currently, no.  We choose element texture sizes based on how big an element is, and how far away it is from the user in the 3D world.  If an element moves, in the future, we *might* change its texture size, and hence create a new representation, but in that case we\u0027d be toggling between two scale factors, not \"many\".  I think we\u0027re pretty safe.",
+      "parentUuid": "0a89ee20_51120f08",
+      "revId": "89c3e5271283591c9b499497f76d89b043a5aaef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5805f24b_cc33d6d6",
         "filename": "chrome/browser/vr/elements/url_bar_texture.cc",
         "patchSetId": 1
