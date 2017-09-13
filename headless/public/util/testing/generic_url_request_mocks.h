@@ -19,8 +19,7 @@
 
 namespace headless {
 
-class HEADLESS_EXPORT MockGenericURLRequestJobDelegate
-    : public GenericURLRequestJob::Delegate {
+class MockGenericURLRequestJobDelegate : public GenericURLRequestJob::Delegate {
  public:
   MockGenericURLRequestJobDelegate();
   ~MockGenericURLRequestJobDelegate() override;
@@ -41,7 +40,7 @@ class HEADLESS_EXPORT MockGenericURLRequestJobDelegate
 };
 
 // TODO(alexclarke): We may be able to replace this with the CookieMonster.
-class HEADLESS_EXPORT MockCookieStore : public net::CookieStore {
+class MockCookieStore : public net::CookieStore {
  public:
   MockCookieStore();
   ~MockCookieStore() override;
@@ -126,8 +125,7 @@ class HEADLESS_EXPORT MockCookieStore : public net::CookieStore {
   DISALLOW_COPY_AND_ASSIGN(MockCookieStore);
 };
 
-class HEADLESS_EXPORT MockURLRequestDelegate
-    : public net::URLRequest::Delegate {
+class MockURLRequestDelegate : public net::URLRequest::Delegate {
  public:
   MockURLRequestDelegate();
   ~MockURLRequestDelegate() override;
