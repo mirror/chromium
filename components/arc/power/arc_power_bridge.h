@@ -54,19 +54,43 @@ class ArcPowerBridge : public KeyedService,
   // mojom::PowerHost overrides.
   void OnAcquireDisplayWakeLock(mojom::DisplayWakeLockType type) override;
   void OnReleaseDisplayWakeLock(mojom::DisplayWakeLockType type) override;
+  void OnAcquirePartialWakeLock() override;
+  void OnReleasePartialWakeLock() override;
   void IsDisplayOn(const IsDisplayOnCallback& callback) override;
   void OnScreenBrightnessUpdateRequest(double percent) override;
 
  private:
-  void ReleaseAllDisplayWakeLocks();
+  friend class ArcPowerBridgeTest;
+
+  enum class WakeLockType : int32_t {
+    FULL_WAKE_LOCK_BRIGHT,
+    FULL_WAKE_LOCK_DIM,
+    PARTIAL_WAKE_LOCK,
+  };
+
+  // Information about wake locks registered with PowerPolicyController
+  // in Chrome. All Android wake locks of a given type are condensed
+  // into a single Chrome wake lock.
+  struct WakeLockInfo {
+    // ID returned by PowerPolicyController.
+    int id;
+    // Number of Android wake locks held at this level.
+    int count;
+  };
+  void AcquireWakeLockInternal(WakeLockType type);
+  void ReleaseWakeLockInternal(WakeLockType type);
+  void ReleaseAllWakeLocks();
   void UpdateAndroidScreenBrightness(double percent);
 
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
   mojo::Binding<mojom::PowerHost> binding_;
 
-  // Stores a mapping of type -> wake lock ID for all wake locks
-  // held by ARC.
-  std::multimap<mojom::DisplayWakeLockType, int> wake_locks_;
+  // Stores a mapping of type -> WakeLockInfo. All ARC wake locks of given type
+  // are condensed into a single entry. Every entry represents a single chrome
+  // wake lock held by PowerPolicyController. When all the wake locks of given
+  // type are released, entry in this map is removed and PowerPolicyController
+  // will release the chrome wake lock.
+  std::map<WakeLockType, WakeLockInfo> wake_locks_;
 
   // Last time that the power manager notified about a brightness change.
   base::TimeTicks last_brightness_changed_time_;
