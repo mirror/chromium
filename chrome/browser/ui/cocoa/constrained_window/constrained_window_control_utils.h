@@ -22,6 +22,18 @@ NSAttributedString* GetAttributedLabelString(
     NSTextAlignment alignment,
     NSLineBreakMode lineBreakMode);
 
+// Create a new NSTextField and add it to the specified parent.
+NSTextField* AddTextField(NSView* parent,
+                          const base::string16& message,
+                          const ui::ResourceBundle::FontStyle& font_style);
+
+void AddButton(NSView* parent,
+               NSButton* button,
+               int title_id,
+               id target,
+               SEL action,
+               BOOL should_auto_size);
+
 }  // namespace constrained_window
 
 #endif  // CHROME_BROWSER_UI_COCOA_CONSTRAINED_WINDOW_CONSTRAINED_WINDOW_CONTROL_UTILS_H_

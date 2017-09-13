@@ -112,30 +112,10 @@ NSTextView* AddTextView(
   return textView.autorelease();
 }
 
-// Create a new NSTextField and add it to the specified parent.
-NSTextField* AddTextField(
-    NSView* parent,
-    const base::string16& message,
-    const ui::ResourceBundle::FontStyle& font_style) {
-  NSTextField* textField = constrained_window::CreateLabel();
-  [textField
-      setAttributedStringValue:constrained_window::GetAttributedLabelString(
-                                   base::SysUTF16ToNSString(message),
-                                   font_style, NSNaturalTextAlignment,
-                                   NSLineBreakByWordWrapping)];
-  [parent addSubview:textField];
-  return textField;
-}
-
 }  // namespace
 
 @interface ProfileSigninConfirmationViewController ()
 - (void)learnMore;
-- (void)addButton:(NSButton*)button
-        withTitle:(int)resourceID
-           target:(id)target
-           action:(SEL)action
-   shouldAutoSize:(BOOL)shouldAutoSize;
 @end
 
 @implementation ProfileSigninConfirmationViewController
@@ -188,25 +168,18 @@ NSTextField* AddTextField(
   // and the buttons and then compute the necessary width.
 
   // OK button.
-  [self addButton:okButton_
-        withTitle:IDS_ENTERPRISE_SIGNIN_CONTINUE
-           target:self
-           action:@selector(ok:)
-   shouldAutoSize:YES];
+  constrained_window::AddButton([self view], okButton_,
+                                IDS_ENTERPRISE_SIGNIN_CONTINUE, self,
+                                @selector(ok:), true);
 
   // Cancel button.
-  [self addButton:cancelButton_
-        withTitle:IDS_ENTERPRISE_SIGNIN_CANCEL
-           target:self
-           action:@selector(cancel:)
-   shouldAutoSize:YES];
+  constrained_window::AddButton([self view], cancelButton_,
+                                IDS_ENTERPRISE_SIGNIN_CANCEL, self,
+                                @selector(cancel:), true);
 
   // Add the close button.
-  [self addButton:closeButton_
-        withTitle:0
-           target:self
-           action:@selector(close:)
-   shouldAutoSize:NO];
+  constrained_window::AddButton([self view], closeButton_, 0, self,
+                                @selector(close:), false);
   NSRect closeButtonFrame = [closeButton_ frame];
   closeButtonFrame.size.width = chrome_style::GetCloseButtonSize();
   closeButtonFrame.size.height = chrome_style::GetCloseButtonSize();
@@ -214,19 +187,15 @@ NSTextField* AddTextField(
 
   // Create Profile link.
   if (offerProfileCreation_) {
-    [self addButton:createProfileButton_
-          withTitle:IDS_ENTERPRISE_SIGNIN_CREATE_NEW_PROFILE
-             target:self
-             action:@selector(createProfile:)
-     shouldAutoSize:YES];
+    constrained_window::AddButton([self view], createProfileButton_,
+                                  IDS_ENTERPRISE_SIGNIN_CREATE_NEW_PROFILE,
+                                  self, @selector(createProfile:), true);
   }
 
   // Add the title label.
-  titleField_.reset(
-      [AddTextField([self view],
-                    l10n_util::GetStringUTF16(
-                        IDS_ENTERPRISE_SIGNIN_TITLE),
-                    chrome_style::kTitleFontStyle) retain]);
+  titleField_.reset([constrained_window::AddTextField(
+      [self view], l10n_util::GetStringUTF16(IDS_ENTERPRISE_SIGNIN_TITLE),
+      chrome_style::kTitleFontStyle) retain]);
   [titleField_ setFrame:ComputeFrame(
       [titleField_ attributedStringValue], 0.0, 0.0)];
 
@@ -271,9 +240,8 @@ NSTextField* AddTextField(
       l10n_util::GetStringFUTF16(
           IDS_ENTERPRISE_SIGNIN_ALERT,
           domain, &offset);
-  promptField_.reset(
-      [AddTextField(promptBox_, prompt_text, chrome_style::kTextFontStyle)
-          retain]);
+  promptField_.reset([constrained_window::AddTextField(
+      promptBox_, prompt_text, chrome_style::kTextFontStyle) retain]);
   MakeTextBold(promptField_, offset, domain.size());
   [promptField_ setFrame:ComputeFrame(
         [promptField_ attributedStringValue], width, 0.0)];
@@ -423,21 +391,6 @@ NSTextField* AddTextField(
     return YES;
   }
   return NO;
-}
-
-- (void)addButton:(NSButton*)button
-        withTitle:(int)resourceID
-           target:(id)target
-           action:(SEL)action
-   shouldAutoSize:(BOOL)shouldAutoSize {
-  if (resourceID)
-    [button setTitle:base::SysUTF16ToNSString(
-        l10n_util::GetStringUTF16(resourceID))];
-  [button setTarget:target];
-  [button setAction:action];
-  [[self view] addSubview:button];
-  if (shouldAutoSize)
-    [GTMUILocalizerAndLayoutTweaker sizeToFitView:button];
 }
 
 @end

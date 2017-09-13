@@ -5,7 +5,11 @@
 #import "chrome/browser/ui/cocoa/constrained_window/constrained_window_control_utils.h"
 
 #include "base/mac/scoped_nsobject.h"
+#include "base/strings/sys_string_conversions.h"
+#include "base/strings/utf_string_conversions.h"
 #include "skia/ext/skia_utils_mac.h"
+#import "third_party/google_toolbox_for_mac/src/AppKit/GTMUILocalizerAndLayoutTweaker.h"
+#include "ui/base/l10n/l10n_util_mac.h"
 
 namespace constrained_window {
 
@@ -40,6 +44,34 @@ NSAttributedString* GetAttributedLabelString(
   };
   return [[[NSAttributedString alloc] initWithString:string
                                           attributes:attributes] autorelease];
+}
+
+NSTextField* AddTextField(NSView* parent,
+                          const base::string16& message,
+                          const ui::ResourceBundle::FontStyle& font_style) {
+  NSTextField* textField = constrained_window::CreateLabel();
+  [textField
+      setAttributedStringValue:constrained_window::GetAttributedLabelString(
+                                   base::SysUTF16ToNSString(message),
+                                   font_style, NSNaturalTextAlignment,
+                                   NSLineBreakByWordWrapping)];
+  [parent addSubview:textField];
+  return textField;
+}
+
+void AddButton(NSView* parent,
+               NSButton* button,
+               int title_id,
+               id target,
+               SEL action,
+               BOOL should_auto_size) {
+  if (title_id)
+    [button setTitle:l10n_util::GetNSString(title_id)];
+  [button setTarget:target];
+  [button setAction:action];
+  [parent addSubview:button];
+  if (should_auto_size)
+    [GTMUILocalizerAndLayoutTweaker sizeToFitView:button];
 }
 
 }  // namespace constrained_window
