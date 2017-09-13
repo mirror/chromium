@@ -6,6 +6,7 @@
 #define COMPONENTS_CRYPTAUTH_CRYPTAUTH_GCM_MANAGER_H_
 
 #include <string>
+#include "base/logging.h"
 
 class PrefRegistrySimple;
 

@@ -8,6 +8,8 @@
 #include <utility>
 #include <vector>
 
+#include "base/logging.h"
+
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
@@ -34,11 +36,16 @@ class PtrSet {
 
   template <typename FunctionType>
   void ForAllPtrs(FunctionType function) {
+    LOG(ERROR) << "for all ptrs called";
     for (const auto& it : ptrs_) {
+      LOG(ERROR) << "enter loop";
       if (it)
         function(it->get());
     }
+    LOG(ERROR) << "loop ended";
+
     ClearNullPtrs();
+    LOG(ERROR) << "clear null ptrs";
   }
 
   void CloseAll() {

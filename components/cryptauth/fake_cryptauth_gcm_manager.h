@@ -18,7 +18,7 @@ class FakeCryptAuthGCMManager : public CryptAuthGCMManager {
   // |registration_id|: The GCM registration id from a previous successful
   //     enrollment. Pass in an empty |registration_id| to simulate never having
   //     registered successfully.
-  explicit FakeCryptAuthGCMManager(const std::string& registration_id);
+  FakeCryptAuthGCMManager(const std::string& registration_id);
 
   ~FakeCryptAuthGCMManager() override;
 

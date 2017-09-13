@@ -91,7 +91,7 @@ class CryptAuthEnrollmentManager : public SyncScheduler::Delegate,
 
   // Returns true if a successful enrollment has been recorded and this
   // enrollment has not expired.
-  bool IsEnrollmentValid() const;
+  virtual bool IsEnrollmentValid() const;
 
   // Returns the timestamp of the last successful enrollment. If no enrollment
   // has ever been made, then a null base::Time object will be returned.

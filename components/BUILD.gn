@@ -274,6 +274,8 @@ test("components_unittests") {
     deps += [
       "//components/cryptauth:unit_tests",
       "//components/feedback:unit_tests",
+      "//components/multidevice:unit_tests",
+      "//components/multidevice/service:unit_tests",
 
       # See comment in components/guest_view/browser/BUILD.gn for why
       # guest_view is currently non-mobile.

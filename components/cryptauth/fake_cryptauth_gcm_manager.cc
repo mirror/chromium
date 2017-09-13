@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "components/cryptauth/fake_cryptauth_gcm_manager.h"
+#include "base/logging.h"
 
 namespace cryptauth {
 
@@ -10,7 +11,9 @@ FakeCryptAuthGCMManager::FakeCryptAuthGCMManager(
     const std::string& registration_id)
     : registration_in_progress_(false), registration_id_(registration_id) {}
 
-FakeCryptAuthGCMManager::~FakeCryptAuthGCMManager() {}
+FakeCryptAuthGCMManager::~FakeCryptAuthGCMManager() {
+  LOG(ERROR) << "~FakeCryptAuthGCMManager called";
+}
 
 void FakeCryptAuthGCMManager::StartListening() {}
 
