@@ -11,7 +11,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/threading/thread_checker.h"
 #include "base/timer/timer.h"
-#include "net/proxy/mojo_proxy_resolver_factory.h"
+#include "net/interfaces/proxy_resolver_service.mojom.h"
 
 #if !defined(OS_ANDROID)
 namespace content {
@@ -28,43 +28,62 @@ struct DefaultSingletonTraits;
 // Android, the proxy resolvers will run in the browser process, and on other
 // platforms, they'll all be run in the same utility process. Utility process
 // crashes are detected and the utility process is automatically restarted.
-class ChromeMojoProxyResolverFactory : public net::MojoProxyResolverFactory {
+class ChromeMojoProxyResolverFactory {
  public:
   static ChromeMojoProxyResolverFactory* GetInstance();
 
-  // Overridden from net::MojoProxyResolverFactory:
-  std::unique_ptr<base::ScopedClosureRunner> CreateResolver(
-      const std::string& pac_script,
-      mojo::InterfaceRequest<net::interfaces::ProxyResolver> req,
-      net::interfaces::ProxyResolverFactoryRequestClientPtr client) override;
+  // Creates a new net::interfaces::ProxyResolverFactoryPtr, which proxies
+  // ProxyResolver creation through the ChromeMojoProxyResolverFactory.
+  net::interfaces::ProxyResolverFactoryPtr CreateFactoryInterface();
+
+  net::interfaces::ProxyResolverFactory* get_utility_factory_for_testing()
+      const {
+    return utility_process_resolver_factory_.get();
+  }
+
+  // Sets the idle timeout for shutting down the utility process when there are
+  // no live ProxyResolvers.
+  static void SetUtilityProcessIdleTimeoutSecsForTesting(int seconds);
 
  private:
   friend struct base::DefaultSingletonTraits<ChromeMojoProxyResolverFactory>;
+
+  // Each ResolverFactoryChannel manages a single mojo connection, tracking the
+  // number of live resolvers it has issued.
+  class ResolverFactoryChannel;
+
   ChromeMojoProxyResolverFactory();
-  ~ChromeMojoProxyResolverFactory() override;
+  ~ChromeMojoProxyResolverFactory();
 
   // Creates the proxy resolver factory. On desktop, creates a new utility
   // process before creating it out of process. On Android, creates it on the
   // current thread.
-  void CreateFactory();
+  net::interfaces::ProxyResolverFactory* ResolverFactory();
 
   // Destroys |resolver_factory_|.
   void DestroyFactory();
-
-  // Invoked each time a proxy resolver is destroyed.
-  void OnResolverDestroyed();
 
   // Invoked once an idle timeout has elapsed after all proxy resolvers are
   // destroyed.
   void OnIdleTimeout();
 
-  net::interfaces::ProxyResolverFactoryPtr resolver_factory_;
+  // Called when a ResolverFactoryChannel's connection is closed. Destroys
+  // |binding|.
+  void OnConnectionClosed(ResolverFactoryChannel* binding);
+
+  // Called whenever the number of proxy resolvers changes.
+  void OnNumProxyResolversChanged(int delta);
+
+  // The real ProxyResolverFactory that, on desktop platforms, lives in the
+  // utility process.
+  net::interfaces::ProxyResolverFactoryPtr utility_process_resolver_factory_;
 
 #if !defined(OS_ANDROID)
   base::WeakPtr<content::UtilityProcessHost> weak_utility_process_host_;
 #endif
+  std::set<std::unique_ptr<ResolverFactoryChannel>> channels_;
 
-  size_t num_proxy_resolvers_ = 0;
+  int num_proxy_resolvers_ = 0;
 
   base::OneShotTimer idle_timer_;
 

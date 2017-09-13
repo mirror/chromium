@@ -10,37 +10,33 @@
 
 #include "base/macros.h"
 #include "base/memory/singleton.h"
-#include "net/proxy/mojo_proxy_resolver_factory.h"
+#include "mojo/public/cpp/bindings/binding.h"
+#include "net/interfaces/proxy_resolver_service.mojom.h"
 
 namespace net {
 
 // MojoProxyResolverFactory that runs PAC scripts in-process, for tests.
-class TestMojoProxyResolverFactory : public MojoProxyResolverFactory {
+class TestMojoProxyResolverFactory : public interfaces::ProxyResolverFactory {
  public:
-  static TestMojoProxyResolverFactory* GetInstance();
-
-  // Returns true if CreateResolver was called.
-  bool resolver_created() { return resolver_created_; }
-
-  // Sets the value returned by resolver_created. Since this is a singleton,
-  // Serves to avoid with test fixture reuse.
-  void set_resolver_created(bool resolver_created) {
-    resolver_created_ = resolver_created;
-  }
-
-  // Overridden from MojoProxyResolverFactory:
-  std::unique_ptr<base::ScopedClosureRunner> CreateResolver(
-      const std::string& pac_script,
-      mojo::InterfaceRequest<interfaces::ProxyResolver> req,
-      interfaces::ProxyResolverFactoryRequestClientPtr client) override;
-
- private:
   TestMojoProxyResolverFactory();
   ~TestMojoProxyResolverFactory() override;
 
-  friend struct base::DefaultSingletonTraits<TestMojoProxyResolverFactory>;
+  // Returns true if CreateResolver was called.
+  bool resolver_created() const { return resolver_created_; }
+
+  interfaces::ProxyResolverFactoryPtr CreateFactoryInterface();
+
+ private:
+  // Overridden from interfaces::ProxyResolverFactory:
+  void CreateResolver(
+      const std::string& pac_script,
+      interfaces::ProxyResolverRequest req,
+      interfaces::ProxyResolverFactoryRequestClientPtr client) override;
+  void OnResolverDestroyed() override;
 
   interfaces::ProxyResolverFactoryPtr factory_;
+
+  mojo::Binding<ProxyResolverFactory> binding_;
 
   bool resolver_created_ = false;
 

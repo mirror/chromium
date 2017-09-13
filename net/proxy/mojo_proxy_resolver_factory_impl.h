@@ -25,11 +25,12 @@ class MojoProxyResolverFactoryImpl : public interfaces::ProxyResolverFactory {
  private:
   class Job;
 
-  // interfaces::ProxyResolverFactory override.
+  // interfaces::ProxyResolverFactory overrides.
   void CreateResolver(
       const std::string& pac_script,
       interfaces::ProxyResolverRequest request,
       interfaces::ProxyResolverFactoryRequestClientPtr client) override;
+  void OnResolverDestroyed() override;
 
   void RemoveJob(Job* job);
 

@@ -51,9 +51,17 @@ interface ProxyResolverRequestClient {
 };
 
 interface ProxyResolverFactory {
+  // Creates a ProxyResolver for the provided PAC script.
   CreateResolver(string pac_script,
                  ProxyResolver& resolver,
                  ProxyResolverFactoryRequestClient client);
+
+  // Optional notification that a ProxyResolver created by CreateResolver was
+  // destroyed. Allows intermediary classes to free up resources when there are
+  // no live ProxyResolvers. If used, must be called once for each
+  // CreateResolver call. On destruction of the factory itself, it's fine not
+  // to invoke this callback for previously created factories.
+  OnResolverDestroyed();
 };
 
 interface ProxyResolverFactoryRequestClient {

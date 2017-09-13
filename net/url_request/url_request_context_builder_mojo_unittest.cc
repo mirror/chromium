@@ -57,12 +57,12 @@ class URLRequestContextBuilderMojoTest : public PlatformTest {
 
 TEST_F(URLRequestContextBuilderMojoTest, MojoProxyResolver) {
   EXPECT_TRUE(test_server_.Start());
-  TestMojoProxyResolverFactory::GetInstance()->set_resolver_created(false);
 
   builder_.set_proxy_config_service(std::make_unique<ProxyConfigServiceFixed>(
       ProxyConfig::CreateFromCustomPacURL(test_server_.GetURL(kPacPath))));
-  builder_.set_mojo_proxy_resolver_factory(
-      TestMojoProxyResolverFactory::GetInstance());
+  TestMojoProxyResolverFactory mojo_proxy_resolver_factory;
+  builder_.SetMojoProxyResolverFactory(
+      mojo_proxy_resolver_factory.CreateFactoryInterface());
 
   std::unique_ptr<URLRequestContext> context(builder_.Build());
   TestDelegate delegate;
@@ -75,7 +75,7 @@ TEST_F(URLRequestContextBuilderMojoTest, MojoProxyResolver) {
   EXPECT_EQ("Bar", delegate.data_received());
 
   // Make sure that the Mojo factory was used.
-  EXPECT_TRUE(TestMojoProxyResolverFactory::GetInstance()->resolver_created());
+  EXPECT_TRUE(mojo_proxy_resolver_factory.resolver_created());
 }
 
 // Makes sure that pending PAC requests are correctly shut down during teardown.
@@ -87,8 +87,9 @@ TEST_F(URLRequestContextBuilderMojoTest, ShutdownWithHungRequest) {
 
   builder_.set_proxy_config_service(std::make_unique<ProxyConfigServiceFixed>(
       ProxyConfig::CreateFromCustomPacURL(test_server_.GetURL("/hung"))));
-  builder_.set_mojo_proxy_resolver_factory(
-      TestMojoProxyResolverFactory::GetInstance());
+  TestMojoProxyResolverFactory mojo_proxy_resolver_factory;
+  builder_.SetMojoProxyResolverFactory(
+      mojo_proxy_resolver_factory.CreateFactoryInterface());
 
   std::unique_ptr<URLRequestContext> context(builder_.Build());
   TestDelegate delegate;
