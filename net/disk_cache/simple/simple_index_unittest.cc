@@ -128,29 +128,6 @@ class SimpleIndexTest  : public testing::Test, public SimpleIndexDelegate {
     index_->Initialize(base::Time());
   }
 
-  void EnableEvictBySize() {
-    // Enable size-based eviction.
-    const std::string kTrialName = "EvictWithSizeTrial";
-    const std::string kGroupName = "GroupFoo";  // Value not used
-
-    field_trial_list_ = std::make_unique<base::FieldTrialList>(
-        std::make_unique<base::MockEntropyProvider>());
-
-    scoped_refptr<base::FieldTrial> trial =
-        base::FieldTrialList::CreateFieldTrial(kTrialName, kGroupName);
-
-    std::map<std::string, std::string> params;
-    params[kSizeEvictionParam] = "1";
-    base::FieldTrialParamAssociator::GetInstance()->AssociateFieldTrialParams(
-        kTrialName, kGroupName, params);
-
-    std::unique_ptr<base::FeatureList> feature_list(new base::FeatureList);
-    feature_list->RegisterFieldTrialOverride(
-        kSimpleCacheEvictionWithSizeExperiment.name,
-        base::FeatureList::OVERRIDE_ENABLE_FEATURE, trial.get());
-    scoped_feature_list_.InitWithFeatureList(std::move(feature_list));
-  }
-
   void WaitForTimeChange() {
     const base::Time initial_time = base::Time::Now();
     do {
@@ -623,7 +600,6 @@ TEST_F(SimpleIndexTest, BasicEviction) {
 }
 
 TEST_F(SimpleIndexTest, EvictBySize) {
-  EnableEvictBySize();
   // Enabled, now we can run the actual test.
   base::Time now(base::Time::Now());
   index()->SetMaxSize(50000);
@@ -658,7 +634,6 @@ TEST_F(SimpleIndexTest, EvictBySize) {
 // Same as test above, but using much older entries to make sure that small
 // things eventually get evictied.
 TEST_F(SimpleIndexTest, EvictBySize2) {
-  EnableEvictBySize();
   // Enabled, now we can run the actual test.
   base::Time now(base::Time::Now());
   index()->SetMaxSize(50000);
