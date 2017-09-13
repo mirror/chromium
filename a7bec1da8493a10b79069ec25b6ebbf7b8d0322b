@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d633fc1_56ef1a39",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-13T16:13:25Z",
+      "side": 1,
+      "message": "If this is hardcoding skipping certain files, I think we should document it clearly in comments and/or help documentation.",
+      "revId": "a7bec1da8493a10b79069ec25b6ebbf7b8d0322b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0369311c_ad92201b",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-13T16:13:25Z",
+      "side": 1,
+      "message": "Is this something you think we should hardcode in? or would it be better to make it configurable?\n\nAllowing the user to enable/disable this? Or perhaps allow them to pass in file postfixes on their own?",
+      "revId": "a7bec1da8493a10b79069ec25b6ebbf7b8d0322b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
