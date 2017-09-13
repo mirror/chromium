@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "be6845eb_12bffecd",
+        "filename": "components/arc/common/power.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-13T21:49:47Z",
+      "side": 1,
+      "message": "add space between \u0027]\u0027 and method name on this line and the next",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "31a36e63_6deacbb4",
         "filename": "components/arc/common/power.mojom",
         "patchSetId": 10
@@ -42,6 +59,97 @@
     },
     {
       "key": {
+        "uuid": "6f5342bd_a4b9afba",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-13T21:49:47Z",
+      "side": 1,
+      "message": "nit: remove \"ARC\" from the variable name?",
+      "range": {
+        "startLine": 27,
+        "startChar": 26,
+        "endLine": 27,
+        "endChar": 29
+      },
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cadcacf_673f48f1",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-13T21:49:47Z",
+      "side": 1,
+      "message": "please make the method order in the .cc file match the .h file",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4057a45d_e7887b58",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-13T21:49:47Z",
+      "side": 1,
+      "message": "nit: move this down to as close to where it\u0027s needed as possible (i.e. just before the switch statement)",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feab0c99_0f96a6f7",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-13T21:49:47Z",
+      "side": 1,
+      "message": "nit: add blank line after this line",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689d4c52_8b6fe08d",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-13T21:49:47Z",
+      "side": 1,
+      "message": "nit: you need curly brackets for this if/else since the next statement is multiline",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98aefb68_4b1acb9b",
         "filename": "components/arc/power/arc_power_bridge.h",
         "patchSetId": 10
@@ -53,6 +161,75 @@
       "writtenOn": "2017-09-13T21:38:32Z",
       "side": 1,
       "message": "Instead of adding this which reveals everything to the testing code, you can add\n\n void ReleaseAllWakeLocksForTesting();\n\nin the public: section above.",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20828359_be4ec51d",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-13T21:49:47Z",
+      "side": 1,
+      "message": "if you don\u0027t need int32_t here, just leave it off: https://google.github.io/styleguide/cppguide.html#Integer_Types",
+      "range": {
+        "startLine": 65,
+        "startChar": 26,
+        "endLine": 65,
+        "endChar": 35
+      },
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe054cb9_7a0db43d",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-13T21:49:47Z",
+      "side": 1,
+      "message": "nit: maybe drop Internal from this method and the next since these are already private methods, and there are no non-internal versions of these names to confuse them with",
+      "range": {
+        "startLine": 80,
+        "startChar": 22,
+        "endLine": 80,
+        "endChar": 30
+      },
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6505dd8_70363d0f",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-13T21:49:47Z",
+      "side": 1,
+      "message": "nit: Chrome",
+      "range": {
+        "startLine": 92,
+        "startChar": 22,
+        "endLine": 92,
+        "endChar": 28
+      },
       "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +293,40 @@
     },
     {
       "key": {
+        "uuid": "87b91444_25d29b29",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-13T21:49:47Z",
+      "side": 1,
+      "message": "put methods above data members",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be550c4_3809455c",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-13T21:49:47Z",
+      "side": 1,
+      "message": "move this and TearDown\u0027s contents into the c\u0027tor and d\u0027tor: https://github.com/google/googletest/blob/master/googletest/docs/FAQ.md#should-i-use-the-constructordestructor-of-the-test-fixture-or-the-set-uptear-down-function",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db8418f9_fc1f4cda",
         "filename": "components/arc/power/arc_power_bridge_unittest.cc",
         "patchSetId": 10
@@ -127,6 +338,40 @@
       "writtenOn": "2017-09-13T21:38:32Z",
       "side": 1,
       "message": "can you document where this is deleted?",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7bc214e_900d955a",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-13T21:49:47Z",
+      "side": 1,
+      "message": "i think you\u0027re leaking this object",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45498403_1ae2fc33",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-13T21:49:47Z",
+      "side": 1,
+      "message": "you probably need to shut down the old PPC if one already exists first, and you should also shut down the one you created in the d\u0027tor so you don\u0027t leave one around pointing at an abandoned PowerManagerClient",
       "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -184,6 +429,57 @@
       "writtenOn": "2017-09-13T21:38:32Z",
       "side": 1,
       "message": "\"map\" is implementation details of the class. Instead of checking that, what about adding a function like\n\n bool HasWakeLockForTesting(mojom::DisplayWakeLockType wake_lock_type);\n\nand calling it?",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ae9c96_7f5bbfee",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-13T21:49:47Z",
+      "side": 1,
+      "message": "instead of testing the class\u0027s internal implementation details (e.g. the size of its wake lock map), test its outputs -- that it\u0027s taken the correct number of locks in PowerPolicyController. see https://chromium.googlesource.com/chromiumos/docs/+/master/unit_tests.md#Use-well_defined-public-interfaces\n\nthere\u0027s no easy way to check the number of locks in PPC right now, but you\u0027re already approximating this by checking num_set_policy_calls, so i\u0027d just remove the WakeLockMapSize checks throughout this file.",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "625800ad_067da429",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-13T21:49:47Z",
+      "side": 1,
+      "message": "i don\u0027t see any reason why you need to use the string here. just check fake_power_manager_client_-\u003epolicy().screen_wake_lock() or whatever. the rest of the file should be updated too.",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c979a400_83c88612",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-13T21:49:47Z",
+      "side": 1,
+      "message": "if you\u0027re trying to test that wake locks are released when the PowerInstance goes away, can you just call OnInstanceClosed() instead?",
       "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
