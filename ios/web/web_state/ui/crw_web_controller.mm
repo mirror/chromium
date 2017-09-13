@@ -3319,6 +3319,7 @@ registerLoadRequestForURL:(const GURL&)requestURL
 }
 
 - (web::NavigationItemImpl*)currentNavItem {
+  DCHECK(_webStateImpl);
   return self.navigationManagerImpl->GetCurrentItemImpl();
 }
 
@@ -3480,6 +3481,9 @@ registerLoadRequestForURL:(const GURL&)requestURL
   int itemID = currentItem->GetUniqueID();
   [self executeJavaScript:kViewportContentQuery
         completionHandler:^(id viewportContent, NSError*) {
+          if (![weakSelf navigationManagerImpl]) {
+            return;
+          }
           web::NavigationItem* item = [weakSelf currentNavItem];
           if (item && item->GetUniqueID() == itemID) {
             web::PageViewportState viewportState(
