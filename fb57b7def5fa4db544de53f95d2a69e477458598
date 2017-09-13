@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "39dec37f_f67494cc",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-13T01:50:57Z",
+      "side": 1,
+      "message": "Oh, right. Thanks for reminding me about -u.",
+      "parentUuid": "b4dc76da_6d2889a8",
+      "revId": "fb57b7def5fa4db544de53f95d2a69e477458598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "757fc857_95efad38",
         "filename": "chrome/installer/linux/common/installer.include",
         "patchSetId": 2
@@ -69,6 +87,24 @@
       "revId": "fb57b7def5fa4db544de53f95d2a69e477458598",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "706895bb_00349731",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-13T01:50:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "38208c3f_1a8016a3",
+      "revId": "fb57b7def5fa4db544de53f95d2a69e477458598",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
