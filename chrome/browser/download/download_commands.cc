@@ -121,16 +121,8 @@ class ImageClipboardCopyManager : public ImageDecoder::ImageRequest {
   DISALLOW_IMPLICIT_CONSTRUCTORS(ImageClipboardCopyManager);
 };
 
-}  // anonymous namespace
-
-DownloadCommands::DownloadCommands(content::DownloadItem* download_item)
-    : download_item_(download_item) {
-  DCHECK(download_item);
-}
-
-DownloadCommands::~DownloadCommands() = default;
-
-int DownloadCommands::GetCommandIconId(Command command) const {
+#if defined(OS_CHROMEOS)
+int GetDownloadNotificationMenuIcon(DownloadCommands::Command command) {
   switch (command) {
     case PAUSE:
       return IDR_DOWNLOAD_NOTIFICATION_MENU_PAUSE;
@@ -144,12 +136,45 @@ int DownloadCommands::GetCommandIconId(Command command) const {
       return IDR_DOWNLOAD_NOTIFICATION_MENU_DELETE;
     case CANCEL:
       return IDR_DOWNLOAD_NOTIFICATION_MENU_CANCEL;
-    case LEARN_MORE_SCANNING:
-      return IDR_DOWNLOAD_NOTIFICATION_MENU_LEARN_MORE;
     case COPY_TO_CLIPBOARD:
       return IDR_DOWNLOAD_NOTIFICATION_MENU_COPY_TO_CLIPBOARD;
+    case LEARN_MORE_SCANNING:
+      return IDR_DOWNLOAD_NOTIFICATION_MENU_LEARN_MORE;
     case ANNOTATE:
       return IDR_DOWNLOAD_NOTIFICATION_MENU_ANNOTATE;
+    default:
+      NOTREACHED();
+      return -1;
+  }
+}
+#endif
+
+}  // namespace
+
+DownloadCommands::DownloadCommands(content::DownloadItem* download_item)
+    : download_item_(download_item) {
+  DCHECK(download_item);
+}
+
+DownloadCommands::~DownloadCommands() = default;
+
+int DownloadCommands::GetCommandIconId(Command command) const {
+  switch (command) {
+    case PAUSE:
+    case RESUME:
+    case SHOW_IN_FOLDER:
+    case KEEP:
+    case DISCARD:
+    case CANCEL:
+    case COPY_TO_CLIPBOARD:
+    case LEARN_MORE_SCANNING:
+    case ANNOTATE:
+#if defined(OS_CHROMEOS)
+      return GetDownloadNotificationMenuIcon(command);
+#else
+      NOTREACHED();
+      return -1;
+#endif
     case OPEN_WHEN_COMPLETE:
     case ALWAYS_OPEN_TYPE:
     case PLATFORM_OPEN:
