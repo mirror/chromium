@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1b64eb03_09bf501e",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 992,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-13T20:55:24Z",
+      "side": 1,
+      "message": "SGTM; I\u0027m not actually sure right now whether this is necessary.",
+      "revId": "0038b433dce2b14c793b14209380c4bb7dfc2353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "90a45de2_94494a38",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 993,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-13T20:55:24Z",
+      "side": 1,
+      "message": "So, the unit test is failing now just because of unimportant order differences.\nThis could return sorted(test.rstrip(\u0027/\u0027) for test in tests) to ensure a consistent order.",
+      "revId": "0038b433dce2b14c793b14209380c4bb7dfc2353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
