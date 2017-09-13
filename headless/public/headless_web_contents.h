@@ -22,6 +22,7 @@ class HeadlessBrowserContextImpl;
 class HeadlessBrowserImpl;
 class HeadlessDevToolsTarget;
 class HeadlessTabSocket;
+class MockHeadlessWebContents;
 
 // Class representing contents of a browser tab. Should be accessed from browser
 // main thread.
@@ -101,6 +102,7 @@ class HEADLESS_EXPORT HeadlessWebContents {
 
  private:
   friend class HeadlessWebContentsImpl;
+  friend class MockHeadlessWebContents;
   HeadlessWebContents() {}
 
   DISALLOW_COPY_AND_ASSIGN(HeadlessWebContents);
