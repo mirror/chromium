@@ -758,6 +758,7 @@ void DesktopNativeWidgetAura::ShowWithWindowState(ui::WindowShowState state) {
   // IsVisible() should check the same objects here for visibility.
   if (!content_window_)
     return;
+
   desktop_window_tree_host_->ShowWindowWithState(state);
   content_window_->Show();
 }
