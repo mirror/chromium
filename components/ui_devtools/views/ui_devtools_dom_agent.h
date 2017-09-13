@@ -136,6 +136,7 @@ class UIDevToolsDOMAgent : public ui_devtools::UiDevToolsBaseAgent<
   // TODO(thanhph): |layer_for_highlighting_| should be owned by the overlay
   // agent.
   std::unique_ptr<ui::Layer> layer_for_highlighting_;
+  gfx::Rect hit_test_window_bounds_;
   std::vector<aura::Window*> root_windows_;
   gfx::Rect hovered_rect_;
   gfx::Rect pinned_rect_;
