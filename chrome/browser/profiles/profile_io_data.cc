@@ -78,6 +78,7 @@
 #include "components/sync/base/pref_names.h"
 #include "components/url_formatter/url_fixer.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/ignore_errors_cert_verifier.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/resource_context.h"
 #include "content/public/common/content_switches.h"
@@ -1112,8 +1113,11 @@ void ProfileIOData::Init(
       DCHECK_EQ(policy_cert_verifier_, cert_verifier_.get());
       policy_cert_verifier_->InitializeOnIOThread(verify_proc);
     } else {
-      cert_verifier_ = base::MakeUnique<net::CachingCertVerifier>(
-          base::MakeUnique<net::MultiThreadedCertVerifier>(verify_proc.get()));
+      cert_verifier_ = content::IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(
+          *base::CommandLine::ForCurrentProcess(), switches::kUserDataDir,
+          base::MakeUnique<net::CachingCertVerifier>(
+              base::MakeUnique<net::MultiThreadedCertVerifier>(
+                  verify_proc.get())));
     }
     builder->set_shared_cert_verifier(cert_verifier_.get());
 #else
