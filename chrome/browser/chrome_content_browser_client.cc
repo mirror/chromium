@@ -2423,7 +2423,6 @@ void ChromeContentBrowserClient::OverrideWebkitPrefs(
   web_prefs->dom_paste_enabled =
       prefs->GetBoolean(prefs::kWebKitDomPasteEnabled);
   web_prefs->tabs_to_links = prefs->GetBoolean(prefs::kWebkitTabsToLinks);
-
   if (!prefs->GetBoolean(prefs::kWebKitJavascriptEnabled))
     web_prefs->javascript_enabled = false;
 
@@ -2449,7 +2448,7 @@ void ChromeContentBrowserClient::OverrideWebkitPrefs(
       prefs->GetBoolean(prefs::kWebKitLoadsImagesAutomatically);
 
   if (prefs->GetBoolean(prefs::kDisable3DAPIs))
-    web_prefs->experimental_webgl_enabled = false;
+    web_prefs->disable_3d_apis = true;
 
   web_prefs->allow_running_insecure_content =
       prefs->GetBoolean(prefs::kWebKitAllowRunningInsecureContent);
