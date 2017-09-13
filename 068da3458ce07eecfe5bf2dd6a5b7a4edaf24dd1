@@ -52,6 +52,24 @@
       "revId": "068da3458ce07eecfe5bf2dd6a5b7a4edaf24dd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538829f7_4af25a5b",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-09-13T20:03:15Z",
+      "side": 1,
+      "message": "I have a different understanding: if you take a close look at HistoryBackend::GetFaviconsFromDB, icon IDs (stored in |favicon_id_per_icon_type| and |favicon_ids|) are reused, without additional lookups. If we split the function in two, we\u0027d need additional SQL queries to map icon URLs to icon IDs. Does that make sense?",
+      "parentUuid": "6db45f0a_0791b426",
+      "revId": "068da3458ce07eecfe5bf2dd6a5b7a4edaf24dd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
