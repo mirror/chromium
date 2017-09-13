@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9306a689_a0132e0f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServiceWorkerCacheModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-13T19:06:35Z",
+      "side": 1,
+      "message": "JSDoc please",
+      "revId": "7bd826b6802fc89b0ac34d5e57bbd8c7b74a304d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51aec9a7_ceb5aa6b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/ServiceWorkerCacheModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-13T19:06:35Z",
+      "side": 1,
+      "message": "Instead of sniffing, just call _isValidSecurityOrigin directly and dump it\u0027s result.",
+      "revId": "7bd826b6802fc89b0ac34d5e57bbd8c7b74a304d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
