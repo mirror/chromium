@@ -16,6 +16,24 @@
       "revId": "4a2762ac495029a83289f0df5dafcd9640499a83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c01c47_6794ea0b",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 6
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-09-13T07:00:04Z",
+      "side": 1,
+      "message": "Done.\n\nNew gist https://gist.github.com/rjwright/6e9327a5a24ea253e278ad38b3bdc52b/revisions",
+      "parentUuid": "1a62a0c4_09e2e02f",
+      "revId": "4a2762ac495029a83289f0df5dafcd9640499a83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
