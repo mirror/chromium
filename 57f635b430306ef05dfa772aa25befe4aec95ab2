@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73e13f86_20ed9575",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-13T01:40:39Z",
+      "side": 1,
+      "message": "nit: neither of these variables is used in the following block; move it to just above the block that initializes them?",
+      "revId": "57f635b430306ef05dfa772aa25befe4aec95ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
