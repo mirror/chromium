@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6bc56c31_b4a6692c",
+        "filename": "chrome/browser/resources/settings/multidevice_page/multidevice_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1118279
+      },
+      "writtenOn": "2017-09-13T20:58:49Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "f2e123c0_5a24411f",
+      "revId": "83af4cec301b93807cbde607bb3d15e0c027326b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c6ac472_8c73581c",
         "filename": "chrome/browser/resources/settings/multidevice_page/multidevice_page.html",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "83af4cec301b93807cbde607bb3d15e0c027326b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8039856b_89ba4658",
+        "filename": "chrome/browser/resources/settings/multidevice_page/multidevice_page.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1118279
+      },
+      "writtenOn": "2017-09-13T20:58:49Z",
+      "side": 1,
+      "message": "Not needed, removed.\nI think these might have been added back as part of a rebase, accidentally. So thanks for catching it :)",
+      "parentUuid": "3c6ac472_8c73581c",
+      "revId": "83af4cec301b93807cbde607bb3d15e0c027326b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
