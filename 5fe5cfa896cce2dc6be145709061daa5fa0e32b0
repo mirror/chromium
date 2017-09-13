@@ -46,6 +46,30 @@
       "revId": "5fe5cfa896cce2dc6be145709061daa5fa0e32b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ccc8b2f_2e6719e1",
+        "filename": "ios/chrome/browser/web/repost_form_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-13T07:52:58Z",
+      "side": 1,
+      "message": "Right, but that means the model layer has to know about the UI state in order to make that decision. I\u0027d prefer it didn\u0027t, but I\u0027m not blocking this CL on it.",
+      "parentUuid": "15ba4720_631bd081",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 27
+      },
+      "revId": "5fe5cfa896cce2dc6be145709061daa5fa0e32b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
