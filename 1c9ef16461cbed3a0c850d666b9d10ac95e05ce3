@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a9d4352_8e0397f9",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-09-13T09:27:14Z",
+      "side": 1,
+      "message": "nit: I think constexpr should work here.",
+      "range": {
+        "startLine": 538,
+        "startChar": 6,
+        "endLine": 538,
+        "endChar": 15
+      },
+      "revId": "1c9ef16461cbed3a0c850d666b9d10ac95e05ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57380f0b_9ceb6ce6",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-09-13T09:27:14Z",
+      "side": 1,
+      "message": "nit: On the second thought we can go even further, and move element.Utf16() to separate variable.\n\nNO harm should be done, by calling Utf16 conversion on empty WebString.",
+      "range": {
+        "startLine": 539,
+        "startChar": 18,
+        "endLine": 539,
+        "endChar": 19
+      },
+      "revId": "1c9ef16461cbed3a0c850d666b9d10ac95e05ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf5f1e9_4d0a5b70",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-09-13T09:27:14Z",
+      "side": 1,
+      "message": "And maybe even std::copy_if can be used instead of this for block.",
+      "range": {
+        "startLine": 542,
+        "startChar": 8,
+        "endLine": 542,
+        "endChar": 32
+      },
+      "revId": "1c9ef16461cbed3a0c850d666b9d10ac95e05ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
