@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e4ca44e_4411e138",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/permissions/PermissionTestRule.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-13T10:52:46Z",
+      "side": 1,
+      "message": "Optional nit: perhaps this could use an EmbeddedTestServerRule?",
+      "range": {
+        "startLine": 147,
+        "startChar": 8,
+        "endLine": 147,
+        "endChar": 19
+      },
+      "revId": "9fa5b58e978faf313ec6b883e527d85e403ac614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
