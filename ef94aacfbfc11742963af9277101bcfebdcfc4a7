@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "64391aed_66b8d145",
+        "filename": "chrome/browser/chromeos/arc/arc_auth_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-09-13T03:55:33Z",
+      "side": 1,
+      "message": "The icon on the right side should be removed in new style notification (https://crbug.com/758212). This is specified in the design mock. go/cros-md-notification-mock",
+      "parentUuid": "86312f24_b10503a4",
+      "revId": "ef94aacfbfc11742963af9277101bcfebdcfc4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac5bd173_56596767",
         "filename": "chrome/browser/chromeos/arc/arc_auth_notification.cc",
         "patchSetId": 1
@@ -62,6 +80,30 @@
       "revId": "ef94aacfbfc11742963af9277101bcfebdcfc4a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf94b9e3_fe05a58c",
+        "filename": "chrome/browser/chromeos/arc/arc_auth_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-09-13T03:55:33Z",
+      "side": 1,
+      "message": "The icon on the top left should be added in new style notification.",
+      "parentUuid": "ac5bd173_56596767",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 180,
+        "endChar": 69
+      },
+      "revId": "ef94aacfbfc11742963af9277101bcfebdcfc4a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
