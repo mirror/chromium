@@ -44,19 +44,15 @@ class PasswordsPrivateDelegateImpl : public PasswordsPrivateDelegate,
   void SendPasswordExceptionsList() override;
   void GetPasswordExceptionsList(
       const ExceptionEntriesCallback& callback) override;
-  void RemoveSavedPassword(
-      const std::string& origin_url, const std::string& username) override;
-  void RemovePasswordException(const std::string& exception_url) override;
-  void RequestShowPassword(const std::string& origin_url,
-                           const std::string& username,
+  void RemoveSavedPassword(size_t index) override;
+  void RemovePasswordException(size_t index) override;
+  void RequestShowPassword(size_t index,
                            content::WebContents* web_contents) override;
 
   // PasswordUIView implementation.
   Profile* GetProfile() override;
   void ShowPassword(
       size_t index,
-      const std::string& origin_url,
-      const std::string& username,
       const base::string16& plaintext_password) override;
   void SetPasswordList(
       const std::vector<std::unique_ptr<autofill::PasswordForm>>& password_list)
@@ -80,13 +76,6 @@ class PasswordsPrivateDelegateImpl : public PasswordsPrivateDelegate,
   // Executes a given callback by either invoking it immediately if the class
   // has been initialized or by deferring it until initialization has completed.
   void ExecuteFunction(const base::Closure& callback);
-
-  void RemoveSavedPasswordInternal(
-      const std::string& origin_url, const std::string& username);
-  void RemovePasswordExceptionInternal(const std::string& exception_url);
-  void RequestShowPasswordInternal(const std::string& origin_url,
-                                   const std::string& username,
-                                   content::WebContents* web_contents);
 
   // Not owned by this class.
   Profile* profile_;
@@ -117,14 +106,6 @@ class PasswordsPrivateDelegateImpl : public PasswordsPrivateDelegate,
   // The WebContents used when invoking this API. Used to fetch the
   // NativeWindow for the window where the API was called.
   content::WebContents* web_contents_;
-
-  // Map from origin URL and username to the index of |password_list_| at which
-  // the corresponding entry resides.
-  std::map<std::string, size_t> login_pair_to_index_map_;
-
-  // Map from password exception URL to the index of |password_exception_list_|
-  // at which the correponding entry resides.
-  std::map<std::string, size_t> exception_url_to_index_map_;
 
   DISALLOW_COPY_AND_ASSIGN(PasswordsPrivateDelegateImpl);
 };

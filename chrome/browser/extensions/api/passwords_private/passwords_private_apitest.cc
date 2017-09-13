@@ -88,8 +88,7 @@ class TestDelegate : public PasswordsPrivateDelegate {
     callback.Run(current_exceptions_);
   }
 
-  void RemoveSavedPassword(const std::string& origin,
-                           const std::string& username) override {
+  void RemoveSavedPassword(size_t index) override {
     if (current_entries_.empty())
       return;
 
@@ -99,7 +98,7 @@ class TestDelegate : public PasswordsPrivateDelegate {
     SendSavedPasswordsList();
   }
 
-  void RemovePasswordException(const std::string& exception_url) override {
+  void RemovePasswordException(size_t index) override {
     if (current_exceptions_.empty())
       return;
 
@@ -109,15 +108,14 @@ class TestDelegate : public PasswordsPrivateDelegate {
     SendPasswordExceptionsList();
   }
 
-  void RequestShowPassword(const std::string& origin,
-                           const std::string& username,
+  void RequestShowPassword(size_t index,
                            content::WebContents* web_contents) override {
     // Return a mocked password value.
     std::string plaintext_password(kPlaintextPassword);
     PasswordsPrivateEventRouter* router =
         PasswordsPrivateEventRouterFactory::GetForProfile(profile_);
     if (router) {
-      router->OnPlaintextPasswordFetched(origin, username, plaintext_password);
+      router->OnPlaintextPasswordFetched(index, plaintext_password);
     }
   }
 
