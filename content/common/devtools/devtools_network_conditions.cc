@@ -2,39 +2,38 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/devtools/devtools_network_conditions.h"
+#include "content/common/devtools/devtools_network_conditions.h"
 
 #include "url/gurl.h"
+
+namespace content {
 
 DevToolsNetworkConditions::DevToolsNetworkConditions()
     : offline_(false),
       latency_(0),
       download_throughput_(0),
-      upload_throughput_(0) {
-}
+      upload_throughput_(0) {}
 
 DevToolsNetworkConditions::DevToolsNetworkConditions(bool offline)
     : offline_(offline),
       latency_(0),
       download_throughput_(0),
-      upload_throughput_(0) {
-}
+      upload_throughput_(0) {}
 
-DevToolsNetworkConditions::DevToolsNetworkConditions(
-    bool offline,
-    double latency,
-    double download_throughput,
-    double upload_throughput)
+DevToolsNetworkConditions::DevToolsNetworkConditions(bool offline,
+                                                     double latency,
+                                                     double download_throughput,
+                                                     double upload_throughput)
     : offline_(offline),
       latency_(latency),
       download_throughput_(download_throughput),
-      upload_throughput_(upload_throughput) {
-}
+      upload_throughput_(upload_throughput) {}
 
-DevToolsNetworkConditions::~DevToolsNetworkConditions() {
-}
+DevToolsNetworkConditions::~DevToolsNetworkConditions() {}
 
 bool DevToolsNetworkConditions::IsThrottling() const {
   return !offline_ && ((latency_ != 0) || (download_throughput_ != 0.0) ||
-      (upload_throughput_ != 0));
+                       (upload_throughput_ != 0));
 }
+
+}  // namespace content

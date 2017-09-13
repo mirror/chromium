@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_DEVTOOLS_DEVTOOLS_NETWORK_INTERCEPTOR_H_
-#define CHROME_BROWSER_DEVTOOLS_DEVTOOLS_NETWORK_INTERCEPTOR_H_
+#ifndef CONTENT_COMMON_DEVTOOLS_DEVTOOLS_NETWORK_INTERCEPTOR_H_
+#define CONTENT_COMMON_DEVTOOLS_DEVTOOLS_NETWORK_INTERCEPTOR_H_
 
 #include <stdint.h>
 
@@ -16,12 +16,13 @@
 #include "base/macros.h"
 #include "base/timer/timer.h"
 
-class DevToolsNetworkConditions;
-
 namespace base {
 class TimeDelta;
 class TimeTicks;
-}
+}  // namespace base
+
+namespace content {
+class DevToolsNetworkConditions;
 
 // DevToolsNetworkInterceptor emulates network conditions for transactions with
 // specific client id.
@@ -64,8 +65,10 @@ class DevToolsNetworkInterceptor {
 
   void FinishRecords(ThrottleRecords* records, bool offline);
 
-  uint64_t UpdateThrottledRecords(base::TimeTicks now, ThrottleRecords* records,
-      uint64_t last_tick, base::TimeDelta tick_length);
+  uint64_t UpdateThrottledRecords(base::TimeTicks now,
+                                  ThrottleRecords* records,
+                                  uint64_t last_tick,
+                                  base::TimeDelta tick_length);
   void UpdateThrottled(base::TimeTicks now);
   void UpdateSuspended(base::TimeTicks now);
 
@@ -73,7 +76,8 @@ class DevToolsNetworkInterceptor {
   void OnTimer();
 
   base::TimeTicks CalculateDesiredTime(const ThrottleRecords& records,
-    uint64_t last_tick, base::TimeDelta tick_length);
+                                       uint64_t last_tick,
+                                       base::TimeDelta tick_length);
   void ArmTimer(base::TimeTicks now);
 
   void RemoveRecord(ThrottleRecords* records, const ThrottleCallback& callback);
@@ -100,4 +104,6 @@ class DevToolsNetworkInterceptor {
   DISALLOW_COPY_AND_ASSIGN(DevToolsNetworkInterceptor);
 };
 
-#endif  // CHROME_BROWSER_DEVTOOLS_DEVTOOLS_NETWORK_INTERCEPTOR_H_
+}  // namespace content
+
+#endif  // CONTENT_COMMON_DEVTOOLS_DEVTOOLS_NETWORK_INTERCEPTOR_H_
