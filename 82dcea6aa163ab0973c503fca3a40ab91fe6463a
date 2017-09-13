@@ -22,6 +22,30 @@
       "revId": "82dcea6aa163ab0973c503fca3a40ab91fe6463a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6f41bfb_69263ed6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1225365
+      },
+      "writtenOn": "2017-09-13T17:03:04Z",
+      "side": 1,
+      "message": "Yes, all text menu items will have a 80ms delay. I think this is fine because the icon menu items get the same start delay.",
+      "parentUuid": "52ebe41b_457e9f38",
+      "range": {
+        "startLine": 374,
+        "startChar": 36,
+        "endLine": 374,
+        "endChar": 60
+      },
+      "revId": "82dcea6aa163ab0973c503fca3a40ab91fe6463a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
