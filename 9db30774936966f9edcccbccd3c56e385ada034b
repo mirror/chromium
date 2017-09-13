@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d2cb846_364eef1d",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-slimming-paint-v2",
+        "patchSetId": 1
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-13T21:31:02Z",
+      "side": 0,
+      "message": "The five above are likely fixed by chrishtr\u0027s recent improvement in multicol. (I wonder why not many more are passing though.)",
+      "revId": "9db30774936966f9edcccbccd3c56e385ada034b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
