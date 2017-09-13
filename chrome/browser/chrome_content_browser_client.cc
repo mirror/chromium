@@ -115,6 +115,7 @@
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/client_hints.h"
 #include "chrome/common/constants.mojom.h"
 #include "chrome/common/env_vars.h"
 #include "chrome/common/features.h"
@@ -199,6 +200,7 @@
 #include "content/public/common/content_descriptors.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/origin_util.h"
 #include "content/public/common/sandbox_type.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/service_names.mojom.h"
@@ -226,6 +228,8 @@
 #include "services/preferences/public/cpp/in_process_service_factory.h"
 #include "services/preferences/public/interfaces/preferences.mojom.h"
 #include "storage/browser/fileapi/external_mount_points.h"
+#include "third_party/WebKit/common/device_memory/approximated_device_memory.h"
+#include "third_party/WebKit/public/platform/WebClientHintsType.h"
 #include "third_party/WebKit/public/platform/modules/installedapp/installed_app_provider.mojom.h"
 #include "third_party/WebKit/public/platform/modules/webshare/webshare.mojom.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -233,6 +237,7 @@
 #include "ui/resources/grit/ui_resources.h"
 #include "url/gurl.h"
 #include "url/origin.h"
+#include "url/url_constants.h"
 
 #if defined(OS_WIN)
 #include "base/strings/string_tokenizer.h"
@@ -1839,6 +1844,39 @@ bool ChromeContentBrowserClient::IsDataSaverEnabled(
     return false;
   PrefService* prefs = profile->GetPrefs();
   return prefs && prefs->GetBoolean(prefs::kDataSaverEnabled);
+}
+
+void ChromeContentBrowserClient::ShouldAttachClientHint(
+    content::BrowserContext* context,
+    const GURL& url,
+    net::HttpRequestHeaders* additional_headers) {
+  if (!url.is_valid() || !url.SchemeIs(url::kHttpsScheme)) {
+    return;
+  }
+
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  Profile* profile = Profile::FromBrowserContext(context);
+  if (!profile)
+    return;
+
+  ContentSettingsForOneType client_hints_host_settings;
+
+  HostContentSettingsMapFactory::GetForProfile(profile)->GetSettingsForOneType(
+      CONTENT_SETTINGS_TYPE_CLIENT_HINTS, std::string(),
+      &client_hints_host_settings);
+
+  blink::WebEnabledClientHints web_client_hints;
+
+  client_hints::GetAllowedClientHintsFromSource(url, client_hints_host_settings,
+                                                &web_client_hints);
+
+  if (web_client_hints.IsEnabled(
+          blink::mojom::WebClientHintsType::kDeviceMemory)) {
+    additional_headers->SetHeader(
+        "device-memory",
+        base::DoubleToString(
+            blink::ApproximatedDeviceMemory::GetApproximatedDeviceMemory()));
+  }
 }
 
 bool ChromeContentBrowserClient::AllowAppCache(
