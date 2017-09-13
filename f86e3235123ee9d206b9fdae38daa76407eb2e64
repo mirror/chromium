@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8c6da14_90cc5b5d",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-13T23:40:43Z",
+      "side": 1,
+      "message": "This DCHECK probably isn\u0027t needed, but consider adding DCHECK(IsRunningInMash())",
+      "revId": "f86e3235123ee9d206b9fdae38daa76407eb2e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2eb4617_c81f4c3c",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-13T23:40:43Z",
+      "side": 1,
+      "message": "optional: DCHECK(!chrome_launcher_controller_) as well",
+      "revId": "f86e3235123ee9d206b9fdae38daa76407eb2e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76441db8_7f9572ce",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-13T23:40:43Z",
+      "side": 1,
+      "message": "optional: \"using session_manager::SessionManager\" and/or SessionState might make this a little more readable",
+      "revId": "f86e3235123ee9d206b9fdae38daa76407eb2e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05ce4f7a_5e7e62c4",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-13T23:40:43Z",
+      "side": 1,
+      "message": "I think we\u0027re using std::make_unique\u003c\u003e now.",
+      "revId": "f86e3235123ee9d206b9fdae38daa76407eb2e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "167bcf65_caf16e74",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 705,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-13T23:40:43Z",
+      "side": 1,
+      "message": "Does this need to be explicitly reset somewhere? The bots seem unhappy about shutdown.",
+      "revId": "f86e3235123ee9d206b9fdae38daa76407eb2e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2100977c_4cf15a52",
+        "filename": "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-13T23:40:43Z",
+      "side": 1,
+      "message": "nit: no {}",
+      "revId": "f86e3235123ee9d206b9fdae38daa76407eb2e64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
