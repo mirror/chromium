@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "8ee364c8_78e59677",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-13T05:38:17Z",
+      "side": 1,
+      "message": "Yeah we can\u0027t really guarantee the lifetime between these. (I\u0027m happy to cleanup this further whenever we find out better lifetime/ownership model)",
+      "parentUuid": "d4e01621_8dd9f0a8",
+      "revId": "554f788d13945d71974c78bc91bf4f490e5ec819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "695ce623_389bf18b",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 11
@@ -119,6 +137,24 @@
       "writtenOn": "2017-09-12T14:53:11Z",
       "side": 1,
       "message": "(not about your patch, but seeing this makes me think OnNetworkProviderDestroyed() should be renamed to something like DestroyContainerHost(). Seems more direct to describe what the function does than when it\u0027s called.)",
+      "revId": "554f788d13945d71974c78bc91bf4f490e5ec819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7fa46a6_b5c02326",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-13T05:38:17Z",
+      "side": 1,
+      "message": "Yep, +1.",
+      "parentUuid": "695ce623_389bf18b",
       "revId": "554f788d13945d71974c78bc91bf4f490e5ec819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -148,6 +184,30 @@
     },
     {
       "key": {
+        "uuid": "540d55f0_d898e27b",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-13T05:38:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4274c00c_25ab08dc",
+      "range": {
+        "startLine": 56,
+        "startChar": 69,
+        "endLine": 56,
+        "endChar": 75
+      },
+      "revId": "554f788d13945d71974c78bc91bf4f490e5ec819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7db33bd7_1ab2485b",
         "filename": "content/common/service_worker/service_worker_container.mojom",
         "patchSetId": 11
@@ -162,6 +222,24 @@
       "revId": "554f788d13945d71974c78bc91bf4f490e5ec819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2589126d_bac01fcb",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-13T05:38:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7db33bd7_1ab2485b",
+      "revId": "554f788d13945d71974c78bc91bf4f490e5ec819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -185,6 +263,30 @@
       "revId": "554f788d13945d71974c78bc91bf4f490e5ec819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73cabcac_d31b0e72",
+        "filename": "content/common/service_worker/service_worker_fetch_response_callback.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-13T05:38:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e822bee_f2b045d6",
+      "range": {
+        "startLine": 14,
+        "startChar": 53,
+        "endLine": 14,
+        "endChar": 67
+      },
+      "revId": "554f788d13945d71974c78bc91bf4f490e5ec819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
