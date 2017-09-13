@@ -11,6 +11,7 @@
 #include "cc/cc_export.h"
 #include "cc/paint/display_item_list.h"
 #include "cc/quads/content_draw_quad_base.h"
+#include "components/viz/common/display/resource_provider.h"
 #include "components/viz/common/resources/resource_format.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/rect_f.h"

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CC_TREES_BLOCKING_TASK_RUNNER_H_
-#define CC_TREES_BLOCKING_TASK_RUNNER_H_
+#ifndef CC_BASE_BLOCKING_TASK_RUNNER_H_
+#define CC_BASE_BLOCKING_TASK_RUNNER_H_
 
 #include <memory>
 #include <vector>
@@ -13,7 +13,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/lock.h"
 #include "base/threading/platform_thread.h"
-#include "cc/cc_export.h"
+#include "cc/base/base_export.h"
 
 namespace cc {
 
@@ -42,7 +42,7 @@ namespace cc {
 //
 // Beware of re-entrancy, make sure the CapturePostTasks object is destroyed at
 // a time when it makes sense for the embedder to call arbitrary things.
-class CC_EXPORT BlockingTaskRunner {
+class CC_BASE_EXPORT BlockingTaskRunner {
  public:
   // Creates a BlockingTaskRunner for a given SingleThreadTaskRunner.
   // |task_runner| will be used to run the tasks which are posted while we are
@@ -56,7 +56,7 @@ class CC_EXPORT BlockingTaskRunner {
   // While an object of this type is held alive on a thread, any tasks
   // posted to the thread will be captured and run as soon as the object
   // is destroyed, shortcutting past the task runner.
-  class CC_EXPORT CapturePostTasks {
+  class CC_BASE_EXPORT CapturePostTasks {
    public:
     explicit CapturePostTasks(BlockingTaskRunner* blocking_runner);
     ~CapturePostTasks();
@@ -95,4 +95,4 @@ class CC_EXPORT BlockingTaskRunner {
 
 }  // namespace cc
 
-#endif  // CC_TREES_BLOCKING_TASK_RUNNER_H_
+#endif  // CC_BASE_BLOCKING_TASK_RUNNER_H_

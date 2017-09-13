@@ -18,18 +18,19 @@ class DebugBorderDrawQuad;
 class OutputSurface;
 class PictureDrawQuad;
 class RenderPassDrawQuad;
-class ResourceProvider;
 class SolidColorDrawQuad;
 class TextureDrawQuad;
 class TileDrawQuad;
 }  // namespace cc
 
 namespace viz {
+class ResourceProvider;
+
 class VIZ_SERVICE_EXPORT SkiaRenderer : public cc::DirectRenderer {
  public:
   SkiaRenderer(const RendererSettings* settings,
                cc::OutputSurface* output_surface,
-               cc::DisplayResourceProvider* resource_provider);
+               DisplayResourceProvider* resource_provider);
 
   ~SkiaRenderer() override;
 
@@ -100,9 +101,9 @@ class VIZ_SERVICE_EXPORT SkiaRenderer : public cc::DirectRenderer {
   SkCanvas* root_canvas_ = nullptr;
   SkCanvas* current_canvas_ = nullptr;
   SkPaint current_paint_;
-  std::unique_ptr<cc::ResourceProvider::ScopedWriteLockGL>
+  std::unique_ptr<ResourceProvider::ScopedWriteLockGL>
       current_framebuffer_lock_;
-  std::unique_ptr<cc::ResourceProvider::ScopedSkSurface>
+  std::unique_ptr<ResourceProvider::ScopedSkSurface>
       current_framebuffer_surface_lock_;
 
   bool use_swap_with_bounds_ = false;

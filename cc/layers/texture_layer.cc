@@ -10,13 +10,13 @@
 #include "base/memory/ptr_util.h"
 #include "base/synchronization/lock.h"
 #include "base/trace_event/trace_event.h"
+#include "cc/base/blocking_task_runner.h"
 #include "cc/base/simple_enclosed_region.h"
 #include "cc/layers/texture_layer_client.h"
 #include "cc/layers/texture_layer_impl.h"
-#include "cc/resources/single_release_callback_impl.h"
-#include "cc/trees/blocking_task_runner.h"
 #include "cc/trees/layer_tree_host.h"
 #include "components/viz/common/quads/single_release_callback.h"
+#include "components/viz/common/quads/single_release_callback_impl.h"
 
 namespace cc {
 
@@ -219,7 +219,7 @@ void TextureLayer::PushPropertiesTo(LayerImpl* layer) {
   texture_layer->SetBlendBackgroundColor(blend_background_color_);
   if (needs_set_mailbox_) {
     viz::TextureMailbox texture_mailbox;
-    std::unique_ptr<SingleReleaseCallbackImpl> release_callback_impl;
+    std::unique_ptr<viz::SingleReleaseCallbackImpl> release_callback_impl;
     if (holder_ref_) {
       TextureMailboxHolder* holder = holder_ref_->holder();
       texture_mailbox = holder->mailbox();
@@ -271,13 +271,13 @@ void TextureLayer::TextureMailboxHolder::Return(
   is_lost_ = is_lost;
 }
 
-std::unique_ptr<SingleReleaseCallbackImpl>
+std::unique_ptr<viz::SingleReleaseCallbackImpl>
 TextureLayer::TextureMailboxHolder::GetCallbackForImplThread() {
   // We can't call GetCallbackForImplThread if we released the main thread
   // reference.
   DCHECK_GT(internal_references_, 0u);
   InternalAddRef();
-  return SingleReleaseCallbackImpl::Create(
+  return viz::SingleReleaseCallbackImpl::Create(
       base::Bind(&TextureMailboxHolder::ReturnAndReleaseOnImplThread, this));
 }
 

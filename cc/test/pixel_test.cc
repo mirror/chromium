@@ -9,6 +9,7 @@
 #include "base/path_service.h"
 #include "base/run_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "cc/base/blocking_task_runner.h"
 #include "cc/base/switches.h"
 #include "cc/output/compositor_frame_metadata.h"
 #include "cc/output/output_surface_client.h"
@@ -16,13 +17,12 @@
 #include "cc/output/software_renderer.h"
 #include "cc/output/texture_mailbox_deleter.h"
 #include "cc/raster/raster_buffer_provider.h"
-#include "cc/resources/resource_provider.h"
 #include "cc/test/fake_output_surface_client.h"
 #include "cc/test/pixel_test_output_surface.h"
 #include "cc/test/pixel_test_utils.h"
 #include "cc/test/test_in_process_context_provider.h"
 #include "cc/test/test_shared_bitmap_manager.h"
-#include "cc/trees/blocking_task_runner.h"
+#include "components/viz/common/display/resource_provider.h"
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
 #include "components/viz/common/quads/copy_output_request.h"
 #include "components/viz/common/quads/copy_output_result.h"
@@ -171,7 +171,7 @@ void PixelTest::SetUpGLRenderer(bool flipped_output_surface) {
       std::make_unique<viz::TestGpuMemoryBufferManager>();
   // Not relevant for display compositor since it's not delegated.
   constexpr bool delegated_sync_points_required = false;
-  resource_provider_ = std::make_unique<DisplayResourceProvider>(
+  resource_provider_ = std::make_unique<viz::DisplayResourceProvider>(
       output_surface_->context_provider(), shared_bitmap_manager_.get(),
       gpu_memory_buffer_manager_.get(), main_thread_task_runner_.get(),
       delegated_sync_points_required,
@@ -200,7 +200,7 @@ void PixelTest::SetUpSoftwareRenderer() {
   shared_bitmap_manager_.reset(new TestSharedBitmapManager());
   constexpr bool delegated_sync_points_required =
       false;  // Meaningless for software.
-  resource_provider_ = std::make_unique<DisplayResourceProvider>(
+  resource_provider_ = std::make_unique<viz::DisplayResourceProvider>(
       nullptr, shared_bitmap_manager_.get(), gpu_memory_buffer_manager_.get(),
       main_thread_task_runner_.get(), delegated_sync_points_required,
       settings_.enable_color_correct_rasterization,

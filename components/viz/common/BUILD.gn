@@ -32,8 +32,14 @@ viz_component("common") {
   defines = [ "VIZ_COMMON_IMPLEMENTATION" ]
 
   sources = [
+    "display/display_resource_provider.cc",
+    "display/display_resource_provider.h",
+    "display/layer_tree_resource_provider.cc",
+    "display/layer_tree_resource_provider.h",
     "display/renderer_settings.cc",
     "display/renderer_settings.h",
+    "display/resource_provider.cc",
+    "display/resource_provider.h",
     "frame_sinks/begin_frame_args.cc",
     "frame_sinks/begin_frame_args.h",
     "frame_sinks/begin_frame_source.cc",
@@ -69,8 +75,11 @@ viz_component("common") {
     "quads/shared_quad_state.h",
     "quads/single_release_callback.cc",
     "quads/single_release_callback.h",
+    "quads/single_release_callback_impl.cc",
+    "quads/single_release_callback_impl.h",
     "quads/texture_mailbox.cc",
     "quads/texture_mailbox.h",
+    "resource_to_rect_map.h",
     "resources/buffer_to_texture_target_map.cc",
     "resources/buffer_to_texture_target_map.h",
     "resources/platform_color.h",
@@ -138,6 +147,7 @@ viz_component("common") {
 viz_source_set("unit_tests") {
   testonly = true
   sources = [
+    "display/resource_provider_unittest.cc",
     "frame_sinks/begin_frame_args_unittest.cc",
     "frame_sinks/delay_based_time_source_unittest.cc",
     "gl_helper_unittest.cc",
@@ -150,12 +160,14 @@ viz_source_set("unit_tests") {
   deps = [
     ":common",
     "//base/test:test_support",
+    "//cc:test_support",
     "//components/viz/test:test_support",
     "//gpu/command_buffer/client:gles2_implementation",
     "//gpu/command_buffer/client:gles2_interface",
     "//gpu/ipc:gl_in_process_context",
     "//gpu/ipc/common:surface_handle_type",
     "//media",
+    "//testing/gmock",
     "//testing/gtest",
   ]
 }

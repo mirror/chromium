@@ -60,7 +60,7 @@ static void RasterizeSourceOOP(
     const gfx::AxisTransform2d& transform,
     const RasterSource::PlaybackSettings& playback_settings,
     viz::ContextProvider* context_provider,
-    ResourceProvider::ScopedWriteLockGL* resource_lock,
+    viz::ResourceProvider::ScopedWriteLockGL* resource_lock,
     bool use_distance_field_text,
     int msaa_sample_count) {
   gpu::gles2::GLES2Interface* gl = context_provider->ContextGL();
@@ -98,7 +98,7 @@ static void RasterizeSource(
     const gfx::AxisTransform2d& transform,
     const RasterSource::PlaybackSettings& playback_settings,
     viz::ContextProvider* context_provider,
-    ResourceProvider::ScopedWriteLockGL* resource_lock,
+    viz::ResourceProvider::ScopedWriteLockGL* resource_lock,
     bool use_distance_field_text,
     int msaa_sample_count) {
   ScopedGpuRaster gpu_raster(context_provider);
@@ -107,7 +107,7 @@ static void RasterizeSource(
   GLuint texture_id = resource_lock->ConsumeTexture(gl);
 
   {
-    ResourceProvider::ScopedSkSurface scoped_surface(
+    viz::ResourceProvider::ScopedSkSurface scoped_surface(
         context_provider->GrContext(), texture_id, resource_lock->target(),
         resource_lock->size(), resource_lock->format(), use_distance_field_text,
         playback_settings.use_lcd_text, msaa_sample_count);
@@ -139,7 +139,7 @@ static void RasterizeSource(
 
 GpuRasterBufferProvider::RasterBufferImpl::RasterBufferImpl(
     GpuRasterBufferProvider* client,
-    LayerTreeResourceProvider* resource_provider,
+    viz::LayerTreeResourceProvider* resource_provider,
     viz::ResourceId resource_id,
     bool resource_has_previous_content)
     : client_(client),
@@ -170,7 +170,7 @@ void GpuRasterBufferProvider::RasterBufferImpl::Playback(
 GpuRasterBufferProvider::GpuRasterBufferProvider(
     viz::ContextProvider* compositor_context_provider,
     viz::ContextProvider* worker_context_provider,
-    LayerTreeResourceProvider* resource_provider,
+    viz::LayerTreeResourceProvider* resource_provider,
     bool use_distance_field_text,
     int gpu_rasterization_msaa_sample_count,
     viz::ResourceFormat preferred_tile_format,
@@ -212,7 +212,8 @@ void GpuRasterBufferProvider::OrderingBarrier() {
 
   gpu::gles2::GLES2Interface* gl = compositor_context_provider_->ContextGL();
   if (async_worker_context_enabled_) {
-    gpu::SyncToken sync_token = ResourceProvider::GenerateSyncTokenHelper(gl);
+    gpu::SyncToken sync_token =
+        viz::ResourceProvider::GenerateSyncTokenHelper(gl);
     for (RasterBufferImpl* buffer : pending_raster_buffers_)
       buffer->set_sync_token(sync_token);
   } else {
@@ -267,7 +268,7 @@ bool GpuRasterBufferProvider::IsResourceReadyToDraw(
 }
 
 uint64_t GpuRasterBufferProvider::SetReadyToDrawCallback(
-    const ResourceProvider::ResourceIdArray& resource_ids,
+    const viz::ResourceProvider::ResourceIdArray& resource_ids,
     const base::Closure& callback,
     uint64_t pending_callback_id) const {
   if (!async_worker_context_enabled_)
@@ -296,7 +297,7 @@ void GpuRasterBufferProvider::Shutdown() {
 }
 
 void GpuRasterBufferProvider::PlaybackOnWorkerThread(
-    ResourceProvider::ScopedWriteLockGL* resource_lock,
+    viz::ResourceProvider::ScopedWriteLockGL* resource_lock,
     const gpu::SyncToken& sync_token,
     bool resource_has_previous_content,
     const RasterSource* raster_source,
@@ -349,7 +350,8 @@ void GpuRasterBufferProvider::PlaybackOnWorkerThread(
   }
 
   // Generate sync token for cross context synchronization.
-  resource_lock->set_sync_token(ResourceProvider::GenerateSyncTokenHelper(gl));
+  resource_lock->set_sync_token(
+      viz::ResourceProvider::GenerateSyncTokenHelper(gl));
 
   // Mark resource as synchronized when worker and compositor are in same stream
   // to prevent extra wait sync token calls.

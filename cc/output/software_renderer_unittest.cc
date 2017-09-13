@@ -42,15 +42,16 @@ class SoftwareRendererTest : public testing::Test {
     output_surface_->BindToClient(&output_surface_client_);
 
     shared_bitmap_manager_.reset(new TestSharedBitmapManager());
-    resource_provider_ = FakeResourceProvider::Create<DisplayResourceProvider>(
-        nullptr, shared_bitmap_manager_.get());
+    resource_provider_ =
+        FakeResourceProvider::Create<viz::DisplayResourceProvider>(
+            nullptr, shared_bitmap_manager_.get());
     renderer_ = std::make_unique<SoftwareRenderer>(
         &settings_, output_surface_.get(), resource_provider());
     renderer_->Initialize();
     renderer_->SetVisible(true);
   }
 
-  DisplayResourceProvider* resource_provider() const {
+  viz::DisplayResourceProvider* resource_provider() const {
     return resource_provider_.get();
   }
 
@@ -89,7 +90,7 @@ class SoftwareRendererTest : public testing::Test {
   FakeOutputSurfaceClient output_surface_client_;
   std::unique_ptr<FakeOutputSurface> output_surface_;
   std::unique_ptr<viz::SharedBitmapManager> shared_bitmap_manager_;
-  std::unique_ptr<DisplayResourceProvider> resource_provider_;
+  std::unique_ptr<viz::DisplayResourceProvider> resource_provider_;
   std::unique_ptr<SoftwareRenderer> renderer_;
 };
 
@@ -148,10 +149,10 @@ TEST_F(SoftwareRendererTest, TileQuad) {
   InitializeRenderer(base::WrapUnique(new SoftwareOutputDevice));
 
   viz::ResourceId resource_yellow = resource_provider()->CreateResource(
-      outer_size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, viz::RGBA_8888,
+      outer_size, viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE, viz::RGBA_8888,
       gfx::ColorSpace());
   viz::ResourceId resource_cyan = resource_provider()->CreateResource(
-      inner_size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, viz::RGBA_8888,
+      inner_size, viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE, viz::RGBA_8888,
       gfx::ColorSpace());
 
   SkBitmap yellow_tile;
@@ -216,7 +217,7 @@ TEST_F(SoftwareRendererTest, TileQuadVisibleRect) {
   InitializeRenderer(base::WrapUnique(new SoftwareOutputDevice));
 
   viz::ResourceId resource_cyan = resource_provider()->CreateResource(
-      tile_size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, viz::RGBA_8888,
+      tile_size, viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE, viz::RGBA_8888,
       gfx::ColorSpace());
 
   SkBitmap cyan_tile;  // The lowest five rows are yellow.

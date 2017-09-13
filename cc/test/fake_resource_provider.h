@@ -8,13 +8,13 @@
 #include <stddef.h>
 
 #include "base/memory/ptr_util.h"
-#include "cc/resources/resource_provider.h"
+#include "components/viz/common/display/resource_provider.h"
 #include "components/viz/common/resources/buffer_to_texture_target_map.h"
 #include "ui/gfx/buffer_types.h"
 
 namespace cc {
 
-class FakeResourceProvider : public ResourceProvider {
+class FakeResourceProvider : public viz::ResourceProvider {
  public:
   static std::unique_ptr<FakeResourceProvider> Create(
       viz::ContextProvider* context_provider,

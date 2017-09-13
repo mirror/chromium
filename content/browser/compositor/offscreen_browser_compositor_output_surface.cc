@@ -10,7 +10,7 @@
 #include "build/build_config.h"
 #include "cc/output/output_surface_client.h"
 #include "cc/output/output_surface_frame.h"
-#include "cc/resources/resource_provider.h"
+#include "components/viz/common/display/resource_provider.h"
 #include "components/viz/common/resources/resource_format_utils.h"
 #include "components/viz/service/display_embedder/compositor_overlay_candidate_validator.h"
 #include "content/browser/compositor/reflector_impl.h"

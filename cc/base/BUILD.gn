@@ -8,6 +8,8 @@ component("base") {
   output_name = "cc_base"
   sources = [
     "base_export.h",
+    "blocking_task_runner.cc",
+    "blocking_task_runner.h",
     "completion_event.h",
     "container_util.h",
     "delayed_unique_notifier.cc",
@@ -35,6 +37,7 @@ component("base") {
     "region.h",
     "render_surface_filters.cc",
     "render_surface_filters.h",
+    "resource_util.h",
     "reverse_spiral_iterator.cc",
     "reverse_spiral_iterator.h",
     "rolling_time_delta_history.cc",
@@ -57,6 +60,7 @@ component("base") {
   deps = [
     "//base",
     "//base/third_party/dynamic_annotations",
+    "//components/viz/common:resource_format",
     "//skia",
     "//ui/gfx:geometry_skia",
     "//ui/gfx/animation",

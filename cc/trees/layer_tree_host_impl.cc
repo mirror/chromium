@@ -1762,7 +1762,7 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
   }
 
   // Collect all resource ids in the render passes into a single array.
-  ResourceProvider::ResourceIdArray resources;
+  viz::ResourceProvider::ResourceIdArray resources;
   for (const auto& render_pass : frame->render_passes) {
     for (auto* quad : render_pass->quad_list) {
       for (viz::ResourceId resource_id : quad->resources)
@@ -2369,7 +2369,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
   if (!compositor_context_provider) {
     *resource_pool =
         ResourcePool::Create(resource_provider_.get(), GetTaskRunner(),
-                             ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+                             viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE,
                              ResourcePool::kDefaultExpirationDelay,
                              settings_.disallow_non_exact_resource_reuse);
 
@@ -2385,7 +2385,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
 
     *resource_pool = ResourcePool::Create(
         resource_provider_.get(), GetTaskRunner(),
-        ResourceProvider::TEXTURE_HINT_IMMUTABLE_FRAMEBUFFER,
+        viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE_FRAMEBUFFER,
         ResourcePool::kDefaultExpirationDelay,
         settings_.disallow_non_exact_resource_reuse);
 
@@ -2423,7 +2423,7 @@ void LayerTreeHostImpl::CreateResourceAndRasterBufferProvider(
 
   *resource_pool =
       ResourcePool::Create(resource_provider_.get(), GetTaskRunner(),
-                           ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+                           viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE,
                            ResourcePool::kDefaultExpirationDelay,
                            settings_.disallow_non_exact_resource_reuse);
 
@@ -2562,7 +2562,7 @@ bool LayerTreeHostImpl::InitializeRenderer(
 
   layer_tree_frame_sink_ = layer_tree_frame_sink;
   has_valid_layer_tree_frame_sink_ = true;
-  resource_provider_ = std::make_unique<LayerTreeResourceProvider>(
+  resource_provider_ = std::make_unique<viz::LayerTreeResourceProvider>(
       layer_tree_frame_sink_->context_provider(),
       layer_tree_frame_sink_->shared_bitmap_manager(),
       layer_tree_frame_sink_->gpu_memory_buffer_manager(),
@@ -4156,7 +4156,7 @@ void LayerTreeHostImpl::CreateUIResource(UIResourceId uid,
   }
 
   id = resource_provider_->CreateResource(
-      upload_size, ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
+      upload_size, viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE, format,
       gfx::ColorSpace::CreateSRGB());
 
   if (!scaled) {

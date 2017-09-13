@@ -54,9 +54,10 @@ bool IsScaleAndIntegerTranslate(const SkMatrix& matrix) {
 
 }  // anonymous namespace
 
-SoftwareRenderer::SoftwareRenderer(const viz::RendererSettings* settings,
-                                   OutputSurface* output_surface,
-                                   DisplayResourceProvider* resource_provider)
+SoftwareRenderer::SoftwareRenderer(
+    const viz::RendererSettings* settings,
+    OutputSurface* output_surface,
+    viz::DisplayResourceProvider* resource_provider)
     : DirectRenderer(settings, output_surface, resource_provider),
       output_device_(output_surface->software_device()) {}
 
@@ -120,7 +121,7 @@ bool SoftwareRenderer::BindFramebufferToTexture(
   // same texture again.
   current_framebuffer_lock_ = nullptr;
   current_framebuffer_lock_ =
-      std::make_unique<ResourceProvider::ScopedWriteLockSoftware>(
+      std::make_unique<viz::ResourceProvider::ScopedWriteLockSoftware>(
           resource_provider_, texture->id());
   current_framebuffer_canvas_ =
       std::make_unique<SkCanvas>(current_framebuffer_lock_->sk_bitmap());
@@ -196,10 +197,10 @@ void SoftwareRenderer::PrepareSurfaceForPass(
 
 bool SoftwareRenderer::IsSoftwareResource(viz::ResourceId resource_id) const {
   switch (resource_provider_->GetResourceType(resource_id)) {
-    case ResourceProvider::RESOURCE_TYPE_GPU_MEMORY_BUFFER:
-    case ResourceProvider::RESOURCE_TYPE_GL_TEXTURE:
+    case viz::ResourceProvider::RESOURCE_TYPE_GPU_MEMORY_BUFFER:
+    case viz::ResourceProvider::RESOURCE_TYPE_GL_TEXTURE:
       return false;
-    case ResourceProvider::RESOURCE_TYPE_BITMAP:
+    case viz::ResourceProvider::RESOURCE_TYPE_BITMAP:
       return true;
   }
 
@@ -391,8 +392,8 @@ void SoftwareRenderer::DrawTextureQuad(const TextureDrawQuad* quad) {
   }
 
   // TODO(skaslev): Add support for non-premultiplied alpha.
-  DisplayResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
-                                                      quad->resource_id());
+  viz::DisplayResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
+                                                           quad->resource_id());
   if (!lock.valid())
     return;
   const SkImage* image = lock.sk_image();
@@ -434,8 +435,8 @@ void SoftwareRenderer::DrawTileQuad(const TileDrawQuad* quad) {
   DCHECK(resource_provider_);
   DCHECK(IsSoftwareResource(quad->resource_id()));
 
-  DisplayResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
-                                                      quad->resource_id());
+  viz::DisplayResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
+                                                           quad->resource_id());
   if (!lock.valid())
     return;
 
@@ -460,8 +461,8 @@ void SoftwareRenderer::DrawRenderPassQuad(const RenderPassDrawQuad* quad) {
   DCHECK(content_texture->id());
   DCHECK(IsSoftwareResource(content_texture->id()));
 
-  DisplayResourceProvider::ScopedReadLockSoftware lock(resource_provider_,
-                                                       content_texture->id());
+  viz::DisplayResourceProvider::ScopedReadLockSoftware lock(
+      resource_provider_, content_texture->id());
   if (!lock.valid())
     return;
 
@@ -513,11 +514,12 @@ void SoftwareRenderer::DrawRenderPassQuad(const RenderPassDrawQuad* quad) {
                                       SkShader::kClamp_TileMode, &content_mat);
   }
 
-  std::unique_ptr<DisplayResourceProvider::ScopedReadLockSoftware> mask_lock;
+  std::unique_ptr<viz::DisplayResourceProvider::ScopedReadLockSoftware>
+      mask_lock;
   if (quad->mask_resource_id()) {
     mask_lock =
-        std::unique_ptr<DisplayResourceProvider::ScopedReadLockSoftware>(
-            new DisplayResourceProvider::ScopedReadLockSoftware(
+        std::unique_ptr<viz::DisplayResourceProvider::ScopedReadLockSoftware>(
+            new viz::DisplayResourceProvider::ScopedReadLockSoftware(
                 resource_provider_, quad->mask_resource_id()));
 
     if (!mask_lock->valid())

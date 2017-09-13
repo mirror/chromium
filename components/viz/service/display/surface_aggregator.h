@@ -22,12 +22,11 @@
 namespace cc {
 class BlockingTaskRunner;
 class CompositorFrame;
-class DisplayResourceProvider;
 class SurfaceDrawQuad;
 }  // namespace cc
 
 namespace viz {
-
+class DisplayResourceProvider;
 class Surface;
 class SurfaceClient;
 class SurfaceManager;
@@ -37,7 +36,7 @@ class VIZ_SERVICE_EXPORT SurfaceAggregator {
   using SurfaceIndexMap = base::flat_map<SurfaceId, uint64_t>;
 
   SurfaceAggregator(SurfaceManager* manager,
-                    cc::DisplayResourceProvider* provider,
+                    DisplayResourceProvider* provider,
                     bool aggregate_only_damaged);
   ~SurfaceAggregator();
 
@@ -148,7 +147,7 @@ class VIZ_SERVICE_EXPORT SurfaceAggregator {
                              cc::BlockingTaskRunner* main_thread_task_runner);
 
   SurfaceManager* manager_;
-  cc::DisplayResourceProvider* provider_;
+  DisplayResourceProvider* provider_;
 
   // Every Surface has its own cc::RenderPass ID namespace. This structure maps
   // each source (SurfaceId, cc::RenderPass id) to a unified ID namespace that's

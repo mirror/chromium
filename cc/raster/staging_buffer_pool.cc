@@ -128,7 +128,7 @@ void StagingBuffer::OnMemoryDump(base::trace_event::ProcessMemoryDump* pmd,
 StagingBufferPool::StagingBufferPool(
     base::SequencedTaskRunner* task_runner,
     viz::ContextProvider* worker_context_provider,
-    ResourceProvider* resource_provider,
+    viz::ResourceProvider* resource_provider,
     bool use_partial_raster,
     int max_staging_buffer_usage_in_bytes)
     : task_runner_(task_runner),

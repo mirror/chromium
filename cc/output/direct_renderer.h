@@ -17,7 +17,7 @@
 #include "cc/output/dc_layer_overlay.h"
 #include "cc/output/overlay_processor.h"
 #include "cc/quads/tile_draw_quad.h"
-#include "cc/resources/display_resource_provider.h"
+#include "components/viz/common/display/display_resource_provider.h"
 #include "gpu/command_buffer/common/texture_in_use_response.h"
 #include "ui/gfx/geometry/quad_f.h"
 #include "ui/gfx/geometry/rect.h"
@@ -28,11 +28,11 @@ class ColorSpace;
 }
 
 namespace viz {
+class DisplayResourceProvider;
 class RendererSettings;
 }
 
 namespace cc {
-class DisplayResourceProvider;
 class DrawPolygon;
 class OutputSurface;
 class RenderPass;
@@ -46,7 +46,7 @@ class CC_EXPORT DirectRenderer {
  public:
   DirectRenderer(const viz::RendererSettings* settings,
                  OutputSurface* output_surface,
-                 DisplayResourceProvider* resource_provider);
+                 viz::DisplayResourceProvider* resource_provider);
   virtual ~DirectRenderer();
 
   void Initialize();
@@ -131,7 +131,7 @@ class CC_EXPORT DirectRenderer {
   void SetScissorTestRectInDrawSpace(const gfx::Rect& draw_space_rect);
 
   static gfx::Size RenderPassTextureSize(const RenderPass* render_pass);
-  static ResourceProvider::TextureHint RenderPassTextureHint(
+  static viz::ResourceProvider::TextureHint RenderPassTextureHint(
       const RenderPass* render_pass);
 
   void FlushPolygons(std::deque<std::unique_ptr<DrawPolygon>>* poly_list,
@@ -185,7 +185,7 @@ class CC_EXPORT DirectRenderer {
 
   const viz::RendererSettings* const settings_;
   OutputSurface* const output_surface_;
-  DisplayResourceProvider* const resource_provider_;
+  viz::DisplayResourceProvider* const resource_provider_;
   // This can be replaced by test implementations.
   std::unique_ptr<OverlayProcessor> overlay_processor_;
 

@@ -177,7 +177,7 @@ void LayerImpl::PopulateScaledSharedQuadState(viz::SharedQuadState* state,
 }
 
 bool LayerImpl::WillDraw(DrawMode draw_mode,
-                         ResourceProvider* resource_provider) {
+                         viz::ResourceProvider* resource_provider) {
   // WillDraw/DidDraw must be matched.
   DCHECK_NE(DRAW_MODE_NONE, draw_mode);
   DCHECK_EQ(DRAW_MODE_NONE, current_draw_mode_);
@@ -185,7 +185,7 @@ bool LayerImpl::WillDraw(DrawMode draw_mode,
   return true;
 }
 
-void LayerImpl::DidDraw(ResourceProvider* resource_provider) {
+void LayerImpl::DidDraw(viz::ResourceProvider* resource_provider) {
   DCHECK_NE(DRAW_MODE_NONE, current_draw_mode_);
   current_draw_mode_ = DRAW_MODE_NONE;
 }
@@ -468,7 +468,7 @@ void LayerImpl::NoteLayerPropertyChangedFromPropertyTrees() {
 
 void LayerImpl::ValidateQuadResourcesInternal(viz::DrawQuad* quad) const {
 #if DCHECK_IS_ON()
-  const ResourceProvider* resource_provider =
+  const viz::ResourceProvider* resource_provider =
       layer_tree_impl_->resource_provider();
   for (viz::ResourceId resource_id : quad->resources)
     resource_provider->ValidateResource(resource_id);

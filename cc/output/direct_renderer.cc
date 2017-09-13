@@ -78,7 +78,7 @@ DirectRenderer::DrawingFrame::~DrawingFrame() = default;
 
 DirectRenderer::DirectRenderer(const viz::RendererSettings* settings,
                                OutputSurface* output_surface,
-                               DisplayResourceProvider* resource_provider)
+                               viz::DisplayResourceProvider* resource_provider)
     : settings_(settings),
       output_surface_(output_surface),
       resource_provider_(resource_provider),
@@ -182,7 +182,7 @@ void DirectRenderer::DecideRenderPassAllocationsForFrame(
 
   struct RenderPassRequirements {
     gfx::Size size;
-    ResourceProvider::TextureHint hint;
+    viz::ResourceProvider::TextureHint hint;
   };
   base::flat_map<RenderPassId, RenderPassRequirements> render_passes_in_frame;
   for (const auto& pass : render_passes_in_draw_order) {
@@ -207,7 +207,7 @@ void DirectRenderer::DecideRenderPassAllocationsForFrame(
     }
 
     gfx::Size required_size = it->second.size;
-    ResourceProvider::TextureHint required_hint = it->second.hint;
+    viz::ResourceProvider::TextureHint required_hint = it->second.hint;
     ScopedResource* texture = pair.second.get();
     DCHECK(texture);
 
@@ -675,11 +675,11 @@ gfx::Size DirectRenderer::RenderPassTextureSize(const RenderPass* render_pass) {
 }
 
 // static
-ResourceProvider::TextureHint DirectRenderer::RenderPassTextureHint(
+viz::ResourceProvider::TextureHint DirectRenderer::RenderPassTextureHint(
     const RenderPass* render_pass) {
   return render_pass->generate_mipmap
-             ? ResourceProvider::TEXTURE_HINT_IMMUTABLE_MIPMAP_FRAMEBUFFER
-             : ResourceProvider::TEXTURE_HINT_IMMUTABLE_FRAMEBUFFER;
+             ? viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE_MIPMAP_FRAMEBUFFER
+             : viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE_FRAMEBUFFER;
 }
 
 void DirectRenderer::SetCurrentFrameForTesting(const DrawingFrame& frame) {

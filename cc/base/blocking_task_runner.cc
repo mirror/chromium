@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cc/trees/blocking_task_runner.h"
+#include "cc/base/blocking_task_runner.h"
 
 #include <stddef.h>
 
@@ -24,8 +24,7 @@ BlockingTaskRunner::BlockingTaskRunner(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner)
     : thread_id_(base::PlatformThread::CurrentId()),
       task_runner_(task_runner),
-      capture_(0) {
-}
+      capture_(0) {}
 
 BlockingTaskRunner::~BlockingTaskRunner() {}
 

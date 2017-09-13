@@ -21,11 +21,11 @@ struct SyncToken;
 
 namespace viz {
 class SingleReleaseCallback;
+class SingleReleaseCallbackImpl;
 }
 
 namespace cc {
 class BlockingTaskRunner;
-class SingleReleaseCallbackImpl;
 class TextureLayerClient;
 
 // A Layer containing a the rendered output of a plugin instance.
@@ -50,7 +50,7 @@ class CC_EXPORT TextureLayer : public Layer {
 
     // Gets a viz::ReleaseCallback that can be called from another thread. Note:
     // the caller must ensure the callback is called.
-    std::unique_ptr<SingleReleaseCallbackImpl> GetCallbackForImplThread();
+    std::unique_ptr<viz::SingleReleaseCallbackImpl> GetCallbackForImplThread();
 
    protected:
     friend class TextureLayer;

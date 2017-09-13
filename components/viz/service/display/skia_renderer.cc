@@ -60,7 +60,7 @@ bool IsScaleAndIntegerTranslate(const SkMatrix& matrix) {
 
 SkiaRenderer::SkiaRenderer(const RendererSettings* settings,
                            cc::OutputSurface* output_surface,
-                           cc::DisplayResourceProvider* resource_provider)
+                           DisplayResourceProvider* resource_provider)
     : DirectRenderer(settings, output_surface, resource_provider) {
   const auto& context_caps =
       output_surface_->context_provider()->ContextCapabilities();
@@ -89,20 +89,19 @@ void SkiaRenderer::BeginDrawingFrame() {
   TRACE_EVENT0("cc", "SkiaRenderer::BeginDrawingFrame");
   // Copied from GLRenderer.
   bool use_sync_query_ = false;
-  scoped_refptr<cc::ResourceProvider::Fence> read_lock_fence;
+  scoped_refptr<ResourceProvider::Fence> read_lock_fence;
   // TODO(weiliangc): Implement use_sync_query_. (crbug.com/644851)
   if (use_sync_query_) {
     NOTIMPLEMENTED();
   } else {
-    read_lock_fence =
-        make_scoped_refptr(new cc::ResourceProvider::SynchronousFence(
-            output_surface_->context_provider()->ContextGL()));
+    read_lock_fence = make_scoped_refptr(new ResourceProvider::SynchronousFence(
+        output_surface_->context_provider()->ContextGL()));
   }
   resource_provider_->SetReadLockFence(read_lock_fence.get());
 
   // Insert WaitSyncTokenCHROMIUM on quad resources prior to drawing the frame,
   // so that drawing can proceed without GL context switching interruptions.
-  cc::ResourceProvider* resource_provider = resource_provider_;
+  ResourceProvider* resource_provider = resource_provider_;
   for (const auto& pass : *current_frame()->render_passes_in_draw_order) {
     for (auto* quad : pass->quad_list) {
       for (ResourceId resource_id : quad->resources)
@@ -222,11 +221,11 @@ bool SkiaRenderer::BindFramebufferToTexture(const cc::ScopedResource* texture) {
   current_framebuffer_surface_lock_ = nullptr;
   current_framebuffer_lock_ = nullptr;
   current_framebuffer_lock_ =
-      base::WrapUnique(new cc::ResourceProvider::ScopedWriteLockGL(
+      base::WrapUnique(new ResourceProvider::ScopedWriteLockGL(
           resource_provider_, texture->id()));
 
   current_framebuffer_surface_lock_ =
-      base::WrapUnique(new cc::ResourceProvider::ScopedSkSurface(
+      base::WrapUnique(new ResourceProvider::ScopedSkSurface(
           output_surface_->context_provider()->GrContext(),
           current_framebuffer_lock_->GetTexture(),
           current_framebuffer_lock_->target(),
@@ -305,10 +304,10 @@ void SkiaRenderer::PrepareSurfaceForPass(
 
 bool SkiaRenderer::IsSoftwareResource(ResourceId resource_id) const {
   switch (resource_provider_->GetResourceType(resource_id)) {
-    case cc::ResourceProvider::RESOURCE_TYPE_GPU_MEMORY_BUFFER:
-    case cc::ResourceProvider::RESOURCE_TYPE_GL_TEXTURE:
+    case ResourceProvider::RESOURCE_TYPE_GPU_MEMORY_BUFFER:
+    case ResourceProvider::RESOURCE_TYPE_GL_TEXTURE:
       return true;
-    case cc::ResourceProvider::RESOURCE_TYPE_BITMAP:
+    case ResourceProvider::RESOURCE_TYPE_BITMAP:
       return false;
   }
 
@@ -498,8 +497,8 @@ void SkiaRenderer::DrawTextureQuad(const cc::TextureDrawQuad* quad) {
   }
 
   // TODO(skaslev): Add support for non-premultiplied alpha.
-  cc::DisplayResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
-                                                          quad->resource_id());
+  DisplayResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
+                                                      quad->resource_id());
   const SkImage* image = lock.sk_image();
   if (!image)
     return;
@@ -540,8 +539,8 @@ void SkiaRenderer::DrawTileQuad(const cc::TileDrawQuad* quad) {
   // should never produce tile quads in the first place.
   DCHECK(resource_provider_);
   DCHECK(IsSoftwareResource(quad->resource_id()));
-  cc::DisplayResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
-                                                          quad->resource_id());
+  DisplayResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
+                                                      quad->resource_id());
   if (!lock.sk_image())
     return;
   gfx::RectF visible_tex_coord_rect = cc::MathUtil::ScaleRectProportional(
@@ -564,8 +563,8 @@ void SkiaRenderer::DrawRenderPassQuad(const cc::RenderPassDrawQuad* quad) {
   DCHECK(content_texture);
   DCHECK(content_texture->id());
   DCHECK(IsSoftwareResource(content_texture->id()));
-  cc::DisplayResourceProvider::ScopedReadLockSkImage lock(
-      resource_provider_, content_texture->id());
+  DisplayResourceProvider::ScopedReadLockSkImage lock(resource_provider_,
+                                                      content_texture->id());
   if (!lock.sk_image())
     return;
 

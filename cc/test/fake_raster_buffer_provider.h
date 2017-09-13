@@ -28,7 +28,7 @@ class FakeRasterBufferProviderImpl : public RasterBufferProvider {
   bool CanPartialRasterIntoProvidedResource() const override;
   bool IsResourceReadyToDraw(viz::ResourceId id) const override;
   uint64_t SetReadyToDrawCallback(
-      const ResourceProvider::ResourceIdArray& resource_ids,
+      const viz::ResourceProvider::ResourceIdArray& resource_ids,
       const base::Callback<void()>& callback,
       uint64_t pending_callback_id) const override;
   void Shutdown() override;

@@ -89,7 +89,7 @@ class CC_EXPORT YUVVideoDrawQuad : public viz::DrawQuad {
   float resource_offset = 0.0f;
   float resource_multiplier = 1.0f;
   uint32_t bits_per_channel = 8;
-  // TODO(hubbe): Move to ResourceProvider::ScopedSamplerGL.
+  // TODO(hubbe): Move to viz::ResourceProvider::ScopedSamplerGL.
   gfx::ColorSpace video_color_space;
   bool require_overlay = false;
 

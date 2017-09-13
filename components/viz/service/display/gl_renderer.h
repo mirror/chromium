@@ -55,7 +55,7 @@ class VIZ_SERVICE_EXPORT GLRenderer : public cc::DirectRenderer {
 
   GLRenderer(const RendererSettings* settings,
              cc::OutputSurface* output_surface,
-             cc::DisplayResourceProvider* resource_provider,
+             DisplayResourceProvider* resource_provider,
              cc::TextureMailboxDeleter* texture_mailbox_deleter);
   ~GLRenderer() override;
 
@@ -282,7 +282,7 @@ class VIZ_SERVICE_EXPORT GLRenderer : public cc::DirectRenderer {
                                int multiplier);
 
   using OverlayResourceLock =
-      std::unique_ptr<cc::DisplayResourceProvider::ScopedReadLockGL>;
+      std::unique_ptr<DisplayResourceProvider::ScopedReadLockGL>;
   using OverlayResourceLockList = std::vector<OverlayResourceLock>;
 
   // Resources that have been sent to the GPU process, but not yet swapped.
@@ -334,7 +334,7 @@ class VIZ_SERVICE_EXPORT GLRenderer : public cc::DirectRenderer {
   std::vector<std::unique_ptr<PendingAsyncReadPixels>>
       pending_async_read_pixels_;
 
-  std::unique_ptr<cc::ResourceProvider::ScopedWriteLockGL>
+  std::unique_ptr<ResourceProvider::ScopedWriteLockGL>
       current_framebuffer_lock_;
   // This is valid when current_framebuffer_lock_ is not null.
   ResourceFormat current_framebuffer_format_;

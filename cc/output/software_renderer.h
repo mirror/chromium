@@ -10,12 +10,15 @@
 #include "cc/output/direct_renderer.h"
 #include "ui/latency/latency_info.h"
 
+namespace viz {
+class DisplayResourceProvider;
+}
+
 namespace cc {
 class DebugBorderDrawQuad;
 class OutputSurface;
 class PictureDrawQuad;
 class RenderPassDrawQuad;
-class DisplayResourceProvider;
 class SoftwareOutputDevice;
 class SolidColorDrawQuad;
 class TextureDrawQuad;
@@ -25,7 +28,7 @@ class CC_EXPORT SoftwareRenderer : public DirectRenderer {
  public:
   SoftwareRenderer(const viz::RendererSettings* settings,
                    OutputSurface* output_surface,
-                   DisplayResourceProvider* resource_provider);
+                   viz::DisplayResourceProvider* resource_provider);
 
   ~SoftwareRenderer() override;
 
@@ -95,7 +98,7 @@ class CC_EXPORT SoftwareRenderer : public DirectRenderer {
   SkCanvas* root_canvas_ = nullptr;
   SkCanvas* current_canvas_ = nullptr;
   SkPaint current_paint_;
-  std::unique_ptr<ResourceProvider::ScopedWriteLockSoftware>
+  std::unique_ptr<viz::ResourceProvider::ScopedWriteLockSoftware>
       current_framebuffer_lock_;
   std::unique_ptr<SkCanvas> current_framebuffer_canvas_;
 

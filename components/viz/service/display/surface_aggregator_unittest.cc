@@ -20,10 +20,10 @@
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/surface_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
-#include "cc/resources/display_resource_provider.h"
 #include "cc/test/fake_resource_provider.h"
 #include "cc/test/render_pass_test_utils.h"
 #include "cc/test/test_shared_bitmap_manager.h"
+#include "components/viz/common/display/display_resource_provider.h"
 #include "components/viz/common/resources/shared_bitmap_manager.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
@@ -2166,7 +2166,7 @@ class SurfaceAggregatorWithResourcesTest : public testing::Test {
   void SetUp() override {
     shared_bitmap_manager_ = base::MakeUnique<cc::TestSharedBitmapManager>();
     resource_provider_ =
-        cc::FakeResourceProvider::Create<cc::DisplayResourceProvider>(
+        cc::FakeResourceProvider::Create<DisplayResourceProvider>(
             nullptr, shared_bitmap_manager_.get());
 
     aggregator_ = base::MakeUnique<SurfaceAggregator>(
@@ -2177,7 +2177,7 @@ class SurfaceAggregatorWithResourcesTest : public testing::Test {
  protected:
   FrameSinkManagerImpl manager_;
   std::unique_ptr<SharedBitmapManager> shared_bitmap_manager_;
-  std::unique_ptr<cc::DisplayResourceProvider> resource_provider_;
+  std::unique_ptr<DisplayResourceProvider> resource_provider_;
   std::unique_ptr<SurfaceAggregator> aggregator_;
 };
 

@@ -77,8 +77,9 @@ void PaintedScrollbarLayerImpl::PushPropertiesTo(LayerImpl* layer) {
   scrollbar_layer->set_thumb_opacity(thumb_opacity_);
 }
 
-bool PaintedScrollbarLayerImpl::WillDraw(DrawMode draw_mode,
-                                  ResourceProvider* resource_provider) {
+bool PaintedScrollbarLayerImpl::WillDraw(
+    DrawMode draw_mode,
+    viz::ResourceProvider* resource_provider) {
   DCHECK(draw_mode != DRAW_MODE_RESOURCELESS_SOFTWARE);
   return LayerImpl::WillDraw(draw_mode, resource_provider);
 }

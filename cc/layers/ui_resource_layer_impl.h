@@ -11,8 +11,8 @@
 #include "base/memory/ptr_util.h"
 #include "cc/cc_export.h"
 #include "cc/layers/layer_impl.h"
-#include "cc/resources/resource_provider.h"
 #include "cc/resources/ui_resource_client.h"
+#include "components/viz/common/display/resource_provider.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/size.h"
 
@@ -45,7 +45,7 @@ class CC_EXPORT UIResourceLayerImpl : public LayerImpl {
   void PushPropertiesTo(LayerImpl* layer) override;
 
   bool WillDraw(DrawMode draw_mode,
-                ResourceProvider* resource_provider) override;
+                viz::ResourceProvider* resource_provider) override;
   void AppendQuads(RenderPass* render_pass,
                    AppendQuadsData* append_quads_data) override;
 

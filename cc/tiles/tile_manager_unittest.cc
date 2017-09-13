@@ -1726,7 +1726,7 @@ TEST_F(TileManagerTest, LowResHasNoImage) {
     EXPECT_EQ(TileDrawInfo::RESOURCE_MODE, tile->draw_info().mode());
     EXPECT_TRUE(tile->draw_info().IsReadyToDraw());
 
-    ResourceProvider::ScopedWriteLockSoftware lock(
+    viz::ResourceProvider::ScopedWriteLockSoftware lock(
         host_impl()->resource_provider(), tile->draw_info().resource_id());
     const SkBitmap bitmap = lock.sk_bitmap();
     for (int x = 0; x < size.width(); ++x) {
@@ -1984,7 +1984,7 @@ class MockReadyToDrawRasterBufferProviderImpl
   MOCK_CONST_METHOD1(IsResourceReadyToDraw, bool(viz::ResourceId resource_id));
   MOCK_CONST_METHOD3(
       SetReadyToDrawCallback,
-      uint64_t(const ResourceProvider::ResourceIdArray& resource_ids,
+      uint64_t(const viz::ResourceProvider::ResourceIdArray& resource_ids,
                const base::Closure& callback,
                uint64_t pending_callback_id));
 
@@ -2100,13 +2100,15 @@ TEST_F(TileManagerReadyToDrawTest, SmoothActivationWaitsOnCallback) {
         .WillRepeatedly(Return(false));
 
     EXPECT_CALL(*mock_raster_buffer_provider(), SetReadyToDrawCallback(_, _, 0))
-        .WillOnce(testing::Invoke([&run_loop, &callback](
-            const ResourceProvider::ResourceIdArray& resource_ids,
-            const base::Closure& callback_in, uint64_t pending_callback_id) {
-          callback = callback_in;
-          run_loop.Quit();
-          return 1;
-        }));
+        .WillOnce(testing::Invoke(
+            [&run_loop, &callback](
+                const viz::ResourceProvider::ResourceIdArray& resource_ids,
+                const base::Closure& callback_in,
+                uint64_t pending_callback_id) {
+              callback = callback_in;
+              run_loop.Quit();
+              return 1;
+            }));
     host_impl()->tile_manager()->DidModifyTilePriorities();
     host_impl()->tile_manager()->PrepareTiles(host_impl()->global_tile_state());
     run_loop.Run();
@@ -2162,13 +2164,15 @@ TEST_F(TileManagerReadyToDrawTest, SmoothDrawWaitsOnCallback) {
         .WillRepeatedly(Return(false));
 
     EXPECT_CALL(*mock_raster_buffer_provider(), SetReadyToDrawCallback(_, _, 0))
-        .WillOnce(Invoke([&run_loop, &callback](
-            const ResourceProvider::ResourceIdArray& resource_ids,
-            const base::Closure& callback_in, uint64_t pending_callback_id) {
-          callback = callback_in;
-          run_loop.Quit();
-          return 1;
-        }));
+        .WillOnce(Invoke(
+            [&run_loop, &callback](
+                const viz::ResourceProvider::ResourceIdArray& resource_ids,
+                const base::Closure& callback_in,
+                uint64_t pending_callback_id) {
+              callback = callback_in;
+              run_loop.Quit();
+              return 1;
+            }));
     host_impl()->tile_manager()->DidModifyTilePriorities();
     host_impl()->tile_manager()->PrepareTiles(host_impl()->global_tile_state());
     run_loop.Run();
@@ -2272,13 +2276,15 @@ TEST_F(TileManagerReadyToDrawTest, ReadyToDrawRespectsRequirementChange) {
     base::RunLoop run_loop;
 
     EXPECT_CALL(*mock_raster_buffer_provider(), SetReadyToDrawCallback(_, _, 0))
-        .WillOnce(testing::Invoke([&run_loop, &callback](
-            const ResourceProvider::ResourceIdArray& resource_ids,
-            const base::Closure& callback_in, uint64_t pending_callback_id) {
-          callback = callback_in;
-          run_loop.Quit();
-          return 1;
-        }));
+        .WillOnce(testing::Invoke(
+            [&run_loop, &callback](
+                const viz::ResourceProvider::ResourceIdArray& resource_ids,
+                const base::Closure& callback_in,
+                uint64_t pending_callback_id) {
+              callback = callback_in;
+              run_loop.Quit();
+              return 1;
+            }));
     host_impl()->tile_manager()->DidModifyTilePriorities();
     host_impl()->tile_manager()->PrepareTiles(host_impl()->global_tile_state());
     run_loop.Run();

@@ -10,6 +10,7 @@
 
 #include "cc/cc_export.h"
 #include "cc/quads/render_pass.h"
+#include "components/viz/common/resource_to_rect_map.h"
 #include "components/viz/common/resources/resource_id.h"
 #include "ui/gfx/buffer_types.h"
 #include "ui/gfx/geometry/rect.h"
@@ -22,9 +23,12 @@ namespace gfx {
 class Rect;
 }
 
+namespace viz {
+class DisplayResourceProvider;
+}
+
 namespace cc {
 
-class DisplayResourceProvider;
 class DrawQuad;
 class StreamVideoDrawQuad;
 class TextureDrawQuad;
@@ -34,7 +38,7 @@ class CC_EXPORT OverlayCandidate {
  public:
   // Returns true and fills in |candidate| if |draw_quad| is of a known quad
   // type and contains an overlayable resource.
-  static bool FromDrawQuad(DisplayResourceProvider* resource_provider,
+  static bool FromDrawQuad(viz::DisplayResourceProvider* resource_provider,
                            const viz::DrawQuad* quad,
                            OverlayCandidate* candidate);
   // Returns true if |quad| will not block quads underneath from becoming
@@ -98,20 +102,22 @@ class CC_EXPORT OverlayCandidate {
   bool overlay_handled;
 
  private:
-  static bool FromDrawQuadResource(DisplayResourceProvider* resource_provider,
-                                   const viz::DrawQuad* quad,
-                                   viz::ResourceId resource_id,
-                                   bool y_flipped,
-                                   OverlayCandidate* candidate);
-  static bool FromTextureQuad(DisplayResourceProvider* resource_provider,
+  static bool FromDrawQuadResource(
+      viz::DisplayResourceProvider* resource_provider,
+      const viz::DrawQuad* quad,
+      viz::ResourceId resource_id,
+      bool y_flipped,
+      OverlayCandidate* candidate);
+  static bool FromTextureQuad(viz::DisplayResourceProvider* resource_provider,
                               const TextureDrawQuad* quad,
                               OverlayCandidate* candidate);
-  static bool FromTileQuad(DisplayResourceProvider* resource_provider,
+  static bool FromTileQuad(viz::DisplayResourceProvider* resource_provider,
                            const TileDrawQuad* quad,
                            OverlayCandidate* candidate);
-  static bool FromStreamVideoQuad(DisplayResourceProvider* resource_provider,
-                                  const StreamVideoDrawQuad* quad,
-                                  OverlayCandidate* candidate);
+  static bool FromStreamVideoQuad(
+      viz::DisplayResourceProvider* resource_provider,
+      const StreamVideoDrawQuad* quad,
+      OverlayCandidate* candidate);
 };
 
 class CC_EXPORT OverlayCandidateList : public std::vector<OverlayCandidate> {
@@ -125,11 +131,9 @@ class CC_EXPORT OverlayCandidateList : public std::vector<OverlayCandidate> {
   OverlayCandidateList& operator=(OverlayCandidateList&&);
 
   // [id] == candidate's |display_rect| for all promotable resources.
-  using PromotionHintInfoMap = std::map<viz::ResourceId, gfx::RectF>;
-
   // For android, this provides a set of resources that could be promoted to
   // overlay, if one backs them with a SurfaceView.
-  PromotionHintInfoMap promotion_hint_info_map_;
+  viz::ResourceToRectMap promotion_hint_info_map_;
 
   // Helper to insert |candidate| into |promotion_hint_info_|.
   void AddPromotionHint(const OverlayCandidate& candidate);

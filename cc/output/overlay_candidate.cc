@@ -12,7 +12,7 @@
 #include "cc/quads/stream_video_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/quads/tile_draw_quad.h"
-#include "cc/resources/display_resource_provider.h"
+#include "components/viz/common/display/display_resource_provider.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/vector3d_f.h"
 
@@ -193,9 +193,10 @@ OverlayCandidate::OverlayCandidate(const OverlayCandidate& other) = default;
 OverlayCandidate::~OverlayCandidate() {}
 
 // static
-bool OverlayCandidate::FromDrawQuad(DisplayResourceProvider* resource_provider,
-                                    const viz::DrawQuad* quad,
-                                    OverlayCandidate* candidate) {
+bool OverlayCandidate::FromDrawQuad(
+    viz::DisplayResourceProvider* resource_provider,
+    const viz::DrawQuad* quad,
+    OverlayCandidate* candidate) {
   // We don't support an opacity value different than one for an overlay plane.
   if (quad->shared_quad_state->opacity != 1.f)
     return false;
@@ -255,7 +256,7 @@ bool OverlayCandidate::IsOccluded(const OverlayCandidate& candidate,
 
 // static
 bool OverlayCandidate::FromDrawQuadResource(
-    DisplayResourceProvider* resource_provider,
+    viz::DisplayResourceProvider* resource_provider,
     const viz::DrawQuad* quad,
     viz::ResourceId resource_id,
     bool y_flipped,
@@ -289,7 +290,7 @@ bool OverlayCandidate::FromDrawQuadResource(
 
 // static
 bool OverlayCandidate::FromTextureQuad(
-    DisplayResourceProvider* resource_provider,
+    viz::DisplayResourceProvider* resource_provider,
     const TextureDrawQuad* quad,
     OverlayCandidate* candidate) {
   if (quad->background_color != SK_ColorTRANSPARENT)
@@ -304,9 +305,10 @@ bool OverlayCandidate::FromTextureQuad(
 }
 
 // static
-bool OverlayCandidate::FromTileQuad(DisplayResourceProvider* resource_provider,
-                                    const TileDrawQuad* quad,
-                                    OverlayCandidate* candidate) {
+bool OverlayCandidate::FromTileQuad(
+    viz::DisplayResourceProvider* resource_provider,
+    const TileDrawQuad* quad,
+    OverlayCandidate* candidate) {
   if (!FromDrawQuadResource(resource_provider, quad, quad->resource_id(), false,
                             candidate)) {
     return false;
@@ -318,7 +320,7 @@ bool OverlayCandidate::FromTileQuad(DisplayResourceProvider* resource_provider,
 
 // static
 bool OverlayCandidate::FromStreamVideoQuad(
-    DisplayResourceProvider* resource_provider,
+    viz::DisplayResourceProvider* resource_provider,
     const StreamVideoDrawQuad* quad,
     OverlayCandidate* candidate) {
   if (!FromDrawQuadResource(resource_provider, quad, quad->resource_id(), false,

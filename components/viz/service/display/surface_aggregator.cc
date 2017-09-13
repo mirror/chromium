@@ -22,7 +22,7 @@
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/surface_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
-#include "cc/resources/display_resource_provider.h"
+#include "components/viz/common/display/display_resource_provider.h"
 #include "components/viz/common/quads/draw_quad.h"
 #include "components/viz/common/quads/shared_quad_state.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
@@ -77,7 +77,7 @@ bool CalculateQuadSpaceDamageRect(
 }  // namespace
 
 SurfaceAggregator::SurfaceAggregator(SurfaceManager* manager,
-                                     cc::DisplayResourceProvider* provider,
+                                     DisplayResourceProvider* provider,
                                      bool aggregate_only_damaged)
     : manager_(manager),
       provider_(provider),
@@ -244,7 +244,7 @@ void SurfaceAggregator::HandleSurfaceQuad(
   referenced_surfaces_.insert(surface_id);
   // TODO(vmpstr): provider check is a hack for unittests that don't set up a
   // resource provider.
-  cc::ResourceProvider::ResourceIdMap empty_map;
+  ResourceProvider::ResourceIdMap empty_map;
   const auto& child_to_parent_map =
       provider_ ? provider_->GetChildToParentMap(ChildIdForSurface(surface))
                 : empty_map;
@@ -555,7 +555,7 @@ void SurfaceAggregator::CopyPasses(const cc::CompositorFrame& frame,
 
   // TODO(vmpstr): provider check is a hack for unittests that don't set up a
   // resource provider.
-  cc::ResourceProvider::ResourceIdMap empty_map;
+  ResourceProvider::ResourceIdMap empty_map;
   const auto& child_to_parent_map =
       provider_ ? provider_->GetChildToParentMap(ChildIdForSurface(surface))
                 : empty_map;
@@ -661,7 +661,7 @@ gfx::Rect SurfaceAggregator::PrewalkTree(const SurfaceId& surface_id,
   referenced_resources.reserve(reserve_size);
 
   bool invalid_frame = false;
-  cc::ResourceProvider::ResourceIdMap empty_map;
+  ResourceProvider::ResourceIdMap empty_map;
   const auto& child_to_parent_map =
       provider_ ? provider_->GetChildToParentMap(child_id) : empty_map;
 

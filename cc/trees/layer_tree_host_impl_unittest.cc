@@ -4097,7 +4097,7 @@ class DidDrawCheckLayer : public LayerImpl {
     return base::WrapUnique(new DidDrawCheckLayer(tree_impl, id));
   }
 
-  bool WillDraw(DrawMode draw_mode, ResourceProvider* provider) override {
+  bool WillDraw(DrawMode draw_mode, viz::ResourceProvider* provider) override {
     will_draw_called_ = true;
     if (will_draw_returns_false_)
       return false;
@@ -4110,7 +4110,7 @@ class DidDrawCheckLayer : public LayerImpl {
     LayerImpl::AppendQuads(render_pass, append_quads_data);
   }
 
-  void DidDraw(ResourceProvider* provider) override {
+  void DidDraw(viz::ResourceProvider* provider) override {
     did_draw_called_ = true;
     LayerImpl::DidDraw(provider);
   }
@@ -4333,7 +4333,7 @@ class MissingTextureAnimatingLayer : public DidDrawCheckLayer {
       bool tile_missing,
       bool had_incomplete_tile,
       bool animating,
-      ResourceProvider* resource_provider,
+      viz::ResourceProvider* resource_provider,
       scoped_refptr<AnimationTimeline> timeline) {
     return base::WrapUnique(new MissingTextureAnimatingLayer(
         tree_impl, id, tile_missing, had_incomplete_tile, animating,
@@ -4355,7 +4355,7 @@ class MissingTextureAnimatingLayer : public DidDrawCheckLayer {
                                bool tile_missing,
                                bool had_incomplete_tile,
                                bool animating,
-                               ResourceProvider* resource_provider,
+                               viz::ResourceProvider* resource_provider,
                                scoped_refptr<AnimationTimeline> timeline)
       : DidDrawCheckLayer(tree_impl, id),
         tile_missing_(tile_missing),
@@ -7737,7 +7737,7 @@ class BlendStateCheckLayer : public LayerImpl {
   static std::unique_ptr<LayerImpl> Create(
       LayerTreeImpl* tree_impl,
       int id,
-      ResourceProvider* resource_provider) {
+      viz::ResourceProvider* resource_provider) {
     return base::WrapUnique(
         new BlendStateCheckLayer(tree_impl, id, resource_provider));
   }
@@ -7790,7 +7790,7 @@ class BlendStateCheckLayer : public LayerImpl {
  private:
   BlendStateCheckLayer(LayerTreeImpl* tree_impl,
                        int id,
-                       ResourceProvider* resource_provider)
+                       viz::ResourceProvider* resource_provider)
       : LayerImpl(tree_impl, id),
         blend_(false),
         has_render_surface_(false),
@@ -7800,7 +7800,7 @@ class BlendStateCheckLayer : public LayerImpl {
         quad_visible_rect_(5, 5, 5, 5),
         resource_id_(resource_provider->CreateResource(
             gfx::Size(1, 1),
-            ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+            viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE,
             viz::RGBA_8888,
             gfx::ColorSpace())) {
     resource_provider->AllocateForTesting(resource_id_);

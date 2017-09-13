@@ -9,7 +9,7 @@
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "cc/resources/resource_util.h"
+#include "cc/base/resource_util.h"
 #include "cc/resources/scoped_resource.h"
 #include "cc/test/fake_resource_provider.h"
 #include "cc/test/test_context_provider.h"
@@ -29,7 +29,7 @@ class ResourcePoolTest : public testing::Test {
     task_runner_ = base::ThreadTaskRunnerHandle::Get();
     resource_pool_ =
         ResourcePool::Create(resource_provider_.get(), task_runner_.get(),
-                             ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+                             viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE,
                              ResourcePool::kDefaultExpirationDelay, false);
   }
 
@@ -42,7 +42,7 @@ class ResourcePoolTest : public testing::Test {
 
   scoped_refptr<TestContextProvider> context_provider_;
   std::unique_ptr<viz::SharedBitmapManager> shared_bitmap_manager_;
-  std::unique_ptr<ResourceProvider> resource_provider_;
+  std::unique_ptr<viz::ResourceProvider> resource_provider_;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
   std::unique_ptr<ResourcePool> resource_pool_;
 };
@@ -162,7 +162,7 @@ TEST_F(ResourcePoolTest, BusyResourcesEventuallyFreed) {
   // to run.
   resource_pool_ =
       ResourcePool::Create(resource_provider_.get(), task_runner_.get(),
-                           ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+                           viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE,
                            base::TimeDelta::FromMilliseconds(10), false);
 
   // Limits high enough to not be hit by this test.
@@ -203,7 +203,7 @@ TEST_F(ResourcePoolTest, UnusedResourcesEventuallyFreed) {
   // to run.
   resource_pool_ =
       ResourcePool::Create(resource_provider_.get(), task_runner_.get(),
-                           ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+                           viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE,
                            base::TimeDelta::FromMilliseconds(100), false);
 
   // Limits high enough to not be hit by this test.
@@ -414,7 +414,7 @@ TEST_F(ResourcePoolTest, TextureHintRespected) {
 
   resource_pool_ =
       ResourcePool::Create(resource_provider_.get(), task_runner_.get(),
-                           ResourceProvider::TEXTURE_HINT_IMMUTABLE,
+                           viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE,
                            base::TimeDelta::FromMilliseconds(100), false);
   Resource* resource =
       resource_pool_->AcquireResource(size, format, color_space);
@@ -423,7 +423,7 @@ TEST_F(ResourcePoolTest, TextureHintRespected) {
 
   resource_pool_ =
       ResourcePool::Create(resource_provider_.get(), task_runner_.get(),
-                           ResourceProvider::TEXTURE_HINT_DEFAULT,
+                           viz::ResourceProvider::TEXTURE_HINT_DEFAULT,
                            base::TimeDelta::FromMilliseconds(100), false);
   resource = resource_pool_->AcquireResource(size, format, color_space);
   EXPECT_FALSE(resource_provider_->IsImmutable(resource->id()));
@@ -436,7 +436,7 @@ TEST_F(ResourcePoolTest, ExactRequestsRespected) {
 
   resource_pool_ =
       ResourcePool::Create(resource_provider_.get(), task_runner_.get(),
-                           ResourceProvider::TEXTURE_HINT_DEFAULT,
+                           viz::ResourceProvider::TEXTURE_HINT_DEFAULT,
                            base::TimeDelta::FromMilliseconds(100), true);
 
   // Create unused resource with size 100x100.

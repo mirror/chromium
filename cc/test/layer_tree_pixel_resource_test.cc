@@ -46,7 +46,7 @@ LayerTreeHostPixelResourceTest::LayerTreeHostPixelResourceTest(
     Layer::LayerMaskType mask_type)
     : draw_texture_target_(GL_INVALID_VALUE),
       raster_buffer_provider_type_(RASTER_BUFFER_PROVIDER_TYPE_BITMAP),
-      texture_hint_(ResourceProvider::TEXTURE_HINT_IMMUTABLE),
+      texture_hint_(viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE),
       mask_type_(mask_type),
       initialized_(false),
       test_case_(test_case) {
@@ -69,49 +69,49 @@ void LayerTreeHostPixelResourceTest::InitializeFromTestCase(
       test_type_ = PIXEL_TEST_SOFTWARE;
       draw_texture_target_ = GL_INVALID_VALUE;
       raster_buffer_provider_type_ = RASTER_BUFFER_PROVIDER_TYPE_BITMAP;
-      texture_hint_ = ResourceProvider::TEXTURE_HINT_IMMUTABLE;
+      texture_hint_ = viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE;
       return;
     case GL_GPU_RASTER_2D_DRAW:
       test_type_ = PIXEL_TEST_GL;
       draw_texture_target_ = GL_TEXTURE_2D;
       raster_buffer_provider_type_ = RASTER_BUFFER_PROVIDER_TYPE_GPU;
-      texture_hint_ = ResourceProvider::TEXTURE_HINT_IMMUTABLE_FRAMEBUFFER;
+      texture_hint_ = viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE_FRAMEBUFFER;
       return;
     case GL_ONE_COPY_2D_STAGING_2D_DRAW:
       test_type_ = PIXEL_TEST_GL;
       draw_texture_target_ = GL_TEXTURE_2D;
       raster_buffer_provider_type_ = RASTER_BUFFER_PROVIDER_TYPE_ONE_COPY;
-      texture_hint_ = ResourceProvider::TEXTURE_HINT_IMMUTABLE;
+      texture_hint_ = viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE;
       return;
     case GL_ONE_COPY_RECT_STAGING_2D_DRAW:
       test_type_ = PIXEL_TEST_GL;
       draw_texture_target_ = GL_TEXTURE_2D;
       raster_buffer_provider_type_ = RASTER_BUFFER_PROVIDER_TYPE_ONE_COPY;
-      texture_hint_ = ResourceProvider::TEXTURE_HINT_IMMUTABLE;
+      texture_hint_ = viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE;
       return;
     case GL_ONE_COPY_EXTERNAL_STAGING_2D_DRAW:
       test_type_ = PIXEL_TEST_GL;
       draw_texture_target_ = GL_TEXTURE_2D;
       raster_buffer_provider_type_ = RASTER_BUFFER_PROVIDER_TYPE_ONE_COPY;
-      texture_hint_ = ResourceProvider::TEXTURE_HINT_IMMUTABLE;
+      texture_hint_ = viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE;
       return;
     case GL_ZERO_COPY_2D_DRAW:
       test_type_ = PIXEL_TEST_GL;
       draw_texture_target_ = GL_TEXTURE_2D;
       raster_buffer_provider_type_ = RASTER_BUFFER_PROVIDER_TYPE_ZERO_COPY;
-      texture_hint_ = ResourceProvider::TEXTURE_HINT_IMMUTABLE;
+      texture_hint_ = viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE;
       return;
     case GL_ZERO_COPY_RECT_DRAW:
       test_type_ = PIXEL_TEST_GL;
       draw_texture_target_ = GL_TEXTURE_RECTANGLE_ARB;
       raster_buffer_provider_type_ = RASTER_BUFFER_PROVIDER_TYPE_ZERO_COPY;
-      texture_hint_ = ResourceProvider::TEXTURE_HINT_IMMUTABLE;
+      texture_hint_ = viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE;
       return;
     case GL_ZERO_COPY_EXTERNAL_DRAW:
       test_type_ = PIXEL_TEST_GL;
       draw_texture_target_ = GL_TEXTURE_EXTERNAL_OES;
       raster_buffer_provider_type_ = RASTER_BUFFER_PROVIDER_TYPE_ZERO_COPY;
-      texture_hint_ = ResourceProvider::TEXTURE_HINT_IMMUTABLE;
+      texture_hint_ = viz::ResourceProvider::TEXTURE_HINT_IMMUTABLE;
       return;
   }
   NOTREACHED();
@@ -132,7 +132,8 @@ void LayerTreeHostPixelResourceTest::CreateResourceAndRasterBufferProvider(
       host_impl->layer_tree_frame_sink()->context_provider();
   viz::ContextProvider* worker_context_provider =
       host_impl->layer_tree_frame_sink()->worker_context_provider();
-  LayerTreeResourceProvider* resource_provider = host_impl->resource_provider();
+  viz::LayerTreeResourceProvider* resource_provider =
+      host_impl->resource_provider();
   int max_bytes_per_copy_operation = 1024 * 1024;
   int max_staging_buffer_usage_in_bytes = 32 * 1024 * 1024;
 

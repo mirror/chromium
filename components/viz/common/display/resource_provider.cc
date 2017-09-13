@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cc/resources/resource_provider.h"
+#include "components/viz/common/display/resource_provider.h"
 
 #include <stddef.h>
 #include <stdint.h>
@@ -24,7 +24,7 @@
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
-#include "cc/resources/resource_util.h"
+#include "cc/base/resource_util.h"
 #include "components/viz/common/resources/platform_color.h"
 #include "components/viz/common/resources/returned_resource.h"
 #include "components/viz/common/resources/shared_bitmap_manager.h"
@@ -48,7 +48,7 @@
 
 using gpu::gles2::GLES2Interface;
 
-namespace cc {
+namespace viz {
 
 class TextureIdAllocator {
  public:
@@ -89,24 +89,24 @@ class TextureIdAllocator {
 
 namespace {
 
-GLenum TextureToStorageFormat(viz::ResourceFormat format) {
+GLenum TextureToStorageFormat(ResourceFormat format) {
   GLenum storage_format = GL_RGBA8_OES;
   switch (format) {
-    case viz::RGBA_8888:
+    case RGBA_8888:
       break;
-    case viz::BGRA_8888:
+    case BGRA_8888:
       storage_format = GL_BGRA8_EXT;
       break;
-    case viz::RGBA_F16:
+    case RGBA_F16:
       storage_format = GL_RGBA16F_EXT;
       break;
-    case viz::RGBA_4444:
-    case viz::ALPHA_8:
-    case viz::LUMINANCE_8:
-    case viz::RGB_565:
-    case viz::ETC1:
-    case viz::RED_8:
-    case viz::LUMINANCE_F16:
+    case RGBA_4444:
+    case ALPHA_8:
+    case LUMINANCE_8:
+    case RGB_565:
+    case ETC1:
+    case RED_8:
+    case LUMINANCE_F16:
       NOTREACHED();
       break;
   }
@@ -114,20 +114,20 @@ GLenum TextureToStorageFormat(viz::ResourceFormat format) {
   return storage_format;
 }
 
-bool IsFormatSupportedForStorage(viz::ResourceFormat format, bool use_bgra) {
+bool IsFormatSupportedForStorage(ResourceFormat format, bool use_bgra) {
   switch (format) {
-    case viz::RGBA_8888:
-    case viz::RGBA_F16:
+    case RGBA_8888:
+    case RGBA_F16:
       return true;
-    case viz::BGRA_8888:
+    case BGRA_8888:
       return use_bgra;
-    case viz::RGBA_4444:
-    case viz::ALPHA_8:
-    case viz::LUMINANCE_8:
-    case viz::RGB_565:
-    case viz::ETC1:
-    case viz::RED_8:
-    case viz::LUMINANCE_F16:
+    case RGBA_4444:
+    case ALPHA_8:
+    case LUMINANCE_8:
+    case RGB_565:
+    case ETC1:
+    case RED_8:
+    case LUMINANCE_F16:
       return false;
   }
   return false;
@@ -167,7 +167,7 @@ ResourceProvider::Resource::Resource(GLuint texture_id,
                                      GLenum filter,
                                      TextureHint hint,
                                      ResourceType type,
-                                     viz::ResourceFormat format)
+                                     ResourceFormat format)
     : child_id(0),
       gl_id(texture_id),
       pixels(nullptr),
@@ -201,7 +201,7 @@ ResourceProvider::Resource::Resource(GLuint texture_id,
 }
 
 ResourceProvider::Resource::Resource(uint8_t* pixels,
-                                     viz::SharedBitmap* bitmap,
+                                     SharedBitmap* bitmap,
                                      const gfx::Size& size,
                                      Origin origin,
                                      GLenum filter)
@@ -232,14 +232,14 @@ ResourceProvider::Resource::Resource(uint8_t* pixels,
       hint(TEXTURE_HINT_IMMUTABLE),
       type(RESOURCE_TYPE_BITMAP),
       buffer_format(gfx::BufferFormat::RGBA_8888),
-      format(viz::RGBA_8888),
+      format(RGBA_8888),
       shared_bitmap(bitmap) {
   DCHECK(origin == DELEGATED || pixels);
   if (bitmap)
     shared_bitmap_id = bitmap->id();
 }
 
-ResourceProvider::Resource::Resource(const viz::SharedBitmapId& bitmap_id,
+ResourceProvider::Resource::Resource(const SharedBitmapId& bitmap_id,
                                      const gfx::Size& size,
                                      Origin origin,
                                      GLenum filter)
@@ -270,7 +270,7 @@ ResourceProvider::Resource::Resource(const viz::SharedBitmapId& bitmap_id,
       hint(TEXTURE_HINT_IMMUTABLE),
       type(RESOURCE_TYPE_BITMAP),
       buffer_format(gfx::BufferFormat::RGBA_8888),
-      format(viz::RGBA_8888),
+      format(RGBA_8888),
       shared_bitmap_id(bitmap_id),
       shared_bitmap(nullptr) {
 }
@@ -279,8 +279,7 @@ ResourceProvider::Resource::Resource(Resource&& other) = default;
 
 ResourceProvider::Resource::~Resource() = default;
 
-void ResourceProvider::Resource::SetMailbox(
-    const viz::TextureMailbox& mailbox) {
+void ResourceProvider::Resource::SetMailbox(const TextureMailbox& mailbox) {
   DCHECK(!mailbox.sync_token().HasData() || IsGpuResourceType(type));
   mailbox_ = mailbox;
   synchronization_state_ =
@@ -330,10 +329,10 @@ void ResourceProvider::Resource::SetGenerateMipmap() {
 }
 
 ResourceProvider::Settings::Settings(
-    viz::ContextProvider* compositor_context_provider,
+    ContextProvider* compositor_context_provider,
     bool delegated_sync_points_required,
     bool enable_color_correct_rasterization,
-    const viz::ResourceSettings& resource_settings)
+    const ResourceSettings& resource_settings)
     : default_resource_type(resource_settings.use_gpu_memory_buffer_resources
                                 ? RESOURCE_TYPE_GPU_MEMORY_BUFFER
                                 : RESOURCE_TYPE_GL_TEXTURE),
@@ -343,7 +342,7 @@ ResourceProvider::Settings::Settings(
     default_resource_type = RESOURCE_TYPE_BITMAP;
     // Pick an arbitrary limit here similar to what hardware might.
     max_texture_size = 16 * 1024;
-    best_texture_format = viz::RGBA_8888;
+    best_texture_format = RGBA_8888;
     return;
   }
 
@@ -357,31 +356,30 @@ ResourceProvider::Settings::Settings(
   use_sync_query = caps.sync_query;
 
   if (caps.disable_one_component_textures) {
-    yuv_resource_format = yuv_highbit_resource_format = viz::RGBA_8888;
+    yuv_resource_format = yuv_highbit_resource_format = RGBA_8888;
   } else {
-    yuv_resource_format = caps.texture_rg ? viz::RED_8 : viz::LUMINANCE_8;
-    yuv_highbit_resource_format = caps.texture_half_float_linear
-                                      ? viz::LUMINANCE_F16
-                                      : yuv_resource_format;
+    yuv_resource_format = caps.texture_rg ? RED_8 : LUMINANCE_8;
+    yuv_highbit_resource_format =
+        caps.texture_half_float_linear ? LUMINANCE_F16 : yuv_resource_format;
   }
 
   GLES2Interface* gl = compositor_context_provider->ContextGL();
   gl->GetIntegerv(GL_MAX_TEXTURE_SIZE, &max_texture_size);
 
   best_texture_format =
-      viz::PlatformColor::BestSupportedTextureFormat(use_texture_format_bgra);
-  best_render_buffer_format = viz::PlatformColor::BestSupportedTextureFormat(
+      PlatformColor::BestSupportedTextureFormat(use_texture_format_bgra);
+  best_render_buffer_format = PlatformColor::BestSupportedTextureFormat(
       caps.render_buffer_format_bgra8888);
 }
 
 ResourceProvider::ResourceProvider(
-    viz::ContextProvider* compositor_context_provider,
-    viz::SharedBitmapManager* shared_bitmap_manager,
+    ContextProvider* compositor_context_provider,
+    SharedBitmapManager* shared_bitmap_manager,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
-    BlockingTaskRunner* blocking_main_thread_task_runner,
+    cc::BlockingTaskRunner* blocking_main_thread_task_runner,
     bool delegated_sync_points_required,
     bool enable_color_correct_rasterization,
-    const viz::ResourceSettings& resource_settings)
+    const ResourceSettings& resource_settings)
     : settings_(compositor_context_provider,
                 delegated_sync_points_required,
                 enable_color_correct_rasterization,
@@ -404,7 +402,7 @@ ResourceProvider::ResourceProvider(
   // TODO(ericrk): Get this working in Android Webview. crbug.com/517156
   if (base::ThreadTaskRunnerHandle::IsSet()) {
     base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-        this, "cc::ResourceProvider", base::ThreadTaskRunnerHandle::Get());
+        this, "ResourceProvider", base::ThreadTaskRunnerHandle::Get());
   }
 
   if (!compositor_context_provider)
@@ -443,27 +441,26 @@ ResourceProvider::~ResourceProvider() {
   gl->Finish();
 }
 
-bool ResourceProvider::IsTextureFormatSupported(
-    viz::ResourceFormat format) const {
+bool ResourceProvider::IsTextureFormatSupported(ResourceFormat format) const {
   gpu::Capabilities caps;
   if (compositor_context_provider_)
     caps = compositor_context_provider_->ContextCapabilities();
 
   switch (format) {
-    case viz::ALPHA_8:
-    case viz::RGBA_4444:
-    case viz::RGBA_8888:
-    case viz::RGB_565:
-    case viz::LUMINANCE_8:
+    case ALPHA_8:
+    case RGBA_4444:
+    case RGBA_8888:
+    case RGB_565:
+    case LUMINANCE_8:
       return true;
-    case viz::BGRA_8888:
+    case BGRA_8888:
       return caps.texture_format_bgra8888;
-    case viz::ETC1:
+    case ETC1:
       return caps.texture_format_etc1;
-    case viz::RED_8:
+    case RED_8:
       return caps.texture_rg;
-    case viz::LUMINANCE_F16:
-    case viz::RGBA_F16:
+    case LUMINANCE_F16:
+    case RGBA_F16:
       return caps.texture_half_float_linear;
   }
 
@@ -472,29 +469,29 @@ bool ResourceProvider::IsTextureFormatSupported(
 }
 
 bool ResourceProvider::IsRenderBufferFormatSupported(
-    viz::ResourceFormat format) const {
+    ResourceFormat format) const {
   gpu::Capabilities caps;
   if (compositor_context_provider_)
     caps = compositor_context_provider_->ContextCapabilities();
 
   switch (format) {
-    case viz::RGBA_4444:
-    case viz::RGBA_8888:
-    case viz::RGB_565:
+    case RGBA_4444:
+    case RGBA_8888:
+    case RGB_565:
       return true;
-    case viz::BGRA_8888:
+    case BGRA_8888:
       return caps.render_buffer_format_bgra8888;
-    case viz::RGBA_F16:
+    case RGBA_F16:
       // TODO(ccameron): This will always return false on pixel tests, which
       // makes it un-test-able until we upgrade Mesa.
       // https://crbug.com/687720
       return caps.texture_half_float_linear &&
              caps.color_buffer_half_float_rgba;
-    case viz::LUMINANCE_8:
-    case viz::ALPHA_8:
-    case viz::RED_8:
-    case viz::ETC1:
-    case viz::LUMINANCE_F16:
+    case LUMINANCE_8:
+    case ALPHA_8:
+    case RED_8:
+    case ETC1:
+    case LUMINANCE_F16:
       // We don't currently render into these formats. If we need to render into
       // these eventually, we should expand this logic.
       return false;
@@ -504,24 +501,24 @@ bool ResourceProvider::IsRenderBufferFormatSupported(
   return false;
 }
 
-bool ResourceProvider::InUseByConsumer(viz::ResourceId id) {
+bool ResourceProvider::InUseByConsumer(ResourceId id) {
   Resource* resource = GetResource(id);
   return resource->lock_for_read_count > 0 || resource->exported_count > 0 ||
          resource->lost;
 }
 
-bool ResourceProvider::IsLost(viz::ResourceId id) {
+bool ResourceProvider::IsLost(ResourceId id) {
   Resource* resource = GetResource(id);
   return resource->lost;
 }
 
-void ResourceProvider::LoseResourceForTesting(viz::ResourceId id) {
+void ResourceProvider::LoseResourceForTesting(ResourceId id) {
   Resource* resource = GetResource(id);
   DCHECK(resource);
   resource->lost = true;
 }
 
-viz::ResourceFormat ResourceProvider::YuvResourceFormat(int bits) const {
+ResourceFormat ResourceProvider::YuvResourceFormat(int bits) const {
   if (bits > 8) {
     return settings_.yuv_highbit_resource_format;
   } else {
@@ -529,16 +526,16 @@ viz::ResourceFormat ResourceProvider::YuvResourceFormat(int bits) const {
   }
 }
 
-viz::ResourceId ResourceProvider::CreateResource(
+ResourceId ResourceProvider::CreateResource(
     const gfx::Size& size,
     TextureHint hint,
-    viz::ResourceFormat format,
+    ResourceFormat format,
     const gfx::ColorSpace& color_space) {
   DCHECK(!size.IsEmpty());
   switch (settings_.default_resource_type) {
     case RESOURCE_TYPE_GPU_MEMORY_BUFFER:
-      // GPU memory buffers don't support viz::LUMINANCE_F16 yet.
-      if (format != viz::LUMINANCE_F16) {
+      // GPU memory buffers don't support LUMINANCE_F16 yet.
+      if (format != LUMINANCE_F16) {
         return CreateGpuResource(
             size, hint, RESOURCE_TYPE_GPU_MEMORY_BUFFER, format,
             gfx::BufferUsage::GPU_READ_CPU_READ_WRITE, color_space);
@@ -550,7 +547,7 @@ viz::ResourceId ResourceProvider::CreateResource(
                                color_space);
 
     case RESOURCE_TYPE_BITMAP:
-      DCHECK_EQ(viz::RGBA_8888, format);
+      DCHECK_EQ(RGBA_8888, format);
       return CreateBitmapResource(size, color_space);
   }
 
@@ -558,10 +555,10 @@ viz::ResourceId ResourceProvider::CreateResource(
   return 0;
 }
 
-viz::ResourceId ResourceProvider::CreateGpuMemoryBufferResource(
+ResourceId ResourceProvider::CreateGpuMemoryBufferResource(
     const gfx::Size& size,
     TextureHint hint,
-    viz::ResourceFormat format,
+    ResourceFormat format,
     gfx::BufferUsage usage,
     const gfx::ColorSpace& color_space) {
   DCHECK(!size.IsEmpty());
@@ -572,7 +569,7 @@ viz::ResourceId ResourceProvider::CreateGpuMemoryBufferResource(
                                format, usage, color_space);
     }
     case RESOURCE_TYPE_BITMAP:
-      DCHECK_EQ(viz::RGBA_8888, format);
+      DCHECK_EQ(RGBA_8888, format);
       return CreateBitmapResource(size, color_space);
   }
 
@@ -580,11 +577,11 @@ viz::ResourceId ResourceProvider::CreateGpuMemoryBufferResource(
   return 0;
 }
 
-viz::ResourceId ResourceProvider::CreateGpuResource(
+ResourceId ResourceProvider::CreateGpuResource(
     const gfx::Size& size,
     TextureHint hint,
     ResourceType type,
-    viz::ResourceFormat format,
+    ResourceFormat format,
     gfx::BufferUsage usage,
     const gfx::ColorSpace& color_space) {
   DCHECK_LE(size.width(), settings_.max_texture_size);
@@ -598,7 +595,7 @@ viz::ResourceId ResourceProvider::CreateGpuResource(
                       ? GetImageTextureTarget(usage, format)
                       : GL_TEXTURE_2D;
 
-  viz::ResourceId id = next_id_++;
+  ResourceId id = next_id_++;
   Resource* resource =
       InsertResource(id, Resource(0, size, Resource::INTERNAL, target,
                                   GL_LINEAR, hint, type, format));
@@ -608,17 +605,17 @@ viz::ResourceId ResourceProvider::CreateGpuResource(
   return id;
 }
 
-viz::ResourceId ResourceProvider::CreateBitmapResource(
+ResourceId ResourceProvider::CreateBitmapResource(
     const gfx::Size& size,
     const gfx::ColorSpace& color_space) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
-  std::unique_ptr<viz::SharedBitmap> bitmap =
+  std::unique_ptr<SharedBitmap> bitmap =
       shared_bitmap_manager_->AllocateSharedBitmap(size);
   uint8_t* pixels = bitmap->pixels();
   DCHECK(pixels);
 
-  viz::ResourceId id = next_id_++;
+  ResourceId id = next_id_++;
   Resource* resource = InsertResource(
       id,
       Resource(pixels, bitmap.release(), size, Resource::INTERNAL, GL_LINEAR));
@@ -627,27 +624,27 @@ viz::ResourceId ResourceProvider::CreateBitmapResource(
   return id;
 }
 
-viz::ResourceId ResourceProvider::CreateResourceFromTextureMailbox(
-    const viz::TextureMailbox& mailbox,
+ResourceId ResourceProvider::CreateResourceFromTextureMailbox(
+    const TextureMailbox& mailbox,
     std::unique_ptr<SingleReleaseCallbackImpl> release_callback_impl,
     bool read_lock_fences_enabled,
     gfx::BufferFormat buffer_format) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   // Just store the information. Mailbox will be consumed in
   // DisplayResourceProvider::LockForRead().
-  viz::ResourceId id = next_id_++;
+  ResourceId id = next_id_++;
   DCHECK(mailbox.IsValid());
   Resource* resource = nullptr;
   if (mailbox.IsTexture()) {
     resource = InsertResource(
-        id, Resource(0, mailbox.size_in_pixels(), Resource::EXTERNAL,
-                     mailbox.target(),
-                     mailbox.nearest_neighbor() ? GL_NEAREST : GL_LINEAR,
-                     TEXTURE_HINT_IMMUTABLE, RESOURCE_TYPE_GL_TEXTURE,
-                     viz::RGBA_8888));
+        id,
+        Resource(0, mailbox.size_in_pixels(), Resource::EXTERNAL,
+                 mailbox.target(),
+                 mailbox.nearest_neighbor() ? GL_NEAREST : GL_LINEAR,
+                 TEXTURE_HINT_IMMUTABLE, RESOURCE_TYPE_GL_TEXTURE, RGBA_8888));
   } else {
     DCHECK(mailbox.IsSharedMemory());
-    viz::SharedBitmap* shared_bitmap = mailbox.shared_bitmap();
+    SharedBitmap* shared_bitmap = mailbox.shared_bitmap();
     uint8_t* pixels = shared_bitmap->pixels();
     DCHECK(pixels);
     resource = InsertResource(
@@ -675,8 +672,8 @@ viz::ResourceId ResourceProvider::CreateResourceFromTextureMailbox(
   return id;
 }
 
-viz::ResourceId ResourceProvider::CreateResourceFromTextureMailbox(
-    const viz::TextureMailbox& mailbox,
+ResourceId ResourceProvider::CreateResourceFromTextureMailbox(
+    const TextureMailbox& mailbox,
     std::unique_ptr<SingleReleaseCallbackImpl> release_callback_impl,
     bool read_lock_fences_enabled) {
   return CreateResourceFromTextureMailbox(
@@ -684,14 +681,14 @@ viz::ResourceId ResourceProvider::CreateResourceFromTextureMailbox(
       gfx::BufferFormat::RGBA_8888);
 }
 
-viz::ResourceId ResourceProvider::CreateResourceFromTextureMailbox(
-    const viz::TextureMailbox& mailbox,
+ResourceId ResourceProvider::CreateResourceFromTextureMailbox(
+    const TextureMailbox& mailbox,
     std::unique_ptr<SingleReleaseCallbackImpl> release_callback_impl) {
   return CreateResourceFromTextureMailbox(
       mailbox, std::move(release_callback_impl), false);
 }
 
-void ResourceProvider::DeleteResource(viz::ResourceId id) {
+void ResourceProvider::DeleteResource(ResourceId id) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   ResourceMap::iterator it = resources_.find(id);
   CHECK(it != resources_.end());
@@ -799,15 +796,15 @@ void ResourceProvider::FlushPendingDeletions() const {
 }
 
 ResourceProvider::ResourceType ResourceProvider::GetResourceType(
-    viz::ResourceId id) {
+    ResourceId id) {
   return GetResource(id)->type;
 }
 
-GLenum ResourceProvider::GetResourceTextureTarget(viz::ResourceId id) {
+GLenum ResourceProvider::GetResourceTextureTarget(ResourceId id) {
   return GetResource(id)->target;
 }
 
-bool ResourceProvider::IsImmutable(viz::ResourceId id) {
+bool ResourceProvider::IsImmutable(ResourceId id) {
   if (IsGpuResourceType(settings_.default_resource_type)) {
     return GetTextureHint(id) == TEXTURE_HINT_IMMUTABLE;
   } else {
@@ -817,8 +814,7 @@ bool ResourceProvider::IsImmutable(viz::ResourceId id) {
   }
 }
 
-ResourceProvider::TextureHint ResourceProvider::GetTextureHint(
-    viz::ResourceId id) {
+ResourceProvider::TextureHint ResourceProvider::GetTextureHint(ResourceId id) {
   return GetResource(id)->hint;
 }
 
@@ -829,7 +825,7 @@ gfx::ColorSpace ResourceProvider::GetResourceColorSpaceForRaster(
   return resource->color_space;
 }
 
-void ResourceProvider::CopyToResource(viz::ResourceId id,
+void ResourceProvider::CopyToResource(ResourceId id,
                                       const uint8_t* image,
                                       const gfx::Size& image_size) {
   Resource* resource = GetResource(id);
@@ -846,7 +842,7 @@ void ResourceProvider::CopyToResource(viz::ResourceId id,
   if (resource->type == RESOURCE_TYPE_BITMAP) {
     DCHECK_EQ(RESOURCE_TYPE_BITMAP, resource->type);
     DCHECK(resource->allocated);
-    DCHECK_EQ(viz::RGBA_8888, resource->format);
+    DCHECK_EQ(RGBA_8888, resource->format);
     SkImageInfo source_info =
         SkImageInfo::MakeN32Premul(image_size.width(), image_size.height());
     size_t image_stride = image_size.width() * 4;
@@ -863,11 +859,11 @@ void ResourceProvider::CopyToResource(viz::ResourceId id,
     GLES2Interface* gl = ContextGL();
     DCHECK(gl);
     gl->BindTexture(resource->target, texture_id);
-    if (resource->format == viz::ETC1) {
+    if (resource->format == ETC1) {
       DCHECK_EQ(resource->target, static_cast<GLenum>(GL_TEXTURE_2D));
       int image_bytes =
-          ResourceUtil::CheckedSizeInBytes<int>(image_size, viz::ETC1);
-      gl->CompressedTexImage2D(resource->target, 0, GLInternalFormat(viz::ETC1),
+          cc::ResourceUtil::CheckedSizeInBytes<int>(image_size, ETC1);
+      gl->CompressedTexImage2D(resource->target, 0, GLInternalFormat(ETC1),
                                image_size.width(), image_size.height(), 0,
                                image_bytes, image);
     } else {
@@ -879,7 +875,7 @@ void ResourceProvider::CopyToResource(viz::ResourceId id,
 }
 
 ResourceProvider::Resource* ResourceProvider::InsertResource(
-    viz::ResourceId id,
+    ResourceId id,
     Resource resource) {
   std::pair<ResourceMap::iterator, bool> result =
       resources_.insert(ResourceMap::value_type(id, std::move(resource)));
@@ -887,7 +883,7 @@ ResourceProvider::Resource* ResourceProvider::InsertResource(
   return &result.first->second;
 }
 
-ResourceProvider::Resource* ResourceProvider::GetResource(viz::ResourceId id) {
+ResourceProvider::Resource* ResourceProvider::GetResource(ResourceId id) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(id);
   ResourceMap::iterator it = resources_.find(id);
@@ -895,7 +891,7 @@ ResourceProvider::Resource* ResourceProvider::GetResource(viz::ResourceId id) {
   return &it->second;
 }
 
-ResourceProvider::Resource* ResourceProvider::LockForWrite(viz::ResourceId id) {
+ResourceProvider::Resource* ResourceProvider::LockForWrite(ResourceId id) {
   DCHECK(CanLockForWrite(id));
   Resource* resource = GetResource(id);
   resource->WaitSyncToken(ContextGL());
@@ -905,30 +901,30 @@ ResourceProvider::Resource* ResourceProvider::LockForWrite(viz::ResourceId id) {
   return resource;
 }
 
-bool ResourceProvider::CanLockForWrite(viz::ResourceId id) {
+bool ResourceProvider::CanLockForWrite(ResourceId id) {
   Resource* resource = GetResource(id);
   return !resource->locked_for_write && !resource->lock_for_read_count &&
          !resource->exported_count && resource->origin == Resource::INTERNAL &&
          !resource->lost && ReadLockFenceHasPassed(resource);
 }
 
-bool ResourceProvider::IsOverlayCandidate(viz::ResourceId id) {
+bool ResourceProvider::IsOverlayCandidate(ResourceId id) {
   Resource* resource = GetResource(id);
   return resource->is_overlay_candidate;
 }
 
-gfx::BufferFormat ResourceProvider::GetBufferFormat(viz::ResourceId id) {
+gfx::BufferFormat ResourceProvider::GetBufferFormat(ResourceId id) {
   Resource* resource = GetResource(id);
   return resource->buffer_format;
 }
 
 #if defined(OS_ANDROID)
-bool ResourceProvider::IsBackedBySurfaceTexture(viz::ResourceId id) {
+bool ResourceProvider::IsBackedBySurfaceTexture(ResourceId id) {
   Resource* resource = GetResource(id);
   return resource->is_backed_by_surface_texture;
 }
 
-bool ResourceProvider::WantsPromotionHint(viz::ResourceId id) {
+bool ResourceProvider::WantsPromotionHint(ResourceId id) {
   return wants_promotion_hints_set_.count(id) > 0;
 }
 
@@ -944,7 +940,7 @@ void ResourceProvider::UnlockForWrite(Resource* resource) {
   resource->locked_for_write = false;
 }
 
-void ResourceProvider::EnableReadLockFencesForTesting(viz::ResourceId id) {
+void ResourceProvider::EnableReadLockFencesForTesting(ResourceId id) {
   Resource* resource = GetResource(id);
   DCHECK(resource);
   resource->read_lock_fences_enabled = true;
@@ -952,7 +948,7 @@ void ResourceProvider::EnableReadLockFencesForTesting(viz::ResourceId id) {
 
 ResourceProvider::ScopedWriteLockGL::ScopedWriteLockGL(
     ResourceProvider* resource_provider,
-    viz::ResourceId resource_id)
+    ResourceId resource_id)
     : resource_provider_(resource_provider), resource_id_(resource_id) {
   Resource* resource = resource_provider->LockForWrite(resource_id);
   DCHECK(IsGpuResourceType(resource->type));
@@ -1076,7 +1072,7 @@ void ResourceProvider::ScopedWriteLockGL::AllocateTexture(
     gpu::gles2::GLES2Interface* gl,
     GLuint texture_id) {
   DCHECK(gl);
-  if (format_ == viz::ETC1)  // ETC1 does not support preallocation.
+  if (format_ == ETC1)  // ETC1 does not support preallocation.
     return;
   gl->BindTexture(target_, texture_id);
   const ResourceProvider::Settings& settings = resource_provider_->settings_;
@@ -1102,7 +1098,7 @@ ResourceProvider::ScopedSkSurface::ScopedSkSurface(GrContext* gr_context,
                                                    GLuint texture_id,
                                                    GLenum texture_target,
                                                    const gfx::Size& size,
-                                                   viz::ResourceFormat format,
+                                                   ResourceFormat format,
                                                    bool use_distance_field_text,
                                                    bool can_use_lcd_text,
                                                    int msaa_sample_count) {
@@ -1132,7 +1128,7 @@ ResourceProvider::ScopedSkSurface::~ScopedSkSurface() {
 
 void ResourceProvider::PopulateSkBitmapWithResource(SkBitmap* sk_bitmap,
                                                     const Resource* resource) {
-  DCHECK_EQ(viz::RGBA_8888, resource->format);
+  DCHECK_EQ(RGBA_8888, resource->format);
   SkImageInfo info = SkImageInfo::MakeN32Premul(resource->size.width(),
                                                 resource->size.height());
   sk_bitmap->installPixels(info, resource->pixels, info.minRowBytes());
@@ -1140,7 +1136,7 @@ void ResourceProvider::PopulateSkBitmapWithResource(SkBitmap* sk_bitmap,
 
 ResourceProvider::ScopedWriteLockSoftware::ScopedWriteLockSoftware(
     ResourceProvider* resource_provider,
-    viz::ResourceId resource_id)
+    ResourceId resource_id)
     : resource_provider_(resource_provider), resource_id_(resource_id) {
   Resource* resource = resource_provider->LockForWrite(resource_id);
   resource_provider->PopulateSkBitmapWithResource(&sk_bitmap_, resource);
@@ -1181,7 +1177,7 @@ void ResourceProvider::SynchronousFence::Synchronize() {
   gl_->Finish();
 }
 
-GLenum ResourceProvider::BindForSampling(viz::ResourceId resource_id,
+GLenum ResourceProvider::BindForSampling(ResourceId resource_id,
                                          GLenum unit,
                                          GLenum filter) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
@@ -1222,7 +1218,7 @@ GLenum ResourceProvider::BindForSampling(viz::ResourceId resource_id,
   return target;
 }
 
-void ResourceProvider::CreateForTesting(viz::ResourceId id) {
+void ResourceProvider::CreateForTesting(ResourceId id) {
   CreateTexture(GetResource(id));
 }
 
@@ -1278,11 +1274,11 @@ void ResourceProvider::CreateMailbox(Resource* resource) {
   gl->ProduceTextureDirectCHROMIUM(resource->gl_id,
                                    mailbox_holder.texture_target,
                                    mailbox_holder.mailbox.name);
-  resource->SetMailbox(viz::TextureMailbox(mailbox_holder));
+  resource->SetMailbox(TextureMailbox(mailbox_holder));
   resource->SetLocallyUsed();
 }
 
-void ResourceProvider::AllocateForTesting(viz::ResourceId id) {
+void ResourceProvider::AllocateForTesting(ResourceId id) {
   Resource* resource = GetResource(id);
   if (!resource->allocated) {
     // Software and external resources are marked allocated on creation.
@@ -1322,7 +1318,7 @@ void ResourceProvider::CreateAndBindImage(Resource* resource) {
   }
 }
 
-void ResourceProvider::WaitSyncToken(viz::ResourceId id) {
+void ResourceProvider::WaitSyncToken(ResourceId id) {
   GetResource(id)->WaitSyncToken(ContextGL());
 }
 
@@ -1351,22 +1347,22 @@ gpu::SyncToken ResourceProvider::GenerateSyncTokenHelper(
 }
 
 GLenum ResourceProvider::GetImageTextureTarget(gfx::BufferUsage usage,
-                                               viz::ResourceFormat format) {
+                                               ResourceFormat format) {
   gfx::BufferFormat buffer_format = BufferFormat(format);
   auto found = buffer_to_texture_target_map_.find(
-      viz::BufferToTextureTargetKey(usage, buffer_format));
+      BufferToTextureTargetKey(usage, buffer_format));
   DCHECK(found != buffer_to_texture_target_map_.end());
   return found->second;
 }
 
-void ResourceProvider::ValidateResource(viz::ResourceId id) const {
+void ResourceProvider::ValidateResource(ResourceId id) const {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(id);
   DCHECK(resources_.find(id) != resources_.end());
 }
 
 GLES2Interface* ResourceProvider::ContextGL() const {
-  viz::ContextProvider* context_provider = compositor_context_provider_;
+  ContextProvider* context_provider = compositor_context_provider_;
   return context_provider ? context_provider->ContextGL() : nullptr;
 }
 
@@ -1412,8 +1408,9 @@ bool ResourceProvider::OnMemoryDump(
     base::trace_event::MemoryAllocatorDump* dump =
         pmd->CreateAllocatorDump(dump_name);
 
-    uint64_t total_bytes = ResourceUtil::UncheckedSizeInBytesAligned<size_t>(
-        resource.size, resource.format);
+    uint64_t total_bytes =
+        cc::ResourceUtil::UncheckedSizeInBytesAligned<size_t>(resource.size,
+                                                              resource.format);
     dump->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
                     base::trace_event::MemoryAllocatorDump::kUnitsBytes,
                     static_cast<uint64_t>(total_bytes));
@@ -1438,7 +1435,7 @@ bool ResourceProvider::OnMemoryDump(
         break;
       case RESOURCE_TYPE_BITMAP:
         DCHECK(resource.has_shared_bitmap_id);
-        guid = viz::GetSharedBitmapGUIDForTracing(resource.shared_bitmap_id);
+        guid = GetSharedBitmapGUIDForTracing(resource.shared_bitmap_id);
         if (resource.shared_bitmap) {
           shared_memory_guid =
               resource.shared_bitmap->GetSharedMemoryHandle().GetGUID();
@@ -1461,4 +1458,4 @@ bool ResourceProvider::OnMemoryDump(
   return true;
 }
 
-}  // namespace cc
+}  // namespace viz

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CC_RESOURCES_RESOURCE_PROVIDER_H_
-#define CC_RESOURCES_RESOURCE_PROVIDER_H_
+#ifndef COMPONENTS_VIZ_COMMON_DISPLAY_RESOURCE_PROVIDER_H_
+#define COMPONENTS_VIZ_COMMON_DISPLAY_RESOURCE_PROVIDER_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -24,18 +24,19 @@
 #include "base/threading/thread_checker.h"
 #include "base/trace_event/memory_allocator_dump.h"
 #include "base/trace_event/memory_dump_provider.h"
-#include "cc/cc_export.h"
-#include "cc/resources/release_callback_impl.h"
+#include "build/build_config.h"
 #include "cc/resources/return_callback.h"
-#include "cc/resources/single_release_callback_impl.h"
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/gpu/context_provider.h"
+#include "components/viz/common/quads/release_callback_impl.h"
 #include "components/viz/common/quads/shared_bitmap.h"
+#include "components/viz/common/quads/single_release_callback_impl.h"
 #include "components/viz/common/quads/texture_mailbox.h"
 #include "components/viz/common/resources/resource_format.h"
 #include "components/viz/common/resources/resource_id.h"
 #include "components/viz/common/resources/resource_settings.h"
 #include "components/viz/common/resources/transferable_resource.h"
+#include "components/viz/common/viz_common_export.h"
 #include "third_party/khronos/GLES2/gl2.h"
 #include "third_party/khronos/GLES2/gl2ext.h"
 #include "third_party/skia/include/core/SkBitmap.h"
@@ -50,20 +51,22 @@ class GpuMemoryBufferManager;
 namespace gles {
 class GLES2Interface;
 }
-}
+}  // namespace gpu
 
 namespace viz {
 class SharedBitmap;
 class SharedBitmapManager;
+class TextureIdAllocator;
 }  // namespace viz
 
 namespace cc {
 class BlockingTaskRunner;
-class TextureIdAllocator;
+}
 
+namespace viz {
 // This class is not thread-safe and can only be called from the thread it was
 // created on (in practice, the impl thread).
-class CC_EXPORT ResourceProvider
+class VIZ_COMMON_EXPORT ResourceProvider
     : public base::trace_event::MemoryDumpProvider {
  protected:
   struct Resource;
@@ -90,7 +93,7 @@ class CC_EXPORT ResourceProvider
   ResourceProvider(viz::ContextProvider* compositor_context_provider,
                    viz::SharedBitmapManager* shared_bitmap_manager,
                    gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
-                   BlockingTaskRunner* blocking_main_thread_task_runner,
+                   cc::BlockingTaskRunner* blocking_main_thread_task_runner,
                    bool delegated_sync_points_required,
                    bool enable_color_correct_rasterization,
                    const viz::ResourceSettings& resource_settings);
@@ -185,12 +188,11 @@ class CC_EXPORT ResourceProvider
                       const uint8_t* image,
                       const gfx::Size& image_size);
 
-
   // The following lock classes are part of the ResourceProvider API and are
   // needed to read and write the resource contents. The user must ensure
   // that they only use GL locks on GL resources, etc, and this is enforced
   // by assertions.
-  class CC_EXPORT ScopedWriteLockGL {
+  class VIZ_COMMON_EXPORT ScopedWriteLockGL {
    public:
     ScopedWriteLockGL(ResourceProvider* resource_provider,
                       viz::ResourceId resource_id);
@@ -262,7 +264,7 @@ class CC_EXPORT ResourceProvider
   };
 
   // TODO(sunnyps): Move to //components/viz/common/gl_helper.h ?
-  class CC_EXPORT ScopedSkSurface {
+  class VIZ_COMMON_EXPORT ScopedSkSurface {
    public:
     ScopedSkSurface(GrContext* gr_context,
                     GLuint texture_id,
@@ -282,7 +284,7 @@ class CC_EXPORT ResourceProvider
     DISALLOW_COPY_AND_ASSIGN(ScopedSkSurface);
   };
 
-  class CC_EXPORT ScopedWriteLockSoftware {
+  class VIZ_COMMON_EXPORT ScopedWriteLockSoftware {
    public:
     ScopedWriteLockSoftware(ResourceProvider* resource_provider,
                             viz::ResourceId resource_id);
@@ -305,7 +307,7 @@ class CC_EXPORT ResourceProvider
     DISALLOW_COPY_AND_ASSIGN(ScopedWriteLockSoftware);
   };
 
-  class CC_EXPORT Fence : public base::RefCounted<Fence> {
+  class VIZ_COMMON_EXPORT Fence : public base::RefCounted<Fence> {
    public:
     Fence() {}
 
@@ -321,7 +323,7 @@ class CC_EXPORT ResourceProvider
     DISALLOW_COPY_AND_ASSIGN(Fence);
   };
 
-  class CC_EXPORT SynchronousFence : public ResourceProvider::Fence {
+  class VIZ_COMMON_EXPORT SynchronousFence : public ResourceProvider::Fence {
    public:
     explicit SynchronousFence(gpu::gles2::GLES2Interface* gl);
 
@@ -598,7 +600,7 @@ class CC_EXPORT ResourceProvider
   viz::ContextProvider* compositor_context_provider_;
   viz::SharedBitmapManager* shared_bitmap_manager_;
   gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager_;
-  BlockingTaskRunner* blocking_main_thread_task_runner_;
+  cc::BlockingTaskRunner* blocking_main_thread_task_runner_;
   viz::ResourceId next_id_;
   int next_child_;
 
@@ -635,6 +637,6 @@ class CC_EXPORT ResourceProvider
   DISALLOW_COPY_AND_ASSIGN(ResourceProvider);
 };
 
-}  // namespace cc
+}  // namespace viz
 
-#endif  // CC_RESOURCES_RESOURCE_PROVIDER_H_
+#endif  // COMPONENTS_VIZ_COMMON_DISPLAY_RESOURCE_PROVIDER_H_

@@ -9,7 +9,7 @@
 #include "cc/quads/render_pass_draw_quad.h"
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/yuv_video_draw_quad.h"
-#include "cc/resources/resource_provider.h"
+#include "components/viz/common/display/resource_provider.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gl/gl_switches.h"
@@ -19,7 +19,7 @@ namespace cc {
 namespace {
 
 DCLayerOverlayProcessor::DCLayerResult FromYUVQuad(
-    ResourceProvider* resource_provider,
+    viz::ResourceProvider* resource_provider,
     const YUVVideoDrawQuad* quad,
     DCLayerOverlay* ca_layer_overlay) {
   for (const auto& resource : quad->resources) {
@@ -90,7 +90,7 @@ DCLayerOverlayProcessor::DCLayerOverlayProcessor() = default;
 DCLayerOverlayProcessor::~DCLayerOverlayProcessor() = default;
 
 DCLayerOverlayProcessor::DCLayerResult DCLayerOverlayProcessor::FromDrawQuad(
-    ResourceProvider* resource_provider,
+    viz::ResourceProvider* resource_provider,
     const gfx::RectF& display_rect,
     QuadList::ConstIterator quad_list_begin,
     QuadList::ConstIterator quad,
@@ -129,7 +129,7 @@ DCLayerOverlayProcessor::DCLayerResult DCLayerOverlayProcessor::FromDrawQuad(
   return result;
 }
 
-void DCLayerOverlayProcessor::Process(ResourceProvider* resource_provider,
+void DCLayerOverlayProcessor::Process(viz::ResourceProvider* resource_provider,
                                       const gfx::RectF& display_rect,
                                       RenderPassList* render_passes,
                                       gfx::Rect* overlay_damage_rect,
@@ -218,7 +218,7 @@ QuadList::Iterator DCLayerOverlayProcessor::ProcessRenderPassDrawQuad(
 }
 
 void DCLayerOverlayProcessor::ProcessRenderPass(
-    ResourceProvider* resource_provider,
+    viz::ResourceProvider* resource_provider,
     const gfx::RectF& display_rect,
     RenderPass* render_pass,
     bool is_root,
