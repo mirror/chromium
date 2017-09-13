@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34f87151_3946b562",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuAdapter.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-13T17:33:30Z",
+      "side": 1,
+      "message": "nit: ... battery saver mode does not cause the view to stay at alpha 0 on Android O.",
+      "range": {
+        "startLine": 374,
+        "startChar": 93,
+        "endLine": 375,
+        "endChar": 27
+      },
+      "revId": "5f9b3162adfaaabbfb7b1b873de4b583a1a2264e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
