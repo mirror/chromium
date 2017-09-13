@@ -490,6 +490,7 @@ void SimpleSynchronousEntry::ReadSparseData(
 
       int len_to_read = std::min(buf_len, range_len_after_offset);
       if (!ReadSparseRange(found_range, net_offset, len_to_read, buf)) {
+        Doom();
         *out_result = net::ERR_CACHE_READ_FAILURE;
         return;
       }
@@ -508,6 +509,7 @@ void SimpleSynchronousEntry::ReadSparseData(
     int range_len = base::saturated_cast<int>(found_range->length);
     int len_to_read = std::min(buf_len - read_so_far, range_len);
     if (!ReadSparseRange(found_range, 0, len_to_read, buf + read_so_far)) {
+      Doom();
       *out_result = net::ERR_CACHE_READ_FAILURE;
       return;
     }
@@ -565,6 +567,7 @@ void SimpleSynchronousEntry::WriteSparseData(
 
       int len_to_write = std::min(buf_len, range_len_after_offset);
       if (!WriteSparseRange(found_range, net_offset, len_to_write, buf)) {
+        Doom();
         *out_result = net::ERR_CACHE_WRITE_FAILURE;
         return;
       }
@@ -583,6 +586,7 @@ void SimpleSynchronousEntry::WriteSparseData(
       if (!AppendSparseRange(offset + written_so_far,
                              len_to_append,
                              buf + written_so_far)) {
+        Doom();
         *out_result = net::ERR_CACHE_WRITE_FAILURE;
         return;
       }
@@ -595,6 +599,7 @@ void SimpleSynchronousEntry::WriteSparseData(
                           0,
                           len_to_write,
                           buf + written_so_far)) {
+      Doom();
       *out_result = net::ERR_CACHE_WRITE_FAILURE;
       return;
     }
@@ -607,6 +612,7 @@ void SimpleSynchronousEntry::WriteSparseData(
     if (!AppendSparseRange(offset + written_so_far,
                            len_to_append,
                            buf + written_so_far)) {
+      Doom();
       *out_result = net::ERR_CACHE_WRITE_FAILURE;
       return;
     }
