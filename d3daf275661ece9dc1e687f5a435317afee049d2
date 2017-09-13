@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b49fb4f8_b79e1795",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-13T16:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "045acefa_96aae6ba",
+      "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c74bb039_2b6d530e",
         "filename": "ui/aura/window_occlusion_tracker.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd426f04_aad2f98e",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-13T16:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c74bb039_2b6d530e",
+      "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4520a490_8605c8b2",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-13T16:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebf0b12c_44367624",
+      "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca2cd94a_145a16cc",
         "filename": "ui/aura/window_occlusion_tracker.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ddca06_d5ec26be",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-13T16:18:35Z",
+      "side": 1,
+      "message": "No. DCHECK references its argument in non-dcheck builds https://cs.chromium.org/chromium/src/base/logging.h?rcl\u003d0c860bfecebfc1395fb8a8f6e28f3ea7c2f921b1\u0026l\u003d831-832",
+      "parentUuid": "ca2cd94a_145a16cc",
+      "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7420da37_0f2767a4",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-13T16:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f33e6743_ae21ac8b",
+      "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "294404c1_963b2b8f",
         "filename": "ui/aura/window_occlusion_tracker.cc",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-12T17:52:17Z",
       "side": 1,
       "message": "This means that it is possible for a previously occluded window to know that it was unoccluded *after* the next frame, right? So we will end up with a window on screen that doesn\u0027t yet know that it has been unoccluded.",
+      "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fb81d2a_707f4c3b",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-13T16:18:35Z",
+      "side": 1,
+      "message": "Yes.\n\nWindows should display some content even when occluded, because they can be revealed by window switching tools such as \"Alt-Tab\" or \"Overview\".\n\nKnowing that, I don\u0027t think it\u0027s a big deal to have a few frames where windows believe that they are occluded but aren\u0027t.",
+      "parentUuid": "294404c1_963b2b8f",
       "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "95909402_82831b5b",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-13T16:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2fc6278_7a6e98da",
+      "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90e5a176_cf45d3ee",
         "filename": "ui/aura/window_occlusion_tracker.cc",
         "patchSetId": 6
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "3e86de55_0983ed38",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-13T16:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90e5a176_cf45d3ee",
+      "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78f4b984_6090057d",
         "filename": "ui/aura/window_occlusion_tracker.cc",
         "patchSetId": 6
@@ -152,6 +296,24 @@
       "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eca9234_56aeb948",
+        "filename": "ui/aura/window_occlusion_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-13T16:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78f4b984_6090057d",
+      "revId": "d3daf275661ece9dc1e687f5a435317afee049d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
