@@ -16,6 +16,52 @@
       "revId": "cb6b331256d75433dec8210812b79bf9a794c1fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c9e8220_2b5e14b8",
+        "filename": "ui/webui/resources/cr_elements/cr_toast/cr_toast.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-13T01:01:20Z",
+      "side": 1,
+      "message": "Change this to:\n\n    open: {\n      type: Boolean,\n      value: false,\n      reflectToAttribute: true,\n    },\n\nThen you can use .open in your css. No need for an observer, then you can also delete |openChanged_|",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 6
+      },
+      "revId": "cb6b331256d75433dec8210812b79bf9a794c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "365c66f2_931fab65",
+        "filename": "ui/webui/resources/cr_elements/cr_toast/cr_toast.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-13T01:01:20Z",
+      "side": 1,
+      "message": "Just as an FYI you can do this in one line:\nthis.classList.toggle(\u0027opening\u0027, this.open_);",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 5
+      },
+      "revId": "cb6b331256d75433dec8210812b79bf9a794c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

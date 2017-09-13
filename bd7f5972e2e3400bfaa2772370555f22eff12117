@@ -46,6 +46,30 @@
       "revId": "bd7f5972e2e3400bfaa2772370555f22eff12117",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08e1425c_66cb275d",
+        "filename": "chrome/browser/resources/md_bookmarks/dnd_manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-13T01:01:20Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "9c2cc886_c2543946",
+      "range": {
+        "startLine": 398,
+        "startChar": 27,
+        "endLine": 398,
+        "endChar": 50
+      },
+      "revId": "bd7f5972e2e3400bfaa2772370555f22eff12117",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

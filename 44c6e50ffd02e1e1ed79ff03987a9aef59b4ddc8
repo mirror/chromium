@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef51b0b1_8b13f8d1",
+        "filename": "chrome/browser/resources/md_bookmarks/compiled_resources2.gyp",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-13T01:01:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f4337b83_8f9d4959",
+      "range": {
+        "startLine": 198,
+        "startChar": 0,
+        "endLine": 199,
+        "endChar": 96
+      },
+      "revId": "44c6e50ffd02e1e1ed79ff03987a9aef59b4ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3198637_cb038f8a",
         "filename": "chrome/browser/resources/md_bookmarks/debouncer.js",
         "patchSetId": 2
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "Ack, leaving this for the MD Bookmarks folks to decide.",
       "parentUuid": "b3198637_cb038f8a",
+      "range": {
+        "startLine": 87,
+        "startChar": 15,
+        "endLine": 87,
+        "endChar": 24
+      },
+      "revId": "44c6e50ffd02e1e1ed79ff03987a9aef59b4ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "650312ef_14945203",
+        "filename": "chrome/browser/resources/md_bookmarks/debouncer.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-13T01:01:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3b2ebe96_8129b24d",
       "range": {
         "startLine": 87,
         "startChar": 15,
