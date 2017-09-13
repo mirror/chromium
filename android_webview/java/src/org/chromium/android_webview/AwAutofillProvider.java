@@ -44,6 +44,7 @@ public class AwAutofillProvider extends AutofillProvider {
             this.absBound = absBound;
         }
     }
+
     /**
      * The class to wrap the request to framework.
      *
