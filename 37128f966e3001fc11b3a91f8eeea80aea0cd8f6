@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "635f3558_39c6c8ad",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1108729
+      },
+      "writtenOn": "2017-09-13T21:51:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bcb9b55_a792cd5b",
+      "range": {
+        "startLine": 734,
+        "startChar": 5,
+        "endLine": 735,
+        "endChar": 50
+      },
+      "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2a8011c_9f44b541",
         "filename": "components/exo/surface.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-12T20:24:16Z",
       "side": 1,
       "message": "nit: |buffer_matrix| and follow work can potentially make this a member that is updated when buffer transform/scale changes",
+      "range": {
+        "startLine": 736,
+        "startChar": 11,
+        "endLine": 736,
+        "endChar": 34
+      },
+      "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5fd77f0_ff38f811",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1108729
+      },
+      "writtenOn": "2017-09-13T21:51:37Z",
+      "side": 1,
+      "message": "Done, but note I could not do it in Surface::CommitSurfaceHierarchy() because current_resource_.size isn\u0027t updated until after that call.",
+      "parentUuid": "b2a8011c_9f44b541",
       "range": {
         "startLine": 736,
         "startChar": 11,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b5d1326d_bea04121",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1108729
+      },
+      "writtenOn": "2017-09-13T21:51:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a832a16a_a25703b1",
+      "range": {
+        "startLine": 744,
+        "startChar": 44,
+        "endLine": 744,
+        "endChar": 74
+      },
+      "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eff3c930_04c33f93",
         "filename": "components/exo/surface.cc",
         "patchSetId": 6
@@ -85,6 +157,24 @@
       "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e694463c_0ec188ab",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1108729
+      },
+      "writtenOn": "2017-09-13T21:51:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eff3c930_04c33f93",
+      "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -108,6 +198,30 @@
       "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed1e50e_e06fdc55",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1108729
+      },
+      "writtenOn": "2017-09-13T21:51:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f30d4138_a96c6ec2",
+      "range": {
+        "startLine": 759,
+        "startChar": 2,
+        "endLine": 759,
+        "endChar": 10
+      },
+      "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "a5d6e19a_dddf4b65",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1108729
+      },
+      "writtenOn": "2017-09-13T21:51:37Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "2075a03e_a35895e0",
+      "range": {
+        "startLine": 786,
+        "startChar": 16,
+        "endLine": 786,
+        "endChar": 31
+      },
+      "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "490ede5d_bb2ebd92",
         "filename": "components/exo/surface.cc",
         "patchSetId": 6
@@ -180,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "6e577d3e_c472fe87",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1108729
+      },
+      "writtenOn": "2017-09-13T21:51:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "490ede5d_bb2ebd92",
+      "range": {
+        "startLine": 792,
+        "startChar": 6,
+        "endLine": 792,
+        "endChar": 14
+      },
+      "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b093c153_92eb2596",
         "filename": "components/exo/surface.cc",
         "patchSetId": 6
@@ -194,6 +356,24 @@
       "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14363959_5d2fb8ba",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1108729
+      },
+      "writtenOn": "2017-09-13T21:51:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b093c153_92eb2596",
+      "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -217,6 +397,30 @@
       "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "909cf5ab_da4d472e",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1108729
+      },
+      "writtenOn": "2017-09-13T21:51:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10a6d1cb_dbbc2031",
+      "range": {
+        "startLine": 800,
+        "startChar": 6,
+        "endLine": 800,
+        "endChar": 48
+      },
+      "revId": "37128f966e3001fc11b3a91f8eeea80aea0cd8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
