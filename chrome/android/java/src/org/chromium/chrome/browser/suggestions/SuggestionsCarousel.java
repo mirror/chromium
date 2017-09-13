@@ -11,8 +11,8 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.ViewGroup;
+import android.webkit.URLUtil;
 
 import org.chromium.base.ApiCompatibilityUtils;
 import org.chromium.chrome.R;
@@ -23,6 +23,7 @@ import org.chromium.chrome.browser.ntp.cards.NewTabPageViewHolder;
 import org.chromium.chrome.browser.ntp.cards.NodeVisitor;
 import org.chromium.chrome.browser.ntp.cards.OptionalLeaf;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
+import org.chromium.chrome.browser.util.UrlUtilities;
 import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 import org.chromium.ui.widget.Toast;
 
@@ -66,7 +67,7 @@ public class SuggestionsCarousel extends OptionalLeaf implements ImpressionTrack
      * was shown.
      */
     public void refresh(final Context context, @Nullable final String newUrl) {
-        if (TextUtils.isEmpty(newUrl)) {
+        if (!URLUtil.isNetworkUrl(newUrl)) {
             clearSuggestions();
             return;
         }
@@ -78,7 +79,7 @@ public class SuggestionsCarousel extends OptionalLeaf implements ImpressionTrack
         mWasScrolledSinceShown = false;
 
         // Do nothing if there are already suggestions in the carousel for the new context.
-        if (TextUtils.equals(newUrl, mCurrentContextUrl)) return;
+        if (UrlUtilities.urlsMatchIgnoringFragments(newUrl, mCurrentContextUrl)) return;
 
         String text = "Fetching contextual suggestions...";
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
