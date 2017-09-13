@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb81c97e_69c03e08",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-13T22:18:52Z",
+      "side": 1,
+      "message": "I missed the point when we augmented all our base classes with the _coordination_units. Seems like quite an indirection. What makes this aspect unique that we don\u0027t want to base these responsibilities into frame/web_contents themselves using fields?",
+      "revId": "4ce51b8b860e78244f81e24fa5fe3a67a988aec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31eb99d8_7a727b63",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-13T22:18:52Z",
+      "side": 1,
+      "message": "Platform should not know what Frame is - it looks like a layering issue.",
+      "revId": "4ce51b8b860e78244f81e24fa5fe3a67a988aec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050282df_220d3194",
+        "filename": "third_party/WebKit/Source/core/loader/NetworkQuietDetector.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-13T22:18:52Z",
+      "side": 1,
+      "message": "I thought this class was going away...",
+      "revId": "4ce51b8b860e78244f81e24fa5fe3a67a988aec1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
