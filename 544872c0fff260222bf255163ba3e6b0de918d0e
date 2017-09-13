@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ea9f9363_15a51b13",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-13T18:49:01Z",
+      "side": 1,
+      "message": "Nit: simpler to just write this as:\n\nbase::StringPiece name(kv.first);\n\nBut it\u0027d be even better to write:\n\nauto\u0026 name \u003d kv.first;\nif (base::MatchesPattern(name, pattern)) {\n  ...",
+      "revId": "544872c0fff260222bf255163ba3e6b0de918d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea801541_043e2973",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 4
