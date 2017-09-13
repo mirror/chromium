@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "484b6f0f_5a400585",
+        "filename": "components/drive/chromeos/file_system/copy_operation.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-13T06:29:43Z",
+      "side": 1,
+      "message": "\"Even if A, C will be B\" says nothing about the relationship between A and B.\nTo avoid alienating future readers, I think it\u0027s better to describe the things in the same order as the value propagates (i.e. preserve_last_modified -\u003e last_modified -\u003e last_modified_by_me) so that the all relationships become clear.\n\nThank you for writing the new comment.\nIt\u0027s a bit lengthy, but now the intention of the code should be clear to anyone.",
+      "parentUuid": "40215b25_7d9084ce",
+      "range": {
+        "startLine": 139,
+        "startChar": 5,
+        "endLine": 139,
+        "endChar": 43
+      },
+      "revId": "47b60b99f8fdbe70cffdc904d9bae04c62a08126",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48516c5c_db49529f",
         "filename": "components/drive/drive.proto",
         "patchSetId": 9
