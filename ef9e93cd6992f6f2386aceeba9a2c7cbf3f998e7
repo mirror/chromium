@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18d540c3_3bf3a561",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-13T18:59:06Z",
+      "side": 1,
+      "message": "This can go negative, is that accounted for elsewhere?",
+      "revId": "ef9e93cd6992f6f2386aceeba9a2c7cbf3f998e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26ccc0e3_477f6eb1",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-13T18:59:06Z",
+      "side": 1,
+      "message": "A six-line ternary operation statement is pushing it a bit. Let\u0027s rewrite this to make it more readable.\n\nbool ltr \u003d direction \u003d\u003d TextDirection::kLtr;\nbool auto_left \u003d (ltr \u0026\u0026 child_style.MarginStart().IsAuto())\n    || (!ltr \u0026\u0026 child_style.MarginEnd().IsAuto());\nLayoutUnit line_left_auto_margin \u003d auto_left\n          ? margins.LineLeft(direction)\n          : LayoutUnit();\n\nPerhaps? Or use a regular if statement.",
+      "range": {
+        "startLine": 891,
+        "startChar": 13,
+        "endLine": 891,
+        "endChar": 34
+      },
+      "revId": "ef9e93cd6992f6f2386aceeba9a2c7cbf3f998e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
