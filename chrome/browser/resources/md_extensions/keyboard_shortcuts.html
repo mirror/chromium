@@ -13,7 +13,7 @@
       .shortcut-card {
         @apply(--shadow-elevation-2dp);
         background-color: white;
-        color: var(--paper-grey-600);
+        color: var(--paper-grey-900);
         margin: 0 auto 16px auto;
         max-width: 928px;
         min-width: 600px;
@@ -28,28 +28,39 @@
       }
 
       .command-name {
-        color: var(--paper-grey-900);
         flex: 1;
       }
 
       .command-entry .md-select-wrapper {
-        -webkit-margin-start: 40px;
+        -webkit-margin-start: 20px;
       }
 
-      .card-title {
-        align-items: center;
-        border-bottom: 1px solid var(--paper-grey-400);
-        display: flex;
-        font-size: 14px;
-        font-weight: 500;
-        margin-bottom: 9px;
-        padding: 16px 20px;
+      /* Vertically align with paper-input. */
+      .command-entry .md-select {
+        /* Todo(scottchen): line-height needs adjustment to fix large fonts,
+         *                  same for paper-input. */
+        line-height: 22px;
+        /* Below rules help align md-select and paper-input underline. */
+        margin-top: 3px;
+        padding-bottom: 0;
+        padding-top: 0;
       }
 
       .icon {
         -webkit-margin-end: 20px;
         height: 16px;
         width: 16px;
+      }
+
+      .card-title {
+        align-items: center;
+        border-bottom: 1px solid var(--paper-grey-300);
+        color: var(--paper-grey-700);
+        display: flex;
+        font-size: 14px;
+        font-weight: 500;
+        margin-bottom: 9px;
+        padding: 16px 20px;
       }
 
       .card-controls {
