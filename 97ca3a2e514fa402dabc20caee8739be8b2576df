@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f403a39_24a9f86c",
+        "filename": "ui/base/models/list_selection_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-13T20:53:46Z",
+      "side": 1,
+      "message": "DCHECK",
+      "range": {
+        "startLine": 26,
+        "startChar": 3,
+        "endLine": 26,
+        "endChar": 42
+      },
+      "revId": "97ca3a2e514fa402dabc20caee8739be8b2576df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feb11af5_80b1023d",
+        "filename": "ui/base/models/list_selection_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-13T20:53:46Z",
+      "side": 1,
+      "message": "I\u0027m not a fan of using a magical index like this.",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "97ca3a2e514fa402dabc20caee8739be8b2576df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e5ea36f_552c5357",
+        "filename": "ui/base/models/list_selection_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-13T20:53:46Z",
+      "side": 1,
+      "message": "DCHECK_GT",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 109,
+        "endChar": 8
+      },
+      "revId": "97ca3a2e514fa402dabc20caee8739be8b2576df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d17e63e3_c8416b0e",
+        "filename": "ui/base/models/list_selection_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-13T20:53:46Z",
+      "side": 1,
+      "message": "This is most definitely not obvious and worth comments.",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 45
+      },
+      "revId": "97ca3a2e514fa402dabc20caee8739be8b2576df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0524ce7d_1b55fdcf",
+        "filename": "ui/views/controls/table/table_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-13T20:53:46Z",
+      "side": 1,
+      "message": "Again, I don\u0027t like overloading Move like this. It\u0027s confusing to equate adding items to a move.",
+      "range": {
+        "startLine": 485,
+        "startChar": 19,
+        "endLine": 485,
+        "endChar": 23
+      },
+      "revId": "97ca3a2e514fa402dabc20caee8739be8b2576df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
