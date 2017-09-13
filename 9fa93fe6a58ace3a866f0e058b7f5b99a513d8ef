@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a5f427e_bbf7a498",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-13T10:17:55Z",
+      "side": 1,
+      "message": "Rename to bookmarkTableViewRefreshContextBar. Let the homeviewcontroller decide the state.",
+      "range": {
+        "startLine": 63,
+        "startChar": 8,
+        "endLine": 64,
+        "endChar": 29
+      },
+      "revId": "9fa93fe6a58ace3a866f0e058b7f5b99a513d8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dadbc0ca_b693169f",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-13T10:17:55Z",
+      "side": 1,
+      "message": "nit: Returns if current root node...",
+      "range": {
+        "startLine": 100,
+        "startChar": 3,
+        "endLine": 100,
+        "endChar": 21
+      },
+      "revId": "9fa93fe6a58ace3a866f0e058b7f5b99a513d8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5434e0bc_e85361c9",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-13T10:17:55Z",
+      "side": 1,
+      "message": "mit: Returns if...",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 28
+      },
+      "revId": "9fa93fe6a58ace3a866f0e058b7f5b99a513d8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00bbca1c_eaf4e12c",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-13T10:17:55Z",
+      "side": 1,
+      "message": "Can we just call this bookmarkTableViewRefreshContextBar? Let the home_view_controller decide the state etc?",
+      "range": {
+        "startLine": 582,
+        "startChar": 17,
+        "endLine": 582,
+        "endChar": 67
+      },
+      "revId": "9fa93fe6a58ace3a866f0e058b7f5b99a513d8ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
