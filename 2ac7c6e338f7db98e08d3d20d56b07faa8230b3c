@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9f3e637_68cde565",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-13T22:48:45Z",
+      "side": 1,
+      "message": "Is this check needed?",
+      "range": {
+        "startLine": 770,
+        "startChar": 58,
+        "endLine": 770,
+        "endChar": 0
+      },
+      "revId": "2ac7c6e338f7db98e08d3d20d56b07faa8230b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22612c12_b6de9d27",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-13T22:48:45Z",
+      "side": 1,
+      "message": "Presumably we should not Remove ourselves if we didn\u0027t add ourselves?",
+      "range": {
+        "startLine": 786,
+        "startChar": 55,
+        "endLine": 786,
+        "endChar": 0
+      },
+      "revId": "2ac7c6e338f7db98e08d3d20d56b07faa8230b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c09e2d10_5c4722bb",
+        "filename": "net/quic/chromium/quic_stream_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1165,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-13T22:48:45Z",
+      "side": 1,
+      "message": "(Aside, I wonder how this notification interacts with the various migration related platform notifications.)",
+      "range": {
+        "startLine": 1165,
+        "startChar": 11,
+        "endLine": 1165,
+        "endChar": 0
+      },
+      "revId": "2ac7c6e338f7db98e08d3d20d56b07faa8230b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb3b54c_44d51e55",
+        "filename": "net/quic/chromium/quic_stream_factory_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1847,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-13T22:48:45Z",
+      "side": 1,
+      "message": "How does this verify that the connection is unaffected?",
+      "range": {
+        "startLine": 1847,
+        "startChar": 72,
+        "endLine": 1847,
+        "endChar": 0
+      },
+      "revId": "2ac7c6e338f7db98e08d3d20d56b07faa8230b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
