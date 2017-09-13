@@ -233,8 +233,10 @@ void PhysicalWebProvider::ConstructZeroSuggestMatches(
         AutocompleteMatchType::PHYSICAL_WEB);
     match.destination_url = url;
 
+    // Because the user did not type a related input to get this Physical Web
+    // suggestion, preserve the path, as the user needs the extra context.
     match.contents = url_formatter::FormatUrl(
-        url, AutocompleteMatch::GetFormatTypes(false, false, false),
+        url, AutocompleteMatch::GetFormatTypes(false, false, true),
         net::UnescapeRule::SPACES, nullptr, nullptr, nullptr);
     match.contents_class.push_back(
         ACMatchClassification(0, ACMatchClassification::URL));
