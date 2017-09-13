@@ -25,7 +25,9 @@ class SingleThreadTaskRunner;
 
 namespace media {
 
+class AudioRendererSink;
 class MediaResource;
+class MojoAudioRendererSinkImpl;
 class MojoDemuxerStreamImpl;
 class MojoVideoRendererSinkImpl;
 class VideoOverlayFactory;
@@ -45,6 +47,7 @@ class MojoRenderer : public Renderer, public mojom::RendererClient {
  public:
   MojoRenderer(const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
                std::unique_ptr<VideoOverlayFactory> video_overlay_factory,
+               AudioRendererSink* audio_renderer_sink,
                VideoRendererSink* video_renderer_sink,
                mojom::RendererPtr remote_renderer);
   ~MojoRenderer() override;
@@ -106,6 +109,9 @@ class MojoRenderer : public Renderer, public mojom::RendererClient {
   // indicates which stream the error happened on.
   void OnDemuxerStreamConnectionError(MojoDemuxerStreamImpl* stream);
 
+  // Callback for connection error on |mojo_audio_renderer_sink_|.
+  void OnAudioRendererSinkConnectionError();
+
   // Callback for connection error on |mojo_video_renderer_sink_|.
   void OnVideoRendererSinkConnectionError();
 
@@ -123,6 +129,8 @@ class MojoRenderer : public Renderer, public mojom::RendererClient {
   // Overlay factory used to create overlays for video frames rendered
   // by the remote renderer.
   std::unique_ptr<VideoOverlayFactory> video_overlay_factory_;
+
+  AudioRendererSink* audio_renderer_sink_ = nullptr;
 
   // Video frame overlays are rendered onto this sink.
   // Rendering of a new overlay is only needed when video natural size changes.
@@ -165,6 +173,7 @@ class MojoRenderer : public Renderer, public mojom::RendererClient {
   base::DefaultTickClock media_clock_;
   media::TimeDeltaInterpolator media_time_interpolator_;
 
+  std::unique_ptr<MojoAudioRendererSinkImpl> mojo_audio_renderer_sink_;
   std::unique_ptr<MojoVideoRendererSinkImpl> mojo_video_renderer_sink_;
 
   DISALLOW_COPY_AND_ASSIGN(MojoRenderer);

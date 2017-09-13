@@ -10,6 +10,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/numerics/safe_conversions.h"
 #include "media/base/audio_buffer.h"
+#include "media/base/audio_bus.h"
 #include "media/base/audio_decoder_config.h"
 #include "media/base/cdm_key_information.h"
 #include "media/base/decoder_buffer.h"
@@ -238,6 +239,23 @@ TypeConverter<scoped_refptr<media::AudioBuffer>, media::mojom::AudioBufferPtr>::
       input->sample_format, input->channel_layout, input->channel_count,
       input->sample_rate, input->frame_count, &channel_ptrs[0],
       input->timestamp);
+}
+
+// static
+media::mojom::AudioBusPtr
+TypeConverter<media::mojom::AudioBusPtr, media::AudioBus>::Convert(
+    const media::AudioBus& input) {
+  media::mojom::AudioBusPtr buffer(media::mojom::AudioBus::New());
+  buffer->nb_channels = input.channels();
+  buffer->nb_frames = input.frames();
+
+  if (input.data_) {
+    DCHECK_GT(input.data_size_, 0u);
+    buffer->data.assign(input.data_.get(),
+                        input.data_.get() + input.data_size_);
+  }
+
+  return buffer;
 }
 
 }  // namespace mojo
