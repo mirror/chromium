@@ -1,5 +1,6 @@
 include_rules = [
   "+components/viz/service/surfaces",
+  "+third_party/skia/include/core/SkMatrix44.h",
 ]
 
 specific_include_rules = {
