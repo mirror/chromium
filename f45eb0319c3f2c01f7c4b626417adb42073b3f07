@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1715601a_da295e57",
+        "filename": "components/history/core/browser/top_sites_database.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-13T21:13:04Z",
+      "side": 1,
+      "message": "Generally we use {} if the body spans multiple lines.",
+      "range": {
+        "startLine": 391,
+        "startChar": 2,
+        "endLine": 391,
+        "endChar": 49
+      },
+      "revId": "f45eb0319c3f2c01f7c4b626417adb42073b3f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af85f3e_0a5e3579",
+        "filename": "components/history/core/browser/top_sites_database.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-13T21:13:04Z",
+      "side": 1,
+      "message": "Check return value.",
+      "range": {
+        "startLine": 667,
+        "startChar": 6,
+        "endLine": 667,
+        "endChar": 13
+      },
+      "revId": "f45eb0319c3f2c01f7c4b626417adb42073b3f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac200d93_22ac6d04",
+        "filename": "components/history/core/browser/top_sites_database.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-13T21:13:04Z",
+      "side": 1,
+      "message": "Make sure you check failures like this.",
+      "range": {
+        "startLine": 674,
+        "startChar": 2,
+        "endLine": 674,
+        "endChar": 25
+      },
+      "revId": "f45eb0319c3f2c01f7c4b626417adb42073b3f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
