@@ -18,7 +18,7 @@ TEST_F(SelectionModifierTest, leftPositionOf) {
       "<b id=four>4444</b><content select=#two></content><content "
       "select=#one></content><b id=five>55555</b>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Element* one = GetDocument().getElementById("one");
   Element* two = GetDocument().getElementById("two");
@@ -56,7 +56,7 @@ TEST_F(SelectionModifierTest, rightPositionOf) {
       "<p id=four>4444</p><content select=#two></content><content "
       "select=#one></content><p id=five>55555</p>";
   SetBodyContent(body_content);
-  ShadowRoot* shadow_root = SetShadowContent(shadow_content, "host");
+  ShadowRoot* shadow_root = SetShadowContentDeprecated(shadow_content, "host");
 
   Node* one = GetDocument().getElementById("one")->firstChild();
   Node* two = GetDocument().getElementById("two")->firstChild();
