@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f75df40_74612261",
+        "filename": "components/history/core/browser/top_sites_database.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-13T21:28:45Z",
+      "side": 1,
+      "message": "Ah, my bad! Done.",
+      "parentUuid": "1715601a_da295e57",
+      "range": {
+        "startLine": 391,
+        "startChar": 2,
+        "endLine": 391,
+        "endChar": 49
+      },
+      "revId": "f45eb0319c3f2c01f7c4b626417adb42073b3f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2af85f3e_0a5e3579",
         "filename": "components/history/core/browser/top_sites_database.cc",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c24a41e9_a0c6b7bf",
+        "filename": "components/history/core/browser/top_sites_database.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-13T21:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2af85f3e_0a5e3579",
+      "range": {
+        "startLine": 667,
+        "startChar": 6,
+        "endLine": 667,
+        "endChar": 13
+      },
+      "revId": "f45eb0319c3f2c01f7c4b626417adb42073b3f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac200d93_22ac6d04",
         "filename": "components/history/core/browser/top_sites_database.cc",
         "patchSetId": 15
@@ -68,6 +116,30 @@
       "revId": "f45eb0319c3f2c01f7c4b626417adb42073b3f07",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c79a666_8033f0b9",
+        "filename": "components/history/core/browser/top_sites_database.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-13T21:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac200d93_22ac6d04",
+      "range": {
+        "startLine": 674,
+        "startChar": 2,
+        "endLine": 674,
+        "endChar": 25
+      },
+      "revId": "f45eb0319c3f2c01f7c4b626417adb42073b3f07",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
