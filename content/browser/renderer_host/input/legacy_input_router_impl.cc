@@ -94,7 +94,7 @@ LegacyInputRouterImpl::LegacyInputRouterImpl(
       wheel_scroll_latching_enabled_(base::FeatureList::IsEnabled(
           features::kTouchpadAndWheelScrollLatching)),
       wheel_event_queue_(this, wheel_scroll_latching_enabled_),
-      gesture_event_queue_(this, this, config.gesture_config),
+      gesture_event_queue_(this, this, this, config.gesture_config),
       device_scale_factor_(1.f),
       raf_aligned_touch_enabled_(
           base::FeatureList::IsEnabled(features::kRafAlignedTouchInputEvents)) {
@@ -238,6 +238,10 @@ void LegacyInputRouterImpl::SetDeviceScaleFactor(float device_scale_factor) {
   device_scale_factor_ = device_scale_factor;
 }
 
+void LegacyInputRouterImpl::ProgressFling(base::TimeTicks time) {
+  gesture_event_queue_.ProgressFling(time);
+}
+
 void LegacyInputRouterImpl::BindHost(
     mojom::WidgetInputHandlerHostRequest request) {
   NOTREACHED();
@@ -306,6 +310,11 @@ void LegacyInputRouterImpl::ForwardGestureEventWithLatencyInfo(
     const blink::WebGestureEvent& event,
     const ui::LatencyInfo& latency_info) {
   client_->ForwardGestureEventWithLatencyInfo(event, latency_info);
+}
+
+void LegacyInputRouterImpl::SendGeneratedWheelEvent(
+    const MouseWheelEventWithLatencyInfo& wheel_event) {
+  SendWheelEvent(wheel_event);
 }
 
 void LegacyInputRouterImpl::SendMouseWheelEventImmediately(

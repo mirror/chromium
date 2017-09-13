@@ -25,6 +25,8 @@
 #ifndef WebGestureCurve_h
 #define WebGestureCurve_h
 
+#include "ui/gfx/geometry/vector2d_f.h"
+
 namespace blink {
 
 class WebGestureCurveTarget;
@@ -39,6 +41,12 @@ class WebGestureCurve {
 
   // Returns false if curve has finished and can no longer be applied.
   virtual bool Apply(double time, WebGestureCurveTarget*) = 0;
+
+  // Returns false if curve has finished and can no longer progress.
+  // This function is used for browser side touchpad fling.
+  virtual bool Progress(double time,
+                        gfx::Vector2dF& out_current_velocity,
+                        gfx::Vector2dF& out_delta_to_scroll) = 0;
 };
 
 }  // namespace blink
