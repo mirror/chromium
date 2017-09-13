@@ -2513,6 +2513,23 @@
       }
     ]
   },
+  "Oreo Phone Tester": {
+    "instrumentation_tests": [
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "android_devices": "1",
+              "device_os": "OPR6.170623.012",
+              "device_type": "marlin"
+            }
+          ]
+        },
+        "test": "chrome_public_test_apk"
+      }
+    ]
+  },
   "Unswarmed N5 Tests Dummy Builder": {
     "gtest_tests": [
       {
