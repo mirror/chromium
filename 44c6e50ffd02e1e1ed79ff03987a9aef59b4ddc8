@@ -211,6 +211,23 @@
       "revId": "44c6e50ffd02e1e1ed79ff03987a9aef59b4ddc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75c65e76_fe29a037",
+        "filename": "ui/webui/resources/js/test_timer_proxy.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-13T16:54:57Z",
+      "side": 1,
+      "message": "Is this class meant to be used only in tests? If so why are we placing it in ui/webui/resources/js?",
+      "revId": "44c6e50ffd02e1e1ed79ff03987a9aef59b4ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
