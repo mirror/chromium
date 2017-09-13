@@ -16,6 +16,24 @@
       "revId": "d25609ef22dcef6121adf3f7d5d5eb1aa9b330d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6205e507_4bcf55a6",
+        "filename": "ui/base/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-13T20:13:10Z",
+      "side": 1,
+      "message": "Probably should be deleted. It was from https://bugs.chromium.org/p/chromium/issues/detail?id\u003d507792",
+      "parentUuid": "7f5b222b_0742a854",
+      "revId": "d25609ef22dcef6121adf3f7d5d5eb1aa9b330d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
