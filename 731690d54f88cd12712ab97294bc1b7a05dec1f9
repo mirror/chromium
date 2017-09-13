@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "13e1e464_ef08640a",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-09-13T20:09:35Z",
+      "side": 1,
+      "message": "We already do similar checks for the legacy format in page_state_serialization_unittest, so I can add this relatively easily.",
+      "parentUuid": "52425a24_eeb3de5c",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 12
+      },
+      "revId": "731690d54f88cd12712ab97294bc1b7a05dec1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2522ff5_c71d5440",
         "filename": "content/common/page_state.mojom",
         "patchSetId": 9
