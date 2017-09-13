@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "08b00d22_d0a8e1e9",
+        "filename": "ash/wm/overview/window_selector_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-13T22:15:48Z",
+      "side": 1,
+      "message": "i feel both are kind of useful. ill levae it up to ux to decide",
+      "parentUuid": "f4f731e7_11be414b",
+      "revId": "b9c5e9f2f16343cd47f9be8139fbe9b34e37eda9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f12cae7c_6c0b267d",
         "filename": "ash/wm/overview/window_selector_controller.cc",
         "patchSetId": 4
@@ -102,6 +120,24 @@
       "side": 1,
       "message": "so you get split screen with just one window in this case?",
       "parentUuid": "1d2317db_66254bc1",
+      "revId": "b9c5e9f2f16343cd47f9be8139fbe9b34e37eda9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbcd0d9_a7fe287d",
+        "filename": "ash/wm/overview/window_selector_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-13T22:15:48Z",
+      "side": 1,
+      "message": "yes, and then theres a ui that says no recent items.",
+      "parentUuid": "3062e6ea_cf053d7d",
       "revId": "b9c5e9f2f16343cd47f9be8139fbe9b34e37eda9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -310,6 +346,24 @@
       "revId": "b9c5e9f2f16343cd47f9be8139fbe9b34e37eda9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9263198d_dfe78eec",
+        "filename": "ash/wm/splitview/split_view_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-13T22:15:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d2b56085_5edb0f64",
+      "revId": "b9c5e9f2f16343cd47f9be8139fbe9b34e37eda9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
