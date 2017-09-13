@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4f7195bf_0359d2c5",
+        "filename": "components/network_session_configurator/browser/network_session_configurator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-13T20:40:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "559eb4fa_1218ff19",
+      "range": {
+        "startLine": 62,
+        "startChar": 53,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "2cded752e3029045b4ea86e92da717779c6b7268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3f726f9_1f33a9f3",
         "filename": "net/http/http_network_session.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "2cded752e3029045b4ea86e92da717779c6b7268",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f88ad9b3_aceedfb5",
+        "filename": "net/http/http_network_session.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-13T20:40:11Z",
+      "side": 1,
+      "message": "Good idea, done (Though used an enum class)",
+      "parentUuid": "c3f726f9_1f33a9f3",
+      "range": {
+        "startLine": 99,
+        "startChar": 38,
+        "endLine": 99,
+        "endChar": 0
+      },
+      "revId": "2cded752e3029045b4ea86e92da717779c6b7268",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
