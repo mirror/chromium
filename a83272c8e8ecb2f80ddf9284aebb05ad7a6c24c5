@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab22a52e_b36117d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/NewTabPageAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-13T22:08:08Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 378,
+        "startChar": 31,
+        "endLine": 378,
+        "endChar": 53
+      },
+      "revId": "a83272c8e8ecb2f80ddf9284aebb05ad7a6c24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "684694d6_63de747c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-13T22:08:08Z",
+      "side": 1,
+      "message": "not a big fan of workarounds just for the sake of tests. Find a way to pass a context?",
+      "range": {
+        "startLine": 86,
+        "startChar": 12,
+        "endLine": 86,
+        "endChar": 19
+      },
+      "revId": "a83272c8e8ecb2f80ddf9284aebb05ad7a6c24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f024cf_b28e42a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-13T22:08:08Z",
+      "side": 1,
+      "message": "is there a way to cancel a pending fetch as well? maybe double check the url in the callback to make sure we don\u0027t do a double update?",
+      "range": {
+        "startLine": 93,
+        "startChar": 29,
+        "endLine": 93,
+        "endChar": 35
+      },
+      "revId": "a83272c8e8ecb2f80ddf9284aebb05ad7a6c24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db59d58a_de20f063",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-13T22:08:08Z",
+      "side": 1,
+      "message": "should be same as `adapter.getFirstPositionForType(CAROUSEL)`, returning -1 when it\u0027s not there or invisible. Might replace some getters?",
+      "range": {
+        "startLine": 50,
+        "startChar": 29,
+        "endLine": 50,
+        "endChar": 63
+      },
+      "revId": "a83272c8e8ecb2f80ddf9284aebb05ad7a6c24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3332c0c1_48f29ea5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-13T22:08:08Z",
+      "side": 1,
+      "message": "use the check in FeatureUtilities? and if modern is not set by default feel free to set it as well. Maybe declare static strings for flag sets?",
+      "range": {
+        "startLine": 79,
+        "startChar": 26,
+        "endLine": 79,
+        "endChar": 84
+      },
+      "revId": "a83272c8e8ecb2f80ddf9284aebb05ad7a6c24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c0403fd_83a39351",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-13T22:08:08Z",
+      "side": 1,
+      "message": "FYI: this is not a safe check in a RecyclerView. if you scroll down and the item gets recycled, the one at position 0 won\u0027t be the carousel. getting the viewholder by adapterposition would let you know if it\u0027s bound or not, and the you can get itemView from it. That being said, it\u0027s a test, you control the condition so this is good enough I\u0027d say.",
+      "range": {
+        "startLine": 106,
+        "startChar": 50,
+        "endLine": 106,
+        "endChar": 60
+      },
+      "revId": "a83272c8e8ecb2f80ddf9284aebb05ad7a6c24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53810c28_fbe3ff63",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-13T22:08:08Z",
+      "side": 1,
+      "message": "when the recycler view is not attached, it\u0027s not a child at all.the visibility should not have anything to do here. setVisibilityInternal(false) removes the item, does not hide it.",
+      "range": {
+        "startLine": 109,
+        "startChar": 15,
+        "endLine": 109,
+        "endChar": 27
+      },
+      "revId": "a83272c8e8ecb2f80ddf9284aebb05ad7a6c24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2997f576_c01a703b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-13T22:08:08Z",
+      "side": 1,
+      "message": "use a EmbeddedTestServerRule? it\u0027s used in at least half of the tests, that\u0027s good enough for me.",
+      "range": {
+        "startLine": 124,
+        "startChar": 59,
+        "endLine": 124,
+        "endChar": 79
+      },
+      "revId": "a83272c8e8ecb2f80ddf9284aebb05ad7a6c24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d992792c_9ae5bba5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-13T22:08:08Z",
+      "side": 1,
+      "message": "can\u0027t be null, it\u0027s final and set in the constructor.",
+      "range": {
+        "startLine": 139,
+        "startChar": 15,
+        "endLine": 139,
+        "endChar": 28
+      },
+      "revId": "a83272c8e8ecb2f80ddf9284aebb05ad7a6c24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e24644c8_4d737845",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-13T22:08:08Z",
+      "side": 1,
+      "message": "adapter.getItemCount returns the value without having the pull the whole list.",
+      "range": {
+        "startLine": 140,
+        "startChar": 15,
+        "endLine": 140,
+        "endChar": 27
+      },
+      "revId": "a83272c8e8ecb2f80ddf9284aebb05ad7a6c24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "114a2588_fd7593ce",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-13T22:08:08Z",
+      "side": 1,
+      "message": "you can find better dummy data than that! See what we have in NtpUiCaptureTestData.",
+      "range": {
+        "startLine": 164,
+        "startChar": 24,
+        "endLine": 164,
+        "endChar": 30
+      },
+      "revId": "a83272c8e8ecb2f80ddf9284aebb05ad7a6c24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb643f10_bce072a9",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-13T22:08:08Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s worth handling that case. You can use a mock or RuntimeEnvironment.application as context in unit tests, if that\u0027s what you needed.",
+      "range": {
+        "startLine": 51,
+        "startChar": 26,
+        "endLine": 51,
+        "endChar": 46
+      },
+      "revId": "a83272c8e8ecb2f80ddf9284aebb05ad7a6c24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "908ade51_2e51b19b",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-13T22:08:08Z",
+      "side": 1,
+      "message": "Implicit. You can just call verify(object).foo(), it\u0027s the same.",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 43
+      },
+      "revId": "a83272c8e8ecb2f80ddf9284aebb05ad7a6c24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e66057b4_12c57f7e",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-13T22:08:08Z",
+      "side": 1,
+      "message": "how about URL_STRING + \"#\" + URL_STRING?\n\nActually I don\u0027t think concatenating the 2 ends up with a valid URL.. maybe just use URL_STRING + \"/foo\" ?",
+      "range": {
+        "startLine": 75,
+        "startChar": 61,
+        "endLine": 75,
+        "endChar": 71
+      },
+      "revId": "a83272c8e8ecb2f80ddf9284aebb05ad7a6c24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f0d483_fa66dc72",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/FakeSuggestionsSource.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-13T22:08:08Z",
+      "side": 1,
+      "message": "move next to createAndSetSuggestions",
+      "range": {
+        "startLine": 58,
+        "startChar": 16,
+        "endLine": 58,
+        "endChar": 49
+      },
+      "revId": "a83272c8e8ecb2f80ddf9284aebb05ad7a6c24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
