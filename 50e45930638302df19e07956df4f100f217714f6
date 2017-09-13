@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3ef5f919_ee4a3c7f",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Part of the dcheck in the beginning of the function",
+      "parentUuid": "178111b7_0e189bc5",
+      "range": {
+        "startLine": 964,
+        "startChar": 20,
+        "endLine": 964,
+        "endChar": 25
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6c1bdfc_d843a685",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "50e45930638302df19e07956df4f100f217714f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a086e86_08273dae",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6c1bdfc_d843a685",
+      "range": {
+        "startLine": 633,
+        "startChar": 56,
+        "endLine": 633,
+        "endChar": 0
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "26bc8517_1aa1155e",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 2913,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b31a0191_2a86e48a",
+      "range": {
+        "startLine": 2913,
+        "startChar": 6,
+        "endLine": 2913,
+        "endChar": 12
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f33bf7a_30dcdd05",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 14
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "226c8d26_2ced452e",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3054,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f33bf7a_30dcdd05",
+      "range": {
+        "startLine": 3054,
+        "startChar": 29,
+        "endLine": 3054,
+        "endChar": 51
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e421ca8_ab5c27f6",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 14
@@ -114,6 +210,30 @@
       "revId": "50e45930638302df19e07956df4f100f217714f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13050567_d50557c0",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 3062,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e421ca8_ab5c27f6",
+      "range": {
+        "startLine": 3062,
+        "startChar": 6,
+        "endLine": 3062,
+        "endChar": 79
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "204d5129_4a909748",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "876f87a6_5a26764f",
+      "range": {
+        "startLine": 189,
+        "startChar": 71,
+        "endLine": 191,
+        "endChar": 56
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ff5489a_0131bac0",
         "filename": "net/http/http_cache_transaction.h",
         "patchSetId": 14
@@ -175,6 +319,30 @@
       "writtenOn": "2017-09-05T16:55:18Z",
       "side": 1,
       "message": "can success be renamed to something more specific?",
+      "range": {
+        "startLine": 426,
+        "startChar": 42,
+        "endLine": 426,
+        "endChar": 49
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04c618fb_e33e32cd",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Renamed success as keep_entry since if it is false, entry will be doomed",
+      "parentUuid": "5ff5489a_0131bac0",
       "range": {
         "startLine": 426,
         "startChar": 42,
@@ -233,6 +401,54 @@
     },
     {
       "key": {
+        "uuid": "628f8061_b0aef5eb",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0bfe411_ff05424d",
+      "range": {
+        "startLine": 427,
+        "startChar": 2,
+        "endLine": 427,
+        "endChar": 63
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8c89df10_98555b0c",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Renamed HeadersPhaseContinueWithoutEntryDoomEntry to HeadersPhaseContinueWithoutEntry since it will only doom entry on failure.\nRenamed success as keep_entry.",
+      "parentUuid": "6c707e2b_6ff2051f",
+      "range": {
+        "startLine": 427,
+        "startChar": 54,
+        "endLine": 427,
+        "endChar": 61
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "89e0cd35_359ab51b",
         "filename": "net/http/http_cache_transaction.h",
         "patchSetId": 14
@@ -253,6 +469,30 @@
       "revId": "50e45930638302df19e07956df4f100f217714f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8489b98e_f1ea0cc4",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89e0cd35_359ab51b",
+      "range": {
+        "startLine": 429,
+        "startChar": 47,
+        "endLine": 429,
+        "endChar": 48
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -279,6 +519,30 @@
     },
     {
       "key": {
+        "uuid": "324f42ee_5401b58b",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Made it return a const pointer and created another network_transaction() function which is not const and does not return a const * as given in the link:\nhttps://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Classes-of-const-in-correctness",
+      "parentUuid": "80112686_a778e809",
+      "range": {
+        "startLine": 473,
+        "startChar": 41,
+        "endLine": 473,
+        "endChar": 46
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de3e4d2c_2abf9096",
         "filename": "net/http/http_cache_transaction.h",
         "patchSetId": 14
@@ -299,6 +563,30 @@
       "revId": "50e45930638302df19e07956df4f100f217714f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b31204c_72fac316",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de3e4d2c_2abf9096",
+      "range": {
+        "startLine": 491,
+        "startChar": 21,
+        "endLine": 491,
+        "endChar": 24
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -342,6 +630,48 @@
     },
     {
       "key": {
+        "uuid": "a135db9e_630dea11",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5420add3_a5a14aa9",
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "354bf72d_eb87588e",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8331b6c_f0cef860",
+      "range": {
+        "startLine": 495,
+        "startChar": 7,
+        "endLine": 495,
+        "endChar": 25
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "628b72d7_98093d91",
         "filename": "net/http/http_cache_transaction_writers_common.h",
         "patchSetId": 14
@@ -353,6 +683,30 @@
       "writtenOn": "2017-09-06T20:11:23Z",
       "side": 1,
       "message": "nit, thought: I think of HttpCache::Writers as being a producer class for services consumed by HttpCache::Transaction.  On that line, I think it would be fine to define these structs (and maybe the functions too) within http_cache_writers.* rather than having a separate set of files. Up to you.",
+      "range": {
+        "startLine": 16,
+        "startChar": 17,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db7fc50_6a3778bd",
+        "filename": "net/http/http_cache_transaction_writers_common.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Wanted to keep these in a separate file for clarity since it has data that may be owned by one class and pointed to by another.",
+      "parentUuid": "628b72d7_98093d91",
       "range": {
         "startLine": 16,
         "startChar": 17,
@@ -388,6 +742,30 @@
     },
     {
       "key": {
+        "uuid": "59eb0f9c_82601a54",
+        "filename": "net/http/http_cache_transaction_writers_common.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a5810d8_dd0a290c",
+      "range": {
+        "startLine": 56,
+        "startChar": 9,
+        "endLine": 56,
+        "endChar": 16
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20999b2b_3854dc40",
         "filename": "net/http/http_cache_transaction_writers_common.h",
         "patchSetId": 14
@@ -411,6 +789,30 @@
     },
     {
       "key": {
+        "uuid": "3d9e286f_c542e264",
+        "filename": "net/http/http_cache_transaction_writers_common.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20999b2b_3854dc40",
+      "range": {
+        "startLine": 62,
+        "startChar": 5,
+        "endLine": 62,
+        "endChar": 29
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cc5f545_35b33b27",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 14
@@ -422,6 +824,30 @@
       "writtenOn": "2017-09-05T16:55:18Z",
       "side": 1,
       "message": "I don\u0027t know that writers cares about this being a partial transaction. Perhaps rename to ResetNetworkTransaction? You can still DCHECK that the size is 1 and that it\u0027s exclusive.",
+      "range": {
+        "startLine": 146,
+        "startChar": 25,
+        "endLine": 146,
+        "endChar": 55
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e3cd4a0_1b5371c9",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "The intent behind putting this in the name was to make sure that this API is only invoked for partial transactions.",
+      "parentUuid": "6cc5f545_35b33b27",
       "range": {
         "startLine": 146,
         "startChar": 25,
@@ -457,6 +883,30 @@
     },
     {
       "key": {
+        "uuid": "a761367a_0b13f863",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "266a3fe2_49a36d3a",
+      "range": {
+        "startLine": 147,
+        "startChar": 17,
+        "endLine": 147,
+        "endChar": 28
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e55fca9_423d7a91",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 14
@@ -480,6 +930,30 @@
     },
     {
       "key": {
+        "uuid": "3904600a_c3be76c1",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e55fca9_423d7a91",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 67
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26a6db3e_004c3347",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 14
@@ -491,6 +965,30 @@
       "writtenOn": "2017-09-05T16:55:18Z",
       "side": 1,
       "message": "What\u0027s the purpose of this function? It just calls RemoveTransactionInternal.",
+      "range": {
+        "startLine": 168,
+        "startChar": 25,
+        "endLine": 168,
+        "endChar": 42
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34611b4d_ea779e76",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "The intent was to clarify that the public API cannot be invoked with a null transaction while the internal API can be. Let me know if I should just add it to a comment.",
+      "parentUuid": "26a6db3e_004c3347",
       "range": {
         "startLine": 168,
         "startChar": 25,
@@ -526,6 +1024,30 @@
     },
     {
       "key": {
+        "uuid": "199c9b36_c2dc67b3",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b69ce3bc_7bae0765",
+      "range": {
+        "startLine": 181,
+        "startChar": 52,
+        "endLine": 181,
+        "endChar": 59
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57bcd95f_1f832515",
         "filename": "net/http/http_cache_writers.cc",
         "patchSetId": 14
@@ -537,6 +1059,30 @@
       "writtenOn": "2017-09-05T16:55:18Z",
       "side": 1,
       "message": "It\u0027s kind of magic that the HC::T\u0027s network transaction info is ready for it when necessary. Instead, what if HC::Writers signaled to HC::T when it\u0027s about to be removed from writers. Then it can perform any necessary cleanup.\n\nSomething like:\n\nvoid HC::Transaction::AboutToRemoveFromWriters(int error_code) {\n  // We\u0027re not currently reading from writers, so remember the error.\n  if (next_state_ \u003d\u003d STATE_NONE || next_state \u003d\u003d STATE_CACHE_READ_DATA_COMPLETE) {\n    shared_writing_error_ \u003d result;\n  }\n\n  SaveNetworkTransactionInfo();\n  entry_ \u003d nullptr;\n}\n\nWDYT?",
+      "range": {
+        "startLine": 184,
+        "startChar": 4,
+        "endLine": 184,
+        "endChar": 30
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476444b3_8e6ae328",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Adding this will make it a cycle:\n~Transaction-\u003eDoneWithEntry-\u003eRemoveTransaction-\u003eTransaction::AboutToRemoveFromWriters\nThis was added mainly to avoid this kind of cyclic function call.",
+      "parentUuid": "57bcd95f_1f832515",
       "range": {
         "startLine": 184,
         "startChar": 4,
@@ -572,6 +1118,30 @@
     },
     {
       "key": {
+        "uuid": "fad25f1e_963534e2",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69986498_6bb59304",
+      "range": {
+        "startLine": 260,
+        "startChar": 40,
+        "endLine": 260,
+        "endChar": 64
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37a929c0_7c23491a",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 14
@@ -583,6 +1153,30 @@
       "writtenOn": "2017-09-06T20:11:23Z",
       "side": 1,
       "message": "Any reason not to just do this in ActiveEntry\u0027s destructor?\n\n(Seems like most of the things in the ~HttpCache while loop could be as naturally done in ActiveEntry\u0027s destructor.)",
+      "range": {
+        "startLine": 88,
+        "startChar": 20,
+        "endLine": 88,
+        "endChar": 31
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8b2855d_fb17007b",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "DeactivateEntry is being invoked in the while loop for each entry in ~HttpCache and some of the Dchecks there require the entry\u0027s fields to be cleared before invoking that.",
+      "parentUuid": "37a929c0_7c23491a",
       "range": {
         "startLine": 88,
         "startChar": 20,
@@ -618,6 +1212,30 @@
     },
     {
       "key": {
+        "uuid": "78848a97_acbd6140",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5f39d26_0296b03f",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 134,
+        "endChar": 64
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdeb0cda_641c9fd7",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 14
@@ -638,6 +1256,30 @@
       "revId": "50e45930638302df19e07956df4f100f217714f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76197d15_c24ad107",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdeb0cda_641c9fd7",
+      "range": {
+        "startLine": 139,
+        "startChar": 16,
+        "endLine": 139,
+        "endChar": 18
+      },
+      "revId": "50e45930638302df19e07956df4f100f217714f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

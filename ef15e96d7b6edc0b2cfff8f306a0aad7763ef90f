@@ -685,6 +685,30 @@
     },
     {
       "key": {
+        "uuid": "8f373107_832e9df7",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-13T18:03:45Z",
+      "side": 1,
+      "message": "You are right. Looking at writers::MayBeSetNetworkReadOnly , I think for failure case, its good to invoke WritersDoneWritingtoEntry so that the entry can be doomed and any queued transactions can be restarted. For successful case, however, the entry will be marked as truncated at the end of this transaction and that truncated entry will then be used by all the queued transactions so invoking WritersDoneWritingtoEntry with success during the call to MayBeSetNetworkReadOnly will do nothing since the entry is still valid and is not accepting any new writers.",
+      "parentUuid": "653172c7_2d0684d3",
+      "range": {
+        "startLine": 363,
+        "startChar": 4,
+        "endLine": 363,
+        "endChar": 22
+      },
+      "revId": "ef15e96d7b6edc0b2cfff8f306a0aad7763ef90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2749518_535389fa",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 11
