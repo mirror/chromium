@@ -1988,7 +1988,7 @@ void RenderThreadImpl::RequestNewLayerTreeFrameSink(
       frame_sink_provider_->CreateForWidget(routing_id, std::move(sink_request),
                                             std::move(client));
       callback.Run(base::MakeUnique<viz::ClientLayerTreeFrameSink>(
-          std::move(vulkan_context_provider),
+          std::move(vulkan_context_provider), shared_bitmap_manager(),
           std::move(synthetic_begin_frame_source), std::move(sink_info),
           std::move(client_request), nullptr /* hit_test_data_provider */,
           base::MakeUnique<RendererLocalSurfaceIdProvider>(),

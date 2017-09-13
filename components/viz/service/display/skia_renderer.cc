@@ -4,6 +4,7 @@
 
 #include "components/viz/service/display/skia_renderer.h"
 
+#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
 #include "cc/base/math_util.h"
@@ -38,6 +39,10 @@
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/skia_util.h"
 #include "ui/gfx/transform.h"
+#if BUILDFLAG(ENABLE_VULKAN)
+#include "content/browser/compositor/vulkan_browser_compositor_output_surface.h"
+#include "third_party/skia/src/gpu/vk/GrVkUtil.h"
+#endif
 
 namespace viz {
 namespace {
@@ -62,14 +67,24 @@ SkiaRenderer::SkiaRenderer(const RendererSettings* settings,
                            cc::OutputSurface* output_surface,
                            cc::DisplayResourceProvider* resource_provider)
     : DirectRenderer(settings, output_surface, resource_provider) {
+#if BUILDFLAG(ENABLE_VULKAN)
+  VulkanInProcessContextProvider* vulkan_in_process_context_provider =
+      static_cast<VulkanInProcessContextProvider*>(
+          output_surface->vulkan_context_provider());
+  gr_context = vulkan_in_process_context_provider->getGrContext();
+#else
   const auto& context_caps =
       output_surface_->context_provider()->ContextCapabilities();
   use_swap_with_bounds_ = context_caps.swap_buffers_with_bounds;
+#endif
 }
 
 SkiaRenderer::~SkiaRenderer() {}
 
 bool SkiaRenderer::CanPartialSwap() {
+#if BUILDFLAG(ENABLE_VULKAN)
+  return false;
+#endif
   if (use_swap_with_bounds_)
     return false;
   auto* context_provider = output_surface_->context_provider();
@@ -87,6 +102,8 @@ ResourceFormat SkiaRenderer::BackbufferFormat() const {
 
 void SkiaRenderer::BeginDrawingFrame() {
   TRACE_EVENT0("cc", "SkiaRenderer::BeginDrawingFrame");
+#if BUILDFLAG(ENABLE_VULKAN)
+#else
   // Copied from GLRenderer.
   bool use_sync_query_ = false;
   scoped_refptr<cc::ResourceProvider::Fence> read_lock_fence;
@@ -109,6 +126,7 @@ void SkiaRenderer::BeginDrawingFrame() {
         resource_provider->WaitSyncToken(resource_id);
     }
   }
+#endif
 }
 
 void SkiaRenderer::FinishDrawingFrame() {
@@ -171,6 +189,43 @@ void SkiaRenderer::BindFramebufferToOutputSurface() {
   DCHECK(!output_surface_->HasExternalStencilTest());
   current_framebuffer_lock_ = nullptr;
 
+#if BUILDFLAG(ENABLE_VULKAN)
+  content::VulkanBrowserCompositorOutputSurface* vulkan_output_surface = NULL;
+  vulkan_output_surface =
+      static_cast<content::VulkanBrowserCompositorOutputSurface*>(
+          output_surface_);
+  gpu::VulkanSurface* vulkan_surface =
+      vulkan_output_surface->GetVulkanSurface();
+  gpu::VulkanSwapChain* swap_chain;
+  VkImage image = VK_NULL_HANDLE;
+  swap_chain = vulkan_surface->GetSwapChain();
+  image = swap_chain->GetCurrentImage(swap_chain->current_image());
+
+  GrVkImageInfo info_;
+  info_.fImage = image;
+  info_.fAlloc = {VK_NULL_HANDLE, 0, 0, 0};
+  info_.fImageLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+  info_.fImageTiling = VK_IMAGE_TILING_OPTIMAL;
+  info_.fFormat = VK_FORMAT_B8G8R8A8_UNORM;
+  info_.fLevelCount = 1;
+
+  GrPixelConfig pixelConfig;
+  pixelConfig = GrVkFormatToPixelConfig(info_.fFormat);
+  GrBackendRenderTarget render_target(
+      current_frame()->device_viewport_size.width(),
+      current_frame()->device_viewport_size.height(), 0, 0, info_);
+
+  // LegacyFontHost will get LCD text and skia figures out what type to use.
+  SkSurfaceProps surface_props =
+      SkSurfaceProps(0, SkSurfaceProps::kLegacyFontHost_InitType);
+
+  root_surface_ = SkSurface::MakeFromBackendRenderTarget(
+      gr_context, render_target, kTopLeft_GrSurfaceOrigin, nullptr,
+      &surface_props);
+  root_canvas_ = root_surface_->getCanvas();
+
+  current_canvas_ = root_canvas_;
+#else
   // TODO(weiliangc): Set up correct can_use_lcd_text and
   // use_distance_field_text for SkSurfaceProps flags. How to setup is in
   // ResourceProvider. (crbug.com/644851)
@@ -212,10 +267,14 @@ void SkiaRenderer::BindFramebufferToOutputSurface() {
   } else {
     current_canvas_ = root_canvas_;
   }
+#endif
 }
 
 bool SkiaRenderer::BindFramebufferToTexture(const cc::ScopedResource* texture) {
   DCHECK(texture->id());
+#if BUILDFLAG(ENABLE_VULKAN)
+  return false;
+#endif
 
   // Explicitly release lock, otherwise we can crash when try to lock
   // same texture again.
@@ -559,6 +618,9 @@ void SkiaRenderer::DrawTileQuad(const cc::TileDrawQuad* quad) {
 }
 
 void SkiaRenderer::DrawRenderPassQuad(const cc::RenderPassDrawQuad* quad) {
+#if BUILDFLAG(ENABLE_VULKAN)
+  return;
+#endif
   cc::ScopedResource* content_texture =
       render_pass_textures_[quad->render_pass_id].get();
   DCHECK(content_texture);

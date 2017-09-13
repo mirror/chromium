@@ -442,8 +442,9 @@ cc_component("cc") {
 
   if (enable_vulkan) {
     sources += [
-      "output/vulkan_renderer.cc",
-      "output/vulkan_renderer.h",
+      # Enabling Vulkan backend in SkiaRenderer.cc
+      #"output/vulkan_renderer.cc",
+      #"output/vulkan_renderer.h",
     ]
 
     deps += [ "//gpu/vulkan" ]
