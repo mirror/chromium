@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2062c565_9e4049a6",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-13T21:57:01Z",
+      "side": 1,
+      "message": "We should rename instrumentation into something meaningful...",
+      "revId": "91a49ccfda241369897a15e1aba58736b560e846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d51cd2_b0fc53a9",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-13T21:57:01Z",
+      "side": 1,
+      "message": "Do you know how this is used? It is unclear whether idle signal should be stateful (true or false as it is now) or it should be a timeline of lifecycle events. Latter would make sense to me and in that case you would no need to set it to false here, you just emit it when it happens and coordinator can hold the state if it needs to.",
+      "revId": "91a49ccfda241369897a15e1aba58736b560e846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
