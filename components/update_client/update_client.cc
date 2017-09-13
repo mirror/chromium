@@ -45,10 +45,20 @@ CrxUpdateItem::~CrxUpdateItem() {
 
 CrxUpdateItem::CrxUpdateItem(const CrxUpdateItem& other) = default;
 
+DisabledReasons::DisabledReasons() : DisabledReasons(0, 0) {}
+
+DisabledReasons::DisabledReasons(int last, int rs)
+    : last_reason(last), reasons(rs) {}
+
+DisabledReasons::DisabledReasons(const DisabledReasons& other) = default;
+
+DisabledReasons::~DisabledReasons() {}
+
 CrxComponent::CrxComponent()
     : allows_background_download(true),
       requires_network_encryption(true),
-      supports_group_policy_enable_component_updates(false) {}
+      supports_group_policy_enable_component_updates(false),
+      disabled_reasons() {}
 
 CrxComponent::CrxComponent(const CrxComponent& other) = default;
 

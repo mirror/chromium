@@ -211,6 +211,17 @@ class CrxInstaller : public base::RefCountedThreadSafe<CrxInstaller> {
 // may be used in the update checks requests.
 using InstallerAttributes = std::map<std::string, std::string>;
 
+struct DisabledReasons {
+  DisabledReasons();
+  DisabledReasons(int last, int reasons);
+  DisabledReasons(const DisabledReasons& other);
+  ~DisabledReasons();
+
+  // When reasons == 0 => Component/extension is enabled.
+  int last_reason;
+  int reasons;
+};
+
 // TODO(sorin): this structure will be refactored soon.
 struct CrxComponent {
   CrxComponent();
@@ -250,6 +261,9 @@ struct CrxComponent {
   // as CRLSet, Supervised User Whitelists, STH Set, Origin Trials, and File
   // Type Policies.
   bool supports_group_policy_enable_component_updates;
+
+  // The reasons why this component/extension is disabled.
+  DisabledReasons disabled_reasons;
 };
 
 // All methods are safe to call only from the browser's main thread. Once an
