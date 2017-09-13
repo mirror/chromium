@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9971ef5_a59b5357",
+        "filename": "ash/public/cpp/shell_window_ids.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T16:04:49Z",
+      "side": 1,
+      "message": "nit: \"which are displayed regardless of the screen lock state\" (ie. shown when locked and unlocked, right?)",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "800d24e1_e9370902",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T16:04:49Z",
+      "side": 1,
+      "message": "It\u0027s a bit odd to land these buttons devoid of content. You can use IDS_SHUTDOWN_BUTTON/IDS_RESTART_BUTTON/IDS_CANCEL/etc. (at least as placeholders) without moving anything. It would be good to move IDS_SCREEN_LOCK_UNLOCK_USER_BUTTON and IDS_SCREEN_LOCK_SIGN_OUT from chrome to ash. (you could also rename IDS_ASH_STATUS_TRAY_SIGN_OUT to IDS_SIGN_OUT or similar, and then we could remove Chrome\u0027s IDS_SCREEN_LOCK_SIGN_OUT, instead of moving it to ash as a duplicated string resource). Consolidating string copies is good.",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b06e9cf_a9504862",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T16:04:49Z",
+      "side": 1,
+      "message": "How common will it be for the policy to change while the screen is locked? Would it be so bad to show the wrong button label in that case? (ie. is it worth adding a new observer to make sure this button has the correct label in those cases?). It\u0027s okay as-is, but maybe checking the initial state is simpler and sufficient.",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3c6a6fc_4cb09501",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T16:04:49Z",
+      "side": 1,
+      "message": "nit: maybe DCHECK that this view isn\u0027t visible?",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92fc8b57_4ee07c75",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T16:04:49Z",
+      "side": 1,
+      "message": "nit: not needed with tray_action_observer.h include",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28815443_a23fef67",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T16:04:49Z",
+      "side": 1,
+      "message": "nit: protected? (or move all subclass overrides to private?)",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2078b2ff_04208089",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T16:04:49Z",
+      "side": 1,
+      "message": "The return value is no longer used, remove it and the LabelButton fwd decl.",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74a25ed2_90e545e8",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T16:04:49Z",
+      "side": 1,
+      "message": "optional nit: move this member to a function local in the one test fixture that uses it.",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b8164d_a8b56128",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T16:04:49Z",
+      "side": 1,
+      "message": "Can you use EventGenerator instead?",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7783d3_84e03071",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T16:04:49Z",
+      "side": 1,
+      "message": "nit: trailing underscore for class members",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eebccc69_254d537b",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T16:04:49Z",
+      "side": 1,
+      "message": "Please have this test (or a new fixture) also check that login_shelf_view_ is not visible during the ACTIVE and UNKNOWN states. You might also/instead update ShowsShelfButtons to match an empty id list when login_shelf_view_ is not visible; that would allow you to keep your old checks: \n  NotifySessionStateChanged(session_manager::SessionState::ACTIVE);\n  EXPECT_TRUE(ShowsShelfButtons({}));\n\n  NotifySessionStateChanged(session_manager::SessionState::UNKNOWN);\n  EXPECT_TRUE(ShowsShelfButtons({}));",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f45d75_9feb51e7",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T16:04:49Z",
+      "side": 1,
+      "message": "nit: call NotifySessionStateChanged(session_manager::SessionState::OOBE); here for good measure (to more clearly show that this state is handled), or check that the current session state matches OOBE.",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "006cd20f_de8085ee",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T16:04:49Z",
+      "side": 1,
+      "message": "nit: policy",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6070eea5_5f6689b4",
+        "filename": "ash/shutdown_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T16:04:49Z",
+      "side": 1,
+      "message": "optional: I\u0027m thinking it\u0027d be okay to just make SetRebootOnShutdown public.",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

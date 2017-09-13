@@ -879,6 +879,24 @@
     },
     {
       "key": {
+        "uuid": "1265d5e3_d803d91c",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T16:04:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7d1cf7bb_072d19c1",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed3ed40a_afb97561",
         "filename": "ash/shelf/shelf_widget.h",
         "patchSetId": 12
@@ -978,6 +996,24 @@
       "side": 1,
       "message": "I adjusted the order of session state changes to make it more resemble a production usage.. Not sure if it\u0027s better.",
       "parentUuid": "34ef8c8a_4143096b",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceda8ad9_c7c6f928",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-13T16:04:49Z",
+      "side": 1,
+      "message": "I like the new test pattern a lot, it\u0027s clear, it follows a reasonable sequence of actions, and explains each step with a good comment, thanks!",
+      "parentUuid": "a9c3341e_e7a68cfd",
       "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
