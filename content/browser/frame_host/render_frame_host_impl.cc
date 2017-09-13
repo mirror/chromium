@@ -1320,6 +1320,8 @@ void RenderFrameHostImpl::OnCreateChildFrame(
 
 void RenderFrameHostImpl::SetLastCommittedOrigin(const url::Origin& origin) {
   last_committed_origin_ = origin;
+  ChildProcessSecurityPolicyImpl::GetInstance()->MarkAsContainingOrigin(
+      GetProcess()->GetID(), origin);
   CSPContext::SetSelf(origin);
 }
 
