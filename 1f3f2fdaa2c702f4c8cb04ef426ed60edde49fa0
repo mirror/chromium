@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bb01b7d_c860b85d",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-13T20:41:24Z",
+      "side": 1,
+      "message": "nit: if (it \u003d\u003d end()) ?",
+      "revId": "1f3f2fdaa2c702f4c8cb04ef426ed60edde49fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44bb9778_3bae7493",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-13T20:41:24Z",
+      "side": 1,
+      "message": "does this actually work? It is the LocalStorageCachedArea destructor that calls this method, but with cached_areas_ now holding scoped_refptrs to the areas the area will never be destroyed, and thus this code will never be called.",
+      "revId": "1f3f2fdaa2c702f4c8cb04ef426ed60edde49fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7797ff_b5c48502",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-13T20:41:24Z",
+      "side": 1,
+      "message": "nit: maybe have just a forward declaration here in the .h file, with the full definition in the .cc file?",
+      "revId": "1f3f2fdaa2c702f4c8cb04ef426ed60edde49fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42792bc4_3bc9d4af",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-13T20:41:24Z",
+      "side": 1,
+      "message": "do you actually need an open_count? Or could you just use area.HasOneRef() (after somehow fixing that CacheAreaClosed isn\u0027t actually ever called anymore)",
+      "revId": "1f3f2fdaa2c702f4c8cb04ef426ed60edde49fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc986403_43ca63cc",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-13T20:41:24Z",
+      "side": 1,
+      "message": "not sure why you need an open_count parameter here, as it\u0027s always initialized to 1 anyway.",
+      "range": {
+        "startLine": 43,
+        "startChar": 49,
+        "endLine": 43,
+        "endChar": 59
+      },
+      "revId": "1f3f2fdaa2c702f4c8cb04ef426ed60edde49fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd40e5db_e9c40eec",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-13T20:41:24Z",
+      "side": 1,
+      "message": "nit: this should probably just pass area (by value) as a scoped_refptr. When a smart pointer is passed to something that then ends up owning it using a raw pointer is almost always the wrong thing to do.",
+      "revId": "1f3f2fdaa2c702f4c8cb04ef426ed60edde49fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba07d147_75798d84",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-13T20:41:24Z",
+      "side": 1,
+      "message": "this comment is no longer true, right? Could you update comments to explain the new ownership structure?",
+      "range": {
+        "startLine": 52,
+        "startChar": 63,
+        "endLine": 53,
+        "endChar": 12
+      },
+      "revId": "1f3f2fdaa2c702f4c8cb04ef426ed60edde49fa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
