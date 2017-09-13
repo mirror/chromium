@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6e50b10_c620d1c9",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-13T19:28:32Z",
+      "side": 1,
+      "message": "nit: don\u0027t wrap in ()s",
+      "revId": "469f10d7fab8333da22abaa5f15c53fecb03c2dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0377a19a_d9abb9d7",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-13T19:28:32Z",
+      "side": 1,
+      "message": "nit: Not sure it\u0027s useful to have this as a separate class when there\u0027s already a Csv-specific class for describers. I don\u0027t really feel to strongly about this, but I think it might be a bit more easy to follow if you inlined CsvRenderer() into DescriberCsv()",
+      "revId": "469f10d7fab8333da22abaa5f15c53fecb03c2dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1349d42d_5b0bce36",
+        "filename": "tools/binary_size/libsupersize/describe.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-13T19:28:32Z",
+      "side": 1,
+      "message": "nit: relevant_section_names \u003d _GetSectionSizeInfo(section_sizes)[1]",
+      "revId": "469f10d7fab8333da22abaa5f15c53fecb03c2dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
