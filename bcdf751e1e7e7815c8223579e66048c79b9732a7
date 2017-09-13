@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1c3c9cc_52b5b170",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-13T07:50:07Z",
+      "side": 1,
+      "message": "I would prefer not to rely on the metrics service to provide this time value, as it feels rather like exposing an implementation detail.  Could this provider simply record the last time that ProvideExtensionInstallsMetric was called, and compute based on that?",
+      "range": {
+        "startLine": 409,
+        "startChar": 0,
+        "endLine": 411,
+        "endChar": 34
+      },
+      "revId": "bcdf751e1e7e7815c8223579e66048c79b9732a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d6cb731_86ffe7fd",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-13T07:50:07Z",
+      "side": 1,
+      "message": "nit: Could you use protected members rather than friend classes for testing?",
+      "range": {
+        "startLine": 63,
+        "startChar": 52,
+        "endLine": 63,
+        "endChar": 0
+      },
+      "revId": "bcdf751e1e7e7815c8223579e66048c79b9732a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a71e4b6_d20cadcf",
+        "filename": "chrome/browser/metrics/extensions_metrics_provider.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-13T07:50:07Z",
+      "side": 1,
+      "message": "nit: This provides multiple metrics, so I would name it \"...InstallMetrics\" or \"...InstallsData\" or something like that.",
+      "range": {
+        "startLine": 79,
+        "startChar": 7,
+        "endLine": 79,
+        "endChar": 37
+      },
+      "revId": "bcdf751e1e7e7815c8223579e66048c79b9732a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "175b4f30_1c02623c",
+        "filename": "components/metrics/metrics_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-13T07:50:07Z",
+      "side": 1,
+      "message": "As I mentioned elsewhere, I\u0027d prefer not to expose this information to consumers of this class.",
+      "range": {
+        "startLine": 152,
+        "startChar": 73,
+        "endLine": 152,
+        "endChar": 0
+      },
+      "revId": "bcdf751e1e7e7815c8223579e66048c79b9732a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
