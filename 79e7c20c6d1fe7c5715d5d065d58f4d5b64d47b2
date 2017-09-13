@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f4849fb_a0adf146",
+        "filename": "testing/libfuzzer/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-09-13T01:10:02Z",
+      "side": 1,
+      "message": "Thanks for removing space on line#32, could you remove this one as well?",
+      "range": {
+        "startLine": 23,
+        "startChar": 71,
+        "endLine": 23,
+        "endChar": 72
+      },
+      "revId": "79e7c20c6d1fe7c5715d5d065d58f4d5b64d47b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f24b65f_6c933f97",
+        "filename": "testing/libfuzzer/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-09-13T01:10:02Z",
+      "side": 1,
+      "message": "I think it\u0027s worth to move this up right under \"Efficient Fuzzer Guide\".\n\nMaybe we can shorten the name, e.g. \"libprotobuf-mutator Guide\", but up to you.",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 49
+      },
+      "revId": "79e7c20c6d1fe7c5715d5d065d58f4d5b64d47b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d76b915e_89c0d5d4",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-09-13T01:10:02Z",
+      "side": 1,
+      "message": "nit: extra space",
+      "range": {
+        "startLine": 22,
+        "startChar": 23,
+        "endLine": 22,
+        "endChar": 24
+      },
+      "revId": "79e7c20c6d1fe7c5715d5d065d58f4d5b64d47b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deea2206_9483804c",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-09-13T01:10:02Z",
+      "side": 1,
+      "message": "We tend to name it \"Fuzz Target\", would you mind to say so?",
+      "range": {
+        "startLine": 62,
+        "startChar": 14,
+        "endLine": 62,
+        "endChar": 29
+      },
+      "revId": "79e7c20c6d1fe7c5715d5d065d58f4d5b64d47b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef164c88_f4ce2414",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-09-13T01:10:02Z",
+      "side": 1,
+      "message": "Is it a necessary part of the code?",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 26
+      },
+      "revId": "79e7c20c6d1fe7c5715d5d065d58f4d5b64d47b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "825a64dd_4cb1aafa",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-09-13T01:10:02Z",
+      "side": 1,
+      "message": "Let\u0027s remove these words, I\u0027m afraid that it may confuse readers and they would expect that something needs to be done in order to \"add it to clusterfuzz\".",
+      "range": {
+        "startLine": 113,
+        "startChar": 8,
+        "endLine": 113,
+        "endChar": 32
+      },
+      "revId": "79e7c20c6d1fe7c5715d5d065d58f4d5b64d47b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
