@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8977c68c_8718bc70",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2497,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-13T13:58:17Z",
+      "side": 1,
+      "message": "Per the comment at the top of this array, new entries should go at the end.",
+      "range": {
+        "startLine": 2497,
+        "startChar": 68,
+        "endLine": 2497,
+        "endChar": 0
+      },
+      "revId": "6351959b036907daa4099bf2ed025e44821ebd28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07944ebf_7dbe48bd",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-13T13:58:17Z",
+      "side": 1,
+      "message": "nit: I think we generally prefer std::string() over \"\". Or maybe make an overload of Log() that doesn\u0027t take an extra message?",
+      "range": {
+        "startLine": 84,
+        "startChar": 48,
+        "endLine": 84,
+        "endChar": 0
+      },
+      "revId": "6351959b036907daa4099bf2ed025e44821ebd28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "228de848_69f63cc2",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-13T13:58:17Z",
+      "side": 1,
+      "message": "But failing nicely is not the point of a DCHECK. The point is that it *never happens*, so it doesn\u0027t matter if the failure is nice or not. It\u0027s essentially a comment for the reader of the code, with the extra bonus that it\u0027s actually verified.",
+      "parentUuid": "1b1e13df_2d4f93d9",
+      "range": {
+        "startLine": 83,
+        "startChar": 24,
+        "endLine": 83,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "36e69d4e_0e82ba3b",
         "filename": "components/ntp_snippets/logger.cc",
         "patchSetId": 3
@@ -187,6 +211,30 @@
       "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00bba0ce_3cdb78be",
+        "filename": "components/ntp_snippets/logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-13T13:58:17Z",
+      "side": 1,
+      "message": "Fair enough.\nMostly what I don\u0027t like is having to initialize the struct members manually. That way, when a new one is added, it\u0027s easy to forget to initialize it properly.",
+      "parentUuid": "1abab785_a8a9fb0b",
+      "range": {
+        "startLine": 32,
+        "startChar": 32,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
