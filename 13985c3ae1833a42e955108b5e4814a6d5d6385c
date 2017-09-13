@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c6c251e3_384bc026",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-13T15:15:24Z",
+      "side": 1,
+      "message": "Oops leftover from a previous idea",
+      "parentUuid": "8b270562_8a831ed3",
+      "range": {
+        "startLine": 35,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 42
+      },
+      "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a24df037_4fd1c644",
         "filename": "base/test/scoped_task_environment.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a59fefa_7a4f046c",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-13T15:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a24df037_4fd1c644",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ca0360ee_f53062e0",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-13T15:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18747f69_d2fe7174",
+      "range": {
+        "startLine": 142,
+        "startChar": 4,
+        "endLine": 142,
+        "endChar": 10
+      },
+      "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf2aa333_53b55749",
         "filename": "base/test/scoped_task_environment.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "39e005f1_52577d32",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-13T15:15:24Z",
+      "side": 1,
+      "message": "Interesting, content::RunAllBlockingPoolTasksUntilIdle() has this issue as well FWIW. I think we will need a solution for both and as such I\u0027m not convinced it\u0027s needed in this CL (I\u0027m thinking of a parameter an optional AtomicFlag passed to TaskScheduler::FlushForTesting() which would tell it to return early and which would be set when something is posted to the main loop -- which can be done by having an overriding forwarding MessageLoop::SetTaskRunner()).",
+      "parentUuid": "cf2aa333_53b55749",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 159,
+        "endChar": 52
+      },
+      "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a758ed8f_a5ae3f74",
         "filename": "base/test/scoped_task_environment.cc",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa735276_4cedda0c",
+        "filename": "base/test/scoped_task_environment.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-13T15:15:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a758ed8f_a5ae3f74",
+      "range": {
+        "startLine": 161,
+        "startChar": 17,
+        "endLine": 161,
+        "endChar": 38
+      },
+      "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -305,6 +425,30 @@
       "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b5106bc_f575be8d",
+        "filename": "base/test/scoped_task_environment.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-13T15:15:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "91a08202_c78416de",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 68,
+        "endChar": 14
+      },
+      "revId": "13985c3ae1833a42e955108b5e4814a6d5d6385c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
