@@ -38,6 +38,10 @@
 #include "services/service_manager/public/cpp/connect.h"
 #endif
 
+#if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_UTILITY_PROCESS)
+#include "media/mojo/services/media_service_factory.h"  // nogncheck
+#endif
+
 namespace {
 
 std::unique_ptr<service_manager::Service> CreateVideoCaptureService() {
@@ -205,6 +209,13 @@ void UtilityServiceFactory::RegisterServices(ServiceMap* services) {
   service_manager::EmbeddedServiceInfo info;
   info.factory = base::Bind(&CreateCdmService);
   services->insert(std::make_pair(media::mojom::kCdmServiceName, info));
+#endif
+
+#if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_UTILITY_PROCESS)
+  service_manager::EmbeddedServiceInfo info_utility;
+  info_utility.factory = base::Bind(&media::CreateUtilityMediaService);
+  services->insert(
+      std::make_pair(media::mojom::kMediaServiceName, info_utility));
 #endif
 
   service_manager::EmbeddedServiceInfo shape_detection_info;
