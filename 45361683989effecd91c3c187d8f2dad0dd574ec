@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa01f1ae_133020b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-13T00:16:29Z",
+      "side": 1,
+      "message": "nit: Treat.",
+      "revId": "45361683989effecd91c3c187d8f2dad0dd574ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a57f8a6f_8573c70d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-13T00:16:29Z",
+      "side": 1,
+      "message": "treat?",
+      "revId": "45361683989effecd91c3c187d8f2dad0dd574ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b445671_39a514d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-13T00:16:29Z",
+      "side": 1,
+      "message": "b/62822485",
+      "revId": "45361683989effecd91c3c187d8f2dad0dd574ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1dced84_d07b2f10",
+        "filename": "ui/ozone/platform/drm/common/drm_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-13T00:16:29Z",
+      "side": 1,
+      "message": "Is it possible this could be abused to skip content protection checks we do on external displays?",
+      "revId": "45361683989effecd91c3c187d8f2dad0dd574ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
