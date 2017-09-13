@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<title>Origin Flags API: Shared Mode</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+promise_test(async t => {
+  const granted = [];
+  let n = 0;
+  function grant(n) { return () => { granted.push(n); }; }
+
+  await Promise.all([
+    requestFlag('a', 'shared').then(grant(++n)),
+    requestFlag('b', 'shared').then(grant(++n)),
+    requestFlag('c', 'shared').then(grant(++n)),
+    requestFlag('a', 'shared').then(grant(++n)),
+    requestFlag('b', 'shared').then(grant(++n)),
+    requestFlag('c', 'shared').then(grant(++n)),
+  ]);
+
+  assert_array_equals(granted, [1, 2, 3, 4, 5, 6]);
+}, 'Flag requests are granted in order');
+
+</script>
