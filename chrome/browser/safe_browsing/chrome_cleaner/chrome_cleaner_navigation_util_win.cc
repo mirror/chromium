@@ -29,18 +29,22 @@ Browser* FindBrowser() {
   return nullptr;
 }
 
+bool SettingsPageIsCurrentActiveTab(Browser* browser) {
+  DCHECK(browser);
+  content::WebContents* web_contents =
+      browser->tab_strip_model()->GetActiveWebContents();
+  return web_contents &&
+         web_contents->GetLastCommittedURL() == chrome::kChromeUISettingsURL;
+}
+
 void OpenSettingsPage(Browser* browser,
                       WindowOpenDisposition disposition,
                       bool skip_if_current_tab) {
   DCHECK(browser);
 
   // Skip opening the settings page if it's already the currently active tab.
-  content::WebContents* web_contents =
-      browser->tab_strip_model()->GetActiveWebContents();
-  if (skip_if_current_tab && web_contents &&
-      web_contents->GetLastCommittedURL() == chrome::kChromeUISettingsURL) {
+  if (skip_if_current_tab && SettingsPageIsCurrentActiveTab(browser))
     return;
-  }
 
   browser->OpenURL(content::OpenURLParams(
       GURL(chrome::kChromeUISettingsURL), content::Referrer(), disposition,

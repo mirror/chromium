@@ -534,10 +534,11 @@ void RegisterComponentsForUpdate() {
   }
 
 #if defined(OS_WIN)
-#if defined(GOOGLE_CHROME_BUILD)
+  // DO NOT SUBMIT: this is to force the sw reporter component.
+  // #if defined(GOOGLE_CHROME_BUILD)
   RegisterSwReporterComponent(cus);
   RegisterThirdPartyModuleListComponent(cus);
-#endif  // defined(GOOGLE_CHROME_BUILD)
+// #endif  // defined(GOOGLE_CHROME_BUILD)
 #endif  // defined(OS_WIN)
 }
 
