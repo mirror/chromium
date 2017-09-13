@@ -296,6 +296,20 @@ bool CompositedLayerMapping::UsesCompositedStickyPosition() const {
                     ->NeedsCompositedScrolling());
 }
 
+FloatSize CompositedLayerMapping::OffsetForStickyPosition() const {
+  if (!UsesCompositedStickyPosition())
+    return FloatSize();
+
+  const StickyConstraintsMap& constraints_map =
+      owning_layer_.AncestorOverflowLayer()
+          ->GetScrollableArea()
+          ->GetStickyConstraintsMap();
+  const StickyPositionScrollingConstraints& constraints =
+      constraints_map.at(&owning_layer_);
+
+  return constraints.GetOffsetForStickyPosition(constraints_map);
+}
+
 void CompositedLayerMapping::UpdateStickyConstraints(
     const ComputedStyle& style) {
   WebLayerStickyPositionConstraint web_constraint;
@@ -1189,25 +1203,12 @@ void CompositedLayerMapping::UpdateMainGraphicsLayerGeometry(
     const IntRect& relative_compositing_bounds,
     const IntRect& local_compositing_bounds,
     const IntPoint& graphics_layer_parent_location) {
-  // Find and remove the offset applied for sticky position if the compositor
-  // will shift the layer for sticky position to avoid offsetting the layer
-  // twice.
-  FloatSize offset_for_sticky_position;
-  if (UsesCompositedStickyPosition()) {
-    const StickyConstraintsMap& constraints_map =
-        owning_layer_.AncestorOverflowLayer()
-            ->GetScrollableArea()
-            ->GetStickyConstraintsMap();
-    const StickyPositionScrollingConstraints& constraints =
-        constraints_map.at(&owning_layer_);
-
-    offset_for_sticky_position =
-        constraints.GetOffsetForStickyPosition(constraints_map);
-  }
+  // We have to remove the offset Blink applied for sticky position, because the
+  // compositor will also compute sticky positions and shift the layer for them.
   graphics_layer_->SetPosition(
       FloatPoint(relative_compositing_bounds.Location() -
                  graphics_layer_parent_location) -
-      offset_for_sticky_position);
+      OffsetForStickyPosition());
   graphics_layer_->SetOffsetFromLayoutObject(
       ToIntSize(local_compositing_bounds.Location()));
 
@@ -1468,8 +1469,11 @@ void CompositedLayerMapping::UpdateChildTransformLayerGeometry() {
   const IntRect border_box =
       ToLayoutBox(owning_layer_.GetLayoutObject()).PixelSnappedBorderBoxRect();
   child_transform_layer_->SetSize(FloatSize(border_box.Size()));
+  // The child transform layer should not be affected by the offset applied for
+  // sticky, or the sticky will be double-offset (http://crbug.com/762962).
   child_transform_layer_->SetPosition(
-      FloatPoint(ContentOffsetInCompositingLayer()));
+      FloatPoint(ContentOffsetInCompositingLayer()) -
+      OffsetForStickyPosition());
 }
 
 void CompositedLayerMapping::UpdateMaskLayerGeometry() {
