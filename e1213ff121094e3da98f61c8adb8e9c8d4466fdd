@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ec9f87c7_adae6165",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 12
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "I see. Moving the strings will be addressed to a separate CL.",
+      "parentUuid": "8ecd1ef8_d07e168d",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8c63ade_db8f9a61",
         "filename": "ash/root_window_controller.cc",
         "patchSetId": 12
@@ -69,6 +87,24 @@
       "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a722914_707a21ad",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8c63ade_db8f9a61",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -89,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "09f52461_fd58754c",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28515712_97a56d6b",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a8f338e_02cd6230",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 12
@@ -106,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "bd758e94_15128abb",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a8f338e_02cd6230",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c0c943e_ac78a5f4",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 12
@@ -117,6 +189,24 @@
       "writtenOn": "2017-09-12T18:24:51Z",
       "side": 1,
       "message": "Are you sure that the LoginShelfView itself should be focusable? (ShelfView doesn\u0027t do that...) It seems like just the buttons it contains should be focusable.",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3385f9d_6e3935ed",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "It shouldn\u0027t be focusable. Thanks.",
+      "parentUuid": "4c0c943e_ac78a5f4",
       "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -176,6 +266,24 @@
     },
     {
       "key": {
+        "uuid": "4e8992ba_802d4378",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44e41757_3d44b2a6",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac705638_dc1f4a07",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 12
@@ -190,6 +298,24 @@
       "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19137d64_ee3b95a5",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac705638_dc1f4a07",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +336,24 @@
     },
     {
       "key": {
+        "uuid": "d6fd60a5_5497a646",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd6d7b03_b1a2fc77",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4c0549d_0d25de35",
         "filename": "ash/shelf/login_shelf_view.h",
         "patchSetId": 12
@@ -224,6 +368,24 @@
       "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53e7cfd8_0e781358",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4c0549d_0d25de35",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -244,6 +406,24 @@
     },
     {
       "key": {
+        "uuid": "5366b42a_85c270c3",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "575d53f7_91581c38",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0572568c_3989a16b",
         "filename": "ash/shelf/login_shelf_view.h",
         "patchSetId": 12
@@ -258,6 +438,24 @@
       "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc4db9e_9324aa94",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0572568c_3989a16b",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +476,24 @@
     },
     {
       "key": {
+        "uuid": "1296ee02_466973b5",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2946de9b_c4706391",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "086bab0d_fdf510e3",
         "filename": "ash/shelf/login_shelf_view.h",
         "patchSetId": 12
@@ -292,6 +508,24 @@
       "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "362e4a6f_c2f7eb73",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "086bab0d_fdf510e3",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -312,6 +546,24 @@
     },
     {
       "key": {
+        "uuid": "00b806ea_63cc09ce",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "838a4f56_24a251c6",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c70836af_c2188f82",
         "filename": "ash/shelf/login_shelf_view.h",
         "patchSetId": 12
@@ -326,6 +578,24 @@
       "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d84d6aac_af9ae76e",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c70836af_c2188f82",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -346,6 +616,24 @@
     },
     {
       "key": {
+        "uuid": "f5204a2c_4a158c9b",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5900bdf6_c28c5867",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae7d0c94_704686c2",
         "filename": "ash/shelf/shelf.cc",
         "patchSetId": 12
@@ -360,6 +648,24 @@
       "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c73252_296a59ce",
+        "filename": "ash/shelf/shelf.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ae7d0c94_704686c2",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -380,6 +686,24 @@
     },
     {
       "key": {
+        "uuid": "6c1b0634_50f1570f",
+        "filename": "ash/shelf/shelf.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32854c51_cb604e15",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea5a738c_d6da604e",
         "filename": "ash/shelf/shelf.h",
         "patchSetId": 12
@@ -394,6 +718,24 @@
       "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b650bfe_77cb4d04",
+        "filename": "ash/shelf/shelf.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea5a738c_d6da604e",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -414,6 +756,24 @@
     },
     {
       "key": {
+        "uuid": "e287a93e_319ea956",
+        "filename": "ash/shelf/shelf.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "daf768e5_6d8e0a59",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab711e29_72777fcd",
         "filename": "ash/shelf/shelf_widget.cc",
         "patchSetId": 12
@@ -428,6 +788,24 @@
       "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33021445_06146c90",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab711e29_72777fcd",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -448,6 +826,24 @@
     },
     {
       "key": {
+        "uuid": "8a97940a_51436b04",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dc51ccf_654fafc0",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b1d4e5e_e229894b",
         "filename": "ash/shelf/shelf_widget.cc",
         "patchSetId": 12
@@ -459,6 +855,24 @@
       "writtenOn": "2017-09-12T18:24:51Z",
       "side": 1,
       "message": "Does it make sense to hide both here? (what happens if the session state gets stuck here?)",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d1cf7bb_072d19c1",
+        "filename": "ash/shelf/shelf_widget.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "For OOBE, LOGIN_PRIMARY and LOGGED_IN_NOT_ACTIVE, both views are hidden because the web UI fake shelf is shown instead, since web UI is still being used by OOBE and login screen. Once views-based login screen is ready, this part should be changed accordingly.\n\nFor the one remaining session state UNKNOWN I think it\u0027s fine to hide both. Currently it\u0027s not handled by web UI either.",
+      "parentUuid": "8b1d4e5e_e229894b",
       "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -482,6 +896,24 @@
     },
     {
       "key": {
+        "uuid": "ddacf5d4_552487dc",
+        "filename": "ash/shelf/shelf_widget.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed3ed40a_afb97561",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06c4ec68_7b06390d",
         "filename": "ash/shelf/shelf_widget.h",
         "patchSetId": 12
@@ -499,6 +931,24 @@
     },
     {
       "key": {
+        "uuid": "467b94c7_9af91768",
+        "filename": "ash/shelf/shelf_widget.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06c4ec68_7b06390d",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34ef8c8a_4143096b",
         "filename": "ash/shelf/shelf_widget_unittest.cc",
         "patchSetId": 12
@@ -510,6 +960,24 @@
       "writtenOn": "2017-09-12T18:24:51Z",
       "side": 1,
       "message": "Why do you reset to the primary login screen state before the block below?\n(seems like ClearLogin might conflict with the attempt to lock the screen below)",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9c3341e_e7a68cfd",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "I adjusted the order of session state changes to make it more resemble a production usage.. Not sure if it\u0027s better.",
+      "parentUuid": "34ef8c8a_4143096b",
       "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -533,6 +1001,24 @@
     },
     {
       "key": {
+        "uuid": "7d75895d_69eb8fde",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f59a0ab5_bbd027c9",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c924ced_48ae708f",
         "filename": "ash/shutdown_controller.h",
         "patchSetId": 12
@@ -550,6 +1036,24 @@
     },
     {
       "key": {
+        "uuid": "b83cbda2_7b331e86",
+        "filename": "ash/shutdown_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c924ced_48ae708f",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e2a3f91_58c48a49",
         "filename": "chrome/browser/ui/webui/chromeos/login/oobe_ui.cc",
         "patchSetId": 12
@@ -564,6 +1068,24 @@
       "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ad14297_c4bc4012",
+        "filename": "chrome/browser/ui/webui/chromeos/login/oobe_ui.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T00:38:54Z",
+      "side": 1,
+      "message": "Done. Technically only MD lock screen is supported instead of MD login as of now, and I wanted to expose this detail in login related codes. \n\nNevertheless using \u0027showMdLogin\u0027 is consistent with other places.",
+      "parentUuid": "7e2a3f91_58c48a49",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
