@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "721bf63c_983ee326",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-13T20:34:28Z",
+      "side": 1,
+      "message": "I don\u0027t think we should warn on this and return today - instead we should fail the build if the format is bad. This way, such a CL shouldn\u0027t be committed.\n\nAlso, can you add test coverage for this - i.e. with some example file contents (including finding interesting dates and invalid dates like Feb 29 on years where there isn\u0027t such a date) and check that the code handles them as expected? (i.e. gives error on invalid ones and parses valid ones correctly.)",
+      "range": {
+        "startLine": 101,
+        "startChar": 18,
+        "endLine": 101,
+        "endChar": 0
+      },
+      "revId": "ca546aadb0484d006aa648393ef056ea0ab77a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
