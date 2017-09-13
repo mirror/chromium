@@ -1,0 +1,255 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35e474c1_da29ea38",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-13T18:59:44Z",
+      "side": 1,
+      "message": "Should we say what event/background pages are?  All I know right now is that they rescue me from needing a long-running script to manage state.  WDYT?",
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4402ae_305858ef",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-13T18:59:44Z",
+      "side": 1,
+      "message": "I wonder if it would be worth a quick line like \"There are two types of \u003c...*\u003e: Event pages and persistent background pages.\" just so we make it clear that we\u0027re differentiating between two things?\n\n...* - I don\u0027t know what a good term encompassing both event pages and background pages is.  Any thoughts?",
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc42d791_a7c20ec6",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-13T18:59:44Z",
+      "side": 1,
+      "message": "Hmm... \"event pages\" by definition are non-persistent (the counterpart is a \"persistent background page\".  Maybe just \"Event pages are considered...\"?  WDYT?",
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f197db2_d333e34e",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-13T18:59:44Z",
+      "side": 1,
+      "message": "We can probably remove this line - Chrome 22 was a long time ago (four years ago?)",
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54fb02f_872ee660",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-13T18:59:44Z",
+      "side": 1,
+      "message": "*encouraged",
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a945a9c4_b137cca1",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-13T18:59:44Z",
+      "side": 1,
+      "message": "\"With persistent false\" sounds a bit funny to me - maybe \"with the \"persistent\" property set to false\" or something like that?",
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f70c49a5_a19646b3",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-13T18:59:44Z",
+      "side": 1,
+      "message": "nit: event page?",
+      "range": {
+        "startLine": 61,
+        "startChar": 36,
+        "endLine": 61,
+        "endChar": 42
+      },
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ffbbae7_9ff3cd86",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-13T18:59:44Z",
+      "side": 1,
+      "message": "There\u0027s another gotcha here that I think we could document better.  Events have to be registered *synchronously* once the page loads, so doing something like:\n\nchrome.storage.local.get(\u0027runtimeEvents\u0027, (events) \u003d\u003e {\n  for (let event of events)\n    chrome.runtime[event].addListener(listener);\n});\n\nwon\u0027t work.",
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed10d22_fb0610c7",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-13T18:59:44Z",
+      "side": 1,
+      "message": "Similar to above, just \"Event pages\"?",
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c262635e_cb201bab",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-13T18:59:44Z",
+      "side": 1,
+      "message": "*views",
+      "range": {
+        "startLine": 142,
+        "startChar": 63,
+        "endLine": 142,
+        "endChar": 67
+      },
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96fe903d_93e4a0f0",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-13T18:59:44Z",
+      "side": 1,
+      "message": "nit: comma needed?",
+      "range": {
+        "startLine": 144,
+        "startChar": 10,
+        "endLine": 144,
+        "endChar": 11
+      },
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d104c302_a89ed533",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-13T18:59:44Z",
+      "side": 1,
+      "message": "This part is actually true for both event and persistent background pages.  Can we hoist it up higher to a common place?",
+      "range": {
+        "startLine": 168,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 4
+      },
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7372501a_49be491e",
+        "filename": "chrome/common/extensions/docs/templates/articles/event_pages.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-13T18:59:44Z",
+      "side": 1,
+      "message": "same as above, just \"event pages\"",
+      "range": {
+        "startLine": 250,
+        "startChar": 10,
+        "endLine": 250,
+        "endChar": 36
+      },
+      "revId": "15e96b260e0e49dc9d45deea4d29269e5f3be8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
