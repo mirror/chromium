@@ -10,8 +10,6 @@
 // Parent window sets parameter for this page.
 assert_not_equals(shouldCallClose, null);
 
-internals.settings.setPresentationReceiver(true);
-
 const pageUrl = 'http://example.com/a.html';
 const id = 'fakeSessionId';
 
@@ -37,10 +35,6 @@ navigator.presentation.receiver.connectionList.then(list => {
     });
   }
 });
-
-window.onunload = () => {
-  internals.settings.setPresentationReceiver(false);
-};
 
 </script>
 </body>

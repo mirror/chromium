@@ -11,8 +11,6 @@
 assert_not_equals(controllerConnectionPtr, null);
 assert_not_equals(receiverConnectionRequest, null);
 
-internals.settings.setPresentationReceiver(true);
-
 var connection = null;
 
 const pageUrl = 'http://example.com/a.html';
@@ -35,7 +33,6 @@ window.onunload = () => {
   } else {
     opener.postMessage('failed', '*');
   }
-  internals.settings.setPresentationReceiver(false);
 };
 
 </script>
