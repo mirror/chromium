@@ -35,17 +35,33 @@ FeaturePromoBubbleView::FeaturePromoBubbleView(views::View* anchor_view,
     : FeaturePromoBubbleView(anchor_view,
                              gfx::Rect(),
                              arrow,
-                             string_specifier) {}
+                             string_specifier,
+                             true) {}
+
+FeaturePromoBubbleView::FeaturePromoBubbleView(views::View* anchor_view,
+                                               views::BubbleBorder::Arrow arrow,
+                                               int string_specifier,
+                                               bool can_activate)
+    : FeaturePromoBubbleView(anchor_view,
+                             gfx::Rect(),
+                             arrow,
+                             string_specifier,
+                             can_activate) {}
 
 FeaturePromoBubbleView::FeaturePromoBubbleView(const gfx::Rect& anchor_rect,
                                                views::BubbleBorder::Arrow arrow,
                                                int string_specifier)
-    : FeaturePromoBubbleView(nullptr, anchor_rect, arrow, string_specifier) {}
+    : FeaturePromoBubbleView(nullptr,
+                             anchor_rect,
+                             arrow,
+                             string_specifier,
+                             true) {}
 
 FeaturePromoBubbleView::FeaturePromoBubbleView(views::View* anchor_view,
                                                const gfx::Rect& anchor_rect,
                                                views::BubbleBorder::Arrow arrow,
-                                               int string_specifier)
+                                               int string_specifier,
+                                               bool can_activate)
     : BubbleDialogDelegateView(anchor_view, arrow) {
   if (!anchor_view)
     SetAnchorRect(anchor_rect);
@@ -60,6 +76,7 @@ FeaturePromoBubbleView::FeaturePromoBubbleView(views::View* anchor_view,
 
   AddChildView(new views::Label(l10n_util::GetStringUTF16(string_specifier)));
 
+  set_can_activate(can_activate);
   views::Widget* widget = views::BubbleDialogDelegateView::CreateBubble(this);
   UseCompactMargins();
   widget->Show();
@@ -67,6 +84,11 @@ FeaturePromoBubbleView::FeaturePromoBubbleView(views::View* anchor_view,
 }
 
 FeaturePromoBubbleView::~FeaturePromoBubbleView() = default;
+
+// static
+void FeaturePromoBubbleView::CloseBubble() {
+  GetWidget()->Close();
+}
 
 int FeaturePromoBubbleView::GetDialogButtons() const {
   return ui::DIALOG_BUTTON_NONE;
@@ -83,10 +105,6 @@ void FeaturePromoBubbleView::OnMouseEntered(const ui::MouseEvent& event) {
 
 void FeaturePromoBubbleView::OnMouseExited(const ui::MouseEvent& event) {
   StartAutoCloseTimer(kDelayShort);
-}
-
-void FeaturePromoBubbleView::CloseBubble() {
-  GetWidget()->Close();
 }
 
 void FeaturePromoBubbleView::StartAutoCloseTimer(
