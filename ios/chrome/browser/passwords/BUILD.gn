@@ -72,7 +72,6 @@ source_set("passwords") {
     "//ios/chrome/browser/autofill",
     "//ios/chrome/browser/browser_state",
     "//ios/chrome/browser/infobars",
-
     # TODO(crbug.com/435048): Remove payments dependency after landing
     # https://chromium-review.googlesource.com/c/chromium/src/+/631881.
     "//ios/chrome/browser/payments",
@@ -85,6 +84,7 @@ source_set("passwords") {
     "//ios/chrome/browser/ui/infobars",
     "//ios/public/provider/chrome/browser",
     "//ios/public/provider/chrome/browser/ui",
+    "//ios/third_party/material_components_ios:material_components_ios",
     "//ios/web",
     "//ui/base",
     "//url",
@@ -145,6 +145,50 @@ source_set("unit_tests") {
     "//testing/gtest",
     "//third_party/ocmock",
     "//url",
+  ]
+}
+
+source_set("eg_tests") {
+  configs += [ "//build/config/compiler:enable_arc" ]
+  testonly = true
+  sources = [
+    "credential_manager_notify_auto_signin_egtest.mm",
+  ]
+
+  deps = [
+    ":passwords",
+    "//base",
+    "//google_apis",
+    "//base/test:test_support",
+    "//components/autofill/core/common",
+    "//components/autofill/ios/browser",
+    "//components/password_manager/core/browser",
+    "//components/password_manager/core/browser:test_support",
+    "//components/password_manager/core/common",
+    "//components/prefs",
+    "//components/prefs:test_support",
+    "//google_apis",
+    "//ios/chrome/browser/autofill",
+    "//ios/chrome/browser/browser_state:test_support",
+    "//ios/chrome/browser/ssl",
+    "//ios/chrome/browser/ui/commands",
+    "//ios/testing:ocmock_support",
+    "//ios/web",
+    "//ios/web/public/test",
+    "//ios/web/public/test/fakes",
+    "//net:test_support",
+    "//testing/gtest",
+    "//third_party/ocmock",
+    "//url",
+    "//ios/chrome/test/app:test_support",
+    "//ios/chrome/test/earl_grey:test_support",
+    "//ios/testing:ios_test_support",
+    "//ios/testing/earl_grey:earl_grey_support",
+    "//ios/third_party/earl_grey",
+  ]
+  libs = [
+    "UIKit.framework",
+    "XCTest.framework",
   ]
 }
 

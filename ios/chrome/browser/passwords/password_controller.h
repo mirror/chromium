@@ -24,6 +24,7 @@ class PasswordGenerationManager;
 class PasswordManagerClient;
 class PasswordManagerDriver;
 }  // namespace password_manager
+class CredentialManager;
 
 // Per-tab password controller. Handles password autofill and saving.
 @interface PasswordController : NSObject<CRWWebStateObserver,
@@ -49,6 +50,9 @@ class PasswordManagerDriver;
 // The PasswordManagerDriver owned by this PasswordController.
 @property(nonatomic, readonly)
     password_manager::PasswordManagerDriver* passwordManagerDriver;
+
+@property(nonatomic, readonly)
+    CredentialManager* credentialManager;
 
 // The PasswordFormFiller owned by this PasswordController.
 @property(nonatomic, readonly) id<PasswordFormFiller> passwordFormFiller;
