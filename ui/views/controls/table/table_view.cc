@@ -482,9 +482,13 @@ void TableView::OnItemsChanged(int start, int length) {
 }
 
 void TableView::OnItemsAdded(int start, int length) {
-  for (int i = 0; i < length; ++i)
-    selection_model_.IncrementFrom(start);
+  selection_model_.Move(RowCount(), start, length);
   NumRowsChanged();
+}
+
+void TableView::OnItemsMoved(int old_start, int length, int new_start) {
+  selection_model_.Move(old_start, new_start, length);
+  SortItemsAndUpdateMapping();
 }
 
 void TableView::OnItemsRemoved(int start, int length) {
