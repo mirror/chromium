@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34933341_5d513560",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-13T16:41:37Z",
+      "side": 1,
+      "message": "nit: maybe have a slightly more descriptive commit message?",
+      "revId": "17f605fd3a7084a5d82a3ee2d9ec3e660b0a6c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c5870f7_c5c6aefd",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-13T16:41:37Z",
+      "side": 1,
+      "message": "nit: could you also add a comment here explaining when commit_batch_ can be null (i.e. if the commit has already been committed by a ScheduleImmediateCommit call)?",
+      "revId": "17f605fd3a7084a5d82a3ee2d9ec3e660b0a6c6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
