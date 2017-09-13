@@ -2,12 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "content/browser/tracing/power_tracing_agent.h"
 #include "base/bind.h"
+#include "base/callback.h"
 #include "base/lazy_instance.h"
 #include "base/memory/singleton.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event_impl.h"
-#include "content/browser/tracing/power_tracing_agent.h"
 #include "tools/battor_agent/battor_finder.h"
 
 namespace content {
@@ -24,7 +27,11 @@ PowerTracingAgent* PowerTracingAgent::GetInstance() {
   return base::Singleton<PowerTracingAgent>::get();
 }
 
-PowerTracingAgent::PowerTracingAgent() {}
+PowerTracingAgent::PowerTracingAgent()
+    : task_runner_(base::CreateSequencedTaskRunnerWithTraits({})) {
+  DETACH_FROM_SEQUENCE(sequence_checker_);
+}
+
 PowerTracingAgent::~PowerTracingAgent() {}
 
 std::string PowerTracingAgent::GetTracingAgentName() {
@@ -38,36 +45,30 @@ std::string PowerTracingAgent::GetTraceEventLabel() {
 void PowerTracingAgent::StartAgentTracing(
     const base::trace_event::TraceConfig& trace_config,
     const StartAgentTracingCallback& callback) {
+  // TODO(charliea): StartAgentTracing for each of the tracing agents is called
+  // on the UI thread and, to avoid doing real work on the UI thread, each agent
+  // should immediately move work to another thread. A more sensible system
+  // would be to call StartAgentTracing on a non-UI thread in the first place.
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  BrowserThread::PostTask(
-      BrowserThread::FILE, FROM_HERE,
-      base::BindOnce(&PowerTracingAgent::FindBattOrOnFileThread,
-                     base::Unretained(this), callback));
+  base::PostTaskWithTraits(
+      FROM_HERE, {base::MayBlock()},
+      base::BindOnce(&PowerTracingAgent::FindBattOr, base::Unretained(this),
+                     base::BindOnce(&PowerTracingAgent::StartAgentTracingImpl,
+                                    base::Unretained(this), callback)));
 }
 
-void PowerTracingAgent::FindBattOrOnFileThread(
-    const StartAgentTracingCallback& callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
-
-  std::string path = battor::BattOrFinder::FindBattOr();
-  if (path.empty()) {
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::BindOnce(callback, GetTracingAgentName(), false /* success */));
-    return;
-  }
-
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&PowerTracingAgent::StartAgentTracingOnIOThread,
-                     base::Unretained(this), path, callback));
+void PowerTracingAgent::FindBattOr(
+    base::OnceCallback<void(const std::string& path)> callback) {
+  task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(std::move(callback), battor::BattOrFinder::FindBattOr()));
 }
 
-void PowerTracingAgent::StartAgentTracingOnIOThread(
-    const std::string& path,
-    const StartAgentTracingCallback& callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+void PowerTracingAgent::StartAgentTracingImpl(
+    const StartAgentTracingCallback& callback,
+    const std::string& path) {
+  DCHECK(sequence_checker_.CalledOnValidSequence());
 
   battor_agent_.reset(new battor::BattOrAgent(
       path, this, BrowserThread::GetTaskRunnerForThread(BrowserThread::UI)));
@@ -77,7 +78,7 @@ void PowerTracingAgent::StartAgentTracingOnIOThread(
 }
 
 void PowerTracingAgent::OnStartTracingComplete(battor::BattOrError error) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DCHECK(sequence_checker_.CalledOnValidSequence());
 
   bool success = (error == battor::BATTOR_ERROR_NONE);
   if (!success)
@@ -91,17 +92,20 @@ void PowerTracingAgent::OnStartTracingComplete(battor::BattOrError error) {
 
 void PowerTracingAgent::StopAgentTracing(
     const StopAgentTracingCallback& callback) {
+  // TODO(charliea): StopAgentTracing for each of the tracing agents is called
+  // on the UI thread and, to avoid doing real work on the UI thread, each agent
+  // should immediately move work to another thread. A more sensible system
+  // would be to call StopAgentTracing on a non-UI thread in the first place.
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&PowerTracingAgent::StopAgentTracingOnIOThread,
-                     base::Unretained(this), callback));
+  task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&PowerTracingAgent::StopAgentTracingImpl,
+                                base::Unretained(this), callback));
 }
 
-void PowerTracingAgent::StopAgentTracingOnIOThread(
+void PowerTracingAgent::StopAgentTracingImpl(
     const StopAgentTracingCallback& callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DCHECK(sequence_checker_.CalledOnValidSequence());
 
   if (!battor_agent_) {
     BrowserThread::PostTask(
@@ -118,7 +122,7 @@ void PowerTracingAgent::StopAgentTracingOnIOThread(
 void PowerTracingAgent::OnStopTracingComplete(
     const battor::BattOrResults& results,
     battor::BattOrError error) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DCHECK(sequence_checker_.CalledOnValidSequence());
 
   scoped_refptr<base::RefCountedString> result(new base::RefCountedString());
   if (error == battor::BATTOR_ERROR_NONE)
@@ -135,19 +139,23 @@ void PowerTracingAgent::OnStopTracingComplete(
 void PowerTracingAgent::RecordClockSyncMarker(
     const std::string& sync_id,
     const RecordClockSyncMarkerCallback& callback) {
+  // TODO(charliea): RecordClockSyncMarker for each of the tracing agents is
+  // called on the UI thread and, to avoid doing real work on the UI thread,
+  // each agent should immediately move work to another thread. A more sensible
+  // system would be to call RecordClockSyncMarker on a non-UI thread in the
+  // first place.
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(SupportsExplicitClockSync());
 
-  BrowserThread::PostTask(
-      BrowserThread::IO, FROM_HERE,
-      base::BindOnce(&PowerTracingAgent::RecordClockSyncMarkerOnIOThread,
-                     base::Unretained(this), sync_id, callback));
+  task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&PowerTracingAgent::RecordClockSyncMarkerImpl,
+                                base::Unretained(this), callback, sync_id));
 }
 
-void PowerTracingAgent::RecordClockSyncMarkerOnIOThread(
-    const std::string& sync_id,
-    const RecordClockSyncMarkerCallback& callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+void PowerTracingAgent::RecordClockSyncMarkerImpl(
+    const RecordClockSyncMarkerCallback& callback,
+    const std::string& sync_id) {
+  DCHECK(sequence_checker_.CalledOnValidSequence());
   DCHECK(battor_agent_);
 
   record_clock_sync_marker_sync_id_ = sync_id;
@@ -158,7 +166,7 @@ void PowerTracingAgent::RecordClockSyncMarkerOnIOThread(
 
 void PowerTracingAgent::OnRecordClockSyncMarkerComplete(
     battor::BattOrError error) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DCHECK(sequence_checker_.CalledOnValidSequence());
 
   base::TimeTicks issue_start_ts = record_clock_sync_marker_start_time_;
   base::TimeTicks issue_end_ts = base::TimeTicks::Now();
@@ -181,7 +189,8 @@ bool PowerTracingAgent::SupportsExplicitClockSync() {
 }
 
 void PowerTracingAgent::OnGetFirmwareGitHashComplete(
-    const std::string& version, battor::BattOrError error) {
+    const std::string& version,
+    battor::BattOrError error) {
   return;
 }
 

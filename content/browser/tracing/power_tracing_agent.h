@@ -7,8 +7,11 @@
 
 #include <memory>
 
+#include "base/callback_forward.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted_memory.h"
+#include "base/sequence_checker.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "base/threading/thread.h"
 #include "base/trace_event/tracing_agent.h"
 #include "content/public/browser/browser_thread.h"
@@ -57,17 +60,14 @@ class PowerTracingAgent : public base::trace_event::TracingAgent,
   PowerTracingAgent();
   ~PowerTracingAgent() override;
 
-  void FindBattOrOnFileThread(const StartAgentTracingCallback& callback);
-  void StartAgentTracingOnIOThread(const std::string& path,
-                                   const StartAgentTracingCallback& callback);
-  void StopAgentTracingOnIOThread(const StopAgentTracingCallback& callback);
-  void RecordClockSyncMarkerOnIOThread(
-      const std::string& sync_id,
-      const RecordClockSyncMarkerCallback& callback);
+  void StartAgentTracingImpl(const StartAgentTracingCallback& callback,
+                             const std::string& path);
+  void StopAgentTracingImpl(const StopAgentTracingCallback& callback);
+  void RecordClockSyncMarkerImpl(const RecordClockSyncMarkerCallback& callback,
+                                 const std::string& sync_id);
 
-  // Returns the path of a BattOr (e.g. /dev/ttyUSB0), or an empty string if
-  // none are found.
-  std::string GetBattOrPath();
+  // Finds the path of the BattOr and posts the result to StartAgentTracingImpl.
+  void FindBattOr(base::OnceCallback<void(const std::string& path)> callback);
 
   // All interactions with the BattOrAgent (after construction) must happen on
   // the IO thread.
@@ -79,6 +79,10 @@ class PowerTracingAgent : public base::trace_event::TracingAgent,
   std::string record_clock_sync_marker_sync_id_;
   base::TimeTicks record_clock_sync_marker_start_time_;
   RecordClockSyncMarkerCallback record_clock_sync_marker_callback_;
+
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
+
+  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(PowerTracingAgent);
 };
