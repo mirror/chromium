@@ -333,6 +333,8 @@ component("headless") {
     "public/util/url_request_dispatcher.h",
     "public/util/user_agent.cc",
     "public/util/user_agent.h",
+    "public/util/virtual_time_controller.cc",
+    "public/util/virtual_time_controller.h",
   ]
 
   if (!is_fuchsia) {
@@ -521,7 +523,10 @@ test("headless_unittests") {
     "public/util/generic_url_request_job_test.cc",
     "public/util/testing/fake_managed_dispatch_url_request_job.cc",
     "public/util/testing/fake_managed_dispatch_url_request_job.h",
+    "public/util/testing/mock_devtools_agent_host.cc",
+    "public/util/testing/mock_devtools_agent_host.h",
     "public/util/throttled_dispatcher_test.cc",
+    "public/util/virtual_time_controller_test.cc",
   ]
 
   if (!is_component_build) {
@@ -534,6 +539,7 @@ test("headless_unittests") {
   }
 
   deps = [
+    ":headless",
     ":headless_renderer",
     "//base/test:run_all_unittests",
     "//base/test:test_support",
