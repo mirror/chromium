@@ -12,6 +12,7 @@ import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 
+import org.chromium.base.Log;
 import org.chromium.base.TraceEvent;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
@@ -30,6 +31,8 @@ public class EventForwarder {
     private float mCurrentTouchOffsetY;
 
     private int mLastMouseButtonState;
+
+    private static final String TAG = "mDebug";
 
     @CalledByNative
     private static EventForwarder create(long nativeEventForwarder, boolean isDragDropEnabled) {
@@ -53,9 +56,23 @@ public class EventForwarder {
         // TODO(mustaq): Should we include MotionEvent.TOOL_TYPE_STYLUS here?
         // crbug.com/592082
         if (event.getToolType(0) == MotionEvent.TOOL_TYPE_MOUSE) {
-            // Mouse button info is incomplete on L and below
-            int apiVersion = Build.VERSION.SDK_INT;
-            if (apiVersion >= android.os.Build.VERSION_CODES.M) {
+            // Skip firing mouse events in the follwoing cases:
+            // - In Android L and below, where mouse button info is incomplete.
+            // - A move w/o a button press, which represents a trackpad scroll. Real mousemoves w/o
+            //   buttons goes to onHoverEvent.
+            final int apiVersion = Build.VERSION.SDK_INT;
+            if (event.getActionMasked() == MotionEvent.ACTION_MOVE && event.getButtonState() == 0) {
+                Log.d(TAG, "eventTime=" + event.getEventTime());
+                Log.d(TAG, "x=" + event.getX());
+                Log.d(TAG, "y=" + event.getY());
+                Log.d(TAG, "hscroll=" + event.getAxisValue(MotionEvent.AXIS_HSCROLL));
+                Log.d(TAG, "vscroll=" + event.getAxisValue(MotionEvent.AXIS_VSCROLL));
+
+                final float touchpadScrollFactor = 64.f;
+                return onMouseWheelEvent(event.getEventTime(), event.getX(), event.getY(),
+                        event.getAxisValue(MotionEvent.AXIS_HSCROLL),
+                        event.getAxisValue(MotionEvent.AXIS_VSCROLL), touchpadScrollFactor);
+            } else if (apiVersion >= android.os.Build.VERSION_CODES.M) {
                 return onMouseEvent(event);
             }
         }
