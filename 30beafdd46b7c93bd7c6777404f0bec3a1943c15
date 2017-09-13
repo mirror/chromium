@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d39aaa02_b3b3afe6",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-13T19:26:30Z",
+      "side": 1,
+      "message": "Pass by reference?",
+      "revId": "30beafdd46b7c93bd7c6777404f0bec3a1943c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a24e3b6_1e4f56aa",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-13T19:26:30Z",
+      "side": 1,
+      "message": "Initialize these?",
+      "revId": "30beafdd46b7c93bd7c6777404f0bec3a1943c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "725a680b_975dff0c",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-13T19:26:30Z",
+      "side": 1,
+      "message": "const reference",
+      "revId": "30beafdd46b7c93bd7c6777404f0bec3a1943c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
