@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c3f938d0_a5640a06",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-13T07:01:07Z",
+      "side": 1,
+      "message": "lambdas with no captures are allowed; see https://groups.google.com/a/chromium.org/d/msg/chromium-dev/D9UnnxBnciQ/zUhOMwKKDgAJ and \"Lambda Expressions\" in https://chromium-cpp.appspot.com/#core-whitelist.",
+      "parentUuid": "32babaa6_f0c48a14",
+      "range": {
+        "startLine": 189,
+        "startChar": 17,
+        "endLine": 194,
+        "endChar": 38
+      },
+      "revId": "95a79e315ca5a2f74aff6952f304cf5387860611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea705600_6a6d59ae",
         "filename": "chrome/browser/ui/views/try_chrome_dialog.cc",
         "patchSetId": 11

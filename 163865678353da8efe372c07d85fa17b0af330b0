@@ -45,6 +45,30 @@
       "revId": "163865678353da8efe372c07d85fa17b0af330b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ae87877_b9921fe4",
+        "filename": "chrome/installer/util/experiment_metrics.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-13T07:01:07Z",
+      "side": 1,
+      "message": "Nope; pure bug. Nice catch.",
+      "parentUuid": "1ff86e57_5bfa6c0b",
+      "range": {
+        "startLine": 80,
+        "startChar": 21,
+        "endLine": 80,
+        "endChar": 0
+      },
+      "revId": "163865678353da8efe372c07d85fa17b0af330b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
