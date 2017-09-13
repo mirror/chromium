@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c5a6d463_89b03440",
+        "filename": "ui/events/event_processor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-13T20:59:46Z",
+      "side": 1,
+      "message": "I\u0027m fine with keeping the weak_ptr_factory_ as a member.",
+      "parentUuid": "b06da120_7a518018",
+      "range": {
+        "startLine": 19,
+        "startChar": 20,
+        "endLine": 19,
+        "endChar": 35
+      },
+      "revId": "843b1ded109b1497f8113d6f83a7b9c4c9cca42b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f42eb241_1acfa191",
         "filename": "ui/events/event_processor.h",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I thought that it prevented someone from using a variable that this class defines blinding without checking that *this* is valid.",
       "parentUuid": "f42eb241_1acfa191",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 8
+      },
+      "revId": "843b1ded109b1497f8113d6f83a7b9c4c9cca42b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42cce191_68097a30",
+        "filename": "ui/events/event_processor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-13T20:59:46Z",
+      "side": 1,
+      "message": "The crash would be slightly different in that you would see someone blindly derefencing a null weakptr. I favor an instance function.",
+      "parentUuid": "bd554187_ec634605",
       "range": {
         "startLine": 57,
         "startChar": 2,
