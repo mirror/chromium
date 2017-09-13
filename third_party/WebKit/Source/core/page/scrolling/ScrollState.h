@@ -68,6 +68,16 @@ class CORE_EXPORT ScrollState final
   // True if this scroll is allowed to bubble upwards.
   bool shouldPropagate() const { return data_->should_propagate; };
 
+  // When gesture begins it equals deltaXHint() and deltaX() otherwise.
+  double effectiveDeltaX() const {
+    return isBeginning() ? deltaXHint() : deltaX();
+  }
+
+  // When gesture begins it equals deltaYHint() and deltaY() otherwise.
+  double effectiveDeltaY() const {
+    return isBeginning() ? deltaYHint() : deltaY();
+  }
+
   // Non web exposed methods.
   void ConsumeDeltaNative(double x, double y);
 

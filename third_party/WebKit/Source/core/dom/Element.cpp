@@ -142,6 +142,7 @@
 #include "platform/bindings/V8PerContextData.h"
 #include "platform/graphics/CompositorMutableProperties.h"
 #include "platform/graphics/CompositorMutation.h"
+#include "platform/scroll/ScrollCustomization.h"
 #include "platform/scroll/ScrollableArea.h"
 #include "platform/scroll/SmoothScrollSequencer.h"
 #include "platform/wtf/BitVector.h"
@@ -616,10 +617,18 @@ void Element::CallDistributeScroll(ScrollState& scroll_state) {
                                        ->GlobalRootScrollerController()
                                        .IsViewportScrollCallback(callback);
 
-  if (!callback || disable_custom_callbacks) {
+  ScrollCustomization scroll_customization =
+      GetLayoutBox()->Style()->GetScrollCustomization();
+  ScrollCustomization direction = GetScrollCustomizationForDirection(
+      scroll_state.effectiveDeltaX(), scroll_state.effectiveDeltaY());
+  bool has_scroll_customization_for_gesture = direction & scroll_customization;
+
+  if (!callback || disable_custom_callbacks ||
+      !has_scroll_customization_for_gesture) {
     NativeDistributeScroll(scroll_state);
     return;
   }
+
   if (callback->NativeScrollBehavior() !=
       WebNativeScrollBehavior::kPerformAfterNativeScroll)
     callback->handleEvent(&scroll_state);
@@ -705,10 +714,18 @@ void Element::CallApplyScroll(ScrollState& scroll_state) {
                                        ->GlobalRootScrollerController()
                                        .IsViewportScrollCallback(callback);
 
-  if (!callback || disable_custom_callbacks) {
+  ScrollCustomization scroll_customization =
+      GetLayoutBox()->Style()->GetScrollCustomization();
+  ScrollCustomization direction = GetScrollCustomizationForDirection(
+      scroll_state.effectiveDeltaX(), scroll_state.effectiveDeltaY());
+  bool has_scroll_customization_for_gesture = direction & scroll_customization;
+
+  if (!callback || disable_custom_callbacks ||
+      !has_scroll_customization_for_gesture) {
     NativeApplyScroll(scroll_state);
     return;
   }
+
   if (callback->NativeScrollBehavior() !=
       WebNativeScrollBehavior::kPerformAfterNativeScroll)
     callback->handleEvent(&scroll_state);
