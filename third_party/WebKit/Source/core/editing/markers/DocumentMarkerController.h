@@ -45,6 +45,7 @@ namespace blink {
 
 class DocumentMarkerList;
 class Node;
+class SuggestionMarkerProperties;
 
 class CORE_EXPORT DocumentMarkerController final
     : public GarbageCollected<DocumentMarkerController>,
@@ -71,10 +72,7 @@ class CORE_EXPORT DocumentMarkerController final
                                  Color background_color);
   void AddSuggestionMarker(const EphemeralRange&,
                            const Vector<String>& suggestions,
-                           Color suggestion_highlight_color,
-                           Color underline_color,
-                           StyleableMarker::Thickness,
-                           Color background_color);
+                           const SuggestionMarkerProperties&);
 
   void MoveMarkers(Node* src_node, int length, Node* dst_node);
 

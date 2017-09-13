@@ -191,18 +191,13 @@ void DocumentMarkerController::AddActiveSuggestionMarker(
 void DocumentMarkerController::AddSuggestionMarker(
     const EphemeralRange& range,
     const Vector<String>& suggestions,
-    Color suggestion_highlight_color,
-    Color underline_color,
-    StyleableMarker::Thickness thickness,
-    Color background_color) {
+    const SuggestionMarkerProperties& properties) {
   DCHECK(!document_->NeedsLayoutTreeUpdate());
-  AddMarkerInternal(
-      range, [this, &suggestions, suggestion_highlight_color, underline_color,
-              thickness, background_color](int start_offset, int end_offset) {
-        return new SuggestionMarker(start_offset, end_offset, suggestions,
-                                    suggestion_highlight_color, underline_color,
-                                    thickness, background_color);
-      });
+  AddMarkerInternal(range, [this, &suggestions, &properties](int start_offset,
+                                                             int end_offset) {
+    return new SuggestionMarker(start_offset, end_offset, suggestions,
+                                properties);
+  });
 }
 
 void DocumentMarkerController::PrepareForDestruction() {

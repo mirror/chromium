@@ -38,6 +38,7 @@
 #include "core/editing/SetSelectionOptions.h"
 #include "core/editing/commands/TypingCommand.h"
 #include "core/editing/markers/DocumentMarkerController.h"
+#include "core/editing/markers/SuggestionMarkerProperties.h"
 #include "core/editing/state_machines/BackwardCodePointStateMachine.h"
 #include "core/editing/state_machines/ForwardCodePointStateMachine.h"
 #include "core/events/CompositionEvent.h"
@@ -505,11 +506,14 @@ void InputMethodController::AddImeTextSpans(
     } else if (ime_text_span.GetType() == ImeTextSpan::Type::kSuggestion) {
       GetDocument().Markers().AddSuggestionMarker(
           ephemeral_line_range, ime_text_span.Suggestions(),
-          ime_text_span.SuggestionHighlightColor(),
-          ime_text_span.UnderlineColor(),
-          ime_text_span.Thick() ? StyleableMarker::Thickness::kThick
-                                : StyleableMarker::Thickness::kThin,
-          ime_text_span.BackgroundColor());
+          SuggestionMarkerProperties::Builder()
+              .SetHighlightColor(ime_text_span.SuggestionHighlightColor())
+              .SetUnderlineColor(ime_text_span.UnderlineColor())
+              .SetThickness(ime_text_span.Thick()
+                                ? StyleableMarker::Thickness::kThick
+                                : StyleableMarker::Thickness::kThin)
+              .SetBackgroundColor(ime_text_span.BackgroundColor())
+              .Build());
     }
   }
 }
