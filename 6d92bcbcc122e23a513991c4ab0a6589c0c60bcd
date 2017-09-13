@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "844a008f_48d7169d",
+        "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-13T21:37:10Z",
+      "side": 1,
+      "message": "Nice!",
+      "parentUuid": "59020c83_6054c15c",
+      "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70fbd2b2_b41d01fb",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
         "patchSetId": 6
@@ -116,6 +134,30 @@
       "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f73679_657d42f6",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-13T21:37:10Z",
+      "side": 1,
+      "message": "Can we perform the check and set is_active to true as we call to media_route_provider_ just as before? It looks like this is what the latest PS is doing, so lgtm.",
+      "parentUuid": "da868950_19225c54",
+      "range": {
+        "startLine": 365,
+        "startChar": 33,
+        "endLine": 365,
+        "endChar": 0
+      },
+      "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -265,6 +307,24 @@
       "side": 1,
       "message": "I\u0027m not sure how to make WithArg() move the callback object when calling this function, which would be necessary for passing by value.",
       "parentUuid": "0c80b447_174494c8",
+      "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3ef39d_57f4314a",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_test.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-13T21:37:10Z",
+      "side": 1,
+      "message": "Have you tried InvokeArgument\u003cN\u003e in the test? It\u0027s fine to leave as is if it doesn\u0027t work with move-only args.",
+      "parentUuid": "845d5e33_481f31ae",
       "revId": "6d92bcbcc122e23a513991c4ab0a6589c0c60bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
