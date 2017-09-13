@@ -16,6 +16,47 @@
       "revId": "2c12041b791563d25603c306e94d134ec8bc5e19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25f863fe_58c50115",
+        "filename": "third_party/WebKit/Source/core/html/parser/PreloadRequest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-13T00:54:49Z",
+      "side": 1,
+      "message": "or we can only check script_type_ here, and DCHECK_EQ(resource_type_, Resource::kScript)",
+      "parentUuid": "55a6ac5d_a8c9f5ea",
+      "revId": "2c12041b791563d25603c306e94d134ec8bc5e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f354660_635990d8",
+        "filename": "third_party/WebKit/Source/core/html/parser/PreloadRequest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-13T00:54:49Z",
+      "side": 1,
+      "message": "Align to L66 change here.",
+      "range": {
+        "startLine": 99,
+        "startChar": 34,
+        "endLine": 99,
+        "endChar": 41
+      },
+      "revId": "2c12041b791563d25603c306e94d134ec8bc5e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
