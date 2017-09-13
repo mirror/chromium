@@ -208,23 +208,6 @@ void ResetSchemesAndOriginsWhitelist() {
   url::Initialize();
 }
 
-void EnableFeatureWithParam(const base::Feature& feature,
-                            const std::string& param_name,
-                            const std::string& param_value,
-                            base::CommandLine* command_line) {
-  static const char kFakeTrialName[] = "TrialNameForTesting";
-  static const char kFakeTrialGroupName[] = "TrialGroupForTesting";
-
-  // Enable all the |feature|, associating them with |trial_name|.
-  command_line->AppendSwitchASCII(
-      switches::kEnableFeatures,
-      std::string(feature.name) + "<" + kFakeTrialName);
-
-  std::map<std::string, std::string> param_values = {{param_name, param_value}};
-  variations::testing::VariationParamsManager::AppendVariationParams(
-      kFakeTrialName, kFakeTrialGroupName, param_values, command_line);
-}
-
 MessageLoopRunner::MessageLoopRunner(QuitMode quit_mode)
     : quit_mode_(quit_mode), loop_running_(false), quit_closure_called_(false) {
 }
