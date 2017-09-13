@@ -25,7 +25,7 @@ SessionDesktopEnvironment::CreateInputInjector() {
 
   return base::MakeUnique<SessionInputInjectorWin>(
       input_task_runner(),
-      InputInjector::Create(input_task_runner(), ui_task_runner()),
+      InputInjector::Create(input_task_runner(), ui_task_runner(), nullptr),
       ui_task_runner(), inject_sas_, lock_workstation_);
 }
 
