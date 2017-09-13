@@ -16,6 +16,24 @@
       "revId": "b5e5f649887bd7679ca8883dd52158bf959d41bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c0c2d6_7db79535",
+        "filename": "services/ui/public/interfaces/window_tree.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-13T16:14:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "784f66cf_362b167a",
+      "revId": "b5e5f649887bd7679ca8883dd52158bf959d41bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
