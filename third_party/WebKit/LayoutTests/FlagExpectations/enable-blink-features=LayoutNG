@@ -7071,7 +7071,6 @@ crbug.com/591099 fast/events/input-focus-no-duplicate-events.html [ Failure Pass
 crbug.com/591099 fast/events/input-tab-focus-no-duplicate-events.html [ Failure Pass ]
 crbug.com/591099 fast/events/inputText-never-fired-on-keydown-cancel.html [ Crash Failure ]
 crbug.com/591099 fast/events/inputevents/beforeinput-remove-iframe-crash.html [ Crash Failure ]
-crbug.com/591099 fast/events/inputevents/inputevent-data-keyboard.html [ Failure ]
 crbug.com/591099 fast/events/inputevents/inputevent-keyboard.html [ Crash Failure ]
 crbug.com/591099 fast/events/invalid-001.html [ Crash Failure Pass ]
 crbug.com/591099 fast/events/invalid-002.html [ Crash Failure Pass ]
