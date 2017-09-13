@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2226466_74f7be20",
+        "filename": "third_party/WebKit/Source/core/xml/XSLTProcessor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-13T07:45:30Z",
+      "side": 0,
+      "message": "I added this to fix another bug, but I changed how the sandbox flags are enforced for MHTML in https://chromium-review.googlesource.com/656779, so this is no longer needed.\n\n(It\u0027s also covered by tests now)",
+      "revId": "1b9d05b5b55eea66084b2ef5e7a437ebbb974a5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
