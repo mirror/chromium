@@ -22,6 +22,30 @@
       "revId": "18dc0b23e5d3b0d7dd723bec58911bc6271d6421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fba1c77_5394676f",
+        "filename": "chrome/browser/ui/webui/interstitials/interstitial_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-09-13T23:28:56Z",
+      "side": 1,
+      "message": "Because the linter complained:\n\nsrc/chrome/browser/ui/webui/interstitials/interstitial_ui.cc:460:  If an else has a brace on one side, it should have it on both  [readability/braces] [5]",
+      "parentUuid": "3dd3e634_cfe8da8a",
+      "range": {
+        "startLine": 462,
+        "startChar": 3,
+        "endLine": 462,
+        "endChar": 0
+      },
+      "revId": "18dc0b23e5d3b0d7dd723bec58911bc6271d6421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
