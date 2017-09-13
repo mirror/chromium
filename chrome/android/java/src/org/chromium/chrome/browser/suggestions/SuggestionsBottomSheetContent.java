@@ -33,7 +33,6 @@ import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService.TemplateUrlServiceObserver;
 import org.chromium.chrome.browser.snackbar.SnackbarManager;
-import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.ViewUtils;
@@ -286,8 +285,7 @@ public class SuggestionsBottomSheetContent implements BottomSheet.BottomSheetCon
         if (mSuggestionsCarousel == null) return;
         assert ChromeFeatureList.isEnabled(ChromeFeatureList.CONTEXTUAL_SUGGESTIONS_CAROUSEL);
 
-        Tab activeTab = mSheet.getActiveTab();
-        final String currentUrl = activeTab == null ? null : activeTab.getUrl();
+        String currentUrl = mSheet.getActiveTab() == null ? null : mSheet.getActiveTab().getUrl();
 
         mSuggestionsCarousel.refresh(mSheet.getContext(), currentUrl);
     }
