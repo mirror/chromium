@@ -22,6 +22,30 @@
       "revId": "080d320cae4b18ec984e9a933c973003cfdb8d01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f03aaf1_09a86bba",
+        "filename": "chrome/browser/extensions/extension_incognito_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-13T00:47:50Z",
+      "side": 1,
+      "message": ":D Slightly less copy-pasting",
+      "parentUuid": "9994bf54_bc246358",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 24
+      },
+      "revId": "080d320cae4b18ec984e9a933c973003cfdb8d01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
