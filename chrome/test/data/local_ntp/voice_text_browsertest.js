@@ -188,10 +188,13 @@ test.text.testReadyMessage = function() {
 
 
 /**
- * Test showing the listening message when the ready message is shown.
+ * Test showing the listening message when the ready message is shown,
+ * and the state is correct.
  */
 test.text.testListeningMessageWhenReady = function() {
   text.interim_.textContent = 'Ready';
+  test.text.stubs.replace(speech, 'isRecognizing', () => true);
+  test.text.stubs.replace(speech, 'hasReceivedResults', () => false);
 
   test.text.clock.setTime(1);
   text.startListeningMessageAnimation_();
@@ -209,10 +212,13 @@ test.text.testListeningMessageWhenReady = function() {
 
 
 /**
- * Test not showing the listening message when the ready message is not shown.
+ * Test not showing the listening message when the ready message is shown,
+ * but the state is incorrect.
  */
-test.text.testListeningMessageWhenNotReady = function() {
-  text.interim_.textContent = 'some text';
+test.text.testListeningMessageWhenReadyButIncorrectState = function() {
+  text.interim_.textContent = 'Ready';
+  test.text.stubs.replace(speech, 'isRecognizing', () => true);
+  test.text.stubs.replace(speech, 'hasReceivedResults', () => true);
 
   test.text.clock.setTime(1);
   text.startListeningMessageAnimation_();
@@ -223,7 +229,31 @@ test.text.testListeningMessageWhenNotReady = function() {
   test.text.clock.advanceTime(2000);
   test.text.clock.pendingTimeouts.shift().callback();
 
-  assertEquals('some text', text.interim_.textContent);
+  assertEquals('Ready', text.interim_.textContent);
+  assertEquals('', text.final_.textContent);
+  assertEquals(0, test.text.clock.pendingTimeouts.length);
+};
+
+
+/**
+ * Test showing the listening message when the ready message is not shown,
+ * but the state is correct.
+ */
+test.text.testListeningMessageWhenNotReady = function() {
+  text.interim_.textContent = 'some text';
+  test.text.stubs.replace(speech, 'isRecognizing', () => true);
+  test.text.stubs.replace(speech, 'hasReceivedResults', () => false);
+
+  test.text.clock.setTime(1);
+  text.startListeningMessageAnimation_();
+
+  assertEquals(1, test.text.clock.pendingTimeouts.length);
+  assertEquals(2001, test.text.clock.pendingTimeouts[0].activationTime);
+
+  test.text.clock.advanceTime(2000);
+  test.text.clock.pendingTimeouts.shift().callback();
+
+  assertEquals('Listening', text.interim_.textContent);
   assertEquals('', text.final_.textContent);
   assertEquals(0, test.text.clock.pendingTimeouts.length);
 };
@@ -231,7 +261,7 @@ test.text.testListeningMessageWhenNotReady = function() {
 /**
  * Test not showing the listening message when the ready message is spoken.
  */
-test.text.testListeningMessageWhenNotReady = function() {
+test.text.testListeningMessageWhenReadySpoken = function() {
   // Show the "Ready" message.
   text.interim_.textContent = 'Ready';
   assertEquals('', text.final_.textContent);
