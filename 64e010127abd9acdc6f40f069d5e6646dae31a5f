@@ -122,6 +122,24 @@
       "revId": "64e010127abd9acdc6f40f069d5e6646dae31a5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1993671c_88de6aff",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-13T22:08:26Z",
+      "side": 1,
+      "message": "\u003e If the TemplateURLService is not yet loaded, the only TemplateURL it knows about is initial_default_search_provider_, so it can\u0027t be the case that a match is created with a TemplateURL* that points at another search provider.\n\u003e \n\u003e If the TemplateURLService is loaded between the time the match is created and this code is reached, your code and mine behave identically.\n\u003e \n\u003e So I think the extra simplification is fine correctness-wise.\n\u003e \n\u003e The reason I want to simplify is not just to remove redundancy or have shorter code.  It\u0027s that the not-wonderfully-named \"ShowInDefaultList()\" is supposed to be the master \"users might care about this engine\" API.  Poking at IsPrepopulatedOrCreatedByPolicy() is really more low-level than a consumer here ought to be dealing with, conceptually.\n\nOkay, removed the GetDefaultSearch test and revised comment.",
+      "parentUuid": "d5102935_9d5a4777",
+      "revId": "64e010127abd9acdc6f40f069d5e6646dae31a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
