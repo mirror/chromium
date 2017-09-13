@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "06eacbe4_b3094486",
+        "filename": "components/offline_pages/core/model/get_pages_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-13T18:28:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2aee8c09_5a321957",
+      "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b451bc50_21083ff6",
         "filename": "components/offline_pages/core/model/get_pages_task.cc",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Yes, I am weeding out things that don\u0027t match at all here.\nEverything else is treated as a candidate. Per comment in line 152:\n\n\u003e False positives are dropped in the while loop.\n\nAnd that is what is happening in 168 and 169.",
       "parentUuid": "b451bc50_21083ff6",
+      "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc49ee2e_d2247f32",
+        "filename": "components/offline_pages/core/model/get_pages_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-13T18:28:18Z",
+      "side": 1,
+      "message": "Indeed I missed the line 168 and 169...\nThen does it make sense to also add a \u0027%\u0027 at the start of |string_to_match|?",
+      "parentUuid": "2bfbe1b2_d201befa",
       "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +175,24 @@
       "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a31e419_860c0b49",
+        "filename": "components/offline_pages/core/model/get_pages_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-13T18:28:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "78369045_3231a128",
+      "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
