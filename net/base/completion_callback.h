@@ -15,6 +15,7 @@ namespace net {
 // A callback specialization that takes a single int parameter. Usually this is
 // used to report a byte count or network error code.
 typedef base::Callback<void(int)> CompletionCallback;
+typedef base::OnceCallback<void(int)> OnceCompletionCallback;
 
 // 64bit version of callback specialization that takes a single int64_t
 // parameter. Usually this is used to report a file offset, size or network
