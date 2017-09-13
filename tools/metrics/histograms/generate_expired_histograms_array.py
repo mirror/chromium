@@ -14,6 +14,9 @@ import sys
 import extract_histograms
 import merge_xml
 
+_DATE_FILEPATH = "chrome/MAJOR_BRANCH_DATE"
+_DATE_FILE_PATTERN = r".*MAJOR_BRANCH_DATE=(.+).*"
+
 _SCRIPT_NAME = "generate_expired_histograms_array.py"
 _HASH_DATATYPE = "uint64_t"
 _HEADER = """// Generated from {script_name}. Do not edit!
@@ -71,6 +74,31 @@ def _GetExpiredHistograms(histograms, base_date):
       expired_histograms_names.append(name)
   return expired_histograms_names
 
+def _GetBaseDate(filepath, pattern):
+  """Fetches base date from |filepath| to compare expiry dates with.
+
+  Args:
+   filepath(str): A path to the file with the base date.
+   pattern(str): A regular expression that matches the base date.
+
+  Returns:
+   A base date as datetime.date object. If an error occurs, base date is today
+   date.
+  """
+  today = datetime.datetime.now().date()
+  with open(filepath, "r") as date_file:
+    match_result = re.search(pattern, date_file.read())
+    if not match_result:
+      return today
+    base_date_str = match_result.group(1)
+    try:
+      base_date = datetime.datetime.strptime(
+          base_date_str, extract_histograms.EXPIRY_DATE_PATTERN).date()
+      return base_date
+    except ValueError:
+      logging.warning("Unable to parse base date {date} in file {filepath}.".
+                  format(date=base_date_str, filepath=_DATE_FILEPATH))
+      return today
 
 def _HashName(name):
   """Returns hash for the given histogram |name|."""
@@ -134,8 +162,8 @@ def _GenerateFile(arguments):
       extract_histograms.ExtractHistogramsFromDom(descriptions))
   if had_errors:
     raise Error("Error parsing inputs.")
-  today = datetime.datetime.now().date()
-  expired_histograms_names = _GetExpiredHistograms(histograms, today)
+  base_date = _GetBaseDate(_DATE_FILEPATH, _DATE_FILE_PATTERN)
+  expired_histograms_names = _GetExpiredHistograms(histograms, base_date)
   expired_histograms_map = _GetHashToNameMap(expired_histograms_names)
   header_file_content = _GenerateHeaderFileContent(
       arguments.header_filename, arguments.namespace,
