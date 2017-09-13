@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5580bcd_4095b436",
+        "filename": "third_party/ow2_asm/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-13T17:00:22Z",
+      "side": 1,
+      "message": "super nit: //build/android/bytecode:java_bytecode_rewriter in all three locations here",
+      "range": {
+        "startLine": 8,
+        "startChar": 27,
+        "endLine": 8,
+        "endChar": 49
+      },
+      "revId": "c41ad83ff2c43757cb5fe3ea10bdc7e902611377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
