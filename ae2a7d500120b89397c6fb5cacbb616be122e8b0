@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "132e8ad2_f8d09dea",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-13T23:59:17Z",
+      "side": 1,
+      "message": "Should animation_type_ also be set here?",
+      "revId": "ae2a7d500120b89397c6fb5cacbb616be122e8b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e29cd39_e9333720",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-13T23:59:17Z",
+      "side": 1,
+      "message": "nit: PaintImage instead of PaintImages",
+      "revId": "ae2a7d500120b89397c6fb5cacbb616be122e8b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
