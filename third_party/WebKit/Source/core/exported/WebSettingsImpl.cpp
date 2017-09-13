@@ -438,8 +438,8 @@ void WebSettingsImpl::SetOfflineWebApplicationCacheEnabled(bool enabled) {
   settings_->SetOfflineWebApplicationCacheEnabled(enabled);
 }
 
-void WebSettingsImpl::SetExperimentalWebGLEnabled(bool enabled) {
-  settings_->SetWebGLEnabled(enabled);
+void WebSettingsImpl::SetDisable3DAPIs(bool enabled) {
+  settings_->SetDisable3DAPIs(enabled);
 }
 
 void WebSettingsImpl::SetRenderVSyncNotificationEnabled(bool enabled) {

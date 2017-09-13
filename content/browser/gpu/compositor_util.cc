@@ -80,7 +80,7 @@ const GpuFeatureInfo GetGpuFeatureInfo(size_t index, bool* eof) {
      " and hardware acceleration will be unavailable.",
      true},
     {kWebGLFeatureName, !manager->IsWebGLEnabled(),
-     command_line.HasSwitch(switches::kDisableExperimentalWebGL),
+     command_line.HasSwitch(switches::kDisableWebGL),
      "WebGL has been disabled via blacklist or the command line.", false},
     {"flash_3d", manager->IsFeatureBlacklisted(gpu::GPU_FEATURE_TYPE_FLASH3D),
      command_line.HasSwitch(switches::kDisableFlash3d),

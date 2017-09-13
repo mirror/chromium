@@ -51,7 +51,11 @@ class CORE_EXPORT CanvasRenderingContextHost : public GarbageCollectedMixin {
   virtual ImageBuffer* GetImageBuffer() const = 0;
   virtual ImageBuffer* GetOrCreateImageBuffer() = 0;
 
-  virtual bool IsWebGLAllowed() const = 0;
+  // If WebGL is disabled by an enterprise policy.
+  virtual bool IsWebGLDisabled() const = 0;
+  // If WebGL is temporarily blocked due to WebGL contexts were lost one or
+  // more times, in particular, via the GL_ARB_robustness extension.
+  virtual bool IsWebGLBlocked() const = 0;
 
   virtual FontSelector* GetFontSelector() = 0;
 

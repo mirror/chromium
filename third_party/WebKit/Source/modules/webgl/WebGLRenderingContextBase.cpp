@@ -689,10 +689,16 @@ WebGLRenderingContextBase::CreateWebGraphicsContext3DProvider(
     CanvasRenderingContextHost* host,
     const CanvasContextCreationAttributes& attributes,
     unsigned web_gl_version) {
-  if (!host->IsWebGLAllowed()) {
+  if (host->IsWebGLBlocked()) {
     host->HostDispatchEvent(WebGLContextEvent::Create(
         EventTypeNames::webglcontextcreationerror, false, true,
-        "Web page was not allowed to create a WebGL context."));
+        "Web page caused context lost and was blocked"));
+    return nullptr;
+  }
+  if (host->IsWebGLDisabled()) {
+    host->HostDispatchEvent(WebGLContextEvent::Create(
+        EventTypeNames::webglcontextcreationerror, false, true,
+        "3D APIs are disabled by an enterprise policy"));
     return nullptr;
   }
 
@@ -7469,10 +7475,11 @@ void WebGLRenderingContextBase::MaybeRestoreContext(TimerBase*) {
     LocalFrame* frame = canvas()->GetDocument().GetFrame();
     if (!frame)
       return;
+    if (frame->Client()->BlockWebGL())
+      return;
 
     Settings* settings = frame->GetSettings();
-
-    if (!frame->Client()->AllowWebGL(settings && settings->GetWebGLEnabled()))
+    if (settings && settings->GetDisable3DAPIs())
       return;
   }
 

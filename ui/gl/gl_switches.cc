@@ -82,8 +82,8 @@ const char kTestGLLib[]                     = "test-gl-lib";
 // Use hardware gpu, if available, for tests.
 const char kUseGpuInTests[] = "use-gpu-in-tests";
 
-// Enable OpenGL ES 3 APIs.
-const char kEnableES3APIs[] = "enable-es3-apis";
+// Disable WebGL.
+const char kDisableWebGL[] = "disable-webgl";
 
 // Disable OpenGL ES 3 APIs. This in turn will disable WebGL2.
 const char kDisableES3APIs[] = "disable-es3-apis";
@@ -125,6 +125,8 @@ const char kUsePassthroughCmdDecoder[] = "use-passthrough-cmd-decoder";
 const char* const kGLSwitchesCopiedFromGpuProcessHost[] = {
     kDisableGpuVsync,
     kDisableD3D11,
+    kDisableWebGL,
+    kDisableES3APIs,
     kDisableES3GLContext,
     kEnableGPUServiceLogging,
     kEnableGPUServiceTracing,

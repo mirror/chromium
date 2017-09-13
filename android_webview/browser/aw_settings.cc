@@ -434,9 +434,9 @@ void AwSettings::PopulateWebPreferencesLocked(JNIEnv* env,
     // Using 100M instead of max int to avoid overflows.
     web_prefs->minimum_accelerated_2d_canvas_size = 100 * 1000 * 1000;
   }
-  web_prefs->experimental_webgl_enabled =
-      web_prefs->experimental_webgl_enabled &&
-      enable_supported_hardware_accelerated_features;
+  if (!enable_supported_hardware_accelerated_features) {
+    web_prefs->disable_3d_apis = true;
+  }
 
   // If strict mixed content checking is enabled then running should not be
   // allowed.
