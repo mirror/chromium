@@ -255,6 +255,24 @@
     },
     {
       "key": {
+        "uuid": "bbce2439_ec60d6d5",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T00:41:15Z",
+      "side": 1,
+      "message": "Sorry, lost track of the comment thread. I see, makes sense. So ServiceWorkerProviderContext::SetController() can be called before the ServiceWorkerContainer exists, and it keeps the controller around until the ServiceWorkerCotnainer is created.\n\nMakes sense to keep the check. Please add comments about why provider_client_ is nullptr (assuming we can\u0027t do the observer/callback method which seems like it\u0027d work better).",
+      "parentUuid": "32f7c23e_77f12cfe",
+      "revId": "d7a5649d12d0f26edc2365f7f03ed5615e29f557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e1b99b5_a2fe8118",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 3
