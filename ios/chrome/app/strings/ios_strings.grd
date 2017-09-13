@@ -557,6 +557,9 @@ To adjust your search term, long press to select. To refine your search, slide t
       <message name="IDS_IOS_COPY_VERSION_HINT" desc="The accessibility hint for the label showing the Chrome version. [iOS only]">
         Double tap to copy.
       </message>
+      <message name="IDS_IOS_CREDENTIAL_MANAGER_AUTO_SIGNIN" desc="Notification about automatic sign in. [iOS only]">
+        Signing in as
+      </message>
       <message name="IDS_IOS_DISCONNECT_DIALOG_CONTINUE_BUTTON_MOBILE" desc="The title of the continue button on the disconnect dialog [Length: 20em].">
         Sign Out
       </message>
