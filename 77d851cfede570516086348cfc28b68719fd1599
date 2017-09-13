@@ -33,6 +33,24 @@
       "revId": "77d851cfede570516086348cfc28b68719fd1599",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c086c02e_e4ff5159",
+        "filename": "content/browser/renderer_host/render_widget_host_input_event_router.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-09-13T18:40:11Z",
+      "side": 1,
+      "message": "I did notice that pinchEnd uses update values, but there is no struct in the union for pinch_end.\nIf it makes the code clearer I can change it to the type based switch statement and for pinchEnd just send a scroll_end with default values for all fields.",
+      "parentUuid": "493f2992_85811c9f",
+      "revId": "77d851cfede570516086348cfc28b68719fd1599",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
