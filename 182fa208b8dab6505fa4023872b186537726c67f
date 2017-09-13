@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56514abc_90f40f20",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T19:07:56Z",
+      "side": 1,
+      "message": "\u0026PasswordManagerClientHelper::OnCredentialsChosen",
+      "range": {
+        "startLine": 342,
+        "startChar": 6,
+        "endLine": 342,
+        "endChar": 73
+      },
+      "revId": "182fa208b8dab6505fa4023872b186537726c67f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "193d6c72_9d84f586",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-13T19:07:56Z",
+      "side": 1,
+      "message": "I\u0027m not sure if it works but may be you can just write \u0027using PasswordManagerClient::GetPasswordManager;\u0027 in the header to define this function. Same for iOS.",
+      "range": {
+        "startLine": 797,
+        "startChar": 10,
+        "endLine": 797,
+        "endChar": 27
+      },
+      "revId": "182fa208b8dab6505fa4023872b186537726c67f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
