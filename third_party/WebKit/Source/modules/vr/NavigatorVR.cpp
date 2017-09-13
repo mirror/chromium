@@ -26,12 +26,14 @@ namespace blink {
 
 namespace {
 
-void RejectNavigatorDetached(ScriptPromiseResolver* resolver) {
-  DOMException* exception = DOMException::Create(
-      kInvalidStateError,
-      "The object is no longer associated with a document.");
-  resolver->Reject(exception);
-}
+const char kFeaturePolicyBlocked[] =
+    "Access to the feature \"vr\" is disallowed by feature policy.";
+
+const char kIframeBlockedOnUserGesture[] =
+    "Access to the method is blocked on a user gesture in embedded frames.";
+
+const char kNotAssociatedWithDocument[] =
+    "The object is no longer associated with a document.";
 
 }  // namespace
 
@@ -55,39 +57,37 @@ NavigatorVR& NavigatorVR::From(Navigator& navigator) {
 ScriptPromise NavigatorVR::getVRDisplays(ScriptState* script_state,
                                          Navigator& navigator) {
   if (!navigator.GetFrame()) {
-    ScriptPromiseResolver* resolver =
-        ScriptPromiseResolver::Create(script_state);
-    ScriptPromise promise = resolver->Promise();
-    RejectNavigatorDetached(resolver);
-    return promise;
+    return ScriptPromise::RejectWithDOMException(
+        script_state,
+        DOMException::Create(kInvalidStateError, kNotAssociatedWithDocument));
   }
   return NavigatorVR::From(navigator).getVRDisplays(script_state);
 }
 
 ScriptPromise NavigatorVR::getVRDisplays(ScriptState* script_state) {
-  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
-  ScriptPromise promise = resolver->Promise();
-
   if (!GetDocument()) {
-    RejectNavigatorDetached(resolver);
-    return promise;
+    return ScriptPromise::RejectWithDOMException(
+        script_state,
+        DOMException::Create(kInvalidStateError, kNotAssociatedWithDocument));
   }
 
   LocalFrame* frame = GetDocument()->GetFrame();
-  // TODO(bshe): Add different error string for cases when promise is rejected.
   if (!frame) {
-    RejectNavigatorDetached(resolver);
-    return promise;
+    return ScriptPromise::RejectWithDOMException(
+        script_state,
+        DOMException::Create(kInvalidStateError, kNotAssociatedWithDocument));
   }
   if (IsSupportedInFeaturePolicy(WebFeaturePolicyFeature::kWebVr)) {
     if (!frame->IsFeatureEnabled(WebFeaturePolicyFeature::kWebVr)) {
-      RejectNavigatorDetached(resolver);
-      return promise;
+      return ScriptPromise::RejectWithDOMException(
+          script_state,
+          DOMException::Create(kSecurityError, kFeaturePolicyBlocked));
     }
   } else if (!frame->HasReceivedUserGesture() &&
              frame->IsCrossOriginSubframe()) {
-    RejectNavigatorDetached(resolver);
-    return promise;
+    return ScriptPromise::RejectWithDOMException(
+        script_state,
+        DOMException::Create(kSecurityError, kIframeBlockedOnUserGesture));
   }
 
   UseCounter::Count(*GetDocument(), WebFeature::kVRGetDisplays);
@@ -98,9 +98,10 @@ ScriptPromise NavigatorVR::getVRDisplays(ScriptState* script_state) {
   Platform::Current()->RecordRapporURL("VR.WebVR.GetDisplays",
                                        GetDocument()->Url());
 
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
   Controller()->GetDisplays(resolver);
 
-  return promise;
+  return resolver->Promise();
 }
 
 VRController* NavigatorVR::Controller() {
