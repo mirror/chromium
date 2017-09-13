@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f5b222b_0742a854",
+        "filename": "ui/base/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-13T18:38:06Z",
+      "side": 1,
+      "message": "I didn\u0027t know that android-aura config exists....",
+      "revId": "d25609ef22dcef6121adf3f7d5d5eb1aa9b330d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
