@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a902bff6_71ef95c3",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-13T05:30:21Z",
+      "side": 1,
+      "message": "Could you make this function file local function since this function doesn\u0027t\nuse member of DMC.",
+      "revId": "1dcf95cfc22c71b54b3243adea7c40eb8b07053c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e297717_bcd32a06",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-13T05:30:21Z",
+      "side": 1,
+      "message": "nit: Could you use early-return style?",
+      "revId": "1dcf95cfc22c71b54b3243adea7c40eb8b07053c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b9ed952_c4bfe5c9",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-13T05:30:21Z",
+      "side": 1,
+      "message": "nit: Could you use early-return style?",
+      "revId": "1dcf95cfc22c71b54b3243adea7c40eb8b07053c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe704bf0_336a9f56",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-13T05:30:21Z",
+      "side": 1,
+      "message": "BTW, if we check |LayoutObject::NeedsPaintOffsetAndVisualRectUpdate()|,\nwhich is bit field, |InvalidatePaintForNode()|, we don\u0027t need to use\n|doc_dirty| flag.",
+      "revId": "1dcf95cfc22c71b54b3243adea7c40eb8b07053c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453804b4_e83b4faf",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-13T05:30:21Z",
+      "side": 1,
+      "message": "nit: Could you use early-return style?",
+      "revId": "1dcf95cfc22c71b54b3243adea7c40eb8b07053c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "369c5372_afb74501",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-13T05:30:21Z",
+      "side": 1,
+      "message": "How about using early-return style?\n\n\nif (!doc_dirty)\n  return false;\nInvalidatePaintForNode(*node);\nreturn true;",
+      "revId": "1dcf95cfc22c71b54b3243adea7c40eb8b07053c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
