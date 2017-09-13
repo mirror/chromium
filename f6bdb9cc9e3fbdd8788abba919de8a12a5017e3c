@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "477013ee_f376be71",
+        "filename": "ash/public/cpp/shell_window_ids.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T21:48:57Z",
+      "side": 1,
+      "message": "Thanks for catching that. It seems that this comment is incorrect for some time.",
+      "parentUuid": "a9971ef5_a59b5357",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "800d24e1_e9370902",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-13T16:04:49Z",
       "side": 1,
       "message": "It\u0027s a bit odd to land these buttons devoid of content. You can use IDS_SHUTDOWN_BUTTON/IDS_RESTART_BUTTON/IDS_CANCEL/etc. (at least as placeholders) without moving anything. It would be good to move IDS_SCREEN_LOCK_UNLOCK_USER_BUTTON and IDS_SCREEN_LOCK_SIGN_OUT from chrome to ash. (you could also rename IDS_ASH_STATUS_TRAY_SIGN_OUT to IDS_SIGN_OUT or similar, and then we could remove Chrome\u0027s IDS_SCREEN_LOCK_SIGN_OUT, instead of moving it to ash as a duplicated string resource). Consolidating string copies is good.",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8b1521c_2c2a63b6",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T21:48:57Z",
+      "side": 1,
+      "message": "Sure. I will use IDS_CANCEL as placeholder for now. (Other strings are all in /chrome that can\u0027t be depended on) There\u0027s a follow-up CL handling the strings. I will make sure no duplicate strings exist.",
+      "parentUuid": "800d24e1_e9370902",
       "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "41d5a6bd_e1eea6fb",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T21:48:57Z",
+      "side": 1,
+      "message": "The policy doesn\u0027t change often but still may. I think we need the observer, otherwise a policy change during an active user session can\u0027t be captured either.",
+      "parentUuid": "2b06e9cf_a9504862",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3c6a6fc_4cb09501",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 14
@@ -67,6 +121,24 @@
       "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b0e4474_aa4dbdc3",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T21:48:57Z",
+      "side": 1,
+      "message": "I tried but it doesn\u0027t work. Because the ctor of LoginShelfView calls UpdateUi() first, and then ShelfWidget notifies the session state (which hides the LoginShelfView). So it will crash at startup.\n\nUnless we want to set LoginShelfView invisible in ctor, or initialize the session state to some other states except ACTIVE or UNKNOWN in login_shelf_view.h.",
+      "parentUuid": "c3c6a6fc_4cb09501",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c7d18991_e13aa696",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T21:48:57Z",
+      "side": 1,
+      "message": "I tried removing it but tray_action_observer.h doesn\u0027t include class TrayAction declaration (the class in tray_action.h)",
+      "parentUuid": "92fc8b57_4ee07c75",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28815443_a23fef67",
         "filename": "ash/shelf/login_shelf_view.h",
         "patchSetId": 14
@@ -101,6 +191,24 @@
       "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dbfe498_67381755",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T21:48:57Z",
+      "side": 1,
+      "message": "If it\u0027s protected the unit tests couldn\u0027t directly call it to simulate a button press event.. I used to have it protected but I have a TestApi class as a friend class in the previous patches. Now the TestApi is already removed per previous comments.",
+      "parentUuid": "28815443_a23fef67",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "0c078073_00ff195e",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T21:48:57Z",
+      "side": 1,
+      "message": "Thanks for catching this.",
+      "parentUuid": "2078b2ff_04208089",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74a25ed2_90e545e8",
         "filename": "ash/shelf/login_shelf_view_unittest.cc",
         "patchSetId": 14
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "0d43e584_2677f382",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T21:48:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74a25ed2_90e545e8",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79b8164d_a8b56128",
         "filename": "ash/shelf/login_shelf_view_unittest.cc",
         "patchSetId": 14
@@ -149,6 +293,24 @@
       "writtenOn": "2017-09-13T16:04:49Z",
       "side": 1,
       "message": "Can you use EventGenerator instead?",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb6f4d50_565c4def",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T21:48:57Z",
+      "side": 1,
+      "message": "I tried, but it doesn\u0027t work. I\u0027m not sure, could it be because EventGenerator doesn\u0027t work with ButtonPressed() (I didn\u0027t do a comprehensive search but the unit tests I saw which tested ButtonPressed() always called it directly, while EventGenerator tests e.g. PerformAction(const ui::Event\u0026 event)) Or I may have missed something.",
+      "parentUuid": "79b8164d_a8b56128",
       "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "4366b096_b31d1900",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T21:48:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de7783d3_84e03071",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eebccc69_254d537b",
         "filename": "ash/shelf/login_shelf_view_unittest.cc",
         "patchSetId": 14
@@ -186,6 +366,24 @@
       "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad4a48f_d8a39c5f",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T21:48:57Z",
+      "side": 1,
+      "message": "Please see the above related reply.",
+      "parentUuid": "eebccc69_254d537b",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "18cfeede_ab6bd7c7",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T21:48:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91f45d75_9feb51e7",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "006cd20f_de8085ee",
         "filename": "ash/shelf/login_shelf_view_unittest.cc",
         "patchSetId": 14
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "a8a14b41_46786af2",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T21:48:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "006cd20f_de8085ee",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6070eea5_5f6689b4",
         "filename": "ash/shutdown_controller.cc",
         "patchSetId": 14
@@ -234,6 +468,24 @@
       "writtenOn": "2017-09-13T16:04:49Z",
       "side": 1,
       "message": "optional: I\u0027m thinking it\u0027d be okay to just make SetRebootOnShutdown public.",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47f8f02f_30448ab7",
+        "filename": "ash/shutdown_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-13T21:48:57Z",
+      "side": 1,
+      "message": "I\u0027m not very comfortable with making it public.. I think policy changes should be restricted.",
+      "parentUuid": "6070eea5_5f6689b4",
       "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
