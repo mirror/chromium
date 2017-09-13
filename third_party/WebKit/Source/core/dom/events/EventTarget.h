@@ -160,6 +160,8 @@ class CORE_EXPORT EventTarget : public GarbageCollectedFinalized<EventTarget>,
   bool dispatchEventForBindings(Event*, ExceptionState&);
   virtual void UncaughtExceptionInEventHandler();
 
+  RegisteredEventListener* GetAttributeRegisteredEventListener(
+      const AtomicString& event_type);
   // Used for legacy "onEvent" attribute APIs.
   bool SetAttributeEventListener(const AtomicString& event_type,
                                  EventListener*);
