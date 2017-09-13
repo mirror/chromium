@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6c30f36_147b7946",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/compressor_archive_minizip.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-13T08:52:34Z",
+      "side": 1,
+      "message": "nit: function name must start with capital letter. https://google.github.io/styleguide/cppguide.html#Function_Names\n\nSame with the other function.",
+      "range": {
+        "startLine": 15,
+        "startChar": 9,
+        "endLine": 15,
+        "endChar": 22
+      },
+      "revId": "1fc21cb1db15561f302ed108b4d062562a79ee59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817a007b_3a9d6802",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/volume_archive_minizip.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-13T08:52:34Z",
+      "side": 1,
+      "message": "This function is just converting format. This comment should go to the caller of this function, e.g. above line 283.",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 72
+      },
+      "revId": "1fc21cb1db15561f302ed108b4d062562a79ee59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
