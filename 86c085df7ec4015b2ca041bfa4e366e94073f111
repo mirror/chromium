@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a8a026d_9552e1e5",
+        "filename": "content/common/service_worker/controller_service_worker.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-13T16:24:40Z",
+      "side": 1,
+      "message": "Which way does this interface go?  At present, is the event dispatched in the browser or the renderer? Maybe we can clarify which way the API goes beyond \"One of its Mojo endpoints ...\"?",
+      "range": {
+        "startLine": 14,
+        "startChar": 65,
+        "endLine": 16,
+        "endChar": 22
+      },
+      "revId": "86c085df7ec4015b2ca041bfa4e366e94073f111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5bfe30d_4893ab9f",
+        "filename": "content/common/service_worker/controller_service_worker.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-13T16:24:40Z",
+      "side": 1,
+      "message": "where are these IDs generated?  Are we safe if we get a response with a non-existent or duplicate ID?",
+      "range": {
+        "startLine": 37,
+        "startChar": 27,
+        "endLine": 37,
+        "endChar": 41
+      },
+      "revId": "86c085df7ec4015b2ca041bfa4e366e94073f111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
