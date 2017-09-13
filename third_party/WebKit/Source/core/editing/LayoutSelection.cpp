@@ -120,8 +120,8 @@ static SelectionMode ComputeSelectionMode(
 }
 
 // TODO(yoichio): Once we have Position::IsValidFor, use it.
-static bool IsPositionValidFor(const PositionInFlatTree& position,
-                               const Document& document) {
+static bool IsPositionValidFor1(const PositionInFlatTree& position,
+                                const Document& document) {
   DCHECK(position.IsNotNull());
   if (position.GetDocument() != document)
     return false;
@@ -142,8 +142,8 @@ static EphemeralRangeInFlatTree CalcSelectionInFlatTree(
       const PositionInFlatTree& extent =
           ToPositionInFlatTree(selection_in_dom.Extent());
       if (base.IsNull() || extent.IsNull() || base == extent ||
-          !IsPositionValidFor(base, frame_selection.GetDocument()) ||
-          !IsPositionValidFor(extent, frame_selection.GetDocument()))
+          !IsPositionValidFor1(base, frame_selection.GetDocument()) ||
+          !IsPositionValidFor1(extent, frame_selection.GetDocument()))
         return {};
       return base <= extent ? EphemeralRangeInFlatTree(base, extent)
                             : EphemeralRangeInFlatTree(extent, base);

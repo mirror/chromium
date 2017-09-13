@@ -2065,6 +2065,8 @@ split_static_library("browser") {
     sources += [
       "signin/dice_response_handler.cc",
       "signin/dice_response_handler.h",
+      "signin/dice_tab_helper.cc",
+      "signin/dice_tab_helper.h",
     ]
   }
   if (enable_spellcheck) {

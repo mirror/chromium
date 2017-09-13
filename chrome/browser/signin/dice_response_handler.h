@@ -18,6 +18,10 @@ namespace signin {
 struct DiceResponseParams;
 }
 
+namespace content {
+class WebContents;
+}
+
 class AccountTrackerService;
 class GaiaAuthFetcher;
 class GoogleServiceAuthError;
@@ -43,7 +47,8 @@ class DiceResponseHandler : public KeyedService {
   ~DiceResponseHandler() override;
 
   // Must be called when receiving a Dice response header.
-  void ProcessDiceHeader(const signin::DiceResponseParams& dice_params);
+  void ProcessDiceHeader(const signin::DiceResponseParams& dice_params,
+                         content::WebContents* web_contents);
 
   // Returns the number of pending DiceTokenFetchers. Exposed for testing.
   size_t GetPendingDiceTokenFetchersCountForTesting() const;
@@ -56,6 +61,7 @@ class DiceResponseHandler : public KeyedService {
                      const std::string& email,
                      const std::string& authorization_code,
                      SigninClient* signin_client,
+                     content::WebContents* web_contents,
                      DiceResponseHandler* dice_response_handler);
     ~DiceTokenFetcher() override;
 
@@ -77,6 +83,7 @@ class DiceResponseHandler : public KeyedService {
     std::string gaia_id_;
     std::string email_;
     std::string authorization_code_;
+    content::WebContents* web_contents_;
     DiceResponseHandler* dice_response_handler_;
     base::CancelableClosure timeout_closure_;
     std::unique_ptr<GaiaAuthFetcher> gaia_auth_fetcher_;
@@ -95,7 +102,8 @@ class DiceResponseHandler : public KeyedService {
   // Process the Dice signin action.
   void ProcessDiceSigninHeader(const std::string& gaia_id,
                                const std::string& email,
-                               const std::string& authorization_code);
+                               const std::string& authorization_code,
+                               content::WebContents* web_contents);
 
   // Process the Dice signout action.
   void ProcessDiceSignoutHeader(const std::vector<std::string>& gaia_ids,
@@ -105,11 +113,16 @@ class DiceResponseHandler : public KeyedService {
   // after DiceAction::SIGNIN.
   void OnTokenExchangeSuccess(
       DiceTokenFetcher* token_fetcher,
-      const std::string& gaia_id,
-      const std::string& email,
+      const std::string gaia_id,
+      const std::string email,
+      content::WebContents* web_contents,
       const GaiaAuthConsumer::ClientOAuthResult& result);
   void OnTokenExchangeFailure(DiceTokenFetcher* token_fetcher,
                               const GoogleServiceAuthError& error);
+
+  void StartSyncIfNeeded(const std::string& gaia_id,
+                         const std::string& email,
+                         content::WebContents* web_contents);
 
   SigninManager* signin_manager_;
   SigninClient* signin_client_;

@@ -28,6 +28,8 @@ class SigninDiceInternalsHandler : public content::WebUIMessageHandler {
   // Handler for disable sync event.
   void HandleDisableSync(const base::ListValue* args);
 
+  void StartWebGaiaSigninAndStartSyncWhenDone();
+
   Profile* profile_;
 
   DISALLOW_COPY_AND_ASSIGN(SigninDiceInternalsHandler);

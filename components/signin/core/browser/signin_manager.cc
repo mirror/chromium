@@ -107,6 +107,7 @@ void SigninManager::StartSignInWithRefreshToken(
   SigninType signin_type = refresh_token.empty()
                                ? SIGNIN_TYPE_WITHOUT_REFRESH_TOKEN
                                : SIGNIN_TYPE_WITH_REFRESH_TOKEN;
+  LOG(ERROR) << "StartSignInWithRefreshToken: " << gaia_id << "  " << username;
   if (!PrepareForSignin(signin_type, gaia_id, username, password)) {
     return;
   }

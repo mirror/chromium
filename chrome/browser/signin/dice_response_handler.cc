@@ -30,6 +30,8 @@
 #include "google_apis/gaia/gaia_constants.h"
 #include "google_apis/gaia/google_service_auth_error.h"
 
+#include "chrome/browser/signin/dice_tab_helper.h"
+
 const int kDiceTokenFetchTimeoutSeconds = 10;
 
 namespace {
@@ -131,10 +133,12 @@ DiceResponseHandler::DiceTokenFetcher::DiceTokenFetcher(
     const std::string& email,
     const std::string& authorization_code,
     SigninClient* signin_client,
+    content::WebContents* web_contents,
     DiceResponseHandler* dice_response_handler)
     : gaia_id_(gaia_id),
       email_(email),
       authorization_code_(authorization_code),
+      web_contents_(web_contents),
       dice_response_handler_(dice_response_handler),
       timeout_closure_(
           base::Bind(&DiceResponseHandler::DiceTokenFetcher::OnTimeout,
@@ -166,7 +170,7 @@ void DiceResponseHandler::DiceTokenFetcher::OnClientOAuthSuccess(
   gaia_auth_fetcher_.reset();
   timeout_closure_.Cancel();
   dice_response_handler_->OnTokenExchangeSuccess(this, gaia_id_, email_,
-                                                 result);
+                                                 web_contents_, result);
   // |this| may be deleted at this point.
 }
 
@@ -206,13 +210,14 @@ DiceResponseHandler::DiceResponseHandler(
 DiceResponseHandler::~DiceResponseHandler() {}
 
 void DiceResponseHandler::ProcessDiceHeader(
-    const signin::DiceResponseParams& dice_params) {
+    const signin::DiceResponseParams& dice_params,
+    content::WebContents* web_contents) {
   DCHECK(signin::IsDiceFixAuthErrorsEnabled());
   switch (dice_params.user_intention) {
     case signin::DiceAction::SIGNIN:
-      ProcessDiceSigninHeader(dice_params.signin_info.gaia_id,
-                              dice_params.signin_info.email,
-                              dice_params.signin_info.authorization_code);
+      ProcessDiceSigninHeader(
+          dice_params.signin_info.gaia_id, dice_params.signin_info.email,
+          dice_params.signin_info.authorization_code, web_contents);
       return;
     case signin::DiceAction::SIGNOUT: {
       const signin::DiceResponseParams::SignoutInfo& signout_info =
@@ -257,7 +262,8 @@ bool DiceResponseHandler::CanGetTokenForAccount(const std::string& gaia_id,
 void DiceResponseHandler::ProcessDiceSigninHeader(
     const std::string& gaia_id,
     const std::string& email,
-    const std::string& authorization_code) {
+    const std::string& authorization_code,
+    content::WebContents* web_contents) {
   DCHECK(!gaia_id.empty());
   DCHECK(!email.empty());
   DCHECK(!authorization_code.empty());
@@ -277,7 +283,7 @@ void DiceResponseHandler::ProcessDiceSigninHeader(
   }
 
   token_fetchers_.push_back(base::MakeUnique<DiceTokenFetcher>(
-      gaia_id, email, authorization_code, signin_client_, this));
+      gaia_id, email, authorization_code, signin_client_, web_contents, this));
 }
 
 void DiceResponseHandler::ProcessDiceSignoutHeader(
@@ -342,8 +348,9 @@ void DiceResponseHandler::DeleteTokenFetcher(DiceTokenFetcher* token_fetcher) {
 
 void DiceResponseHandler::OnTokenExchangeSuccess(
     DiceTokenFetcher* token_fetcher,
-    const std::string& gaia_id,
-    const std::string& email,
+    const std::string gaia_id,
+    const std::string email,
+    content::WebContents* web_contents,
     const GaiaAuthConsumer::ClientOAuthResult& result) {
   if (!CanGetTokenForAccount(gaia_id, email))
     return;
@@ -353,6 +360,8 @@ void DiceResponseHandler::OnTokenExchangeSuccess(
   VLOG(1) << "[Dice] OAuth success for account: " << account_id;
   token_service_->UpdateCredentials(account_id, result.refresh_token);
   DeleteTokenFetcher(token_fetcher);
+
+  StartSyncIfNeeded(gaia_id, email, web_contents);
 }
 
 void DiceResponseHandler::OnTokenExchangeFailure(
@@ -361,4 +370,14 @@ void DiceResponseHandler::OnTokenExchangeFailure(
   // TODO(droger): Handle authentication errors.
   VLOG(1) << "[Dice] OAuth failed with error: " << error.ToString();
   DeleteTokenFetcher(token_fetcher);
+}
+
+void DiceResponseHandler::StartSyncIfNeeded(
+    const std::string& gaia_id,
+    const std::string& email,
+    content::WebContents* web_contents) {
+  DiceTabHelper* tab_helper = DiceTabHelper::FromWebContents(web_contents);
+  if (!tab_helper)
+    return;
+  tab_helper->StartSyncIfNeeded(gaia_id, email);
 }
