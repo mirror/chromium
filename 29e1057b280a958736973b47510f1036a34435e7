@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3997e70b_3696d51c",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-13T20:48:11Z",
+      "side": 1,
+      "message": "Sorry about my back-and-forth commenting here, but doesn\u0027t this belong in Node, Element, HTMLElement, or with media controls code?\n\nThis method is about DOM relationships between nodes and html elements in the media controls and not something that belongs in the StyleResolver?",
+      "revId": "29e1057b280a958736973b47510f1036a34435e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea3cf2d4_6e92a71d",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-13T20:48:11Z",
+      "side": 1,
+      "message": "If you make HasMediaControlAncestor a function in the anon namespace as well, you don\u0027t need the ScopedResolverFor friendness.\n\nEdit: I see now that you need this for unit testing. I think HasMediaControlAncestor belongs in the dom/html/media_controls code somewhere as a public method StyleResolver can call. See my other comment.",
+      "revId": "29e1057b280a958736973b47510f1036a34435e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d609c4e_ea01c99c",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolverTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-13T20:48:11Z",
+      "side": 1,
+      "message": "Returning a reference here probably works, but is not a common pattern for oilpan objects. I would have returned a pointer instead.",
+      "revId": "29e1057b280a958736973b47510f1036a34435e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

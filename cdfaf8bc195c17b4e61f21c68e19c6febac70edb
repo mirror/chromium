@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "23a3de29_7827f97f",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-13T20:48:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "da53c71e_58afdee9",
+      "revId": "cdfaf8bc195c17b4e61f21c68e19c6febac70edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db8861ba_905c6e5b",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "db8861ba_905c6e5b",
+      "revId": "cdfaf8bc195c17b4e61f21c68e19c6febac70edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f489926_0ddf93e4",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-13T20:48:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5e00f302_ef325f62",
       "revId": "cdfaf8bc195c17b4e61f21c68e19c6febac70edb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -107,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "86ef0fa5_f41809b0",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-13T20:48:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b226537e_39291af6",
+      "revId": "cdfaf8bc195c17b4e61f21c68e19c6febac70edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0208e37_be98aebe",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
         "patchSetId": 3
@@ -136,6 +190,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "b0208e37_be98aebe",
+      "revId": "cdfaf8bc195c17b4e61f21c68e19c6febac70edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7f1c8a9f_119d0d90",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-13T20:48:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ad966036_8f9c452f",
       "revId": "cdfaf8bc195c17b4e61f21c68e19c6febac70edb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -177,6 +249,24 @@
     },
     {
       "key": {
+        "uuid": "7f566b7c_20c228e8",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-13T20:48:11Z",
+      "side": 1,
+      "message": "I thought you could just keep the method local to this file like the static function we had before or in an anonymous namespace like you did for IsMediaControl(). Just have all three of IsMediaControl/HasMediaControlAncestor/ScopedResolverFor as functions in the anon namespace.",
+      "parentUuid": "22741464_dac46d3b",
+      "revId": "cdfaf8bc195c17b4e61f21c68e19c6febac70edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "152ca211_3b95b8a6",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
         "patchSetId": 3
@@ -206,6 +296,24 @@
       "side": 1,
       "message": "Yes this is fine.",
       "parentUuid": "152ca211_3b95b8a6",
+      "revId": "cdfaf8bc195c17b4e61f21c68e19c6febac70edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8cc8e250_a42b9a85",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-13T20:48:11Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "619381ab_d9a7f39c",
       "revId": "cdfaf8bc195c17b4e61f21c68e19c6febac70edb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
