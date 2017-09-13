@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aee46c7c_e71676cd",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-13T07:12:32Z",
+      "side": 1,
+      "message": "Is having content_settings::SETTING_SOURCE_NONE needed?",
+      "revId": "45c5d16ba42f6037bdd168c17dd755e4e3caac0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "762619e8_9546b598",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-13T07:12:32Z",
+      "side": 1,
+      "message": "You may want to have a comment explaining these conditions. I think the conditions are:\n1) info.source \u003d\u003d content_settings::SETTING_SOURCE_USER checks that the current active setting comes from the default provider or pref provider\n2) info.setting \u003d\u003d CONTENT_SETTING_DEFAULT ensures that the pattern is a wildcard which ensures the setting is actually from the default provider.\n3) The other check ensures that the value in the default provider matches the factory default\n\nAlso, I think the outer () aren\u0027t needed on the return statement (I don\u0027t think they add to readability and don\u0027t impact correctness)",
+      "revId": "45c5d16ba42f6037bdd168c17dd755e4e3caac0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e39c6487_de071695",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-13T07:12:32Z",
+      "side": 1,
+      "message": "nit: this comment might make slightly more sense if moved above the top if-statement",
+      "revId": "45c5d16ba42f6037bdd168c17dd755e4e3caac0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225e990d_3dede8ba",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-13T07:12:32Z",
+      "side": 1,
+      "message": "nit: add {}",
+      "revId": "45c5d16ba42f6037bdd168c17dd755e4e3caac0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a805b1a_de3e3d75",
+        "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-13T07:12:32Z",
+      "side": 1,
+      "message": "Hmm, I thought the default for popups was BLOCK? Is this because it\u0027s a user preference?",
+      "revId": "45c5d16ba42f6037bdd168c17dd755e4e3caac0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f5ccc7e_1e9f077f",
+        "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-13T07:12:32Z",
+      "side": 1,
+      "message": "Should we have one where we set the default value to the factory default and check that the size doesn\u0027t change?",
+      "revId": "45c5d16ba42f6037bdd168c17dd755e4e3caac0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33d67a77_af6aeb9a",
+        "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-13T07:12:32Z",
+      "side": 1,
+      "message": "Could the above be unwound a little?\n\ne.g. would this work?\n\nEXPECT_EQ(non_default_permissions.size(), last_permission_info_list().size());\nfor (PageInfoUI::PermissionInfo permission : last_permission_info_list())\n    EXPECT_TRUE(base::ContainsValue(non_default_permissions, permission.type));\n\nNow that I look at it, did you mean to call PermissionInfoListContainsPermission instead of contans_permission, that would be fine too since code is being shared, otherwise we should probably re-inline that function",
+      "revId": "45c5d16ba42f6037bdd168c17dd755e4e3caac0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d68a5a68_8e807818",
+        "filename": "components/content_settings/core/browser/host_content_settings_map.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-13T07:12:32Z",
+      "side": 1,
+      "message": "The disadvantage of adding this function is that HCSM is already a large API and that it doesn\u0027t actually need to be on the HCSM. Could we put it on ContentSettingsInfo instead and then look up the value using ContentSettingsRegistry directly?",
+      "revId": "45c5d16ba42f6037bdd168c17dd755e4e3caac0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
