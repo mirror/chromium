@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d5993a3_4f9f5308",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-13T10:03:58Z",
+      "side": 1,
+      "message": "doesnt work for Webstring or string16 because of non-linearity",
+      "parentUuid": "1a9d4352_8e0397f9",
+      "range": {
+        "startLine": 538,
+        "startChar": 6,
+        "endLine": 538,
+        "endChar": 15
+      },
+      "revId": "1c9ef16461cbed3a0c850d666b9d10ac95e05ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57380f0b_9ceb6ce6",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f24dc51b_d39ae0a4",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-13T10:03:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57380f0b_9ceb6ce6",
+      "range": {
+        "startLine": 539,
+        "startChar": 18,
+        "endLine": 539,
+        "endChar": 19
+      },
+      "revId": "1c9ef16461cbed3a0c850d666b9d10ac95e05ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cf5f1e9_4d0a5b70",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "1c9ef16461cbed3a0c850d666b9d10ac95e05ce3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f8155c6_e4b111f9",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-13T10:03:58Z",
+      "side": 1,
+      "message": "I did some research on copy_if, and I guess it is not able to convert between types (getting element x from one and putting x.toUtf16() to the other), it just copies elements from one vector to another if they satisfy a condition. Here the passwords vector contains elements of type WebInputElement while other_possible_passwords is of string16. I think adding some extra lines to do the conversion just to use copy_if would not be effective, so I am leaving the block as it is. If I am missing something please tell me. :)",
+      "parentUuid": "6cf5f1e9_4d0a5b70",
+      "range": {
+        "startLine": 542,
+        "startChar": 8,
+        "endLine": 542,
+        "endChar": 32
+      },
+      "revId": "1c9ef16461cbed3a0c850d666b9d10ac95e05ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
