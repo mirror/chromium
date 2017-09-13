@@ -24,11 +24,15 @@
 #define ImageLoader_h
 
 #include <memory>
+#include "bindings/core/v8/ExceptionState.h"
+#include "bindings/core/v8/ScriptPromise.h"
+#include "bindings/core/v8/ScriptPromiseResolver.h"
 #include "core/CoreExport.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/loader/resource/ImageResource.h"
 #include "core/loader/resource/ImageResourceContent.h"
 #include "core/loader/resource/ImageResourceObserver.h"
+#include "platform/bindings/ScriptState.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/WeakPtr.h"
@@ -115,6 +119,8 @@ class CORE_EXPORT ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
 
   bool GetImageAnimationPolicy(ImageAnimationPolicy&) final;
 
+  ScriptPromise Decode(ScriptState*, ExceptionState&);
+
  protected:
   void ImageChanged(ImageResourceContent*, const IntRect*) override;
   void ImageNotifyFinished(ImageResourceContent*) override;
@@ -126,7 +132,8 @@ class CORE_EXPORT ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
   void DoUpdateFromElement(BypassMainWorldBehavior,
                            UpdateFromElementBehavior,
                            const KURL&,
-                           ReferrerPolicy = kReferrerPolicyDefault);
+                           ReferrerPolicy = kReferrerPolicyDefault,
+                           bool sync_update = false);
 
   virtual void DispatchLoadEvent() = 0;
   virtual void NoImageResourceToLoad() {}
@@ -164,6 +171,10 @@ class CORE_EXPORT ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
   // that have already been finalized in the current lazy sweeping.
   void Dispose();
 
+  void DispatchDecodeRequestsIfComplete();
+  void RejectPendingDecodes(bool sync_update = false);
+  void DecodeRequestFinished(uint64_t request_id, bool success);
+
   Member<Element> element_;
   Member<ImageResourceContent> image_;
   Member<ImageResource> image_resource_for_image_document_;
@@ -196,6 +207,65 @@ class CORE_EXPORT ImageLoader : public GarbageCollectedFinalized<ImageLoader>,
   bool image_complete_ : 1;
   bool loading_image_document_ : 1;
   bool suppress_error_events_ : 1;
+
+  // DecodeRequest represents a single request to the Decode() function. The
+  // decode requests have one of the following states:
+  //
+  // - kPendingMutation: This is the initial state. The caller is responsible
+  // for scheduling a microtask that would advance the state to the next value.
+  // Images invalidated by the pending mutations microtask (|pending_task_|) do
+  // not invalidate decode requests in this state. The exception is synchronous
+  // updates that do not go through |pending_task_|.
+  //
+  // - kPendingLoad: Once the microtask runs, it advances the state to
+  // kPendingLoad which waits for the image to be loaded. If |pending_task_|
+  // runs and modifies the image, it invalidates any DecodeRequests in this
+  // state.
+  //
+  // - kDispatched: Once the image is loaded and the request to decode it is
+  // dispatched on behalf of this DecodeRequest, the state changes to
+  // kDispatched. If |pending_task_| runs and modifies the image, it invalidates
+  // any DecodeRequests in this state.
+  class DecodeRequest : public GarbageCollectedFinalized<DecodeRequest> {
+   public:
+    enum State { kPendingMutation, kPendingLoad, kDispatched };
+
+    DecodeRequest(ImageLoader*, ScriptPromiseResolver*);
+    DecodeRequest(DecodeRequest&&) = default;
+    ~DecodeRequest();
+
+    DECLARE_TRACE();
+
+    DecodeRequest& operator=(DecodeRequest&&) = default;
+
+    uint64_t request_id() const { return request_id_; }
+    State state() const { return state_; }
+    ScriptPromise promise() { return resolver_->Promise(); }
+
+    void Resolve();
+    void Reject();
+
+    void ProcessForTask();
+    void NotifyDecodeDispatched();
+
+    WeakPtr<DecodeRequest> CreateWeakPtr() {
+      return weak_ptr_factory_.CreateWeakPtr();
+    }
+
+   private:
+    static uint64_t s_next_request_id_;
+
+    uint64_t request_id_ = 0;
+    State state_ = kPendingMutation;
+
+    Member<ScriptPromiseResolver> resolver_;
+    bool processed_ = false;
+    UntracedMember<ImageLoader> loader_ = nullptr;
+
+    WeakPtrFactory<DecodeRequest> weak_ptr_factory_;
+  };
+
+  HeapVector<Member<DecodeRequest>> decode_requests_;
 };
 
 }  // namespace blink

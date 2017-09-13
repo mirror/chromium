@@ -165,10 +165,79 @@ void ImageLoader::Dispose() {
   }
 }
 
+void ImageLoader::DispatchDecodeRequestsIfComplete() {
+  // If the current image isn't complete, then we can't dispatch any decodes.
+  // This function will be called again when the current image completes.
+  if (!image_complete_)
+    return;
+
+  bool is_active = GetElement()->GetDocument().IsActive();
+  LocalFrame* frame = GetElement()->GetDocument().GetFrame();
+  // If any of the following conditions hold, we either have an inactive
+  // document or a broken/non-existent image. In those cases, we reject any
+  // pending decodes.
+  if (!is_active || !frame || !GetImage() || GetImage()->ErrorOccurred()) {
+    RejectPendingDecodes();
+    return;
+  }
+
+  for (auto& request : decode_requests_) {
+    // If the image already had a decode dispatched or it is still in the
+    // pending mutation state, then we don't dispatch decodes for it. So, the
+    // only case to handle is if we're in kPendingLoad state.
+    if (request->state() != DecodeRequest::kPendingLoad)
+      continue;
+    Image* image = GetImage()->GetImage();
+    frame->GetChromeClient().RequestDecode(
+        frame, image->PaintImageForCurrentFrame(),
+        WTF::Bind(&ImageLoader::DecodeRequestFinished, WrapWeakPersistent(this),
+                  request->request_id()));
+    request->NotifyDecodeDispatched();
+  }
+}
+
+void ImageLoader::DecodeRequestFinished(uint64_t request_id, bool success) {
+  // First we find the corrensponding request id, then we either resolve or
+  // reject it and remove it from the list.
+  for (size_t i = 0; i < decode_requests_.size(); ++i) {
+    auto& request = decode_requests_[i];
+    if (request->request_id() != request_id)
+      continue;
+
+    if (success)
+      request->Resolve();
+    else
+      request->Reject();
+    decode_requests_.erase(i);
+    break;
+  }
+}
+
+void ImageLoader::RejectPendingDecodes(bool sync_update) {
+  // Normally, we only reject pending decodes that have passed the
+  // kPendingMutation state, since pending mutations requests still have an
+  // outstanding microtask that will run and might act on a different image that
+  // the current one. However, as an optimization, there are cases where we
+  // synchronously update the image (see UpdateFromElement). In those cases, we
+  // have to reject even the pending mutation requests because conceptually they
+  // would have been scheduled before the synchronous update ran, so they
+  // referred to the old image.
+  for (size_t i = 0; i < decode_requests_.size();) {
+    auto& request = decode_requests_[i];
+    if (!sync_update && request->state() == DecodeRequest::kPendingMutation) {
+      ++i;
+      continue;
+    }
+    request->Reject();
+    decode_requests_.erase(i);
+  }
+}
+
 DEFINE_TRACE(ImageLoader) {
   visitor->Trace(image_);
   visitor->Trace(image_resource_for_image_document_);
   visitor->Trace(element_);
+  visitor->Trace(decode_requests_);
 }
 
 void ImageLoader::SetImageForTest(ImageResourceContent* new_image) {
@@ -284,7 +353,8 @@ void ImageLoader::UpdateImageState(ImageResourceContent* new_image) {
 void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
                                       UpdateFromElementBehavior update_behavior,
                                       const KURL& url,
-                                      ReferrerPolicy referrer_policy) {
+                                      ReferrerPolicy referrer_policy,
+                                      bool sync_update) {
   // FIXME: According to
   // http://www.whatwg.org/specs/web-apps/current-work/multipage/embedded-content.html#the-img-element:the-img-element-55
   // When "update image" is called due to environment changes and the load
@@ -348,6 +418,9 @@ void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
   }
 
   ImageResourceContent* old_image = image_.Get();
+  if (old_image != new_image)
+    RejectPendingDecodes(sync_update);
+
   if (update_behavior == kUpdateSizeChanged && element_->GetLayoutObject() &&
       element_->GetLayoutObject()->IsImage() && new_image == old_image) {
     ToLayoutImage(element_->GetLayoutObject())->IntrinsicSizeChanged();
@@ -427,7 +500,7 @@ void ImageLoader::UpdateFromElement(UpdateFromElementBehavior update_behavior,
   KURL url = ImageSourceToKURL(image_source_url);
   if (ShouldLoadImmediately(url)) {
     DoUpdateFromElement(kDoNotBypassMainWorldCSP, update_behavior, url,
-                        referrer_policy);
+                        referrer_policy, true /* sync_update */);
     return;
   }
   // Allow the idiom "img.src=''; img.src='.." to clear down the image before an
@@ -533,6 +606,8 @@ void ImageLoader::ImageNotifyFinished(ImageResourceContent* resource) {
     ToSVGImage(image_->GetImage())
         ->UpdateUseCounters(GetElement()->GetDocument());
   }
+
+  DispatchDecodeRequestsIfComplete();
 
   if (loading_image_document_) {
     CHECK(!pending_load_event_.IsActive());
@@ -644,6 +719,26 @@ bool ImageLoader::GetImageAnimationPolicy(ImageAnimationPolicy& policy) {
   return true;
 }
 
+ScriptPromise ImageLoader::Decode(ScriptState* script_state,
+                                  ExceptionState& exception_state) {
+  if (!script_state->ContextIsValid()) {
+    exception_state.ThrowDOMException(kEncodingError,
+                                      "The source image cannot be decoded.");
+    return ScriptPromise();
+  }
+
+  Member<DecodeRequest> request(
+      new DecodeRequest(this, ScriptPromiseResolver::Create(script_state)));
+
+  auto promise = request->promise();
+  Microtask::EnqueueMicrotask(
+      WTF::Bind(&DecodeRequest::ProcessForTask, request->CreateWeakPtr()));
+
+  decode_requests_.push_back(std::move(request));
+
+  return promise;
+}
+
 void ImageLoader::ElementDidMoveToNewDocument() {
   if (delay_until_do_update_from_element_) {
     delay_until_do_update_from_element_->DocumentChanged(
@@ -655,6 +750,57 @@ void ImageLoader::ElementDidMoveToNewDocument() {
   }
   ClearFailedLoadURL();
   ClearImage();
+}
+
+// Indicates the next available id that we can use to uniquely identify a decode
+// request.
+uint64_t ImageLoader::DecodeRequest::s_next_request_id_ = 0;
+
+ImageLoader::DecodeRequest::DecodeRequest(ImageLoader* loader,
+                                          ScriptPromiseResolver* resolver)
+    : request_id_(s_next_request_id_++),
+      resolver_(resolver),
+      loader_(loader),
+      weak_ptr_factory_(this) {}
+
+ImageLoader::DecodeRequest::~DecodeRequest() {
+  // For sanity, reject any unprocessed requests. This can happen when the
+  // containing ImageLoader is destroyed.
+  if (!processed_)
+    Reject();
+}
+
+void ImageLoader::DecodeRequest::Resolve() {
+  resolver_->Resolve();
+  processed_ = true;
+}
+
+void ImageLoader::DecodeRequest::Reject() {
+  resolver_->Reject(DOMException::Create(
+      kEncodingError, "The source image cannot be decoded."));
+  processed_ = true;
+}
+
+void ImageLoader::DecodeRequest::ProcessForTask() {
+  // We could have already processed (ie rejected) this task due to a sync
+  // update in UpdateFromElement. In that case, there's nothing to do here.
+  if (processed_)
+    return;
+
+  DCHECK_EQ(state_, kPendingMutation);
+  state_ = kPendingLoad;
+  // This must be the last call in the function, since
+  // DispatchDecodeRequestsIfComplete might delete this request.
+  loader_->DispatchDecodeRequestsIfComplete();
+}
+
+void ImageLoader::DecodeRequest::NotifyDecodeDispatched() {
+  DCHECK_EQ(state_, kPendingLoad);
+  state_ = kDispatched;
+}
+
+DEFINE_TRACE(ImageLoader::DecodeRequest) {
+  visitor->Trace(resolver_);
 }
 
 }  // namespace blink
