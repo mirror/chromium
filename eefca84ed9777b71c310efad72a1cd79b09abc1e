@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efd12aad_9ab5d112",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-13T21:26:35Z",
+      "side": 1,
+      "message": "This is causing the chromeos build failures, e.g. https://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.linux%2Fchromeos_amd64-generic_chromium_compile_only_ng%2F417919%2F%2B%2Frecipes%2Fsteps%2Fcompile__with_patch_%2F0%2Fstdout\n\nLooks like it needs more conditions.\n\nI think this is what we want (stolen from further down in the file):\n\nif (is_clang \u0026\u0026 !is_nacl \u0026\u0026 current_toolchain \u003d\u003d host_toolchain)",
+      "revId": "eefca84ed9777b71c310efad72a1cd79b09abc1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
