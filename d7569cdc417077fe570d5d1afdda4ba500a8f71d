@@ -2,6 +2,120 @@
   "comments": [
     {
       "key": {
+        "uuid": "fb1ea2dc_beeb6454",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-13T07:13:31Z",
+      "side": 1,
+      "message": "Move this default state creation into its own function.\n\nfunction createGeneralInfo()\n\nsame for dataSeries. Then in the cr.define\n\nreturn {\n  dataSeries: createDataSeries(),\n  generalInfo: createGeneralInfo(),\n.. etc",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 2
+      },
+      "revId": "d7569cdc417077fe570d5d1afdda4ba500a8f71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44bce4f4_93399be8",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-13T07:13:31Z",
+      "side": 1,
+      "message": "All of the constants above here should be moved into their own constants.js file. This file is overcrowded.",
+      "revId": "d7569cdc417077fe570d5d1afdda4ba500a8f71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "368bf7a9_0c4412a2",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-13T07:13:31Z",
+      "side": 1,
+      "message": "startUpdateRequests",
+      "range": {
+        "startLine": 253,
+        "startChar": 9,
+        "endLine": 253,
+        "endChar": 34
+      },
+      "revId": "d7569cdc417077fe570d5d1afdda4ba500a8f71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955fb0ef_3c43d182",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-13T07:13:31Z",
+      "side": 1,
+      "message": "Factor this function into a var. Call it once before you start the interval so a request is sent as soon as the page loads.\n\nvar updateFunc \u003d () \u003d\u003e {};\nupdateFunc();\nsetInterval(updateFunc, UPDATE_PERIOD);",
+      "revId": "d7569cdc417077fe570d5d1afdda4ba500a8f71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2924caef_667eb6ef",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-13T07:13:31Z",
+      "side": 1,
+      "message": "I think you should just always do these calculations. It\u0027s weird that the info page holds old data for 1 second. You\u0027re already getting the data, you may as well update it.\n\nSame for other data.",
+      "revId": "d7569cdc417077fe570d5d1afdda4ba500a8f71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9683f83d_53491cba",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-13T07:13:31Z",
+      "side": 1,
+      "message": "@type Object\u003cstring, CounterType\u003e?",
+      "revId": "d7569cdc417077fe570d5d1afdda4ba500a8f71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "678c039d_8da799f9",
         "filename": "chrome/browser/resources/sys_internals/index.js",
         "patchSetId": 4
@@ -42,6 +156,40 @@
         "endLine": 541,
         "endChar": 20
       },
+      "revId": "d7569cdc417077fe570d5d1afdda4ba500a8f71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4599be5_ff16d67f",
+        "filename": "chrome/test/data/webui/sys_internals/page_drawer_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-13T07:13:31Z",
+      "side": 1,
+      "message": "You can just return this promise chain instead of using done. The test will wait until the promise chain is fully resolved.",
+      "revId": "d7569cdc417077fe570d5d1afdda4ba500a8f71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c45d628_0efe9d68",
+        "filename": "chrome/test/data/webui/sys_internals/sys_internals_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-13T07:13:31Z",
+      "side": 1,
+      "message": "Remove.",
       "revId": "d7569cdc417077fe570d5d1afdda4ba500a8f71d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
