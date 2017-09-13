@@ -557,8 +557,16 @@ Feature::Availability SimpleFeature::GetEnvironmentAvailability(
   if (!platforms_.empty() && !base::ContainsValue(platforms_, platform))
     return CreateAvailability(INVALID_PLATFORM);
 
-  if (channel_ && *channel_ < GetCurrentChannel())
-    return CreateAvailability(UNSUPPORTED_CHANNEL, *channel_);
+  if (channel_ && *channel_ < GetCurrentChannel()) {
+    // If the user has the --enable-experimental-extension-apis commandline flag
+    // appended, we ignore channel restrictions.
+    if (!ignore_channel_) {
+      ignore_channel_ =
+          command_line->HasSwitch(switches::kEnableExperimentalExtensionApis);
+    }
+    if (!(*ignore_channel_))
+      return CreateAvailability(UNSUPPORTED_CHANNEL, *channel_);
+  }
 
   if (!command_line_switch_.empty() &&
       !IsCommandLineSwitchEnabled(command_line, command_line_switch_)) {
