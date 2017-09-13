@@ -1540,9 +1540,6 @@ int QuicStreamFactory::CreateSession(const QuicSessionKey& key,
   config.SetBytesForConnectionIdToSend(0);
   ConfigureInitialRttEstimate(server_id, &config);
 
-  if (force_hol_blocking_)
-    config.SetForceHolBlocking();
-
   // Use the factory to create a new socket performance watcher, and pass the
   // ownership to QuicChromiumClientSession.
   std::unique_ptr<SocketPerformanceWatcher> socket_performance_watcher;

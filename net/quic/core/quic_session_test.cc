@@ -1268,12 +1268,6 @@ TEST_P(QuicSessionTestServer, TestMaxIncomingAndOutgoingStreamsAllowed) {
             kDefaultMaxStreamsPerConnection);
 }
 
-TEST_P(QuicSessionTestServer, EnableFHOLThroughConfigOption) {
-  QuicConfigPeer::SetReceivedForceHolBlocking(session_.config());
-  session_.OnConfigNegotiated();
-  EXPECT_FALSE(session_.force_hol_blocking());
-}
-
 class QuicSessionTestClient : public QuicSessionTestBase {
  protected:
   QuicSessionTestClient() : QuicSessionTestBase(Perspective::IS_CLIENT) {}
@@ -1347,12 +1341,6 @@ TEST_P(QuicSessionTestClient, EnableDHDTThroughConnectionOption) {
   EXPECT_EQ(
       QuicSpdySessionPeer::GetSpdyFramer(&session_).header_encoder_table_size(),
       0UL);
-}
-
-TEST_P(QuicSessionTestClient, EnableFHOLThroughConfigOption) {
-  session_.config()->SetForceHolBlocking();
-  session_.OnConfigNegotiated();
-  EXPECT_FALSE(session_.force_hol_blocking());
 }
 
 TEST_P(QuicSessionTestServer, ZombieStreams) {
