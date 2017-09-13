@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "433663c5_e1b9b753",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-13T19:32:41Z",
+      "side": 1,
+      "message": "Can this reuse gfx::mojom::Point from //ui/gfx/geometry/mojo/geometry.mojom?",
+      "range": {
+        "startLine": 56,
+        "startChar": 7,
+        "endLine": 56,
+        "endChar": 12
+      },
+      "revId": "731690d54f88cd12712ab97294bc1b7a05dec1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2522ff5_c71d5440",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-13T19:32:41Z",
+      "side": 1,
+      "message": "Can this reuse gfx::mojom::PointF from //ui/gfx/geometry/mojo/geometry.mojom? (the other one uses float instead of double - hopefully this doesn\u0027t matter)",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 13
+      },
+      "revId": "731690d54f88cd12712ab97294bc1b7a05dec1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "214bb47e_59b6d4ad",
+        "filename": "content/common/page_state.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-13T19:32:41Z",
+      "side": 1,
+      "message": "Do the values need to match blink::WebHistoryScrollRestorationType?  Do we want a comment explaining this and/or static_asserts verifying this?",
+      "range": {
+        "startLine": 66,
+        "startChar": 5,
+        "endLine": 66,
+        "endChar": 26
+      },
+      "revId": "731690d54f88cd12712ab97294bc1b7a05dec1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
