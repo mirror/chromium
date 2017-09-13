@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcf5b138_a6b102a1",
+        "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-09-13T13:57:20Z",
+      "side": 1,
+      "message": "I\u0027m not entirely familiar with them, but does this match the style guide for line breaking in JS?\n\nhttps://google.github.io/styleguide/jsguide.html#formatting-line-wrapping",
+      "revId": "dfd937b926c447330c2d7df4820cac8a544ce5d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d3dc6dc_b63484f7",
+        "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-09-13T13:57:20Z",
+      "side": 1,
+      "message": "You should be able to move this up to a single constant, e.g.\n\n_CHECK_RESTAURANTS_UPDATED \u003d \u0027\u0027\u0027\n   document.querySelectorAll(\u0027[data-result-index\u003d\"1\"]\u0027)[0].\n      getAttribute(\u0027jstrack\u0027) !\u003d {{ old_restaurant }} \u0026\u0026 [...]\n\u0027\u0027\u0027\n\nAnd then call it like:\n\naction_runner.WaitForJavaScriptCondition(\n  self._CHECK_RESTAURANTS_UPDATED, old_restaurant\u003dprevious_restaurant_name)",
+      "revId": "dfd937b926c447330c2d7df4820cac8a544ce5d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
