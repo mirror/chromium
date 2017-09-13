@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "037dc012_0d23c425",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-13T06:30:36Z",
+      "side": 1,
+      "message": "I needed to add this because of the DCHECK(!overlay_info.HasValidSurfaceId()) I added (because we\u0027re not supporting CVV).",
+      "range": {
+        "startLine": 103,
+        "startChar": 4,
+        "endLine": 103,
+        "endChar": 31
+      },
+      "revId": "328a57021c145aad10c5077781dc467c6660de95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77d9567d_de99c26d",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-13T06:30:36Z",
+      "side": 1,
+      "message": "I realised there was no point in releasing the codec and creating a new one. We may as well just call SetSurface() because we\u0027re guaranteed that the surface only changes if we support SetSurface.",
+      "range": {
+        "startLine": 327,
+        "startChar": 4,
+        "endLine": 327,
+        "endChar": 29
+      },
+      "revId": "328a57021c145aad10c5077781dc467c6660de95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "102e8096_aa00096c",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 390,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-13T06:30:36Z",
+      "side": 1,
+      "message": "minor optimization (and a bit of documentation I guess) to avoid 100 unnecessary calls to PumpCodec().",
+      "range": {
+        "startLine": 390,
+        "startChar": 0,
+        "endLine": 390,
+        "endChar": 32
+      },
+      "revId": "328a57021c145aad10c5077781dc467c6660de95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
