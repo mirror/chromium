@@ -148,18 +148,6 @@ void PasswordProtectionService::RecordWarningAction(WarningUIType ui_type,
   }
 }
 
-void PasswordProtectionService::OnWarningDone(WebContents* web_contents,
-                                              WarningUIType ui_type,
-                                              WarningAction action) {
-  RecordWarningAction(ui_type, action);
-  // TODO(jialiul): Need to send post-warning report, trigger event logger and
-  // other tasks.
-  if (action == MARK_AS_LEGITIMATE) {
-    DCHECK_EQ(PAGE_INFO, ui_type);
-    UpdateSecurityState(SB_THREAT_TYPE_SAFE, web_contents);
-  }
-}
-
 void PasswordProtectionService::OnWarningShown(WebContents* web_contents,
                                                WarningUIType ui_type) {
   RecordWarningAction(ui_type, SHOWN);
@@ -427,9 +415,15 @@ void PasswordProtectionService::RequestFinished(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(request);
 
-  if (response && !already_cached) {
-    CacheVerdict(request->main_frame_url(), request->trigger_type(),
-                 response.get(), base::Time::Now());
+  if (response) {
+    if (!already_cached) {
+      CacheVerdict(request->main_frame_url(), request->trigger_type(),
+                   response.get(), base::Time::Now());
+    }
+    if (response->verdict_type() != LoginReputationClientResponse::SAFE &&
+        base::FeatureList::IsEnabled(kGoogleBrandedPhishingWarning)) {
+      ShowModalWarning(request->web_contents(), response->verdict_token());
+    }
   }
 
   // Finished processing this request. Remove it from pending list.

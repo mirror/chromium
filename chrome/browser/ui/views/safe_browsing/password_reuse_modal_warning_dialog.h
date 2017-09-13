@@ -42,6 +42,9 @@ class PasswordReuseModalWarningDialog
   void OnStartingGaiaPasswordChange() override;
   void OnGaiaPasswordChanged() override;
   void OnMarkingSiteAsLegitimate(const GURL& url) override;
+  void IncokeActionForTesting(
+      ChromePasswordProtectionService::WarningAction action) override;
+  ChromePasswordProtectionService::WarningUIType GetObserverType() override;
 
  private:
   const bool show_softer_warning_;
