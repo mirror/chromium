@@ -22,6 +22,30 @@
       "revId": "ff86aef11810b23fca1ce8272f54a578b9a85f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3019d90_38383886",
+        "filename": "ios/clean/chrome/browser/ui/web_contents/web_contents_mediator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-13T14:19:52Z",
+      "side": 1,
+      "message": "Ack. Is true that the commands won\u0027t work (Open URL and send feedback), but I think is out of the scope of this CL to deal with that. I\u0027ll make sure to update this with any changes needed for/after bridging.",
+      "parentUuid": "de950d18_9217f77e",
+      "range": {
+        "startLine": 31,
+        "startChar": 30,
+        "endLine": 31,
+        "endChar": 49
+      },
+      "revId": "ff86aef11810b23fca1ce8272f54a578b9a85f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
