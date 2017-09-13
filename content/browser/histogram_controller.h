@@ -40,7 +40,7 @@ class HistogramController {
   void Unregister(const HistogramSubscriber* subscriber);
 
   // Contact all processes and get their histogram data.
-  void GetHistogramData(int sequence_number);
+  void GetHistogramData(int64_t sequence_number);
 
   // Notify the |subscriber_| that it should expect at least |pending_processes|
   // additional calls to OnHistogramDataCollected().  OnPendingProcess() may be
@@ -52,7 +52,7 @@ class HistogramController {
   // Send the |histogram| back to the |subscriber_|.
   // This can be called from any thread.
   void OnHistogramDataCollected(
-      int sequence_number,
+      int64_t sequence_number,
       const std::vector<std::string>& pickled_histograms);
 
  private:
@@ -61,7 +61,7 @@ class HistogramController {
   // Contact PLUGIN and GPU child processes and get their histogram data.
   // TODO(rtenneti): Enable getting histogram data for other processes like
   // PPAPI and NACL.
-  void GetHistogramDataFromChildProcesses(int sequence_number);
+  void GetHistogramDataFromChildProcesses(int64_t sequence_number);
 
   HistogramSubscriber* subscriber_;
 

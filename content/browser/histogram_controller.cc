@@ -8,11 +8,14 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/process/process_handle.h"
 #include "content/browser/histogram_subscriber.h"
+#include "content/common/child_histogram.mojom.h"
 #include "content/common/child_process_messages.h"
 #include "content/public/browser/browser_child_process_host_iterator.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/child_process_data.h"
 #include "content/public/browser/render_process_host.h"
+#include "content/public/common/bind_interface_helpers.h"
+#include "content/public/common/child_process_host.h"
 #include "content/public/common/process_type.h"
 
 namespace content {
@@ -36,7 +39,7 @@ void HistogramController::OnPendingProcesses(int sequence_number,
 }
 
 void HistogramController::OnHistogramDataCollected(
-    int sequence_number,
+    int64_t sequence_number,
     const std::vector<std::string>& pickled_histograms) {
   if (!BrowserThread::CurrentlyOn(BrowserThread::UI)) {
     BrowserThread::PostTask(
@@ -67,7 +70,7 @@ void HistogramController::Unregister(
 }
 
 void HistogramController::GetHistogramDataFromChildProcesses(
-    int sequence_number) {
+    int64_t sequence_number) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   int pending_processes = 0;
@@ -87,10 +90,14 @@ void HistogramController::GetHistogramDataFromChildProcesses(
       continue;
 
     ++pending_processes;
-    if (!iter.Send(new ChildProcessMsg_GetChildNonPersistentHistogramData(
-            sequence_number))) {
-      --pending_processes;
-    }
+
+    content::mojom::ChildHistogramPtr child_histogram;
+    content::BindInterface(iter.GetHost(), &child_histogram);
+    child_histogram->GetChildNonPersistentHistogramData(
+        sequence_number,
+        base::Bind(&HistogramController::OnHistogramDataCollected,
+                   base::Unretained(this)));
+    --pending_processes;
   }
 
   BrowserThread::PostTask(
@@ -100,18 +107,20 @@ void HistogramController::GetHistogramDataFromChildProcesses(
                      true));
 }
 
-void HistogramController::GetHistogramData(int sequence_number) {
+void HistogramController::GetHistogramData(int64_t sequence_number) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   int pending_processes = 0;
   for (RenderProcessHost::iterator it(RenderProcessHost::AllHostsIterator());
        !it.IsAtEnd(); it.Advance()) {
     ++pending_processes;
-    if (!it.GetCurrentValue()->Send(
-            new ChildProcessMsg_GetChildNonPersistentHistogramData(
-                sequence_number))) {
-      --pending_processes;
-    }
+    content::mojom::ChildHistogramPtr child_histogram;
+    content::BindInterface(it.GetCurrentValue(), &child_histogram);
+    child_histogram->GetChildNonPersistentHistogramData(
+        sequence_number,
+        base::Bind(&HistogramController::OnHistogramDataCollected,
+                   base::Unretained(this)));
+    --pending_processes;
   }
   OnPendingProcesses(sequence_number, pending_processes, false);
 
