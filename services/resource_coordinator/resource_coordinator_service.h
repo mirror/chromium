@@ -54,7 +54,6 @@ class ResourceCoordinatorService : public service_manager::Service {
       registry_;
   std::unique_ptr<service_manager::ServiceContextRefFactory> ref_factory_;
   CoordinationUnitManager coordination_unit_manager_;
-  CoordinationUnitIntrospectorImpl introspector_;
   std::unique_ptr<ukm::MojoUkmRecorder> ukm_recorder_;
   std::unique_ptr<memory_instrumentation::CoordinatorImpl>
       memory_instrumentation_coordinator_;
