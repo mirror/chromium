@@ -19,8 +19,8 @@
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
         '<(EXTERNS_GYP):chrome_extensions',
         'actions',
+        'debouncer',
         'store',
-        'timer_proxy',
         'util',
       ],
       'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi'],
@@ -63,6 +63,14 @@
       'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi']
     },
     {
+      'target_name': 'debouncer',
+      'dependencies': [
+        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
+        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:timer_proxy',
+      ],
+      'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi'],
+    },
+    {
       'target_name': 'dialog_focus_manager',
       'dependencies': [
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
@@ -88,7 +96,7 @@
         'dnd_chip',
         'folder_node',
         'store',
-        'timer_proxy',
+        'debouncer',
         'types',
         'util',
       ],
@@ -185,20 +193,13 @@
       'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi']
     },
     {
-      'target_name': 'timer_proxy',
-      'dependencies': [
-        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
-      ],
-      'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi'],
-    },
-    {
       'target_name': 'toast_manager',
       'dependencies': [
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:cr',
         '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:load_time_data',
+        '<(DEPTH)/ui/webui/resources/js/compiled_resources2.gyp:timer_proxy',
         '<(DEPTH)/third_party/polymer/v1_0/components-chromium/iron-a11y-announcer/compiled_resources2.gyp:iron-a11y-announcer-extracted',
         '<(DEPTH)/third_party/polymer/v1_0/components-chromium/paper-button/compiled_resources2.gyp:paper-button-extracted',
-        'timer_proxy',
       ],
       'includes': ['../../../../third_party/closure_compiler/compile_js2.gypi'],
     },

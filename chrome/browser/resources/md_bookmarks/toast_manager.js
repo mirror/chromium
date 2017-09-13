@@ -27,8 +27,8 @@ cr.define('bookmarks', function() {
       showUndo_: Boolean,
     },
 
-    /** @private {bookmarks.TimerProxy} */
-    timerProxy_: new bookmarks.TimerProxy(),
+    /** @private {TimerProxy} */
+    timerProxy_: new TimerProxy(),
 
     /** @private {number|null} */
     hideTimeoutId_: null,

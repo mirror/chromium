@@ -26,9 +26,9 @@ MaterialBookmarksBrowserTest.prototype = {
   typedefCppFixture: 'MdBookmarksBrowserTest',
 
   extraLibraries: PolymerTest.getLibraries(ROOT_PATH).concat([
+    ROOT_PATH + 'ui/webui/resources/js/test_timer_proxy.js',
     'test_command_manager.js',
     'test_store.js',
-    'test_timer_proxy.js',
     'test_util.js',
   ]),
 };
