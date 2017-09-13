@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c11aa0ae_637d8e32",
+        "filename": "components/favicon/content/content_favicon_driver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-13T18:09:09Z",
+      "side": 1,
+      "message": "Here are repro steps:\n1) Add printf() to ContentFaviconDriver::DidFinishNavigation()\n2) Throttle the connection using Charles proxy (Bandwidth download\u003d10kbps)\n3) Run desktop Chrome using --proxy-server\u003dlocalhost:8888 --ignore-certificate-errors\n4) Clear chrome\u0027s history \n5) Enter https://webapk-test.appspot.com/static/a.html into omnibox. Hit \"Stop\" button after printf() statement in (1) has been printed. You don\u0027t need to be very fast\n\nI can repro 100% of the time. In my local testing WebLocalFrameImpl::IconURLs() does not return an empty list\n\n\"The icon of a user\u0027s bookmark\" being randomly deleted when a user stops a page from loading is a pretty bad experience. Even if this does not happen that often, I think that we should care about this case.",
+      "parentUuid": "d19d6568_663a55cc",
+      "revId": "7523cc6ce00be6fa9854297e2997276d22539d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a48a8c2_7228e6b0",
         "filename": "components/favicon/core/favicon_handler.cc",
         "patchSetId": 5
@@ -69,6 +87,24 @@
       "revId": "7523cc6ce00be6fa9854297e2997276d22539d1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1964bfc3_b0b4e8e5",
+        "filename": "components/favicon/core/favicon_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-13T18:09:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "73c910d2_730b4fcf",
+      "revId": "7523cc6ce00be6fa9854297e2997276d22539d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
