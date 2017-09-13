@@ -250,6 +250,10 @@ struct CrxComponent {
   // as CRLSet, Supervised User Whitelists, STH Set, Origin Trials, and File
   // Type Policies.
   bool supports_group_policy_enable_component_updates;
+
+  // Array of reasons why this component/extension is disabled. If the array is
+  // not empty, it means that the component is disabled.
+  std::vector<int> disabled_reasons;
 };
 
 // All methods are safe to call only from the browser's main thread. Once an
