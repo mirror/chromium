@@ -22,6 +22,30 @@
       "revId": "01245a89aeee670e8b7bb5ba3592aeeb157baa68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb2e928_dae0fd2e",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11347,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-13T17:14:50Z",
+      "side": 1,
+      "message": "In passive mode (and chrome doesn\u0027t support active mode) the FTP server allocates port dynamically and sends the address+port number to the client. The client then uses that address to establish secondary connection for data transfers. There are two ways it may be possible to make it work with RemoteTestServer:\n 1. Make the socket proxy intercept the traffic and substitute port number. This will require very significant amount of work. It\u0027s certainly easier to implement an in-process FTP server for tests.\n 2. Limit port range used by the server for data connection and forward all of them to the guest allocating the same port numbers the guest. Problem here is that the same port may not be available on both ends, so the tests will have to try different ports and forward more than one port.\n\n(2) is doable, but I don\u0027t think it\u0027s worth spending much time on it given that FTP client is tested on other platforms and there shouldn\u0027t be much platform-specific logic there. Note that RemoteTestServerProxy is used only Fuchsia, while on Android uses ADB to forward TCP from tests to the host, so it won\u0027t be possible to share the same solution between these two platforms. If you disagree, can we reopen http://crbug.com/495220 and fix it later?",
+      "parentUuid": "1669ed46_c7846c70",
+      "range": {
+        "startLine": 11347,
+        "startChar": 25,
+        "endLine": 11347,
+        "endChar": 41
+      },
+      "revId": "01245a89aeee670e8b7bb5ba3592aeeb157baa68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
