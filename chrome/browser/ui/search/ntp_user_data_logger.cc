@@ -40,6 +40,96 @@ void RecordSyncSessionMetrics(content::WebContents* contents) {
       sessions);
 }
 
+// This enum must match the numbering for NewTabPageVoiceAction in enums.xml.
+// Do not reorder or remove items, only add new items before VOICE_ACTION_MAX.
+enum VoiceAction {
+  // Activated by clicking on the fakebox icon.
+  ACTIVATE_FAKEBOX = 0,
+  // Activated by keyboard shortcut.
+  ACTIVATE_KEYBOARD = 1,
+  // Close the voice overlay by a user's explicit action.
+  CLOSE_OVERLAY = 2,
+  // Submitted voice query.
+  QUERY_SUBMITTED = 3,
+  // Clicked on support link in error message.
+  SUPPORT_LINK_CLICKED = 4,
+  // Retried by clicking Try Again link.
+  TRY_AGAIN_LINK = 5,
+  // Retried by clicking microphone button.
+  TRY_AGAIN_MIC_BUTTON = 6,
+
+  VOICE_ACTION_MAX
+};
+
+// Converts |NTPLoggingEventType| to a |VoiceAction|, if the value
+// is an action value. Otherwise, |VOICE_ACTION_MAX| is returned.
+VoiceAction LoggingEventToVoiceAction(NTPLoggingEventType event) {
+  switch (event) {
+    case NTP_VOICE_ACTION_ACTIVATE_FAKEBOX:
+      return ACTIVATE_FAKEBOX;
+    case NTP_VOICE_ACTION_ACTIVATE_KEYBOARD:
+      return ACTIVATE_KEYBOARD;
+    case NTP_VOICE_ACTION_CLOSE_OVERLAY:
+      return CLOSE_OVERLAY;
+    case NTP_VOICE_ACTION_QUERY_SUBMITTED:
+      return QUERY_SUBMITTED;
+    case NTP_VOICE_ACTION_SUPPORT_LINK_CLICKED:
+      return SUPPORT_LINK_CLICKED;
+    case NTP_VOICE_ACTION_TRY_AGAIN_LINK:
+      return TRY_AGAIN_LINK;
+    case NTP_VOICE_ACTION_TRY_AGAIN_MIC_BUTTON:
+      return TRY_AGAIN_MIC_BUTTON;
+    default:
+      return VOICE_ACTION_MAX;
+  }
+}
+
+// This enum must match the numbering for NewTabPageVoiceError in enums.xml.
+// Do not reorder or remove items, only add new items before VOICE_ERROR_MAX.
+enum VoiceError {
+  ABORTED = 0,
+  AUDIO_CAPTURE = 1,
+  BAD_GRAMMAR = 2,
+  LANGUAGE_NOT_SUPPORTED = 3,
+  NETWORK = 4,
+  NO_MATCH = 5,
+  NO_SPEECH = 6,
+  NOT_ALLOWED = 7,
+  OTHER = 8,
+  SERVICE_NOT_ALLOWED = 9,
+
+  VOICE_ERROR_MAX
+};
+
+// Converts |NTPLoggingEventType| to a |VoiceError|, if the value
+// is an error value. Otherwise, |VOICE_ERROR_MAX| is returned.
+VoiceError LoggingEventToVoiceError(NTPLoggingEventType event) {
+  switch (event) {
+    case NTP_VOICE_ERROR_ABORTED:
+      return ABORTED;
+    case NTP_VOICE_ERROR_AUDIO_CAPTURE:
+      return AUDIO_CAPTURE;
+    case NTP_VOICE_ERROR_BAD_GRAMMAR:
+      return BAD_GRAMMAR;
+    case NTP_VOICE_ERROR_LANGUAGE_NOT_SUPPORTED:
+      return LANGUAGE_NOT_SUPPORTED;
+    case NTP_VOICE_ERROR_NETWORK:
+      return NETWORK;
+    case NTP_VOICE_ERROR_NO_MATCH:
+      return NO_MATCH;
+    case NTP_VOICE_ERROR_NO_SPEECH:
+      return NO_SPEECH;
+    case NTP_VOICE_ERROR_NOT_ALLOWED:
+      return NOT_ALLOWED;
+    case NTP_VOICE_ERROR_OTHER:
+      return OTHER;
+    case NTP_VOICE_ERROR_SERVICE_NOT_ALLOWED:
+      return SERVICE_NOT_ALLOWED;
+    default:
+      return VOICE_ERROR_MAX;
+  }
+}
+
 }  // namespace
 
 DEFINE_WEB_CONTENTS_USER_DATA_KEY(NTPUserDataLogger);
@@ -92,6 +182,31 @@ void NTPUserDataLogger::LogEvent(NTPLoggingEventType event,
       break;
     case NTP_ALL_TILES_LOADED:
       EmitNtpStatistics(time);
+      break;
+    case NTP_VOICE_ACTION_ACTIVATE_FAKEBOX:
+    case NTP_VOICE_ACTION_ACTIVATE_KEYBOARD:
+    case NTP_VOICE_ACTION_CLOSE_OVERLAY:
+    case NTP_VOICE_ACTION_QUERY_SUBMITTED:
+    case NTP_VOICE_ACTION_SUPPORT_LINK_CLICKED:
+    case NTP_VOICE_ACTION_TRY_AGAIN_LINK:
+    case NTP_VOICE_ACTION_TRY_AGAIN_MIC_BUTTON:
+      UMA_HISTOGRAM_ENUMERATION("NewTabPage.VoiceActions",
+                                LoggingEventToVoiceAction(event),
+                                VOICE_ACTION_MAX);
+      break;
+    case NTP_VOICE_ERROR_ABORTED:
+    case NTP_VOICE_ERROR_AUDIO_CAPTURE:
+    case NTP_VOICE_ERROR_BAD_GRAMMAR:
+    case NTP_VOICE_ERROR_LANGUAGE_NOT_SUPPORTED:
+    case NTP_VOICE_ERROR_NETWORK:
+    case NTP_VOICE_ERROR_NO_MATCH:
+    case NTP_VOICE_ERROR_NO_SPEECH:
+    case NTP_VOICE_ERROR_NOT_ALLOWED:
+    case NTP_VOICE_ERROR_OTHER:
+    case NTP_VOICE_ERROR_SERVICE_NOT_ALLOWED:
+      UMA_HISTOGRAM_ENUMERATION("NewTabPage.VoiceErrors",
+                                LoggingEventToVoiceError(event),
+                                VOICE_ERROR_MAX);
       break;
   }
 }
