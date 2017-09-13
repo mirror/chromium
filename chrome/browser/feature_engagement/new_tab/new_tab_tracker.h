@@ -29,6 +29,10 @@ class NewTabTracker : public FeatureTracker {
   NewTabTracker(Profile* profile,
                 SessionDurationUpdater* session_duration_updater);
 
+  // Returns whether there was a bubble that was closed. A bubble closes only
+  // when it exists.
+  static bool CloseCurrentBubble();
+
   // Alerts the new tab tracker that a new tab was opened.
   void OnNewTabOpened();
   // Alerts the new tab tracker that the omnibox has been used.
@@ -37,6 +41,9 @@ class NewTabTracker : public FeatureTracker {
   void OnOmniboxFocused();
   // Clears the flag for whether there is any in-product help being displayed.
   void OnPromoClosed();
+
+  // Sets the NewTabInProductHelp pref to true and calls the New Tab Promo.
+  void ShowPromo();
 
  protected:
   // Alternate constructor to support unit testing.
@@ -52,9 +59,6 @@ class NewTabTracker : public FeatureTracker {
   base::TimeTicks last_promo_seen_;
   // FeatureTracker:
   void OnSessionTimeMet() override;
-
-  // Sets the NewTabInProductHelp pref to true and calls the New Tab Promo.
-  void ShowPromo();
 
   DISALLOW_COPY_AND_ASSIGN(NewTabTracker);
 };
