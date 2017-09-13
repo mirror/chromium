@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "13d97c09_cf494d31",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-13T23:13:15Z",
+      "side": 1,
+      "message": "What I meant to say in the comment is to center the view horizontally. Fixed the comment and massaged some of the code.",
+      "parentUuid": "0e3af519_3b3ecd52",
+      "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e29d268_3ff2de68",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-13T22:36:47Z",
       "side": 1,
       "message": "Nit: Perhaps HandleFullscreenControlVisibility() should start like this?:\n\n  if (IsAnimating() || (input_entry_method_ !\u003d NOT_ACTIVE \u0026\u0026 input_entry_method_ !\u003d input_entry_method))\n    return;\n\nThen we wouldn\u0027t need the conditional checks here and below.",
+      "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c78b607_d04a9298",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-13T23:13:15Z",
+      "side": 1,
+      "message": "That works for me. It\u0027s a little trickier to read, but is shorter.",
+      "parentUuid": "9e29d268_3ff2de68",
       "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d2b82d45_4159d873",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-13T23:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f373725b_7f3f2a34",
+      "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed438514_260d6049",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38251036_1252b5c5",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-13T23:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed438514_260d6049",
+      "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "51f6c9ae_86eb8e85",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-13T23:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a963e049_edcc686f",
+      "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9304db68_1bbb5856",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1de82ddc_236db1d9",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-13T23:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9304db68_1bbb5856",
+      "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "031aa157_1e7a9b24",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-13T23:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5213c735_0dafdfad",
+      "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bc4b9e9_788e5fa4",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a49bb8_f021ca9e",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-13T23:13:15Z",
+      "side": 1,
+      "message": "That is correct.",
+      "parentUuid": "7bc4b9e9_788e5fa4",
+      "revId": "cb13918f9696693fbb5381c6bc059b27a2821fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
