@@ -12,6 +12,7 @@
 
 namespace ntp_snippets {
 class ContentSuggestionsService;
+class Logger;
 }  // namespace ntp_snippets
 
 namespace ntp_snippets {
@@ -31,7 +32,8 @@ void RegisterReadingListProvider(ContentSuggestionsService* service,
 
 // Registers the RemoteSuggestionsProvider (articles provider).
 void RegisterRemoteSuggestionsProvider(ContentSuggestionsService* service,
-                                       web::BrowserState* browser_state);
+                                       web::BrowserState* browser_state,
+                                       Logger* debug_logger);
 
 }  // namespace ntp_snippets
 

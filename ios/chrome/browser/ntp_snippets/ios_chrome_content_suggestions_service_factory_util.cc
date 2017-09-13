@@ -56,6 +56,7 @@ using image_fetcher::CreateIOSImageDecoder;
 using image_fetcher::ImageFetcherImpl;
 using ntp_snippets::ContentSuggestionsService;
 using ntp_snippets::GetFetchEndpoint;
+using ntp_snippets::Logger;
 using ntp_snippets::PersistentScheduler;
 using ntp_snippets::RemoteSuggestionsDatabase;
 using ntp_snippets::RemoteSuggestionsFetcherImpl;
@@ -94,8 +95,9 @@ CreateChromeContentSuggestionsServiceWithProviders(
 
   ntp_snippets::RegisterReadingListProvider(suggestions_service, browser_state);
   if (base::FeatureList::IsEnabled(ntp_snippets::kArticleSuggestionsFeature)) {
-    ntp_snippets::RegisterRemoteSuggestionsProvider(suggestions_service,
-                                                    browser_state);
+    ntp_snippets::RegisterRemoteSuggestionsProvider(
+        suggestions_service, browser_state,
+        suggestions_service->debug_logger());
   }
 
   return service;
@@ -116,7 +118,7 @@ std::unique_ptr<KeyedService> CreateChromeContentSuggestionsService(
   auto scheduler = base::MakeUnique<RemoteSuggestionsSchedulerImpl>(
       /*persistent_scheduler=*/nullptr, user_classifier.get(), prefs,
       GetApplicationContext()->GetLocalState(),
-      base::MakeUnique<base::DefaultClock>());
+      base::MakeUnique<base::DefaultClock>(), debug_logger.get());
 
   // Create the ContentSuggestionsService.
   SigninManager* signin_manager =
@@ -134,7 +136,7 @@ std::unique_ptr<KeyedService> CreateChromeContentSuggestionsService(
       base::MakeUnique<ContentSuggestionsService>(
           State::ENABLED, signin_manager, history_service, large_icon_service,
           prefs, std::move(category_ranker), std::move(user_classifier),
-          std::move(scheduler));
+          std::move(scheduler), /*debug_logger=*/base::MakeUnique<Logger>());
 
   // TODO(crbug.com/703565): remove std::move() once Xcode 9.0+ is required.
   return std::move(service);
@@ -155,7 +157,8 @@ void RegisterReadingListProvider(ContentSuggestionsService* service,
 }
 
 void RegisterRemoteSuggestionsProvider(ContentSuggestionsService* service,
-                                       web::BrowserState* browser_state) {
+                                       web::BrowserState* browser_state,
+                                       Logger* debug_logger) {
   ios::ChromeBrowserState* chrome_browser_state =
       ios::ChromeBrowserState::FromBrowserState(browser_state);
   PrefService* prefs = chrome_browser_state->GetPrefs();
@@ -195,7 +198,7 @@ void RegisterRemoteSuggestionsProvider(ContentSuggestionsService* service,
       base::MakeUnique<RemoteSuggestionsStatusServiceImpl>(signin_manager,
                                                            prefs, pref_name),
       /*prefetched_pages_tracker=*/nullptr,
-      /*breaking_news_raw_data_provider*/ nullptr);
+      /*breaking_news_raw_data_provider*/ nullptr, debug_logger);
 
   service->remote_suggestions_scheduler()->SetProvider(provider.get());
   service->set_remote_suggestions_provider(provider.get());
