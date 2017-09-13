@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28a5797e_c1c6ec38",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/compressor_archive_minizip.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-13T07:21:41Z",
+      "side": 1,
+      "message": "format: Use camel case for function name UnixToDosdate",
+      "range": {
+        "startLine": 15,
+        "startChar": 9,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "5c4a4cf734a3a8be8f2f8e5be35bdad2b95e9c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e94ba925_f15c0439",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/compressor_archive_minizip.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-13T07:21:41Z",
+      "side": 1,
+      "message": "nit: return value of localtime can be modified by the following call. It would be safer to copy value or use localtime_r.",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 41
+      },
+      "revId": "5c4a4cf734a3a8be8f2f8e5be35bdad2b95e9c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f4c19c_69a823b3",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/compressor_archive_minizip.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-13T07:21:41Z",
+      "side": 1,
+      "message": "optional nit: tm_sec \u003e\u003e 1 seems easier to read.",
+      "range": {
+        "startLine": 20,
+        "startChar": 37,
+        "endLine": 20,
+        "endChar": 60
+      },
+      "revId": "5c4a4cf734a3a8be8f2f8e5be35bdad2b95e9c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2ccd54e_a7c29493",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/volume_archive_minizip.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-13T07:21:41Z",
+      "side": 1,
+      "message": "format: Camel case.",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 20
+      },
+      "revId": "5c4a4cf734a3a8be8f2f8e5be35bdad2b95e9c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa15fda5_805857e4",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/volume_archive_minizip.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-13T07:21:41Z",
+      "side": 1,
+      "message": "This should be uint32_t",
+      "range": {
+        "startLine": 19,
+        "startChar": 21,
+        "endLine": 19,
+        "endChar": 29
+      },
+      "revId": "5c4a4cf734a3a8be8f2f8e5be35bdad2b95e9c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb664e53_7f013aad",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/cpp/volume_archive_minizip.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-13T07:21:41Z",
+      "side": 1,
+      "message": "optional: How about to return base::Time::Exploded rather than setting result to the passed value?",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 4
+      },
+      "revId": "5c4a4cf734a3a8be8f2f8e5be35bdad2b95e9c40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
