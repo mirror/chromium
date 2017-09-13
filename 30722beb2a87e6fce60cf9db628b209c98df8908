@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a4c9b2f_c1314d50",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-09-13T00:48:34Z",
+      "side": 1,
+      "message": "I\u0027m slowly starting to get concerned by the proliferation of translate test scripts. I don\u0027t have a good answer how to address that (yet), so no need to fix this CL, but worth thinking about.",
+      "range": {
+        "startLine": 69,
+        "startChar": 8,
+        "endLine": 69,
+        "endChar": 23
+      },
+      "revId": "30722beb2a87e6fce60cf9db628b209c98df8908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d33148_9eaf4e9f",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-09-13T00:48:34Z",
+      "side": 1,
+      "message": "You probably don\u0027t need to keep state (see Translate() below)",
+      "range": {
+        "startLine": 111,
+        "startChar": 25,
+        "endLine": 111,
+        "endChar": 31
+      },
+      "revId": "30722beb2a87e6fce60cf9db628b209c98df8908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71eb9d56_796b35b6",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-09-13T00:48:34Z",
+      "side": 1,
+      "message": "You can just obtain the model via \n  translate::test_utils::GetCurrentModel(browser_);\n\nsee translate_bubble_test_utils_views.cc",
+      "range": {
+        "startLine": 130,
+        "startChar": 48,
+        "endLine": 130,
+        "endChar": 0
+      },
+      "revId": "30722beb2a87e6fce60cf9db628b209c98df8908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44135a53_17102906",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-09-13T00:48:34Z",
+      "side": 1,
+      "message": "And this should maybe be translate::test_utils::PressTranslate(browser_)\n\nIt won\u0027t make a difference here, but it\u0027s closer to the actual path taken if the user presses a button.",
+      "range": {
+        "startLine": 131,
+        "startChar": 22,
+        "endLine": 131,
+        "endChar": 31
+      },
+      "revId": "30722beb2a87e6fce60cf9db628b209c98df8908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf7a74ad_308ed098",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-09-13T00:48:34Z",
+      "side": 1,
+      "message": "If you use PressTranslate (see above), you probably want to add ::PressRevert to the test_utils",
+      "range": {
+        "startLine": 142,
+        "startChar": 22,
+        "endLine": 142,
+        "endChar": 39
+      },
+      "revId": "30722beb2a87e6fce60cf9db628b209c98df8908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "008e21b4_911c535e",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-09-13T00:48:34Z",
+      "side": 1,
+      "message": "If you have the time, it\u0027d be nice if this moved over to the translate test utils. Maybe in a later CL?",
+      "range": {
+        "startLine": 160,
+        "startChar": 28,
+        "endLine": 160,
+        "endChar": 44
+      },
+      "revId": "30722beb2a87e6fce60cf9db628b209c98df8908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81c633e_8dbe6ca3",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-09-13T00:48:34Z",
+      "side": 1,
+      "message": "And this is probably worth combining with the other SimulateURLFetch methods that we have implemented for Translate",
+      "range": {
+        "startLine": 167,
+        "startChar": 25,
+        "endLine": 167,
+        "endChar": 30
+      },
+      "revId": "30722beb2a87e6fce60cf9db628b209c98df8908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98267231_1e47e328",
+        "filename": "chrome/browser/ui/views/translate/translate_language_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-09-13T00:48:34Z",
+      "side": 1,
+      "message": "TranslateAndRevert, please",
+      "range": {
+        "startLine": 217,
+        "startChar": 53,
+        "endLine": 217,
+        "endChar": 69
+      },
+      "revId": "30722beb2a87e6fce60cf9db628b209c98df8908",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
