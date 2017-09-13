@@ -5,7 +5,6 @@
 #include "chrome/browser/ui/views/omnibox/omnibox_view_views.h"
 
 #include <set>
-
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -794,7 +793,21 @@ void OmniboxViewViews::OnFocus() {
   if (controller()->GetToolbarModel()->ShouldDisplayURL()) {
     feature_engagement::NewTabTrackerFactory::GetInstance()
         ->GetForProfile(location_bar_view_->profile())
-        ->OnOmniboxFocused();
+        ->ShowPromo();
+    //     bool shouldShowPromo =
+    //     feature_engagement::NewTabTrackerFactory::GetInstance()
+    //         ->GetForProfile(location_bar_view_->profile())
+    //         ->ShouldShowPromo();
+    //                 LOG(ERROR) << "argargargagggggggggggg";
+
+    //     if (shouldShowPromo) {
+
+    // feature_engagement::NewTabTrackerFactory::GetInstance()
+    //         ->GetForProfile(location_bar_view_->profile())
+    //         ->ShowPromo();
+    //         LOG(ERROR) << "airgnariognaiorg";
+    //         RequestFocus();
+    //     }
   }
 #endif
 }

@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "ui/views/widget/desktop_aura/desktop_native_widget_aura.h"
+#include "base/logging.h"
 
 #include "base/bind.h"
 #include "base/macros.h"
@@ -758,6 +759,8 @@ void DesktopNativeWidgetAura::ShowWithWindowState(ui::WindowShowState state) {
   // IsVisible() should check the same objects here for visibility.
   if (!content_window_)
     return;
+
+  LOG(ERROR) << "DESKTOP";
   desktop_window_tree_host_->ShowWindowWithState(state);
   content_window_->Show();
 }

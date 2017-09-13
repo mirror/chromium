@@ -539,7 +539,6 @@ void NativeWidgetAura::ShowMaximizedWithBounds(
 void NativeWidgetAura::ShowWithWindowState(ui::WindowShowState state) {
   if (!window_)
     return;
-
   if (state == ui::SHOW_STATE_MAXIMIZED || state == ui::SHOW_STATE_FULLSCREEN)
     window_->SetProperty(aura::client::kShowStateKey, state);
   window_->Show();

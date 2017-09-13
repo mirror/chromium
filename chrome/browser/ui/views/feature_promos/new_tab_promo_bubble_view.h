@@ -14,13 +14,19 @@
 class NewTabPromoBubbleView : public FeaturePromoBubbleView {
  public:
   // Returns a raw pointer that is owned by its native widget.
-  static NewTabPromoBubbleView* CreateOwned(const gfx::Rect& anchor_rect);
+  static NewTabPromoBubbleView* CreateOwned(views::View* anchor_view);
+
+  // Returns whether there was a bubble that was closed. A bubble closes only
+  // when it exists.
+  static bool CloseCurrentBubble();
 
  private:
   // Anchors the bubble to |anchor_rect|. The bubble widget and promo are
   // owned by their native widget.
-  explicit NewTabPromoBubbleView(const gfx::Rect& anchor_rect);
+  explicit NewTabPromoBubbleView(views::View* anchor_view);
   ~NewTabPromoBubbleView() override;
+
+  static NewTabPromoBubbleView* new_tab_bubble_;
 
   // Returns the string ID to display in the promo.
   static int GetStringSpecifier();
