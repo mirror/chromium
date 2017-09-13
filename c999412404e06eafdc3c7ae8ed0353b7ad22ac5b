@@ -16,6 +16,58 @@
       "revId": "c999412404e06eafdc3c7ae8ed0353b7ad22ac5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81948c53_16f48a90",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-13T22:20:52Z",
+      "side": 1,
+      "message": "nit: Please keep the comment from AccessibilityController about checking the PrefService pointer instead of checking session state. Otherwise, what you have is fine.",
+      "parentUuid": "75ba436d_ef202f99",
+      "revId": "c999412404e06eafdc3c7ae8ed0353b7ad22ac5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3b9d3c0_a5e08497",
+        "filename": "chrome/browser/chromeos/system/input_device_settings.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-13T22:20:52Z",
+      "side": 1,
+      "message": "I suspect this won\u0027t compile.",
+      "revId": "c999412404e06eafdc3c7ae8ed0353b7ad22ac5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7ba10b_ce25e6a8",
+        "filename": "chrome/browser/chromeos/system/input_device_settings.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-13T22:20:52Z",
+      "side": 1,
+      "message": "Can this be removed now?",
+      "revId": "c999412404e06eafdc3c7ae8ed0353b7ad22ac5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
