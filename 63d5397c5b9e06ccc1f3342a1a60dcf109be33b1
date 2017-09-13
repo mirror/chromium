@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "0a88adcf_7a0b19f9",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-13T16:26:29Z",
+      "side": 1,
+      "message": "The variant one also calls SetDefaultPrefValue. I think a lot of the pref stuff is historical because everything else followed this path, but it\u0027s also the case that our experiments almost always hit enterprise policy because enterprises with buggy middleboxes often need options to decrease security.\n\nVariants are unlikely to ever become enterprise policy, but they do interact with the existing version-max value in subtle ways, so it\u0027s a little messy. I expect there is room to simplify complexity of plumbing all this stuff through, but that\u0027s probably better thought about separately.",
+      "parentUuid": "1d53f285_de611bdd",
+      "range": {
+        "startLine": 1282,
+        "startChar": 65,
+        "endLine": 1282,
+        "endChar": 0
+      },
+      "revId": "63d5397c5b9e06ccc1f3342a1a60dcf109be33b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14271c59_3c4646c3",
         "filename": "net/ssl/ssl_config.h",
         "patchSetId": 1
