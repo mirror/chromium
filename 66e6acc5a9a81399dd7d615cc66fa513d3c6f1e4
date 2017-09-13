@@ -22,6 +22,30 @@
       "revId": "66e6acc5a9a81399dd7d615cc66fa513d3c6f1e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df57d698_7d950091",
+        "filename": "net/socket/transport_client_socket_pool.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1118144
+      },
+      "writtenOn": "2017-09-13T20:06:28Z",
+      "side": 1,
+      "message": "Name change in a separate CL SGTM.",
+      "parentUuid": "06bc0330_6f5c7a80",
+      "range": {
+        "startLine": 40,
+        "startChar": 4,
+        "endLine": 40,
+        "endChar": 37
+      },
+      "revId": "66e6acc5a9a81399dd7d615cc66fa513d3c6f1e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
