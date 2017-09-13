@@ -50,6 +50,9 @@ class PasswordManagerDriver;
 @property(nonatomic, readonly)
     password_manager::PasswordManagerDriver* passwordManagerDriver;
 
+@property(nonatomic, readonly)
+    CredentialManager* credentialManager;
+
 // The PasswordFormFiller owned by this PasswordController.
 @property(nonatomic, readonly) id<PasswordFormFiller> passwordFormFiller;
 

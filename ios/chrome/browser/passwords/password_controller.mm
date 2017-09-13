@@ -42,10 +42,13 @@
 #import "ios/chrome/browser/passwords/password_generation_agent.h"
 #include "ios/chrome/browser/sync/ios_chrome_profile_sync_service_factory.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
+#include "ios/chrome/grit/ios_strings.h"
+#import "ios/third_party/material_components_ios/src/components/Snackbar/src/MaterialSnackbar.h"
 #import "ios/web/public/origin_util.h"
 #include "ios/web/public/url_scheme_util.h"
 #import "ios/web/public/web_state/js/crw_js_injection_receiver.h"
 #import "ios/web/public/web_state/web_state.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "url/gurl.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -703,6 +706,24 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
     (std::unique_ptr<PasswordFormManager>)formToUpdate {
   [self showInfoBarForForm:std::move(formToUpdate)
                infoBarType:PasswordInfoBarType::UPDATE];
+}
+
+- (void)showAutosigninSnackBar:
+    (std::unique_ptr<autofill::PasswordForm>)formSignedIn {
+  if (!webStateObserverBridge_ || !webStateObserverBridge_->web_state())
+    return;
+
+  NSString* text = [NSString
+      stringWithFormat:@"%@ %@",
+                       l10n_util::GetNSString(
+                           IDS_IOS_CREDENTIAL_MANAGER_AUTO_SIGNIN),
+                       base::SysUTF16ToNSString(formSignedIn->username_value)];
+  MDCSnackbarMessage* message = [MDCSnackbarMessage messageWithText:text];
+  message.category = @"PasswordsSnackbarCategory";
+  message.duration = 3.; // seconds
+  message.accessibilityLabel = text;
+  [MDCSnackbarManager showMessage:message];
+  // TODO(crbug.com/435048): This snackbar must also contain an icon.
 }
 
 #pragma mark -
