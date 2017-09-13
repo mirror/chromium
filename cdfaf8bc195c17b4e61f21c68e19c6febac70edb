@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bab9c9e_9a1b057e",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-13T07:33:53Z",
+      "side": 1,
+      "message": "If you put the anonymous namespace inside the blink namespace you wouldn\u0027t need the blink:: prefix here.",
+      "revId": "cdfaf8bc195c17b4e61f21c68e19c6febac70edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db8861ba_905c6e5b",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-13T07:33:53Z",
+      "side": 1,
+      "message": "Pass a reference instead?",
+      "revId": "cdfaf8bc195c17b4e61f21c68e19c6febac70edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e450789_03bc3f32",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-13T07:33:53Z",
+      "side": 1,
+      "message": "Pass a reference instead?",
+      "revId": "cdfaf8bc195c17b4e61f21c68e19c6febac70edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0208e37_be98aebe",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-13T07:33:53Z",
+      "side": 1,
+      "message": "Should not need braces here.",
+      "revId": "cdfaf8bc195c17b4e61f21c68e19c6febac70edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adedd9e4_526dd1f8",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-13T07:33:53Z",
+      "side": 1,
+      "message": "Why was this made into a static member method?",
+      "revId": "cdfaf8bc195c17b4e61f21c68e19c6febac70edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "152ca211_3b95b8a6",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-13T07:33:53Z",
+      "side": 1,
+      "message": "This will only work if the element with the ShadowPseudoId() can only be styled from the UA stylesheet (not author). Is that the case? If so, that should be clarified in the added documentation above.",
+      "revId": "cdfaf8bc195c17b4e61f21c68e19c6febac70edb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
