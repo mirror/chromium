@@ -74,6 +74,21 @@ ui::ImeTextSpan::Type ConvertWebTypeToUiType(blink::WebImeTextSpan::Type type) {
   return ui::ImeTextSpan::Type::kComposition;
 }
 
+ui::ImeTextSpan::Thickness ConvertWebThicknessToUiThickness(
+    blink::WebImeTextSpan::Thickness thickness) {
+  switch (thickness) {
+    case blink::WebImeTextSpan::Thickness::kNone:
+      return ui::ImeTextSpan::Thickness::kNone;
+    case blink::WebImeTextSpan::Thickness::kThin:
+      return ui::ImeTextSpan::Thickness::kThin;
+    case blink::WebImeTextSpan::Thickness::kThick:
+      return ui::ImeTextSpan::Thickness::kThick;
+  }
+
+  NOTREACHED();
+  return ui::ImeTextSpan::Thickness::kThin;
+}
+
 std::vector<ui::ImeTextSpan> ConvertToUiImeTextSpan(
     const std::vector<blink::WebImeTextSpan>& ime_text_spans) {
   std::vector<ui::ImeTextSpan> ui_ime_text_spans;
@@ -81,7 +96,8 @@ std::vector<ui::ImeTextSpan> ConvertToUiImeTextSpan(
     ui_ime_text_spans.emplace_back(ui::ImeTextSpan(
         ConvertWebTypeToUiType(ime_text_span.type), ime_text_span.start_offset,
         ime_text_span.end_offset, ime_text_span.underline_color,
-        ime_text_span.thick, ime_text_span.background_color,
+        ConvertWebThicknessToUiThickness(ime_text_span.thickness),
+        ime_text_span.background_color,
         ime_text_span.suggestion_highlight_color, ime_text_span.suggestions));
   }
   return ui_ime_text_spans;

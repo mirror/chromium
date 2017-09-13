@@ -62,6 +62,12 @@ enum ImeTextSpanType {
   kSuggestion,
 };
 
+enum ImeTextSpanThickness {
+  kNone,
+  kThin,
+  kThick,
+};
+
 // Represents an underlined segment of text currently composed by IME.
 // Corresponds to ui::ImeTextSpan.
 struct ImeTextSpan {
@@ -69,7 +75,7 @@ struct ImeTextSpan {
   uint32 start_offset;
   uint32 end_offset;
   uint32 underline_color;
-  bool thick;
+  ImeTextSpanThickness thickness;
   uint32 background_color;
   uint32 suggestion_highlight_color;
   array<string> suggestions;

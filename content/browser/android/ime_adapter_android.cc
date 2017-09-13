@@ -88,8 +88,8 @@ void AppendBackgroundColorSpan(JNIEnv*,
   ime_text_spans->push_back(ui::ImeTextSpan(
       ui::ImeTextSpan::Type::kComposition, static_cast<unsigned>(start),
       static_cast<unsigned>(end), static_cast<unsigned>(background_color),
-      false, SK_ColorTRANSPARENT, SK_ColorTRANSPARENT,
-      std::vector<std::string>()));
+      ui::ImeTextSpan::Thickness::kThin, SK_ColorTRANSPARENT,
+      SK_ColorTRANSPARENT, std::vector<std::string>()));
 }
 
 // Callback from Java to convert SuggestionSpan data to a
@@ -111,9 +111,9 @@ void AppendSuggestionSpan(JNIEnv* env,
   AppendJavaStringArrayToStringVector(env, suggestions, &suggestions_vec);
   ime_text_spans->push_back(blink::WebImeTextSpan(
       blink::WebImeTextSpan::Type::kSuggestion, static_cast<unsigned>(start),
-      static_cast<unsigned>(end), static_cast<unsigned>(underline_color), true,
-      SK_ColorTRANSPARENT, static_cast<unsigned>(suggestion_highlight_color),
-      suggestions_vec));
+      static_cast<unsigned>(end), static_cast<unsigned>(underline_color),
+      blink::WebImeTextSpan::Thickness::kThick, SK_ColorTRANSPARENT,
+      static_cast<unsigned>(suggestion_highlight_color), suggestions_vec));
 }
 
 // Callback from Java to convert UnderlineSpan data to a
@@ -127,10 +127,11 @@ void AppendUnderlineSpan(JNIEnv*,
   DCHECK_GE(end, 0);
   std::vector<ui::ImeTextSpan>* ime_text_spans =
       reinterpret_cast<std::vector<ui::ImeTextSpan>*>(ime_text_spans_ptr);
-  ime_text_spans->push_back(ui::ImeTextSpan(
-      ui::ImeTextSpan::Type::kComposition, static_cast<unsigned>(start),
-      static_cast<unsigned>(end), SK_ColorBLACK, false, SK_ColorTRANSPARENT,
-      SK_ColorTRANSPARENT, std::vector<std::string>()));
+  ime_text_spans->push_back(
+      ui::ImeTextSpan(ui::ImeTextSpan::Type::kComposition,
+                      static_cast<unsigned>(start), static_cast<unsigned>(end),
+                      SK_ColorTRANSPARENT, ui::ImeTextSpan::Thickness::kThin,
+                      SK_ColorTRANSPARENT, std::vector<std::string>()));
 }
 
 ImeAdapterAndroid::ImeAdapterAndroid(JNIEnv* env,
@@ -244,7 +245,7 @@ void ImeAdapterAndroid::SetComposingText(JNIEnv* env,
   if (ime_text_spans.empty()) {
     ime_text_spans.push_back(
         ui::ImeTextSpan(ui::ImeTextSpan::Type::kComposition, 0, text16.length(),
-                        SK_ColorBLACK, false, SK_ColorTRANSPARENT,
+                        SK_ColorTRANSPARENT, ui::ImeTextSpan::Thickness::kThin,
                         SK_ColorTRANSPARENT, std::vector<std::string>()));
   }
 
@@ -366,9 +367,10 @@ void ImeAdapterAndroid::SetComposingRegion(JNIEnv*,
     return;
 
   std::vector<ui::ImeTextSpan> ime_text_spans;
-  ime_text_spans.push_back(ui::ImeTextSpan(
-      ui::ImeTextSpan::Type::kComposition, 0, end - start, SK_ColorBLACK, false,
-      SK_ColorTRANSPARENT, SK_ColorTRANSPARENT, std::vector<std::string>()));
+  ime_text_spans.push_back(
+      ui::ImeTextSpan(ui::ImeTextSpan::Type::kComposition, 0, end - start,
+                      SK_ColorTRANSPARENT, ui::ImeTextSpan::Thickness::kThin,
+                      SK_ColorTRANSPARENT, std::vector<std::string>()));
 
   rfh->GetFrameInputHandler()->SetCompositionFromExistingText(start, end,
                                                               ime_text_spans);

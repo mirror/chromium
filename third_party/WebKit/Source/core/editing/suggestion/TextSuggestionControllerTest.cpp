@@ -160,8 +160,8 @@ TEST_F(TextSuggestionControllerTest, DeleteActiveSuggestionRange_DeleteAtEnd) {
 
   // Mark "word2" as the active suggestion range
   GetDocument().Markers().AddActiveSuggestionMarker(
-      EphemeralRange(Position(text, 6), Position(text, 11)), Color::kBlack,
-      StyleableMarker::Thickness::kThin, Color::kBlack);
+      EphemeralRange(Position(text, 6), Position(text, 11)),
+      Color::kTransparent, StyleableMarker::Thickness::kThin, Color::kBlack);
   // Select immediately before word2
   GetDocument().GetFrame()->Selection().SetSelection(
       SelectionInDOMTree::Builder()
@@ -186,8 +186,8 @@ TEST_F(TextSuggestionControllerTest,
 
   // Mark "word2" as the active suggestion range
   GetDocument().Markers().AddActiveSuggestionMarker(
-      EphemeralRange(Position(text, 6), Position(text, 11)), Color::kBlack,
-      StyleableMarker::Thickness::kThin, Color::kBlack);
+      EphemeralRange(Position(text, 6), Position(text, 11)),
+      Color::kTransparent, StyleableMarker::Thickness::kThin, Color::kBlack);
   // Select immediately before word2
   GetDocument().GetFrame()->Selection().SetSelection(
       SelectionInDOMTree::Builder()
@@ -213,7 +213,7 @@ TEST_F(TextSuggestionControllerTest,
 
   // Mark "word1" as the active suggestion range
   GetDocument().Markers().AddActiveSuggestionMarker(
-      EphemeralRange(Position(text, 0), Position(text, 5)), Color::kBlack,
+      EphemeralRange(Position(text, 0), Position(text, 5)), Color::kTransparent,
       StyleableMarker::Thickness::kThin, Color::kBlack);
   // Select immediately before word1
   GetDocument().GetFrame()->Selection().SetSelection(
@@ -241,7 +241,7 @@ TEST_F(TextSuggestionControllerTest,
 
   // Mark "word1" as the active suggestion range
   GetDocument().Markers().AddActiveSuggestionMarker(
-      EphemeralRange(Position(text, 0), Position(text, 5)), Color::kBlack,
+      EphemeralRange(Position(text, 0), Position(text, 5)), Color::kTransparent,
       StyleableMarker::Thickness::kThin, Color::kBlack);
   // Select immediately before word1
   GetDocument().GetFrame()->Selection().SetSelection(
@@ -272,8 +272,8 @@ TEST_F(TextSuggestionControllerTest,
 
   // Mark "word2" as the active suggestion range
   GetDocument().Markers().AddActiveSuggestionMarker(
-      EphemeralRange(Position(text, 5), Position(text, 10)), Color::kBlack,
-      StyleableMarker::Thickness::kThin, Color::kBlack);
+      EphemeralRange(Position(text, 5), Position(text, 10)),
+      Color::kTransparent, StyleableMarker::Thickness::kThin, Color::kBlack);
   // Select immediately before word2
   GetDocument().GetFrame()->Selection().SetSelection(
       SelectionInDOMTree::Builder()
@@ -298,8 +298,8 @@ TEST_F(TextSuggestionControllerTest,
 
   // Mark "word2" as the active suggestion range
   GetDocument().Markers().AddActiveSuggestionMarker(
-      EphemeralRange(Position(text, 6), Position(text, 11)), Color::kBlack,
-      StyleableMarker::Thickness::kThin, Color::kBlack);
+      EphemeralRange(Position(text, 6), Position(text, 11)),
+      Color::kTransparent, StyleableMarker::Thickness::kThin, Color::kBlack);
   // Select immediately before word2
   GetDocument().GetFrame()->Selection().SetSelection(
       SelectionInDOMTree::Builder()
@@ -324,7 +324,7 @@ TEST_F(TextSuggestionControllerTest,
 
   // Mark "word1" as the active suggestion range
   GetDocument().Markers().AddActiveSuggestionMarker(
-      EphemeralRange(Position(text, 0), Position(text, 5)), Color::kBlack,
+      EphemeralRange(Position(text, 0), Position(text, 5)), Color::kTransparent,
       StyleableMarker::Thickness::kThin, Color::kBlack);
   // Select immediately before word1
   GetDocument().GetFrame()->Selection().SetSelection(
