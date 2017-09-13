@@ -52,6 +52,24 @@
       "revId": "3d2885afc78232d1a176bca34be4792c5cc447c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c04b3f_1c6ee2e8",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-13T15:55:10Z",
+      "side": 1,
+      "message": "ContentsWebView is-a LayerOwner, as is Window here. I would just remove the delegate altogether, and do this through LayerOwner::OnLayerCreated()",
+      "parentUuid": "74948282_f912c102",
+      "revId": "3d2885afc78232d1a176bca34be4792c5cc447c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
