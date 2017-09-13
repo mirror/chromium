@@ -1,0 +1,203 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a237533_91c88858",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T14:09:51Z",
+      "side": 1,
+      "message": "I\u0027d prefer to write this function inline in the ctor, to make obvious that the ctor is doing heavy stuff.",
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09da9be7_d62d0061",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T14:09:51Z",
+      "side": 1,
+      "message": "move this to where it\u0027s used, or just remove it.",
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5063512_132ce509",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T14:09:51Z",
+      "side": 1,
+      "message": "Could add a short comment here about did_replace() meaning, since this is non-obvious.",
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0585563f_a583ed49",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T14:09:51Z",
+      "side": 1,
+      "message": "You can link to that bug about UMA for S13nSW.",
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aec113d_b2557097",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T14:09:51Z",
+      "side": 1,
+      "message": "this class is pretty complex so this sentence could be broken into multiple ones. i think we also want something about the byte-to-byte comparison. i imagine something like:\n\nThis fetches the script (the main script or imported script) from network. While reading\nthe network response, it:\n1. Forwards the response to |client| (which is the service worker in the renderer).\n2. Writes the response to service worker script storage.\n\nIn case there is already an installed service worker for this registration, this class also performs the \"byte-for-byte\" comparison for updating the worker. If the scripts are identical, the load succeeds but no script is written, and ServiceWorkerVersion is told to terminate startup.",
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa48fa86_b0bb40ae",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T14:09:51Z",
+      "side": 1,
+      "message": "maybe worth saying this is for the network load",
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceec5570_9ee1b9f7",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T14:09:51Z",
+      "side": 1,
+      "message": "there\u0027s no class SWScriptCache, and I\u0027d like to avoid using the word \"cache\" for storing these installed scripts (SWCache usually refers to Cache Storage API, and cache feels transient). Prefer \"service worker script storage\"",
+      "range": {
+        "startLine": 71,
+        "startChar": 39,
+        "endLine": 71,
+        "endChar": 63
+      },
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6c1c57a_6348c24b",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T14:09:51Z",
+      "side": 1,
+      "message": "service worker script storage.",
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c95052d_4660a62e",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T14:09:51Z",
+      "side": 1,
+      "message": "I like the idea of grouping these all with network_. Also network_watcher_?",
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ffc253_5b08a6f2",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T14:09:51Z",
+      "side": 1,
+      "message": "ditto about controller",
+      "range": {
+        "startLine": 112,
+        "startChar": 49,
+        "endLine": 112,
+        "endChar": 59
+      },
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c7f38a_62e4ad52",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-13T14:09:51Z",
+      "side": 1,
+      "message": "The comment could use more context: what message pipe and what data pipe? how about something like:\n\n// A barrier closure for waiting for loading the script from the network to be complete. Called when both URLLoaderClient::OnComplete() is called, and the entire response body is read from the data pipe.\n\ncompletion_closure_ also seems vague for this class which is doing a lot of completions.\n\nhow about something like \"network_load_barrier_closure_\"",
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
