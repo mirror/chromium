@@ -22,6 +22,30 @@
       "revId": "6000cc45578b2016c765150871f136a78d19b29f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb49506_ada151ef",
+        "filename": "content/browser/webui/web_ui_data_source_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-13T18:11:38Z",
+      "side": 1,
+      "message": "No (confusingly).\n\nLine 95 uses an unordered_set member.  We were previously getting this #include for free from web_ui_data_source.h, but since we aren\u0027t now, we need to add it.",
+      "parentUuid": "b53ba897_19596623",
+      "range": {
+        "startLine": 12,
+        "startChar": 24,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "6000cc45578b2016c765150871f136a78d19b29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
