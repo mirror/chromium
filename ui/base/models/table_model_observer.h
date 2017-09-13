@@ -25,6 +25,9 @@ class UI_BASE_EXPORT TableModelObserver {
   // Invoked when a range of items has been removed.
   virtual void OnItemsRemoved(int start, int length) = 0;
 
+  // Invoked when a range of rows is being moved to a different position.
+  virtual void OnItemsMoved(int old_start, int length, int new_start) {}
+
  protected:
   virtual ~TableModelObserver() {}
 };
