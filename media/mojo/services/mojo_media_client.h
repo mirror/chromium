@@ -10,6 +10,7 @@
 
 #include "base/callback_forward.h"
 #include "base/memory/ref_counted.h"
+#include "media/base/demuxer.h"
 #include "media/mojo/interfaces/video_decoder.mojom.h"
 #include "media/mojo/services/media_mojo_export.h"
 
@@ -34,6 +35,7 @@ namespace media {
 class AudioDecoder;
 class AudioRendererSink;
 class CdmFactory;
+class DemuxerFactory;
 class MediaLog;
 class RendererFactory;
 class VideoDecoder;
@@ -83,6 +85,10 @@ class MEDIA_MOJO_EXPORT MojoMediaClient {
 
   // Returns the RendererFactory to be used by MojoRendererService.
   virtual std::unique_ptr<RendererFactory> CreateRendererFactory(
+      MediaLog* media_log);
+
+  // Returns the DemuxerFactory to be used by MojoDemuxerService.
+  virtual std::unique_ptr<DemuxerFactory> CreateDemuxerFactory(
       MediaLog* media_log);
 
   // Returns the CdmFactory to be used by MojoCdmService. |host_interfaces| can
