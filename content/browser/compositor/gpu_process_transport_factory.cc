@@ -562,7 +562,7 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
             base::MakeUnique<GpuSurfacelessBrowserCompositorOutputSurface>(
                 context_provider, data->surface_handle, vsync_callback,
                 CreateOverlayCandidateValidator(compositor->widget()),
-                GL_TEXTURE_2D, GL_RGB,
+                GL_TEXTURE_2D, GL_RGBA,
                 display::DisplaySnapshot::PrimaryFormat(),
                 GetGpuMemoryBufferManager());
         gpu_vsync_control = gpu_output_surface.get();
