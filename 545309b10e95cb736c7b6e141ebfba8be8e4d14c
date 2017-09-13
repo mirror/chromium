@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f569c3df_0a2369bf",
+        "filename": "media/audio/audio_output_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-09-13T15:24:14Z",
+      "side": 1,
+      "message": "Changed to Media.AudioOutputController.ProxyStreamCreationResultForDeviceChange and Media.AudioOutputController.ProxyStreamCreationResult.",
+      "parentUuid": "2f6d6eb1_c92b8ca5",
+      "revId": "545309b10e95cb736c7b6e141ebfba8be8e4d14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8e53b2e_bcfc8a22",
         "filename": "media/audio/audio_output_controller.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "545309b10e95cb736c7b6e141ebfba8be8e4d14c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4fcce38_b4b6fcf8",
+        "filename": "media/audio/audio_output_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-09-13T15:24:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8e53b2e_bcfc8a22",
+      "revId": "545309b10e95cb736c7b6e141ebfba8be8e4d14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
