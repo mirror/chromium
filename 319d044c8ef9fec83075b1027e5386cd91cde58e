@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0899727_79187b50",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-13T03:34:52Z",
+      "side": 1,
+      "message": "Good idea.  that\u0027s a simple change.  I will do that right away ;)",
+      "parentUuid": "df919c5f_963a989a",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 66
+      },
+      "revId": "319d044c8ef9fec83075b1027e5386cd91cde58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb628965_e26b018f",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "319d044c8ef9fec83075b1027e5386cd91cde58e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6121b8d2_0acd5c5b",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-13T03:34:52Z",
+      "side": 1,
+      "message": "done. thanks.",
+      "parentUuid": "eb628965_e26b018f",
+      "range": {
+        "startLine": 249,
+        "startChar": 64,
+        "endLine": 249,
+        "endChar": 70
+      },
+      "revId": "319d044c8ef9fec83075b1027e5386cd91cde58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
