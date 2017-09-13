@@ -134,6 +134,47 @@
       "revId": "383af1dbac57a97e256ab6479021bda98fe08aa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc92f52_fd959b28",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-13T18:47:08Z",
+      "side": 1,
+      "message": "Hey, so I\u0027m referring to these async callbacks:\nOfflineInternalsUIMessageHandler::HandleDeletedPagesCallback\nOfflineInternalsUIMessageHandler::HandleDeletedRequestsCallback\nOfflineInternalsUIMessageHandler::HandleRequestQueueCallback\nOfflineInternalsUIMessageHandler::HandleStoredPagesCallback\n\nThese four cannot call AllowJavascript and need to be cancelled via a callback_weak_ptr_factory_. I can see that they are not directly affected by this patch, so you may fix it in a followup CL.",
+      "parentUuid": "5a964e8d_95c6c878",
+      "range": {
+        "startLine": 330,
+        "startChar": 2,
+        "endLine": 330,
+        "endChar": 17
+      },
+      "revId": "383af1dbac57a97e256ab6479021bda98fe08aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d53ba71_6b2bd7ea",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-13T18:47:08Z",
+      "side": 1,
+      "message": "I think this callback is no longer used.",
+      "revId": "383af1dbac57a97e256ab6479021bda98fe08aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
