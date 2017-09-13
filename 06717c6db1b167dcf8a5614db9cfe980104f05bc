@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2759d7b0_d145de2b",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 5588,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T17:52:49Z",
+      "side": 1,
+      "message": "nit: passwords (same below)",
+      "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af77ba62_7bab5719",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T17:52:49Z",
+      "side": 1,
+      "message": "All of these need documentation.",
+      "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dcb7ea5_9aa4a515",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T17:52:49Z",
+      "side": 1,
+      "message": "This is awkward. The model shouldn\u0027t be dictating view behavior. It should just provide state to the view and the view should determine button visibility. Also, the way this is triggered (on the getSavedPasswordList request) is fragile.\n\nThis isn\u0027t something that should be part of the API. For feature switches like this we typically provide a boolean to the html source, e.g. see changePasswordEnabled: https://cs.chromium.org/search/?q\u003dchangePasswordEnabled\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "revId": "06717c6db1b167dcf8a5614db9cfe980104f05bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
