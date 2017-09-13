@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa0590c5_e555e637",
+        "filename": "chrome/browser/printing/print_view_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-13T09:41:16Z",
+      "side": 1,
+      "message": "Not needed based on the print_view_manager.cc build rules.",
+      "revId": "6d5cf554cca6d782641782798bb0f219178ecdd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b711245_2ba8dc30",
+        "filename": "chrome/browser/printing/print_view_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-13T09:41:16Z",
+      "side": 1,
+      "message": "nit: |variable_name|",
+      "revId": "6d5cf554cca6d782641782798bb0f219178ecdd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1600e64d_862289ca",
+        "filename": "chrome/browser/printing/print_view_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-13T09:41:16Z",
+      "side": 1,
+      "message": "It is null for me on Linux, because PrintViewManager::OnDidShowPrintDialog() got called first and Reset() the callback, before reaching here. Maybe you need to special-case the Windows behavior?",
+      "range": {
+        "startLine": 138,
+        "startChar": 53,
+        "endLine": 138,
+        "endChar": 64
+      },
+      "revId": "6d5cf554cca6d782641782798bb0f219178ecdd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0af75763_da3cc6be",
+        "filename": "chrome/browser/printing/print_view_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-13T09:41:16Z",
+      "side": 1,
+      "message": "nit: braces.",
+      "revId": "6d5cf554cca6d782641782798bb0f219178ecdd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
