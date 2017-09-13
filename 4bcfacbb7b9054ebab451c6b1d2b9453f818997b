@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e8d3a5e_e4bb1bab",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-13T17:41:14Z",
+      "side": 1,
+      "message": "How about this formatting?:\n- (nonnull instancetype)initWithRewriter:(nullable MailtoURLRewriter*)rewriter\n    handler:(void (^ __nullable)(MailtoHandler *handler))handler;",
+      "revId": "4bcfacbb7b9054ebab451c6b1d2b9453f818997b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd5f3878_f68a75cd",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-13T17:41:14Z",
+      "side": 1,
+      "message": "\"callback\" normally implies function pointers. How about \"handler\" to follow UIAlertController naming?",
+      "revId": "4bcfacbb7b9054ebab451c6b1d2b9453f818997b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dde06db_1b10739e",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-13T17:41:14Z",
+      "side": 1,
+      "message": "_selectedCallback \u003d [selectedCallback copy];\n\nNot sure if ARC forces copy automatically, but it\u0027s still better to be on the safe side.",
+      "range": {
+        "startLine": 80,
+        "startChar": 24,
+        "endLine": 80,
+        "endChar": 40
+      },
+      "revId": "4bcfacbb7b9054ebab451c6b1d2b9453f818997b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc704a9_0607aee1",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-13T17:41:14Z",
+      "side": 1,
+      "message": "s/mailApp/mail_app\n\nPlease fix in other places as well.\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/objective-c/objective-c.md#objective_c_style-matches-the-language",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 14
+      },
+      "revId": "4bcfacbb7b9054ebab451c6b1d2b9453f818997b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91005f4e_52b9a35d",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-13T17:41:14Z",
+      "side": 1,
+      "message": "variable_name_",
+      "range": {
+        "startLine": 42,
+        "startChar": 36,
+        "endLine": 42,
+        "endChar": 53
+      },
+      "revId": "4bcfacbb7b9054ebab451c6b1d2b9453f818997b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cd31935_fc5b8c73",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-13T17:41:14Z",
+      "side": 1,
+      "message": "s/testViewController/test_view_controller",
+      "range": {
+        "startLine": 154,
+        "startChar": 47,
+        "endLine": 154,
+        "endChar": 65
+      },
+      "revId": "4bcfacbb7b9054ebab451c6b1d2b9453f818997b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d2ec52_32feaf36",
+        "filename": "ios/chrome/browser/web/nullable_mailto_url_rewriter_unittest.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-13T17:41:14Z",
+      "side": 1,
+      "message": "gmail_installed\n\nSame for other variable names",
+      "range": {
+        "startLine": 72,
+        "startChar": 17,
+        "endLine": 72,
+        "endChar": 31
+      },
+      "revId": "4bcfacbb7b9054ebab451c6b1d2b9453f818997b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

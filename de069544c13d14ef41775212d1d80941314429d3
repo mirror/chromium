@@ -342,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "d7480968_b7c84e43",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-13T17:41:14Z",
+      "side": 1,
+      "message": "Sorry. ALL caps used to be an explicit requirements in Chromium Style, now it was removed.",
+      "parentUuid": "2b68ce6f_dbe3c11b",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 25
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e67d1d92_b712486d",
         "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
         "patchSetId": 11
@@ -1252,6 +1276,24 @@
       "side": 1,
       "message": "There is no coordinator class. These feature flags will be removed once we settled down on an implementation.",
       "parentUuid": "95101e50_67c115d9",
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4df8ba0_d08067a8",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-13T17:41:14Z",
+      "side": 1,
+      "message": "From my understanding in the new architecture view controllers should be created by coordinators. So maybe we need a coordinator?",
+      "parentUuid": "e6819f3d_31628ee6",
       "revId": "de069544c13d14ef41775212d1d80941314429d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
