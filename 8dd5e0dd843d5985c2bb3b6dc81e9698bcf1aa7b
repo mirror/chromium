@@ -34,6 +34,24 @@
       "revId": "8dd5e0dd843d5985c2bb3b6dc81e9698bcf1aa7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e9f3c0_4e83b2f9",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-13T22:03:14Z",
+      "side": 1,
+      "message": "I see. Perhaps, we can add \"mark_as_canceled\" to Modifications struct, and pass that from NetworkHandler. This way, we keep the logic next to navigation throttle, while easily accessing resource_request_info here. WDYT?",
+      "parentUuid": "06dfbf44_58cd885d",
+      "revId": "8dd5e0dd843d5985c2bb3b6dc81e9698bcf1aa7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
