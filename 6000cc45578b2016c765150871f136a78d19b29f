@@ -46,6 +46,30 @@
       "revId": "6000cc45578b2016c765150871f136a78d19b29f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6263b25b_6fd4e429",
+        "filename": "content/browser/webui/web_ui_data_source_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-09-13T18:24:04Z",
+      "side": 1,
+      "message": "Indeed very confusing. Guess this is a poster child for IWYU.\n\nThanks for the explanation.",
+      "parentUuid": "2cb49506_ada151ef",
+      "range": {
+        "startLine": 12,
+        "startChar": 24,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "6000cc45578b2016c765150871f136a78d19b29f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
