@@ -16,6 +16,24 @@
       "revId": "e2b952bc55ebec49ebd5c0e43a4ef28c29a6a249",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "042323e0_903ed0dd",
+        "filename": "net/disk_cache/simple/simple_experiment.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-13T21:45:52Z",
+      "side": 0,
+      "message": "How about I keep EVICT_WITH_SIZE but add a deprecation comment?",
+      "parentUuid": "b4c54a14_5fb79985",
+      "revId": "e2b952bc55ebec49ebd5c0e43a4ef28c29a6a249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
