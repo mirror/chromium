@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7efef676_bbe9ea7f",
+        "filename": "testing/libfuzzer/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-09-13T02:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f4849fb_a0adf146",
+      "range": {
+        "startLine": 23,
+        "startChar": 71,
+        "endLine": 23,
+        "endChar": 72
+      },
+      "revId": "79e7c20c6d1fe7c5715d5d065d58f4d5b64d47b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f24b65f_6c933f97",
         "filename": "testing/libfuzzer/README.md",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "79e7c20c6d1fe7c5715d5d065d58f4d5b64d47b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "127617e3_a5b56c90",
+        "filename": "testing/libfuzzer/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-09-13T02:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f24b65f_6c933f97",
+      "range": {
+        "startLine": 37,
+        "startChar": 3,
+        "endLine": 37,
+        "endChar": 49
+      },
+      "revId": "79e7c20c6d1fe7c5715d5d065d58f4d5b64d47b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "917b4e95_3e4cc9cc",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-09-13T02:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d76b915e_89c0d5d4",
+      "range": {
+        "startLine": 22,
+        "startChar": 23,
+        "endLine": 22,
+        "endChar": 24
+      },
+      "revId": "79e7c20c6d1fe7c5715d5d065d58f4d5b64d47b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "deea2206_9483804c",
         "filename": "testing/libfuzzer/libprotobuf-mutator.md",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "79e7c20c6d1fe7c5715d5d065d58f4d5b64d47b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ab69c2_0d5ac25a",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-09-13T02:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "deea2206_9483804c",
+      "range": {
+        "startLine": 62,
+        "startChar": 14,
+        "endLine": 62,
+        "endChar": 29
+      },
+      "revId": "79e7c20c6d1fe7c5715d5d065d58f4d5b64d47b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "aba9c666_6b4bb80b",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-09-13T02:40:24Z",
+      "side": 1,
+      "message": "Nope, I just wanted to be consistent with what I do in url_parse_proto_fuzzer.cc. I\u0027ll remove it.",
+      "parentUuid": "ef164c88_f4ce2414",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 26
+      },
+      "revId": "79e7c20c6d1fe7c5715d5d065d58f4d5b64d47b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "825a64dd_4cb1aafa",
         "filename": "testing/libfuzzer/libprotobuf-mutator.md",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "79e7c20c6d1fe7c5715d5d065d58f4d5b64d47b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c324a8f_8eda5ee3",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-09-13T02:40:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "825a64dd_4cb1aafa",
+      "range": {
+        "startLine": 113,
+        "startChar": 8,
+        "endLine": 113,
+        "endChar": 32
+      },
+      "revId": "79e7c20c6d1fe7c5715d5d065d58f4d5b64d47b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
