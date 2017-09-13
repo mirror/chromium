@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "21f55636_f3bdfc5d",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-13T17:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "276e41ca_df93284a",
+      "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6d70c09_7c38a5fa",
         "filename": "chrome/browser/search/local_ntp_source.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f76f47f8_87fca5e6",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-13T17:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6d70c09_7c38a5fa",
+      "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "544b94dd_7f0f0f6f",
         "filename": "components/search_provider_logos/logo_common.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5bc415f_96bc7432",
+        "filename": "components/search_provider_logos/logo_common.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-13T17:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "544b94dd_7f0f0f6f",
+      "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "d9d6cc1a_06f186ab",
+        "filename": "components/search_provider_logos/logo_common.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-13T17:44:16Z",
+      "side": 1,
+      "message": "\u003e This seems weird. You might get a logo, but you\u0027re supposed to ignore it? Then why even hand it out at all?\n\nThis was related to the case where decoding fails (so we could hand out encoded data, but not decoded). Changed to always hand out nullopt.",
+      "parentUuid": "30f24dae_d3a404b2",
+      "range": {
+        "startLine": 79,
+        "startChar": 42,
+        "endLine": 79,
+        "endChar": 0
+      },
+      "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8df34392_ae2a9289",
         "filename": "components/search_provider_logos/logo_common.h",
         "patchSetId": 6
@@ -90,6 +168,24 @@
       "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d51535a5_c786b550",
+        "filename": "components/search_provider_logos/logo_common.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-13T17:44:16Z",
+      "side": 1,
+      "message": "\u003e nit: This trips up my grammar parser. I guess you elided the \"_available\" suffix?\n\nYes. Restored.",
+      "parentUuid": "8df34392_ae2a9289",
+      "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "2e275256_749e86b7",
+        "filename": "components/search_provider_logos/logo_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-13T17:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02f7921a_326b7344",
+      "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4e8107b_10132cca",
         "filename": "components/search_provider_logos/logo_service.h",
         "patchSetId": 6
@@ -124,6 +238,24 @@
       "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9393f9ab_0064bfa7",
+        "filename": "components/search_provider_logos/logo_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-13T17:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4e8107b_10132cca",
+      "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +282,30 @@
     },
     {
       "key": {
+        "uuid": "e19b6ab8_e6381ab1",
+        "filename": "components/search_provider_logos/logo_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-13T17:44:16Z",
+      "side": 1,
+      "message": "\u003e Really? Why?\n\nDo you think that it\u0027s reasonable to start a fetch without providing any callback to be notified on a response? I figured it was likely to be a programming error.\n\nIt\u0027s just a DCHECK, easily removed.",
+      "parentUuid": "0308e45f_5a5bdd7d",
+      "range": {
+        "startLine": 60,
+        "startChar": 57,
+        "endLine": 60,
+        "endChar": 0
+      },
+      "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c75af754_fa34285a",
         "filename": "components/search_provider_logos/logo_service_unittest.cc",
         "patchSetId": 6
@@ -161,6 +317,30 @@
       "writtenOn": "2017-09-12T11:29:05Z",
       "side": 1,
       "message": "Hm, should we maybe provide these two helper directly in the LogoService? Seems that every client will want either only the encoded or only the decoded logos, so that\u0027d make the service more convenient to use.",
+      "range": {
+        "startLine": 330,
+        "startChar": 77,
+        "endLine": 330,
+        "endChar": 0
+      },
+      "revId": "0586c3ec62b5063219dd317389c51412f39e7491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cfe1d6a_e9fa416f",
+        "filename": "components/search_provider_logos/logo_service_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-13T17:44:16Z",
+      "side": 1,
+      "message": "Since using the interface usually involves passing two callbacks of identical type, I like the explicitness of naming their fields (outside the test). What do you think?",
+      "parentUuid": "c75af754_fa34285a",
       "range": {
         "startLine": 330,
         "startChar": 77,

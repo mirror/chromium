@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "784dddfd_127b3cfd",
+        "filename": "components/search_provider_logos/logo_common.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-13T17:44:16Z",
+      "side": 1,
+      "message": "\u003e nit: This doesn\u0027t seem quite accurate for cached logos. AVAILABLE?\n\nRenamed to \"DETERMINED\" because it was unified with CLEARED (also to preserve the -ED pattern).",
+      "parentUuid": "14e228c7_1d2e4513",
+      "range": {
+        "startLine": 66,
+        "startChar": 10,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "15355f91689c649767664d0b87591d6cf0e82fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "693c52f8_2d224c60",
         "filename": "components/search_provider_logos/logo_tracker.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "15355f91689c649767664d0b87591d6cf0e82fea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e1f8e9a_3cb6d67a",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-13T17:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "693c52f8_2d224c60",
+      "range": {
+        "startLine": 66,
+        "startChar": 56,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "15355f91689c649767664d0b87591d6cf0e82fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b43e63b8_7a6f9243",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-13T17:44:16Z",
+      "side": 1,
+      "message": "\u003e nit: nullopt is default, no need to set explicitly.\n\u003e Or alternatively: opt_logo \u003d logo ? *logo : base::nullopt;\n\nDone (except a little different, because C++ doesn\u0027t know how to unify *logo and base::nullopt into a third type).",
+      "parentUuid": "da1d1013_b1c3831a",
+      "range": {
+        "startLine": 67,
+        "startChar": 48,
+        "endLine": 67,
+        "endChar": 0
+      },
+      "revId": "15355f91689c649767664d0b87591d6cf0e82fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "007c12b0_a8d10b04",
         "filename": "components/search_provider_logos/logo_tracker.cc",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "15355f91689c649767664d0b87591d6cf0e82fea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da28923_54c7c775",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-09-13T17:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "007c12b0_a8d10b04",
+      "range": {
+        "startLine": 180,
+        "startChar": 31,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "15355f91689c649767664d0b87591d6cf0e82fea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
