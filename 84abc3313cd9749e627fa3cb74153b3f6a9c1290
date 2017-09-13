@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae61a424_74e897d6",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-13T22:39:26Z",
+      "side": 1,
+      "message": "I uploaded a screenshot on the bug page showing the titlebar and buttons are still visible when the Chrome apps window size is very small.",
+      "parentUuid": "ad55f066_a944037d",
+      "revId": "84abc3313cd9749e627fa3cb74153b3f6a9c1290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3371be46_992d96c9",
         "filename": "chrome/browser/ui/views/device_chooser_content_view.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "84abc3313cd9749e627fa3cb74153b3f6a9c1290",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b60a54_8ce5ea65",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-13T22:39:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3371be46_992d96c9",
+      "revId": "84abc3313cd9749e627fa3cb74153b3f6a9c1290",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
