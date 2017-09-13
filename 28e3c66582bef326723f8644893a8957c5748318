@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfa9a092_2880c8ea",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-13T23:06:09Z",
+      "side": 0,
+      "message": "Do you want to follow http://crbug.com/386004 and clean up these out side of app list too? I am okay if we do it separate CLs. Just want to make sure we clean up as much as we can.",
+      "range": {
+        "startLine": 126,
+        "startChar": 20,
+        "endLine": 126,
+        "endChar": 39
+      },
+      "revId": "28e3c66582bef326723f8644893a8957c5748318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
