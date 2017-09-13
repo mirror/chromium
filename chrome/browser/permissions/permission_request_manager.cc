@@ -225,24 +225,6 @@ void PermissionRequestManager::CancelRequest(PermissionRequest* request) {
   NOTREACHED();  // Callers should not cancel requests that are not pending.
 }
 
-void PermissionRequestManager::DisplayPendingRequests() {
-  tab_can_show_prompts_ = true;
-
-  if (!main_frame_has_fully_loaded_)
-    return;
-
-  if (requests_.empty()) {
-    DequeueRequestsAndShowBubble();
-  } else {
-    // We switched tabs away and back while a prompt was active.
-#if defined(OS_ANDROID)
-    DCHECK(view_);
-#else
-    ShowBubble();
-#endif
-  }
-}
-
 void PermissionRequestManager::UpdateAnchorPosition() {
   if (view_)
     view_->UpdateAnchorPosition();
@@ -298,10 +280,32 @@ void PermissionRequestManager::WebContentsDestroyed() {
 }
 
 void PermissionRequestManager::WasShown() {
-  DisplayPendingRequests();
+  // This function can be called when the tab is already showing.
+  if (tab_can_show_prompts_)
+    return;
+
+  tab_can_show_prompts_ = true;
+
+  if (!main_frame_has_fully_loaded_)
+    return;
+
+  if (requests_.empty()) {
+    DequeueRequestsAndShowBubble();
+  } else {
+    // We switched tabs away and back while a prompt was active.
+#if defined(OS_ANDROID)
+    DCHECK(view_);
+#else
+    ShowBubble();
+#endif
+  }
 }
 
 void PermissionRequestManager::WasHidden() {
+  // This function can be called when the tab is not showing.
+  if (!tab_can_show_prompts_)
+    return;
+
   tab_can_show_prompts_ = false;
 
 #if !defined(OS_ANDROID)
