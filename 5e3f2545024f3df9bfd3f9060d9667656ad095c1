@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a0233e4_eed69c2d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-13T21:38:32Z",
+      "side": 1,
+      "message": "can you run \u0027git cl lint\u0027 to find all IWYU violations?",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98aefb68_4b1acb9b",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-13T21:38:32Z",
+      "side": 1,
+      "message": "Instead of adding this which reveals everything to the testing code, you can add\n\n void ReleaseAllWakeLocksForTesting();\n\nin the public: section above.",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bf0f1fa_834b5447",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-13T21:38:32Z",
+      "side": 1,
+      "message": "IWYU: \u003cstring\u003e and \u003cmemory\u003e missing?",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147e2df2_b7202af2",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-13T21:38:32Z",
+      "side": 1,
+      "message": "remove?",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19141e25_f0414f68",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-13T21:38:32Z",
+      "side": 1,
+      "message": "nit: Move these lines to L24.\n\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 65
+      },
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db8418f9_fc1f4cda",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-13T21:38:32Z",
+      "side": 1,
+      "message": "can you document where this is deleted?",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876fdd02_6e8dc725",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-13T21:38:32Z",
+      "side": 1,
+      "message": "In new file, please use std::make_unique\u003c\u003e (with #include \u003cmemory\u003e). The standard function is allowed now.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 48
+      },
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5acef28_9640cac8",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-13T21:38:32Z",
+      "side": 1,
+      "message": "PowerPolicyController::Shutdown() seems missing here. Did you try to run this with DCHECK enabled?",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e37931f_28b97c25",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-13T21:38:32Z",
+      "side": 1,
+      "message": "\"map\" is implementation details of the class. Instead of checking that, what about adding a function like\n\n bool HasWakeLockForTesting(mojom::DisplayWakeLockType wake_lock_type);\n\nand calling it?",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

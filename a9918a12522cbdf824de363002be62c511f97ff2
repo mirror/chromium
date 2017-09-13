@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92890a4e_bba56571",
+        "filename": "components/arc/common/power.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-13T21:38:32Z",
+      "side": 1,
+      "message": "space missing after \u0027]\u0027",
+      "range": {
+        "startLine": 29,
+        "startChar": 15,
+        "endLine": 29,
+        "endChar": 16
+      },
+      "revId": "a9918a12522cbdf824de363002be62c511f97ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62bbcb77_2dc744db",
+        "filename": "components/arc/common/power.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-13T21:38:32Z",
+      "side": 1,
+      "message": "same",
+      "revId": "a9918a12522cbdf824de363002be62c511f97ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0064ed7a_fd71ffc2",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-13T21:38:32Z",
+      "side": 1,
+      "message": "constexpr (to be consistent with L24.)",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 5
+      },
+      "revId": "a9918a12522cbdf824de363002be62c511f97ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd47e5e3_15c4236f",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-13T21:38:32Z",
+      "side": 1,
+      "message": "nit: this can be moved down to line 156.",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 45
+      },
+      "revId": "a9918a12522cbdf824de363002be62c511f97ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1852f02_2c6883de",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-13T21:38:32Z",
+      "side": 1,
+      "message": "What about removing default: for better compile time checks?\n\n switch (type) {\n  case ...:\n   ...\n   return;\n  case ...:\n   ...\n   return;\n }\n NOTREACHED(...);",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 191,
+        "endChar": 13
+      },
+      "revId": "a9918a12522cbdf824de363002be62c511f97ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abba373b_8e42e3f8",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-13T21:38:32Z",
+      "side": 1,
+      "message": "Before doing this, how about checking that the count is \u003e\u003d0 and LOG() if it\u0027s negative? DCHECK_LE() is also fine to me.",
+      "revId": "a9918a12522cbdf824de363002be62c511f97ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2ee9c5a_6b3ab5e3",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-13T21:38:32Z",
+      "side": 1,
+      "message": "Can you use switch-case to be consistent with L180?",
+      "revId": "a9918a12522cbdf824de363002be62c511f97ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6280659_d1ed8af8",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-13T21:38:32Z",
+      "side": 1,
+      "message": "When the body of IF has 2+ lines, I think we usually use {}.",
+      "revId": "a9918a12522cbdf824de363002be62c511f97ff2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
