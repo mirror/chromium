@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ed4f47e_f53dff78",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/LightweightFirstRunActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-13T05:28:00Z",
+      "side": 1,
+      "message": "I can\u0027t make this into a lambda expression because FirstRunFlowSequencer is not an interface",
+      "revId": "c419d98aa04711c0af02ed3132f5ee27c0f7983f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32edc828_f1e35bd6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/LightweightFirstRunActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-13T05:28:00Z",
+      "side": 1,
+      "message": "I can\u0027t make this into a lambda expression because NoUnderlineClickableSpan is not an interface",
+      "revId": "c419d98aa04711c0af02ed3132f5ee27c0f7983f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
