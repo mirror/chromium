@@ -34,6 +34,24 @@
       "revId": "f6d02aed69586617491e21377d62fd75e893be09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14df4db4_16cae3e4",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-13T23:48:43Z",
+      "side": 1,
+      "message": "I see, makes sense.",
+      "parentUuid": "239475e9_0aafd32c",
+      "revId": "f6d02aed69586617491e21377d62fd75e893be09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
