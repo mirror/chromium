@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36405738_43bf88ae",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2475,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-13T09:26:47Z",
+      "side": 1,
+      "message": "Done.\n\nI originally hoped to use it on iOS, because I forgot that they have a separate file for flags.",
+      "parentUuid": "7101fe3e_c394bc64",
+      "range": {
+        "startLine": 2475,
+        "startChar": 71,
+        "endLine": 2475,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "268bcd02_b6875026",
         "filename": "components/ntp_snippets/content_suggestions_service.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1e13df_2d4f93d9",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-13T09:26:47Z",
+      "side": 1,
+      "message": "ACK\n\nIMO DCHECK fails much nicer than \"-\u003e\" of a nullptr.",
+      "parentUuid": "268bcd02_b6875026",
+      "range": {
+        "startLine": 83,
+        "startChar": 24,
+        "endLine": 83,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ed28f218_4002c914",
+        "filename": "components/ntp_snippets/logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-13T09:26:47Z",
+      "side": 1,
+      "message": "Both done.",
+      "parentUuid": "36e69d4e_0e82ba3b",
+      "range": {
+        "startLine": 18,
+        "startChar": 33,
+        "endLine": 18,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f8da1e7_da00a149",
         "filename": "components/ntp_snippets/logger.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1abab785_a8a9fb0b",
+        "filename": "components/ntp_snippets/logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-13T09:26:47Z",
+      "side": 1,
+      "message": "ACK\n\nI feel setting time in the constructor too implicit.",
+      "parentUuid": "9f8da1e7_da00a149",
+      "range": {
+        "startLine": 32,
+        "startChar": 32,
+        "endLine": 32,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51806762_c27feca7",
         "filename": "components/ntp_snippets/logger.cc",
         "patchSetId": 3
@@ -108,6 +204,24 @@
       "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1359a80_b396730f",
+        "filename": "components/ntp_snippets/logger.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-13T09:26:47Z",
+      "side": 1,
+      "message": "Somewhat done.\n\nThat printf has a lot of parameters already.\n\nInstead I did \n\nbase::StringPrintf(\"%s %s\", time_string, message);",
+      "parentUuid": "51806762_c27feca7",
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "c2040fc6_7350b95e",
+        "filename": "components/ntp_snippets/logger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-13T09:26:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3662cfec_6ff00ffe",
+      "range": {
+        "startLine": 16,
+        "startChar": 33,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5609400e_0a5b661d",
         "filename": "components/ntp_snippets/logger_unittest.cc",
         "patchSetId": 3
@@ -154,6 +292,30 @@
       "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cc412f2_a8a62c82",
+        "filename": "components/ntp_snippets/logger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-13T09:26:47Z",
+      "side": 1,
+      "message": "ACK\n\nNow I need variation params, but thank you for scoped_feature_list.h, I did not know about it.",
+      "parentUuid": "5609400e_0a5b661d",
+      "range": {
+        "startLine": 29,
+        "startChar": 44,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "fff16d24_63462bf2",
+        "filename": "components/ntp_snippets/logger_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-13T09:26:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e80a977_8337472c",
+      "range": {
+        "startLine": 51,
+        "startChar": 51,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9be13bf2_8820cc36",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 3
@@ -200,6 +386,30 @@
       "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee9d697_1a2b43c0",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-13T09:26:47Z",
+      "side": 1,
+      "message": "Done.\n\nGreat idea, I just did not know about FROM_HERE.",
+      "parentUuid": "9be13bf2_8820cc36",
+      "range": {
+        "startLine": 474,
+        "startChar": 61,
+        "endLine": 474,
+        "endChar": 0
+      },
+      "revId": "1beffb1c9da91873b4337bd0e39c0d3de26d65d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
