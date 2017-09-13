@@ -33,8 +33,7 @@ ExtensionFunction::ResponseAction
   PasswordsPrivateDelegate* delegate =
       PasswordsPrivateDelegateFactory::GetForBrowserContext(browser_context(),
                                                             true /* create */);
-  delegate->RemoveSavedPassword(parameters->login_pair.urls.origin,
-                                parameters->login_pair.username);
+  delegate->RemoveSavedPassword(parameters->index);
 
   return RespondNow(NoArguments());
 }
@@ -56,7 +55,7 @@ ExtensionFunction::ResponseAction
   PasswordsPrivateDelegate* delegate =
       PasswordsPrivateDelegateFactory::GetForBrowserContext(browser_context(),
                                                             true /* create */);
-  delegate->RemovePasswordException(parameters->exception_url);
+  delegate->RemovePasswordException(parameters->index);
 
   return RespondNow(NoArguments());
 }
@@ -79,9 +78,7 @@ ExtensionFunction::ResponseAction
       PasswordsPrivateDelegateFactory::GetForBrowserContext(browser_context(),
                                                             true /* create */);
 
-  delegate->RequestShowPassword(parameters->login_pair.urls.origin,
-                                parameters->login_pair.username,
-                                GetSenderWebContents());
+  delegate->RequestShowPassword(parameters->index, GetSenderWebContents());
 
   // No response given from this API function; instead, listeners wait for the
   // chrome.passwordsPrivate.onPlaintextPasswordRetrieved event to fire.

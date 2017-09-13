@@ -50,29 +50,20 @@ class PasswordsPrivateDelegate : public KeyedService {
   virtual void GetPasswordExceptionsList(
       const ExceptionEntriesCallback& callback) = 0;
 
-  // Removes the saved password entry corresponding to |origin_url| and
-  // |username|.
-  // |origin_url| The origin for the URL where the password is used; should be
-  //     obtained using CreateUrlCollectionFromForm().origin.
-  // |username| The username used in conjunction with the saved password.
-  virtual void RemoveSavedPassword(
-      const std::string& origin_url, const std::string& username) = 0;
+  // Removes the saved password entry corresponding to |index|.
+  // |index| The position of the corresponding entry in the saved password list.
+  virtual void RemoveSavedPassword(size_t index) = 0;
 
-  // Removes the saved password exception entry corresponding to
-  // |exception_url|.
-  // |exception_url| The URL corresponding to the exception to remove; should
-  //     be obtained using CreateUrlCollectionFromForm().origin.
-  virtual void RemovePasswordException(const std::string& exception_url) = 0;
+  // Removes the saved password exception entry corresponding to |index|.
+  // |index| The position of the corresponding entry in the password exception
+  //     list.
+  virtual void RemovePasswordException(size_t index) = 0;
 
-  // Requests the plain text password for entry corresponding to |origin_url|
-  // and |username|.
-  // |origin_url| The origin for the URL where the password is used; should be
-  //     obtained using CreateUrlCollectionFromForm().origin.
-  // |username| The username used in conjunction with the saved password.
-  // |native_window| The Chrome host window; will be used to show an OS-level
+  // Requests the plain text password for entry corresponding to |index|.
+  // |index| The position of the corresponding entry in the saved password list.
+  // |web_contents| The Chrome host window; will be used to show an OS-level
   //     authentication dialog if necessary.
-  virtual void RequestShowPassword(const std::string& origin_url,
-                                   const std::string& username,
+  virtual void RequestShowPassword(size_t index,
                                    content::WebContents* web_contents) = 0;
 };
 
