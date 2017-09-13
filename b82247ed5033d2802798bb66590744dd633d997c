@@ -16,6 +16,24 @@
       "revId": "b82247ed5033d2802798bb66590744dd633d997c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85bc679b_3ee580ab",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-13T08:35:31Z",
+      "side": 1,
+      "message": "Just to make sure, after we remove this legacy one we\u0027re renaming StatusOnceCallback back to StatusCallback, right?  Should we rather rename the other one that we\u0027re deprecating in this patch, e.g. LegacyStatusCallback or something?",
+      "parentUuid": "36cf687b_b2fd0962",
+      "revId": "b82247ed5033d2802798bb66590744dd633d997c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
