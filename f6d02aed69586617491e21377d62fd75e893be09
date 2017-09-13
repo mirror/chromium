@@ -16,6 +16,24 @@
       "revId": "f6d02aed69586617491e21377d62fd75e893be09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "239475e9_0aafd32c",
+        "filename": "third_party/WebKit/Source/core/page/DragController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1101,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-13T23:39:47Z",
+      "side": 1,
+      "message": "I\u0027d like to save this for a followup, but FrameSelection::Bounds claims to do the clipping I\u0027ve added in DeviceSpaceBounds but it is not correct with pinch-zoom. My comment here was not clear. I\u0027ve remvoed this and added a TODO in FrameSelection::Bounds; I am pretty sure that is responsible for the selection jump bug when you create a drag image when zoomed in.\n\nI\u0027ve slightly reworked this patch so that only DataTransfer::CreateDragImageForFrame is modified.",
+      "parentUuid": "0781e422_5c569d84",
+      "revId": "f6d02aed69586617491e21377d62fd75e893be09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
