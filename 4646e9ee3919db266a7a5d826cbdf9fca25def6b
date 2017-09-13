@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1032af93_ae7fa048",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-09-13T02:30:19Z",
+      "side": 1,
+      "message": "You can use base::BarrierClosure.\nhttps://cs.chromium.org/chromium/src/base/barrier_closure.h",
+      "revId": "4646e9ee3919db266a7a5d826cbdf9fca25def6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "134e5ab3_b5ab58af",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-09-13T02:30:19Z",
+      "side": 1,
+      "message": "nit:\nDISALLOW_COPY_AND_ASSIGN(StopWorkerBarrierCallback);",
+      "revId": "4646e9ee3919db266a7a5d826cbdf9fca25def6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
