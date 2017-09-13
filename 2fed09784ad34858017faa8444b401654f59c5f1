@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23056275_97cd3ac6",
+        "filename": "chrome/renderer/autofill/password_autofill_agent_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2773,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-13T09:49:40Z",
+      "side": 1,
+      "message": "can we also check a prefix case (e.g. USER + AUTOFILL)?",
+      "range": {
+        "startLine": 2773,
+        "startChar": 28,
+        "endLine": 2773,
+        "endChar": 42
+      },
+      "revId": "2fed09784ad34858017faa8444b401654f59c5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeefeb4e_438aa657",
+        "filename": "chrome/renderer/autofill/password_autofill_agent_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2773,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-13T09:49:40Z",
+      "side": 1,
+      "message": "I would move ChangeSource to empty namespace, create an array of all values.\n\nFieldChangeSource?",
+      "range": {
+        "startLine": 2773,
+        "startChar": 13,
+        "endLine": 2773,
+        "endChar": 25
+      },
+      "revId": "2fed09784ad34858017faa8444b401654f59c5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb711eaf_d0a544b0",
+        "filename": "chrome/renderer/autofill/password_autofill_agent_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2784,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-13T09:49:40Z",
+      "side": 1,
+      "message": "Could you move it to a separate method?",
+      "range": {
+        "startLine": 2781,
+        "startChar": 4,
+        "endLine": 2784,
+        "endChar": 45
+      },
+      "revId": "2fed09784ad34858017faa8444b401654f59c5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27bf77b4_e94b469f",
+        "filename": "chrome/renderer/autofill/password_autofill_agent_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2803,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-13T09:49:40Z",
+      "side": 1,
+      "message": "Two tests have identical names.",
+      "range": {
+        "startLine": 2803,
+        "startChar": 7,
+        "endLine": 2803,
+        "endChar": 54
+      },
+      "revId": "2fed09784ad34858017faa8444b401654f59c5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
