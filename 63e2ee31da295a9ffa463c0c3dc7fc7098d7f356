@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4552a602_5b7b019c",
+        "filename": "build/android/pylib/android/logdog_logcat_monitor.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-13T14:41:46Z",
+      "side": 1,
+      "message": "optional nit: if data is empty here (i.e., if deobfuscate_func returned an empty list), should we skip this?",
+      "revId": "63e2ee31da295a9ffa463c0c3dc7fc7098d7f356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
