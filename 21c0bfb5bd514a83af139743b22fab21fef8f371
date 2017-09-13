@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf740101_c12cc470",
+        "filename": "net/cert/internal/general_names.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-13T21:07:52Z",
+      "side": 1,
+      "message": "since the error is added by the caller, and it\u0027s called from multiple files, needed to make it public. Does that seem reasonable?",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 35
+      },
+      "revId": "21c0bfb5bd514a83af139743b22fab21fef8f371",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
