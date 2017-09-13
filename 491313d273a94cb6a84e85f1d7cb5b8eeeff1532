@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a975634_f14fa4ac",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-13T22:05:42Z",
+      "side": 1,
+      "message": "I forgot we needed a type for #getType(). Maybe this could just be TYPE_OTHER and located above below TYPE_PLACEHOLDER? Also, I\u0027d prefer to see TYPE_OTHER \u003d 6. The type is used exclusively for metrics.. I think from a BottomSheetMetrics perspective, if other content is shown in the sheet we don\u0027t particularly care what it is so there\u0027s no need to distinguish.",
+      "range": {
+        "startLine": 79,
+        "startChar": 4,
+        "endLine": 79,
+        "endChar": 56
+      },
+      "revId": "491313d273a94cb6a84e85f1d7cb5b8eeeff1532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
