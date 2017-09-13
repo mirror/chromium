@@ -182,7 +182,6 @@ source_set("blink_headers") {
     "platform/WebDatabaseObserver.h",
     "platform/WebDisplayItemList.h",
     "platform/WebDisplayMode.h",
-    "platform/WebDistillability.h",
     "platform/WebDocumentSubresourceFilter.h",
     "platform/WebDoublePoint.h",
     "platform/WebDoubleSize.h",

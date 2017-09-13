@@ -11,6 +11,8 @@ class WebFormControlElement;
 
 namespace autofill {
 
+class AutofillElement;
+
 // Interface that should be implemented by classes interested in getting
 // notifications for clicks or taps on a page.
 // Register on the PageListenerTracker object.
@@ -24,6 +26,16 @@ class PageClickListener {
 
  protected:
   virtual ~PageClickListener() {}
+};
+
+class PageClickListenerWebagent {
+ public:
+  virtual void FormControlElementClickedWebagents(
+      const AutofillElement& element,
+      bool was_focused) = 0;
+
+ protected:
+  virtual ~PageClickListenerWebagent() {}
 };
 
 }  // namespace autofill

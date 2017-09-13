@@ -97,8 +97,6 @@ blink_core_sources("dom") {
     "DocumentShutdownNotifier.h",
     "DocumentShutdownObserver.cpp",
     "DocumentShutdownObserver.h",
-    "DocumentStatisticsCollector.cpp",
-    "DocumentStatisticsCollector.h",
     "DocumentTiming.cpp",
     "DocumentTiming.h",
     "DocumentType.cpp",

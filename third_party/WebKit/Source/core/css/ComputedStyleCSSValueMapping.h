@@ -5,6 +5,7 @@
 #ifndef ComputedStyleCSSValueMapping_h
 #define ComputedStyleCSSValueMapping_h
 
+#include "core/CoreExport.h"
 #include "core/CSSPropertyNames.h"
 #include "core/css/CSSValue.h"
 #include "platform/wtf/Allocator.h"
@@ -23,7 +24,7 @@ class ShadowData;
 class ShadowList;
 class StyleColor;
 
-class ComputedStyleCSSValueMapping {
+class CORE_EXPORT ComputedStyleCSSValueMapping {
   STATIC_ONLY(ComputedStyleCSSValueMapping);
 
  public:

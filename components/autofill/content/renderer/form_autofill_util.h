@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/strings/string16.h"
 #include "components/autofill/content/renderer/password_form_conversion_utils.h"
 #include "components/autofill/core/common/autofill_constants.h"
@@ -30,8 +31,17 @@ class WebLocalFrame;
 class WebNode;
 }
 
+namespace webagents {
+class Document;
+class Element;
+class HTMLAllCollection;
+class HTMLFormElement;
+class HTMLInputElement;
+}  // namespace webagents
+
 namespace autofill {
 
+class AutofillElement;
 struct FormData;
 struct FormFieldData;
 
@@ -82,6 +92,8 @@ GURL StripAuthAndParams(const GURL& gurl);
 // Extract FormData from the form element and return whether the operation was
 // successful.
 bool ExtractFormData(const blink::WebFormElement& form_element, FormData* data);
+bool ExtractFormDataWebagents(const webagents::HTMLFormElement& form_element,
+                              FormData* data);
 
 // Helper function to check if there exist any visible form on |frame| which
 // equals |form_element|. If |form_element| is null, checks if forms action
@@ -104,7 +116,10 @@ bool AreFormContentsVisible(const blink::WebFormElement& form);
 // origin. The action will proplerly take into account <BASE>, and both will
 // strip unnecessary data (e.g. query params and HTTP credentials).
 GURL GetCanonicalActionForForm(const blink::WebFormElement& form);
+GURL GetCanonicalActionForFormWebagents(const webagents::HTMLFormElement& form);
 GURL GetCanonicalOriginForDocument(const blink::WebDocument& document);
+GURL GetCanonicalOriginForDocumentWebagents(
+    const webagents::Document& document);
 
 // Returns true if |element| is a month input element.
 bool IsMonthInput(const blink::WebInputElement* element);
@@ -120,14 +135,17 @@ bool IsTextAreaElement(const blink::WebFormControlElement& element);
 
 // Returns true if |element| is a checkbox or a radio button element.
 bool IsCheckableElement(const blink::WebInputElement* element);
+bool IsCheckableElementWebagents(const webagents::HTMLInputElement& element);
 
 // Returns true if |element| is one of the input element types that can be
 // autofilled. {Text, Radiobutton, Checkbox}.
 bool IsAutofillableInputElement(const blink::WebInputElement* element);
+bool IsAutofillableInputElementWebagents(const webagents::Element& element);
 
 // Returns true if |element| is one of the element types that can be autofilled.
 // {Text, Radiobutton, Checkbox, Select, TextArea}.
 bool IsAutofillableElement(const blink::WebFormControlElement& element);
+bool IsAutofillableElementWebagents(const webagents::Element& element);
 
 // True if this node can take focus. If layout is blocked, then the function
 // checks if the element takes up space in the layout, ie. this element or a
@@ -137,6 +155,7 @@ bool IsWebElementVisible(const blink::WebElement& element);
 // Returns the form's |name| attribute if non-empty; otherwise the form's |id|
 // attribute.
 const base::string16 GetFormIdentifier(const blink::WebFormElement& form);
+const base::string16 GetFormIdentifier(const webagents::HTMLFormElement& form);
 
 // Returns all the auto-fillable form control elements in |control_elements|.
 std::vector<blink::WebFormControlElement> ExtractAutofillableElementsFromSet(
@@ -155,6 +174,12 @@ void WebFormControlElementToFormField(
     const FieldValueAndPropertiesMaskMap* field_value_and_properties_map,
     ExtractMask extract_mask,
     FormFieldData* field);
+void WebFormControlElementToFormFieldWebagents(
+    const AutofillElement& element,
+    const FieldValueAndPropertiesMaskMapWebagents*
+        field_value_and_properties_map,
+    ExtractMask extract_mask,
+    FormFieldData* field);
 
 // Fills |form| with the FormData object corresponding to the |form_element|.
 // If |field| is non-NULL, also fills |field| with the FormField object
@@ -170,6 +195,14 @@ bool WebFormElementToFormData(
     ExtractMask extract_mask,
     FormData* form,
     FormFieldData* field);
+bool WebFormElementToFormDataWebagents(
+    const webagents::HTMLFormElement& form_element,
+    base::Optional<AutofillElement> form_control_element,
+    const FieldValueAndPropertiesMaskMapWebagents*
+        field_value_and_properties_map,
+    ExtractMask extract_mask,
+    FormData* form,
+    FormFieldData* field);
 
 // Get all form control elements from |elements| that are not part of a form.
 // If |fieldsets| is not NULL, also append the fieldsets encountered that are
@@ -177,6 +210,9 @@ bool WebFormElementToFormData(
 std::vector<blink::WebFormControlElement> GetUnownedFormFieldElements(
     const blink::WebElementCollection& elements,
     std::vector<blink::WebElement>* fieldsets);
+std::vector<AutofillElement> GetUnownedFormFieldElementsWebagents(
+    const webagents::HTMLAllCollection& elements,
+    std::vector<AutofillElement>* fieldsets);
 
 // A shorthand for filtering the results of GetUnownedFormFieldElements with
 // ExtractAutofillableElementsFromSet.
@@ -184,6 +220,9 @@ std::vector<blink::WebFormControlElement>
 GetUnownedAutofillableFormFieldElements(
     const blink::WebElementCollection& elements,
     std::vector<blink::WebElement>* fieldsets);
+std::vector<AutofillElement> GetUnownedAutofillableFormFieldElementsWebagents(
+    const webagents::HTMLAllCollection& elements,
+    std::vector<webagents::Element>* fieldsets);
 
 // Fills |form| with the form data derived from |fieldsets|, |control_elements|
 // and |origin|. If |field| is non-NULL, fill it with the FormField
@@ -197,6 +236,14 @@ bool UnownedCheckoutFormElementsAndFieldSetsToFormData(
     const std::vector<blink::WebFormControlElement>& control_elements,
     const blink::WebFormControlElement* element,
     const blink::WebDocument& document,
+    ExtractMask extract_mask,
+    FormData* form,
+    FormFieldData* field);
+bool UnownedCheckoutFormElementsAndFieldSetsToFormDataWebagents(
+    const std::vector<webagents::Element>& fieldsets,
+    const std::vector<AutofillElement>& control_elements,
+    base::Optional<AutofillElement> element,
+    const webagents::Document& document,
     ExtractMask extract_mask,
     FormData* form,
     FormFieldData* field);
@@ -220,6 +267,10 @@ bool UnownedPasswordFormElementsAndFieldSetsToFormData(
 // Returns false if the form is not found or cannot be serialized.
 bool FindFormAndFieldForFormControlElement(
     const blink::WebFormControlElement& element,
+    FormData* form,
+    FormFieldData* field);
+bool FindFormAndFieldForFormControlElementWebagents(
+    const AutofillElement& element,
     FormData* form,
     FormFieldData* field);
 
