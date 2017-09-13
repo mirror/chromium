@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40629b9e_e1c23250",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-13T12:19:43Z",
+      "side": 1,
+      "message": "don\u0027t you need handle this separately?\nit seems to be used by requests from NaCl API.",
+      "range": {
+        "startLine": 1055,
+        "startChar": 24,
+        "endLine": 1055,
+        "endChar": 45
+      },
+      "revId": "eba65e5dd9f1d69f9c24ece6d6167679eacff0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb80414b_3e0d66f6",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-13T12:19:43Z",
+      "side": 1,
+      "message": "I\u0027m not sure how much this construction costs, but how about returning a static instance instead? Actually, I did so in some places before, e.g. at https://cs.chromium.org/chromium/src/content/renderer/mojo_context_state.cc?q\u003dmojo_context_state\u0026dr\u003dC\u0026l\u003d190\n\nThe code for the annotation looks something magical, and I may miss something.",
+      "range": {
+        "startLine": 1067,
+        "startChar": 18,
+        "endLine": 1067,
+        "endChar": 48
+      },
+      "revId": "eba65e5dd9f1d69f9c24ece6d6167679eacff0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f60fdc1_59e561f1",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-13T12:19:43Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this is intentional, but just in case.\nPrecisely said, this would not by extensions, but by NaCl instance tagged with \u003cembed\u003e or \u003cobject\u003e. By default it runs only when it is installed via Chrome Store. So saying extensions won\u0027t be wrong.",
+      "range": {
+        "startLine": 1096,
+        "startChar": 13,
+        "endLine": 1096,
+        "endChar": 23
+      },
+      "revId": "eba65e5dd9f1d69f9c24ece6d6167679eacff0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5822548a_ab4b930b",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-13T12:19:43Z",
+      "side": 1,
+      "message": "I prefer not to have default here.\nThat encourages developers to update this implementation at compile time when people adds a new context type to the RequestContext.",
+      "revId": "eba65e5dd9f1d69f9c24ece6d6167679eacff0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
