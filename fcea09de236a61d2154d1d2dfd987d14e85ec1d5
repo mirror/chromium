@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b41939c9_83e79d26",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 5
+      },
+      "lineNbr": 2442,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-13T17:14:19Z",
+      "side": 1,
+      "message": "intentional addition?",
+      "revId": "fcea09de236a61d2154d1d2dfd987d14e85ec1d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
