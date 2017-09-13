@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea7b8dbd_c22b7a2c",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-13T08:49:47Z",
+      "side": 1,
+      "message": "This is not exactly correct, for exemple, if urls \u003d {GURL(), GURL()}, then no navigation will happen. Instead, I would change this to the following:\n\n  // The view controller wants to be dismissed.\n  // Navigates to all valid urls in |urls| if any.\n\nOr better, since there are only two location this code is called, I would change the implementation to DCHECK that all GURL in urls are valid, and change the sole caller to pass an empty vector if no navigation is request, then you can change the comment to:\n\n  // The view controller wants to be dismissed. If |urls| is not empty, then\n  // the user has selected to navigate to those URLs.",
+      "revId": "eb565c3a0b241af3e6e7b9a96854c768bae4ee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb67913_c4882572",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-13T08:49:47Z",
+      "side": 1,
+      "message": "Since this is a free function, it should follow the C++ naming convention using CamelCase, so should be called \"GetUrlsToOpen\" instead.",
+      "range": {
+        "startLine": 57,
+        "startChar": 18,
+        "endLine": 57,
+        "endChar": 31
+      },
+      "revId": "eb565c3a0b241af3e6e7b9a96854c768bae4ee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4242f1a_50e5ef63",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-13T08:49:47Z",
+      "side": 1,
+      "message": "nit: since the anonymous namespace starts to get large, maybe mark it is then end of the namespace like this\n\n  }  // namespace",
+      "revId": "eb565c3a0b241af3e6e7b9a96854c768bae4ee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419bdb98_051e00fa",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1034,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-13T08:49:47Z",
+      "side": 1,
+      "message": "Since \"GetURLsToOpen\" will only returns a vector with valid URLs, then this is the only location where code needs to check whether the given url is valid:\n\n  std::vector\u003cGURL\u003e urls;\n  if (url.is_valid())\n    urls.push_back(url);\n  [self.homeDelegate bookmarkHomeViewControllerWantsDismissal:self\n                                             navigationToUrls:urls];",
+      "revId": "eb565c3a0b241af3e6e7b9a96854c768bae4ee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ea31bc_b659d546",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-13T08:49:47Z",
+      "side": 1,
+      "message": "If you make the change I suggest (checking for the validity of |url| before adding it to the |urls| vector, then you can change this to a DCHECK).",
+      "revId": "eb565c3a0b241af3e6e7b9a96854c768bae4ee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25bba72a_5a27a7be",
+        "filename": "ios/clean/chrome/browser/ui/bookmarks/bookmarks_coordinator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-13T08:49:47Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "eb565c3a0b241af3e6e7b9a96854c768bae4ee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
