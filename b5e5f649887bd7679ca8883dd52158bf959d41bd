@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "784f66cf_362b167a",
+        "filename": "services/ui/public/interfaces/window_tree.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-13T15:21:46Z",
+      "side": 1,
+      "message": "Maybe add a comment here that this will go away relatively soon? It\u0027s unfortunate that only ash needs this at the moment, but all clients have to deal with it.",
+      "revId": "b5e5f649887bd7679ca8883dd52158bf959d41bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
