@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//media/media_options.gni")
+
 # Implementations of media C++ interfaces using corresponding mojo services.
 source_set("clients") {
   visibility = [
@@ -77,5 +79,13 @@ source_set("clients") {
       "//gpu/ipc/common:common",
       "//ui/gl:gl",
     ]
+  }
+
+  if (enable_library_cdms) {
+    sources += [
+      "mojo_cdm_file_io_impl.cc",
+      "mojo_cdm_file_io_impl.h",
+    ]
+    deps += [ "//media/cdm:cdm_api" ]
   }
 }

@@ -28,7 +28,9 @@
 #include "media/base/scoped_callback_runner.h"
 #include "media/cdm/cdm_adapter_factory.h"           // nogncheck
 #include "media/cdm/cdm_helpers.h"                   // nogncheck
+#include "media/mojo/clients/mojo_cdm_file_io_impl.h"  // nogncheck
 #include "media/mojo/features.h"                     // nogncheck
+#include "media/mojo/interfaces/cdm_storage.mojom.h"  // nogncheck
 #include "media/mojo/interfaces/constants.mojom.h"   // nogncheck
 #include "media/mojo/interfaces/output_protection.mojom.h"      // nogncheck
 #include "media/mojo/interfaces/platform_verification.mojom.h"  // nogncheck
@@ -61,15 +63,20 @@ static_assert(BUILDFLAG(ENABLE_MOJO_CDM), "");
 class MojoCdmHelper : public media::CdmAuxiliaryHelper {
  public:
   explicit MojoCdmHelper(
-      service_manager::mojom::InterfaceProvider* interface_provider)
-      : interface_provider_(interface_provider) {}
+      service_manager::mojom::InterfaceProvider* interface_provider,
+      const std::string& key_system)
+      : interface_provider_(interface_provider), key_system_(key_system) {}
   ~MojoCdmHelper() override = default;
 
   // CdmAuxiliaryHelper implementation.
-  std::unique_ptr<media::CdmFileIO> CreateCdmFileIO(
-      cdm::FileIOClient* client) override {
-    // TODO(jrummell): Hook up File IO. http://crbug.com/479923.
-    return nullptr;
+  cdm::FileIO* CreateCdmFileIO(cdm::FileIOClient* client) override {
+    media::mojom::CdmStoragePtr storage;
+    service_manager::GetInterface<media::mojom::CdmStorage>(interface_provider_,
+                                                            &storage);
+    if (!storage.is_bound())
+      return nullptr;
+    return new media::MojoCdmFileIOImpl(key_system_, std::move(storage),
+                                        client);
   }
 
   cdm::Buffer* CreateCdmBuffer(size_t capacity) override {
@@ -148,6 +155,8 @@ class MojoCdmHelper : public media::CdmAuxiliaryHelper {
   // Provides interfaces when needed.
   service_manager::mojom::InterfaceProvider* interface_provider_;
 
+  std::string key_system_;
+
   // Keep track if connection to the Mojo service has been attempted once.
   // The service may not exist, or may fail later.
   bool output_protection_attempted_ = false;
@@ -159,8 +168,9 @@ class MojoCdmHelper : public media::CdmAuxiliaryHelper {
 };
 
 std::unique_ptr<media::CdmAuxiliaryHelper> CreateCdmHelper(
-    service_manager::mojom::InterfaceProvider* interface_provider) {
-  return base::MakeUnique<MojoCdmHelper>(interface_provider);
+    service_manager::mojom::InterfaceProvider* interface_provider,
+    const std::string& key_system) {
+  return base::MakeUnique<MojoCdmHelper>(interface_provider, key_system);
 }
 
 class CdmMojoMediaClient final : public media::MojoMediaClient {

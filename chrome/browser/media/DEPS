@@ -5,4 +5,5 @@ include_rules = [
   "+media/media_features.h",
   "+media/mojo/interfaces",
   "+services/device/public/interfaces",
+  "+third_party/widevine/cdm/widevine_cdm_common.h",
 ]
