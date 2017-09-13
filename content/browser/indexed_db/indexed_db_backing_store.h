@@ -599,6 +599,14 @@ class CONTENT_EXPORT IndexedDBBackingStore
 
   LevelDBDatabase* db() { return db_.get(); }
 
+  // Returns true if a blob cleanup job is pending on journal_cleaning_timer_.
+  bool IsBlobCleanupPending();
+
+  int NumBlobFilesDeletedForTesting() { return num_blob_files_deleted_; }
+
+  // Stops the journal_cleaning_timer_ and runs its pending task.
+  void ForceRunBlobCleanup();
+
  protected:
   friend class base::RefCounted<IndexedDBBackingStore>;
 
@@ -683,6 +691,10 @@ class CONTENT_EXPORT IndexedDBBackingStore
   leveldb::Status CleanUpBlobJournalEntries(
       const BlobJournalType& journal) const;
 
+  void IncrementCommittingTransactionCount();
+  // Can run a journal cleaning job if one is pending.
+  void DecrementCommittingTransactionCount();
+
   IndexedDBFactory* indexed_db_factory_;
   const url::Origin origin_;
   base::FilePath blob_path_;
@@ -699,7 +711,13 @@ class CONTENT_EXPORT IndexedDBBackingStore
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
   std::set<int> child_process_ids_granted_;
   std::map<std::string, std::unique_ptr<BlobChangeRecord>> incognito_blob_map_;
+
+  bool execute_journal_cleaning_on_no_txns_ = false;
+  int num_aggregated_journal_cleaning_requests_ = 0;
   base::OneShotTimer journal_cleaning_timer_;
+  // Stores the first start of the timer before any restarts.
+  base::TimeTicks journal_cleaning_timer_start_;
+  mutable int num_blob_files_deleted_ = 0;
 
   std::unique_ptr<LevelDBDatabase> db_;
   std::unique_ptr<LevelDBComparator> comparator_;
