@@ -154,6 +154,11 @@ unpacker.app = {
    * @private
    */
   saveState_: function(fileSystemIdsArray) {
+    // If current context is in incognito mode, then skip save state because
+    // retainEntry is not available in incognito mode.
+    if (chrome.extension.inIncognitoContext)
+      return;
+
     chrome.storage.local.get([unpacker.app.STORAGE_KEY], function(result) {
       if (!result[unpacker.app.STORAGE_KEY])  // First save state call.
         result[unpacker.app.STORAGE_KEY] = {};
@@ -180,6 +185,9 @@ unpacker.app = {
    * @param {!unpacker.types.FileSystemId} fileSystemId
    */
   removeState_: function(fileSystemId) {
+    if (chrome.extension.inIncognitoContext)
+      return;
+
     chrome.storage.local.get([unpacker.app.STORAGE_KEY], function(result) {
       console.assert(
           result[unpacker.app.STORAGE_KEY] &&
