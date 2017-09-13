@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a52f94c_ee8e4c5b",
+        "filename": "components/history/core/browser/top_sites_database.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-13T21:37:30Z",
+      "side": 1,
+      "message": "You\u0027re not actually checking the return value.",
+      "range": {
+        "startLine": 389,
+        "startChar": 4,
+        "endLine": 389,
+        "endChar": 26
+      },
+      "revId": "f4b2ce31e61e62b30f3f6fd419c7c18b25e0f789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
