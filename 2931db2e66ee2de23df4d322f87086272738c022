@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51169e16_257bb911",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-must-not-contain-cookie.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-13T05:40:43Z",
+      "side": 1,
+      "message": "I think test.unreached_func(...) is enough. What do you think?",
+      "revId": "2931db2e66ee2de23df4d322f87086272738c022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "315339b1_5c2b7c08",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-must-not-contain-cookie.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-13T05:40:43Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2931db2e66ee2de23df4d322f87086272738c022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d2dd66_9139f242",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-must-not-contain-cookie.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-13T05:40:43Z",
+      "side": 1,
+      "message": "Don\u0027t you need xhr.withCredentials \u003d true?",
+      "revId": "2931db2e66ee2de23df4d322f87086272738c022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "275f8096_87390fef",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-must-not-contain-cookie.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-13T05:40:43Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "2931db2e66ee2de23df4d322f87086272738c022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18aff46_3708a13c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-preflight-request-must-not-contain-cookie.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-13T05:40:43Z",
+      "side": 1,
+      "message": "step_func_done",
+      "revId": "2931db2e66ee2de23df4d322f87086272738c022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ed56cb_c5aef4f3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-cookie.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-13T05:40:43Z",
+      "side": 1,
+      "message": "I\u0027m confused, because there are only two callers and both specify reset_cookies\u003dtrue. Can you explain why is this conditional?",
+      "revId": "2931db2e66ee2de23df4d322f87086272738c022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "462ebdda_3cf1062e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-cookie.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-13T05:40:43Z",
+      "side": 1,
+      "message": "You can use datetime.datetime.now() - datetime.timedelta(days\u003d1)",
+      "revId": "2931db2e66ee2de23df4d322f87086272738c022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f84564e_47982500",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-cookie.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-13T05:40:43Z",
+      "side": 1,
+      "message": "You can use datetime.datetime.now() + datetime.timedelta(days\u003d1)",
+      "range": {
+        "startLine": 21,
+        "startChar": 46,
+        "endLine": 21,
+        "endChar": 59
+      },
+      "revId": "2931db2e66ee2de23df4d322f87086272738c022",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
