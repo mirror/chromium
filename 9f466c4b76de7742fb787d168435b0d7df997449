@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ee3a46e6_db445530",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuItemDelegate.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-13T23:21:54Z",
+      "side": 1,
+      "message": "Follow the offline discussion to move openTabInBackground into the service.\n\nThe I/O operations happen only when the BrowserActionsTabModelSelector is not initialized (load and restore tab list) and when a new tab is created (update tab model). We don\u0027t do those in this class and the service class but in the BrowserActionsTabModelSelector class.",
+      "parentUuid": "ba7e5e29_257c2c06",
+      "range": {
+        "startLine": 107,
+        "startChar": 8,
+        "endLine": 107,
+        "endChar": 29
+      },
+      "revId": "9f466c4b76de7742fb787d168435b0d7df997449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "871b66d7_db84fda7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-13T05:16:04Z",
       "side": 1,
       "message": "this looks to be API24+, so I think we need an api to use across all versions",
+      "range": {
+        "startLine": 102,
+        "startChar": 12,
+        "endLine": 102,
+        "endChar": 26
+      },
+      "revId": "9f466c4b76de7742fb787d168435b0d7df997449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e27e58_e41d13a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-13T23:21:54Z",
+      "side": 1,
+      "message": "Looks like the stopForeground(int flags) is API 24+ but stopForeground(boolean removeNotification) isn\u0027t?",
+      "parentUuid": "871b66d7_db84fda7",
       "range": {
         "startLine": 102,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1eb7998d_4f6f10bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-13T23:21:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c68456dc_db63eb75",
+      "range": {
+        "startLine": 153,
+        "startChar": 16,
+        "endLine": 153,
+        "endChar": 53
+      },
+      "revId": "9f466c4b76de7742fb787d168435b0d7df997449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43b213dd_cacb813b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7a357209_59c5ff74",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-13T23:21:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43b213dd_cacb813b",
+      "range": {
+        "startLine": 188,
+        "startChar": 26,
+        "endLine": 188,
+        "endChar": 46
+      },
+      "revId": "9f466c4b76de7742fb787d168435b0d7df997449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6be6ff42_00365152",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelSelectorImpl.java",
         "patchSetId": 5
@@ -114,6 +210,30 @@
       "revId": "9f466c4b76de7742fb787d168435b0d7df997449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8a7515a_b4877993",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelSelectorImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-13T23:21:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6be6ff42_00365152",
+      "range": {
+        "startLine": 105,
+        "startChar": 16,
+        "endLine": 105,
+        "endChar": 29
+      },
+      "revId": "9f466c4b76de7742fb787d168435b0d7df997449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
