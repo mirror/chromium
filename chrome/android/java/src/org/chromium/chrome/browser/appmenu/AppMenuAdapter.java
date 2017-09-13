@@ -371,6 +371,9 @@ class AppMenuAdapter extends BaseAdapter {
             animation.setStartDelay(startDelay);
         } else {
             animation.playTogether(ObjectAnimator.ofFloat(view, View.ALPHA, 0.f, 1.f));
+            // Start delay is set to make sure disabling the animation in battery saver mode would
+            // not let the view stays at alpha 0 in Android O.
+            animation.setStartDelay(ENTER_ITEM_BASE_DELAY_MS);
         }
         animation.setDuration(ENTER_ITEM_DURATION_MS);
         animation.setInterpolator(BakedBezierInterpolator.FADE_IN_CURVE);
