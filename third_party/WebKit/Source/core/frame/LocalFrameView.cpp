@@ -4098,6 +4098,8 @@ IntRect LocalFrameView::VisibleContentRect(
 }
 
 IntSize LocalFrameView::ContentsSize() const {
+  if (RuntimeEnabledFeatures::RootLayerScrollingEnabled())
+    return VisibleContentSize();
   return contents_size_;
 }
 
