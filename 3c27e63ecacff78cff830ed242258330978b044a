@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70e536b6_447bd6f6",
+        "filename": "ash/system/tray/tray_constants.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001410
+      },
+      "writtenOn": "2017-09-13T02:16:24Z",
+      "side": 1,
+      "message": "This is the width of the menu in it\u0027s smallest form (english). Most other languages (especially languages like French) need more space and the menu gets bigger.\n\nDid we remove the text somehow so that the menu has now always the same length?\n\nIf not (which I think is the case): Please bring back the \"Minimum\".\n\nIf I am wrong and the text is in deed now \"normed\" to a default length and text gets cut with an ellipsis: Please remove the \"minimum\" from the comment.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 32
+      },
+      "revId": "3c27e63ecacff78cff830ed242258330978b044a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
