@@ -573,7 +573,7 @@ void PannerHandler::MarkPannerAsDirty(unsigned dirty) {
 void PannerHandler::SetChannelCount(unsigned long channel_count,
                                     ExceptionState& exception_state) {
   DCHECK(IsMainThread());
-  BaseAudioContext::AutoLocker locker(Context());
+  BaseAudioContext::GraphAutoLocker locker(Context());
 
   // A PannerNode only supports 1 or 2 channels
   if (channel_count > 0 && channel_count <= 2) {
@@ -594,7 +594,7 @@ void PannerHandler::SetChannelCount(unsigned long channel_count,
 void PannerHandler::SetChannelCountMode(const String& mode,
                                         ExceptionState& exception_state) {
   DCHECK(IsMainThread());
-  BaseAudioContext::AutoLocker locker(Context());
+  BaseAudioContext::GraphAutoLocker locker(Context());
 
   ChannelCountMode old_mode = InternalChannelCountMode();
 
