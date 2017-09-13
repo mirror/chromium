@@ -381,7 +381,7 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   RequestParams BuildFetchParams(
       base::Optional<Category> fetched_category) const;
 
-  void MarkEmptyCategoriesAsLoading();
+  void MarkEmptyOrStaleCategoriesAsLoading();
 
   State state_;
 

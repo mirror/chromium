@@ -79,6 +79,9 @@ const char kMaxAgeForAdditionalPrefetchedSuggestionParamName[] =
 const base::TimeDelta kDefaultMaxAgeForAdditionalPrefetchedSuggestion =
     base::TimeDelta::FromHours(36);
 
+const base::TimeDelta kDefaultMinAgeForStaleSuggestion =
+    base::TimeDelta::FromMinutes(1);
+
 bool IsOrderingNewRemoteCategoriesBasedOnArticlesCategoryEnabled() {
   // TODO(vitaliii): Use GetFieldTrialParamByFeature(As.*)? from
   // base/metrics/field_trial_params.h. GetVariationParamByFeature(As.*)? are
@@ -452,7 +455,9 @@ void RemoteSuggestionsProviderImpl::FetchSuggestions(
     return;
   }
 
-  MarkEmptyCategoriesAsLoading();
+  DLOG(WARNING) << "fetch initiated";
+
+  MarkEmptyOrStaleCategoriesAsLoading();
 
   RequestParams params = BuildFetchParams(/*fetched_category=*/base::nullopt);
   params.interactive_request = interactive_request;
@@ -524,12 +529,22 @@ RequestParams RemoteSuggestionsProviderImpl::BuildFetchParams(
   return result;
 }
 
-void RemoteSuggestionsProviderImpl::MarkEmptyCategoriesAsLoading() {
+void RemoteSuggestionsProviderImpl::MarkEmptyOrStaleCategoriesAsLoading() {
   for (const auto& item : category_contents_) {
     Category category = item.first;
     const CategoryContent& content = item.second;
     if (content.suggestions.empty()) {
       UpdateCategoryStatus(category, CategoryStatus::AVAILABLE_LOADING);
+      continue;
+    }
+    for (const std::unique_ptr<RemoteSuggestion>& suggestion :
+         content.suggestions) {
+      if (base::Time::Now() - suggestion->fetch_date() >
+          kDefaultMinAgeForStaleSuggestion) {
+        UpdateCategoryStatus(category, CategoryStatus::AVAILABLE_LOADING);
+        DLOG(WARNING) << "fetch category stale " << category.id();
+        break;
+      }
     }
   }
 }
@@ -876,6 +891,7 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
   for (auto& item : category_contents_) {
     Category category = item.first;
     UpdateCategoryStatus(category, CategoryStatus::AVAILABLE);
+    DLOG(WARNING) << "fetch category available " << category.id();
     // TODO(sfiera): notify only when a category changed above.
     NotifyNewSuggestions(category, item.second);
 
