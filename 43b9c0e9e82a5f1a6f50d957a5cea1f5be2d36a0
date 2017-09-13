@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d3e76050_e239d74e",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-09-13T01:10:12Z",
+      "side": 1,
+      "message": "nit: 2 many spaces ?",
+      "revId": "43b9c0e9e82a5f1a6f50d957a5cea1f5be2d36a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f35ebcf2_24258cf6",
         "filename": "components/arc/net/arc_net_host_impl.cc",
         "patchSetId": 5
@@ -119,6 +136,23 @@
       "side": 1,
       "message": "Unfortunately that is never called.  The calling sequence seems to be:\n\n    NetworkStateListDetailedView::HandleViewClicked\n    SystemTrayController::ShowNetworkSettings\n    SystemTrayClient::ShowNetworkSettings\n    SystemTrayClient::ShowNetworkSettingsHelper",
       "parentUuid": "5877da34_e75b32a0",
+      "revId": "43b9c0e9e82a5f1a6f50d957a5cea1f5be2d36a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16d2ca81_8e6b73fc",
+        "filename": "components/arc/net/arc_net_host_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-09-13T01:10:12Z",
+      "side": 1,
+      "message": "shouldn\u0027t these be VpnConnected etc. as they are always called from the Instance/Android . Adding an Android prefix is inconsistent IMO",
       "revId": "43b9c0e9e82a5f1a6f50d957a5cea1f5be2d36a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

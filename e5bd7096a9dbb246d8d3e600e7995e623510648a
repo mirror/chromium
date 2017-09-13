@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5f425c3_8cc3cac5",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 856,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-09-13T01:10:12Z",
+      "side": 1,
+      "message": "we should log the params in the outer log in case we hit the else case.",
+      "revId": "e5bd7096a9dbb246d8d3e600e7995e623510648a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
