@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3e8b5062_7a5dd118",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-09-13T18:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72fb88ba_9d555525",
+      "range": {
+        "startLine": 319,
+        "startChar": 35,
+        "endLine": 319,
+        "endChar": 0
+      },
+      "revId": "ee52c2680bacaef48226e668765bbd214708545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13f64bfe_23922ad2",
         "filename": "components/update_client/protocol_builder.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "ee52c2680bacaef48226e668765bbd214708545d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94ea63d2_43959bad",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-09-13T18:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13f64bfe_23922ad2",
+      "range": {
+        "startLine": 323,
+        "startChar": 41,
+        "endLine": 323,
+        "endChar": 42
+      },
+      "revId": "ee52c2680bacaef48226e668765bbd214708545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c253d48c_5104b52d",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-09-13T18:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcaf7f59_2cb95f14",
+      "range": {
+        "startLine": 325,
+        "startChar": 30,
+        "endLine": 325,
+        "endChar": 0
+      },
+      "revId": "ee52c2680bacaef48226e668765bbd214708545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92bba0ec_1c0bce65",
         "filename": "components/update_client/protocol_builder.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4191bcd3_6ef2df49",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-09-13T18:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92bba0ec_1c0bce65",
+      "range": {
+        "startLine": 342,
+        "startChar": 49,
+        "endLine": 342,
+        "endChar": 0
+      },
+      "revId": "ee52c2680bacaef48226e668765bbd214708545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "811b11a0_1012b686",
         "filename": "components/update_client/protocol_builder.cc",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "ee52c2680bacaef48226e668765bbd214708545d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f8a3bef_0195f289",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-09-13T18:34:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "811b11a0_1012b686",
+      "range": {
+        "startLine": 349,
+        "startChar": 66,
+        "endLine": 349,
+        "endChar": 0
+      },
+      "revId": "ee52c2680bacaef48226e668765bbd214708545d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
