@@ -123,7 +123,6 @@ class CORE_EXPORT InputTypeView : public GarbageCollectedMixin {
   virtual void DidSetValue(const String&, bool value_changed);
   virtual void ListAttributeTargetChanged();
   virtual void UpdateClearButtonVisibility();
-  virtual void UpdatePlaceholderText();
   virtual AXObject* PopupRootAXObject();
   virtual void EnsureFallbackContent() {}
   virtual void EnsurePrimaryContent() {}
