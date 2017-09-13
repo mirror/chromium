@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80d7dd4c_920fc13e",
+        "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-09-13T15:44:40Z",
+      "side": 1,
+      "message": "nit: add whitespace around {{ old_restaurant }}",
+      "range": {
+        "startLine": 684,
+        "startChar": 38,
+        "endLine": 684,
+        "endChar": 52
+      },
+      "revId": "29a6175e9d405c42f83c7a81c9b4699108dede32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b90a52ac_c8a8c6b4",
+        "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-09-13T15:44:40Z",
+      "side": 1,
+      "message": "nit: indents after ending line with ( should be of 4 spaces on the next line.",
+      "revId": "29a6175e9d405c42f83c7a81c9b4699108dede32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c282bd_61f03c37",
+        "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-09-13T15:44:40Z",
+      "side": 1,
+      "message": "nit: indent 4 spaces\n\n(and so on below)",
+      "revId": "29a6175e9d405c42f83c7a81c9b4699108dede32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dee2956_34f29299",
+        "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-09-13T15:44:40Z",
+      "side": 1,
+      "message": "nit: as above, break the line after the first (",
+      "revId": "29a6175e9d405c42f83c7a81c9b4699108dede32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
