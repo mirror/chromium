@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8dd614cc_3cd9bcbc",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-13T10:06:07Z",
+      "side": 1,
+      "message": "Not addressed?",
+      "parentUuid": "b9f26739_3126d95e",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17a40ad8_ae348669",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
         "patchSetId": 1
@@ -189,6 +207,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "bb40c609_94046e35",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ae474e5_269ef193",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-13T10:06:07Z",
+      "side": 1,
+      "message": "not done \u003e RAII?\n\nI meant, I think unique_ptr can be used.\nOr, ScopedCERTList can be exposed?\n\nhttps://cs.chromium.org/chromium/src/net/cert/cert_verify_proc_nss.cc?q\u003dScopedCert\u0026sq\u003dpackage:chromium\u0026l\u003d50",
+      "parentUuid": "01cf3a76_ac529193",
       "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e7a3789_38ca7530",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-13T10:06:07Z",
+      "side": 1,
+      "message": "Could you use DVLOG, instead, or lower the severity?\nIn ARC, VLOG(1) is enabled in some cases, and I think this is more debug-ish purpose.\n\ncf) https://chromium.googlesource.com/chromiumos/platform2/+/master/login_manager/chrome_setup.cc#469",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfbf28c5_aad96986",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-13T10:06:07Z",
+      "side": 1,
+      "message": "What does \"This\" point to here? If |policy_service_|, I think this is redundant, considering the DCHECK below.",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a83935_87002117",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-13T10:06:07Z",
+      "side": 1,
+      "message": "Clarification: This should never happen?",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f575a5ce_ecd64fc2",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-13T10:06:07Z",
+      "side": 1,
+      "message": "Maybe: s/it/entry/ etc.? Actually it is not an iterator.",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06ef5be_728d4844",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-13T10:06:07Z",
+      "side": 1,
+      "message": "nit/style: I often see override methods are listed without empty lines in ARC code. Could you follow it for consistency?",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d122a1_774c2092",
+        "filename": "chrome/browser/chromeos/platform_keys/key_permissions.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-13T10:06:07Z",
+      "side": 1,
+      "message": "nit/optional, we often drop second \"const\" in Chromium, I think.",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3af9b413_319cbbed",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-13T10:06:07Z",
+      "side": 1,
+      "message": "Single enum looks slightly weird to me.\nAny plans to be extended?",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c683dad4_9d53a7ca",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-13T10:06:07Z",
+      "side": 1,
+      "message": "Clarification: Any reasons to keep those params in struct?\nCan these be arguments of methods simply?",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
