@@ -70,7 +70,9 @@ class CONTENT_EXPORT ServiceWorkerVersion
     : public base::RefCounted<ServiceWorkerVersion>,
       public EmbeddedWorkerInstance::Listener {
  public:
-  using StatusCallback = base::Callback<void(ServiceWorkerStatusCode)>;
+  // TODO: Remove this when no one else depends on the definition.
+  using LegacyStatusCallback = base::Callback<void(ServiceWorkerStatusCode)>;
+  using StatusCallback = base::OnceCallback<void(ServiceWorkerStatusCode)>;
   using SimpleEventCallback =
       base::Callback<void(ServiceWorkerStatusCode, base::Time)>;
 
@@ -203,11 +205,11 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // This returns OK (success) if the worker is already running.
   // |purpose| is recorded in UMA.
   void StartWorker(ServiceWorkerMetrics::EventType purpose,
-                   const StatusCallback& callback);
+                   StatusCallback callback);
 
   // Stops an embedded worker for this version.
   // This returns OK (success) if the worker is already stopped.
-  void StopWorker(const StatusCallback& callback);
+  void StopWorker(StatusCallback callback);
 
   // Skips waiting and forces this version to become activated.
   void SkipWaitingFromDevTools();
@@ -229,7 +231,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // |purpose| is used for UMA.
   void RunAfterStartWorker(ServiceWorkerMetrics::EventType purpose,
                            base::OnceClosure task,
-                           const StatusCallback& error_callback);
+                           StatusCallback error_callback);
 
   // Call this while the worker is running before dispatching an event to the
   // worker. This informs ServiceWorkerVersion about the event in progress. The
@@ -245,12 +247,12 @@ class CONTENT_EXPORT ServiceWorkerVersion
   // killed before the request finishes. In this case, the caller should not
   // call FinishRequest.
   int StartRequest(ServiceWorkerMetrics::EventType event_type,
-                   const StatusCallback& error_callback);
+                   StatusCallback error_callback);
 
   // Same as StartRequest, but allows the caller to specify a custom timeout for
   // the event, as well as the behavior for when the request times out.
   int StartRequestWithCustomTimeout(ServiceWorkerMetrics::EventType event_type,
-                                    const StatusCallback& error_callback,
+                                    StatusCallback error_callback,
                                     const base::TimeDelta& timeout,
                                     TimeoutBehavior timeout_behavior);
 
@@ -467,7 +469,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
   };
 
   struct PendingRequest {
-    PendingRequest(const StatusCallback& error_callback,
+    PendingRequest(StatusCallback error_callback,
                    base::Time time,
                    const base::TimeTicks& time_ticks,
                    ServiceWorkerMetrics::EventType event_type);
@@ -612,7 +614,7 @@ class CONTENT_EXPORT ServiceWorkerVersion
       ServiceWorkerMetrics::EventType purpose,
       Status prestart_status,
       bool is_browser_startup_complete,
-      const StatusCallback& callback,
+      StatusCallback callback,
       ServiceWorkerStatusCode status,
       scoped_refptr<ServiceWorkerRegistration> registration);
   void StartWorkerInternal();

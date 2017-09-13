@@ -69,22 +69,22 @@ void CallServiceWorkerVersionMethodWithVersionID(
     ServiceWorkerInternalsUI::ServiceWorkerVersionMethod method,
     scoped_refptr<ServiceWorkerContextWrapper> context,
     int64_t version_id,
-    const ServiceWorkerInternalsUI::StatusCallback& callback) {
+    ServiceWorkerInternalsUI::StatusCallback callback) {
   if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(CallServiceWorkerVersionMethodWithVersionID, method,
-                       context, version_id, callback));
+                       context, version_id, std::move(callback)));
     return;
   }
 
   scoped_refptr<ServiceWorkerVersion> version =
       context->GetLiveVersion(version_id);
   if (!version.get()) {
-    callback.Run(SERVICE_WORKER_ERROR_NOT_FOUND);
+    std::move(callback).Run(SERVICE_WORKER_ERROR_NOT_FOUND);
     return;
   }
-  (*version.get().*method)(callback);
+  (*version.get().*method)(std::move(callback));
 }
 
 std::vector<const Value*> ConvertToRawPtrVector(
@@ -518,10 +518,10 @@ void ServiceWorkerInternalsUI::CallServiceWorkerVersionMethod(
     return;
   }
 
-  base::Callback<void(ServiceWorkerStatusCode)> callback =
-      base::Bind(OperationCompleteCallback, AsWeakPtr(), callback_id);
-  CallServiceWorkerVersionMethodWithVersionID(
-      method, context, version_id, callback);
+  base::OnceCallback<void(ServiceWorkerStatusCode)> callback =
+      base::BindOnce(OperationCompleteCallback, AsWeakPtr(), callback_id);
+  CallServiceWorkerVersionMethodWithVersionID(method, context, version_id,
+                                              std::move(callback));
 }
 
 void ServiceWorkerInternalsUI::InspectWorker(const ListValue* args) {
@@ -593,23 +593,25 @@ void ServiceWorkerInternalsUI::StartWorker(const ListValue* args) {
 void ServiceWorkerInternalsUI::UnregisterWithScope(
     scoped_refptr<ServiceWorkerContextWrapper> context,
     const GURL& scope,
-    const ServiceWorkerInternalsUI::StatusCallback& callback) const {
+    ServiceWorkerInternalsUI::StatusCallback callback) const {
   if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::BindOnce(&ServiceWorkerInternalsUI::UnregisterWithScope,
-                       base::Unretained(this), context, scope, callback));
+                       base::Unretained(this), context, scope,
+                       std::move(callback)));
     return;
   }
 
   if (!context->context()) {
-    callback.Run(SERVICE_WORKER_ERROR_ABORT);
+    std::move(callback).Run(SERVICE_WORKER_ERROR_ABORT);
     return;
   }
 
   // ServiceWorkerContextWrapper::UnregisterServiceWorker doesn't work here
   // because that reduces a status code to boolean.
-  context->context()->UnregisterServiceWorker(scope, callback);
+  context->context()->UnregisterServiceWorker(
+      scope, base::AdaptCallbackForRepeating(std::move(callback)));
 }
 
 }  // namespace content
