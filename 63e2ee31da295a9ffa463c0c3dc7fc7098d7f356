@@ -34,6 +34,24 @@
       "revId": "63e2ee31da295a9ffa463c0c3dc7fc7098d7f356",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c603ec1_cd75ea47",
+        "filename": "build/android/pylib/android/logdog_logcat_monitor.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-13T14:55:35Z",
+      "side": 1,
+      "message": "That line checks that the input to the deobfuscator isn\u0027t empty; it doesn\u0027t check the output.\n\nI wasn\u0027t sure if empty output for non-empty input was legitimate behavior; if it isn\u0027t, then I\u0027m fine w/ this as-is.",
+      "parentUuid": "df435825_3c062d53",
+      "revId": "63e2ee31da295a9ffa463c0c3dc7fc7098d7f356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
