@@ -1,13 +1,25 @@
-<h1>Event Pages</h1>
+<h1 id="top-heading">Event and Background Pages</h1>
 
 
 <p>
-A common need for apps and extensions is to have
-a single long-running script to manage some task or state.
-Event pages to the rescue.
-Event pages are loaded only when they are needed.
-When the event page is not actively doing something,
-it is unloaded, freeing memory and other system resources.
+Background pages are Chrome Extensions answer to a common need for
+single long-running scripts to manage a task or state. They are JavaScript files
+that aid in the functionality and communication between your Extension and the
+Chrome browser.
+Background pages come in two flavors, persistent and non-persistent event pages.
+</p>
+
+<p>
+Non persistent background pages,
+event pages, are considered best practice when building an Extension.
+They are loaded only when needed to fulfill a specific task or answer a call.
+When an event page is not actively doing something, it is unloaded, freeing
+memory and other system resources. This provides a considerable performance
+advantage, especially on low-power devices.
+</p>
+
+<p>
+<strong>Event pages are preferred to persistent background pages whenever possible.</strong>
 </p>
 
 {{?is_apps}}
@@ -17,19 +29,12 @@ It is not possible for a Chrome App to have a persistent background page.
 </p>
 {{/is_apps}}
 
-<p>
-Event pages are available in the stable channel as of Chrome 22, and the
-performance advantages are significant, especially on low-power devices. Please
-prefer them to persistent background pages whenever possible for new development
-and begin <a href="#transition">migrating existing background pages</a> to this
-new model.
-</p>
-
 <h2 id="manifest">Manifest</h2>
 
 <p>
 Register your event page in the
-<a href="manifest">extension manifest</a>:
+<a href="manifest">extension manifest</a>
+with the "persistent" feild set to false.
 </p>
 
 {{^is_apps}}
@@ -46,10 +51,27 @@ Register your event page in the
 </pre>
 
 <p>
-Notice that without the "persistent" key, you have
-a regular background page. Persistence is what differentiates
-an event page from a background page.
+If the function of your extension absolutely depends on a persistent script,
+you can register a background page by updating the "persistent" field to true.
 </p>
+
+<p>
+If you need to specify HTML in your event page,
+you can do that using the page property instead:
+</p>
+
+<pre data-filename="manifest.json">
+{
+  "name": "My extension",
+  ...
+  <b>"background": {
+     "page": "background.html",
+     "persistent": false
+  }</b>,
+  ...
+}
+</pre>
+
 {{/is_apps}}
 {{?is_apps}}
 <pre data-filename="manifest.json">
@@ -66,68 +88,27 @@ an event page from a background page.
 </pre>
 {{/is_apps}}
 
-<h2 id="lifetime">Lifetime</h2>
-
 <p>
-The event page is loaded when it is "needed", and unloaded
-when it goes idle again. Here are some examples of things
-that will cause the event page to load:
+In many cases, an event page does not require any HTML markup.
+This can be implemented using JavaScript files alone.
 </p>
-<ul>
-<li>The app or extension is first installed or is updated to a new version
-(in order to <a href="#registration">register for events</a>).
-<li>The event page was listening for an event, and the event is dispatched.
-<li>A content script or other extension
-<a href="messaging">sends a message.</a>
-<li>Another view in the extension (for example, a popup) calls
-<code>$(ref:runtime.getBackgroundPage)</code>.
-</ul>
+
+<h2 id="registration">Event Registration</h2>
 
 <p>
-Once it has been loaded, the event page will stay running
-as long as it is active (for example, calling an extension
-API or issuing a network request). Additionally, the
-event page will not unload until all visible views (for example,
-popup windows) are closed and all message ports are closed. Note
-that opening a view does not cause the event page to load, but
-only prevents it from closing once loaded.
+Chrome will keep track of events that an extension has specified listeners for.
+When a listener is triggered, the event page is loaded.
 </p>
 
 <p>
-Make sure your event page closes as soon as the event that
-opened it is processed.
-You can observe the lifetime of your event page by
-opening Chrome's task manager. You can see when your event
-page loads and unloads by observing when an entry for your
-extension appears in the list of processes.
-</p>
-
-<p>
-Once the event page has been idle a short time
-(a few seconds), the
-<code>$(ref:runtime.onSuspend)</code>
-event is dispatched. The event page has a few more seconds to handle this
-event before it is forcibly unloaded. If during this time an event occurs which
-would normally cause the event page to be loaded, the suspend is canceled
-and the <code>$(ref:runtime.onSuspendCanceled)</code> event is dispatched.
-</p>
-
-<h2 id="registration">Event registration</h2>
-
-<p>
-Chrome keeps track of events that an app or extension has added listeners
-for. When it dispatches such an event, the event page is
-loaded. Conversely, if the app or extension removes all of its listeners for
-an event by calling <code>removeListener</code>, Chrome will no longer
-load its event page for that event.
-</p>
-
-<p>
-Because the listeners themselves only exist in the context of the
-event page, you must use <code>addListener</code> each time the event
-page loads; only doing so at
-<code>$(ref:runtime.onInstalled)</code>
-by itself is insufficient.
+Listeners only exist in the context of the event page,
+therefore you must use <code>addListener</code> each time the event page loads.
+Only doing so at <code>$(ref:runtime.onInstalled)</code> is insufficient.
+Recurring events should be located at the top scope of your functions
+- they must be registered synchronously.
+Conversely, if the extension removes all of its listeners
+for an event by calling <code>removeListener</code>,
+Chrome will no longer load the page for that event.
 </p>
 
 <p>
@@ -136,95 +117,225 @@ For an example of event registration in action, you can view the
 Checker</a> extension.
 </p>
 
-{{^is_apps}}
-<h2 id="transition">Convert background page to event page</h2>
+<h2 id="lifetime">Lifetime</h2>
+
 <p>
-Follow this checklist to convert your extension's
-(persistent) background page to an event page.
-
-<ol>
-  <li>Add <code>"persistent": false</code> to your manifest as shown above.
-
-  <li>If your extension uses <code>window.setTimeout()</code> or
-  <code>window.setInterval()</code>, switch to using the
-  <a href="alarms">alarms API</a> instead. DOM-based timers won't
-  be honored if the event page shuts down.
-
-  <li>Similarly, other asynchronous HTML5 APIs like notifications and
-  geolocation will not complete if the event page shuts down. Instead,
-  use equivalent extension APIs, like
-  <a href="notifications">notifications</a>.
-
-  <li>If your extension uses,
-  <code>$(ref:extension.getBackgroundPage)</a></code>,
-  switch to
-  <code>$(ref:runtime.getBackgroundPage)</code>
-  instead. The newer method is asynchronous so that it can start the event
-  page if necessary before returning it.
-</ol>
+Both event pages and persistent background pages exsist in one instance at a time.
+The only exception occurs if your extension uses <a href="manifest/incognito#split">incognito "split" mode</a>,
+a second instance is created for incognito windows.
 </p>
-{{/is_apps}}
 
-<h2 id="best-practices">Best practices when using event pages</h2>
+<h3 id="event-lifetime">Event Pages</h3>
+
 <p>
-Keep these tips in mind when using event pages to avoid common subtle pitfalls.
+Event pages are only loaded when Chrome dispatches an event
+it is listening for, and unloaded when it goes idle again.
+Here are some additional examples of things that will cause the event page to load:
 
-<ol>
-  <li>Register to receive any events your extension is interested in
-  each time the event page is loaded. The event page will be loaded once
-  for each new version of your extension. After that it will only be
-  loaded to deliver events you have registered for. This generally means that
-  your event listeners should be added at the top level scope of the event
-  page, otherwise they may not be available when the event page reloads.
+<ul>
+  <li>The app or extension is first installed or is updated to a new version
+  - in order to <a href="#registration">register for events</a>.
+  <li>A content script or other extension <a href="messaging">sends a message</a>.
+  <li>Another view in the extension
+    - for example, a popup -
+    calls <code>$(ref:runtime.getBackgroundPage)</code>.
+</ul>
+</p>
+
+<p>
+Once loaded, the event page will stay running as long as it is active
+- for example, calling an extension API or issuing a network request.
+Additionally, the event page will not unload until all visible views
+- for example, popup windows -
+are closed, along with all message ports.
+Note that opening a view does not cause the event page to load,
+but will prevent it from closing once loaded.
+</p>
+
+<p>
+Event pages should close as soon as the event that opened it is processed.
+You can observe the lifetime of your event page by opening Chrome's task manager.
+You can see when your event page loads and unloads by observing when an entry
+for your extension appears in the list of processes.
+</p>
+
+<p>
+After the event page has been idle a few seconds,
+the <code>$(ref:runtime.onSuspend)</code> event is dispatched.
+The event page has a few more seconds to handle this event before it is forcibly unloaded.
+If during this time an event occurs which would normally cause the event page to be loaded,
+the suspend is canceled and the <code>$(ref:runtime.onSuspendCanceled)</code> event is dispatched.
+</p>
+
+<h3 id="background-lifetime">Background Pages</h3>
+
+<p>
+Persistent background pages exist for the lifetime of your extension,
+and only one instance of it at a time is active.
+
+</p>
+
+<p>
+Only use persistent background scripts if absolutely necessary.
+</p>
+
+<h2 id="communication">Cross Page Communication</h2>
+
+<p>
+You can communicate between your various pages using direct script calls,
+similar to how frames can communicate.
+The <code>$(ref:extension.getViews)</code> method returns a list of window objects for every active
+page belonging to your extension, and the <code>$(ref:runtime.getBackgroundPage)</code>
+method returns the event or persistent background page.
+</p>
+
+<p>
+The following code snippet demonstrates how an event page can interact with
+other pages in the extension and how to handle events such as user clicks.
+</p>
+
+<p>
+This example extension has an event page and multiple pages created,
+with tabs.create,
+from a file named image.html.
+</p>
+
+<pre data-filename="background.js">
+// React when a browser action's icon is clicked.
+chrome.browserAction.onClicked.addListener(function(tab) {
+  var viewTabUrl = chrome.runtime.getURL('image.html');
+  var imageUrl = <em>/* an image's URL */</em>;
+
+  // Look through all the pages in this extension to find one we can use.
+  var views = chrome.extension.getViews();
+  for (var i = 0; i < views.length; i++) {
+    var view = views[i];
+
+    // If this view has the right URL and hasn't been used yet...
+    if (view.location.href == viewTabUrl && !view.imageAlreadySet) {
+
+      // ...call one of its functions and set a property.
+      view.setImageUrl(imageUrl);
+      view.imageAlreadySet = true;
+      break; // we're done
+    }
+  }
+});
+</pre>
+<pre data-filename="image.html">
+&lt;html>
+  &lt;script>
+    function setImageUrl(url) {
+      document.getElementById('target').src = url;
+    }
+  &lt;/script>
+
+  &lt;body>
+    &lt;p>
+    Image here:
+    &lt;/p>
+
+    &lt;img id="target" src="white.png" width="640" height="480">
+
+  &lt;/body>
+&lt;/html>
+</pre>
+
+<p>
+If provided the correct permissions and registered in the manifest, you can call outside <a href="content_scripts">Content Scripts</a> as well:
+
+
+<pre>
+chrome.tabs.executeScript(null, {file: "content_script.js"});
+</pre>
+</p>
+<h2 id="best-practices">Best Practices</h2>
+
+<ul>
+  <li>Use event pages over persistent background pages whenever possible.
+
+  <li>Keep necessary listeners at the top level scope of the event page.
+      The event page is loaded once for each new version of your extension.
+      After that, it will only load to deliver events you have registered for.
 
   <li>If you need to do some initialization when your extension is
-  installed or upgraded, listen to the
-  <code>$(ref:runtime.onInstalled)</code>
-  event. This is a good place to register for
-  <a href="declarativeWebRequest">declarativeWebRequest</a> rules,
-  <a href="contextMenus">contextMenu</a> entries, and other such
-  one-time initialization.
+      installed or upgraded, listen to the
+      <code>$(ref:runtime.onInstalled)</code>
+      event. This is a good place to register for
+      <a href="declarativeWebRequest">declarativeWebRequest</a> rules,
+      <a href="contextMenus">contextMenu</a> entries, and other such
+      one-time initialization.
 
   <li>If you need to keep runtime state in memory throughout a browser
-  session, use the <a href="storage">storage API</a> or
-  IndexedDB. Since the event page does not stay loaded for long, you
-  can no longer rely on global variables for runtime state.
+      session, use the <a href="storage">storage API</a> or
+      IndexedDB. Since the event page does not stay loaded for long, you
+      can no longer rely on global variables for runtime state.
 
-  {{^is_apps}}
-  <li>Use <a href="events#filtered">event filters</a> to restrict
-  your event notifications to the cases you care about. For example, if
-  you listen to the <code><a href="extensions/tabs#event-onUpdated">tabs.onUpdated</a></code>
-  event, try using the
-  <code>$(ref:webNavigation.onCompleted)</code>
-  event with filters instead (the tabs API does not support filters).
-  That way, your event page will only be loaded for events that
-  interest you.
-  {{/is_apps}}
+      {{^is_apps}}
+    <li>Use <a href="events#filtered">event filters</a> to restrict
+      your event notifications to the cases you care about. For example, if
+      you listen to the <code><a href="extensions/tabs#event-onUpdated">tabs.onUpdated</a></code>
+      event, try using the
+      <code>$(ref:webNavigation.onCompleted)</code>
+      event with filters instead (the tabs API does not support filters).
+      That way, your event page will only be loaded for events that
+      interest you.
+      {{/is_apps}}
 
   <li>Listen to the
-  <code>$(ref:runtime.onSuspend)</code>
-  event if you need to do last second cleanup before your event page
-  is shut down. However, we recommend persisting periodically instead.
-  That way if your extension crashes without receiving
-  <code>onSuspend</code>, no data will typically be lost.
+        <code>$(ref:runtime.onSuspend)</code>
+        event if you need to do last second cleanup before your event page
+        is shut down. However, we recommend persisting periodically instead.
+        That way if your extension crashes without receiving
+        <code>onSuspend</code>, no data will typically be lost.
 
-  <li>If you're using <a href="messaging">message passing</a>, be sure
-  to close unused message ports. The event page will not shut down until all
-  message ports are closed.
+  <li>When using <a href="messaging">message passing</a>, close unused message ports.
+      The event page will not shut down until all message ports are closed.
 
   <li>If you're using the <a href="contextMenus">context menus</a> API,
-  pass a string <code>id</code> parameter to
-  <code>$(ref:contextMenus.create)</code>,
-  and use the
-  <code>$(ref:contextMenus.onClicked)</code>
-  callback instead of an <code>onclick</code> parameter to
-  <code>$(ref:contextMenus.create)</code>.
+      pass a string <code>id</code> parameter to
+      <code>$(ref:contextMenus.create)</code>,
+      and use the
+      <code>$(ref:contextMenus.onClicked)</code>
+      callback instead of an <code>onclick</code> parameter to
+      <code>$(ref:contextMenus.create)</code>.
 
-  <li>Remember to test that your event page works properly when it is unloaded
-  and then reloaded, which only happens after several seconds of inactivity.
-  Common mistakes include doing unnecessary work at page load time (when it
-  should only be done when the extension is installed); setting an alarm at
-  page load time (which resets any previous alarm); or not adding event
-  listeners at page load time.
+  <li>Test that your event page works properly when it is unloaded and then reloaded,
+      which only happens after several seconds of inactivity.
+      Common mistakes include:
+      <ul>
+         <li>Executing work at page load time
+           when it should only be done when the extension is installed.
+
+	       <li>Setting an alarm at page load time, which resets any previous alarm.
+
+         <li>Not adding event listeners at page load time.
+     </ul>
+</ul>
+
+<h2 id="transition">Convert persistent background page to event page</h2>
+
+<p>
+When converting an existing extension with a persistent background page to an event page, follow this checklist:
+</p>
+<ol>
+  <li>Add <code>"persistent": false</code> to your manifest.
+
+  <li>If your extension uses <code>window.setTimeout()</code>
+      or <code>window.setInterval()</code>,
+      switch to using the <a href="alarms">alarms API</a> instead.
+      DOM-based timers won't be honored if the event page shuts down.
+
+  <li>Asynchronous HTML5 APIs like notifications and geolocation
+    will not complete if the event page shuts down.
+    Instead, use equivalent extension APIs, like
+    <a href="notifications">notifications</a>.
+
+  <li>If your extension uses,
+    <code>$(ref:extension.getBackgroundPage)</a></code>,
+    switch to
+    <code>$(ref:runtime.getBackgroundPage)</code>
+    instead. The newer method is asynchronous so that it can start the event
+    page if necessary before returning it.
 </ol>
 </p>
