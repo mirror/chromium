@@ -92,6 +92,10 @@ DeviceChooserContentView::~DeviceChooserContentView() {
   table_view_->SetModel(nullptr);
 }
 
+gfx::Size DeviceChooserContentView::GetMinimumSize() const {
+  return gfx::Size();
+}
+
 void DeviceChooserContentView::Layout() {
   gfx::Rect rect(GetContentsBounds());
   table_parent_->SetBoundsRect(rect);
