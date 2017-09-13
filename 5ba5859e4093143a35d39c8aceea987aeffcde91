@@ -22,6 +22,74 @@
       "revId": "5ba5859e4093143a35d39c8aceea987aeffcde91",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c61f1d_7c02cd57",
+        "filename": "ui/webui/resources/cr_elements/cr_toast/cr_toast.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-13T17:00:02Z",
+      "side": 1,
+      "message": "!TimerProxy",
+      "revId": "5ba5859e4093143a35d39c8aceea987aeffcde91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac85038_862cdd39",
+        "filename": "ui/webui/resources/cr_elements/cr_toast/cr_toast.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-13T17:00:02Z",
+      "side": 1,
+      "message": "!TimerProxy",
+      "revId": "5ba5859e4093143a35d39c8aceea987aeffcde91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd57895_3a4a2520",
+        "filename": "ui/webui/resources/cr_elements/cr_toast/cr_toast.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-13T17:00:02Z",
+      "side": 1,
+      "message": "Lines 56-60 can be replaced with\n\nthis.classList.toggle(\u0027opening\u0027, this.open_);",
+      "revId": "5ba5859e4093143a35d39c8aceea987aeffcde91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d578463_65164526",
+        "filename": "ui/webui/resources/js/timer_proxy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-13T17:00:02Z",
+      "side": 1,
+      "message": "Can you use ES6 class syntax instead?",
+      "revId": "5ba5859e4093143a35d39c8aceea987aeffcde91",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
