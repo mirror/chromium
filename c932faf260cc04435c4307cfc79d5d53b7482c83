@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1c8d19da_c7be5358",
+        "filename": "ui/app_list/views/app_list_drag_and_drop_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-09-13T21:23:13Z",
+      "side": 1,
+      "message": "They are both called from other places than from AppsGridView, so I would rather keep two separate sets of API for different purpose.",
+      "parentUuid": "107482ba_9c3ed05a",
+      "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "85a0963c_1f363eae",
         "filename": "ui/app_list/views/app_list_item_view.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-12T20:36:21Z",
       "side": 1,
       "message": "Layer comes with a cost. Suggest to defer this until we need it and call DestroyLayer when we don\u0027t need it.",
+      "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034db0e6_55d9046d",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-09-13T21:23:13Z",
+      "side": 1,
+      "message": "The layer has been already created when the AppListItemView is created in AppsGridView code, therefore, remove the line.",
+      "parentUuid": "85a0963c_1f363eae",
       "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "af7d02a3_bf835c79",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-09-13T21:23:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2596e382_ef0022b3",
+      "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "974184db_ea3638eb",
         "filename": "ui/app_list/views/app_list_item_view.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7433d57_90dca6b6",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-09-13T21:23:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "974184db_ea3638eb",
+      "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b2a3cd74_b90f1acd",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-09-13T21:23:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9c785c4_d893c14c",
+      "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3160cf2_1bb75eee",
         "filename": "ui/app_list/views/app_list_item_view.cc",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-12T20:36:21Z",
       "side": 1,
       "message": "Why do we need to call this from AppListItemView now? Could we still rely on AppsGridView to do this after dragging amount exceeds a threshold?",
+      "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a89a82d9_b9124da7",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-09-13T21:23:13Z",
+      "side": 1,
+      "message": "Originally, I was thinking to make the mouse drag experience similar to touch drag, after re-think and experiment, I think we don\u0027t need to do so, we can just reply on AppsGridView to do so after dragging amount exceeding a threshold. Changed.",
+      "parentUuid": "d3160cf2_1bb75eee",
       "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "9ef40aeb_d92473c5",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-09-13T21:23:13Z",
+      "side": 1,
+      "message": "Yes, removed this.",
+      "parentUuid": "1cdbc1c3_afcaa46e",
+      "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97f5ad41_b69485e8",
         "filename": "ui/app_list/views/app_list_item_view.cc",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2017-09-12T20:36:21Z",
       "side": 1,
       "message": "Leave this to AppsGridView after dragging amount exceeds a threshold ?",
+      "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b81da274_04d639f8",
+        "filename": "ui/app_list/views/app_list_item_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1001044
+      },
+      "writtenOn": "2017-09-13T21:23:13Z",
+      "side": 1,
+      "message": "I suppose this may look more smooth if we switch to proxy as soon as touch drag starts.",
+      "parentUuid": "97f5ad41_b69485e8",
       "revId": "c932faf260cc04435c4307cfc79d5d53b7482c83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
