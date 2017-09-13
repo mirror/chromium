@@ -1743,11 +1743,9 @@ TEST_P(EndToEndTest, HeadersAndCryptoStreamsNoConnectionFlowControl) {
 
   QuicHeadersStream* headers_stream = QuicSpdySessionPeer::GetHeadersStream(
       client_->client()->client_session());
-  if (!client_->client()->client_session()->force_hol_blocking()) {
-    EXPECT_LT(QuicFlowControllerPeer::SendWindowSize(
-                  headers_stream->flow_controller()),
-              kStreamIFCW);
-  }
+  EXPECT_LT(
+      QuicFlowControllerPeer::SendWindowSize(headers_stream->flow_controller()),
+      kStreamIFCW);
   EXPECT_EQ(kSessionIFCW,
             QuicFlowControllerPeer::SendWindowSize(
                 client_->client()->client_session()->flow_controller()));
@@ -1819,33 +1817,22 @@ TEST_P(EndToEndTest, FlowControlsSynced) {
             ->flow_controller());
   }
 
-  if (!client_session->force_hol_blocking()) {
-    if (FLAGS_quic_reloadable_flag_quic_send_max_header_list_size) {
-      // Client *may* have received the SETTINGs frame.
-      // TODO(fayang): Rewrite this part because it is hacky.
-      float ratio1 =
-          static_cast<float>(QuicFlowControllerPeer::ReceiveWindowSize(
-              client_session->flow_controller())) /
-          QuicFlowControllerPeer::ReceiveWindowSize(
-              QuicSpdySessionPeer::GetHeadersStream(client_session)
-                  ->flow_controller());
-      float ratio2 =
-          static_cast<float>(QuicFlowControllerPeer::ReceiveWindowSize(
-              client_session->flow_controller())) /
-          (QuicFlowControllerPeer::ReceiveWindowSize(
-               QuicSpdySessionPeer::GetHeadersStream(client_session)
-                   ->flow_controller()) +
-           frame.size());
-      EXPECT_TRUE(ratio1 == kSessionToStreamRatio ||
-                  ratio2 == kSessionToStreamRatio);
-    } else {
-      EXPECT_EQ(static_cast<float>(QuicFlowControllerPeer::ReceiveWindowSize(
-                    client_session->flow_controller())) /
-                    QuicFlowControllerPeer::ReceiveWindowSize(
+  if (FLAGS_quic_reloadable_flag_quic_send_max_header_list_size) {
+    // Client *may* have received the SETTINGs frame.
+    // TODO(fayang): Rewrite this part because it is hacky.
+    float ratio1 = static_cast<float>(QuicFlowControllerPeer::ReceiveWindowSize(
+                       client_session->flow_controller())) /
+                   QuicFlowControllerPeer::ReceiveWindowSize(
+                       QuicSpdySessionPeer::GetHeadersStream(client_session)
+                           ->flow_controller());
+    float ratio2 = static_cast<float>(QuicFlowControllerPeer::ReceiveWindowSize(
+                       client_session->flow_controller())) /
+                   (QuicFlowControllerPeer::ReceiveWindowSize(
                         QuicSpdySessionPeer::GetHeadersStream(client_session)
-                            ->flow_controller()),
-                kSessionToStreamRatio);
-    }
+                            ->flow_controller()) +
+                    frame.size());
+    EXPECT_TRUE(ratio1 == kSessionToStreamRatio ||
+                ratio2 == kSessionToStreamRatio);
   }
 
   server_thread_->Resume();
