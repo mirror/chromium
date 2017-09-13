@@ -3301,14 +3301,37 @@ bool Document::DispatchBeforeUnloadEvent(ChromeClient& chrome_client,
   BeforeUnloadEvent* before_unload_event = BeforeUnloadEvent::Create();
   before_unload_event->initEvent(EventTypeNames::beforeunload, false, true);
   load_event_progress_ = kBeforeUnloadEventInProgress;
+  TRACE_EVENT_BEGIN0("blink.user_timing", "beforeUnloadEvent");
+  const double beforeunload_event_start = MonotonicallyIncreasingTime();
   dom_window_->DispatchEvent(before_unload_event, this);
+  const double beforeunload_event_end = MonotonicallyIncreasingTime();
   load_event_progress_ = kBeforeUnloadEventCompleted;
+  TRACE_EVENT_END0("blink.user_timing", "beforeUnloadEvent");
+  DEFINE_STATIC_LOCAL(
+      CustomCountHistogram, beforeunload_histogram,
+      ("DocumentEventTiming.BeforeUnloadDuration", 0, 10000000, 50));
+  beforeunload_histogram.Count(
+      (beforeunload_event_end - beforeunload_event_start) * 1000000.0);
   if (!before_unload_event->defaultPrevented())
     DefaultEventHandler(before_unload_event);
+
+  enum BeforeUnloadDialogHistogramEnum {
+    kNoDialogNoText,
+    kNoDialogNoUserGesture,
+    kNoDialogMultipleConfirmationForNavigation,
+    kShowDialog,
+    kDialogEnumMax
+  };
+  DEFINE_STATIC_LOCAL(EnumerationHistogram, beforeunload_dialog_histogram,
+                      ("Document.BeforeUnloadDialog", kDialogEnumMax));
+  if (before_unload_event->returnValue().IsNull()) {
+    beforeunload_dialog_histogram.Count(kNoDialogNoText);
+  }
   if (!GetFrame() || before_unload_event->returnValue().IsNull())
     return true;
 
   if (!GetFrame()->HasReceivedUserGesture()) {
+    beforeunload_dialog_histogram.Count(kNoDialogNoUserGesture);
     AddConsoleMessage(ConsoleMessage::Create(
         kJSMessageSource, kErrorMessageLevel,
         "Blocked attempt to show a 'beforeunload' confirmation panel for a "
@@ -3318,18 +3341,22 @@ bool Document::DispatchBeforeUnloadEvent(ChromeClient& chrome_client,
   }
 
   if (did_allow_navigation) {
+    beforeunload_dialog_histogram.Count(
+        kNoDialogMultipleConfirmationForNavigation);
     AddConsoleMessage(ConsoleMessage::Create(
         kJSMessageSource, kErrorMessageLevel,
         "Blocked attempt to show multiple 'beforeunload' confirmation panels "
         "for a single navigation."));
     return true;
   }
-
   String text = before_unload_event->returnValue();
+  beforeunload_dialog_histogram.Count(
+      BeforeUnloadDialogHistogramEnum::kShowDialog);
   if (chrome_client.OpenBeforeUnloadConfirmPanel(text, frame_, is_reload)) {
     did_allow_navigation = true;
     return true;
   }
+
   return false;
 }
 
@@ -3347,9 +3374,19 @@ void Document::DispatchUnloadEvents() {
       toHTMLInputElement(*current_focused_element).EndEditing();
     if (load_event_progress_ < kPageHideInProgress) {
       load_event_progress_ = kPageHideInProgress;
-      if (LocalDOMWindow* window = domWindow())
+      if (LocalDOMWindow* window = domWindow()) {
+        TRACE_EVENT_BEGIN0("blink.user_timing", "pageHideEvent");
+        const double pagehide_event_start = MonotonicallyIncreasingTime();
         window->DispatchEvent(
             PageTransitionEvent::Create(EventTypeNames::pagehide, false), this);
+        const double pagehide_event_end = MonotonicallyIncreasingTime();
+        TRACE_EVENT_END0("blink.user_timing", "pageHideEvent");
+        DEFINE_STATIC_LOCAL(
+            CustomCountHistogram, pagehide_histogram,
+            ("DocumentEventTiming.PageHideDuration", 0, 10000000, 50));
+        pagehide_histogram.Count((pagehide_event_end - pagehide_event_start) *
+                                 1000000.0);
+      }
       if (!frame_)
         return;
 
@@ -3358,7 +3395,19 @@ void Document::DispatchUnloadEvents() {
       if (visibility_state != kPageVisibilityStateHidden) {
         // Dispatch visibilitychange event, but don't bother doing
         // other notifications as we're about to be unloaded.
+        TRACE_EVENT_BEGIN0("blink.user_timing", "pageVisibilityHiddenEvent");
+        const double pagevisibility_hidden_event_start =
+            MonotonicallyIncreasingTime();
         DispatchEvent(Event::CreateBubble(EventTypeNames::visibilitychange));
+        const double pagevisibility_hidden_event_end =
+            MonotonicallyIncreasingTime();
+        TRACE_EVENT_END0("blink.user_timing", "pageVisibilityHiddenEvent");
+        DEFINE_STATIC_LOCAL(CustomCountHistogram, pagevisibility_histogram,
+                            ("DocumentEventTiming.PageVibilityHiddenDuration",
+                             0, 10000000, 50));
+        pagevisibility_histogram.Count((pagevisibility_hidden_event_end -
+                                        pagevisibility_hidden_event_start) *
+                                       1000000.0);
         DispatchEvent(
             Event::CreateBubble(EventTypeNames::webkitvisibilitychange));
       }
@@ -3373,9 +3422,18 @@ void Document::DispatchUnloadEvents() {
           !document_loader->GetTiming().UnloadEventEnd()) {
         DocumentLoadTiming& timing = document_loader->GetTiming();
         DCHECK(timing.NavigationStart());
-        timing.MarkUnloadEventStart();
+        const double unload_event_start = MonotonicallyIncreasingTime();
+        timing.MarkUnloadEventStart(unload_event_start);
+        TRACE_EVENT_BEGIN0("blink.user_timing", "unloadEvent");
         frame_->DomWindow()->DispatchEvent(unload_event, this);
-        timing.MarkUnloadEventEnd();
+        const double unload_event_end = MonotonicallyIncreasingTime();
+        TRACE_EVENT_END0("blink.user_timing", "unloadEvent");
+        DEFINE_STATIC_LOCAL(
+            CustomCountHistogram, unload_histogram,
+            ("DocumentLoadTiming.UnloadDuration", 0, 10000000, 50));
+        unload_histogram.Count((unload_event_end - unload_event_start) *
+                               1000000.0);
+        timing.MarkUnloadEventEnd(unload_event_end);
       } else {
         frame_->DomWindow()->DispatchEvent(unload_event, frame_->GetDocument());
       }
