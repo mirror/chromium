@@ -12,6 +12,7 @@
 #include "build/build_config.h"
 #include "media/base/decoder_factory.h"
 #include "media/base/media_log.h"
+#include "media/base/video_frame_provider.h"
 #include "media/filters/gpu_video_decoder.h"
 #include "media/renderers/audio_renderer_impl.h"
 #include "media/renderers/renderer_impl.h"

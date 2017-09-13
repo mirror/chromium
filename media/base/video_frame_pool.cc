@@ -11,6 +11,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/synchronization/lock.h"
 #include "base/time/default_tick_clock.h"
+#include "media/base/default_video_frame_provider.h"
 
 namespace media {
 
@@ -21,11 +22,13 @@ class VideoFramePool::PoolImpl
 
   // See VideoFramePool::CreateFrame() for usage. Attempts to keep |frames_| in
   // LRU order by always pulling from the back of |frames_|.
-  scoped_refptr<VideoFrame> CreateFrame(VideoPixelFormat format,
-                                        const gfx::Size& coded_size,
-                                        const gfx::Rect& visible_rect,
-                                        const gfx::Size& natural_size,
-                                        base::TimeDelta timestamp);
+  scoped_refptr<VideoFrame> CreateFrame(
+      VideoPixelFormat format,
+      const gfx::Size& coded_size,
+      const gfx::Rect& visible_rect,
+      const gfx::Size& natural_size,
+      base::TimeDelta timestamp,
+      VideoFrameProvider* video_frame_provider);
 
   // Shuts down the frame pool and releases all frames in |frames_|.
   // Once this is called frames will no longer be inserted back into
@@ -77,7 +80,8 @@ scoped_refptr<VideoFrame> VideoFramePool::PoolImpl::CreateFrame(
     const gfx::Size& coded_size,
     const gfx::Rect& visible_rect,
     const gfx::Size& natural_size,
-    base::TimeDelta timestamp) {
+    base::TimeDelta timestamp,
+    VideoFrameProvider* video_frame_provider) {
   base::AutoLock auto_lock(lock_);
   DCHECK(!is_shutdown_);
 
@@ -98,8 +102,9 @@ scoped_refptr<VideoFrame> VideoFramePool::PoolImpl::CreateFrame(
   }
 
   if (!frame) {
-    frame = VideoFrame::CreateZeroInitializedFrame(
+    frame = video_frame_provider->CreateZeroInitializedFrame(
         format, coded_size, visible_rect, natural_size, timestamp);
+
     // This can happen if the arguments are not valid.
     if (!frame) {
       LOG(ERROR) << "Failed to create a video frame";
@@ -107,8 +112,8 @@ scoped_refptr<VideoFrame> VideoFramePool::PoolImpl::CreateFrame(
     }
   }
 
-  scoped_refptr<VideoFrame> wrapped_frame = VideoFrame::WrapVideoFrame(
-      frame, frame->format(), frame->visible_rect(), frame->natural_size());
+  scoped_refptr<VideoFrame> wrapped_frame =
+      video_frame_provider->WrapVideoFrame(frame);
   wrapped_frame->AddDestructionObserver(base::Bind(
       &VideoFramePool::PoolImpl::FrameReleased, this, std::move(frame)));
   return wrapped_frame;
@@ -141,7 +146,14 @@ void VideoFramePool::PoolImpl::FrameReleased(scoped_refptr<VideoFrame> frame) {
     frames_.erase(frames_.begin(), frames_.begin() + stale_index);
 }
 
-VideoFramePool::VideoFramePool() : pool_(new PoolImpl()) {}
+VideoFramePool::VideoFramePool()
+    : video_frame_provider_(new DefaultVideoFrameProvider()),
+      pool_(new PoolImpl()) {}
+
+VideoFramePool::VideoFramePool(
+    std::unique_ptr<VideoFrameProvider> video_frame_provider)
+    : video_frame_provider_(std::move(video_frame_provider)),
+      pool_(new PoolImpl()) {}
 
 VideoFramePool::~VideoFramePool() {
   pool_->Shutdown();
@@ -154,7 +166,7 @@ scoped_refptr<VideoFrame> VideoFramePool::CreateFrame(
     const gfx::Size& natural_size,
     base::TimeDelta timestamp) {
   return pool_->CreateFrame(format, coded_size, visible_rect, natural_size,
-                            timestamp);
+                            timestamp, video_frame_provider_.get());
 }
 
 size_t VideoFramePool::GetPoolSizeForTesting() const {
