@@ -79,6 +79,9 @@ const char kMaxAgeForAdditionalPrefetchedSuggestionParamName[] =
 const base::TimeDelta kDefaultMaxAgeForAdditionalPrefetchedSuggestion =
     base::TimeDelta::FromHours(36);
 
+const base::TimeDelta kDefaultMinAgeForStaleSuggestion =
+    base::TimeDelta::FromMinutes(1);
+
 bool IsOrderingNewRemoteCategoriesBasedOnArticlesCategoryEnabled() {
   // TODO(vitaliii): Use GetFieldTrialParamByFeature(As.*)? from
   // base/metrics/field_trial_params.h. GetVariationParamByFeature(As.*)? are
@@ -452,7 +455,10 @@ void RemoteSuggestionsProviderImpl::FetchSuggestions(
     return;
   }
 
+  DLOG(WARNING) << "fetch initiated";
+
   MarkEmptyCategoriesAsLoading();
+  MarkStaleCategoriesAsLoading();
 
   RequestParams params = BuildFetchParams(/*fetched_category=*/base::nullopt);
   params.interactive_request = interactive_request;
@@ -530,6 +536,37 @@ void RemoteSuggestionsProviderImpl::MarkEmptyCategoriesAsLoading() {
     const CategoryContent& content = item.second;
     if (content.suggestions.empty()) {
       UpdateCategoryStatus(category, CategoryStatus::AVAILABLE_LOADING);
+      continue;
+    }
+  }
+}
+
+void RemoteSuggestionsProviderImpl::MarkStaleCategoriesAsLoading() {
+  for (const auto& item : category_contents_) {
+    Category category = item.first;
+    const CategoryContent& content = item.second;
+    for (const std::unique_ptr<RemoteSuggestion>& suggestion :
+         content.suggestions) {
+      if (base::Time::Now() - suggestion->fetch_date() >
+          kDefaultMinAgeForStaleSuggestion) {
+        DLOG(WARNING) << "fetch category stale " << category.id();
+        UpdateCategoryStatus(category, CategoryStatus::AVAILABLE_LOADING);
+        NotifyNewSuggestions(category, RemoteSuggestion::PtrVector());
+        break;
+      }
+    }
+  }
+}
+
+void RemoteSuggestionsProviderImpl::MarkStaleCategoriesAsAvailable() {
+  for (const auto& item : category_contents_) {
+    Category category = item.first;
+    const CategoryContent& content = item.second;
+    if (content.status == CategoryStatus::AVAILABLE_LOADING) {
+      DLOG(WARNING) << "fetch category not stale any more " << category.id();
+      UpdateCategoryStatus(category, CategoryStatus::AVAILABLE);
+      NotifyNewSuggestions(category, content.suggestions);
+      continue;
     }
   }
 }
@@ -770,6 +807,7 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
   }
 
   if (!status.IsSuccess()) {
+    MarkStaleCategoriesAsAvailable();
     if (callback) {
       std::move(callback).Run(status);
     }
@@ -876,8 +914,9 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
   for (auto& item : category_contents_) {
     Category category = item.first;
     UpdateCategoryStatus(category, CategoryStatus::AVAILABLE);
+    DLOG(WARNING) << "fetch category available " << category.id();
     // TODO(sfiera): notify only when a category changed above.
-    NotifyNewSuggestions(category, item.second);
+    NotifyNewSuggestions(category, item.second.suggestions);
 
     // The suggestions may be reused (e.g. when prepending an article), avoid
     // trigering notifications for the second time.
@@ -1039,7 +1078,9 @@ void RemoteSuggestionsProviderImpl::PrependArticleSuggestion(
       content->suggestions[i]->set_rank(i);
     }
 
-    NotifyNewSuggestions(articles_category_, *content);
+    if (IsCategoryStatusAvailable(content->status)) {
+      NotifyNewSuggestions(articles_category_, content->suggestions);
+    }
 
     // Avoid triggering the pushed suggestion notification for the second time
     // (e.g. when another suggestions is pushed).
@@ -1172,7 +1213,7 @@ void RemoteSuggestionsProviderImpl::NukeAllSuggestions() {
     ClearCachedSuggestions(category);
     // Update listeners about the new (empty) state.
     if (IsCategoryStatusAvailable(content.status)) {
-      NotifyNewSuggestions(category, content);
+      NotifyNewSuggestions(category, content.suggestions);
     }
     // TODO(tschumann): We should not call debug code from production code.
     ClearDismissedSuggestionsForDebugging(category);
@@ -1297,7 +1338,7 @@ void RemoteSuggestionsProviderImpl::FinishInitialization() {
     // Note: We might be in a non-available status here, e.g. DISABLED due to
     // enterprise policy.
     if (IsCategoryStatusAvailable(content.status)) {
-      NotifyNewSuggestions(category, content);
+      NotifyNewSuggestions(category, content.suggestions);
     }
   }
 }
@@ -1413,11 +1454,9 @@ void RemoteSuggestionsProviderImpl::NotifyStateChanged() {
 
 void RemoteSuggestionsProviderImpl::NotifyNewSuggestions(
     Category category,
-    const CategoryContent& content) {
-  DCHECK(IsCategoryStatusAvailable(content.status));
-
+    const RemoteSuggestion::PtrVector& suggestions) {
   std::vector<ContentSuggestion> result =
-      ConvertToContentSuggestions(category, content.suggestions);
+      ConvertToContentSuggestions(category, suggestions);
 
   DVLOG(1) << "NotifyNewSuggestions(): " << result.size()
            << " items in category " << category;
