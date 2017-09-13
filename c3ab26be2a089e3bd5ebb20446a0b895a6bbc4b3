@@ -670,6 +670,24 @@
     },
     {
       "key": {
+        "uuid": "fb29d196_96cab19e",
+        "filename": "content/renderer/media/user_media_processor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-13T12:16:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec073060_b22a1199",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e31b7e99_65b32a5c",
         "filename": "content/renderer/media/user_media_processor.h",
         "patchSetId": 3
@@ -681,6 +699,24 @@
       "writtenOn": "2017-09-11T13:31:18Z",
       "side": 1,
       "message": "Should this be a SequencedTaskRunner?",
+      "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60e5e0e8_ffe450fe",
+        "filename": "content/renderer/media/user_media_processor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-13T12:16:18Z",
+      "side": 1,
+      "message": "In practice, this is initialized with the result of RenderThreadImpl::GetWorkerTaskRunner() which currently returns base::TaskRunner*, so I guess it should continue to be a base::TaskRunner.",
+      "parentUuid": "e31b7e99_65b32a5c",
       "revId": "c3ab26be2a089e3bd5ebb20446a0b895a6bbc4b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
