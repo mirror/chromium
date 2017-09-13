@@ -178,9 +178,9 @@ class ServiceWorkerPerfTest(perf_benchmark.PerfBenchmark):
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
-        self.DisableStory('first_load',
-                          [story.expectations.ALL_ANDROID],
-                          'crbug.com/736518, crbug.com/763153')
+        self.DisableBenchmark(
+            [story.expectations.ALL],
+            'crbug.com/736518, crbug.com/763153, crbug.com/764545')
     return StoryExpectations()
 
 
