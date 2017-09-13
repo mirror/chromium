@@ -14,42 +14,51 @@
 namespace exo {
 namespace wayland {
 namespace clients {
-namespace {
+
+const size_t kWarmUpFrames = 20;
+const size_t kFrameCounts = 600;
 
 void FrameCallback(void* data, wl_callback* callback, uint32_t time) {
   bool* callback_pending = static_cast<bool*>(data);
   *callback_pending = false;
 }
 
-}  // namespace
-
-class SimpleClient : public ClientBase {
+class SimpleClient : public wayland::clients::ClientBase {
  public:
   SimpleClient() {}
-  void Run(const ClientBase::InitParams& params);
+  float Run(const ClientBase::InitParams& params);
 
  private:
+  base::TimeDelta DrawFrames(int count);
+
   DISALLOW_COPY_AND_ASSIGN(SimpleClient);
 };
 
-void SimpleClient::Run(const ClientBase::InitParams& params) {
+float SimpleClient::Run(const ClientBase::InitParams& params) {
   if (!ClientBase::Init(params))
-    return;
+    return 0.f;
+  DrawFrames(kWarmUpFrames);
+  auto time_delta = DrawFrames(kFrameCounts);
+  return kFrameCounts / time_delta.InSecondsF();
+}
+
+base::TimeDelta SimpleClient::DrawFrames(int count) {
   bool callback_pending = false;
   std::unique_ptr<wl_callback> frame_callback;
   wl_callback_listener frame_listener = {FrameCallback};
 
-  size_t frame_count = 0;
+  int frame_count = 0;
+  auto start_time = base::TimeTicks::Now();
   do {
     if (callback_pending)
       continue;
+    callback_pending = true;
 
     Buffer* buffer = buffers_.front().get();
     SkCanvas* canvas = buffer->sk_surface->getCanvas();
 
     static const SkColor kColors[] = {SK_ColorRED, SK_ColorBLACK};
-    canvas->clear(kColors[frame_count % arraysize(kColors)]);
-    ++frame_count;
+    canvas->clear(kColors[++frame_count % arraysize(kColors)]);
 
     if (gr_context_) {
       gr_context_->flush();
@@ -66,23 +75,28 @@ void SimpleClient::Run(const ClientBase::InitParams& params) {
                              &callback_pending);
     wl_surface_commit(surface_.get());
     wl_display_flush(display_.get());
-  } while (wl_display_dispatch(display_.get()) != -1);
+  } while (wl_display_dispatch(display_.get()) != -1 && frame_count < count);
+  return base::TimeTicks::Now() - start_time;
+}
+
+float SimpleMain() {
+  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
+  exo::wayland::clients::ClientBase::InitParams params;
+  if (!params.FromCommandLine(*command_line))
+    return 0.f;
+
+  SimpleClient client;
+  return client.Run(params);
 }
 
 }  // namespace clients
 }  // namespace wayland
 }  // namespace exo
 
+#if !defined(WAYLAND_CLIENT_PERFTESTS)
 int main(int argc, char* argv[]) {
   base::AtExitManager exit_manager;
   base::CommandLine::Init(argc, argv);
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-
-  exo::wayland::clients::ClientBase::InitParams params;
-  if (!params.FromCommandLine(*command_line))
-    return 1;
-
-  exo::wayland::clients::SimpleClient client;
-  client.Run(params);
-  return 1;
+  return exo::wayland::clients::SimpleMain() == 0.f ? 1 : 0;
 }
+#endif

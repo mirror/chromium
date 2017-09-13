@@ -238,6 +238,20 @@ void SurfaceTreeHost::OnWindowDestroying(aura::Window* window) {
 bool SurfaceTreeHost::OnBeginFrameDerivedImpl(const viz::BeginFrameArgs& args) {
   current_begin_frame_ack_ =
       viz::BeginFrameAck(args.source_id, args.sequence_number, false);
+  // In exo perftest, we use BackToBackBeginFrameSource to run exo as fast as
+  // possible. So the OnBeginFrameDerivedImpl could be called before
+  // DidReceivedCompositorFrameAck. When it happens, we need call
+  // layer_tree_frame_sink_holder_->frame_sink()->DidNotProduceFrame() and
+  // begin_frame_source_->DidFinishFrame(), so we can receive the next
+  // BeginFrame.
+  if (active_frame_callbacks_.empty() && !frame_callbacks_.empty()) {
+    layer_tree_frame_sink_holder_->frame_sink()->DidNotProduceFrame(
+        current_begin_frame_ack_);
+    current_begin_frame_ack_.sequence_number =
+        viz::BeginFrameArgs::kInvalidFrameNumber;
+    begin_frame_source_->DidFinishFrame(this);
+  }
+
   while (!active_frame_callbacks_.empty()) {
     active_frame_callbacks_.front().Run(args.frame_time);
     active_frame_callbacks_.pop_front();

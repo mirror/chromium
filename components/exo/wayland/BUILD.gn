@@ -6,6 +6,7 @@ import("//build/config/linux/pkg_config.gni")
 import("//build/config/ui.gni")
 import("//ui/base/ui_features.gni")
 import("//ui/ozone/ozone.gni")
+import("//testing/test.gni")
 
 if (use_xkbcommon) {
   pkg_config("xkbcommon") {
@@ -26,8 +27,8 @@ config("aura_shell_protocol_config") {
 source_set("aura_shell_protocol") {
   sources = [
     "aura-shell-client-protocol.h",
-    "aura-shell-server-protocol.h",
     "aura-shell-protocol.c",
+    "aura-shell-server-protocol.h",
   ]
 
   deps = [
@@ -222,6 +223,60 @@ executable("wayland_subsurface_client") {
     ]
     defines = [ "OZONE_PLATFORM_GBM" ]
     deps += [ "//third_party/minigbm" ]
+  }
+}
+
+test("wayland_client_perftests") {
+  sources = [
+    "../../../ash/test/ash_test_suite.cc",
+    "../../../ash/test/ash_test_suite.h",
+    "../test/run_all_perftests.cc",
+    "clients/perftests.cc",
+    "clients/simple.cc",
+  ]
+
+  defines = [ "WAYLAND_CLIENT_PERFTESTS" ]
+
+  deps = [
+    ":client_lib",
+    ":wayland",
+    "//ash:test_support_without_content",
+    "//ash/public/cpp:ash_public_cpp",
+    "//base",
+    "//base/test:test_support",
+    "//cc:test_support",
+    "//components/exo",
+    "//components/exo:test_support",
+    "//components/viz/test:test_support",
+    "//device/gamepad:test_helpers",
+    "//mojo/edk/embedder:headers",
+    "//testing/gtest",
+    "//testing/perf",
+    "//third_party/wayland:wayland_client",
+    "//third_party/wayland-protocols:linux_dmabuf_protocol",
+    "//third_party/wayland-protocols:presentation_time_protocol",
+    "//ui/aura",
+    "//ui/base",
+    "//ui/compositor:test_support",
+    "//ui/gl:test_support",
+  ]
+
+  data_deps = [
+    "//ash/strings:ash_test_strings",
+    "//ash/resources:ash_test_resources_100_percent",
+    "//ash/resources:ash_test_resources_200_percent",
+  ]
+
+  if (ozone_platform_gbm) {
+    configs += [
+      "//components/exo/wayland:libdrm",
+      "//ui/gl:gl_config",
+    ]
+    defines += [ "OZONE_PLATFORM_GBM" ]
+    deps += [
+      "//third_party/minigbm",
+      "//ui/ozone",
+    ]
   }
 }
 

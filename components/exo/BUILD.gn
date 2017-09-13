@@ -106,6 +106,8 @@ source_set("test_support") {
     "test/exo_test_base.h",
     "test/exo_test_helper.cc",
     "test/exo_test_helper.h",
+    "test/wayland_client_test.cc",
+    "test/wayland_client_test.h",
   ]
 
   deps = [
@@ -113,6 +115,7 @@ source_set("test_support") {
     "//ash:test_support_without_content",
     "//ash/public/cpp:ash_public_cpp",
     "//base",
+    "//components/exo/wayland",
     "//gpu",
     "//skia",
     "//testing/gtest",
