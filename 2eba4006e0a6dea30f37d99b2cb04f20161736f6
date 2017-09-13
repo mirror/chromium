@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5ac80f3f_8fd44683",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3877,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-13T04:24:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8d2b3f7b_74f0f2ae",
+      "revId": "2eba4006e0a6dea30f37d99b2cb04f20161736f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fa1c5e9_fabbc062",
         "filename": "ios/web/web_state/web_state_impl.mm",
         "patchSetId": 1
@@ -265,6 +283,30 @@
       "revId": "2eba4006e0a6dea30f37d99b2cb04f20161736f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce5e452c_2dbab1c8",
+        "filename": "ios/web_view/public/cwv_ui_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-13T04:24:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ab7947eb_e21c5740",
+      "range": {
+        "startLine": 68,
+        "startChar": 37,
+        "endLine": 68,
+        "endChar": 61
+      },
+      "revId": "2eba4006e0a6dea30f37d99b2cb04f20161736f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

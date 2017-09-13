@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "18061d08_94a961ce",
+        "filename": "ios/web/web_state/web_state_delegate_bridge.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-13T04:24:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "781d542c_65f4f966",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 132,
+        "endChar": 10
+      },
+      "revId": "4aad0c54742856874a9c3803b10e6f1d844b56fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af81c3ee_55ba5940",
         "filename": "ios/web_view/public/cwv_ui_delegate.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-07T18:01:05Z",
       "side": 1,
       "message": "nit: Do you want to follow existing commenting Style (Instructs the delegate..)?",
+      "range": {
+        "startLine": 72,
+        "startChar": 3,
+        "endLine": 72,
+        "endChar": 9
+      },
+      "revId": "4aad0c54742856874a9c3803b10e6f1d844b56fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ad72b5_ef83fab3",
+        "filename": "ios/web_view/public/cwv_ui_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-13T04:24:22Z",
+      "side": 1,
+      "message": "Can you advise me how I can rearrange this to follow the style?\n\nIt\u0027s a bit different from the existing methods, in a sense that it doesn\u0027t instruct delegate to do any action. It just expects the delegate to return something.\n\nShould I say \"Instructs the delegate to return a view controller shown as a pop-up.\"?",
+      "parentUuid": "af81c3ee_55ba5940",
       "range": {
         "startLine": 72,
         "startChar": 3,

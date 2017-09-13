@@ -22,6 +22,30 @@
       "revId": "34bafcf0b406d4810abdcdbfbcb69901db62d02f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e84938_18ba649e",
+        "filename": "ios/web/web_state/web_view_internal_creation_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-09-13T04:24:22Z",
+      "side": 0,
+      "message": "Simply removing this line causes regression (to enable the default Peek\u0026Pop behavior).\nI won\u0027t cause regression if we remove this line *and* implement webView:shouldPreviewElement: by returning NO, because it would prevent Peek\u0026Pop in the end.\n\nLooks like it assumes YES by default if webView:shouldPreviewElement: is not implemented. (Confirmed by running a small app with WKWebView.)",
+      "parentUuid": "b46b2b62_0070083e",
+      "range": {
+        "startLine": 64,
+        "startChar": 11,
+        "endLine": 64,
+        "endChar": 28
+      },
+      "revId": "34bafcf0b406d4810abdcdbfbcb69901db62d02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
