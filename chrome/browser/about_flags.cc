@@ -3482,7 +3482,12 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnablePixelCanvasRecordingName,
      flag_descriptions::kEnablePixelCanvasRecordingDescription, kOsCrOS,
      FEATURE_VALUE_TYPE(features::kEnablePixelCanvasRecording)},
-#endif
+
+    {"disable-tablet-autohide-titlebars",
+     flag_descriptions::kDisableTabletAutohideTitlebarsName,
+     flag_descriptions::kDisableTabletAutohideTitlebarsDescription, kOsCrOS,
+     SINGLE_DISABLE_VALUE_TYPE(
+         ash::switches::kAshDisableTabletAutohideTitlebars)},
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in
