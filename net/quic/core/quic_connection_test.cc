@@ -5369,7 +5369,6 @@ TEST_P(QuicConnectionTest, CloseConnectionForStatelessReject) {
 
 // Regression test for b/63620844.
 TEST_P(QuicConnectionTest, FailedToWriteHandshakePacket) {
-  FLAGS_quic_reloadable_flag_quic_clear_packet_before_handed_over = true;
   SimulateNextPacketTooLarge();
   EXPECT_CALL(visitor_, OnConnectionClosed(QUIC_PACKET_WRITE_ERROR, _,
                                            ConnectionCloseSource::FROM_SELF))
