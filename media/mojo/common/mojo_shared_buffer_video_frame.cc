@@ -13,6 +13,96 @@
 
 namespace media {
 
+static inline size_t RoundUp(size_t value, size_t alignment) {
+  // DCHECK(IsPowerOfTwo(alignment));
+  return ((value + (alignment - 1)) & ~(alignment - 1));
+}
+
+// static
+scoped_refptr<MojoSharedBufferVideoFrame>
+MojoSharedBufferVideoFrame::WrapMojoSharedBufferVideoFrame(
+    const scoped_refptr<MojoSharedBufferVideoFrame>& frame) {
+  mojo::ScopedSharedBufferHandle duplicated_handle = frame->Handle().Clone();
+  CHECK(duplicated_handle.is_valid());
+
+  return MojoSharedBufferVideoFrame::Create(
+      frame->format(), frame->coded_size(), frame->visible_rect(),
+      frame->natural_size(), std::move(duplicated_handle), frame->MappedSize(),
+      frame->PlaneOffset(media::VideoFrame::kYPlane),
+      frame->PlaneOffset(media::VideoFrame::kUPlane),
+      frame->PlaneOffset(media::VideoFrame::kVPlane),
+      frame->stride(media::VideoFrame::kYPlane),
+      frame->stride(media::VideoFrame::kUPlane),
+      frame->stride(media::VideoFrame::kVPlane), frame->timestamp());
+}
+
+// static
+scoped_refptr<MojoSharedBufferVideoFrame> MojoSharedBufferVideoFrame::CreateYUV(
+    const VideoPixelFormat format,
+    const gfx::Size& dimensions,
+    base::TimeDelta timestamp) {
+  if (!IsYuvPlanar(format)) {
+    NOTIMPLEMENTED();
+    return nullptr;
+  }
+
+  const gfx::Rect visible_rect(dimensions);
+
+  // Since we're allocating memory for the new frame, pad the requested
+  // size if necessary so that the requested size does line up on sample
+  // boundaries. See related discussion in VideoFrame::CreateFrameInternal().
+  const gfx::Size coded_size = DetermineAlignedSize(format, dimensions);
+  if (!IsValidConfig(format, STORAGE_MOJO_SHARED_BUFFER, coded_size,
+                     visible_rect, dimensions)) {
+    LOG(DFATAL) << __func__ << " Invalid config. "
+                << ConfigToString(format, STORAGE_MOJO_SHARED_BUFFER,
+                                  dimensions, visible_rect, dimensions);
+    return nullptr;
+  }
+
+  size_t data_size = 0;
+  int32_t strides[kMaxPlanes];
+  size_t offsets[kMaxPlanes];
+  for (size_t plane = 0; plane < NumPlanes(format); ++plane) {
+    // The *2 in alignment for height is because some formats (e.g. h264) allow
+    // interlaced coding, and then the size needs to be a multiple of two
+    // macroblocks (vertically). See
+    // libavcodec/utils.c:avcodec_align_dimensions2().
+    const size_t height =
+        RoundUp(VideoFrame::Rows(plane, format, coded_size.height()),
+                kFrameSizeAlignment * 2);
+
+    size_t stride =
+        RoundUp(VideoFrame::RowBytes(plane, format, coded_size.width()),
+                kFrameSizeAlignment);
+    DCHECK_LE(stride,
+              static_cast<uint32_t>(std::numeric_limits<int32_t>::max()));
+    strides[plane] = static_cast<int32_t>(stride);
+    offsets[plane] = data_size;
+    data_size += height * strides[plane];
+  }
+
+  // The extra line of UV being allocated is because h264 chroma MC
+  // overreads by one line in some cases, see libavcodec/utils.c:
+  // avcodec_align_dimensions2() and libavcodec/x86/h264_chromamc.asm:
+  // put_h264_chroma_mc4_ssse3().
+  DCHECK(IsValidPlane(kUPlane, format));
+  data_size += strides[kUPlane] + kFrameSizePadding;
+
+  // Allocate a shared memory buffer big enough to hold the desired frame.
+  // const size_t allocation_size = VideoFrame::AllocationSize(format,
+  // coded_size);
+  mojo::ScopedSharedBufferHandle handle =
+      mojo::SharedBufferHandle::Create(data_size);
+  if (!handle.is_valid())
+    return nullptr;
+
+  return Create(format, coded_size, visible_rect, dimensions, std::move(handle),
+                data_size, offsets[kYPlane], offsets[kUPlane], offsets[kVPlane],
+                strides[kYPlane], strides[kUPlane], strides[kVPlane],
+                timestamp);
+}
+
 // static
 scoped_refptr<MojoSharedBufferVideoFrame>
 MojoSharedBufferVideoFrame::CreateDefaultI420(const gfx::Size& dimensions,
