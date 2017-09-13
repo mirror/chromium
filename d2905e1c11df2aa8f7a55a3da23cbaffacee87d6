@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "96a0a923_cccf34a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-13T17:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "964bd2a0_b82aa5eb",
+      "revId": "d2905e1c11df2aa8f7a55a3da23cbaffacee87d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc0d5cea_4931e270",
         "filename": "build/config/compiler/compiler.gni",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "d2905e1c11df2aa8f7a55a3da23cbaffacee87d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "669e8759_94c67d21",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-13T17:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc0d5cea_4931e270",
+      "revId": "d2905e1c11df2aa8f7a55a3da23cbaffacee87d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f1d542af_35ee00da",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-13T17:26:55Z",
+      "side": 1,
+      "message": "I don\u0027t think they\u0027re overridden.  Moved out of declare_args.",
+      "parentUuid": "ae9e92d2_f7fca7e1",
+      "revId": "d2905e1c11df2aa8f7a55a3da23cbaffacee87d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6da45684_209e5f86",
         "filename": "build/config/compiler/compiler.gni",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-13T16:46:38Z",
       "side": 1,
       "message": "Is brettw@\u0027s TODO still relevant? The conditional here seems to just special-case Android \u0026 iOS?",
+      "revId": "d2905e1c11df2aa8f7a55a3da23cbaffacee87d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec111d0_2aae300d",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-13T17:26:55Z",
+      "side": 1,
+      "message": "Perhaps Brett (a reviewer) can comment if anyone has investigated optimizing for size over speed on Mac and Linux.",
+      "parentUuid": "6da45684_209e5f86",
       "revId": "d2905e1c11df2aa8f7a55a3da23cbaffacee87d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1c20e2c0_b1b580ca",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-13T17:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c500403d_a8430b34",
+      "revId": "d2905e1c11df2aa8f7a55a3da23cbaffacee87d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b2b8e12_1cc4ac9a",
         "filename": "build/config/compiler/compiler.gni",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "d2905e1c11df2aa8f7a55a3da23cbaffacee87d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "305aaee8_0795b949",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-13T17:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b2b8e12_1cc4ac9a",
+      "revId": "d2905e1c11df2aa8f7a55a3da23cbaffacee87d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
