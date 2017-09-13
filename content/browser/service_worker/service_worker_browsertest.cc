@@ -1338,11 +1338,10 @@ class MockContentBrowserClient : public TestContentBrowserClient {
 class ServiceWorkerVersionOffMainThreadFetchTest
     : public ServiceWorkerVersionBrowserTest {
  public:
-  ~ServiceWorkerVersionOffMainThreadFetchTest() override {}
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitchASCII(switches::kEnableFeatures,
-                                    features::kOffMainThreadFetch.name);
+  ServiceWorkerVersionOffMainThreadFetchTest() {
+    scoped_feature_list_.InitAndEnableFeature(features::kOffMainThreadFetch);
   }
+  base::test::ScopedFeatureList scoped_feature_list_;
 };
 
 IN_PROC_BROWSER_TEST_F(ServiceWorkerVersionBrowserTest, FetchWithSaveData) {

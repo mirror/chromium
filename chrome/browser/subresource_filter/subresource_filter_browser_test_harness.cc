@@ -23,6 +23,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_paths.h"
+#include "components/safe_browsing/features.h"
 #include "components/safe_browsing_db/util.h"
 #include "components/safe_browsing_db/v4_protocol_manager_util.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features.h"
@@ -40,19 +41,18 @@ namespace {
 
 }  // namespace
 
-SubresourceFilterBrowserTest::SubresourceFilterBrowserTest() {}
+SubresourceFilterBrowserTest::SubresourceFilterBrowserTest() {
+  scoped_feature_list_.InitWithFeatures(
+      {kSafeBrowsingSubresourceFilter,
+       kSafeBrowsingSubresourceFilterExperimentalUI,
+       safe_browsing::kV4OnlyEnabled},
+      {});
+}
+
 SubresourceFilterBrowserTest::~SubresourceFilterBrowserTest() {}
 
 void SubresourceFilterBrowserTest::SetUpCommandLine(
     base::CommandLine* command_line) {
-  command_line->AppendSwitchASCII(switches::kEnableFeatures,
-                                  base::JoinString(RequiredFeatures(), ","));
-}
-
-std::vector<base::StringPiece> SubresourceFilterBrowserTest::RequiredFeatures()
-    const {
-  return {kSafeBrowsingSubresourceFilter.name, "SafeBrowsingV4OnlyEnabled",
-          kSafeBrowsingSubresourceFilterExperimentalUI.name};
 }
 
 void SubresourceFilterBrowserTest::SetUp() {
