@@ -664,14 +664,18 @@ class GoogleMapsStory(_BrowsingStory):
   URL = 'https://www.maps.google.com/maps'
   _MAPS_SEARCH_BOX_SELECTOR = 'input[aria-label="Search Google Maps"]'
   _MAPS_ZOOM_IN_SELECTOR = '[aria-label="Zoom in"]'
-  _RESTAURANTS_LOADING = ('[class="searchbox searchbox-shadow noprint '
-                          'clear-button-shown loading"]')
   _RESTAURANTS_LOADED = ('[class="searchbox searchbox-shadow noprint '
                          'clear-button-shown"]')
   _RESTAURANTS_LINK = '[data-result-index="1"]'
   _DIRECTIONS_LINK = '[class="section-hero-header-directions-icon"]'
   _DIRECTIONS_FROM_BOX = '[class="tactile-searchbox-input"]'
   _DIRECTIONS_LOADED = '[class="section-directions-trip clearfix selected"]'
+  # Get the current name of the restaurant and store it for use
+  # in CheckRestaurantsLoaded.
+  _GET_RESTAURANT_NAME = '''
+    document.querySelectorAll('[data-result-index="1"]')[0].
+    getAttribute('jstrack')
+  '''
   SUPPORTED_PLATFORMS = platforms.DESKTOP_ONLY
   TAGS = [story_tags.JAVASCRIPT_HEAVY]
 
@@ -680,6 +684,25 @@ class GoogleMapsStory(_BrowsingStory):
       logging.warning('Browser does not support webgl, skipping test')
       return False
     return True
+
+  def CheckRestaurantsLoaded(self, action_runner, previous_restaurant_name):
+    # Check if the current restaurant name is different from the previously
+    # stored name. This checks that restaurants have started to update.
+    check_restaurants_started_updating = '''
+      document.querySelectorAll('[data-result-index="1"]')[0].
+      getAttribute('jstrack') != '''
+    # Also wait for the completion of the loading by waiting for the button to
+    # change to loaded.
+    check_restaurants_finished_updating = '''
+       && (document.querySelectorAll(
+       '[class="searchbox searchbox-shadow noprint clear-button-shown"]')[0]
+        != null)
+    '''
+    action_runner.WaitForJavaScriptCondition(
+      check_restaurants_started_updating + '"' + previous_restaurant_name +
+      '"' + check_restaurants_finished_updating)
+    return
+
 
   def _DidLoadDocument(self, action_runner):
     # Click on the search box.
@@ -694,14 +717,17 @@ class GoogleMapsStory(_BrowsingStory):
     action_runner.Wait(1)
 
     # ZoomIn two times.
+    previous_restaurant_name = action_runner.EvaluateJavaScript(
+                                      self._GET_RESTAURANT_NAME)
     action_runner.ClickElement(selector=self._MAPS_ZOOM_IN_SELECTOR)
-    action_runner.WaitForElement(selector=self._RESTAURANTS_LOADING)
-    action_runner.WaitForElement(selector=self._RESTAURANTS_LOADED)
+    self.CheckRestaurantsLoaded(action_runner, previous_restaurant_name)
     # This wait is required to fetch the data for all the tiles in the map.
     action_runner.Wait(1)
+
+    previous_restaurant_name = action_runner.EvaluateJavaScript(
+                                      self._GET_RESTAURANT_NAME)
     action_runner.ClickElement(selector=self._MAPS_ZOOM_IN_SELECTOR)
-    action_runner.WaitForElement(selector=self._RESTAURANTS_LOADING)
-    action_runner.WaitForElement(selector=self._RESTAURANTS_LOADED)
+    self.CheckRestaurantsLoaded(action_runner, previous_restaurant_name)
     # This wait is required to fetch the data for all the tiles in the map.
     action_runner.Wait(1)
 
@@ -709,17 +735,20 @@ class GoogleMapsStory(_BrowsingStory):
     # recording the wpr. If we scroll too fast, the data will not be recorded
     # well. After recording reset it back to the original value to have a more
     # realistic scroll.
+    previous_restaurant_name = action_runner.EvaluateJavaScript(
+                                      self._GET_RESTAURANT_NAME)
     action_runner.RepeatableBrowserDrivenScroll(
         x_scroll_distance_ratio = 0.0, y_scroll_distance_ratio = 0.5,
         repeat_count=2, speed=500, timeout=120, repeat_delay_ms=2000)
-    action_runner.WaitForElement(selector=self._RESTAURANTS_LOADING)
-    action_runner.WaitForElement(selector=self._RESTAURANTS_LOADED)
+    self.CheckRestaurantsLoaded(action_runner, previous_restaurant_name)
+
+    previous_restaurant_name = action_runner.EvaluateJavaScript(
+                                      self._GET_RESTAURANT_NAME)
     action_runner.RepeatableBrowserDrivenScroll(
         x_scroll_distance_ratio = 0.5, y_scroll_distance_ratio = 0,
         repeat_count=2, speed=500, timeout=120, repeat_delay_ms=2000)
+    self.CheckRestaurantsLoaded(action_runner, previous_restaurant_name)
 
-    action_runner.WaitForElement(selector=self._RESTAURANTS_LOADING)
-    action_runner.WaitForElement(selector=self._RESTAURANTS_LOADED)
     # To make the recording more realistic.
     action_runner.Wait(1)
     action_runner.ClickElement(selector=self._RESTAURANTS_LINK)
