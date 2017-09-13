@@ -13,7 +13,6 @@ import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 import org.chromium.chrome.browser.ntp.snippets.SnippetsBridge;
 import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
-import org.chromium.chrome.browser.suggestions.DestructionObserver;
 import org.chromium.chrome.browser.suggestions.SuggestionsRanker;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
 import org.chromium.chrome.browser.util.FeatureUtilities;
@@ -47,12 +46,7 @@ public class SectionList
         mUiDelegate.getSuggestionsSource().addObserver(this);
         mOfflinePageBridge = offlinePageBridge;
 
-        mUiDelegate.addDestructionObserver(new DestructionObserver() {
-            @Override
-            public void onDestroy() {
-                removeAllSections();
-            }
-        });
+        mUiDelegate.addDestructionObserver(this ::removeAllSections);
     }
 
     /**
@@ -87,6 +81,8 @@ public class SectionList
      */
     private void resetSection(@CategoryInt int category, @CategoryStatus int categoryStatus,
             boolean alwaysAllowEmptySections) {
+        Log.d(TAG, "Status when resetting section for category %d: %d", category, categoryStatus);
+
         SuggestionsSource suggestionsSource = mUiDelegate.getSuggestionsSource();
         List<SnippetArticle> suggestions = suggestionsSource.getSuggestionsForCategory(category);
         SuggestionsCategoryInfo info = suggestionsSource.getCategoryInfo(category);
@@ -94,7 +90,8 @@ public class SectionList
         SuggestionsSection section = mSections.get(category);
 
         // Do not show an empty section if not allowed.
-        if (suggestions.isEmpty() && !info.showIfEmpty() && !alwaysAllowEmptySections) {
+        if (suggestions.isEmpty() && !info.showIfEmpty() && !alwaysAllowEmptySections
+                && !SnippetsBridge.isCategoryLoading(categoryStatus)) {
             mBlacklistedCategories.add(category);
             if (section != null) removeSection(section);
             return;
