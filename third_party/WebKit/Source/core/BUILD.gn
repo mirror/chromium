@@ -1676,6 +1676,7 @@ jumbo_source_set("unit_tests") {
     "workers/WorkerThreadTestHelper.h",
     "workers/WorkletModuleResponsesMapTest.cpp",
     "xml/XPathFunctionsTest.cpp",
+    "xml/XSLTTest.cpp",
     "xml/parser/SharedBufferReaderTest.cpp",
   ]
 
