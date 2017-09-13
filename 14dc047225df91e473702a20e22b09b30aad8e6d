@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99804a7c_9ec02ee9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsCardViewHolder.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-13T08:46:49Z",
+      "side": 1,
+      "message": "Nope.Thanks.",
+      "parentUuid": "bbd853dc_d6ac993d",
+      "range": {
+        "startLine": 108,
+        "startChar": 65,
+        "endLine": 108,
+        "endChar": 94
+      },
+      "revId": "14dc047225df91e473702a20e22b09b30aad8e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d97e408b_9df31ff9",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselAdapter.java",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "14dc047225df91e473702a20e22b09b30aad8e6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6affd0c_508368bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselAdapter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-13T08:46:49Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "d97e408b_9df31ff9",
+      "range": {
+        "startLine": 83,
+        "startChar": 12,
+        "endLine": 85,
+        "endChar": 83
+      },
+      "revId": "14dc047225df91e473702a20e22b09b30aad8e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -22,6 +22,30 @@
       "revId": "4f6fa49db22cd55942e1e69e677fef8d0f7c5534",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a891da73_95316387",
+        "filename": "components/ntp_snippets/contextual/contextual_json_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-13T08:46:49Z",
+      "side": 0,
+      "message": "This should be a local change only. This way I get suggestions while there is the problem with authentication on the backend. For now I only get news suggestions. I will remove this diff, thanks.",
+      "parentUuid": "f3321986_1460820f",
+      "range": {
+        "startLine": 194,
+        "startChar": 28,
+        "endLine": 194,
+        "endChar": 44
+      },
+      "revId": "4f6fa49db22cd55942e1e69e677fef8d0f7c5534",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
