@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/ui/views/tabs/browser_tab_strip_controller.h"
+#include "base/logging.h"
 
 #include "base/auto_reset.h"
 #include "base/macros.h"
@@ -366,6 +367,11 @@ void BrowserTabStripController::CreateNewTab() {
   feature_engagement::NewTabTrackerFactory::GetInstance()
       ->GetForProfile(browser_view_->browser()->profile())
       ->OnNewTabOpened();
+  if (feature_engagement::NewTabTracker::CloseCurrentBubble()) {
+    feature_engagement::NewTabTrackerFactory::GetInstance()
+        ->GetForProfile(browser_view_->browser()->profile())
+        ->OnPromoClosed();
+  }
 #endif
   model_->delegate()->AddTabAt(GURL(), -1, true);
 }

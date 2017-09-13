@@ -35,6 +35,11 @@ NewTabTracker::NewTabTracker(SessionDurationUpdater* session_duration_updater)
 
 NewTabTracker::~NewTabTracker() = default;
 
+// static
+bool NewTabTracker::CloseCurrentBubble() {
+  return NewTabButton::CloseCurrentBubble();
+}
+
 void NewTabTracker::OnNewTabOpened() {
   GetTracker()->NotifyEvent(events::kNewTabOpened);
 }
@@ -45,7 +50,7 @@ void NewTabTracker::OnOmniboxNavigation() {
 
 void NewTabTracker::OnOmniboxFocused() {
   if (ShouldShowPromo())
-    ShowPromo();
+    return ShowPromo();
 }
 
 void NewTabTracker::OnPromoClosed() {
