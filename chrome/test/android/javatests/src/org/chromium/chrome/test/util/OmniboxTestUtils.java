@@ -212,12 +212,6 @@ public class OmniboxTestUtils {
                 boolean preventInlineAutocomplete, boolean focusedFromFakebox) {}
 
         @Override
-        public final void start(Profile profile, String url, final String text,
-                boolean preventInlineAutocomplete, boolean focusedFromFakebox) {
-            start(profile, url, text, -1, preventInlineAutocomplete, focusedFromFakebox);
-        }
-
-        @Override
         public void startZeroSuggest(Profile profile, String omniboxText, String url,
                 boolean focusedFromFakebox) {
         }
