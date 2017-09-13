@@ -26,6 +26,7 @@
 #include "media/mojo/interfaces/renderer.mojom.h"
 #include "media/mojo/services/mojo_cdm_service.h"
 #include "media/mojo/services/mojo_cdm_service_context.h"
+#include "media/mojo/services/mojo_demuxer_service_context.h"
 #include "media/mojo/services/mojo_renderer_service.h"
 #include "media/renderers/video_overlay_factory.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
@@ -67,6 +68,7 @@ class MojoRendererTest : public ::testing::Test {
 
     mojom::RendererPtr remote_renderer;
     renderer_binding_ = MojoRendererService::Create(
+        mojo_demuxer_service_context_.GetWeakPtr(),
         mojo_cdm_service_context_.GetWeakPtr(), nullptr, nullptr,
         std::move(mock_renderer),
         MojoRendererService::InitiateSurfaceRequestCB(),
@@ -219,6 +221,7 @@ class MojoRendererTest : public ::testing::Test {
   // Service side mocks and helpers.
   StrictMock<MockRenderer>* mock_renderer_;
   MojoCdmServiceContext mojo_cdm_service_context_;
+  MojoDemuxerServiceContext mojo_demuxer_service_context_;
   RendererClient* remote_renderer_client_;
   DefaultCdmFactory cdm_factory_;
 

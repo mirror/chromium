@@ -25,6 +25,32 @@ MediaInterfaceFactory::~MediaInterfaceFactory() {
   DCHECK(task_runner_->BelongsToCurrentThread());
 }
 
+void MediaInterfaceFactory::CreateDemuxer(
+    media::mojom::DemuxerRequest request) {
+  if (!task_runner_->BelongsToCurrentThread()) {
+    task_runner_->PostTask(FROM_HERE,
+                           base::BindOnce(&MediaInterfaceFactory::CreateDemuxer,
+                                          weak_this_, std::move(request)));
+    return;
+  }
+
+  DVLOG(1) << __func__;
+  GetMediaInterfaceFactory()->CreateDemuxer(std::move(request));
+}
+
+void MediaInterfaceFactory::CreateSourceBuffer(
+    media::mojom::SourceBufferRequest request) {
+  if (!task_runner_->BelongsToCurrentThread()) {
+    task_runner_->PostTask(
+        FROM_HERE, base::BindOnce(&MediaInterfaceFactory::CreateSourceBuffer,
+                                  weak_this_, std::move(request)));
+    return;
+  }
+
+  DVLOG(1) << __func__;
+  GetMediaInterfaceFactory()->CreateSourceBuffer(std::move(request));
+}
+
 void MediaInterfaceFactory::CreateAudioDecoder(
     media::mojom::AudioDecoderRequest request) {
   if (!task_runner_->BelongsToCurrentThread()) {
