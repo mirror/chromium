@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f6d6eb1_c92b8ca5",
+        "filename": "media/audio/audio_output_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T08:44:01Z",
+      "side": 1,
+      "message": "Media.Audio.RenderProxyStreamStartupResult or Media.Audio.OutputProxyStreamStartupResult\nor Media.AudioOutputController.ProxyStremStartupResult?\n\n(It\u0027s create + start result; and it\u0027s _audio_ rendering stream)",
+      "revId": "545309b10e95cb736c7b6e141ebfba8be8e4d14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e53b2e_bcfc8a22",
+        "filename": "media/audio/audio_output_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-13T08:44:01Z",
+      "side": 1,
+      "message": "Let\u0027s log normal creation and is_for_device_change separately? Combining them does not help analysis.",
+      "revId": "545309b10e95cb736c7b6e141ebfba8be8e4d14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
