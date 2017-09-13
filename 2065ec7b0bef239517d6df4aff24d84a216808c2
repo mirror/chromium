@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2aee8c09_5a321957",
+        "filename": "components/offline_pages/core/model/get_pages_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-13T17:23:29Z",
+      "side": 1,
+      "message": "Yes, this function performs multiple queries and we want these to be done in context of consistent view of the DB.\n\nAll of the other methods have a single query, which implies a transaction.",
+      "parentUuid": "6cdb61a0_9e1f61f5",
+      "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b451bc50_21083ff6",
         "filename": "components/offline_pages/core/model/get_pages_task.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-13T00:39:59Z",
       "side": 1,
       "message": "by adding a wildcard at the end, will \u0027www.wikipedia.org\u0027 and \u0027www.wikipedia.org/foo/bar/a.html\u0027 be matched? I think currently we\u0027re only doing exact matching between urls after removing fragment, am i missing anything?",
+      "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bfbe1b2_d201befa",
+        "filename": "components/offline_pages/core/model/get_pages_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-13T17:23:29Z",
+      "side": 1,
+      "message": "Yes, I am weeding out things that don\u0027t match at all here.\nEverything else is treated as a candidate. Per comment in line 152:\n\n\u003e False positives are dropped in the while loop.\n\nAnd that is what is happening in 168 and 169.",
+      "parentUuid": "b451bc50_21083ff6",
       "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2dd325aa_d1c1fb90",
+        "filename": "components/offline_pages/core/model/get_pages_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-13T17:23:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79970e32_dc659d10",
+      "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5532382_ba77f5f5",
         "filename": "components/offline_pages/core/model/get_pages_task.cc",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-13T00:39:59Z",
       "side": 1,
       "message": "i was seeing \u0027std::move(callback_).Run(result)\u0027 somewhere else, is the std::move() preferred to have? I feel like it\u0027s not necessary.",
+      "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78369045_3231a128",
+        "filename": "components/offline_pages/core/model/get_pages_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-13T17:23:29Z",
+      "side": 1,
+      "message": "It depends on the type of callback.\nFor base::OnceCallback  std::move is necessary.\n\nFor base::Callback it does not matter as such I think.",
+      "parentUuid": "f5532382_ba77f5f5",
       "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
