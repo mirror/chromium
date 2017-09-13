@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1e8fdb4_4f39153e",
+        "filename": "chrome/browser/ui/views/cookie_info_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-13T21:43:54Z",
+      "side": 1,
+      "message": "It seems like the current mocks want to hide this section entirely when no cookie is selected, and my hope is to punt that to a later Harmony phase.\n\nIn the absence of making that change, does it make sense to omit this one as well?  The placeholders seem to make this section feel a bit less \"broken\".  I tried to look for why Jayson originally asked for these to be removed, but the older mocks are gone (that I could find).  Did you discuss this with Alan?",
+      "revId": "39d43c1b3b51fb915fda2465dcef07c92e32b3b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
