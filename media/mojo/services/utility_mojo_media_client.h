@@ -31,7 +31,8 @@ class UtilityMojoMediaClient : public MojoMediaClient {
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
       MediaLog* media_log,
       mojom::CommandBufferIdPtr command_buffer_id,
-      OutputWithReleaseMailboxCB output_cb) final;
+      OutputWithReleaseMailboxCB output_cb,
+      const std::string& decoder_name) final;
 
   DISALLOW_COPY_AND_ASSIGN(UtilityMojoMediaClient);
 };
