@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea8034f5_f84df237",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-13T19:03:38Z",
+      "side": 1,
+      "message": "Would you mind including the direction in the name, something like FragmentainerBlockSPaceAvailable?",
+      "revId": "0c5ffc9a0e325fcd613d212c9894fa8cd42db67c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a9bd648_1a0f0a6e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-09-13T19:03:38Z",
+      "side": 1,
+      "message": "IsFragmentainerOutOfSpace? We might also want to invert it, FragmentainerHasSpaceRemaining.",
+      "revId": "0c5ffc9a0e325fcd613d212c9894fa8cd42db67c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
