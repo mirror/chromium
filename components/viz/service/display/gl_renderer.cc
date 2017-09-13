@@ -659,7 +659,7 @@ void GLRenderer::DrawDebugBorderQuad(const cc::DebugBorderDrawQuad* quad) {
 }
 
 static sk_sp<SkImage> WrapTexture(
-    const cc::DisplayResourceProvider::ScopedReadLockGL& lock,
+    const cc::ResourceProvider::ScopedLocalReadLockGL& lock,
     GrContext* context,
     bool flip_texture) {
   // Wrap a given texture in a Ganesh backend texture.
@@ -681,7 +681,7 @@ static sk_sp<SkImage> ApplyImageFilter(
     const gfx::RectF& dst_rect,
     const gfx::Vector2dF& scale,
     sk_sp<SkImageFilter> filter,
-    const cc::DisplayResourceProvider::ScopedReadLockGL& source_texture_lock,
+    const cc::ResourceProvider::ScopedLocalReadLockGL& source_texture_lock,
     SkIPoint* offset,
     SkIRect* subset,
     bool flip_texture,
@@ -920,7 +920,7 @@ std::unique_ptr<cc::ScopedResource> GLRenderer::GetBackdropTexture(
       bounding_rect.size(), cc::ResourceProvider::TEXTURE_HINT_DEFAULT,
       BackbufferFormat(), current_frame()->current_render_pass->color_space);
   {
-    cc::ResourceProvider::ScopedWriteLockGL lock(
+    cc::ResourceProvider::ScopedLocalWriteLockGL lock(
         resource_provider_, device_background_texture->id());
     GetFramebufferTexture(lock.GetTexture(), bounding_rect);
   }
@@ -949,8 +949,8 @@ sk_sp<SkImage> GLRenderer::ApplyBackgroundFilters(
   if (!filter || !use_gr_context)
     return nullptr;
 
-  cc::DisplayResourceProvider::ScopedReadLockGL lock(resource_provider_,
-                                                     background_texture->id());
+  cc::DisplayResourceProvider::ScopedLocalReadLockGL lock(
+      resource_provider_, background_texture->id());
 
   bool flip_texture = true;
   sk_sp<SkImage> src_image =
@@ -1275,7 +1275,7 @@ bool GLRenderer::UpdateRPDQWithSkiaFilters(
         SkIRect subset;
         gfx::RectF src_rect(quad->rect);
 
-        cc::DisplayResourceProvider::ScopedReadLockGL
+        cc::ResourceProvider::ScopedLocalReadLockGL
             prefilter_contents_texture_lock(resource_provider_,
                                             params->contents_texture->id());
         params->contents_color_space =
@@ -3063,7 +3063,7 @@ bool GLRenderer::BindFramebufferToTexture(const cc::ScopedResource* texture) {
 
   gl_->BindFramebuffer(GL_FRAMEBUFFER, offscreen_framebuffer_id_);
   current_framebuffer_lock_ =
-      base::MakeUnique<cc::ResourceProvider::ScopedWriteLockGL>(
+      base::MakeUnique<cc::ResourceProvider::ScopedLocalWriteLockGL>(
           resource_provider_, texture->id());
   current_framebuffer_format_ = texture->format();
   GLuint texture_id = current_framebuffer_lock_->GetTexture();
@@ -3572,8 +3572,8 @@ void GLRenderer::CopyRenderPassDrawQuadToOverlayResource(
   }
 
   // Establish destination texture.
-  cc::ResourceProvider::ScopedWriteLockGL destination(resource_provider_,
-                                                      (*resource)->id());
+  cc::ResourceProvider::ScopedLocalWriteLockGL destination(resource_provider_,
+                                                           (*resource)->id());
   GLuint temp_fbo;
 
   gl_->GenFramebuffers(1, &temp_fbo);

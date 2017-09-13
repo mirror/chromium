@@ -334,7 +334,7 @@ class VIZ_SERVICE_EXPORT GLRenderer : public cc::DirectRenderer {
   std::vector<std::unique_ptr<PendingAsyncReadPixels>>
       pending_async_read_pixels_;
 
-  std::unique_ptr<cc::ResourceProvider::ScopedWriteLockGL>
+  std::unique_ptr<cc::ResourceProvider::ScopedLocalWriteLockGL>
       current_framebuffer_lock_;
   // This is valid when current_framebuffer_lock_ is not null.
   ResourceFormat current_framebuffer_format_;
