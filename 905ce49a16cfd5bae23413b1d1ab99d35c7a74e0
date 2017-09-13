@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "544f7ebc_98562b0e",
+        "filename": "chrome/browser/vr/elements/system_indicator_texture.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-09-13T17:24:19Z",
+      "side": 1,
+      "message": "I was wondering if it looks similar for when IsRTL() is true. It looks that you are missing \"2 *\" here, but I\u0027m not sure if it\u0027s needed.",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 73
+      },
+      "revId": "905ce49a16cfd5bae23413b1d1ab99d35c7a74e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ae1dba5_fd5b26ca",
         "filename": "chrome/browser/vr/elements/vector_icon.h",
         "patchSetId": 4
