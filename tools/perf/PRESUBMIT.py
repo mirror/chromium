@@ -19,6 +19,7 @@ def _CommonChecks(input_api, output_api):
   results.extend(_CheckJson(input_api, output_api))
   results.extend(_CheckPerfJsonUpToDate(input_api, output_api))
   results.extend(_CheckExpectations(input_api, output_api))
+  results.extend(_UpdateSysHealthCSV(input_api, output_api))
   results.extend(input_api.RunTests(input_api.canned_checks.GetPylint(
       input_api, output_api, extra_paths_list=_GetPathsToPrepend(input_api),
       pylintrc='pylintrc')))
@@ -114,6 +115,20 @@ def _CheckJson(input_api, output_api):
     except ValueError:
       return [output_api.PresubmitError('Error parsing JSON in %s!' % filename)]
   return []
+
+
+def _UpdateSysHealthCSV(input_api, output_api):
+  results = []
+  perf_dir = input_api.PresubmitLocalPath()
+  out, return_code = _RunArgs([
+      input_api.python_executable,
+      input_api.os_path.join(perf_dir, 'generate_system_health_csv'),
+      '--validate-only'], input_api)
+  if return_code:
+      results.append(output_api.PresubmitError(
+          'Updating System Health CSV doc (go/csh-stories) failed.',
+          long_text=out))
+  return results
 
 
 def CheckChangeOnUpload(input_api, output_api):
