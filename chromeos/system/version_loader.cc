@@ -64,12 +64,12 @@ std::string GetVersion(VersionFormat format) {
   return version;
 }
 
-void GetTpmVersion(StringCallback callback) {
+void GetTpmVersion(GetTpmVersionCallback callback) {
   chromeos::DBusThreadManager::Get()->GetCryptohomeClient()->TpmGetVersion(
-      base::Bind([](StringCallback callback,
+      base::Bind([](GetTpmVersionCallback callback,
                     chromeos::DBusMethodCallStatus call_status,
-                    const std::string& tpm_version) {
-        callback.Run(tpm_version);
+                    CryptohomeClient::TpmVersionInfo tpm_version_info) {
+        callback.Run(tpm_version_info);
       },
       callback));
 }

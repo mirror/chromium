@@ -827,7 +827,16 @@ bool DeviceStatusCollector::GetVersionInfo(
   status->set_browser_version(version_info::GetVersionNumber());
   status->set_os_version(os_version_);
   status->set_firmware_version(firmware_version_);
-  status->set_tpm_version(tpm_version_);
+
+  em::TpmVersionInfo* tpm_version_info = status->mutable_tpm_version_info();
+  tpm_version_info->set_tpm_family(tpm_version_info_.family);
+  tpm_version_info->set_tpm_spec_level(tpm_version_info_.spec_level);
+  tpm_version_info->set_tpm_manufacturer(tpm_version_info_.manufacturer);
+  tpm_version_info->set_tpm_tpm_model(tpm_version_info_.tpm_model);
+  tpm_version_info->set_tpm_firmware_version(
+      tpm_version_info_.firmware_version);
+  tpm_version_info->set_tpm_vendor_specific(tpm_version_info_.vendor_specific);
+
   return true;
 }
 
@@ -1276,8 +1285,9 @@ void DeviceStatusCollector::OnOSFirmware(const std::string& version) {
   firmware_version_ = version;
 }
 
-void DeviceStatusCollector::OnTpmVersion(const std::string& version) {
-  tpm_version_ = version;
+void DeviceStatusCollector::OnTpmVersion(
+    chromeos::CryptohomeClient::TpmVersionInfo tpm_version_info) {
+  tpm_version_info_ = tpm_version_info;
 }
 
 }  // namespace policy
