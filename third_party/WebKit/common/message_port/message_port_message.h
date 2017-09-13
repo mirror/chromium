@@ -12,9 +12,15 @@
 
 namespace blink {
 
+namespace mojom {
+class MessagePortMessage;
+}
+
 // This struct represents messages as they are posted over a message port. This
 // type can be serialized as a content::mojom::MessagePortMessage struct.
 struct MessagePortMessage {
+  using MojoStruct = mojom::MessagePortMessage;
+
   MessagePortMessage();
   ~MessagePortMessage();
 

@@ -30,6 +30,7 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "bindings/core/v8/serialization/SerializedScriptValueFactory.h"
+#include "core/dom/BlinkMessagePortMessageStructTraits.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/TaskRunnerHelper.h"
@@ -42,6 +43,7 @@
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/AtomicString.h"
 #include "public/platform/WebString.h"
+#include "third_party/WebKit/common/message_port/message_port.mojom-blink.h"
 
 namespace blink {
 
@@ -67,6 +69,9 @@ void MessagePort::postMessage(ScriptState* script_state,
   DCHECK(GetExecutionContext());
   DCHECK(channel_.GetHandle().is_valid());
 
+  BlinkMessagePortMessage msg;
+  msg.message = message;
+
   // Make sure we aren't connected to any of the passed-in ports.
   for (unsigned i = 0; i < ports.size(); ++i) {
     if (ports[i] == this) {
@@ -76,15 +81,12 @@ void MessagePort::postMessage(ScriptState* script_state,
       return;
     }
   }
-  WebVector<MessagePortChannel> channels = MessagePort::DisentanglePorts(
+  msg.ports = MessagePort::DisentanglePorts(
       ExecutionContext::From(script_state), ports, exception_state);
   if (exception_state.HadException())
     return;
 
-  StringView wire_data = message->GetWireData();
-  channel_.PostMessage(
-      reinterpret_cast<const uint8_t*>(wire_data.Characters8()),
-      wire_data.length(), std::move(channels));
+  channel_.PostMessage(&msg);
 }
 
 MessagePortChannel MessagePort::Disentangle() {
@@ -153,16 +155,12 @@ bool MessagePort::TryGetMessage(RefPtr<SerializedScriptValue>& message,
   if (!channel_.GetHandle().is_valid())
     return false;
 
-  std::vector<uint8_t> message_data;
-  std::vector<MessagePortChannel> channels_vector;
-  if (!channel_.GetMessage(&message_data, &channels_vector))
+  BlinkMessagePortMessage msg;
+  if (!channel_.GetMessage(&msg))
     return false;
 
-  channels.resize(channels_vector.size());
-  std::move(channels_vector.begin(), channels_vector.end(), channels.begin());
-
-  message = SerializedScriptValue::Create(
-      reinterpret_cast<const char*>(message_data.data()), message_data.size());
+  message = std::move(msg.message);
+  channels = std::move(msg.ports);
   return true;
 }
 
