@@ -70,6 +70,30 @@
       "revId": "8e88b315858e76683589c4e70359cbf9df6239af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "400be31b_d91cc542",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-13T01:49:05Z",
+      "side": 0,
+      "message": "Oh... yes, this was just an oversight. Thank you for fixing this!",
+      "parentUuid": "3291e6e9_4c4488cc",
+      "range": {
+        "startLine": 922,
+        "startChar": 2,
+        "endLine": 929,
+        "endChar": 77
+      },
+      "revId": "8e88b315858e76683589c4e70359cbf9df6239af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
