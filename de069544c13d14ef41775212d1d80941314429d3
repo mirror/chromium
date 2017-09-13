@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cd623e15_bda34069",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "I moved the block to the initializer. But after some thoughts, a delegate callback with a @protocol is probably better, but it is rather heavy weight for this specific use case. That\u0027s why I\u0027ve changed to passing a block with the initializer.",
+      "parentUuid": "76697aa0_1a9996dc",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 37
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c5c130b_958f1b17",
         "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.h",
         "patchSetId": 11
@@ -39,6 +63,24 @@
       "revId": "de069544c13d14ef41775212d1d80941314429d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "434edd1b_a76fc0c8",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c5c130b_958f1b17",
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +124,48 @@
     },
     {
       "key": {
+        "uuid": "56a5427d_18286db3",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f925299_46d0a85c",
+      "range": {
+        "startLine": 27,
+        "startChar": 34,
+        "endLine": 27,
+        "endChar": 51
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac2adeb7_e5410e74",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8bed7ed_954fda33",
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd5d59c9_41404b14",
         "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
         "patchSetId": 11
@@ -102,6 +186,30 @@
       "revId": "de069544c13d14ef41775212d1d80941314429d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f6b366_76fe85c0",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd5d59c9_41404b14",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 23
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +253,48 @@
     },
     {
       "key": {
+        "uuid": "9681cb2e_a80f12fb",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6243cf0_56df0f3f",
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db95df7b_6613505f",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Again, the several subclasses I\u0027ve examined use NS_ENUM(). I prefer keeping it consistent unless there\u0027s a compelling reason.",
+      "parentUuid": "054f92a6_36ef55e1",
+      "range": {
+        "startLine": 28,
+        "startChar": 16,
+        "endLine": 28,
+        "endChar": 25
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd0db423_491dd2bd",
         "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
         "patchSetId": 11
@@ -156,6 +306,30 @@
       "writtenOn": "2017-09-12T16:03:26Z",
       "side": 1,
       "message": "SECTION_IDENTIFIER_HEADER",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 25
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b68ce6f_dbe3c11b",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Current style guide seems to prefer names that are CamelCase and extends the type name, so SectionIdentifierHeader is preferred.",
+      "parentUuid": "bd0db423_491dd2bd",
       "range": {
         "startLine": 29,
         "startChar": 2,
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "dd18f11b_974ba0b1",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Moved to -viewDidLoad as discussed in person.",
+      "parentUuid": "e67d1d92_b712486d",
+      "range": {
+        "startLine": 69,
+        "startChar": 10,
+        "endLine": 69,
+        "endChar": 19
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a272af49_d89a4a4a",
         "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
         "patchSetId": 11
@@ -202,6 +400,30 @@
       "writtenOn": "2017-09-12T14:19:51Z",
       "side": 1,
       "message": "Is this section useful?",
+      "range": {
+        "startLine": 104,
+        "startChar": 9,
+        "endLine": 104,
+        "endChar": 57
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c971b04a_243babbb",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "I put this (UISwitch row) in a separate section as it is logically unrelated to the previous section which is a list of available apps.",
+      "parentUuid": "a272af49_d89a4a4a",
       "range": {
         "startLine": 104,
         "startChar": 9,
@@ -237,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "3422ddcc_f83942c4",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Yes, thank you! Fixed.",
+      "parentUuid": "c1e0c597_692c9368",
+      "range": {
+        "startLine": 122,
+        "startChar": 6,
+        "endLine": 122,
+        "endChar": 14
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a339e90_23a9168c",
         "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
         "patchSetId": 11
@@ -248,6 +494,30 @@
       "writtenOn": "2017-09-12T16:03:26Z",
       "side": 1,
       "message": "How about a small optimization?:\n\nif ([self.collectionViewModel itemTypeForIndexPath:indexPath] !\u003d ItemTypeApp)\n  return NO;\n\nreturn [super collectionView:collectionView shouldHighlightItemAtIndexPath:indexPath];",
+      "range": {
+        "startLine": 156,
+        "startChar": 21,
+        "endLine": 156,
+        "endChar": 32
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c9179bc_d5a7916f",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Not really. -collectionView:shouldHighlightItemAtIndexPath: in MDCCollectionViewController has been annotated with NS_REQUIRES_SUPER. So, it has to be called even if the result ended up being unused. I\u0027ll add a comment.",
+      "parentUuid": "9a339e90_23a9168c",
       "range": {
         "startLine": 156,
         "startChar": 21,
@@ -283,6 +553,30 @@
     },
     {
       "key": {
+        "uuid": "24b8c168_b7cce07e",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "It is possible to call the callback function before dismissing the view controller. It actually makes the code simpler and easier to understand.\n\nBTW, the updated unit test also exposed a problem with calling the callback from -dismissViewControllerAnimated:completion: when there\u0027s no presentingViewController. So, this change here passes the unit test and has no negative effect on the app.",
+      "parentUuid": "17585c02_e0f6a91d",
+      "range": {
+        "startLine": 177,
+        "startChar": 62,
+        "endLine": 177,
+        "endChar": 72
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33648aa2_30975ed9",
         "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
         "patchSetId": 11
@@ -294,6 +588,30 @@
       "writtenOn": "2017-09-12T16:03:26Z",
       "side": 1,
       "message": "strongSelf.onMailtoHandlerSelected ?",
+      "range": {
+        "startLine": 181,
+        "startChar": 35,
+        "endLine": 181,
+        "endChar": 71
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e70adc1_1db8a929",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "No longer needed.",
+      "parentUuid": "33648aa2_30975ed9",
       "range": {
         "startLine": 181,
         "startChar": 35,
@@ -329,6 +647,30 @@
     },
     {
       "key": {
+        "uuid": "f2400ca1_dcf18c09",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7267fb47_dbb6343d",
+      "range": {
+        "startLine": 31,
+        "startChar": 29,
+        "endLine": 31,
+        "endChar": 36
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dad17c4b_c0c845c9",
         "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller_unittest.mm",
         "patchSetId": 11
@@ -340,6 +682,30 @@
       "writtenOn": "2017-09-12T14:19:51Z",
       "side": 1,
       "message": "Is the end of the comment missing?",
+      "range": {
+        "startLine": 67,
+        "startChar": 61,
+        "endLine": 67,
+        "endChar": 68
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ed87a4_a51beeed",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Completed.",
+      "parentUuid": "dad17c4b_c0c845c9",
       "range": {
         "startLine": 67,
         "startChar": 61,
@@ -375,6 +741,30 @@
     },
     {
       "key": {
+        "uuid": "859c43b8_03927461",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Good call. Added callbackCalled boolean. And it actually caught a \"bug\" in the unit test :)",
+      "parentUuid": "91046b8f_d35ec626",
+      "range": {
+        "startLine": 84,
+        "startChar": 25,
+        "endLine": 84,
+        "endChar": 32
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "67db1f9d_3b1fede5",
         "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller_unittest.mm",
         "patchSetId": 11
@@ -398,6 +788,30 @@
     },
     {
       "key": {
+        "uuid": "75c533a1_95ebcb9e",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67db1f9d_3b1fede5",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 6
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0416e25f_8ff89472",
         "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.mm",
         "patchSetId": 11
@@ -409,6 +823,30 @@
       "writtenOn": "2017-09-12T14:19:51Z",
       "side": 1,
       "message": "Is this working with the switch?",
+      "range": {
+        "startLine": 105,
+        "startChar": 16,
+        "endLine": 105,
+        "endChar": 44
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d136a5f_d13ff620",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "This method is not called with the indexPath for the UISwitch item.",
+      "parentUuid": "0416e25f_8ff89472",
       "range": {
         "startLine": 105,
         "startChar": 16,
@@ -444,6 +882,30 @@
     },
     {
       "key": {
+        "uuid": "626a7008_7e631876",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Thanks for pointing that out. I didn\u0027t know that exists. I switched both collection view controllers to use hidesInkViewAtIndexPath method.",
+      "parentUuid": "4ef88017_afe2d0e0",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 34
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13007985_be573c37",
         "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.mm",
         "patchSetId": 11
@@ -455,6 +917,30 @@
       "writtenOn": "2017-09-12T14:19:51Z",
       "side": 1,
       "message": "Same question",
+      "range": {
+        "startLine": 119,
+        "startChar": 16,
+        "endLine": 119,
+        "endChar": 44
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0119d8c4_8df31063",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "This method has been removed.",
+      "parentUuid": "13007985_be573c37",
       "range": {
         "startLine": 119,
         "startChar": 16,
@@ -490,6 +976,30 @@
     },
     {
       "key": {
+        "uuid": "b19a4fec_d1d65614",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "It\u0027s not absolutely necessary since we should prevent the selection to happen in the first place.",
+      "parentUuid": "4ec53564_709dd83d",
+      "range": {
+        "startLine": 123,
+        "startChar": 4,
+        "endLine": 123,
+        "endChar": 28
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bbf18c8_e44213b4",
         "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.mm",
         "patchSetId": 11
@@ -504,6 +1014,24 @@
       "revId": "de069544c13d14ef41775212d1d80941314429d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c3c792c_4e9481a3",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bbf18c8_e44213b4",
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -530,6 +1058,30 @@
     },
     {
       "key": {
+        "uuid": "28a28083_f4436f22",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f3aee39_258fa968",
+      "range": {
+        "startLine": 182,
+        "startChar": 8,
+        "endLine": 182,
+        "endChar": 17
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b07ab688_9a73a548",
         "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.mm",
         "patchSetId": 11
@@ -541,6 +1093,30 @@
       "writtenOn": "2017-09-12T16:03:26Z",
       "side": 1,
       "message": "Do you want to create a local variable for items to improve the formatting?",
+      "range": {
+        "startLine": 190,
+        "startChar": 26,
+        "endLine": 190,
+        "endChar": 45
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6103f2dc_3d28013b",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Done. Also removed some unnecessary casts.",
+      "parentUuid": "b07ab688_9a73a548",
       "range": {
         "startLine": 190,
         "startChar": 26,
@@ -576,6 +1152,30 @@
     },
     {
       "key": {
+        "uuid": "7dad19bb_2813936f",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller_unittest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Done, and in other places too.",
+      "parentUuid": "68ee1a16_0006eb83",
+      "range": {
+        "startLine": 58,
+        "startChar": 7,
+        "endLine": 58,
+        "endChar": 18
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6791e35e_f39624ca",
         "filename": "ios/chrome/browser/web/external_app_launcher.mm",
         "patchSetId": 11
@@ -599,6 +1199,30 @@
     },
     {
       "key": {
+        "uuid": "4578f66e_64b7e627",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6791e35e_f39624ca",
+      "range": {
+        "startLine": 99,
+        "startChar": 8,
+        "endLine": 99,
+        "endChar": 42
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95101e50_67c115d9",
         "filename": "ios/chrome/browser/web/external_app_launcher.mm",
         "patchSetId": 11
@@ -610,6 +1234,24 @@
       "writtenOn": "2017-09-12T16:03:26Z",
       "side": 1,
       "message": "Should this code be inside ExternalAppLauncherCoordinator class?",
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6819f3d_31628ee6",
+        "filename": "ios/chrome/browser/web/external_app_launcher.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "There is no coordinator class. These feature flags will be removed once we settled down on an implementation.",
+      "parentUuid": "95101e50_67c115d9",
       "revId": "de069544c13d14ef41775212d1d80941314429d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -636,6 +1278,30 @@
       "revId": "de069544c13d14ef41775212d1d80941314429d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cce2b491_e9434cfd",
+        "filename": "ios/chrome/browser/web/features.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-13T07:36:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "faef4486_a84dcf40",
+      "range": {
+        "startLine": 22,
+        "startChar": 27,
+        "endLine": 22,
+        "endChar": 50
+      },
+      "revId": "de069544c13d14ef41775212d1d80941314429d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
