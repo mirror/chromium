@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2f632506_e7bab1ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/LightweightFirstRunActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-13T12:03:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6ed4f47e_f53dff78",
+      "revId": "c419d98aa04711c0af02ed3132f5ee27c0f7983f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32edc828_f1e35bd6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/LightweightFirstRunActivity.java",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "c419d98aa04711c0af02ed3132f5ee27c0f7983f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c3ac7e2_dd37093a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/firstrun/LightweightFirstRunActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-13T12:03:25Z",
+      "side": 1,
+      "message": "Ack\n\n(\u003cSigh\u003e I wonder whether it would be worth making these into concrete classes that take a Callback...)",
+      "parentUuid": "32edc828_f1e35bd6",
+      "revId": "c419d98aa04711c0af02ed3132f5ee27c0f7983f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
