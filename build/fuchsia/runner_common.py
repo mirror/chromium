@@ -29,6 +29,8 @@ GUEST_NET = '192.168.3.0/24'
 GUEST_IP_ADDRESS = '192.168.3.9'
 HOST_IP_ADDRESS = '192.168.3.2'
 
+# This port on localhost is forwarded to 22 on the target.
+HOST_SSH_PORT = '23422'
 
 def _RunAndCheck(dry_run, args):
   if dry_run:
@@ -164,6 +166,47 @@ def ReadRuntimeDeps(deps_path, output_directory):
   return result
 
 
+def _InitializeSSH(base_path, dry_run):
+  """Creates a keypair to enable SSHing into the target. Returns a list of files
+  to be added to the bootfs, and the ssh config file to be used on the host."""
+  id_key_path = '%s.id_key' % base_path
+  host_key_path = '%s.host_key' % base_path
+
+  if os.path.isfile(id_key_path):
+    os.unlink(id_key_path)
+  if os.path.isfile(host_key_path):
+    os.unlink(host_key_path)
+
+  _RunAndCheck(
+      dry_run,
+      ['ssh-keygen', '-q', '-t', 'ed25519', '-N', '', '-f', id_key_path])
+  _RunAndCheck(
+      dry_run,
+      ['ssh-keygen', '-q', '-t', 'ed25519', '-N', '', '-f', host_key_path])
+
+  config_file_path = '%s.ssh_config' % base_path
+  with open(config_file_path, 'w') as f:
+    f.write("""Host *
+CheckHostIP no
+StrictHostKeyChecking no
+ForwardAgent no
+ForwardX11 no
+GSSAPIDelegateCredentials no
+UserKnownHostsFile /dev/null
+User fuchsia
+IdentityFile {id_key_path}
+IPQoS reliability
+ControlPersist yes
+ControlMaster auto
+ControlPath /tmp/fuchsia-{user}-%r@%h:%p
+""".format(id_key_path=id_key_path, user=os.environ.get('USER')))
+
+  return ((('data/ssh/authorized_keys', '%s.pub' % id_key_path),
+           ('data/ssh/ssh_host_ed25519_key', host_key_path),
+           ('data/ssh/ssh_host_ed25519_key.pub', '%s.pub' % host_key_path)),
+          config_file_path)
+
+
 class BootfsData(object):
   """Results from BuildBootfs().
 
@@ -171,17 +214,23 @@ class BootfsData(object):
   symbols_mapping: A dict mapping executables to their unstripped originals.
   termination_string: A string to be grep'd for that indicates the target
                       process on the VM has terminated.
+  ssh_config_file: A host-side file that can be used to SSH into the target.
   """
-  def __init__(self, bootfs_name, symbols_mapping, termination_string):
+  def __init__(self, bootfs_name, symbols_mapping, termination_string,
+               ssh_config_file):
     self.bootfs = bootfs_name
     self.symbols_mapping = symbols_mapping
     self.termination_string = termination_string
+    self.ssh_config_file = ssh_config_file
 
 
 def BuildBootfs(output_directory, runtime_deps, bin_name, child_args, dry_run):
   # |runtime_deps| already contains (target, source) pairs for the runtime deps,
   # so we can initialize |file_mapping| from it directly.
   file_mapping = dict(runtime_deps)
+
+  extra_files, local_config_file = _InitializeSSH(bin_name, dry_run)
+  file_mapping.update(dict(extra_files))
 
   # Generate a script that runs the binaries and shuts down QEMU (if used).
   autorun_file = open(bin_name + '.bootfs_autorun', 'w')
@@ -238,7 +287,8 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args, dry_run):
        '--target=system', manifest_file.name]) != 0:
     return None
 
-  return BootfsData(bootfs_name, symbols_mapping, termination_string)
+  return BootfsData(bootfs_name, symbols_mapping, termination_string,
+                    local_config_file)
 
 
 def _SymbolizeEntries(entries):
@@ -387,16 +437,13 @@ def RunFuchsia(bootfs_data, use_device, dry_run, test_launcher_summary_output):
       '-enable-kvm',
       '-cpu', 'host,migratable=no',
 
-      # Configure the tun/tap device used for retrieving test results and
-      # triggering shutdown.
-      '-netdev', 'tap,ifname=qemu,script=no,downscript=no,id=net0',
-      '-device', 'e1000,netdev=net0,mac=52:54:00:63:5e:7a',
-
       # Configure virtual network. It is used in the tests to connect to
-      # testserver running on the host.
-      '-netdev', 'user,id=net1,net=%s,dhcpstart=%s,host=%s' %
-          (GUEST_NET, GUEST_IP_ADDRESS, HOST_IP_ADDRESS),
-      '-device', 'e1000,netdev=net1,mac=52:54:00:63:5e:7b',
+      # testserver running on the host. HOST_SSH_PORT on the host is forwarded
+      # to 22 on the target so that ssh/scp can be used to control the target.
+      '-netdev',
+          'user,id=net0,net=%s,dhcpstart=%s,host=%s,hostfwd=tcp::%s-:22' %
+          (GUEST_NET, GUEST_IP_ADDRESS, HOST_IP_ADDRESS, HOST_SSH_PORT),
+      '-device', 'virtio-net,netdev=net0,mac=52:54:00:63:5e:7b',
 
       # Use stdio for the guest OS only; don't attach the QEMU interactive
       # monitor.
@@ -452,10 +499,12 @@ def RunFuchsia(bootfs_data, use_device, dry_run, test_launcher_summary_output):
 
       if test_launcher_summary_output:
         _RunAndCheck(dry_run,
-            [os.path.join(SDK_ROOT, 'tools', 'netcp'),
-             ':/tmp/summary_output.json', test_launcher_summary_output])
+            ['scp', '-v', '-v', '-F', bootfs_data.ssh_config_file, '-P',
+             HOST_SSH_PORT, 'fuchsia@localhost:/tmp/summary_output.json',
+            test_launcher_summary_output])
       _RunAndCheck(dry_run,
-          [os.path.join(SDK_ROOT, 'tools', 'netruncmd'), ':', 'dm poweroff'])
+          ['ssh', '-v', '-v', '-F', bootfs_data.ssh_config_file,
+           '-p', HOST_SSH_PORT, 'fuchsia@localhost', 'dm shutdown'])
       sys.stdout.write('Result retrieval complete.')
       sys.stdout.flush()
 
