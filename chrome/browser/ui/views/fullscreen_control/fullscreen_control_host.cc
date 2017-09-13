@@ -15,9 +15,9 @@
 namespace {
 
 // +----------------------------+
-// |                |  Control  |
-// |                |           |
-// |                +-----------+ <-- Height
+// |       |  Control  |        |
+// |       |           |        |
+// |       +-----------+        | <-- Height
 // |                            | <-- Height * kExitHeightScaleFactor
 // |          Screen            |       Buffer for mouse moves or pointer events
 // |                            |       before closing the fullscreen exit
@@ -69,34 +69,45 @@ gfx::Rect FullscreenControlHost::GetDialogPosition(
 
   preferred_size.SetToMin(widget_bounds.size());
 
-  // Place the view in the top right corner of the widget boundaries (top left
-  // for RTL languages).
+  // Place the view in the center of the widget boundaries.
   gfx::Rect view_location;
   gfx::Point origin = widget_bounds.origin();
-  if (!base::i18n::IsRTL())
-    origin.set_x(widget_bounds.right() - preferred_size.width());
+  origin.set_x((widget_bounds.right() - preferred_size.width()) / 2);
   return gfx::Rect(origin, preferred_size);
 }
 
 void FullscreenControlHost::OnMouseEvent(ui::MouseEvent* event) {
+  if (input_entry_method_ == InputEntryMethod::TOUCH)
+    return;
+
   if (event->type() == ui::ET_MOUSE_MOVED)
-    HandleFullScreenControlVisibility(event);
+    HandleFullScreenControlVisibility(event, InputEntryMethod::MOUSE);
 }
 
 void FullscreenControlHost::OnTouchEvent(ui::TouchEvent* event) {
+  if (input_entry_method_ == InputEntryMethod::MOUSE)
+    return;
+
   if (event->type() == ui::ET_TOUCH_MOVED)
-    HandleFullScreenControlVisibility(event);
+    HandleFullScreenControlVisibility(event, InputEntryMethod::TOUCH);
 }
 
 void FullscreenControlHost::OnGestureEvent(ui::GestureEvent* event) {
-  if (event->type() == ui::ET_GESTURE_LONG_PRESS && !IsAnimating() &&
+  if (event->type() == ui::ET_GESTURE_LONG_TAP && !IsAnimating() &&
       browser_view_->IsFullscreen() && !IsVisible()) {
+    input_entry_method_ = InputEntryMethod::TOUCH;
     Show(true);
   }
 }
 
+void FullscreenControlHost::OnVisibilityChanged() {
+  if (!IsVisible())
+    input_entry_method_ = InputEntryMethod::NOT_ACTIVE;
+}
+
 void FullscreenControlHost::HandleFullScreenControlVisibility(
-    const ui::LocatedEvent* event) {
+    const ui::LocatedEvent* event,
+    InputEntryMethod input_entry_method) {
   if (IsAnimating())
     return;
 
@@ -107,8 +118,10 @@ void FullscreenControlHost::HandleFullScreenControlVisibility(
       if (event->y() >= y_limit)
         Hide(true);
     } else {
-      if (event->y() <= kShowFullscreenExitControlHeight)
+      if (event->y() <= kShowFullscreenExitControlHeight) {
+        input_entry_method_ = input_entry_method;
         Show(true);
+      }
     }
   } else if (IsVisible()) {
     Hide(true);
