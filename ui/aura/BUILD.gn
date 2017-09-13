@@ -361,6 +361,7 @@ test("aura_unittests") {
     "//services/ui/common:task_runner_test_base",
     "//services/ui/public/cpp",
     "//skia",
+    "//testing/gmock",
     "//testing/gtest",
     "//ui/base:test_support",
     "//ui/compositor:test_support",
