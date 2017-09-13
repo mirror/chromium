@@ -272,6 +272,24 @@
     },
     {
       "key": {
+        "uuid": "e4c04845_aa136173",
+        "filename": "components/arc/common/video_decode_accelerator.typemap",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-13T05:30:48Z",
+      "side": 1,
+      "message": "I don\u0027t think I understand the question. Why is it useful to have three different rect abstractions that all map to the same C++ class? ARC++ controls the definition of all three, so using the same definition for all of them should be pretty straightforward.\n\nWe don\u0027t have to merge them in this CL; a followup is reasonable for this sort of change.",
+      "parentUuid": "f0c34d42_0a24a8e1",
+      "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a79995c_ce908920",
         "filename": "components/arc/video_accelerator/video_decode_accelerator_struct_traits.cc",
         "patchSetId": 6
