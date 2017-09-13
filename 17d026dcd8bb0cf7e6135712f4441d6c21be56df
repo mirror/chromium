@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d76513e4_142e8e69",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-13T21:17:43Z",
+      "side": 1,
+      "message": "Nit: Explicit \"TestData\" likely not needed",
+      "revId": "17d026dcd8bb0cf7e6135712f4441d6c21be56df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca841fc1_c321e164",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-13T21:17:43Z",
+      "side": 1,
+      "message": "Nit: auto navigation_entry \u003d ... ? (2 places)",
+      "revId": "17d026dcd8bb0cf7e6135712f4441d6c21be56df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
