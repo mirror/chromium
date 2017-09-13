@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52ebe41b_457e9f38",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/appmenu/AppMenuAdapter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-13T15:31:00Z",
+      "side": 1,
+      "message": "This will delay the enter animation for all menu items by 80ms?\n\nI think that\u0027s totally fine, but let\u0027s add a comment here referencing the bug and explaining why it\u0027s necessary. Also, will you please grab a video and attach it to the bug/send it to Hannah to confirm UX is okay with the delay amount?",
+      "range": {
+        "startLine": 374,
+        "startChar": 36,
+        "endLine": 374,
+        "endChar": 60
+      },
+      "revId": "82dcea6aa163ab0973c503fca3a40ab91fe6463a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
