@@ -3454,6 +3454,7 @@ split_static_library("browser") {
       "task_manager/providers/task.h",
       "task_manager/providers/task_provider.cc",
       "task_manager/providers/task_provider.h",
+      "task_manager/providers/task_provider_observer.cc",
       "task_manager/providers/task_provider_observer.h",
       "task_manager/providers/web_contents/background_contents_tag.cc",
       "task_manager/providers/web_contents/background_contents_tag.h",
