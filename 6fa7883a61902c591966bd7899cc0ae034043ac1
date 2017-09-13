@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "833cd6de_30cc494b",
+        "filename": "testing/libfuzzer/fuzzers/url_parse_proto_fuzzer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-09-13T03:53:36Z",
+      "side": 1,
+      "message": "nit: |else| is redundant here and on line#40",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 7
+      },
+      "revId": "6fa7883a61902c591966bd7899cc0ae034043ac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
