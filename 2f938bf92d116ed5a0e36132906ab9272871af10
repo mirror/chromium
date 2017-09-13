@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a9a06aec_98eed861",
+        "filename": "remoting/host/input_injector_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001794
+      },
+      "writtenOn": "2017-09-13T15:18:15Z",
+      "side": 1,
+      "message": "I\u0027m not sure whether removing such dependencies is really a really good thing for the codebase. The dependency is real, and removing it makes the dependencies less faithful to what is actually required.\n\nIt\u0027s likely possible to solve this in a more faithful way, such as by passing the injector factory into the constructor for the remoting host. Whatever actually builds those (depending on whether top level binary is MUS or ozone) would want real dependencies on either ozone or MUS so it can ask for the right factory instead of getting it in a very indirect way.",
+      "parentUuid": "33c10272_f4ef3566",
+      "range": {
+        "startLine": 149,
+        "startChar": 14,
+        "endLine": 149,
+        "endChar": 45
+      },
+      "revId": "2f938bf92d116ed5a0e36132906ab9272871af10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5bad0517_cfa8f76f",
         "filename": "ui/aura/mus/system_input_injector_mus.h",
         "patchSetId": 8
