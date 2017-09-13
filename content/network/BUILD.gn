@@ -59,6 +59,8 @@ source_set("network_sources") {
     "//content/public/common:common_sources",
     "//mojo/public/cpp/bindings",
     "//net",
+    "//net:net_utility_services",
+    "//net/interfaces",
     "//services/network/public/cpp",
     "//services/service_manager/public/cpp",
     "//services/service_manager/public/interfaces",

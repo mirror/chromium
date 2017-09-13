@@ -17,6 +17,10 @@ static_library("utility") {
     "cloud_print/bitmap_image.h",
     "cloud_print/pwg_encoder.cc",
     "cloud_print/pwg_encoder.h",
+    "network/mojo_proxy_resolver_factory_impl.cc",
+    "network/mojo_proxy_resolver_factory_impl.h",
+    "network/mojo_proxy_resolver_factory_service.cc",
+    "network/mojo_proxy_resolver_factory_service.h",
     "printing_handler.cc",
     "printing_handler.h",
     "shell_handler_impl_win.cc",
@@ -46,12 +50,15 @@ static_library("utility") {
     "//components/url_formatter",
     "//content/public/child",
     "//content/public/common",
+    "//content/public/network",
     "//content/public/utility",
     "//courgette:courgette_lib",
     "//extensions/features",
     "//ipc",
     "//media",
+    "//net:net_utility_services",
     "//net:net_with_v8",
+    "//net/interfaces",
     "//printing/features",
     "//services/service_manager/public/cpp",
     "//skia",
@@ -182,6 +189,11 @@ static_library("utility") {
       "media_router/dial_device_description_parser_impl.h",
     ]
   }
+}
+
+service_manifest("network_utility_manifest") {
+  name = "net_proxy_resolver_factory"
+  source = "network/manifest.json"
 }
 
 if (!is_android) {

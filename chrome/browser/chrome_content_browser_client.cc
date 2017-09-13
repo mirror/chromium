@@ -218,6 +218,7 @@
 #include "net/base/mime_util.h"
 #include "net/cookies/canonical_cookie.h"
 #include "net/cookies/cookie_options.h"
+#include "net/interfaces/proxy_resolver_service.mojom.h"
 #include "net/ssl/ssl_cert_request_info.h"
 #include "ppapi/features/features.h"
 #include "ppapi/host/ppapi_host.h"
@@ -2987,6 +2988,14 @@ void ChromeContentBrowserClient::RegisterInProcessServices(
     services->insert(
         std::make_pair(prefs::mojom::kLocalStateServiceName, info));
   }
+#if defined(OS_ANDROID)
+  {
+    service_manager::EmbeddedServiceInfo info;
+    info.factory = base::Bind(&ChromeService::Create);
+    services->insert(std::make_pair(
+        net::interfaces::kProxyResolverFactoryServiceName, info));
+  }
+#endif
 #if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_BROWSER_PROCESS)
   service_manager::EmbeddedServiceInfo info;
   info.factory = base::Bind(&media::CreateMediaService);
@@ -3001,9 +3010,13 @@ void ChromeContentBrowserClient::RegisterOutOfProcessServices(
   (*services)[printing::mojom::kServiceName] =
       base::ASCIIToUTF16("PDF Compositor Service");
 #endif
-
-  (*services)[profiling::mojom::kServiceName] =
-      base::ASCIIToUTF16("Profiling Service");
+#if !defined(OS_ANDROID)
+  (*services)[net::interfaces::kProxyResolverFactoryServiceName] = {
+      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PROXY_RESOLVER_NAME),
+      content::SANDBOX_TYPE_UTILITY};
+#endif
+  (*services)[profiling::mojom::kServiceName] = {
+      base::ASCIIToUTF16("Profiling Service"), content::SANDBOX_TYPE_UTILITY};
 
 #if !defined(OS_ANDROID)
   (*services)[chrome::mojom::kProfileImportServiceName] =
