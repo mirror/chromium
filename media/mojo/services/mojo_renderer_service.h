@@ -20,6 +20,7 @@
 #include "media/base/pipeline_status.h"
 #include "media/base/renderer_client.h"
 #include "media/mojo/interfaces/renderer.mojom.h"
+#include "media/mojo/interfaces/video_renderer_sink.mojom.h"
 #include "media/mojo/services/media_mojo_export.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
@@ -63,6 +64,7 @@ class MEDIA_MOJO_EXPORT MojoRendererService : public mojom::Renderer,
   // mojom::Renderer implementation.
   void Initialize(mojom::RendererClientAssociatedPtrInfo client,
                   base::Optional<std::vector<mojom::DemuxerStreamPtr>> streams,
+                  mojom::VideoRendererSinkPtr video_renderer_sink_ptr,
                   const base::Optional<GURL>& media_url,
                   const base::Optional<GURL>& site_for_cookies,
                   InitializeCallback callback) final;

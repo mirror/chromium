@@ -45,6 +45,8 @@ source_set("clients") {
     "mojo_video_decoder.h",
     "mojo_video_encode_accelerator.cc",
     "mojo_video_encode_accelerator.h",
+    "mojo_video_renderer_sink_impl.cc",
+    "mojo_video_renderer_sink_impl.h",
   ]
 
   if (is_android) {

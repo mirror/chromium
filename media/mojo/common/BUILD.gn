@@ -10,6 +10,8 @@ source_set("common") {
     "mojo_decoder_buffer_converter.h",
     "mojo_video_frame_provider.cc",
     "mojo_video_frame_provider.h",
+    "mojo_video_frame_provider_factory.cc",
+    "mojo_video_frame_provider_factory.h",
   ]
 
   deps = [

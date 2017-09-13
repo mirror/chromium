@@ -37,7 +37,8 @@ CreateMediaServiceForTesting();
 
 // Creates a MediaService instance using the UtilityMojoMediaClient.
 std::unique_ptr<service_manager::Service> MEDIA_MOJO_EXPORT
-CreateUtilityMediaService();
+CreateUtilityMediaService(
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
 }  // namespace media
 

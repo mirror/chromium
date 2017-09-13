@@ -24,6 +24,7 @@
 #include "media/base/media_log.h"
 #include "media/base/media_switches.h"
 #include "media/base/test_helpers.h"
+#include "media/base/video_frame_provider_factory.h"
 #include "media/blink/webmediaplayer_delegate.h"
 #include "media/blink/webmediaplayer_params.h"
 #include "media/mojo/services/video_decode_stats_recorder.h"
@@ -252,7 +253,7 @@ class WebMediaPlayerImplTest : public testing::Test {
         RendererFactorySelector::FactoryType::DEFAULT,
         base::MakeUnique<DefaultRendererFactory>(
             media_log.get(), nullptr,
-            DefaultRendererFactory::GetGpuFactoriesCB()));
+            DefaultRendererFactory::GetGpuFactoriesCB(), nullptr));
     factory_selector->SetBaseFactoryType(
         RendererFactorySelector::FactoryType::DEFAULT);
 
