@@ -81,7 +81,12 @@ ViewAndroid::ScopedAnchorView::view() const {
 }
 
 ViewAndroid::ViewAndroid(ViewClient* view_client, LayoutType layout_type)
-    : parent_(nullptr), client_(view_client), layout_type_(layout_type) {}
+    : parent_(nullptr),
+      client_(view_client),
+      layout_type_(layout_type),
+      top_controls_height_(0),
+      bottom_controls_height_(0),
+      shrink_blink_size_(false) {}
 
 ViewAndroid::ViewAndroid() : ViewAndroid(nullptr, LayoutType::NORMAL) {}
 
@@ -400,6 +405,41 @@ void ViewAndroid::OnSizeChangedInternal(const gfx::Size& size) {
     if (child->match_parent())
       child->OnSizeChangedInternal(size);
   }
+}
+
+gfx::Size ViewAndroid::GetSize() const {
+  gfx::Size size = view_rect_.size();
+  if (shrink_blink_size_)
+    size.set_height(size.height() -
+                    (top_controls_height_ + bottom_controls_height_));
+  return size;
+}
+
+void ViewAndroid::SetTopControlsHeight(int height, bool shrink_blink_size) {
+  SetTopControlsHeightInternal(std::ceil(height / GetDipScale()),
+                               shrink_blink_size);
+  DispatchOnSizeChanged();
+}
+
+void ViewAndroid::SetTopControlsHeightInternal(int height,
+                                               bool shrink_blink_size) {
+  top_controls_height_ = height;
+  shrink_blink_size_ = shrink_blink_size;
+
+  for (auto* child : children_)
+    child->SetTopControlsHeightInternal(height, shrink_blink_size);
+}
+
+void ViewAndroid::SetBottomControlsHeight(int height) {
+  SetBottomControlsHeightInternal(std::ceil(height / GetDipScale()));
+  DispatchOnSizeChanged();
+}
+
+void ViewAndroid::SetBottomControlsHeightInternal(int height) {
+  bottom_controls_height_ = height;
+
+  for (auto* child : children_)
+    child->SetBottomControlsHeightInternal(height);
 }
 
 void ViewAndroid::DispatchOnSizeChanged() {
