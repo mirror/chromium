@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36a348a7_9fba9d6c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-13T04:52:45Z",
+      "side": 1,
+      "message": "This is a bit ambiguous, could you reword it to something along the lines of \"This CL correctly applies the DSF to Android scrollbars when using the \u0027use-zoom-for-DSF\u0027 flag.\"",
+      "range": {
+        "startLine": 9,
+        "startChar": 57,
+        "endLine": 10,
+        "endChar": 68
+      },
+      "revId": "0cd6558e09dbfb2c748eac587df9704587888127",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
