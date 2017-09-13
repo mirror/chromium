@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2c5fed8_1e3c60b3",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 4102,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-09-13T18:34:57Z",
+      "side": 1,
+      "message": "Let\u0027s just use\n\n  return Size();\n\nIt should be the same thing but more direct.",
+      "range": {
+        "startLine": 4102,
+        "startChar": 11,
+        "endLine": 4102,
+        "endChar": 29
+      },
+      "revId": "4d85279ec739e890dd0166ffb45d74e4facbcb4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b10fe37_8caa0f4f",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 4103,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-09-13T18:34:57Z",
+      "side": 1,
+      "message": "Let\u0027s rename contents_size_ to layout_overflow_size_.  It\u0027s confusing for contents_size_ and ContentsSize() to have the same name but different values.\n\nSome callers of LocalFrameView::ContentsSize might need to be updated to call LayoutView::DocumentRect instead.  Those should be evaluated on a case by case basis.  (Maybe that will fix some of your test failures.)\n\nFor example, the SetContentsSize() method is currently doing\n\n  if (size \u003d\u003d ContentsSize())\n    return;\n\nBut the purpose of SetContentsSize is to set contents_size_ (which is becoming layout_overflow_size_), and to process side effects of that change.  So it should instead check\n\n  if (size \u003d\u003d layout_overflow_size_)\n    return;\n\nAnd also we should rename SetContentsSize to SetLayoutOverflowSize.\n\nDoes that make sense?",
+      "range": {
+        "startLine": 4103,
+        "startChar": 9,
+        "endLine": 4103,
+        "endChar": 23
+      },
+      "revId": "4d85279ec739e890dd0166ffb45d74e4facbcb4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe4648a1_8c7a7229",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 4139,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-09-13T18:34:57Z",
+      "side": 1,
+      "message": "This should be updated to use ContentsSize().  (ScrollSize should return 0 with RLS.)",
+      "range": {
+        "startLine": 4139,
+        "startChar": 26,
+        "endLine": 4139,
+        "endChar": 40
+      },
+      "revId": "4d85279ec739e890dd0166ffb45d74e4facbcb4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
