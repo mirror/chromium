@@ -308,6 +308,24 @@
     },
     {
       "key": {
+        "uuid": "edcf28b8_664e9ae9",
+        "filename": "components/arc/common/video_decode_accelerator.typemap",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-13T06:23:02Z",
+      "side": 1,
+      "message": "Well, the mojom rect class would still be defined in ARC++, so it would be up to ARC++ to maintain the stable interface? It\u0027s true someone could go and change it... but ARC++ conventions kind of already dictate that you shouldn\u0027t do that.",
+      "parentUuid": "876b1322_e1e4d0ab",
+      "revId": "e35daa52afe670b26cb646c65e0783fd04d5c40a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a79995c_ce908920",
         "filename": "components/arc/video_accelerator/video_decode_accelerator_struct_traits.cc",
         "patchSetId": 6
