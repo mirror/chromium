@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "00ba165d_752d18d3",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-13T01:09:01Z",
+      "side": 1,
+      "message": "Why is the friendship needed?",
+      "revId": "72118eed77725c80c0e5e2e3409c1862887b0d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f548b1a_88c0567e",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-13T01:09:01Z",
+      "side": 1,
+      "message": "Nit: typo",
+      "range": {
+        "startLine": 78,
+        "startChar": 11,
+        "endLine": 78,
+        "endChar": 19
+      },
+      "revId": "72118eed77725c80c0e5e2e3409c1862887b0d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c86ff2_6677f3d2",
+        "filename": "chrome/browser/net/chrome_mojo_proxy_resolver_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-13T01:09:01Z",
+      "side": 1,
+      "message": "This is quite hard to follow: this class is a factory that creates factories.\nMaybe there could be a better name for it that is not factory?\n\nActually naive question, is there any reason we couldn\u0027t bind all mojom::ProxyResolver to a unique MojoProxyResolverFactoryImpl (using a mojo::BindingSet)?",
+      "range": {
+        "startLine": 37,
+        "startChar": 43,
+        "endLine": 37,
+        "endChar": 65
+      },
+      "revId": "72118eed77725c80c0e5e2e3409c1862887b0d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "225cf85a_2db5acc0",
         "filename": "net/interfaces/proxy_resolver_service.mojom",
         "patchSetId": 7
@@ -18,6 +81,52 @@
         "startChar": 24,
         "endLine": 64,
         "endChar": 0
+      },
+      "revId": "72118eed77725c80c0e5e2e3409c1862887b0d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01da186a_d77bf58d",
+        "filename": "net/proxy/test_mojo_proxy_resolver_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-13T01:09:01Z",
+      "side": 1,
+      "message": "Nit: since you are there, could be const.",
+      "range": {
+        "startLine": 25,
+        "startChar": 7,
+        "endLine": 25,
+        "endChar": 23
+      },
+      "revId": "72118eed77725c80c0e5e2e3409c1862887b0d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e937de8a_8ba3b5dc",
+        "filename": "net/url_request/url_request_context_builder_mojo.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-13T01:09:01Z",
+      "side": 1,
+      "message": "Nit: I thought the preference was to capitalize acronyms, e.g  SetDHCPFetcherFactory",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 28
       },
       "revId": "72118eed77725c80c0e5e2e3409c1862887b0d25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
