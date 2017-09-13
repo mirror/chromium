@@ -277,6 +277,8 @@ TEST(ProfilingJsonExporterTest, Simple) {
       AllocationEvent(AllocatorType::kMalloc, Address(0x2), 32, bt2, 0));
   events.insert(
       AllocationEvent(AllocatorType::kMalloc, Address(0x3), 20, bt1, 0));
+  events.insert(
+      AllocationEvent(AllocatorType::kMalloc, Address(0x4), 12, bt2, 0));
 
   std::ostringstream stream;
   std::map<std::string, int> context_map;
@@ -378,10 +380,10 @@ TEST(ProfilingJsonExporterTest, Simple) {
   EXPECT_EQ(40, sizes->GetList()[node1].GetInt());
   EXPECT_EQ(id1, backtraces->GetList()[node1].GetInt());
 
-  // Validate node allocated with |stack2|.
-  EXPECT_EQ(1, counts->GetList()[node3].GetInt());
+  // Validate node allocated with |stack2| (variadic allocations).
+  EXPECT_EQ(2, counts->GetList()[node3].GetInt());
   EXPECT_EQ(0, types->GetList()[node3].GetInt());
-  EXPECT_EQ(32, sizes->GetList()[node3].GetInt());
+  EXPECT_EQ(44, sizes->GetList()[node3].GetInt());
   EXPECT_EQ(id3, backtraces->GetList()[node3].GetInt());
 }
 
