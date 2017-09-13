@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30e0fefb_16ba1308",
+        "filename": "components/exo/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-13T17:53:34Z",
+      "side": 1,
+      "message": "this doesn\u0027t belong here. should be in wayland/client. maybe wayland/client/test/",
+      "revId": "fd7b844d3cb39ae0c1dcd2ab6cfe2887471ced87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b49bb8fa_cc399faa",
+        "filename": "components/exo/wayland/clients/simple.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-13T17:53:34Z",
+      "side": 1,
+      "message": "I think these should be params passed to Run() instead",
+      "revId": "fd7b844d3cb39ae0c1dcd2ab6cfe2887471ced87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3106a369_abedea48",
+        "filename": "components/exo/wayland/clients/simple.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-13T17:53:34Z",
+      "side": 1,
+      "message": "I think it would be more appropriate if this returned a time delta",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 7
+      },
+      "revId": "fd7b844d3cb39ae0c1dcd2ab6cfe2887471ced87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a71dae67_7258a062",
+        "filename": "components/exo/wayland/clients/simple.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-13T17:53:34Z",
+      "side": 1,
+      "message": "can we skip this and just have Run() contain the needed logic?",
+      "revId": "fd7b844d3cb39ae0c1dcd2ab6cfe2887471ced87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a035cfd1_2f4f281a",
+        "filename": "components/exo/wayland/clients/simple.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-13T17:53:34Z",
+      "side": 1,
+      "message": "I\u0027d skip this for now and duplicate the param init for the perf test",
+      "revId": "fd7b844d3cb39ae0c1dcd2ab6cfe2887471ced87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29aec3ba_dbd76948",
+        "filename": "components/exo/wayland/clients/simple.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-13T17:53:34Z",
+      "side": 1,
+      "message": "I think we should move this to a simple_main.cc file and add a simple.h file to get the right structure.",
+      "revId": "fd7b844d3cb39ae0c1dcd2ab6cfe2887471ced87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

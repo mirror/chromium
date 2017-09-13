@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "6156e0eb_67c40d1e",
+        "filename": "components/exo/surface_tree_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-13T17:53:34Z",
+      "side": 1,
+      "message": "If this can happen for normal usage then let\u0027s fix that first as that would be a serious bug that needs to be resolved separately.\n\nRegarding the use of BackToBackBeginFrameSource; I don\u0027t think we should do that for these client perf tests. I\u0027d like all these perf tests to run chrome as it would normally run and the tests should be constructed to be meaningful for that usage. Single buffer mode is a more appropriate way of doing perf tests without back-pressure as that\u0027s something that also works for normal chrome usage. However, if such a test makes sense or not depends on what we\u0027re trying to test.\n\nIf we want to just test CPU processing overhead in Chrome then some lower level perf test at the exo level is more appropriate.",
+      "parentUuid": "9f7472d3_ce4d43c2",
+      "revId": "890ba8b0bc38e5ab14571945e7af3b22993ef487",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9742513_fdc404ed",
         "filename": "components/exo/test/exo_perftest.cc",
         "patchSetId": 5
