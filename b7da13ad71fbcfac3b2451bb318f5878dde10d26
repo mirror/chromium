@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f2ecd483_f66555c4",
+        "filename": "testing/libfuzzer/fuzzers/url.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-09-13T02:26:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "838d0a63_1f563735",
+      "range": {
+        "startLine": 10,
+        "startChar": 19,
+        "endLine": 10,
+        "endChar": 23
+      },
+      "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9da41c19_40f1ec37",
         "filename": "testing/libfuzzer/fuzzers/url.proto",
         "patchSetId": 4
@@ -123,6 +147,24 @@
       "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c927e3_d61c5f1c",
+        "filename": "testing/libfuzzer/fuzzers/url.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-09-13T02:26:19Z",
+      "side": 1,
+      "message": "Done. Forgot to check Resolved.",
+      "parentUuid": "5a0113bf_a29ad99e",
+      "revId": "b7da13ad71fbcfac3b2451bb318f5878dde10d26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
