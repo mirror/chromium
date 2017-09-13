@@ -69,6 +69,14 @@ class CupsPrintersHandler : public ::settings::SettingsPageUIHandler,
                      const std::string& make_and_model,
                      bool ipp_everywhere);
 
+  // Handles the callback for HandleGetPrinterInfo for a discovered printer.
+  void OnPrinterInfoDiscovered(std::unique_ptr<Printer> printer,
+                               bool success,
+                               const std::string& make,
+                               const std::string& model,
+                               const std::string& make_and_model,
+                               bool ipp_everywhere);
+
   void HandleAddCupsPrinter(const base::ListValue* args);
 
   // Handles the result of adding a printer which the user specified the
