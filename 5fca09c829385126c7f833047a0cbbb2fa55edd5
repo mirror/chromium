@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6c3165a7_632eba05",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-09-13T14:51:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e364ab60_b5768725",
+      "range": {
+        "startLine": 1055,
+        "startChar": 12,
+        "endLine": 1055,
+        "endChar": 29
+      },
+      "revId": "5fca09c829385126c7f833047a0cbbb2fa55edd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcdeef2b_e4a5211d",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-12T18:46:15Z",
       "side": 1,
       "message": "Yikes!  This keeps the SetPriority from getting passed down into the network stack for things like DNS request prioritization and connect job prioritization.  Do you have a specific reason to want to prevent that?",
+      "range": {
+        "startLine": 1182,
+        "startChar": 0,
+        "endLine": 1182,
+        "endChar": 11
+      },
+      "revId": "5fca09c829385126c7f833047a0cbbb2fa55edd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3afc0046_07ba7fea",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-09-13T14:51:53Z",
+      "side": 1,
+      "message": "I thought this might have had other unwanted side effects, but looking deeper I don\u0027t think it matters.  In our motivating use case, none of those things actually happen (we have protocol handlers that use another system to actually fetch the bytes).",
+      "parentUuid": "dcdeef2b_e4a5211d",
       "range": {
         "startLine": 1182,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dc5f0ce9_4e6629e1",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-09-13T14:51:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b21d3867_fa1cfafb",
+      "range": {
+        "startLine": 184,
+        "startChar": 32,
+        "endLine": 184,
+        "endChar": 39
+      },
+      "revId": "5fca09c829385126c7f833047a0cbbb2fa55edd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f35f4227_9d299b3e",
         "filename": "content/browser/loader/resource_scheduler_unittest.cc",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "5fca09c829385126c7f833047a0cbbb2fa55edd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66dec73f_b09c8dbe",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1982,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-09-13T14:51:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f35f4227_9d299b3e",
+      "range": {
+        "startLine": 1982,
+        "startChar": 37,
+        "endLine": 1982,
+        "endChar": 39
+      },
+      "revId": "5fca09c829385126c7f833047a0cbbb2fa55edd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
