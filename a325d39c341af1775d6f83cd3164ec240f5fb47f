@@ -33,6 +33,24 @@
       "revId": "a325d39c341af1775d6f83cd3164ec240f5fb47f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9747cb5_f491c374",
+        "filename": "build/android/stacktrace/java_deobfuscate_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-13T01:47:49Z",
+      "side": 1,
+      "message": "Figured I\u0027d just run them manually when updating the regex.",
+      "parentUuid": "00306b83_b0824d66",
+      "revId": "a325d39c341af1775d6f83cd3164ec240f5fb47f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
