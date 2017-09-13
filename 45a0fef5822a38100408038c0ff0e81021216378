@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9276a720_a8cfdaef",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-13T21:26:40Z",
+      "side": 1,
+      "message": "Thanks for the comments! The UpdateWebContentsModalDialogPosition() is called when the Chrome apps window is resized. It seems that we can just implement GetMinimumSize() here and the device chooser will resize correctly when the Chrome apps window is resized.\n\nDone.",
+      "parentUuid": "f8a4ead7_f68da255",
+      "revId": "45a0fef5822a38100408038c0ff0e81021216378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95686065_5ea9e417",
         "filename": "chrome/browser/ui/views/device_chooser_content_view.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-13T14:38:30Z",
       "side": 1,
       "message": "nit: maybe name the argument or member in some way to denote that it\u0027s the parent of this dialog? A comment describing the ctor args (and/or) class member would also suffice.",
+      "revId": "45a0fef5822a38100408038c0ff0e81021216378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38fd7658_b9ff0adb",
+        "filename": "chrome/browser/ui/views/device_chooser_content_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-09-13T21:26:40Z",
+      "side": 1,
+      "message": "This parameter is not used any more.",
+      "parentUuid": "95686065_5ea9e417",
       "revId": "45a0fef5822a38100408038c0ff0e81021216378",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
