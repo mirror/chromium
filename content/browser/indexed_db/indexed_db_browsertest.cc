@@ -305,6 +305,46 @@ IN_PROC_BROWSER_TEST_F(IndexedDBBrowserTestWithGCExposed,
   SimpleTest(GetTestUrl("indexeddb", "database_callbacks_first.html"));
 }
 
+void GetBlobFilesNumber(IndexedDBContextImpl* context, int* blobs_removed) {
+  IndexedDBFactory* factory = context->GetIDBFactory();
+  std::pair<IndexedDBFactory::OriginDBMapIterator,
+            IndexedDBFactory::OriginDBMapIterator>
+      range = factory->GetOpenDatabasesForOrigin(url::Origin(GURL("file:///")));
+
+  if (range.first == range.second)  // If no open db's for this origin
+    return;
+
+  IndexedDBDatabase* db = range.first->second;
+  IndexedDBBackingStore* backing_store = db->backing_store();
+
+  *blobs_removed = backing_store->NumBlobFilesDeletedForTesting();
+}
+
+IN_PROC_BROWSER_TEST_F(IndexedDBBrowserTestWithGCExposed, Bug756754) {
+  SimpleTest(GetTestUrl("indexeddb", "bug_756754.html"));
+
+  IndexedDBContextImpl* context = GetContext();
+
+  int blobs_removed = 0;
+  context->TaskRunner()->PostTask(
+      FROM_HERE, base::BindOnce(&GetBlobFilesNumber, base::Unretained(context),
+                                &blobs_removed));
+  scoped_refptr<base::ThreadTestHelper> helper(
+      new base::ThreadTestHelper(context->TaskRunner()));
+  ASSERT_TRUE(helper->Run());
+
+  EXPECT_GT(blobs_removed, 0);
+
+  shell()->web_contents()->GetRenderProcessHost()->Shutdown(0, true);
+  shell()->Close();
+
+  // Wait for idle so that the blob ack has time to be received/processed by
+  // the browser process.
+  ASSERT_TRUE(helper->Run());
+  base::RunLoop().RunUntilIdle();
+  ASSERT_TRUE(helper->Run());
+}
+
 static void CopyLevelDBToProfile(Shell* shell,
                                  scoped_refptr<IndexedDBContextImpl> context,
                                  const std::string& test_directory) {
@@ -462,7 +502,11 @@ IN_PROC_BROWSER_TEST_F(IndexedDBBrowserTestWithGCExposed, DISABLED_BlobDidAck) {
   SimpleTest(GetTestUrl("indexeddb", "blob_did_ack.html"));
   // Wait for idle so that the blob ack has time to be received/processed by
   // the browser process.
+  scoped_refptr<base::ThreadTestHelper> helper(
+      new base::ThreadTestHelper(GetContext()->TaskRunner()));
+  ASSERT_TRUE(helper->Run());
   base::RunLoop().RunUntilIdle();
+  ASSERT_TRUE(helper->Run());
   content::ChromeBlobStorageContext* blob_context =
       ChromeBlobStorageContext::GetFor(
           shell()->web_contents()->GetBrowserContext());
