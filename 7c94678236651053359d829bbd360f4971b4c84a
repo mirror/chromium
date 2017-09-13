@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b6095010_2568a468",
+        "filename": "base/win/com_base_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Obsolete.",
+      "parentUuid": "b0df6e85_71d8acc7",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 22
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcb922f5_ba290f6f",
         "filename": "base/win/com_base_util.cc",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3b2efcb0_6caa305a",
+        "filename": "base/win/com_base_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Obsolete.",
+      "parentUuid": "bcb922f5_ba290f6f",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bed7fe86_b49d4e6b",
         "filename": "base/win/com_base_util.cc",
         "patchSetId": 9
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-08T01:01:05Z",
       "side": 1,
       "message": "Can this be \u0027auto\u0027?",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 37
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8561ac8e_ca06efb9",
+        "filename": "base/win/com_base_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Obsolete, I believe.",
+      "parentUuid": "bed7fe86_b49d4e6b",
       "range": {
         "startLine": 68,
         "startChar": 2,
@@ -106,6 +178,30 @@
       "side": 1,
       "message": "toyoshim@\u0027s comment reminded me you can also use HRESULT_FROM_WIN32(GetLastError()) to have Windows explain what happened.\n\nIMPORTANT: Care must be taken to call GetLastError() immediately after the failing call, which means the Preloads should also provide a return value or set the last result right before returning if other Windows calls were made (and these are hard to spot).",
       "parentUuid": "63a1eed6_119b37c9",
+      "range": {
+        "startLine": 71,
+        "startChar": 11,
+        "endLine": 71,
+        "endChar": 25
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fce5e22_0f30ba3d",
+        "filename": "base/win/com_base_util.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Obsolete, I believe.",
+      "parentUuid": "cb03c5cd_ead20800",
       "range": {
         "startLine": 71,
         "startChar": 11,
@@ -233,6 +329,30 @@
     },
     {
       "key": {
+        "uuid": "62e67d22_e1062984",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05e2f165_500fd58d",
+      "range": {
+        "startLine": 29,
+        "startChar": 43,
+        "endLine": 29,
+        "endChar": 50
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c446288a_d8ee8db6",
         "filename": "base/win/com_base_util_unittest.cc",
         "patchSetId": 9
@@ -253,6 +373,30 @@
       "revId": "7c94678236651053359d829bbd360f4971b4c84a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1aa9e3e_651d3b5b",
+        "filename": "base/win/com_base_util_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c446288a_d8ee8db6",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 56
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +469,30 @@
     },
     {
       "key": {
+        "uuid": "f98a980b_3bc99208",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Obsolete, I believe.",
+      "parentUuid": "733babf3_fd410bdc",
+      "range": {
+        "startLine": 26,
+        "startChar": 24,
+        "endLine": 26,
+        "endChar": 73
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b79e6804_24bc6f39",
         "filename": "base/win/scoped_hstring.cc",
         "patchSetId": 9
@@ -342,6 +510,24 @@
     },
     {
       "key": {
+        "uuid": "239e4254_b6aeb4c6",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b79e6804_24bc6f39",
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a14193f8_e8358713",
         "filename": "base/win/scoped_hstring.cc",
         "patchSetId": 9
@@ -356,6 +542,24 @@
       "revId": "7c94678236651053359d829bbd360f4971b4c84a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b730b74_c7a21baa",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a14193f8_e8358713",
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -403,6 +607,30 @@
       "revId": "7c94678236651053359d829bbd360f4971b4c84a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8085d51a_da85a9e9",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7eec2228_6bf3c09c",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 94,
+        "endChar": 1
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -495,6 +723,24 @@
     },
     {
       "key": {
+        "uuid": "8c9ee768_6f5ff95c",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d84c71d7_4a3a6542",
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8250594e_3e092bc4",
         "filename": "base/win/scoped_hstring.cc",
         "patchSetId": 9
@@ -518,6 +764,30 @@
     },
     {
       "key": {
+        "uuid": "aa5366dc_e50a34ad",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Obsolete, I believe.",
+      "parentUuid": "8250594e_3e092bc4",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 26
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b23f07a_c31e8e35",
         "filename": "base/win/scoped_hstring.cc",
         "patchSetId": 9
@@ -529,6 +799,30 @@
       "writtenOn": "2017-09-08T01:01:05Z",
       "side": 1,
       "message": "This should return nullptr on failure.",
+      "range": {
+        "startLine": 126,
+        "startChar": 11,
+        "endLine": 126,
+        "endChar": 14
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a307d7_90d30f67",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Obsolete, I believe.",
+      "parentUuid": "0b23f07a_c31e8e35",
       "range": {
         "startLine": 126,
         "startChar": 11,
@@ -607,6 +901,30 @@
       "revId": "7c94678236651053359d829bbd360f4971b4c84a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8deb162d_cfeb717b",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b54e214_f8f0dc39",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 25
+      },
+      "revId": "7c94678236651053359d829bbd360f4971b4c84a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "76afd5b3_bb916bc9",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c8b390b_2c76341c",
+      "revId": "014e2e523af9746ccc23277a59e3f736633771c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4eca017f_b25e3b9a",
         "filename": "base/win/scoped_hstring.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "014e2e523af9746ccc23277a59e3f736633771c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "becb213a_010a082b",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4eca017f_b25e3b9a",
+      "revId": "014e2e523af9746ccc23277a59e3f736633771c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "619ce409_1b8311d8",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2786a78d_c03c63e9",
+      "revId": "014e2e523af9746ccc23277a59e3f736633771c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b42e299_ae56a7d0",
         "filename": "base/win/scoped_hstring.h",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-11T20:45:15Z",
       "side": 1,
       "message": "i don\u0027t believe you need BASE_EXPORT on individual members of a class that is BASE_EXPORT.",
+      "revId": "014e2e523af9746ccc23277a59e3f736633771c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29bad7b7_b874b7a4",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Seems like the linker disagrees...",
+      "parentUuid": "9b42e299_ae56a7d0",
       "revId": "014e2e523af9746ccc23277a59e3f736633771c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "903341cf_03479b0a",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Something like this? (see patch)",
+      "parentUuid": "ea0cf2ee_3173cc0f",
+      "revId": "014e2e523af9746ccc23277a59e3f736633771c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9066a04c_260ed326",
         "filename": "base/win/scoped_hstring_unittest.cc",
         "patchSetId": 10
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-11T20:45:15Z",
       "side": 1,
       "message": "this shouldn\u0027t be here, should it?\n(same comment below)",
+      "revId": "014e2e523af9746ccc23277a59e3f736633771c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dfaa258_bf05a29f",
+        "filename": "base/win/scoped_hstring_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "This was to ensure that a NoPreload test below would be valid (otherwise the DLL would have been loaded). But this is now obsolete.",
+      "parentUuid": "9066a04c_260ed326",
       "revId": "014e2e523af9746ccc23277a59e3f736633771c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +226,24 @@
       "revId": "014e2e523af9746ccc23277a59e3f736633771c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5250f4ea_2c361224",
+        "filename": "base/win/scoped_hstring_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Done. Looks like WIN8 and up to me.",
+      "parentUuid": "826be5cb_c19b12f6",
+      "revId": "014e2e523af9746ccc23277a59e3f736633771c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

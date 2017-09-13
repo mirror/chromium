@@ -22,6 +22,30 @@
       "revId": "54a25749711ede6b0a6e6d0467e65f865e652b4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e761cfea_5feed3db",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "575fba72_b9ce8133",
+      "range": {
+        "startLine": 34,
+        "startChar": 33,
+        "endLine": 34,
+        "endChar": 48
+      },
+      "revId": "54a25749711ede6b0a6e6d0467e65f865e652b4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

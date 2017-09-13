@@ -16,6 +16,24 @@
       "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a3725e0_286fe6ac",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-13T14:11:58Z",
+      "side": 1,
+      "message": "Robert made the argument that the API can fail and handling that in the constructor isn\u0027t ideal. Better to do so in a static Create method.",
+      "parentUuid": "50a8d65b_baee24f4",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
