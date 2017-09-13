@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e47d5d70_718ffb89",
+        "filename": "chrome/browser/metrics/thread_watcher_report_hang.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-13T22:16:24Z",
+      "side": 0,
+      "message": "What\u0027s blocking doing this now? Hardcoded constants are sad. :(",
+      "range": {
+        "startLine": 92,
+        "startChar": 43,
+        "endLine": 92,
+        "endChar": 44
+      },
+      "revId": "297442d0e24dab5b3aa81f684aed820853a1d4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79ad66d7_4d62a49f",
+        "filename": "components/metrics/proto/execution_context.proto",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-13T22:16:24Z",
+      "side": 0,
+      "message": "Er, this is a protobuf, which is send to the server. You can\u0027t just renumber these values because then value 3 would have different meaning between different Chrome versions.\n\nAlso, the master copy of this proto is in google3, so the workflow would be to make the change there first and then make this change. Alternatively, you can leave old values in-place in this CL - although it would be good to at least mark them as deprecated.",
+      "revId": "297442d0e24dab5b3aa81f684aed820853a1d4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "025b7feb_f7be6afc",
+        "filename": "components/metrics/public/interfaces/call_stack_profile_collector.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-13T22:16:24Z",
+      "side": 0,
+      "message": "Eek, it\u0027s sad that we have duplication in so many places. I wonder if we couldn\u0027t make a mojom file be the master copy - and have all the other places (besides protobufs) use that?",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "297442d0e24dab5b3aa81f684aed820853a1d4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe335b3e_dbbc9fa0",
+        "filename": "content/public/browser/browser_thread.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-13T22:16:24Z",
+      "side": 0,
+      "message": "Have you audited all the places that might rely on the number values of these? For example, is it possible they\u0027re used in some histograms? If so, it might be better to explicitly number them and keep the existing values, just leaving holes for the ones being deleted.",
+      "range": {
+        "startLine": 72,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "297442d0e24dab5b3aa81f684aed820853a1d4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
