@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18b65e54_f53085af",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-13T17:12:03Z",
+      "side": 1,
+      "message": "Should this comment be this specific? Could we add other tests in this class?",
+      "revId": "1913a37dad1b12b642bf385a77a0ab86893d5258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a729dbc2_f1fa5413",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-13T17:12:03Z",
+      "side": 1,
+      "message": "I think the load URL portion might be better in the test, than setup.\n\nsetup is a better fit for pre-conditions that need to be set for all tests in the file.",
+      "revId": "1913a37dad1b12b642bf385a77a0ab86893d5258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7d11d9d_55323cbc",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-13T17:12:03Z",
+      "side": 1,
+      "message": "Similar to the previous comment, anything below that is part of the test should be in the test method. Anything that is setting up state before the test belongs in setUp.",
+      "revId": "1913a37dad1b12b642bf385a77a0ab86893d5258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab3c8e61_0eee1fac",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-13T17:12:03Z",
+      "side": 1,
+      "message": "Will this data persist into other tests? If so, it should be removed in -tearDown. A test should clean up everything it does that may affect subsequent tests.",
+      "revId": "1913a37dad1b12b642bf385a77a0ab86893d5258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc2f7d29_391a44b6",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-13T17:12:03Z",
+      "side": 1,
+      "message": "nit: since this method is Obj-C, this should be snackbarMatcher. (here and other c-style variables in this method).",
+      "range": {
+        "startLine": 109,
+        "startChar": 18,
+        "endLine": 109,
+        "endChar": 34
+      },
+      "revId": "1913a37dad1b12b642bf385a77a0ab86893d5258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
