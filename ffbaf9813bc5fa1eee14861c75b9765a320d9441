@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b91522bf_e88154e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T20:13:09Z",
+      "side": 1,
+      "message": "s/should not can/should not/",
+      "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a0bb608_a31d87fb",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_browser_proxy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T20:13:09Z",
+      "side": 1,
+      "message": "Describe the return value. Use one line if it fits.",
+      "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19960d1c_dd56f91e",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T20:13:09Z",
+      "side": 1,
+      "message": "Why \u0027Expand\u0027 ?",
+      "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95a12ac_f1b05e60",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T20:13:09Z",
+      "side": 1,
+      "message": "Separate comment for each property. Also, what is hidden? The property name is not descriptive.",
+      "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9454afba_ccf947af",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T20:13:09Z",
+      "side": 1,
+      "message": "One line: /** Chrome OS only */ but just remove the comment since the \u003cif\u003e above already indicates that.",
+      "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b1a558c_dfb7a9f7",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T20:13:09Z",
+      "side": 1,
+      "message": "This is confusing. Are we hiding the button when we open the wallpaper manager?",
+      "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7312aeb_ef92b8eb",
+        "filename": "chrome/browser/ui/webui/settings/appearance_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T20:13:09Z",
+      "side": 1,
+      "message": "can_open",
+      "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11cc80f8_6af602f5",
+        "filename": "chrome/browser/ui/webui/settings/appearance_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T20:13:09Z",
+      "side": 1,
+      "message": "We shouldn\u0027t wait until the user tries to open the wallpaper manager to hide or disable the button in the UI. Instead we should set a boolean and use that. See \u0027easyUnlockAllowed\u0027 for an example.",
+      "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
