@@ -12,6 +12,7 @@
 #include "base/files/file_path.h"
 #include "base/path_service.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
 #include "base/threading/platform_thread.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -281,15 +282,18 @@ class EncryptedMediaSupportedTypesExternalClearKeyTest
     : public EncryptedMediaSupportedTypesTest {
 #if BUILDFLAG(ENABLE_LIBRARY_CDMS)
  protected:
+  EncryptedMediaSupportedTypesExternalClearKeyTest() {
+    scoped_feature_list_.InitAndEnableFeature(
+        media::kExternalClearKeyForTesting);
+  }
   void SetUpCommandLine(base::CommandLine* command_line) override {
     EncryptedMediaSupportedTypesTest::SetUpCommandLine(command_line);
     RegisterPepperCdm(command_line, media::kClearKeyCdmBaseDirectory,
                       media::kClearKeyCdmAdapterFileName,
                       media::kClearKeyCdmDisplayName,
                       media::kClearKeyCdmPepperMimeType);
-    command_line->AppendSwitchASCII(switches::kEnableFeatures,
-                                    media::kExternalClearKeyForTesting.name);
   }
+  base::test::ScopedFeatureList scoped_feature_list_;
 #endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 };
 
@@ -320,15 +324,18 @@ class EncryptedMediaSupportedTypesWidevineTest
 class EncryptedMediaSupportedTypesClearKeyCDMRegisteredWithWrongPathTest
     : public EncryptedMediaSupportedTypesTest {
  protected:
+  EncryptedMediaSupportedTypesClearKeyCDMRegisteredWithWrongPathTest() {
+    scoped_feature_list_.InitAndEnableFeature(
+        media::kExternalClearKeyForTesting);
+  }
   void SetUpCommandLine(base::CommandLine* command_line) override {
     EncryptedMediaSupportedTypesTest::SetUpCommandLine(command_line);
     RegisterPepperCdm(command_line, media::kClearKeyCdmBaseDirectory,
                       "clearkeycdmadapterwrongname.dll",
                       media::kClearKeyCdmDisplayName,
                       media::kClearKeyCdmPepperMimeType, false);
-    command_line->AppendSwitchASCII(switches::kEnableFeatures,
-                                    media::kExternalClearKeyForTesting.name);
   }
+  base::test::ScopedFeatureList scoped_feature_list_;
 };
 
 // Registers Widevine CDM with the wrong path (filename).

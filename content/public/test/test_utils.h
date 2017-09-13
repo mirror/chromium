@@ -88,17 +88,6 @@ void IsolateAllSitesForTesting(base::CommandLine* command_line);
 // Resets the internal secure schemes/origins whitelist.
 void ResetSchemesAndOriginsWhitelist();
 
-// Appends command line switches to |command_line| to enable the |feature| and
-// to set field trial params associated with the feature as specified by
-// |param_name| and |param_value|.
-//
-// Note that a dummy trial and trial group will be registered behind the scenes.
-// See also variations::testing::VariationsParamsManager class.
-void EnableFeatureWithParam(const base::Feature& feature,
-                            const std::string& param_name,
-                            const std::string& param_value,
-                            base::CommandLine* command_line);
-
 // Helper class to Run and Quit the message loop. Run and Quit can only happen
 // once per instance. Make a new instance for each use. Calling Quit after Run
 // has returned is safe and has no effect.

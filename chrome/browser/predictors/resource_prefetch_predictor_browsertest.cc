@@ -11,6 +11,7 @@
 #include "base/run_loop.h"
 #include "base/strings/string_util.h"
 #include "base/test/histogram_tester.h"
+#include "base/test/scoped_feature_list.h"
 #include "chrome/browser/browsing_data/browsing_data_helper.h"
 #include "chrome/browser/predictors/loading_data_collector.h"
 #include "chrome/browser/predictors/loading_predictor.h"
@@ -322,12 +323,6 @@ class ResourcePrefetchPredictorBrowserTest : public InProcessBrowserTest {
  protected:
   using URLRequestSummary = URLRequestSummary;
 
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    content::EnableFeatureWithParam(kSpeculativeResourcePrefetchingFeature,
-                                    kModeParamName, kExternalPrefetchingMode,
-                                    command_line);
-  }
-
   void SetUpOnMainThread() override {
     // Resolving all hosts to local allows us to have
     // cross domains navigations (matching url_visit_count_, etc).
@@ -358,6 +353,11 @@ class ResourcePrefetchPredictorBrowserTest : public InProcessBrowserTest {
     LoadingDataCollector::SetAllowPortInUrlsForTesting(true);
     EnsurePredictorInitialized();
     histogram_tester_.reset(new base::HistogramTester());
+
+    std::map<std::string, std::string> parameters;
+    parameters[kModeParamName] = kExternalPrefetchingMode;
+    scoped_feature_list_.InitAndEnableFeatureWithParameters(
+        kSpeculativeResourcePrefetchingFeature, parameters);
   }
 
   void TearDownOnMainThread() override {
@@ -720,21 +720,7 @@ class ResourcePrefetchPredictorBrowserTest : public InProcessBrowserTest {
   std::map<GURL, RedirectEdge> redirects_;
   std::map<GURL, size_t> visit_count_;
   std::set<NavigationID> navigation_id_history_;
-};
-
-// Subclass to test HintOrigin::NAVIGATION.
-class ResourcePrefetchPredictorPrefetchingBrowserTest
-    : public ResourcePrefetchPredictorBrowserTest {
- protected:
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    command_line->AppendSwitchASCII("force-fieldtrials", "trial/group");
-    std::string parameter = base::StringPrintf(
-        "trial.group:%s/%s", kModeParamName, kPrefetchingMode);
-    command_line->AppendSwitchASCII("force-fieldtrial-params", parameter);
-    std::string enabled_feature = base::StringPrintf(
-        "%s<trial", kSpeculativeResourcePrefetchingFeatureName);
-    command_line->AppendSwitchASCII("enable-features", enabled_feature);
-  }
+  base::test::ScopedFeatureList scoped_feature_list_;
 };
 
 IN_PROC_BROWSER_TEST_F(ResourcePrefetchPredictorBrowserTest, Simple) {
@@ -970,8 +956,8 @@ IN_PROC_BROWSER_TEST_F(ResourcePrefetchPredictorBrowserTest,
 }
 
 // Makes sure that {Stop,Start}Prefetching are called with the same argument.
-IN_PROC_BROWSER_TEST_F(ResourcePrefetchPredictorPrefetchingBrowserTest,
-                       Simple) {
+IN_PROC_BROWSER_TEST_F(ResourcePrefetchPredictorBrowserTest,
+                       PrefetchWithSameArgumentSimple) {
   AddResourcesFromSubresourceHtml();
 
   GURL main_frame_url =
@@ -985,8 +971,8 @@ IN_PROC_BROWSER_TEST_F(ResourcePrefetchPredictorPrefetchingBrowserTest,
 
 // Makes sure that {Stop,Start}Prefetching are called with the same argument in
 // presence of redirect.
-IN_PROC_BROWSER_TEST_F(ResourcePrefetchPredictorPrefetchingBrowserTest,
-                       Redirect) {
+IN_PROC_BROWSER_TEST_F(ResourcePrefetchPredictorBrowserTest,
+                       PrefetchWithSameArgumentRedirect) {
   GURL initial_url = GetURLWithHost(kFooHost, kRedirectPath);
   GURL redirected_url =
       GetPageURLWithReplacements(kBarHost, kHtmlSubresourcesPath);
