@@ -36,15 +36,15 @@
 #include "core/dom/Document.h"
 #include "core/dom/QualifiedName.h"
 #include "core/dom/TaskRunnerHelper.h"
-#include "core/frame/DOMWindow.h"
+#include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLFrameOwnerElement.h"
 #include "core/loader/DocumentLoader.h"
 #include "core/origin_trials/OriginTrials.h"
 #include "core/timing/PerformanceTiming.h"
-#include "platform/loader/fetch/ResourceTimingInfo.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/loader/fetch/ResourceTimingInfo.h"
 
 static const double kLongTaskObserverThreshold = 0.05;
 
@@ -94,11 +94,11 @@ bool IsSameOrigin(String key) {
 
 }  // namespace
 
-static double ToTimeOrigin(LocalFrame* frame) {
-  if (!frame)
+static double ToTimeOrigin(LocalDOMWindow* window) {
+  if (!window)
     return 0.0;
 
-  Document* document = frame->GetDocument();
+  Document* document = window->document();
   if (!document)
     return 0.0;
 
@@ -109,11 +109,11 @@ static double ToTimeOrigin(LocalFrame* frame) {
   return loader->GetTiming().ReferenceMonotonicTime();
 }
 
-Performance::Performance(LocalFrame* frame)
-    : PerformanceBase(
-          ToTimeOrigin(frame),
-          TaskRunnerHelper::Get(TaskType::kPerformanceTimeline, frame)),
-      DOMWindowClient(frame) {}
+Performance::Performance(LocalDOMWindow* window)
+    : PerformanceBase(ToTimeOrigin(window),
+                      TaskRunnerHelper::Get(TaskType::kPerformanceTimeline,
+                                            window->document())),
+      DOMWindowClient(window) {}
 
 Performance::~Performance() {
 }
