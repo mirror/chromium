@@ -107,6 +107,11 @@ void SetAnimationUpdateIfNeeded(StyleResolverState& state, Element& element) {
         state.AnimationUpdate());
 }
 
+// Check if the element is a media control.
+bool IsMediaControl(const Element& element) {
+  return element.IsMediaControls() || element.IsMediaControlElement();
+}
+
 // Returns whether any @apply rule sets a custom property
 bool CacheCustomPropertiesForApplyAtRules(StyleResolverState& state,
                                           const MatchedPropertiesRange& range) {
@@ -189,7 +194,24 @@ void StyleResolver::SetRuleUsageTracker(StyleRuleUsageTracker* tracker) {
   tracker_ = tracker;
 }
 
-static inline ScopedStyleResolver* ScopedResolverFor(const Element& element) {
+// Check if the element has an ancestor that is a media control.
+bool StyleResolver::HasMediaControlAncestor(const blink::Element& element) {
+  const Element* current = &element;
+
+  while (current) {
+    if (IsMediaControl(*current))
+      return true;
+
+    if (current->IsShadowRoot())
+      current = current->OwnerShadowHost();
+    else
+      current = current->ParentOrShadowHostElement();
+  }
+
+  return false;
+}
+
+ScopedStyleResolver* ScopedResolverFor(const Element& element) {
   // For normal elements, returning element->treeScope().scopedStyleResolver()
   // is enough. Rules for ::cue and custom pseudo elements like
   // ::-webkit-meter-bar pierce through a single shadow dom boundary and apply
@@ -198,11 +220,17 @@ static inline ScopedStyleResolver* ScopedResolverFor(const Element& element) {
   // An assumption here is that these elements belong to scopes without a
   // ScopedStyleResolver due to the fact that VTT scopes and UA shadow trees
   // don't have <style> or <link> elements. This is backed up by the DCHECKs
-  // below.
+  // below. The one exception to this assumption are the media controls which
+  // use a <style> element for CSS animations in the shadow DOM. If a <style>
+  // element is present in the shadow DOM then this will also block any
+  // author styling.
 
   TreeScope* tree_scope = &element.GetTreeScope();
   if (ScopedStyleResolver* resolver = tree_scope->GetScopedStyleResolver()) {
-    DCHECK(element.ShadowPseudoId().IsEmpty());
+#if DCHECK_IS_ON()
+    if (!StyleResolver::HasMediaControlAncestor(element))
+      DCHECK(element.ShadowPseudoId().IsEmpty());
+#endif
     DCHECK(!element.IsVTTElement());
     return resolver;
   }

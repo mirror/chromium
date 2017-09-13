@@ -148,9 +148,14 @@ class CORE_EXPORT StyleResolver final
   DECLARE_TRACE();
 
  private:
+  friend class StyleResolverTest;
+  friend ScopedStyleResolver* ScopedResolverFor(const Element&);
+
   explicit StyleResolver(Document&);
 
   static RefPtr<ComputedStyle> InitialStyleForElement(Document&);
+  static bool HasMediaControlAncestor(const Element&);
+  // static ScopedStyleResolver* ScopedResolverFor(const Element&);
 
   // FIXME: This should probably go away, folded into FontBuilder.
   void UpdateFont(StyleResolverState&);
