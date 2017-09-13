@@ -75,11 +75,6 @@ class PermissionRequestManager
   // at which time the caller is free to delete the request.
   void CancelRequest(PermissionRequest* request);
 
-  // Will show a permission bubble if there is a pending permission request on
-  // the web contents that the PermissionRequestManager belongs to.
-  // TODO(timloh): Remove this from the public API.
-  void DisplayPendingRequests();
-
   // Will reposition the bubble (may change parent if necessary).
   void UpdateAnchorPosition();
 
