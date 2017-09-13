@@ -464,6 +464,21 @@ void ServiceWorkerContextWrapper::StopAllServiceWorkersForOrigin(
   }
 }
 
+void ServiceWorkerContextWrapper::StopAllServiceWorkers(
+    base::OnceClosure callback) {
+  if (!BrowserThread::CurrentlyOn(BrowserThread::IO)) {
+    BrowserThread::PostTask(
+        BrowserThread::IO, FROM_HERE,
+        base::BindOnce(&ServiceWorkerContextWrapper::StopAllServiceWorkersOnIO,
+                       this, std::move(callback),
+                       base::ThreadTaskRunnerHandle::Get()));
+    return;
+  } else {
+    StopAllServiceWorkersOnIO(std::move(callback),
+                              base::ThreadTaskRunnerHandle::Get());
+  }
+}
+
 ServiceWorkerRegistration* ServiceWorkerContextWrapper::GetLiveRegistration(
     int64_t registration_id) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
@@ -1024,6 +1039,26 @@ void ServiceWorkerContextWrapper::
   ServiceWorkerMetrics::RecordStartServiceWorkerForNavigationHintResult(result);
   BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                           base::BindOnce(std::move(callback), result));
+}
+
+void ServiceWorkerContextWrapper::StopAllServiceWorkersOnIO(
+    base::OnceClosure callback,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner_for_callback) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (!context_core_.get()) {
+    task_runner_for_callback->PostTask(FROM_HERE, std::move(callback));
+    return;
+  }
+  std::vector<ServiceWorkerVersionInfo> live_versions = GetAllLiveVersionInfo();
+  base::RepeatingClosure barrier =
+      base::BarrierClosure(live_versions.size(), std::move(callback));
+  for (const ServiceWorkerVersionInfo& info : live_versions) {
+    ServiceWorkerVersion* version = GetLiveVersion(info.version_id);
+    if (version)
+      version->StopWorker(base::BindOnce(barrier));
+    else
+      barrier.Run();
+  }
 }
 
 ServiceWorkerContextCore* ServiceWorkerContextWrapper::context() {
