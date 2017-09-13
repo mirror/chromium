@@ -34,6 +34,24 @@
       "revId": "84d22eb83e8b5202b1b441fb5edf529c0a2a0b8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc676462_3756bd9f",
+        "filename": "third_party/WebKit/public/platform/WebLayer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-13T15:00:26Z",
+      "side": 1,
+      "message": "I think WebLayer::SetOpaque is it.  It\u0027s an abstract function, so WebLayerImpl implements it too.  I think either means about the same thing.\n\nI was linking that to show you the only place that \"contents opaque is fixed\" is used, which is why I thought this comment should be \"SetOpaque\" and not \"SetOpacity\".",
+      "parentUuid": "a0bebaf5_65a1e3f1",
+      "revId": "84d22eb83e8b5202b1b441fb5edf529c0a2a0b8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
