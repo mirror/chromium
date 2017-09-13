@@ -22,6 +22,30 @@
       "revId": "bca05c7b1649ddfd3aa1660309e516cb1d836df4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a547b0b6_76c41419",
+        "filename": "components/viz/common/quads/release_callback_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-13T03:25:53Z",
+      "side": 1,
+      "message": "Nevermind this question, I looked into it and see what\u0027s up. I just kind of find it weird for it to occupy its own file like this.",
+      "parentUuid": "92204c44_9e1e6dd6",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 7
+      },
+      "revId": "bca05c7b1649ddfd3aa1660309e516cb1d836df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
