@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7c70656d_36b5f180",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-13T17:42:17Z",
+      "side": 1,
+      "message": "good concern! Instead of adding a comment, is it better to just give gtest_filter a default value?",
+      "parentUuid": "81e2a177_c8c409cc",
+      "revId": "a9f25e1b936af3e7df602b076772927b0b5b85b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d616aec_1dfa47c4",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "drive-by: alternatively, you can refer to the path in the repository itself, like this\n\n  # For iossim arguments, please refer to src/testing/iossim/iossim.mm.",
       "parentUuid": "1d616aec_1dfa47c4",
+      "revId": "a9f25e1b936af3e7df602b076772927b0b5b85b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbdaedc9_15e7d8d4",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-13T17:42:17Z",
+      "side": 1,
+      "message": "Per the style guide, we should not break an URL, but it should be on its own line: https://engdoc.corp.google.com/eng/doc/devguide/py/styleguide.shtml?cl\u003dhead#line-length.\n\nI would prefer what Sylvain suggested as it\u0027s more concise and fits within 80 chars. Thanks Sylvain!",
+      "parentUuid": "737800b5_16def059",
       "revId": "a9f25e1b936af3e7df602b076772927b0b5b85b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
