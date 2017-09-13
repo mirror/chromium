@@ -4046,6 +4046,36 @@
                     { "name": "lineNumber", "type": "integer" },
                     { "name": "columnNumber", "type": "integer" }
                 ]
+            },
+            {
+                "id": "ServiceWorkerSyncRegistration",
+                "type": "object",
+                "description": "ServiceWorker sync registration",
+                "properties": [
+                    { "name": "delayUntil", "type": "number" },
+                    { "name": "numAttempts", "type": "number" },
+                    { "name": "syncNetworkState", "type": "string", "enum": [ "any", "avoid_cellular", "online" ] },
+                    { "name": "backgroundSyncState", "type": "string", "enum": [ "pending", "firing", "reregistered_while_firing" ] },
+                    { "name": "tag", "type": "string" }
+                ]
+            },
+            {
+                "id": "ServiceWorkerSyncStatus",
+                "type": "object",
+                "description": "ServiceWorker sync status",
+                "properties": [
+                    {
+                        "name": "status",
+                        "description": "Sync status",
+                        "type": "string",
+                        "enum": [ "ok", "storage_error", "not_found", "no_service_worker", "not_allowed", "permission_denied" ]
+                    },
+                    {
+                        "name": "registrations",
+                        "type": "array",
+                        "items": { "$ref": "ServiceWorkerSyncRegistration" }
+                    }
+                 ]
             }
         ],
         "commands": [
@@ -4112,6 +4142,15 @@
                     { "name": "registrationId", "type": "string" },
                     { "name": "tag", "type": "string" },
                     { "name": "lastChance", "type": "boolean" }
+                ]
+            },
+            {
+                "name": "getSyncStatus",
+                "parameters": [
+                    { "name": "registrationId", "type": "string" }
+                ],
+                "returns": [
+                    { "name": "status", "$ref": "ServiceWorkerSyncStatus", "description": "ServiceWorker sync status." }
                 ]
             }
         ],
