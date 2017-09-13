@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd780554_48e70502",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-13T15:19:00Z",
+      "side": 1,
+      "message": "nit: this makes it sound like you should give the results to this script to diff. Suggest:\n\n\"\"\"Runs resource_sizes.py on two apks and outputs the diff.\"\"\"",
+      "revId": "91cbee8be8a90e1822d6633111d2bc005e2d7096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd6a1828_334654bc",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-13T15:19:00Z",
+      "side": 1,
+      "message": "nit: indentation\u0027s off a bit",
+      "revId": "91cbee8be8a90e1822d6633111d2bc005e2d7096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ef53b8_598d3e17",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-13T15:19:00Z",
+      "side": 1,
+      "message": "nit: don\u0027t add this in unless you find you need it.",
+      "revId": "91cbee8be8a90e1822d6633111d2bc005e2d7096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff9ce3ed_2d15b42e",
+        "filename": "build/android/diff_resource_sizes.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-13T15:19:00Z",
+      "side": 1,
+      "message": "Drop the ()s here and everywhere",
+      "revId": "91cbee8be8a90e1822d6633111d2bc005e2d7096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
