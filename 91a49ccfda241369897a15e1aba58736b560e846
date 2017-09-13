@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e661570d_0ba0400b",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-13T22:33:37Z",
+      "side": 1,
+      "message": "Sg. As you are doing it, make sure platform/resource_coordinator/ does not operate terms such as \u0027Frame\u0027.",
+      "parentUuid": "78bd8dcc_ef516c80",
+      "revId": "91a49ccfda241369897a15e1aba58736b560e846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34d51cd2_b0fc53a9",
         "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
         "patchSetId": 5
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "6e6929be_107f4472",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-13T22:33:37Z",
+      "side": 1,
+      "message": "I think I understand the contract, but it feels a bit fragile. Instead of consuming probes and tracking internal state, grc relies upon publicly writable boolean. I\u0027d be interested in looking into it and helping resolving it.",
+      "parentUuid": "18b5a39b_fafdebf9",
+      "revId": "91a49ccfda241369897a15e1aba58736b560e846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e60f4da2_bf3a802e",
         "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
         "patchSetId": 5
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "We treat 2-quiet as idle in resource coordinator. I think we may want to have a kNetworkAlmostIdle in next iteration.",
       "parentUuid": "e60f4da2_bf3a802e",
+      "revId": "91a49ccfda241369897a15e1aba58736b560e846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bd6ed1d3_40a39f49",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-13T22:33:37Z",
+      "side": 1,
+      "message": "Well, you should name it the way it is. If that is networkAlmostIdle, name it accordingly, otherwise use the networkIdle timestamp for it. Either is fine with me, I\u0027m just not comfortable with emitting \"NetworkIdle\" upon \"NetworkAlmostIdle\".",
+      "parentUuid": "2968f8e7_c9341324",
       "revId": "91a49ccfda241369897a15e1aba58736b560e846",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
