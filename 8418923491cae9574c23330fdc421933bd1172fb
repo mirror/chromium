@@ -34,6 +34,24 @@
       "revId": "8418923491cae9574c23330fdc421933bd1172fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "606058d9_9c604757",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-13T05:38:20Z",
+      "side": 1,
+      "message": "Similar to SetSelectionOptions and SeetSelectionOptions::Builder()\n\nStyleableMarkerProperties is *virtually* immutable object and it is\nused as passing properties to AddSuggestionMarker(), constructor of\nSuggetionsMarker().\n\nOnce we have SuggestionProperties and Builder, we could write:\n\nCaller:\n// Note: We can inline |builder| at argument place.\nSuggetionProperteis::Builder builder;\nbuild.SetColor(...)\n...\nGetDMC()-\u003eAddSuggestionMarker(builder.Build());\n\nDMC::AddSuggetionMaker(const SuggetionMarkerProperties\u0026 props) {\n  AddMarkerInternal(\n     ...\n     return new SuggestionMakrer(start_offset, end_offset, props);\n  });\n}\n\nWe use this pattern for SelectionTemplate and SelectionTemplate::Builder.",
+      "parentUuid": "62cc587c_5dcf56ab",
+      "revId": "8418923491cae9574c23330fdc421933bd1172fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
