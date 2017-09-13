@@ -17,6 +17,7 @@
 
 class AutocompleteInput;
 class KeywordProvider;
+class Profile;
 class TemplateURL;
 
 class KeywordExtensionsDelegate {
@@ -50,6 +51,9 @@ class KeywordExtensionsDelegate {
   // keyword mode. This happens when the user has cleared the keyword or closed
   // the omnibox popup.
   virtual void MaybeEndExtensionKeywordMode();
+
+  // Returns the profile associated with the delegate.
+  virtual Profile* profile();
 
  private:
   DISALLOW_COPY_AND_ASSIGN(KeywordExtensionsDelegate);

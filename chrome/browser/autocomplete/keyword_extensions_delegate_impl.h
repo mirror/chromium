@@ -33,6 +33,8 @@ class KeywordExtensionsDelegateImpl : public KeywordExtensionsDelegate,
   KeywordExtensionsDelegateImpl(Profile* profile, KeywordProvider* provider);
   ~KeywordExtensionsDelegateImpl() override;
 
+  Profile* profile() override;
+
  private:
   // KeywordExtensionsDelegate:
   void IncrementInputId() override;

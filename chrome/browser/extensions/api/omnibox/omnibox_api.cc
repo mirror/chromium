@@ -170,6 +170,21 @@ void ExtensionOmniboxEventRouter::OnInputCancelled(
       ->DispatchEventToExtension(extension_id, std::move(event));
 }
 
+void ExtensionOmniboxEventRouter::OnDeleteSuggestion(
+    Profile* profile,
+    const std::string& extension_id,
+    const std::string& suggestion_text) {
+  std::unique_ptr<base::ListValue> args(new base::ListValue());
+  args->Set(0, base::MakeUnique<base::Value>(suggestion_text));
+
+  auto event = base::MakeUnique<Event>(events::OMNIBOX_ON_DELETE_SUGGESTION,
+                                       omnibox::OnDeleteSuggestion::kEventName,
+                                       std::move(args), profile);
+
+  EventRouter::Get(profile)->DispatchEventToExtension(extension_id,
+                                                      std::move(event));
+}
+
 OmniboxAPI::OmniboxAPI(content::BrowserContext* context)
     : profile_(Profile::FromBrowserContext(context)),
       url_service_(TemplateURLServiceFactory::GetForProfile(profile_)),

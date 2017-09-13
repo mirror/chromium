@@ -32,3 +32,7 @@ void KeywordExtensionsDelegate::EnterExtensionKeywordMode(
 
 void KeywordExtensionsDelegate::MaybeEndExtensionKeywordMode() {
 }
+
+Profile* KeywordExtensionsDelegate::profile() {
+  return nullptr;
+}

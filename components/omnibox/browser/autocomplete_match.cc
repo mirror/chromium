@@ -612,6 +612,7 @@ bool AutocompleteMatch::SupportsDeletion() const {
     if (it->deletable)
       return true;
   }
+
   return false;
 }
 
