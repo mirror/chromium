@@ -32,7 +32,7 @@ namespace {
 
 // Fixed width of the description label of the bubble.
 // TODO(mad): Make sure there is enough room for all languages.
-const int kWidthOfDescriptionText = 330;
+const int kWidthOfDescriptionText = 280;
 
 // The URL to be used to re-install Chrome when auto-update failed for too long.
 const char kDownloadChromeUrl[] = "https://www.google.com/chrome/?&brand=CHWL"
