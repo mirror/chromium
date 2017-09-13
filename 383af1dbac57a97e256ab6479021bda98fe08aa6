@@ -73,6 +73,23 @@
     },
     {
       "key": {
+        "uuid": "b2e7b7df_8bed9087",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-13T18:32:30Z",
+      "side": 1,
+      "message": "Nit (optional): browserProxy.scheduleNwake().then(setPrefetchResult, prefetchResultError);\n\nInstead of catch() you can use the 2nd parameter of then() to pass an error callback.",
+      "revId": "383af1dbac57a97e256ab6479021bda98fe08aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8050348_d3aade17",
         "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
         "patchSetId": 6
