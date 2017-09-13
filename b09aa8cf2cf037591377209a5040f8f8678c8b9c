@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0afca727_94c5fcda",
+        "filename": "ios/web/web_state/web_state_delegate_bridge.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-13T16:54:02Z",
+      "side": 1,
+      "message": "From Chromium Style Guide: \"Don\u0027t use else after return\"",
+      "revId": "b09aa8cf2cf037591377209a5040f8f8678c8b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377501c0_a856035a",
+        "filename": "ios/web/web_state/web_state_delegate_bridge.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-13T16:54:02Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 123,
+        "startChar": 11,
+        "endLine": 123,
+        "endChar": 14
+      },
+      "revId": "b09aa8cf2cf037591377209a5040f8f8678c8b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fb3875c_6eafbda6",
+        "filename": "ios/web/web_state/web_state_delegate_bridge_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-13T16:54:02Z",
+      "side": 1,
+      "message": "Please add comments for consistency with other tests.",
+      "range": {
+        "startLine": 174,
+        "startChar": 7,
+        "endLine": 174,
+        "endChar": 33
+      },
+      "revId": "b09aa8cf2cf037591377209a5040f8f8678c8b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c239a721_b60da2b5",
+        "filename": "ios/web_view/internal/cwv_preview_element_info.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-13T16:54:02Z",
+      "side": 1,
+      "message": "Could you please add a test similar to cwv_html_element_unittest.mm",
+      "range": {
+        "startLine": 11,
+        "startChar": 16,
+        "endLine": 11,
+        "endChar": 31
+      },
+      "revId": "b09aa8cf2cf037591377209a5040f8f8678c8b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d44b7aae_79ab55d3",
+        "filename": "ios/web_view/public/cwv_preview_element_info.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-13T16:54:02Z",
+      "side": 1,
+      "message": "Should this even be a part of public API?",
+      "range": {
+        "startLine": 21,
+        "startChar": 16,
+        "endLine": 21,
+        "endChar": 31
+      },
+      "revId": "b09aa8cf2cf037591377209a5040f8f8678c8b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7cd2d47_44fa15db",
+        "filename": "ios/web_view/public/cwv_ui_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-13T16:54:02Z",
+      "side": 1,
+      "message": "Sorry for missing in the previous round. Please document what happens if these methods are not implemented.",
+      "range": {
+        "startLine": 70,
+        "startChar": 15,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "b09aa8cf2cf037591377209a5040f8f8678c8b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

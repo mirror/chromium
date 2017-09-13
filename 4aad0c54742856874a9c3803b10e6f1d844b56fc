@@ -93,6 +93,30 @@
       "revId": "4aad0c54742856874a9c3803b10e6f1d844b56fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33426a84_b9dfe714",
+        "filename": "ios/web_view/public/cwv_ui_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-13T16:54:02Z",
+      "side": 1,
+      "message": "Maybe \"Instructs the delegate to show a preview view controller on force touch. Uses Webkit\u0027s default preview behavior when it returns nil or not implemented.\" ?",
+      "parentUuid": "39ad72b5_ef83fab3",
+      "range": {
+        "startLine": 72,
+        "startChar": 3,
+        "endLine": 72,
+        "endChar": 9
+      },
+      "revId": "4aad0c54742856874a9c3803b10e6f1d844b56fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
