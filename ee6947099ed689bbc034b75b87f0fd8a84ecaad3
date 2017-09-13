@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de194671_95dcb9ef",
+        "filename": "third_party/WebKit/Source/platform/testing/URLTestHelpers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-13T05:48:25Z",
+      "side": 1,
+      "message": "Nit: please call this loader_factory instead of platform (ditto elsewhere)",
+      "range": {
+        "startLine": 64,
+        "startChar": 29,
+        "endLine": 64,
+        "endChar": 37
+      },
+      "revId": "ee6947099ed689bbc034b75b87f0fd8a84ecaad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
