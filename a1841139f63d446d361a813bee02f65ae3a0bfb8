@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95cd83ee_5ad3bfba",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-13T18:21:44Z",
+      "side": 1,
+      "message": "There is also a `spitlines()` method which does basically the same thing.",
+      "revId": "a1841139f63d446d361a813bee02f65ae3a0bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67ec9b44_140a6759",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-13T18:21:44Z",
+      "side": 1,
+      "message": "It might be more idiomatic to write `not line` rather than `not len(line)`",
+      "revId": "a1841139f63d446d361a813bee02f65ae3a0bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f50cec_f43f7be8",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-13T18:21:44Z",
+      "side": 1,
+      "message": "If we use a set here, then the `test not in smoke_tests` check below should be faster.",
+      "revId": "a1841139f63d446d361a813bee02f65ae3a0bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6050148f_82ebd5b3",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 946,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-13T18:21:44Z",
+      "side": 1,
+      "message": "I\u0027m not positive, but I think that currently we\u0027re actually reading in the whole contents of SmokeTests for each test that\u0027s checked.\n\nOne additional improvement that could be made here if you want would be to change the helper method to take a filename (e.g. change _tests_from_file_contents to _tests_from_file), and add the @memoized decorator (like the skipped_perf_tests method below).",
+      "revId": "a1841139f63d446d361a813bee02f65ae3a0bfb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
