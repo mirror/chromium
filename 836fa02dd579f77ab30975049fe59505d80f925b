@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5815fa23_02598536",
+        "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1213209
+      },
+      "writtenOn": "2017-09-13T14:29:23Z",
+      "side": 1,
+      "message": "You are right, I was testing it without enabling the flags for oopif. When I enabled them I saw that latching is broken for touch when the child iframe hits its extent.",
+      "parentUuid": "12894d25_91692f24",
+      "range": {
+        "startLine": 457,
+        "startChar": 4,
+        "endLine": 458,
+        "endChar": 51
+      },
+      "revId": "836fa02dd579f77ab30975049fe59505d80f925b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24ba76a4_65110bfb",
         "filename": "content/browser/renderer_host/render_widget_host_view_child_frame.h",
         "patchSetId": 1
