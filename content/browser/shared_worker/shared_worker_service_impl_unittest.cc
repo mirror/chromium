@@ -32,6 +32,8 @@
 #include "mojo/public/cpp/bindings/binding.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using blink::MessagePortChannel;
+
 namespace content {
 
 class SharedWorkerServiceImplTest : public testing::Test {
@@ -126,13 +128,13 @@ std::vector<uint8_t> StringPieceToVector(base::StringPiece s) {
   return std::vector<uint8_t>(s.begin(), s.end());
 }
 
-void BlockingReadFromMessagePort(MessagePort port,
+void BlockingReadFromMessagePort(MessagePortChannel port,
                                  std::vector<uint8_t>* message) {
   base::RunLoop run_loop;
   port.SetCallback(run_loop.QuitClosure());
   run_loop.Run();
 
-  std::vector<MessagePort> should_be_empty;
+  std::vector<MessagePortChannel> should_be_empty;
   EXPECT_TRUE(port.GetMessage(message, &should_be_empty));
   EXPECT_TRUE(should_be_empty.empty());
 }
@@ -309,7 +311,7 @@ class MockSharedWorkerConnector {
         false /* data_saver_enabled */));
 
     mojo::MessagePipe message_pipe;
-    local_port_ = MessagePort(std::move(message_pipe.handle0));
+    local_port_ = MessagePortChannel(std::move(message_pipe.handle0));
 
     mojom::SharedWorkerClientPtr client_proxy;
     client->Bind(mojo::MakeRequest(&client_proxy));
@@ -317,11 +319,12 @@ class MockSharedWorkerConnector {
     connector->Connect(std::move(info), std::move(client_proxy),
                        std::move(message_pipe.handle1));
   }
-  MessagePort local_port() { return local_port_; }
+  MessagePortChannel local_port() { return local_port_; }
+
  private:
   mojom::SharedWorkerClientRequest client_request_;
   MockRendererProcessHost* renderer_host_;
-  MessagePort local_port_;
+  MessagePortChannel local_port_;
 };
 
 void CheckWorkerProcessMsgCreateWorker(
@@ -344,7 +347,7 @@ void CheckWorkerProcessMsgCreateWorker(
 void CheckWorkerMsgConnect(MockRendererProcessHost* renderer_host,
                            int expected_msg_route_id,
                            int* connection_request_id = nullptr,
-                           MessagePort* port = nullptr) {
+                           MessagePortChannel* port = nullptr) {
   std::unique_ptr<IPC::Message> msg(renderer_host->PopMessage());
   EXPECT_EQ(WorkerMsg_Connect::ID, msg->type());
   EXPECT_EQ(expected_msg_route_id, msg->routing_id());
@@ -390,7 +393,7 @@ TEST_F(SharedWorkerServiceImplTest, BasicTest) {
 
   // WorkerMsg_Connect should be sent to SharedWorker side.
   int worker_msg_connection_request_id;
-  MessagePort worker_msg_port;
+  MessagePortChannel worker_msg_port;
   CheckWorkerMsgConnect(renderer_host.get(), worker_route_id,
                         &worker_msg_connection_request_id, &worker_msg_port);
 
@@ -418,7 +421,7 @@ TEST_F(SharedWorkerServiceImplTest, BasicTest) {
   std::vector<uint8_t> expected_message(StringPieceToVector("test1"));
   connector->local_port().PostMessage(expected_message.data(),
                                       expected_message.size(),
-                                      std::vector<MessagePort>());
+                                      std::vector<MessagePortChannel>());
   std::vector<uint8_t> received_message;
   BlockingReadFromMessagePort(worker_msg_port, &received_message);
   EXPECT_EQ(expected_message, received_message);
@@ -472,7 +475,7 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
 
   // WorkerMsg_Connect should be sent to SharedWorker side.
   int worker_msg_connection_request_id1;
-  MessagePort worker_msg_port1;
+  MessagePortChannel worker_msg_port1;
   CheckWorkerMsgConnect(renderer_host0.get(), worker_route_id,
                         &worker_msg_connection_request_id1, &worker_msg_port1);
 
@@ -500,7 +503,7 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
   std::vector<uint8_t> expected_message1(StringPieceToVector("test1"));
   connector0->local_port().PostMessage(expected_message1.data(),
                                        expected_message1.size(),
-                                       std::vector<MessagePort>());
+                                       std::vector<MessagePortChannel>());
   std::vector<uint8_t> received_message1;
   BlockingReadFromMessagePort(worker_msg_port1, &received_message1);
   EXPECT_EQ(expected_message1, received_message1);
@@ -546,7 +549,7 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
 
   // WorkerMsg_Connect should be sent to SharedWorker side.
   int worker_msg_connection_request_id2;
-  MessagePort worker_msg_port2;
+  MessagePortChannel worker_msg_port2;
   CheckWorkerMsgConnect(renderer_host0.get(), worker_route_id,
                         &worker_msg_connection_request_id2, &worker_msg_port2);
 
@@ -562,7 +565,7 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
   std::vector<uint8_t> expected_message2(StringPieceToVector("test2"));
   connector1->local_port().PostMessage(expected_message2.data(),
                                        expected_message2.size(),
-                                       std::vector<MessagePort>());
+                                       std::vector<MessagePortChannel>());
   std::vector<uint8_t> received_message2;
   BlockingReadFromMessagePort(worker_msg_port2, &received_message2);
   EXPECT_EQ(expected_message2, received_message2);
