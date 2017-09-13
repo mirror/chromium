@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "077df820_49a0c57d",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoaderTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-13T08:19:49Z",
+      "side": 1,
+      "message": "we should not have this any more?",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 15
+      },
+      "revId": "995d0f06ef74e01a33e52eaf75478cf284751072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed2e7b3_00cf85bb",
+        "filename": "third_party/WebKit/Source/modules/notifications/NotificationImageLoaderTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-13T08:19:49Z",
+      "side": 1,
+      "message": "and use platform_ instead?",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 10
+      },
+      "revId": "995d0f06ef74e01a33e52eaf75478cf284751072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
