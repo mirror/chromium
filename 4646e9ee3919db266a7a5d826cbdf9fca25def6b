@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "47e66df4_faa7e3c8",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-13T09:43:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1032af93_ae7fa048",
+      "revId": "4646e9ee3919db266a7a5d826cbdf9fca25def6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "134e5ab3_b5ab58af",
         "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
         "patchSetId": 17
@@ -33,6 +51,24 @@
       "revId": "4646e9ee3919db266a7a5d826cbdf9fca25def6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b5e4f30_398735b8",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-13T09:43:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "134e5ab3_b5ab58af",
+      "revId": "4646e9ee3919db266a7a5d826cbdf9fca25def6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
