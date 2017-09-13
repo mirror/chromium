@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "60291886_34cec241",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-13T20:03:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d462873f_8849e154",
+      "range": {
+        "startLine": 158,
+        "startChar": 57,
+        "endLine": 158,
+        "endChar": 62
+      },
+      "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e36b401d_7a4b23b5",
         "filename": "components/arc/power/arc_power_bridge.cc",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c751df35_658f0932",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-13T20:03:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e36b401d_7a4b23b5",
+      "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "7f1fb852_5e98fa5b",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-13T20:03:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a317bec_3e1c204c",
+      "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd2f7ea4_699f535b",
         "filename": "components/arc/power/arc_power_bridge.cc",
         "patchSetId": 5
@@ -73,6 +133,24 @@
       "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a04afce_80cd5f83",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-13T20:03:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd2f7ea4_699f535b",
+      "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "6d2a7014_a473a491",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-13T20:03:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d494e8a4_08e0bfbd",
+      "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86c9a708_ceb6fc6a",
         "filename": "components/arc/power/arc_power_bridge.h",
         "patchSetId": 5
@@ -107,6 +203,24 @@
       "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcd73c11_90e95a78",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-13T20:03:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86c9a708_ceb6fc6a",
+      "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "ee0efd6b_bd360b8d",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-13T20:03:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e4b72f6_2185bb65",
+      "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b86bc98_04baff62",
         "filename": "components/arc/power/arc_power_bridge.h",
         "patchSetId": 5
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "58e23b3a_800d1a3c",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-13T20:03:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b86bc98_04baff62",
+      "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af66de6d_e2a09486",
         "filename": "components/arc/power/arc_power_bridge.h",
         "patchSetId": 5
@@ -158,6 +308,24 @@
       "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd7789b_40f049b7",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-13T20:03:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af66de6d_e2a09486",
+      "revId": "e71bb4bcc8854317339806be1a29490ae263fd73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
