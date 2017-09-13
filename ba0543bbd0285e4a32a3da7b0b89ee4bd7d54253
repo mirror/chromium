@@ -22,6 +22,30 @@
       "revId": "ba0543bbd0285e4a32a3da7b0b89ee4bd7d54253",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3893f28f_6a7e3ab0",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3279,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-13T04:46:56Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s a better idea. Done.",
+      "parentUuid": "842c2b56_87baa78c",
+      "range": {
+        "startLine": 3279,
+        "startChar": 41,
+        "endLine": 3279,
+        "endChar": 44
+      },
+      "revId": "ba0543bbd0285e4a32a3da7b0b89ee4bd7d54253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
