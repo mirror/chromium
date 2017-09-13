@@ -102,8 +102,8 @@ class AudioListener : public GarbageCollectedFinalized<AudioListener>,
   const float* GetUpZValues(size_t frames_to_process);
 
   // Position
-  void setPosition(float x, float y, float z) {
-    setPosition(FloatPoint3D(x, y, z));
+  void setPosition(float x, float y, float z, ExceptionState& exceptionState) {
+    setPosition(FloatPoint3D(x, y, z), exceptionState);
   }
 
   // Orientation and Up-vector
@@ -112,9 +112,10 @@ class AudioListener : public GarbageCollectedFinalized<AudioListener>,
                       float z,
                       float up_x,
                       float up_y,
-                      float up_z) {
-    setOrientation(FloatPoint3D(x, y, z));
-    SetUpVector(FloatPoint3D(up_x, up_y, up_z));
+                      float up_z,
+                      ExceptionState& exceptionState) {
+    setOrientation(FloatPoint3D(x, y, z), exceptionState);
+    SetUpVector(FloatPoint3D(up_x, up_y, up_z), exceptionState);
   }
 
   Mutex& ListenerLock() { return listener_lock_; }
@@ -134,9 +135,9 @@ class AudioListener : public GarbageCollectedFinalized<AudioListener>,
  private:
   AudioListener(BaseAudioContext&);
 
-  void setPosition(const FloatPoint3D&);
-  void setOrientation(const FloatPoint3D&);
-  void SetUpVector(const FloatPoint3D&);
+  void setPosition(const FloatPoint3D&, ExceptionState&);
+  void setOrientation(const FloatPoint3D&, ExceptionState&);
+  void SetUpVector(const FloatPoint3D&, ExceptionState&);
 
   void MarkPannersAsDirty(unsigned);
 
