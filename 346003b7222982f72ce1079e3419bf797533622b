@@ -34,6 +34,24 @@
       "revId": "346003b7222982f72ce1079e3419bf797533622b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379b94e3_6cc91c8c",
+        "filename": "chrome/browser/resources/print_preview/data/print_ticket_store.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-13T20:52:38Z",
+      "side": 0,
+      "message": "This is fine. Thanks for explaining the round trip that we are now avoiding.",
+      "parentUuid": "e6ca103f_0227a2a1",
+      "revId": "346003b7222982f72ce1079e3419bf797533622b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
