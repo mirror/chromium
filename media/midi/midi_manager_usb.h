@@ -28,7 +28,6 @@
 
 namespace midi {
 
-class MidiScheduler;
 class MidiService;
 
 // MidiManager for USB-MIDI.
@@ -82,6 +81,11 @@ class USB_MIDI_EXPORT MidiManagerUsb : public MidiManager,
   void OnEnumerateDevicesDone(bool result, UsbMidiDevice::Devices* devices);
   bool AddPorts(UsbMidiDevice* device, int device_id);
 
+  // TODO(toyoshim): Remove |lock_| once dynamic instantiation mode is enabled
+  // by default. This protects objects allocated on the I/O thread from doubly
+  // released on the main thread.
+  base::Lock lock_;
+
   std::unique_ptr<UsbMidiDevice::Factory> device_factory_;
   std::vector<std::unique_ptr<UsbMidiDevice>> devices_;
   std::vector<std::unique_ptr<UsbMidiOutputStream>> output_streams_;
@@ -91,11 +95,6 @@ class USB_MIDI_EXPORT MidiManagerUsb : public MidiManager,
 
   // A map from <endpoint_number, cable_number> to the index of input jacks.
   base::hash_map<std::pair<int, int>, size_t> input_jack_dictionary_;
-
-  // Lock to ensure the MidiScheduler is being destructed only once in
-  // Finalize() on Chrome_IOThread.
-  base::Lock scheduler_lock_;
-  std::unique_ptr<MidiScheduler> scheduler_;
 
   DISALLOW_COPY_AND_ASSIGN(MidiManagerUsb);
 };
