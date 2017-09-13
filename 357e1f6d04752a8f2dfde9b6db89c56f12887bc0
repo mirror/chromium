@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "0e305c74_a373d92f",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T19:21:51Z",
+      "side": 1,
+      "message": "nit: I would define 5000 as a property in the JS rather than the html (layout), i.e. duration\u003d\"[[toastDuration_]]\"",
+      "revId": "357e1f6d04752a8f2dfde9b6db89c56f12887bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b525c5d3_9f60038b",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T19:21:51Z",
+      "side": 1,
+      "message": "[[undoLabel]]\n\n{{}} sets up two way data binding which is just extra overhead here.",
+      "revId": "357e1f6d04752a8f2dfde9b6db89c56f12887bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7be12c5d_e4516e64",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_shared_css.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-13T19:21:51Z",
+      "side": 1,
+      "message": "Are these actually shared, or can they be in passwords_section.html? Typically shared CSS uses element types or classes for stlying, not ids.",
+      "revId": "357e1f6d04752a8f2dfde9b6db89c56f12887bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "597740ee_5171fd20",
         "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
         "patchSetId": 7
