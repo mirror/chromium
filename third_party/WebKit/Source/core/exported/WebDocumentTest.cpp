@@ -19,6 +19,7 @@
 #include "core/style/ComputedStyle.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/graphics/Color.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/weborigin/SchemeRegistry.h"
@@ -42,12 +43,15 @@ class WebDocumentTest : public ::testing::Test {
   WebDocument TopWebDocument() const;
 
   WebViewHelper web_view_helper_;
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
 };
 
 void WebDocumentTest::SetUpTestCase() {
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
   URLTestHelpers::RegisterMockedURLLoad(
       ToKURL(std::string(kDefaultOrigin) + kManifestDummyFilePath),
-      testing::CoreTestDataPath(kManifestDummyFilePath));
+      testing::CoreTestDataPath(kManifestDummyFilePath),
+      platform_->GetURLLoaderMockFactory());
 }
 
 void WebDocumentTest::LoadURL(const std::string& url) {
@@ -203,7 +207,9 @@ KURL ToOriginB(const char* file) {
 }
 
 void RegisterMockedURLLoad(const KURL& url, const char* path) {
-  URLTestHelpers::RegisterMockedURLLoad(url, testing::CoreTestDataPath(path));
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
+  URLTestHelpers::RegisterMockedURLLoad(url, testing::CoreTestDataPath(path),
+                                        platform_->GetURLLoaderMockFactory());
 }
 
 }  // anonymous namespace

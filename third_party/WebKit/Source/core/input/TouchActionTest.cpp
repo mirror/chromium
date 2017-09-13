@@ -45,9 +45,9 @@
 #include "core/layout/LayoutTreeAsText.h"
 #include "core/layout/api/LayoutViewItem.h"
 #include "platform/graphics/TouchAction.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebCoalescedInputEvent.h"
 #include "public/platform/WebTouchEvent.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
@@ -97,18 +97,19 @@ class TouchActionTest : public ::testing::Test {
   TouchActionTest() : base_url_("http://www.test.com/") {
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url_), testing::CoreTestDataPath(),
-        "touch-action-tests.css", "text/css");
+        "touch-action-tests.css", platform_->GetURLLoaderMockFactory(),
+        "text/css");
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url_), testing::CoreTestDataPath(),
-        "touch-action-tests.js", "text/javascript");
+        "touch-action-tests.js", platform_->GetURLLoaderMockFactory(),
+        "text/javascript");
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url_), testing::CoreTestDataPath(),
-        "white-1x1.png", "image/png");
+        "white-1x1.png", platform_->GetURLLoaderMockFactory(), "image/png");
   }
 
   void TearDown() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
@@ -124,6 +125,7 @@ class TouchActionTest : public ::testing::Test {
 
   std::string base_url_;
   FrameTestHelpers::WebViewHelper web_view_helper_;
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
 };
 
 void TouchActionTest::RunTouchActionTest(std::string file) {
@@ -199,9 +201,9 @@ void TouchActionTest::RunIFrameTest(std::string file) {
 WebViewImpl* TouchActionTest::SetupTest(
     std::string file,
     TouchActionTrackingWebWidgetClient& client) {
-  URLTestHelpers::RegisterMockedURLLoadFromBase(WebString::FromUTF8(base_url_),
-                                                testing::CoreTestDataPath(),
-                                                WebString::FromUTF8(file));
+  URLTestHelpers::RegisterMockedURLLoadFromBase(
+      WebString::FromUTF8(base_url_), testing::CoreTestDataPath(),
+      WebString::FromUTF8(file), platform_->GetURLLoaderMockFactory());
   // Note that JavaScript must be enabled for shadow DOM tests.
   WebViewImpl* web_view = web_view_helper_.InitializeAndLoad(
       base_url_ + file, nullptr, nullptr, &client);

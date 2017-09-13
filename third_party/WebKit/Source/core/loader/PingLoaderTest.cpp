@@ -9,10 +9,10 @@
 #include "core/loader/FrameLoader.h"
 #include "core/testing/DummyPageHolder.h"
 #include "platform/loader/fetch/SubstituteData.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/weborigin/KURL.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -41,8 +41,7 @@ class PingLoaderTest : public ::testing::Test {
   }
 
   void TearDown() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
+    platform_->GetURLLoaderMockFactory()
         ->UnregisterAllURLsAndClearMemoryCache();
   }
 
@@ -57,7 +56,8 @@ class PingLoaderTest : public ::testing::Test {
   const ResourceRequest& PingAndGetRequest(const KURL& ping_url) {
     KURL destination_url(kParsedURLString, "http://navigation.destination");
     URLTestHelpers::RegisterMockedURLLoad(
-        ping_url, testing::CoreTestDataPath("bar.html"), "text/html");
+        ping_url, testing::CoreTestDataPath("bar.html"),
+        platform_->GetURLLoaderMockFactory(), "text/html");
     PingLoader::SendLinkAuditPing(&page_holder_->GetFrame(), ping_url,
                                   destination_url);
     const ResourceRequest& ping_request = client_->PingRequest();
@@ -67,13 +67,14 @@ class PingLoaderTest : public ::testing::Test {
     }
     // Serve the ping request, since it will otherwise bleed in to the next
     // test, and once begun there is no way to cancel it directly.
-    Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
+    platform_->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
     return ping_request;
   }
 
  protected:
   Persistent<PingLocalFrameClient> client_;
   std::unique_ptr<DummyPageHolder> page_holder_;
+  ScopedTestingPlatformSupport<TestingPlatformSupport> platform_;
 };
 
 TEST_F(PingLoaderTest, HTTPSToHTTPS) {
@@ -108,9 +109,10 @@ TEST_F(PingLoaderTest, LoadImagePriority) {
 
   KURL ping_url(kParsedURLString, "https://localhost/bar.html");
   URLTestHelpers::RegisterMockedURLLoad(
-      ping_url, testing::CoreTestDataPath("bar.html"), "text/html");
+      ping_url, testing::CoreTestDataPath("bar.html"),
+      platform_->GetURLLoaderMockFactory(), "text/html");
   PingLoader::LoadImage(&page_holder_->GetFrame(), ping_url);
-  Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
+  platform_->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
   const ResourceRequest& request = client_->PingRequest();
   ASSERT_FALSE(request.IsNull());
   ASSERT_EQ(request.Url(), ping_url);
@@ -123,10 +125,11 @@ TEST_F(PingLoaderTest, LinkAuditPingPriority) {
 
   KURL ping_url(kParsedURLString, "https://localhost/bar.html");
   URLTestHelpers::RegisterMockedURLLoad(
-      ping_url, testing::CoreTestDataPath("bar.html"), "text/html");
+      ping_url, testing::CoreTestDataPath("bar.html"),
+      platform_->GetURLLoaderMockFactory(), "text/html");
   PingLoader::SendLinkAuditPing(&page_holder_->GetFrame(), ping_url,
                                 destination_url);
-  Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
+  platform_->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
   const ResourceRequest& request = client_->PingRequest();
   ASSERT_FALSE(request.IsNull());
   ASSERT_EQ(request.Url(), ping_url);
@@ -138,11 +141,12 @@ TEST_F(PingLoaderTest, ViolationPriority) {
 
   KURL ping_url(kParsedURLString, "https://localhost/bar.html");
   URLTestHelpers::RegisterMockedURLLoad(
-      ping_url, testing::CoreTestDataPath("bar.html"), "text/html");
+      ping_url, testing::CoreTestDataPath("bar.html"),
+      platform_->GetURLLoaderMockFactory(), "text/html");
   PingLoader::SendViolationReport(&page_holder_->GetFrame(), ping_url,
                                   EncodedFormData::Create(),
                                   PingLoader::kXSSAuditorViolationReport);
-  Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
+  platform_->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
   const ResourceRequest& request = client_->PingRequest();
   ASSERT_FALSE(request.IsNull());
   ASSERT_EQ(request.Url(), ping_url);
@@ -154,11 +158,12 @@ TEST_F(PingLoaderTest, BeaconPriority) {
 
   KURL ping_url(kParsedURLString, "https://localhost/bar.html");
   URLTestHelpers::RegisterMockedURLLoad(
-      ping_url, testing::CoreTestDataPath("bar.html"), "text/html");
+      ping_url, testing::CoreTestDataPath("bar.html"),
+      platform_->GetURLLoaderMockFactory(), "text/html");
   size_t size = 0;
   PingLoader::SendBeacon(&page_holder_->GetFrame(), 123, ping_url, "hello",
                          size);
-  Platform::Current()->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
+  platform_->GetURLLoaderMockFactory()->ServeAsynchronousRequests();
   const ResourceRequest& request = client_->PingRequest();
   ASSERT_FALSE(request.IsNull());
   ASSERT_EQ(request.Url(), ping_url);

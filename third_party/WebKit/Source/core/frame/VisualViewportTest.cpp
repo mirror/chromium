@@ -28,9 +28,9 @@
 #include "platform/graphics/CompositorElementId.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/testing/URLTestHelpers.h"
 #include "platform/testing/UnitTestHelpers.h"
-#include "public/platform/Platform.h"
 #include "public/platform/WebCachePolicy.h"
 #include "public/platform/WebCoalescedInputEvent.h"
 #include "public/platform/WebInputEvent.h"
@@ -78,7 +78,10 @@ class VisualViewportTest
  public:
   VisualViewportTest()
       : ScopedRootLayerScrollingForTest(GetParam()),
-        base_url_("http://www.test.com/") {}
+        base_url_("http://www.test.com/") {
+    ScopedTestingPlatformSupport<TestingPlatformSupport> platform;
+    platform_ = platform->GetURLLoaderMockFactory();
+  }
 
   void InitializeWithDesktopSettings(
       void (*override_settings_func)(WebSettings*) = 0) {
@@ -99,9 +102,7 @@ class VisualViewportTest
   }
 
   ~VisualViewportTest() override {
-    Platform::Current()
-        ->GetURLLoaderMockFactory()
-        ->UnregisterAllURLsAndClearMemoryCache();
+    platform_->UnregisterAllURLsAndClearMemoryCache();
   }
 
   void NavigateTo(const std::string& url) {
@@ -113,14 +114,15 @@ class VisualViewportTest
   void RegisterMockedHttpURLLoad(const std::string& fileName) {
     URLTestHelpers::RegisterMockedURLLoadFromBase(
         WebString::FromUTF8(base_url_), blink::testing::CoreTestDataPath(),
-        WebString::FromUTF8(fileName));
+        WebString::FromUTF8(fileName), platform_);
   }
 
   void RegisterMockedHttpURLLoad(const std::string& url,
                                  const std::string& fileName) {
     URLTestHelpers::RegisterMockedURLLoad(
         ToKURL(url),
-        blink::testing::CoreTestDataPath(WebString::FromUTF8(fileName)));
+        blink::testing::CoreTestDataPath(WebString::FromUTF8(fileName)),
+        platform_);
   }
 
   WebViewImpl* WebView() const { return helper_.WebView(); }
@@ -145,6 +147,7 @@ class VisualViewportTest
 
  private:
   FrameTestHelpers::WebViewHelper helper_;
+  WebURLLoaderMockFactory* platform_;
 };
 
 INSTANTIATE_TEST_CASE_P(All, VisualViewportTest, ::testing::Bool());
