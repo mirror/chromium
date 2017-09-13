@@ -19,6 +19,12 @@ namespace gin {
 
 class GIN_EXPORT V8Initializer {
  public:
+  enum class SnapshotType {
+    Native,
+    Startup,
+    V8Context,
+  };
+
   // This should be called by IsolateHolder::Initialize().
   static void Initialize(IsolateHolder::ScriptMode mode,
                          IsolateHolder::V8ExtrasMode v8_extras_mode);
@@ -26,8 +32,8 @@ class GIN_EXPORT V8Initializer {
   // Get address and size information for currently loaded snapshot.
   // If no snapshot is loaded, the return values are null for addresses
   // and 0 for sizes.
-  static void GetV8ExternalSnapshotData(v8::StartupData* natives,
-                                        v8::StartupData* snapshot);
+  static v8::StartupData* GetMappedSnapshotData(SnapshotType type,
+                                                v8::StartupData* data);
   static void GetV8ExternalSnapshotData(const char** natives_data_out,
                                         int* natives_size_out,
                                         const char** snapshot_data_out,
@@ -71,10 +77,6 @@ class GIN_EXPORT V8Initializer {
 
   // Load V8 context snapshot from default resources, if they are available.
   static void LoadV8ContextSnapshot();
-
-  // Get address and size information for currently loaded V8 context snapshot.
-  // If no snapshot is loaded, the return values are nullptr and 0.
-  static void GetV8ContextSnapshotData(v8::StartupData* snapshot);
 };
 
 }  // namespace gin

@@ -357,10 +357,24 @@ void V8Initializer::Initialize(IsolateHolder::ScriptMode mode,
 }
 
 // static
-void V8Initializer::GetV8ExternalSnapshotData(v8::StartupData* natives,
-                                              v8::StartupData* snapshot) {
-  GetMappedFileData(g_mapped_natives, natives);
-  GetMappedFileData(g_mapped_snapshot, snapshot);
+v8::StartupData* V8Initializer::GetMappedSnapshotData(SnapshotType type,
+                                                      v8::StartupData* data) {
+  if (!data) {
+    return nullptr;
+  }
+
+  switch (type) {
+    case SnapshotType::Native:
+      GetMappedFileData(g_mapped_natives, data);
+      break;
+    case SnapshotType::Startup:
+      GetMappedFileData(g_mapped_snapshot, data);
+      break;
+    case SnapshotType::V8Context:
+      GetMappedFileData(g_mapped_v8_context_snapshot, data);
+      break;
+  }
+  return data;
 }
 
 // static
@@ -370,7 +384,8 @@ void V8Initializer::GetV8ExternalSnapshotData(const char** natives_data_out,
                                               int* snapshot_size_out) {
   v8::StartupData natives;
   v8::StartupData snapshot;
-  GetV8ExternalSnapshotData(&natives, &snapshot);
+  GetMappedSnapshotData(SnapshotType::Native, &natives);
+  GetMappedSnapshotData(SnapshotType::Startup, &snapshot);
   *natives_data_out = natives.data;
   *natives_size_out = natives.raw_size;
   *snapshot_data_out = snapshot.data;
@@ -407,11 +422,6 @@ void V8Initializer::LoadV8ContextSnapshotFromFD(base::PlatformFile snapshot_pf,
     g_opened_files.Get()[kV8ContextSnapshotFileName] =
         std::make_pair(snapshot_pf, snapshot_region);
   }
-}
-
-// static
-void V8Initializer::GetV8ContextSnapshotData(v8::StartupData* snapshot) {
-  GetMappedFileData(g_mapped_v8_context_snapshot, snapshot);
 }
 
 }  // namespace gin

@@ -63,7 +63,8 @@ IsolateHolder::IsolateHolder(
 
   if (startup_data) {
     CHECK(reference);
-    V8Initializer::GetV8ContextSnapshotData(startup_data);
+    V8Initializer::GetMappedSnapshotData(V8Initializer::SnapshotType::V8Context,
+                                         startup_data);
     if (startup_data->data) {
       params.snapshot_blob = startup_data;
     }
