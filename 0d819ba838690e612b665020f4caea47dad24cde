@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd4abc67_e79d7377",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerIsolateData.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-13T12:34:42Z",
+      "side": 1,
+      "message": "Should we put this into platform/wtf/HashFunctions.h ?\ne.g. struct SimplePtrHash\u003cT\u003e : PtrHash\u003cT\u003e { ... }",
+      "revId": "0d819ba838690e612b665020f4caea47dad24cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
