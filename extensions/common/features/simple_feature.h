@@ -17,6 +17,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/lazy_instance.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/values.h"
 #include "components/version_info/version_info.h"
 #include "extensions/common/extension.h"
@@ -260,6 +261,10 @@ class SimpleFeature : public Feature {
   bool is_internal_;
   std::string command_line_switch_;
   std::unique_ptr<version_info::Channel> channel_;
+  // Whether to ignore channel-based restrictions (such as because the user has
+  // enabled experimental extension APIs). Note: this is lazily calculated, and
+  // then cached.
+  mutable base::Optional<bool> ignore_channel_;
 
   DISALLOW_COPY_AND_ASSIGN(SimpleFeature);
 };
