@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe793c46_9b72b7a5",
+        "filename": "extensions/common/features/simple_feature.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-13T04:34:40Z",
+      "side": 1,
+      "message": "nit: use the constant name i.e. kEnableExperimentalExtensionApis",
+      "range": {
+        "startLine": 561,
+        "startChar": 26,
+        "endLine": 561,
+        "endChar": 63
+      },
+      "revId": "b8e96f1b54bf571728b5f90e48f9785e23c4283e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0acf16_065407f7",
+        "filename": "extensions/common/features/simple_feature.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-13T04:34:40Z",
+      "side": 1,
+      "message": "It feels wrong to cache a value on this instance using a value passed to one of its function. Either CommandLine should be a non-mutable instance variable or we should use CommandLine::ForCurrentProcess in the function. \n\nAlso, can\u0027t we do this:\n\nbool ShouldIgnoreChannel() {\n  const static bool ignore_channel \u003d base::CommandLine::ForCurrentProcess()-\u003eHasSwitch(...);\n  return ignore_channel;\n}\n\nin an anon namespace. This get us lazy init, caching over multiple instances etc. However, there is probably some performance penalty due to static usage.",
+      "range": {
+        "startLine": 565,
+        "startChar": 10,
+        "endLine": 565,
+        "endChar": 22
+      },
+      "revId": "b8e96f1b54bf571728b5f90e48f9785e23c4283e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
