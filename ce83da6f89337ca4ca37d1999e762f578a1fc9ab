@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc61c086_ba339794",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-13T04:50:53Z",
+      "side": 1,
+      "message": "It\u0027s better to describe when specifically last target is returned.\nHow about:\nLet event.target return the last target after dispatch is complete.",
+      "revId": "ce83da6f89337ca4ca37d1999e762f578a1fc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c000d808_1191c6cf",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventDispatcher.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-13T04:50:53Z",
+      "side": 1,
+      "message": "How about adding a new private interface UpdateLastEventTarget(EventTarget*) and\nset |target_| in it (maybe with renaming |target_| to |last_event_target_|)?\n\nThen line 190 would be\nevent_-\u003eSetTarget(GetLastEventTarget())\n\nand the intention would be clearer.",
+      "revId": "ce83da6f89337ca4ca37d1999e762f578a1fc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a900b862_89f7235e",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventDispatcher.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-13T04:50:53Z",
+      "side": 1,
+      "message": "Please remove this line, and add comment why restoring the original target here.",
+      "revId": "ce83da6f89337ca4ca37d1999e762f578a1fc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b4da6a6_af040da2",
+        "filename": "third_party/WebKit/Source/core/dom/events/EventDispatcher.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-13T04:50:53Z",
+      "side": 1,
+      "message": "I guess this is not intentional, is it?",
+      "revId": "ce83da6f89337ca4ca37d1999e762f578a1fc9ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
