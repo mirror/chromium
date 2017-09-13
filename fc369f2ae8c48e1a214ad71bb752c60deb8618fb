@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72992870_e7f66f82",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-13T18:43:50Z",
+      "side": 0,
+      "message": "Do you want to remove this?  Although we don\u0027t set this right now, it seems like we may want to in the future, and if we do, we should jump straight to configuration.",
+      "range": {
+        "startLine": 694,
+        "startChar": 13,
+        "endLine": 694,
+        "endChar": 49
+      },
+      "revId": "fc369f2ae8c48e1a214ad71bb752c60deb8618fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

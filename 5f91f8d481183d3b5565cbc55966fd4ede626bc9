@@ -1,0 +1,158 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1aab2a7_bfc9a581",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-13T18:43:50Z",
+      "side": 1,
+      "message": "Function comment?",
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "023c63e5_1d1d8516",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-13T18:43:50Z",
+      "side": 1,
+      "message": "You refer to this as \u0027scheme\u0027 elsewhere, consider following that naming pattern here instead of \u0027protocol\u0027.",
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aab9802_2c22e2b8",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-13T18:43:50Z",
+      "side": 1,
+      "message": "I think you need to be checking is_valid() before using len, as invalid/unspecified Components will have a len of -1.",
+      "range": {
+        "startLine": 83,
+        "startChar": 37,
+        "endLine": 83,
+        "endChar": 54
+      },
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56351581_33d65347",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-13T18:43:50Z",
+      "side": 1,
+      "message": "I believe you can reach this path by feeding the right external input beyond the browser\u0027s control in, so I don\u0027t think this should be a NOTREACHED.",
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c29abb49_1d778b22",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-13T18:43:50Z",
+      "side": 1,
+      "message": "Suggest that the flow here would be slightly better as\nif (success) {\n  lines 367-382\n} \nFireWebUIListener(...)\n\ninstead of duplicating the FireWebUIListener at the top and bottom of the function.  But this is pretty subjective.",
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b560402_b3631d1a",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-13T18:43:50Z",
+      "side": 1,
+      "message": "Does !make_and_model.empty() imply !make.empty() and !model.empty()?  The reason for the conditional is not obvious and needs a comment, why do we want to be careful about overwriting those fields in this condition?",
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0db4f37f_438d64d4",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-13T18:43:50Z",
+      "side": 1,
+      "message": "The naming mismatch between \"CheckAutoconf\" and the continuation\"OnPrinterInfoDiscovered\" is weird.",
+      "range": {
+        "startLine": 762,
+        "startChar": 2,
+        "endLine": 763,
+        "endChar": 73
+      },
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ca1205_3c321a5a",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-13T18:43:50Z",
+      "side": 1,
+      "message": "Suggest naming this effective_make_and_model to match other places.",
+      "range": {
+        "startLine": 77,
+        "startChar": 50,
+        "endLine": 77,
+        "endChar": 64
+      },
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
