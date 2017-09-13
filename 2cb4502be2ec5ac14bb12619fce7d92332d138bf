@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "6fce8dd7_45f3099e",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-13T14:24:38Z",
+      "side": 1,
+      "message": "Changed to at least use adb_wrapper. Was confused about how the process gets terminated upon Ctrl-C, and have now learned you can use a try/finally within an infinite generator, which will be called from __del__. Clever! (crazy?)",
+      "parentUuid": "c7888f51_357416dc",
+      "revId": "2cb4502be2ec5ac14bb12619fce7d92332d138bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48faf0d6_d1509c2e",
         "filename": "build/android/apk_operations.py",
         "patchSetId": 2
@@ -138,6 +156,30 @@
       "writtenOn": "2017-09-11T13:31:26Z",
       "side": 1,
       "message": "Does this have the same problem as --apk-path since it is relying on the default of the parent parser?",
+      "range": {
+        "startLine": 811,
+        "startChar": 39,
+        "endLine": 811,
+        "endChar": 59
+      },
+      "revId": "2cb4502be2ec5ac14bb12619fce7d92332d138bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea81270a_8cd0d3ed",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-13T14:24:38Z",
+      "side": 1,
+      "message": "Hmm, interestingly, it doesn\u0027t! It seems to work just fine (has the set_defaults mapping).\n\nChanged it anyways so as to not mix patterns.",
+      "parentUuid": "48faf0d6_d1509c2e",
       "range": {
         "startLine": 811,
         "startChar": 39,
