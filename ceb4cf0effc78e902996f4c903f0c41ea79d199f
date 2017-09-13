@@ -19,6 +19,46 @@
     },
     {
       "key": {
+        "uuid": "b4ce333e_c9462a51",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-13T08:53:57Z",
+      "side": 1,
+      "message": "The thing we need to do in this ctor looks getting larger. I prefer moving them to some methods and add a static method to clarify it starts network loading and caching (SWScriptURLLoader::CreateAndStartCaching(...), for example).\nWDYT?",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64beb16_496afa6a",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-13T08:53:57Z",
+      "side": 1,
+      "message": "nit: Can we remove \"-\u003eget()\"?",
+      "range": {
+        "startLine": 53,
+        "startChar": 46,
+        "endLine": 53,
+        "endChar": 53
+      },
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0220c440_5f98bd1e",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 23
@@ -30,6 +70,29 @@
       "writtenOn": "2017-09-13T06:02:44Z",
       "side": 1,
       "message": "TODO(nhiroki): Move this function after OnWriteHeadersComplete() for the declaration order.",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5b3fb5_b7380d6f",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-13T08:53:57Z",
+      "side": 1,
+      "message": "std::make_unique",
+      "range": {
+        "startLine": 217,
+        "startChar": 24,
+        "endLine": 217,
+        "endChar": 34
+      },
       "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +116,23 @@
     },
     {
       "key": {
+        "uuid": "cad670e9_0ec97454",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-13T08:53:57Z",
+      "side": 1,
+      "message": "Why do we need the logic? How will this be changed after addressing the TODO comment?\n// Sorry in advance if I\u0027m missing something!",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3625b8ca_e98a4198",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 23
@@ -64,6 +144,40 @@
       "writtenOn": "2017-09-13T08:43:31Z",
       "side": 1,
       "message": "...asynchronously ?",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9fdb7b4_e51ca0dd",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-13T08:53:57Z",
+      "side": 1,
+      "message": "I felt a bit lost since I couldn\u0027t figure out why we need to call OnWriteDataComplete() though it was already passed as a callback.\nHow about adding something like \"OnWriteDataComplete should be called when MaybeWriteData processed the data synchronously.\"?",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a58917b_33e55893",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-13T08:53:57Z",
+      "side": 1,
+      "message": "Is it possible to reach to here without |pending_read_|? If not, I think it could be DCHECK.",
       "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -98,6 +212,23 @@
       "writtenOn": "2017-09-13T08:43:31Z",
       "side": 1,
       "message": "...returns kDummyHeaders with kDummyBody to any request.",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92847dc0_89f4df6a",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-13T08:53:57Z",
+      "side": 1,
+      "message": "Is it possible to have big body which can be split into chunks by mojo?",
       "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
