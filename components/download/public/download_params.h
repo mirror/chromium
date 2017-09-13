@@ -102,6 +102,7 @@ struct RequestParams {
   // The request method ("GET" is the default value).
   std::string method;
   net::HttpRequestHeaders request_headers;
+  std::string post_body;
 };
 
 // The parameters that describe a download request made to the DownloadService.
