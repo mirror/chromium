@@ -870,9 +870,6 @@ extern const char kVideoRotateToFullscreenDescription[];
 extern const char kWalletServiceUseSandboxName[];
 extern const char kWalletServiceUseSandboxDescription[];
 
-extern const char kWebgl2Name[];
-extern const char kWebgl2Description[];
-
 extern const char kWebglDraftExtensionsName[];
 extern const char kWebglDraftExtensionsDescription[];
 

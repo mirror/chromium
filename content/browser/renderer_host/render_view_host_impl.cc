@@ -393,10 +393,8 @@ WebPreferences RenderViewHostImpl::ComputeWebkitPrefs() {
   prefs.databases_enabled =
       !command_line.HasSwitch(switches::kDisableDatabases);
 
-  prefs.experimental_webgl_enabled =
-      GpuProcessHost::gpu_enabled() &&
-      !command_line.HasSwitch(switches::kDisable3DAPIs) &&
-      !command_line.HasSwitch(switches::kDisableExperimentalWebGL);
+  prefs.disable_3d_apis =
+      command_line.HasSwitch(switches::kDisable3DAPIs);
 
   prefs.pepper_3d_enabled =
       !command_line.HasSwitch(switches::kDisablePepper3d);

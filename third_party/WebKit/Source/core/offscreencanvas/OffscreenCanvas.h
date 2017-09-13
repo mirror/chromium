@@ -149,7 +149,8 @@ class CORE_EXPORT OffscreenCanvas final
     return DispatchEvent(event);
   }
 
-  bool IsWebGLAllowed() const override { return true; }
+  bool IsWebGLDisabled() const override { return false; }
+  bool IsWebGLBlocked() const override { return false; }
 
   FontSelector* GetFontSelector() override;
 
