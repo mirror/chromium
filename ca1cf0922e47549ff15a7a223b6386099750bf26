@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "556975a2_13c88c81",
+        "filename": "media/midi/usb_midi_device_factory_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-13T08:05:23Z",
+      "side": 1,
+      "message": "oops... wrong move target :(\nshould be callback_",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 20
+      },
+      "revId": "ca1cf0922e47549ff15a7a223b6386099750bf26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
