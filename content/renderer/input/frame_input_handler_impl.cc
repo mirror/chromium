@@ -35,6 +35,21 @@ blink::WebImeTextSpan::Type ConvertUiImeTextSpanTypeToBlinkType(
   return blink::WebImeTextSpan::Type::kComposition;
 }
 
+blink::WebImeTextSpan::Thickness ConvertUiImeTextSpanThicknessToBlinkThickness(
+    ui::ImeTextSpan::Thickness thickness) {
+  switch (thickness) {
+    case ui::ImeTextSpan::Thickness::kNone:
+      return blink::WebImeTextSpan::Thickness::kNone;
+    case ui::ImeTextSpan::Thickness::kThin:
+      return blink::WebImeTextSpan::Thickness::kThin;
+    case ui::ImeTextSpan::Thickness::kThick:
+      return blink::WebImeTextSpan::Thickness::kThick;
+  }
+
+  NOTREACHED();
+  return blink::WebImeTextSpan::Thickness::kThin;
+}
+
 }  // namespace
 
 FrameInputHandlerImpl::FrameInputHandlerImpl(
@@ -101,7 +116,8 @@ void FrameInputHandlerImpl::SetCompositionFromExistingText(
     blink::WebImeTextSpan blink_ime_text_span(
         ConvertUiImeTextSpanTypeToBlinkType(ime_text_span.type),
         ime_text_span.start_offset, ime_text_span.end_offset,
-        ime_text_span.underline_color, ime_text_span.thick,
+        ime_text_span.underline_color,
+        ConvertUiImeTextSpanThicknessToBlinkThickness(ime_text_span.thickness),
         ime_text_span.background_color,
         ime_text_span.suggestion_highlight_color, ime_text_span.suggestions);
     ime_text_spans.push_back(blink_ime_text_span);

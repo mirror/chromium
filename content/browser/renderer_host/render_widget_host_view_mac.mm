@@ -295,9 +295,12 @@ void ExtractUnderlines(NSAttributedString* string,
         color = WebColorFromNSColor(
             [colorAttr colorUsingColorSpaceName:NSDeviceRGBColorSpace]);
       }
+      ui::ImeTextSpan::Thickness thickness =
+          [style intValue] > 1 ? ui::ImeTextSpan::Thickness::kThick
+                               : ui::ImeTextSpan::Thickness::kThin;
       ime_text_spans->push_back(ui::ImeTextSpan(
           ui::ImeTextSpan::Type::kComposition, range.location,
-          NSMaxRange(range), color, [style intValue] > 1, SK_ColorTRANSPARENT));
+          NSMaxRange(range), color, thickness, SK_ColorTRANSPARENT));
     }
     i = range.location + range.length;
   }
@@ -3352,10 +3355,10 @@ extern NSString *NSTextInputReplacementRangeAttributeName;
   if (isAttributedString) {
     ExtractUnderlines(string, &ime_text_spans_);
   } else {
-    // Use a thin black underline by default.
-    ime_text_spans_.push_back(
-        ui::ImeTextSpan(ui::ImeTextSpan::Type::kComposition, 0, length,
-                        SK_ColorBLACK, false, SK_ColorTRANSPARENT));
+    // Use a thin underline with text color by default.
+    ime_text_spans_.push_back(ui::ImeTextSpan(
+        ui::ImeTextSpan::Type::kComposition, 0, length, SK_ColorTRANSPARENT,
+        ui::ImeTextSpan::Thickness::kThin, SK_ColorTRANSPARENT));
   }
 
   // If we are handling a key down event, then SetComposition() will be
