@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e773c5ab_e80e2806",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-13T16:01:04Z",
+      "side": 0,
+      "message": "Let\u0027s keep this since we keep AppListShown call in ViewInitialized().",
+      "range": {
+        "startLine": 381,
+        "startChar": 13,
+        "endLine": 381,
+        "endChar": 26
+      },
+      "revId": "70fbbcbc16fee296b48ffeb270e0d8ded788954e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
