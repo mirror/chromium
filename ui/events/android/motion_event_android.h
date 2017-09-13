@@ -13,6 +13,7 @@
 
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "base/time/time.h"
 #include "ui/events/events_export.h"
 #include "ui/events/gesture_detection/motion_event.h"
@@ -132,8 +133,25 @@ class EVENTS_EXPORT MotionEventAndroid : public MotionEvent {
   // redundant JNI fetches for the same bits.
   enum { MAX_POINTERS_TO_CACHE = 2 };
 
-  // The Java reference to the underlying MotionEvent.
-  base::android::ScopedJavaGlobalRef<jobject> event_;
+  // Wrapper around a global ref to Java MotionEvent object. There can be
+  // multiple MotionEventAndroid objects per a Java MotionEvent object.
+  // This class let the MEA's avoid creating multiple global ref's to it.
+  class JavaMotionEvent : public base::RefCountedThreadSafe<JavaMotionEvent> {
+   public:
+    JavaMotionEvent(JNIEnv* env, jobject obj);
+
+    base::android::ScopedJavaLocalRef<jobject> obj() const;
+    bool is_null() const;
+
+   private:
+    friend base::RefCountedThreadSafe<JavaMotionEvent>;
+    ~JavaMotionEvent();
+
+    // The Java reference to the underlying MotionEvent.
+    base::android::ScopedJavaGlobalRef<jobject> ref_;
+  };
+
+  scoped_refptr<JavaMotionEvent> event_;
 
   // Used to convert pixel coordinates from the Java-backed MotionEvent to
   // DIP coordinates cached/returned by the MotionEventAndroid.
