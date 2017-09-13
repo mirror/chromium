@@ -3761,8 +3761,7 @@ TEST_P(QuicFramerTest, BuildStreamFramePacketWithVersionFlag) {
   // clang-format off
   unsigned char packet[] = {
       // public flags (version, 8 byte connection_id)
-      static_cast<unsigned char>(
-          FLAGS_quic_reloadable_flag_quic_remove_v33_hacks2 ? 0x39 : 0x3D),
+      0x3D,
       // connection_id
       0xFE, 0xDC, 0xBA, 0x98, 0x76, 0x54, 0x32, 0x10,
       // version tag
@@ -3782,8 +3781,7 @@ TEST_P(QuicFramerTest, BuildStreamFramePacketWithVersionFlag) {
 
   unsigned char packet39[] = {
       // public flags (version, 8 byte connection_id)
-      static_cast<unsigned char>(
-          FLAGS_quic_reloadable_flag_quic_remove_v33_hacks2 ? 0x39 : 0x3D),
+      0x3D,
       // connection_id
       0xFE, 0xDC, 0xBA, 0x98, 0x76, 0x54, 0x32, 0x10,
       // version tag
@@ -3803,8 +3801,7 @@ TEST_P(QuicFramerTest, BuildStreamFramePacketWithVersionFlag) {
 
   unsigned char packet40[] = {
       // public flags (version, 8 byte connection_id)
-      static_cast<unsigned char>(
-          FLAGS_quic_reloadable_flag_quic_remove_v33_hacks2 ? 0x39 : 0x3D),
+      0x3D,
       // connection_id
       0xFE, 0xDC, 0xBA, 0x98, 0x76, 0x54, 0x32, 0x10,
       // version tag
