@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e2e17a5_0e88caf4",
+        "filename": "chrome/browser/resources/print_preview/data/print_ticket_store.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-13T06:02:30Z",
+      "side": 0,
+      "message": "The real magic in this CL is removing onDestinationSelect_(), right? By deferring the ticket updates until later, onTicketChanged_() doesn\u0027t get called, and thus no new preview requests.\n\nHow does the SELECTED_DESTINATION_INVALID part fit in with this?",
+      "revId": "346003b7222982f72ce1079e3419bf797533622b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
