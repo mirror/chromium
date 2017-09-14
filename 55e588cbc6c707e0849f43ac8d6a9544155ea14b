@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09baf8b4_96d4821d",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a237533_91c88858",
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09da9be7_d62d0061",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 24
@@ -33,6 +51,24 @@
       "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5053f4f8_64e70cde",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09da9be7_d62d0061",
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "10bfbea4_b812099e",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5063512_132ce509",
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0585563f_a583ed49",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 24
@@ -67,6 +121,24 @@
       "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b208ddd5_a691170b",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0585563f_a583ed49",
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c2cca919_daa720f1",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0aec113d_b2557097",
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa48fa86_b0bb40ae",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
         "patchSetId": 24
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "b7352793_1c46b414",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa48fa86_b0bb40ae",
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ceec5570_9ee1b9f7",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
         "patchSetId": 24
@@ -115,6 +223,30 @@
       "writtenOn": "2017-09-13T14:09:51Z",
       "side": 1,
       "message": "there\u0027s no class SWScriptCache, and I\u0027d like to avoid using the word \"cache\" for storing these installed scripts (SWCache usually refers to Cache Storage API, and cache feels transient). Prefer \"service worker script storage\"",
+      "range": {
+        "startLine": 71,
+        "startChar": 39,
+        "endLine": 71,
+        "endChar": 63
+      },
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13781d64_348ba8ce",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "I meant SWDiskCache :p \n\nAgree to avoid \"cache\" and \"service worker script storage\" sounds better. Replaced.",
+      "parentUuid": "ceec5570_9ee1b9f7",
       "range": {
         "startLine": 71,
         "startChar": 39,
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "f16f2a3f_2f312b50",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6c1c57a_6348c24b",
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c95052d_4660a62e",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
         "patchSetId": 24
@@ -158,6 +308,24 @@
       "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c925afd_4fdf7cc5",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c95052d_4660a62e",
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -184,6 +352,30 @@
     },
     {
       "key": {
+        "uuid": "c1d52d1b_b959064a",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83ffc253_5b08a6f2",
+      "range": {
+        "startLine": 112,
+        "startChar": 49,
+        "endLine": 112,
+        "endChar": 59
+      },
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31c7f38a_62e4ad52",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
         "patchSetId": 24
@@ -195,6 +387,24 @@
       "writtenOn": "2017-09-13T14:09:51Z",
       "side": 1,
       "message": "The comment could use more context: what message pipe and what data pipe? how about something like:\n\n// A barrier closure for waiting for loading the script from the network to be complete. Called when both URLLoaderClient::OnComplete() is called, and the entire response body is read from the data pipe.\n\ncompletion_closure_ also seems vague for this class which is doing a lot of completions.\n\nhow about something like \"network_load_barrier_closure_\"",
+      "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a844582a_67885102",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "SGTM. Updated the comment and renamed this to |network_load_barrier_closure_|.",
+      "parentUuid": "31c7f38a_62e4ad52",
       "revId": "55e588cbc6c707e0849f43ac8d6a9544155ea14b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

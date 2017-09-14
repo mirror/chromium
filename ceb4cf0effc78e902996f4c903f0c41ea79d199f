@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b8f5966f_f7d99df1",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "Added the comments in the header file.",
+      "parentUuid": "8b96fbf9_bef34ae1",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33cde89a_1535a12b",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 23
@@ -153,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "9b7be1e4_9ab4e863",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "OK, then remove this comment.",
+      "parentUuid": "8b1aa4d6_7b70b437",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dab3a079_044b727c",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 23
@@ -167,6 +203,24 @@
       "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf09e6f2_377ed8b1",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dab3a079_044b727c",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -234,6 +288,24 @@
       "writtenOn": "2017-09-13T09:03:53Z",
       "side": 1,
       "message": "would it be nicer to make this a param to the constructor? decouples a bit.",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1093d69_0f60b2e0",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "I\u0027ll make a follow-up CL to clean up the params of the ctor.",
+      "parentUuid": "65780956_3434062e",
       "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -479,6 +551,24 @@
     },
     {
       "key": {
+        "uuid": "c0d0312e_bd8e2fc0",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure yhirano\u0027s work. Is it already available?\n\nI\u0027d prefer to keep the divergence from the existing system (non-S13n codebase) small as much as possible for now so that we can (hopefully) reuse the existing tests, so can I keep this as is for now and leave a TODO comment instead?",
+      "parentUuid": "8d5bfb9c_9b128e27",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee6a1705_1f75e0cf",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
         "patchSetId": 23
@@ -537,6 +627,30 @@
     },
     {
       "key": {
+        "uuid": "681a2605_49009a34",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "911f119c_82b20b8d",
+      "range": {
+        "startLine": 28,
+        "startChar": 48,
+        "endLine": 28,
+        "endChar": 58
+      },
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbf0cf27_dcdf5c18",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
         "patchSetId": 23
@@ -551,6 +665,24 @@
       "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f1cf7a_2382e820",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbf0cf27_dcdf5c18",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -571,6 +703,24 @@
     },
     {
       "key": {
+        "uuid": "edb37058_53592469",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "Replaced with CommitCompleted().",
+      "parentUuid": "a18cc2ad_0952e485",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00abcd0b_dd1b6945",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
         "patchSetId": 23
@@ -582,6 +732,24 @@
       "writtenOn": "2017-09-13T09:03:53Z",
       "side": 1,
       "message": "I don\u0027t know if the \"forwarding\" is very helpful here. This URLLoader used to just forward a network response. Now it\u0027s looking like a normal URLLoader with a client. Seems it should just be called |client_|.",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bea1cef_53ce867c",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T03:46:02Z",
+      "side": 1,
+      "message": "I\u0027d prefer to keep \"forwarding\" as opposed to \"network\". We have some similar/confusing words like \"client\" and \"producer/consumer\" in this class and the suffix would make them a bit more readable.",
+      "parentUuid": "00abcd0b_dd1b6945",
       "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
