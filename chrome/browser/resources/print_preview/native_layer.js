@@ -86,6 +86,7 @@ print_preview.PrinterType = {
   PRIVET_PRINTER: 0,
   EXTENSION_PRINTER: 1,
   PDF_PRINTER: 2,
+  LOCAL_PRINTER: 3,
 };
 
 cr.define('print_preview', function() {
@@ -163,7 +164,8 @@ cr.define('print_preview', function() {
      * @return {!Promise<!Array<print_preview.LocalDestinationInfo>>}
      */
     getPrinters() {
-      return cr.sendWithPromise('getPrinters');
+      return cr.sendWithPromise(
+          'getPrinters', print_preview.PrinterType.LOCAL_PRINTER);
     }
 
     /**
@@ -174,8 +176,7 @@ cr.define('print_preview', function() {
      */
     getPrivetPrinters() {
       return cr.sendWithPromise(
-          'getExtensionOrPrivetPrinters',
-          print_preview.PrinterType.PRIVET_PRINTER);
+          'getPrinters', print_preview.PrinterType.PRIVET_PRINTER);
     }
 
     /**
@@ -186,8 +187,7 @@ cr.define('print_preview', function() {
      */
     getExtensionPrinters() {
       return cr.sendWithPromise(
-          'getExtensionOrPrivetPrinters',
-          print_preview.PrinterType.EXTENSION_PRINTER);
+          'getPrinters', print_preview.PrinterType.EXTENSION_PRINTER);
     }
 
     /**
@@ -197,7 +197,12 @@ cr.define('print_preview', function() {
      * @return {!Promise<!print_preview.PrinterCapabilitiesResponse>}
      */
     getPrinterCapabilities(destinationId) {
-      return cr.sendWithPromise('getPrinterCapabilities', destinationId);
+      return cr.sendWithPromise(
+          'getPrinterCapabilities', destinationId,
+          destinationId ==
+                  print_preview.Destination.GooglePromotedId.SAVE_AS_PDF ?
+              print_preview.PrinterType.PDF_PRINTER :
+              print_preview.PrinterType.LOCAL_PRINTER);
     }
 
     /**
@@ -209,7 +214,7 @@ cr.define('print_preview', function() {
      */
     getPrivetPrinterCapabilities(destinationId) {
       return cr.sendWithPromise(
-          'getExtensionOrPrivetPrinterCapabilities', destinationId,
+          'getPrinterCapabilities', destinationId,
           print_preview.PrinterType.PRIVET_PRINTER);
     }
 
@@ -223,7 +228,7 @@ cr.define('print_preview', function() {
      */
     getExtensionPrinterCapabilities(destinationId) {
       return cr.sendWithPromise(
-          'getExtensionOrPrivetPrinterCapabilities', destinationId,
+          'getPrinterCapabilities', destinationId,
           print_preview.PrinterType.EXTENSION_PRINTER);
     }
 
