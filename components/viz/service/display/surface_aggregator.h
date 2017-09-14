@@ -23,13 +23,12 @@ namespace cc {
 class BlockingTaskRunner;
 class CompositorFrame;
 class DisplayResourceProvider;
-class SurfaceDrawQuad;
 }  // namespace cc
 
 namespace viz {
-
 class Surface;
 class SurfaceClient;
+class SurfaceDrawQuad;
 class SurfaceManager;
 
 class VIZ_SERVICE_EXPORT SurfaceAggregator {
@@ -102,7 +101,7 @@ class VIZ_SERVICE_EXPORT SurfaceAggregator {
   cc::RenderPassId RemapPassId(cc::RenderPassId surface_local_pass_id,
                                const SurfaceId& surface_id);
 
-  void HandleSurfaceQuad(const cc::SurfaceDrawQuad* surface_quad,
+  void HandleSurfaceQuad(const SurfaceDrawQuad* surface_quad,
                          const gfx::Transform& target_transform,
                          const ClipData& clip_rect,
                          cc::RenderPass* dest_pass,

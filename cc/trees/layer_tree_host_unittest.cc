@@ -28,7 +28,6 @@
 #include "cc/output/output_surface.h"
 #include "cc/output/swap_promise.h"
 #include "cc/quads/render_pass_draw_quad.h"
-#include "cc/quads/tile_draw_quad.h"
 #include "cc/resources/ui_resource_manager.h"
 #include "cc/test/fake_content_layer_client.h"
 #include "cc/test/fake_layer_tree_host_client.h"
@@ -62,6 +61,7 @@
 #include "components/viz/common/quads/copy_output_request.h"
 #include "components/viz/common/quads/copy_output_result.h"
 #include "components/viz/common/quads/draw_quad.h"
+#include "components/viz/common/quads/tile_draw_quad.h"
 #include "components/viz/test/begin_frame_args_test.h"
 #include "components/viz/test/test_layer_tree_frame_sink.h"
 #include "gpu/GLES2/gl2extchromium.h"
@@ -6339,7 +6339,8 @@ class LayerTreeHostTestCrispUpAfterPinchEnds : public LayerTreeHostTest {
       // Checkerboards mean an incomplete frame.
       if (draw_quad->material != viz::DrawQuad::TILED_CONTENT)
         return 0.f;
-      const TileDrawQuad* quad = TileDrawQuad::MaterialCast(draw_quad);
+      const viz::TileDrawQuad* quad =
+          viz::TileDrawQuad::MaterialCast(draw_quad);
       float quad_scale =
           quad->tex_coord_rect.width() / static_cast<float>(quad->rect.width());
       float transform_scale = SkMScalarToFloat(
@@ -6644,7 +6645,8 @@ class LayerTreeHostTestContinuousDrawWhenCreatingVisibleTiles
     float frame_scale = 0.f;
     RenderPass* root_pass = frame_data->render_passes.back().get();
     for (auto* draw_quad : root_pass->quad_list) {
-      const TileDrawQuad* quad = TileDrawQuad::MaterialCast(draw_quad);
+      const viz::TileDrawQuad* quad =
+          viz::TileDrawQuad::MaterialCast(draw_quad);
       float quad_scale =
           quad->tex_coord_rect.width() / static_cast<float>(quad->rect.width());
       float transform_scale = SkMScalarToFloat(

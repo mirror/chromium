@@ -14,19 +14,19 @@
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
 #include "cc/base/math_util.h"
-#include "cc/quads/debug_border_draw_quad.h"
 #include "cc/quads/largest_draw_quad.h"
-#include "cc/quads/picture_draw_quad.h"
 #include "cc/quads/render_pass_draw_quad.h"
-#include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/stream_video_draw_quad.h"
-#include "cc/quads/surface_draw_quad.h"
-#include "cc/quads/texture_draw_quad.h"
-#include "cc/quads/tile_draw_quad.h"
-#include "cc/quads/yuv_video_draw_quad.h"
 #include "components/viz/common/quads/copy_output_request.h"
+#include "components/viz/common/quads/debug_border_draw_quad.h"
 #include "components/viz/common/quads/draw_quad.h"
+#include "components/viz/common/quads/picture_draw_quad.h"
 #include "components/viz/common/quads/shared_quad_state.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
+#include "components/viz/common/quads/stream_video_draw_quad.h"
+#include "components/viz/common/quads/surface_draw_quad.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
+#include "components/viz/common/quads/tile_draw_quad.h"
+#include "components/viz/common/quads/yuv_video_draw_quad.h"
 #include "components/viz/common/traced_value.h"
 
 namespace {
@@ -54,8 +54,8 @@ void QuadList::ReplaceExistingQuadWithOpaqueTransparentSolidColor(Iterator at) {
   bool needs_blending = false;
   const viz::SharedQuadState* shared_quad_state = at->shared_quad_state;
 
-  SolidColorDrawQuad* replacement =
-      QuadList::ReplaceExistingElement<SolidColorDrawQuad>(at);
+  auto* replacement =
+      QuadList::ReplaceExistingElement<viz::SolidColorDrawQuad>(at);
   replacement->SetAll(shared_quad_state, rect, rect /* visible_rect */,
                       needs_blending, SK_ColorTRANSPARENT, true);
 }
@@ -277,28 +277,28 @@ viz::DrawQuad* RenderPass::CopyFromAndAppendDrawQuad(
   DCHECK(!shared_quad_state_list.empty());
   switch (quad->material) {
     case viz::DrawQuad::DEBUG_BORDER:
-      CopyFromAndAppendTypedDrawQuad<DebugBorderDrawQuad>(quad);
+      CopyFromAndAppendTypedDrawQuad<viz::DebugBorderDrawQuad>(quad);
       break;
     case viz::DrawQuad::PICTURE_CONTENT:
-      CopyFromAndAppendTypedDrawQuad<PictureDrawQuad>(quad);
+      CopyFromAndAppendTypedDrawQuad<viz::PictureDrawQuad>(quad);
       break;
     case viz::DrawQuad::TEXTURE_CONTENT:
-      CopyFromAndAppendTypedDrawQuad<TextureDrawQuad>(quad);
+      CopyFromAndAppendTypedDrawQuad<viz::TextureDrawQuad>(quad);
       break;
     case viz::DrawQuad::SOLID_COLOR:
-      CopyFromAndAppendTypedDrawQuad<SolidColorDrawQuad>(quad);
+      CopyFromAndAppendTypedDrawQuad<viz::SolidColorDrawQuad>(quad);
       break;
     case viz::DrawQuad::TILED_CONTENT:
-      CopyFromAndAppendTypedDrawQuad<TileDrawQuad>(quad);
+      CopyFromAndAppendTypedDrawQuad<viz::TileDrawQuad>(quad);
       break;
     case viz::DrawQuad::STREAM_VIDEO_CONTENT:
-      CopyFromAndAppendTypedDrawQuad<StreamVideoDrawQuad>(quad);
+      CopyFromAndAppendTypedDrawQuad<viz::StreamVideoDrawQuad>(quad);
       break;
     case viz::DrawQuad::SURFACE_CONTENT:
-      CopyFromAndAppendTypedDrawQuad<SurfaceDrawQuad>(quad);
+      CopyFromAndAppendTypedDrawQuad<viz::SurfaceDrawQuad>(quad);
       break;
     case viz::DrawQuad::YUV_VIDEO_CONTENT:
-      CopyFromAndAppendTypedDrawQuad<YUVVideoDrawQuad>(quad);
+      CopyFromAndAppendTypedDrawQuad<viz::YUVVideoDrawQuad>(quad);
       break;
     // RenderPass quads need to use specific CopyFrom function.
     case viz::DrawQuad::RENDER_PASS:

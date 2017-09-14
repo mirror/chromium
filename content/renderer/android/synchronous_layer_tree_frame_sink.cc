@@ -20,9 +20,9 @@
 #include "cc/output/software_output_device.h"
 #include "cc/output/texture_mailbox_deleter.h"
 #include "cc/quads/render_pass.h"
-#include "cc/quads/surface_draw_quad.h"
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/gpu/context_provider.h"
+#include "components/viz/common/quads/surface_draw_quad.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
@@ -304,7 +304,7 @@ void SynchronousLayerTreeFrameSink::SubmitCompositorFrame(
     auto* shared_quad_state =
         embed_render_pass->CreateAndAppendSharedQuadState();
     auto* surface_quad =
-        embed_render_pass->CreateAndAppendDrawQuad<cc::SurfaceDrawQuad>();
+        embed_render_pass->CreateAndAppendDrawQuad<viz::SurfaceDrawQuad>();
     shared_quad_state->SetAll(
         child_transform, gfx::Rect(child_size), gfx::Rect(child_size),
         gfx::Rect() /* clip_rect */, false /* is_clipped */,
@@ -313,7 +313,7 @@ void SynchronousLayerTreeFrameSink::SubmitCompositorFrame(
     surface_quad->SetNew(
         shared_quad_state, gfx::Rect(child_size), gfx::Rect(child_size),
         viz::SurfaceId(kChildFrameSinkId, child_local_surface_id_),
-        cc::SurfaceDrawQuadType::PRIMARY, nullptr);
+        viz::SurfaceDrawQuadType::PRIMARY, nullptr);
 
     bool result = child_support_->SubmitCompositorFrame(child_local_surface_id_,
                                                         std::move(frame));

@@ -5,7 +5,7 @@
 #include "platform/graphics/OffscreenCanvasFrameDispatcherImpl.h"
 
 #include "cc/output/compositor_frame.h"
-#include "cc/quads/texture_draw_quad.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
 #include "components/viz/common/resources/resource_format.h"
 #include "platform/CrossThreadFunctional.h"
 #include "platform/Histogram.h"
@@ -193,8 +193,8 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
   offscreen_canvas_resource_provider_->IncNextResourceId();
   frame.resource_list.push_back(std::move(resource));
 
-  cc::TextureDrawQuad* quad =
-      pass->CreateAndAppendDrawQuad<cc::TextureDrawQuad>();
+  viz::TextureDrawQuad* quad =
+      pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
   gfx::Size rect_size(width_, height_);
 
   // TODO(crbug.com/705019): optimize for contexts that have {alpha: false}

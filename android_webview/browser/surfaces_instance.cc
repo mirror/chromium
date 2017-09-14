@@ -13,10 +13,10 @@
 #include "android_webview/browser/parent_output_surface.h"
 #include "base/memory/ptr_util.h"
 #include "cc/output/texture_mailbox_deleter.h"
-#include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/surface_draw_quad.h"
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/frame_sinks/begin_frame_source.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
+#include "components/viz/common/quads/surface_draw_quad.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "components/viz/service/display/display.h"
 #include "components/viz/service/display/display_scheduler.h"
@@ -139,11 +139,11 @@ void SurfacesInstance::DrawAndSwap(const gfx::Size& viewport,
   quad_state->is_clipped = true;
   quad_state->opacity = 1.f;
 
-  cc::SurfaceDrawQuad* surface_quad =
-      render_pass->CreateAndAppendDrawQuad<cc::SurfaceDrawQuad>();
+  viz::SurfaceDrawQuad* surface_quad =
+      render_pass->CreateAndAppendDrawQuad<viz::SurfaceDrawQuad>();
   surface_quad->SetNew(quad_state, gfx::Rect(quad_state->quad_layer_rect),
                        gfx::Rect(quad_state->quad_layer_rect), child_id,
-                       cc::SurfaceDrawQuadType::PRIMARY, nullptr);
+                       viz::SurfaceDrawQuadType::PRIMARY, nullptr);
 
   cc::CompositorFrame frame;
   // We draw synchronously, so acknowledge a manual BeginFrame.
@@ -192,8 +192,8 @@ void SurfacesInstance::SetSolidColorRootFrame() {
       render_pass->CreateAndAppendSharedQuadState();
   quad_state->SetAll(gfx::Transform(), rect, rect, rect, is_clipped,
                      are_contents_opaque, 1.f, SkBlendMode::kSrcOver, 0);
-  cc::SolidColorDrawQuad* solid_quad =
-      render_pass->CreateAndAppendDrawQuad<cc::SolidColorDrawQuad>();
+  viz::SolidColorDrawQuad* solid_quad =
+      render_pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   solid_quad->SetNew(quad_state, rect, rect, SK_ColorBLACK, false);
   cc::CompositorFrame frame;
   frame.render_pass_list.push_back(std::move(render_pass));

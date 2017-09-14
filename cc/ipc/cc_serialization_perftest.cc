@@ -8,7 +8,7 @@
 #include "base/test/test_suite.h"
 #include "cc/ipc/cc_param_traits.h"
 #include "cc/output/compositor_frame.h"
-#include "cc/quads/picture_draw_quad.h"
+#include "components/viz/common/quads/picture_draw_quad.h"
 #include "gpu/ipc/common/mailbox_holder_struct_traits.h"
 #include "gpu/ipc/common/mailbox_struct_traits.h"
 #include "gpu/ipc/common/sync_token_struct_traits.h"
@@ -362,7 +362,7 @@ class CCSerializationPerfTest : public testing::Test {
           arbitrary_bool1, arbitrary_bool1, arbitrary_float2,
           arbitrary_blend_mode2, arbitrary_context_id2);
       for (uint32_t j = 0; j < 6; ++j) {
-        TileDrawQuad* tile_in =
+        viz::TileDrawQuad* tile_in =
             pass_in->CreateAndAppendDrawQuad<TileDrawQuad>();
         tile_in->SetAll(shared_state2_in, arbitrary_rect2,
                         arbitrary_rect1_inside_rect2, arbitrary_bool1,
@@ -380,7 +380,7 @@ class CCSerializationPerfTest : public testing::Test {
           arbitrary_bool1, arbitrary_bool1, arbitrary_float3,
           arbitrary_blend_mode3, arbitrary_context_id3);
       for (uint32_t j = 0; j < 5; ++j) {
-        SolidColorDrawQuad* solidcolor_in =
+        viz::SolidColorDrawQuad* solidcolor_in =
             pass_in->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
         solidcolor_in->SetAll(shared_state3_in, arbitrary_rect3,
                               arbitrary_rect2_inside_rect3, arbitrary_bool1,
@@ -406,7 +406,7 @@ class CCSerializationPerfTest : public testing::Test {
           render_pass->CreateAndAppendSharedQuadState();
         const gfx::Rect bounds(100, 100, 100, 100);
         const bool kForceAntiAliasingOff = true;
-        SolidColorDrawQuad* quad =
+        viz::SolidColorDrawQuad* quad =
             render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
         quad->SetNew(render_pass->shared_quad_state_list.back(), bounds, bounds,
                      SK_ColorRED, kForceAntiAliasingOff);

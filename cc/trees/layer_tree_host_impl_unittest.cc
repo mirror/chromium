@@ -39,9 +39,6 @@
 #include "cc/output/compositor_frame_metadata.h"
 #include "cc/output/latency_info_swap_promise.h"
 #include "cc/quads/render_pass_draw_quad.h"
-#include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/texture_draw_quad.h"
-#include "cc/quads/tile_draw_quad.h"
 #include "cc/resources/ui_resource_bitmap.h"
 #include "cc/resources/ui_resource_manager.h"
 #include "cc/test/animation_test_common.h"
@@ -69,6 +66,9 @@
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "components/viz/common/quads/copy_output_request.h"
 #include "components/viz/common/quads/copy_output_result.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
+#include "components/viz/common/quads/tile_draw_quad.h"
 #include "components/viz/service/display/gl_renderer.h"
 #include "components/viz/test/begin_frame_args_test.h"
 #include "components/viz/test/test_layer_tree_frame_sink.h"
@@ -7792,8 +7792,8 @@ class BlendStateCheckLayer : public LayerImpl {
         render_pass->CreateAndAppendSharedQuadState();
     PopulateSharedQuadState(shared_quad_state, contents_opaque());
 
-    TileDrawQuad* test_blending_draw_quad =
-        render_pass->CreateAndAppendDrawQuad<TileDrawQuad>();
+    auto* test_blending_draw_quad =
+        render_pass->CreateAndAppendDrawQuad<viz::TileDrawQuad>();
     test_blending_draw_quad->SetNew(
         shared_quad_state, quad_rect_, visible_quad_rect, needs_blending,
         resource_id_, gfx::RectF(0.f, 0.f, 1.f, 1.f), gfx::Size(1, 1), false,
@@ -8350,7 +8350,8 @@ class LayerTreeHostImplViewportCoveredTest : public LayerTreeHostImplTest {
     for (auto* quad : quad_list) {
       if (quad->material != viz::DrawQuad::TEXTURE_CONTENT)
         continue;
-      const TextureDrawQuad* texture_quad = TextureDrawQuad::MaterialCast(quad);
+      const viz::TextureDrawQuad* texture_quad =
+          viz::TextureDrawQuad::MaterialCast(quad);
       gfx::SizeF gutter_texture_size_pixels =
           gfx::ScaleSize(gfx::SizeF(gutter_texture_size_),
                          host_impl_->active_tree()->device_scale_factor());
@@ -8590,8 +8591,8 @@ class FakeLayerWithQuads : public LayerImpl {
     SkColor gray = SkColorSetRGB(100, 100, 100);
     gfx::Rect quad_rect(bounds());
     gfx::Rect visible_quad_rect(quad_rect);
-    SolidColorDrawQuad* my_quad =
-        render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+    auto* my_quad =
+        render_pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
     my_quad->SetNew(shared_quad_state, quad_rect, visible_quad_rect, gray,
                     false);
   }
@@ -12061,12 +12062,11 @@ TEST_F(LayerTreeHostImplTest, RemoveUnreferencedRenderPass) {
   pass3->SetNew(3, gfx::Rect(), gfx::Rect(), gfx::Transform());
 
   // Add a quad to each pass so they aren't empty.
-  SolidColorDrawQuad* color_quad;
-  color_quad = pass1->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  auto* color_quad = pass1->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   color_quad->material = viz::DrawQuad::SOLID_COLOR;
-  color_quad = pass2->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  color_quad = pass2->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   color_quad->material = viz::DrawQuad::SOLID_COLOR;
-  color_quad = pass3->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  color_quad = pass3->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   color_quad->material = viz::DrawQuad::SOLID_COLOR;
 
   // pass3 is referenced by pass2.
@@ -12098,8 +12098,7 @@ TEST_F(LayerTreeHostImplTest, RemoveEmptyRenderPass) {
   pass3->SetNew(3, gfx::Rect(), gfx::Rect(), gfx::Transform());
 
   // pass1 is not empty, but pass2 and pass3 are.
-  SolidColorDrawQuad* color_quad;
-  color_quad = pass1->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  auto* color_quad = pass1->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   color_quad->material = viz::DrawQuad::SOLID_COLOR;
 
   // pass3 is referenced by pass2.

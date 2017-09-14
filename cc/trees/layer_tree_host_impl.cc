@@ -49,8 +49,6 @@
 #include "cc/output/compositor_frame_metadata.h"
 #include "cc/output/layer_tree_frame_sink.h"
 #include "cc/quads/render_pass_draw_quad.h"
-#include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/raster/bitmap_raster_buffer_provider.h"
 #include "cc/raster/gpu_raster_buffer_provider.h"
 #include "cc/raster/one_copy_raster_buffer_provider.h"
@@ -82,6 +80,8 @@
 #include "components/viz/common/frame_sinks/delay_based_time_source.h"
 #include "components/viz/common/quads/copy_output_request.h"
 #include "components/viz/common/quads/shared_quad_state.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
 #include "components/viz/common/traced_value.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/context_support.h"
@@ -775,8 +775,8 @@ static void AppendQuadsToFillScreen(
     gfx::Rect visible_screen_space_rect = screen_space_rect;
     // Skip the quad culler and just append the quads directly to avoid
     // occlusion checks.
-    SolidColorDrawQuad* quad =
-        target_render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+    auto* quad =
+        target_render_pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
     quad->SetNew(shared_quad_state, screen_space_rect,
                  visible_screen_space_rect, screen_background_color, false);
   }

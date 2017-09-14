@@ -14,18 +14,18 @@
 #include "cc/base/math_util.h"
 #include "cc/debug/debug_colors.h"
 #include "cc/layers/append_quads_data.h"
-#include "cc/quads/content_draw_quad_base.h"
-#include "cc/quads/debug_border_draw_quad.h"
 #include "cc/quads/render_pass.h"
 #include "cc/quads/render_pass_draw_quad.h"
-#include "cc/quads/solid_color_draw_quad.h"
 #include "cc/trees/damage_tracker.h"
 #include "cc/trees/draw_property_utils.h"
 #include "cc/trees/effect_node.h"
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/occlusion.h"
 #include "cc/trees/transform_node.h"
+#include "components/viz/common/quads/content_draw_quad_base.h"
+#include "components/viz/common/quads/debug_border_draw_quad.h"
 #include "components/viz/common/quads/shared_quad_state.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
 #include "third_party/skia/include/core/SkImageFilter.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/transform.h"
@@ -398,8 +398,8 @@ void RenderSurfaceImpl::AppendQuads(DrawMode draw_mode,
 
   if (layer_tree_impl_->debug_state().show_debug_borders.test(
           DebugBorderType::RENDERPASS)) {
-    DebugBorderDrawQuad* debug_border_quad =
-        render_pass->CreateAndAppendDrawQuad<DebugBorderDrawQuad>();
+    auto* debug_border_quad =
+        render_pass->CreateAndAppendDrawQuad<viz::DebugBorderDrawQuad>();
     debug_border_quad->SetNew(shared_quad_state, content_rect(),
                               visible_layer_rect, GetDebugBorderColor(),
                               GetDebugBorderWidth());
@@ -513,9 +513,9 @@ void RenderSurfaceImpl::TileMaskLayer(RenderPass* render_pass,
       case viz::DrawQuad::TILED_CONTENT: {
         DCHECK_EQ(1U, temp_quad->resources.count);
         gfx::Size mask_texture_size =
-            static_cast<ContentDrawQuadBase*>(temp_quad)->texture_size;
+            static_cast<viz::ContentDrawQuadBase*>(temp_quad)->texture_size;
         gfx::RectF temp_tex_coord_rect =
-            static_cast<ContentDrawQuadBase*>(temp_quad)->tex_coord_rect;
+            static_cast<viz::ContentDrawQuadBase*>(temp_quad)->tex_coord_rect;
         gfx::Transform coverage_to_non_normalized_mask =
             gfx::Transform(SkMatrix44(SkMatrix::MakeRectToRect(
                 RectToSkRect(quad_rect), RectFToSkRect(temp_tex_coord_rect),
@@ -538,12 +538,12 @@ void RenderSurfaceImpl::TileMaskLayer(RenderPass* render_pass,
                      quad_rect_in_non_normalized_texture_space);
       } break;
       case viz::DrawQuad::SOLID_COLOR: {
-        if (!static_cast<SolidColorDrawQuad*>(temp_quad)->color)
+        if (!static_cast<viz::SolidColorDrawQuad*>(temp_quad)->color)
           continue;
         SkAlpha solid = SK_AlphaOPAQUE;
-        DCHECK_EQ(
-            SkColorGetA(static_cast<SolidColorDrawQuad*>(temp_quad)->color),
-            solid);
+        DCHECK_EQ(SkColorGetA(
+                      static_cast<viz::SolidColorDrawQuad*>(temp_quad)->color),
+                  solid);
 
         RenderPassDrawQuad* quad =
             render_pass->CreateAndAppendDrawQuad<RenderPassDrawQuad>();

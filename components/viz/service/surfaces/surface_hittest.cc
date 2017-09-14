@@ -6,8 +6,8 @@
 
 #include "cc/output/compositor_frame.h"
 #include "cc/quads/render_pass_draw_quad.h"
-#include "cc/quads/surface_draw_quad.h"
 #include "components/viz/common/quads/draw_quad.h"
+#include "components/viz/common/quads/surface_draw_quad.h"
 #include "components/viz/service/surfaces/surface.h"
 #include "components/viz/service/surfaces/surface_hittest_delegate.h"
 #include "components/viz/service/surfaces/surface_manager.h"
@@ -115,10 +115,9 @@ bool SurfaceHittest::GetTargetSurfaceAtPointInternal(
     }
 
     if (quad->material == DrawQuad::SURFACE_CONTENT) {
-      // We've hit a cc::SurfaceDrawQuad, we need to recurse into this
+      // We've hit a SurfaceDrawQuad, we need to recurse into this
       // Surface.
-      const cc::SurfaceDrawQuad* surface_quad =
-          cc::SurfaceDrawQuad::MaterialCast(quad);
+      const SurfaceDrawQuad* surface_quad = SurfaceDrawQuad::MaterialCast(quad);
 
       if (delegate_ &&
           delegate_->RejectHitTarget(surface_quad, point_in_quad_space)) {
@@ -209,8 +208,7 @@ bool SurfaceHittest::GetTransformToTargetSurfaceInternal(
         return false;
       }
 
-      const cc::SurfaceDrawQuad* surface_quad =
-          cc::SurfaceDrawQuad::MaterialCast(quad);
+      const SurfaceDrawQuad* surface_quad = SurfaceDrawQuad::MaterialCast(quad);
       if (surface_quad->surface_id == target_surface_id) {
         *out_transform = target_to_quad_transform * transform_from_root_target;
         return true;

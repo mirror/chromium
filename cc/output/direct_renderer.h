@@ -16,8 +16,8 @@
 #include "cc/output/ca_layer_overlay.h"
 #include "cc/output/dc_layer_overlay.h"
 #include "cc/output/overlay_processor.h"
-#include "cc/quads/tile_draw_quad.h"
 #include "cc/resources/display_resource_provider.h"
+#include "components/viz/common/quads/tile_draw_quad.h"
 #include "gpu/command_buffer/common/texture_in_use_response.h"
 #include "ui/gfx/geometry/quad_f.h"
 #include "ui/gfx/geometry/rect.h"
@@ -168,7 +168,8 @@ class CC_EXPORT DirectRenderer {
   // If a pass contains a single tile draw quad and can be drawn without
   // a render pass (e.g. applying a filter directly to the tile quad)
   // return that quad, otherwise return null.
-  virtual const TileDrawQuad* CanPassBeDrawnDirectly(const RenderPass* pass);
+  virtual const viz::TileDrawQuad* CanPassBeDrawnDirectly(
+      const RenderPass* pass);
   virtual void FinishDrawingQuadList() {}
   virtual bool FlippedFramebuffer() const = 0;
   virtual void EnsureScissorTestEnabled() = 0;
@@ -210,7 +211,7 @@ class CC_EXPORT DirectRenderer {
       render_pass_textures_;
   // A map from RenderPass id to the single quad present in and replacing the
   // RenderPass.
-  base::flat_map<RenderPassId, TileDrawQuad> render_pass_bypass_quads_;
+  base::flat_map<RenderPassId, viz::TileDrawQuad> render_pass_bypass_quads_;
 
   // A map from RenderPass id to the filters used when drawing the RenderPass.
   base::flat_map<RenderPassId, FilterOperations*> render_pass_filters_;
