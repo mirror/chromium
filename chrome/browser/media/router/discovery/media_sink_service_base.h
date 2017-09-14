@@ -5,8 +5,8 @@
 #ifndef CHROME_BROWSER_MEDIA_ROUTER_DISCOVERY_MEDIA_SINK_SERVICE_BASE_H_
 #define CHROME_BROWSER_MEDIA_ROUTER_DISCOVERY_MEDIA_SINK_SERVICE_BASE_H_
 
+#include <map>
 #include <memory>
-#include <set>
 
 #include "base/gtest_prod_util.h"
 #include "base/timer/timer.h"
@@ -44,10 +44,10 @@ class MediaSinkServiceBase : public MediaSinkService {
   int fetch_complete_timeout_secs_;
 
   // Sorted sinks from current round of discovery.
-  std::set<MediaSinkInternal> current_sinks_;
+  std::map<MediaSink::Id, MediaSinkInternal> current_sinks_;
 
   // Sorted sinks sent to Media Router Provider in last FetchCompleted().
-  std::set<MediaSinkInternal> mrp_sinks_;
+  std::map<MediaSink::Id, MediaSinkInternal> mrp_sinks_;
 
  private:
   friend class MediaSinkServiceBaseTest;

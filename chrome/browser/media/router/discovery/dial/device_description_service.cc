@@ -273,6 +273,7 @@ void DeviceDescriptionService::OnParsedDeviceDescription(
            << CachedDeviceDescriptionToString(cached_description_data);
 #endif
 
+  // XXX: update description if already exists for some reason?
   DVLOG(2) << "Caching device description for " << device_data.label();
   description_cache_.insert(
       std::make_pair(device_data.label(), cached_description_data));

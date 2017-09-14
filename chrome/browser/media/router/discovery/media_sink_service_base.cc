@@ -1,6 +1,7 @@
 // Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+
 #include "chrome/browser/media/router/discovery/media_sink_service_base.h"
 
 #include <vector>
@@ -34,8 +35,12 @@ void MediaSinkServiceBase::OnFetchCompleted() {
   }
 
   DVLOG(2) << "Send sinks to media router, [size]: " << current_sinks_.size();
-  sink_discovery_callback_.Run(std::vector<MediaSinkInternal>(
-      current_sinks_.begin(), current_sinks_.end()));
+  std::vector<MediaSinkInternal> sinks;
+  sinks.reserve(current_sinks_.size());
+  for (const auto& it : current_sinks_)
+    sinks.push_back(it.second);
+
+  sink_discovery_callback_.Run(std::move(sinks));
   mrp_sinks_ = current_sinks_;
 
   RecordDeviceCounts();

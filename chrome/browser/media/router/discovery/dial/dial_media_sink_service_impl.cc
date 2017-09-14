@@ -130,7 +130,17 @@ void DialMediaSinkServiceImpl::OnDeviceDescriptionAvailable(
   }
 
   MediaSinkInternal dial_sink(sink, extra_data);
-  current_sinks_.insert(dial_sink);
+
+  // Note that it is rare, but possible for |OnDeviceDescriptionAvailable| to be
+  // called more than once for the same device after |current_sinks_| has been
+  // cleared (e.g. the device description parser does not return until the next
+  // DIAL device event). Assume the incoming description is the most recent
+  // version.
+  auto result = current_sinks_.emplace(dial_sink.sink().id(), dial_sink);
+  if (!result.second) {
+    result.first->second = dial_sink;
+  }
+
   if (observer_)
     observer_->OnDialSinkAdded(dial_sink);
 

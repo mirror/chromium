@@ -132,7 +132,11 @@ void CastMediaSinkServiceImpl::OnFetchCompleted() {
              << " [name]: " << sink_it.second.sink().name()
              << " [ip_endpoint]: "
              << sink_it.second.cast_data().ip_endpoint.ToString();
-    current_sinks_.insert(sink_it.second);
+    // TODO(imcheng): Consider getting rid of |current_sinks_map_| and just use
+    // |current_sinks_| directly. We need to re-evaluate if we really need to
+    // index sinks by IP endpoint.
+    const MediaSinkInternal& cast_sink = sink_it.second;
+    current_sinks_.emplace(cast_sink.sink().id(), cast_sink);
   }
 
   MediaSinkServiceBase::OnFetchCompleted();
@@ -183,15 +187,12 @@ void CastMediaSinkServiceImpl::OnError(const cast_channel::CastSocket& socket,
     return;
   }
 
-  std::unique_ptr<net::BackoffEntry> backoff_entry(
-      new net::BackoffEntry(backoff_policy_));
-
-  DVLOG(2) << "OnError starts reopening cast channel: "
-           << ip_endpoint.ToString();
-  // Find existing cast sink from |current_sinks_map_|.
   auto cast_sink_it = current_sinks_map_.find(ip_endpoint.address());
   if (cast_sink_it != current_sinks_map_.end()) {
-    OnChannelErrorMayRetry(cast_sink_it->second, std::move(backoff_entry),
+    DVLOG(2) << "OnError starts reopening cast channel: "
+             << ip_endpoint.ToString();
+    OnChannelErrorMayRetry(cast_sink_it->second,
+                           base::MakeUnique<net::BackoffEntry>(backoff_policy_),
                            error_state);
     return;
   }
@@ -312,7 +313,7 @@ void CastMediaSinkServiceImpl::OnChannelOpenSucceeded(
     extra_data.capabilities |= cast_channel::CastDeviceCapability::VIDEO_OUT;
   extra_data.cast_channel_id = socket->id();
   cast_sink.set_cast_data(extra_data);
-  DVLOG(2) << "Ading sink to current_sinks_ [name]: "
+  DVLOG(2) << "Adding sink to current_sinks_ [name]: "
            << cast_sink.sink().name();
 
   // Add or update existing cast sink.
