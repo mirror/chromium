@@ -263,6 +263,12 @@ void AwURLRequestContextGetter::InitializeURLRequestContext() {
       CreateAuthHandlerFactory(host_resolver.get()));
   builder.set_host_resolver(std::move(host_resolver));
 
+  std::unique_ptr<net::CertVerifier> cert_verifier =
+      net::CertVerifier::CreateDefault();
+  builder->SetCertVerifier(
+      content::IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(
+          command_line, switches::kUserDataDir, std::move(cert_verifier)));
+
   url_request_context_ = builder.Build();
 #if DCHECK_IS_ON()
   g_created_url_request_context_builder = true;
