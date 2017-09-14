@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3976a699_2c7bd340",
+        "filename": "chrome/browser/metrics/thread_watcher_report_hang.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-14T15:06:38Z",
+      "side": 0,
+      "message": "\u003e What\u0027s blocking doing this now? \n\nI have no idea...\n\n\u003e Hardcoded constants are sad. :(\n\nI agree but this is beyond the scope of this CL.",
+      "parentUuid": "e47d5d70_718ffb89",
+      "range": {
+        "startLine": 92,
+        "startChar": 43,
+        "endLine": 92,
+        "endChar": 44
+      },
+      "revId": "297442d0e24dab5b3aa81f684aed820853a1d4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79ad66d7_4d62a49f",
         "filename": "components/metrics/proto/execution_context.proto",
         "patchSetId": 13
@@ -39,6 +63,24 @@
       "revId": "297442d0e24dab5b3aa81f684aed820853a1d4a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc652b81_fcd02ea1",
+        "filename": "components/metrics/proto/execution_context.proto",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-14T15:06:38Z",
+      "side": 0,
+      "message": "Flagged deprecated and commented out (don\u0027t need the explicit values to exist at compile-time do I?)",
+      "parentUuid": "79ad66d7_4d62a49f",
+      "revId": "297442d0e24dab5b3aa81f684aed820853a1d4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "2b97e6f6_a0f60c00",
+        "filename": "components/metrics/public/interfaces/call_stack_profile_collector.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-14T15:06:38Z",
+      "side": 0,
+      "message": "Perhaps we could but this should have been a concern when introducing this in components/metrics in the first place, it\u0027s not in this CL\u0027s scope (nor will I own doing this after, sorry..).",
+      "parentUuid": "025b7feb_f7be6afc",
+      "range": {
+        "startLine": 56,
+        "startChar": 12,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "297442d0e24dab5b3aa81f684aed820853a1d4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe335b3e_dbbc9fa0",
         "filename": "content/public/browser/browser_thread.h",
         "patchSetId": 13
@@ -85,6 +151,30 @@
       "revId": "297442d0e24dab5b3aa81f684aed820853a1d4a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaafaced_25f1be5c",
+        "filename": "content/public/browser/browser_thread.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-14T15:06:38Z",
+      "side": 0,
+      "message": "I have tried my best but can\u0027t guarantee... everything I found is in this CL. Some code also loops from BrowserThread::UI to BrowserThread::ID_COUNT so we can\u0027t leave deprecated values in place either. My thought was to search around and fix everything I could find and see what breaks when this lands (at beginning of M63 so plenty of time).\n\nAlternatively we could remove BrowserThread::ID_COUNT and looping code once BrowserThread::FILE goes away and leave the old values in place (but it blocks this CL until BrowserThread::FILE can also be removed).",
+      "parentUuid": "fe335b3e_dbbc9fa0",
+      "range": {
+        "startLine": 72,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 0
+      },
+      "revId": "297442d0e24dab5b3aa81f684aed820853a1d4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
