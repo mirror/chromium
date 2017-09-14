@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab90c163_2c86da4c",
+        "filename": "third_party/WebKit/Source/core/html/ImageDocument.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-14T23:26:26Z",
+      "side": 1,
+      "message": "Nit: use full name instead of abbreviation whose meaning looks not obvious in this context.",
+      "revId": "c9269779f1d920b490d84131e8c93641f83d891c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
