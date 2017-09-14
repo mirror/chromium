@@ -806,6 +806,11 @@ const char kRootLayerScrolls[]              = "root-layer-scrolls";
 // Causes the process to run as a sandbox IPC subprocess.
 const char kSandboxIPCProcess[]             = "sandbox-ipc";
 
+// Causes the renderer to keep an old document's cached resources alive until
+// the specified point in the next document's lifecycle.
+const char kSavePreviousDocumentResourcesUntil[] =
+    "save-previous-document-resources-until";
+
 // Visibly render a border around paint rects in the web page to help debug
 // and study painting behavior.
 const char kShowPaintRects[]                = "show-paint-rects";
