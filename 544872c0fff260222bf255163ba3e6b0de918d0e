@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b9d0b004_75e341e7",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T13:58:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea9f9363_15a51b13",
+      "revId": "544872c0fff260222bf255163ba3e6b0de918d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea801541_043e2973",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "30a16d15_eae58c0d",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T13:58:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea801541_043e2973",
+      "range": {
+        "startLine": 286,
+        "startChar": 12,
+        "endLine": 286,
+        "endChar": 47
+      },
+      "revId": "544872c0fff260222bf255163ba3e6b0de918d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca57ebc3_3e776399",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2017-09-13T18:27:38Z",
       "side": 1,
       "message": "move this up into the anonymous namespace",
+      "range": {
+        "startLine": 455,
+        "startChar": 0,
+        "endLine": 455,
+        "endChar": 26
+      },
+      "revId": "544872c0fff260222bf255163ba3e6b0de918d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1222ca8_1a69caa5",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T13:58:44Z",
+      "side": 1,
+      "message": "Or even better, within the body of FinalizeGlobalMemoryDumpIfAllManagersReplied(), since it\u0027s used only there",
+      "parentUuid": "ca57ebc3_3e776399",
       "range": {
         "startLine": 455,
         "startChar": 0,
@@ -122,6 +188,30 @@
       "writtenOn": "2017-09-12T21:33:01Z",
       "side": 1,
       "message": "how about merge the 2 loops instead of intermediate vector?\n\nfor (it : map)\n  if(!valid)\n    continue;\n  add to trace...\n\n\nCurious, why don\u0027t we add whatever information we have to trace? Let\u0027s say os dump failed, but chrome dump was success, why not add the chrome dumps to trace or uma ...?\nI think what should happen is in just a single loop through the responses we can do all these checks and add to trace and create the result struct.",
+      "range": {
+        "startLine": 519,
+        "startChar": 2,
+        "endLine": 519,
+        "endChar": 45
+      },
+      "revId": "544872c0fff260222bf255163ba3e6b0de918d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb80e413_9f9cd156",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T13:58:44Z",
+      "side": 1,
+      "message": "\u003e how about merge the 2 loops instead of intermediate vector?\n\nYup I agree\n\n\n\u003e Curious, why don\u0027t we add whatever information we have to trace? Let\u0027s say os dump failed, but chrome dump was success, why not add the chrome dumps to trace or uma ...?\n\nHmm this will make the code below harder to handle and more prone to null pointer deref bugs.\nI don\u0027t think we have a concrete case where we want this (null os dump)?",
+      "parentUuid": "b74f8ac4_047e6517",
       "range": {
         "startLine": 519,
         "startChar": 2,
@@ -226,6 +316,54 @@
     },
     {
       "key": {
+        "uuid": "f607c15c_a8177940",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T13:58:44Z",
+      "side": 1,
+      "message": "not sure but conservatively keeping this, will add a TODO for hjd.",
+      "parentUuid": "443b8fd2_20def722",
+      "range": {
+        "startLine": 562,
+        "startChar": 6,
+        "endLine": 562,
+        "endChar": 48
+      },
+      "revId": "544872c0fff260222bf255163ba3e6b0de918d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f16330_ea0d6ed5",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T13:58:44Z",
+      "side": 1,
+      "message": "not sure but conservatively keeping this, will add a TODO for hjd.",
+      "parentUuid": "443b8fd2_20def722",
+      "range": {
+        "startLine": 562,
+        "startChar": 6,
+        "endLine": 562,
+        "endChar": 48
+      },
+      "revId": "544872c0fff260222bf255163ba3e6b0de918d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a98427f_37d1bfda",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 4
@@ -296,6 +434,30 @@
     },
     {
       "key": {
+        "uuid": "e562d4ce_2e22da2c",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T13:58:44Z",
+      "side": 1,
+      "message": "no more.",
+      "parentUuid": "78dc578c_59016cf5",
+      "range": {
+        "startLine": 80,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 19
+      },
+      "revId": "544872c0fff260222bf255163ba3e6b0de918d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8814c024_28381aa0",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
         "patchSetId": 4
@@ -316,6 +478,30 @@
       "revId": "544872c0fff260222bf255163ba3e6b0de918d0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e700e079_785ad7e5",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T13:58:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8814c024_28381aa0",
+      "range": {
+        "startLine": 83,
+        "startChar": 9,
+        "endLine": 83,
+        "endChar": 30
+      },
+      "revId": "544872c0fff260222bf255163ba3e6b0de918d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
