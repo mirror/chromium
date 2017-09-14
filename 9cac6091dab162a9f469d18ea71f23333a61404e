@@ -550,6 +550,24 @@
     },
     {
       "key": {
+        "uuid": "945f1421_21e83ad1",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-14T17:10:05Z",
+      "side": 1,
+      "message": "Just made a couple small tweaks, bumping to Clang 5 and removing everything but the simplest loop: https://godbolt.org/g/vewsR7.\n\nLooks like it\u0027s decided to unroll it 4x.  I guess what I\u0027m wondering is, is Clang right to unroll 4x or are we right to unroll it 16x?  Are you set up to time the difference?  It\u0027s kind of naive to count instructions to measure overhead, especially with out of order execution and instruction fusion.  I\u0027m generally inclined to leave these things up to the compiler and its baked-in cost models when it\u0027s a wash.  They\u0027ve even been forced to write loop-reroll optimization passes just to undo this sort of thing...",
+      "parentUuid": "ca998e71_90bacbee",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1eae378_20622253",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16
