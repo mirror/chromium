@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "abddfed0_d63313d2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/input-events/input-events-get-target-ranges-manual.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-14T23:42:36Z",
+      "side": 1,
+      "message": "I think actualEventLog would be a more clear name for this.",
+      "range": {
+        "startLine": 48,
+        "startChar": 10,
+        "endLine": 48,
+        "endChar": 26
+      },
+      "revId": "6b19b119ff6411d0cc52eb06843333ea3b266347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecbee6e6_b94c7128",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/input-events/input-events-get-target-ranges-manual.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-14T23:42:36Z",
+      "side": 1,
+      "message": "Lowercase textarea",
+      "range": {
+        "startLine": 70,
+        "startChar": 45,
+        "endLine": 70,
+        "endChar": 50
+      },
+      "revId": "6b19b119ff6411d0cc52eb06843333ea3b266347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
