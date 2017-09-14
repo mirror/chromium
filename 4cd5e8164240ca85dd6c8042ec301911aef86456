@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "4be7e682_70d5026b",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-14T08:53:13Z",
+      "side": 1,
+      "message": "Ignore the above comment. This is now fixed using isReconstructingFromCache variable. Thanks for bringing this up :)",
+      "parentUuid": "895d7042_c3f11ea0",
+      "revId": "4cd5e8164240ca85dd6c8042ec301911aef86456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d94a1b32_7d67d7aa",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 2
