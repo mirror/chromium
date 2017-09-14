@@ -67,6 +67,23 @@
       "revId": "1f6e675f81d7a4185cb0a12905bae8c697a8a674",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd739b1_804e7402",
+        "filename": "ios/chrome/app/resources/app_icons.xcassets/app_icons.appiconset/Icon-1024.png",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-14T00:24:57Z",
+      "side": 1,
+      "message": "Need to get the right image from pschaffner@",
+      "revId": "1f6e675f81d7a4185cb0a12905bae8c697a8a674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
