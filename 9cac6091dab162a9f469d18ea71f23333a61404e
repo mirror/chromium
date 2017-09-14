@@ -532,6 +532,24 @@
     },
     {
       "key": {
+        "uuid": "ca998e71_90bacbee",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-14T15:49:59Z",
+      "side": 1,
+      "message": "Yeah, possible.\n\nNot sure if this\u0027ll work, but see https://godbolt.org/g/HYhQGr which I used to test clang. This code:\n\n   while (len--) {\n     s2 +\u003d (s1 +\u003d *buf++);\n   }\n\ngenerates a loop (Hover over the code of interest on the left, right-click and select \"Scroll to Assembly\")\n\n.LBB0_11:                               # \u003d\u003eThis Inner Loop Header: Depth\u003d1\n        decq    %rdx\n        movzbl  (%rsi), %r9d\n        incq    %rsi\n        addl    %r9d, %eax\n        addl    %eax, %edi\n        incq    %rcx\n        jne     .LBB0_11\n\nRoughly 4 inst. for the loop control, and 4 inst. to do \"s2 +\u003d (s1 +\u003d *buf++);\", so 50% loop overhead.  The body cost equals the loop control cost.\n\n(Noted that clang adds some code straight after for the |len| is exactly divisible by 4 case.  That seems silly, the while (len \u003e\u003d4) { } loop before it already handled that!).\n\nFor the \"while (len \u003e\u003d 4) { .. }\" code we get:\n\n.LBB0_16:                               # \u003d\u003eThis Inner Loop Header: Depth\u003d1\n        movzbl  (%r10), %ecx\n        addl    %eax, %ecx\n        addl    %ecx, %edi\n        movzbl  1(%r10), %eax\n        addl    %ecx, %eax\n        addl    %eax, %edi\n        movzbl  2(%r10), %ecx\n        addl    %eax, %ecx\n        addl    %ecx, %edi\n        movzbl  3(%r10), %eax\n        addl    %ecx, %eax\n        addl    %eax, %edi\n        addq    $-4, %rdx\n        addq    $4, %r10\n        cmpq    $3, %rdx\n        ja      .LBB0_16\n\nAgain 4 inst. for the loop control, and 12 inst. to do \"s2 +\u003d (s1 +\u003d *buf++) 4 times, so loop overhead now 25%, much better.\n\nFor the \"while (len \u003e\u003d 16) { .. }\" code we get:\n  ...\n\n4 inst. for the loop control, and 3 x 16 inst. to do \"s2 +\u003d (s1 +\u003d *buf++) 16 times, loop overhead is smaller again, 8%.\n\nSeems to me that irrespective of compiler, alder32.c is using DO16 to amortize the significant cost of the loop overhead compared to the loop body.  Makes sense to me when I consider small workloads an PNG.",
+      "parentUuid": "8a30338b_a3dcd917",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1eae378_20622253",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16
