@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "642af111_22a1fdb2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-14T21:17:59Z",
+      "side": 1,
+      "message": "Ultra nit: virtually all Chromium commit messages start with a capital letter.\n\nAlso since this contains the mb config too, that\u0027s worth mentioning as well.",
+      "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4da5c15_d182ce03",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 14031,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-14T21:17:59Z",
+      "side": 1,
+      "message": "Looks reasonable. I assume you copied this from some other bot?",
+      "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "75d1aeb8_6c846179",
         "filename": "tools/mb/mb_config.pyl",
         "patchSetId": 1
@@ -13,6 +47,23 @@
       "writtenOn": "2017-09-14T21:14:13Z",
       "side": 1,
       "message": "I think this naming scheme was a mistake; the new Windows CFI bots I added are named using the same ClangToTWin* pattern as the other Clang ToT bots. Can you rename this one to match?",
+      "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0014b48f_c46d6b65",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1563,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-14T21:17:59Z",
+      "side": 1,
+      "message": "The WinClang release builders generally have \u0027official\u0027 as well (see e.g. ClangToTWin).",
       "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
