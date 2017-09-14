@@ -77,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "21d3e686_fd48660d",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-14T08:34:26Z",
+      "side": 1,
+      "message": "\u003e \u003e on second thought, is this namespace even needed?\n\u003e \n\u003e You mean ResolveCoreWinRTDelayload should just be part of base/win namespace?\n\nSure, why not? Namespaces are useful for either avoiding a naming collision or for making a logical grouping. In this case, there\u0027s so little to group and no risk of collision, so I don\u0027t think it adds much.\n\n\u003e \u003e the other two functions can go away altogether, can they not?\n\u003e \n\u003e Well, they are there to contain the spreading of the mincore.lib+delayload dance to other modules. This way media/ and chrome/ can just call this through here.\n\nHmm. So you\u0027re suggesting that for component builds, all callers should go through the resolution that happens in base.dll, right? (For static builds this is a non-issue.) Seems sensible.",
+      "parentUuid": "cb91d5f7_76790ae3",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1662a8e7_44eac1f6",
         "filename": "base/win/com_base_util.h",
         "patchSetId": 13
@@ -129,6 +147,24 @@
       "side": 1,
       "message": "The documentation for the two functions used (RoGetActivationFactory and RoActivateInstance) state a minimum on Win8, according to the documentation. Also, the DLL loaded is not present on my Win7 box (outside of an SDK/Web Tools directory).",
       "parentUuid": "92be5d77_3dd8669a",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81478e0_9796d7b5",
+        "filename": "base/win/com_base_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-14T08:34:26Z",
+      "side": 1,
+      "message": "Right, so PreloadRequiredFunctions() should return false (and not crash!) on Win7. Why not test this?",
+      "parentUuid": "47cec873_178b4be1",
       "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
