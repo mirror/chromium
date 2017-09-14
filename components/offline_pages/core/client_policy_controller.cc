@@ -9,6 +9,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/time/time.h"
 #include "components/offline_pages/core/client_namespace_constants.h"
+#include "components/offline_pages/core/offline_page_feature.h"
 
 using LifetimeType = offline_pages::LifetimePolicy::LifetimeType;
 
@@ -58,15 +59,18 @@ ClientPolicyController::ClientPolicyController() {
           .SetIsSupportedByDownload(true)
           .SetIsRemovedOnCacheReset(false)
           .Build()));
-  policies_.insert(std::make_pair(
-      kSuggestedArticlesNamespace,
-      OfflinePageClientPolicyBuilder(kSuggestedArticlesNamespace,
-                                     LifetimeType::TEMPORARY, kUnlimitedPages,
-                                     kUnlimitedPages)
-          .SetIsRemovedOnCacheReset(true)
-          .SetIsDisabledWhenPrefetchDisabled(true)
-          .SetExpirePeriod(base::TimeDelta::FromDays(30))
-          .Build()));
+  OfflinePageClientPolicyBuilder suggestedArticlePolicy(
+      kSuggestedArticlesNamespace, LifetimeType::TEMPORARY, kUnlimitedPages,
+      kUnlimitedPages);
+  suggestedArticlePolicy.SetIsRemovedOnCacheReset(true)
+      .SetIsDisabledWhenPrefetchDisabled(true)
+      .SetExpirePeriod(base::TimeDelta::FromDays(3))
+      .SetIsSuggested(true);
+  if (IsOfflinePagesPrefetchingUIEnabled())
+    suggestedArticlePolicy.SetIsSupportedByDownload(true);
+
+  policies_.insert(std::make_pair(kSuggestedArticlesNamespace,
+                                  suggestedArticlePolicy.Build()));
   policies_.insert(std::make_pair(
       kBrowserActionsNamespace,
       OfflinePageClientPolicyBuilder(kBrowserActionsNamespace,
@@ -193,6 +197,10 @@ ClientPolicyController::GetNamespacesDisabledWhenPrefetchDisabled() const {
   }
 
   return *disabled_when_prefetch_disabled_cache_;
+}
+
+bool ClientPolicyController::IsSuggested(const std::string& name_space) const {
+  return GetPolicy(name_space).feature_policy.is_suggested;
 }
 
 void ClientPolicyController::AddPolicyForTest(

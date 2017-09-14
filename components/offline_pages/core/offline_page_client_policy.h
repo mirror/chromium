@@ -58,6 +58,8 @@ struct FeaturePolicy {
   // Whether the namespace should be disabled if prefetching-related preferences
   // are disabled.
   bool disabled_when_prefetch_disabled;
+  // Whether the pages originated from suggestions by zine or elsewhere.
+  bool is_suggested;
 
   FeaturePolicy()
       : is_supported_by_download(false),
@@ -152,6 +154,11 @@ class OfflinePageClientPolicyBuilder {
       const bool disabled_when_prefetch_disabled) {
     policy_.feature_policy.disabled_when_prefetch_disabled =
         disabled_when_prefetch_disabled;
+    return *this;
+  }
+
+  OfflinePageClientPolicyBuilder& SetIsSuggested(const bool is_suggested) {
+    policy_.feature_policy.is_suggested = is_suggested;
     return *this;
   }
 
