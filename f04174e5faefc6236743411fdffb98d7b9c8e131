@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb240ea9_61fc9d81",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1244,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-14T22:03:07Z",
+      "side": 1,
+      "message": "So who\u0027s calling this? I\u0027d like to have a bit more context. It\u0027s a bit weird to pass binary data decoded as a string, but I\u0027d like to see if there\u0027s a chance of avoiding blobs either.",
+      "revId": "f04174e5faefc6236743411fdffb98d7b9c8e131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
