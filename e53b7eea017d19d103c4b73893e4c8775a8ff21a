@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2a77f3a_6849a9a4",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-14T20:31:56Z",
+      "side": 1,
+      "message": "nit: can you not move this one? it\u0027s more than an arsc, so doesn\u0027t match up so well with being in a directory called \"arsc\".",
+      "revId": "e53b7eea017d19d103c4b73893e4c8775a8ff21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7beea237_fe3429f6",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-14T20:31:56Z",
+      "side": 1,
+      "message": "nit: Drop the \".intermediate\" while we\u0027re at it. It doesn\u0027t add anything useful.",
+      "revId": "e53b7eea017d19d103c4b73893e4c8775a8ff21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
