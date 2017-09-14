@@ -35,6 +35,16 @@ class PerformanceMonitorTest : public ::testing::Test {
     monitor_->WillExecuteScript(execution_context);
   }
 
+  void DomContentLoadedEventFired() {
+    monitor_->DomContentLoadedEventFired(GetFrame());
+  }
+
+  bool IsLongTaskIdlenessDetectionStarted() {
+    return monitor_->long_task_idle_ > 0;
+  }
+
+  bool IsLongTaskIdle() { return monitor_->long_task_idle_ == -1; }
+
   // scheduler::TaskTimeObserver implementation
   void WillProcessTask(double start_time) {
     monitor_->WillProcessTask(start_time);
@@ -131,6 +141,40 @@ TEST_F(PerformanceMonitorTest, NoScriptInLongTask) {
   DidProcessTask(3719349.445172, 3719349.5561923);  // Long task
   // Without presence of Script, FrameContext URL is not available
   EXPECT_EQ(0, NumUniqueFrameContextsSeen());
+}
+
+TEST_F(PerformanceMonitorTest, LongTaskIdlenessDetectionBasic) {
+  DomContentLoadedEventFired();
+  WillProcessTask(0.01);
+  DidProcessTask(0.01, 0.02);
+  EXPECT_TRUE(IsLongTaskIdlenessDetectionStarted());
+  WillProcessTask(0.50);
+  EXPECT_FALSE(IsLongTaskIdle());
+  DidProcessTask(0.50, 0.52);
+  EXPECT_TRUE(IsLongTaskIdle());
+}
+
+TEST_F(PerformanceMonitorTest, LongTaskIdlenessDetectionReset) {
+  DomContentLoadedEventFired();
+  WillProcessTask(0.01);
+  DidProcessTask(0.01, 0.03);
+  EXPECT_TRUE(IsLongTaskIdlenessDetectionStarted());
+  WillProcessTask(0.44);
+  DidProcessTask(0.44, 0.51);
+  EXPECT_FALSE(IsLongTaskIdle());
+  WillProcessTask(1.0);
+  EXPECT_FALSE(IsLongTaskIdle());
+  DidProcessTask(1.0, 1.03);
+  EXPECT_TRUE(IsLongTaskIdle());
+}
+
+TEST_F(PerformanceMonitorTest, LongTaskIdlenessDetectionWillProcessTask) {
+  DomContentLoadedEventFired();
+  WillProcessTask(0.01);
+  DidProcessTask(0.01, 0.02);
+  EXPECT_TRUE(IsLongTaskIdlenessDetectionStarted());
+  WillProcessTask(0.55);
+  EXPECT_TRUE(IsLongTaskIdle());
 }
 
 }  // namespace blink

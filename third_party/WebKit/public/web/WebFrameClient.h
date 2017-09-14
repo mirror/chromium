@@ -74,6 +74,7 @@
 #include "public/platform/WebURLRequest.h"
 #include "public/platform/WebWorkerFetchContext.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 #include "v8/include/v8.h"
 
 namespace service_manager {
@@ -125,6 +126,12 @@ struct WebURLError;
 
 class BLINK_EXPORT WebFrameClient {
  public:
+  WebFrameClient() {
+    service_manager::mojom::InterfaceProviderPtr provider;
+    mojo::MakeRequest(&provider);
+    interface_provider_.Bind(std::move(provider));
+  }
+
   virtual ~WebFrameClient() {}
 
   // Initialization ------------------------------------------------------
@@ -197,8 +204,7 @@ class BLINK_EXPORT WebFrameClient {
   // Returns an InterfaceProvider the frame can use to request interfaces from
   // the browser. This method may not return nullptr.
   virtual service_manager::InterfaceProvider* GetInterfaceProvider() {
-    NOTREACHED();
-    return nullptr;
+    return &interface_provider_;
   }
 
   // General notifications -----------------------------------------------
@@ -832,6 +838,9 @@ class BLINK_EXPORT WebFrameClient {
     NOTREACHED();
     return nullptr;
   }
+
+ private:
+  service_manager::InterfaceProvider interface_provider_;
 };
 
 }  // namespace blink

@@ -668,6 +668,7 @@ source_set("blink_headers") {
     "//mojo/public/cpp/bindings:bindings",
     "//mojo/public/cpp/system:system",
     "//services/network/public/interfaces:interfaces",
+    "//services/service_manager/public/cpp:cpp",
     "//v8:v8_headers",
   ]
 }
