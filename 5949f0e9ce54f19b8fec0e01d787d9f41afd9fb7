@@ -52,6 +52,24 @@
       "revId": "5949f0e9ce54f19b8fec0e01d787d9f41afd9fb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b9c8949_df7e2b7c",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-14T22:36:38Z",
+      "side": 1,
+      "message": "So I still haven\u0027t addressed an empty list, I\u0027ll do that next, but:\n* I don\u0027t think we want a separate dialog.\n* We should indicate when scanning is active.\n* We should show something (\u0027scanning\u0027 or \u0027no networks\u0027) in the dropdown if the list is empty.\n* I don\u0027t think we want a \u0027scan\u0027 button. We initiate a scan when the user opens the UI; if we expect the results to change we could scan periodically (like we do for WiFi), otherwise scanning when the UI is opened should suffice.",
+      "parentUuid": "d790e0df_13687a52",
+      "revId": "5949f0e9ce54f19b8fec0e01d787d9f41afd9fb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
