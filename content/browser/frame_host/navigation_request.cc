@@ -153,6 +153,12 @@ void AddAdditionalRequestHeaders(net::HttpRequestHeaders* headers,
   if (GetContentClient()->browser()->IsDataSaverEnabled(browser_context))
     headers->SetHeaderIfMissing("Save-Data", "on");
 
+  // Attach request headers based on client hints.
+  net::HttpRequestHeaders client_hints_additional_headers;
+  GetContentClient()->browser()->RetrieveClientHintHeaders(
+      browser_context, url, &client_hints_additional_headers);
+  headers->MergeFrom(client_hints_additional_headers);
+
   headers->SetHeaderIfMissing(net::HttpRequestHeaders::kUserAgent,
                               user_agent_override.empty()
                                   ? GetContentClient()->GetUserAgent()
