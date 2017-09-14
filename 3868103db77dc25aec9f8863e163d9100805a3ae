@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "183a5cb4_2c71f706",
+        "filename": "components/autofill/core/browser/webdata/autofill_table.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-14T20:50:18Z",
+      "side": 1,
+      "message": "I didn\u0027t find a way to bind an unsigned, do you know of any?",
+      "range": {
+        "startLine": 95,
+        "startChar": 5,
+        "endLine": 95,
+        "endChar": 14
+      },
+      "revId": "3868103db77dc25aec9f8863e163d9100805a3ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
