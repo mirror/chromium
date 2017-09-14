@@ -16,6 +16,24 @@
       "revId": "a8b453e749dff47128a7346b7c44717cd888a90d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0c4974_b108508e",
+        "filename": "third_party/WebKit/Source/platform/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-14T08:49:01Z",
+      "side": 1,
+      "message": "in snake_case_source_files world, the filename will be \u0027text/locale_win.cc\u0027, and it will be automatically subtracted by [1], and the following line will causes an error like \u0027text/local_win.cc is not in sources\u0027.\n\n[1] https://cs.chromium.org/chromium/src/build/config/BUILDCONFIG.gn?type\u003dcs\u0026q\u003dBUILDCONFIG.gn\u0026sq\u003dpackage:chromium\u0026l\u003d413",
+      "parentUuid": "97153728_fedb31d0",
+      "revId": "a8b453e749dff47128a7346b7c44717cd888a90d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
