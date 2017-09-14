@@ -16,6 +16,24 @@
       "revId": "1a4a319af9f95c154a8338677c9561aaace723ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a1f2634_87864b57",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-basic-whitelist-request-headers.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-14T06:16:31Z",
+      "side": 1,
+      "message": "For now, we\u0027ll leave it as it is, since the \u0027Save-Data\u0027 header isn\u0027t included in the request headers as given in the Python server file. I wonder what happens to it....",
+      "parentUuid": "708dea67_8c66cfa3",
+      "revId": "1a4a319af9f95c154a8338677c9561aaace723ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
