@@ -199,9 +199,16 @@ Status AdbImpl::GetPidByName(const std::string& device_serial,
                              const std::string& process_name,
                              int* pid) {
   std::string response;
-  Status status = ExecuteHostShellCommand(device_serial, "ps", &response);
+  Status status = ExecuteHostShellCommand(device_serial, "ps -A", &response);
+
   if (!status.IsOk())
     return status;
+
+  // other than Android O, "ps -A" will fail with "bad pid '-A'"
+  // so rerun the command if that is returned
+  if (!response.compare(0, 7, "bad pid")) {
+    status = ExecuteHostShellCommand(device_serial, "ps", &response);
+  }
 
   for (const base::StringPiece& line : base::SplitString(
            response, "\n", base::TRIM_WHITESPACE, base::SPLIT_WANT_NONEMPTY)) {
@@ -256,4 +263,3 @@ Status AdbImpl::ExecuteHostShellCommand(
       "host:transport:" + device_serial + "|shell:" + shell_command,
       response);
 }
-
