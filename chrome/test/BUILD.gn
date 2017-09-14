@@ -2441,6 +2441,7 @@ test("browser_tests") {
         "../browser/media/webrtc/webrtc_webcam_browsertest.cc",
       ]
     }
+
     if (is_win) {
       deps += [
         "//chrome:other_version",
@@ -2608,6 +2609,9 @@ test("browser_tests") {
       ]
     }
     if (enable_library_cdms) {
+      sources += [ "../browser/media/cdm_storage_browsertest.cc" ]
+      deps += [ "//media/mojo/interfaces" ]
+
       # Runtime dependencies.
       data_deps += [
         "//media/cdm/ppapi:clearkeycdmadapter",

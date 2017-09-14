@@ -13,14 +13,14 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "media/base/media_export.h"
+#include "media/cdm/api/content_decryption_module.h"
 #include "media/cdm/cdm_allocator.h"
-#include "media/cdm/cdm_file_io.h"
 #include "media/cdm/output_protection.h"
 #include "media/cdm/platform_verification.h"
 
 namespace media {
 
-// Provides a wrapper on the auxiliary functions (CdmAllocator, CdmFileIO,
+// Provides a wrapper on the auxiliary functions (CdmAllocator, cdm::FileIO,
 // OutputProtection, PlatformVerification) needed by the CDM. The default
 // implementation does nothing -- it simply returns NULL, false, 0, etc.
 // as required to meet the interface.
@@ -30,14 +30,15 @@ class MEDIA_EXPORT CdmAuxiliaryHelper : public CdmAllocator,
  public:
   // Callback to create CdmAllocator for the created CDM.
   using CreationCB =
-      base::RepeatingCallback<std::unique_ptr<CdmAuxiliaryHelper>()>;
+      base::RepeatingCallback<std::unique_ptr<CdmAuxiliaryHelper>(
+          const std::string& key_system)>;
 
   CdmAuxiliaryHelper();
   ~CdmAuxiliaryHelper() override;
 
-  // Given |client|, create a CdmFileIO object and return it. Caller owns the
-  // returned object, and should only destroy it after Close() has been called.
-  virtual std::unique_ptr<CdmFileIO> CreateCdmFileIO(cdm::FileIOClient* client);
+  // Given |client|, create a cdm::FileIO object and return it. Caller owns the
+  // returned object, and should only destroy it by calling Close().
+  virtual cdm::FileIO* CreateCdmFileIO(cdm::FileIOClient* client);
 
   // CdmAllocator implementation.
   cdm::Buffer* CreateCdmBuffer(size_t capacity) override;

@@ -399,8 +399,12 @@
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA)
 #include "chrome/browser/media/output_protection_impl.h"
-#if BUILDFLAG(ENABLE_MOJO_CDM) && defined(OS_ANDROID)
+#if BUILDFLAG(ENABLE_MOJO_CDM)
+#if defined(OS_ANDROID)
 #include "chrome/browser/media/android/cdm/media_drm_storage_factory.h"
+#else
+#include "chrome/browser/media/cdm_storage_impl.h"
+#endif
 #endif
 #endif
 
@@ -2929,10 +2933,15 @@ void ChromeContentBrowserClient::ExposeInterfacesToMediaService(
 #if BUILDFLAG(ENABLE_MOJO_MEDIA)
   registry->AddInterface(
       base::Bind(&OutputProtectionImpl::Create, render_frame_host));
-#if BUILDFLAG(ENABLE_MOJO_CDM) && defined(OS_ANDROID)
+#if BUILDFLAG(ENABLE_MOJO_CDM)
+#if defined(OS_ANDROID)
   registry->AddInterface(
       base::Bind(&chrome::CreateMediaDrmStorage, render_frame_host));
-#endif
+#else
+  registry->AddInterface(
+      base::Bind(&CdmStorageImpl::Create, render_frame_host));
+#endif  // defined(OS_ANDROID)
+#endif  // BUILDFLAG(ENABLE_MOJO_CDM)
 #endif  // BUILDFLAG(ENABLE_MOJO_MEDIA)
 }
 

@@ -3947,6 +3947,13 @@ split_static_library("browser") {
       "media/output_protection_impl.cc",
       "media/output_protection_impl.h",
     ]
+    if (!is_android) {
+      sources += [
+        "media/cdm_storage_impl.cc",
+        "media/cdm_storage_impl.h",
+      ]
+    }
+
     deps += [ "//media/mojo/interfaces" ]
     if (mojo_media_host == "browser") {
       deps += [
