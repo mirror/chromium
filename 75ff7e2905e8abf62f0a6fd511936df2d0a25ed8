@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "b9259dd4_09c8b6de",
+        "filename": "chrome/installer/zucchini/targets_affinity.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-14T03:02:44Z",
+      "side": 1,
+      "message": "Ah yes, targets.\n\nContinuing comment in new patch.",
+      "parentUuid": "9054ec61_9f812271",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 63
+      },
+      "revId": "75ff7e2905e8abf62f0a6fd511936df2d0a25ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e1d3f4b_637f9fc9",
         "filename": "chrome/installer/zucchini/targets_affinity.cc",
         "patchSetId": 2
@@ -695,6 +719,30 @@
       "side": 1,
       "message": "I rather stick to association because we are already defining target association in README.",
       "parentUuid": "26b104bc_953b3635",
+      "range": {
+        "startLine": 45,
+        "startChar": 9,
+        "endLine": 45,
+        "endChar": 20
+      },
+      "revId": "75ff7e2905e8abf62f0a6fd511936df2d0a25ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10624e86_181fe48d",
+        "filename": "chrome/installer/zucchini/targets_affinity.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-14T03:02:44Z",
+      "side": 1,
+      "message": "README can also be changed -- but if you prefer this then okay.",
+      "parentUuid": "e23450f2_90739e0b",
       "range": {
         "startLine": 45,
         "startChar": 9,
