@@ -335,10 +335,11 @@ void HistoryURLProviderTest::RunTest(
     const UrlAndLegalDefault* expected_urls,
     size_t num_results,
     metrics::OmniboxInputType* identified_input_type) {
-  AutocompleteInput input(
-      text, base::string16::npos, desired_tld, GURL(), base::string16(),
-      metrics::OmniboxEventProto::INVALID_SPEC, prevent_inline_autocomplete,
-      false, true, true, false, TestSchemeClassifier());
+  AutocompleteInput input(text, base::string16::npos, desired_tld,
+                          TestSchemeClassifier());
+  input.set_prevent_inline_autocomplete(prevent_inline_autocomplete);
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
   *identified_input_type = input.type();
   autocomplete_->Start(input, false);
   if (!autocomplete_->done())
@@ -379,9 +380,9 @@ void HistoryURLProviderTest::ExpectFormattedFullMatch(
                expected_match_contents_string);
 
   AutocompleteInput input(ASCIIToUTF16(input_text), base::string16::npos,
-                          std::string(), GURL(), base::string16(),
-                          metrics::OmniboxEventProto::INVALID_SPEC, false,
-                          false, true, true, false, TestSchemeClassifier());
+                          std::string(), TestSchemeClassifier());
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
   autocomplete_->Start(input, false);
   if (!autocomplete_->done())
     base::RunLoop().Run();
@@ -715,9 +716,9 @@ TEST_F(HistoryURLProviderTest, EmptyVisits) {
       client_->GetHistoryService());
 
   AutocompleteInput input(ASCIIToUTF16("pa"), base::string16::npos,
-                          std::string(), GURL(), base::string16(),
-                          metrics::OmniboxEventProto::INVALID_SPEC, false,
-                          false, true, true, false, TestSchemeClassifier());
+                          std::string(), TestSchemeClassifier());
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
   autocomplete_->Start(input, false);
   // HistoryURLProvider shouldn't be done (waiting on async results).
   EXPECT_FALSE(autocomplete_->done());
@@ -757,9 +758,9 @@ TEST_F(HistoryURLProviderTestNoDB, NavigateWithoutDB) {
 
 TEST_F(HistoryURLProviderTest, DontAutocompleteOnTrailingWhitespace) {
   AutocompleteInput input(ASCIIToUTF16("slash "), base::string16::npos,
-                          std::string(), GURL(), base::string16(),
-                          metrics::OmniboxEventProto::INVALID_SPEC, false,
-                          false, true, true, false, TestSchemeClassifier());
+                          std::string(), TestSchemeClassifier());
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
   autocomplete_->Start(input, false);
   if (!autocomplete_->done())
     base::RunLoop().Run();
@@ -896,9 +897,9 @@ TEST_F(HistoryURLProviderTest, CrashDueToFixup) {
   };
   for (size_t i = 0; i < arraysize(test_cases); ++i) {
     AutocompleteInput input(ASCIIToUTF16(test_cases[i]), base::string16::npos,
-                            std::string(), GURL(), base::string16(),
-                            metrics::OmniboxEventProto::INVALID_SPEC, false,
-                            false, true, true, false, TestSchemeClassifier());
+                            std::string(), TestSchemeClassifier());
+    input.set_allow_exact_keyword_match();
+    input.set_want_asynchronous_matches();
     autocomplete_->Start(input, false);
     if (!autocomplete_->done())
       base::RunLoop().Run();
@@ -907,9 +908,9 @@ TEST_F(HistoryURLProviderTest, CrashDueToFixup) {
 
 TEST_F(HistoryURLProviderTest, DoesNotProvideMatchesOnFocus) {
   AutocompleteInput input(ASCIIToUTF16("foo"), base::string16::npos,
-                          std::string(), GURL(), base::string16(),
-                          metrics::OmniboxEventProto::INVALID_SPEC, false,
-                          false, true, true, true, TestSchemeClassifier());
+                          std::string(), TestSchemeClassifier());
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
   autocomplete_->Start(input, false);
   EXPECT_TRUE(autocomplete_->matches().empty());
 }
@@ -1074,9 +1075,10 @@ TEST_F(HistoryURLProviderTest, SuggestExactInput) {
 
     AutocompleteInput input(ASCIIToUTF16(test_cases[i].input),
                             base::string16::npos, std::string(),
-                            GURL("about:blank"), base::string16(),
-                            metrics::OmniboxEventProto::INVALID_SPEC, false,
-                            false, true, true, false, TestSchemeClassifier());
+                            TestSchemeClassifier());
+    input.set_current_url(GURL("about:blank"));
+    input.set_allow_exact_keyword_match();
+    input.set_want_asynchronous_matches();
     AutocompleteMatch match(autocomplete_->SuggestExactInput(
         input, input.canonicalized_url(), test_cases[i].trim_http));
     EXPECT_EQ(ASCIIToUTF16(test_cases[i].contents), match.contents);

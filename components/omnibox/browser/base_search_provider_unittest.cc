@@ -179,10 +179,10 @@ TEST_F(BaseSearchProviderTest, MatchTailSuggestionProperly) {
   data.SetURL("http://foo.com/url?bar={searchTerms}");
   auto template_url = base::MakeUnique<TemplateURL>(data);
 
-  AutocompleteInput autocomplete_input(
-      base::ASCIIToUTF16("weather"), 7, std::string(), GURL(), base::string16(),
-      metrics::OmniboxEventProto::BLANK, false, false, false, false, false,
-      TestSchemeClassifier());
+  AutocompleteInput autocomplete_input(base::ASCIIToUTF16("weather"), 7,
+                                       std::string(), TestSchemeClassifier());
+  autocomplete_input.set_current_page_classification(
+      metrics::OmniboxEventProto::BLANK);
 
   EXPECT_CALL(*provider_, GetInput(_))
       .WillRepeatedly(Return(autocomplete_input));

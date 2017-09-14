@@ -100,10 +100,11 @@ class BuiltinProviderTest : public testing::Test {
     for (size_t i = 0; i < num_cases; ++i) {
       SCOPED_TRACE(base::StringPrintf(
           "case %" PRIuS ": %s", i, base::UTF16ToUTF8(cases[i].input).c_str()));
-      const AutocompleteInput input(
-          cases[i].input, base::string16::npos, std::string(), GURL(),
-          base::string16(), metrics::OmniboxEventProto::INVALID_SPEC, true,
-          false, true, true, false, TestSchemeClassifier());
+      AutocompleteInput input(cases[i].input, base::string16::npos,
+                              std::string(), TestSchemeClassifier());
+      input.set_prevent_inline_autocomplete();
+      input.set_allow_exact_keyword_match();
+      input.set_want_asynchronous_matches();
       provider_->Start(input, false);
       EXPECT_TRUE(provider_->done());
       matches = provider_->matches();
@@ -295,10 +296,12 @@ TEST_F(BuiltinProviderTest, AboutBlank) {
 }
 
 TEST_F(BuiltinProviderTest, DoesNotSupportMatchesOnFocus) {
-  const AutocompleteInput input(
-      ASCIIToUTF16("chrome://m"), base::string16::npos, std::string(), GURL(),
-      base::string16(), metrics::OmniboxEventProto::INVALID_SPEC, true, false,
-      true, true, true, TestSchemeClassifier());
+  AutocompleteInput input(ASCIIToUTF16("chrome://m"), base::string16::npos,
+                          std::string(), TestSchemeClassifier());
+  input.set_prevent_inline_autocomplete();
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
+  input.set_from_omnibox_focus();
   provider_->Start(input, false);
   EXPECT_TRUE(provider_->matches().empty());
 }
@@ -382,10 +385,10 @@ TEST_F(BuiltinProviderTest, Inlining) {
   for (size_t i = 0; i < arraysize(cases); ++i) {
     SCOPED_TRACE(base::StringPrintf(
         "case %" PRIuS ": %s", i, base::UTF16ToUTF8(cases[i].input).c_str()));
-    const AutocompleteInput input(
-        cases[i].input, base::string16::npos, std::string(), GURL(),
-        base::string16(), metrics::OmniboxEventProto::INVALID_SPEC, false,
-        false, true, true, false, TestSchemeClassifier());
+    AutocompleteInput input(cases[i].input, base::string16::npos, std::string(),
+                            TestSchemeClassifier());
+    input.set_allow_exact_keyword_match();
+    input.set_want_asynchronous_matches();
     provider_->Start(input, false);
     EXPECT_TRUE(provider_->done());
     matches = provider_->matches();

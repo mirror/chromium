@@ -35,10 +35,12 @@ OmniboxProvider::~OmniboxProvider() {}
 
 void OmniboxProvider::Start(bool is_voice_query, const base::string16& query) {
   is_voice_query_ = is_voice_query;
-  controller_->Start(AutocompleteInput(
-      query, base::string16::npos, std::string(), GURL(), base::string16(),
-      metrics::OmniboxEventProto::INVALID_SPEC, false, false, true, true, false,
-      ChromeAutocompleteSchemeClassifier(profile_)));
+  AutocompleteInput input =
+      AutocompleteInput(query, base::string16::npos, std::string(),
+                        ChromeAutocompleteSchemeClassifier(profile_));
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
+  controller_->Start(input);
 }
 
 void OmniboxProvider::Stop() {

@@ -284,10 +284,14 @@ const TemplateURL* ZeroSuggestProvider::GetTemplateURL(bool is_keyword) const {
 const AutocompleteInput ZeroSuggestProvider::GetInput(bool is_keyword) const {
   // The callers of this method won't look at the AutocompleteInput's
   // |from_omnibox_focus| member, so we can set its value to false.
-  return AutocompleteInput(base::string16(), base::string16::npos,
-                           std::string(), GURL(current_query_), current_title_,
-                           current_page_classification_, true, false, false,
-                           true, false, client()->GetSchemeClassifier());
+  AutocompleteInput input(base::string16(), base::string16::npos, std::string(),
+                          client()->GetSchemeClassifier());
+  input.set_current_url(GURL(current_query_));
+  input.set_current_title(current_title_);
+  input.set_current_page_classification(current_page_classification_);
+  input.set_prevent_inline_autocomplete();
+  input.set_want_asynchronous_matches();
+  return input;
 }
 
 bool ZeroSuggestProvider::ShouldAppendExtraParams(

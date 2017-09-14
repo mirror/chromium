@@ -78,24 +78,14 @@ AutocompleteInput::AutocompleteInput(
     const base::string16& text,
     size_t cursor_position,
     const std::string& desired_tld,
-    const GURL& current_url,
-    const base::string16& current_title,
-    metrics::OmniboxEventProto::PageClassification current_page_classification,
-    bool prevent_inline_autocomplete,
-    bool prefer_keyword,
-    bool allow_exact_keyword_match,
-    bool want_asynchronous_matches,
-    bool from_omnibox_focus,
     const AutocompleteSchemeClassifier& scheme_classifier)
     : cursor_position_(cursor_position),
-      current_url_(current_url),
-      current_title_(current_title),
-      current_page_classification_(current_page_classification),
-      prevent_inline_autocomplete_(prevent_inline_autocomplete),
-      prefer_keyword_(prefer_keyword),
-      allow_exact_keyword_match_(allow_exact_keyword_match),
-      want_asynchronous_matches_(want_asynchronous_matches),
-      from_omnibox_focus_(from_omnibox_focus) {
+      current_page_classification_(metrics::OmniboxEventProto::INVALID_SPEC),
+      prevent_inline_autocomplete_(false),
+      prefer_keyword_(false),
+      allow_exact_keyword_match_(false),
+      want_asynchronous_matches_(false),
+      from_omnibox_focus_(false) {
   DCHECK(cursor_position <= text.length() ||
          cursor_position == base::string16::npos)
       << "Text: '" << text << "', cp: " << cursor_position;
@@ -110,9 +100,6 @@ AutocompleteInput::AutocompleteInput(
   type_ = Parse(text_, desired_tld, scheme_classifier, &parts_, &scheme_,
                 &canonicalized_url);
   PopulateTermsPrefixedByHttpOrHttps(text_, &terms_prefixed_by_http_or_https_);
-
-  if (type_ == metrics::OmniboxInputType::INVALID)
-    return;
 
   if (((type_ == metrics::OmniboxInputType::UNKNOWN) ||
        (type_ == metrics::OmniboxInputType::URL)) &&

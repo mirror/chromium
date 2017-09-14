@@ -72,9 +72,10 @@ TEST(TitledUrlMatchUtilsTest, TitledUrlMatchToAutocompleteMatch) {
       new MockAutocompleteProvider(AutocompleteProvider::Type::TYPE_BOOKMARK);
   TestSchemeClassifier classifier;
   AutocompleteInput input(input_text, base::string16::npos, std::string(),
-                          GURL(), base::string16(),
-                          metrics::OmniboxEventProto::NTP, false, false, true,
-                          true, false, classifier);
+                          classifier);
+  input.set_current_page_classification(metrics::OmniboxEventProto::NTP);
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
   const base::string16 fixed_up_input(input_text);
 
   AutocompleteMatch autocomplete_match = TitledUrlMatchToAutocompleteMatch(
@@ -130,9 +131,10 @@ TEST(TitledUrlMatchUtilsTest, EmptyInlineAutocompletion) {
       new MockAutocompleteProvider(AutocompleteProvider::Type::TYPE_BOOKMARK);
   TestSchemeClassifier classifier;
   AutocompleteInput input(input_text, base::string16::npos, std::string(),
-                          GURL(), base::string16(),
-                          metrics::OmniboxEventProto::NTP, false, false, true,
-                          true, false, classifier);
+                          classifier);
+  input.set_current_page_classification(metrics::OmniboxEventProto::NTP);
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
   const base::string16 fixed_up_input(input_text);
 
   AutocompleteMatch autocomplete_match = TitledUrlMatchToAutocompleteMatch(

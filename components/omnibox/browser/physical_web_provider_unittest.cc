@@ -134,20 +134,27 @@ class PhysicalWebProviderTest : public testing::Test {
   // Construct an AutocompleteInput to represent tapping the omnibox from the
   // new tab page.
   static AutocompleteInput CreateInputForNTP() {
-    return AutocompleteInput(
-        base::string16(), base::string16::npos, std::string(), GURL(),
-        base::string16(),
-        metrics::OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS,
-        false, false, true, true, true, TestSchemeClassifier());
+    AutocompleteInput input(base::string16(), base::string16::npos,
+                            std::string(), TestSchemeClassifier());
+    input.set_current_page_classification(
+        metrics::OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS);
+    input.set_allow_exact_keyword_match();
+    input.set_want_asynchronous_matches();
+    input.set_from_omnibox_focus();
+    return input;
   }
 
   // Construct an AutocompleteInput to represent tapping the omnibox with |url|
   // as the current web page.
   static AutocompleteInput CreateInputWithCurrentUrl(const std::string& url) {
-    return AutocompleteInput(base::UTF8ToUTF16(url), base::string16::npos,
-                             std::string(), GURL(url), base::string16(),
-                             metrics::OmniboxEventProto::OTHER, false, false,
-                             true, true, true, TestSchemeClassifier());
+    AutocompleteInput input(base::UTF8ToUTF16(url), base::string16::npos,
+                            std::string(), TestSchemeClassifier());
+    input.set_current_url(GURL(url));
+    input.set_current_page_classification(metrics::OmniboxEventProto::OTHER);
+    input.set_allow_exact_keyword_match();
+    input.set_want_asynchronous_matches();
+    input.set_from_omnibox_focus();
+    return input;
   }
 
   // For a given |match|, check that the destination URL, contents string,
@@ -324,11 +331,13 @@ TEST_F(PhysicalWebProviderTest, TestNoMatchesWithUserInput) {
   // Construct an AutocompleteInput to simulate user input in the omnibox input
   // field. The provider should not generate any matches.
   std::string text("user input");
-  const AutocompleteInput input(
-      base::UTF8ToUTF16(text), text.length(), std::string(), GURL(),
-      base::string16(),
-      metrics::OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS,
-      true, false, true, true, false, TestSchemeClassifier());
+  AutocompleteInput input(base::UTF8ToUTF16(text), text.length(), std::string(),
+                          TestSchemeClassifier());
+  input.set_current_page_classification(
+      metrics::OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS);
+  input.set_prevent_inline_autocomplete();
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
   provider_->Start(input, false);
 
   EXPECT_TRUE(provider_->matches().empty());
@@ -344,10 +353,13 @@ TEST_F(PhysicalWebProviderTest, TestEmptyInputAfterTyping) {
   // Construct an AutocompleteInput to simulate a blank input field, as if the
   // user typed a query and then deleted it. The provider should generate
   // suggestions for the zero-suggest case. No default match should be created.
-  const AutocompleteInput input(
-      base::string16(), 0, std::string(), GURL(), base::string16(),
-      metrics::OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS,
-      true, false, true, true, false, TestSchemeClassifier());
+  AutocompleteInput input(base::string16(), 0, std::string(),
+                          TestSchemeClassifier());
+  input.set_current_page_classification(
+      metrics::OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS);
+  input.set_prevent_inline_autocomplete();
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
   provider_->Start(input, false);
 
   size_t metadata_match_count = 0;
@@ -438,10 +450,13 @@ TEST_F(PhysicalWebProviderTest, TestNearbyURLCountHistograms) {
   EXPECT_TRUE(data_source);
 
   AutocompleteInput zero_suggest_input(CreateInputForNTP());
-  AutocompleteInput after_typing_input(
-      base::UTF8ToUTF16("Example"), 7, std::string(), GURL(), base::string16(),
-      metrics::OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS,
-      true, false, true, true, false, TestSchemeClassifier());
+  AutocompleteInput after_typing_input(base::UTF8ToUTF16("Example"), 7,
+                                       std::string(), TestSchemeClassifier());
+  after_typing_input.set_current_page_classification(
+      metrics::OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS);
+  after_typing_input.set_prevent_inline_autocomplete();
+  after_typing_input.set_allow_exact_keyword_match();
+  after_typing_input.set_want_asynchronous_matches();
 
   data_source->SetMetadataList(CreateMetadata(3));
 
@@ -488,10 +503,13 @@ TEST_F(PhysicalWebProviderTest, TestNearbyURLCountAfterTypingWithoutFocus) {
       client_->GetFakePhysicalWebDataSource();
   EXPECT_TRUE(data_source);
 
-  AutocompleteInput after_typing_input(
-      base::UTF8ToUTF16("Example"), 7, std::string(), GURL(), base::string16(),
-      metrics::OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS,
-      true, false, true, true, false, TestSchemeClassifier());
+  AutocompleteInput after_typing_input(base::UTF8ToUTF16("Example"), 7,
+                                       std::string(), TestSchemeClassifier());
+  after_typing_input.set_current_page_classification(
+      metrics::OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS);
+  after_typing_input.set_prevent_inline_autocomplete();
+  after_typing_input.set_allow_exact_keyword_match();
+  after_typing_input.set_want_asynchronous_matches();
 
   data_source->SetMetadataList(CreateMetadata(3));
 

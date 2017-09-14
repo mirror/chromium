@@ -132,10 +132,11 @@ void KeywordProviderTest::RunTest(TestData<ResultType>* keyword_cases,
   ACMatches matches;
   for (int i = 0; i < num_cases; ++i) {
     SCOPED_TRACE(keyword_cases[i].input);
-    AutocompleteInput input(
-        keyword_cases[i].input, base::string16::npos, std::string(), GURL(),
-        base::string16(), metrics::OmniboxEventProto::INVALID_SPEC, true, false,
-        true, true, false, TestingSchemeClassifier());
+    AutocompleteInput input(keyword_cases[i].input, base::string16::npos,
+                            std::string(), TestingSchemeClassifier());
+    input.set_prevent_inline_autocomplete();
+    input.set_allow_exact_keyword_match();
+    input.set_want_asynchronous_matches();
     kw_provider_->Start(input, false);
     EXPECT_TRUE(kw_provider_->done());
     matches = kw_provider_->matches();
@@ -503,9 +504,9 @@ TEST_F(KeywordProviderTest, GetSubstitutingTemplateURLForInput) {
   for (size_t i = 0; i < arraysize(cases); i++) {
     AutocompleteInput input(
         ASCIIToUTF16(cases[i].text), cases[i].cursor_position, std::string(),
-        GURL(), base::string16(), metrics::OmniboxEventProto::INVALID_SPEC,
-        false, false, cases[i].allow_exact_keyword_match, true, false,
         TestingSchemeClassifier());
+    input.set_allow_exact_keyword_match(cases[i].allow_exact_keyword_match);
+    input.set_want_asynchronous_matches();
     const TemplateURL* url =
         KeywordProvider::GetSubstitutingTemplateURLForInput(
             client_->GetTemplateURLService(), &input);
@@ -539,9 +540,11 @@ TEST_F(KeywordProviderTest, ExtraQueryParams) {
 TEST_F(KeywordProviderTest, DoesNotProvideMatchesOnFocus) {
   SetUpClientAndKeywordProvider();
   AutocompleteInput input(ASCIIToUTF16("aaa"), base::string16::npos,
-                          std::string(), GURL(), base::string16(),
-                          metrics::OmniboxEventProto::INVALID_SPEC, true, false,
-                          true, true, true, TestingSchemeClassifier());
+                          std::string(), TestingSchemeClassifier());
+  input.set_prevent_inline_autocomplete();
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
+  input.set_from_omnibox_focus();
   kw_provider_->Start(input, false);
   ASSERT_TRUE(kw_provider_->matches().empty());
 }

@@ -442,10 +442,14 @@ void AutocompleteProviderTest::RunKeywordTest(const base::string16& input,
     matches.push_back(match);
   }
 
-  controller_->input_ = AutocompleteInput(
-      input, base::string16::npos, std::string(), GURL(), base::string16(),
-      metrics::OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS,
-      false, true, true, true, false, TestingSchemeClassifier());
+  AutocompleteInput autocomplete_input(
+      input, base::string16::npos, std::string(), TestingSchemeClassifier());
+  autocomplete_input.set_current_page_classification(
+      metrics::OmniboxEventProto::INSTANT_NTP_WITH_OMNIBOX_AS_STARTING_FOCUS);
+  autocomplete_input.set_prefer_keyword();
+  autocomplete_input.set_allow_exact_keyword_match();
+  autocomplete_input.set_want_asynchronous_matches();
+  controller_->input_ = autocomplete_input;
   AutocompleteResult result;
   result.AppendMatches(controller_->input_, matches);
   controller_->UpdateAssociatedKeywords(&result);
@@ -488,10 +492,12 @@ void AutocompleteProviderTest::RunAssistedQueryStatsTest(
 void AutocompleteProviderTest::RunQuery(const std::string& query,
                                         bool allow_exact_keyword_match) {
   result_.Reset();
-  controller_->Start(AutocompleteInput(
-      base::ASCIIToUTF16(query), base::string16::npos, std::string(), GURL(),
-      base::string16(), metrics::OmniboxEventProto::INVALID_SPEC, true, false,
-      allow_exact_keyword_match, true, false, TestingSchemeClassifier()));
+  AutocompleteInput input(base::ASCIIToUTF16(query), base::string16::npos,
+                          std::string(), TestingSchemeClassifier());
+  input.set_prevent_inline_autocomplete();
+  input.set_allow_exact_keyword_match(allow_exact_keyword_match);
+  input.set_want_asynchronous_matches();
+  controller_->Start(input);
 
   if (!controller_->done())
     // The message loop will terminate when all autocomplete input has been

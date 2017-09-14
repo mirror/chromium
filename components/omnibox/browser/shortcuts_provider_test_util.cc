@@ -71,10 +71,11 @@ void RunShortcutsProviderTest(
     std::string expected_top_result,
     base::string16 top_result_inline_autocompletion) {
   base::RunLoop().RunUntilIdle();
-  AutocompleteInput input(
-      text, base::string16::npos, std::string(), GURL(), base::string16(),
-      metrics::OmniboxEventProto::INVALID_SPEC, prevent_inline_autocomplete,
-      false, true, true, false, TestSchemeClassifier());
+  AutocompleteInput input(text, base::string16::npos, std::string(),
+                          TestSchemeClassifier());
+  input.set_prevent_inline_autocomplete(prevent_inline_autocomplete);
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
   provider->Start(input, false);
   EXPECT_TRUE(provider->done());
 
