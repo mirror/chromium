@@ -301,6 +301,30 @@
     },
     {
       "key": {
+        "uuid": "0497bf38_4c93dacb",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-14T09:29:34Z",
+      "side": 1,
+      "message": "What about if it gets called 2 times? Will the test fail?",
+      "parentUuid": "908ade51_2e51b19b",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 43
+      },
+      "revId": "a83272c8e8ecb2f80ddf9284aebb05ad7a6c24c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e66057b4_12c57f7e",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselTest.java",
         "patchSetId": 1
