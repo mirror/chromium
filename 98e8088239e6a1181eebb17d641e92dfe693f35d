@@ -22,6 +22,30 @@
       "revId": "98e8088239e6a1181eebb17d641e92dfe693f35d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1876fcf9_778d5211",
+        "filename": "base/threading/platform_thread_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-09-14T22:14:10Z",
+      "side": 1,
+      "message": "I added a scope around CreateThread to avoid including any new functionality in the measurement. I should have done that from the beginning but wanted to keep the change as small as possible.",
+      "parentUuid": "0079eab2_bdeb36c9",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 28
+      },
+      "revId": "98e8088239e6a1181eebb17d641e92dfe693f35d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
