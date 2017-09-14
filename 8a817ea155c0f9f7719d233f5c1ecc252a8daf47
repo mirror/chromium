@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e766b809_25ab1721",
+        "filename": "ui/base/models/list_selection_model.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-14T18:23:39Z",
+      "side": 1,
+      "message": "In response to the feedback of \"This is most definitely not obvious\", I\u0027ve made the following changes:\n\n - Renamed TransformIndex to MoveToLowerIndexImpl.\n - Expanded MoveToLowerIndexImpl with comments.\n - Inlined the MoveToLowerIndex call that was inside the loop, which allows a better explaination for how things work.\n - Added the DCHECKs and comments about pivot_value, including a better description of why the std::rotate() call restores sortedness.",
+      "range": {
+        "startLine": 183,
+        "startChar": 3,
+        "endLine": 183,
+        "endChar": 0
+      },
+      "revId": "8a817ea155c0f9f7719d233f5c1ecc252a8daf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
