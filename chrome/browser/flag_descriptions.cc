@@ -1114,6 +1114,18 @@ const char kSavePageAsMhtmlDescription[] =
     "Enables saving pages as MHTML: a single text file containing HTML and all "
     "sub-resources.";
 
+const char kSavePreviousDocumentResourcesUntilName[] =
+    "Save Previous Document Resources";
+const char kSavePreviousDocumentResourcesUntilDescription[] =
+    "Saves an old document's cached resources until the specified point in the "
+    "next document's lifecycle.";
+const char kSavePreviousDocumentResourcesUntilNever[] =
+    "Don't explicitly save resources";
+const char kSavePreviousDocumentResourcesUntilOnDOMContentLoaded[] =
+    "Save resources until onDOMContentLoaded completes";
+const char kSavePreviousDocumentResourcesUntilOnLoad[] =
+    "Save resources until onload completes";
+
 const char kScrollPredictionName[] = "Scroll prediction";
 const char kScrollPredictionDescription[] =
     "Predicts the finger's future position during scrolls allowing time to "

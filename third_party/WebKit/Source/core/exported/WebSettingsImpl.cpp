@@ -266,6 +266,12 @@ void WebSettingsImpl::SetProgressBarCompletion(
       static_cast<blink::ProgressBarCompletion>(progress_bar_completion));
 }
 
+void WebSettingsImpl::SetSavePreviousDocumentResourcesUntil(
+    SavePreviousDocumentResourcesUntil until) {
+  settings_->SetSavePreviousDocumentResourcesUntil(
+      static_cast<blink::SavePreviousDocumentResourcesUntil>(until));
+}
+
 void WebSettingsImpl::SetPluginsEnabled(bool enabled) {
   dev_tools_emulator_->SetPluginsEnabled(enabled);
 }

@@ -3267,6 +3267,10 @@ void Document::CheckCompleted() {
   // The readystatechanged or load event may have disconnected this frame.
   if (!frame_ || !frame_->IsAttached())
     return;
+  if (frame_->GetSettings()->GetSavePreviousDocumentResourcesUntil() ==
+      SavePreviousDocumentResourcesUntil::kOnLoad) {
+    fetcher_->ClearResourcesFromPreviousFetcher();
+  }
   frame_->GetNavigationScheduler().StartTimer();
   View()->HandleLoadCompleted();
   // The document itself is complete, but if a child frame was restarted due to
@@ -5704,6 +5708,11 @@ void Document::FinishedParsing() {
     BeginLifecycleUpdatesIfRenderingReady();
 
     frame->Loader().FinishedParsing();
+
+    if (frame->GetSettings()->GetSavePreviousDocumentResourcesUntil() ==
+        SavePreviousDocumentResourcesUntil::kOnDOMContentLoaded) {
+      fetcher_->ClearResourcesFromPreviousFetcher();
+    }
 
     TRACE_EVENT_INSTANT1("devtools.timeline", "MarkDOMContent",
                          TRACE_EVENT_SCOPE_THREAD, "data",
