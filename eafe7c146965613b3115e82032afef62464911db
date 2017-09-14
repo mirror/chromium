@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fca62a7e_edd889e7",
+        "filename": "chrome/renderer/autofill/password_autofill_agent_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2848,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-14T09:48:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c2b900c_c4485c41",
+      "range": {
+        "startLine": 2848,
+        "startChar": 4,
+        "endLine": 2848,
+        "endChar": 26
+      },
+      "revId": "eafe7c146965613b3115e82032afef62464911db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0ea30b9_aae2bdb8",
         "filename": "chrome/renderer/autofill/password_autofill_agent_browsertest.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "eafe7c146965613b3115e82032afef62464911db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "607c4f32_71d539c6",
+        "filename": "chrome/renderer/autofill/password_autofill_agent_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2857,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-14T09:48:39Z",
+      "side": 1,
+      "message": "Good point, LoadHTML is missing in this test (lines 2791, 2792 in this patch), I\u0027ve added them. So no clearing is required.",
+      "parentUuid": "d0ea30b9_aae2bdb8",
+      "range": {
+        "startLine": 2857,
+        "startChar": 4,
+        "endLine": 2857,
+        "endChar": 75
+      },
+      "revId": "eafe7c146965613b3115e82032afef62464911db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
