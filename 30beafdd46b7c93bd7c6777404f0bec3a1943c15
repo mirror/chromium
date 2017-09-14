@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "96b2c493_c2b08141",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-14T16:17:48Z",
+      "side": 1,
+      "message": "Done, thanks.",
+      "parentUuid": "d39aaa02_b3b3afe6",
+      "revId": "30beafdd46b7c93bd7c6777404f0bec3a1943c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a24e3b6_1e4f56aa",
         "filename": "chromeos/dbus/cryptohome_client.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "30beafdd46b7c93bd7c6777404f0bec3a1943c15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9771e7e_dae1461b",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-14T16:17:48Z",
+      "side": 1,
+      "message": "Thanks, I keep mixing up C++ and Java behaviour about default initialization.",
+      "parentUuid": "6a24e3b6_1e4f56aa",
+      "revId": "30beafdd46b7c93bd7c6777404f0bec3a1943c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "7cd57bf1_b3fe2069",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-14T16:17:48Z",
+      "side": 1,
+      "message": "Switched to DBusCallback. I think you don\u0027t use const\u0026 with that one, right?",
+      "parentUuid": "58469fdb_8e6e5788",
+      "revId": "30beafdd46b7c93bd7c6777404f0bec3a1943c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7743fd3_701712fa",
         "filename": "chromeos/dbus/fake_cryptohome_client.cc",
         "patchSetId": 3
@@ -91,6 +145,30 @@
       "revId": "30beafdd46b7c93bd7c6777404f0bec3a1943c15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b5b73c1_4f17d6a2",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-14T16:17:48Z",
+      "side": 1,
+      "message": "Good point, thanks.",
+      "parentUuid": "e7743fd3_701712fa",
+      "range": {
+        "startLine": 576,
+        "startChar": 32,
+        "endLine": 576,
+        "endChar": 50
+      },
+      "revId": "30beafdd46b7c93bd7c6777404f0bec3a1943c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
