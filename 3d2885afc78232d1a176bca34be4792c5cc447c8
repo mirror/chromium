@@ -70,6 +70,24 @@
       "revId": "3d2885afc78232d1a176bca34be4792c5cc447c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ccb8e98_3142b6ee",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-14T00:39:36Z",
+      "side": 1,
+      "message": "That\u0027s IMHO even more bug prone. We\u0027d need to call super in each OnLayerCreated, and it\u0027s easy to forget. Eg. if we don\u0027t call the base class OnLayerCreated from ContentsWebView::OnLayerCreated, and then add some logic in View::OnLayerCreated, then it will never be executed.\n\n\nIf your concern is the delegate being overriden, how about adding a DCHECK so it\u0027s only set once?",
+      "parentUuid": "62c04b3f_1c6ee2e8",
+      "revId": "3d2885afc78232d1a176bca34be4792c5cc447c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
