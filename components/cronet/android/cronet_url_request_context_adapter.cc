@@ -62,6 +62,7 @@
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
 #include "net/url_request/url_request_interceptor.h"
+#include "third_party/brotli/common/dictionary.h"
 
 using base::android::JavaParamRef;
 using base::android::ScopedJavaLocalRef;
@@ -887,6 +888,32 @@ static ScopedJavaLocalRef<jbyteArray> GetHistogramDeltas(
   if (!HistogramManager::GetInstance()->GetDeltas(&data))
     return ScopedJavaLocalRef<jbyteArray>();
   return base::android::ToJavaByteArray(env, &data[0], data.size());
+}
+
+static void SetBrotliDictionaryData(JNIEnv* env,
+                                    const JavaParamRef<jclass>& jcaller,
+                                    const JavaParamRef<jobject>& buffer) {
+  jobject buffer_ref = env->NewGlobalRef(buffer);
+  if (!buffer_ref) {
+    LOG(ERROR) << "Can't get Brotli dictionary buffer reference";
+    return;
+  }
+  uint8_t* data = static_cast<uint8_t*>(env->GetDirectBufferAddress(buffer));
+  if (!data) {
+    LOG(ERROR) << "Can't access Brotli dictionary data";
+    return;
+  }
+
+  BrotliSetDictionaryData(data);
+
+  const BrotliDictionary* dictionary = BrotliGetDictionary();
+  if (dictionary->data != data) {
+    env->DeleteGlobalRef(buffer_ref);
+    LOG(ERROR) << "Can't set Brotli dictionary data";
+    return;
+  } else {
+    /* Don't release reference; it is an intended memory leak. */
+  }
 }
 
 }  // namespace cronet

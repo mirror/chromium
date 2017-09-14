@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 package org.chromium.net;
 
+import java.nio.ByteBuffer;
 import java.util.Date;
 import java.util.Set;
 
@@ -27,6 +28,10 @@ public abstract class ICronetEngineBuilder {
     public abstract ICronetEngineBuilder enableQuic(boolean value);
     public abstract ICronetEngineBuilder enableSdch(boolean value);
     public ICronetEngineBuilder enableBrotli(boolean value) {
+        // Do nothing for older implementations.
+        return this;
+    }
+    public ICronetEngineBuilder enableBrotliAndSetDictionaryData(ByteBuffer dictionaryData) {
         // Do nothing for older implementations.
         return this;
     }

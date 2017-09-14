@@ -42,6 +42,7 @@ public final class Http2TestHandler extends Http2ConnectionHandler implements Ht
     public static final String ECHO_STREAM_PATH = "/echostream";
     public static final String ECHO_TRAILERS_PATH = "/echotrailers";
     public static final String SERVE_SIMPLE_BROTLI_RESPONSE = "/simplebrotli";
+    public static final String SERVE_DICTIONARY_BROTLI_RESPONSE = "/dicbrotli";
 
     private static final String TAG = Http2TestHandler.class.getSimpleName();
     private static final Http2FrameLogger sLogger =
@@ -193,6 +194,23 @@ public final class Http2TestHandler extends Http2ConnectionHandler implements Ht
         }
     }
 
+    // A RequestResponder that serves a Brotli-encoded response requiring the dictionary to
+    // decompress.
+    private class ServeDictionaryBrotliResponder extends RequestResponder {
+        @Override
+        void onHeadersRead(ChannelHandlerContext ctx, int streamId, boolean endOfStream,
+                Http2Headers headers) {
+            Http2Headers responseHeaders = new DefaultHttp2Headers().status(OK.codeAsText());
+            byte[] compressed = {27, 15, 0, 0, 0, 0, -128, -29, -76, 13, 0, 0, 7, 91, 38, 49, 64, 2,
+                    0, -32, 78, 27, 65, -128, 32, 80, 16, 36, 8, 6};
+            ByteBuf content = copiedBuffer(compressed);
+            responseHeaders.add("content-encoding", "br");
+            encoder().writeHeaders(ctx, streamId, responseHeaders, 0, false, ctx.newPromise());
+            encoder().writeData(ctx, streamId, content, 0, true, ctx.newPromise());
+            ctx.flush();
+        }
+    }
+
     private static Http2Headers createDefaultResponseHeaders() {
         return new DefaultHttp2Headers().status(OK.codeAsText());
     }
@@ -251,6 +269,8 @@ public final class Http2TestHandler extends Http2ConnectionHandler implements Ht
             responder = new EchoMethodResponder();
         } else if (path.startsWith(SERVE_SIMPLE_BROTLI_RESPONSE)) {
             responder = new ServeSimpleBrotliResponder();
+        } else if (path.startsWith(SERVE_DICTIONARY_BROTLI_RESPONSE)) {
+            responder = new ServeDictionaryBrotliResponder();
         } else {
             responder = new RequestResponder();
         }

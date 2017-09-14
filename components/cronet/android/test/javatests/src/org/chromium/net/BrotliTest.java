@@ -26,6 +26,9 @@ import org.chromium.base.test.util.Feature;
 import org.chromium.net.CronetTestRule.OnlyRunNativeCronet;
 import org.chromium.net.CronetTestRule.RequiresMinApi;
 
+import java.io.InputStream;
+import java.nio.ByteBuffer;
+
 /**
  * Simple test for Brotli support.
  */
@@ -37,6 +40,8 @@ public class BrotliTest {
     public final CronetTestRule mTestRule = new CronetTestRule();
 
     private CronetEngine mCronetEngine;
+
+    private static final int BROTLI_RFC_DICTIONARY_SIZE = 122784;
 
     @Before
     public void setUp() throws Exception {
@@ -61,12 +66,8 @@ public class BrotliTest {
         ExperimentalCronetEngine.Builder builder =
                 new ExperimentalCronetEngine.Builder(getContext());
         builder.enableBrotli(true);
-        CronetTestUtil.setMockCertVerifierForTesting(
-                builder, QuicTestServer.createMockCertVerifier());
-        mCronetEngine = builder.build();
         String url = Http2TestServer.getEchoAllHeadersUrl();
-        TestUrlRequestCallback callback = startAndWaitForComplete(url);
-        assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
+        TestUrlRequestCallback callback = startAndWaitForComplete(builder, url);
         assertTrue(callback.mResponseAsString.contains("accept-encoding: gzip, deflate, br"));
     }
 
@@ -77,12 +78,8 @@ public class BrotliTest {
     public void testBrotliNotAdvertised() throws Exception {
         ExperimentalCronetEngine.Builder builder =
                 new ExperimentalCronetEngine.Builder(getContext());
-        CronetTestUtil.setMockCertVerifierForTesting(
-                builder, QuicTestServer.createMockCertVerifier());
-        mCronetEngine = builder.build();
         String url = Http2TestServer.getEchoAllHeadersUrl();
-        TestUrlRequestCallback callback = startAndWaitForComplete(url);
-        assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
+        TestUrlRequestCallback callback = startAndWaitForComplete(builder, url);
         assertFalse(callback.mResponseAsString.contains("br"));
     }
 
@@ -94,23 +91,58 @@ public class BrotliTest {
         ExperimentalCronetEngine.Builder builder =
                 new ExperimentalCronetEngine.Builder(getContext());
         builder.enableBrotli(true);
-        CronetTestUtil.setMockCertVerifierForTesting(
-                builder, QuicTestServer.createMockCertVerifier());
-        mCronetEngine = builder.build();
         String url = Http2TestServer.getServeSimpleBrotliResponse();
-        TestUrlRequestCallback callback = startAndWaitForComplete(url);
-        assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
-        String expectedResponse = "The quick brown fox jumps over the lazy dog";
-        assertEquals(expectedResponse, callback.mResponseAsString);
+        TestUrlRequestCallback callback = startAndWaitForComplete(builder, url);
+        assertEquals("The quick brown fox jumps over the lazy dog", callback.mResponseAsString);
         assertEquals(callback.mResponseInfo.getAllHeaders().get("content-encoding").get(0), "br");
     }
 
-    private TestUrlRequestCallback startAndWaitForComplete(String url) {
+    @Test
+    @SmallTest
+    @Feature({"Cronet"})
+    @OnlyRunNativeCronet
+    public void testBrotliDictionaryRequiredButNotProvided() throws Exception {
+        ExperimentalCronetEngine.Builder builder =
+                new ExperimentalCronetEngine.Builder(getContext());
+        builder.enableBrotli(true);
+        String url = Http2TestServer.getServeDictionaryBrotliResponse();
+        TestUrlRequestCallback callback = startAndWaitForComplete(builder, url);
+        assertTrue(callback.mError.getMessage().contains("net::ERR_CONTENT_DECODING_FAILED"));
+        assertEquals(callback.mResponseInfo.getAllHeaders().get("content-encoding").get(0), "br");
+    }
+
+    @Test
+    @SmallTest
+    @Feature({"Cronet"})
+    @OnlyRunNativeCronet
+    public void testBrotliDictionaryProvided() throws Exception {
+        InputStream dictionaryStream = getContext().getAssets().open("test/dictionary.bin");
+        ByteBuffer dictionary = ByteBuffer.allocateDirect(BROTLI_RFC_DICTIONARY_SIZE);
+        byte[] buffer = new byte[4096];
+        int readBytes;
+        while ((readBytes = dictionaryStream.read(buffer)) != -1) {
+            dictionary.put(buffer, 0, readBytes);
+        }
+        ExperimentalCronetEngine.Builder builder =
+                new ExperimentalCronetEngine.Builder(getContext());
+        builder.enableBrotliAndSetDictionaryData(dictionary);
+        String url = Http2TestServer.getServeDictionaryBrotliResponse();
+        TestUrlRequestCallback callback = startAndWaitForComplete(builder, url);
+        assertEquals("leftdatadataleft", callback.mResponseAsString);
+        assertEquals(callback.mResponseInfo.getAllHeaders().get("content-encoding").get(0), "br");
+    }
+
+    private TestUrlRequestCallback startAndWaitForComplete(
+            ExperimentalCronetEngine.Builder engineBuilder, String url) {
+        CronetTestUtil.setMockCertVerifierForTesting(
+                engineBuilder, QuicTestServer.createMockCertVerifier());
+        mCronetEngine = engineBuilder.build();
         TestUrlRequestCallback callback = new TestUrlRequestCallback();
-        UrlRequest.Builder builder =
+        UrlRequest.Builder requestBuilder =
                 mCronetEngine.newUrlRequestBuilder(url, callback, callback.getExecutor());
-        builder.build().start();
+        requestBuilder.build().start();
         callback.blockForDone();
+        assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
         return callback;
     }
 }
