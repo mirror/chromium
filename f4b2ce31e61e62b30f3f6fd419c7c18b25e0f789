@@ -22,6 +22,30 @@
       "revId": "f4b2ce31e61e62b30f3f6fd419c7c18b25e0f789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b7ddb9_7a5902a5",
+        "filename": "components/history/core/browser/top_sites_database.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-14T17:51:42Z",
+      "side": 1,
+      "message": "I should have asked this earlier. In the old implementation, every RemoveURL call creates its own sql::Transaction inside the function. If removing that particular URL fails, transaction.Commit() is skipped. That means the program will not remove that URL in DB. However, the action on other changed URLs (added,deleted,moved) won\u0027t be affected.\n\nSince now we have only one sql::Transaction for all changed URLs, I am not sure what is the best strategy when RemoveURLNoTransaction() returns false. Shall we exit ApplyDelta() and skip updating all other changed URLs? Another idea is to to create a sql::Transaction for each deleted URL (with the old RemoveURL method), and pack the rest (added, moved URLs) into a single sql::Transaction as return value is not checked for them.\n\nHow do you think please?",
+      "parentUuid": "0a52f94c_ee8e4c5b",
+      "range": {
+        "startLine": 389,
+        "startChar": 4,
+        "endLine": 389,
+        "endChar": 26
+      },
+      "revId": "f4b2ce31e61e62b30f3f6fd419c7c18b25e0f789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
