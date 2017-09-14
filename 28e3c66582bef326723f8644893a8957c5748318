@@ -46,6 +46,30 @@
       "revId": "28e3c66582bef326723f8644893a8957c5748318",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19447363_88efdc18",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-14T23:48:05Z",
+      "side": 0,
+      "message": "heh - I was going to mention this too. Things like AppListService::{Show,Hide}ForCustomLauncherPage(), AppListModel::State::STATE_CUSTOM_LAUNCHER_PAGE are some threads to pull, but scanning crbug/386004 is a good way to be thorough. (Separate CLs is fine)",
+      "parentUuid": "69141665_b0f15cdd",
+      "range": {
+        "startLine": 126,
+        "startChar": 20,
+        "endLine": 126,
+        "endChar": 39
+      },
+      "revId": "28e3c66582bef326723f8644893a8957c5748318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
