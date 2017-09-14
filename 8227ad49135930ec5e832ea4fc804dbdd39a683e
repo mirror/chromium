@@ -16,6 +16,24 @@
       "revId": "8227ad49135930ec5e832ea4fc804dbdd39a683e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15066cd8_8738ad25",
+        "filename": "tools/gritsettings/resource_ids",
+        "patchSetId": 5
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-14T08:58:06Z",
+      "side": 1,
+      "message": "Fixed, sorry about that!",
+      "parentUuid": "484641ae_51e567f3",
+      "revId": "8227ad49135930ec5e832ea4fc804dbdd39a683e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
