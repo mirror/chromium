@@ -250,13 +250,30 @@ def _NormalizeLanguagePaks(translations, normalized_apk_size, factor):
   return normalized_apk_size
 
 
-def _NormalizeResourcesArsc(apk_path, num_translations):
+def _NormalizeResourcesArsc(apk_path, num_arsc_files, num_translations):
   """Estimates the expected overhead of untranslated strings in resources.arsc.
 
   See http://crbug.com/677966 for why this is necessary.
   """
-  aapt_output = _RunAaptDumpResources(apk_path)
+  # If there are multiple .arsc files, use the resource packaged APK instead.
+  if num_arsc_files > 1:
+    try:
+      out_dir = constants.GetOutDirectory()
+    except EnvironmentError:
+      print 'Skipping resources.arsc normalization (output directory required)'
+      return 0
+    apk_target = os.path.basename(apk_path).lower().replace('.apk', '_apk')
+    ap_re = re.compile(
+        r'^' + re.escape(os.path.join(out_dir, 'gen')) + r'.*' +
+        re.escape(apk_target) + r'.apk_intermediates.ap___intermediate.ap_$')
 
+    for root, _, files in os.walk(out_dir):
+      for name in files:
+        here = os.path.join(root, name)
+        if ap_re.match(here):
+          apk_path = here
+
+  aapt_output = _RunAaptDumpResources(apk_path)
   # en-rUS is in the default config and may be cluttered with non-translatable
   # strings, so en-rGB is a better baseline for finding missing translations.
   en_strings = _CreateResourceIdValueMap(aapt_output, 'en-rGB')
@@ -515,8 +532,8 @@ def PrintApkAnalysis(apk_filename, tool_prefix, chartjson=None):
       # WebView (which supports more locales), but these should mostly be empty
       # so ignore them here.
       num_arsc_translations = num_translations
-    normalized_apk_size += int(
-        _NormalizeResourcesArsc(apk_filename, num_arsc_translations))
+    normalized_apk_size += int(_NormalizeResourcesArsc(
+        apk_filename, arsc.GetNumEntries(), num_arsc_translations))
 
   ReportPerfResult(chartjson, apk_basename + '_Specifics',
                    'normalized apk size', normalized_apk_size, 'bytes')
