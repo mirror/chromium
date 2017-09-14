@@ -291,7 +291,7 @@ class IDLParser(object):
 
   def p_Partial(self, p):
     """Partial : PARTIAL PartialDefinition"""
-    p[2].AddChildren(self.BuildTrue('Partial'))
+    p[2].AddChildren(self.BuildTrue('PARTIAL'))
     p[0] = p[2]
 
   # Error recovery for Partial
@@ -382,8 +382,7 @@ class IDLParser(object):
 
   def p_PartialDictionary(self, p):
     """PartialDictionary : DICTIONARY identifier '{' DictionaryMembers '}' ';'"""
-    partial = self.BuildTrue('Partial')
-    p[0] = self.BuildNamed('Dictionary', p, 2, ListFromConcat(p[4], partial))
+    p[0] = self.BuildNamed('Dictionary', p, 2, p[4])
 
   # Error recovery for Partial Dictionary
   def p_PartialDictionaryError(self, p):
