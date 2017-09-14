@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "cd3b821c_3eba947d",
+        "filename": "components/metrics/proto/execution_context.proto",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-14T20:15:37Z",
+      "side": 1,
+      "message": "Please making corresponding change to google3, because that\u0027s the policy for metrics protos.\n\nOr if you don\u0027t want to block this CL on that, leave this change out and do it in a separate CL - as I don\u0027t think it should break anything keeping the proto constants.",
+      "revId": "b788dd96732aad7c4d298b7ea8469e702b0805d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f769e95_17fc8ee4",
         "filename": "ios/web/app/web_main_loop.mm",
         "patchSetId": 14
