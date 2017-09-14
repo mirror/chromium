@@ -22,6 +22,30 @@
       "revId": "9ba78917993435e390e433129cc5c5880f0549bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c0f185_a22f4877",
+        "filename": "android_webview/browser/aw_settings.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-09-14T23:40:59Z",
+      "side": 1,
+      "message": "For booleans, \u0026\u003d is \u0026\u0026\u003d (the latter doesn\u0027t exist)",
+      "parentUuid": "612a029f_4c44d8a9",
+      "range": {
+        "startLine": 437,
+        "startChar": 28,
+        "endLine": 437,
+        "endChar": 30
+      },
+      "revId": "9ba78917993435e390e433129cc5c5880f0549bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
