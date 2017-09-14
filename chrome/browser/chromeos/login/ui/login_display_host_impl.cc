@@ -1235,6 +1235,7 @@ void LoginDisplayHostImpl::ResetLoginWindowAndView() {
   }
 
   if (login_window_) {
+    login_window_->RemoveRemovalsObserver(this);
     login_window_->Close();
     login_window_ = nullptr;
     login_window_delegate_ = nullptr;

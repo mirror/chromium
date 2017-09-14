@@ -31,6 +31,7 @@
 #include "ui/base/class_property.h"
 #include "ui/base/dragdrop/os_exchange_data.h"
 #include "ui/base/ui_base_types.h"
+#include "ui/compositor/compositor_observer.h"
 #include "ui/compositor/layer.h"
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
@@ -94,6 +95,26 @@ void SetIcon(aura::Window* window,
   else
     window->SetProperty(key, new gfx::ImageSkia(value));
 }
+
+class CloseNowAfterCommit : public ui::CompositorObserver {
+ public:
+  CloseNowAfterCommit(NativeWidgetAura* widget) : widget_(widget) {}
+  ~CloseNowAfterCommit() override = default;
+
+  // Overridden from ui::CompositorObserver
+  void OnCompositingDidCommit(ui::Compositor* compositor) override {
+    widget_->CloseNow();
+  }
+
+  void OnCompositingStarted(ui::Compositor* compositor,
+                            base::TimeTicks start_time) override {}
+  void OnCompositingEnded(ui::Compositor* compositor) override {}
+  void OnCompositingLockStateChanged(ui::Compositor* compositor) override {}
+  void OnCompositingShuttingDown(ui::Compositor* compositor) override {}
+
+ private:
+  NativeWidgetAura* widget_;
+};
 
 }  // namespace
 
@@ -508,9 +529,13 @@ void NativeWidgetAura::Close() {
     window_->SuppressPaint();
     Hide();
     window_->SetProperty(aura::client::kModalKey, ui::MODAL_TYPE_NONE);
-  }
-
-  if (!close_widget_factory_.HasWeakPtrs()) {
+    if (!close_widget_factory_.HasWeakPtrs()) {
+      DCHECK(!compositor_observer_);
+      compositor_observer_.reset(new CloseNowAfterCommit(this));
+      window_->layer()->GetCompositor()->AddObserver(
+          compositor_observer_.get());
+    }
+  } else if (!close_widget_factory_.HasWeakPtrs()) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::Bind(&NativeWidgetAura::CloseNow,
                               close_widget_factory_.GetWeakPtr()));
@@ -518,6 +543,10 @@ void NativeWidgetAura::Close() {
 }
 
 void NativeWidgetAura::CloseNow() {
+  if (window_ && compositor_observer_) {
+    window_->layer()->GetCompositor()->RemoveObserver(
+        compositor_observer_.get());
+  }
   delete window_;
 }
 

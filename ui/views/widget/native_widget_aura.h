@@ -24,6 +24,10 @@ namespace aura {
 class Window;
 }
 
+namespace ui {
+class CompositorObserver;
+}
+
 namespace views {
 
 class DropHelper;
@@ -234,6 +238,10 @@ class VIEWS_EXPORT NativeWidgetAura : public internal::NativeWidgetPrivate,
 
   // Native widget's handler to receive events before the event target.
   std::unique_ptr<FocusManagerEventHandler> focus_manager_event_handler_;
+
+  // Used briefly to make sure that the window closes after it's hidden state
+  // is committed.
+  std::unique_ptr<ui::CompositorObserver> compositor_observer_;
 
   // The following factory is used for calls to close the NativeWidgetAura
   // instance.
