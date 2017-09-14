@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 /**
- * @implements {UI.ListDelegate<!Console.ConsoleSidebar.GroupItem>}
+ * @implements {UI.ListDelegate<!Console.ConsoleFilter>}
  */
 Console.ConsoleSidebar = class extends UI.VBox {
   constructor() {
@@ -11,30 +11,28 @@ Console.ConsoleSidebar = class extends UI.VBox {
     this.registerRequiredCSS('console/consoleSidebar.css');
     this.setMinimumSize(50, 0);
 
-    /** @type {!UI.ListModel<!Console.ConsoleSidebar.GroupItem>} */
+    /** @type {!UI.ListModel<!Console.ConsoleFilter>} */
     this._items = new UI.ListModel();
-    /** @type {!UI.ListControl<!Console.ConsoleSidebar.GroupItem>} */
+    /** @type {!UI.ListControl<!Console.ConsoleFilter>} */
     this._list = new UI.ListControl(this._items, this, UI.ListMode.EqualHeightItems);
     this._list.element.classList.add('list');
     this.contentElement.appendChild(this._list.element);
 
-    this._allGroup = this._createAllGroup();
-    this._items.replaceAll([this._allGroup]);
+    this._allFilter =
+        new Console.ConsoleFilter(Common.UIString('All'), null, Console.ConsoleViewFilter.allLevelsFilterValue());
+    var defaultParsedFilter = /** @type {!TextUtils.FilterParser.ParsedFilter} */ ({
+      key: Console.ConsoleViewFilter.FilterType.Level,
+      text: ConsoleModel.ConsoleMessage.MessageLevel.Verbose,
+      negative: true
+    });
+    this._defaultFilter = new Console.ConsoleFilter(
+        Common.UIString('Default'), defaultParsedFilter, Console.ConsoleViewFilter.defaultLevelsFilterValue());
+    this._items.replaceAll([this._allFilter, this._defaultFilter]);
     this._list.selectItem(this._items.at(0));
-
-    /** @type {!Map<string, !Console.ConsoleSidebar.GroupItem>} */
-    this._contextToItem = new Map();
-    /** @type {!Set<!Console.ConsoleSidebar.GroupItem>} */
+    this._valueToItemMaps = this._createValueToItemMaps();
+    /** @type {!Set<!Console.ConsoleFilter>} */
     this._pendingItemsToAdd = new Set();
     this._pendingClear = false;
-  }
-
-  /**
-   * @return {!Console.ConsoleSidebar.GroupItem}
-   */
-  _createAllGroup() {
-    this._allGroup = {context: Console.ConsoleSidebar.AllContextsFilter, name: 'All', info: 0, warning: 0, error: 0};
-    return this._allGroup;
   }
 
   /**
@@ -58,47 +56,60 @@ Console.ConsoleSidebar = class extends UI.VBox {
   onMessageAdded(message) {
     if (!Runtime.experiments.isEnabled('logManagement'))
       return;
-    incrementCounters(this._allGroup, message.level);
-    var context = message.context;
-    if (!context)
-      return;
-
-    var item = this._contextToItem.get(context);
-    if (!item) {
-      item = {name: context, context: context, info: 0, warning: 0, error: 0};
-      this._contextToItem.set(context, item);
-      this._pendingItemsToAdd.add(item);
+    this._allFilter[Console.ConsoleSidebar._itemIsDirtySymbol] = true;
+    this._allFilter.incrementCounters(message.level);
+    if (message.level !== ConsoleModel.ConsoleMessage.MessageLevel.Verbose) {
+      this._defaultFilter[Console.ConsoleSidebar._itemIsDirtySymbol] = true;
+      this._defaultFilter.incrementCounters(message.level);
     }
-    incrementCounters(item, message.level);
+    if (message.context)
+      this._addItem(message.level, Console.ConsoleViewFilter.FilterType.Context, message.context);
+  }
 
-    /**
-     * @param {!Console.ConsoleSidebar.GroupItem} item
-     * @param {?ConsoleModel.ConsoleMessage.MessageLevel} level
-     */
-    function incrementCounters(item, level) {
-      if (level === ConsoleModel.ConsoleMessage.MessageLevel.Info)
-        item.info++;
-      else if (level === ConsoleModel.ConsoleMessage.MessageLevel.Warning)
-        item.warning++;
-      else if (level === ConsoleModel.ConsoleMessage.MessageLevel.Error)
-        item.error++;
+  /**
+   * @param {?ConsoleModel.ConsoleMessage.MessageLevel} level
+   * @param {!Console.ConsoleViewFilter.FilterType} filterType
+   * @param {string} value
+   */
+  _addItem(level, filterType, value) {
+    var item = this._valueToItemMaps[filterType].get(value);
+    if (!item) {
+      item = new Console.ConsoleFilter(
+          value, /** @type {!TextUtils.FilterParser.ParsedFilter} */ ({key: filterType, text: value, negative: false}));
+      this._valueToItemMaps[filterType].set(value, item);
+      this._pendingItemsToAdd.add(item);
+    } else {
       item[Console.ConsoleSidebar._itemIsDirtySymbol] = true;
     }
+    item.incrementCounters(level);
   }
 
   clear() {
     if (!Runtime.experiments.isEnabled('logManagement'))
       return;
-    this._contextToItem.clear();
+    this._valueToItemMaps = this._createValueToItemMaps();
     this._pendingItemsToAdd.clear();
     this._pendingClear = true;
+  }
+
+  /**
+   * @return {!Object<!Console.ConsoleViewFilter.FilterType, !Map<string, !Console.ConsoleFilter>>}
+   */
+  _createValueToItemMaps() {
+    /** @type {!Object<!Console.ConsoleViewFilter.FilterType, !Map<string, !Console.ConsoleFilter>>} */
+    var valueToItemMaps = {};
+    for (var type of Object.values(Console.ConsoleViewFilter.FilterType))
+      valueToItemMaps[type] = /** @type {!Map<string, !Console.ConsoleFilter>} */ (new Map());
+    return valueToItemMaps;
   }
 
   refresh() {
     if (!Runtime.experiments.isEnabled('logManagement'))
       return;
     if (this._pendingClear) {
-      this._items.replaceAll([this._createAllGroup()]);
+      this._allFilter.resetCounters();
+      this._defaultFilter.resetCounters();
+      this._items.replaceAll([this._allFilter, this._defaultFilter]);
       this._list.selectItem(this._items.at(0));
       this._pendingClear = false;
     }
@@ -119,26 +130,27 @@ Console.ConsoleSidebar = class extends UI.VBox {
 
   /**
    * @override
-   * @param {!Console.ConsoleSidebar.GroupItem} item
+   * @param {!Console.ConsoleFilter} item
    * @return {!Element}
    */
   createElementForItem(item) {
     var element = createElementWithClass('div', 'context-item');
-    element.createChild('div', 'name').textContent = item.name;
-    element.title = item.name;
-    var counters = element.createChild('div', 'counters');
-    if (item.error)
-      counters.createChild('span', 'error-count').textContent = item.error > 99 ? '99+' : item.error;
-    if (item.warning)
-      counters.createChild('span', 'warning-count').textContent = item.warning > 99 ? '99+' : item.warning;
-    if (item.info)
-      counters.createChild('span', 'info-count').textContent = item.info > 99 ? '99+' : item.info;
+    element.createChild('div', 'name').textContent = item.name();
+    element.title = item.name();
+    var countersElement = element.createChild('div', 'counters');
+    var counts = item.counters();
+    if (counts.error)
+      countersElement.createChild('span', 'error-count').textContent = counts.error > 99 ? '99+' : counts.error;
+    if (counts.warning)
+      countersElement.createChild('span', 'warning-count').textContent = counts.warning > 99 ? '99+' : counts.warning;
+    if (counts.info)
+      countersElement.createChild('span', 'info-count').textContent = counts.info > 99 ? '99+' : counts.info;
     return element;
   }
 
   /**
    * @override
-   * @param {!Console.ConsoleSidebar.GroupItem} item
+   * @param {!Console.ConsoleFilter} item
    * @return {number}
    */
   heightForItem(item) {
@@ -147,7 +159,7 @@ Console.ConsoleSidebar = class extends UI.VBox {
 
   /**
    * @override
-   * @param {!Console.ConsoleSidebar.GroupItem} item
+   * @param {!Console.ConsoleFilter} item
    * @return {boolean}
    */
   isItemSelectable(item) {
@@ -156,8 +168,8 @@ Console.ConsoleSidebar = class extends UI.VBox {
 
   /**
    * @override
-   * @param {?Console.ConsoleSidebar.GroupItem} from
-   * @param {?Console.ConsoleSidebar.GroupItem} to
+   * @param {?Console.ConsoleFilter} from
+   * @param {?Console.ConsoleFilter} to
    * @param {?Element} fromElement
    * @param {?Element} toElement
    */
@@ -168,26 +180,71 @@ Console.ConsoleSidebar = class extends UI.VBox {
       return;
 
     toElement.classList.add('selected');
-    this.dispatchEventToListeners(Console.ConsoleSidebar.Events.ContextSelected, to.context);
+    this.dispatchEventToListeners(Console.ConsoleSidebar.Events.GroupSelected, to);
   }
 };
 
-Console.ConsoleSidebar.AllContextsFilter = Symbol('All');
-
 /** @enum {symbol} */
 Console.ConsoleSidebar.Events = {
-  ContextSelected: Symbol('ContextSelected')
+  GroupSelected: Symbol('GroupSelected')
 };
-
-/** @typedef {{
-        context: (string|symbol),
-        name: string,
-        info: number,
-        warning: number,
-        error: number
-    }}
- */
-Console.ConsoleSidebar.GroupItem;
 
 /** @type {symbol} */
 Console.ConsoleSidebar._itemIsDirtySymbol = Symbol('itemIsDirty');
+
+Console.ConsoleFilter = class {
+  /**
+   * @param  {string} name
+   * @param  {?TextUtils.FilterParser.ParsedFilter} parsedFilter
+   * @param  {!Object<string, boolean>=} levelsMask
+   */
+  constructor(name, parsedFilter, levelsMask) {
+    this._name = name;
+    this._parsedFilter = parsedFilter;
+    this._levelsMask = levelsMask || Console.ConsoleViewFilter.defaultLevelsFilterValue();
+
+    this._info = 0;
+    this._warning = 0;
+    this._error = 0;
+  }
+
+  /**
+   * @return {string}
+   */
+  name() {
+    return this._name;
+  }
+
+  /**
+   * @return {?TextUtils.FilterParser.ParsedFilter}
+   */
+  parsedFilter() {
+    return this._parsedFilter;
+  }
+
+  /**
+   * @return {!Object<string, number>}
+   */
+  counters() {
+    return {info: this._info, warning: this._warning, error: this._error};
+  }
+
+  /**
+   * @param {?ConsoleModel.ConsoleMessage.MessageLevel} level
+   */
+  incrementCounters(level) {
+    if (level === ConsoleModel.ConsoleMessage.MessageLevel.Info ||
+        level === ConsoleModel.ConsoleMessage.MessageLevel.Verbose)
+      this._info++;
+    else if (level === ConsoleModel.ConsoleMessage.MessageLevel.Warning)
+      this._warning++;
+    else if (level === ConsoleModel.ConsoleMessage.MessageLevel.Error)
+      this._error++;
+  }
+
+  resetCounters() {
+    this._info = 0;
+    this._warning = 0;
+    this._error = 0;
+  }
+};
