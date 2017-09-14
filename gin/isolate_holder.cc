@@ -75,10 +75,13 @@ IsolateHolder::IsolateHolder(
 
 IsolateHolder::IsolateHolder(const intptr_t* reference_table,
                              v8::StartupData* existing_blob)
-    : snapshot_creator_(
-          new v8::SnapshotCreator(reference_table, existing_blob)),
-      isolate_(snapshot_creator_->GetIsolate()),
-      access_mode_(AccessMode::kSingleThread) {
+    : access_mode_(AccessMode::kSingleThread) {
+  v8::StartupData unused_natives;
+  V8Initializer::GetV8ExternalSnapshotData(&unused_natives, existing_blob);
+  snapshot_creator_.reset(
+      new v8::SnapshotCreator(reference_table, existing_blob));
+  isolate_ = snapshot_creator_->GetIsolate();
+
   SetUp(nullptr);
 }
 
