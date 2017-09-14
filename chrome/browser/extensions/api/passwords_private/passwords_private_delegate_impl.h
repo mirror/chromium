@@ -44,11 +44,15 @@ class PasswordsPrivateDelegateImpl : public PasswordsPrivateDelegate,
   void SendPasswordExceptionsList() override;
   void GetPasswordExceptionsList(
       const ExceptionEntriesCallback& callback) override;
-  void RemoveSavedPassword(
-      const std::string& origin_url, const std::string& username) override;
+  void RemoveSavedPassword(const std::string& origin_url,
+                           const std::string& username,
+                           const std::string& username_element,
+                           const std::string& password_element) override;
   void RemovePasswordException(const std::string& exception_url) override;
   void RequestShowPassword(const std::string& origin_url,
                            const std::string& username,
+                           const std::string& username_element,
+                           const std::string& password_element,
                            content::WebContents* web_contents) override;
 
   // PasswordUIView implementation.
@@ -81,11 +85,15 @@ class PasswordsPrivateDelegateImpl : public PasswordsPrivateDelegate,
   // has been initialized or by deferring it until initialization has completed.
   void ExecuteFunction(const base::Closure& callback);
 
-  void RemoveSavedPasswordInternal(
-      const std::string& origin_url, const std::string& username);
+  void RemoveSavedPasswordInternal(const std::string& origin_url,
+                                   const std::string& username,
+                                   const std::string& username_element,
+                                   const std::string& password_element);
   void RemovePasswordExceptionInternal(const std::string& exception_url);
   void RequestShowPasswordInternal(const std::string& origin_url,
                                    const std::string& username,
+                                   const std::string& username_element,
+                                   const std::string& password_element,
                                    content::WebContents* web_contents);
 
   // Not owned by this class.

@@ -55,8 +55,14 @@ class PasswordsPrivateDelegate : public KeyedService {
   // |origin_url| The origin for the URL where the password is used; should be
   //     obtained using CreateUrlCollectionFromForm().origin.
   // |username| The username used in conjunction with the saved password.
-  virtual void RemoveSavedPassword(
-      const std::string& origin_url, const std::string& username) = 0;
+  // |username_element| The username element used in conjunction with the saved
+  //     password.
+  // |password_element| The password element used in conjunction with the saved
+  //     password.
+  virtual void RemoveSavedPassword(const std::string& origin_url,
+                                   const std::string& username,
+                                   const std::string& username_element,
+                                   const std::string& password_element) = 0;
 
   // Removes the saved password exception entry corresponding to
   // |exception_url|.
@@ -69,10 +75,16 @@ class PasswordsPrivateDelegate : public KeyedService {
   // |origin_url| The origin for the URL where the password is used; should be
   //     obtained using CreateUrlCollectionFromForm().origin.
   // |username| The username used in conjunction with the saved password.
-  // |native_window| The Chrome host window; will be used to show an OS-level
-  //     authentication dialog if necessary.
+  // |username_element| The username element used in conjunction with the saved
+  //     password.
+  // |password_element| The password element used in conjunction with the saved
+  //     password.
+  // |web_contents| The web content object used as the UI; will be used to show
+  //     an OS-level authentication dialog if necessary.
   virtual void RequestShowPassword(const std::string& origin_url,
                                    const std::string& username,
+                                   const std::string& username_element,
+                                   const std::string& password_element,
                                    content::WebContents* web_contents) = 0;
 };
 

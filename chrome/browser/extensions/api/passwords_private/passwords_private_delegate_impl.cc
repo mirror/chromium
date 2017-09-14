@@ -4,7 +4,10 @@
 
 #include "chrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.h"
 
+#include <utility>
+
 #include "base/strings/string_util.h"
+#include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 #include "chrome/browser/extensions/api/passwords_private/passwords_private_event_router.h"
@@ -24,9 +27,12 @@
 namespace {
 
 std::string LoginPairToMapKey(const std::string& origin_url,
-                              const std::string& username) {
+                              const std::string& username,
+                              const std::string& user_element,
+                              const std::string& password_element) {
   // Concatenate origin URL and username to form a unique key.
-  return origin_url + ',' + username;
+  return base::StringPrintf("%s,%s,%s,%s", origin_url.c_str(), username.c_str(),
+                            user_element.c_str(), password_element.c_str());
 }
 
 }  // namespace
@@ -77,17 +83,23 @@ void PasswordsPrivateDelegateImpl::GetPasswordExceptionsList(
 }
 
 void PasswordsPrivateDelegateImpl::RemoveSavedPassword(
-    const std::string& origin_url, const std::string& username) {
-  ExecuteFunction(base::Bind(
-      &PasswordsPrivateDelegateImpl::RemoveSavedPasswordInternal,
-      base::Unretained(this),
-      origin_url,
-      username));
+    const std::string& origin_url,
+    const std::string& username,
+    const std::string& username_element,
+    const std::string& password_element) {
+  ExecuteFunction(
+      base::Bind(&PasswordsPrivateDelegateImpl::RemoveSavedPasswordInternal,
+                 base::Unretained(this), origin_url, username, username_element,
+                 password_element));
 }
 
 void PasswordsPrivateDelegateImpl::RemoveSavedPasswordInternal(
-    const std::string& origin_url, const std::string& username) {
-  std::string key = LoginPairToMapKey(origin_url, username);
+    const std::string& origin_url,
+    const std::string& username,
+    const std::string& username_element,
+    const std::string& password_element) {
+  std::string key = LoginPairToMapKey(origin_url, username, username_element,
+                                      password_element);
   if (login_pair_to_index_map_.find(key) == login_pair_to_index_map_.end()) {
     // If the URL/username pair does not exist in the map, do nothing.
     return;
@@ -120,17 +132,23 @@ void PasswordsPrivateDelegateImpl::RemovePasswordExceptionInternal(
 void PasswordsPrivateDelegateImpl::RequestShowPassword(
     const std::string& origin_url,
     const std::string& username,
+    const std::string& username_element,
+    const std::string& password_element,
     content::WebContents* web_contents) {
   ExecuteFunction(
       base::Bind(&PasswordsPrivateDelegateImpl::RequestShowPasswordInternal,
-                 base::Unretained(this), origin_url, username, web_contents));
+                 base::Unretained(this), origin_url, username, username_element,
+                 password_element, web_contents));
 }
 
 void PasswordsPrivateDelegateImpl::RequestShowPasswordInternal(
     const std::string& origin_url,
     const std::string& username,
+    const std::string& username_element,
+    const std::string& password_element,
     content::WebContents* web_contents) {
-  std::string key = LoginPairToMapKey(origin_url, username);
+  std::string key = LoginPairToMapKey(origin_url, username, username_element,
+                                      password_element);
   if (login_pair_to_index_map_.find(key) == login_pair_to_index_map_.end()) {
     // If the URL/username pair does not exist in the map, do nothing.
     return;
@@ -178,12 +196,18 @@ void PasswordsPrivateDelegateImpl::SetPasswordList(
     const auto& form = password_list[i];
     api::passwords_private::UrlCollection urls =
         CreateUrlCollectionFromForm(*form);
+
+    api::passwords_private::ElementCollection elements =
+        CreateElementCollectionFromForm(*form);
+
     std::string key =
-        LoginPairToMapKey(urls.origin, base::UTF16ToUTF8(form->username_value));
+        LoginPairToMapKey(urls.origin, base::UTF16ToUTF8(form->username_value),
+                          elements.username, elements.password);
     login_pair_to_index_map_[key] = i;
 
     api::passwords_private::PasswordUiEntry entry;
     entry.login_pair.urls = std::move(urls);
+    entry.login_pair.elements = std::move(elements);
     entry.login_pair.username = base::UTF16ToUTF8(form->username_value);
     entry.num_characters_in_password = form->password_value.length();
 
