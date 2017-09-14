@@ -2263,7 +2263,7 @@ public class ToolbarPhone extends ToolbarLayout
 
         if (inOrEnteringTabSwitcher) {
             mUseLightToolbarDrawables = ColorUtils.shouldUseLightForegroundOnBackground(
-                    getToolbarColorForVisualState(VisualState.TAB_SWITCHER_NORMAL));
+                    getToolbarColorForVisualState(mVisualState));
             mLocationBarBackgroundAlpha = LOCATION_BAR_TRANSPARENT_BACKGROUND_ALPHA;
             getProgressBar().setBackgroundColor(mProgressBackBackgroundColorWhite);
             getProgressBar().setForegroundColor(ApiCompatibilityUtils.getColor(getResources(),
