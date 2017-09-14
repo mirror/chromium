@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3ab75f0_28ae4639",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-14T05:06:22Z",
+      "side": 1,
+      "message": "\u0027data pipe\u0027 and \u0027message pipe\u0027 are not really helpful comments, given that we have more detailed comment for network_load_barrier_closure_ in the header we can probably just remove this, ... or if something like this fits in one line\n/* for URLLoaderClient::OnComplete and for the end of body data */\n\nBy the way do you think using this barrier(2) is better than using some status flags?  We use flag approach for StartNetworkConsumerHandleWatcher() but not for OnWriteHeadersAndDataComplete().  Either works for me but I feel I\u0027m not strongly convinced why we do one or the other.",
+      "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48c57eae_11200455",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-14T05:06:22Z",
+      "side": 1,
+      "message": "I think I slightly prefer centralizing this randevouzs code for readability, e.g. have\nMaybeStartNetworkConsumerHandleWatcher() which internally checks did_write_headers_ and network_consumer_.is_valid().",
+      "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8479e87f_c9bef024",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-14T05:06:22Z",
+      "side": 1,
+      "message": "nit: client -\u003e |client|",
+      "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3a353a_0ec89410",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-14T05:06:22Z",
+      "side": 1,
+      "message": "\u0027to net\u0027 is not really meaningful term here, also I wonder if using this helper class without using MojoToNetIOBuffer is really useful?  I didn\u0027t feel using this improves readability much.",
+      "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "864bbc15_7949f0ad",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-14T05:06:22Z",
+      "side": 1,
+      "message": "nit: \u0027both\u0027 can be probably removed\n..., and the -\u003e ..., and when the",
+      "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
