@@ -46,6 +46,30 @@
       "revId": "29bfdc2bcebdde3c1e3fca2c62896524ce2fdf28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d438c49_e721d22a",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-14T13:29:57Z",
+      "side": 1,
+      "message": "I\u0027d go for option 1.",
+      "parentUuid": "1e8b7366_91d565f9",
+      "range": {
+        "startLine": 231,
+        "startChar": 2,
+        "endLine": 231,
+        "endChar": 15
+      },
+      "revId": "29bfdc2bcebdde3c1e3fca2c62896524ce2fdf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
