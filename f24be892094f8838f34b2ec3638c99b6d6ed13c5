@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "015e30d7_dafdacdb",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-09-14T07:18:18Z",
+      "side": 1,
+      "message": "Uber-nit: should it be \"multiple CSS properties\"?",
+      "revId": "f24be892094f8838f34b2ec3638c99b6d6ed13c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
