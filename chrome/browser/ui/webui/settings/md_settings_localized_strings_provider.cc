@@ -122,7 +122,7 @@ void AddCommonStrings(content::WebUIDataSource* html_source, Profile* profile) {
       "isGuest",
 #if defined(OS_CHROMEOS)
       user_manager::UserManager::Get()->IsLoggedInAsGuest() ||
-      user_manager::UserManager::Get()->IsLoggedInAsPublicAccount());
+          user_manager::UserManager::Get()->IsLoggedInAsPublicAccount());
 #else
       profile->IsOffTheRecord());
 #endif
@@ -765,19 +765,20 @@ void AddResetStrings(content::WebUIDataSource* html_source) {
 #if !defined(OS_CHROMEOS)
 void AddImportDataStrings(content::WebUIDataSource* html_source) {
   LocalizedString localized_strings[] = {
-    {"importTitle", IDS_SETTINGS_IMPORT_SETTINGS_TITLE},
-    {"importFromLabel", IDS_SETTINGS_IMPORT_FROM_LABEL},
-    {"importDescription", IDS_SETTINGS_IMPORT_ITEMS_LABEL},
-    {"importLoading", IDS_SETTINGS_IMPORT_LOADING_PROFILES},
-    {"importHistory", IDS_SETTINGS_IMPORT_HISTORY_CHECKBOX},
-    {"importFavorites", IDS_SETTINGS_IMPORT_FAVORITES_CHECKBOX},
-    {"importPasswords", IDS_SETTINGS_IMPORT_PASSWORDS_CHECKBOX},
-    {"importSearch", IDS_SETTINGS_IMPORT_SEARCH_ENGINES_CHECKBOX},
-    {"importAutofillFormData", IDS_SETTINGS_IMPORT_AUTOFILL_FORM_DATA_CHECKBOX},
-    {"importChooseFile", IDS_SETTINGS_IMPORT_CHOOSE_FILE},
-    {"importCommit", IDS_SETTINGS_IMPORT_COMMIT},
-    {"noProfileFound", IDS_SETTINGS_IMPORT_NO_PROFILE_FOUND},
-    {"importSuccess", IDS_SETTINGS_IMPORT_SUCCESS},
+      {"importTitle", IDS_SETTINGS_IMPORT_SETTINGS_TITLE},
+      {"importFromLabel", IDS_SETTINGS_IMPORT_FROM_LABEL},
+      {"importDescription", IDS_SETTINGS_IMPORT_ITEMS_LABEL},
+      {"importLoading", IDS_SETTINGS_IMPORT_LOADING_PROFILES},
+      {"importHistory", IDS_SETTINGS_IMPORT_HISTORY_CHECKBOX},
+      {"importFavorites", IDS_SETTINGS_IMPORT_FAVORITES_CHECKBOX},
+      {"importPasswords", IDS_SETTINGS_IMPORT_PASSWORDS_CHECKBOX},
+      {"importSearch", IDS_SETTINGS_IMPORT_SEARCH_ENGINES_CHECKBOX},
+      {"importAutofillFormData",
+       IDS_SETTINGS_IMPORT_AUTOFILL_FORM_DATA_CHECKBOX},
+      {"importChooseFile", IDS_SETTINGS_IMPORT_CHOOSE_FILE},
+      {"importCommit", IDS_SETTINGS_IMPORT_COMMIT},
+      {"noProfileFound", IDS_SETTINGS_IMPORT_NO_PROFILE_FOUND},
+      {"importSuccess", IDS_SETTINGS_IMPORT_SUCCESS},
   };
   AddLocalizedStringsBulk(html_source, localized_strings,
                           arraysize(localized_strings));
@@ -1162,12 +1163,10 @@ void AddPasswordsAndFormsStrings(content::WebUIDataSource* html_source) {
               password_manager::kPasswordManagerAccountDashboardURL)));
   html_source->AddString("passwordManagerLearnMoreURL",
                          chrome::kPasswordManagerLearnMoreURL);
-  html_source->AddString(
-      "manageAddressesUrl",
-      autofill::payments::GetManageAddressesUrl(0).spec());
-  html_source->AddString(
-      "manageCreditCardsUrl",
-      autofill::payments::GetManageInstrumentsUrl(0).spec());
+  html_source->AddString("manageAddressesUrl",
+                         autofill::payments::GetManageAddressesUrl(0).spec());
+  html_source->AddString("manageCreditCardsUrl",
+                         autofill::payments::GetManageInstrumentsUrl(0).spec());
 
   AddLocalizedStringsBulk(html_source, localized_strings,
                           arraysize(localized_strings));
@@ -1381,8 +1380,7 @@ void AddPeopleStrings(content::WebUIDataSource* html_source) {
       "syncDisconnectManagedProfileExplanation",
       l10n_util::GetStringFUTF8(
           IDS_SETTINGS_SYNC_DISCONNECT_MANAGED_PROFILE_EXPLANATION,
-          base::ASCIIToUTF16("$1"),
-          base::ASCIIToUTF16(sync_dashboard_url)));
+          base::ASCIIToUTF16("$1"), base::ASCIIToUTF16(sync_dashboard_url)));
 #endif
 
   html_source->AddString("syncErrorHelpUrl", chrome::kSyncErrorsHelpURL);
@@ -1458,6 +1456,20 @@ void AddPrintingStrings(content::WebUIDataSource* html_source) {
      IDS_SETTINGS_PRINTING_CUPS_PRINTER_SEARCHING_NEARBY_PRINTER},
     {"printerAddedFailedMessage",
      IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_ERROR_MESSAGE},
+    {"printerAddedFatalErrorMessage",
+     IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_FATAL_ERROR_MESSAGE},
+    {"printerAddedUnreachableMessage",
+     IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_PRINTER_UNREACHABLE_MESSAGE},
+    {"printerAddedDbusErrorMessage",
+     IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_DBUS_ERROR_MESSAGE},
+    {"printerAddedPpdTooLargeMessage",
+     IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_PPD_TOO_LARGE_MESSAGE},
+    {"printerAddedInvalidPpdMessage",
+     IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_INVALID_PPD_MESSAGE},
+    {"printerAddedPpdNotFoundMessage",
+     IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_PPD_NOT_FOUND},
+    {"printerAddedPpdUnretrievableMessage",
+     IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_PPD_UNRETRIEVABLE},
     {"printerAddedTryAgainMessage",
      IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADDED_PRINTER_TRY_AGAIN_MESSAGE},
     {"requireNetworkMessage",
@@ -1594,8 +1606,7 @@ void AddSearchStrings(content::WebUIDataSource* html_source) {
   };
   AddLocalizedStringsBulk(html_source, localized_strings,
                           arraysize(localized_strings));
-  html_source->AddString("hotwordLearnMoreUrl",
-                         chrome::kHotwordLearnMoreURL);
+  html_source->AddString("hotwordLearnMoreUrl", chrome::kHotwordLearnMoreURL);
   html_source->AddString("manageAudioHistoryUrl",
                          chrome::kManageAudioHistoryURL);
   base::string16 search_explanation_text = l10n_util::GetStringFUTF16(
@@ -1941,15 +1952,15 @@ void AddSiteSettingsStrings(content::WebUIDataSource* html_source,
 #if defined(OS_CHROMEOS)
 void AddUsersStrings(content::WebUIDataSource* html_source) {
   LocalizedString localized_strings[] = {
-    {"usersModifiedByOwnerLabel", IDS_SETTINGS_USERS_MODIFIED_BY_OWNER_LABEL},
-    {"guestBrowsingLabel", IDS_SETTINGS_USERS_GUEST_BROWSING_LABEL},
-    {"settingsManagedLabel", IDS_SETTINGS_USERS_MANAGED_LABEL},
-    {"supervisedUsersLabel", IDS_SETTINGS_USERS_SUPERVISED_USERS_LABEL},
-    {"showOnSigninLabel", IDS_SETTINGS_USERS_SHOW_ON_SIGNIN_LABEL},
-    {"restrictSigninLabel", IDS_SETTINGS_USERS_RESTRICT_SIGNIN_LABEL},
-    {"deviceOwnerLabel", IDS_SETTINGS_USERS_DEVICE_OWNER_LABEL},
-    {"addUsers", IDS_SETTINGS_USERS_ADD_USERS},
-    {"addUsersEmail", IDS_SETTINGS_USERS_ADD_USERS_EMAIL},
+      {"usersModifiedByOwnerLabel", IDS_SETTINGS_USERS_MODIFIED_BY_OWNER_LABEL},
+      {"guestBrowsingLabel", IDS_SETTINGS_USERS_GUEST_BROWSING_LABEL},
+      {"settingsManagedLabel", IDS_SETTINGS_USERS_MANAGED_LABEL},
+      {"supervisedUsersLabel", IDS_SETTINGS_USERS_SUPERVISED_USERS_LABEL},
+      {"showOnSigninLabel", IDS_SETTINGS_USERS_SHOW_ON_SIGNIN_LABEL},
+      {"restrictSigninLabel", IDS_SETTINGS_USERS_RESTRICT_SIGNIN_LABEL},
+      {"deviceOwnerLabel", IDS_SETTINGS_USERS_DEVICE_OWNER_LABEL},
+      {"addUsers", IDS_SETTINGS_USERS_ADD_USERS},
+      {"addUsersEmail", IDS_SETTINGS_USERS_ADD_USERS_EMAIL},
   };
   AddLocalizedStringsBulk(html_source, localized_strings,
                           arraysize(localized_strings));
