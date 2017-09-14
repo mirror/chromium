@@ -607,12 +607,6 @@ Polymer({
     this.networkingPrivate.startActivate(this.guid);
   },
 
-  /** @private */
-  onChooseMobileTap_: function() {
-    // TODO(stevenjb): Integrate ChooseMobileNetworkDialog with WebUI.
-    chrome.send('addNetwork', [this.networkProperties.Type]);
-  },
-
   /** @const {string} */
   CR_EXPAND_BUTTON_TAG: 'CR-EXPAND-BUTTON',
 
