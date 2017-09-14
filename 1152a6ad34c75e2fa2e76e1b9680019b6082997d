@@ -156,6 +156,24 @@
       "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66a2a065_1f5ef32c",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-09-14T21:23:50Z",
+      "side": 1,
+      "message": "I don\u0027t think we are. I\u0027d be in favour of collapsing the flags by removing allow_posix_link_time_opt, especially since we\u0027re starting to use it on non-POSIX platforms.",
+      "parentUuid": "84d0ec9e_67ec1a7c",
+      "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
