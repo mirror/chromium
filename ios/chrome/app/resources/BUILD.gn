@@ -73,21 +73,38 @@ repack("repack_unscaled_resources") {
   copy_data_to_bundle = true
 }
 
-bundle_data("chromium_icons") {
+#bundle_data("chromium_icons") {
+#  sources = [
+#    "chromium/Icon-120.png",
+#    "chromium/Icon-152.png",
+#    "chromium/Icon-167.png",
+#    "chromium/Icon-180.png",
+#    "chromium/Icon-29.png",
+#    "chromium/Icon-40.png",
+#    "chromium/Icon-58.png",
+#    "chromium/Icon-76.png",
+#    "chromium/Icon-80.png",
+#    "chromium/Icon-87.png",
+#  ]
+#  outputs = [
+#    "{{bundle_resources_dir}}/{{source_file_part}}",
+#  ]
+#}
+
+imageset("chromium_icons") {
   sources = [
-    "chromium/Icon-120.png",
-    "chromium/Icon-152.png",
-    "chromium/Icon-167.png",
-    "chromium/Icon-180.png",
-    "chromium/Icon-29.png",
-    "chromium/Icon-40.png",
-    "chromium/Icon-58.png",
-    "chromium/Icon-76.png",
-    "chromium/Icon-80.png",
-    "chromium/Icon-87.png",
-  ]
-  outputs = [
-    "{{bundle_resources_dir}}/{{source_file_part}}",
+    "app_icons.xcassets/app_icons.appiconset/Contents.json",
+    "app_icons.xcassets/app_icons.appiconset/Icon-1024.png",
+    "app_icons.xcassets/app_icons.appiconset/Icon-120.png",
+    "app_icons.xcassets/app_icons.appiconset/Icon-152.png",
+    "app_icons.xcassets/app_icons.appiconset/Icon-167.png",
+    "app_icons.xcassets/app_icons.appiconset/Icon-180.png",
+    "app_icons.xcassets/app_icons.appiconset/Icon-29.png",
+    "app_icons.xcassets/app_icons.appiconset/Icon-40.png",
+    "app_icons.xcassets/app_icons.appiconset/Icon-58.png",
+    "app_icons.xcassets/app_icons.appiconset/Icon-76.png",
+    "app_icons.xcassets/app_icons.appiconset/Icon-80.png",
+    "app_icons.xcassets/app_icons.appiconset/Icon-87.png",
   ]
 }
 

@@ -94,6 +94,14 @@ def CompileAssetCatalog(output, platform, product_type, min_deployment_target,
       '--minimum-deployment-target', min_deployment_target,
   ]
 
+  if product_type == 'com.apple.product-type.application':
+    command.extend([
+      '--app-icon',
+      'app_icons',
+      '--output-partial-info-plist',
+      '/Users/justincohen/Desktop/omg.plist',
+    ])
+
   if compress_pngs:
     command.extend(['--compress-pngs'])
 

@@ -75,8 +75,9 @@ template("imageset") {
     _sources = invoker.sources
     foreach(_source, invoker.sources) {
       _dir = get_path_info(_source, "dir")
-      assert(get_path_info(_dir, "extension") == "imageset",
-             "$_source dirname must have .imageset extension")
+
+      #assert(get_path_info(_dir, "extension") == "imageset",
+      #       "$_source dirname must have .imageset extension")
 
       # If the compilation of asset catalogs is disabled, the Contents.json
       # file must not be copied.
