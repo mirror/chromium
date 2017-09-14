@@ -194,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "e617e4aa_0ae683b9",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-14T14:27:22Z",
+      "side": 1,
+      "message": "Indeed, and done.",
+      "parentUuid": "a3109de9_2698d3d3",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc27b784_a2d3243c",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16
@@ -421,6 +439,24 @@
       "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "29fc8c3e_0f042ae4",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-14T14:27:22Z",
+      "side": 1,
+      "message": "ktklein@ Yeah, I\u0027m a little curious to see what sort of code Clang generates from just\n\n   while (len--) {\n     s2 +\u003d (s1 +\u003d *buf++);\n   }\n\nYes, agree, an interesting experiment.  Hope you noticed that adler32.c use that DO16 macro in places to avoid doing the above.  One has to wonder why?\n\n\u003e If nothing else, a blank line every group of 4 might help make it visually clear that there really are 16 iterations here.\n\nLike the \"visually clear\" aspect here, done.  Let me know if you like it.",
+      "parentUuid": "45872747_6dfc6a86",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
