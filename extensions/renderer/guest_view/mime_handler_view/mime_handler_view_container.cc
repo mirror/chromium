@@ -317,8 +317,12 @@ void MimeHandlerViewContainer::OnMimeHandlerViewGuestOnLoadCompleted(
 }
 
 void MimeHandlerViewContainer::CreateMimeHandlerViewGuestIfNecessary() {
-  if (guest_created_ || element_size_.IsEmpty() || view_id_.empty())
+  if (guest_created_ || view_id_.empty()) {
+    // In docs/ it is possible to have |element_size_.IsEmpty()| as the <embed>
+    // used for print preview has a size of 0x0. See https://crbug.com/763812
+    // for more context.
     return;
+  }
 
   // The loader has completed loading |view_id_| so we can dispose it.
   if (loader_) {
