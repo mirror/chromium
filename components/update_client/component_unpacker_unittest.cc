@@ -18,11 +18,24 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "build/build_config.h"
 #include "components/crx_file/crx_verifier.h"
 #include "components/update_client/component_unpacker.h"
 #include "components/update_client/test_configurator.h"
 #include "components/update_client/test_installer.h"
 #include "testing/gtest/include/gtest/gtest.h"
+
+#if defined(OS_ANDROID)
+#include "base/android/jni_android.h"
+#include "base/android/jni_string.h"
+#include "jni/ApkUtils_jni.h"
+#endif
+
+using base::android::ClearException;
+using base::android::ConvertUTF8ToJavaString;
+using base::android::GetClass;
+using base::android::MethodID;
+using base::android::ScopedJavaLocalRef;
 
 namespace {
 
@@ -59,6 +72,10 @@ base::FilePath test_file(const char* file) {
       .AppendASCII("data")
       .AppendASCII("update_client")
       .AppendASCII(file);
+}
+
+base::FilePath apk_test_file(const char* file) {
+  return test_file("apk").AppendASCII(file);
 }
 
 }  // namespace
@@ -161,5 +178,120 @@ TEST_F(ComponentUnpackerTest, UnpackFileHashMismatch) {
 
   EXPECT_TRUE(result_.unpack_path.empty());
 }
+
+#if defined(OS_ANDROID)
+TEST_F(ComponentUnpackerTest, LoadPublicKeyFromX509Cert) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+
+  auto cert1_path =
+      ConvertUTF8ToJavaString(env, apk_test_file("1.crt").MaybeAsASCII());
+  auto cert2_path =
+      ConvertUTF8ToJavaString(env, apk_test_file("2.crt").MaybeAsASCII());
+
+  // Loading a public key from a valid certificate doesn't throw an exception.
+
+  Java_ApkUtils_loadPublicKey(env, cert1_path);
+  EXPECT_FALSE(ClearException(env));
+
+  Java_ApkUtils_loadPublicKey(env, cert2_path);
+  EXPECT_FALSE(ClearException(env));
+
+  // Trying to open a file that doesn't exist causes a FileNotFoundException to
+  // be thrown.
+  auto file_not_found_exception =
+      GetClass(env, "java/io/FileNotFoundException");
+  Java_ApkUtils_loadPublicKey(env, ConvertUTF8ToJavaString(env, "nonexistent"));
+  auto* exception = env->ExceptionOccurred();
+  EXPECT_TRUE(ClearException(env));
+  EXPECT_TRUE(env->IsInstanceOf(exception, file_not_found_exception.obj()));
+}
+
+TEST_F(ComponentUnpackerTest, VerifyAPKSignature) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+
+  // Get reference to java.io.RandomAccessFile class and constructor so we can
+  // instantiate the class below.
+  auto raf_class = GetClass(env, "java/io/RandomAccessFile");
+  auto* raf_constructor = MethodID::Get<MethodID::TYPE_INSTANCE>(
+      env, raf_class.obj(), "<init>",
+      "(Ljava/lang/String;Ljava/lang/String;)V");
+  // Java string "r" meaning read-only permission.
+  auto perm_string = ConvertUTF8ToJavaString(env, "r");
+  // Function to instantiate java.io.RandomAccessFile.
+  auto new_raf = [&](const char* file) {
+    return env->NewObject(
+        raf_class.obj(), raf_constructor,
+        ConvertUTF8ToJavaString(env, apk_test_file(file).MaybeAsASCII()).obj(),
+        perm_string.obj());
+  };
+
+  // An APK signed with certificate #1.
+  ScopedJavaLocalRef<jobject> signed1_apk(env, new_raf("signed-1.apk"));
+  // Signed with #2.
+  ScopedJavaLocalRef<jobject> signed2_apk(env, new_raf("signed-2.apk"));
+  // Signed with both certificates.
+  ScopedJavaLocalRef<jobject> signed_both_apk(env, new_raf("signed-1-2.apk"));
+  // Not signed.
+  ScopedJavaLocalRef<jobject> unsigned_apk(env, new_raf("unsigned.apk"));
+
+  auto cert1_path =
+      ConvertUTF8ToJavaString(env, apk_test_file("1.crt").MaybeAsASCII());
+  auto cert2_path =
+      ConvertUTF8ToJavaString(env, apk_test_file("2.crt").MaybeAsASCII());
+
+  auto pk1 = Java_ApkUtils_loadPublicKey(env, cert1_path);
+  auto pk2 = Java_ApkUtils_loadPublicKey(env, cert2_path);
+
+  // Signed APKs should verify with the corresponding public key.
+  Java_ApkUtils_verify(env, signed1_apk, pk1);
+  EXPECT_FALSE(ClearException(env));
+
+  Java_ApkUtils_verify(env, signed2_apk, pk2);
+  EXPECT_FALSE(ClearException(env));
+
+  // APKs signed with multiple certificates should verify with either
+  // corresponding public key.
+  Java_ApkUtils_verify(env, signed_both_apk, pk1);
+  EXPECT_FALSE(ClearException(env));
+
+  Java_ApkUtils_verify(env, signed_both_apk, pk2);
+  EXPECT_FALSE(ClearException(env));
+
+  // InvalidKeyException should be thrown when none of the signing certificates
+  // match the given public key.
+  auto invalid_key_exception =
+      GetClass(env, "java/security/InvalidKeyException");
+  // ApkSignatureSchemeV2Verifier.SignatureNotFoundException should be thrown
+  // when an APK isn't signed at all.
+  auto signature_not_found_exception =
+      GetClass(env,
+               "org/chromium/third_party/android/util/apk/"
+               "ApkSignatureSchemeV2Verifier$SignatureNotFoundException");
+
+  {
+    // Signed APKs shouldn't verify given the wrong public key.
+    Java_ApkUtils_verify(env, signed1_apk, pk2);
+    auto* exception = env->ExceptionOccurred();
+    EXPECT_TRUE(ClearException(env));
+    EXPECT_TRUE(env->IsInstanceOf(exception, invalid_key_exception.obj()));
+  }
+
+  {
+    Java_ApkUtils_verify(env, signed2_apk, pk1);
+    auto* exception = env->ExceptionOccurred();
+    EXPECT_TRUE(ClearException(env));
+    EXPECT_TRUE(env->IsInstanceOf(exception, invalid_key_exception.obj()));
+  }
+
+  {
+    // Unsigned APKs shouldn't verify.
+    Java_ApkUtils_verify(env, unsigned_apk, pk1);
+    auto* exception = env->ExceptionOccurred();
+    EXPECT_TRUE(ClearException(env));
+    EXPECT_TRUE(
+        env->IsInstanceOf(exception, signature_not_found_exception.obj()));
+  }
+}
+#endif
 
 }  // namespace update_client
