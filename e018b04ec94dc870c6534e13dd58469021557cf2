@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51b209b6_10d57c61",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-14T00:30:30Z",
+      "side": 1,
+      "message": "BindOnce",
+      "revId": "e018b04ec94dc870c6534e13dd58469021557cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "781420ab_60a5c19e",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-14T00:30:30Z",
+      "side": 1,
+      "message": "... and you won\u0027t need Passed() here and below.",
+      "revId": "e018b04ec94dc870c6534e13dd58469021557cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446dfa3d_450a6280",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-14T00:30:30Z",
+      "side": 1,
+      "message": "nit: extract into a var for better readability.",
+      "revId": "e018b04ec94dc870c6534e13dd58469021557cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fa88409_eb0e0b94",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-14T00:30:30Z",
+      "side": 1,
+      "message": "BindOnce and drop Passed()",
+      "revId": "e018b04ec94dc870c6534e13dd58469021557cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433d0276_7fab7c37",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4055,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-14T00:30:30Z",
+      "side": 1,
+      "message": "What are the units for this? Add description?",
+      "revId": "e018b04ec94dc870c6534e13dd58469021557cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f62b44e0_79bb3468",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4057,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-14T00:30:30Z",
+      "side": 1,
+      "message": "I think the dominating style of enum values in the protocol is CamelCase (with first letter capitalized), although I can see various types. Let\u0027s settle on one style -- Dmitry, WDYT?",
+      "revId": "e018b04ec94dc870c6534e13dd58469021557cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
