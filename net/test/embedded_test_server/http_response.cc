@@ -46,7 +46,7 @@ BasicHttpResponse::BasicHttpResponse() : code_(HTTP_OK) {
 BasicHttpResponse::~BasicHttpResponse() {
 }
 
-std::string BasicHttpResponse::ToResponseString() const {
+std::string BasicHttpResponse::BuildHeader() const {
   // Response line with headers.
   std::string response_builder;
 
@@ -74,8 +74,11 @@ std::string BasicHttpResponse::ToResponseString() const {
                         header_value.c_str());
   }
   base::StringAppendF(&response_builder, "\r\n");
+  return response_builder;
+}
 
-  return response_builder + content_;
+std::string BasicHttpResponse::ToResponseString() const {
+  return BuildHeader() + content_;
 }
 
 void BasicHttpResponse::SendResponse(const SendBytesCallback& send,
