@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2ae03023_f2f632ae",
+        "filename": "remoting/client/chromoting_client_runtime.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "There are no blocking operations in android like there are in iOS and the double buffer.",
+      "parentUuid": "ce191574_8b3ea80a",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 75
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb4de680_fa814abf",
         "filename": "remoting/ios/audio/audio_player_ios.h",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b15d2028_99095457",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb4de680_fa814abf",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 29
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f37a0516_66c23d7f",
         "filename": "remoting/ios/audio/audio_player_ios.h",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0118a949_103538ac",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f37a0516_66c23d7f",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 14
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "004abae6_8a38a97f",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "Perhaps we find a reason to prime outside of the callback... I made it a public interface for the class just incase.",
+      "parentUuid": "7cfb7440_60c86798",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 67
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d62b9ef_9682bf9f",
         "filename": "remoting/ios/audio/audio_player_ios.h",
         "patchSetId": 8
@@ -160,6 +256,30 @@
       "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d35fb1_4b0fa853",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d62b9ef_9682bf9f",
+      "range": {
+        "startLine": 78,
+        "startChar": 6,
+        "endLine": 78,
+        "endChar": 14
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +329,54 @@
     },
     {
       "key": {
+        "uuid": "a1271902_30d530f2",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b4db549_7ef9ac7d",
+      "range": {
+        "startLine": 85,
+        "startChar": 2,
+        "endLine": 85,
+        "endChar": 10
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "962cb97d_56425334",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1656822b_c07c0a73",
+      "range": {
+        "startLine": 85,
+        "startChar": 11,
+        "endLine": 85,
+        "endChar": 27
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf20f941_f8c918e7",
         "filename": "remoting/ios/audio/audio_player_ios.mm",
         "patchSetId": 8
@@ -229,6 +397,30 @@
       "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74886984_1080f8d4",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "Yes thread checkers and locks are coming next.",
+      "parentUuid": "cf20f941_f8c918e7",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 19
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "9a8e29cf_c7216c8e",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "Yeah some of this was ported from the original class using older chromium style.",
+      "parentUuid": "fafb0ad7_e5d06892",
+      "range": {
+        "startLine": 44,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 25
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eebb238f_bf079869",
         "filename": "remoting/ios/audio/audio_player_ios.mm",
         "patchSetId": 8
@@ -275,6 +491,30 @@
       "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b616f001_c091fd26",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eebb238f_bf079869",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 38
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +541,30 @@
     },
     {
       "key": {
+        "uuid": "97e9a2a6_28a7c221",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "I will add a weak version of this",
+      "parentUuid": "e4c5f210_194b6971",
+      "range": {
+        "startLine": 74,
+        "startChar": 60,
+        "endLine": 74,
+        "endChar": 70
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e02146d8_b8991bf9",
         "filename": "remoting/ios/audio/audio_player_ios.mm",
         "patchSetId": 8
@@ -321,6 +585,30 @@
       "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e8f3a5_e6e6d245",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e02146d8_b8991bf9",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 19
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +635,30 @@
     },
     {
       "key": {
+        "uuid": "30b9ef75_1398d7af",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "the call to prime can come in at any time from the public api, or more likely the callback from the audio sub-system. This is to prevent the buffer from continuing to use the queue while we are in stopping more.",
+      "parentUuid": "c13fbd4e_67bd906f",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 27
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c150cc2_dcc287ef",
         "filename": "remoting/ios/audio/audio_player_ios.mm",
         "patchSetId": 8
@@ -358,6 +670,30 @@
       "writtenOn": "2017-09-13T21:08:49Z",
       "side": 1,
       "message": "base::Unretained\n\nWhat is the life time of output_buffer? Are you sure it outlives audio_frame_supplier_?",
+      "range": {
+        "startLine": 136,
+        "startChar": 23,
+        "endLine": 136,
+        "endChar": 33
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38d95783_1b7ac2b9",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "output_buffer is removed when audio player is destructed. audio frame supplier is cleaned up.... after that in the default destructed? I am not 100% sure on this one.",
+      "parentUuid": "2c150cc2_dcc287ef",
       "range": {
         "startLine": 136,
         "startChar": 23,
@@ -393,6 +729,30 @@
     },
     {
       "key": {
+        "uuid": "3b473b6f_7877d77b",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "Yes this is true that nothing sees the underrun state, but the states are really helpful for debugging and inspection and we can use them later if needed.\n\nin a few lines this moves the queue to priming state, so if we underrun the state moves from play -\u003e underrun -\u003e stopping -\u003e stopped -\u003e priming automatically.",
+      "parentUuid": "19392cff_a7307d0d",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 140,
+        "endChar": 22
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f2354f6_6a54ce35",
         "filename": "remoting/ios/audio/audio_player_ios.mm",
         "patchSetId": 8
@@ -413,6 +773,30 @@
       "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdeaf5d7_85be1f65",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "No, two lines down we move to priming.",
+      "parentUuid": "5f2354f6_6a54ce35",
+      "range": {
+        "startLine": 141,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 24
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -439,6 +823,30 @@
     },
     {
       "key": {
+        "uuid": "bc906689_8555b6a5",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "Not required. Pump is public.",
+      "parentUuid": "4974dbf9_945fd3c1",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 15
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb581cef_33c28a06",
         "filename": "remoting/ios/audio/audio_player_ios.mm",
         "patchSetId": 8
@@ -462,6 +870,30 @@
     },
     {
       "key": {
+        "uuid": "f7b5a8d7_d5141265",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "Pump is public.",
+      "parentUuid": "fb581cef_33c28a06",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 78
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c7d3dec_b0c82d64",
         "filename": "remoting/ios/audio/audio_player_ios.mm",
         "patchSetId": 8
@@ -482,6 +914,30 @@
       "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01dcf8f2_ee2a173f",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "I need to clarify caller_thread_runner. It is not who calls this class but where the audio is coming from. It is the thread the audio stream consumer is being called from.",
+      "parentUuid": "6c7d3dec_b0c82d64",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 31
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -531,6 +987,30 @@
     },
     {
       "key": {
+        "uuid": "f36eabff_75fc2fc1",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "The follow up CL needs to clean up the locks, yes. STOPPING state is useful from the prime method called by the audio subsystem callback.",
+      "parentUuid": "105c255a_9fd1e0ec",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 20
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb1db5ec_4885fe86",
         "filename": "remoting/ios/audio/audio_player_ios.mm",
         "patchSetId": 8
@@ -551,6 +1031,30 @@
       "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a048283f_05da7851",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "yep! thanks.",
+      "parentUuid": "bb1db5ec_4885fe86",
+      "range": {
+        "startLine": 185,
+        "startChar": 9,
+        "endLine": 185,
+        "endChar": 45
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -577,6 +1081,30 @@
     },
     {
       "key": {
+        "uuid": "eeffd45f_444326a3",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "There are a couple methods that implement the AudioPlayer interface but I removed the usage because the interface does not work with iOS. This was removed. Cleanup, thanks!",
+      "parentUuid": "6ab2c5f3_5a55c90c",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 41
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fc19ad4_f591ae1c",
         "filename": "remoting/ios/audio/audio_player_ios.mm",
         "patchSetId": 8
@@ -600,6 +1128,30 @@
     },
     {
       "key": {
+        "uuid": "52c8856c_474d83af",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "I want to leave it as is until the todo is resolved.",
+      "parentUuid": "9fc19ad4_f591ae1c",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 197,
+        "endChar": 68
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9572274c_fdc4d252",
         "filename": "remoting/ios/audio/audio_player_ios.mm",
         "patchSetId": 8
@@ -620,6 +1172,30 @@
       "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "068dbd42_a062f89e",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "output_queue is not an object. it is a number to an internal queue in the iOS subsystem where it does the memory management for the buffers it is passing back and fourth here. So this is just making sure that we ask the internal system to free the memory it has allocated as the iOS player dies.",
+      "parentUuid": "9572274c_fdc4d252",
+      "range": {
+        "startLine": 244,
+        "startChar": 20,
+        "endLine": 244,
+        "endChar": 33
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -781,6 +1357,30 @@
       "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31fe3a5_52743f3f",
+        "filename": "remoting/ios/session/remoting_client.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-14T17:15:22Z",
+      "side": 1,
+      "message": "yeah. this is the UI thread, that is where the player was created.",
+      "parentUuid": "0e5f2996_56a06208",
+      "range": {
+        "startLine": 174,
+        "startChar": 17,
+        "endLine": 174,
+        "endChar": 24
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
