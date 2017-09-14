@@ -2038,6 +2038,10 @@ if (enable_java_templates) {
         if (is_java_debug || dcheck_always_on) {
           defines += [ "_DCHECK_IS_ON" ]
         }
+        if (defined(invoker.compress_packed_relocations) &&
+            invoker.compress_packed_relocations) {
+          defines += [ "_USE_LEGACY_LINKER" ]
+        }
         defines += [
           "COMPRESSED_LOCALE_LIST=" +
               "@FileArg($_rebased_build_config:compressed_locales_java_list)",
@@ -2229,6 +2233,7 @@ if (enable_java_templates) {
       pack_relocation_section(_prepare_native_target_name) {
         forward_variables_from(invoker,
                                [
+                                 "compress_packed_relocations",
                                  "deps",
                                  "public_deps",
                                ])
@@ -2257,6 +2262,7 @@ if (enable_java_templates) {
         pack_relocation_section(_prepare_native_target_name) {
           forward_variables_from(invoker,
                                  [
+                                   "compress_packed_relocations",
                                    "deps",
                                    "public_deps",
                                  ])

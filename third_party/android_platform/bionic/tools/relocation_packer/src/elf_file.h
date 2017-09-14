@@ -48,7 +48,7 @@ class ElfFile {
   // Transfer relative relocations from .rel.dyn or .rela.dyn to a packed
   // representation in .android.rel.dyn or .android.rela.dyn.  Returns true
   // on success.
-  bool PackRelocations();
+  bool PackRelocations(bool compress);
 
   // Transfer relative relocations from a packed representation in
   // .android.rel.dyn or .android.rela.dyn to .rel.dyn or .rela.dyn.  Returns
@@ -67,11 +67,12 @@ class ElfFile {
 
   // Templated packer, helper for PackRelocations().  Rel type is one of
   // ELF::Rel or ELF::Rela.
-  bool PackTypedRelocations(std::vector<typename ELF::Rela>* relocations);
+  bool PackTypedRelocations(std::vector<typename ELF::Rela>* relocations,
+                            bool compress);
 
   // Templated unpacker, helper for UnpackRelocations().  Rel type is one of
   // ELF::Rel or ELF::Rela.
-  bool UnpackTypedRelocations(const std::vector<uint8_t>& packed);
+  bool UnpackTypedRelocations(const std::vector<uint8_t>& packed, bool compress);
 
   // Write ELF file changes.
   void Flush();

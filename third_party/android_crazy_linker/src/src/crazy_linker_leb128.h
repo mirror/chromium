@@ -8,6 +8,8 @@
 #include <assert.h>
 #include <stdint.h>
 
+#include "crazy_linker_debug.h"
+
 // Helper classes for decoding LEB128, used in packed relocation data.
 // http://en.wikipedia.org/wiki/LEB128
 
@@ -15,12 +17,6 @@ namespace crazy {
 
 class Sleb128Decoder {
  public:
-  Sleb128Decoder(const uint8_t* buffer, size_t count) : current_(buffer)
-#ifndef NDEBUG
-      , end_(buffer + count)
-#endif
-  {}
-
   size_t pop_front() {
     size_t value = 0;
     static const size_t size = CHAR_BIT * sizeof(value);
@@ -43,10 +39,19 @@ class Sleb128Decoder {
     return value;
   }
 
+  const uint8_t* current() { return current_; }
+
+  void reset(const uint8_t* buffer, size_t count) {
+    current_ = buffer;
+#if defined(NDEBUG) || CRAZY_DEBUG
+    end_ = buffer + count;
+#endif
+  }
+
  private:
-  const uint8_t* current_;
-#ifndef NDEBUG
-  const uint8_t* const end_;
+  const uint8_t* current_ = nullptr;
+#if defined(NDEBUG) || CRAZY_DEBUG
+  const uint8_t* end_ = nullptr;
 #endif
 };
 
