@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91c2cb19_f65c9dfd",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-09-14T13:16:36Z",
+      "side": 1,
+      "message": "s/bitmap/icon/? Also from the comment above. For the member field, you might as well remove the prefix, I don\u0027t think it adds clarity.",
+      "range": {
+        "startLine": 79,
+        "startChar": 32,
+        "endLine": 79,
+        "endChar": 0
+      },
+      "revId": "98621f106796ac169268d239c103439c87f70f56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
