@@ -12,11 +12,13 @@ bool StructTraits<blink::mojom::MessagePortMessage::DataView,
                   blink::MessagePortMessage>::
     Read(blink::mojom::MessagePortMessage::DataView data,
          blink::MessagePortMessage* out) {
+  std::vector<mojo::ScopedMessagePipeHandle> ports;
   if (!data.ReadEncodedMessage(&out->owned_encoded_message) ||
-      !data.ReadPorts(&out->ports))
+      !data.ReadPorts(&ports))
     return false;
 
   out->encoded_message = out->owned_encoded_message;
+  out->ports = blink::MessagePortChannel::CreateFromHandles(std::move(ports));
   return true;
 }
 
