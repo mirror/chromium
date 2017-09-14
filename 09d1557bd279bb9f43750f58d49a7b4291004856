@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0907a9ee_2b22e5dc",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-14T17:47:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df7a06f3_465e9c72",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 46
+      },
+      "revId": "09d1557bd279bb9f43750f58d49a7b4291004856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d2ab4978_18572193",
         "filename": "build/run_swarming_xcode_install.py",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-12T18:18:32Z",
       "side": 1,
       "message": "This enforces the type to be a function (?). I think it should be str.",
+      "range": {
+        "startLine": 28,
+        "startChar": 57,
+        "endLine": 28,
+        "endChar": 72
+      },
+      "revId": "09d1557bd279bb9f43750f58d49a7b4291004856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a52181ac_2d7eda98",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-14T17:47:56Z",
+      "side": 1,
+      "message": "Are you sure?  We use this all the over the place?",
+      "parentUuid": "d2ab4978_18572193",
       "range": {
         "startLine": 28,
         "startChar": 57,
