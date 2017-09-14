@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e302255a_512f5526",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1930,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-14T18:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56b3885a_59c538cf",
+      "range": {
+        "startLine": 1930,
+        "startChar": 15,
+        "endLine": 1930,
+        "endChar": 27
+      },
+      "revId": "3ac3d7f3f0da959dc387b9122c006ca7199dfb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a691e50_feecc678",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "3ac3d7f3f0da959dc387b9122c006ca7199dfb10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ff2e93_1cd49f08",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 5131,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-14T18:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a691e50_feecc678",
+      "range": {
+        "startLine": 5131,
+        "startChar": 8,
+        "endLine": 5131,
+        "endChar": 23
+      },
+      "revId": "3ac3d7f3f0da959dc387b9122c006ca7199dfb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -92,6 +140,30 @@
       "revId": "3ac3d7f3f0da959dc387b9122c006ca7199dfb10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7970f24_800a1950",
+        "filename": "ios/chrome/browser/ui/tabs/requirements/tab_strip_placeholder_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-14T18:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2de798e0_7cf8e7c8",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "3ac3d7f3f0da959dc387b9122c006ca7199dfb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
