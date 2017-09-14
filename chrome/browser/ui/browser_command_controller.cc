@@ -85,6 +85,8 @@
 #if defined(OS_WIN) || (defined(OS_LINUX) && !defined(OS_CHROMEOS))
 #include "chrome/browser/feature_engagement/bookmark/bookmark_tracker.h"
 #include "chrome/browser/feature_engagement/bookmark/bookmark_tracker_factory.h"
+#include "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h"
+#include "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_factory.h"
 #include "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h"
 #include "chrome/browser/feature_engagement/new_tab/new_tab_tracker_factory.h"
 #endif
@@ -322,6 +324,11 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
       NewWindow(browser_);
       break;
     case IDC_NEW_INCOGNITO_WINDOW:
+#if defined(OS_WIN) || (defined(OS_LINUX) && !defined(OS_CHROMEOS))
+      feature_engagement::IncognitoWindowTrackerFactory::GetInstance()
+          ->GetForProfile(profile())
+          ->OnIncognitoWindowOpened();
+#endif
       NewIncognitoWindow(browser_);
       break;
     case IDC_CLOSE_WINDOW:
