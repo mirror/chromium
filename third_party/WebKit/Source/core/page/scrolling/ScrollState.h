@@ -67,6 +67,14 @@ class CORE_EXPORT ScrollState final
   bool isDirectManipulation() const { return data_->is_direct_manipulation; }
   // True if this scroll is allowed to bubble upwards.
   bool shouldPropagate() const { return data_->should_propagate; };
+  // When gesture begins it equals deltaXHint(). Otherwise, it returns deltaX().
+  double effectiveDeltaX() const {
+    return data_->is_beginning ? data_->delta_x_hint : data_->delta_x;
+  }
+  // When gesture begins it equals deltaYHint(). Otherwise, it returns deltaY().
+  double effectiveDeltaY() const {
+    return data_->is_beginning ? data_->delta_y_hint : data_->delta_y;
+  }
 
   // Non web exposed methods.
   void ConsumeDeltaNative(double x, double y);
