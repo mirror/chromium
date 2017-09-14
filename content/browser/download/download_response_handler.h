@@ -16,7 +16,6 @@
 
 namespace content {
 
-class DownloadUrlParameters;
 struct DownloadCreateInfo;
 struct DownloadSaveInfo;
 
@@ -34,9 +33,11 @@ class DownloadResponseHandler : public mojom::URLLoaderClient {
         mojom::DownloadStreamHandlePtr stream_handle) = 0;
   };
 
-  DownloadResponseHandler(DownloadUrlParameters* params,
+  DownloadResponseHandler(ResourceRequest* resource_request,
                           Delegate* delegate,
-                          bool is_parallel_request);
+                          std::unique_ptr<DownloadSaveInfo> save_info,
+                          bool is_parallel_request,
+                          bool is_transient);
   ~DownloadResponseHandler() override;
 
   // mojom::URLLoaderClient
@@ -72,7 +73,6 @@ class DownloadResponseHandler : public mojom::URLLoaderClient {
   // Information needed to create DownloadCreateInfo when the time comes.
   std::unique_ptr<DownloadSaveInfo> save_info_;
   std::vector<GURL> url_chain_;
-  std::string guid_;
   std::string method_;
   GURL referrer_;
   bool is_transient_;
