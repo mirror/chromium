@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "6f3f313d_0ebe67d7",
+        "filename": "gpu/command_buffer/service/gpu_tracer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-09-14T20:15:12Z",
+      "side": 1,
+      "message": "sgtm. Thanks!",
+      "parentUuid": "7624ab00_4b1cf924",
+      "range": {
+        "startLine": 52,
+        "startChar": 39,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "c38cc9d39e0dc4c549521762bfcee690ebe55d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b3b7621d_3b2a695c",
         "filename": "gpu/command_buffer/service/gpu_tracer.cc",
         "patchSetId": 2
@@ -60,6 +84,24 @@
       "writtenOn": "2017-09-14T18:45:36Z",
       "side": 1,
       "message": "Any reason you chose to pass it through the ContextGroup, as opposed to directly in the decoder? The latter seems more natural and wouldn\u0027t have this problem.",
+      "revId": "c38cc9d39e0dc4c549521762bfcee690ebe55d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "899141b6_17323c16",
+        "filename": "gpu/command_buffer/service/gpu_tracer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-09-14T20:15:12Z",
+      "side": 1,
+      "message": "Passing the outputter through the decoder would require doing the same for decoder\u0027s subclasses as well. That isn\u0027t the case with ContextGroup. Therefore, my initial choice was ContextGroup.\n\nBut as you have rightly pointed out, we can avoid this problem. Then, I think we need to add a |outputter| field to the existing ctors of decoder and its subclasses and cache |outputter| in decoder. Please correct me if my understanding is not right here.",
+      "parentUuid": "b3b7621d_3b2a695c",
       "revId": "c38cc9d39e0dc4c549521762bfcee690ebe55d1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
