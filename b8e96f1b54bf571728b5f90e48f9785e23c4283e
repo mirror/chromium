@@ -93,6 +93,30 @@
       "revId": "b8e96f1b54bf571728b5f90e48f9785e23c4283e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dffb3f5f_9d8017e4",
+        "filename": "extensions/common/features/simple_feature.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-14T22:28:41Z",
+      "side": 1,
+      "message": "What do you mean by \"some statics can be shared between tests\"? That state of tests run in a single process can influence each other?\n\nThen something like ScopedCurrentChannel should work.\n\nFor our current testing needs, even the following should suffice:\n-----\nvoid SimpleFeature::set_ignore_channel_for_testing(bool val) {\n  ignore_channel_for_testing_ \u003d val; /*this is base::Optional*/\n}\n\nAnd whenever we need to retrieve it:\n\nbool ignore_channel \u003d ignore_channel_for_testing_ ? *ignore_channel_for_testing_ : ShouldIgnoreChannel();\n-----",
+      "parentUuid": "bdd926d4_5ed0b8b0",
+      "range": {
+        "startLine": 565,
+        "startChar": 10,
+        "endLine": 565,
+        "endChar": 22
+      },
+      "revId": "b8e96f1b54bf571728b5f90e48f9785e23c4283e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
