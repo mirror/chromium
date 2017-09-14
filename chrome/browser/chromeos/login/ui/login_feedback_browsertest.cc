@@ -12,6 +12,7 @@
 #include "chrome/browser/chromeos/login/login_manager_test.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/common/extensions/extension_constants.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "extensions/browser/app_window/app_window.h"
 #include "extensions/browser/app_window/app_window_registry.h"
 #include "extensions/browser/app_window/native_app_window.h"
@@ -31,6 +32,11 @@ class LoginFeedbackTest : public LoginManagerTest {
 
 // Test feedback UI shows up and is active.
 IN_PROC_BROWSER_TEST_F(LoginFeedbackTest, Basic) {
+  if (content::IsBrowserSideNavigationEnabled()) {
+    // TODO(clamy): This test should be re-enabled for PlzNavigate once
+    // crbug.com/764997 is fixed.
+    return;
+  }
   Profile* const profile = ProfileHelper::GetSigninProfile();
   std::unique_ptr<LoginFeedback> login_feedback(new LoginFeedback(profile));
 
