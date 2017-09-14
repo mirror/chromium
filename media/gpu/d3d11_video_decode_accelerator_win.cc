@@ -117,6 +117,8 @@ bool D3D11VideoDecodeAccelerator::Initialize(const Config& config,
 
 void D3D11VideoDecodeAccelerator::Decode(
     const BitstreamBuffer& bitstream_buffer) {
+  DCHECK_EQ(state_, State::kRunning);
+
   input_buffer_queue_.push_back(bitstream_buffer);
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::Bind(&D3D11VideoDecodeAccelerator::DoDecode,
@@ -124,6 +126,8 @@ void D3D11VideoDecodeAccelerator::Decode(
 }
 
 void D3D11VideoDecodeAccelerator::DoDecode() {
+  DCHECK(state_ == State::kRunning || state_ == State::kFlushing);
+
   if (!bitstream_buffer_) {
     if (input_buffer_queue_.empty())
       return;
@@ -143,6 +147,8 @@ void D3D11VideoDecodeAccelerator::DoDecode() {
     if (result == media::AcceleratedVideoDecoder::kRanOutOfStreamData) {
       client_->NotifyEndOfBitstreamBuffer(input_buffer_id_);
       bitstream_buffer_.reset();
+      // Since we just completed a buffer, see if we're done flushing.
+      AdvanceFlushIfPossible();
       break;
     }
     if (result == media::AcceleratedVideoDecoder::kRanOutOfSurfaces) {
@@ -227,12 +233,39 @@ D3D11PictureBuffer* D3D11VideoDecodeAccelerator::GetPicture() {
 }
 
 void D3D11VideoDecodeAccelerator::Flush() {
+  state_ = State::kFlushing;
+  AdvanceFlushIfPossible();
+}
+
+void D3D11VideoDecodeAccelerator::AdvanceFlushIfPossible() {
+  // If we're not flushing, then nothing to do.
+  if (state_ != State::kFlushing)
+    return;
+
+  // Since the client may not queue new bitstreams after starting a Flush before
+  // we signal that it is complete, any queued bitstreams must be before the
+  // flush.  We have to wait until the're decoded.
+  if (!input_buffer_queue_.empty())
+    return;
+
+  // If there's an in-progress buffer, then we're not done yet.
+  if (bitstream_buffer_)
+    return;
+
+  // All queued inputs have been processed.  Flush the decoder to emit any
+  // pictures that are still buffered, and signal completion of the flush.
+  bool flush_result = decoder_->Flush();
+  CHECK(flush_result);
+
   client_->NotifyFlushDone();
+  state_ = State::kRunning;
 }
 
 void D3D11VideoDecodeAccelerator::Reset() {
+  // TODO(liberato): handle kFlushing.
   client_->NotifyResetDone();
 }
+
 void D3D11VideoDecodeAccelerator::Destroy() {}
 
 bool D3D11VideoDecodeAccelerator::TryToSetupDecodeOnSeparateThread(
@@ -256,4 +289,5 @@ void D3D11VideoDecodeAccelerator::OutputResult(D3D11PictureBuffer* buffer,
                   gfx::Rect(0, 0), gfx::ColorSpace(), true);
   client_->PictureReady(picture);
 }
+
 }  // namespace media
