@@ -24,7 +24,10 @@ namespace device {
 namespace {
 base::LazyInstance<std::unique_ptr<GeolocationDelegate>>::Leaky g_delegate =
     LAZY_INSTANCE_INITIALIZER;
-}  // anonymous namespace
+base::LazyInstance<GeolocationProvider::RequestContextCallback>::Leaky
+    g_request_context_callback = LAZY_INSTANCE_INITIALIZER;
+base::LazyInstance<std::string>::Leaky g_api_key = LAZY_INSTANCE_INITIALIZER;
+}  // namespace
 
 // static
 GeolocationProvider* GeolocationProvider::GetInstance() {
@@ -36,6 +39,17 @@ void GeolocationProvider::SetGeolocationDelegate(
     GeolocationDelegate* delegate) {
   DCHECK(!g_delegate.Get());
   g_delegate.Get().reset(delegate);
+}
+
+// static
+void GeolocationProvider::SetRequestContextCallback(
+    GeolocationProvider::RequestContextCallback request_context_callback) {
+  g_request_context_callback.Get() = request_context_callback;
+}
+
+// static
+void GeolocationProvider::SetApiKey(const std::string& api_key) {
+  g_api_key.Get() = api_key;
 }
 
 std::unique_ptr<GeolocationProvider::Subscription>
