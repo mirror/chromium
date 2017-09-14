@@ -221,15 +221,12 @@ test(function(t)
 
     list1.accessibleNode.owns = new AccessibleNodeList();
     assert_equals(axList1.childrenCount, 2);
-/**
-
 
     list1.accessibleNode.owns[0] = item4.accessibleNode;
     assert_equals(axList1.childrenCount, 3);
     assert_equals(axList1.childAtIndex(0).name, "One");
     assert_equals(axList1.childAtIndex(1).name, "Two");
-assert_equals(axList1.childAtIndex(2).name, "Four");
-**/
+    assert_equals(axList1.childAtIndex(2).name, "Four");
 }, "AccessibleNode.owns");
 </script>
 

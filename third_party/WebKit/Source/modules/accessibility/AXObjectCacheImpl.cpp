@@ -623,9 +623,9 @@ void AXObjectCacheImpl::RemoveAXID(AXObject* object) {
   ids_in_use_.erase(obj_id);
 
   if (aria_owner_to_children_mapping_.Contains(obj_id)) {
-    Vector<AXID> child_axi_ds = aria_owner_to_children_mapping_.at(obj_id);
-    for (size_t i = 0; i < child_axi_ds.size(); ++i)
-      aria_owned_child_to_owner_mapping_.erase(child_axi_ds[i]);
+    Vector<AXID> child_axids = aria_owner_to_children_mapping_.at(obj_id);
+    for (size_t i = 0; i < child_axids.size(); ++i)
+      aria_owned_child_to_owner_mapping_.erase(child_axids[i]);
     aria_owner_to_children_mapping_.erase(obj_id);
   }
   aria_owned_child_to_owner_mapping_.erase(obj_id);
@@ -763,111 +763,84 @@ AXObject* AXObjectCacheImpl::GetAriaOwnedParent(const AXObject* child) const {
       aria_owned_child_to_owner_mapping_.at(child->AxObjectID()));
 }
 
-void AXObjectCacheImpl::UpdateAriaOwns(
-    const AXObject* owner,
-    const Vector<String>& id_vector,
-    HeapVector<Member<AXObject>>& owned_children) {
-  //
-  // Update the map from the AXID of this element to the ids of the owned
-  // children, and the reverse map from ids to possible AXID owners.
-  //
-
-  HashSet<String> current_ids =
-      aria_owner_to_ids_mapping_.at(owner->AxObjectID());
-  HashSet<String> new_ids;
-  bool ids_changed = false;
-  for (const String& id : id_vector) {
-    new_ids.insert(id);
-    if (!current_ids.Contains(id)) {
-      ids_changed = true;
-      HashSet<AXID>* owners = id_to_aria_owners_mapping_.at(id);
-      if (!owners) {
-        owners = new HashSet<AXID>();
-        id_to_aria_owners_mapping_.Set(id, WTF::WrapUnique(owners));
-      }
-      owners->insert(owner->AxObjectID());
+// relation_source is related to add_ids, and no longer related to remove_ids
+static void UpdateReverseRelationMap(
+    HashMap<String, std::unique_ptr<HashSet<AXID>>>& reverse_map,
+    AXID relation_source,
+    HashSet<String>& add_ids,
+    HashSet<String>& remove_ids) {
+  // Add entries to reverse map.
+  // Vector<String> id_vector;
+  // CopyToVector(add_ids, id_vector);
+  for (const String& id : add_ids) {
+    HashSet<AXID>* axids = reverse_map.at(id);
+    if (!axids) {
+      axids = new HashSet<AXID>();
+      reverse_map.Set(id, WTF::WrapUnique(axids));
     }
-  }
-  for (const String& id : current_ids) {
-    if (!new_ids.Contains(id)) {
-      ids_changed = true;
-      HashSet<AXID>* owners = id_to_aria_owners_mapping_.at(id);
-      if (owners) {
-        owners->erase(owner->AxObjectID());
-        if (owners->IsEmpty())
-          id_to_aria_owners_mapping_.erase(id);
-      }
-    }
-  }
-  if (ids_changed)
-    aria_owner_to_ids_mapping_.Set(owner->AxObjectID(), new_ids);
-
-  //
-  // Now figure out the ids that actually correspond to children that exist and
-  // that we can legally own (not cyclical, not already owned, etc.) and update
-  // the maps and |ownedChildren| based on that.
-  //
-
-  // Figure out the children that are owned by this object and are in the tree.
-  TreeScope& scope = owner->GetNode()->GetTreeScope();
-  Vector<AXID> new_child_axi_ds;
-  for (const String& id_name : id_vector) {
-    Element* element = scope.getElementById(AtomicString(id_name));
-    if (!element)
-      continue;
-
-    AXObject* child = GetOrCreate(element);
-    if (!child)
-      continue;
-
-    // If this child is already aria-owned by a different owner, continue.
-    // It's an author error if this happens and we don't worry about which of
-    // the two owners wins ownership of the child, as long as only one of them
-    // does.
-    if (IsAriaOwned(child) && GetAriaOwnedParent(child) != owner)
-      continue;
-
-    // You can't own yourself!
-    if (child == owner)
-      continue;
-
-    // Walk up the parents of the owner object, make sure that this child
-    // doesn't appear there, as that would create a cycle.
-    bool found_cycle = false;
-    for (AXObject* parent = owner->ParentObject(); parent && !found_cycle;
-         parent = parent->ParentObject()) {
-      if (parent == child)
-        found_cycle = true;
-    }
-    if (found_cycle)
-      continue;
-
-    new_child_axi_ds.push_back(child->AxObjectID());
-    owned_children.push_back(child);
+    axids->insert(relation_source);
   }
 
-  // Compare this to the current list of owned children, and exit early if there
-  // are no changes.
-  Vector<AXID> current_child_axi_ds =
-      aria_owner_to_children_mapping_.at(owner->AxObjectID());
-  bool same = true;
-  if (current_child_axi_ds.size() != new_child_axi_ds.size()) {
-    same = false;
-  } else {
-    for (size_t i = 0; i < current_child_axi_ds.size() && same; ++i) {
-      if (current_child_axi_ds[i] != new_child_axi_ds[i])
-        same = false;
+  // Remove entries from reverse map that are no longer needed.
+  for (const String& id : remove_ids) {
+    HashSet<AXID>* axids = reverse_map.at(id);
+    if (axids) {
+      axids->erase(relation_source);
+      if (axids->IsEmpty())
+        reverse_map.erase(id);
     }
   }
-  if (same)
-    return;
+}
 
-  // The list of owned children has changed. Even if they were just reordered,
-  // to be safe and handle all cases we remove all of the current owned children
-  // and add the new list of owned children.
-  for (size_t i = 0; i < current_child_axi_ds.size(); ++i) {
+static HashSet<String> CopyToSet(const Vector<String>& source) {
+  HashSet<String> dest;
+  for (const String& entry : source)
+    dest.insert(entry);
+  return dest;
+}
+
+static HashSet<String> SubtractSet(const HashSet<String>& set1,
+                                   const HashSet<String>& set2) {
+  HashSet<String> dest(set1);
+  dest.RemoveAll(set2);
+  return dest;
+}
+
+static bool ContainsCycle(AXObject* owner, AXObject* child) {
+  // Walk up the parents of the owner object, make sure that this child
+  // doesn't appear there, as that would create a cycle.
+  for (AXObject* parent = owner; parent; parent = parent->ParentObject()) {
+    if (parent == child)
+      return true;
+    ;
+  }
+  return false;
+}
+
+bool AXObjectCacheImpl::IsValidOwnsRelation(AXObject* owner,
+                                            AXObject* child) const {
+  if (!child)
+    return false;
+
+  // If this child is already aria-owned by a different owner, continue.
+  // It's an author error if this happens and we don't worry about which of
+  // the two owners wins ownership of the child, as long as only one of them
+  // does.
+  if (IsAriaOwned(child) && GetAriaOwnedParent(child) != owner)
+    return false;
+
+  // You can't own yourself or an ancestor!
+  if (ContainsCycle(owner, child))
+    return false;
+
+  return true;
+}
+
+void AXObjectCacheImpl::UnmapOwnedChildren(const AXObject* owner,
+                                           const Vector<AXID> child_ids) {
+  for (size_t i = 0; i < child_ids.size(); ++i) {
     // Find the AXObject for the child that this owner no longer owns.
-    AXID removed_child_id = current_child_axi_ds[i];
+    AXID removed_child_id = child_ids[i];
     AXObject* removed_child = ObjectFromAXID(removed_child_id);
 
     // It's possible that this child has already been owned by some other owner,
@@ -894,11 +867,14 @@ void AXObjectCacheImpl::UpdateAriaOwns(
     // been reparented back to its original parent.
     aria_owned_child_to_real_parent_mapping_.erase(removed_child_id);
   }
+}
 
-  for (size_t i = 0; i < new_child_axi_ds.size(); ++i) {
+void AXObjectCacheImpl::MapOwnedChildren(const AXObject* owner,
+                                         const Vector<AXID> child_ids) {
+  for (size_t i = 0; i < child_ids.size(); ++i) {
     // Find the AXObject for the child that will now be a child of this
     // owner.
-    AXID added_child_id = new_child_axi_ds[i];
+    AXID added_child_id = child_ids[i];
     AXObject* added_child = ObjectFromAXID(added_child_id);
 
     // Add this child to the mapping from child to owner.
@@ -916,9 +892,65 @@ void AXObjectCacheImpl::UpdateAriaOwns(
     added_child->DetachFromParent();
     ChildrenChanged(original_parent);
   }
+}
+
+void AXObjectCacheImpl::UpdateAriaOwns(
+    const AXObject* owner,
+    const Vector<String>& owned_id_vector,
+    HeapVector<Member<AXObject>>& validated_owned_children_result) {
+  //
+  // Update the map from the AXID of this element to the ids of the owned
+  // children, and the reverse map from ids to possible AXID owners.
+  //
+
+  HashSet<String> current_owned_ids(
+      aria_owner_to_ids_mapping_.at(owner->AxObjectID()));
+  HashSet<String> all_new_owned_ids(CopyToSet(owned_id_vector));
+  HashSet<String> add_ids(SubtractSet(all_new_owned_ids, current_owned_ids));
+  HashSet<String> remove_ids(SubtractSet(current_owned_ids, all_new_owned_ids));
+
+  // Update the maps if necessary (aria_owner_to_ids_mapping_).
+  if (!add_ids.IsEmpty() || !remove_ids.IsEmpty()) {
+    // Update reverse map.
+    UpdateReverseRelationMap(id_to_aria_owners_mapping_, owner->AxObjectID(),
+                             add_ids, remove_ids);
+    // Update forward map.
+    aria_owner_to_ids_mapping_.Set(owner->AxObjectID(), all_new_owned_ids);
+  }
+
+  //
+  // Now figure out the ids that actually correspond to children that exist and
+  // that we can legally own (not cyclical, not already owned, etc.) and update
+  // the maps and |validated_owned_children_result| based on that.
+  //
+  // Figure out the children that are owned by this object and are in the tree.
+  TreeScope& scope = owner->GetNode()->GetTreeScope();
+  Vector<AXID> validated_owned_child_axids;
+  for (const String& id_name : owned_id_vector) {
+    Element* element = scope.getElementById(AtomicString(id_name));
+    AXObject* child = GetOrCreate(element);
+    if (IsValidOwnsRelation(const_cast<AXObject*>(owner), child)) {
+      validated_owned_child_axids.push_back(child->AxObjectID());
+      validated_owned_children_result.push_back(child);
+    }
+  }
+
+  // Compare this to the current list of owned children, and exit early if there
+  // are no changes.
+  Vector<AXID> current_child_axids =
+      aria_owner_to_children_mapping_.at(owner->AxObjectID());
+  if (current_child_axids == validated_owned_child_axids)
+    return;
+
+  // The list of owned children has changed. Even if they were just reordered,
+  // to be safe and handle all cases we remove all of the current owned children
+  // and add the new list of owned children.
+  UnmapOwnedChildren(owner, current_child_axids);
+  MapOwnedChildren(owner, validated_owned_child_axids);
 
   // Finally, update the mapping from the owner to the list of child IDs.
-  aria_owner_to_children_mapping_.Set(owner->AxObjectID(), new_child_axi_ds);
+  aria_owner_to_children_mapping_.Set(owner->AxObjectID(),
+                                      validated_owned_child_axids);
 }
 
 void AXObjectCacheImpl::UpdateTreeIfElementIdIsAriaOwned(Element* element) {

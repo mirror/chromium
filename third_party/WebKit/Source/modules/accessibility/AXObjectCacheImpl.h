@@ -240,6 +240,10 @@ class MODULES_EXPORT AXObjectCacheImpl
   // Aria-owns
   //
 
+  bool IsValidOwnsRelation(AXObject* owner, AXObject* child) const;
+  void UnmapOwnedChildren(const AXObject* owner, Vector<AXID>);
+  void MapOwnedChildren(const AXObject* owner, Vector<AXID>);
+
   // Map from the AXID of the owner to the AXIDs of the children.
   // This is a validated map, it doesn't contain illegal, duplicate,
   // or cyclical matches, or references to IDs that don't exist.
