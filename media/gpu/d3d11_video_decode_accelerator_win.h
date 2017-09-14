@@ -52,6 +52,10 @@ class MEDIA_GPU_EXPORT D3D11VideoDecodeAccelerator
   size_t input_buffer_id() const override;
 
  private:
+  // Advance any pending flush towards completion, if possible.  It's okay to
+  // call this if no flush is pending.
+  void AdvanceFlushIfPossible();
+
   Client* client_;
   GetGLContextCallback get_gl_context_cb_;
   MakeGLContextCurrentCallback make_context_current_cb_;
@@ -71,6 +75,16 @@ class MEDIA_GPU_EXPORT D3D11VideoDecodeAccelerator
   size_t bitstream_buffer_size_;
 
   std::vector<std::unique_ptr<D3D11PictureBuffer>> picture_buffers_;
+
+  enum class State {
+    // Decoder is running, and can accept new bitstream buffers.
+    kRunning = 0,
+
+    // Decoder is flushing.  Will not accept new bitstream buffers.  Will
+    // transition back to kRunning once all queued buffers are decodedd, and
+    // pictures have been emitted for them.
+    kFlushing = 1,
+  } state_ = State::kRunning;
 
   DISALLOW_COPY_AND_ASSIGN(D3D11VideoDecodeAccelerator);
 };
