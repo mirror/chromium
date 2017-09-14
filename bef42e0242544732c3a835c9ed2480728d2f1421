@@ -22,6 +22,30 @@
       "revId": "bef42e0242544732c3a835c9ed2480728d2f1421",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4248f36_8a99af8a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/TabState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T22:40:16Z",
+      "side": 1,
+      "message": "Theresa and I discussed this offline a bit. This could probably be set to Color.TRANSPARENT if the default color is detected. I believe we tried this at some point in the past but there ended up being a complication that prevented it. I think it would be worth trying again.",
+      "parentUuid": "0a43836b_ea2ab5d4",
+      "range": {
+        "startLine": 344,
+        "startChar": 44,
+        "endLine": 344,
+        "endChar": 54
+      },
+      "revId": "bef42e0242544732c3a835c9ed2480728d2f1421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
