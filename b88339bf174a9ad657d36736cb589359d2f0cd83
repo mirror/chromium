@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2bc14654_686ff269",
+        "filename": "ash/public/interfaces/session_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-14T03:47:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "695276cc_c7a5a56f",
+      "range": {
+        "startLine": 166,
+        "startChar": 27,
+        "endLine": 166,
+        "endChar": 33
+      },
+      "revId": "b88339bf174a9ad657d36736cb589359d2f0cd83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6521511d_6af70a6f",
         "filename": "ash/session/session_controller.cc",
         "patchSetId": 1
@@ -60,6 +84,24 @@
       "writtenOn": "2017-09-13T23:27:16Z",
       "side": 1,
       "message": "This is adding a lot of non-session-related dependencies to this file. How about putting CancelCastingDialog in its own file, or putting it somewhere media related? and/or add a SystemTray utility method related to user switching?",
+      "revId": "b88339bf174a9ad657d36736cb589359d2f0cd83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc5f8b66_9b4a59ca",
+        "filename": "ash/session/session_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-14T03:47:31Z",
+      "side": 1,
+      "message": "done, although I don\u0027t love the extra layer of indirection",
+      "parentUuid": "6521511d_6af70a6f",
       "revId": "b88339bf174a9ad657d36736cb589359d2f0cd83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
