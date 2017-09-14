@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Build;
@@ -34,6 +35,9 @@ import org.chromium.chrome.browser.tabmodel.DocumentModeAssassin;
 import org.chromium.components.signin.AccountManagerFacade;
 import org.chromium.ui.base.DeviceFormFactor;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -44,6 +48,7 @@ public class FeatureUtilities {
     private static final String TAG = "FeatureUtilities";
     private static final String HERB_EXPERIMENT_NAME = "TabManagementExperiment";
     private static final String HERB_EXPERIMENT_FLAVOR_PARAM = "type";
+    private static final String CHROME_HOME_SHARED_PREFERENCES_KEY = "chrome_home_enabled_date";
 
     private static Boolean sHasGoogleAccountAuthenticator;
     private static Boolean sHasRecognitionIntentHandler;
@@ -270,13 +275,12 @@ public class FeatureUtilities {
             } finally {
                 StrictMode.setThreadPolicy(oldPolicy);
             }
-
+            logChromeHomeChange();
             // If the browser has been initialized by this point, check the experiment as well to
             // avoid the restart logic in cacheChromeHomeEnabled.
             if (ChromeFeatureList.isInitialized()) {
                 boolean chromeHomeExperimentEnabled =
                         ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME);
-
                 if (chromeHomeExperimentEnabled != sChromeHomeEnabled) {
                     sChromeHomeEnabled = chromeHomeExperimentEnabled;
                     ChromePreferenceManager.getInstance().setChromeHomeEnabled(
@@ -284,7 +288,6 @@ public class FeatureUtilities {
                 }
             }
         }
-
         return sChromeHomeEnabled;
     }
 
@@ -337,6 +340,28 @@ public class FeatureUtilities {
     public static boolean isChromeHomeDoodleEnabled() {
         return isChromeHomeEnabled()
                 && ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_DOODLE);
+    }
+
+    private static void logChromeHomeChange() {
+        SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
+        String earliestLoggedDate =
+                sharedPreferences.getString(CHROME_HOME_SHARED_PREFERENCES_KEY, null);
+        if (sChromeHomeEnabled) {
+            if (earliestLoggedDate == null) {
+                sharedPreferences.edit()
+                        .putString(CHROME_HOME_SHARED_PREFERENCES_KEY, getDate())
+                        .apply();
+            }
+        } else {
+            if (earliestLoggedDate != null) {
+                sharedPreferences.edit().remove(CHROME_HOME_SHARED_PREFERENCES_KEY).apply();
+            }
+        }
+    }
+
+    private static String getDate() {
+        DateFormat dateInstance = SimpleDateFormat.getDateInstance();
+        return dateInstance.format(Calendar.getInstance().getTime());
     }
 
     private static native void nativeSetCustomTabVisible(boolean visible);
