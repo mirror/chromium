@@ -16,6 +16,24 @@
       "revId": "c7c2478a9d32c09251bd2ec0e2a2cd92134d9c0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8a1975d_cfc3215b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-14T23:37:59Z",
+      "side": 0,
+      "message": "After added more logging and by controlling timing, I have an updated theory:\n\nFact: Because onClassified() and onSelectionEvent() are called on the same thread, they are called one after the other, but won\u0027t interleave with each other.\n\nAfter long press, I have observed following cases:\n\n1) SELECTION_HANDLES_SHOWN happened before calling onClassified(), which is a very rare case, because classification is generally very fast, then we call mWebContents.adjustSelectionByCharacterOffset(), SELECTION_HANDLES_MOVED happened afterwards.\n\n2) onClassified() is called first, then comes with one SELECTION_HANDLES_SHOWN for the original selection, and then a following SELECTION_HANDLES_MOVED because of selection adjustment inside of onClassified(). This is the most common case.\n\n3) onClassified() is called first, mWebContents.adjustSelectionByCharacterOffset() happened inside, then comes with only one SELECTION_HANDLES_SHOWN event, there won\u0027t be any SELECTION_HANDLE_MOVED. If we take a closer look at this single event, it contains the correct coordinate from selection adjustment. It indicates that drawing side commits original selection and adjustment at once, so we have only one such event. This happens roughly 1 out of 10 times.\n\nSo for case 1) and 2) we need to show menu for SELECTION_HANDLES_MOVED and do not show menu for SELECTION_HANDLES_SHOWN, but for 3), we need to show menu for SELECTION_HANDLES_SHOWN.\n\nBack to set |mPendingShowActionMode| to true in |onClassified()| solution, it wouldn\u0027t be helpful for case 2), because in that case, we still didn\u0027t get the correct coordinates yet, however, it is still reasonable to have that. Unfortunately, we still have no choice but remove this break, because for case 2) and 3), we don\u0027t know SELECTION_HANDLES_SHOWN is a final event or not.\n\nThis will introduce a flicker for case 2), but comparing menu is not usable in case 3), I prefer to fix it in this way, WDYT? For the long term, I think we might introduce SELECTION_ADJUSTMENT_DONE kind of callbacks.",
+      "parentUuid": "44372c2a_235666c6",
+      "revId": "c7c2478a9d32c09251bd2ec0e2a2cd92134d9c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
