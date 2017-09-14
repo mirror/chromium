@@ -209,6 +209,24 @@
       "revId": "f3d4d98c1c158227e4d1960a86283e13dbda974c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "175a332d_4d0026b2",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1547,
+      "author": {
+        "id": 1222289
+      },
+      "writtenOn": "2017-09-14T23:26:23Z",
+      "side": 1,
+      "message": "The is_clang is mostly there because we need !is_clang for the /GL path. I also don\u0027t think use_thin_lto actually implies clang. That\u0027s why I structured it this way, but I\u0027m fine restructuring if you feel that\u0027s better.",
+      "parentUuid": "85737bd2_8fe2b629",
+      "revId": "f3d4d98c1c158227e4d1960a86283e13dbda974c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
