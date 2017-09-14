@@ -16,6 +16,24 @@
       "revId": "abe92bf2de2764b57bda634c1d617955457376e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1512213_0cbbafb9",
+        "filename": "build/android/resource_sizes.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-14T20:23:57Z",
+      "side": 1,
+      "message": "Much cleaner! Done.",
+      "parentUuid": "78a4c397_787189a5",
+      "revId": "abe92bf2de2764b57bda634c1d617955457376e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
