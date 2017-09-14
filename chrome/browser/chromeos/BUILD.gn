@@ -1587,6 +1587,8 @@ source_set("chromeos") {
     "extensions/wallpaper_manager_util.h",
     "extensions/wallpaper_private_api.cc",
     "extensions/wallpaper_private_api.h",
+    "extensions/zip_archiver_private_api.cc",
+    "extensions/zip_archiver_private_api.h",
   ]
 
   if (use_cups) {

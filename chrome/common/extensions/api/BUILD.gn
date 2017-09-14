@@ -117,6 +117,7 @@ if (is_chromeos) {
     "users_private.idl",
     "wallpaper.json",
     "wallpaper_private.json",
+    "zip_archiver_private.json",
   ]
 } else if (is_linux || is_win) {
   schema_sources += [ "input_ime.json" ]
