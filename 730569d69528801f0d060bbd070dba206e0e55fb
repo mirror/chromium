@@ -94,6 +94,30 @@
       "revId": "730569d69528801f0d060bbd070dba206e0e55fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9bd6d81_ce7b96a4",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-14T23:59:51Z",
+      "side": 1,
+      "message": "I think it is better to use EXPECT here. \nASSERT is used when not passing it would crash next code execution.",
+      "parentUuid": "8431fb15_5c7e95e1",
+      "range": {
+        "startLine": 306,
+        "startChar": 2,
+        "endLine": 306,
+        "endChar": 8
+      },
+      "revId": "730569d69528801f0d060bbd070dba206e0e55fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
