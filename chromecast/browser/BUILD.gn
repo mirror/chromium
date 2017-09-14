@@ -117,6 +117,7 @@ source_set("browser") {
     "//content/public/common:service_names",
     "//content/public/utility",
     "//device/geolocation",
+    "//google_apis",
     "//gpu",
     "//ipc",
     "//media",
