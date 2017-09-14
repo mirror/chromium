@@ -14,8 +14,8 @@ import re
 import shutil
 import signal
 import subprocess
+import struct
 import sys
-import uuid
 
 
 DIR_SOURCE_ROOT = os.path.abspath(
@@ -29,6 +29,8 @@ GUEST_NET = '192.168.3.0/24'
 GUEST_IP_ADDRESS = '192.168.3.9'
 HOST_IP_ADDRESS = '192.168.3.2'
 
+# This port on localhost is forwarded to 22 on the target.
+HOST_SSH_PORT = '23422'
 
 def _RunAndCheck(dry_run, args):
   if dry_run:
@@ -169,19 +171,20 @@ class BootfsData(object):
 
   bootfs: Local path to .bootfs image file.
   symbols_mapping: A dict mapping executables to their unstripped originals.
-  termination_string: A string to be grep'd for that indicates the target
-                      process on the VM has terminated.
   """
-  def __init__(self, bootfs_name, symbols_mapping, termination_string):
+  def __init__(self, bootfs_name, symbols_mapping):
     self.bootfs = bootfs_name
     self.symbols_mapping = symbols_mapping
-    self.termination_string = termination_string
 
 
-def BuildBootfs(output_directory, runtime_deps, bin_name, child_args, dry_run):
+def BuildBootfs(output_directory, runtime_deps, bin_name, child_args, dry_run,
+                summary_output, power_off):
   # |runtime_deps| already contains (target, source) pairs for the runtime deps,
   # so we can initialize |file_mapping| from it directly.
   file_mapping = dict(runtime_deps)
+
+  if summary_output:
+    child_args.append('--test-launcher-summary-output=/tmp/summary_output.json')
 
   # Generate a script that runs the binaries and shuts down QEMU (if used).
   autorun_file = open(bin_name + '.bootfs_autorun', 'w')
@@ -201,10 +204,30 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args, dry_run):
     autorun_file.write(' "%s"' % arg);
   autorun_file.write('\n')
 
-  # Generate a unique string that the output processor can look for to know
-  # that the target process is finished.
-  termination_string = 'Process terminated %s.' % uuid.uuid4().hex
-  autorun_file.write('echo ' + termination_string + '\n')
+  autorun_file.write('echo Process terminated.\n')
+
+  if summary_output:
+    autorun_file.write('echo Mounting results FS...\n')
+
+    # Mount the target disk (added via -drive argument to qemu), format it
+    # (fat16) and then copy the results json on completion. This is extracted
+    # from the disk image after qemu finishes its run.
+    autorun_file.write('mkfs '
+                      '/dev/acpi/PCI0/pci/00:1f:02/ahci/sata0/block '
+                      'fat\n')
+    autorun_file.write('mkdir /volume/results\n')
+    autorun_file.write('mount '
+                      '/dev/acpi/PCI0/pci/00:1f:02/ahci/sata0/block '
+                      '/volume/results\n')
+    autorun_file.write('echo Copying results json...\n')
+    autorun_file.write('cp /tmp/summary_output.json /volume/results/OUTPUT\n')
+
+  if power_off:
+    autorun_file.write('echo Sleeping and shutting down...\n')
+    # A delay is required to give qemu a chance to flush stdout before it
+    # terminates.
+    autorun_file.write('msleep 3000\n')
+    autorun_file.write('dm poweroff\n')
 
   autorun_file.flush()
   os.chmod(autorun_file.name, 0750)
@@ -238,7 +261,7 @@ def BuildBootfs(output_directory, runtime_deps, bin_name, child_args, dry_run):
        '--target=system', manifest_file.name]) != 0:
     return None
 
-  return BootfsData(bootfs_name, symbols_mapping, termination_string)
+  return BootfsData(bootfs_name, symbols_mapping)
 
 
 def _SymbolizeEntries(entries):
@@ -342,23 +365,58 @@ def _SymbolizeBacktrace(backtrace, file_mapping):
   return map(lambda entry: symbolized[entry['frame_id']], backtrace)
 
 
-def _EnsureTunTap(dry_run):
-  """Make sure the tun/tap device is configured. This cannot be done
-  automatically because it requires sudo, unfortunately, so we just print out
-  instructions.
+def _GetResultsFromImg(test_launcher_summary_output):
+  """Extract the results .json to the given name.
+
+  Reads the .json out of a FAT16 image. See e.g.
+  https://www.win.tue.nl/~aeb/linux/fs/fat/fat-1.html, however this function is
+  very minimal and only handles the narrow path that we expect to see.
   """
-  with open(os.devnull, 'w') as nul:
-    p = subprocess.Popen(
-        ['tunctl', '-b', '-u', os.environ.get('USER'), '-t', 'qemu'],
-        stdout=subprocess.PIPE, stderr=nul)
-    output = p.communicate()[0].strip()
-  if output != 'qemu':
-    print 'Configuration of tun/tap device required:'
-    if not os.path.isfile('/usr/sbin/tunctl'):
-      print 'sudo apt-get install uml-utilities'
-    print 'sudo tunctl -u $USER -t qemu'
-    print 'sudo ifconfig qemu up'
+  img_filename = test_launcher_summary_output + '.img'
+  with open(img_filename, 'r') as f:
+    raw_img = f.read()
+
+  (bytes_per_sector,
+   sectors_per_cluster,
+   reserved_sectors,
+   fat_copies,
+   root_entries,
+   sectors_per_fat,
+   signature) = struct.unpack('<11xHBHBH3xH486xH', raw_img[:512])
+  if (bytes_per_sector != 512 or sectors_per_cluster != 16 or
+      reserved_sectors != 1 or fat_copies != 2 or root_entries != 512 or
+      sectors_per_fat != 50 or signature != 0xaa55):
+    print 'Unexpected header on disk image'
     return False
+
+  root_dir_offset = (sectors_per_fat * fat_copies + reserved_sectors) * \
+                    bytes_per_sector
+  assert root_dir_offset == 0xca00
+
+  filename, ext, starting_cluster, file_size = \
+      struct.unpack('<8s3s15xHI', raw_img[0xca00:0xca20])
+  if filename.strip() != 'OUTPUT' or ext.strip() != '':
+    print 'Unexpected root directory'
+    return False
+
+  clusters = [starting_cluster]
+  while True:
+    last_cluster = clusters[-1]
+    offset = 0x200 + last_cluster * 2
+    next_cluster, = struct.unpack('<H', raw_img[offset:offset+2])
+    if next_cluster >= 0xfff8 or next_cluster < 3:
+      break
+    clusters.append(next_cluster)
+
+  bytes_per_cluster = bytes_per_sector * sectors_per_cluster
+  def data_for_cluster(c):
+    data_base = 0xca00
+    start = data_base + c * bytes_per_cluster
+    return raw_img[start:start + bytes_per_cluster]
+  cluster_data = map(data_for_cluster, clusters)
+  with open(test_launcher_summary_output, 'w') as f:
+    f.write(''.join(cluster_data)[:file_size])
+
   return True
 
 
@@ -373,9 +431,6 @@ def RunFuchsia(bootfs_data, use_device, dry_run, test_launcher_summary_output):
                           bootfs_data.bootfs]
     return _RunAndCheck(dry_run, bootserver_command)
 
-  if not _EnsureTunTap(dry_run):
-    return 1
-
   qemu_path = os.path.join(SDK_ROOT, 'qemu', 'bin', 'qemu-system-x86_64')
   qemu_command = [qemu_path,
       '-m', '2048',
@@ -387,16 +442,12 @@ def RunFuchsia(bootfs_data, use_device, dry_run, test_launcher_summary_output):
       '-enable-kvm',
       '-cpu', 'host,migratable=no',
 
-      # Configure the tun/tap device used for retrieving test results and
-      # triggering shutdown.
-      '-netdev', 'tap,ifname=qemu,script=no,downscript=no,id=net0',
-      '-device', 'e1000,netdev=net0,mac=52:54:00:63:5e:7a',
-
       # Configure virtual network. It is used in the tests to connect to
       # testserver running on the host.
-      '-netdev', 'user,id=net1,net=%s,dhcpstart=%s,host=%s' %
-          (GUEST_NET, GUEST_IP_ADDRESS, HOST_IP_ADDRESS),
-      '-device', 'e1000,netdev=net1,mac=52:54:00:63:5e:7b',
+      '-netdev',
+          'user,id=net0,net=%s,dhcpstart=%s,host=%s,hostfwd=tcp::%s-:22' %
+          (GUEST_NET, GUEST_IP_ADDRESS, HOST_IP_ADDRESS, HOST_SSH_PORT),
+      '-device', 'virtio-net,netdev=net0,mac=52:54:00:63:5e:7b',
 
       # Use stdio for the guest OS only; don't attach the QEMU interactive
       # monitor.
@@ -407,6 +458,17 @@ def RunFuchsia(bootfs_data, use_device, dry_run, test_launcher_summary_output):
       # noisy ANSI spew from the user's terminal emulator.
       '-append', 'TERM=dumb kernel.halt_on_panic=true',
     ]
+
+  if test_launcher_summary_output:
+    img_filename = test_launcher_summary_output + '.img'
+    _RunAndCheck(dry_run, ['dd', 'if=/dev/zero', 'of=' + img_filename,
+                           'bs=100M', 'count=1'])
+    qemu_command.extend([
+      # Drive formatted as FAT16 and mounted with results json copied to it in
+      # the target for retrieval.
+      '-drive', 'file=' + img_filename + ',format=raw',
+    ])
+
 
   if dry_run:
     print 'Run:', ' '.join(qemu_command)
@@ -446,19 +508,6 @@ def RunFuchsia(bootfs_data, use_device, dry_run, test_launcher_summary_output):
     if 'SUCCESS: all tests passed.' in line:
       success = True
 
-    if bootfs_data.termination_string in line:
-      print 'Retrieving results and starting shutdown...'
-      sys.stdout.flush()
-
-      if test_launcher_summary_output:
-        _RunAndCheck(dry_run,
-            [os.path.join(SDK_ROOT, 'tools', 'netcp'),
-             ':/tmp/summary_output.json', test_launcher_summary_output])
-      _RunAndCheck(dry_run,
-          [os.path.join(SDK_ROOT, 'tools', 'netruncmd'), ':', 'dm poweroff'])
-      sys.stdout.write('Result retrieval complete.')
-      sys.stdout.flush()
-
     # If the line is not from QEMU then don't try to process it.
     matched = qemu_prefix.match(line)
     if not matched:
@@ -497,5 +546,8 @@ def RunFuchsia(bootfs_data, use_device, dry_run, test_launcher_summary_output):
            'binary': None, 'pc_offset': None})
 
   qemu_popen.wait()
+
+  if test_launcher_summary_output:
+    success = _GetResultsFromImg(test_launcher_summary_output) and success
 
   return 0 if success else 1
