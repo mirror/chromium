@@ -7,6 +7,7 @@
 #include "base/path_service.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome_elf/chrome_elf_main.h"
+#include "content/public/common/content_switches.h"
 
 // This function is a temporary workaround for https://crbug.com/655788. We
 // need to come up with a better way to initialize crash reporting that can

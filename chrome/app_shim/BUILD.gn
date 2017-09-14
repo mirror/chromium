@@ -47,6 +47,7 @@ mac_app_bundle("app_mode_loader") {
     "//chrome/common:app_mode_app_support",
     "//chrome/common:constants",
     "//chrome/common:non_code_constants",
+    "//content/public/common:static_switches",
   ]
 
   libs = [

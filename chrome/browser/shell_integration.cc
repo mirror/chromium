@@ -21,6 +21,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/common/content_switches.h"
 
 #if defined(OS_CHROMEOS)
 #include "chromeos/chromeos_switches.h"
