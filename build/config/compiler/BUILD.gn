@@ -200,7 +200,10 @@ config("compiler") {
 
   # In general, Windows is totally different, but all the other builds share
   # some common GCC configuration.
-  if (!is_win) {
+  if (is_win) {
+    assert(!use_thin_lto || (is_clang && use_lld),
+           "use_thin_lto requires is_clang and use_lld on Windows")
+  } else {
     # Common GCC compiler flags setup.
     # --------------------------------
     cflags += [ "-fno-strict-aliasing" ]  # See http://crbug.com/32204
@@ -1537,8 +1540,9 @@ config("default_stack_frames") {
 # Default "optimization on" config.
 config("optimize") {
   if (is_win) {
-    # TODO(thakis): Remove is_clang here, https://crbug.com/598772
-    if (is_official_build && full_wpo_on_official && !is_clang) {
+    if (use_thin_lto) {
+      common_optimize_on_cflags += [ "-flto=thin" ]
+    } else if (is_official_build && full_wpo_on_official && !is_clang) {
       common_optimize_on_cflags += [
         "/GL",  # Whole program optimization.
 
@@ -1634,19 +1638,18 @@ config("optimize_max") {
       # build also specifies /Ot, /Oi, and /GF, but these are implied by /O2.
       cflags = [ "/O2" ] + common_optimize_on_cflags
 
-      if (is_official_build) {
-        if (!is_clang) {
-          cflags += [
-            "/GL",  # Whole program optimization.
+      if (use_thin_lto) {
+        cflags += [ "-flto=thin" ]
+      } else if (is_official_build && !is_clang) {
+        cflags += [
+          "/GL",  # Whole program optimization.
 
-            # Disable Warning 4702 ("Unreachable code") for the WPO/PGO builds.
-            # Probably anything that this would catch that wouldn't be caught
-            # in a normal build isn't going to actually be a bug, so the
-            # incremental value of C4702 for PGO builds is likely very small.
-            "/wd4702",
-          ]
-        }
-        # TODO(crbug.com/598772): Enable -flto for Clang.
+          # Disable Warning 4702 ("Unreachable code") for the WPO/PGO builds.
+          # Probably anything that this would catch that wouldn't be caught
+          # in a normal build isn't going to actually be a bug, so the
+          # incremental value of C4702 for PGO builds is likely very small.
+          "/wd4702",
+        ]
       }
     } else if (optimize_for_fuzzing) {
       cflags = [ "-O1" ] + common_optimize_on_cflags
@@ -1681,8 +1684,9 @@ config("optimize_speed") {
       # build also specifies /Ot, /Oi, and /GF, but these are implied by /O2.
       cflags = [ "/O2" ] + common_optimize_on_cflags
 
-      # TODO(thakis): Remove is_clang here, https://crbug.com/598772
-      if (is_official_build && !is_clang) {
+      if (use_thin_lto) {
+        cflags += [ "-flto=thin" ]
+      } else if (is_official_build && !is_clang) {
         cflags += [
           "/GL",  # Whole program optimization.
 
