@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "35840a2d_297ac070",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1131114
+      },
+      "writtenOn": "2017-09-14T21:35:28Z",
+      "side": 1,
+      "message": "This value will also appear under /dev/class/block/XXX, along with all the other block devices on the system. For what it\u0027s worth, each \"partition\" also appears as an independent block device.\n\nThis may become problematic if you ever have \u003e 1 block devices attached (partitions or otherwise).",
+      "parentUuid": "6369444f_d5834ba5",
+      "range": {
+        "startLine": 214,
+        "startChar": 42,
+        "endLine": 214,
+        "endChar": 50
+      },
+      "revId": "e2fa82ae426f974b5060a9cc586390bd9a2e8c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1c60c43_1a44ee68",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 5
