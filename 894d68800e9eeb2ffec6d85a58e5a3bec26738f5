@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aba43731_7b2d7d92",
+        "filename": "chrome/browser/android/preferences/pref_service_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-14T14:48:30Z",
+      "side": 1,
+      "message": "Can we not use this method if it always return true?",
+      "revId": "894d68800e9eeb2ffec6d85a58e5a3bec26738f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
