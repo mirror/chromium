@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c3c3ca23_e4b6b050",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-14T23:07:44Z",
+      "side": 1,
+      "message": "The trybots should be faster now that their cache is warmed up. Just remove this, and hit cq, and it should hopefully land fairly quickly.",
+      "parentUuid": "9f1bbc19_0eed248d",
+      "revId": "22b0acbe55593a8fa6352744d92eb7110318ffaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcba968e_e778cdbd",
         "filename": "build/config/compiler/BUILD.gn",
         "patchSetId": 6
