@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "45492fc4_5c33fabb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-14T00:24:27Z",
+      "side": 1,
+      "message": "Good testcase!",
+      "parentUuid": "130a87b8_255a89de",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b049a7d_ad83a635",
         "filename": "cc/layers/picture_layer_impl.cc",
         "patchSetId": 14
@@ -388,6 +406,30 @@
     },
     {
       "key": {
+        "uuid": "12efa4e1_e92956fb",
+        "filename": "cc/layers/picture_layer_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-14T00:24:27Z",
+      "side": 1,
+      "message": "ForTesting should be camel case if anything for consistency with above.",
+      "parentUuid": "896583e8_ff21c031",
+      "range": {
+        "startLine": 116,
+        "startChar": 16,
+        "endLine": 116,
+        "endChar": 40
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afa1d80e_18ac0fc4",
         "filename": "cc/trees/image_animation_controller.cc",
         "patchSetId": 14
@@ -517,6 +559,30 @@
     },
     {
       "key": {
+        "uuid": "d6171431_5a055527",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-14T00:24:27Z",
+      "side": 1,
+      "message": "Ya for sure as a follow-up, I was just noting that this might be low hanging fruit for some perf wins.",
+      "parentUuid": "90485153_ddbf46d0",
+      "range": {
+        "startLine": 242,
+        "startChar": 2,
+        "endLine": 242,
+        "endChar": 62
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed64ddb3_57973606",
         "filename": "cc/trees/image_animation_controller.cc",
         "patchSetId": 14
@@ -552,6 +618,30 @@
       "side": 1,
       "message": "If we are going to skip the first frame on the second iteration then it wouldn\u0027t catch up and play from the start.\n\n|next_desired_frame_time \u003c\u003d now| is checking if we will be skipping this frame to catch up.",
       "parentUuid": "ed64ddb3_57973606",
+      "range": {
+        "startLine": 257,
+        "startChar": 4,
+        "endLine": 258,
+        "endChar": 41
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2fe62044_9c1ccb56",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-14T00:24:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ad9c11db_a32ed6ac",
       "range": {
         "startLine": 257,
         "startChar": 4,
@@ -763,6 +853,24 @@
     },
     {
       "key": {
+        "uuid": "c290ad56_a78bd3b1",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-14T00:24:27Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s true... Up to you, but it might be a perf win as a follow up",
+      "parentUuid": "59dcd6c1_e6f5b16b",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d6687f4_ca406894",
         "filename": "cc/trees/image_animation_controller.h",
         "patchSetId": 14
@@ -845,6 +953,30 @@
     },
     {
       "key": {
+        "uuid": "381aff16_7bac6941",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-14T00:24:27Z",
+      "side": 1,
+      "message": "Ok, can you update the comment to say that?",
+      "parentUuid": "367ebf2a_f22c1724",
+      "range": {
+        "startLine": 62,
+        "startChar": 21,
+        "endLine": 62,
+        "endChar": 79
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b03a525d_91acd936",
         "filename": "cc/trees/image_animation_controller.h",
         "patchSetId": 14
@@ -892,6 +1024,30 @@
     },
     {
       "key": {
+        "uuid": "99592124_25758e55",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-14T00:24:27Z",
+      "side": 1,
+      "message": "Yeah the problem is that PushPropertiesTo takes a thing to push properties to, this is really just Activate?",
+      "parentUuid": "db7e5e4f_d08dca9d",
+      "range": {
+        "startLine": 88,
+        "startChar": 9,
+        "endLine": 88,
+        "endChar": 28
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ebbdec9_48004a5d",
         "filename": "cc/trees/image_animation_controller.h",
         "patchSetId": 14
@@ -921,6 +1077,24 @@
       "side": 1,
       "message": "I did look for something I could re-use from cc/base but nothing supports changing the notification time. And then it needed tracking for when we receive the animate response from a callback, so I figured a different class is better.",
       "parentUuid": "9ebbdec9_48004a5d",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6ea9578e_224c99de",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-14T00:24:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "15b1b7c3_43c401a5",
       "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -962,6 +1136,30 @@
       "side": 1,
       "message": "base::TimeTicks::Now() is an expensive call that we prefer to avoid. That\u0027s why the rest of the animation system also uses now from the BeginFrameArgs.",
       "parentUuid": "28825f5f_ff2f4200",
+      "range": {
+        "startLine": 160,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 74
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "98faa947_860d46cb",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-14T00:24:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0f018473_7c2ff3cb",
       "range": {
         "startLine": 160,
         "startChar": 4,

@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcbadbd4_42e39757",
+        "filename": "cc/raster/raster_source.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-14T00:24:27Z",
+      "side": 1,
+      "message": "This is GetDisplayItemList().get(). No need to add a new accessor.",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161f2e60_72e3fde8",
+        "filename": "cc/trees/image_animation_controller_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-14T00:24:27Z",
+      "side": 1,
+      "message": "Thanks for the comprehensive tests!",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c043aa9d_fac8894d",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-14T00:24:27Z",
+      "side": 1,
+      "message": "Optional?",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ede8faf_d28cd9be",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-09-14T00:24:27Z",
+      "side": 1,
+      "message": "camel case (there are 0 instances of \u0027_for_testing(\u0027 in platform and 92 instances of \u0027ForTesting(\u0027)",
+      "range": {
+        "startLine": 101,
+        "startChar": 7,
+        "endLine": 101,
+        "endChar": 30
+      },
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
