@@ -24,6 +24,7 @@
 #include "ui/display/display.h"
 #include "ui/display/screen.h"
 #include "ui/display/types/display_constants.h"
+#include "ui/events/base_event_utils.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/path.h"
 #include "ui/keyboard/keyboard_controller_observer.h"
@@ -57,6 +58,8 @@ constexpr int kReportLingeringStateDelayMs = 5000;
 // keyboard window before setting the opacity back to 1.0. Since windows are not
 // allowed to be shown with zero opacity, we always animate to 0.01 instead.
 constexpr float kAnimationStartOrAfterHideOpacity = 0.01f;
+
+constexpr int kTransientBlurCheckDurationMs = 2000;
 
 // State transition diagram (document linked from crbug.com/719905)
 bool isAllowedStateStansition(keyboard::KeyboardControllerState from,
@@ -241,6 +244,7 @@ KeyboardController::KeyboardController(std::unique_ptr<KeyboardUI> ui,
       show_on_content_update_(false),
       keyboard_locked_(false),
       state_(KeyboardControllerState::UNKNOWN),
+      last_close_time_seconds_(0.0),
       weak_factory_report_lingering_state_(this),
       weak_factory_will_hide_(this) {
   ui_->GetInputMethod()->AddObserver(this);
@@ -405,8 +409,12 @@ void KeyboardController::HideKeyboard(HideReason reason) {
         observer.OnKeyboardHidden();
       ui_->EnsureCaretInWorkArea();
 
+      last_close_time_seconds_ =
+          ui::EventTimeStampToSeconds(ui::EventTimeForNow());
+
       break;
     }
+
     default:
       NOTREACHED();
   }
@@ -514,7 +522,13 @@ void KeyboardController::OnTextInputStateChanged(
   }
 }
 
-void KeyboardController::OnShowImeIfNeeded() {
+void KeyboardController::OnShowImeIfNeeded(bool transient_blur_check) {
+  if (transient_blur_check && !IsTransientBlur()) {
+    // This ShowIme event has been triggered in a situation where we only want
+    // to show the keyboard if focus has been lost from the text field for a
+    // small amount of time. If it hasn't, then don't show the keyboard.
+    return;
+  }
   // Calling |ShowKeyboardInternal| may move the keyboard to another display.
   if (IsKeyboardEnabled() && !keyboard_locked())
     ShowKeyboardInternal(display::kInvalidDisplayId);
@@ -724,6 +738,13 @@ void KeyboardController::ChangeState(KeyboardControllerState state) {
 void KeyboardController::ReportLingeringState() {
   UMA_HISTOGRAM_ENUMERATION("VirtualKeyboard.LingeringIntermediateState",
                             state_, KeyboardControllerState::COUNT);
+}
+
+bool KeyboardController::IsTransientBlur() const {
+  const double now_time_seconds =
+      ui::EventTimeStampToSeconds(ui::EventTimeForNow());
+  const double difference_seconds = now_time_seconds - last_close_time_seconds_;
+  return difference_seconds < kTransientBlurCheckDurationMs / 1000.f;
 }
 
 }  // namespace keyboard

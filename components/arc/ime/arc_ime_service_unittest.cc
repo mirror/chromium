@@ -63,7 +63,7 @@ class FakeInputMethod : public ui::DummyInputMethod {
     return client_;
   }
 
-  void ShowImeIfNeeded() override {
+  void ShowImeIfNeeded(bool transient_blur_check) override {
     count_show_ime_if_needed_++;
   }
 

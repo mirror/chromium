@@ -185,7 +185,7 @@ class MockInputMethodObserver : public InputMethodObserver {
   void OnTextInputStateChanged(const TextInputClient* client) override {
     verifier_->OnTextInputStateChanged(client);
   }
-  void OnShowImeIfNeeded() override {}
+  void OnShowImeIfNeeded(bool transient_blur_check) override {}
   void OnInputMethodDestroyed(const InputMethod* client) override {}
 
   ClientChangeVerifier* verifier_;

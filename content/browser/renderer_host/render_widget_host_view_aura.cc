@@ -2328,9 +2328,10 @@ void RenderWidgetHostViewAura::OnUpdateTextInputStateCalled(
     GetInputMethod()->OnTextInputTypeChanged(this);
 
   const TextInputState* state = text_input_manager_->GetTextInputState();
+
   if (state && state->show_ime_if_needed &&
       GetInputMethod()->GetTextInputClient() == this) {
-    GetInputMethod()->ShowImeIfNeeded();
+    GetInputMethod()->ShowImeIfNeeded(state->suppress_transient_blur);
   }
 
   if (auto* render_widget_host =

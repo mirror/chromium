@@ -37,7 +37,7 @@ class DummyInputMethod : public InputMethod {
   int GetTextInputFlags() const override;
   bool CanComposeInline() const override;
   bool IsCandidatePopupOpen() const override;
-  void ShowImeIfNeeded() override;
+  void ShowImeIfNeeded(bool transient_blur_check) override;
 
   void AddObserver(InputMethodObserver* observer) override;
   void RemoveObserver(InputMethodObserver* observer) override;

@@ -54,7 +54,7 @@ class VirtualKeyboardWebContentTest : public InProcessBrowserTest {
     client.reset(new ui::DummyTextInputClient(ui::TEXT_INPUT_TYPE_TEXT));
     ui::InputMethod* input_method = ui()->GetInputMethod();
     input_method->SetFocusedTextInputClient(client.get());
-    input_method->ShowImeIfNeeded();
+    input_method->ShowImeIfNeeded(false);
     // Mock window.resizeTo that is expected to be called after navigate to a
     // new virtual keyboard.
     ui()->GetContentsWindow()->SetBounds(init_bounds);
