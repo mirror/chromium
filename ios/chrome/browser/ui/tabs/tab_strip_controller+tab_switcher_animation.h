@@ -8,7 +8,7 @@
 #include "base/ios/block_types.h"
 #import "ios/chrome/browser/ui/tabs/tab_strip_controller.h"
 
-@class TabSwitcherTabStripPlaceholderView;
+@class TabStripPlaceholderView;
 
 // This category is used by the tab switcher to start fold/unfold animations
 // on the tab strip controller.
@@ -17,7 +17,7 @@
 // Returns a tab switcher tab strip placeholder view created from the current
 // state of the tab strip controller. It is used to animate the transition
 // from the browser view controller to the tab switcher.
-- (TabSwitcherTabStripPlaceholderView*)placeholderView;
+- (TabStripPlaceholderView*)placeholderView;
 
 @end
 

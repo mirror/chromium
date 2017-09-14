@@ -2,16 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef IOS_CHROME_BROWSER_UI_TAB_SWITCHER_TAB_SWITCHER_TAB_STRIP_PLACEHOLDER_VIEW_H_
-#define IOS_CHROME_BROWSER_UI_TAB_SWITCHER_TAB_SWITCHER_TAB_STRIP_PLACEHOLDER_VIEW_H_
+#ifndef IOS_CHROME_BROWSER_UI_TABS_REQUIREMENTS_TAB_STRIP_PLACEHOLDER_VIEW_H_
+#define IOS_CHROME_BROWSER_UI_TABS_REQUIREMENTS_TAB_STRIP_PLACEHOLDER_VIEW_H_
 
 #import <UIKit/UIKit.h>
 
 #include "base/ios/block_types.h"
 
-// Used has a placeholder for the tab strip view during the tab switcher
-// controller transition animations.
-@interface TabSwitcherTabStripPlaceholderView : UIView
+// Used has a placeholder for the tab strip view during transition animations.
+@interface TabStripPlaceholderView : UIView
 
 // Triggers a fold animation of the tab strip placeholder resulting
 // in hiding all the tabs views. |completion| is called at the end of the
@@ -24,4 +23,4 @@
 
 @end
 
-#endif  // IOS_CHROME_BROWSER_UI_TAB_SWITCHER_TAB_SWITCHER_TAB_STRIP_PLACEHOLDER_VIEW_H_
+#endif  // IOS_CHROME_BROWSER_UI_TABS_REQUIREMENTS_TAB_STRIP_PLACEHOLDER_VIEW_H_

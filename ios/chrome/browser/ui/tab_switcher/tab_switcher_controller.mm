@@ -615,7 +615,7 @@ enum class SnapshotViewOption {
                       finalTabScreenshotFrame);
   finalTabScreenshotFrame.origin.y += cellTopBarHeight;
 
-  TabSwitcherTabStripPlaceholderView* tabStripPlaceholderView =
+  TabStripPlaceholderView* tabStripPlaceholderView =
       [transitionContextContent generateTabStripPlaceholderView];
   tabStripPlaceholderView.clipsToBounds = YES;
   tabStripPlaceholderView.backgroundColor = [UIColor clearColor];
