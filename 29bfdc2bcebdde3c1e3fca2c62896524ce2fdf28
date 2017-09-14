@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d118994_814d93a5",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-14T10:32:31Z",
+      "side": 1,
+      "message": "I think it\u0027s better to move |requester| to be the final argument and give it a null default argument.\nThis removes the requirement to explicitly pass a null without introducing the requirement to assign the requester separately.",
+      "range": {
+        "startLine": 231,
+        "startChar": 2,
+        "endLine": 231,
+        "endChar": 15
+      },
+      "revId": "29bfdc2bcebdde3c1e3fca2c62896524ce2fdf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
