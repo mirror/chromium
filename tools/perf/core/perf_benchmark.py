@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import logging
 import os
 import sys
 
@@ -39,6 +40,8 @@ class PerfBenchmark(benchmark.Benchmark):
     if options.browser_type != 'reference':
       variations = self._GetVariationsBrowserArgs(options.finder_options)
       options.AppendExtraBrowserArgs(variations)
+      options.AppendExtraBrowserArgs('--perf_benchmark')
+      logging.info("=======================SET FLAG.=========================")
     self.SetExtraBrowserOptions(options)
 
   @staticmethod

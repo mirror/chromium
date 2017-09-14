@@ -200,6 +200,8 @@ class BASE_EXPORT StatisticsRecorder {
   static void SetRecordChecker(
       std::unique_ptr<RecordHistogramChecker> record_checker);
 
+  static void SetRecordCheckerEnabled(bool enabled);
+
   // Returns true iff the given histogram should be recorded based on
   // the ShouldRecord() method of the record checker.
   // If the record checker is not set, returns true.
@@ -247,6 +249,8 @@ class BASE_EXPORT StatisticsRecorder {
   std::unique_ptr<RecordHistogramChecker> existing_record_checker_;
 
   bool vlog_initialized_ = false;
+
+  static bool record_checker_enabled_;
 
   static void Reset();
   static void DumpHistogramsToVlog(void* instance);

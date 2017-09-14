@@ -87,30 +87,37 @@ class InteractiveUITestSuiteRunner : public ChromeTestSuiteRunner {
 };
 
 int main(int argc, char** argv) {
-#if defined(OS_WIN)
-  KillAlwaysOnTopWindows(RunType::BEFORE_TEST);
-#endif
-  // TODO(sky): this causes a crash in an autofill test on macosx, figure out
-  // why: http://crbug.com/641969.
-#if !defined(OS_MACOSX)
-  // Without this it's possible for the first browser to start up in the
-  // background, generally because the last test did something that causes the
-  // test to run in the background. Most interactive ui tests assume they are in
-  // the foreground and fail in weird ways if they aren't (for example, clicks
-  // go to the wrong place). This ensures the first browser is always in the
-  // foreground.
-  InProcessBrowserTest::set_global_browser_set_up_function(
-      &ui_test_utils::BringBrowserWindowToFront);
-#endif
+  // #if defined(OS_WIN)
+  //   KillAlwaysOnTopWindows(RunType::BEFORE_TEST);
+  // #endif
+  //   // TODO(sky): this causes a crash in an autofill test on macosx, figure
+  //   out
+  //   // why: http://crbug.com/641969.
+  // #if !defined(OS_MACOSX)
+  //   // Without this it's possible for the first browser to start up in the
+  //   // background, generally because the last test did something that causes
+  //   the
+  //   // test to run in the background. Most interactive ui tests assume they
+  //   are in
+  //   // the foreground and fail in weird ways if they aren't (for example,
+  //   clicks
+  //   // go to the wrong place). This ensures the first browser is always in
+  //   the
+  //   // foreground.
+  //   InProcessBrowserTest::set_global_browser_set_up_function(
+  //       &ui_test_utils::BringBrowserWindowToFront);
+  // #endif
 
-  // Run interactive_ui_tests serially, they do not support running in parallel.
-  size_t parallel_jobs = 1U;
+  //   // Run interactive_ui_tests serially, they do not support running in
+  //   parallel. size_t parallel_jobs = 1U;
 
-  InteractiveUITestSuiteRunner runner;
-  ChromeTestLauncherDelegate delegate(&runner);
-  const int result = LaunchChromeTests(parallel_jobs, &delegate, argc, argv);
-#if defined(OS_WIN)
-  KillAlwaysOnTopWindows(RunType::AFTER_TEST);
-#endif
-  return result;
+  //   InteractiveUITestSuiteRunner runner;
+  //   ChromeTestLauncherDelegate delegate(&runner);
+  //   const int result = LaunchChromeTests(parallel_jobs, &delegate, argc,
+  //   argv);
+  // #if defined(OS_WIN)
+  //   KillAlwaysOnTopWindows(RunType::AFTER_TEST);
+  // #endif
+  //   return result;
+  return 0;
 }

@@ -8,15 +8,16 @@
 #include "chrome/test/base/chrome_test_suite.h"
 
 int main(int argc, char** argv) {
-  base::CommandLine::Init(argc, argv);
-  size_t parallel_jobs = base::NumParallelJobs();
-  if (parallel_jobs == 0U) {
-    return 1;
-  } else if (parallel_jobs > 1U) {
-    parallel_jobs /= 2U;
-  }
+  // base::CommandLine::Init(argc, argv);
+  // size_t parallel_jobs = base::NumParallelJobs();
+  // if (parallel_jobs == 0U) {
+  //   return 1;
+  // } else if (parallel_jobs > 1U) {
+  //   parallel_jobs /= 2U;
+  // }
 
-  ChromeTestSuiteRunner runner;
-  ChromeTestLauncherDelegate delegate(&runner);
-  return LaunchChromeTests(parallel_jobs, &delegate, argc, argv);
+  // ChromeTestSuiteRunner runner;
+  // ChromeTestLauncherDelegate delegate(&runner);
+  // return LaunchChromeTests(parallel_jobs, &delegate, argc, argv);
+  return 0;
 }
