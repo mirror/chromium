@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a500b5f_4bb5bef5",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-14T23:53:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is the best place, but I also can\u0027t think of anything better.",
+      "revId": "90be88d0fa5e81600aba50deec3510e564c56125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
