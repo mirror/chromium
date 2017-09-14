@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17ef7951_4d020370",
+        "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-14T10:01:32Z",
+      "side": 1,
+      "message": "chatted offline, these are not restaurant name but actually restaurant location hash. We should update the naming \u0026 the comment to make it better reflects what we are doing here.",
+      "revId": "7b3000c7a22799b88173d478c9dd29a6a7dc1801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
