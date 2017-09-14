@@ -64,6 +64,7 @@
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/user_agent.h"
+#include "content/public/network/url_request_context_builder_mojo.h"
 #include "extensions/features/features.h"
 #include "net/base/logging_network_change_observer.h"
 #include "net/base/sdch_manager.h"
@@ -98,7 +99,6 @@
 #include "net/url_request/url_fetcher.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_builder.h"
-#include "net/url_request/url_request_context_builder_mojo.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "url/url_constants.h"
 
@@ -730,7 +730,7 @@ bool IOThread::PacHttpsUrlStrippingEnabled() const {
 }
 
 void IOThread::SetUpProxyConfigService(
-    net::URLRequestContextBuilderMojo* builder,
+    content::URLRequestContextBuilderMojo* builder,
     std::unique_ptr<net::ProxyConfigService> proxy_config_service) const {
   const base::CommandLine& command_line =
       *base::CommandLine::ForCurrentProcess();
@@ -760,8 +760,8 @@ void IOThread::SetUpProxyConfigService(
 }
 
 void IOThread::ConstructSystemRequestContext() {
-  std::unique_ptr<net::URLRequestContextBuilderMojo> builder =
-      base::MakeUnique<net::URLRequestContextBuilderMojo>();
+  std::unique_ptr<content::URLRequestContextBuilderMojo> builder =
+      base::MakeUnique<content::URLRequestContextBuilderMojo>();
 
   builder->set_network_quality_estimator(
       globals_->network_quality_estimator.get());
