@@ -49,7 +49,6 @@ public class SuggestionsSection extends InnerNode {
     private final SuggestionsList mSuggestionsList;
     private final StatusItem mStatus;
     private final ActionItem mMoreButton;
-    private final ProgressItem mProgressIndicator;
 
     /**
      * Keeps track of how many suggestions have been seen by the user so that we replace only
@@ -104,11 +103,10 @@ public class SuggestionsSection extends InnerNode {
             mStatus = StatusItem.createNoSuggestionsItem(info);
         }
         mMoreButton = new ActionItem(this, ranker);
-        mProgressIndicator = new ProgressItem();
         if (useModern) {
-            addChildren(mHeader, mSuggestionsList, mMoreButton, mProgressIndicator);
+            addChildren(mHeader, mSuggestionsList, mMoreButton);
         } else {
-            addChildren(mHeader, mSuggestionsList, mStatus, mMoreButton, mProgressIndicator);
+            addChildren(mHeader, mSuggestionsList, mStatus, mMoreButton);
         }
 
         mOfflineModelObserver = new OfflineModelObserver(offlinePageBridge);
@@ -510,26 +508,15 @@ public class SuggestionsSection extends InnerNode {
     }
     /** Fetches additional suggestions only for this section. */
     public void fetchSuggestions() {
-        // We want to disable the action item while we are fetching suggestions in order to
-        // avoid fetching the same suggestions twice. See crbug.com/739648.
-        mMoreButton.setEnabled(false);
-        mMoreButton.setVisible(false);
-        mSuggestionsSource.fetchSuggestions(mCategoryInfo.getCategory(),
-                getDisplayedSuggestionIds(), new Callback<List<SnippetArticle>>() {
-                    @Override
-                    public void onResult(List<SnippetArticle> additionalSuggestions) {
-                        if (!isAttached()) return; // The section has been dismissed.
+        mMoreButton.updateState(ActionItem.State.LOADING);
+        mSuggestionsSource.fetchSuggestions(
+                mCategoryInfo.getCategory(), getDisplayedSuggestionIds(), additionalSuggestions -> {
+                    Log.d("DGN", "fetchSuggestions: Callback returned.");
+                    if (!isAttached()) return; // The section has been dismissed.
 
-                        mProgressIndicator.setVisible(false);
-
-                        appendSuggestions(additionalSuggestions, /* keepSectionSize = */ false);
-
-                        mMoreButton.setEnabled(true);
-                        mMoreButton.setVisible(true);
-                    }
+                    appendSuggestions(additionalSuggestions, /* keepSectionSize = */ false);
+                    mMoreButton.updateState(ActionItem.State.BUTTON);
                 });
-
-        mProgressIndicator.setVisible(true);
     }
 
     /**
@@ -547,7 +534,8 @@ public class SuggestionsSection extends InnerNode {
             Log.d(TAG, "setStatus: unavailable status, cleared suggestions.");
         }
 
-        mProgressIndicator.setVisible(SnippetsBridge.isCategoryLoading(status));
+        mMoreButton.updateState(SnippetsBridge.isCategoryLoading(status) ? ActionItem.State.LOADING
+                                                                         : ActionItem.State.BUTTON);
     }
 
     /** Clears the suggestions and related data, resetting the state of the section. */
@@ -600,10 +588,6 @@ public class SuggestionsSection extends InnerNode {
 
     public String getHeaderText() {
         return mHeader.getHeaderText();
-    }
-
-    ProgressItem getProgressItemForTesting() {
-        return mProgressIndicator;
     }
 
     ActionItem getActionItemForTesting() {
