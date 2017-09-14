@@ -127,6 +127,11 @@ ExtensionPrinterHandler::ExtensionPrinterHandler(Profile* profile)
 ExtensionPrinterHandler::~ExtensionPrinterHandler() {
 }
 
+void ExtensionPrinterHandler::GetDefaultPrinter(
+    const PrinterHandler::DefaultPrinterCallback& callback) {
+  NOTREACHED();
+}
+
 void ExtensionPrinterHandler::Reset() {
   // TODO(tbarzic): Keep track of pending request ids issued by |this| and
   // cancel them from here.

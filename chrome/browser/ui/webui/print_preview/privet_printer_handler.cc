@@ -53,6 +53,11 @@ void PrivetPrinterHandler::Reset() {
   weak_ptr_factory_.InvalidateWeakPtrs();
 }
 
+void PrivetPrinterHandler::GetDefaultPrinter(
+    const PrinterHandler::DefaultPrinterCallback& callback) {
+  NOTREACHED();
+}
+
 void PrivetPrinterHandler::StartGetPrinters(
     const PrinterHandler::GetPrintersCallback& callback) {
   using local_discovery::ServiceDiscoverySharedClient;
