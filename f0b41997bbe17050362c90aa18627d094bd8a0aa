@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49d147ff_9355bf4b",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-09-14T21:19:14Z",
+      "side": 1,
+      "message": "(We discussed using window properties as an implicit signaling mechanism in person.)",
+      "range": {
+        "startLine": 568,
+        "startChar": 22,
+        "endLine": 568,
+        "endChar": 55
+      },
+      "revId": "f0b41997bbe17050362c90aa18627d094bd8a0aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
