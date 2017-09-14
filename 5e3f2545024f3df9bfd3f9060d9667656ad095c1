@@ -966,6 +966,30 @@
     },
     {
       "key": {
+        "uuid": "23ca4ab4_11ab7ca7",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:56:48Z",
+      "side": 1,
+      "message": "The idea here is to test that OnInstanceClosed will remove  wake lock taken multiple times too.",
+      "parentUuid": "fef425d1_c9ba85e0",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 296,
+        "endChar": 40
+      },
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c979a400_83c88612",
         "filename": "components/arc/power/arc_power_bridge_unittest.cc",
         "patchSetId": 10
