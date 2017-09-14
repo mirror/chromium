@@ -57,7 +57,7 @@ class CORE_EXPORT InProcessWorkerMessagingProxy
                               const String& source_code,
                               const String& referrer_policy);
   void PostMessageToWorkerGlobalScope(RefPtr<SerializedScriptValue>,
-                                      MessagePortChannelArray);
+                                      Vector<MessagePortChannel>);
 
   // Implements ThreadedMessagingProxyBase.
   void WorkerThreadCreated() override;
@@ -67,7 +67,7 @@ class CORE_EXPORT InProcessWorkerMessagingProxy
   // These methods come from worker context thread via
   // InProcessWorkerObjectProxy and are called on the parent context thread.
   void PostMessageToWorkerObject(RefPtr<SerializedScriptValue>,
-                                 MessagePortChannelArray);
+                                 Vector<MessagePortChannel>);
   void DispatchErrorEvent(const String& error_message,
                           std::unique_ptr<SourceLocation>,
                           int exception_id);
