@@ -52,6 +52,24 @@
       "revId": "42ef0ffdc7ef3027a161bd801202e5d92d99fab9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "951fe8b2_1fc5e90d",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-14T16:27:28Z",
+      "side": 1,
+      "message": "Have our minimum support requirements changed?\n\nhttps://support.google.com/chrome/answer/95346?hl\u003den\u0026visit_id\u003d1-636410030537519305-2788000062\u0026rd\u003d1\n\nTo use Chrome on Windows, you\u0027ll need:\nWindows 7, Windows 8, Windows 8.1, Windows 10 or later\nAn Intel Pentium 4 processor or later that\u0027s SSE2 capable\n\nTo use Chrome on Mac, you\u0027ll need:\nOS X Mavericks 10.9 or later\n\nLinux\nTo use Chrome on Linux, you\u0027ll need:\n64-bit Ubuntu 14.04+, Debian 8+, openSUSE 13.3+, or Fedora Linux 24+\nAn Intel Pentium 4 processor or later that\u0027s SSE2 capable.\n\nRobert (as expected) is correct.",
+      "parentUuid": "b967406d_161056ed",
+      "revId": "42ef0ffdc7ef3027a161bd801202e5d92d99fab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
