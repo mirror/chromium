@@ -2,12 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "content/browser/tracing/power_tracing_agent.h"
 #include "base/bind.h"
 #include "base/lazy_instance.h"
 #include "base/memory/singleton.h"
+#include "base/task_scheduler/post_task.h"
+#include "base/task_scheduler/task_traits.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event_impl.h"
-#include "content/browser/tracing/power_tracing_agent.h"
 #include "tools/battor_agent/battor_finder.h"
 
 namespace content {
@@ -40,16 +42,12 @@ void PowerTracingAgent::StartAgentTracing(
     const StartAgentTracingCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  BrowserThread::PostTask(
-      BrowserThread::FILE, FROM_HERE,
-      base::BindOnce(&PowerTracingAgent::FindBattOrOnFileThread,
-                     base::Unretained(this), callback));
+  base::PostTaskWithTraits(FROM_HERE, {base::MayBlock()},
+                           base::BindOnce(&PowerTracingAgent::FindBattOr,
+                                          base::Unretained(this), callback));
 }
 
-void PowerTracingAgent::FindBattOrOnFileThread(
-    const StartAgentTracingCallback& callback) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
-
+void PowerTracingAgent::FindBattOr(const StartAgentTracingCallback& callback) {
   std::string path = battor::BattOrFinder::FindBattOr();
   if (path.empty()) {
     BrowserThread::PostTask(
