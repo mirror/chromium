@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee3b0f3b_926678f0",
+        "filename": "components/cronet/android/test/javaperftests/android_rndis_forwarder.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-14T17:26:15Z",
+      "side": 0,
+      "message": "This change was made because SetProp fails because this command breaks the adb connection temporarily and SetProp doesn\u0027t offer a \"expect_status\u003dNone\" option.",
+      "range": {
+        "startLine": 231,
+        "startChar": 51,
+        "endLine": 231,
+        "endChar": 0
+      },
+      "revId": "4632882b430e20eb0a3e4071d9ad068386be6a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
