@@ -231,11 +231,26 @@ ActivationState GetNextActivationState(ActivationState current_state) {
 }
 
 - (void)childCoordinatorDidStart:(BrowserCoordinator*)childCoordinator {
-  // Default implementation is a no-op.
+  DCHECK(!childCoordinator.viewController.parentViewController)
+      << "Child coordinator already has a parent.";
+  DCHECK(!childCoordinator.viewController.presentingViewController)
+      << "Child coordinator is already presented.";
+  [self.viewController presentViewController:childCoordinator.viewController
+                                    animated:YES
+                                  completion:nil];
 }
 
 - (void)childCoordinatorWillStop:(BrowserCoordinator*)childCoordinator {
-  // Default implementation is a no-op.
+  // No-op for contained children.
+  if (childCoordinator.viewController.parentViewController)
+    return;
+
+  DCHECK(childCoordinator.viewController.presentingViewController)
+      << "Child coordinator is stopping but isn't presented.";
+  DCHECK(self.viewController.presentedViewController ==
+         childCoordinator.viewController)
+      << "Child coordinator is stopping but isn't the child being presented.";
+  [self.viewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)viewControllerWasActivated {

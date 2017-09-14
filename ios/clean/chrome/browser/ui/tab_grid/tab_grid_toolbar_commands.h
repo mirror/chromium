@@ -8,12 +8,6 @@
 // Command protocol for commands related to the Toolbar displayed in the
 // TabGrid.
 @protocol TabGridToolbarCommands<NSObject>
-// Shows the tools menu.
-- (void)showToolsMenu;
-
-// Closes the tools menu.
-- (void)closeToolsMenu;
-
 // Toggles the incognito mode.
 - (void)toggleIncognito;
 @end

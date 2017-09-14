@@ -30,19 +30,14 @@
                                                     ToolbarConsumer,
                                                     ZoomTransitionDelegate>
 
-- (instancetype)initWithDispatcher:(id<NavigationCommands,
-                                       TabGridCommands,
-                                       TabHistoryPopupCommands,
-                                       TabStripCommands,
-                                       ToolsMenuCommands>)dispatcher;
-
 // The dispatcher for this view controller
 @property(nonatomic, weak) id<NavigationCommands,
                               TabGridCommands,
                               TabHistoryPopupCommands,
-                              TabStripCommands,
-                              ToolsMenuCommands>
+                              TabStripCommands>
     dispatcher;
+
+@property(nonatomic, weak) id<ToolsMenuCommands> menuDispatcher;
 
 @property(nonatomic, strong) UIViewController* locationBarViewController;
 

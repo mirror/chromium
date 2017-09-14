@@ -12,12 +12,12 @@
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
 #import "ios/chrome/browser/ui/history_popup/requirements/tab_history_constants.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
-#import "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/history_popup/history_popup_coordinator.h"
 #import "ios/clean/chrome/browser/ui/omnibox/location_bar_coordinator.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_mediator.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h"
 #import "ios/clean/chrome/browser/ui/tools/tools_coordinator.h"
+#import "ios/clean/chrome/browser/ui/tools/tools_menu_commands.h"
 #import "ios/web/public/navigation_manager.h"
 #import "ios/web/public/web_state/web_state.h"
 
@@ -36,6 +36,7 @@
 @property(nonatomic, strong) ToolbarViewController* viewController;
 // The mediator owned by this coordinator.
 @property(nonatomic, strong) ToolbarMediator* mediator;
+@property(nonatomic, strong) CommandDispatcher* router;
 @end
 
 @implementation ToolbarCoordinator
@@ -45,11 +46,13 @@
 @synthesize viewController = _viewController;
 @synthesize webState = _webState;
 @synthesize mediator = _mediator;
+@synthesize router = _router;
 @synthesize usesTabStrip = _usesTabStrip;
 
 - (instancetype)init {
   if ((self = [super init])) {
     _mediator = [[ToolbarMediator alloc] init];
+    _router = [[CommandDispatcher alloc] init];
   }
   return self;
 }
@@ -70,17 +73,18 @@
   if (self.started)
     return;
 
-  self.viewController = [[ToolbarViewController alloc]
-      initWithDispatcher:self.callableDispatcher];
+  self.viewController = [[ToolbarViewController alloc] init];
   self.viewController.usesTabStrip = self.usesTabStrip;
+  self.viewController.dispatcher = self.callableDispatcher;
+  self.viewController.menuDispatcher =
+      static_cast<id<ToolsMenuCommands>>(self.router);
 
-  [self.dispatcher startDispatchingToTarget:self
-                                forSelector:@selector(showToolsMenu)];
-  [self.dispatcher startDispatchingToTarget:self
-                                forSelector:@selector(closeToolsMenu)];
+  [self.router startDispatchingToTarget:self
+                            forProtocol:@protocol(ToolsMenuCommands)];
+
+  // Change this to be handled locally.
   [self.dispatcher startDispatchingToTarget:self
                                 forProtocol:@protocol(TabHistoryPopupCommands)];
-
   self.mediator.consumer = self.viewController;
   self.mediator.webStateList = &self.browser->web_state_list();
 
@@ -104,26 +108,33 @@
         removeObserver:self.mediator
            forSelector:@selector(broadcastTabStripVisible:)];
   }
+  [self.router stopDispatchingToTarget:self];
   [self.dispatcher stopDispatchingToTarget:self];
 }
 
 - (void)childCoordinatorDidStart:(BrowserCoordinator*)childCoordinator {
-  if ([childCoordinator isKindOfClass:[LocationBarCoordinator class]]) {
+  // The location bar is contained.
+  if (childCoordinator == self.locationBarCoordinator) {
     self.viewController.locationBarViewController =
         self.locationBarCoordinator.viewController;
-  } else if ([childCoordinator isKindOfClass:[ToolsCoordinator class]]) {
-    [self.viewController presentViewController:childCoordinator.viewController
-                                      animated:YES
-                                    completion:nil];
+    return;
   }
+
+  // The history pop-up handles (for now) its own presentation, so it doesn't
+  // need to do anything else.
+  if (childCoordinator == self.historyPopupCoordinator)
+    return;
+
+  // All other children are presented.
+  [super childCoordinatorDidStart:childCoordinator];
 }
 
 - (void)childCoordinatorWillStop:(BrowserCoordinator*)childCoordinator {
-  if ([childCoordinator isKindOfClass:[ToolsCoordinator class]]) {
-    [childCoordinator.viewController.presentingViewController
-        dismissViewControllerAnimated:YES
-                           completion:nil];
+  if (childCoordinator == self.locationBarCoordinator ||
+      childCoordinator == self.historyPopupCoordinator) {
+    return;
   }
+  [super childCoordinatorWillStop:childCoordinator];
 }
 
 #pragma mark - ToolsMenuCommands Implementation
@@ -131,6 +142,7 @@
 - (void)showToolsMenu {
   ToolsCoordinator* toolsCoordinator = [[ToolsCoordinator alloc] init];
   [self addChildCoordinator:toolsCoordinator];
+
   ToolsMenuConfiguration* menuConfiguration =
       [[ToolsMenuConfiguration alloc] initWithDisplayView:nil];
   menuConfiguration.inTabSwitcher = NO;
@@ -140,8 +152,8 @@
 
   toolsCoordinator.toolsMenuConfiguration = menuConfiguration;
   toolsCoordinator.webState = self.webState;
-  [toolsCoordinator start];
   self.toolsMenuCoordinator = toolsCoordinator;
+  [toolsCoordinator start];
 }
 
 - (void)closeToolsMenu {

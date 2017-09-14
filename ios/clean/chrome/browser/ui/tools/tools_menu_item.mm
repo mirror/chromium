@@ -12,4 +12,5 @@
 @synthesize title = _title;
 @synthesize action = _action;
 @synthesize enabled = _enabled;
+@synthesize local = _local;
 @end

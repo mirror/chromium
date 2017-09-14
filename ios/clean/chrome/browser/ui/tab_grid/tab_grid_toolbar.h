@@ -10,6 +10,7 @@
 #import "ios/clean/chrome/browser/ui/transitions/animators/zoom_transition_delegate.h"
 
 @protocol TabGridToolbarCommands;
+@protocol ToolsMenuCommands;
 
 // The toolbar in the tab grid, which has a done button, incognito button, and
 // an overflow menu button. The toolbar has an intrinsic height, and its buttons
@@ -18,7 +19,8 @@
 // background.
 @interface TabGridToolbar : UIView<ZoomTransitionDelegate>
 
-@property(nonatomic, weak) id<TabGridToolbarCommands> dispatcher;
+@property(nonatomic, weak) id<TabGridToolbarCommands, ToolsMenuCommands>
+    dispatcher;
 
 // The the incognito mode of the toolbar, adapting its design.
 - (void)setIncognito:(BOOL)incognito;

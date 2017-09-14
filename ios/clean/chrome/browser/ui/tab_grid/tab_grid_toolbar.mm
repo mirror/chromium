@@ -8,6 +8,7 @@
 #include "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/clean/chrome/browser/ui/tab_grid/tab_grid_toolbar_commands.h"
 #import "ios/clean/chrome/browser/ui/tab_grid/ui_button+cr_tab_grid.h"
+#import "ios/clean/chrome/browser/ui/tools/tools_menu_commands.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."

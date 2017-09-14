@@ -15,6 +15,7 @@ source_set("settings") {
   configs += [ "//build/config/compiler:enable_arc" ]
 
   deps = [
+    ":settings_commands",
     "//base:base",
     "//ios/chrome/browser/browser_state",
     "//ios/chrome/browser/ui/browser_list",
@@ -24,6 +25,14 @@ source_set("settings") {
     "//ios/clean/chrome/browser/ui/actions",
     "//ios/clean/chrome/browser/ui/commands",
   ]
+}
+
+source_set("settings_commands") {
+  sources = [
+    "settings_commands.h",
+  ]
+
+  configs += [ "//build/config/compiler:enable_arc" ]
 }
 
 source_set("unit_tests") {

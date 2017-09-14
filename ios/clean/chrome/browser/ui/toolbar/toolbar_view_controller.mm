@@ -11,10 +11,10 @@
 #import "ios/clean/chrome/browser/ui/commands/navigation_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/tab_grid_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/tab_strip_commands.h"
-#import "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_button+factory.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_component_options.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_constants.h"
+#import "ios/clean/chrome/browser/ui/tools/tools_menu_commands.h"
 #import "ios/third_party/material_components_ios/src/components/ProgressView/src/MaterialProgressView.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -33,11 +33,16 @@
 @property(nonatomic, strong) ToolbarButton* reloadButton;
 @property(nonatomic, strong) ToolbarButton* stopButton;
 @property(nonatomic, strong) MDCProgressView* progressBar;
+@property(nonatomic) int lastTabCount;
 @end
 
 @implementation ToolbarViewController
+// Public properties.
 @synthesize dispatcher = _dispatcher;
+@synthesize menuDispatcher = _menuDispatcher;
 @synthesize locationBarViewController = _locationBarViewController;
+@synthesize usesTabStrip = _usesTabStrip;
+// Private property.
 @synthesize stackView = _stackView;
 @synthesize locationBarContainer = _locationBarContainer;
 @synthesize backButton = _backButton;
@@ -49,30 +54,15 @@
 @synthesize reloadButton = _reloadButton;
 @synthesize stopButton = _stopButton;
 @synthesize progressBar = _progressBar;
-@synthesize usesTabStrip = _usesTabStrip;
-
-- (instancetype)init {
-  self = [super init];
-  if (self) {
-    [self setUpToolbarButtons];
-    [self setUpLocationBarContainer];
-    [self setUpProgressBar];
-  }
-  return self;
-}
-
-- (instancetype)initWithDispatcher:(id<NavigationCommands,
-                                       TabGridCommands,
-                                       TabHistoryPopupCommands,
-                                       TabStripCommands,
-                                       ToolsMenuCommands>)dispatcher {
-  _dispatcher = dispatcher;
-  return [self init];
-}
+@synthesize lastTabCount = _lastTabCount;
 
 #pragma mark - View lifecyle
 
 - (void)viewDidLoad {
+  [self setUpToolbarButtons];
+  [self setUpLocationBarContainer];
+  [self setUpProgressBar];
+
   self.view.backgroundColor = UIColorFromRGB(kToolbarBackgroundColor);
   [self addChildViewController:self.locationBarViewController
                      toSubview:self.locationBarContainer];
@@ -132,7 +122,7 @@
            (id<UIViewControllerTransitionCoordinator>)coordinator {
   // We need to dismiss the ToolsMenu every time the Toolbar frame changes
   // (e.g. Size changes, rotation changes, etc.)
-  [self.dispatcher closeToolsMenu];
+  [self.menuDispatcher closeToolsMenu];
 }
 
 #pragma mark - Components Setup
@@ -190,6 +180,7 @@
   [self.tabSwitchStripButton
       setTitleColor:UIColorFromRGB(kToolbarButtonTitleHighlightedColor)
            forState:UIControlStateHighlighted];
+  [self updateTabSwitchButtonWithLastTabCount];
 
   // Tab switcher Grid button.
   self.tabSwitchGridButton = [ToolbarButton tabSwitcherGridToolbarButton];
@@ -211,7 +202,7 @@
   [buttonConstraints
       addObject:[self.toolsMenuButton.widthAnchor
                     constraintEqualToConstant:kToolbarButtonWidth]];
-  [self.toolsMenuButton addTarget:self.dispatcher
+  [self.toolsMenuButton addTarget:self.menuDispatcher
                            action:@selector(showToolsMenu)
                  forControlEvents:UIControlEventTouchUpInside];
 
@@ -275,6 +266,40 @@
   progressBar.translatesAutoresizingMaskIntoConstraints = NO;
   progressBar.hidden = YES;
   self.progressBar = progressBar;
+}
+
+// Updates the tab switch button to show the preferred representation of the
+// last tab count (blank if zero or less, the number of tabs if in [1..99], or
+// a smiley if >=100).
+- (void)updateTabSwitchButtonWithLastTabCount {
+  // Update the text shown in the |self.tabSwitchStripButton|. Note that the
+  // button's title may be empty or contain an easter egg, but the accessibility
+  // value will always be equal to |tabCount|.
+  NSString* tabStripButtonValue =
+      [NSString stringWithFormat:@"%d", self.lastTabCount];
+  NSString* tabStripButtonTitle;
+  if (self.lastTabCount <= 0) {
+    tabStripButtonTitle = @"";
+  } else if (self.lastTabCount > kShowTabStripButtonMaxTabCount) {
+    // As an easter egg, show a smiley face instead of the count if the user has
+    // more than 99 tabs open.
+    tabStripButtonTitle = @":)";
+    [[self.tabSwitchStripButton titleLabel]
+        setFont:[UIFont boldSystemFontOfSize:kFontSizeFewerThanTenTabs]];
+  } else {
+    tabStripButtonTitle = tabStripButtonValue;
+    if (self.lastTabCount < 10) {
+      [[self.tabSwitchStripButton titleLabel]
+          setFont:[UIFont boldSystemFontOfSize:kFontSizeFewerThanTenTabs]];
+    } else {
+      [[self.tabSwitchStripButton titleLabel]
+          setFont:[UIFont boldSystemFontOfSize:kFontSizeTenTabsOrMore]];
+    }
+  }
+
+  [self.tabSwitchStripButton setTitle:tabStripButtonTitle
+                             forState:UIControlStateNormal];
+  [self.tabSwitchStripButton setAccessibilityValue:tabStripButtonValue];
 }
 
 #pragma mark - Button Actions
@@ -372,37 +397,12 @@
 }
 
 - (void)setTabCount:(int)tabCount {
-  // Return if tabSwitchStripButton wasn't initialized.
+  self.lastTabCount = tabCount;
+  // Return if tabSwitchStripButton hasn't been initialized yet.
   if (!self.tabSwitchStripButton)
     return;
 
-  // Update the text shown in the |self.tabSwitchStripButton|. Note that the
-  // button's title may be empty or contain an easter egg, but the accessibility
-  // value will always be equal to |tabCount|.
-  NSString* tabStripButtonValue = [NSString stringWithFormat:@"%d", tabCount];
-  NSString* tabStripButtonTitle;
-  if (tabCount <= 0) {
-    tabStripButtonTitle = @"";
-  } else if (tabCount > kShowTabStripButtonMaxTabCount) {
-    // As an easter egg, show a smiley face instead of the count if the user has
-    // more than 99 tabs open.
-    tabStripButtonTitle = @":)";
-    [[self.tabSwitchStripButton titleLabel]
-        setFont:[UIFont boldSystemFontOfSize:kFontSizeFewerThanTenTabs]];
-  } else {
-    tabStripButtonTitle = tabStripButtonValue;
-    if (tabCount < 10) {
-      [[self.tabSwitchStripButton titleLabel]
-          setFont:[UIFont boldSystemFontOfSize:kFontSizeFewerThanTenTabs]];
-    } else {
-      [[self.tabSwitchStripButton titleLabel]
-          setFont:[UIFont boldSystemFontOfSize:kFontSizeTenTabsOrMore]];
-    }
-  }
-
-  [self.tabSwitchStripButton setTitle:tabStripButtonTitle
-                             forState:UIControlStateNormal];
-  [self.tabSwitchStripButton setAccessibilityValue:tabStripButtonValue];
+  [self updateTabSwitchButtonWithLastTabCount];
 }
 
 #pragma mark - ZoomTransitionDelegate

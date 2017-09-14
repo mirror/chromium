@@ -11,6 +11,7 @@
 
 @protocol FindInPageVisibilityCommands;
 @protocol NavigationCommands;
+@protocol SettingsCommands;
 @protocol ToolsMenuCommands;
 
 // View controller that displays a vertical list of buttons to act as a menu.
@@ -18,10 +19,12 @@
 // outside the presentation area, is tapped.
 @interface MenuViewController : UIViewController<ToolsConsumer>
 
-// The dispatcher for this view controller.
-@property(nonatomic, weak)
-    id<FindInPageVisibilityCommands, NavigationCommands, ToolsMenuCommands>
-        dispatcher;
+// The global dispatcher for this view controller.
+@property(nonatomic, weak) id<FindInPageVisibilityCommands, NavigationCommands>
+    dispatcher;
+
+@property(nonatomic, weak) id<ToolsMenuCommands, SettingsCommands>
+    menuDispatcher;
 
 @end
 
