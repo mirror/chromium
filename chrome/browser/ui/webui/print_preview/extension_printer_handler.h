@@ -53,6 +53,9 @@ class ExtensionPrinterHandler : public PrinterHandler {
 
   // PrinterHandler implementation:
   void Reset() override;
+  // Required by PrinterHandler interface but should never be called.
+  void GetDefaultPrinter(
+      const PrinterHandler::DefaultPrinterCallback& callback) override;
   void StartGetPrinters(
       const PrinterHandler::GetPrintersCallback& callback) override;
   void StartGetCapability(

@@ -38,6 +38,9 @@ class PrivetPrinterHandler
 
   // PrinterHandler implementation:
   void Reset() override;
+  // Required by PrinterHandler interface but should never be called.
+  void GetDefaultPrinter(
+      const PrinterHandler::DefaultPrinterCallback& callback) override;
   void StartGetPrinters(
       const PrinterHandler::GetPrintersCallback& callback) override;
   void StartGetCapability(
@@ -51,6 +54,7 @@ class PrivetPrinterHandler
                   const gfx::Size& page_size,
                   const scoped_refptr<base::RefCountedBytes>& print_data,
                   const PrinterHandler::PrintCallback& callback) override;
+  // Required by PrinterHandler interface but should never be called.
   void StartGrantPrinterAccess(
       const std::string& printer_id,
       const PrinterHandler::GetPrinterInfoCallback& callback) override;
