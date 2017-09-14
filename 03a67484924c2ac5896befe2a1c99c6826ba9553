@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f2cfcd8_6b82bc18",
+        "filename": "components/payments/content/utility/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-09-14T18:42:26Z",
+      "side": 1,
+      "message": "Would you mind using another (more explicit) name for the dict, as it\u0027s not really a dictionary for JSON format, if I understand correctly?",
+      "range": {
+        "startLine": 44,
+        "startChar": 10,
+        "endLine": 44,
+        "endChar": 14
+      },
+      "revId": "03a67484924c2ac5896befe2a1c99c6826ba9553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
