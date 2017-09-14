@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "08aa2946_627c7265",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-14T14:49:29Z",
+      "side": 1,
+      "message": "\u003e I didn\u0027t actually see anywhere that defining this matters.  Is it here out of habit or something?  \n\nI was using __SSSE3__ in earlier patches, not using now, it can just go.\n\n\u003e I think you can get away with just\n\u003e \n\u003e   if (!is_win || is_clang) {\n\u003e     cflags \u003d [ \"-mssse3\" ]\n\u003e   }\n\nYeap, looks fine to me.  (Thanks for the code, btw).\n\n\u003e I think clang-cl.exe does still need -mssse3 right, even though cl.exe doesn\u0027t need (or have) any equivalent flag?\n\nYes, clang-cl.exe needs it.  cl.exe maybe doesn\u0027t need it, the bots will tell us I think, like do the win bots compile the adler_simd.c or some such. \n\n(normally robert.bradford@ would tell me, he is a master of these things, but is unavailable at this time).",
+      "parentUuid": "ff89245d_fbeed180",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "227fecb3_e4520c4d",
         "filename": "third_party/zlib/BUILD.gn",
         "patchSetId": 16
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-14T00:59:32Z",
       "side": 1,
       "message": "Putting my GN-encapsulation hat on, this define seems like the sort of thing that :zlib_adler32_simd wants to provide to :zlib via public_configs.",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcd9b7db_934722d7",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-14T14:49:29Z",
+      "side": 1,
+      "message": "Yeah, I think I kinda get what you\u0027re saying.  Let me see if I can make it work (don\u0027t recall if I\u0027ve ever done this before).",
+      "parentUuid": "227fecb3_e4520c4d",
       "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
