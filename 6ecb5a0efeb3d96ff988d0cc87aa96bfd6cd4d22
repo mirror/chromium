@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9044eaf_2900f707",
+        "filename": "base/memory/ref_counted_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-14T19:12:51Z",
+      "side": 1,
+      "message": "You could rewrite make_scoped_refptr(new T(...)) to MakeRefCounted(...) instead of WrapRefCounted(new T(...)) if you\u0027d like?",
+      "revId": "6ecb5a0efeb3d96ff988d0cc87aa96bfd6cd4d22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
