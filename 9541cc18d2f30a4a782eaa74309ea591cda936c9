@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "94f36a5a_5919a2f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "Its related to which instance should receive updates when an animation is running. This has since been removed.",
+      "parentUuid": "9965e372_6a282925",
+      "range": {
+        "startLine": 21,
+        "startChar": 31,
+        "endLine": 21,
+        "endChar": 39
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62713e97_4c1929e4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-07T18:29:31Z",
       "side": 1,
       "message": "This is a strong reference to the Context.  I think we don\u0027t want to 100% rely on a proper destroy() call to clean this up.  Is there a map that holds weak reference keys?  I think so?  Look at the thumbnail stuff or something.",
+      "range": {
+        "startLine": 25,
+        "startChar": 23,
+        "endLine": 25,
+        "endChar": 30
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebbcb1f9_932d197f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "This has been removed.",
+      "parentUuid": "62713e97_4c1929e4",
       "range": {
         "startLine": 25,
         "startChar": 23,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "365b1c2a_98d94b22",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "Stopped using context in favor of the animation handler. It will require a bit of plumbing to have access everywhere, but it is more reliable.",
+      "parentUuid": "502c89f9_65d847dd",
+      "range": {
+        "startLine": 44,
+        "startChar": 64,
+        "endLine": 44,
+        "endChar": 65
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3214d702_1c9c0e60",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-07T18:29:31Z",
       "side": 1,
       "message": "Should this ever be set more than once?",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 27
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0221684_ec92bb39",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "No, moved to constructor to facilitate new architecture.",
+      "parentUuid": "3214d702_1c9c0e60",
       "range": {
         "startLine": 56,
         "startChar": 8,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3a023f37_c7fe9844",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "Done in constructor.",
+      "parentUuid": "78d06070_9b12cd63",
+      "range": {
+        "startLine": 63,
+        "startChar": 71,
+        "endLine": 63,
+        "endChar": 72
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b39d59bd_e62cc2fd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
         "patchSetId": 6
@@ -128,6 +248,30 @@
       "writtenOn": "2017-09-07T18:29:31Z",
       "side": 1,
       "message": "What else sets this to true?",
+      "range": {
+        "startLine": 75,
+        "startChar": 12,
+        "endLine": 75,
+        "endChar": 47
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eaaec4a_46f8a06d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "This is to prevent multiple animators all requesting updates if they start at the same time. Updated doc and name.",
+      "parentUuid": "b39d59bd_e62cc2fd",
       "range": {
         "startLine": 75,
         "startChar": 12,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f8bf6000_dd14b2fa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a273bac_18d957b2",
+      "range": {
+        "startLine": 85,
+        "startChar": 12,
+        "endLine": 85,
+        "endChar": 34
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "839eb9db_dc7ce397",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
         "patchSetId": 6
@@ -174,6 +342,30 @@
       "writtenOn": "2017-09-07T18:29:31Z",
       "side": 1,
       "message": "Would it be more gc friendly to have a cached list you always use?  You can just copy the elements into it and clear it after.  Would avoid the allocation, although I\u0027m sure we do a ton of those each frame anyway.",
+      "range": {
+        "startLine": 87,
+        "startChar": 46,
+        "endLine": 87,
+        "endChar": 57
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e61188a_9ead01f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "Changed to use a cached list.",
+      "parentUuid": "839eb9db_dc7ce397",
       "range": {
         "startLine": 87,
         "startChar": 46,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "3bae86a2_23e4f113",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "Updated all instances to use manual iteration.",
+      "parentUuid": "986abb40_bb882819",
+      "range": {
+        "startLine": 91,
+        "startChar": 13,
+        "endLine": 91,
+        "endChar": 61
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9a7f5f4_00c160a7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
         "patchSetId": 6
@@ -220,6 +436,30 @@
       "writtenOn": "2017-09-07T18:29:31Z",
       "side": 1,
       "message": "if (!mAnimators.empty()) mUpdateHost.requestUpdate()?",
+      "range": {
+        "startLine": 99,
+        "startChar": 8,
+        "endLine": 99,
+        "endChar": 36
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f97fe803_f94b6272",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "We check this at the top of the method. In the event that all the animations have ended after the update, we still want to push a frame with the final values.",
+      "parentUuid": "f9a7f5f4_00c160a7",
       "range": {
         "startLine": 99,
         "startChar": 8,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "67a5d019_7219a621",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimationHandler.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1349b41_65e4da1c",
+      "range": {
+        "startLine": 115,
+        "startChar": 33,
+        "endLine": 115,
+        "endChar": 34
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2eb4914_5f9c81d5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
         "patchSetId": 6
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "b8fdd45d_3e5b3cfd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2eb4914_5f9c81d5",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 30
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35a87de5_9e66cda2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
         "patchSetId": 6
@@ -289,6 +577,30 @@
       "writtenOn": "2017-09-07T18:29:31Z",
       "side": 1,
       "message": "I think we already have some static interpolators?  If not put this in another class IMO.  InterpolatorFactory?",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 5
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84329765_f8cb4897",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "Switched to using the one in ChromeAnimation for now. I\u0027ll put them somewhere else when that class is being removed.",
+      "parentUuid": "35a87de5_9e66cda2",
       "range": {
         "startLine": 84,
         "startChar": 4,
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "36f252d7_9a638f5e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "Unfortunately this needs to be separate in order to work with other animators in the Android framework. For example, AnimatorSet depends on this api being consistent to sequence animations and it won\u0027t have a concept of something like \u0027CompositorAnimatorListener\u0027.",
+      "parentUuid": "5f1b408d_4fa04634",
+      "range": {
+        "startLine": 96,
+        "startChar": 21,
+        "endLine": 96,
+        "endChar": 43
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "257cc77c_f6658809",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
         "patchSetId": 6
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "4280a90e_f1946ae0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "257cc77c_f6658809",
+      "range": {
+        "startLine": 129,
+        "startChar": 8,
+        "endLine": 134,
+        "endChar": 9
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe0e55ab_74225551",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
         "patchSetId": 6
@@ -358,6 +718,30 @@
       "writtenOn": "2017-09-07T18:29:31Z",
       "side": 1,
       "message": "Can this be null?  If it\u0027s null you just have a LinearInterpolator right?",
+      "range": {
+        "startLine": 140,
+        "startChar": 12,
+        "endLine": 140,
+        "endChar": 29
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533def4b_3abe53de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "Correct, changed to assume the interpolator is never null. Added an assert to setInterpolator.",
+      "parentUuid": "fe0e55ab_74225551",
       "range": {
         "startLine": 140,
         "startChar": 12,
@@ -393,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "a6581d65_58e33ca3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "060c6701_43035dda",
+      "range": {
+        "startLine": 174,
+        "startChar": 37,
+        "endLine": 174,
+        "endChar": 53
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42e5acba_87182599",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
         "patchSetId": 6
@@ -404,6 +812,30 @@
       "writtenOn": "2017-09-07T23:25:09Z",
       "side": 1,
       "message": "Going back to the above question here, if we are OK with AnimatorListeners listening in on this, why not just extend it with the new call you are adding and have a single list of listeners?",
+      "range": {
+        "startLine": 206,
+        "startChar": 28,
+        "endLine": 206,
+        "endChar": 44
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e0716dc_0a681f23",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "Same as above: compatibility with the Android framework.",
+      "parentUuid": "42e5acba_87182599",
       "range": {
         "startLine": 206,
         "startChar": 28,
@@ -439,6 +871,30 @@
     },
     {
       "key": {
+        "uuid": "b64a6fe3_a65074a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "Changed to state machine.",
+      "parentUuid": "762a9bca_211c4a53",
+      "range": {
+        "startLine": 226,
+        "startChar": 8,
+        "endLine": 226,
+        "endChar": 18
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b9edfec_b2f3a96b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
         "patchSetId": 6
@@ -462,6 +918,30 @@
     },
     {
       "key": {
+        "uuid": "e1578f50_dbbedaa1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimator.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "Updated to state machine.",
+      "parentUuid": "4b9edfec_b2f3a96b",
+      "range": {
+        "startLine": 256,
+        "startChar": 8,
+        "endLine": 256,
+        "endChar": 62
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "43e0040d_6671cde6",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimatorTest.java",
         "patchSetId": 6
@@ -473,6 +953,30 @@
       "writtenOn": "2017-09-07T23:25:09Z",
       "side": 1,
       "message": "just to avoid going insane later, I would add a test for the multiwindow stuff here with the necessary annotations and check the keying logic (no need to check the actual animation running).",
+      "range": {
+        "startLine": 38,
+        "startChar": 32,
+        "endLine": 38,
+        "endChar": 33
+      },
+      "revId": "9541cc18d2f30a4a782eaa74309ea591cda936c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "977ae06b_3346660c",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/compositor/animation/CompositorAnimatorTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T21:41:10Z",
+      "side": 1,
+      "message": "No longer using context as a key. Each LayoutManager will create its own handler.",
+      "parentUuid": "43e0040d_6671cde6",
       "range": {
         "startLine": 38,
         "startChar": 32,
