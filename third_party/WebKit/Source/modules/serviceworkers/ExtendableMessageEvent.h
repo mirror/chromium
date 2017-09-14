@@ -27,12 +27,12 @@ class MODULES_EXPORT ExtendableMessageEvent final : public ExtendableEvent {
                                         const String& origin,
                                         MessagePortArray* ports,
                                         WaitUntilObserver*);
-  static ExtendableMessageEvent* Create(PassRefPtr<SerializedScriptValue> data,
+  static ExtendableMessageEvent* Create(RefPtr<SerializedScriptValue> data,
                                         const String& origin,
                                         MessagePortArray* ports,
                                         ServiceWorkerClient* source,
                                         WaitUntilObserver*);
-  static ExtendableMessageEvent* Create(PassRefPtr<SerializedScriptValue> data,
+  static ExtendableMessageEvent* Create(RefPtr<SerializedScriptValue> data,
                                         const String& origin,
                                         MessagePortArray* ports,
                                         ServiceWorker* source,
