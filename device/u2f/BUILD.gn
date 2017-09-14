@@ -11,6 +11,8 @@ source_set("u2f") {
     "u2f_apdu_command.h",
     "u2f_apdu_response.cc",
     "u2f_apdu_response.h",
+    "u2f_ble_frames.cc",
+    "u2f_ble_frames.h",
     "u2f_command_type.h",
     "u2f_device.cc",
     "u2f_device.h",
@@ -73,4 +75,15 @@ fuzzer_test("u2f_message_fuzzer") {
     "//net",
   ]
   libfuzzer_options = [ "max_len=2048" ]
+}
+
+source_set("unit_tests") {
+  testonly = true
+  sources = [
+    "u2f_ble_frames_unittest.cc",
+  ]
+  deps = [
+    ":u2f",
+    "//testing/gtest",
+  ]
 }
