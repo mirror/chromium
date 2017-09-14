@@ -789,11 +789,11 @@ TEST_F(ServiceWorkerVersionTest, StaleUpdate_DoNotDeferTimer) {
   version_->RunAfterStartWorker(
       ServiceWorkerMetrics::EventType::UNKNOWN,
       base::BindOnce(&base::DoNothing),
-      base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+      base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   version_->RunAfterStartWorker(
       ServiceWorkerMetrics::EventType::UNKNOWN,
       base::BindOnce(&base::DoNothing),
-      base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+      base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(stale_time, version_->stale_time_);
 
@@ -828,8 +828,8 @@ class MessageReceiverControlEvents : public MessageReceiver {
   void OnStopWorker(int embedded_worker_id) override {
     EXPECT_FALSE(stop_worker_callback_);
     stop_worker_callback_ =
-        base::Bind(&MessageReceiverControlEvents::SimulateWorkerStopped,
-                   base::Unretained(this), embedded_worker_id);
+        base::BindOnce(&MessageReceiverControlEvents::SimulateWorkerStopped,
+                       base::Unretained(this), embedded_worker_id);
   }
 
   bool has_extendable_message_event_callback() {
@@ -841,12 +841,14 @@ class MessageReceiverControlEvents : public MessageReceiver {
     return std::move(extendable_message_event_callback_);
   }
 
-  const base::Closure& stop_worker_callback() { return stop_worker_callback_; }
+  base::OnceClosure stop_worker_callback() {
+    return std::move(stop_worker_callback_);
+  }
 
  private:
   mojom::ServiceWorkerEventDispatcher::DispatchExtendableMessageEventCallback
       extendable_message_event_callback_;
-  base::Closure stop_worker_callback_;
+  base::OnceClosure stop_worker_callback_;
 };
 
 class ServiceWorkerRequestTimeoutTest : public ServiceWorkerVersionTest {
@@ -868,7 +870,7 @@ class ServiceWorkerRequestTimeoutTest : public ServiceWorkerVersionTest {
         ->TakeExtendableMessageEventCallback();
   }
 
-  const base::Closure& stop_worker_callback() {
+  base::OnceClosure stop_worker_callback() {
     return static_cast<MessageReceiverControlEvents*>(helper_.get())
         ->stop_worker_callback();
   }
@@ -882,8 +884,9 @@ TEST_F(ServiceWorkerRequestTimeoutTest, RequestTimeout) {
       SERVICE_WORKER_ERROR_NETWORK;  // dummy value
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
 
-  version_->StartWorker(ServiceWorkerMetrics::EventType::FETCH_MAIN_FRAME,
-                        base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+  version_->StartWorker(
+      ServiceWorkerMetrics::EventType::FETCH_MAIN_FRAME,
+      base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   base::RunLoop().RunUntilIdle();
 
   // Create a request.
@@ -912,8 +915,10 @@ TEST_F(ServiceWorkerRequestTimeoutTest, RequestTimeout) {
   version_->timeout_timer_.user_task().Run();
   base::RunLoop().RunUntilIdle();
 
+  base::OnceClosure callback = stop_worker_callback();
+
   // The renderer should have received a StopWorker request.
-  EXPECT_TRUE(stop_worker_callback());
+  EXPECT_TRUE(callback);
   // The request should have timed out.
   EXPECT_EQ(SERVICE_WORKER_ERROR_TIMEOUT, error_status);
   // Calling FinishRequest should be no-op, since the request timed out.
@@ -927,7 +932,7 @@ TEST_F(ServiceWorkerRequestTimeoutTest, RequestTimeout) {
   base::RunLoop().RunUntilIdle();
 
   // Simulate the renderer stopping the worker.
-  stop_worker_callback().Run();
+  std::move(callback).Run();
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(EmbeddedWorkerStatus::STOPPED, version_->running_status());
 }
@@ -936,8 +941,9 @@ TEST_F(ServiceWorkerVersionTest, RequestNowTimeout) {
   ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_NETWORK;  // dummy value
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
 
-  version_->StartWorker(ServiceWorkerMetrics::EventType::SYNC,
-                        base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+  version_->StartWorker(
+      ServiceWorkerMetrics::EventType::SYNC,
+      base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   base::RunLoop().RunUntilIdle();
 
   // Create a request that should expire Now().
@@ -963,8 +969,9 @@ TEST_F(ServiceWorkerVersionTest, RequestNowTimeoutKill) {
   ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_NETWORK;  // dummy value
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
 
-  version_->StartWorker(ServiceWorkerMetrics::EventType::SYNC,
-                        base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+  version_->StartWorker(
+      ServiceWorkerMetrics::EventType::SYNC,
+      base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   base::RunLoop().RunUntilIdle();
 
   // Create a request that should expire Now().
@@ -993,8 +1000,9 @@ TEST_F(ServiceWorkerVersionTest, RequestCustomizedTimeout) {
       SERVICE_WORKER_ERROR_MAX_VALUE;  // dummy value
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
 
-  version_->StartWorker(ServiceWorkerMetrics::EventType::SYNC,
-                        base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+  version_->StartWorker(
+      ServiceWorkerMetrics::EventType::SYNC,
+      base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   base::RunLoop().RunUntilIdle();
 
   base::SimpleTestTickClock* tick_clock = SetTickClockForTesting();
@@ -1055,8 +1063,9 @@ TEST_F(ServiceWorkerVersionTest, MixedRequestTimeouts) {
       SERVICE_WORKER_ERROR_NETWORK;  // dummy value
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
 
-  version_->StartWorker(ServiceWorkerMetrics::EventType::FETCH_MAIN_FRAME,
-                        base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+  version_->StartWorker(
+      ServiceWorkerMetrics::EventType::FETCH_MAIN_FRAME,
+      base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   base::RunLoop().RunUntilIdle();
 
   // Create a fetch request that should expire sometime later.

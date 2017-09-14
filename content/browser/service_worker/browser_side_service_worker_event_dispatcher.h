@@ -102,14 +102,14 @@ class BrowserSideServiceWorkerEventDispatcher
 
  private:
   class ResponseCallback;
-  using StatusCallback = base::Callback<void(ServiceWorkerStatusCode)>;
+  using StatusCallback = base::OnceCallback<void(ServiceWorkerStatusCode)>;
 
   void DispatchFetchEventInternal(
       int incoming_fetch_event_id,
       const ServiceWorkerFetchRequest& request,
       mojom::FetchEventPreloadHandlePtr preload_handle,
       mojom::ServiceWorkerFetchResponseCallbackPtr response_callback);
-  void DidFailToStartWorker(const StatusCallback& callback,
+  void DidFailToStartWorker(StatusCallback callback,
                             ServiceWorkerStatusCode status);
   void DidFailToDispatchFetch(int incoming_fetch_event_id,
                               std::unique_ptr<ResponseCallback> callback,
