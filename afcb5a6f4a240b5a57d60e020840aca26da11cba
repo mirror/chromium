@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f62f860_2a9b86e4",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-14T03:16:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "09397e56_cef934ee",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0598a565_3f800608",
         "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-14T01:53:02Z",
       "side": 1,
       "message": "I\u0027m not so familiar with BindingSet. Why don\u0027t we need RemoveBinding() somewhere to balance out the AddBinding?",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19ee2daf_47c2dc14",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-14T03:16:00Z",
+      "side": 1,
+      "message": "If one Mojo binding got broken, BindingSet internal impl will automatically erase it before calling the customer error handler we set, so usually we do not need to initiate an RemoveBinding() except sometimes we intend to remove some one binding which may be still alive.\nThe removement happens here: https://cs.chromium.org/chromium/src/mojo/public/cpp/bindings/binding_set.h?rcl\u003d89b8ccf3d875cb5aa1db1ebcd7492c1b40a94328\u0026l\u003d298",
+      "parentUuid": "0598a565_3f800608",
       "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0087193_c474d53e",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-14T03:16:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "518807b5_0c70e7c4",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "bdd77ffd_efdf9a44",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-14T03:16:00Z",
+      "side": 1,
+      "message": "Yeah Line135 is restoring the associated ptr info, looks somehow tricky.. If we can make sure ControllerState does not need to keep the refcount for ever, then we can Take the registration object here completely, and also no need to introduce the Clone() method. I\u0027ll look into the logic around that to try to get a conclusion.",
+      "parentUuid": "218f12ff_0c261b42",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc0e7b1c_1859b3bb",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
         "patchSetId": 1
@@ -102,6 +174,24 @@
       "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee3467c_173ee9c0",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-14T03:16:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cc0e7b1c_1859b3bb",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "b9c71156_74f8e502",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-14T03:16:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1f584f43_6b309e10",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bdef20f_caec0ddc",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
         "patchSetId": 1
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "5a2aea8b_a3b23bae",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-14T03:16:00Z",
+      "side": 1,
+      "message": "Ack. Yeah I think it makes big sense, thanks for explanations.",
+      "parentUuid": "5bdef20f_caec0ddc",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92c92a31_e669376a",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
         "patchSetId": 1
@@ -150,6 +276,24 @@
       "writtenOn": "2017-09-14T01:53:02Z",
       "side": 1,
       "message": "I dont\u0027 really understand what clone does. It\u0027s cloning the interface or the request?",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9078d5b_01676e8d",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-14T03:16:00Z",
+      "side": 1,
+      "message": "Clone() will let one associated interface ptr get out another associated interface ptr which connects to the same remote SWRegistrationHost impl, it will create another new associated mojo binding.\n\nThe key question is\n\u0027\nI\u0027m wondering if we should get one more refcount here. Do we need to keep ControllerState even after GetRegistration()?\n\u0027\nIf we can make clear that SWProviderContext ControllerState does not need to keep an refcount of the SWRegistration object for ever, then we do not need such a Clone() function.",
+      "parentUuid": "92c92a31_e669376a",
       "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
