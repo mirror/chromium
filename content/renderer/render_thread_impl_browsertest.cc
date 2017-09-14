@@ -201,7 +201,7 @@ class RenderThreadImplBrowserTest : public testing::Test {
                                   nullptr, io_task_runner);
 
     mock_process_.reset(new MockRenderProcess);
-    test_task_counter_ = make_scoped_refptr(new TestTaskCounter());
+    test_task_counter_ = base::WrapRefCounted(new TestTaskCounter());
 
     // RenderThreadImpl expects the browser to pass these flags.
     base::CommandLine* cmd = base::CommandLine::ForCurrentProcess();
@@ -229,7 +229,7 @@ class RenderThreadImplBrowserTest : public testing::Test {
     cmd->InitFromArgv(old_argv);
 
     run_loop_ = base::MakeUnique<base::RunLoop>();
-    test_msg_filter_ = make_scoped_refptr(
+    test_msg_filter_ = base::WrapRefCounted(
         new QuitOnTestMsgFilter(run_loop_->QuitWhenIdleClosure()));
     thread_->AddFilter(test_msg_filter_.get());
   }

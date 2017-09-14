@@ -50,7 +50,7 @@ class SharedMemoryReceivedDataFactoryTest : public ::testing::Test {
     sender_.reset(new StrictMock<MockSender>);
     request_id_ = 0xdeadbeaf;
     memory_.reset(new base::SharedMemory);
-    factory_ = make_scoped_refptr(new SharedMemoryReceivedDataFactory(
+    factory_ = base::WrapRefCounted(new SharedMemoryReceivedDataFactory(
         sender_.get(), request_id_, memory_));
     ASSERT_TRUE(memory_->CreateAndMapAnonymous(memory_size));
 
