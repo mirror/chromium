@@ -664,7 +664,6 @@ cc_test("cc_unittests") {
     "paint/paint_op_buffer_unittest.cc",
     "paint/solid_color_analyzer_unittest.cc",
     "quads/draw_polygon_unittest.cc",
-    "quads/draw_quad_unittest.cc",
     "quads/nine_patch_generator_unittest.cc",
     "quads/render_pass_unittest.cc",
     "raster/playback_image_provider_unittest.cc",
