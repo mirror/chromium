@@ -1052,4 +1052,13 @@ void LocalFrameClientImpl::DidBlockFramebust(const KURL& url) {
   web_frame_->Client()->DidBlockFramebust(url);
 }
 
+WebMimeHandlerViewManager* LocalFrameClientImpl::GetMimeHandlerViewManager()
+    const {
+  return web_frame_->GetMimeHandlerViewManager();
+}
+
+void LocalFrameClientImpl::ResetMimeHandlerViewManager() const {
+  web_frame_->ResetMimeHandlerViewManager();
+}
+
 }  // namespace blink

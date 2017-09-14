@@ -210,6 +210,8 @@ class ChromeContentRendererClient : public content::ContentRendererClient {
       const GURL& script_url) override;
   bool ShouldEnforceWebRTCRoutingPreferences() override;
   GURL OverrideFlashEmbedWithHTML(const GURL& url) override;
+  blink::WebMimeHandlerViewManager* CreateMimeHandlerViewManager(
+      content::RenderFrame* render_frame) const override;
   std::unique_ptr<base::TaskScheduler::InitParams> GetTaskSchedulerInitParams()
       override;
 

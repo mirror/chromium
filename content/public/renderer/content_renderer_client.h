@@ -43,6 +43,7 @@ class WebMIDIAccessor;
 class WebMIDIAccessorClient;
 class WebMediaStreamCenter;
 class WebMediaStreamCenterClient;
+class WebMimeHandlerViewManager;
 class WebPlugin;
 class WebPrescientNetworking;
 class WebRTCPeerConnectionHandler;
@@ -374,6 +375,11 @@ class CONTENT_EXPORT ContentRendererClient {
   // Overwrites the given URL to use an HTML5 embed if possible.
   // An empty URL is returned if the URL is not overriden.
   virtual GURL OverrideFlashEmbedWithHTML(const GURL& url);
+
+  // Creates and returns a new instance of WebMimeHandlerViewManager for
+  // |render_frame|.
+  virtual blink::WebMimeHandlerViewManager* CreateMimeHandlerViewManager(
+      RenderFrame* render_frame) const;
 
   // Provides parameters for initializing the global task scheduler. Default
   // params are used if this returns nullptr.

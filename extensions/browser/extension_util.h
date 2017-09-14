@@ -44,6 +44,9 @@ content::StoragePartition* GetStoragePartitionForExtensionId(
     const std::string& extension_id,
     content::BrowserContext* browser_context);
 
+// Returns true if |url| is for a PDF extension.
+bool IsPdfExtensionUrl(const GURL& url);
+
 }  // namespace util
 }  // namespace extensions
 

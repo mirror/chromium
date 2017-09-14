@@ -53,12 +53,17 @@
 #include "platform/network/mime/MIMETypeRegistry.h"
 #include "platform/plugins/PluginData.h"
 #include "public/platform/WebURLRequest.h"
+#include "public/web/WebMimeHandlerViewManager.h"
 
 namespace blink {
 
 using namespace HTMLNames;
 
 namespace {
+
+// TODO(ekaramad): Remove this ASAP since this is technically dependency on
+// chrome.
+const char kApplicationGoogleChromePdf[] = "application/x-google-chrome-pdf";
 
 // Used for histograms, do not change the order.
 enum PluginRequestObjectResult {
@@ -126,6 +131,8 @@ bool HTMLPlugInElement::RequestObjectInternal(
   if (ProtocolIsJavaScript(url_))
     return false;
 
+  TryUsingExternalHandler();
+
   KURL completed_url =
       url_.IsEmpty() ? KURL() : GetDocument().CompleteURL(url_);
   if (!AllowedToLoadObject(completed_url, service_type_))
@@ -138,7 +145,11 @@ bool HTMLPlugInElement::RequestObjectInternal(
     // loadOrRedirectSubframe will re-use it. Otherwise, it will create a
     // new frame and set it as the LayoutEmbeddedContent's EmbeddedContentView,
     // causing what was previously in the EmbeddedContentView to be torn down.
-    return LoadOrRedirectSubframe(completed_url, GetNameAttribute(), true);
+    bool result =
+        LoadOrRedirectSubframe(completed_url, GetNameAttribute(), true);
+    DCHECK(ContentFrame());
+    DCHECK_EQ(ContentFrame()->Owner(), this);
+    return result;
   }
 
   // If an object's content can't be handled and it has no fallback, let
@@ -351,6 +362,18 @@ v8::Local<v8::Object> HTMLPlugInElement::PluginWrapper() {
   // return the cached allocated Bindings::Instance. Not supporting this
   // edge-case is OK.
   v8::Isolate* isolate = V8PerIsolateData::MainThreadIsolate();
+
+  if (external_handler_id_ != WebMimeHandlerViewManager::kHandlerIdNone) {
+    v8::Local<v8::Object> object =
+        GetMimeHandlerViewManager()->V8ScriptableObject(external_handler_id_,
+                                                        isolate);
+
+    if (!object.IsEmpty()) {
+      plugin_wrapper_.Reset(isolate, object);
+      return plugin_wrapper_.Get(isolate);
+    }
+  }
+
   if (plugin_wrapper_.IsEmpty()) {
     PluginView* plugin;
 
@@ -500,6 +523,9 @@ HTMLPlugInElement::ObjectContentType HTMLPlugInElement::GetObjectContentType() {
     if (mime_type.IsEmpty())
       return ObjectContentType::kFrame;
   }
+
+  if (external_handler_id_ != WebMimeHandlerViewManager::kHandlerIdNone)
+    return ObjectContentType::kFrame;
 
   // If Chrome is started with the --disable-plugins switch, pluginData is 0.
   PluginData* plugin_data = GetDocument().GetFrame()->GetPluginData();
@@ -694,6 +720,41 @@ void HTMLPlugInElement::LazyReattachIfNeeded() {
       !IsImageType()) {
     LazyReattachIfAttached();
     SetPersistedPlugin(nullptr);
+  }
+}
+
+WebMimeHandlerViewManager* HTMLPlugInElement::GetMimeHandlerViewManager()
+    const {
+  return GetDocument().GetFrame()->Client()->GetMimeHandlerViewManager();
+}
+
+void HTMLPlugInElement::ResetExternalHandlerId() {
+  external_handler_id_ = WebMimeHandlerViewManager::kHandlerIdNone;
+  plugin_wrapper_.Reset();
+}
+
+void HTMLPlugInElement::TryUsingExternalHandler() {
+  if (service_type_ == kApplicationGoogleChromePdf)
+    return;
+
+  auto* manager = GetMimeHandlerViewManager();
+  if (!manager)
+    return;
+
+  if (external_handler_id_ != WebMimeHandlerViewManager::kHandlerIdNone) {
+    DCHECK(ContentFrame());
+    if (ContentFrame())
+      DisconnectContentFrame();
+    ResetExternalHandlerId();
+  }
+
+  // TODO(ekaramad): Figure out changes needed to support data URLs.
+  KURL complete_url = GetDocument().CompleteURL(url_);
+  external_handler_id_ =
+      manager->CreateHandler(complete_url, MimeTypeFromURL(complete_url));
+  if (external_handler_id_ != WebMimeHandlerViewManager::kHandlerIdNone) {
+    service_type_ = "application/pdf";
+    url_ = manager->GetUrl(external_handler_id_).GetString();
   }
 }
 
