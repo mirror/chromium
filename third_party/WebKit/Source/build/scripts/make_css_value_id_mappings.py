@@ -7,6 +7,7 @@ import json5_generator
 import template_expander
 import make_style_builder
 import keyword_utils
+import css_properties_utils
 from name_utilities import enum_for_css_keyword, enum_value_name
 
 
@@ -110,9 +111,12 @@ class CSSValueIDMappingsWriter(make_style_builder.StyleBuilderWriter):
         # the generated enum will have the same order and continuity as
         # CSSProperties.json5 and we can get the longest continuous segment.
         # Thereby reduce the switch case statement to the minimum.
-        css_properties = keyword_utils.sort_keyword_properties_by_canonical_order(css_properties,
-                                                                                  json5_file_path[1],
-                                                                                  self.json5_file.parameters)
+        self._fields = css_properties_utils.get_fields_from_css_properties(css_properties,
+                                                                           json5_file_path[2],
+                                                                           self.json5_file.parameters)
+        keyword_utils.sort_keyword_properties_by_canonical_order(self._fields.values(),
+                                                                 json5_file_path[1],
+                                                                 self.json5_file.parameters)
 
 
     @template_expander.use_jinja('templates/CSSValueIDMappingsGenerated.h.tmpl')
@@ -125,7 +129,7 @@ class CSSValueIDMappingsWriter(make_style_builder.StyleBuilderWriter):
         ).name_dictionaries
         name_to_position_dictionary = dict(zip([x['name'] for x in css_values_dictionary], range(len(css_values_dictionary))))
 
-        for property_ in self._properties.values():
+        for property_ in self._fields.values():
             include_paths.update(property_['include_paths'])
             if property_['field_template'] == 'multi_keyword':
                 mappings[property_['type_name']] = {
