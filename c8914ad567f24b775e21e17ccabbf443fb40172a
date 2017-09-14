@@ -155,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "82dd6c82_2997177a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-14T17:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0de28e4_94297150",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 12
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a76d4c9_7663e00c",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 25
@@ -214,6 +238,30 @@
       "side": 1,
       "message": "So the whole point of putting this stuff in a Value is so you can store it in prefs, I guess. Who will read those prefs?\n\nMy concern is you\u0027re baking things like \"day_of_week\" in two places - here, and in another place where you\u0027re reading out the values from prefs, which is weird (effectively, you are serializing here, and deserializing elsewhere). But maybe that\u0027s OK/cleanest - who is reading the prefs that you set?",
       "parentUuid": "0127025e_f508faa2",
+      "range": {
+        "startLine": 44,
+        "startChar": 41,
+        "endLine": 44,
+        "endChar": 48
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689cb9af_664d69d0",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-14T17:00:52Z",
+      "side": 1,
+      "message": "As I know \"OffHours\" information in pref needs for UI things.\nAnd maybe someone wants to get \"OffHours\" information from the cros settings in the future.\n\nIs there the same situation:\nhttps://cs.chromium.org/chromium/src/chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc?type\u003dcs\u0026q\u003dpolicy_decoder\u0026l\u003d345\n\nand here:\nhttps://cs.chromium.org/chromium/src/chrome/browser/chromeos/settings/device_settings_provider.cc?type\u003dcs\u0026q\u003ddevice_settings_provider\u0026l\u003d5\n\nThere is only serialization, deserialization is somewhere else.",
+      "parentUuid": "55f2063c_d3561cb9",
       "range": {
         "startLine": 44,
         "startChar": 41,
@@ -908,6 +956,30 @@
     },
     {
       "key": {
+        "uuid": "85bf917c_59b6cf26",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-14T17:00:52Z",
+      "side": 1,
+      "message": "Agree",
+      "parentUuid": "6a2ca090_ba74c45f",
+      "range": {
+        "startLine": 289,
+        "startChar": 28,
+        "endLine": 289,
+        "endChar": 34
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a20e96b_4be7aa6c",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 25
@@ -979,6 +1051,30 @@
     },
     {
       "key": {
+        "uuid": "a5c12a43_8c7dc0e0",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-14T17:00:52Z",
+      "side": 1,
+      "message": "I\u0027m not sure how it works in this case :(\nAnyway, I think it\u0027s easier to use timer + observer which notifies us when device wakes up.\n\nBut I keep in mind this problem and add TODO about it.",
+      "parentUuid": "eb1494c1_4a940e66",
+      "range": {
+        "startLine": 294,
+        "startChar": 2,
+        "endLine": 294,
+        "endChar": 8
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "605facbc_e5789a74",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 25
@@ -1038,6 +1134,30 @@
       "side": 1,
       "message": "No, it\u0027s triggered when networks change. Even if the device sleeps and wakes up, it seems like we should update our timers, but not necessarily notify observers because we don\u0027t know if OffHours mode has changed or not?",
       "parentUuid": "85259eac_518b3350",
+      "range": {
+        "startLine": 310,
+        "startChar": 31,
+        "endLine": 310,
+        "endChar": 47
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6503786_5957eb62",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-14T17:00:52Z",
+      "side": 1,
+      "message": "In current implementation we don\u0027t keep OffHours proto in our class and we don\u0027t know about other \"Offhours\" intervals. We need to ask DeviceSettingsService to give us proto to update \"OffHours\" mode.\n\nOne more point is if OffHours settings is changed on the server during device sleeps then it will be better to download it again when device wakes up to be sure that there are actual.",
+      "parentUuid": "16932c01_45401691",
       "range": {
         "startLine": 310,
         "startChar": 31,
@@ -1356,6 +1476,30 @@
     },
     {
       "key": {
+        "uuid": "eeefc94c_5ef5c44c",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-14T17:00:52Z",
+      "side": 1,
+      "message": "Agree.\nCreate a function\n\n  bool IsCurrentUserAllowedBeyondOffHours()",
+      "parentUuid": "9a5be512_3907c1e8",
+      "range": {
+        "startLine": 355,
+        "startChar": 12,
+        "endLine": 355,
+        "endChar": 27
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fed4266_d137ca17",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
         "patchSetId": 25
@@ -1424,6 +1568,30 @@
       "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4c7bf3_a0b6c7ea",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-14T17:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4c3e210_21a49a57",
+      "range": {
+        "startLine": 34,
+        "startChar": 30,
+        "endLine": 34,
+        "endChar": 35
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1545,6 +1713,30 @@
     },
     {
       "key": {
+        "uuid": "8f9fcdc7_7b0a2f1e",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-14T17:00:52Z",
+      "side": 1,
+      "message": "Understand, ok!",
+      "parentUuid": "483d104e_00c619a6",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb900441_04aed3b6",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
         "patchSetId": 25
@@ -1660,6 +1852,30 @@
       "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e085fffe_644a9f2e",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-14T17:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8810de5f_10aa51e4",
+      "range": {
+        "startLine": 52,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 42
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1848,6 +2064,30 @@
       "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c542870d_be89a62a",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-09-14T17:00:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "105ec05d_39591d3a",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 22
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
