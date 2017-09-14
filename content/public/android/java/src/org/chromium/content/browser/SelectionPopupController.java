@@ -953,8 +953,6 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
         if (top == bottom) ++bottom;
         switch (eventType) {
             case SelectionEventType.SELECTION_HANDLES_SHOWN:
-                break;
-
             case SelectionEventType.SELECTION_HANDLES_MOVED:
                 mSelectionRect.set(left, top, right, bottom);
                 if (mPendingShowActionMode) {
@@ -1177,7 +1175,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
             // Update the selection range if needed.
             if (!(result.startAdjust == 0 && result.endAdjust == 0)) {
-                // This call causes SELECTION_HANDLES_MOVED event.
+                // This call causes SELECTION_HANDLES_SHOWN or SELECTION_HANDLES_MOVED event.
                 mWebContents.adjustSelectionByCharacterOffset(result.startAdjust, result.endAdjust);
 
                 // Remain pending until SELECTION_HANDLES_MOVED arrives.
