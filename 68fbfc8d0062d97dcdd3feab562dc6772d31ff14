@@ -55,6 +55,23 @@
     },
     {
       "key": {
+        "uuid": "19e71aa0_e353b579",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-09-14T22:34:13Z",
+      "side": 1,
+      "message": "nit: should it be kWakeLockReason ? https://engdoc.corp.google.com/eng/doc/devguide/cpp/styleguide.shtml?cl\u003dhead#Constant_Names",
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "136b1080_084259fb",
         "filename": "components/arc/power/arc_power_bridge.cc",
         "patchSetId": 12
@@ -84,6 +101,75 @@
       "side": 1,
       "message": "I am not sure what would be a right value to KInvalidId. Right now Add*WakeLock will only return positive numbers. But if for some reason Add*WakeLock returns negative numbers tomorrow, won\u0027t this fail runtime ?",
       "parentUuid": "136b1080_084259fb",
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fb01709_0aa5401a",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-09-14T22:34:13Z",
+      "side": 1,
+      "message": "This is an internal function and the argument sanitation is done by the first public function i.e OnAcquireWakelock. Adding DCHECKs here is not needed IMO.",
+      "parentUuid": "8f15a4d2_4a915169",
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd4509d_238340c6",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-09-14T22:34:13Z",
+      "side": 1,
+      "message": "How about we use emplace instead ? https://g3doc.corp.google.com/devtools/library_club/g3doc/totw/65.md?cl\u003dhead",
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2c414e_cc7aee29",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-09-14T22:34:13Z",
+      "side": 1,
+      "message": "This snippet is seen a lot and probably will be used a lot if we need changes. How about a function WakeLockInfo* FindArcWakeLock(int type), Returns null if it doesn\u0027t exist else the pointer to the value in the map.",
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e1c6d9_93326bec",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-09-14T22:34:13Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think a newline addition is needed here.",
       "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +208,23 @@
       "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60454f11_fe5e27ea",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1137924
+      },
+      "writtenOn": "2017-09-14T22:34:13Z",
+      "side": 1,
+      "message": "I am a big fan of storing unique_ptrs in maps. However, since your struct is small and since we will have only one of each type this should probably fine. @Dan can advise if the norm is to always use unique_ptrs for values in maps.",
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
