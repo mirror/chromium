@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b00584ae_ea98f090",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29522,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-09-14T12:36:17Z",
+      "side": 1,
+      "message": "To confirm how this all works: if we preconnect, the connection time won\u0027t appear in the timing for the load of a particular resource. Have you double-checked that locally, so that we don\u0027t add an irrelevant histogram?\n\nAssuming that\u0027s true, in addition to comparing this histogram in the control vs treatment, it might be a good idea to compare this to some sort of total resource download time so we have an idea of its significance. Do you know if there\u0027s an appropriate histogram? If so, add it to this comment for easier future reference.",
+      "range": {
+        "startLine": 29522,
+        "startChar": 27,
+        "endLine": 29522,
+        "endChar": 36
+      },
+      "revId": "d9d26fc4df328b39916e433b04a231cdb53bc0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
