@@ -39,6 +39,30 @@
       "revId": "dd8e0348000a17680019b073201ea362f78d639b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c739619_bf3a4a93",
+        "filename": "ui/webui/resources/js/test_timer_proxy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-14T17:38:26Z",
+      "side": 1,
+      "message": "Do you need to extend the real TimerProxy? I don\u0027t see any calls to super() here, so I don\u0027t think is necessary.\n\nEither way, I assume you were getting an error because the real TimerProxy was not loaded before this \"class TestTimerProxy extends TimerProxy\" executed, but not sure without seeing the error.",
+      "parentUuid": "ce00391f_954e2420",
+      "range": {
+        "startLine": 5,
+        "startChar": 20,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "dd8e0348000a17680019b073201ea362f78d639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

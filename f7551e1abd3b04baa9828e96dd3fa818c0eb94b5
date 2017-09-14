@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7912fc8e_6efb11ed",
+        "filename": "ui/webui/resources/js/test_timer_proxy.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-14T17:38:26Z",
+      "side": 1,
+      "message": "This file is only used in tests. Can we not put it in ui/webui/resources/js? Instead, how about chrome/test/data/webui?\n\nAlso FWIW, there is a similar class at https://cs.chromium.org/chromium/src/chrome/test/data/webui/mock_timer.js. It seems that we now have two slightly different ways to do the same thing.",
+      "revId": "f7551e1abd3b04baa9828e96dd3fa818c0eb94b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2c49a0b_a57f4540",
+        "filename": "ui/webui/resources/js/test_timer_proxy.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-14T17:38:26Z",
+      "side": 1,
+      "message": "@private {number}\n\nPerhaps rename timeoutIds_ to nextTimeoutId_?",
+      "revId": "f7551e1abd3b04baa9828e96dd3fa818c0eb94b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "005083ad_cad05404",
+        "filename": "ui/webui/resources/js/test_timer_proxy.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-14T17:38:26Z",
+      "side": 1,
+      "message": "This line is not doing what you think it does. It should be as follows\nthis.activeTimeouts_.set(this.this.timeoutIds_, fn);\n\nTry the following for example\nvar a \u003d new Map();\na[\u0027foo\u0027] \u003d \u0027bar\u0027;\nconsole.log(a.size); // Prints 0\nconsole.log(a.get(\u0027foo\u0027)); // Prints undefined.\n\nWhen using a Map instance, always use get() and set() to retrieve and populate (see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map).",
+      "revId": "f7551e1abd3b04baa9828e96dd3fa818c0eb94b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa259bc5_5c254270",
+        "filename": "ui/webui/resources/js/timer_proxy.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-14T17:38:26Z",
+      "side": 1,
+      "message": "|fn| can be a string? I don\u0027t think window.setTimeout() accepts a string as a 1st param, does it?",
+      "revId": "f7551e1abd3b04baa9828e96dd3fa818c0eb94b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
