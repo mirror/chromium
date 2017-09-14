@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e4ad8c0_640320dc",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-14T06:06:59Z",
+      "side": 1,
+      "message": "Nit: not a -\u003e not likely to be a\n\n(If we 100% knew it was not a URL, this would be QUERY.)",
+      "revId": "6442308f327d9b1c008e624eebe5a63d88a9d105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
