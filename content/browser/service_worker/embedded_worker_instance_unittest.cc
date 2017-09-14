@@ -37,10 +37,10 @@ namespace content {
 namespace {
 
 void SaveStatusAndCall(ServiceWorkerStatusCode* out,
-                       const base::Closure& callback,
+                       base::OnceClosure callback,
                        ServiceWorkerStatusCode status) {
   *out = status;
-  callback.Run();
+  std::move(callback).Run();
 }
 
 }  // namespace
@@ -147,7 +147,7 @@ class EmbeddedWorkerInstanceTest : public testing::Test,
     worker->Start(
         std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
         GetInstalledScriptsInfoPtr(),
-        base::Bind(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
+        base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     run_loop.Run();
     return status;
   }
@@ -302,7 +302,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StartAndStop) {
   worker->Start(
       std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
       GetInstalledScriptsInfoPtr(),
-      base::Bind(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
+      base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
   EXPECT_EQ(EmbeddedWorkerStatus::STARTING, worker->status());
   run_loop.Run();
   EXPECT_EQ(SERVICE_WORKER_OK, status);
@@ -360,7 +360,7 @@ TEST_F(EmbeddedWorkerInstanceTest, ForceNewProcess) {
     worker->Start(
         std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
         GetInstalledScriptsInfoPtr(),
-        base::Bind(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
+        base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     run_loop.Run();
     EXPECT_EQ(SERVICE_WORKER_OK, status);
     EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, worker->status());
@@ -386,7 +386,7 @@ TEST_F(EmbeddedWorkerInstanceTest, ForceNewProcess) {
     worker->Start(
         std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
         GetInstalledScriptsInfoPtr(),
-        base::Bind(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
+        base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     EXPECT_EQ(EmbeddedWorkerStatus::STARTING, worker->status());
     run_loop.Run();
     EXPECT_EQ(SERVICE_WORKER_OK, status);
@@ -468,7 +468,7 @@ TEST_F(EmbeddedWorkerInstanceTest, RemoveWorkerInSharedProcess) {
     worker1->Start(
         std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
         GetInstalledScriptsInfoPtr(),
-        base::Bind(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
+        base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     run_loop.Run();
     EXPECT_EQ(SERVICE_WORKER_OK, status);
   }
@@ -482,7 +482,7 @@ TEST_F(EmbeddedWorkerInstanceTest, RemoveWorkerInSharedProcess) {
     worker2->Start(
         std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
         GetInstalledScriptsInfoPtr(),
-        base::Bind(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
+        base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
     run_loop.Run();
     EXPECT_EQ(SERVICE_WORKER_OK, status);
   }
@@ -518,10 +518,10 @@ TEST_F(EmbeddedWorkerInstanceTest, DetachDuringProcessAllocation) {
   ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
   std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, scope, url);
-  worker->Start(
-      std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
-      GetInstalledScriptsInfoPtr(),
-      base::Bind(&SaveStatusAndCall, &status, base::Bind(&base::DoNothing)));
+  worker->Start(std::move(params), CreateProviderInfoGetter(),
+                CreateEventDispatcher(), GetInstalledScriptsInfoPtr(),
+                base::BindOnce(&SaveStatusAndCall, &status,
+                               base::BindOnce(&base::DoNothing)));
   worker->Detach();
   base::RunLoop().RunUntilIdle();
 
@@ -552,10 +552,10 @@ TEST_F(EmbeddedWorkerInstanceTest, DetachAfterSendingStartWorkerMessage) {
   ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
   std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, scope, url);
-  worker->Start(
-      std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
-      GetInstalledScriptsInfoPtr(),
-      base::Bind(&SaveStatusAndCall, &status, base::Bind(&base::DoNothing)));
+  worker->Start(std::move(params), CreateProviderInfoGetter(),
+                CreateEventDispatcher(), GetInstalledScriptsInfoPtr(),
+                base::BindOnce(&SaveStatusAndCall, &status,
+                               base::BindOnce(&base::DoNothing)));
   base::RunLoop().RunUntilIdle();
 
   ASSERT_EQ(2u, events_.size());
@@ -593,10 +593,10 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringProcessAllocation) {
 
   std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, scope, url);
-  worker->Start(
-      std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
-      GetInstalledScriptsInfoPtr(),
-      base::Bind(&SaveStatusAndCall, &status, base::Bind(&base::DoNothing)));
+  worker->Start(std::move(params), CreateProviderInfoGetter(),
+                CreateEventDispatcher(), GetInstalledScriptsInfoPtr(),
+                base::BindOnce(&SaveStatusAndCall, &status,
+                               base::BindOnce(&base::DoNothing)));
   worker->Stop();
   base::RunLoop().RunUntilIdle();
 
@@ -620,7 +620,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringProcessAllocation) {
   worker->Start(
       std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
       GetInstalledScriptsInfoPtr(),
-      base::Bind(&SaveStatusAndCall, &status, run_loop->QuitClosure()));
+      base::BindOnce(&SaveStatusAndCall, &status, run_loop->QuitClosure()));
   run_loop->Run();
 
   EXPECT_EQ(SERVICE_WORKER_OK, status);
@@ -670,10 +670,10 @@ TEST_F(EmbeddedWorkerInstanceTest, StopDuringPausedAfterDownload) {
   std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, scope, url);
   params->pause_after_download = true;
-  worker->Start(
-      std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
-      GetInstalledScriptsInfoPtr(),
-      base::Bind(&SaveStatusAndCall, &status, base::Bind(&base::DoNothing)));
+  worker->Start(std::move(params), CreateProviderInfoGetter(),
+                CreateEventDispatcher(), GetInstalledScriptsInfoPtr(),
+                base::BindOnce(&SaveStatusAndCall, &status,
+                               base::BindOnce(&base::DoNothing)));
   base::RunLoop().RunUntilIdle();
 
   // Make the worker stopping and attempt to send a resume after download
@@ -701,10 +701,10 @@ TEST_F(EmbeddedWorkerInstanceTest, StopAfterSendingStartWorkerMessage) {
   ServiceWorkerStatusCode status = SERVICE_WORKER_ERROR_MAX_VALUE;
   std::unique_ptr<EmbeddedWorkerStartParams> params =
       CreateStartParams(version_id, scope, url);
-  worker->Start(
-      std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
-      GetInstalledScriptsInfoPtr(),
-      base::Bind(&SaveStatusAndCall, &status, base::Bind(&base::DoNothing)));
+  worker->Start(std::move(params), CreateProviderInfoGetter(),
+                CreateEventDispatcher(), GetInstalledScriptsInfoPtr(),
+                base::BindOnce(&SaveStatusAndCall, &status,
+                               base::BindOnce(&base::DoNothing)));
   base::RunLoop().RunUntilIdle();
 
   ASSERT_EQ(2u, events_.size());
@@ -738,7 +738,7 @@ TEST_F(EmbeddedWorkerInstanceTest, StopAfterSendingStartWorkerMessage) {
   worker->Start(
       std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
       GetInstalledScriptsInfoPtr(),
-      base::Bind(&SaveStatusAndCall, &status, run_loop->QuitClosure()));
+      base::BindOnce(&SaveStatusAndCall, &status, run_loop->QuitClosure()));
   run_loop->Run();
 
   // The worker should be started.
@@ -770,7 +770,7 @@ TEST_F(EmbeddedWorkerInstanceTest, Detach) {
   worker->Start(
       std::move(params), CreateProviderInfoGetter(), CreateEventDispatcher(),
       GetInstalledScriptsInfoPtr(),
-      base::Bind(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
+      base::BindOnce(&SaveStatusAndCall, &status, run_loop.QuitClosure()));
   run_loop.Run();
 
   // Detach.
@@ -805,7 +805,7 @@ TEST_F(EmbeddedWorkerInstanceTest, FailToSendStartIPC) {
       CreateStartParams(version_id, pattern, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
                 CreateEventDispatcher(), GetInstalledScriptsInfoPtr(),
-                base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+                base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   base::RunLoop().RunUntilIdle();
 
   // Worker should handle the failure of binding on the remote side as detach.
@@ -858,7 +858,7 @@ TEST_F(EmbeddedWorkerInstanceTest, RemoveRemoteInterface) {
       CreateStartParams(version_id, pattern, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
                 CreateEventDispatcher(), GetInstalledScriptsInfoPtr(),
-                base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+                base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   base::RunLoop().RunUntilIdle();
 
   // Worker should handle the sudden shutdown as detach.
@@ -915,7 +915,7 @@ TEST_F(EmbeddedWorkerInstanceTest, AddMessageToConsole) {
       CreateStartParams(version_id, pattern, url);
   worker->Start(std::move(params), CreateProviderInfoGetter(),
                 CreateEventDispatcher(), GetInstalledScriptsInfoPtr(),
-                base::Bind(&ServiceWorkerUtils::NoOpStatusCallback));
+                base::BindOnce(&ServiceWorkerUtils::NoOpStatusCallback));
   worker->AddMessageToConsole(test_message.first, test_message.second);
   base::RunLoop().RunUntilIdle();
 
