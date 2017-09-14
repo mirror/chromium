@@ -245,6 +245,24 @@
       "revId": "f3d4d98c1c158227e4d1960a86283e13dbda974c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "061ac301_a4e1769c",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1547,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-14T23:31:15Z",
+      "side": 1,
+      "message": "Sorry, I hadn\u0027t seen you reply when I wrote mine :-)\n\nWe can still have !is_clang in the /GL path.\nI didn\u0027t mean imply as it turns on implicitly, but that use_thin_lto only makes sense if is_clang is true (we should assert it).",
+      "parentUuid": "175a332d_4d0026b2",
+      "revId": "f3d4d98c1c158227e4d1960a86283e13dbda974c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
