@@ -45,7 +45,7 @@ class Navigator;
 class MODULES_EXPORT NavigatorGamepad final
     : public GarbageCollectedFinalized<NavigatorGamepad>,
       public Supplement<Navigator>,
-      public ContextLifecycleObserver,
+      public DOMWindowClient,
       public PlatformEventController,
       public LocalDOMWindow::EventListenerObserver {
   USING_GARBAGE_COLLECTED_MIXIN(NavigatorGamepad);
@@ -70,7 +70,6 @@ class MODULES_EXPORT NavigatorGamepad final
   bool StartUpdatingIfAttached();
 
   // ContextLifecycleObserver and PageVisibilityObserver
-  void ContextDestroyed(ExecutionContext*) override;
   void PageVisibilityChanged() override;
 
   // PlatformEventController
