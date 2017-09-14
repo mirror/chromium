@@ -256,6 +256,30 @@
       "revId": "4b3ac56fd331b010169f53117b8e8e7de9d874e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c3826e_84d00a9e",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-14T06:01:14Z",
+      "side": 1,
+      "message": "I think that check_passed could be renamed to is_pwa. It looks like there are effectively three possible values for is_pwa: {true, false, n/a}, but the current implementation splits the \"n/a\" case off into a separate method called \"Flush\" (even in the followup cl, I think that has_paused parameter for Flush is effectively \"!is_pwa\").  This is complicated by the introduction of the started_ variable, however, and combining these two methods now would probably make things worse, so I\u0027ll LGTM this, but might play around with it a bit to see if I can simplify it.",
+      "parentUuid": "d4dde5ce_737ce939",
+      "range": {
+        "startLine": 72,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 14
+      },
+      "revId": "4b3ac56fd331b010169f53117b8e8e7de9d874e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

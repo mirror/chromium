@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "354b4737_8bf7ba91",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-14T06:01:14Z",
+      "side": 1,
+      "message": "z",
+      "range": {
+        "startLine": 164,
+        "startChar": 32,
+        "endLine": 164,
+        "endChar": 33
+      },
+      "revId": "56f067ab768330436bf9146f2104ae498dc4dd9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb640f6_6ed6473f",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-14T06:01:14Z",
+      "side": 1,
+      "message": "The DirectRecorder constructor transforms a boolean (check_passed) into a InstallabilityCheckStatus, which is then used in these switch statements.  This means that you need to handle every possible value of InstallabilityCheckStatus, even though only two of them are ever used (corresponding to the two values of check_passed).\n\nInstead, you could calculate (at the time DirectRecorder is constructed) the values that are currently returned by these methods, and store them as members.  Then you don\u0027t need these methods at all.",
+      "revId": "56f067ab768330436bf9146f2104ae498dc4dd9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa801f6_cffb97b6",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-14T06:01:14Z",
+      "side": 1,
+      "message": "s/and to reset state//",
+      "revId": "56f067ab768330436bf9146f2104ae498dc4dd9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
