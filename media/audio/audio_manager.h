@@ -210,10 +210,6 @@ class MEDIA_EXPORT AudioManager {
   // sample rates.
   virtual bool HasAudioInputDevices() = 0;
 
-  // Returns a human readable string for the model/make of the active audio
-  // input device for this computer.
-  virtual base::string16 GetAudioInputDeviceModel() = 0;
-
   // Appends a list of available input devices to |device_descriptions|,
   // which must initially be empty. It is not guaranteed that all the
   // devices in the list support all formats and sample rates for
