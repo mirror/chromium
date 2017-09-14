@@ -325,12 +325,15 @@ void SearchResultPageView::OnSearchResultContainerResultsChanged() {
     old_selection->SetSelectedIndex(old_selection->num_results() - 1);
   }
 
-  // Sort the result container views by their score.
-  std::sort(result_container_views_.begin(), result_container_views_.end(),
-            [](const SearchResultContainerView* a,
-               const SearchResultContainerView* b) -> bool {
-              return a->container_score() > b->container_score();
-            });
+  if (!is_fullscreen_app_list_enabled_) {
+    // Sort the result container views by their score for non-fullscreen app
+    // list. These views should have fixed order in fullscreen app list.
+    std::sort(result_container_views_.begin(), result_container_views_.end(),
+              [](const SearchResultContainerView* a,
+                 const SearchResultContainerView* b) -> bool {
+                return a->container_score() > b->container_score();
+              });
+  }
 
   int result_y_index = 0;
   for (size_t i = 0; i < result_container_views_.size(); ++i) {
