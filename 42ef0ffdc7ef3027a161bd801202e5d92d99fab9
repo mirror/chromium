@@ -88,6 +88,24 @@
       "revId": "42ef0ffdc7ef3027a161bd801202e5d92d99fab9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67dbb86f_98796627",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-14T16:59:20Z",
+      "side": 1,
+      "message": "\u003e One problem therein, anyone got an old machine to measure on?  I certainly don\u0027t.\n\nI\u0027m not sure this is a problem so much as an answer in itself.  I for one don\u0027t want to feel obligated to write code that presumably but unverifyably improves performance on machines that are too uncommon to test.  It\u0027s important that we function correctly and reasonably on older spec machines, but I\u0027m not convinced they\u0027re in the set that we need to really tweak out.\n\nIf we\u0027re not able to find an old enough machine, and no performance bot runs on an old enough machine, I would suggest not worrying about it.",
+      "parentUuid": "c8592523_c39cd9f5",
+      "revId": "42ef0ffdc7ef3027a161bd801202e5d92d99fab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
