@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "00f16ec5_b3c87bb6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-14T22:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b91522bf_e88154e5",
+      "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a0bb608_a31d87fb",
         "filename": "chrome/browser/resources/settings/appearance_page/appearance_browser_proxy.js",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "26130e70_cee51c7a",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_browser_proxy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-14T22:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a0bb608_a31d87fb",
+      "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19960d1c_dd56f91e",
         "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-13T20:13:09Z",
       "side": 1,
       "message": "Why \u0027Expand\u0027 ?",
+      "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9332df12_599a422b",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-14T22:05:32Z",
+      "side": 1,
+      "message": "Since the id\u003d\"wallpaperButton\" has been used by \u003cdiv\u003e above. How about \"wallpaperToggleButton\" here?",
+      "parentUuid": "19960d1c_dd56f91e",
       "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "23f2f896_f8fc4ba5",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-14T22:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c95a12ac_f1b05e60",
+      "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9454afba_ccf947af",
         "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.js",
         "patchSetId": 6
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "507cadae_2023993f",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-14T22:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9454afba_ccf947af",
+      "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b1a558c_dfb7a9f7",
         "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.js",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-13T20:13:09Z",
       "side": 1,
       "message": "This is confusing. Are we hiding the button when we open the wallpaper manager?",
+      "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b239f175_cb9922aa",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-14T22:05:32Z",
+      "side": 1,
+      "message": "Changed to add isWallpaperPolicyControlled_ instead.",
+      "parentUuid": "5b1a558c_dfb7a9f7",
       "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "6eeef536_28ee28af",
+        "filename": "chrome/browser/ui/webui/settings/appearance_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-14T22:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7312aeb_ef92b8eb",
+      "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11cc80f8_6af602f5",
         "filename": "chrome/browser/ui/webui/settings/appearance_handler.cc",
         "patchSetId": 6
@@ -132,6 +258,24 @@
       "writtenOn": "2017-09-13T20:13:09Z",
       "side": 1,
       "message": "We shouldn\u0027t wait until the user tries to open the wallpaper manager to hide or disable the button in the UI. Instead we should set a boolean and use that. See \u0027easyUnlockAllowed\u0027 for an example.",
+      "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a278d9_a0707932",
+        "filename": "chrome/browser/ui/webui/settings/appearance_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-14T22:05:32Z",
+      "side": 1,
+      "message": "Since we already habr the user_policy \"WallpaperImage\", I checked this policy in the function that I added, isWallpaperPolicyControlled().\nAnd just check whether we can open wallpaper manager here.",
+      "parentUuid": "11cc80f8_6af602f5",
       "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
