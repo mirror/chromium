@@ -55,7 +55,7 @@ void DrmOverlayManager::CheckOverlaySupport(
   for (auto& candidate : *candidates) {
     // Reject candidates that don't fall on a pixel boundary.
     if (!gfx::IsNearestRectWithinDistance(candidate.display_rect, 0.01f)) {
-      DCHECK(candidate.plane_z_order != 0);
+      //      DCHECK(candidate.plane_z_order != 0);
       result_candidates.push_back(OverlaySurfaceCandidate());
       result_candidates.back().overlay_handled = false;
       continue;
@@ -71,7 +71,7 @@ void DrmOverlayManager::CheckOverlaySupport(
     result_candidates.back().overlay_handled = true;
 
     if (!CanHandleCandidate(candidate, widget)) {
-      DCHECK(candidate.plane_z_order != 0);
+      //      DCHECK(candidate.plane_z_order != 0);
       result_candidates.back().overlay_handled = false;
     }
   }
