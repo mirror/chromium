@@ -202,8 +202,7 @@ void Display::InitializeRenderer() {
 #if defined(ENABLE_VULKAN)
     DCHECK(texture_mailbox_deleter_);
     renderer_ = base::MakeUnique<cc::VulkanRenderer>(
-        &settings_, output_surface_.get(), resource_provider_.get(),
-        texture_mailbox_deleter_.get(), settings_.highp_threshold_min);
+        &settings_, output_surface_.get(), resource_provider_.get());
 #else
     NOTREACHED();
 #endif
