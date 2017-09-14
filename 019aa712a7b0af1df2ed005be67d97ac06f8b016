@@ -34,6 +34,24 @@
       "revId": "019aa712a7b0af1df2ed005be67d97ac06f8b016",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ffe70ff_7b1588ca",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-14T22:50:22Z",
+      "side": 1,
+      "message": "Can you please comment this? It\u0027d be nice if there was a cleaner alternative approach, as this feels very unexpected/convoluted.\n\nIf you don\u0027t add this what happens? Is there a UI/animation flash?",
+      "parentUuid": "5a6d3c0f_b58b576f",
+      "revId": "019aa712a7b0af1df2ed005be67d97ac06f8b016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
