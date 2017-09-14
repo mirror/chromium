@@ -18,6 +18,7 @@
 #include "url/gurl.h"
 
 namespace headless {
+class HeadlessBrowserContext;
 class HeadlessBrowserContextImpl;
 class HeadlessBrowserImpl;
 class HeadlessDevToolsTarget;
@@ -86,18 +87,21 @@ class HEADLESS_EXPORT HeadlessWebContents {
 
   // Returns the devtools frame id corresponding to the |frame_tree_node_id|, if
   // any. Note this relies on an IPC sent from blink during navigation.
+  // Can be called on any thread.
   virtual std::string GetUntrustedDevToolsFrameIdForFrameTreeNodeId(
       int process_id,
       int frame_tree_node_id) const = 0;
 
-  // Returns the FrameTreeNode id corresponding to |devtools_id| or -1 if it
-  // can't be found. Must be called on the IO thread.
-  virtual int GetFrameTreeNodeIdForDevToolsFrameId(
+  // Returns the Process ID and FrameTreeNode ID corresponding to |devtools_id|
+  // or -1, -1 if |devtools_id| can't be found. Can be called on any thread.
+  virtual std::pair<int, int> GetProcessAndFrameTreeNodeIdForDevToolsFrameId(
       const std::string& devtools_id) const = 0;
 
   virtual int GetMainFrameRenderProcessId() const = 0;
 
   virtual int GetMainFrameTreeNodeId() const = 0;
+
+  virtual HeadlessBrowserContext* GetHeadlessBrowserContext() const = 0;
 
  protected:
   HeadlessWebContents() {}
