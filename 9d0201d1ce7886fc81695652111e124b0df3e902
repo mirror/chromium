@@ -54,6 +54,23 @@
     },
     {
       "key": {
+        "uuid": "aa581fb9_966cd6f8",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T05:57:59Z",
+      "side": 1,
+      "message": "My comment was meant more as an add-on, instead of replacing  the existing stuff: it\u0027s still good to mention is used for loading the script for a new (installing) service worker.\n\nThis is the URLLoader used for loading scripts for a new (installing) service worker. It fetches the script (the main script or imported script) from network, and returns the response to |client|, while also writing the response into service worker script storage.",
+      "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8479e87f_c9bef024",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
         "patchSetId": 27
