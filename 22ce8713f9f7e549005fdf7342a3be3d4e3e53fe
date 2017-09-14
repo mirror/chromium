@@ -162,6 +162,30 @@
       "revId": "22ce8713f9f7e549005fdf7342a3be3d4e3e53fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fef22ea_84d010f9",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-14T17:49:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7455bc12_cc4fafcc",
+      "range": {
+        "startLine": 55,
+        "startChar": 49,
+        "endLine": 55,
+        "endChar": 56
+      },
+      "revId": "22ce8713f9f7e549005fdf7342a3be3d4e3e53fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
