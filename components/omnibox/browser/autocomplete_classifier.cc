@@ -80,7 +80,8 @@ void AutocompleteClassifier::Classify(
   }
 
   DCHECK(result.default_match() != result.end());
-  *match = *result.default_match();
+  CHECK(result.default_match() == result.begin());
+  *match = *result.begin();
   if (alternate_nav_url)
     *alternate_nav_url = result.alternate_nav_url();
 }

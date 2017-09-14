@@ -351,6 +351,8 @@ void AutocompleteController::Start(const AutocompleteInput& input) {
   // only do this once per session. Additionally, a default match is expected to
   // be available at this point but we check anyway to guard against an invalid
   // dereference.
+  CHECK(result_.default_match() == result_.begin() ||
+        result_.default_match() == result_.end());
   if (base::FeatureList::IsEnabled(
           omnibox::kSpeculativeServiceWorkerStartOnQueryInput) &&
       (input.type() == metrics::OmniboxInputType::QUERY) &&
@@ -469,6 +471,8 @@ void AutocompleteController::UpdateResult(
     bool regenerate_result,
     bool force_notify_default_match_changed) {
   TRACE_EVENT0("omnibox", "AutocompleteController::UpdateResult");
+  CHECK(result_.default_match() == result_.begin() ||
+        result_.default_match() == result_.end());
   const bool last_default_was_valid = result_.default_match() != result_.end();
   // The following three variables are only set and used if
   // |last_default_was_valid|.
@@ -514,6 +518,8 @@ void AutocompleteController::UpdateResult(
   if (search_provider_)
     search_provider_->RegisterDisplayedAnswers(result_);
 
+  CHECK(result_.default_match() == result_.begin() ||
+        result_.default_match() == result_.end());
   const bool default_is_valid = result_.default_match() != result_.end();
   base::string16 default_associated_keyword;
   if (default_is_valid &&
@@ -530,6 +536,8 @@ void AutocompleteController::UpdateResult(
   // We don't check the URL as that may change for the default match
   // even though the fill into edit hasn't changed (see SearchProvider
   // for one case of this).
+  CHECK(result_.default_match() == result_.begin() ||
+        result_.default_match() == result_.end());
   const bool notify_default_match =
       (last_default_was_valid != default_is_valid) ||
       (last_default_was_valid &&
@@ -657,22 +665,21 @@ void AutocompleteController::UpdateAssistedQueryStats(
   AppendAvailableAutocompletion(
       last_type, last_subtype, count, &autocompletions);
   // Go over all matches and set AQS if the match supports it.
-  for (size_t index = 0; index < result->size(); ++index) {
-    AutocompleteMatch* match = result->match_at(index);
+  size_t index = 0;
+  for (auto& match : *result) {
     const TemplateURL* template_url =
-        match->GetTemplateURL(template_url_service_, false);
-    if (!template_url || !match->search_terms_args.get())
+        match.GetTemplateURL(template_url_service_, false);
+    if (!template_url || !match.search_terms_args.get())
       continue;
     std::string selected_index;
     // Prevent trivial suggestions from getting credit for being selected.
-    if (!IsTrivialAutocompletion(*match))
+    if (!IsTrivialAutocompletion(match))
       selected_index = base::StringPrintf("%" PRIuS, index);
-    match->search_terms_args->assisted_query_stats =
-        base::StringPrintf("chrome.%s.%s",
-                           selected_index.c_str(),
-                           autocompletions.c_str());
-    match->destination_url = GURL(template_url->url_ref().ReplaceSearchTerms(
-        *match->search_terms_args, template_url_service_->search_terms_data()));
+    match.search_terms_args->assisted_query_stats = base::StringPrintf(
+        "chrome.%s.%s", selected_index.c_str(), autocompletions.c_str());
+    match.destination_url = GURL(template_url->url_ref().ReplaceSearchTerms(
+        *match.search_terms_args, template_url_service_->search_terms_data()));
+    ++index;
   }
 }
 

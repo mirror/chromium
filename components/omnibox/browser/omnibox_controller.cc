@@ -42,6 +42,8 @@ void OmniboxController::OnResultChanged(bool default_match_changed) {
   if (default_match_changed) {
     // The default match has changed, we need to let the OmniboxEditModel know
     // about new inline autocomplete text (blue highlight).
+    CHECK(result().default_match() == result().begin() ||
+          result().default_match() == result().end());
     const AutocompleteResult::const_iterator match(result().default_match());
     if (match != result().end()) {
       current_match_ = *match;
