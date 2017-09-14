@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4a235e03_c05ccfe0",
+        "filename": "ui/aura/keyboard_lock/activator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-09-14T21:40:26Z",
+      "side": 1,
+      "message": "This will be changed in the final version.",
+      "parentUuid": "6c66f226_c9582432",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 15
+      },
+      "revId": "5628453759f05531b569ecce3aa6bd6f0e0723eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "410252bd_e712ab81",
         "filename": "ui/aura/keyboard_lock/activator.h",
         "patchSetId": 14
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4611d6b5_114162c2",
+        "filename": "ui/aura/keyboard_lock/activator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-09-14T21:40:26Z",
+      "side": 1,
+      "message": "This was designed to post Activate / Deactivate / Register / Unregister into a different thread, since they may not always be executed in UI thread. (See the KeyboardLockActivatorThreadProxy in the last prototype https://codereview.chromium.org/2879033002/patch/630001/640026.)\n\nIt seems not really necessary in this prototype: all the components in keyboard lock are executing in the UI thread. But since this is a prototype, I won\u0027t bother change the pattern if it does not impact understanding how it works.\n\nComments have been added.",
+      "parentUuid": "410252bd_e712ab81",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 65
+      },
+      "revId": "5628453759f05531b569ecce3aa6bd6f0e0723eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d32603f3_accdc70c",
         "filename": "ui/aura/keyboard_lock/platform_hook.h",
         "patchSetId": 14
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-14T20:27:03Z",
       "side": 1,
       "message": "While not strictly necessary I favor tying this to a Widget. The reason for that is there is no need to *always* hook events, which this api lets you do. Tying the api to a widget allows you to enforce the hook is only enabled when the widget is active and fullscreen. Also, I don\u0027t think this needs to live in aura.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 19
+      },
+      "revId": "5628453759f05531b569ecce3aa6bd6f0e0723eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a5138b_84cb19b7",
+        "filename": "ui/aura/keyboard_lock/platform_hook.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-09-14T21:40:26Z",
+      "side": 1,
+      "message": "The logic of enabling and disabling the hook are living in PageObserver. Consumers of the keyboard lock feature use Observer to enable or disable the keyboard lock for one CLIENT_ID.",
+      "parentUuid": "d32603f3_accdc70c",
       "range": {
         "startLine": 18,
         "startChar": 6,
