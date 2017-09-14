@@ -462,9 +462,12 @@ void ThreadDebugger::startRepeatingTimer(
   timer_data_.push_back(data);
   timer_callbacks_.push_back(callback);
 
-  std::unique_ptr<Timer<ThreadDebugger>> timer = WTF::WrapUnique(
-      new Timer<ThreadDebugger>(this, &ThreadDebugger::OnTimer));
-  Timer<ThreadDebugger>* timer_ptr = timer.get();
+  std::unique_ptr<TaskRunnerTimer<ThreadDebugger>> timer =
+      WTF::WrapUnique(new TaskRunnerTimer<ThreadDebugger>(
+          TaskRunnerHelper::Get(TaskType::kUnspecedTimer,
+                                CurrentExecutionContext(isolate_)),
+          this, &ThreadDebugger::OnTimer));
+  TaskRunnerTimer<ThreadDebugger>* timer_ptr = timer.get();
   timers_.push_back(std::move(timer));
   timer_ptr->StartRepeating(interval, BLINK_FROM_HERE);
 }
