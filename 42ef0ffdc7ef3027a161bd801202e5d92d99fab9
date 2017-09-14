@@ -145,6 +145,24 @@
     },
     {
       "key": {
+        "uuid": "089e5999_0e35952c",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-14T18:22:46Z",
+      "side": 1,
+      "message": "Yep, makes sense.",
+      "parentUuid": "06bbcfe6_019f5505",
+      "revId": "42ef0ffdc7ef3027a161bd801202e5d92d99fab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25169d7d_33dc329a",
         "filename": "third_party/zlib/adler32_simd.h",
         "patchSetId": 18
