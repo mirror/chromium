@@ -22,7 +22,8 @@ message KeyPair {
   // The private key matching the size requirements of |type|.
   optional bytes private_key = 2;
 
-  // The public key as an X.509 SubjectPublicKeyInfo block.
+  // This field was historically the public key as an X.509 SubjectPublicKeyInfo
+  // block. Now it is omitted.
   optional bytes public_key_x509 = 3;
 
   // The public key as an uncompressed EC point according to SEC 2.3.3.
