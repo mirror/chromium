@@ -17,6 +17,7 @@
 #include "base/containers/circular_deque.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/optional.h"
 #include "base/time/clock.h"
 #include "base/time/time.h"
@@ -358,9 +359,10 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   void UpdatePushedSuggestionsSubscriptionDueToStatusChange(
       RemoteSuggestionsStatus new_status);
 
-  // Converts the cached suggestions in the given |category| to content
+  // Converts the cached |suggestions| in the given |category| to content
   // suggestions and notifies the observer.
-  void NotifyNewSuggestions(Category category, const CategoryContent& content);
+  void NotifyNewSuggestions(Category category,
+                            const RemoteSuggestion::PtrVector& suggestions);
 
   // Updates the internal status for |category| to |category_status_| and
   // notifies the content suggestions observer if it changed.
@@ -382,6 +384,10 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
       base::Optional<Category> fetched_category) const;
 
   void MarkEmptyCategoriesAsLoading();
+
+  bool HasStaleCategories();
+  void MarkStaleCategoriesAsLoading();
+  void MarkStaleCategoriesAsAvailable();
 
   State state_;
 
@@ -442,6 +448,8 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   // Listens for BreakingNews updates (e.g. through GCM) and notifies the
   // provider.
   std::unique_ptr<BreakingNewsListener> breaking_news_raw_data_provider_;
+
+  base::WeakPtrFactory<RemoteSuggestionsProviderImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(RemoteSuggestionsProviderImpl);
 };
