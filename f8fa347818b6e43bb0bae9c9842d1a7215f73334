@@ -19,6 +19,42 @@
     },
     {
       "key": {
+        "uuid": "8c75fa48_34f7be92",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-14T21:56:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9744b41_789b089f",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a41a7cc_3e4e4d3f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-14T21:56:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9744b41_789b089f",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b60dd25_ed081684",
         "filename": "components/offline_pages/core/prefetch/prefetch_item_unittest.cc",
         "patchSetId": 7
@@ -30,6 +66,30 @@
       "writtenOn": "2017-09-14T19:56:45Z",
       "side": 1,
       "message": "This is unrelated to this patch, but perhaps could be a TODO:\nRegarding implementation: Would: count commas and add 1 work here?",
+      "range": {
+        "startLine": 63,
+        "startChar": 30,
+        "endLine": 63,
+        "endChar": 50
+      },
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8239c684_63d0dc22",
+        "filename": "components/offline_pages/core/prefetch/prefetch_item_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-14T21:56:21Z",
+      "side": 1,
+      "message": "Counting commas is what this code already does but in a slightly safer way.",
+      "parentUuid": "6b60dd25_ed081684",
       "range": {
         "startLine": 63,
         "startChar": 30,
@@ -65,6 +125,30 @@
     },
     {
       "key": {
+        "uuid": "6df0fdcb_c812a2f1",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-14T21:56:21Z",
+      "side": 1,
+      "message": "I extracted this because a) it made the migration code simpler/shorter and b) I\u0027m assuming this might be used again at some point.\n\nBut one think I realized is that the more common use case would be to drop the old and replace with the temp. So I collapsed this and the next methods, what ends up reinforcing reason a).",
+      "parentUuid": "7bcb29ac_053130d0",
+      "range": {
+        "startLine": 136,
+        "startChar": 6,
+        "endLine": 136,
+        "endChar": 54
+      },
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e84c2624_3b4aa5f8",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
         "patchSetId": 7
@@ -85,6 +169,30 @@
       "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d579ca88_75956df7",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-14T21:56:21Z",
+      "side": 1,
+      "message": "Ditto.",
+      "parentUuid": "e84c2624_3b4aa5f8",
+      "range": {
+        "startLine": 140,
+        "startChar": 5,
+        "endLine": 140,
+        "endChar": 16
+      },
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +219,30 @@
     },
     {
       "key": {
+        "uuid": "cda9deaa_35149196",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-14T21:56:21Z",
+      "side": 1,
+      "message": "Re 1.: I couldn\u0027t see this class not needing a Connection and not just using it right away. So it seemed natural to set it at construction.\n\nRe 2.: Done.",
+      "parentUuid": "18da1344_e7d222ee",
+      "range": {
+        "startLine": 154,
+        "startChar": 26,
+        "endLine": 154,
+        "endChar": 49
+      },
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a70e726_9b1871dd",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
         "patchSetId": 7
@@ -134,6 +266,30 @@
     },
     {
       "key": {
+        "uuid": "519ea399_dc07e685",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-14T21:56:21Z",
+      "side": 1,
+      "message": "This is just a sanity check. Having a DCHECK seemed simpler than trying to make this a compile time check.",
+      "parentUuid": "3a70e726_9b1871dd",
+      "range": {
+        "startLine": 155,
+        "startChar": 12,
+        "endLine": 155,
+        "endChar": 27
+      },
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcf587e3_b1e74de0",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
         "patchSetId": 7
@@ -145,6 +301,30 @@
       "writtenOn": "2017-09-14T19:56:45Z",
       "side": 1,
       "message": "same here, I don\u0027t get why you StringPrintf",
+      "range": {
+        "startLine": 188,
+        "startChar": 15,
+        "endLine": 188,
+        "endChar": 31
+      },
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9cd4c2_7102612c",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-14T21:56:21Z",
+      "side": 1,
+      "message": "I was trying to consolidate the table names to a single place: the constants. And deriving all their uses from them.\nDo you think it\u0027d be better to remove the constants and have them written out everywhere?",
+      "parentUuid": "fcf587e3_b1e74de0",
       "range": {
         "startLine": 188,
         "startChar": 15,
@@ -191,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "dbbe4d11_b8cc7696",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-14T21:56:21Z",
+      "side": 1,
+      "message": "The idea of the precondition tests is just to make sure the assumptions we have IRT how SQLite works are true.\nThat code is also internal so it would have to be exposed to the test to be made test-able.",
+      "parentUuid": "9b44ba43_4e84a43c",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36bbbfb0_898939f1",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
         "patchSetId": 7
@@ -205,6 +403,24 @@
       "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e1f08b_98f78301",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-14T21:56:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36bbbfb0_898939f1",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -225,6 +441,24 @@
     },
     {
       "key": {
+        "uuid": "62dd4d82_9f096882",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-14T21:56:21Z",
+      "side": 1,
+      "message": "When MetaTable::Init runs for the 1st time, it is the only occasion it persists the version numbers passed in. Using the current numbers there means that when querying those values back from the meta-table they will return current values in 2 situations: the DB schema is already at the latest version or it has just been created.\n\nSo whenever the code detect the current version it will try to create tables if necessary. This test is just checking that that actually happens.",
+      "parentUuid": "49670ba4_a0ec69ac",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cc0431b_647826ea",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
         "patchSetId": 7
@@ -239,6 +473,24 @@
       "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e619f602_80b603a8",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-14T21:56:21Z",
+      "side": 1,
+      "message": "IIUC ASSERTs should be used in Chrome tests when not having them could cause the test to crash. This is not the case here.",
+      "parentUuid": "8cc0431b_647826ea",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -259,6 +511,24 @@
     },
     {
       "key": {
+        "uuid": "a97d189f_cd467df1",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-14T21:56:21Z",
+      "side": 1,
+      "message": "In this case the tables are actually missing. There\u0027s no data there to be changed.\n\nTesting deletion of each table individually is not a necessary but as it just works I kept it here.",
+      "parentUuid": "1b89dbbd_ed55927e",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0baddddc_e0015c1b",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
         "patchSetId": 7
@@ -273,6 +543,24 @@
       "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5bfec7b_ced5b801",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-14T21:56:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0baddddc_e0015c1b",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -293,6 +581,24 @@
     },
     {
       "key": {
+        "uuid": "3b7b4cdd_d9892fa6",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-14T21:56:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1a40ce5_97c927fa",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02b97fdd_5263e343",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
         "patchSetId": 7
@@ -310,6 +616,24 @@
     },
     {
       "key": {
+        "uuid": "e2623de3_60f664d0",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-14T21:56:21Z",
+      "side": 1,
+      "message": "As explained before.",
+      "parentUuid": "02b97fdd_5263e343",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b462e52_5ead4224",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
         "patchSetId": 7
@@ -324,6 +648,24 @@
       "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04256fe5_6ef451c9",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-14T21:56:21Z",
+      "side": 1,
+      "message": "As explained before.",
+      "parentUuid": "2b462e52_5ead4224",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
