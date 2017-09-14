@@ -17,6 +17,13 @@ using ::testing::_;
 
 namespace ui {
 
+namespace {
+
+const uint32_t kXdgShellV5 = 5;
+const uint32_t kXdgShellV6 = 6;
+
+}  // namespace
+
 class WaylandSurfaceFactoryTest : public WaylandTest {
  public:
   WaylandSurfaceFactoryTest() : surface_factory(&connection) {}
@@ -37,7 +44,7 @@ class WaylandSurfaceFactoryTest : public WaylandTest {
   DISALLOW_COPY_AND_ASSIGN(WaylandSurfaceFactoryTest);
 };
 
-TEST_F(WaylandSurfaceFactoryTest, Canvas) {
+TEST_P(WaylandSurfaceFactoryTest, Canvas) {
   canvas->GetSurface();
   canvas->PresentCanvas(gfx::Rect(5, 10, 20, 15));
 
@@ -59,7 +66,7 @@ TEST_F(WaylandSurfaceFactoryTest, Canvas) {
   // SkSurface above.
 }
 
-TEST_F(WaylandSurfaceFactoryTest, CanvasResize) {
+TEST_P(WaylandSurfaceFactoryTest, CanvasResize) {
   canvas->GetSurface();
   canvas->ResizeCanvas(gfx::Size(100, 50));
   canvas->GetSurface();
@@ -79,5 +86,12 @@ TEST_F(WaylandSurfaceFactoryTest, CanvasResize) {
   EXPECT_EQ(wl_shm_buffer_get_width(buffer), 100);
   EXPECT_EQ(wl_shm_buffer_get_height(buffer), 50);
 }
+
+INSTANTIATE_TEST_CASE_P(XdgVersionV5Test,
+                        WaylandSurfaceFactoryTest,
+                        ::testing::Values(kXdgShellV5));
+INSTANTIATE_TEST_CASE_P(XdgVersionV6Test,
+                        WaylandSurfaceFactoryTest,
+                        ::testing::Values(kXdgShellV6));
 
 }  // namespace ui
