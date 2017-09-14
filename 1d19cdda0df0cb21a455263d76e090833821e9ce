@@ -163,6 +163,24 @@
     },
     {
       "key": {
+        "uuid": "f3cb2c9a_13a179ee",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-14T21:15:04Z",
+      "side": 1,
+      "message": "Wait... What\u0027s the difference between adding SMC and categorizing the methods of DMC properly?\n\nSince all the marker data is still owned by DMC, SMC is nothing but a container of suggestion-specific methods manipulating the data in DMC. Then how is it different from adding a \"suggestion-specific\" section in DMC\u0027s methods?\n\nAs long as the data is owned by DMC, we will have encapsulation problems.\n\nI\u0027m OK with just adding another method to DMC, and discuss refactoring/cleanup later.",
+      "parentUuid": "efc63e82_d3fc4047",
+      "revId": "1d19cdda0df0cb21a455263d76e090833821e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8874c3f8_6a42a781",
         "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
         "patchSetId": 3
