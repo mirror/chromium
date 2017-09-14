@@ -46,6 +46,30 @@
       "revId": "d9d26fc4df328b39916e433b04a231cdb53bc0d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3089470d_ea7451c1",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29522,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-09-14T14:40:58Z",
+      "side": 1,
+      "message": "I think just mentioning Net.HttpJob.TotalTime in this comment will be sufficient.\n\nWe just want an order-of-magnitude of how much pre-connection saves with respect to all network traffic, so I don\u0027t think we really get that much additional information by restricting the HttpJob.TotalTime to those that happen before FCP.  (I\u0027m assuming that those that don\u0027t require a network connection, ie, cached resources, won\u0027t contribute much to the total time anyway.)",
+      "parentUuid": "1a7ab060_27915bfd",
+      "range": {
+        "startLine": 29522,
+        "startChar": 27,
+        "endLine": 29522,
+        "endChar": 36
+      },
+      "revId": "d9d26fc4df328b39916e433b04a231cdb53bc0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
