@@ -945,6 +945,16 @@ void NavigatorImpl::OnBeforeUnloadACK(FrameTreeNode* frame_tree_node,
   if (!navigation_request)
     return;
 
+  // The browser-initiated NavigationRequest that triggered the sending of the
+  // BeforeUnload IPC might have been replaced by a renderer-initiated one while
+  // the BeforeUnload event executed in the renderer. In that case, the request
+  // will already have begun, so there is no need to start it again.
+  if (navigation_request->state() >
+      NavigationRequest::WAITING_FOR_RENDERER_RESPONSE) {
+    DCHECK(navigation_request->from_begin_navigation());
+    return;
+  }
+
   // Update the navigation start: it should be when it was determined that the
   // navigation will proceed.
   navigation_request->set_navigation_start_time(proceed_time);
