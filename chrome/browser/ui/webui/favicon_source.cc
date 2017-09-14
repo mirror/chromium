@@ -166,9 +166,23 @@ bool FaviconSource::HandleMissingResource(const IconRequest& request) {
 void FaviconSource::OnFaviconDataAvailable(
     const IconRequest& request,
     const favicon_base::FaviconRawBitmapResult& bitmap_result) {
+  GURL origin = request.request_path.GetOrigin();
+  LOG(ERROR) << request.request_path.spec() << " " << bitmap_result.is_valid();
   if (bitmap_result.is_valid()) {
     // Forward the data along to the networking system.
     request.callback.Run(bitmap_result.bitmap_data.get());
+  } else if (origin != request.request_path) {
+    LOG(ERROR) << origin.spec();
+    IconRequest new_request = request;
+    new_request.request_path = origin;
+    favicon::FaviconService* favicon_service =
+        FaviconServiceFactory::GetForProfile(
+            profile_, ServiceAccessType::EXPLICIT_ACCESS);
+    favicon_service->GetRawFaviconForPageURL(
+        origin, favicon_base::FAVICON, new_request.size_in_dip,
+        base::Bind(&FaviconSource::OnFaviconDataAvailable,
+                   base::Unretained(this), new_request),
+        &cancelable_task_tracker_);
   } else if (!HandleMissingResource(request)) {
     SendDefaultResponse(request);
   }
