@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6200405b_acde4c43",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-09-14T20:54:33Z",
+      "side": 1,
+      "message": "Add link to bug.",
+      "range": {
+        "startLine": 176,
+        "startChar": 26,
+        "endLine": 177,
+        "endChar": 48
+      },
+      "revId": "b1a0754eef7e01d817083a6472c889d9b8a6fde4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
