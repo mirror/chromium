@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f1f07e9_e379b88b",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-14T09:00:45Z",
+      "side": 1,
+      "message": "Oh, I thought we were only making the edit mode one-way for now. Updating.",
+      "parentUuid": "c1f9cebd_bce1886e",
+      "range": {
+        "startLine": 537,
+        "startChar": 18,
+        "endLine": 537,
+        "endChar": 28
+      },
+      "revId": "0519abfd61c943da90b1526251e7588850efd03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f97aaa1c_2c8960f7",
         "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "0519abfd61c943da90b1526251e7588850efd03e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65034d5c_f19d2864",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-09-14T09:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f97aaa1c_2c8960f7",
+      "range": {
+        "startLine": 550,
+        "startChar": 24,
+        "endLine": 550,
+        "endChar": 40
+      },
+      "revId": "0519abfd61c943da90b1526251e7588850efd03e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
