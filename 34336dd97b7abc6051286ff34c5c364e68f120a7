@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c585e61_6fb026df",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-14T00:01:19Z",
+      "side": 1,
+      "message": "It seems better to also put |suggestions| into the properties, since it\u0027s a suggestion marker specific thing that DMC doesn\u0027t care about.",
+      "range": {
+        "startLine": 74,
+        "startChar": 27,
+        "endLine": 74,
+        "endChar": 60
+      },
+      "revId": "34336dd97b7abc6051286ff34c5c364e68f120a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cca7364_bf897cbf",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-14T00:01:19Z",
+      "side": 1,
+      "message": "I see the potential of introducing a StyleableMarkerProperty or even DocumentMarkerProperty hierarchy...\n\nAnyway, this is not quite relevant for now.",
+      "range": {
+        "startLine": 19,
+        "startChar": 22,
+        "endLine": 21,
+        "endChar": 50
+      },
+      "revId": "34336dd97b7abc6051286ff34c5c364e68f120a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
