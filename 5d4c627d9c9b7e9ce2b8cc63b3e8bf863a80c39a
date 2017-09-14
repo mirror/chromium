@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "e88ab27e_6398bd69",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-14T13:42:53Z",
+      "side": 1,
+      "message": "The enum is backed by an int, but the compiler won\u0027t allow an arbitrary integer to be passed instead of an enum value. The compiler also checks that switch statements on enums are exhaustive. This means that the only way we can have such an unintialised variable issue is if someone extends the enum, adds the corresponding case, but then doesn\u0027t assign title and file_selector_mode, right?\n\nI\u0027ve initialised both to zero, and then DCHECK to make sure they\u0027re both set. This seemed better than defaulting to a particular action, and should stop issues with bad extensions to the enum.",
+      "parentUuid": "12080a8d_1ec1aa8b",
+      "range": {
+        "startLine": 52,
+        "startChar": 11,
+        "endLine": 52,
+        "endChar": 16
+      },
+      "revId": "5d4c627d9c9b7e9ce2b8cc63b3e8bf863a80c39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "064c98ac_0b666e3c",
         "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
         "patchSetId": 2
@@ -399,6 +423,30 @@
       "revId": "5d4c627d9c9b7e9ce2b8cc63b3e8bf863a80c39a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d14ec821_7e1c4805",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-14T13:42:53Z",
+      "side": 1,
+      "message": "I\u0027ve replaced its scoped_ref reference below with std::unique_ptr.",
+      "parentUuid": "ff416a83_668c1ce2",
+      "range": {
+        "startLine": 37,
+        "startChar": 21,
+        "endLine": 37,
+        "endChar": 41
+      },
+      "revId": "5d4c627d9c9b7e9ce2b8cc63b3e8bf863a80c39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
