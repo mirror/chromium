@@ -82,6 +82,7 @@ namespace net {
 class ClientCertIdentity;
 using ClientCertIdentityList = std::vector<std::unique_ptr<ClientCertIdentity>>;
 class CookieOptions;
+class HttpRequestHeaders;
 class NetLog;
 class SSLCertRequestInfo;
 class SSLInfo;
@@ -362,6 +363,13 @@ class CONTENT_EXPORT ContentBrowserClient {
       const base::Callback<WebContents*(void)>& wc_getter);
 
   virtual bool IsDataSaverEnabled(BrowserContext* context);
+
+  // Allow the embedder to set |additional_headers| based on client hints that
+  // should be sent when fetching |url|.
+  virtual void RetrieveClientHintHeaders(
+      BrowserContext* context,
+      const GURL& url,
+      net::HttpRequestHeaders* additional_headers) const;
 
   // Allow the embedder to control if the given cookie can be read.
   // This is called on the IO thread.
