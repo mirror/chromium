@@ -2,6 +2,108 @@
   "comments": [
     {
       "key": {
+        "uuid": "a0554e75_14d61bb6",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:30:18Z",
+      "side": 1,
+      "message": "Why do you need HasValidTilePriorities()?",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c068866a_cf9fba7e",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:30:18Z",
+      "side": 1,
+      "message": "Add a comment making explicit that this is checking whether the image\nis on-screen, and that we made an explicit decision not to advance off-screen\nimages.",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6414dd4_86def974",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1511,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:30:18Z",
+      "side": 1,
+      "message": "Spurious",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83177843_ca5a828e",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:30:18Z",
+      "side": 1,
+      "message": "No need for a local variable",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99316649_4e4e3284",
+        "filename": "cc/paint/discardable_image_map_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:30:18Z",
+      "side": 1,
+      "message": "Does this adequately test the new logic in DiscardableImageMap?\ne.g. test that various frames have the right indexes or metadata?",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c17641_f6d8ab70",
+        "filename": "cc/paint/paint_image_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:30:18Z",
+      "side": 1,
+      "message": "Add a test for a frame other than 0?",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcbadbd4_42e39757",
         "filename": "cc/raster/raster_source.h",
         "patchSetId": 18
@@ -13,6 +115,125 @@
       "writtenOn": "2017-09-14T00:24:27Z",
       "side": 1,
       "message": "This is GetDisplayItemList().get(). No need to add a new accessor.",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e950a12_773c98f7",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:30:18Z",
+      "side": 1,
+      "message": "Is this duplicating a bunch of code from BitmapImage?",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a471c28_2e198c72",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:30:18Z",
+      "side": 1,
+      "message": "s/controlling/deciding/",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8043ef0d_7bf13f7d",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:30:18Z",
+      "side": 1,
+      "message": "Supernit: grammar",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc6881d_12396b31",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:30:18Z",
+      "side": 1,
+      "message": "\"at least one driver registered for which ShouldAnimate returns true\"\n\nWhy are multiple drivers allowed?",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b51d2a23_f34f940f",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:30:18Z",
+      "side": 1,
+      "message": "s/proceed/advance/",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "593fa8b6_61a31829",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:30:18Z",
+      "side": 1,
+      "message": "s/DidActivateSyncTree/DidActivate/",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40babdc0_a1abbe28",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:30:18Z",
+      "side": 1,
+      "message": "s/its/the animation\u0027s/ ?",
       "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +274,57 @@
     },
     {
       "key": {
+        "uuid": "db0f4185_4d6e4cc1",
+        "filename": "third_party/WebKit/Source/platform/exported/WebRuntimeFeatures.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:30:18Z",
+      "side": 1,
+      "message": "Is anyone calling this?",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a7263e9_b53e2d98",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:30:18Z",
+      "side": 1,
+      "message": "Why this second condition? Is it a pre-existing bug?",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d61398d6_01acff3e",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:30:18Z",
+      "side": 1,
+      "message": "The change to RepetitionCount here seems to be a behavior change\nif all_data_received_ is true at this time.",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ede8faf_d28cd9be",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.h",
         "patchSetId": 18
@@ -70,6 +342,40 @@
         "endLine": 101,
         "endChar": 30
       },
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dea5946f_25bbfc31",
+        "filename": "third_party/WebKit/Source/platform/graphics/DeferredImageDecoder.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:30:18Z",
+      "side": 1,
+      "message": "Why is all of this inside the if statement now?",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd3b3a0_51f9247d",
+        "filename": "third_party/WebKit/Source/platform/graphics/Image.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:30:18Z",
+      "side": 1,
+      "message": "Why the change here?",
       "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
