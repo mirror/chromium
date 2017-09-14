@@ -34,6 +34,10 @@
 #include "extensions/browser/process_manager.h"
 #include "ui/base/resource/resource_bundle.h"
 
+#if defined(OS_CHROMEOS)
+#include "chrome/browser/devtools/protocol/window_manager_handler.h"
+#endif
+
 using content::DevToolsAgentHost;
 
 char ChromeDevToolsManagerDelegate::kTypeApp[] = "app";
@@ -336,6 +340,11 @@ class ChromeDevToolsManagerDelegate::HostData {
 
 ChromeDevToolsManagerDelegate::ChromeDevToolsManagerDelegate()
     : network_protocol_handler_(new DevToolsNetworkProtocolHandler()) {
+#if defined(OS_CHROMEOS)
+  dispatcher_ = std::make_unique<protocol::UberDispatcher>(nullptr);
+  window_manager_protocl_handler_ =
+      std::make_unique<WindowManagerHandler>(dispatcher_.get());
+#endif
   content::DevToolsAgentHost::AddObserver(this);
 }
 
@@ -351,7 +360,6 @@ void ChromeDevToolsManagerDelegate::Inspect(
 base::DictionaryValue* ChromeDevToolsManagerDelegate::HandleCommand(
     DevToolsAgentHost* agent_host,
     base::DictionaryValue* command_dict) {
-
   int id = 0;
   std::string method;
   base::DictionaryValue* params = nullptr;
@@ -375,7 +383,18 @@ base::DictionaryValue* ChromeDevToolsManagerDelegate::HandleCommand(
   if (method == chrome::devtools::Target::setRemoteLocations::kName)
     return SetRemoteLocations(agent_host, id, params).release();
 
-  return network_protocol_handler_->HandleCommand(agent_host, command_dict);
+  result = network_protocol_handler_->HandleCommand(agent_host, command_dict);
+#if defined(OS_CHROMEOS)
+  if (result)
+    return result;
+  auto response =
+      dispatcher_->dispatch(protocol::toProtocolValue(command_dict, 1000));
+  if (response == protocol::DispatchResponse::Status::kError)
+    return nullptr;
+  return DevToolsProtocol::CreateSuccessResponse(id, nullptr).release();
+#else
+  return result;
+#endif
 }
 
 std::string ChromeDevToolsManagerDelegate::GetTargetType(

@@ -17,11 +17,17 @@
 #include "content/public/browser/devtools_manager_delegate.h"
 #include "net/base/host_port_pair.h"
 
-class DevToolsNetworkProtocolHandler;
+#if defined(OS_CHROMEOS)
+#include "chrome/browser/devtools/protocol/forward.h"
+#include "chrome/browser/devtools/protocol/protocol.h"
+#endif
 
-class ChromeDevToolsManagerDelegate :
-    public content::DevToolsManagerDelegate,
-    public content::DevToolsAgentHostObserver {
+class DevToolsNetworkProtocolHandler;
+class WindowManagerHandler;
+
+class ChromeDevToolsManagerDelegate
+    : public content::DevToolsManagerDelegate,
+      public content::DevToolsAgentHostObserver {
  public:
   static char kTypeApp[];
   static char kTypeBackgroundPage[];
@@ -83,6 +89,11 @@ class ChromeDevToolsManagerDelegate :
 
   std::unique_ptr<DevToolsNetworkProtocolHandler> network_protocol_handler_;
   std::map<content::DevToolsAgentHost*, std::unique_ptr<HostData>> host_data_;
+
+#if defined(OS_CHROMEOS)
+  std::unique_ptr<protocol::UberDispatcher> dispatcher_;
+  std::unique_ptr<WindowManagerHandler> window_manager_protocl_handler_;
+#endif
 
   std::unique_ptr<AndroidDeviceManager> device_manager_;
   std::unique_ptr<DevToolsDeviceDiscovery> device_discovery_;
