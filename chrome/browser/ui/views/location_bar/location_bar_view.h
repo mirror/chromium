@@ -33,6 +33,7 @@ class CommandUpdater;
 class ContentSettingBubbleModelDelegate;
 class ContentSettingImageView;
 class GURL;
+class IntentPickerView;
 class KeywordHintView;
 class LocationIconView;
 class ManagePasswordsIconViews;
@@ -148,6 +149,9 @@ class LocationBarView : public LocationBar,
 
   // Toggles the star on or off.
   void SetStarToggled(bool on);
+
+  // The intent picker, should not always be visible.
+  IntentPickerView* intent_picker_view() { return intent_picker_view_; }
 
   // The star. It may not be visible.
   StarView* star_view() { return star_view_; }
@@ -390,6 +394,9 @@ class LocationBarView : public LocationBar,
 
   // The icon for Translate.
   TranslateIconView* translate_icon_view_ = nullptr;
+
+  // The intent picker for accessing ARC's apps.
+  IntentPickerView* intent_picker_view_ = nullptr;
 
   // The star for bookmarking.
   StarView* star_view_ = nullptr;

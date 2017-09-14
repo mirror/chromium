@@ -1277,4 +1277,9 @@ bool CanCreateBookmarkApp(const Browser* browser) {
 }
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
+void DisplayArcApps(Browser* browser) {
+  browser->window()->ShowIntentPickerBubble(
+      GetURLToBookmark(browser->tab_strip_model()->GetActiveWebContents()));
+}
+
 }  // namespace chrome
