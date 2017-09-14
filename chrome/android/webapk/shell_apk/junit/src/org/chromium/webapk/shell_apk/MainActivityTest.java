@@ -28,15 +28,13 @@ import org.chromium.webapk.test.WebApkTestHelper;
 @Config(manifest = Config.NONE, packageName = WebApkUtilsTest.WEBAPK_PACKAGE_NAME)
 public final class MainActivityTest {
     /**
-     * Test that MainActivity rewrites the start URL when the start URL from the intent is outside
-     * the scope specified in the Android Manifest.
+     * Test that MainActivity ignores the intent URL and uses the manifest start URL if scheme does
+     * not match scope url. The intent URL is not included if |loggedIntentUrlParam| is not set.
      */
     @Test
-    public void testRewriteStartUrlSchemeAndHost() {
-        final String intentStartUrl = "http://www.google.ca/search_results?q=eh#cr=countryCA";
-        final String expectedRewrittenStartUrl =
-                "https://www.google.com/search_results?q=eh#cr=countryCA";
-        final String manifestStartUrl = "https://www.google.com/";
+    public void testIgnoreIntentUrlOutOfScopeBecauseOfScheme() {
+        final String intentStartUrl = "http://www.google.com/search_results?q=eh#cr=countryCA";
+        final String manifestStartUrl = "https://www.google.com/index.html";
         final String manifestScope = "https://www.google.com/";
         final String browserPackageName = "com.android.chrome";
 
@@ -44,6 +42,67 @@ public final class MainActivityTest {
         bundle.putString(WebApkMetaDataKeys.START_URL, manifestStartUrl);
         bundle.putString(WebApkMetaDataKeys.SCOPE, manifestScope);
         bundle.putString(WebApkMetaDataKeys.RUNTIME_HOST, browserPackageName);
+        WebApkTestHelper.registerWebApkWithMetaData(WebApkUtilsTest.WEBAPK_PACKAGE_NAME, bundle);
+
+        installBrowser(browserPackageName);
+
+        Intent launchIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(intentStartUrl));
+        Robolectric.buildActivity(MainActivity.class).withIntent(launchIntent).create();
+
+        Intent startActivityIntent = ShadowApplication.getInstance().getNextStartedActivity();
+        Assert.assertEquals(MainActivity.ACTION_START_WEBAPK, startActivityIntent.getAction());
+        Assert.assertEquals(
+                manifestStartUrl, startActivityIntent.getStringExtra(WebApkConstants.EXTRA_URL));
+    }
+
+    /**
+     * Test that MainActivity ignores the intent URL and uses the manifest start URL if it is
+     * outside the scope specified in the Android Manifest. The intent URL is not included if
+     * |loggedIntentUrlParam| is not set.
+     */
+    @Test
+    public void testRewriteStartUrlOutsideScope() {
+        final String intentStartUrl = "https://www.google.com/maps/";
+        final String manifestStartUrl = "https://www.google.com/maps/contrib/startUrl";
+        final String manifestScope = "https://www.google.com/maps/contrib/";
+        final String browserPackageName = "com.android.chrome";
+
+        Bundle bundle = new Bundle();
+        bundle.putString(WebApkMetaDataKeys.START_URL, manifestStartUrl);
+        bundle.putString(WebApkMetaDataKeys.SCOPE, manifestScope);
+        bundle.putString(WebApkMetaDataKeys.RUNTIME_HOST, browserPackageName);
+        WebApkTestHelper.registerWebApkWithMetaData(WebApkUtilsTest.WEBAPK_PACKAGE_NAME, bundle);
+
+        installBrowser(browserPackageName);
+
+        Intent launchIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(intentStartUrl));
+        Robolectric.buildActivity(MainActivity.class).withIntent(launchIntent).create();
+
+        Intent startActivityIntent = ShadowApplication.getInstance().getNextStartedActivity();
+        Assert.assertEquals(MainActivity.ACTION_START_WEBAPK, startActivityIntent.getAction());
+        Assert.assertEquals(
+                manifestStartUrl, startActivityIntent.getStringExtra(WebApkConstants.EXTRA_URL));
+    }
+
+    /**
+     * Test that MainActivity ignores the intent URL and uses the manifest start URL if it is
+     * outside the scope specified in the Android Manifest. The intent URL is appended if
+     * |loggedIntentUrlParam| is set.
+     */
+    @Test
+    public void testRewriteStartUrlOutsideScopeAndAppendIntentUrl() {
+        final String intentStartUrl = "https://maps.google.com/search_results?A=a";
+        final String manifestStartUrl = "https://www.google.com/maps/startUrl";
+        final String manifestScope = "https://www.google.com/maps";
+        final String expectedRewrittenStartUrl =
+                "https://www.google.com/maps/startUrl?originalUrl=https%253A%252F%252Fmaps.google.com%252Fsearch_results%253FA%253Da";
+        final String browserPackageName = "com.android.chrome";
+
+        Bundle bundle = new Bundle();
+        bundle.putString(WebApkMetaDataKeys.START_URL, manifestStartUrl);
+        bundle.putString(WebApkMetaDataKeys.SCOPE, manifestScope);
+        bundle.putString(WebApkMetaDataKeys.RUNTIME_HOST, browserPackageName);
+        bundle.putString(WebApkMetaDataKeys.LOGGED_INTENT_URL_PARAM, "originalUrl");
         WebApkTestHelper.registerWebApkWithMetaData(WebApkUtilsTest.WEBAPK_PACKAGE_NAME, bundle);
 
         installBrowser(browserPackageName);
