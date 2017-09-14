@@ -38,6 +38,7 @@ namespace blink {
 class Event;
 class EventDispatchMediator;
 class EventDispatchHandlingState;
+class EventTarget;
 class LocalFrameView;
 class Node;
 
@@ -64,6 +65,7 @@ class EventDispatcher {
   DispatchEventResult Dispatch();
   Node& GetNode() const { return *node_; }
   Event& GetEvent() const { return *event_; }
+  EventTarget* GetLastEventTarget() const { return last_event_target_; }
 
  private:
   EventDispatcher(Node&, Event*);
@@ -77,8 +79,13 @@ class EventDispatcher {
   void DispatchEventPostProcess(Node* activation_target,
                                 EventDispatchHandlingState*);
 
+  void UpdateLastEventTarget(EventTarget* target) {
+    last_event_target_ = target;
+  }
+
   Member<Node> node_;
   Member<Event> event_;
+  Member<EventTarget> last_event_target_;
   Member<LocalFrameView> view_;
 #if DCHECK_IS_ON()
   bool event_dispatched_ = false;

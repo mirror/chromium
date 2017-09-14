@@ -167,7 +167,8 @@ DispatchEventResult EventDispatcher::Dispatch() {
     }
   }
 
-  event_->SetTarget(EventPath::EventTargetRespectingTargetRules(*node_));
+  UpdateLastEventTarget(EventPath::EventTargetRespectingTargetRules(*node_));
+  event_->SetTarget(GetLastEventTarget());
 #if DCHECK_IS_ON()
   DCHECK(!EventDispatchForbiddenScope::IsEventDispatchForbidden());
 #endif
@@ -185,10 +186,9 @@ DispatchEventResult EventDispatcher::Dispatch() {
   }
   DispatchEventPostProcess(activation_target,
                            pre_dispatch_event_handler_result);
-
-  // Ensure that after event dispatch, the event's target object is the
-  // outermost shadow DOM boundary.
-  event_->SetTarget(event_->GetEventPath().GetWindowEventContext().Target());
+  // According to the spec (WHATWG DOM spec 2.8 Dispatch events, step 13),
+  // event.target should be kept after event dispatch finishes.
+  event_->SetTarget(GetLastEventTarget());
   event_->SetCurrentTarget(nullptr);
 
   return EventTarget::GetDispatchEventResult(*event_);
@@ -243,6 +243,7 @@ inline void EventDispatcher::DispatchEventAtBubbling() {
   size_t size = event_->GetEventPath().size();
   for (size_t i = 1; i < size; ++i) {
     const NodeEventContext& event_context = event_->GetEventPath()[i];
+    UpdateLastEventTarget(event_context.Target());
     if (event_context.CurrentTargetSameAsTarget()) {
       event_->SetEventPhase(Event::kAtTarget);
     } else if (event_->bubbles() && !event_->cancelBubble()) {
@@ -263,6 +264,9 @@ inline void EventDispatcher::DispatchEventAtBubbling() {
 inline void EventDispatcher::DispatchEventPostProcess(
     Node* activation_target,
     EventDispatchHandlingState* pre_dispatch_event_handler_result) {
+  // This original target should be set to the target because some types of
+  // HTMLInputElement uses this target to determine whether to fire another
+  // related event.
   event_->SetTarget(EventPath::EventTargetRespectingTargetRules(*node_));
   // https://dom.spec.whatwg.org/#concept-event-dispatch
   // 14. Unset event’s dispatch flag, stop propagation flag, and stop immediate
