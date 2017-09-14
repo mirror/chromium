@@ -702,7 +702,7 @@ void AutofillProfile::RecordAndLogUse() {
 }
 
 AutofillProfile::ValidityState AutofillProfile::GetValidityState(
-    ServerFieldType type) {
+    ServerFieldType type) const {
   // Return valid for types that autofill does not validate.
   if (!IsValidationSupportedForType(type))
     return UNSUPPORTED;
@@ -710,7 +710,7 @@ AutofillProfile::ValidityState AutofillProfile::GetValidityState(
   if (!base::ContainsKey(validity_states_, type))
     return UNVALIDATED;
 
-  return validity_states_[type];
+  return validity_states_.find(type)->second;
 }
 
 void AutofillProfile::SetValidityState(ServerFieldType type,
@@ -729,7 +729,7 @@ void AutofillProfile::SetValidityState(ServerFieldType type,
   }
 }
 
-bool AutofillProfile::IsValidationSupportedForType(ServerFieldType type) {
+bool AutofillProfile::IsValidationSupportedForType(ServerFieldType type) const {
   return std::find(supported_types_for_validation,
                    supported_types_for_validation +
                        number_supported_types_for_validation,
@@ -737,7 +737,7 @@ bool AutofillProfile::IsValidationSupportedForType(ServerFieldType type) {
          supported_types_for_validation + number_supported_types_for_validation;
 }
 
-int AutofillProfile::GetValidityBitfieldValue() {
+int AutofillProfile::GetValidityBitfieldValue() const {
   int validity_value = 0;
   size_t field_type_shift = 0;
   for (ServerFieldType supported_type : supported_types_for_validation) {
