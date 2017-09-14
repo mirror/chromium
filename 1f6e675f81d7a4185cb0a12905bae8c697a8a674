@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "332ea16e_73133b52",
+        "filename": "build/config/ios/imageset.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-14T00:18:35Z",
+      "side": 1,
+      "message": "A hack, since appicon folders have a different extension.  But it seems the same code path works, maybe?",
+      "revId": "1f6e675f81d7a4185cb0a12905bae8c697a8a674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32400c39_719c4037",
+        "filename": "build/toolchain/mac/compile_xcassets.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-14T00:18:35Z",
+      "side": 1,
+      "message": "I think the correct way of doing this is to remove the \u0027CFBundleIcons\u0027 section from Info.plist and rely on this instead. Another option is to just skip --output-partial-info-plist and manually maintain it.  I didn\u0027t add anything to this CL to do the plist merge, so perhaps it\u0027s easy?",
+      "revId": "1f6e675f81d7a4185cb0a12905bae8c697a8a674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "196198a3_4093585e",
+        "filename": "ios/chrome/app/resources/Info.plist",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-14T00:18:35Z",
+      "side": 1,
+      "message": "This is a cut and paste from whatever was in --output-partial-info-plist.\n\nI manually inserted \u0027UIPrerenderedIcon\u0027.",
+      "revId": "1f6e675f81d7a4185cb0a12905bae8c697a8a674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e62fe3f_6b63fdb9",
+        "filename": "ios/chrome/app/resources/app_icons.xcassets/app_icons.appiconset/Contents.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-14T00:18:35Z",
+      "side": 1,
+      "message": "Presumably this is removed before distribution by Apple with app thinning?",
+      "revId": "1f6e675f81d7a4185cb0a12905bae8c697a8a674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
