@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "11d6446e_d136f007",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-09-14T19:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfc28ffa_ad543305",
+      "range": {
+        "startLine": 323,
+        "startChar": 57,
+        "endLine": 323,
+        "endChar": 0
+      },
+      "revId": "cf0ab168a4a0b56e265f3f4faec088aeb2c135c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cae0da91_44f3a8a5",
         "filename": "components/update_client/protocol_builder.cc",
         "patchSetId": 8
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "77e800c8_73ddf986",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-09-14T19:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cae0da91_44f3a8a5",
+      "revId": "cf0ab168a4a0b56e265f3f4faec088aeb2c135c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efe51f59_1166e8de",
         "filename": "components/update_client/protocol_builder.cc",
         "patchSetId": 8
@@ -56,6 +98,24 @@
       "revId": "cf0ab168a4a0b56e265f3f4faec088aeb2c135c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c65a3d0_cab6c97c",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-09-14T19:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efe51f59_1166e8de",
+      "revId": "cf0ab168a4a0b56e265f3f4faec088aeb2c135c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "0b2d11ac_21d18bfc",
+        "filename": "components/update_client/update_checker_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-09-14T19:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67597087_1139ca6b",
+      "range": {
+        "startLine": 72,
+        "startChar": 9,
+        "endLine": 72,
+        "endChar": 12
+      },
+      "revId": "cf0ab168a4a0b56e265f3f4faec088aeb2c135c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8050e6f3_3dc194a3",
         "filename": "components/update_client/update_checker_unittest.cc",
         "patchSetId": 8
@@ -96,6 +180,24 @@
       "revId": "cf0ab168a4a0b56e265f3f4faec088aeb2c135c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ea9b573_35aac595",
+        "filename": "components/update_client/update_checker_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-09-14T19:04:42Z",
+      "side": 1,
+      "message": "The compiler would give an error for the map initialization, this is because Component class is uncopyable and unassignable.",
+      "parentUuid": "8050e6f3_3dc194a3",
+      "revId": "cf0ab168a4a0b56e265f3f4faec088aeb2c135c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "de36daee_8d0736ef",
+        "filename": "components/update_client/update_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-09-14T19:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27d0d342_41c78315",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 22
+      },
+      "revId": "cf0ab168a4a0b56e265f3f4faec088aeb2c135c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fecfd88a_960d5d81",
         "filename": "components/update_client/update_client.h",
         "patchSetId": 8
@@ -142,6 +268,30 @@
       "revId": "cf0ab168a4a0b56e265f3f4faec088aeb2c135c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b134dc_6ccf9ee5",
+        "filename": "components/update_client/update_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1238209
+      },
+      "writtenOn": "2017-09-14T19:04:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fecfd88a_960d5d81",
+      "range": {
+        "startLine": 255,
+        "startChar": 56,
+        "endLine": 255,
+        "endChar": 0
+      },
+      "revId": "cf0ab168a4a0b56e265f3f4faec088aeb2c135c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
