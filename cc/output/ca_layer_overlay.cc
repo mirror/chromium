@@ -9,10 +9,10 @@
 #include "base/metrics/histogram_macros.h"
 #include "cc/quads/render_pass_draw_quad.h"
 #include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/stream_video_draw_quad.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/quads/tile_draw_quad.h"
 #include "cc/resources/resource_provider.h"
+#include "components/viz/common/quads/stream_video_draw_quad.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
 #include "gpu/GLES2/gl2extchromium.h"
 
 namespace cc {
@@ -104,7 +104,7 @@ CALayerResult FromRenderPassQuad(
 }
 
 CALayerResult FromStreamVideoQuad(ResourceProvider* resource_provider,
-                                  const StreamVideoDrawQuad* quad,
+                                  const viz::StreamVideoDrawQuad* quad,
                                   CALayerOverlay* ca_layer_overlay) {
   unsigned resource_id = quad->resource_id();
   if (!resource_provider->IsOverlayCandidate(resource_id))
@@ -131,7 +131,7 @@ CALayerResult FromSolidColorDrawQuad(const SolidColorDrawQuad* quad,
 }
 
 CALayerResult FromTextureQuad(ResourceProvider* resource_provider,
-                              const TextureDrawQuad* quad,
+                              const viz::TextureDrawQuad* quad,
                               CALayerOverlay* ca_layer_overlay) {
   unsigned resource_id = quad->resource_id();
   if (!resource_provider->IsOverlayCandidate(resource_id))
@@ -229,7 +229,7 @@ class CALayerOverlayProcessor {
     switch (quad->material) {
       case viz::DrawQuad::TEXTURE_CONTENT:
         return FromTextureQuad(resource_provider,
-                               TextureDrawQuad::MaterialCast(quad),
+                               viz::TextureDrawQuad::MaterialCast(quad),
                                ca_layer_overlay);
       case viz::DrawQuad::TILED_CONTENT:
         return FromTileQuad(resource_provider, TileDrawQuad::MaterialCast(quad),
@@ -239,7 +239,7 @@ class CALayerOverlayProcessor {
                                       ca_layer_overlay, skip);
       case viz::DrawQuad::STREAM_VIDEO_CONTENT:
         return FromStreamVideoQuad(resource_provider,
-                                   StreamVideoDrawQuad::MaterialCast(quad),
+                                   viz::StreamVideoDrawQuad::MaterialCast(quad),
                                    ca_layer_overlay);
       case viz::DrawQuad::DEBUG_BORDER:
         return CA_LAYER_FAILED_DEBUG_BORDER;

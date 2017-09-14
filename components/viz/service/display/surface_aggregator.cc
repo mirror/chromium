@@ -21,10 +21,10 @@
 #include "cc/quads/render_pass_draw_quad.h"
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/surface_draw_quad.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/resources/display_resource_provider.h"
 #include "components/viz/common/quads/draw_quad.h"
 #include "components/viz/common/quads/shared_quad_state.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/surfaces/surface.h"
 #include "components/viz/service/surfaces/surface_client.h"
@@ -511,7 +511,7 @@ void SurfaceAggregator::CopyQuadsToPass(
         dest_quad = dest_pass->CopyFromAndAppendRenderPassDrawQuad(
             pass_quad, remapped_pass_id);
       } else if (quad->material == DrawQuad::TEXTURE_CONTENT) {
-        const auto* texture_quad = cc::TextureDrawQuad::MaterialCast(quad);
+        const auto* texture_quad = TextureDrawQuad::MaterialCast(quad);
         if (texture_quad->secure_output_only &&
             (!output_is_secure_ || copy_request_passes_.count(dest_pass->id))) {
           auto* solid_color_quad =

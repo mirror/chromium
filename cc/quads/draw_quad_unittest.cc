@@ -18,13 +18,13 @@
 #include "cc/quads/render_pass.h"
 #include "cc/quads/render_pass_draw_quad.h"
 #include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/stream_video_draw_quad.h"
 #include "cc/quads/surface_draw_quad.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/quads/tile_draw_quad.h"
-#include "cc/quads/yuv_video_draw_quad.h"
 #include "cc/test/fake_raster_source.h"
 #include "cc/test/geometry_test_utils.h"
+#include "components/viz/common/quads/stream_video_draw_quad.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
+#include "components/viz/common/quads/yuv_video_draw_quad.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/effects/SkBlurImageFilter.h"
 #include "ui/gfx/transform.h"
@@ -254,7 +254,7 @@ TEST(DrawQuadTest, CopyStreamVideoDrawQuad) {
   gfx::Transform matrix = gfx::Transform(0.5, 0.25, 1, 0.75, 0, 1);
   CREATE_SHARED_STATE();
 
-  CREATE_QUAD_NEW(StreamVideoDrawQuad, visible_rect, needs_blending,
+  CREATE_QUAD_NEW(viz::StreamVideoDrawQuad, visible_rect, needs_blending,
                   resource_id, resource_size_in_pixels, matrix);
   EXPECT_EQ(viz::DrawQuad::STREAM_VIDEO_CONTENT, copy_quad->material);
   EXPECT_EQ(visible_rect, copy_quad->visible_rect);
@@ -263,8 +263,8 @@ TEST(DrawQuadTest, CopyStreamVideoDrawQuad) {
   EXPECT_EQ(resource_size_in_pixels, copy_quad->resource_size_in_pixels());
   EXPECT_EQ(matrix, copy_quad->matrix);
 
-  CREATE_QUAD_ALL(StreamVideoDrawQuad, resource_id, resource_size_in_pixels,
-                  matrix);
+  CREATE_QUAD_ALL(viz::StreamVideoDrawQuad, resource_id,
+                  resource_size_in_pixels, matrix);
   EXPECT_EQ(viz::DrawQuad::STREAM_VIDEO_CONTENT, copy_quad->material);
   EXPECT_EQ(resource_id, copy_quad->resource_id());
   EXPECT_EQ(resource_size_in_pixels, copy_quad->resource_size_in_pixels());
@@ -305,10 +305,10 @@ TEST(DrawQuadTest, CopyTextureDrawQuad) {
   bool secure_output_only = true;
   CREATE_SHARED_STATE();
 
-  CREATE_QUAD_NEW(TextureDrawQuad, visible_rect, needs_blending, resource_id,
-                  premultiplied_alpha, uv_top_left, uv_bottom_right,
-                  SK_ColorTRANSPARENT, vertex_opacity, y_flipped,
-                  nearest_neighbor, secure_output_only);
+  CREATE_QUAD_NEW(viz::TextureDrawQuad, visible_rect, needs_blending,
+                  resource_id, premultiplied_alpha, uv_top_left,
+                  uv_bottom_right, SK_ColorTRANSPARENT, vertex_opacity,
+                  y_flipped, nearest_neighbor, secure_output_only);
   EXPECT_EQ(viz::DrawQuad::TEXTURE_CONTENT, copy_quad->material);
   EXPECT_EQ(visible_rect, copy_quad->visible_rect);
   EXPECT_EQ(needs_blending, copy_quad->needs_blending);
@@ -321,7 +321,7 @@ TEST(DrawQuadTest, CopyTextureDrawQuad) {
   EXPECT_EQ(nearest_neighbor, copy_quad->nearest_neighbor);
   EXPECT_EQ(secure_output_only, copy_quad->secure_output_only);
 
-  CREATE_QUAD_ALL(TextureDrawQuad, resource_id, resource_size_in_pixels,
+  CREATE_QUAD_ALL(viz::TextureDrawQuad, resource_id, resource_size_in_pixels,
                   premultiplied_alpha, uv_top_left, uv_bottom_right,
                   SK_ColorTRANSPARENT, vertex_opacity, y_flipped,
                   nearest_neighbor, secure_output_only);
@@ -384,11 +384,11 @@ TEST(DrawQuadTest, CopyYUVVideoDrawQuad) {
   float resource_multiplier = 2.001f;
   uint32_t bits_per_channel = 5;
   bool require_overlay = true;
-  YUVVideoDrawQuad::ColorSpace color_space = YUVVideoDrawQuad::JPEG;
+  auto color_space = viz::YUVVideoDrawQuad::JPEG;
   gfx::ColorSpace video_color_space = gfx::ColorSpace::CreateJpeg();
   CREATE_SHARED_STATE();
 
-  CREATE_QUAD_NEW(YUVVideoDrawQuad, visible_rect, needs_blending,
+  CREATE_QUAD_NEW(viz::YUVVideoDrawQuad, visible_rect, needs_blending,
                   ya_tex_coord_rect, uv_tex_coord_rect, ya_tex_size,
                   uv_tex_size, y_plane_resource_id, u_plane_resource_id,
                   v_plane_resource_id, a_plane_resource_id, color_space,
@@ -411,7 +411,7 @@ TEST(DrawQuadTest, CopyYUVVideoDrawQuad) {
   EXPECT_EQ(bits_per_channel, copy_quad->bits_per_channel);
   EXPECT_FALSE(copy_quad->require_overlay);
 
-  CREATE_QUAD_ALL(YUVVideoDrawQuad, ya_tex_coord_rect, uv_tex_coord_rect,
+  CREATE_QUAD_ALL(viz::YUVVideoDrawQuad, ya_tex_coord_rect, uv_tex_coord_rect,
                   ya_tex_size, uv_tex_size, y_plane_resource_id,
                   u_plane_resource_id, v_plane_resource_id, a_plane_resource_id,
                   color_space, video_color_space, resource_offset,
@@ -545,7 +545,7 @@ TEST_F(DrawQuadIteratorTest, StreamVideoDrawQuad) {
   gfx::Transform matrix = gfx::Transform(0.5, 0.25, 1, 0.75, 0, 1);
 
   CREATE_SHARED_STATE();
-  CREATE_QUAD_NEW(StreamVideoDrawQuad, visible_rect, needs_blending,
+  CREATE_QUAD_NEW(viz::StreamVideoDrawQuad, visible_rect, needs_blending,
                   resource_id, resource_size_in_pixels, matrix);
   EXPECT_EQ(resource_id, quad_new->resource_id());
   EXPECT_EQ(resource_size_in_pixels, quad_new->resource_size_in_pixels());
@@ -577,10 +577,10 @@ TEST_F(DrawQuadIteratorTest, TextureDrawQuad) {
   bool secure_output_only = true;
 
   CREATE_SHARED_STATE();
-  CREATE_QUAD_NEW(TextureDrawQuad, visible_rect, needs_blending, resource_id,
-                  premultiplied_alpha, uv_top_left, uv_bottom_right,
-                  SK_ColorTRANSPARENT, vertex_opacity, y_flipped,
-                  nearest_neighbor, secure_output_only);
+  CREATE_QUAD_NEW(viz::TextureDrawQuad, visible_rect, needs_blending,
+                  resource_id, premultiplied_alpha, uv_top_left,
+                  uv_bottom_right, SK_ColorTRANSPARENT, vertex_opacity,
+                  y_flipped, nearest_neighbor, secure_output_only);
   EXPECT_EQ(resource_id, quad_new->resource_id());
   EXPECT_EQ(1, IterateAndCount(quad_new));
   EXPECT_EQ(resource_id + 1, quad_new->resource_id());
@@ -613,11 +613,11 @@ TEST_F(DrawQuadIteratorTest, YUVVideoDrawQuad) {
   viz::ResourceId u_plane_resource_id = 532;
   viz::ResourceId v_plane_resource_id = 4;
   viz::ResourceId a_plane_resource_id = 63;
-  YUVVideoDrawQuad::ColorSpace color_space = YUVVideoDrawQuad::JPEG;
+  auto color_space = viz::YUVVideoDrawQuad::JPEG;
   gfx::ColorSpace video_color_space = gfx::ColorSpace::CreateJpeg();
 
   CREATE_SHARED_STATE();
-  CREATE_QUAD_NEW(YUVVideoDrawQuad, visible_rect, needs_blending,
+  CREATE_QUAD_NEW(viz::YUVVideoDrawQuad, visible_rect, needs_blending,
                   ya_tex_coord_rect, uv_tex_coord_rect, ya_tex_size,
                   uv_tex_size, y_plane_resource_id, u_plane_resource_id,
                   v_plane_resource_id, a_plane_resource_id, color_space,
@@ -647,7 +647,7 @@ TEST(DrawQuadTest, LargestQuadType) {
         largest = std::max(largest, sizeof(PictureDrawQuad));
         break;
       case viz::DrawQuad::TEXTURE_CONTENT:
-        largest = std::max(largest, sizeof(TextureDrawQuad));
+        largest = std::max(largest, sizeof(viz::TextureDrawQuad));
         break;
       case viz::DrawQuad::RENDER_PASS:
         largest = std::max(largest, sizeof(RenderPassDrawQuad));
@@ -662,10 +662,10 @@ TEST(DrawQuadTest, LargestQuadType) {
         largest = std::max(largest, sizeof(TileDrawQuad));
         break;
       case viz::DrawQuad::STREAM_VIDEO_CONTENT:
-        largest = std::max(largest, sizeof(StreamVideoDrawQuad));
+        largest = std::max(largest, sizeof(viz::StreamVideoDrawQuad));
         break;
       case viz::DrawQuad::YUV_VIDEO_CONTENT:
-        largest = std::max(largest, sizeof(YUVVideoDrawQuad));
+        largest = std::max(largest, sizeof(viz::YUVVideoDrawQuad));
         break;
       case viz::DrawQuad::INVALID:
         break;
@@ -688,7 +688,7 @@ TEST(DrawQuadTest, LargestQuadType) {
         LOG(ERROR) << "PictureDrawQuad " << sizeof(PictureDrawQuad);
         break;
       case viz::DrawQuad::TEXTURE_CONTENT:
-        LOG(ERROR) << "TextureDrawQuad " << sizeof(TextureDrawQuad);
+        LOG(ERROR) << "TextureDrawQuad " << sizeof(viz::TextureDrawQuad);
         break;
       case viz::DrawQuad::RENDER_PASS:
         LOG(ERROR) << "RenderPassDrawQuad " << sizeof(RenderPassDrawQuad);
@@ -703,10 +703,11 @@ TEST(DrawQuadTest, LargestQuadType) {
         LOG(ERROR) << "TileDrawQuad " << sizeof(TileDrawQuad);
         break;
       case viz::DrawQuad::STREAM_VIDEO_CONTENT:
-        LOG(ERROR) << "StreamVideoDrawQuad " << sizeof(StreamVideoDrawQuad);
+        LOG(ERROR) << "StreamVideoDrawQuad "
+                   << sizeof(viz::StreamVideoDrawQuad);
         break;
       case viz::DrawQuad::YUV_VIDEO_CONTENT:
-        LOG(ERROR) << "YUVVideoDrawQuad " << sizeof(YUVVideoDrawQuad);
+        LOG(ERROR) << "YUVVideoDrawQuad " << sizeof(viz::YUVVideoDrawQuad);
         break;
       case viz::DrawQuad::INVALID:
         break;

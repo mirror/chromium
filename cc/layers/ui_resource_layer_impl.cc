@@ -7,9 +7,9 @@
 #include "base/strings/stringprintf.h"
 #include "base/values.h"
 #include "cc/base/math_util.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/occlusion.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
 #include "ui/gfx/geometry/rect_f.h"
 
 namespace cc {
@@ -125,8 +125,7 @@ void UIResourceLayerImpl::AppendQuads(
   if (visible_quad_rect.IsEmpty())
     return;
 
-  TextureDrawQuad* quad =
-      render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
+  auto* quad = render_pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
   quad->SetNew(shared_quad_state, quad_rect, visible_quad_rect, needs_blending,
                resource, premultiplied_alpha, uv_top_left_, uv_bottom_right_,
                SK_ColorTRANSPARENT, vertex_opacity_, flipped, nearest_neighbor,

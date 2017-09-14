@@ -10,6 +10,10 @@
 #include "cc/output/direct_renderer.h"
 #include "ui/latency/latency_info.h"
 
+namespace viz {
+class TextureDrawQuad;
+}
+
 namespace cc {
 class DebugBorderDrawQuad;
 class OutputSurface;
@@ -18,7 +22,6 @@ class RenderPassDrawQuad;
 class DisplayResourceProvider;
 class SoftwareOutputDevice;
 class SolidColorDrawQuad;
-class TextureDrawQuad;
 class TileDrawQuad;
 
 class CC_EXPORT SoftwareRenderer : public DirectRenderer {
@@ -66,7 +69,7 @@ class CC_EXPORT SoftwareRenderer : public DirectRenderer {
   void DrawPictureQuad(const PictureDrawQuad* quad);
   void DrawRenderPassQuad(const RenderPassDrawQuad* quad);
   void DrawSolidColorQuad(const SolidColorDrawQuad* quad);
-  void DrawTextureQuad(const TextureDrawQuad* quad);
+  void DrawTextureQuad(const viz::TextureDrawQuad* quad);
   void DrawTileQuad(const TileDrawQuad* quad);
   void DrawUnsupportedQuad(const viz::DrawQuad* quad);
   bool ShouldApplyBackgroundFilters(

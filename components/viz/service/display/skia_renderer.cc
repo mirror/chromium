@@ -14,11 +14,11 @@
 #include "cc/quads/picture_draw_quad.h"
 #include "cc/quads/render_pass_draw_quad.h"
 #include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/quads/tile_draw_quad.h"
 #include "cc/resources/scoped_resource.h"
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/quads/copy_output_request.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "skia/ext/opacity_filter_canvas.h"
 #include "third_party/skia/include/core/SkCanvas.h"
@@ -391,7 +391,7 @@ void SkiaRenderer::DoDrawQuad(const DrawQuad* quad,
       DrawSolidColorQuad(cc::SolidColorDrawQuad::MaterialCast(quad));
       break;
     case DrawQuad::TEXTURE_CONTENT:
-      DrawTextureQuad(cc::TextureDrawQuad::MaterialCast(quad));
+      DrawTextureQuad(TextureDrawQuad::MaterialCast(quad));
       break;
     case DrawQuad::TILED_CONTENT:
       DrawTileQuad(cc::TileDrawQuad::MaterialCast(quad));
@@ -491,7 +491,7 @@ void SkiaRenderer::DrawSolidColorQuad(const cc::SolidColorDrawQuad* quad) {
                             current_paint_);
 }
 
-void SkiaRenderer::DrawTextureQuad(const cc::TextureDrawQuad* quad) {
+void SkiaRenderer::DrawTextureQuad(const TextureDrawQuad* quad) {
   if (!IsSoftwareResource(quad->resource_id())) {
     DrawUnsupportedQuad(quad);
     return;

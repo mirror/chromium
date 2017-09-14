@@ -15,11 +15,11 @@
 #include "cc/quads/picture_draw_quad.h"
 #include "cc/quads/render_pass_draw_quad.h"
 #include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/quads/tile_draw_quad.h"
 #include "cc/resources/scoped_resource.h"
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/quads/copy_output_request.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
 #include "skia/ext/opacity_filter_canvas.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkColor.h"
@@ -285,7 +285,7 @@ void SoftwareRenderer::DoDrawQuad(const viz::DrawQuad* quad,
       DrawSolidColorQuad(SolidColorDrawQuad::MaterialCast(quad));
       break;
     case viz::DrawQuad::TEXTURE_CONTENT:
-      DrawTextureQuad(TextureDrawQuad::MaterialCast(quad));
+      DrawTextureQuad(viz::TextureDrawQuad::MaterialCast(quad));
       break;
     case viz::DrawQuad::TILED_CONTENT:
       DrawTileQuad(TileDrawQuad::MaterialCast(quad));
@@ -384,7 +384,7 @@ void SoftwareRenderer::DrawSolidColorQuad(const SolidColorDrawQuad* quad) {
                             current_paint_);
 }
 
-void SoftwareRenderer::DrawTextureQuad(const TextureDrawQuad* quad) {
+void SoftwareRenderer::DrawTextureQuad(const viz::TextureDrawQuad* quad) {
   if (!IsSoftwareResource(quad->resource_id())) {
     DrawUnsupportedQuad(quad);
     return;

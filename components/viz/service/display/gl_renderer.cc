@@ -37,14 +37,14 @@
 #include "cc/quads/draw_polygon.h"
 #include "cc/quads/picture_draw_quad.h"
 #include "cc/quads/render_pass.h"
-#include "cc/quads/stream_video_draw_quad.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/raster/scoped_gpu_raster.h"
 #include "cc/resources/resource_pool.h"
 #include "cc/resources/scoped_resource.h"
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/gpu/context_provider.h"
 #include "components/viz/common/quads/copy_output_request.h"
+#include "components/viz/common/quads/stream_video_draw_quad.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
 #include "components/viz/service/display/dynamic_geometry_binding.h"
 #include "components/viz/service/display/layer_quad.h"
 #include "components/viz/service/display/static_geometry_binding.h"
@@ -74,7 +74,7 @@ using gpu::gles2::GLES2Interface;
 namespace viz {
 namespace {
 
-Float4 UVTransform(const cc::TextureDrawQuad* quad) {
+Float4 UVTransform(const TextureDrawQuad* quad) {
   gfx::PointF uv0 = quad->uv_top_left;
   gfx::PointF uv1 = quad->uv_bottom_right;
   Float4 xform = {{uv0.x(), uv0.y(), uv1.x() - uv0.x(), uv1.y() - uv0.y()}};
@@ -613,8 +613,7 @@ void GLRenderer::DoDrawQuad(const DrawQuad* quad,
                          clip_region);
       break;
     case DrawQuad::STREAM_VIDEO_CONTENT:
-      DrawStreamVideoQuad(cc::StreamVideoDrawQuad::MaterialCast(quad),
-                          clip_region);
+      DrawStreamVideoQuad(StreamVideoDrawQuad::MaterialCast(quad), clip_region);
       break;
     case DrawQuad::SURFACE_CONTENT:
       // Surface content should be fully resolved to other quad types before
@@ -622,13 +621,13 @@ void GLRenderer::DoDrawQuad(const DrawQuad* quad,
       NOTREACHED();
       break;
     case DrawQuad::TEXTURE_CONTENT:
-      EnqueueTextureQuad(cc::TextureDrawQuad::MaterialCast(quad), clip_region);
+      EnqueueTextureQuad(TextureDrawQuad::MaterialCast(quad), clip_region);
       break;
     case DrawQuad::TILED_CONTENT:
       DrawTileQuad(cc::TileDrawQuad::MaterialCast(quad), clip_region);
       break;
     case DrawQuad::YUV_VIDEO_CONTENT:
-      DrawYUVVideoQuad(cc::YUVVideoDrawQuad::MaterialCast(quad), clip_region);
+      DrawYUVVideoQuad(YUVVideoDrawQuad::MaterialCast(quad), clip_region);
       break;
   }
 }
@@ -2108,7 +2107,7 @@ void GLRenderer::DrawContentQuadNoAA(const cc::ContentDrawQuadBase* quad,
   num_triangles_drawn_ += 2;
 }
 
-void GLRenderer::DrawYUVVideoQuad(const cc::YUVVideoDrawQuad* quad,
+void GLRenderer::DrawYUVVideoQuad(const YUVVideoDrawQuad* quad,
                                   const gfx::QuadF* clip_region) {
   SetBlendEnabled(quad->ShouldDrawWithBlending());
 
@@ -2133,13 +2132,13 @@ void GLRenderer::DrawYUVVideoQuad(const cc::YUVVideoDrawQuad* quad,
       !settings_->enable_color_correct_rendering) {
     dst_color_space = gfx::ColorSpace();
     switch (quad->color_space) {
-      case cc::YUVVideoDrawQuad::REC_601:
+      case YUVVideoDrawQuad::REC_601:
         src_color_space = gfx::ColorSpace::CreateREC601();
         break;
-      case cc::YUVVideoDrawQuad::REC_709:
+      case YUVVideoDrawQuad::REC_709:
         src_color_space = gfx::ColorSpace::CreateREC709();
         break;
-      case cc::YUVVideoDrawQuad::JPEG:
+      case YUVVideoDrawQuad::JPEG:
         src_color_space = gfx::ColorSpace::CreateJpeg();
         break;
     }
@@ -2277,7 +2276,7 @@ void GLRenderer::DrawYUVVideoQuad(const cc::YUVVideoDrawQuad* quad,
   }
 }
 
-void GLRenderer::DrawStreamVideoQuad(const cc::StreamVideoDrawQuad* quad,
+void GLRenderer::DrawStreamVideoQuad(const StreamVideoDrawQuad* quad,
                                      const gfx::QuadF* clip_region) {
   SetBlendEnabled(quad->ShouldDrawWithBlending());
 
@@ -2436,7 +2435,7 @@ void GLRenderer::FlushTextureQuadCache(BoundGeometry flush_binding) {
   }
 }
 
-void GLRenderer::EnqueueTextureQuad(const cc::TextureDrawQuad* quad,
+void GLRenderer::EnqueueTextureQuad(const TextureDrawQuad* quad,
                                     const gfx::QuadF* clip_region) {
   // If we have a clip_region then we have to render the next quad
   // with dynamic geometry, therefore we must flush all pending

@@ -19,11 +19,11 @@
 #include "cc/quads/render_pass_draw_quad.h"
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/surface_draw_quad.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/resources/display_resource_provider.h"
 #include "cc/test/fake_resource_provider.h"
 #include "cc/test/render_pass_test_utils.h"
 #include "cc/test/test_shared_bitmap_manager.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
 #include "components/viz/common/resources/shared_bitmap_manager.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
@@ -2204,7 +2204,7 @@ void SubmitCompositorFrameWithResources(ResourceId* resource_ids,
     // ResourceProvider is software, so only software resources are valid.
     resource.is_software = valid;
     frame.resource_list.push_back(resource);
-    auto* quad = pass->CreateAndAppendDrawQuad<cc::TextureDrawQuad>();
+    auto* quad = pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
     const gfx::Rect rect;
     const gfx::Rect visible_rect;
     bool needs_blending = false;

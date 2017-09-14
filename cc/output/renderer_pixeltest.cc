@@ -12,11 +12,11 @@
 #include "cc/paint/paint_flags.h"
 #include "cc/paint/skia_paint_canvas.h"
 #include "cc/quads/picture_draw_quad.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/resources/video_resource_updater.h"
 #include "cc/test/fake_raster_source.h"
 #include "cc/test/fake_recording_source.h"
 #include "cc/test/pixel_test.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
 #include "components/viz/service/display/gl_renderer.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "media/base/video_frame.h"
@@ -151,8 +151,7 @@ void CreateTestTwoColoredTextureDrawQuad(const gfx::Rect& rect,
   const gfx::PointF uv_bottom_right(1.0f, 1.0f);
   const bool flipped = false;
   const bool nearest_neighbor = false;
-  TextureDrawQuad* quad =
-      render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
+  auto* quad = render_pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
   quad->SetNew(shared_state, rect, rect, needs_blending, resource,
                premultiplied_alpha, uv_top_left, uv_bottom_right,
                background_color, vertex_opacity, flipped, nearest_neighbor,
@@ -187,8 +186,7 @@ void CreateTestTextureDrawQuad(const gfx::Rect& rect,
   const gfx::PointF uv_bottom_right(1.0f, 1.0f);
   const bool flipped = false;
   const bool nearest_neighbor = false;
-  TextureDrawQuad* quad =
-      render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
+  auto* quad = render_pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
   quad->SetNew(shared_state, rect, rect, needs_blending, resource,
                premultiplied_alpha, uv_top_left, uv_bottom_right,
                background_color, vertex_opacity, flipped, nearest_neighbor,
@@ -219,12 +217,12 @@ void CreateTestYUVVideoDrawQuad_FromVideoFrame(
     const gfx::Rect& visible_rect,
     ResourceProvider* resource_provider) {
   const bool with_alpha = (video_frame->format() == media::PIXEL_FORMAT_YV12A);
-  YUVVideoDrawQuad::ColorSpace color_space = YUVVideoDrawQuad::REC_601;
+  auto color_space = viz::YUVVideoDrawQuad::REC_601;
   int video_frame_color_space;
   if (video_frame->metadata()->GetInteger(
           media::VideoFrameMetadata::COLOR_SPACE, &video_frame_color_space) &&
       video_frame_color_space == media::COLOR_SPACE_JPEG) {
-    color_space = YUVVideoDrawQuad::JPEG;
+    color_space = viz::YUVVideoDrawQuad::JPEG;
   }
 
   gfx::ColorSpace video_color_space = video_frame->ColorSpace();
@@ -293,8 +291,8 @@ void CreateTestYUVVideoDrawQuad_FromVideoFrame(
                                tex_coord_rect.width() * uv_tex_size.width(),
                                tex_coord_rect.height() * uv_tex_size.height());
 
-  YUVVideoDrawQuad* yuv_quad =
-      render_pass->CreateAndAppendDrawQuad<YUVVideoDrawQuad>();
+  auto* yuv_quad =
+      render_pass->CreateAndAppendDrawQuad<viz::YUVVideoDrawQuad>();
   uint32_t bits_per_channel = 8;
   if (video_frame->format() == media::PIXEL_FORMAT_YUV420P10 ||
       video_frame->format() == media::PIXEL_FORMAT_YUV422P10 ||
@@ -331,8 +329,7 @@ void CreateTestY16TextureDrawQuad_FromVideoFrame(
           resources.mailboxes[0],
           SingleReleaseCallbackImpl::Create(resources.release_callbacks[0]));
 
-  TextureDrawQuad* quad =
-      render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
+  auto* quad = render_pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
   bool needs_blending = true;
   float vertex_opacity[4] = {1.0f, 1.0f, 1.0f, 1.0f};
   quad->SetNew(shared_state, rect, rect, needs_blending, y_resource, false,
@@ -552,10 +549,10 @@ void CreateTestYUVVideoDrawQuad_NV12(const SharedQuadState* shared_state,
                                      const gfx::Rect& rect,
                                      const gfx::Rect& visible_rect,
                                      ResourceProvider* resource_provider) {
-  YUVVideoDrawQuad::ColorSpace color_space = YUVVideoDrawQuad::REC_601;
+  auto color_space = viz::YUVVideoDrawQuad::REC_601;
   gfx::ColorSpace gfx_color_space = gfx::ColorSpace::CreateREC601();
   if (video_frame_color_space == media::COLOR_SPACE_JPEG) {
-    color_space = YUVVideoDrawQuad::JPEG;
+    color_space = viz::YUVVideoDrawQuad::JPEG;
     gfx_color_space = gfx::ColorSpace::CreateJpeg();
   }
 
@@ -591,8 +588,8 @@ void CreateTestYUVVideoDrawQuad_NV12(const SharedQuadState* shared_state,
                                tex_coord_rect.width() * uv_tex_size.width(),
                                tex_coord_rect.height() * uv_tex_size.height());
 
-  YUVVideoDrawQuad* yuv_quad =
-      render_pass->CreateAndAppendDrawQuad<YUVVideoDrawQuad>();
+  auto* yuv_quad =
+      render_pass->CreateAndAppendDrawQuad<viz::YUVVideoDrawQuad>();
   yuv_quad->SetNew(shared_state, rect, visible_rect, needs_blending,
                    ya_tex_coord_rect, uv_tex_coord_rect, ya_tex_size,
                    uv_tex_size, y_resource, u_resource, v_resource, a_resource,
@@ -3013,7 +3010,7 @@ TYPED_TEST(SoftwareRendererPixelTest, TextureDrawQuadNearestNeighbor) {
       CreateTestSharedQuadState(quad_to_target_transform, viewport, pass.get());
 
   float vertex_opacity[4] = {1.0f, 1.0f, 1.0f, 1.0f};
-  TextureDrawQuad* quad = pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
+  auto* quad = pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
   quad->SetNew(shared_state, viewport, viewport, needs_blending, resource,
                false, gfx::PointF(0, 0), gfx::PointF(1, 1), SK_ColorBLACK,
                vertex_opacity, false, nearest_neighbor, false);
@@ -3062,7 +3059,7 @@ TYPED_TEST(SoftwareRendererPixelTest, TextureDrawQuadLinear) {
       CreateTestSharedQuadState(quad_to_target_transform, viewport, pass.get());
 
   float vertex_opacity[4] = {1.0f, 1.0f, 1.0f, 1.0f};
-  TextureDrawQuad* quad = pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
+  auto* quad = pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
   quad->SetNew(shared_state, viewport, viewport, needs_blending, resource,
                false, gfx::PointF(0, 0), gfx::PointF(1, 1), SK_ColorBLACK,
                vertex_opacity, false, nearest_neighbor, false);
@@ -3438,8 +3435,8 @@ TEST_F(GLRendererPixelTest, TextureQuadBatching) {
       gfx::RectF uv_rect = gfx::ScaleRect(
           gfx::RectF(layer_rect), 1.f / rect.width(), 1.f / rect.height());
 
-      TextureDrawQuad* texture_quad =
-          pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
+      auto* texture_quad =
+          pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
       texture_quad->SetNew(shared_state, layer_rect, layer_rect, needs_blending,
                            resource, true, uv_rect.origin(),
                            uv_rect.bottom_right(), SK_ColorWHITE,
@@ -3599,7 +3596,7 @@ TEST_P(ColorTransformPixelTest, Basic) {
     const bool flipped = false;
     const bool nearest_neighbor = false;
     const bool premultiplied_alpha = false;
-    TextureDrawQuad* quad = pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
+    auto* quad = pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
 
     float vertex_opacity[4] = {1.0f, 1.0f, 1.0f, 1.0f};
     quad->SetNew(shared_state, rect, rect, needs_blending, resource,

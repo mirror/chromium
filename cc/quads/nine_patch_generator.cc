@@ -5,8 +5,8 @@
 #include "cc/quads/nine_patch_generator.h"
 
 #include "cc/quads/render_pass.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/trees/layer_tree_impl.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/rect_f.h"
 
@@ -356,8 +356,7 @@ void NinePatchGenerator::AppendQuads(LayerImpl* layer_impl,
     bool needs_blending = !opaque;
     if (!visible_rect.IsEmpty()) {
       gfx::RectF image_rect = patch.normalized_image_rect;
-      TextureDrawQuad* quad =
-          render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
+      auto* quad = render_pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
       quad->SetNew(shared_quad_state, output_rect, visible_rect, needs_blending,
                    resource, premultiplied_alpha, image_rect.origin(),
                    image_rect.bottom_right(), SK_ColorTRANSPARENT,

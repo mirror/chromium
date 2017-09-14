@@ -40,7 +40,6 @@
 #include "cc/output/latency_info_swap_promise.h"
 #include "cc/quads/render_pass_draw_quad.h"
 #include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/quads/tile_draw_quad.h"
 #include "cc/resources/ui_resource_bitmap.h"
 #include "cc/resources/ui_resource_manager.h"
@@ -69,6 +68,7 @@
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "components/viz/common/quads/copy_output_request.h"
 #include "components/viz/common/quads/copy_output_result.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
 #include "components/viz/service/display/gl_renderer.h"
 #include "components/viz/test/begin_frame_args_test.h"
 #include "components/viz/test/test_layer_tree_frame_sink.h"
@@ -8350,7 +8350,8 @@ class LayerTreeHostImplViewportCoveredTest : public LayerTreeHostImplTest {
     for (auto* quad : quad_list) {
       if (quad->material != viz::DrawQuad::TEXTURE_CONTENT)
         continue;
-      const TextureDrawQuad* texture_quad = TextureDrawQuad::MaterialCast(quad);
+      const viz::TextureDrawQuad* texture_quad =
+          viz::TextureDrawQuad::MaterialCast(quad);
       gfx::SizeF gutter_texture_size_pixels =
           gfx::ScaleSize(gfx::SizeF(gutter_texture_size_),
                          host_impl_->active_tree()->device_scale_factor());

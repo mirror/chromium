@@ -16,13 +16,13 @@
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "cc/debug/debug_colors.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/raster/scoped_gpu_raster.h"
 #include "cc/resources/memory_history.h"
 #include "cc/trees/frame_rate_counter.h"
 #include "cc/trees/layer_tree_host_impl.h"
 #include "cc/trees/layer_tree_impl.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "skia/ext/platform_canvas.h"
 #include "third_party/skia/include/core/SkCanvas.h"
@@ -148,8 +148,7 @@ void HeadsUpDisplayLayerImpl::AppendQuads(
   const float vertex_opacity[] = { 1.f, 1.f, 1.f, 1.f };
   bool flipped = false;
   bool nearest_neighbor = false;
-  TextureDrawQuad* quad =
-      render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
+  auto* quad = render_pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
   quad->SetNew(shared_quad_state, quad_rect, visible_quad_rect, needs_blending,
                resources_.back()->id(), premultiplied_alpha, uv_top_left,
                uv_bottom_right, SK_ColorTRANSPARENT, vertex_opacity, flipped,
