@@ -70,6 +70,24 @@
       "revId": "c73379d1a241a238c7022bcefc7e777d1df4063d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b92260e3_4cfc042d",
+        "filename": "media/audio/alsa/alsa_input.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1153409
+      },
+      "writtenOn": "2017-09-14T15:26:23Z",
+      "side": 1,
+      "message": "I think I know what you mean, but \"OnData() called every 5ms\" is unclear.\nOnData is called in ReadAudio() in a cycle [https://cs.chromium.org/chromium/src/media/audio/alsa/alsa_input.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d211], so it is called irregularly.\n\nAlso, in your example timestamp at step 3 goes backward.\nWhich contradicts OnData contract (https://cs.chromium.org/chromium/src/media/audio/audio_io.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d128).\n\n----\nActually, it looks like we need to verify with DCHECKs all the code here, to make sure we are not getting backward timestamps even without requesting PcmAvailUpdate() on each call. It depends on how well we are dealing with |next_read_time_| and scheduling next ReadAudio()\ncall (https://cs.chromium.org/chromium/src/media/audio/alsa/alsa_input.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d236)",
+      "parentUuid": "b1b1cd94_dbb2ced5",
+      "revId": "c73379d1a241a238c7022bcefc7e777d1df4063d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
