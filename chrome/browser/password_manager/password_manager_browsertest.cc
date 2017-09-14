@@ -20,6 +20,7 @@
 #include "base/threading/thread_restrictions.h"
 #include "build/build_config.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/metrics/subprocess_metrics_provider.h"
 #include "chrome/browser/password_manager/chrome_password_manager_client.h"
 #include "chrome/browser/password_manager/password_manager_test_base.h"
 #include "chrome/browser/password_manager/password_store_factory.h"
@@ -48,6 +49,7 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
+#include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/content_switches.h"
@@ -3405,6 +3407,219 @@ class PasswordManagerDialogBrowserTest
 
 IN_PROC_BROWSER_TEST_F(PasswordManagerDialogBrowserTest, InvokeDialog_normal) {
   RunDialog();
+}
+
+class SitePerProcessPasswordManagerBrowserTest
+    : public PasswordManagerBrowserTestBase {
+ public:
+  SitePerProcessPasswordManagerBrowserTest() {}
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    content::IsolateAllSitesForTesting(command_line);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(SitePerProcessPasswordManagerBrowserTest);
+};
+
+// Verify that password manager ignores passwords on forms injected into
+// about:blank frames.  See https://crbug.com/756587.
+IN_PROC_BROWSER_TEST_F(SitePerProcessPasswordManagerBrowserTest,
+                       AboutBlankFramesAreIgnored) {
+  // Start from a page without a password form.
+  NavigateToFile("/password/other.html");
+
+  // Add a blank iframe and then inject a password form into it.
+  std::unique_ptr<BubbleObserver> prompt_observer(
+      new BubbleObserver(WebContents()));
+  GURL submit_url(embedded_test_server()->GetURL("/password/done.html"));
+  std::string form_html =
+      "<form method='POST' action='" + submit_url.spec() + "'"
+      "      onsubmit='return true;' id='testform'>"
+      "  <input type='password' id='password_field'>"
+      "</form>";
+  std::string inject_blank_frame_with_password_form =
+      "var frame = document.createElement('iframe');"
+      "document.body.appendChild(frame);"
+      "frame.contentDocument.body.innerHTML = \"" + form_html + "\"";
+  ASSERT_TRUE(content::ExecuteScript(WebContents(),
+                                     inject_blank_frame_with_password_form));
+  content::RenderFrameHost* frame =
+      ChildFrameAt(WebContents()->GetMainFrame(), 0);
+  EXPECT_EQ(GURL(url::kAboutBlankURL), frame->GetLastCommittedURL());
+  EXPECT_TRUE(frame->IsRenderFrameLive());
+  EXPECT_FALSE(prompt_observer->IsSavePromptShownAutomatically());
+
+  // Fill in the password and submit the form.  This shouldn't bring up a save
+  // password prompt and shouldn't result in a renderer kill.
+  base::HistogramTester histogram_tester;
+  std::string submit_form =
+      "document.getElementById('password_field').value = 'pa55w0rd';"
+      "document.getElementById('testform').submit();";
+  {
+    NavigationObserver observer(WebContents());
+    observer.SetPathToWaitFor("/password/done.html");
+    ASSERT_TRUE(content::ExecuteScript(frame, submit_form));
+    observer.Wait();
+  }
+  EXPECT_TRUE(frame->IsRenderFrameLive());
+  EXPECT_EQ(GURL(embedded_test_server()->GetURL("/password/done.html")),
+            frame->GetLastCommittedURL());
+  EXPECT_FALSE(prompt_observer->IsSavePromptShownAutomatically());
+
+  SubprocessMetricsProvider::MergeHistogramDeltasForTesting();
+  const char kHistogramName[] = "PasswordManager.AboutBlankPasswordSubmission";
+  histogram_tester.ExpectUniqueSample(kHistogramName,
+                                      false /* is_main_frame */, 1);
+
+  // Repeat this for an about:blank popup.
+  content::WindowedNotificationObserver popup_observer(
+      chrome::NOTIFICATION_TAB_ADDED,
+      content::NotificationService::AllSources());
+  EXPECT_TRUE(ExecuteScript(WebContents(),
+      "var w = window.open('about:blank');"
+      "w.document.body.innerHTML = \"" + form_html + "\";"));
+  popup_observer.Wait();
+  ASSERT_EQ(2, browser()->tab_strip_model()->count());
+  content::WebContents* newtab =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  {
+    std::unique_ptr<BubbleObserver> prompt_observer(new BubbleObserver(newtab));
+    NavigationObserver observer(newtab);
+    observer.SetPathToWaitFor("/password/done.html");
+    ASSERT_TRUE(content::ExecuteScript(newtab, submit_form));
+    observer.Wait();
+    EXPECT_FALSE(prompt_observer->IsSavePromptShownAutomatically());
+  }
+  EXPECT_TRUE(newtab->GetMainFrame()->IsRenderFrameLive());
+  EXPECT_EQ(GURL(embedded_test_server()->GetURL("/password/done.html")),
+            newtab->GetMainFrame()->GetLastCommittedURL());
+  SubprocessMetricsProvider::MergeHistogramDeltasForTesting();
+  histogram_tester.ExpectTotalCount(kHistogramName, 2);
+  histogram_tester.ExpectBucketCount(kHistogramName,
+                                     true /* is_main_frame */, 1);
+}
+
+// Verify that previously saved passwords for about:blank frames are not used
+// for autofill.  See https://crbug.com/756587.
+IN_PROC_BROWSER_TEST_F(SitePerProcessPasswordManagerBrowserTest,
+                       ExistingAboutBlankPasswordsAreNotUsed) {
+  scoped_refptr<password_manager::TestPasswordStore> password_store =
+      static_cast<password_manager::TestPasswordStore*>(
+          PasswordStoreFactory::GetForProfile(
+              browser()->profile(), ServiceAccessType::IMPLICIT_ACCESS).get());
+  autofill::PasswordForm signin_form;
+  signin_form.origin = GURL(url::kAboutBlankURL);
+  signin_form.signon_realm = "about:";
+  GURL submit_url(embedded_test_server()->GetURL("/password/done.html"));
+  signin_form.action = submit_url;
+  signin_form.password_value = base::ASCIIToUTF16("pa55w0rd");
+  password_store->AddLogin(signin_form);
+
+  // Start from a page without a password form.
+  NavigateToFile("/password/other.html");
+
+  // Add an about:blank iframe with a password form.
+  std::string form_html =
+      "<form method='POST' action='" + submit_url.spec() + "'"
+      "      onsubmit='return true;' id='testform'>"
+      "  <input type='password' id='password_field'>"
+      "</form>";
+  std::string inject_blank_frame_with_password_form =
+      "var frame = document.createElement('iframe');"
+      "frame.id = 'iframe';"
+      "document.body.appendChild(frame);"
+      "frame.contentDocument.body.innerHTML = \"" + form_html + "\"";
+  ASSERT_TRUE(content::ExecuteScript(WebContents(),
+                                     inject_blank_frame_with_password_form));
+  content::RenderFrameHost* frame =
+      ChildFrameAt(WebContents()->GetMainFrame(), 0);
+  EXPECT_EQ(GURL(url::kAboutBlankURL), frame->GetLastCommittedURL());
+  EXPECT_TRUE(frame->IsRenderFrameLive());
+
+  // Simulate user interaction in the iframe which normally triggers
+  // autofill. Click in the middle of the frame to avoid the border.
+  EXPECT_TRUE(content::ExecuteScriptWithoutUserGesture(
+      RenderFrameHost(),
+      "var iframeRect = "
+      "    document.getElementById('iframe').getBoundingClientRect();"));
+  int x;
+  EXPECT_TRUE(content::ExecuteScriptWithoutUserGestureAndExtractInt(
+      RenderFrameHost(),
+      "window.domAutomationController.send("
+      "    parseInt((iframeRect.left + iframeRect.right) / 2));",
+      &x));
+  int y;
+  EXPECT_TRUE(content::ExecuteScriptWithoutUserGestureAndExtractInt(
+      RenderFrameHost(),
+      "window.domAutomationController.send("
+      "    parseInt((iframeRect.top + iframeRect.bottom) / 2));",
+      &y));
+  content::SimulateMouseClickAt(
+      WebContents(), 0, blink::WebMouseEvent::Button::kLeft, gfx::Point(x, y));
+
+  // Verify password is not autofilled.  Blink has a timer for 0.3 seconds
+  // before it updates the browser with the new dynamic form, so wait long
+  // enough for this timer to fire before checking the password.  Note that we
+  // can't wait for any other events here, because when the test passes, there
+  // should be no password manager IPCs sent from the renderer to browser.
+  std::string empty_password;
+  EXPECT_TRUE(content::ExecuteScriptWithoutUserGestureAndExtractString(
+      frame,
+      "setTimeout(function() {"
+      "    domAutomationController.send("
+      "        document.getElementById('password_field').value);"
+      "}, 1000);",
+      &empty_password));
+  EXPECT_EQ("", empty_password);
+
+  EXPECT_TRUE(frame->IsRenderFrameLive());
+}
+
+// Verify that there is no renderer kill when filling out a password on a
+// subframe with a data: URL.
+IN_PROC_BROWSER_TEST_F(SitePerProcessPasswordManagerBrowserTest,
+                       NoRendererKillWithDataURLFrames) {
+  // Start from a page without a password form.
+  NavigateToFile("/password/other.html");
+
+  // Add a iframe with a data URL that has a password form.
+  std::unique_ptr<BubbleObserver> prompt_observer(
+      new BubbleObserver(WebContents()));
+  GURL submit_url(embedded_test_server()->GetURL("/password/done.html"));
+  std::string form_html =
+      "<form method='POST' action='" + submit_url.spec() + "'"
+      "      onsubmit='return true;' id='testform'>"
+      "  <input type='password' id='password_field'>"
+      "</form>";
+  std::string inject_data_frame_with_password_form =
+      "var frame = document.createElement('iframe');\n"
+      "frame.src = \"data:text/html," + form_html + "\";\n"
+      "document.body.appendChild(frame);\n";
+  ASSERT_TRUE(content::ExecuteScript(WebContents(),
+                                     inject_data_frame_with_password_form));
+  content::WaitForLoadStop(WebContents());
+  content::RenderFrameHost* frame =
+      ChildFrameAt(WebContents()->GetMainFrame(), 0);
+  EXPECT_TRUE(frame->GetLastCommittedURL().SchemeIs(url::kDataScheme));
+  EXPECT_TRUE(frame->IsRenderFrameLive());
+  EXPECT_FALSE(prompt_observer->IsSavePromptShownAutomatically());
+
+  // Fill in the password and submit the form.  This shouldn't bring up a save
+  // password prompt and shouldn't result in a renderer kill.
+  std::string submit_form =
+      "document.getElementById('password_field').value = 'pa55w0rd';"
+      "document.getElementById('testform').submit();";
+  {
+    NavigationObserver observer(WebContents());
+    observer.SetPathToWaitFor("/password/done.html");
+    ASSERT_TRUE(content::ExecuteScript(frame, submit_form));
+    observer.Wait();
+  }
+  EXPECT_TRUE(frame->IsRenderFrameLive());
+  EXPECT_EQ(GURL(embedded_test_server()->GetURL("/password/done.html")),
+            frame->GetLastCommittedURL());
+  EXPECT_FALSE(prompt_observer->IsSavePromptShownAutomatically());
 }
 
 }  // namespace password_manager
