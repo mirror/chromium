@@ -16,6 +16,24 @@
       "revId": "2925e1d42d5bc7a91c98a7239424104a43672c02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b88ecfb_f9f08754",
+        "filename": "ios/chrome/browser/tabs/tab_parenting_observer.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-14T12:55:11Z",
+      "side": 0,
+      "message": "As detailed in the description, this was only necessary when restoring a Tab for a cold/warm start (in all other case, the favicon is fetched when the navigation is started). This has been moved to TabModel -restoreSessionWindow:persistState:.",
+      "parentUuid": "71baead4_4afc6b15",
+      "revId": "2925e1d42d5bc7a91c98a7239424104a43672c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

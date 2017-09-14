@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9111c798_b00001d8",
+        "filename": "ios/chrome/browser/tabs/tab_model_observers_bridge.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-14T12:55:11Z",
+      "side": 1,
+      "message": "It was sent from TabModel -notifyTabChanged: called from Tab -setFavicon: called from Tab FaviconDriverObserver OnFaviconUpdated method.",
+      "parentUuid": "215de459_fdf10089",
+      "revId": "461e011249e369b282ed7bde3792b7dbcc799303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd6d814f_860dbf41",
         "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "461e011249e369b282ed7bde3792b7dbcc799303",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e41ce9_32987dbe",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1691,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-14T12:55:11Z",
+      "side": 1,
+      "message": "Because FaviconDriver goes through the NavigationItem (I asked on chat whether I should have a free function to get the favicon for a WebState or whether I should use a tab helper and you suggested using a tab helper, FaviconDriver is that tab helper). This is also detailed in the CL description.",
+      "parentUuid": "dd6d814f_860dbf41",
+      "revId": "461e011249e369b282ed7bde3792b7dbcc799303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
