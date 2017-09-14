@@ -8,6 +8,8 @@
 #include <stdint.h>
 
 #include <set>
+#include <string>
+#include <utility>
 #include <vector>
 
 #include "base/bind.h"
@@ -687,8 +689,8 @@ void StoragePartitionImpl::OpenLocalStorage(
     const url::Origin& origin,
     mojo::InterfaceRequest<mojom::LevelDBWrapper> request) {
   int process_id = bindings_.dispatch_context();
-  if (!ChildProcessSecurityPolicy::GetInstance()->CanAccessDataForOrigin(
-          process_id, origin.GetURL())) {
+  if (!ChildProcessSecurityPolicy::GetInstance()->ContainsOrigin(process_id,
+                                                                 origin)) {
     bindings_.ReportBadMessage("Access denied for localStorage request");
     return;
   }
