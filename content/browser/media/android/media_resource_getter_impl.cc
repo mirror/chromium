@@ -4,6 +4,8 @@
 
 #include "content/browser/media/android/media_resource_getter_impl.h"
 
+#include <utility>
+
 #include "base/android/jni_android.h"
 #include "base/android/jni_string.h"
 #include "base/android/scoped_java_ref.h"
@@ -200,7 +202,7 @@ void MediaResourceGetterTask::RequestCookies(
   DCHECK(GetTaskRunner()->BelongsToCurrentThread());
   ChildProcessSecurityPolicyImpl* policy =
       ChildProcessSecurityPolicyImpl::GetInstance();
-  if (!policy->CanAccessDataForOrigin(render_process_id_, url)) {
+  if (!policy->CanAccessCookiesForURL(render_process_id_, url)) {
     std::move(callback).Run(std::string());
     return;
   }

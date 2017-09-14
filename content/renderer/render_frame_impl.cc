@@ -3769,6 +3769,13 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
     }
   }
 
+  // We need to let the browser know about the commit before doing anything
+  // within the page (e.g. before trigerring script execution).  Therefore
+  // we need to SendDidCommitProvisionalLoad before notifying the observers,
+  // because some observers can trigger javascript execution.
+  SendDidCommitProvisionalLoad(frame_, commit_type);
+
+  // Notify RenderViewObservers and RenderFrameObservers.
   for (auto& observer : render_view_->observers_)
     observer.DidCommitProvisionalLoad(frame_, is_new_navigation);
   for (auto& observer : observers_) {
@@ -3798,8 +3805,6 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
   // navigation without valid HistoryItem state, WebCore will think it is a
   // new navigation.
   navigation_state->set_request_committed(true);
-
-  SendDidCommitProvisionalLoad(frame_, commit_type);
 
   // Check whether we have new encoding name.
   UpdateEncoding(frame_, frame_->View()->PageEncoding().Utf8());
