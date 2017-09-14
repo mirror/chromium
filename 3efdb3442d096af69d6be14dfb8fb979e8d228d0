@@ -445,6 +445,24 @@
       "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27330198_36de28ad",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-14T03:43:59Z",
+      "side": 1,
+      "message": "Or, do you want to maximize immediately on xdg\u0027s set_maximized? This would cause visual artifacts (window frame not matching the buffer size, broken overview, alt-tab screen) until we get a buffer for the new window state.",
+      "parentUuid": "d949d85f_66f2066e",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
