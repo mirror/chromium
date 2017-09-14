@@ -37,13 +37,18 @@ interface LevelDBWrapperGetAllCallback {
 interface LevelDBWrapper {
   AddObserver(associated LevelDBObserver observer);
 
-  // Sets the database entry for |key| to |value|. Returns OK on success.
-  Put(array<uint8> key, array<uint8> value, string source) => (bool success);
+  // Set the database entry for |key| to |value|. Takes an optional
+  // |client_old_value| from clients to send notifications in case the values
+  // are not cached in the service. Returns OK on success.
+  Put(array<uint8> key, array<uint8> value, array<uint8>? client_old_value,
+      string source) =>
+          (bool success);
 
-  // Remove the database entry (if any) for |key|.  Returns OK on success, and a
+  // Remove the database entry (if any) for |key|. Returns OK on success, and a
   // non-OK status on error.  It is not an error if |key| did not exist in the
   // database.
-  Delete(array<uint8> key, string source) => (bool success);
+  Delete(array<uint8> key, array<uint8>? client_old_value, string source) =>
+      (bool success);
 
   // Removes all the entries.
   DeleteAll(string source) => (bool success);
