@@ -78,7 +78,7 @@ public class AppMenuPropertiesDelegate {
         } else {
             boolean isBottomSheetNtpMenu = mActivity.getBottomSheet() != null
                     && mActivity.getBottomSheet().isShowingNewTab();
-            return !isBottomSheetNtpMenu && !isOverview;
+            return !isBottomSheetNtpMenu && !isOverview && mActivity.getActivityTab() != null;
         }
     }
 
@@ -264,6 +264,13 @@ public class AppMenuPropertiesDelegate {
 
         mAppMenuIconRowFooter = (AppMenuIconRowFooter) footerView;
         mAppMenuIconRowFooter.initialize(mActivity, menu, mBookmarkBridge);
+    }
+
+    /**
+     * Called after the menu has hidden.
+     */
+    public void onHide() {
+        mAppMenuIconRowFooter = null;
     }
 
     /**

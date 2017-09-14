@@ -201,7 +201,10 @@ public class AppMenuHandler {
      * Requests to hide the App Menu.
      */
     public void hideAppMenu() {
-        if (mAppMenu != null && mAppMenu.isShowing()) mAppMenu.dismiss();
+        if (mAppMenu != null && mAppMenu.isShowing()) {
+            mAppMenu.dismiss();
+            mDelegate.onHide();
+        }
     }
 
     /**

@@ -450,6 +450,8 @@ public class AppMenu implements OnItemClickListener, OnKeyListener {
         if (isShowing()) {
             mPopup.dismiss();
         }
+        mFooterView = null;
+        mListView = null;
     }
 
     /**
