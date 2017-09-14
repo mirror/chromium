@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandlerFactory;
+import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -176,6 +177,11 @@ public abstract class CronetEngine {
          */
         public Builder enableBrotli(boolean value) {
             mBuilderDelegate.enableBrotli(value);
+            return this;
+        }
+
+        public Builder enableBrotliAndSetDictionaryData(ByteBuffer dictionaryData) {
+            mBuilderDelegate.enableBrotliAndSetDictionaryData(dictionaryData);
             return this;
         }
 

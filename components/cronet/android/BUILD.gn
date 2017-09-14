@@ -173,6 +173,7 @@ source_set("cronet_static") {
     "//components/metrics",
     "//components/prefs",
     "//net",
+    "//third_party/brotli:dec_no_dictionary_data",
     "//url",
     "//url:url_features",
   ]
@@ -456,8 +457,8 @@ instrumentation_test_apk("cronet_sample_test_apk") {
     "//base:base_java",
     "//base:base_java_test_support",
     "//net/android:net_java_test_support",
-    "//third_party/android_support_test_runner:runner_java",
     "//third_party/android_support_test_runner:rules_java",
+    "//third_party/android_support_test_runner:runner_java",
     "//third_party/junit",
   ]
   additional_apks = [ "//net/android:net_test_support_apk" ]
@@ -585,8 +586,8 @@ android_library("cronet_smoketests_native_java") {
     ":cronet_test_apk_java",
     "//base:base_java",
     "//base:base_java_test_support",
-    "//third_party/junit",
     "//third_party/android_support_test_runner:runner_java",
+    "//third_party/junit",
     "//third_party/netty4:netty_all_java",
   ]
 }
@@ -600,6 +601,7 @@ android_assets("cronet_test_apk_assets") {
     "test/assets/test/cacheable.txt.mock-http-headers",
     "test/assets/test/content_length_mismatch.html",
     "test/assets/test/content_length_mismatch.html.mock-http-headers",
+    "test/assets/test/dictionary.bin",
     "test/assets/test/gzipped.html",
     "test/assets/test/gzipped.html.mock-http-headers",
     "test/assets/test/multiredirect.html",
@@ -753,8 +755,8 @@ android_library("cronet_smoketests_platform_only_java") {
   deps = [
     ":cronet_api_java",
     "//base:base_java_test_support",
-    "//third_party/junit",
     "//third_party/android_support_test_runner:runner_java",
+    "//third_party/junit",
     "//third_party/netty4:netty_all_java",
   ]
 }
@@ -805,8 +807,8 @@ android_library("cronet_smoketests_missing_native_library_java") {
     ":cronet_test_apk_java",
     "//base:base_java",
     "//base:base_java_test_support",
-    "//third_party/junit",
     "//third_party/android_support_test_runner:runner_java",
+    "//third_party/junit",
     "//third_party/netty4:netty_all_java",
   ]
 }

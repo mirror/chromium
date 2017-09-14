@@ -99,6 +99,13 @@ public final class Http2TestServer {
         return getServerUrl() + Http2TestHandler.SERVE_SIMPLE_BROTLI_RESPONSE;
     }
 
+    /**
+     * @return url of a brotli-encoded server resource that requires dictonary to decompress.
+     */
+    public static String getServeDictionaryBrotliResponse() {
+        return getServerUrl() + Http2TestHandler.SERVE_DICTIONARY_BROTLI_RESPONSE;
+    }
+
     public static boolean startHttp2TestServer(
             Context context, String certFileName, String keyFileName) throws Exception {
         Http2TestServerRunnable http2TestServerRunnable =

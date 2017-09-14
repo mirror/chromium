@@ -29,6 +29,7 @@ import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLStreamHandlerFactory;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -211,6 +212,10 @@ public class CronetUrlRequestContext extends CronetEngineBase {
         for (CronetEngineBuilderImpl.Pkp pkp : builder.publicKeyPins()) {
             nativeAddPkp(urlRequestContextConfig, pkp.mHost, pkp.mHashes, pkp.mIncludeSubdomains,
                     pkp.mExpirationDate.getTime());
+        }
+        final ByteBuffer brotliDictionaryData = builder.brotliDictionaryData();
+        if (brotliDictionaryData != null) {
+            nativeSetBrotliDictionaryData(brotliDictionaryData);
         }
         return urlRequestContextConfig;
     }
@@ -710,6 +715,8 @@ public class CronetUrlRequestContext extends CronetEngineBase {
     private static native int nativeSetMinLogLevel(int loggingLevel);
 
     private static native byte[] nativeGetHistogramDeltas();
+
+    private static native void nativeSetBrotliDictionaryData(ByteBuffer dictionaryData);
 
     @NativeClassQualifiedName("CronetURLRequestContextAdapter")
     private native void nativeDestroy(long nativePtr);

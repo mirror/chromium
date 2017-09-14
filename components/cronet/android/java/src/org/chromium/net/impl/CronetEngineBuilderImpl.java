@@ -21,6 +21,7 @@ import java.io.File;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.net.IDN;
+import java.nio.ByteBuffer;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -87,6 +88,7 @@ public abstract class CronetEngineBuilderImpl extends ICronetEngineBuilder {
     private boolean mQuicEnabled;
     private boolean mHttp2Enabled;
     private boolean mBrotiEnabled;
+    private ByteBuffer mBrotliDictionaryData;
     private boolean mDisableCache;
     private int mHttpCacheMode;
     private long mHttpCacheMaxSize;
@@ -189,8 +191,19 @@ public abstract class CronetEngineBuilderImpl extends ICronetEngineBuilder {
         return this;
     }
 
+    @Override
+    public CronetEngineBuilderImpl enableBrotliAndSetDictionaryData(ByteBuffer dictionaryData) {
+        mBrotiEnabled = true;
+        mBrotliDictionaryData = dictionaryData;
+        return this;
+    }
+
     boolean brotliEnabled() {
         return mBrotiEnabled;
+    }
+
+    ByteBuffer brotliDictionaryData() {
+        return mBrotliDictionaryData;
     }
 
     @IntDef({
