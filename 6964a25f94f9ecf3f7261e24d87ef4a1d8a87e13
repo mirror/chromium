@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04d7a3c1_015a17ff",
+        "filename": "components/data_reduction_proxy/core/browser/data_reduction_proxy_test_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-14T22:02:51Z",
+      "side": 1,
+      "message": "Maybe pass in a disable_warmup_fetch to DRPIOData and DRPConfig so that you can have it as a member. It\u0027s pretty ugly, so I guess this approach works as well.",
+      "revId": "6964a25f94f9ecf3f7261e24d87ef4a1d8a87e13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
