@@ -711,8 +711,21 @@ void UiSceneManager::OnProjMatrixChanged(const gfx::Transform& proj_matrix) {
     main_content_size = main_content_->size();
   }
 
+  gfx::Transform main_content_inheritable_transform;
+  if (scene_->GetUiElementByName(k2dBrowsingContentGroup)
+          ->animation_player()
+          .IsAnimatingProperty(TargetProperty::TRANSFORM)) {
+    main_content_inheritable_transform =
+        scene_->GetUiElementByName(k2dBrowsingContentGroup)
+            ->animation_player()
+            .GetTargetTransformOperationsValue(TargetProperty::TRANSFORM)
+            .Apply();
+  } else {
+    main_content_inheritable_transform = main_content_->inheritable_transform();
+  }
+
   gfx::SizeF screen_size = CalculateScreenSize(
-      proj_matrix, main_content_->inheritable_transform(), main_content_size);
+      proj_matrix, main_content_inheritable_transform, main_content_size);
 
   float aspect_ratio = main_content_size.width() / main_content_size.height();
   gfx::SizeF screen_bounds;
