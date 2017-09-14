@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c2b900c_c4485c41",
+        "filename": "chrome/renderer/autofill/password_autofill_agent_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2848,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-14T09:35:39Z",
+      "side": 1,
+      "message": "Please rename it to SimulateUsernameTyping or so. Otherwise, there are two method with similar names SimulateUsernameChange and SimulateUsernameFieldChange. \n\nFor consistence, also rename SimulatePasswordChange.",
+      "range": {
+        "startLine": 2848,
+        "startChar": 4,
+        "endLine": 2848,
+        "endChar": 26
+      },
+      "revId": "eafe7c146965613b3115e82032afef62464911db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ea30b9_aae2bdb8",
+        "filename": "chrome/renderer/autofill/password_autofill_agent_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2857,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-14T09:35:39Z",
+      "side": 1,
+      "message": "shall we also clear field values here? I believe iterations will affect each other.\n\nMaybe SimulateUsernameChange(\"\") and SimulatePasswordChange(\"\")?",
+      "range": {
+        "startLine": 2857,
+        "startChar": 4,
+        "endLine": 2857,
+        "endChar": 75
+      },
+      "revId": "eafe7c146965613b3115e82032afef62464911db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
