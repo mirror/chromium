@@ -57,6 +57,7 @@
 #include "content/public/common/service_names.mojom.h"
 #include "content/public/common/url_constants.h"
 #include "content/public/common/web_preferences.h"
+#include "google_apis/google_api_keys.h"
 #include "media/audio/audio_thread_impl.h"
 #include "media/mojo/features.h"
 #include "net/ssl/ssl_cert_request_info.h"
@@ -130,6 +131,18 @@ void CreateMediaDrmStorage(content::RenderFrameHost* render_frame_host,
                                std::move(request));
 }
 #endif  // defined(OS_ANDROID) && !BUILDFLAG(IS_CAST_USING_CMA_BACKEND)
+
+// Gets the URL request context for the single browser context.
+// Must be called on the UI thread.
+net::URLRequestContextGetter* GetRequestContextFromBrowserContext() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK(CastBrowserProcess::GetInstance());
+  DCHECK(CastBrowserProcess::GetInstance()->browser_context());
+  return content::BrowserContext::GetDefaultStoragePartition(
+             CastBrowserProcess::GetInstance()->browser_context())
+      ->GetURLRequestContext();
+}
+
 }  // namespace
 
 CastContentBrowserClient::CastContentBrowserClient()
@@ -413,6 +426,19 @@ void CastContentBrowserClient::ResourceDispatcherHostCreated() {
 std::string CastContentBrowserClient::GetApplicationLocale() {
   const std::string locale(base::i18n::GetConfiguredLocale());
   return locale.empty() ? "en-US" : locale;
+}
+
+void CastContentBrowserClient::GetGeolocationRequestContext(
+    base::OnceCallback<void(const scoped_refptr<net::URLRequestContextGetter>)>
+        callback) {
+  content::BrowserThread::PostTaskAndReplyWithResult(
+      content::BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&GetRequestContextFromBrowserContext),
+      std::move(callback));
+}
+
+std::string CastContentBrowserClient::GetGeolocationApiKey() {
+  return google_apis::GetAPIKey();
 }
 
 content::QuotaPermissionContext*

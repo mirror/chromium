@@ -24,6 +24,7 @@
 #include "media/media_features.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "net/ssl/client_cert_identity.h"
+#include "net/url_request/url_request_context_getter.h"
 #include "storage/browser/quota/quota_manager.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/shell_dialogs/select_file_policy.h"
@@ -268,6 +269,14 @@ void ContentBrowserClient::SelectClientCertificate(
 net::URLRequestContext* ContentBrowserClient::OverrideRequestContextForURL(
     const GURL& url, ResourceContext* context) {
   return nullptr;
+}
+
+void ContentBrowserClient::GetGeolocationRequestContext(
+    base::OnceCallback<void(const scoped_refptr<net::URLRequestContextGetter>)>
+        callback) {}
+
+std::string ContentBrowserClient::GetGeolocationApiKey() {
+  return std::string();
 }
 
 std::string ContentBrowserClient::GetStoragePartitionIdForSite(
