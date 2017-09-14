@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6df72013_61c160ac",
+        "filename": "ui/views/bubble/bubble_dialog_delegate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-14T01:58:38Z",
+      "side": 1,
+      "message": "There are 7 other users of footnote views:\n\n - SaveCardBubbleViews - it\u0027s just a StyledLabel - doesn\u0027t override default margins\n - SessionCrashedBubbleView - StyledLabel and a checkbox - doesn\u0027t override margins\n - ChooserBubbleUiViewDelegate - StyledLabel (a link), doesn\u0027t override\n - ExtensionInstalledBubbleView - it\u0027s BubbleSyncPromoView, subclass of StyledLabel, doesn\u0027t override margins\n\n3 are not bubbles: (they use DialogDelegate::CreateDialogFrameView instead, so don\u0027t call this)\n - CardUnmaskPromptViews\n - ChooserDialogView\n - ChromeCleanerDialog",
+      "revId": "df038dfd861322951c1855c41a9e224ca48abe40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
