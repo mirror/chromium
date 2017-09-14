@@ -27,7 +27,6 @@ namespace safe_browsing {
 
 constexpr int kIconSize = 24;
 
-#if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
 void ShowPasswordReuseModalWarningDialog(
     content::WebContents* web_contents,
     ChromePasswordProtectionService* service,
@@ -38,7 +37,6 @@ void ShowPasswordReuseModalWarningDialog(
       dialog, web_contents->GetTopLevelNativeWindow())
       ->Show();
 }
-#endif  // !OS_MACOSX || MAC_VIEWS_BROWSER
 
 PasswordReuseModalWarningDialog::PasswordReuseModalWarningDialog(
     content::WebContents* web_contents,
