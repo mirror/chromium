@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7c7fd16_bff092f9",
+        "filename": "chrome/browser/ui/views/feature_promos/new_tab_promo_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-14T19:18:46Z",
+      "side": 1,
+      "message": "This should be keyed to the profile or to the containing view. It\u0027s possible for CreateOwned to be called multiple times, right?\n\nIf this were static, there are also lifetime issues to resolve like when the NewTabPromoBubbleView gets destroyed. A cal to CloseCurrentBubble() could crash.\n\nShowPromoForLastActiveBrowser() attempts to address this and maybe what you want here.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 72
+      },
+      "revId": "e0c6568b24c048c805ab4a8a5bc51a6504c19868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
