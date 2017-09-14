@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41acde06_69af73b9",
+        "filename": "chrome/browser/media/router/issue_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-14T17:21:44Z",
+      "side": 1,
+      "message": "Can we make |issues_| a base::SmallMap to simply lookups by id?",
+      "revId": "cd88019f604e187b9f18e3fd19509e064ea78c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53e400e2_2cb9eaa4",
+        "filename": "chrome/browser/media/router/issue_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-14T17:21:44Z",
+      "side": 1,
+      "message": "ISTM that there could be a design that allows CancelableClosure to be move-able.  It might require sharing the weak pointer factory that is the basis for the implementation.",
+      "revId": "cd88019f604e187b9f18e3fd19509e064ea78c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5eac67_3c8c7925",
+        "filename": "chrome/browser/media/router/issue_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-14T17:21:44Z",
+      "side": 1,
+      "message": "Nit: typo in \u0027instances\u0027",
+      "revId": "cd88019f604e187b9f18e3fd19509e064ea78c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf321b0_25bec85a",
+        "filename": "chrome/browser/media/router/issue_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-14T17:21:44Z",
+      "side": 1,
+      "message": "Nit: This isn\u0027t an ID.",
+      "revId": "cd88019f604e187b9f18e3fd19509e064ea78c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06eb67f_5caaa19a",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-14T17:21:44Z",
+      "side": 1,
+      "message": "#include issue_manager.h?",
+      "revId": "cd88019f604e187b9f18e3fd19509e064ea78c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497cc5ae_e867b59f",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-14T17:21:44Z",
+      "side": 1,
+      "message": "Does this need a fwd declaration?",
+      "revId": "cd88019f604e187b9f18e3fd19509e064ea78c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
