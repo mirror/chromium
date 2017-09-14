@@ -76,7 +76,7 @@ void PaymentRequestState::GetAllPaymentAppsCallback(
   get_all_instruments_finished_ = true;
   NotifyOnGetAllPaymentInstrumentsFinished();
 
-  // Fullfill the pending CanMakePayment call.
+  // fullfill the pending CanMakePayment call.
   if (can_make_payment_callback_)
     CheckCanMakePayment(std::move(can_make_payment_callback_));
 }
