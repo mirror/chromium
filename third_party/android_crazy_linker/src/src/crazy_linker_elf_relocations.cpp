@@ -6,6 +6,7 @@
 
 #include <assert.h>
 #include <errno.h>
+#include <memory>
 
 #include "crazy_linker_debug.h"
 #include "crazy_linker_elf_symbols.h"
@@ -15,6 +16,8 @@
 #include "crazy_linker_system.h"
 #include "crazy_linker_util.h"
 #include "linker_phdr.h"
+
+#include <zlib.h>
 
 #define DEBUG_RELOCATIONS 0
 
@@ -48,6 +51,12 @@
 #endif
 #ifndef DT_ANDROID_RELASZ
 #define DT_ANDROID_RELASZ (DT_LOOS + 5)
+#endif
+#ifndef DT_ANDROID_COMPRESSED_REL
+#define DT_ANDROID_COMPRESSED_REL (DT_LOOS + 6)
+#endif
+#ifndef DT_ANDROID_COMPRESSED_RELA
+#define DT_ANDROID_COMPRESSED_RELA (DT_LOOS + 7)
 #endif
 
 // Processor-specific relocation types supported by the linker.
@@ -103,6 +112,10 @@
 namespace crazy {
 
 namespace {
+
+constexpr size_t kDeflateBufferSize = 32 * 1024;
+// Max = 5 bytes for 32-bit, 10 for 64-bit.
+constexpr size_t kMaxLebBytesPerPop = sizeof(size_t) / 4 * 5;
 
 // List of known relocation types the relocator knows about.
 enum RelocationType {
@@ -179,6 +192,72 @@ RelocationType GetRelocationType(ELF::Word r_type) {
   }
 }
 
+class Inflater {
+ public:
+  static std::unique_ptr<Inflater> Create(const uint8_t* deflated_data,
+                                          size_t size,
+                                          Sleb128Decoder* decoder) {
+    std::unique_ptr<Inflater> ret(new Inflater());
+
+    ret->stream_.next_in = const_cast<uint8_t*>(deflated_data);
+    ret->stream_.avail_in = size;
+    // Setting avail_out required by MaybeInflateNext().
+    ret->stream_.avail_out = sizeof(ret->buffer_);
+
+    int err = inflateInit(&ret->stream_);
+    if (err != Z_OK) {
+      LOG("inflateInit failed %d\n", err);
+      return nullptr;
+    }
+
+    decoder->reset(ret->buffer_, 0);
+    if (!ret->MaybeInflateNext(decoder, 1))
+      return nullptr;
+    return ret;
+  }
+
+  ~Inflater() {
+    int err = inflateEnd(&stream_);
+    if (err != Z_OK) {
+      LOG("inflateEnd failed %d\n", err);
+    }
+  }
+
+  bool MaybeInflateNext(Sleb128Decoder* decoder, size_t required) {
+    int consumed = decoder->current() - buffer_;
+    int available = sizeof(buffer_) - consumed - stream_.avail_out;
+    assert(available >= 0);
+    assert(consumed >= 0);
+    if (available >= required)
+      return true;
+    // "required" is an upper-bound estimate, so trust Z_STREAM_END instead
+    // when at the very end.
+    if (err_ == Z_STREAM_END) {
+      LOG("Stream done, with %d available.", available);
+      return true;
+    }
+    memcpy(buffer_, decoder->current(), available);
+    stream_.next_out = buffer_ + available;
+    stream_.avail_out = sizeof(buffer_) - available;
+    size_t prev_total_out = stream_.total_out;
+    err_ = inflate(&stream_, Z_NO_FLUSH);
+    if (err_ < 0) {
+      LOG("inflate failed %d\n", err_);
+      return false;
+    }
+    decoder->reset(buffer_, available + stream_.total_out - prev_total_out);
+    LOG("Inflated %d more bytes", stream_.total_out - prev_total_out);
+    return true;
+  }
+
+ private:
+  z_stream stream_ = {0};
+  int err_ = 0;
+  uint8_t buffer_[kDeflateBufferSize];
+
+  Inflater() {}
+};
+
 }  // namespace
 
 bool ElfRelocations::Init(const ElfView* view, Error* error) {
@@ -189,6 +268,7 @@ bool ElfRelocations::Init(const ElfView* view, Error* error) {
 
   // We handle only Rel or Rela, but not both. If DT_RELA or DT_RELASZ
   // then we require DT_PLTREL to agree.
+  bool has_compressed_relocations = false;
   bool has_rela_relocations = false;
   bool has_rel_relocations = false;
 
@@ -246,6 +326,10 @@ bool ElfRelocations::Init(const ElfView* view, Error* error) {
         else
           has_rel_relocations = true;
         break;
+      case DT_ANDROID_COMPRESSED_RELA:
+      case DT_ANDROID_COMPRESSED_REL:
+        has_compressed_relocations = true;
+        // Intentional fall-through.
       case DT_ANDROID_RELA:
       case DT_ANDROID_REL:
         RLOG("  %s addr=%p\n",
@@ -444,10 +528,20 @@ class AndroidPackedRelocationGroupFlags {
 
 bool ElfRelocations::ForEachAndroidRelocation(RelocationHandler handler,
                                               void* opaque) {
-  // Skip over the "APS2" signature.
-  Sleb128Decoder decoder(android_relocations_ + 4,
-                         android_relocations_size_ - 4);
+  bool compressed = android_relocations_[0] == 'Z';
+  std::unique_ptr<Inflater> inflater;
+  Sleb128Decoder decoder;
 
+  if (compressed) {
+    // Skip over the "ZPS2" and the uncompressed size.
+    inflater = Inflater::Create(android_relocations_ + 8,
+                                android_relocations_size_ - 8, &decoder);
+    if (!inflater)
+      return false;
+  } else {
+    // Skip over the "APS2" signature.
+    decoder.reset(android_relocations_ + 4, android_relocations_size_ - 4);
+  }
   // Unpacking into a relocation with addend, both for REL and RELA, is
   // convenient at this point. If REL, the handler needs to take care of
   // any conversion before use.
@@ -465,6 +559,10 @@ bool ElfRelocations::ForEachAndroidRelocation(RelocationHandler handler,
 
   size_t relocations_handled = 0;
   while (relocations_handled < relocation_count) {
+    // There are at most 5 pop_front() calls before the next loop.
+    if (compressed &&
+        !inflater->MaybeInflateNext(&decoder, 5 * kMaxLebBytesPerPop))
+      return false;
     // Read the start of the group header to obtain its size and flags.
     const size_t group_size = decoder.pop_front();
     AndroidPackedRelocationGroupFlags group_flags(decoder.pop_front());
@@ -485,6 +583,10 @@ bool ElfRelocations::ForEachAndroidRelocation(RelocationHandler handler,
 
     // Expand the group into individual relocations.
     for (size_t group_index = 0; group_index < group_size; group_index++) {
+      // There are at most 3 pop_front() calls before the next loop.
+      if (compressed &&
+          !inflater->MaybeInflateNext(&decoder, 3 * kMaxLebBytesPerPop))
+        return false;
       if (group_flags.is_relocation_grouped_by_offset_delta())
         relocation.r_offset += group_r_offset_delta;
       else
@@ -522,8 +624,8 @@ bool IsValidAndroidPackedRelocations(const uint8_t* android_relocations,
   if (android_relocations_size < 4)
     return false;
 
-  // Check for an initial APS2 Android packed relocations header.
-  return (android_relocations[0] == 'A' &&
+  // Check for an initial APS2/APS3 Android packed relocations header.
+  return ((android_relocations[0] == 'A' || android_relocations[0] == 'Z') &&
           android_relocations[1] == 'P' &&
           android_relocations[2] == 'S' &&
           android_relocations[3] == '2');

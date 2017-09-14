@@ -10,6 +10,7 @@ import android.os.Parcel;
 import android.os.ParcelFileDescriptor;
 import android.os.Parcelable;
 
+import org.chromium.base.BuildConfig;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
 import org.chromium.base.annotations.AccessedByNative;
@@ -246,7 +247,8 @@ public abstract class Linker {
                         ContextUtils.getApplicationContext().getApplicationInfo().className;
                 boolean isIncrementalInstall =
                         appClass != null && appClass.contains("incrementalinstall");
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !isIncrementalInstall) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !isIncrementalInstall
+                        && !BuildConfig.useLegacyLinker()) {
                     sSingleton = ModernLinker.create();
                 } else {
                     sSingleton = LegacyLinker.create();
