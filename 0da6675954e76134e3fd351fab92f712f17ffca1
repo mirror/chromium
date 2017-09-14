@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ded3ae8e_279f8207",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 13
+      },
+      "lineNbr": 2453,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-14T03:17:51Z",
+      "side": 0,
+      "message": "Is there a reason this bug fix is in the same CL as a large amount of code movement? It makes the CL harder to review (almost all of this seems to be pure code movement, but somewhere there is a functionality change), and also harder to revert it needed.\n\nI would prefer these as separate CLs if it\u0027s not too much trouble.",
+      "revId": "0da6675954e76134e3fd351fab92f712f17ffca1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

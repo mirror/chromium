@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f278c078_8e9fcc56",
+        "filename": "third_party/WebKit/Source/core/dom/MessageChannel.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-14T03:17:51Z",
+      "side": 1,
+      "message": "nit: This is so trivial now; just inline it in the MessageChannel constructor (and the comment isn\u0027t really helpful anymore either).",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b8f942e_1dfcb859",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-14T03:17:51Z",
+      "side": 1,
+      "message": "nit: maybe just DCHECK(!IsNeutered()), since this expression is slightly long?",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e5e0e56_ffbd6e20",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-14T03:17:51Z",
+      "side": 1,
+      "message": "Having to play these games with WTF::Vector, WebVector and std::vector isn\u0027t great. Since we\u0027re not mutating the size of this container, we could avoid this copy and not have to use WebVector if we instead make MessagePortChannel::PostMessage take a base::span\u003cMessagePortChannel\u003e, which is constructible directly from a WTF::Vector.\n\ni.e.\nvoid PostMessage(base::span\u003cconst uint8_t\u003e encoded_message,\n                 base::span\u003cMessagePortChannel\u003e ports);\n\nVector\u003cMessagePortChannel\u003e channels \u003d MessagePort::DisentanglePorts(...);\n// ...\nchannel_.PostMessage(\n    base::make_span(wire_data.Characters8(), wire_data.length()),\n    channels);\n\nOTOH, this might be a cleanup better left to another CL.\n\n+dcheng, I think we\u0027re ready to permit base::span in Source/core/ for use cases like this, right?",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92158d74_3072ef33",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-14T03:17:51Z",
+      "side": 1,
+      "message": "nit: because MessagePortChannel\u0027s default constructor does construct a state on the heap, this is slightly more expensive than it has to be (because it construct and then move-assigns). This should move-construct instead:\n\nIf WTF::Vector had an (iterator, iterator) constructor this would be even easier, but since not:\n\nchannels.Shrink(0);\nchannels.ReserveCapacity(channels_vector.size());\nchannels.AppendRange(\n   std::make_move_iterator(channels_vector.begin()),\n   std::make_move_iterator(channels_vector.end()));",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b089c5da_cb091b26",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-14T03:17:51Z",
+      "side": 1,
+      "message": "nit: I generally like this pattern a lot, but regrettably here the default MessagePortChannel constructor actually does non-trivial work that we immediately throw away. Unless we change that, it might be worthwhile to push_back explicitly (to ensure that we move-construct instead of default-construct+move-assign).\n\nVector\u003cMessagePortChannel\u003e channels;\nchannels.ReserveInitialCapacity(ports.size());\nfor (const auto\u0026 port : ports)\n  channels.push_back(port-\u003eDisentangle());\nreturn channels;",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76324d74_bc89383c",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-14T03:17:51Z",
+      "side": 1,
+      "message": "nit: since I mentioned it earlier: or base::span\u003cMessagePortChannel\u003e, which would take either kind of vector",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a83a5b15_f734dd5c",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerRepositoryClient.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-14T03:17:51Z",
+      "side": 1,
+      "message": "would a forward decl suffice?",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "675bdb18_dac83d46",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-14T03:17:51Z",
+      "side": 1,
+      "message": "Since headers from //third_party/WebKit/common are included in this target\u0027s public headers, this should be in public_deps.",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "331bfae9_3dc19d3f",
+        "filename": "third_party/WebKit/public/web/WebDOMMessageEvent.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-14T03:17:51Z",
+      "side": 1,
+      "message": "would a forward declaration suffice here?",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ad9ad2d_833bd9a1",
+        "filename": "third_party/WebKit/public/web/WebSharedWorker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-14T03:17:51Z",
+      "side": 1,
+      "message": "ditto: would a fwd decl suffice?",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
