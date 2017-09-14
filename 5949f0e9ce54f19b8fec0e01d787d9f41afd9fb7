@@ -34,6 +34,24 @@
       "revId": "5949f0e9ce54f19b8fec0e01d787d9f41afd9fb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d790e0df_13687a52",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-14T22:22:21Z",
+      "side": 1,
+      "message": "Here\u0027s the expected behavior:\n\n- The UI presents a \"Choose Mobile Network\" button\n- Only after the user clicks the button, the choose-mobile-network dialog pops up and initiates a scan\n- The scan may take a minute or two. An empty list could be present if the scan doesn\u0027t complete within the time limit.\n- The user can click the \"scan\" button to rescan\n- The user can choose a network from the list if it\u0027s not empty\n- The user can click cancel to close the dialog\n\nwe currently don\u0027t want to initiate any background scan, so the scan should only be triggered by users",
+      "parentUuid": "ef090395_b42c0ec8",
+      "revId": "5949f0e9ce54f19b8fec0e01d787d9f41afd9fb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
