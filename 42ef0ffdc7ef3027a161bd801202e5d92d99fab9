@@ -16,6 +16,24 @@
       "revId": "42ef0ffdc7ef3027a161bd801202e5d92d99fab9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dad9be41_ef20651c",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-14T15:27:32Z",
+      "side": 1,
+      "message": "For the record, I don\u0027t want to delete this blindly, but I do think it\u0027s worth timing to see if it\u0027s necessary sooner rather than later.  If we leave it until later it\u0027ll become part of the furniture, maybe with no real benefit.",
+      "parentUuid": "9c634483_4ee8c9fc",
+      "revId": "42ef0ffdc7ef3027a161bd801202e5d92d99fab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
