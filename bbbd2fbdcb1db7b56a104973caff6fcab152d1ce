@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e739ed31_dc1896a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-14T04:14:58Z",
+      "side": 1,
+      "message": "Just make this a private instance method on ScrollableArea and do it in this patch.",
+      "range": {
+        "startLine": 17,
+        "startChar": 2,
+        "endLine": 17,
+        "endChar": 56
+      },
+      "revId": "bbbd2fbdcb1db7b56a104973caff6fcab152d1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c4de49_ba18ba65",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-14T04:14:58Z",
+      "side": 1,
+      "message": "This won\u0027t be possible to assert in the helper class any longer so you can just remove it",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 75
+      },
+      "revId": "bbbd2fbdcb1db7b56a104973caff6fcab152d1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d01ee3_12fd139c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-14T04:14:58Z",
+      "side": 1,
+      "message": "In the rest of these, if the test doesn\u0027t instantiate a Page (i.e. it\u0027s just a unit test, doesn\u0027t bring up an entire instance of Blink), it\u0027s fine to just have the ScrollableArea create a member ScrollbarThemeMock and have GetPageScrollbarTheme return it.",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "bbbd2fbdcb1db7b56a104973caff6fcab152d1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "171fc0d9_eb0ee809",
+        "filename": "third_party/WebKit/Source/core/frame/RootFrameViewport.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-14T04:14:58Z",
+      "side": 1,
+      "message": "It doesn\u0027t matter functionally here, but RFV generall delegates these kinds of calls to LayoutViewport so I\u0027d prefer using LayoutViewport().GetPageScrollbarTheme for consistency.",
+      "range": {
+        "startLine": 484,
+        "startChar": 9,
+        "endLine": 484,
+        "endChar": 23
+      },
+      "revId": "bbbd2fbdcb1db7b56a104973caff6fcab152d1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67185fee_dc0ea29f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutScrollbarPart.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-14T04:14:58Z",
+      "side": 1,
+      "message": "Make this function a private instance method to avoid passing in ScrollableArea",
+      "range": {
+        "startLine": 123,
+        "startChar": 55,
+        "endLine": 123,
+        "endChar": 70
+      },
+      "revId": "bbbd2fbdcb1db7b56a104973caff6fcab152d1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5494ccaa_7b035f49",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTestHelper.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-14T04:14:58Z",
+      "side": 1,
+      "message": "Why does this have to be moved down to after the lifecycle update now? If it\u0027s because the Document isn\u0027t yet created, page_holder_-\u003eGetPage() should be valid.",
+      "range": {
+        "startLine": 64,
+        "startChar": 20,
+        "endLine": 64,
+        "endChar": 27
+      },
+      "revId": "bbbd2fbdcb1db7b56a104973caff6fcab152d1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fc01723_1848bff1",
+        "filename": "third_party/WebKit/Source/core/layout/ScrollbarsTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-14T04:14:58Z",
+      "side": 1,
+      "message": "Ditto here, Document might not yet be created but we should have a Page.",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 54
+      },
+      "revId": "bbbd2fbdcb1db7b56a104973caff6fcab152d1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beb89cf5_e9efc0e4",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-14T04:14:58Z",
+      "side": 1,
+      "message": "What case is this trying to handle? There should only be one Page for an entire tab (including OOPIFs, etc) so I don\u0027t think you need this unless I\u0027m missing something.",
+      "range": {
+        "startLine": 716,
+        "startChar": 4,
+        "endLine": 716,
+        "endChar": 71
+      },
+      "revId": "bbbd2fbdcb1db7b56a104973caff6fcab152d1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d07d508f_5b930aff",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-14T04:14:58Z",
+      "side": 1,
+      "message": "make this function an instance method.",
+      "range": {
+        "startLine": 303,
+        "startChar": 26,
+        "endLine": 303,
+        "endChar": 63
+      },
+      "revId": "bbbd2fbdcb1db7b56a104973caff6fcab152d1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f624fe59_671c4297",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollableArea.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-14T04:14:58Z",
+      "side": 1,
+      "message": "Rename to GetScrollbarTheme",
+      "range": {
+        "startLine": 384,
+        "startChar": 26,
+        "endLine": 384,
+        "endChar": 47
+      },
+      "revId": "bbbd2fbdcb1db7b56a104973caff6fcab152d1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba19197_1dcfb613",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollbarTheme.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-14T04:14:58Z",
+      "side": 1,
+      "message": "Rename this to DeprecatedStaticGetTheme since people are unlikely to see this before calling it. Add a link in the comment to see https://crrev.com/c/646727 for rationale and mention that this function will eventually be removed.",
+      "range": {
+        "startLine": 205,
+        "startChar": 25,
+        "endLine": 205,
+        "endChar": 33
+      },
+      "revId": "bbbd2fbdcb1db7b56a104973caff6fcab152d1ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
