@@ -40,7 +40,7 @@ class WM_CORE_EXPORT TransientWindowManager : public aura::WindowObserver {
 
   // Returns the TransientWindowManager for |window| only if it already exists.
   // WARNING: this may return NULL.
-  static const TransientWindowManager* Get(const aura::Window* window);
+  static const TransientWindowManager* GetIfExists(const aura::Window* window);
 
   void AddObserver(TransientWindowObserver* observer);
   void RemoveObserver(TransientWindowObserver* observer);

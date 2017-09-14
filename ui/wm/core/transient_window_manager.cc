@@ -43,7 +43,7 @@ TransientWindowManager* TransientWindowManager::Get(Window* window) {
 }
 
 // static
-const TransientWindowManager* TransientWindowManager::Get(
+const TransientWindowManager* TransientWindowManager::GetIfExists(
     const Window* window) {
   return window->GetProperty(kPropertyKey);
 }
@@ -210,8 +210,7 @@ void TransientWindowManager::OnWindowVisibilityChanged(Window* window,
 void TransientWindowManager::OnWindowStackingChanged(Window* window) {
   DCHECK_EQ(window_, window);
   // Do nothing if we initiated the stacking change.
-  const TransientWindowManager* transient_manager =
-      Get(static_cast<const Window*>(window));
+  const TransientWindowManager* transient_manager = GetIfExists(window);
   if (transient_manager && transient_manager->stacking_target_) {
     Windows::const_iterator window_i = std::find(
         window->parent()->children().begin(),
