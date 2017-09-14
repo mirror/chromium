@@ -31,6 +31,15 @@ Polymer({
     },
 
     /**
+     * The media title to display.
+     * @private {string}
+     */
+    displayedTitle_: {
+      type: String,
+      value: '',
+    },
+
+    /**
      * The volume shown in the volume control, between 0 and 1.
      * @private {number}
      */
@@ -347,6 +356,9 @@ Polymer({
     if (this.shouldAcceptVolumeUpdates_()) {
       this.displayedVolume_ = Math.round(newRouteStatus.volume * 100) / 100;
     }
+    if (newRouteStatus.title !== '') {
+      this.displayedTitle_ = newRouteStatus.title;
+    }
     if (newRouteStatus.description !== '') {
       this.displayedDescription_ = newRouteStatus.description;
     }
@@ -440,6 +452,8 @@ Polymer({
    */
   reset: function() {
     this.routeStatus = new media_router.RouteStatus();
+    this.displayedDescription_ = '';
+    this.displayedTitle_ = '';
     media_router.ui.setRouteControls(null);
   },
 
