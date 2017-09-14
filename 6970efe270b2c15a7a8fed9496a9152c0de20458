@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb0f4c3b_4a48abdc",
+        "filename": "chrome/browser/chromeos/arc/accessibility/ax_tree_source_arc.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-14T05:35:34Z",
+      "side": 1,
+      "message": "As far as I tested on a device, it seems that we no longer need to do DPI conversion. As we have divided with DPI, the focus rectangle is shown in smaller size. With this CL, the focus rectangle becomes to be shown with bigger size.\n\nEven if I remove this DPI conversion, the rectangle is still shown in wrong place in its y-coordinate. I think it\u0027s because of the caption bar of an Android app and ChromeVox bar at the top.\n\nI think we can remove this DPI conversion, and replace it with extracting android caption bar and ChromeVox nav bar. Rectangle is shown at below than the expected position.",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 69
+      },
+      "revId": "6970efe270b2c15a7a8fed9496a9152c0de20458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
