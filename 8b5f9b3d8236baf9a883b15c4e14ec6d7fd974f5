@@ -22,6 +22,30 @@
       "revId": "8b5f9b3d8236baf9a883b15c4e14ec6d7fd974f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a88e9ed_7d4d1294",
+        "filename": "components/payments/content/utility/fingerprint_parser_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-14T20:32:45Z",
+      "side": 1,
+      "message": "Although the API is simple, the implementation has some room for errors, hence fuzzing is useful here. I\u0027m parsing something that looks like this: \"02:AB:45\" into a byte array and we\u0027ve seen some mystery crashes in the wild.",
+      "parentUuid": "a016af5b_5f0d697b",
+      "range": {
+        "startLine": 19,
+        "startChar": 12,
+        "endLine": 19,
+        "endChar": 40
+      },
+      "revId": "8b5f9b3d8236baf9a883b15c4e14ec6d7fd974f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
