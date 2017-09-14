@@ -40,7 +40,7 @@ public class CctOfflinePageModelObserver {
         }
         // Create broadcast if signatures match.
         Intent intent = new Intent();
-        intent.setAction(ACTION_OFFLINE_PAGES_UPDATED_SUFFIX);
+        intent.setAction(context.getPackageName() + ACTION_OFFLINE_PAGES_UPDATED_SUFFIX);
         intent.setPackage(origin.getAppName());
         context.sendBroadcast(intent);
     }
