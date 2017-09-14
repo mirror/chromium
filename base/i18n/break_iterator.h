@@ -93,7 +93,7 @@ class BASE_I18N_EXPORT BreakIterator {
   // "(const string16& str, const string16& locale)". We should do something
   // better.
   BreakIterator(const StringPiece16& str, const string16& rules);
-  ~BreakIterator();
+  virtual ~BreakIterator();
 
   // Init() must be called before any of the iterators are valid.
   // Returns false if ICU failed to initialize.
@@ -103,7 +103,7 @@ class BASE_I18N_EXPORT BreakIterator {
   // the string.  (Note that the very last "break" is after the final
   // character in the string, and when we advance to that position it's the
   // last time Advance() returns true.)
-  bool Advance();
+  virtual bool Advance();
 
   // Updates the text used by the iterator, resetting the iterator as if
   // if Init() had been called again. Any old state is lost. Returns true
@@ -114,7 +114,7 @@ class BASE_I18N_EXPORT BreakIterator {
   // end of a word. (Otherwise, the break iterator just skipped over e.g.
   // whitespace or punctuation.)  Under BREAK_LINE and BREAK_NEWLINE modes,
   // this distinction doesn't apply and it always returns false.
-  bool IsWord() const;
+  virtual bool IsWord() const;
 
   // Under BREAK_WORD mode:
   //  - Returns IS_SKIPPABLE_WORD if non-word characters, such as punctuation or
@@ -143,16 +143,16 @@ class BASE_I18N_EXPORT BreakIterator {
   // Returns the string between prev() and pos().
   // Advance() must have been called successfully at least once for pos() to
   // have advanced to somewhere useful.
-  string16 GetString() const;
+  virtual string16 GetString() const;
 
-  StringPiece16 GetStringPiece() const;
+  virtual StringPiece16 GetStringPiece() const;
 
   // Returns the value of pos() returned before Advance() was last called.
-  size_t prev() const { return prev_; }
+  virtual size_t prev() const;
 
   // Returns the current break position within the string,
   // or BreakIterator::npos when done.
-  size_t pos() const { return pos_; }
+  virtual size_t pos() const;
 
  private:
   // ICU iterator, avoiding ICU ubrk.h dependence.
