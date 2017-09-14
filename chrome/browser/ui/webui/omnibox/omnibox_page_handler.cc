@@ -198,13 +198,16 @@ void OmniboxPageHandler::StartOmniboxQuery(const std::string& input_string,
   // actual results to not depend on the state of the previous request.
   ResetController();
   time_omnibox_started_ = base::Time::Now();
-  input_ = AutocompleteInput(
-      base::UTF8ToUTF16(input_string), cursor_position, std::string(), GURL(),
-      base::string16(),
+  input_ = AutocompleteInput(base::UTF8ToUTF16(input_string), cursor_position,
+                             std::string(),
+                             ChromeAutocompleteSchemeClassifier(profile_));
+  input_.set_current_page_classification(
       static_cast<metrics::OmniboxEventProto::PageClassification>(
-          page_classification),
-      prevent_inline_autocomplete, prefer_keyword, true, true, false,
-      ChromeAutocompleteSchemeClassifier(profile_));
+          page_classification));
+  input_.set_prevent_inline_autocomplete(prevent_inline_autocomplete);
+  input_.set_prefer_keyword(prefer_keyword);
+  input_.set_allow_exact_keyword_match();
+  input_.set_want_asynchronous_matches();
   controller_->Start(input_);
 }
 

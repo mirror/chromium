@@ -330,10 +330,10 @@ void SearchProviderTest::RunTest(TestData* cases,
   ACMatches matches;
   for (int i = 0; i < num_cases; ++i) {
     AutocompleteInput input(cases[i].input, base::string16::npos, std::string(),
-                            GURL(), base::string16(),
-                            metrics::OmniboxEventProto::INVALID_SPEC, false,
-                            prefer_keyword, true, true, false,
                             ChromeAutocompleteSchemeClassifier(&profile_));
+    input.set_prefer_keyword(prefer_keyword);
+    input.set_allow_exact_keyword_match();
+    input.set_want_asynchronous_matches();
     provider_->Start(input, false);
     matches = provider_->matches();
     SCOPED_TRACE(
@@ -375,11 +375,12 @@ void SearchProviderTest::QueryForInput(const base::string16& text,
                                        bool prevent_inline_autocomplete,
                                        bool prefer_keyword) {
   // Start a query.
-  AutocompleteInput input(
-      text, base::string16::npos, std::string(), GURL(), base::string16(),
-      metrics::OmniboxEventProto::INVALID_SPEC, prevent_inline_autocomplete,
-      prefer_keyword, true, true, false,
-      ChromeAutocompleteSchemeClassifier(&profile_));
+  AutocompleteInput input(text, base::string16::npos, std::string(),
+                          ChromeAutocompleteSchemeClassifier(&profile_));
+  input.set_prevent_inline_autocomplete(prevent_inline_autocomplete);
+  input.set_prefer_keyword(prefer_keyword);
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
   provider_->Start(input, false);
 
   // RunUntilIdle so that the task scheduled by SearchProvider to create the
@@ -1007,10 +1008,12 @@ TEST_F(SearchProviderTest, KeywordOrderingAndDescriptions) {
   AutocompleteController controller(
       base::WrapUnique(new ChromeAutocompleteProviderClient(&profile_)),
       nullptr, AutocompleteProvider::TYPE_SEARCH);
-  controller.Start(AutocompleteInput(
-      ASCIIToUTF16("k t"), base::string16::npos, std::string(), GURL(),
-      base::string16(), metrics::OmniboxEventProto::INVALID_SPEC, false, false,
-      true, true, false, ChromeAutocompleteSchemeClassifier(&profile_)));
+  AutocompleteInput input(ASCIIToUTF16("k t"), base::string16::npos,
+                          std::string(),
+                          ChromeAutocompleteSchemeClassifier(&profile_));
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
+  controller.Start(input);
   const AutocompleteResult& result = controller.result();
 
   // There should be three matches, one for the keyword history, one for
@@ -3613,19 +3616,25 @@ TEST_F(SearchProviderTest, RemoveExtraAnswers) {
 }
 
 TEST_F(SearchProviderTest, DoesNotProvideOnFocus) {
-  AutocompleteInput input(
-      base::ASCIIToUTF16("f"), base::string16::npos, std::string(), GURL(),
-      base::string16(), metrics::OmniboxEventProto::INVALID_SPEC, false, true,
-      true, true, true, ChromeAutocompleteSchemeClassifier(&profile_));
+  AutocompleteInput input(base::ASCIIToUTF16("f"), base::string16::npos,
+                          std::string(),
+                          ChromeAutocompleteSchemeClassifier(&profile_));
+  input.set_prefer_keyword();
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
+  input.set_from_omnibox_focus();
   provider_->Start(input, false);
   EXPECT_TRUE(provider_->matches().empty());
 }
 
 TEST_F(SearchProviderTest, SendsWarmUpRequestOnFocus) {
-  AutocompleteInput input(
-      base::ASCIIToUTF16("f"), base::string16::npos, std::string(), GURL(),
-      base::string16(), metrics::OmniboxEventProto::INVALID_SPEC, false, true,
-      true, true, true, ChromeAutocompleteSchemeClassifier(&profile_));
+  AutocompleteInput input(base::ASCIIToUTF16("f"), base::string16::npos,
+                          std::string(),
+                          ChromeAutocompleteSchemeClassifier(&profile_));
+  input.set_prefer_keyword();
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
+  input.set_from_omnibox_focus();
 
   {
     // First, verify that without the warm-up feature enabled, the provider
