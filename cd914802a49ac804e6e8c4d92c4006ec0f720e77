@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a98150ca_8cfb2ec8",
+        "filename": "chrome/browser/language/language_model_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-14T05:23:46Z",
+      "side": 1,
+      "message": "Thanks for the pickup - I had uploaded the wrong version of the file.",
+      "parentUuid": "08fcadbf_79c0a02c",
+      "revId": "cd914802a49ac804e6e8c4d92c4006ec0f720e77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7462de93_d7593ebe",
         "filename": "chrome/browser/language/language_model_factory.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "cd914802a49ac804e6e8c4d92c4006ec0f720e77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d57ed04e_cb3743a9",
+        "filename": "chrome/browser/language/language_model_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-14T05:23:46Z",
+      "side": 1,
+      "message": "It also holds the memory for them: the base class holds (and cleans up after) a map from BrowserContext* to LanguageModel*.",
+      "parentUuid": "7462de93_d7593ebe",
+      "revId": "cd914802a49ac804e6e8c4d92c4006ec0f720e77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e46adad7_429413e5",
+        "filename": "chrome/browser/language/language_model_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-14T05:23:46Z",
+      "side": 1,
+      "message": "Answered above.",
+      "parentUuid": "c6efdb2b_00823d26",
+      "revId": "cd914802a49ac804e6e8c4d92c4006ec0f720e77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06ab2e80_7021deb9",
         "filename": "chrome/browser/language/language_model_factory_unittest.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4fabd45f_59f0df8d",
+        "filename": "chrome/browser/language/language_model_factory_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-14T05:23:46Z",
+      "side": 1,
+      "message": "Unfortunately not: the base class of LanguageModelFactoryTest uses mutable BrowserContexts (even though they could probably be const), which prevents us.",
+      "parentUuid": "06ab2e80_7021deb9",
+      "revId": "cd914802a49ac804e6e8c4d92c4006ec0f720e77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34ba192c_13e52092",
         "filename": "chrome/browser/language/language_model_factory_unittest.cc",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "cd914802a49ac804e6e8c4d92c4006ec0f720e77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac98487_9a4df419",
+        "filename": "chrome/browser/language/language_model_factory_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-14T05:23:46Z",
+      "side": 1,
+      "message": "See above.",
+      "parentUuid": "34ba192c_13e52092",
+      "revId": "cd914802a49ac804e6e8c4d92c4006ec0f720e77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
