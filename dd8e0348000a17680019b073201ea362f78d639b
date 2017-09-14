@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3868301f_bfcd24a4",
+        "filename": "chrome/test/data/webui/md_bookmarks/md_bookmarks_browsertest.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-14T09:26:43Z",
+      "side": 1,
+      "message": "When using ES6 Class syntax it doesn\u0027t seem necessary anymore to also include \"real\" timer_proxy anymore (see this comment on the other CL): https://chromium-review.googlesource.com/c/chromium/src/+/660702/3/chrome/test/data/webui/md_bookmarks/md_bookmarks_browsertest.js#29",
+      "revId": "dd8e0348000a17680019b073201ea362f78d639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce00391f_954e2420",
+        "filename": "ui/webui/resources/js/test_timer_proxy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-14T09:26:43Z",
+      "side": 1,
+      "message": "Somehow I wasn\u0027t able to get \"class TestTimerProxy extends TimerProxy\" to work here. Any advice? It is curious that the tests still pass and the closure compiler does not complain either.",
+      "range": {
+        "startLine": 5,
+        "startChar": 20,
+        "endLine": 5,
+        "endChar": 21
+      },
+      "revId": "dd8e0348000a17680019b073201ea362f78d639b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
