@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4ee51a8_12732795",
+        "filename": "components/test/data/autofill/tools/add_disused_address.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-14T18:37:19Z",
+      "side": 1,
+      "message": "needed?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 28
+      },
+      "revId": "cfbdd8ee27d8edd8aee88455e8ffc56c21b6c576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
