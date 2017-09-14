@@ -569,6 +569,24 @@
     },
     {
       "key": {
+        "uuid": "00d537b0_5791e8e1",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T06:52:43Z",
+      "side": 1,
+      "message": "I missed this comment. Yes it\u0027s just a planned work for now. My comment was just FYI.",
+      "parentUuid": "c0d0312e_bd8e2fc0",
+      "revId": "ceb4cf0effc78e902996f4c903f0c41ea79d199f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee6a1705_1f75e0cf",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
         "patchSetId": 23
