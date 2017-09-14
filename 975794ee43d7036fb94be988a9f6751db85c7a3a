@@ -22,6 +22,30 @@
       "revId": "975794ee43d7036fb94be988a9f6751db85c7a3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d259e6_0560673d",
+        "filename": "components/omnibox/browser/autocomplete_match_type.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-09-14T01:11:56Z",
+      "side": 0,
+      "message": "Disregard the comment above. I will revert all changes to this file in the next patch.",
+      "parentUuid": "ae26b31e_bd8ffb3c",
+      "range": {
+        "startLine": 43,
+        "startChar": 61,
+        "endLine": 43,
+        "endChar": 73
+      },
+      "revId": "975794ee43d7036fb94be988a9f6751db85c7a3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
