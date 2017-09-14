@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fd32e8f_cc20ba0a",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-14T23:42:30Z",
+      "side": 1,
+      "message": "So, one question... previously this code would use the callback every time Paint (or CopyVideoTextureToPlatformTexture) is called, but now it uses the ContextProvider passed in the constructor. The question is what happens if the GPU process crashes/is restarted, which makes the ContextProvider unusable. Previously it would create a new ContextProvider when we get here (or reuse a newly created one with the new GPU process), but it doesn\u0027t any more. I believe WebMediaPlayerImpl is not recreated when the GPU process crashes. So maybe we still need a callback to fetch a new ContextProvider?\n\nYou can try to exercise this situation by killing the GPU process from the task manager.",
+      "revId": "95e5a9f7c667b9310d4b4c7ae9f6c2e19b320f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
