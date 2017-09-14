@@ -50,31 +50,13 @@ NOINLINE void ThreadUnresponsive_UI() {
   ReportThreadHang();
 }
 
-NOINLINE void ThreadUnresponsive_DB() {
-  volatile int inhibit_comdat = __LINE__;
-  ALLOW_UNUSED_LOCAL(inhibit_comdat);
-  ReportThreadHang();
-}
-
 NOINLINE void ThreadUnresponsive_FILE() {
   volatile int inhibit_comdat = __LINE__;
   ALLOW_UNUSED_LOCAL(inhibit_comdat);
   ReportThreadHang();
 }
 
-NOINLINE void ThreadUnresponsive_FILE_USER_BLOCKING() {
-  volatile int inhibit_comdat = __LINE__;
-  ALLOW_UNUSED_LOCAL(inhibit_comdat);
-  ReportThreadHang();
-}
-
 NOINLINE void ThreadUnresponsive_PROCESS_LAUNCHER() {
-  volatile int inhibit_comdat = __LINE__;
-  ALLOW_UNUSED_LOCAL(inhibit_comdat);
-  ReportThreadHang();
-}
-
-NOINLINE void ThreadUnresponsive_CACHE() {
   volatile int inhibit_comdat = __LINE__;
   ALLOW_UNUSED_LOCAL(inhibit_comdat);
   ReportThreadHang();
@@ -93,16 +75,10 @@ NOINLINE void CrashBecauseThreadWasUnresponsive(int thread_id) {
   if (thread_id == 0)
     return ThreadUnresponsive_UI();
   else if (thread_id == 1)
-    return ThreadUnresponsive_DB();
-  else if (thread_id == 2)
     return ThreadUnresponsive_FILE();
-  else if (thread_id == 3)
-    return ThreadUnresponsive_FILE_USER_BLOCKING();
-  else if (thread_id == 4)
+  else if (thread_id == 2)
     return ThreadUnresponsive_PROCESS_LAUNCHER();
-  else if (thread_id == 5)
-    return ThreadUnresponsive_CACHE();
-  else if (thread_id == 6)
+  else if (thread_id == 3)
     return ThreadUnresponsive_IO();
 }
 
