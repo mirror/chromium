@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3dda0ea6_e81a35b0",
+        "filename": "ios/build/bots/chromium.fyi/EarlGreyiOS.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-14T11:57:46Z",
+      "side": 1,
+      "message": "Is it possible to use base::test::ScopedFeatureList instead?",
+      "range": {
+        "startLine": 25,
+        "startChar": 14,
+        "endLine": 25,
+        "endChar": 42
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7055bc98_c6b31234",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-14T11:57:46Z",
+      "side": 1,
+      "message": "Can\u0027t we reuse IDS_MANAGE_PASSWORDS_AUTO_SIGNIN_TITLE that is shared between all the platforms?",
+      "range": {
+        "startLine": 560,
+        "startChar": 21,
+        "endLine": 560,
+        "endChar": 59
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "458d1747_42004405",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-14T11:57:46Z",
+      "side": 1,
+      "message": "I wonder why do we need those timeouts? The test has its own timeouts probably.",
+      "range": {
+        "startLine": 35,
+        "startChar": 21,
+        "endLine": 35,
+        "endChar": 50
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32dd7843_51338afe",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-14T11:57:46Z",
+      "side": 1,
+      "message": "no move. Strange that you didn\u0027t get a warning.",
+      "range": {
+        "startLine": 45,
+        "startChar": 9,
+        "endLine": 45,
+        "endChar": 18
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "067007a5_25b22a52",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-14T11:57:46Z",
+      "side": 1,
+      "message": "Normally a test would just enable what it needs",
+      "range": {
+        "startLine": 62,
+        "startChar": 7,
+        "endLine": 62,
+        "endChar": 47
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6087e95_7198a832",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-14T11:57:46Z",
+      "side": 1,
+      "message": "That\u0027s not true.",
+      "range": {
+        "startLine": 102,
+        "startChar": 5,
+        "endLine": 102,
+        "endChar": 77
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0f6dc45_39411f1f",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-14T11:57:46Z",
+      "side": 1,
+      "message": "Why this attribute?",
+      "range": {
+        "startLine": 123,
+        "startChar": 2,
+        "endLine": 123,
+        "endChar": 21
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2edfe527_64f8b843",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-14T11:57:46Z",
+      "side": 1,
+      "message": "3;",
+      "range": {
+        "startLine": 720,
+        "startChar": 21,
+        "endLine": 720,
+        "endChar": 23
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
