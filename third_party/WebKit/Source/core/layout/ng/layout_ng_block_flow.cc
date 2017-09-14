@@ -130,22 +130,46 @@ void LayoutNGBlockFlow::ResetNGInlineNodeData() {
   ng_inline_node_data_ = WTF::MakeUnique<NGInlineNodeData>();
 }
 
+void LayoutNGBlockFlow::AddOverflowFromChildren() {
+  if (ChildrenInline()) {
+    DCHECK(cached_result_ && cached_result_->PhysicalFragment());
+    const NGPhysicalFragment& physical_fragment =
+        *cached_result_->PhysicalFragment();
+    LayoutRect visual_rect = physical_fragment.VisualRect();
+    AddContentsVisualOverflow(visual_rect);
+    return;
+  }
+  LayoutBlockFlow::AddOverflowFromChildren();
+}
+
 LayoutUnit LayoutNGBlockFlow::FirstLineBoxBaseline() const {
-  // TODO(kojii): Implement. This will stop working once we stop creating line
-  // boxes.
+  if (ChildrenInline()) {
+    if (!NeedsLayout())
+      return LayoutUnit(-1);
+#if 0
+    DCHECK(cached_result_ && cached_result_->PhysicalFragment());
+#endif
+    // TODO(kojii): Implement. This will stop working once we stop creating line
+    // boxes.
+  }
   return LayoutBlockFlow::FirstLineBoxBaseline();
 }
 
 LayoutUnit LayoutNGBlockFlow::InlineBlockBaseline(
     LineDirectionMode line_direction) const {
-  // TODO(kojii): Implement. This will stop working once we stop creating line
-  // boxes.
+  if (ChildrenInline()) {
+    DCHECK(cached_result_ && cached_result_->PhysicalFragment());
+    // TODO(kojii): Implement. This will stop working once we stop creating line
+    // boxes.
+  }
   return LayoutBlockFlow::InlineBlockBaseline(line_direction);
 }
 
 RefPtr<NGLayoutResult> LayoutNGBlockFlow::CachedLayoutResult(
     const NGConstraintSpace& constraint_space,
     NGBreakToken* break_token) const {
+  if (!RuntimeEnabledFeatures::LayoutNGFragmentCachingEnabled())
+    return nullptr;
   if (!cached_result_ || break_token || NeedsLayout())
     return nullptr;
   if (constraint_space != *cached_constraint_space_)
@@ -157,8 +181,6 @@ void LayoutNGBlockFlow::SetCachedLayoutResult(
     const NGConstraintSpace& constraint_space,
     NGBreakToken* break_token,
     RefPtr<NGLayoutResult> layout_result) {
-  if (!RuntimeEnabledFeatures::LayoutNGFragmentCachingEnabled())
-    return;
   if (break_token || constraint_space.UnpositionedFloats().size() ||
       layout_result->UnpositionedFloats().size() ||
       layout_result->Status() != NGLayoutResult::kSuccess) {
