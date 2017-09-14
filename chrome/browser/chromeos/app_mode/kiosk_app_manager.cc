@@ -231,14 +231,15 @@ void KioskAppManager::SetAutoLaunchApp(const std::string& app_id,
   // Clean first, so the proper change callbacks are triggered even
   // if we are only changing AutoLoginState here.
   if (!auto_launch_app_id_.empty()) {
-    service->SetString(kAccountsPrefDeviceLocalAccountAutoLoginId,
-                       std::string());
+    CrosSettings::Get()->SetString(kAccountsPrefDeviceLocalAccountAutoLoginId,
+                                   std::string());
   }
 
-  service->SetString(
+  CrosSettings::Get()->SetString(
       kAccountsPrefDeviceLocalAccountAutoLoginId,
       app_id.empty() ? std::string() : GenerateKioskAppAccountId(app_id));
-  service->SetInteger(kAccountsPrefDeviceLocalAccountAutoLoginDelay, 0);
+  CrosSettings::Get()->SetInteger(kAccountsPrefDeviceLocalAccountAutoLoginDelay,
+                                  0);
 }
 
 void KioskAppManager::SetAppWasAutoLaunchedWithZeroDelay(
