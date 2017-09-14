@@ -588,10 +588,10 @@ bool GpuCommandBufferStub::Initialize(
     scoped_refptr<gles2::FeatureInfo> feature_info =
         new gles2::FeatureInfo(manager->gpu_driver_bug_workarounds());
     gpu::GpuMemoryBufferFactory* gmb_factory =
-        channel_->gpu_channel_manager()->gpu_memory_buffer_factory();
+        manager->gpu_memory_buffer_factory();
     context_group_ = new gles2::ContextGroup(
         manager->gpu_preferences(), gles2::PassthroughCommandDecoderSupported(),
-        manager->mailbox_manager(),
+        manager->mailbox_manager(), manager->outputter(),
         new GpuCommandBufferMemoryTracker(
             channel_, command_buffer_id_.GetUnsafeValue(),
             init_params.attribs.context_type, channel_->task_runner()),

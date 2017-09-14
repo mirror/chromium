@@ -11,6 +11,7 @@
 #include "gpu/command_buffer/client/client_test_helper.h"
 #include "gpu/command_buffer/service/gles2_cmd_decoder_mock.h"
 #include "gpu/command_buffer/service/gpu_service_test.h"
+#include "gpu/command_buffer/service/gpu_tracer.h"
 #include "gpu/command_buffer/service/image_manager.h"
 #include "gpu/command_buffer/service/mailbox_manager_impl.h"
 #include "gpu/command_buffer/service/service_discardable_manager.h"
@@ -46,7 +47,7 @@ class ContextGroupTest : public GpuServiceTest {
     decoder_.reset(new MockGLES2Decoder(&command_buffer_service_));
     scoped_refptr<FeatureInfo> feature_info = new FeatureInfo;
     group_ = scoped_refptr<ContextGroup>(new ContextGroup(
-        gpu_preferences_, false, &mailbox_manager_,
+        gpu_preferences_, false, &mailbox_manager_, &outputter_,
         nullptr /* memory_tracker */, nullptr /* shader_translator_cache */,
         nullptr /* framebuffer_completeness_cache */, feature_info,
         kBindGeneratesResource, &image_manager_, nullptr /* image_factory */,
@@ -59,6 +60,7 @@ class ContextGroupTest : public GpuServiceTest {
   ServiceDiscardableManager discardable_manager_;
   FakeCommandBufferServiceBase command_buffer_service_;
   MailboxManagerImpl mailbox_manager_;
+  TraceOutputter outputter_;
   std::unique_ptr<MockGLES2Decoder> decoder_;
   scoped_refptr<ContextGroup> group_;
 };

@@ -63,6 +63,7 @@ ContextGroup::ContextGroup(
     const GpuPreferences& gpu_preferences,
     bool supports_passthrough_command_decoders,
     MailboxManager* mailbox_manager,
+    Outputter* outputter,
     const scoped_refptr<MemoryTracker>& memory_tracker,
     ShaderTranslatorCache* shader_translator_cache,
     FramebufferCompletenessCache* framebuffer_completeness_cache,
@@ -75,6 +76,7 @@ ContextGroup::ContextGroup(
     ServiceDiscardableManager* discardable_manager)
     : gpu_preferences_(gpu_preferences),
       mailbox_manager_(mailbox_manager),
+      outputter_(outputter),
       memory_tracker_(memory_tracker),
       shader_translator_cache_(shader_translator_cache),
 #if defined(OS_MACOSX)
@@ -119,6 +121,7 @@ ContextGroup::ContextGroup(
   DCHECK(discardable_manager);
   DCHECK(feature_info_);
   DCHECK(mailbox_manager_);
+  DCHECK(outputter_);
   transfer_buffer_manager_ =
       base::MakeUnique<TransferBufferManager>(memory_tracker_.get());
   use_passthrough_cmd_decoder_ = supports_passthrough_command_decoders &&

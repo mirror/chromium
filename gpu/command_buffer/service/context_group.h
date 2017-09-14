@@ -38,6 +38,7 @@ class BufferManager;
 class GLES2Decoder;
 class ImageManager;
 class MailboxManager;
+class Outputter;
 class RenderbufferManager;
 class PathManager;
 class ProgramManager;
@@ -60,6 +61,7 @@ class GPU_EXPORT ContextGroup : public base::RefCounted<ContextGroup> {
   ContextGroup(const GpuPreferences& gpu_preferences,
                bool supports_passthrough_command_decoders,
                MailboxManager* mailbox_manager,
+               Outputter* outputter,
                const scoped_refptr<MemoryTracker>& memory_tracker,
                ShaderTranslatorCache* shader_translator_cache,
                FramebufferCompletenessCache* framebuffer_completeness_cache,
@@ -83,6 +85,8 @@ class GPU_EXPORT ContextGroup : public base::RefCounted<ContextGroup> {
   void Destroy(GLES2Decoder* decoder, bool have_context);
 
   MailboxManager* mailbox_manager() const { return mailbox_manager_; }
+
+  gles2::Outputter* outputter() { return outputter_; }
 
   MemoryTracker* memory_tracker() const { return memory_tracker_.get(); }
 
@@ -254,6 +258,7 @@ class GPU_EXPORT ContextGroup : public base::RefCounted<ContextGroup> {
   // than refer to the one passed in to the constructor.
   const GpuPreferences gpu_preferences_;
   MailboxManager* mailbox_manager_;
+  Outputter* outputter_ = nullptr;
   scoped_refptr<MemoryTracker> memory_tracker_;
   ShaderTranslatorCache* shader_translator_cache_;
   FramebufferCompletenessCache* framebuffer_completeness_cache_;

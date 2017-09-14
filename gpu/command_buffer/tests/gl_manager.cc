@@ -325,11 +325,11 @@ void GLManager::InitializeWithWorkaroundsImpl(
     // Always mark the passthrough command decoder as supported so that tests do
     // not unexpectedly use the wrong command decoder
     context_group = new gles2::ContextGroup(
-        gpu_preferences_, true, mailbox_manager_, nullptr /* memory_tracker */,
-        translator_cache_.get(), &completeness_cache_, feature_info,
-        options.bind_generates_resource, &image_manager_, options.image_factory,
-        nullptr /* progress_reporter */, GpuFeatureInfo(),
-        &discardable_manager_);
+        gpu_preferences_, true, mailbox_manager_, &outputter_,
+        nullptr /* memory_tracker */, translator_cache_.get(),
+        &completeness_cache_, feature_info, options.bind_generates_resource,
+        &image_manager_, options.image_factory, nullptr /* progress_reporter */,
+        GpuFeatureInfo(), &discardable_manager_);
   }
 
   command_buffer_.reset(new CommandBufferCheckLostContext(
