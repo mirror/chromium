@@ -12,6 +12,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "chrome/browser/chromeos/arc/boot_phase_monitor/arc_instance_throttle.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/sessions/session_restore.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
 #include "chromeos/cryptohome/cryptohome_parameters.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -82,12 +83,15 @@ ArcBootPhaseMonitorBridge::ArcBootPhaseMonitorBridge(
       account_id_(multi_user_util::GetAccountIdFromProfile(
           Profile::FromBrowserContext(context))),
       binding_(this),
+      cpu_restriction_adjuster_(
+          base::BindRepeating(&SetArcCpuRestriction, false /* do_restrict */)),
       first_app_launch_delay_recorder_(
           base::BindRepeating(&RecordAppLaunchDelay)) {
   arc_bridge_service_->boot_phase_monitor()->AddObserver(this);
   auto* arc_session_manager = ArcSessionManager::Get();
   DCHECK(arc_session_manager);
   arc_session_manager->AddObserver(this);
+  SessionRestore::AddObserver(this);
 }
 
 ArcBootPhaseMonitorBridge::~ArcBootPhaseMonitorBridge() {
@@ -96,6 +100,7 @@ ArcBootPhaseMonitorBridge::~ArcBootPhaseMonitorBridge() {
   auto* arc_session_manager = ArcSessionManager::Get();
   DCHECK(arc_session_manager);
   arc_session_manager->RemoveObserver(this);
+  SessionRestore::RemoveObserver(this);
 }
 
 void ArcBootPhaseMonitorBridge::RecordFirstAppLaunchDelayUMAInternal() {
@@ -125,6 +130,7 @@ void ArcBootPhaseMonitorBridge::OnInstanceReady() {
 void ArcBootPhaseMonitorBridge::OnBootCompleted() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   VLOG(2) << "OnBootCompleted";
+  LOG(ERROR) << "!!! OnBootCompleted";
   boot_completed_ = true;
 
   chromeos::SessionManagerClient* session_manager_client =
@@ -172,7 +178,21 @@ void ArcBootPhaseMonitorBridge::OnArcSessionRestarting() {
   // We assume that a crash tends to happen while the user is actively using
   // the instance. For that reason, we try to restart the instance without the
   // restricted cgroups.
-  SetArcCpuRestriction(false /* do_restrict */);
+  cpu_restriction_adjuster_.Run();
+}
+
+void ArcBootPhaseMonitorBridge::OnSessionRestoreFinishedLoadingTabs() {
+  VLOG(2) << "All tabs have been restored";
+  LOG(ERROR) << "!!! All tabs have been restored";
+  if (throttle_)
+    return;
+  // |throttle_| is not available. This means either of the following:
+  // 1) This is an opt-in boot, and OnArcInitialStart() hasn't been called.
+  // 2) This is not an opt-in boot, and OnBootCompleted() hasn't been called.
+  // In both cases, relax the restriction to let the instance fully start.
+  VLOG(2) << "Allowing the instance to use more CPU resources";
+  LOG(ERROR) << "!!! Allowing the instance to use more CPU resources";
+  cpu_restriction_adjuster_.Run();
 }
 
 void ArcBootPhaseMonitorBridge::Reset() {

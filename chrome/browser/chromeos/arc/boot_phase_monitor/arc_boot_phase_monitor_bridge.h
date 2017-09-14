@@ -12,6 +12,7 @@
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 #include "chrome/browser/chromeos/arc/arc_session_manager.h"
+#include "chrome/browser/sessions/session_restore_observer.h"
 #include "components/arc/common/boot_phase_monitor.mojom.h"
 #include "components/arc/instance_holder.h"
 #include "components/keyed_service/core/keyed_service.h"
@@ -33,7 +34,8 @@ class ArcBootPhaseMonitorBridge
     : public KeyedService,
       public InstanceHolder<mojom::BootPhaseMonitorInstance>::Observer,
       public mojom::BootPhaseMonitorHost,
-      public ArcSessionManager::Observer {
+      public ArcSessionManager::Observer,
+      public SessionRestoreObserver {
  public:
   using FirstAppLaunchDelayRecorder =
       base::RepeatingCallback<void(base::TimeDelta)>;
@@ -69,11 +71,18 @@ class ArcBootPhaseMonitorBridge
   void OnArcSessionStopped(ArcStopReason stop_reason) override;
   void OnArcSessionRestarting() override;
 
+  // SessionRestoreObserver
+  void OnSessionRestoreFinishedLoadingTabs() override;
+
   void RecordFirstAppLaunchDelayUMAForTesting() {
     RecordFirstAppLaunchDelayUMAInternal();
   }
 
   ArcInstanceThrottle* throttle_for_testing() const { return throttle_.get(); }
+  void set_cpu_restriction_adjuster_for_testing(
+      const base::RepeatingClosure& cpu_restriction_adjuster) {
+    cpu_restriction_adjuster_ = cpu_restriction_adjuster;
+  }
   void set_first_app_launch_delay_recorder_for_testing(
       const FirstAppLaunchDelayRecorder& first_app_launch_delay_recorder) {
     first_app_launch_delay_recorder_ = first_app_launch_delay_recorder;
@@ -88,6 +97,9 @@ class ArcBootPhaseMonitorBridge
   ArcBridgeService* const arc_bridge_service_;  // Owned by ArcServiceManager.
   const AccountId account_id_;
   mojo::Binding<mojom::BootPhaseMonitorHost> binding_;
+
+  // Repeating callback objects.
+  base::RepeatingClosure cpu_restriction_adjuster_;
   FirstAppLaunchDelayRecorder first_app_launch_delay_recorder_;
 
   // The following variables must be reset every time when the instance stops or
