@@ -22,6 +22,30 @@
       "revId": "64ad84cf097f18dda230325b3a50155bef69cba0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71b0b378_fab293cb",
+        "filename": "device/u2f/u2f_ble_frames.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-09-14T10:58:51Z",
+      "side": 1,
+      "message": "Done in https://chromium-review.googlesource.com/c/chromium/src/+/659817",
+      "parentUuid": "3b014676_27117d2e",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 20
+      },
+      "revId": "64ad84cf097f18dda230325b3a50155bef69cba0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
