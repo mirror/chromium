@@ -393,4 +393,12 @@ std::string AnimationPlayer::ToString() const {
       animation_ticker_->AnimationsToString().c_str());
 }
 
+bool AnimationPlayer::HasActiveAnimations() const {
+  return animation_ticker_->HasActiveAnimations();
+}
+
+bool AnimationPlayer::HasPendingAnimations() const {
+  return animation_ticker_->HasPendingAnimations();
+}
+
 }  // namespace cc

@@ -1355,11 +1355,6 @@ void LayerTreeHost::BuildPropertyTreesForTesting() {
       gfx::Rect(device_viewport_size()), identity_transform, property_trees());
 }
 
-bool LayerTreeHost::IsElementInList(ElementId element_id,
-                                    ElementListType list_type) const {
-  return list_type == ElementListType::ACTIVE && LayerByElementId(element_id);
-}
-
 void LayerTreeHost::SetMutatorsNeedCommit() {
   SetNeedsCommit();
 }
@@ -1451,7 +1446,10 @@ void LayerTreeHost::ElementIsAnimatingChanged(
     ElementListType list_type,
     const PropertyAnimationState& mask,
     const PropertyAnimationState& state) {
-  DCHECK_EQ(ElementListType::ACTIVE, list_type);
+  // TODO(wkorman): Look into and further rationalize this change, or
+  // restore DCHECK or similar.
+  if (list_type != ElementListType::ACTIVE)
+    return;
   property_trees()->ElementIsAnimatingChanged(mutator_host(), element_id,
                                               list_type, mask, state, true);
 }
