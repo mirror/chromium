@@ -99,7 +99,6 @@ core_idl_files =
                     "dom/DocumentFragment.idl",
                     "dom/DocumentType.idl",
                     "dom/Element.idl",
-                    "dom/FrameRequestCallback.idl",
                     "dom/IdleDeadline.idl",
                     "dom/Iterator.idl",
                     "dom/MessageChannel.idl",
@@ -512,6 +511,7 @@ core_typedefs_enums_only_idl_files =
 core_callback_function_idl_files =
     get_path_info([
                     "dom/FunctionStringCallback.idl",
+                    "dom/FrameRequestCallback.idl",
                     "dom/IdleRequestCallback.idl",
                   ],
                   "abspath")

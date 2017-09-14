@@ -57,7 +57,7 @@ class EventQueue;
 class ExceptionState;
 class External;
 class FrameConsole;
-class FrameRequestCallback;
+class V8FrameRequestCallback;
 class History;
 class IdleRequestOptions;
 class MediaQueryList;
@@ -220,8 +220,8 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
   CSSRuleList* getMatchedCSSRules(Element*, const String& pseudo_elt) const;
 
   // WebKit animation extensions
-  int requestAnimationFrame(FrameRequestCallback*);
-  int webkitRequestAnimationFrame(FrameRequestCallback*);
+  int requestAnimationFrame(V8FrameRequestCallback*);
+  int webkitRequestAnimationFrame(V8FrameRequestCallback*);
   void cancelAnimationFrame(int id);
 
   // Idle callback extensions
