@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7edde231_75292ada",
+        "filename": "chrome/android/java/res/values/colors.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-14T23:43:58Z",
+      "side": 1,
+      "message": "How about light and dark instead of normal and incognito so that it matches Java",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 77,
+        "endChar": 58
+      },
+      "revId": "6db1ead377e13ab55da560593d59e39e7d1e3159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d75df9c9_b6212e4e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-14T23:43:58Z",
+      "side": 1,
+      "message": "I think that we don\u0027t want this is if check here, but rather in getStandardUrlColor below, e.g.\n\n   private int getStandardUrlColor() {\n        if (!FeatureUtilities.isChromeHomeModernEnabled()) return mLightUrlStandardColor;\n\n        return (mUseDarkColors \u003d\u003d null || mUseDarkColors) ? mDarkUrlStandardColor\n                                                          : mLightUrlStandardColor;\n    }",
+      "range": {
+        "startLine": 400,
+        "startChar": 8,
+        "endLine": 400,
+        "endChar": 95
+      },
+      "revId": "6db1ead377e13ab55da560593d59e39e7d1e3159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
