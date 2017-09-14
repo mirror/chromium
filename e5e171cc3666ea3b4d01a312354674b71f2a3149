@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cff5d485_4073e48a",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 955,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-14T20:23:54Z",
+      "side": 1,
+      "message": "Yes, early return seems reasonable to me.  Do we need to catch this earlier?  RFHI::OnBeforeUnloadAck has a bunch of logic as well.\n\nLooking more closely at RFHI, I\u0027m guessing we do want it to wrap up the OnBeforeUnloadOverheadTime metrics as usual, but we definitely don\u0027t want it to call DidCancelLoading() if |proceed| is false, correct?\n\nIs that DidCancelLoading call needed at all in PlzNav, or is it redundant with the CancelNavigation call below on line 969?  Maybe we only need it for the non-PlzNav path, and we could move it within RFHM::OnBeforeUnloadAck?",
+      "revId": "e5e171cc3666ea3b4d01a312354674b71f2a3149",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
