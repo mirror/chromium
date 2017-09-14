@@ -93,9 +93,11 @@ TEST_F(LockScreenActionTrayTest, ActionAvailableState) {
 
   ASSERT_FALSE(GetTray()->GetImageForTesting().isNull());
 
-  EXPECT_EQ(0, tray_action_client.action_requests_count());
+  EXPECT_TRUE(tray_action_client.note_origins().empty());
   ClickOnTray();
-  ASSERT_EQ(1, tray_action_client.action_requests_count());
+  ASSERT_EQ(std::vector<mojom::LockScreenNoteOrigin>(
+                {mojom::LockScreenNoteOrigin::kTrayAction}),
+            tray_action_client.note_origins());
   EXPECT_TRUE(GetTray()->visible());
   EXPECT_FALSE(GetTray()->GetImageForTesting().isNull());
 
@@ -114,9 +116,11 @@ TEST_F(LockScreenActionTrayTest, ActionAvailableStateSetWithClient) {
   EXPECT_TRUE(GetTray()->visible());
   ASSERT_FALSE(GetTray()->GetImageForTesting().isNull());
 
-  EXPECT_EQ(0, tray_action_client.action_requests_count());
+  EXPECT_TRUE(tray_action_client.note_origins().empty());
   ClickOnTray();
-  ASSERT_EQ(1, tray_action_client.action_requests_count());
+  ASSERT_EQ(std::vector<mojom::LockScreenNoteOrigin>(
+                {mojom::LockScreenNoteOrigin::kTrayAction}),
+            tray_action_client.note_origins());
   EXPECT_TRUE(GetTray()->visible());
   EXPECT_FALSE(GetTray()->GetImageForTesting().isNull());
 
@@ -157,11 +161,11 @@ TEST_F(LockScreenActionTrayTest, LaunchingState) {
   EXPECT_TRUE(GetTray()->visible());
   ASSERT_FALSE(GetTray()->GetImageForTesting().isNull());
 
-  EXPECT_EQ(0, tray_action_client.action_requests_count());
+  EXPECT_TRUE(tray_action_client.note_origins().empty());
   ClickOnTray();
   // Clicking on the item while the action is launching should not repeat action
   // request.
-  ASSERT_EQ(0, tray_action_client.action_requests_count());
+  ASSERT_TRUE(tray_action_client.note_origins().empty());
   EXPECT_TRUE(GetTray()->visible());
   EXPECT_FALSE(GetTray()->GetImageForTesting().isNull());
 
