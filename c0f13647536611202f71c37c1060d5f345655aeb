@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "ef01330a_68cf3f50",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-09-14T20:20:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b7c3c10_dabe8212",
+      "revId": "c0f13647536611202f71c37c1060d5f345655aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf7af54f_0732a04e",
         "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
         "patchSetId": 21
@@ -229,6 +247,24 @@
       "revId": "c0f13647536611202f71c37c1060d5f345655aeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7337dcda_5311973e",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1128380
+      },
+      "writtenOn": "2017-09-14T20:20:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ec5587f4_6889b560",
+      "revId": "c0f13647536611202f71c37c1060d5f345655aeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
