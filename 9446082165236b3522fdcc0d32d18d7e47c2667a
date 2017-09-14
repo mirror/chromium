@@ -1,0 +1,414 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88c25e3e_ad33e542",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think we are using \u003cstring.h\u003e and `ptr_util.h`",
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce79c51_c22fa0f1",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "style nit: {} can be removed for one-line body -- You can leave it if you prefer, but then please make it consistent with line 70.",
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60ae320_04897dea",
+        "filename": "content/browser/webauth/cbor/cbor_values.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "While this is not important now, somebody might want to add a reset() method  \nand call this from there. In that case let\u0027s restore the class invariant and set |type_| to NONE given none of the manually constructibles are alive.",
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3863592f_3e5fbd39",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "nit: I think \u003cmap\u003e, \u003cmemory\u003e, and \u003cutility\u003e are unused.",
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff57a7b_2c1d14d2",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "nit: Including just `string_piece_forward.h` should be sufficient in the header.",
+      "range": {
+        "startLine": 17,
+        "startChar": 23,
+        "endLine": 17,
+        "endChar": 35
+      },
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65ee7361_9b50597f",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "nit: Is null the same as NONE?  If so, let\u0027s make the terminology consistent.",
+      "range": {
+        "startLine": 43,
+        "startChar": 30,
+        "endLine": 43,
+        "endChar": 34
+      },
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "867406a1_482f5473",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "nit: Jan, do you feel strongly about having this up here instead of after all the constructors?",
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61d66b7c_c6e7e739",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "nit: Empty line above.\nnit: #include \"base/macros.h\" for this.",
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e523e9_eab5b8eb",
+        "filename": "content/browser/webauth/cbor/cbor_values_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "nit: The production header already includes \u003cstdint.h\u003e; and I think \u003cmap\u003e, \u003cvector\u003e, \u003cmemory\u003e, `ptr_util.h` and `gmock.h` are not used here.",
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f35c8d65_8d7fb1c1",
+        "filename": "content/browser/webauth/cbor/cbor_values_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "nit: Let\u0027s ASSERT that the map contains such a key before each of these EXPECTs in this file, so that the test won\u0027t crash on failure.",
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a1ac904_34ae705d",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "nit: Let\u0027s move this to the header as it is already used there.",
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b54a1a6_fd1fac13",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "nit: extra \u0027;\u0027",
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca42925e_43229f0a",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "I think the need for doing this DCHECK is a good indication that it is cleaner to just return an std::vector\u003cuint8_t\u003e instead of taking a pointer to an existing one. (Unless there are concerns around RVO not working well for some reason here.)",
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84fa0d94_6195d6e4",
+        "filename": "content/browser/webauth/cbor/cbor_writer.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "nit: #include \"base/strings/string_piece.h\"",
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0cd356b_996c2f5a",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "Phrasing nit: Mask selecting the least significant 5 bits of the `initial byte` where `additional information` is encoded.\n\nAlso: To avoid cluttering content, could you please put these into an ::internal subnamespace?",
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b8d252_22103b48",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "nit: #include \u003cstdint.h\u003e",
+      "range": {
+        "startLine": 61,
+        "startChar": 55,
+        "endLine": 61,
+        "endChar": 62
+      },
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c9e477_e7788e2a",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "nit: encoded_cbor_",
+      "range": {
+        "startLine": 67,
+        "startChar": 6,
+        "endLine": 67,
+        "endChar": 18
+      },
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b0a948_fe3c48d0",
+        "filename": "content/browser/webauth/cbor/cbor_writer.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99db55ad_83910ba0",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "nit: I think only `gtest.h` is used.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 46
+      },
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ddaee9_f8654c55",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "nit: This member is never used.",
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef0f7b34_8791c70c",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "nit: I think we can make these tests shorter by avoiding naming types, and instead writing:\n\nconstexpr struct {\n... \n} kUintTestCases[] \u003d { \n...\nconst char* cbor;\n}\n\nThen we need to use `const auto\u0026` in the for loops below.",
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1189ff9e_255afbd2",
+        "filename": "content/browser/webauth/cbor/cbor_writer_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-14T12:58:40Z",
+      "side": 1,
+      "message": "nit: #include \"base/strings/string_piece.h\"\n\n(Because cbor_values.h included in cbor_writer.h now only fwd-declares base::StringPiece and we need the complete type here.)",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 27
+      },
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
