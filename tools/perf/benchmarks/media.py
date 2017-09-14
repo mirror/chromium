@@ -183,7 +183,8 @@ class MediaAndroidToughVideoCasesTBMv2(_MediaTBMv2Benchmark):
     # removed after M60 goes to stable.
     options.AppendExtraBrowserArgs(
         ['--ignore-autoplay-restrictions',
-         '--disable-gesture-requirement-for-media-playback'])
+         '--disable-gesture-requirement-for-media-playback',
+         '--disable-media-suspend'])
 
   @classmethod
   def ValueCanBeAddedPredicate(cls, value, is_first_result):

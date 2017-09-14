@@ -69,13 +69,13 @@ class ToughVideoCasesPage(page_module.Page):
     # 1. Play a video
     # 2. Open new tab overtop to obscure the video
     # 3. Close the tab to go back to the tab that is playing the video.
-    # This test case will work differently depending on whether the platform is
-    # desktop or Android and whether the video has sound or not. For example,
-    # the current Chrome video implementation (as of July 2017) pauses video on
-    # Android when the tab is backgrounded, but on desktop the video is not
-    # paused.
-    # TODO(crouleau): Use --disable-media-suspend flag to enable Android to
-    # play video in the background.
+    # Note that this test case requires the --disable-media-suspend flag for
+    # Android. This flag is added in the benchmark code benchmarks/media.py for
+    # TBMv2 and is added in measurements/media.py for legacy tests.
+    # Unfortunately, those changes add the flag for all pages
+    # within the benchmark, not just the background tab pages. Telemetry doesn't
+    # seem to provide a method to add Chrome arguments only for certain pages
+    # within a benchmark.
     # The motivation for this test case is crbug.com/678663.
     action_runner.PlayMedia(
         playing_event_timeout_in_seconds=60)

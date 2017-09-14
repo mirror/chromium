@@ -38,7 +38,8 @@ class Media(legacy_page_test.LegacyPageTest):
     # removed after M60 goes to stable.
     options.AppendExtraBrowserArgs(
         ['--ignore-autoplay-restrictions',
-         '--disable-gesture-requirement-for-media-playback'])
+         '--disable-gesture-requirement-for-media-playback',
+         '--disable-media-suspend'])
     power.PowerMetric.CustomizeBrowserOptions(options)
 
   def DidNavigateToPage(self, page, tab):
