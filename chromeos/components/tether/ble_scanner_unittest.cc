@@ -166,7 +166,7 @@ class BleScannerTest : public testing::Test {
             test_beacon_seeds_));
 
     mock_adapter_ =
-        make_scoped_refptr(new NiceMock<device::MockBluetoothAdapter>());
+        base::WrapRefCounted(new NiceMock<device::MockBluetoothAdapter>());
     stored_discovery_callback_.Reset();
     stored_discovery_errback_.Reset();
     ON_CALL(*mock_adapter_, StartDiscoverySession(_, _))

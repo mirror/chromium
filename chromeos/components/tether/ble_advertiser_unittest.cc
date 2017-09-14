@@ -73,7 +73,7 @@ class MockBluetoothAdapterWithAdvertisements
       const device::BluetoothAdapter::AdvertisementErrorCallback& errback)
       override {
     RegisterAdvertisementWithArgsStruct(
-        make_scoped_refptr(new RegisterAdvertisementArgs(
+        base::WrapRefCounted(new RegisterAdvertisementArgs(
             *advertisement_data->service_data(),
             *advertisement_data->service_uuids(), callback, errback)));
   }
@@ -146,7 +146,7 @@ class BleAdvertiserTest : public testing::Test {
     individual_advertisements_.clear();
     register_advertisement_args_.clear();
 
-    mock_adapter_ = make_scoped_refptr(
+    mock_adapter_ = base::WrapRefCounted(
         new StrictMock<MockBluetoothAdapterWithAdvertisements>());
     ON_CALL(*mock_adapter_, AddObserver(_))
         .WillByDefault(Invoke(this, &BleAdvertiserTest::OnAdapterAddObserver));
@@ -247,7 +247,7 @@ class BleAdvertiserTest : public testing::Test {
   }
 
   void InvokeCallback(scoped_refptr<RegisterAdvertisementArgs> args) {
-    args->callback.Run(make_scoped_refptr(new FakeBluetoothAdvertisement(
+    args->callback.Run(base::WrapRefCounted(new FakeBluetoothAdvertisement(
         base::Bind(&BleAdvertiserTest::OnAdvertisementUnregistered,
                    base::Unretained(this)))));
   }

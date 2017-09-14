@@ -1280,7 +1280,7 @@ void DisplayManager::CreateSoftwareMirroringDisplayInfo(
           });
 
       scoped_refptr<ManagedDisplayMode> dm(*iter);
-      *iter = make_scoped_refptr(new ManagedDisplayMode(
+      *iter = base::WrapRefCounted(new ManagedDisplayMode(
           dm->size(), dm->refresh_rate(), dm->is_interlaced(),
           true /* native */, dm->ui_scale(), dm->device_scale_factor()));
 

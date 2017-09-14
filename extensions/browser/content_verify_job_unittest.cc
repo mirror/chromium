@@ -26,7 +26,7 @@ namespace {
 scoped_refptr<ContentHashReader> CreateContentHashReader(
     const Extension& extension,
     const base::FilePath& extension_resource_path) {
-  return make_scoped_refptr(new ContentHashReader(
+  return base::WrapRefCounted(new ContentHashReader(
       extension.id(), *extension.version(), extension.path(),
       extension_resource_path,
       ContentVerifierKey(kWebstoreSignaturesPublicKey,

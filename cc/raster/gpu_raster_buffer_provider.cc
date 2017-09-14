@@ -66,7 +66,7 @@ static void RasterizeSourceOOP(
   gpu::gles2::GLES2Interface* gl = context_provider->ContextGL();
   GLuint texture_id = resource_lock->ConsumeTexture(gl);
 
-  auto setup_list = make_scoped_refptr(
+  auto setup_list = base::WrapRefCounted(
       new DisplayItemList(DisplayItemList::kTopLevelDisplayItemList));
   setup_list->StartPaint();
   setup_list->push<DrawRecordOp>(SetupForRaster(raster_source, raster_full_rect,

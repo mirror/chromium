@@ -78,7 +78,7 @@ TEST(PostTaskAndReplyImplTest, PostTaskAndReply) {
           .PostTaskAndReply(
               FROM_HERE,
               BindOnce(&MockObject::Task, Unretained(&mock_object),
-                       make_scoped_refptr(new ObjectToDelete(&delete_flag))),
+                       WrapRefCounted(new ObjectToDelete(&delete_flag))),
               BindOnce(&MockObject::Reply, Unretained(&mock_object))));
 
   // Expect the task to be posted to |post_runner|.

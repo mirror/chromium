@@ -830,7 +830,7 @@ TEST(URLMatcherTest, FullTest) {
 
   const int kConditionSetId1 = 1;
   URLMatcherConditionSet::Vector insert1;
-  insert1.push_back(make_scoped_refptr(
+  insert1.push_back(base::WrapRefCounted(
       new URLMatcherConditionSet(kConditionSetId1, conditions1)));
   matcher.AddConditionSets(insert1);
   EXPECT_EQ(1u, matcher.MatchURL(url1).size());
@@ -842,7 +842,7 @@ TEST(URLMatcherTest, FullTest) {
 
   const int kConditionSetId2 = 2;
   URLMatcherConditionSet::Vector insert2;
-  insert2.push_back(make_scoped_refptr(
+  insert2.push_back(base::WrapRefCounted(
       new URLMatcherConditionSet(kConditionSetId2, conditions2)));
   matcher.AddConditionSets(insert2);
   EXPECT_EQ(2u, matcher.MatchURL(url1).size());
@@ -859,7 +859,7 @@ TEST(URLMatcherTest, FullTest) {
 
   const int kConditionSetId3 = 3;
   URLMatcherConditionSet::Vector insert3;
-  insert3.push_back(make_scoped_refptr(
+  insert3.push_back(base::WrapRefCounted(
       new URLMatcherConditionSet(kConditionSetId3, conditions3)));
   matcher.AddConditionSets(insert3);
   EXPECT_EQ(3u, matcher.MatchURL(url1).size());
@@ -945,7 +945,7 @@ TEST(URLMatcherTest, TestComponentsImplyContains) {
 
   const int kConditionSetId = 1;
   URLMatcherConditionSet::Vector insert;
-  insert.push_back(make_scoped_refptr(
+  insert.push_back(base::WrapRefCounted(
       new URLMatcherConditionSet(kConditionSetId, conditions)));
   matcher.AddConditionSets(insert);
   EXPECT_EQ(1u, matcher.MatchURL(url).size());
@@ -963,7 +963,7 @@ TEST(URLMatcherTest, TestOriginAndPathRegExPositive) {
   conditions.insert(factory->CreateOriginAndPathMatchesCondition("w..hp"));
   const int kConditionSetId = 1;
   URLMatcherConditionSet::Vector insert;
-  insert.push_back(make_scoped_refptr(
+  insert.push_back(base::WrapRefCounted(
       new URLMatcherConditionSet(kConditionSetId, conditions)));
   matcher.AddConditionSets(insert);
   EXPECT_EQ(1u, matcher.MatchURL(url).size());
@@ -981,7 +981,7 @@ TEST(URLMatcherTest, TestOriginAndPathRegExNegative) {
   conditions.insert(factory->CreateOriginAndPathMatchesCondition("val"));
   const int kConditionSetId = 1;
   URLMatcherConditionSet::Vector insert;
-  insert.push_back(make_scoped_refptr(
+  insert.push_back(base::WrapRefCounted(
       new URLMatcherConditionSet(kConditionSetId, conditions)));
   matcher.AddConditionSets(insert);
   EXPECT_EQ(0u, matcher.MatchURL(url).size());

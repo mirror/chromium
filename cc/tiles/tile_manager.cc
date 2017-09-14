@@ -1174,7 +1174,7 @@ scoped_refptr<TileTask> TileManager::CreateRasterTask(
                            image_controller_.cache(), color_space);
   }
 
-  return make_scoped_refptr(new RasterTaskImpl(
+  return base::WrapRefCounted(new RasterTaskImpl(
       this, tile, resource, prioritized_tile.raster_source(), playback_settings,
       prioritized_tile.priority().resolution, invalidated_rect,
       prepare_tiles_count_, std::move(raster_buffer), &decode_tasks,
@@ -1578,7 +1578,7 @@ void TileManager::CheckPendingGpuWorkTiles(bool issue_signals, bool flush) {
 // posts |callback| to |task_runner| when run.
 scoped_refptr<TileTask> TileManager::CreateTaskSetFinishedTask(
     void (TileManager::*callback)()) {
-  return make_scoped_refptr(new TaskSetFinishedTaskImpl(
+  return base::WrapRefCounted(new TaskSetFinishedTaskImpl(
       task_runner_,
       base::Bind(callback, task_set_finished_weak_ptr_factory_.GetWeakPtr())));
 }

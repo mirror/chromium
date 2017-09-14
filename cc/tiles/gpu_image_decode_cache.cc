@@ -525,7 +525,7 @@ bool GpuImageDecodeCache::GetTaskForImageAndRefInternal(
     // Ref image and create a upload and decode tasks. We will release this ref
     // in UploadTaskCompleted.
     RefImage(draw_image);
-    *task = make_scoped_refptr(new ImageUploadTaskImpl(
+    *task = base::WrapRefCounted(new ImageUploadTaskImpl(
         this, draw_image,
         GetImageDecodeTaskAndRef(draw_image, tracing_info, task_type),
         tracing_info));
@@ -858,7 +858,7 @@ scoped_refptr<TileTask> GpuImageDecodeCache::GetImageDecodeTaskAndRef(
     // Ref image decode and create a decode task. This ref will be released in
     // DecodeTaskCompleted.
     RefImageDecode(draw_image);
-    existing_task = make_scoped_refptr(
+    existing_task = base::WrapRefCounted(
         new ImageDecodeTaskImpl(this, draw_image, tracing_info, task_type));
   }
   return existing_task;
@@ -1306,7 +1306,7 @@ GpuImageDecodeCache::CreateImageData(const DrawImage& draw_image) {
     mode = DecodedDataMode::GPU;
   }
 
-  return make_scoped_refptr(
+  return base::WrapRefCounted(
       new ImageData(mode, data_size, draw_image.target_color_space(), params));
 }
 

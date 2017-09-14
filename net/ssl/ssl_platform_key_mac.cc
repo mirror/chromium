@@ -356,7 +356,7 @@ scoped_refptr<SSLPrivateKey> CreateSSLPrivateKeyForSecKey(
     return nullptr;
 
   if (__builtin_available(macOS 10.12, *)) {
-    return make_scoped_refptr(
+    return base::WrapRefCounted(
         new ThreadedSSLPrivateKey(std::make_unique<SSLPlatformKeySecKey>(
                                       key_type, max_length, private_key),
                                   GetSSLPlatformKeyTaskRunner()));
@@ -369,7 +369,7 @@ scoped_refptr<SSLPrivateKey> CreateSSLPrivateKeyForSecKey(
     return nullptr;
   }
 
-  return make_scoped_refptr(new ThreadedSSLPrivateKey(
+  return base::WrapRefCounted(new ThreadedSSLPrivateKey(
       std::make_unique<SSLPlatformKeyCSSM>(key_type, max_length, private_key,
                                            cssm_key),
       GetSSLPlatformKeyTaskRunner()));

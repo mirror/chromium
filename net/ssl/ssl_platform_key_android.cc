@@ -212,7 +212,7 @@ scoped_refptr<SSLPrivateKey> WrapJavaPrivateKey(
     }
   }
 
-  return make_scoped_refptr(new ThreadedSSLPrivateKey(
+  return base::WrapRefCounted(new ThreadedSSLPrivateKey(
       std::make_unique<SSLPlatformKeyAndroid>(type, key, max_length, sys_rsa),
       GetSSLPlatformKeyTaskRunner()));
 }
