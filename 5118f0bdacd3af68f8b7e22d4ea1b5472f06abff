@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "0f8ee401_15c6f622",
+        "filename": "components/download/internal/navigation_monitor_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-14T23:19:44Z",
+      "side": 1,
+      "message": "This check is to ensure that |current_navigation_count_| never becomes negative :)\nIn the above scenario (missed start, start, end, end), the finish callback would have been called when first end comes up. After that, there would be no callbacks left.\nThis test case is covered here, NavigationMonitorImplTest#UnexpectedNavigationEndCalls",
+      "parentUuid": "ec075b55_4c37621c",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 25
+      },
+      "revId": "5118f0bdacd3af68f8b7e22d4ea1b5472f06abff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "134f2563_fded71ce",
         "filename": "components/download/internal/navigation_monitor_impl.h",
         "patchSetId": 6
@@ -68,6 +92,30 @@
       "revId": "5118f0bdacd3af68f8b7e22d4ea1b5472f06abff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88d7a34b_a6cff7a8",
+        "filename": "components/download/internal/navigation_monitor_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-14T23:19:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "134f2563_fded71ce",
+      "range": {
+        "startLine": 23,
+        "startChar": 31,
+        "endLine": 23,
+        "endChar": 32
+      },
+      "revId": "5118f0bdacd3af68f8b7e22d4ea1b5472f06abff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "9695b481_e308c3f6",
+        "filename": "components/download/internal/navigation_monitor_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-14T23:19:44Z",
+      "side": 1,
+      "message": "Actually time.h mentions that the base::TimeDelta is preferred to be passed by value.",
+      "parentUuid": "f390ff3d_4f0f2c13",
+      "range": {
+        "startLine": 24,
+        "startChar": 16,
+        "endLine": 24,
+        "endChar": 32
+      },
+      "revId": "5118f0bdacd3af68f8b7e22d4ea1b5472f06abff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0bcf83e5_5fe074f6",
         "filename": "components/download/internal/stats.cc",
         "patchSetId": 6
@@ -105,6 +177,30 @@
       "writtenOn": "2017-09-14T21:26:38Z",
       "side": 1,
       "message": "nit: I think the download may be paused by other reasons. So it does not necessarily resume the download.",
+      "range": {
+        "startLine": 259,
+        "startChar": 13,
+        "endLine": 259,
+        "endChar": 22
+      },
+      "revId": "5118f0bdacd3af68f8b7e22d4ea1b5472f06abff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ef27b25_a2bc02e9",
+        "filename": "components/download/internal/stats.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-14T23:19:44Z",
+      "side": 1,
+      "message": "You are right. This is incorrect. I guess I should just remove the RESUME part, we don\u0027t need it that much.",
+      "parentUuid": "0bcf83e5_5fe074f6",
       "range": {
         "startLine": 259,
         "startChar": 13,
