@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f3ccc93_c277448e",
+        "filename": "net/traffic_annotation/network_traffic_annotation.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-14T09:36:29Z",
+      "side": 1,
+      "message": "Maybe using TRAFFIC_ANNOTATION_UNINITIALIZED is better.",
+      "revId": "1eddadc9613fad68098eda77430a9d4d9919219b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
