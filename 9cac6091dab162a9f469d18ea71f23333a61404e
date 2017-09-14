@@ -460,6 +460,24 @@
     },
     {
       "key": {
+        "uuid": "8a30338b_a3dcd917",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-14T14:34:08Z",
+      "side": 1,
+      "message": "lgtm!\n\nMight just be that zlib has been evolving since the 90s and can\u0027t make very strong assumptions about its compiler?  Now I\u0027m curious and want to see if there\u0027s any record about why the do macros were added or if they\u0027ve been there from the beginning... they\u0027re at least present since v0.71 (14 April 95).",
+      "parentUuid": "29fc8c3e_0f042ae4",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1eae378_20622253",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16
