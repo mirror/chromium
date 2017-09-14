@@ -2834,6 +2834,8 @@ class RenderFrameHostManagerTestWithBrowserSideNavigation
 // are reached when navigating from a renderer that is not live to a WebUI URL.
 TEST_F(RenderFrameHostManagerTestWithBrowserSideNavigation,
        NavigateFromDeadRendererToWebUI) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   set_should_create_webui(true);
   RenderFrameHostManager* manager = contents()->GetRenderManagerForTesting();
 
@@ -2893,6 +2895,8 @@ TEST_F(RenderFrameHostManagerTestWithBrowserSideNavigation,
 // are reached when navigating same-site between two WebUIs of the same type.
 TEST_F(RenderFrameHostManagerTestWithBrowserSideNavigation,
        NavigateSameSiteBetweenWebUIs) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   set_should_create_webui(true);
   NavigateActiveAndCommit(GURL("chrome://foo"));
 
@@ -2944,6 +2948,8 @@ TEST_F(RenderFrameHostManagerTestWithBrowserSideNavigation,
 // are reached when navigating cross-site between two different WebUI types.
 TEST_F(RenderFrameHostManagerTestWithBrowserSideNavigation,
        NavigateCrossSiteBetweenWebUIs) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   // Cross-site navigations will always cause the change of the WebUI instance
   // but for consistency sake different types will be set for each navigation.
   set_should_create_webui(true);
@@ -3103,6 +3109,8 @@ TEST_F(RenderFrameHostManagerTestWithSiteIsolation,
 // Tests that a BeginNavigation IPC from a no longer active RFH is ignored.
 TEST_F(RenderFrameHostManagerTestWithBrowserSideNavigation,
        BeginNavigationIgnoredWhenNotActive) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   const GURL kUrl1("http://www.google.com");
   const GURL kUrl2("http://www.chromium.org");
   const GURL kUrl3("http://foo.com");

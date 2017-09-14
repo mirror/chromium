@@ -375,6 +375,8 @@ TEST_F(ServiceWorkerProviderHostTest, RemoveProvider) {
 TEST_F(ServiceWorkerProviderHostTest, Controller) {
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kEnableBrowserSideNavigation);
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   // Create a host.
   std::unique_ptr<ServiceWorkerProviderHost> host =
       ServiceWorkerProviderHost::PreCreateNavigationHost(
@@ -411,6 +413,8 @@ TEST_F(ServiceWorkerProviderHostTest, Controller) {
 TEST_F(ServiceWorkerProviderHostTest, ActiveIsNotController) {
   base::CommandLine::ForCurrentProcess()->AppendSwitch(
       switches::kEnableBrowserSideNavigation);
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   // Create a host.
   std::unique_ptr<ServiceWorkerProviderHost> host =
       ServiceWorkerProviderHost::PreCreateNavigationHost(

@@ -63,6 +63,8 @@ class AppCacheNetworkServiceBrowserTest : public ContentBrowserTest {
 // validating that request count for the last navigation.
 IN_PROC_BROWSER_TEST_F(AppCacheNetworkServiceBrowserTest,
                        VerifySubresourceFactoryClearedOnNewNavigation) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   std::unique_ptr<net::EmbeddedTestServer> embedded_test_server(
       new net::EmbeddedTestServer());
 

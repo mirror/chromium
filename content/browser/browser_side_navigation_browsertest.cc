@@ -57,6 +57,8 @@ class BrowserSideNavigationBrowserTest : public ContentBrowserTest {
 // navigation.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
                        BrowserInitiatedNavigations) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   // Perform a navigation with no live renderer.
   {
     TestNavigationObserver observer(shell()->web_contents());
@@ -101,6 +103,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
 // navigation.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
                        RendererInitiatedSameSiteNavigation) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   // Perform a navigation with no live renderer.
   {
     TestNavigationObserver observer(shell()->web_contents());
@@ -137,6 +141,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
 // navigation.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
                        RendererInitiatedCrossSiteNavigation) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   // Perform a navigation with no live renderer.
   {
     TestNavigationObserver observer(shell()->web_contents());
@@ -190,6 +196,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
 
 // Ensure that browser side navigation handles navigation failures.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest, FailedNavigation) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   // Perform a navigation with no live renderer.
   {
     TestNavigationObserver observer(shell()->web_contents());
@@ -219,6 +227,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest, FailedNavigation) {
 // to view-source URLs.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
                        ViewSourceNavigation_BrowserInitiated) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   TestNavigationObserver observer(shell()->web_contents());
   GURL url(embedded_test_server()->GetURL("/title1.html"));
   GURL view_source_url(content::kViewSourceScheme + std::string(":") +
@@ -232,6 +242,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
 // view-source URLs.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
                        ViewSourceNavigation_RendererInitiated) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   TestNavigationObserver observer(shell()->web_contents());
   GURL kUrl(embedded_test_server()->GetURL("/simple_links.html"));
   NavigateToURL(shell(), kUrl);
@@ -263,6 +275,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
 // if there's an ongoing navigation.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
                        UnloadDuringNavigation) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   content::WindowedNotificationObserver close_observer(
       content::NOTIFICATION_WEB_CONTENTS_DESTROYED,
       content::Source<content::WebContents>(shell()->web_contents()));
@@ -276,6 +290,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
 
 // Ensure that the referrer of a navigation is properly sanitized.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest, SanitizeReferrer) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   const GURL kInsecureUrl(embedded_test_server()->GetURL("/title1.html"));
   const Referrer kSecureReferrer(
       GURL("https://secure-url.com"),
@@ -309,6 +325,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest, SanitizeReferrer) {
 // it hasn't been explicitly granted permissions to is correctly terminated.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
                        PostUploadIllegalFilePath) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   GURL form_url(
       embedded_test_server()->GetURL("/form_that_posts_to_echoall.html"));
   EXPECT_TRUE(NavigateToURL(shell(), form_url));
@@ -373,6 +391,8 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
 // reload uses the NavigationEntry state to create a navigation and commit it.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
                        VerifyBlockedErrorPageURL_Reload) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   NavigationControllerImpl& controller = static_cast<NavigationControllerImpl&>(
       shell()->web_contents()->GetController());
 
@@ -428,6 +448,8 @@ class BrowserSideNavigationBrowserDisableWebSecurityTest
 // by default.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserDisableWebSecurityTest,
                        ValidateBaseUrlForDataUrl) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   GURL start_url(embedded_test_server()->GetURL("/title1.html"));
   EXPECT_TRUE(NavigateToURL(shell(), start_url));
 

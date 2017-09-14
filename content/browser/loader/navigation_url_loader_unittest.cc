@@ -153,6 +153,8 @@ class NavigationURLLoaderTest : public testing::Test {
 
 // Tests that a basic request works.
 TEST_F(NavigationURLLoaderTest, Basic) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   TestNavigationURLLoaderDelegate delegate;
   std::unique_ptr<NavigationURLLoader> loader =
       MakeTestLoader(net::URLRequestTestJob::test_url_1(), &delegate);
@@ -176,6 +178,8 @@ TEST_F(NavigationURLLoaderTest, Basic) {
 
 // Tests that request failures are propagated correctly.
 TEST_F(NavigationURLLoaderTest, RequestFailedNoCertError) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   TestNavigationURLLoaderDelegate delegate;
   std::unique_ptr<NavigationURLLoader> loader =
       MakeTestLoader(GURL("bogus:bogus"), &delegate);
@@ -192,6 +196,8 @@ TEST_F(NavigationURLLoaderTest, RequestFailedNoCertError) {
 // - |ssl_info| has the expected values.
 // - |should_ssl_errors_be_fatal| is false.
 TEST_F(NavigationURLLoaderTest, RequestFailedCertError) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
   https_server.SetSSLConfig(net::EmbeddedTestServer::CERT_MISMATCHED_NAME);
   ASSERT_TRUE(https_server.Start());
@@ -216,6 +222,8 @@ TEST_F(NavigationURLLoaderTest, RequestFailedCertError) {
 // - |ssl_info| has the expected values.
 // - |should_ssl_errors_be_fatal| is true.
 TEST_F(NavigationURLLoaderTest, RequestFailedCertErrorFatal) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   net::EmbeddedTestServer https_server(net::EmbeddedTestServer::TYPE_HTTPS);
   https_server.SetSSLConfig(net::EmbeddedTestServer::CERT_MISMATCHED_NAME);
   ASSERT_TRUE(https_server.Start());
@@ -247,6 +255,8 @@ TEST_F(NavigationURLLoaderTest, RequestFailedCertErrorFatal) {
 
 // Test that redirects are sent to the delegate.
 TEST_F(NavigationURLLoaderTest, RequestRedirected) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   // Fake a top-level request. Choose a URL which redirects so the request can
   // be paused before the response comes in.
   TestNavigationURLLoaderDelegate delegate;
@@ -284,6 +294,8 @@ TEST_F(NavigationURLLoaderTest, RequestRedirected) {
 
 // Tests that the destroying the loader cancels the request.
 TEST_F(NavigationURLLoaderTest, CancelOnDestruct) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   // Fake a top-level request. Choose a URL which redirects so the request can
   // be paused before the response comes in.
   TestNavigationURLLoaderDelegate delegate;
@@ -303,6 +315,8 @@ TEST_F(NavigationURLLoaderTest, CancelOnDestruct) {
 // Test that the delegate is not called if OnResponseStarted and destroying the
 // loader race.
 TEST_F(NavigationURLLoaderTest, CancelResponseRace) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   TestNavigationURLLoaderDelegate delegate;
   std::unique_ptr<NavigationURLLoader> loader = MakeTestLoader(
       net::URLRequestTestJob::test_url_redirect_to_url_2(), &delegate);
@@ -324,6 +338,8 @@ TEST_F(NavigationURLLoaderTest, CancelResponseRace) {
 
 // Tests that the loader may be canceled by context.
 TEST_F(NavigationURLLoaderTest, CancelByContext) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   TestNavigationURLLoaderDelegate delegate;
   std::unique_ptr<NavigationURLLoader> loader = MakeTestLoader(
       net::URLRequestTestJob::test_url_redirect_to_url_2(), &delegate);
@@ -343,6 +359,8 @@ TEST_F(NavigationURLLoaderTest, CancelByContext) {
 // Tests that, if the request is blocked by the ResourceDispatcherHostDelegate,
 // the caller is informed appropriately.
 TEST_F(NavigationURLLoaderTest, RequestBlocked) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   RequestBlockingResourceDispatcherHostDelegate rdh_delegate;
   host_.SetDelegate(&rdh_delegate);
 
@@ -360,6 +378,8 @@ TEST_F(NavigationURLLoaderTest, RequestBlocked) {
 
 // Tests that ownership leaves the loader once the response is received.
 TEST_F(NavigationURLLoaderTest, LoaderDetached) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   // Fake a top-level request to a URL whose body does not load immediately.
   TestNavigationURLLoaderDelegate delegate;
   std::unique_ptr<NavigationURLLoader> loader =
@@ -387,6 +407,8 @@ TEST_F(NavigationURLLoaderTest, LoaderDetached) {
 
 // Tests that the request is owned by the body StreamHandle.
 TEST_F(NavigationURLLoaderTest, OwnedByHandle) {
+  if (!IsBrowserSideNavigationEnabled())
+    return;
   // Fake a top-level request to a URL whose body does not load immediately.
   TestNavigationURLLoaderDelegate delegate;
   std::unique_ptr<NavigationURLLoader> loader =
