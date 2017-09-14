@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "452a8851_f66543da",
+        "filename": "content/common/DEPS",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-14T08:43:25Z",
+      "side": 1,
+      "message": "Can you list this separately from this block, like how we do in content/browser/DEPS?\n\nhttps://cs.chromium.org/chromium/src/content/browser/DEPS?q\u003dcontent/browser/DEPS\u0026sq\u003dpackage:chromium\u0026l\u003d151",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f278c078_8e9fcc56",
         "filename": "third_party/WebKit/Source/core/dom/MessageChannel.cpp",
         "patchSetId": 13
@@ -47,6 +64,23 @@
       "writtenOn": "2017-09-14T03:17:51Z",
       "side": 1,
       "message": "Having to play these games with WTF::Vector, WebVector and std::vector isn\u0027t great. Since we\u0027re not mutating the size of this container, we could avoid this copy and not have to use WebVector if we instead make MessagePortChannel::PostMessage take a base::span\u003cMessagePortChannel\u003e, which is constructible directly from a WTF::Vector.\n\ni.e.\nvoid PostMessage(base::span\u003cconst uint8_t\u003e encoded_message,\n                 base::span\u003cMessagePortChannel\u003e ports);\n\nVector\u003cMessagePortChannel\u003e channels \u003d MessagePort::DisentanglePorts(...);\n// ...\nchannel_.PostMessage(\n    base::make_span(wire_data.Characters8(), wire_data.length()),\n    channels);\n\nOTOH, this might be a cleanup better left to another CL.\n\n+dcheng, I think we\u0027re ready to permit base::span in Source/core/ for use cases like this, right?",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70dcfd88_78a3b807",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-14T08:43:25Z",
+      "side": 1,
+      "message": "Does this need to be CrossThreadBind? (I assume yes, but wasn\u0027t super clear- can we have a brief comment about that?)",
       "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -115,6 +149,40 @@
       "writtenOn": "2017-09-14T03:17:51Z",
       "side": 1,
       "message": "would a forward decl suffice?",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb2c78a_854ee28b",
+        "filename": "third_party/WebKit/common/message_port/message_port_channel.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-14T08:43:25Z",
+      "side": 1,
+      "message": "Not sure if Bind is the best word, we do something similar to Bind but don\u0027t really call Bind... CreateFromHandles?",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36fb44f6_25b10c94",
+        "filename": "third_party/WebKit/common/message_port/message_port_channel.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-14T08:43:25Z",
+      "side": 1,
+      "message": "nit: explicit (not from your code but while you\u0027re there)",
       "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
