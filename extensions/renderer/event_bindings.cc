@@ -45,7 +45,7 @@ v8::Local<v8::Array> GetMatchingListeners(ScriptContext* script_context,
   // have a routingId in their filter.
   std::set<EventFilter::MatcherID> matched_event_filters =
       event_filter.MatchEvent(event_name, info,
-                              script_context->GetRenderFrame()->GetRoutingID());
+                              script_context->GetRoutingIDForFilteredEvents());
   v8::Local<v8::Array> array(
       v8::Array::New(isolate, matched_event_filters.size()));
   int i = 0;
@@ -234,7 +234,7 @@ void EventBindings::AttachFilteredEvent(
   int id = event_filter.AddEventMatcher(
       event_name,
       std::make_unique<EventMatcher>(
-          std::move(filter), context()->GetRenderFrame()->GetRoutingID()));
+          std::move(filter), context()->GetRoutingIDForFilteredEvents()));
   if (id == -1) {
     args.GetReturnValue().Set(static_cast<int32_t>(-1));
     return;

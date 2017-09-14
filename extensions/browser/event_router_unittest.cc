@@ -20,6 +20,7 @@
 #include "extensions/browser/event_listener_map.h"
 #include "extensions/browser/extensions_test.h"
 #include "extensions/common/extension_builder.h"
+#include "extensions/common/extension_messages.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using base::DictionaryValue;
@@ -369,8 +370,10 @@ TEST_F(EventRouterFilterTest, Basic) {
   for (size_t i = 0; i < arraysize(kHostSuffixes); ++i) {
     std::unique_ptr<base::DictionaryValue> filter =
         CreateHostSuffixFilter(kHostSuffixes[i]);
-    event_router()->AddFilteredEventListener(kEventName, render_process_host(),
-                                             kExtensionId, *filter, true);
+    event_router()->AddFilteredEventListener(
+        kEventName, render_process_host(), kExtensionId,
+        base::Optional<ExtensionHostMsg_ServiceWorkerIdentifier>(), *filter,
+        true);
     filters.push_back(std::move(filter));
   }
 
@@ -391,22 +394,28 @@ TEST_F(EventRouterFilterTest, Basic) {
   ASSERT_TRUE(ContainsFilter(kExtensionId, kEventName, *filters[2]));
 
   // Remove the second filter.
-  event_router()->RemoveFilteredEventListener(kEventName, render_process_host(),
-                                              kExtensionId, *filters[1], true);
+  event_router()->RemoveFilteredEventListener(
+      kEventName, render_process_host(), kExtensionId,
+      base::Optional<ExtensionHostMsg_ServiceWorkerIdentifier>(), *filters[1],
+      true);
   ASSERT_TRUE(ContainsFilter(kExtensionId, kEventName, *filters[0]));
   ASSERT_FALSE(ContainsFilter(kExtensionId, kEventName, *filters[1]));
   ASSERT_TRUE(ContainsFilter(kExtensionId, kEventName, *filters[2]));
 
   // Remove the first filter.
-  event_router()->RemoveFilteredEventListener(kEventName, render_process_host(),
-                                              kExtensionId, *filters[0], true);
+  event_router()->RemoveFilteredEventListener(
+      kEventName, render_process_host(), kExtensionId,
+      base::Optional<ExtensionHostMsg_ServiceWorkerIdentifier>(), *filters[0],
+      true);
   ASSERT_FALSE(ContainsFilter(kExtensionId, kEventName, *filters[0]));
   ASSERT_FALSE(ContainsFilter(kExtensionId, kEventName, *filters[1]));
   ASSERT_TRUE(ContainsFilter(kExtensionId, kEventName, *filters[2]));
 
   // Remove the third filter.
-  event_router()->RemoveFilteredEventListener(kEventName, render_process_host(),
-                                              kExtensionId, *filters[2], true);
+  event_router()->RemoveFilteredEventListener(
+      kEventName, render_process_host(), kExtensionId,
+      base::Optional<ExtensionHostMsg_ServiceWorkerIdentifier>(), *filters[2],
+      true);
   ASSERT_FALSE(ContainsFilter(kExtensionId, kEventName, *filters[0]));
   ASSERT_FALSE(ContainsFilter(kExtensionId, kEventName, *filters[1]));
   ASSERT_FALSE(ContainsFilter(kExtensionId, kEventName, *filters[2]));
