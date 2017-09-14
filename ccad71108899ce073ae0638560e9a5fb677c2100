@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23112eb9_48682adc",
+        "filename": "ui/base/ime/input_method_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-09-14T05:23:20Z",
+      "side": 1,
+      "message": "Can you please work through the following Chinese Pinyin case and see whether your change can work well?\n\nCase: input Chinese Period \"。\".\nSteps:\n1) Activate Chinese Pinyin input method.\n2) Put focus into an input field.\n3) Press \".\" key.\nExpect result:\n1) \"。\" is input into the input field.\n2) The web page can receive these events sequentially:\n   - keydown, keyCode\u003d190\n   - keypress, charCode\u003d12290\n   - beforeinput\n   - input\n   - keyup, keyCode\u003d190\n\nPer my understanding of your change:\n1) \".\" key is pressed, DispatchKeyEvent will invoke the IME extension.\n2) ProcessKeyEventDone is invoked after the turn around from the IME extension.\n3) ProcessKeyEventPostIME is invoked with handled \u003d\u003d true.\n4) Original: ProcessFilteredKeyPressEvent is invoked to produce \"keydown, keyCode\u003d190\", and the following ProcessInputMethodResult is invoked to produce \"keypress, charCode\u003d12290\".\n   Your change: ProcessFilteredKeyPressEvent is invoked to produce \"keydown, keyCode\u003d190\", but who can produce \"keypress, charCode\u003d12290\"?",
+      "range": {
+        "startLine": 335,
+        "startChar": 11,
+        "endLine": 335,
+        "endChar": 39
+      },
+      "revId": "ccad71108899ce073ae0638560e9a5fb677c2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1566c44_b890ee05",
+        "filename": "ui/base/ime/input_method_chromeos.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-09-14T05:23:20Z",
+      "side": 1,
+      "message": "This overload method seems tricky. Please make InputMethodBase::DispatchKeyEventPostIME() a virtual and make this an override.",
+      "range": {
+        "startLine": 60,
+        "startChar": 27,
+        "endLine": 60,
+        "endChar": 50
+      },
+      "revId": "ccad71108899ce073ae0638560e9a5fb677c2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
