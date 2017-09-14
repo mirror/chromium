@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0c95735_cfd58252",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-14T23:29:45Z",
+      "side": 1,
+      "message": "nit: since this spans multiple lines, you want to use curly braces for the if statement.",
+      "revId": "4caa20527d7687ba25c4d3b882a3e11c4caa37c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0687e392_d6011837",
+        "filename": "chrome/browser/extensions/context_menu_matcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-14T23:29:45Z",
+      "side": 1,
+      "message": "nit: Same as the other comment, use {}",
+      "revId": "4caa20527d7687ba25c4d3b882a3e11c4caa37c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
