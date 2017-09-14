@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fbedcf13_0b51594d",
+        "filename": "base/task_scheduler/can_schedule_sequence_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-14T20:38:46Z",
+      "side": 1,
+      "message": "danakj@ previously asked me to avoid defining interfaces in the same file as another class, because it forces implementations to include more than what they need.",
+      "parentUuid": "3ad1698d_7cce75b8",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "ee5d0f9a9582bda48f19b713aab0c171325e854a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13300318_7c10af0f",
         "filename": "base/task_scheduler/scheduler_worker.h",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-14T03:50:04Z",
       "side": 1,
       "message": "The SchedulerWorker and the Delegate is now a durable OnMainEntry() called only once relationship. Would it make sense for the delegate to store a pointer here to avoid the set_worker() calls elsewhere?",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 58
+      },
+      "revId": "ee5d0f9a9582bda48f19b713aab0c171325e854a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8918d2d8_e87f4b55",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-14T20:38:46Z",
+      "side": 1,
+      "message": "The single-threaded SchedulerWorkerDelegate needs a pointer to its SchedulerWorker before OnMainEntry:\n\n1. Create background single-threaded TaskRunner.\n2. Post task to it.\n2.1. WillScheduleSequence prevents the sequence from being scheduled.\n3. A task finishes to run on another thread, allowing the task posted at the previous step to be scheduled.\n3.1. Call OnCanScheduleSequence, which needs a pointer to SchedulerWorker https://chromium-review.googlesource.com/c/chromium/src/+/615903/11/base/task_scheduler/scheduler_single_thread_task_runner_manager.cc#121.  OnMainEntry hasn\u0027t been called yet.\n\nDo you suggest that I add a SetWorker() method to the Delegate interface, even though it\u0027s only needed by the single-threaded SchedulerWorkerDelegate?",
+      "parentUuid": "13300318_7c10af0f",
       "range": {
         "startLine": 52,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8ecd5bef_419f4c6a",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-14T20:38:46Z",
+      "side": 1,
+      "message": "Done. Added comment for WillScheduleSequence() in the header file.",
+      "parentUuid": "18613d08_5b3a7a72",
+      "range": {
+        "startLine": 280,
+        "startChar": 2,
+        "endLine": 281,
+        "endChar": 35
+      },
+      "revId": "ee5d0f9a9582bda48f19b713aab0c171325e854a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36837cdb_8b8eb4de",
         "filename": "base/task_scheduler/task_tracker.cc",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "f4008cd5_f8b7cfae",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-14T20:38:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36837cdb_8b8eb4de",
+      "range": {
+        "startLine": 647,
+        "startChar": 8,
+        "endLine": 652,
+        "endChar": 9
+      },
+      "revId": "ee5d0f9a9582bda48f19b713aab0c171325e854a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0df8a3dc_82e189b4",
         "filename": "base/task_scheduler/task_tracker.cc",
         "patchSetId": 10
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-14T03:50:04Z",
       "side": 1,
       "message": "Would it make the logic simpler if the caller had to call WillScheduleSequence() again? This way we don\u0027t have to manage the # ofscheduled sequences here and in WillScheduleSequence()",
+      "range": {
+        "startLine": 659,
+        "startChar": 10,
+        "endLine": 659,
+        "endChar": 48
+      },
+      "revId": "ee5d0f9a9582bda48f19b713aab0c171325e854a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdfb5535_a22feb9d",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-14T20:38:46Z",
+      "side": 1,
+      "message": "Currently, the pseudo-code for this method is:\n\nLock BACKGROUND LOCK.\nList \u003d List of background sequences that can be scheduled.\nAdjust |num_scheduled_background_sequences_| to include the sequences in List.\nUnlock BACKGROUND LOCK\nTell observers to schedule background sequences in List.\n\nIf we change it too:\n\nLock BACKGROUND LOCK\nList \u003d List of background sequences that can be scheduled.\nDo *not* include sequences in List in |num_scheduled_background_sequences_|.\nUnlock BACKGROUND LOCK\n**\nTell observers to try to schedule background sequences in List. There is a possibility that WillScheduleSequence will prevent that.\n\nThere is a possibility that new background sequences will be posted at **, starving background sequences in List.\n\nAlso, requiring WillScheduleSequence() to be called again means more work than just incrementing |num_scheduled_background_sequences_| here.",
+      "parentUuid": "0df8a3dc_82e189b4",
       "range": {
         "startLine": 659,
         "startChar": 10,
@@ -137,6 +257,30 @@
       "revId": "ee5d0f9a9582bda48f19b713aab0c171325e854a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08ee2207_d1f00c0f",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-14T20:38:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32f24723_ec5c198c",
+      "range": {
+        "startLine": 70,
+        "startChar": 29,
+        "endLine": 73,
+        "endChar": 40
+      },
+      "revId": "ee5d0f9a9582bda48f19b713aab0c171325e854a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
