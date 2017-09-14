@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1415da71_d0eb5114",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-09-14T19:39:25Z",
+      "side": 1,
+      "message": "maybe combine this with \"case ThrottlingHistory::kThrottled\" above for UMA?",
+      "range": {
+        "startLine": 186,
+        "startChar": 37,
+        "endLine": 186,
+        "endChar": 0
+      },
+      "revId": "61d8a1bf33253b1cb316ff73d84036a208a09ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
