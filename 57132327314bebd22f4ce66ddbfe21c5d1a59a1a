@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee51037c_8ac7c915",
+        "filename": "components/safe_browsing_db/v4_update_protocol_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-14T01:40:46Z",
+      "side": 1,
+      "message": "existing nit: The .TimedOut metric name is in two places.  Make it a string, or wrap it in a function.",
+      "range": {
+        "startLine": 365,
+        "startChar": 2,
+        "endLine": 365,
+        "endChar": 23
+      },
+      "revId": "57132327314bebd22f4ce66ddbfe21c5d1a59a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da869985_9be94cf8",
+        "filename": "components/safe_browsing_db/v4_update_protocol_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-14T01:40:46Z",
+      "side": 1,
+      "message": "Why isn\u0027t back_off_mult_ increasing here?",
+      "range": {
+        "startLine": 358,
+        "startChar": 21,
+        "endLine": 358,
+        "endChar": 42
+      },
+      "revId": "57132327314bebd22f4ce66ddbfe21c5d1a59a1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
