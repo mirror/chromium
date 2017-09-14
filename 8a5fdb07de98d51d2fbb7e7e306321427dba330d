@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "7211ae8b_345f08ff",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-14T18:18:57Z",
+      "side": 1,
+      "message": "nit: newline above",
+      "revId": "8a5fdb07de98d51d2fbb7e7e306321427dba330d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e864c0d_7d4ba7bb",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-14T18:18:57Z",
+      "side": 1,
+      "message": "nit: newline",
+      "revId": "8a5fdb07de98d51d2fbb7e7e306321427dba330d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59a4f994_1d7f8392",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 16
