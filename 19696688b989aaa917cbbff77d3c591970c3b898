@@ -16,6 +16,40 @@
       "revId": "19696688b989aaa917cbbff77d3c591970c3b898",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d051d2b_6a0ca4eb",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-14T06:05:41Z",
+      "side": 1,
+      "message": "Hmm, this is a bit confusing. all_properties is actually a list of field dictionaries right? I think things like property_[\u0027field_template\u0027] should be renamed to field[\u0027field_template\u0027] or something.",
+      "revId": "19696688b989aaa917cbbff77d3c591970c3b898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55041ecd_a82f16aa",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-09-14T06:05:41Z",
+      "side": 1,
+      "message": "What\u0027s this divider for? Maybe add a comment to explain, or even better, put the code into separate functions instead having a divider comment if that makes sense.",
+      "revId": "19696688b989aaa917cbbff77d3c591970c3b898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
