@@ -50,6 +50,98 @@
       "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18845287_a1648191",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-14T16:47:14Z",
+      "side": 1,
+      "message": "Profile* profile_;\nSEQUENCE_CHECKER(sequence_checker_);\n\nDISALLOW_COPY_AND_ASSIGN(PasswordImportConsumer);",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fccab6a_07b87c64",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-14T16:47:14Z",
+      "side": 1,
+      "message": "I think this is excessive but write a comment about cast limitations.",
+      "range": {
+        "startLine": 129,
+        "startChar": 10,
+        "endLine": 129,
+        "endChar": 27
+      },
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "549cc798_b7da1088",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-14T16:47:14Z",
+      "side": 1,
+      "message": "That should appear before the block of the methods from that interface. In your case it\u0027s FileSelected",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 35
+      },
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01de40a3_38be352b",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-14T16:47:14Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 37
+      },
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
