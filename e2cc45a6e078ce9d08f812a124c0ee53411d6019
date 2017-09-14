@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b03ff9fd_1fd9e4bc",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-14T21:06:21Z",
+      "side": 1,
+      "message": "would this make sense here:\n@apply(--cr-primary-text);",
+      "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88413845_79028914",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-14T21:06:21Z",
+      "side": 1,
+      "message": "Can this be \nheight: var(--cr-section-min-height);",
+      "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d90566_32d93191",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-14T21:06:21Z",
+      "side": 1,
+      "message": "var(--cr-section-padding);",
+      "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a46c363_a60b6f61",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-14T21:06:21Z",
+      "side": 1,
+      "message": "How about (assuming that we set line height to 20px with the 154% elsewhere) line-height: 110%;",
+      "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe0fa76d_4f563543",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-14T21:06:21Z",
+      "side": 1,
+      "message": "Can this be \nvar(--cr-separator-line);",
+      "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbcfd43_e74b5473",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-14T21:06:21Z",
+      "side": 1,
+      "message": "optional: it would be nice to define a --cr-title-text to set this color, font-size (as a %), and font-weight.",
+      "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42ae734a_0e399ede",
+        "filename": "chrome/browser/resources/md_extensions/keyboard_shortcuts.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-14T21:06:21Z",
+      "side": 1,
+      "message": "padding: 16px var(--cr-section-padding);",
+      "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36529b23_90b0a1ca",
+        "filename": "chrome/browser/resources/md_extensions/shortcut_input.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-14T21:06:21Z",
+      "side": 1,
+      "message": "Maybe do this instead of lines 146 to 151:\n\nlet shortcut \u003d (this.capturing_) ? this.pendingShortcut_ : this.shortcut;",
+      "revId": "e2cc45a6e078ce9d08f812a124c0ee53411d6019",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
