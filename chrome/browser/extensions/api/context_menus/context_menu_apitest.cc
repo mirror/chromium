@@ -59,9 +59,11 @@ class ExtensionContextMenuApiTest : public ExtensionApiTest {
     return valid_setup;
   }
 
-  void CallAPI(const std::string& script) {
+  void CallAPI(const std::string& script) { CallAPI(extension_, script); }
+
+  void CallAPI(const Extension* extension, const std::string& script) {
     content::RenderViewHost* background_page =
-        GetBackgroundPage(extension_->id());
+        GetBackgroundPage(extension->id());
     bool error = false;
     ASSERT_TRUE(
         content::ExecuteScriptAndExtractBool(background_page, script, &error));
@@ -395,6 +397,28 @@ IN_PROC_BROWSER_TEST_F(ExtensionContextMenuApiTest,
                  true);
   VerifyMenuItem("child2", item3_submodel, 1, ui::MenuModel::TYPE_COMMAND,
                  true);
+}
+
+// Tests that more than one extension named top-level parent menu item can be
+// displayed in the context menu.
+IN_PROC_BROWSER_TEST_F(ExtensionContextMenuApiTest,
+                       ShowMultipleExtensionNamedTopLevelItemsWithChidlren) {
+  const Extension* e1 =
+      LoadExtension(test_data_dir_.AppendASCII("context_menus/simple/one"));
+  const Extension* e2 =
+      LoadExtension(test_data_dir_.AppendASCII("context_menus/simple/two"));
+
+  CallAPI(e1, "create({title: 'item1'});");
+  CallAPI(e1, "create({title: 'item2'});");
+  CallAPI(e2, "create({title: 'item1'});");
+  CallAPI(e2, "create({title: 'item2'});");
+
+  ASSERT_TRUE(SetupTopLevelMenuModel());
+
+  VerifyMenuItem(e2->name(), top_level_model_, top_level_index(),
+                 ui::MenuModel::TYPE_SUBMENU, true);
+  VerifyMenuItem(e1->name(), top_level_model_, top_level_index() + 1,
+                 ui::MenuModel::TYPE_SUBMENU, true);
 }
 
 }  // namespace extensions
