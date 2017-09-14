@@ -39,7 +39,7 @@ class CORE_EXPORT NetworkQuietDetector
 
   // The page is quiet if there are no more than 2 active network requests for
   // this duration of time.
-  static constexpr double kNetworkQuietWindowSeconds = 1.0;
+  static constexpr double kNetworkQuietWindowSeconds = 0.5;
   static constexpr int kNetworkQuietMaximumConnections = 2;
 
   explicit NetworkQuietDetector(Document&);
