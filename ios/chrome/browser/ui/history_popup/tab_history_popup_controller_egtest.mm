@@ -52,9 +52,7 @@
   [ChromeEarlGrey loadURL:URL4];
 
   // Long press on back button.
-  [[EarlGrey
-      selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabelId(
-                                   IDS_ACCNAME_BACK)]
+  [[EarlGrey selectElementWithMatcher:chrome_test_util::BackButton()]
       performAction:grey_longPress()];
 
   // Check that the first four entries are shown the back tab history menu.
@@ -75,9 +73,7 @@
       assertWithMatcher:grey_notNil()];
 
   // Long press forward button.
-  [[EarlGrey
-      selectElementWithMatcher:chrome_test_util::ButtonWithAccessibilityLabelId(
-                                   IDS_ACCNAME_FORWARD)]
+  [[EarlGrey selectElementWithMatcher:chrome_test_util::ForwardButton()]
       performAction:grey_longPress()];
 
   // Check that entries 2, 3, and 4 are in the forward tab history menu.
