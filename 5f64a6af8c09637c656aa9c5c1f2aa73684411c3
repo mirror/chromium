@@ -16,6 +16,40 @@
       "revId": "5f64a6af8c09637c656aa9c5c1f2aa73684411c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05cd8923_24febe69",
+        "filename": "content/browser/tracing/power_tracing_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-09-14T19:00:01Z",
+      "side": 1,
+      "message": "base::TaskPriority::BACKGROUND priority maps more closely to the FILE thread, I think.",
+      "revId": "5f64a6af8c09637c656aa9c5c1f2aa73684411c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "455ca0fe_f9160b97",
+        "filename": "content/browser/tracing/power_tracing_agent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-09-14T19:00:01Z",
+      "side": 1,
+      "message": "nit: Maybe \"...OnBackgroundThread\"?",
+      "revId": "5f64a6af8c09637c656aa9c5c1f2aa73684411c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
