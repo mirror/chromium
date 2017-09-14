@@ -106,6 +106,24 @@
       "revId": "42ef0ffdc7ef3027a161bd801202e5d92d99fab9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c75c5fb_fc9dca7c",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-14T17:16:27Z",
+      "side": 1,
+      "message": "As in drop the code and instead use an _mm_loadu_si128 for loading the data?",
+      "parentUuid": "67dbb86f_98796627",
+      "revId": "42ef0ffdc7ef3027a161bd801202e5d92d99fab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
