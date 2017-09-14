@@ -36,6 +36,74 @@
     },
     {
       "key": {
+        "uuid": "c9735bfd_e58d602c",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-14T18:22:51Z",
+      "side": 1,
+      "message": "I think the only reason you chdir is to use relative paths in the copyfiles on lines 43 and 45? If so, I think it\u0027d be easier to use absolute paths and not use chdir.",
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d342336_ab28a179",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-14T18:22:51Z",
+      "side": 1,
+      "message": "Is there some way to check that the previous command succeeded before proceeding?",
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "896a7ea1_c1aac396",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-14T18:22:51Z",
+      "side": 1,
+      "message": "I see. So this script:\n\n1) Packages two python files into an isolate.\n2) Runs the isolate on swarming machines that satisfy certain dimensions, e.g. xcode_version 9.0. \n\nCan you update the file comment to be more explicit about what this script does, and when it should be run? Does it need additional permissions that are implied here, but not explicitly specified?\n\ne.g., I imagine that we will need to run this script at some point in the future for xcode_version \u003d 10.0?",
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc366772_fad6a109",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-14T18:22:51Z",
+      "side": 1,
+      "message": "Can we print out whether the command succeeded?",
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ecf4c8e_eebfa87e",
         "filename": "build/swarming_xcode_install.py",
         "patchSetId": 10
@@ -53,6 +121,64 @@
     },
     {
       "key": {
+        "uuid": "2e5f4b0a_338876a3",
+        "filename": "build/swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-14T18:22:51Z",
+      "side": 1,
+      "message": "Is this import going to work on the isolate servers? Do we need to make the isolate have the structure of a python package, and do a relative import?",
+      "parentUuid": "5ecf4c8e_eebfa87e",
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed8bbb3_612e0793",
+        "filename": "build/swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-14T18:22:51Z",
+      "side": 1,
+      "message": "I believe that python style typically uses all caps for top-of-file constants?",
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a69d412c_f6c49e9e",
+        "filename": "build/swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-14T18:22:51Z",
+      "side": 1,
+      "message": "This constant is implicitly related to the run_swarming_xcode_install swarming dimension xcode version\u003d9.0 constant. Is there some way we can make this relationship explicit? Maybe all of these constants should be in a single file, and should be passed as arguments to this file?",
+      "range": {
+        "startLine": 21,
+        "startChar": 13,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "773e97ad_4202ca26",
         "filename": "build/swarming_xcode_install.py",
         "patchSetId": 10
@@ -64,6 +190,46 @@
       "writtenOn": "2017-09-14T17:54:21Z",
       "side": 1,
       "message": "Make a main() function.",
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93aa8c73_82c1100c",
+        "filename": "build/swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-14T18:22:51Z",
+      "side": 1,
+      "message": "Interesting. If for some reason a machine has Xcode9.0-Beta2...we fail. Does this error somehow get propagated back to the person running the script? How will we know there\u0027s a failure?",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 16
+      },
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c2bd98_aaed34ae",
+        "filename": "build/swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-14T18:22:51Z",
+      "side": 1,
+      "message": "should this function have a return argument that we check here, and do something with?",
       "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
