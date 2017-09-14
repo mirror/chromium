@@ -16,6 +16,24 @@
       "revId": "f24be892094f8838f34b2ec3638c99b6d6ed13c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8cd47ec_ed0b12c6",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-09-14T23:09:06Z",
+      "side": 1,
+      "message": "Sure, but I\u0027ll add it to all of them, \"implements the \u0027foo\u0027 CSS property\", and \"CSS descriptor\"",
+      "parentUuid": "015e30d7_dafdacdb",
+      "revId": "f24be892094f8838f34b2ec3638c99b6d6ed13c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
