@@ -1151,8 +1151,16 @@ void RendererSchedulerImpl::UpdatePolicyLocked(UpdateType update_type) {
   if (main_thread_only().timer_queue_pause_count != 0)
     new_policy.timer_queue_policy().is_paused = true;
 
-  if (main_thread_only().timer_queue_stopped_when_backgrounded)
+  if (main_thread_only().timer_queue_stopped_when_backgrounded) {
     new_policy.timer_queue_policy().is_stopped = true;
+    if (RuntimeEnabledFeatures::StopLoadingInBackgroundAndroidEnabled()) {
+      new_policy.loading_queue_policy().is_stopped = true;
+      for (WebViewSchedulerImpl* web_view_scheduler :
+           main_thread_only().web_view_schedulers) {
+        web_view_scheduler->OnStopLoadingInBackground();
+      }
+    }
+  }
 
   if (main_thread_only().renderer_paused) {
     new_policy.loading_queue_policy().is_paused = true;
