@@ -236,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "d059d44a_12555f0e",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-14T19:18:24Z",
+      "side": 1,
+      "message": "This may complicate the thread model of this class -- some methods run on the caller\u0027s thread while others run on the audio thread.\n\nAnyway... At least comment that these two methods should be used on audio thread and DCHECK that?",
+      "parentUuid": "004abae6_8a38a97f",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 67
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d62b9ef_9682bf9f",
         "filename": "remoting/ios/audio/audio_player_ios.h",
         "patchSetId": 8
@@ -659,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "95a5a4f8_55cfafae",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-14T19:18:24Z",
+      "side": 1,
+      "message": "Do you expect Prime to be called from multiple thread? This sounds wrong and we may get thread safety issues...",
+      "parentUuid": "30b9ef75_1398d7af",
+      "range": {
+        "startLine": 125,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 27
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c150cc2_dcc287ef",
         "filename": "remoting/ios/audio/audio_player_ios.mm",
         "patchSetId": 8
@@ -694,6 +742,30 @@
       "side": 1,
       "message": "output_buffer is removed when audio player is destructed. audio frame supplier is cleaned up.... after that in the default destructed? I am not 100% sure on this one.",
       "parentUuid": "2c150cc2_dcc287ef",
+      "range": {
+        "startLine": 136,
+        "startChar": 23,
+        "endLine": 136,
+        "endChar": 33
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dbd25b5_f75cd1d7",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-14T19:18:24Z",
+      "side": 1,
+      "message": "Hmm I guess it\u0027s fine to use raw pointers here as long as:\n* |audio_frame_supplier_| properly cleans up all its callbacks when it gets destroyed.\n* |audio_frame_supplier_| gets destroyed when |this| gets destroyed.\n* The destructor of |this| runs on the same thread as the one that runs the audio frame callback. The audio thread in this case.",
+      "parentUuid": "38d95783_1b7ac2b9",
       "range": {
         "startLine": 136,
         "startChar": 23,
@@ -847,6 +919,30 @@
     },
     {
       "key": {
+        "uuid": "cc0cdecd_12f7328e",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-14T19:18:24Z",
+      "side": 1,
+      "message": "Same as Prime. I don\u0027t think this implementation is thread safe... You either want to post tasks or add locks...",
+      "parentUuid": "bc906689_8555b6a5",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 15
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb581cef_33c28a06",
         "filename": "remoting/ios/audio/audio_player_ios.mm",
         "patchSetId": 8
@@ -882,6 +978,30 @@
       "side": 1,
       "message": "Pump is public.",
       "parentUuid": "fb581cef_33c28a06",
+      "range": {
+        "startLine": 165,
+        "startChar": 0,
+        "endLine": 165,
+        "endChar": 78
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f969bf8_683a43ea",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-14T19:18:24Z",
+      "side": 1,
+      "message": "ditto",
+      "parentUuid": "f7b5a8d7_d5141265",
       "range": {
         "startLine": 165,
         "startChar": 0,
@@ -1187,6 +1307,30 @@
       "side": 1,
       "message": "output_queue is not an object. it is a number to an internal queue in the iOS subsystem where it does the memory management for the buffers it is passing back and fourth here. So this is just making sure that we ask the internal system to free the memory it has allocated as the iOS player dies.",
       "parentUuid": "9572274c_fdc4d252",
+      "range": {
+        "startLine": 244,
+        "startChar": 20,
+        "endLine": 244,
+        "endChar": 33
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e0f16f51_01930af3",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-14T19:18:24Z",
+      "side": 1,
+      "message": "I\u0027m not sure if the Apple\u0027s implementation is really thread-safe. Apparently they don\u0027t have to.\n\nIf a function that modifies/accesses |output_queue_| or |output_buffers_| is run on the audio thread meanwhile the class is being destroyed on UI thread, then you may get race conditions.\n\nAnyway your code binds the weak pointer to the audio thread. That will prevent this destructor from being called from any non-audio thread...",
+      "parentUuid": "068dbd42_a062f89e",
       "range": {
         "startLine": 244,
         "startChar": 20,
