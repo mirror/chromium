@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "ff89245d_fbeed180",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-14T00:59:32Z",
+      "side": 1,
+      "message": "I didn\u0027t actually see anywhere that defining this matters.  Is it here out of habit or something?  I think you can get away with just\n\n  if (!is_win || is_clang) {\n    cflags \u003d [ \"-mssse3\" ]\n  }\n\nI think clang-cl.exe does still need -mssse3 right, even though cl.exe doesn\u0027t need (or have) any equivalent flag?",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "227fecb3_e4520c4d",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-14T00:59:32Z",
+      "side": 1,
+      "message": "Putting my GN-encapsulation hat on, this define seems like the sort of thing that :zlib_adler32_simd wants to provide to :zlib via public_configs.",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5fd6f19_998d1e45",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16
@@ -36,6 +70,40 @@
     },
     {
       "key": {
+        "uuid": "087691cf_9a284e07",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-14T00:59:32Z",
+      "side": 1,
+      "message": "You might want to time how things go if you don\u0027t do this, and just _mm_loadu_si128 right from the start.  I\u0027ve found it often just doesn\u0027t matter anymore, and people tend to just do this out of superstition.",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3109de9_2698d3d3",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-14T00:59:32Z",
+      "side": 1,
+      "message": "Might be nice to write this as s2 +\u003d (s1 +\u003d *buf++); like elsewhere.",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc27b784_a2d3243c",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16
@@ -47,6 +115,24 @@
       "writtenOn": "2017-09-14T00:07:27Z",
       "side": 1,
       "message": "Probably won\u0027t change the ASM at all, but similarly to what you requested in the NEON patch, please move it outside of the loop.",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18071e76_b93b08e9",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-14T00:59:32Z",
+      "side": 1,
+      "message": "I really think we need to have more faith in our compiler.  These constants should go where they make the code read most clearly, which is usually scoped as tightly and lexically as close as possible to the point of use.\n\nHoisting these values outside of a loop is trivially easy for any compiler we\u0027d ever use.",
+      "parentUuid": "dc27b784_a2d3243c",
       "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +156,24 @@
     },
     {
       "key": {
+        "uuid": "7be8156c_54440faa",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-14T00:59:32Z",
+      "side": 1,
+      "message": "To a), It usually doesn\u0027t matter, except that we\u0027re more likely to get good code generation for x86 (and in my experience, for ARM) if you keep yourself in the habit of staying away from arrays of vector types.  But given that these are constant, the compiler\u0027s really just going to ignore any opinion we have about where or how to store them and do it itself.",
+      "parentUuid": "59959851_8a307f15",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1df88ab3_0c508140",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16
@@ -81,6 +185,24 @@
       "writtenOn": "2017-09-14T00:07:27Z",
       "side": 1,
       "message": "While on ARM it doesn\u0027t matter (i.e. the compiler will map to the same instruction), I recall that in Intel may be a tad faster an alternative way of calculating the modulo using bitwise operators.",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5c698c_c0152b6e",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-14T00:59:32Z",
+      "side": 1,
+      "message": "This will be fine on as written on x86 too, really any platform.  This is kid stuff for compilers...",
+      "parentUuid": "1df88ab3_0c508140",
       "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +226,24 @@
     },
     {
       "key": {
+        "uuid": "252fc186_657113ac",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-14T00:59:32Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m a little curious to see what sort of code Clang generates from just\n\n   while (len--) {\n     s2 +\u003d (s1 +\u003d *buf++);\n   }\n\nIf nothing else, a blank line every group of 4 might help make it visually clear that there really are 16 iterations here.",
+      "parentUuid": "392e94de_10856c41",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1eae378_20622253",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16
@@ -121,6 +261,24 @@
     },
     {
       "key": {
+        "uuid": "f20fc260_cd292afc",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-14T00:59:32Z",
+      "side": 1,
+      "message": "That\u0027s an excellent idea.  I have found that keeping related algorithms in the same file generally does make things easier to maintain, more consistent, and helps remind you to implement fast paths for all the platforms you care about.",
+      "parentUuid": "a1eae378_20622253",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0f2f488_d814351b",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16
@@ -132,6 +290,24 @@
       "writtenOn": "2017-09-14T00:07:27Z",
       "side": 1,
       "message": "Please see previous comment about the inline function.\n\nAlso, is there any performance advantage in this format than what is used in vanilla adler32?\nI\u0027m referring to DO1 macro: https://cs.chromium.org/chromium/src/third_party/zlib/adler32.c?l\u003d16",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774b0137_08c6811d",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-14T00:59:32Z",
+      "side": 1,
+      "message": "I kinda gotta disagree here on hiding this with a macro or inline function.  Seeing the checksum kernel written this clearly and pithily was enlightening.  Anything we do to paper over that is only going to make it harder for the next person reading this code to learn what the adler32 checksum is.\n\n(I don\u0027t think zlib\u0027s existing code is a particularly good reference point for code clarity.)",
+      "parentUuid": "f0f2f488_d814351b",
       "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
