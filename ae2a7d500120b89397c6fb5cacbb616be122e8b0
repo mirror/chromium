@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7e8ab905_5115f8f4",
+        "filename": "cc/paint/paint_image.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T00:19:07Z",
+      "side": 1,
+      "message": "I think the AnimationType is meant to denote whether the source of this PaintImage is an animated image. We have a few places in code (checker-imaging), that rely on this and should probably continue to have the same behaviour.",
+      "parentUuid": "132e8ad2_f8d09dea",
+      "revId": "ae2a7d500120b89397c6fb5cacbb616be122e8b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e29cd39_e9333720",
         "filename": "cc/paint/paint_image.h",
         "patchSetId": 2
