@@ -37,6 +37,9 @@
 #include "third_party/re2/src/re2/re2.h"
 
 using base::FilePath;
+using base::trace_event::MemoryAllocatorDump;
+using base::trace_event::MemoryDumpArgs;
+using base::trace_event::ProcessMemoryDump;
 using leveldb::FileLock;
 using leveldb::Slice;
 using leveldb::Status;
@@ -441,6 +444,11 @@ int MaxOpenFiles() {
   // Allow use of 20% of available file descriptors for read-only files.
   int open_read_only_file_limit = base::GetMaxFds() / 5;
   return open_read_only_file_limit;
+}
+
+std::string GetDumpNameForDB(leveldb::DB* db) {
+  return base::StringPrintf("leveldatabase/0x%" PRIXPTR,
+                            reinterpret_cast<uintptr_t>(db));
 }
 
 }  // unnamed namespace
@@ -1223,14 +1231,19 @@ LevelDBStatusValue GetLevelDBStatusUMAValue(const leveldb::Status& s) {
 class DBTracker::TrackedDBImpl : public base::LinkNode<TrackedDBImpl>,
                                  public TrackedDB {
  public:
-  TrackedDBImpl(DBTracker* tracker, const std::string name, leveldb::DB* db)
-      : tracker_(tracker), name_(name), db_(db) {
+  TrackedDBImpl(DBTracker* tracker,
+                const std::string name,
+                leveldb::DB* db,
+                leveldb::Cache* block_cache)
+      : tracker_(tracker), name_(name), db_(db), block_cache_(block_cache) {
     tracker_->DatabaseOpened(this);
   }
 
   ~TrackedDBImpl() override { tracker_->DatabaseDestroyed(this); }
 
   const std::string& name() const override { return name_; }
+
+  const leveldb::Cache* block_cache() const override { return block_cache_; }
 
   leveldb::Status Put(const leveldb::WriteOptions& options,
                       const leveldb::Slice& key,
@@ -1284,6 +1297,7 @@ class DBTracker::TrackedDBImpl : public base::LinkNode<TrackedDBImpl>,
   DBTracker* tracker_;
   std::string name_;
   std::unique_ptr<leveldb::DB> db_;
+  const leveldb::Cache* const block_cache_;
 };
 
 // Reports live databases to memory-infra. For each live database the following
@@ -1307,27 +1321,115 @@ class DBTracker::TrackedDBImpl : public base::LinkNode<TrackedDBImpl>,
 class DBTracker::MemoryDumpProvider
     : public base::trace_event::MemoryDumpProvider {
  public:
-  bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
-                    base::trace_event::ProcessMemoryDump* pmd) override {
+  static void DumpAllDatabases(ProcessMemoryDump* pmd);
+
+  bool OnMemoryDump(const MemoryDumpArgs& args,
+                    ProcessMemoryDump* pmd) override {
     // Don't dump in background mode ("from the field") until whitelisted.
     if (args.level_of_detail ==
         base::trace_event::MemoryDumpLevelOfDetail::BACKGROUND) {
       return true;
     }
-
-    auto db_visitor = [](const base::trace_event::MemoryDumpArgs& args,
-                         base::trace_event::ProcessMemoryDump* pmd,
-                         TrackedDB* db) {
-      auto* dump = DBTracker::GetOrCreateAllocatorDump(pmd, db);
-      // TODO(ssid): Do not add string attribute in background mode.
-      dump->AddString("name", "", db->name());
-    };
-
-    DBTracker::GetInstance()->VisitDatabases(
-        base::BindRepeating(db_visitor, args, base::Unretained(pmd)));
+    DumpAllDatabases(pmd);
     return true;
   }
 };
+
+void DBTracker::MemoryDumpProvider::DumpAllDatabases(ProcessMemoryDump* pmd) {
+  // Check if all the databases have been added already.
+  if (pmd->GetAllocatorDump("leveldatabase"))
+    return;
+  pmd->CreateAllocatorDump("leveldatabase");
+
+  const char* system_allocator_name =
+      base::trace_event::MemoryDumpManager::GetInstance()
+          ->system_allocator_pool_name();
+  const leveldb::Cache* browser_cache =
+      leveldb_chrome::GetSharedBrowserBlockCache();
+  // TODO(ssid): Create only one cache dump when leveldatabase is shared_library
+  // and only one instance of dump provider is created, crbug.com/764810.
+  auto* browser_cache_dump = pmd->CreateAllocatorDump(
+      base::StringPrintf("leveldatabase/browser_block_cache_0x%" PRIXPTR,
+                         reinterpret_cast<uintptr_t>(browser_cache)));
+  browser_cache_dump->AddScalar(MemoryAllocatorDump::kNameSize,
+                                MemoryAllocatorDump::kUnitsBytes,
+                                browser_cache->TotalCharge());
+  if (system_allocator_name)
+    pmd->AddSuballocation(browser_cache_dump->guid(), system_allocator_name);
+
+  const leveldb::Cache* web_cache = leveldb_chrome::GetSharedWebBlockCache();
+  auto* web_cache_dump = browser_cache_dump;
+  if (web_cache != browser_cache) {
+    // TODO(ssid): Create only one cache dump when leveldatabase is
+    // shared_library and only one instance of dump provider is created,
+    // crbug.com/764810.
+    web_cache_dump = pmd->CreateAllocatorDump(
+        base::StringPrintf("leveldatabase/web_block_cache_0x%" PRIXPTR,
+                           reinterpret_cast<uintptr_t>(web_cache)));
+    web_cache_dump->AddScalar(MemoryAllocatorDump::kNameSize,
+                              MemoryAllocatorDump::kUnitsBytes,
+                              web_cache->TotalCharge());
+    if (system_allocator_name)
+      pmd->AddSuballocation(web_cache_dump->guid(), system_allocator_name);
+  }
+
+  auto db_visitor = [](ProcessMemoryDump* pmd,
+                       const MemoryAllocatorDump* browser_cache_dump,
+                       const MemoryAllocatorDump* web_cache_dump, TrackedDB* db,
+                       int block_cache_share_count) {
+    std::string db_dump_name = GetDumpNameForDB(db);
+    auto* db_dump = pmd->CreateAllocatorDump(db_dump_name);
+
+    const char* system_allocator_name =
+        base::trace_event::MemoryDumpManager::GetInstance()
+            ->system_allocator_pool_name();
+    const leveldb::Cache* cache = db->block_cache();
+    auto* cache_dump = pmd->CreateAllocatorDump(db_dump_name + "/block_cache");
+    size_t cache_usage_pss = 0;
+    if (cache == leveldb_chrome::GetSharedBrowserBlockCache()) {
+      pmd->AddSuballocation(cache_dump->guid(),
+                            browser_cache_dump->absolute_name());
+      cache_usage_pss =
+          browser_cache_dump->GetSizeInternal() / block_cache_share_count;
+    } else {
+      DCHECK_EQ(cache, leveldb_chrome::GetSharedWebBlockCache());
+      pmd->AddSuballocation(cache_dump->guid(),
+                            web_cache_dump->absolute_name());
+      cache_usage_pss =
+          web_cache_dump->GetSizeInternal() / block_cache_share_count;
+    }
+    cache_dump->AddScalar(MemoryAllocatorDump::kNameSize,
+                          MemoryAllocatorDump::kUnitsBytes, cache_usage_pss);
+
+    uint64_t memory_usage = 0;
+    std::string usage_string;
+    bool success =
+        db->GetProperty("leveldb.approximate-memory-usage", &usage_string) &&
+        base::StringToUint64(usage_string, &memory_usage);
+    DCHECK(success);
+    uint64_t mem_table_usage = memory_usage - cache->TotalCharge();
+
+    auto* mem_table_dump =
+        pmd->CreateAllocatorDump(db_dump_name + "/mem_table");
+    mem_table_dump->AddScalar(MemoryAllocatorDump::kNameSize,
+                              MemoryAllocatorDump::kUnitsBytes,
+                              mem_table_usage);
+    if (system_allocator_name)
+      pmd->AddSuballocation(mem_table_dump->guid(), system_allocator_name);
+
+    // Add size to the parent dump since some clients get the database size from
+    // this dump.
+    db_dump->AddScalar(MemoryAllocatorDump::kNameSize,
+                       MemoryAllocatorDump::kUnitsBytes,
+                       mem_table_usage + cache_usage_pss);
+
+    // TODO(ssid): Do not add string attribute in background mode.
+    db_dump->AddString("name", "", db->name());
+  };
+
+  DBTracker::GetInstance()->VisitDatabases(base::BindRepeating(
+      db_visitor, base::Unretained(pmd), browser_cache_dump, web_cache_dump));
+}
 
 DBTracker::DBTracker() : mdp_(new MemoryDumpProvider()) {
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
@@ -1344,36 +1446,15 @@ DBTracker* DBTracker::GetInstance() {
 }
 
 // static
-base::trace_event::MemoryAllocatorDump* DBTracker::GetOrCreateAllocatorDump(
-    base::trace_event::ProcessMemoryDump* pmd,
+MemoryAllocatorDump* DBTracker::GetOrCreateAllocatorDump(
+    ProcessMemoryDump* pmd,
     leveldb::DB* tracked_db) {
   if (pmd->dump_args().level_of_detail ==
       base::trace_event::MemoryDumpLevelOfDetail::BACKGROUND) {
     return nullptr;
   }
-  std::string dump_name = base::StringPrintf(
-      "leveldatabase/0x%" PRIXPTR, reinterpret_cast<uintptr_t>(tracked_db));
-  auto* dump = pmd->GetAllocatorDump(dump_name);
-  if (dump)
-    return dump;
-  dump = pmd->CreateAllocatorDump(dump_name);
-
-  uint64_t memory_usage = 0;
-  std::string usage_string;
-  bool success = tracked_db->GetProperty("leveldb.approximate-memory-usage",
-                                         &usage_string) &&
-                 base::StringToUint64(usage_string, &memory_usage);
-  DCHECK(success);
-  dump->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
-                  base::trace_event::MemoryAllocatorDump::kUnitsBytes,
-                  memory_usage);
-
-  const char* system_allocator_name =
-      base::trace_event::MemoryDumpManager::GetInstance()
-          ->system_allocator_pool_name();
-  if (system_allocator_name)
-    pmd->AddSuballocation(dump->guid(), system_allocator_name);
-  return dump;
+  DBTracker::MemoryDumpProvider::DumpAllDatabases(pmd);
+  return pmd->GetAllocatorDump(GetDumpNameForDB(tracked_db));
 }
 
 leveldb::Status DBTracker::OpenDatabase(const leveldb::Options& options,
@@ -1386,7 +1467,7 @@ leveldb::Status DBTracker::OpenDatabase(const leveldb::Options& options,
   CHECK((status.ok() && db) || (!status.ok() && !db));
   if (status.ok()) {
     // TrackedDBImpl ctor adds the instance to the tracker.
-    *dbptr = new TrackedDBImpl(GetInstance(), name, db);
+    *dbptr = new TrackedDBImpl(GetInstance(), name, db, options.block_cache);
   }
   return status;
 }
@@ -1394,17 +1475,20 @@ leveldb::Status DBTracker::OpenDatabase(const leveldb::Options& options,
 void DBTracker::VisitDatabases(const DatabaseVisitor& visitor) {
   base::AutoLock lock(databases_lock_);
   for (auto* i = databases_.head(); i != databases_.end(); i = i->next()) {
-    visitor.Run(i->value());
+    visitor.Run(i->value(),
+                block_cache_share_counts_[i->value()->block_cache()]);
   }
 }
 
 void DBTracker::DatabaseOpened(TrackedDBImpl* database) {
   base::AutoLock lock(databases_lock_);
   databases_.Append(database);
+  ++block_cache_share_counts_[database->block_cache()];
 }
 
 void DBTracker::DatabaseDestroyed(TrackedDBImpl* database) {
   base::AutoLock lock(databases_lock_);
+  --block_cache_share_counts_[database->block_cache()];
   database->RemoveFromList();
 }
 

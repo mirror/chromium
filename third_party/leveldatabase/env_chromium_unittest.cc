@@ -17,7 +17,9 @@
 #include "base/test/test_suite.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/src/include/leveldb/cache.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
+#include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 
 #define FPL FILE_PATH_LITERAL
 
@@ -379,6 +381,50 @@ TEST_F(ChromiumEnvDBTrackerTest, OpenDBTracking) {
   // Databases returned by OpenDB() should be tracked.
   ASSERT_EQ(1u, visited_dbs.size());
   ASSERT_EQ(db.get(), *visited_dbs.begin());
+}
+
+TEST_F(ChromiumEnvDBTrackerTest, MemoryDumpCreation) {
+  Options options;
+  options.create_if_missing = true;
+  const size_t kCacheSize = 1 << 20;
+  leveldb::Cache* cache1 = leveldb::NewLRUCache(kCacheSize);
+  leveldb::Cache* cache2 = leveldb::NewLRUCache(kCacheSize);
+  options.block_cache = cache1;
+  std::unique_ptr<leveldb::DB> db1;
+  base::ScopedTempDir temp_dir1;
+  ASSERT_TRUE(temp_dir1.CreateUniqueTempDir());
+  base::ScopedTempDir temp_dir2;
+  ASSERT_TRUE(temp_dir2.CreateUniqueTempDir());
+  base::ScopedTempDir temp_dir3;
+  ASSERT_TRUE(temp_dir3.CreateUniqueTempDir());
+
+  auto status =
+      leveldb_env::OpenDB(options, temp_dir1.GetPath().AsUTF8Unsafe(), &db1);
+  ASSERT_TRUE(status.ok()) << status.ToString();
+
+  std::unique_ptr<leveldb::DB> db2;
+  status =
+      leveldb_env::OpenDB(options, temp_dir2.GetPath().AsUTF8Unsafe(), &db2);
+  ASSERT_TRUE(status.ok()) << status.ToString();
+
+  std::unique_ptr<leveldb::DB> db3;
+  options.block_cache = cache2;
+  status =
+      leveldb_env::OpenDB(options, temp_dir3.GetPath().AsUTF8Unsafe(), &db3);
+  ASSERT_TRUE(status.ok()) << status.ToString();
+
+  auto db_visitor = [](DBTracker::TrackedDB* db) {
+    auto status = db->Put(WriteOptions(), "key", "value");
+    EXPECT_TRUE(status.ok()) << status.ToString();
+    db->CompactRange(nullptr, nullptr);
+    std::string value;
+    status = db->Get(ReadOptions(), "key", &value);
+    ASSERT_TRUE(status.ok()) << status.ToString();
+    EXPECT_NE(0u, db->block_cache()->TotalCharge());
+  };
+  DBTracker::GetInstance()->VisitDatabases(base::BindRepeating(db_visitor));
+
+  bb
 }
 
 int main(int argc, char** argv) { return base::TestSuite(argc, argv).Run(); }

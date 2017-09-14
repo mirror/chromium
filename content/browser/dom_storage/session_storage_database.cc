@@ -378,15 +378,18 @@ void SessionStorageDatabase::OnMemoryDump(
   auto* mad = pmd->CreateAllocatorDump(
       base::StringPrintf("site_storage/session_storage_0x%" PRIXPTR,
                          reinterpret_cast<uintptr_t>(this)));
-  mad->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
-                 base::trace_event::MemoryAllocatorDump::kUnitsBytes, size);
 
   // All leveldb databases are already dumped by leveldb_env::DBTracker. Add
   // an edge to avoid double counting.
   auto* tracker_dump =
       leveldb_env::DBTracker::GetOrCreateAllocatorDump(pmd, db_.get());
-  if (tracker_dump)
+  if (tracker_dump) {
     pmd->AddOwnershipEdge(mad->guid(), tracker_dump->guid());
+    size = tracker_dump->GetSizeInternal();
+  }
+
+  mad->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
+                 base::trace_event::MemoryAllocatorDump::kUnitsBytes, size);
 }
 
 bool SessionStorageDatabase::LazyOpen(bool create_if_needed) {
