@@ -36,7 +36,7 @@ void ConnectivityChecker::Notify(bool connected) {
 scoped_refptr<ConnectivityChecker> ConnectivityChecker::Create(
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
     net::URLRequestContextGetter* url_request_context_getter) {
-  return make_scoped_refptr(
+  return base::WrapRefCounted(
       new ConnectivityCheckerImpl(task_runner, url_request_context_getter));
 }
 

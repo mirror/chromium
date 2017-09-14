@@ -203,10 +203,11 @@ void ShowBalloon(const Extension* extension, Profile* profile) {
   // so we'll bind all the pertinent data here.
   extensions::ImageLoader::Get(profile)->LoadImageAsync(
       extension, resource, gfx::Size(size, size),
-      base::Bind(
-          &NotificationImageReady, extension->name(), extension->id(), message,
-          make_scoped_refptr(new CrashNotificationDelegate(profile, extension)),
-          profile));
+      base::Bind(&NotificationImageReady, extension->name(), extension->id(),
+                 message,
+                 base::WrapRefCounted(
+                     new CrashNotificationDelegate(profile, extension)),
+                 profile));
 }
 
 void ReloadExtension(const std::string& extension_id, Profile* profile) {

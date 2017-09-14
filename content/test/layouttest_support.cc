@@ -402,7 +402,7 @@ class LayoutTestDependenciesImpl : public LayoutTestDependencies,
     const bool support_locking = false;
 
     auto context_provider =
-        make_scoped_refptr(new ui::ContextProviderCommandBuffer(
+        base::WrapRefCounted(new ui::ContextProviderCommandBuffer(
             gpu_channel_, kGpuStreamIdDefault, kGpuStreamPriorityDefault,
             gpu::kNullSurfaceHandle,
             GURL("chrome://gpu/"
