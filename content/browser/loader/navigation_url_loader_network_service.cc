@@ -326,6 +326,15 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     Restart();
   }
 
+  void InterceptNavigationResponse(
+      NavigationURLLoader::NavigationResponseInterceptionCB callback) {
+    LOG(ERROR) << "NavigationURLLoaderNetworkService::"
+                  "InterceptNavigationResponse*************2********";
+    std::move(callback).Run(std::move(resource_request_),
+                            std::move(url_loader_),
+                            std::move(completion_status_));
+  }
+
   // Ownership of the URLLoaderFactoryPtrInfo instance is transferred to the
   // caller.
   mojom::URLLoaderFactoryPtrInfo GetSubresourceURLLoaderFactory() {
@@ -411,6 +420,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       if (MaybeCreateLoaderForResponse(ResourceResponseHead()))
         return;
     }
+    completion_status_ = completion_status;
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(&NavigationURLLoaderNetworkService::OnComplete, owner_,
@@ -471,6 +481,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   // Set to true if we receive a valid response from a URLLoader, i.e.
   // URLLoaderClient::OnReceivedResponse() is called.
   bool received_response_ = false;
+
+  base::Optional<ResourceRequestCompletionStatus> completion_status_;
 
   DISALLOW_COPY_AND_ASSIGN(URLLoaderRequestController);
 };
@@ -575,6 +587,17 @@ void NavigationURLLoaderNetworkService::FollowRedirect() {
 }
 
 void NavigationURLLoaderNetworkService::ProceedWithResponse() {}
+
+void NavigationURLLoaderNetworkService::InterceptNavigationResponse(
+    NavigationURLLoader::NavigationResponseInterceptionCB callback) {
+  LOG(ERROR) << "NavigationURLLoaderNetworkService::"
+                "InterceptNavigationResponse*********************";
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&URLLoaderRequestController::InterceptNavigationResponse,
+                     base::Unretained(request_controller_.get()),
+                     std::move(callback)));
+}
 
 void NavigationURLLoaderNetworkService::OnReceiveResponse(
     scoped_refptr<ResourceResponse> response,
