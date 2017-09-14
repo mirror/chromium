@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d380deab_c853d0f6",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestDictionary.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-14T04:19:26Z",
+      "side": 1,
+      "message": "Why don\u0027t we have a corresponding change in a generated code?",
+      "revId": "d83822b3fb69333cac11b904f1a2cdb3cdf44552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
