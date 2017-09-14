@@ -22,6 +22,30 @@
       "revId": "27a4715aa8b7e2c146cdab8f6b4e8cb734ab0e12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fdf118d_7ad3868e",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-14T07:02:49Z",
+      "side": 1,
+      "message": "If switch won\u0027t have a \u0027default\u0027 case, then win_chromium_compile_dbg_ng issues a warning treated as error stating that \u0027not all control paths return a value\u0027.\nAnd as we cannot have a return value outside the switch, I don\u0027t see any neat way to remove \u0027default\u0027. Am I missing something?",
+      "parentUuid": "629cb449_be6ebba8",
+      "range": {
+        "startLine": 1094,
+        "startChar": 13,
+        "endLine": 1094,
+        "endChar": 21
+      },
+      "revId": "27a4715aa8b7e2c146cdab8f6b4e8cb734ab0e12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
