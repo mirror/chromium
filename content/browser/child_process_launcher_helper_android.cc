@@ -145,8 +145,8 @@ base::TerminationStatus ChildProcessLauncherHelper::GetTerminationStatus(
     const ChildProcessLauncherHelper::Process& process,
     bool known_dead,
     int* exit_code) {
-  if (Java_ChildProcessLauncherHelper_isOomProtected(AttachCurrentThread(),
-                                                     java_peer_)) {
+  if (!java_peer_.is_null() && Java_ChildProcessLauncherHelper_isOomProtected(
+                                   AttachCurrentThread(), java_peer_)) {
     return base::TERMINATION_STATUS_OOM_PROTECTED;
   }
   return base::GetTerminationStatus(process.process.Handle(), exit_code);
