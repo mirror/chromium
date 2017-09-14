@@ -4901,9 +4901,10 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, ClientRedirectToMixedContentSSLState) {
 IN_PROC_BROWSER_TEST_F(SSLUITest, InPageNavigationDuringLoadSSLState) {
   ASSERT_TRUE(https_server_.Start());
 
-  ui_test_utils::NavigateToURL(
+  ui_test_utils::NavigateToURLBlockUntilNavigationsComplete(
       browser(),
-      https_server_.GetURL("/ssl/in_page_navigation_during_load.html"));
+      https_server_.GetURL("/ssl/in_page_navigation_during_load.html"),
+      2);
   WebContents* tab = browser()->tab_strip_model()->GetActiveWebContents();
   CheckAuthenticatedState(tab, AuthState::NONE);
 }

@@ -1384,6 +1384,7 @@ void NavigationControllerImpl::RendererDidNavigateToExistingPage(
         handle->GetNetErrorCode() == net::OK) {
       bool has_cert = !!entry->GetSSL().certificate;
       if (is_same_document) {
+        CHECK(has_cert);
         UMA_HISTOGRAM_BOOLEAN(
             "Navigation.SecureSchemeHasSSLStatus."
             "ExistingPageSameDocumentRendererInitiated",
