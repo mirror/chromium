@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa15eb48_9cf8d4b8",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-14T08:08:07Z",
+      "side": 1,
+      "message": "Maybe as a followup, we could remove this loop and the one below since there is only one thread now.",
+      "revId": "1bb581fb23c061b377c1b835c5c451109980909f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78257e15_dc17ed70",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-14T08:08:07Z",
+      "side": 1,
+      "message": "Remove this part.",
+      "range": {
+        "startLine": 213,
+        "startChar": 27,
+        "endLine": 214,
+        "endChar": 44
+      },
+      "revId": "1bb581fb23c061b377c1b835c5c451109980909f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f94d271a_1d7a3f28",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-14T08:08:07Z",
+      "side": 1,
+      "message": "Remove this part.",
+      "range": {
+        "startLine": 217,
+        "startChar": 7,
+        "endLine": 217,
+        "endChar": 38
+      },
+      "revId": "1bb581fb23c061b377c1b835c5c451109980909f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
