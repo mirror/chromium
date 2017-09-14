@@ -23,6 +23,7 @@
 #include "components/password_manager/core/browser/password_store_consumer.h"
 #include "components/password_manager/core/browser/password_syncable_service.h"
 #include "components/password_manager/core/browser/statistics_table.h"
+#include "url/url_constants.h"
 
 #if !defined(OS_ANDROID) && !defined(OS_IOS) && !defined(OS_CHROMEOS)
 #include "components/password_manager/core/browser/password_store_signin_notifier.h"
@@ -47,6 +48,17 @@ void PasswordStore::GetLoginsRequest::NotifyConsumerWithResults(
     base::EraseIf(results,
                   [this](const std::unique_ptr<PasswordForm>& credential) {
                     return (credential->date_created < ignore_logins_cutoff_);
+                  });
+  }
+
+  // Per https://crbug.com/756587, exclude passwords saved for about:blank
+  // documents.  Saving such passwords is not possible anymore, and this
+  // prevents existing saved about:blank passwords from being used for
+  // autofill.
+  if (ignore_about_blank_) {
+    base::EraseIf(results,
+                  [this](const std::unique_ptr<PasswordForm>& credential) {
+                    return (credential->origin == url::kAboutBlankURL);
                   });
   }
 
@@ -222,6 +234,7 @@ void PasswordStore::GetLogins(const FormDigest& form,
   }
   std::unique_ptr<GetLoginsRequest> request(new GetLoginsRequest(consumer));
   request->set_ignore_logins_cutoff(ignore_logins_cutoff);
+  request->set_ignore_about_blank();
 
   if (affiliated_match_helper_) {
     affiliated_match_helper_->GetAffiliatedAndroidRealms(

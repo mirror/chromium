@@ -150,8 +150,7 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   bool logging_state_active() const { return logging_state_active_; }
 
  protected:
-  virtual bool OriginCanAccessPasswordManager(
-      const blink::WebSecurityOrigin& origin);
+  virtual bool FrameCanAccessPasswordManager(blink::WebLocalFrame* frame);
 
  private:
   class FormElementObserverCallback;

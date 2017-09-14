@@ -296,9 +296,15 @@ class PasswordStore : protected PasswordStoreSync,
       ignore_logins_cutoff_ = cutoff;
     }
 
+    void set_ignore_about_blank() { ignore_about_blank_ = true; }
+
    private:
     // See GetLogins(). Logins older than this will be removed from the reply.
     base::Time ignore_logins_cutoff_;
+
+    // See https://crbug.com/756587.  Used to ensure that autofill is disabled
+    // for existing saved passwords for about:blank pages.
+    bool ignore_about_blank_ = false;
 
     scoped_refptr<base::SequencedTaskRunner> origin_task_runner_;
     base::WeakPtr<PasswordStoreConsumer> consumer_weak_;
