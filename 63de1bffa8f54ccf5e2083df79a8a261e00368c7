@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f3c2d3fe_08e9cc8c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsCarousel.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-14T16:18:26Z",
+      "side": 1,
+      "message": "Yeah there is a new patch with the fix.",
+      "parentUuid": "2bb8a803_7c8bbd09",
+      "range": {
+        "startLine": 87,
+        "startChar": 12,
+        "endLine": 87,
+        "endChar": 29
+      },
+      "revId": "63de1bffa8f54ccf5e2083df79a8a261e00368c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c4deb127_0182545a",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsTest.java",
         "patchSetId": 3
@@ -59,6 +83,30 @@
       "writtenOn": "2017-09-14T15:02:38Z",
       "side": 1,
       "message": "you seem to never need it as an array, so just declare it as a list? Also, feel free to make the variable in the other test public and reuse it here rather than copying the code.",
+      "range": {
+        "startLine": 55,
+        "startChar": 42,
+        "endLine": 55,
+        "endChar": 69
+      },
+      "revId": "63de1bffa8f54ccf5e2083df79a8a261e00368c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08723c96_3a9be407",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-14T16:18:26Z",
+      "side": 1,
+      "message": "The suggestions there are KnownKategories.ARTICLE. I will have to create another list and copy over the suggestions from there. If that\u0027s ok with you, idm :)",
+      "parentUuid": "f07c9714_7ccc9c20",
       "range": {
         "startLine": 55,
         "startChar": 42,
@@ -177,6 +225,30 @@
       "revId": "63de1bffa8f54ccf5e2083df79a8a261e00368c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c56501e_758ea2f5",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-09-14T16:18:26Z",
+      "side": 1,
+      "message": "Then it executes the code in the function, which is what i am trying to avoid.",
+      "parentUuid": "2297b343_1b4bf888",
+      "range": {
+        "startLine": 80,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 39
+      },
+      "revId": "63de1bffa8f54ccf5e2083df79a8a261e00368c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
