@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bae2e33e_9e1798ae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-14T00:25:48Z",
+      "side": 1,
+      "message": "Done, sounds great.",
+      "parentUuid": "e89fc6b2_4c58cb12",
+      "revId": "ee0a780bacfaf431b31962ad0a873de2a7e81934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bc08807_01eceab0",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-13T22:07:33Z",
       "side": 1,
       "message": "I think it\u0027s time to introduce struct-like Console.ConsoleFilter, and use it here and in ConsoleView. I\u0027d say it should have parsedFilter, name, levelsMask, and info/warning/error counters. WDYT?",
+      "revId": "ee0a780bacfaf431b31962ad0a873de2a7e81934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb85268_2b368377",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-14T00:25:48Z",
+      "side": 1,
+      "message": "Done.\n\nConsole.ConsoleFilter makes things much nicer, esp. hiding counter manipulation details, and we can easily upgrade parsedFilter into an array, parsedFilters.\n\nDown the line, I\u0027d try per-ExecutionContext groups, and I think exposing parsedFilter() and executionContext() is a little awkward, but that\u0027s not in this CL.",
+      "parentUuid": "7bc08807_01eceab0",
       "revId": "ee0a780bacfaf431b31962ad0a873de2a7e81934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
