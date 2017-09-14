@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b37be7bc_f5832c38",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3569,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-14T22:57:28Z",
+      "side": 1,
+      "message": "I\u0027m not thrilled about this approach, but I couldn\u0027t find any other event to wait for -- as I mentioned in the comment, when everything works, the renderer won\u0027t send any password manager IPCs at all.  This is technically also covered by the unit test I added to password_store_unittest, so we could just rely on that one, but I thought a browsertest might be useful to have as well (e.g., to verify there are no kills).  It also seems consistent with the best-effort approach in CrossSiteIframeNotFillTest in this file, for example.",
+      "range": {
+        "startLine": 3569,
+        "startChar": 7,
+        "endLine": 3569,
+        "endChar": 17
+      },
+      "revId": "79d06de0d18c83022ac9359fa40a625211cf20ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e2e60d4_1aff6bbc",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1471,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-14T22:57:28Z",
+      "side": 1,
+      "message": "Is it worth also logging the UMA I added to WillSendSubmitEvent here?  (That would mean we\u0027d need to move this check down and do it right before each PasswordFormSubmitted() below.)  AFAICT, this detects filled forms on navigations that aren\u0027t form submits, but I don\u0027t know how common those are compared to WillSendSubmitEvent, and whether they\u0027re worth logging for this.",
+      "revId": "79d06de0d18c83022ac9359fa40a625211cf20ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0ff95cb_4874f25d",
+        "filename": "components/password_manager/content/browser/content_password_manager_driver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-14T22:57:28Z",
+      "side": 1,
+      "message": "This would help catch someone sending an IPC that checks ContentPasswordManagerDriver::CheckChildProcessSecurityPolicy without first checking FrameCanAccessPasswordManager on the renderer side.",
+      "revId": "79d06de0d18c83022ac9359fa40a625211cf20ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2663693_6805f9f1",
+        "filename": "components/password_manager/core/browser/password_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-14T22:57:28Z",
+      "side": 1,
+      "message": "I *think* doing this here would filter out existing about:blank passwords for both autofill and credential manager, but still keep it working for chrome://settings/passwords (I\u0027ve verified the latter).  Password autofill seems to invoke this via PasswordManager::CreatePendingLoginManagers -\u003e PasswordFormManager::Init -\u003e FormFetcherImpl::Fetch; and credentials API via CredentialManagerImpl::Get; while chrome://settings/passwords gets passwords via PasswordStore::InjectAffiliationAndBrandingInformation.  I\u0027ve verified that existing about:blank passwords are still visible in chrome://settings/passwords with this CL.  I\u0027d definitely like someone who knows this code better to confirm though.",
+      "revId": "79d06de0d18c83022ac9359fa40a625211cf20ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
