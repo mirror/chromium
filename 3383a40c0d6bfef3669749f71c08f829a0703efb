@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d88cc80_0cbe884d",
+        "filename": "android_webview/browser/aw_browser_context.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-14T21:07:30Z",
+      "side": 1,
+      "message": "Please (file and) link to a bug tracking whether we enable Background Fetch in WebView, and making sure that we don\u0027t ship a broken implementation to WebView JS that just hangs, by doing something like https://crrev.com/d948e026b32a9d86e79bb5b19ab93efc45c1b6ad (i.e. having WebView explicitly turn BF off).",
+      "range": {
+        "startLine": 320,
+        "startChar": 9,
+        "endLine": 320,
+        "endChar": 16
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1460a5ce_257db37d",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_factory.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-14T21:07:30Z",
+      "side": 1,
+      "message": "Should you add a dependency on the DownloadService here? Or are you avoiding doing so unconditionally until we\u0027ve finished migrating off Download Manager?",
+      "range": {
+        "startLine": 27,
+        "startChar": 58,
+        "endLine": 27,
+        "endChar": 60
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ceeb079_5db7019f",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_factory.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-14T21:07:30Z",
+      "side": 1,
+      "message": "Note to self: overriding ServiceIsCreatedWithBrowserContext() may later provide a clean mechanism for checking our DB is in sync with what is actually downloading. But that can be added later.",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 46
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e6dfd71c_c93bf098",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_factory.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-14T21:07:30Z",
+      "side": 1,
+      "message": "Since incognito must not be detectable due to the absence of Background Fetch, then depending on the permission model we end up with for Background Fetch we\u0027ll probably end up needing to override GetBrowserContextToUse here to return chrome::GetBrowserContextOwnInstanceInIncognito(context);. We\u0027ll additionally need to work with the Download Service to special case such downloads so that they are only stored in memory, and are aborted if/when the browser is exited. None of that is necessary as part of this patch, but perhaps add a TODO and link to a bug describing this.",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab3e0873_2ba4777b",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-14T21:07:30Z",
+      "side": 1,
+      "message": "Make this a Profile* since you\u0027re in chrome/. In fact, you\u0027re already passing a Profile* into the constructor from the Factory :)",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 44
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e51a01f0_f3a467ea",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-14T21:07:30Z",
+      "side": 1,
+      "message": "Instead of unique_ptrs, these should all be ordinary member variables, since their lifetimes and thread-affinity exactly match that of the bgfcontext.",
+      "range": {
+        "startLine": 44,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 26
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e094e2de_84fdd1cc",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-14T21:07:30Z",
+      "side": 1,
+      "message": "Add a comment explaining that some BrowserContext implementations return nullptr for their delegate implementation, and the feature should be disabled in that case, though any cases that can be encountered by third-party JS must explicitly turn off the Background Fetch feature to prevent exposing a broken implementation that just hangs (see my comment on aw_browser_context).",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 17
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d8574dc_13a24091",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-14T21:07:30Z",
+      "side": 1,
+      "message": "Please add a comment explaining that it\u0027s ok to drop this on the floor because it\u0027s equivalent to the case where the DownloadService fails to store the request to disk, and we already have to handle such failures in the DownloadService.",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b82cec51_7b49639c",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-14T21:07:30Z",
+      "side": 1,
+      "message": "Why the early out? We should still MarkRequestAsComplete in this case, as that\u0027s how we\u0027ll end up firing the backgroundfetchfail event. And you don\u0027t need to worry about cleaning up downloaded files here - we\u0027ll handle that as usual when the SW JS finishes handling the event (which isn\u0027t yet implemented, but it\u0027ll share the same codepath as the success case).",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 10
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aba7c031_76972960",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-14T21:07:30Z",
+      "side": 1,
+      "message": "Nit: Consider DCHECK(delegate_)",
+      "range": {
+        "startLine": 84,
+        "startChar": 35,
+        "endLine": 84,
+        "endChar": 61
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ec8eaeb_ad8aff60",
+        "filename": "content/browser/background_fetch/background_fetch_request_info.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-14T21:07:30Z",
+      "side": 1,
+      "message": "Nit: forward declare this",
+      "range": {
+        "startLine": 21,
+        "startChar": 33,
+        "endLine": 21,
+        "endChar": 58
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "282d52d9_39303ef2",
+        "filename": "content/browser/background_fetch/background_fetch_test_browser_context.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-14T21:07:30Z",
+      "side": 1,
+      "message": "Other features lazily create mock delegates in their implementation of content/public/test/test_browser_context.cc. Any particular reason for having a dedicated text browser context subclass?",
+      "range": {
+        "startLine": 18,
+        "startChar": 21,
+        "endLine": 18,
+        "endChar": 32
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
