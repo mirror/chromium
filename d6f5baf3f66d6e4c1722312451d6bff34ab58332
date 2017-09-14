@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b0d5404_10878565",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-14T18:21:05Z",
+      "side": 1,
+      "message": "Test for global/123_anything_else is not whitelisted.",
+      "revId": "d6f5baf3f66d6e4c1722312451d6bff34ab58332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef5b2faf_3f40c044",
+        "filename": "base/trace_event/memory_infra_background_whitelist.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-14T18:21:05Z",
+      "side": 1,
+      "message": "To make sure that the other characters in the string are hex digits and not some dump provider creating \"global/\u003csome_pii\u003e\".\nSomething like:\nif (base::StartsWith(name, \"global\", CompareCase::SENSITIVE)) {\n  for (char a : name.data() + sizeof(\"global/\"))\n    if (!isxdigit(a))\n       return false;\n  return true;\n}",
+      "revId": "d6f5baf3f66d6e4c1722312451d6bff34ab58332",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
