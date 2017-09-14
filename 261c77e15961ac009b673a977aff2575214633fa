@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a9b7f58_d6d3b9c3",
+        "filename": "ios/chrome/browser/web/progress_indicator_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-14T12:48:55Z",
+      "side": 1,
+      "message": "Instead of a busy loop, can we use a base::ConditionVariable()? Something like this:\n\n  void Abort() {\n    aborted_ \u003d true;\n    condition_variable_.Signal();\n    while (!terminated_)\n      condition_variable_.Wait();\n  }\n\n  void GetResponseHeadersAndBody(\n      const Request\u0026 request,\n      scoped_refptr\u003cnet::HttpResponseHeaders\u003e* headers,\n      std::string* response_body) override {\n    DCHECK(request.url \u003d\u003d url_ || request.url \u003d\u003d GetInfinitePendingResponseUrl());\n    *headers \u003d GetDefaultResponseHeaders();\n    if (request.url \u003d\u003d url_) {\n      *response_body \u003d base::StringPrintf(\"\u003cp\u003e%s\u003c/p\u003e\u003cimg src\u003d\u0027%s\u0027/\u003e, kPageText,\n                                          GetInfinitePendingResponseUrl().spec().c_str());\n    } else {\n      *response_body \u003d std::string();\n      while (!aborted_)\n        condition_variable_.Wait();\n      terminated_ \u003d true;\n    }\n  }\n\n  std::atomic_bool aborted_ \u003d false;\n  std::atomic_bool terminated_ \u003d false;",
+      "revId": "261c77e15961ac009b673a977aff2575214633fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5daf8600_48a9ee05",
+        "filename": "ios/chrome/browser/web/progress_indicator_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-14T12:48:55Z",
+      "side": 1,
+      "message": "You have undefined behaviour as you are using uninitialized memory in destructor:\n\n  bool abort_ \u003d false;\n  bool in_infinite_loop_ \u003d false;",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 14
+      },
+      "revId": "261c77e15961ac009b673a977aff2575214633fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
