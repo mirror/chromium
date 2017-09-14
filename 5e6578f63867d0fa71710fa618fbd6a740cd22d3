@@ -16,6 +16,24 @@
       "revId": "5e6578f63867d0fa71710fa618fbd6a740cd22d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4a8ce31_f8de9100",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-14T23:50:26Z",
+      "side": 1,
+      "message": "It\u0027s an agonizing thing to name\n* It is \"a callback that produces a URLRequestContextGetter\"\n* In existing code it\u0027s common to refer to URLRequestContextGetter as \"request contexts\" because it seems adding the extra \u0027Getter\u0027 layer of abstraction came later for threading reasons.\n\nSo, ... SetRequestContextGetterGetter (lol), SetRequestContextGetterCallback might be the most fully descriptive names...\n\nI figured dropping the \"Getter\" is the least confusing way to make it shorter.\n\nWDYT about the full spiel: SetRequestContextGetterCallback (or SetRequestContextGetterProducer maybe?)",
+      "parentUuid": "10548b15_938086e3",
+      "revId": "5e6578f63867d0fa71710fa618fbd6a740cd22d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
