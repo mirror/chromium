@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a5e30ad_677784cf",
+        "filename": "content/browser/service_worker/service_worker_internals_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-14T01:32:17Z",
+      "side": 1,
+      "message": "Thanks for the explanation! It looks correct.\nIf the caller of this method is only StopWorker, I think we should specialize this for StopWorker because the other methods in the internals ui have each methods.\nhttps://cs.chromium.org/chromium/src/content/browser/service_worker/service_worker_internals_ui.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d374\n\nMy suggestion is:\n1: Changing the name of CallServiceWorkerVersionMethod to StopWorker\n2: Inlining CallServiceWorkerVersionMethodWithVersionID to (new) StopWorker\n3: Calling version-\u003eStopWorker() instead of (*version.get().*method).",
+      "revId": "96000b8df6f05f50abb261a82a0bec5b380a4f01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
