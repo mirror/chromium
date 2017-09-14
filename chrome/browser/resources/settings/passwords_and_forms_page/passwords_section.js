@@ -70,6 +70,16 @@ class PasswordManager {
    * @param {function(!PasswordManager.PlaintextPasswordEvent):void} callback
    */
   getPlaintextPassword(loginPair, callback) {}
+
+  /**
+   * Triggers the dialogue for importing passwords.
+   */
+  importPasswords() {}
+
+  /**
+   * Triggers the dialogue for exporting passwords.
+   */
+  exportPasswords() {}
 }
 
 /** @typedef {chrome.passwordsPrivate.PasswordUiEntry} */
@@ -146,6 +156,16 @@ class PasswordManagerImpl {
     chrome.passwordsPrivate.onPlaintextPasswordRetrieved.addListener(listener);
     chrome.passwordsPrivate.requestPlaintextPassword(loginPair);
   }
+
+  /** @override */
+  importPasswords() {
+    chrome.passwordsPrivate.importPasswords();
+  }
+
+  /** @override */
+  exportPasswords() {
+    chrome.passwordsPrivate.exportPasswords();
+  }
 }
 
 cr.addSingletonGetter(PasswordManagerImpl);
@@ -196,6 +216,15 @@ Polymer({
     activePassword: Object,
 
     /** @private */
+    showImportExportPasswords_: {
+      type: Boolean,
+      value: function() {
+        return loadTimeData.valueExists('showImportExportPasswords') &&
+            loadTimeData.getBoolean('showImportExportPasswords');
+      }
+    },
+
+    /** @private */
     showPasswordEditDialog_: Boolean,
 
     /** Filter on the saved passwords and exceptions. */
@@ -211,6 +240,8 @@ Polymer({
   listeners: {
     'show-password': 'showPassword_',
     'password-menu-tap': 'onPasswordMenuTap_',
+    'import-passwords': 'onImportTap_',
+    'export-passwords': 'onExportTap_',
   },
 
   /**
@@ -353,6 +384,22 @@ Polymer({
             event.detail.item);
     menu.showAt(target);
     this.activeDialogAnchor_ = target;
+  },
+
+  /**
+   * Fires an event that should trigger the password import process.
+   * @private
+   */
+  onImportTap_: function() {
+    this.passwordManager_.importPasswords();
+  },
+
+  /**
+   * Fires an event that should trigger the password export process.
+   * @private
+   */
+  onExportTap_: function() {
+    this.passwordManager_.exportPasswords();
   },
 
   /**

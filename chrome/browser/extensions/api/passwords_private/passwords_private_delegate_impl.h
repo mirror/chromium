@@ -50,6 +50,8 @@ class PasswordsPrivateDelegateImpl : public PasswordsPrivateDelegate,
   void RequestShowPassword(const std::string& origin_url,
                            const std::string& username,
                            content::WebContents* web_contents) override;
+  void ImportPasswords(content::WebContents* web_contents) override;
+  void ExportPasswords(content::WebContents* web_contents) override;
 
   // PasswordUIView implementation.
   Profile* GetProfile() override;

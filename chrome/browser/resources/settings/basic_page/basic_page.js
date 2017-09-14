@@ -45,6 +45,15 @@ Polymer({
       },
     },
 
+    showImportExportPasswords: {
+      type: Boolean,
+      value: function() {
+        // return loadTimeData.valueExists('showImportExportPasswords') &&
+        //     loadTimeData.getBoolean('showImportExportPasswords');
+        return true;
+      },
+    },
+
     /**
      * Dictionary defining page visibility.
      * @type {!GuestModePageVisibility}
