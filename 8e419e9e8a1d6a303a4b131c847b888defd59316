@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6789ff6a_0a1d75c2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/IncognitoBottomSheetContent.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-14T22:59:13Z",
+      "side": 1,
+      "message": "any reason to not do mScrollView.smoothScrollTo(0, 0);\n\nhttps://developer.android.com/reference/android/widget/ScrollView.html#smoothScrollTo(int, int)\n\nI could see in landscape that this would actually have an effect and makes it more consistent.",
+      "range": {
+        "startLine": 178,
+        "startChar": 31,
+        "endLine": 178,
+        "endChar": 32
+      },
+      "revId": "8e419e9e8a1d6a303a4b131c847b888defd59316",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
