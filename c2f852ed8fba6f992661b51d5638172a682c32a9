@@ -34,6 +34,24 @@
       "revId": "c2f852ed8fba6f992661b51d5638172a682c32a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac8a1a4_cf108728",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Toolbar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-14T22:38:02Z",
+      "side": 1,
+      "message": "Hmm.... Do we need that multiline editing? Let\u0027s have a setting in TextPrompt then?",
+      "parentUuid": "b59a487e_79f71a43",
+      "revId": "c2f852ed8fba6f992661b51d5638172a682c32a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
