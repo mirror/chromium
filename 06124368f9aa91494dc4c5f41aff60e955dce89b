@@ -16,6 +16,24 @@
       "revId": "06124368f9aa91494dc4c5f41aff60e955dce89b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e4c01d_849121d9",
+        "filename": "mojo/public/cpp/bindings/lib/multiplex_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-14T18:04:33Z",
+      "side": 1,
+      "message": "Right, I misread the intent of the original code.",
+      "parentUuid": "474e85f7_87fff23c",
+      "revId": "06124368f9aa91494dc4c5f41aff60e955dce89b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
