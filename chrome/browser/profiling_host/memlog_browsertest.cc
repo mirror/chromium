@@ -179,20 +179,10 @@ IN_PROC_BROWSER_TEST_P(MemlogBrowserTest, EndToEnd) {
   // This test kludges the flushing by allocating two difference sizes. The
   // presence of both sizes is a good indicator that the allocations are making
   // it through.
-  //
-  // Intentionally leak the allocations so that they can be observed in the
-  // dump.
-  char* leak = nullptr;
   constexpr int kBrowserAllocSize = 103 * 1024;
   constexpr int kBrowserAllocCount = 2048;
   constexpr int kBrowserAllocFlushFillSize = 107 * 1024;
   constexpr int kBrowserAllocFlushFillCount = 2048;
-  for (int i = 0; i < kBrowserAllocCount; ++i) {
-    leak = new char[kBrowserAllocSize];
-  }
-  for (int i = 0; i < kBrowserAllocFlushFillCount; ++i) {
-    leak = new char[kBrowserAllocFlushFillSize];
-  }
 
   // Assuming an average stack size of 20 frames, each alloc packet is ~160
   // bytes in size, and there are 400 packets to fill up a channel. There are 17
@@ -200,8 +190,19 @@ IN_PROC_BROWSER_TEST_P(MemlogBrowserTest, EndToEnd) {
   // even distribution of allocations across channels. Unfortunately, we're
   // using a fairly dumb hash function. To prevent test flakiness, increase
   // those allocations by an order of magnitude.
-  for (int i = 0; i < 68000; ++i) {
-    leak = new char[1];
+  constexpr int kFlushCount = 68000;
+
+  std::vector<char*> leaks;
+  leaks.reserve(kBrowserAllocCount + kBrowserAllocFlushFillCount + kFlushCount);
+  for (int i = 0; i < kBrowserAllocCount; ++i) {
+    leaks.push_back(new char[kBrowserAllocSize]);
+  }
+  for (int i = 0; i < kBrowserAllocFlushFillCount; ++i) {
+    leaks.push_back(new char[kBrowserAllocFlushFillSize]);
+  }
+
+  for (int i = 0; i < kFlushCount; ++i) {
+    leaks.push_back(new char[1]);
   }
 
   // Navigate around to force allocations in the renderer.
@@ -223,10 +224,9 @@ IN_PROC_BROWSER_TEST_P(MemlogBrowserTest, EndToEnd) {
     std::unique_ptr<base::Value> dump_json =
         ReadDumpFile(browser_dumpfile_path);
     ASSERT_TRUE(dump_json);
-    // TODO(ajwong): Make these verify allocation amounts in the browser using
-    // kBrowserAllocSize, kBrowserAllocCount, and kBrowserAllocFlushFillSize
-    // after the baseline tests are determined to be stable.
-    ASSERT_NO_FATAL_FAILURE(ValidateDump(dump_json.get(), 0, 0, 0));
+    ASSERT_NO_FATAL_FAILURE(ValidateDump(dump_json.get(), kBrowserAllocSize,
+                                         kBrowserAllocCount,
+                                         kBrowserAllocFlushFillSize));
   }
 
   {
