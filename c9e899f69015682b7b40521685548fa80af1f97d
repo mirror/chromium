@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "793cc21a_706952e8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/the-img-element/decode/image-decode-path-changes-svg.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-09-14T12:24:13Z",
+      "side": 1,
+      "message": "Yeah, testing both would be ideal I think. Either a quick xlink-less smoke test, or a two-iteration for loop like `for (const setHref of [setXLinkHref, setPlainHref]) { ... test code ... }`.",
+      "parentUuid": "694ac4aa_e2358d47",
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff96fffb_208b4fc9",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/the-img-element/decode/image-decode-path-changes.html",
         "patchSetId": 3
