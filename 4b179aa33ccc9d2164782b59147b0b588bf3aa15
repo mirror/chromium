@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8835503_c482bfcc",
+        "filename": "tools/perf/page_sets/tough_video_cases.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-14T23:54:47Z",
+      "side": 1,
+      "message": "We actually plan to add this (see https://groups.google.com/a/google.com/d/msg/chrome-benchmarking-request/R3yswQz-PsY/XAd8BKMpCwAJ (Googler only))\n\n:-)",
+      "revId": "4b179aa33ccc9d2164782b59147b0b588bf3aa15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
