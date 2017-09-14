@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e41e50cd_5c6cc7db",
+        "filename": "components/vector_icons/close_16.icon",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-14T16:50:43Z",
+      "side": 1,
+      "message": "I\u0027m surprised the icon named \u002716\u0027 has a size of \u002732\u0027.",
+      "range": {
+        "startLine": 6,
+        "startChar": 19,
+        "endLine": 6,
+        "endChar": 21
+      },
+      "revId": "04e948130407d8dae2ea17bcea151a0e5dfd04c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
