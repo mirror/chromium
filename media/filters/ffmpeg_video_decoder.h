@@ -30,6 +30,8 @@ class MEDIA_EXPORT FFmpegVideoDecoder : public VideoDecoder {
   static bool IsCodecSupported(VideoCodec codec);
 
   explicit FFmpegVideoDecoder(MediaLog* media_log);
+  FFmpegVideoDecoder(MediaLog* media_log,
+                     std::unique_ptr<VideoFrameProvider> video_frame_provider);
   ~FFmpegVideoDecoder() override;
 
   // Allow decoding of individual NALU. Entire frames are required by default.
