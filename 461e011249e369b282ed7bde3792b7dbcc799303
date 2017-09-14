@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "215de459_fdf10089",
+        "filename": "ios/chrome/browser/tabs/tab_model_observers_bridge.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-14T12:39:17Z",
+      "side": 1,
+      "message": "Where was this notification sent from before?",
+      "revId": "461e011249e369b282ed7bde3792b7dbcc799303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd6d814f_860dbf41",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1691,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-14T12:39:17Z",
+      "side": 1,
+      "message": "The logic here is different from the old implementation of [Tab favicon], which went through the NavigationItem.  Why the change?",
+      "revId": "461e011249e369b282ed7bde3792b7dbcc799303",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
