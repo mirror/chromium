@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3da6a34_5a00ef3a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/EditFileSystemView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-09-14T23:16:17Z",
+      "side": 1,
+      "message": "can we show this UI only if the request interception button is on?",
+      "revId": "bef6498d7e3959970b576613ce1217fec3056c75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d12a3c_be030b9f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/EditFileSystemView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-09-14T23:16:17Z",
+      "side": 1,
+      "message": "don\u0027t create the setting. Query it instead",
+      "range": {
+        "startLine": 62,
+        "startChar": 24,
+        "endLine": 62,
+        "endChar": 37
+      },
+      "revId": "bef6498d7e3959970b576613ce1217fec3056c75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0049f0fc_9ace963a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/FileSystemMapping.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-09-14T23:16:17Z",
+      "side": 1,
+      "message": "why do you create it? You\u0027ve described it as extension point. You should query it:\n\nCommon.moduleSetting(\u0027Persistence.enabledFileSystemPathsForInterception\u0027)",
+      "revId": "bef6498d7e3959970b576613ce1217fec3056c75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d35be6c_5a284cba",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/editFileSystemView.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-09-14T23:16:17Z",
+      "side": 1,
+      "message": "why 8?",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 11
+      },
+      "revId": "bef6498d7e3959970b576613ce1217fec3056c75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc88316_996234a7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/module.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-09-14T23:16:17Z",
+      "side": 1,
+      "message": "Drop the \"Persistence.\" to be consistent with other settings\n\nenabledFileSystemPathsForInterception",
+      "range": {
+        "startLine": 12,
+        "startChar": 28,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "bef6498d7e3959970b576613ce1217fec3056c75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
