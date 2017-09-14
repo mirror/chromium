@@ -28,6 +28,7 @@
 
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/origin_manifest/OriginManifestStoreClient.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/Platform.h"
 
@@ -53,6 +54,37 @@ void SecurityContext::SetSecurityOrigin(
 void SecurityContext::SetContentSecurityPolicy(
     ContentSecurityPolicy* content_security_policy) {
   content_security_policy_ = content_security_policy;
+
+  OriginManifestStoreClient om_store;
+  // We need to check for SecurityOrigin because RemoteSecurityContext does not
+  // have one when uninitialized
+  if (GetSecurityOrigin() &&
+      !om_store.DefinesContentSecurityPolicies(GetSecurityOrigin())) {
+    return;
+  }
+
+  if (!content_security_policy_)
+    content_security_policy_ = ContentSecurityPolicy::Create();
+
+  ContentSecurityPolicyHeaderType header_type =
+      ContentSecurityPolicyHeaderType::kContentSecurityPolicyHeaderTypeEnforce;
+  ContentSecurityPolicyHeaderSource header_source =
+      ContentSecurityPolicyHeaderSource::kContentSecurityPolicyHeaderSourceHTTP;
+  WTF::Vector<String> policies = om_store.GetContentSecurityPolicies(
+      GetSecurityOrigin(), header_type, content_security_policy_->IsActive());
+  for (auto const& policy : policies) {
+    content_security_policy_->AddPolicyFromHeaderValue(policy, header_type,
+                                                       header_source);
+  }
+
+  header_type =
+      ContentSecurityPolicyHeaderType::kContentSecurityPolicyHeaderTypeReport;
+  policies = om_store.GetContentSecurityPolicies(
+      GetSecurityOrigin(), header_type, content_security_policy_->IsActive());
+  for (auto const& policy : policies) {
+    content_security_policy_->AddPolicyFromHeaderValue(policy, header_type,
+                                                       header_source);
+  }
 }
 
 void SecurityContext::EnforceSandboxFlags(SandboxFlags mask) {
