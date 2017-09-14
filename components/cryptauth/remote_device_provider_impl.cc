@@ -15,6 +15,8 @@ namespace cryptauth {
 RemoteDeviceProviderImpl::Factory*
     RemoteDeviceProviderImpl::Factory::factory_instance_ = nullptr;
 
+RemoteDeviceProviderImpl::Factory::~Factory() {}
+
 // static
 std::unique_ptr<RemoteDeviceProvider>
 RemoteDeviceProviderImpl::Factory::NewInstance(
