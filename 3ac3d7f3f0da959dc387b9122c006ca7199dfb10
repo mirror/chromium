@@ -68,6 +68,30 @@
       "revId": "3ac3d7f3f0da959dc387b9122c006ca7199dfb10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2de798e0_7cf8e7c8",
+        "filename": "ios/chrome/browser/ui/tabs/requirements/tab_strip_placeholder_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-09-14T16:52:26Z",
+      "side": 1,
+      "message": "I could create a protocol TabStripPlaceholder and the public API could use UIView\u003cTabStripPlaceholder\u003e. This implementation could be moved to inside tabs/.",
+      "parentUuid": "7691ba84_1f8e4b3a",
+      "range": {
+        "startLine": 13,
+        "startChar": 11,
+        "endLine": 13,
+        "endChar": 34
+      },
+      "revId": "3ac3d7f3f0da959dc387b9122c006ca7199dfb10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
