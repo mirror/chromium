@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <script src="../resources/runner.js"></script>
+  </head>
+  <body>
+    <!-- Performance test runner code below -->
+    <script>
+        PerfTestRunner.measurePageLoadTime({
+            description: "Measures performance of a document load.",
+            path: "resources/Bootstrap.html",
+            iterationCount: 10,
+            tracingCategories: 'blink',
+            traceEventsToMeasure: [
+                'CSSParserImpl::parseStyleSheet.parse',
+            ]
+        });
+    </script>
+  </body>
+</html>
