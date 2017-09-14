@@ -22,6 +22,30 @@
       "revId": "32dc6f985268266a6abc339410943a398fee66fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f282b9b_4502e324",
+        "filename": "cc/animation/element_animations.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-09-14T16:43:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90c71891_8d55ed65",
+      "range": {
+        "startLine": 139,
+        "startChar": 6,
+        "endLine": 139,
+        "endChar": 37
+      },
+      "revId": "32dc6f985268266a6abc339410943a398fee66fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
