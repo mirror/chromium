@@ -83,7 +83,8 @@ class TestProtocolHandler : public net::URLRequestJobFactory::ProtocolHandler {
       result_listener->OnFetchCompleteExtractHeaders(
           url, response->data.c_str(), response->data.size(), load_timing_info);
 
-      int frame_tree_node_id = request->GetFrameTreeNodeId();
+      int frame_tree_node_id =
+          request->GetRenderProcessAndFrameTreeNodeId().second;
       DCHECK_NE(frame_tree_node_id, -1) << " For url " << url;
       protocol_handler_->url_to_frame_tree_node_id_[url.spec()] =
           frame_tree_node_id;
@@ -251,8 +252,10 @@ class FrameIdTest : public HeadlessAsyncDevTooledBrowserTest,
               web_contents_->GetMainFrameRenderProcessId(), pair.second);
 
       EXPECT_EQ(pair.second,
-                web_contents_->GetFrameTreeNodeIdForDevToolsFrameId(
-                    protocol_handler_url_to_frame_id_[pair.first]));
+                web_contents_
+                    ->GetProcessAndFrameTreeNodeIdForDevToolsFrameId(
+                        protocol_handler_url_to_frame_id_[pair.first])
+                    .second);
     }
 
     EXPECT_THAT(url_to_frame_id_, protocol_handler_url_to_frame_id_);

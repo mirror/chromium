@@ -202,7 +202,8 @@ const net::HttpRequestHeaders& GenericURLRequestJob::GetHttpRequestHeaders()
   return extra_request_headers_;
 }
 
-int GenericURLRequestJob::GetFrameTreeNodeId() const {
+std::pair<int, int> GenericURLRequestJob::GetRenderProcessAndFrameTreeNodeId()
+    const {
   // URLRequestUserData will be set for all renderer initiated resource
   // requests, but not for browser side navigations.
   int render_process_id;
@@ -211,16 +212,20 @@ int GenericURLRequestJob::GetFrameTreeNodeId() const {
           request_, &render_process_id, &render_frame_routing_id) &&
       render_process_id != -1) {
     DCHECK(headless_browser_context_);
-    return static_cast<HeadlessBrowserContextImpl*>(headless_browser_context_)
-        ->GetFrameTreeNodeId(render_process_id, render_frame_routing_id);
+    return std::make_pair(
+        render_process_id,
+        static_cast<HeadlessBrowserContextImpl*>(headless_browser_context_)
+            ->GetFrameTreeNodeId(render_process_id, render_frame_routing_id));
   }
   // ResourceRequestInfo::GetFrameTreeNodeId is only set for browser side
   // navigations.
-  if (request_resource_info_)
-    return request_resource_info_->GetFrameTreeNodeId();
+  if (request_resource_info_) {
+    return std::make_pair(request_resource_info_->GetOriginPID(),
+                          request_resource_info_->GetFrameTreeNodeId());
+  }
 
   // This should only happen in tests.
-  return -1;
+  return std::make_pair(-1, -1);
 }
 
 std::string GenericURLRequestJob::GetDevToolsAgentHostId() const {

@@ -23,11 +23,11 @@
 namespace content {
 class DevToolsAgentHost;
 class WebContents;
-}
+}  // namespace content
 
 namespace gfx {
 class Rect;
-}
+}  // namespace gfx
 
 namespace headless {
 class HeadlessBrowser;
@@ -64,10 +64,11 @@ class HEADLESS_EXPORT HeadlessWebContentsImpl
   std::string GetUntrustedDevToolsFrameIdForFrameTreeNodeId(
       int process_id,
       int frame_tree_node_id) const override;
-  int GetFrameTreeNodeIdForDevToolsFrameId(
+  std::pair<int, int> GetProcessAndFrameTreeNodeIdForDevToolsFrameId(
       const std::string& devtools_id) const override;
   int GetMainFrameRenderProcessId() const override;
   int GetMainFrameTreeNodeId() const override;
+  HeadlessBrowserContext* GetHeadlessBrowserContext() const override;
 
   // HeadlessDevToolsTarget implementation:
   bool AttachClient(HeadlessDevToolsClient* client) override;
@@ -95,6 +96,8 @@ class HEADLESS_EXPORT HeadlessWebContentsImpl
       content::RenderFrameHost* render_frame_host,
       const std::string& interface_name,
       mojo::ScopedMessagePipeHandle* interface_pipe) override;
+  bool OnMessageReceived(const IPC::Message& message,
+                         content::RenderFrameHost* render_frame_host) override;
 
   content::WebContents* web_contents() const;
   bool OpenURL(const GURL& url);
@@ -132,6 +135,11 @@ class HEADLESS_EXPORT HeadlessWebContentsImpl
 
   void InitializeWindow(const gfx::Rect& initial_bounds);
 
+  // TODO(alexclarke): Replace with whatever API results from
+  // http://crbug.com/715541
+  void OnSetDevToolsFrameId(content::RenderFrameHost* render_frame_host,
+                            const std::string& devtools_frame_id);
+
   using MojoService = HeadlessWebContents::Builder::MojoService;
   void CreateMojoService(
       const MojoService::ServiceFactoryCallback& service_factory,
@@ -156,6 +164,12 @@ class HEADLESS_EXPORT HeadlessWebContentsImpl
   base::ObserverList<HeadlessWebContents::Observer> observers_;
 
   service_manager::BinderRegistry registry_;
+
+  mutable base::Lock frame_id_lock_;
+  base::flat_map<std::pair<int, int>, std::string>
+      frame_tree_node_id_to_devtools_id_;
+  base::flat_map<std::string, std::pair<int, int>>
+      devtools_id_to_frame_tree_node_id_;
 
   base::WeakPtrFactory<HeadlessWebContentsImpl> weak_ptr_factory_;
 

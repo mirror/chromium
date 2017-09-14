@@ -16,6 +16,7 @@
 #include "base/trace_event/trace_event.h"
 #include "components/security_state/content/content_utils.h"
 #include "components/security_state/core/security_state.h"
+#include "content/common/frame_messages.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/devtools_agent_host.h"
 #include "content/public/browser/navigation_handle.h"
@@ -33,6 +34,7 @@
 #include "headless/lib/browser/headless_browser_main_parts.h"
 #include "headless/lib/browser/headless_tab_socket_impl.h"
 #include "headless/public/internal/headless_devtools_client_impl.h"
+#include "ipc/ipc_message_macros.h"
 #include "printing/features/features.h"
 
 #if BUILDFLAG(ENABLE_BASIC_PRINTING)
@@ -332,6 +334,27 @@ void HeadlessWebContentsImpl::OnInterfaceRequestFromFrame(
   registry_.TryBindInterface(interface_name, interface_pipe);
 }
 
+bool HeadlessWebContentsImpl::OnMessageReceived(
+    const IPC::Message& message,
+    content::RenderFrameHost* render_frame_host) {
+  IPC_BEGIN_MESSAGE_MAP_WITH_PARAM(HeadlessWebContentsImpl, message,
+                                   render_frame_host)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_SetDevToolsFrameId, OnSetDevToolsFrameId)
+    IPC_MESSAGE_UNHANDLED(break)
+  IPC_END_MESSAGE_MAP()
+  return false;  // Report not handled so the real handler receives it.
+}
+
+void HeadlessWebContentsImpl::OnSetDevToolsFrameId(
+    content::RenderFrameHost* render_frame_host,
+    const std::string& devtools_frame_id) {
+  base::AutoLock lock(frame_id_lock_);
+  std::pair<int, int> process_and_node(render_frame_host->GetProcess()->GetID(),
+                                       render_frame_host->GetFrameTreeNodeId());
+  frame_tree_node_id_to_devtools_id_[process_and_node] = devtools_frame_id;
+  devtools_id_to_frame_tree_node_id_[devtools_frame_id] = process_and_node;
+}
+
 void HeadlessWebContentsImpl::RenderFrameDeleted(
     content::RenderFrameHost* render_frame_host) {
   if (headless_tab_socket_)
@@ -352,14 +375,22 @@ std::string
 HeadlessWebContentsImpl::GetUntrustedDevToolsFrameIdForFrameTreeNodeId(
     int process_id,
     int frame_tree_node_id) const {
-  return content::DevToolsAgentHost::
-      GetUntrustedDevToolsFrameIdForFrameTreeNodeId(process_id,
-                                                    frame_tree_node_id);
+  base::AutoLock lock(frame_id_lock_);
+  const auto find_it = frame_tree_node_id_to_devtools_id_.find(
+      std::make_pair(process_id, frame_tree_node_id));
+  if (find_it == frame_tree_node_id_to_devtools_id_.end())
+    return "";
+  return find_it->second;
 }
 
-int HeadlessWebContentsImpl::GetFrameTreeNodeIdForDevToolsFrameId(
+std::pair<int, int>
+HeadlessWebContentsImpl::GetProcessAndFrameTreeNodeIdForDevToolsFrameId(
     const std::string& devtools_id) const {
-  return browser_context_->GetFrameTreeNodeIdForDevToolsFrameId(devtools_id);
+  base::AutoLock lock(frame_id_lock_);
+  const auto find_it = devtools_id_to_frame_tree_node_id_.find(devtools_id);
+  if (find_it == devtools_id_to_frame_tree_node_id_.end())
+    return std::make_pair(-1, -1);
+  return find_it->second;
 }
 
 int HeadlessWebContentsImpl::GetMainFrameRenderProcessId() const {
@@ -368,6 +399,11 @@ int HeadlessWebContentsImpl::GetMainFrameRenderProcessId() const {
 
 int HeadlessWebContentsImpl::GetMainFrameTreeNodeId() const {
   return web_contents()->GetMainFrame()->GetFrameTreeNodeId();
+}
+
+HeadlessBrowserContext* HeadlessWebContentsImpl::GetHeadlessBrowserContext()
+    const {
+  return browser_context();
 }
 
 bool HeadlessWebContentsImpl::OpenURL(const GURL& url) {
