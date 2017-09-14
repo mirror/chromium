@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/run_loop.h"
+#include "base/test/scoped_feature_list.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -47,12 +48,8 @@ Profile* CreateNonSyncProfile() {
 // Test fixture that provides access to some UKM internals.
 class UkmBrowserTest : public SyncTest {
  public:
-  UkmBrowserTest() : SyncTest(SINGLE_CLIENT) {}
-
-  void SetUpCommandLine(base::CommandLine* command_line) override {
-    SyncTest::SetUpCommandLine(command_line);
-    command_line->AppendSwitchASCII(switches::kEnableFeatures,
-                                    ukm::kUkmFeature.name);
+  UkmBrowserTest() : SyncTest(SINGLE_CLIENT) {
+    scoped_feature_list_.InitAndEnableFeature(ukm::kUkmFeature);
   }
 
  protected:
@@ -97,6 +94,8 @@ class UkmBrowserTest : public SyncTest {
   ukm::UkmService* ukm_service() {
     return static_cast<ukm::UkmService*>(ukm::UkmRecorder::Get());
   }
+
+  base::test::ScopedFeatureList scoped_feature_list_;
 };
 
 // Make sure that UKM is disabled while an incognito window is open.
