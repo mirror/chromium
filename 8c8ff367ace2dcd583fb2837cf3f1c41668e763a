@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20f79b34_f6ed8c5f",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-14T08:17:28Z",
+      "side": 0,
+      "message": "I think it\u0027s actually better to have these set externally on a view controller rather than have them defined internally. Generally these properties define how the VC interacts with the rest of the VC hierarchy, which is really not something the VC itself should be dictating. It also resolves the issue of setting these properties during initialization.",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 60
+      },
+      "revId": "8c8ff367ace2dcd583fb2837cf3f1c41668e763a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
