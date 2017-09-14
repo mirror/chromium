@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f9b8c611_e109e79d",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-14T08:07:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a02ebc07_80e40409",
+      "range": {
+        "startLine": 1055,
+        "startChar": 24,
+        "endLine": 1055,
+        "endChar": 45
+      },
+      "revId": "eba65e5dd9f1d69f9c24ece6d6167679eacff0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb80414b_3e0d66f6",
         "filename": "content/child/web_url_loader_impl.cc",
         "patchSetId": 3
@@ -93,6 +117,30 @@
       "revId": "eba65e5dd9f1d69f9c24ece6d6167679eacff0e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba94d42b_b2dfed38",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1067,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-14T08:07:00Z",
+      "side": 1,
+      "message": "Thank you for the clarification.",
+      "parentUuid": "afe3a846_c9c27697",
+      "range": {
+        "startLine": 1067,
+        "startChar": 18,
+        "endLine": 1067,
+        "endChar": 48
+      },
+      "revId": "eba65e5dd9f1d69f9c24ece6d6167679eacff0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "8cdd5548_4af56ecb",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1096,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-14T08:07:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4d370181_10bfc32c",
+      "range": {
+        "startLine": 1096,
+        "startChar": 13,
+        "endLine": 1096,
+        "endChar": 23
+      },
+      "revId": "eba65e5dd9f1d69f9c24ece6d6167679eacff0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5822548a_ab4b930b",
         "filename": "content/child/web_url_loader_impl.cc",
         "patchSetId": 3
@@ -172,6 +244,24 @@
       "side": 1,
       "message": "Do you have any suggestion for an alternative solution? We cannot have a default annotation in case a new enum is added and the developer forgets to add it here.\nAnd there is a check to ensure that the \u0027default\u0027 value is \u0027kRequestContextFavicon\u0027.",
       "parentUuid": "5822548a_ab4b930b",
+      "revId": "eba65e5dd9f1d69f9c24ece6d6167679eacff0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a5ce40d_369b5262",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-14T08:07:00Z",
+      "side": 1,
+      "message": "How about just handling all types explicitly to return a right annotation without using default, and not putting anything after the switch statement. I should compile, and when user add a new type, it can not compile until adding new case statement to handle the new type.",
+      "parentUuid": "029bbd83_38c72009",
       "revId": "eba65e5dd9f1d69f9c24ece6d6167679eacff0e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
