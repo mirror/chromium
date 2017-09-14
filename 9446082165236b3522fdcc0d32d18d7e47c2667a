@@ -116,6 +116,30 @@
     },
     {
       "key": {
+        "uuid": "aa8d5e23_8488f2e6",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-14T13:30:40Z",
+      "side": 1,
+      "message": "Yeah, null is NONE. A bit of background: The corresponding comment in base::Value predates the refactoring. When I introduced the Type enum class NULL was not available as a name, hence we settled on NONE.",
+      "parentUuid": "65ee7361_9b50597f",
+      "range": {
+        "startLine": 43,
+        "startChar": 30,
+        "endLine": 43,
+        "endChar": 34
+      },
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "867406a1_482f5473",
         "filename": "content/browser/webauth/cbor/cbor_values.h",
         "patchSetId": 22
@@ -127,6 +151,24 @@
       "writtenOn": "2017-09-14T12:58:40Z",
       "side": 1,
       "message": "nit: Jan, do you feel strongly about having this up here instead of after all the constructors?",
+      "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b3a03c_c7c0c1be",
+        "filename": "content/browser/webauth/cbor/cbor_values.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-14T13:30:40Z",
+      "side": 1,
+      "message": "No, I don\u0027t feel strongly about this. TBH until now I wasn\u0027t aware we do this in base::Value. If I interpret the style guide correctly (https://google.github.io/styleguide/cppguide.html#Declaration_Order), it should go in between |~CBORValue()| and |type()|.",
+      "parentUuid": "867406a1_482f5473",
       "revId": "9446082165236b3522fdcc0d32d18d7e47c2667a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
