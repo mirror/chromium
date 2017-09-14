@@ -63,6 +63,24 @@
       "revId": "95b7fd4d9d035ad3bc06897fafabaaf88ffbc3a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e02a05_a8e49c99",
+        "filename": "components/viz/service/display/texture_mailbox_deleter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-09-14T17:16:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8461a4f_5ec7425f",
+      "revId": "95b7fd4d9d035ad3bc06897fafabaaf88ffbc3a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
