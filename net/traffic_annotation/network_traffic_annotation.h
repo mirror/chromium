@@ -38,6 +38,11 @@ struct NetworkTrafficAnnotationTag {
   bool operator==(const NetworkTrafficAnnotationTag& other) const {
     return unique_id_hash_code == other.unique_id_hash_code;
   }
+
+  static NetworkTrafficAnnotationTag NotReached() {
+    NOTREACHED();
+    return net::NetworkTrafficAnnotationTag({-1});
+  }
 };
 struct PartialNetworkTrafficAnnotationTag {
   const int32_t unique_id_hash_code;
