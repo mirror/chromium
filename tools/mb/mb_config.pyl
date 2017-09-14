@@ -223,6 +223,7 @@
       'Site Isolation Linux': 'release_trybot',
       'Site Isolation Win': 'release_trybot_x86',
       'ThinLTO Linux ToT': 'thin_lto_clang_tot_full_symbols_release_static_use_lld',
+      'ThinLTO Windows ToT': 'thin_lto_win_clang_tot_full_symbols_release_static_use_lld',
       'UBSanVptr Linux': 'ubsan_vptr_release_bot',
       'WebKit Linux - RandomOrder': 'release_trybot',
       'WebKit Mac - RandomOrder': 'release_trybot',
@@ -1558,6 +1559,10 @@
       'thin_lto', 'clang_tot', 'full_symbols', 'release', 'static', 'use_lld',
     ],
 
+    'thin_lto_win_clang_tot_full_symbols_release_static_use_lld': [
+      'thin_lto_win', 'clang_tot', 'full_symbols', 'release', 'static', 'use_lld',
+    ],
+
     'tsan_disable_nacl_debug_bot': [
       'tsan', 'disable_nacl', 'debug_bot',
     ],
@@ -1983,6 +1988,10 @@
     'thin_lto': {
       'gn_args': 'use_thin_lto=true',
       'mixins': ['lto'],
+    },
+
+    'thin_lto_win': {
+      'gn_args': 'use_thin_lto=true',
     },
 
     'tsan': {
