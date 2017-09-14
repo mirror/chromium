@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9120626_6399659b",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_apitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-14T16:41:59Z",
+      "side": 1,
+      "message": "In an API test it\u0027s a good idea to ensure that the delegate was called correctly, e.g. by setting a boolean here and testing that it was set after running the JS test.",
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3838defa_bc6efbcb",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-14T16:41:59Z",
+      "side": 1,
+      "message": "Uncomment?",
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b97d421_d5f5a33d",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-14T16:41:59Z",
+      "side": 1,
+      "message": "Looking at the issue and the screenshot there (thanks for adding it), this doesn\u0027t look consistent with the existing UI. That said, I couldn\u0027t immediately find any similar examples.\n\nThe best option would be to get a proper mock from UX.\n\nIn the absence of a proper mock, we need to do two things:\n\n1) Use class\u003d\"settings-box continuation\" for the containing div. That will give the consistent padding, etc. It should also pad the last button and space the buttons correctly. You will need to add the \u0027justify-content: flex-end\u0027 to the div however; we don\u0027t have an existing class for that.\n2) Remove the custom styling for the paper-button; we want to use the styling in settings_shared_css.html.",
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
