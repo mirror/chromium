@@ -105,6 +105,24 @@
       "revId": "c38cc9d39e0dc4c549521762bfcee690ebe55d1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c740c0f_6fd5bb6f",
+        "filename": "gpu/command_buffer/service/gpu_tracer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-14T21:49:45Z",
+      "side": 1,
+      "message": "I think that\u0027s correct, it sounds fine to do.",
+      "parentUuid": "899141b6_17323c16",
+      "revId": "c38cc9d39e0dc4c549521762bfcee690ebe55d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
