@@ -70,6 +70,30 @@
       "revId": "29bfdc2bcebdde3c1e3fca2c62896524ce2fdf28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001ad7eb_933c245a",
+        "filename": "content/browser/renderer_host/media/media_stream_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-09-14T13:45:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d438c49_e721d22a",
+      "range": {
+        "startLine": 231,
+        "startChar": 2,
+        "endLine": 231,
+        "endChar": 15
+      },
+      "revId": "29bfdc2bcebdde3c1e3fca2c62896524ce2fdf28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
