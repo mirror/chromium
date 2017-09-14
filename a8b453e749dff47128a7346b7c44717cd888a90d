@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97153728_fedb31d0",
+        "filename": "third_party/WebKit/Source/platform/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1577,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-14T07:54:16Z",
+      "side": 1,
+      "message": "why we don\u0027t remove files in case snake_case_source_files?",
+      "revId": "a8b453e749dff47128a7346b7c44717cd888a90d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
