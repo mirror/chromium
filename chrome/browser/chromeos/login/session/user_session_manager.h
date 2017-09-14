@@ -253,6 +253,8 @@ class UserSessionManager
 
   const base::Time& ui_shown_time() const { return ui_shown_time_; }
 
+  void WaitForEasyUnlockKeyOpsFinished(base::OnceClosure callback);
+
   void Shutdown();
 
  private:
@@ -437,6 +439,8 @@ class UserSessionManager
   // Sends metrics for user pods display when existing user has logged in.
   void SendUserPodsMetrics();
 
+  void NotifyEasyUnlockKeyOpsFinished();
+
   UserSessionManagerDelegate* delegate_;
 
   // Authentication/user context.
@@ -527,6 +531,10 @@ class UserSessionManager
   base::Time ui_shown_time_;
 
   scoped_refptr<HatsNotificationController> hats_notification_controller_;
+
+  bool easy_unlock_key_ops_finished_ = false;
+
+  std::vector<base::OnceClosure> easy_unlock_key_ops_finished_callbacks_;
 
   base::WeakPtrFactory<UserSessionManager> weak_factory_;
 
