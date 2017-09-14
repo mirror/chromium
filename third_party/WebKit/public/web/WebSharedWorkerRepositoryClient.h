@@ -34,10 +34,10 @@
 #include <memory>
 #include "public/platform/WebAddressSpace.h"
 #include "public/web/shared_worker_creation_context_type.mojom-shared.h"
+#include "third_party/WebKit/common/message_port/message_port_channel.h"
 
 namespace blink {
 
-class WebMessagePortChannel;
 class WebSharedWorkerConnectListener;
 class WebString;
 class WebURL;
@@ -57,7 +57,7 @@ class WebSharedWorkerRepositoryClient {
                        WebAddressSpace,
                        mojom::SharedWorkerCreationContextType,
                        bool data_saver_enabled,
-                       std::unique_ptr<WebMessagePortChannel>,
+                       MessagePortChannel,
                        std::unique_ptr<blink::WebSharedWorkerConnectListener>) {
   }
 
