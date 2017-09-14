@@ -16,6 +16,24 @@
       "revId": "d83822b3fb69333cac11b904f1a2cdb3cdf44552",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1598f3_989dbb89",
+        "filename": "third_party/WebKit/Source/bindings/tests/idls/core/TestDictionary.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1239026
+      },
+      "writtenOn": "2017-09-14T08:52:54Z",
+      "side": 1,
+      "message": "With or without Extended Attributes, Blink generate the same codes of RecordType\u0027s value type part, so it is okay we don\u0027t have a corresponding change in a generated code.\nThen I thought this change is not necessary and reverted this change.\n\nThank you.",
+      "parentUuid": "d380deab_c853d0f6",
+      "revId": "d83822b3fb69333cac11b904f1a2cdb3cdf44552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
