@@ -14,4 +14,9 @@
             <solid android:color="@color/light_active_color" />
         </shape>
     </item>
+    <item android:maxLevel="@integer/selectable_item_level_incognito">
+        <shape android:shape="oval">
+            <solid android:color="@color/white_alpha_70" />
+        </shape>
+    </item>
 </level-list>
