@@ -131,6 +131,9 @@ class TryChromeDialog : public views::ButtonListener,
   void OnWidgetDestroyed(views::Widget* widget) override;
   Result result() const { return result_; }
 
+  // A gfx::SingletonHwndObserver::WndProc for handling WM_ENDSESSION messages.
+  void OnWindowMessage(HWND window, UINT message, WPARAM wparam, LPARAM lparam);
+
   // Controls which experiment group to use for varying the layout and controls.
   const size_t group_;
   Delegate* const delegate_;

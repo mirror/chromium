@@ -9,7 +9,14 @@
 #include "chrome/common/chrome_result_codes.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/in_process_browser_test.h"
+#include "testing/gmock/include/gmock/gmock.h"
 #include "ui/base/ui_base_switches.h"
+
+using ::testing::_;
+using ::testing::Eq;
+using ::testing::InSequence;
+using ::testing::InvokeWithoutArgs;
+using ::testing::Range;
 
 // Unfortunately, this needs to be Windows only for now. Even though this test
 // is meant to exercise code that is for Windows only, it is a good general
@@ -62,10 +69,32 @@ IN_PROC_BROWSER_TEST_F(TryChromeDialogBrowserTest, ToastCrasher) {}
 // Test harness to display the TryChromeDialog for testing. Template parameter 0
 // is the group number to be evaluated.
 class TryChromeDialogTest : public DialogBrowserTest,
-                            public ::testing::WithParamInterface<int>,
-                            public TryChromeDialog::Delegate {
+                            public ::testing::WithParamInterface<int> {
+ public:
+  // Breaks ShowDialog() out of its modal run loop.
+  void QuitModalLoop() { quit_closure_.Run(); }
+
  protected:
-  TryChromeDialogTest() : dialog_(GetParam(), this) {}
+  class MockDelegate : public TryChromeDialog::Delegate {
+   public:
+    MOCK_METHOD1(SetToastLocation,
+                 void(installer::ExperimentMetrics::ToastLocation));
+    MOCK_METHOD1(SetExperimentState, void(installer::ExperimentMetrics::State));
+    MOCK_METHOD0(InteractionComplete, void());
+  };
+
+  TryChromeDialogTest() : dialog_(GetParam(), &delegate_) {
+    // Configure the delegate to exit the modal loop when the dialog is shown
+    // so that ShowDialog() behaves as expected.
+    ON_CALL(delegate_, SetToastLocation(_))
+        .WillByDefault(
+            InvokeWithoutArgs(this, &TryChromeDialogTest::QuitModalLoop));
+  }
+
+  MockDelegate& delegate() { return delegate_; }
+
+  // Returns the result of showing the dialog.
+  TryChromeDialog::Result result() const { return dialog_.result(); }
 
   // DialogBrowserTest:
   void ShowDialog(const std::string& name) override {
@@ -84,32 +113,29 @@ class TryChromeDialogTest : public DialogBrowserTest,
     command_line->AppendSwitch(switches::kExtendMdToSecondaryUi);
   }
 
-  TryChromeDialog::Result result() const { return dialog_.result(); }
-  installer::ExperimentMetrics::State state() const { return state_; }
-
  private:
-  // TryChromeDialog::Delegate:
-  void SetToastLocation(
-      installer::ExperimentMetrics::ToastLocation toast_location) override {
-    quit_closure_.Run();
-  }
-  void SetExperimentState(installer::ExperimentMetrics::State state) override {
-    state_ = state;
-  }
-  void InteractionComplete() override {}
-
+  MockDelegate delegate_;
   TryChromeDialog dialog_;
-  installer::ExperimentMetrics::State state_ =
-      installer::ExperimentMetrics::kUninitialized;
   base::Closure quit_closure_;
 
   DISALLOW_COPY_AND_ASSIGN(TryChromeDialogTest);
 };
 
 IN_PROC_BROWSER_TEST_P(TryChromeDialogTest, InvokeDialog_default) {
+  {
+    // Each method on the delegate should be called once in sequence.
+    InSequence delegate_sequence;
+    EXPECT_CALL(delegate(), SetToastLocation(_));
+    EXPECT_CALL(delegate(),
+                SetExperimentState(installer::ExperimentMetrics::kOtherClose));
+    EXPECT_CALL(delegate(), InteractionComplete());
+  }
+
   RunDialog();
-  EXPECT_EQ(result(), TryChromeDialog::NOT_NOW);
-  EXPECT_EQ(state(), installer::ExperimentMetrics::kOtherClose);
+
+  // Since the dialog was closed by external factors, the overall result should
+  // be to exit the browser process.
+  EXPECT_THAT(result(), Eq(TryChromeDialog::NOT_NOW));
 }
 
 // TODO(skare): Remove " - 1" hack when
@@ -117,8 +143,7 @@ IN_PROC_BROWSER_TEST_P(TryChromeDialogTest, InvokeDialog_default) {
 INSTANTIATE_TEST_CASE_P(
     Variations,
     TryChromeDialogTest,
-    ::testing::Range(
-        0,
-        static_cast<int>(installer::ExperimentMetrics::kHoldbackGroup) - 1));
+    Range(0,
+          static_cast<int>(installer::ExperimentMetrics::kHoldbackGroup) - 1));
 
 #endif  // defined(OS_WIN)
