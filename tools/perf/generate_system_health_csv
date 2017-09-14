@@ -11,7 +11,7 @@ from core import path_util
 sys.path.insert(1, path_util.GetTelemetryDir())  # To resolve telemetry imports
 
 import page_sets
-
+from page_sets.system_health import expectations
 
 def IterAllSystemHealthStories():
   for s in page_sets.SystemHealthStorySet(platform='desktop'):
@@ -23,23 +23,47 @@ def IterAllSystemHealthStories():
 SYSTEM_HEALTH_CSV = os.path.join(os.path.dirname(__file__),
                                  'system_health_stories.csv')
 
+def PopulateExpectations():
+  print "DEBUG: In Populate ..."
+  disables = {}
+  sys_health_exp = expectations.SystemHealthDesktopCommonExpectations().AsDict()['stories']
+  sys_keys = sys_health_exp.keys()
+  sys_keys.sort()
+
+  print sys_keys
+  for story in sys_keys:
+    print "DEBUG: Disabled Story: %s" % story
+    for conditions, reason in  sys_health_exp[story]:
+      conditions_str = ", ".join(map(str, conditions))
+      disables[story] = conditions_str
+      print "DEBUG: Condition: %s" % conditions_str
+      print "DEBUG: Reason: %s" % reason
+  return disables    
 
 def main():
+  print "DEBUG: Begin Main ..."
   system_health_stories = list(IterAllSystemHealthStories())
+  espn = PopulateExpectations()
   system_health_stories.sort(key=lambda s: s.name)
   with open(SYSTEM_HEALTH_CSV, 'w') as f:
     csv_writer = csv.writer(f)
     csv_writer.writerow([
-        'Story name', 'Platform', 'Description'])
+        'Story name', 'Platform', 'Description', 'Disabled Platforms'])
+    count = 1
     for s in system_health_stories:
       p = s.SUPPORTED_PLATFORMS
       if len(p) == 2:
         p = 'all'
       else:
         p = list(p)[0]
-      csv_writer.writerow([s.name, p, s.GetStoryDescription()])
+      if s.name in espn:
+        print "DEBUG: espn[s.name]: %s" % espn[s.name]
+        csv_writer.writerow([s.name, p, s.GetStoryDescription(), espn[s.name]])
+      else:
+        csv_writer.writerow([s.name, p, s.GetStoryDescription(), " "])
   return 0
 
 
 if __name__ == '__main__':
+  print "DEBUG: In gen_sys_hlt_csv ..."
   sys.exit(main())
