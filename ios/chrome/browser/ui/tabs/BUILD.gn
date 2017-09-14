@@ -44,6 +44,7 @@ source_set("tabs") {
     "//ios/chrome/browser/ui/bubble",
     "//ios/chrome/browser/ui/colors",
     "//ios/chrome/browser/ui/commands",
+    "//ios/chrome/browser/ui/tabs/requirements",
     "//ios/chrome/browser/ui/util",
     "//ios/third_party/material_components_ios",
     "//ios/web",
@@ -52,6 +53,21 @@ source_set("tabs") {
     "//ui/gfx",
   ]
   libs = [ "UIKit.framework" ]
+}
+
+source_set("coordinator") {
+  configs += [ "//build/config/compiler:enable_arc" ]
+  sources = [
+    "tab_strip_legacy_coordinator.h",
+    "tab_strip_legacy_coordinator.mm",
+  ]
+  deps = [
+    ":tabs",
+    "//ios/chrome/browser",
+    "//ios/chrome/browser/browser_state",
+    "//ios/chrome/browser/ui/bubble",
+    "//ios/chrome/browser/ui/commands",
+  ]
 }
 
 source_set("unit_tests") {
