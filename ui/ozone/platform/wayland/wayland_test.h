@@ -16,7 +16,7 @@ namespace ui {
 
 // WaylandTest is a base class that sets up a display, window, and fake server,
 // and allows easy synchronization between them.
-class WaylandTest : public testing::Test {
+class WaylandTest : public ::testing::TestWithParam<uint32_t> {
  public:
   WaylandTest();
   ~WaylandTest() override;
