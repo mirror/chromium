@@ -683,8 +683,8 @@ struct FuzzTraits<cc::QuadList> {
 };
 
 template <>
-struct FuzzTraits<cc::RenderPass> {
-  static bool Fuzz(cc::RenderPass* p, Fuzzer* fuzzer) {
+struct FuzzTraits<viz::RenderPass> {
+  static bool Fuzz(viz::RenderPass* p, Fuzzer* fuzzer) {
     if (!FuzzParam(&p->id, fuzzer))
       return false;
     if (!FuzzParam(&p->output_rect, fuzzer))
@@ -705,8 +705,8 @@ struct FuzzTraits<cc::RenderPass> {
 };
 
 template <>
-struct FuzzTraits<cc::RenderPassList> {
-  static bool Fuzz(cc::RenderPassList* p, Fuzzer* fuzzer) {
+struct FuzzTraits<viz::RenderPassList> {
+  static bool Fuzz(viz::RenderPassList* p, Fuzzer* fuzzer) {
     if (!fuzzer->ShouldGenerate()) {
       for (size_t i = 0; i < p->size(); ++i) {
         if (!FuzzParam(p->at(i).get(), fuzzer))
@@ -717,7 +717,7 @@ struct FuzzTraits<cc::RenderPassList> {
 
     size_t count = RandElementCount();
     for (size_t i = 0; i < count; ++i) {
-      std::unique_ptr<cc::RenderPass> render_pass = cc::RenderPass::Create();
+      std::unique_ptr<viz::RenderPass> render_pass = viz::RenderPass::Create();
       if (!FuzzParam(render_pass.get(), fuzzer))
         return false;
       p->push_back(std::move(render_pass));
