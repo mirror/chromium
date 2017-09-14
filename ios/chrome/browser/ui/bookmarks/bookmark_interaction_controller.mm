@@ -177,7 +177,8 @@ using bookmarks::BookmarkNode;
   self.bookmarkBrowser.homeDelegate = self;
 
   if (base::FeatureList::IsEnabled(kBookmarkNewGeneration)) {
-    [self.bookmarkBrowser setRootNode:self.bookmarkModel->root_node()];
+    const BookmarkNode* folder = self.bookmarkModel->root_node();
+    [self.bookmarkBrowser setRootNode:folder];
     UINavigationController* navController = [[UINavigationController alloc]
         initWithRootViewController:self.bookmarkBrowser];
     [navController setModalPresentationStyle:UIModalPresentationFormSheet];
