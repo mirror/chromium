@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c99bc85d_c43354d7",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T05:45:54Z",
+      "side": 1,
+      "message": "Yea I thought the same... my preference is status flags here, the barrier seems too clever for its use of only being called twice, especially since it needs comments like the above. I\u0027m also a fan of enum states over bools since there\u0027s not a combinatoric explosion of possible states.",
+      "parentUuid": "b3ab75f0_28ae4639",
+      "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48c57eae_11200455",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 27
@@ -53,6 +71,23 @@
     },
     {
       "key": {
+        "uuid": "99cb9512_e72ce83f",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T05:45:54Z",
+      "side": 1,
+      "message": "I see your point but I\u0027m not very happy with \"forwarding\", it sounds like the client is doing something special that makes it different than a normal client. \"forwarding_client\" sounds like the client is forwarding... much like \"receiving_client\" would mean the client is receiving.\n\nI\u0027m struggling to come up with a better name though. I still would prefer |client_| and |client_producer_| here.. Or |script_loader_client_| and |script_loader_producer_|?",
+      "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a3a353a_0ec89410",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
         "patchSetId": 27
@@ -81,6 +116,23 @@
       "writtenOn": "2017-09-14T05:06:22Z",
       "side": 1,
       "message": "nit: \u0027both\u0027 can be probably removed\n..., and the -\u003e ..., and when the",
+      "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f0ad96_bab37245",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T05:45:54Z",
+      "side": 1,
+      "message": "move this up to the |network_| stuff",
       "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
