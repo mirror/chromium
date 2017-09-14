@@ -16,7 +16,6 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "components/data_use_measurement/core/data_use_user_data.h"
 #include "components/google/core/browser/google_util.h"
@@ -62,18 +61,14 @@ void LogResponseState(SuggestionsResponseState state) {
                             RESPONSE_STATE_SIZE);
 }
 
-// TODO(treib): Use net::BackoffEntry here instead of rolling our own
-// exponential backoff logic.
-
-// Default delay used when scheduling a request.
-const int kDefaultSchedulingDelaySec = 1;
-
-// Multiplier on the delay used when re-scheduling a failed request.
-const int kSchedulingBackoffMultiplier = 2;
-
-// Maximum valid delay for scheduling a request. Candidate delays larger than
-// this are rejected. This means the maximum backoff is at least 1 hour.
-const int kSchedulingMaxDelaySec = 2 * 60 * 60;
+const net::BackoffEntry::Policy kBlacklistBackoffPolicy = {
+    /*num_errors_to_ignore*/ 0,
+    /*initial_delay_ms=*/1000,
+    /*multiply_factor=*/2.0,
+    /*jitter_factor=*/0.0,
+    /*maximum_backoff_ms=*/2 * 60 * 60 * 1000,
+    /*entry_lifetime_ms=*/-1,
+    /*always_use_initial_delay=*/true};
 
 const char kDefaultGoogleBaseURL[] = "https://www.google.com/";
 
@@ -130,7 +125,8 @@ SuggestionsServiceImpl::SuggestionsServiceImpl(
     net::URLRequestContextGetter* url_request_context,
     std::unique_ptr<SuggestionsStore> suggestions_store,
     std::unique_ptr<ImageManager> thumbnail_manager,
-    std::unique_ptr<BlacklistStore> blacklist_store)
+    std::unique_ptr<BlacklistStore> blacklist_store,
+    std::unique_ptr<base::TickClock> tick_clock)
     : signin_manager_(signin_manager),
       token_service_(token_service),
       sync_service_(sync_service),
@@ -140,7 +136,9 @@ SuggestionsServiceImpl::SuggestionsServiceImpl(
       suggestions_store_(std::move(suggestions_store)),
       thumbnail_manager_(std::move(thumbnail_manager)),
       blacklist_store_(std::move(blacklist_store)),
-      scheduling_delay_(TimeDelta::FromSeconds(kDefaultSchedulingDelaySec)),
+      tick_clock_(std::move(tick_clock)),
+      blacklist_upload_backoff_(&kBlacklistBackoffPolicy, tick_clock_.get()),
+      blacklist_upload_timer_(tick_clock_.get()),
       weak_ptr_factory_(this) {
   // |sync_service_| is null if switches::kDisableSync is set (tests use that).
   if (sync_service_) {
@@ -149,6 +147,8 @@ SuggestionsServiceImpl::SuggestionsServiceImpl(
   // Immediately get the current sync state, so we'll flush the cache if
   // necessary.
   OnStateChanged(sync_service_);
+  // This makes sure the initial delay is actually respected.
+  blacklist_upload_backoff_.InformOfRequest(true);
 }
 
 SuggestionsServiceImpl::~SuggestionsServiceImpl() {}
@@ -239,6 +239,14 @@ void SuggestionsServiceImpl::ClearBlacklist() {
   callback_list_.Notify(
       GetSuggestionsDataFromCache().value_or(SuggestionsProfile()));
   IssueRequestIfNoneOngoing(BuildSuggestionsBlacklistClearURL());
+}
+
+base::TimeDelta SuggestionsServiceImpl::BlacklistDelayForTesting() const {
+  return blacklist_upload_backoff_.GetTimeUntilRelease();
+}
+
+bool SuggestionsServiceImpl::HasPendingRequestForTesting() const {
+  return !!pending_request_.get();
 }
 
 // static
@@ -577,11 +585,10 @@ void SuggestionsServiceImpl::ScheduleBlacklistUpload() {
   TimeDelta time_delta;
   if (blacklist_store_->GetTimeUntilReadyForUpload(&time_delta)) {
     // Blacklist cache is not empty: schedule.
-    base::Closure blacklist_cb =
+    blacklist_upload_timer_.Start(
+        FROM_HERE, time_delta + blacklist_upload_backoff_.GetTimeUntilRelease(),
         base::Bind(&SuggestionsServiceImpl::UploadOneFromBlacklist,
-                   weak_ptr_factory_.GetWeakPtr());
-    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
-        FROM_HERE, blacklist_cb, time_delta + scheduling_delay_);
+                   weak_ptr_factory_.GetWeakPtr()));
   }
 }
 
@@ -605,14 +612,7 @@ void SuggestionsServiceImpl::UpdateBlacklistDelay(
     bool last_request_successful) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (last_request_successful) {
-    scheduling_delay_ = TimeDelta::FromSeconds(kDefaultSchedulingDelaySec);
-  } else {
-    TimeDelta candidate_delay =
-        scheduling_delay_ * kSchedulingBackoffMultiplier;
-    if (candidate_delay < TimeDelta::FromSeconds(kSchedulingMaxDelaySec))
-      scheduling_delay_ = candidate_delay;
-  }
+  blacklist_upload_backoff_.InformOfRequest(last_request_successful);
 }
 
 }  // namespace suggestions

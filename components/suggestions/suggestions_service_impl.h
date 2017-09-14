@@ -19,12 +19,15 @@
 #include "base/optional.h"
 #include "base/scoped_observer.h"
 #include "base/threading/thread_checker.h"
+#include "base/time/tick_clock.h"
 #include "base/time/time.h"
+#include "base/timer/timer.h"
 #include "components/signin/core/browser/access_token_fetcher.h"
 #include "components/suggestions/proto/suggestions.pb.h"
 #include "components/suggestions/suggestions_service.h"
 #include "components/sync/driver/sync_service_observer.h"
 #include "google_apis/gaia/google_service_auth_error.h"
+#include "net/base/backoff_entry.h"
 #include "net/url_request/url_fetcher_delegate.h"
 #include "url/gurl.h"
 
@@ -60,7 +63,8 @@ class SuggestionsServiceImpl : public SuggestionsService,
                          net::URLRequestContextGetter* url_request_context,
                          std::unique_ptr<SuggestionsStore> suggestions_store,
                          std::unique_ptr<ImageManager> thumbnail_manager,
-                         std::unique_ptr<BlacklistStore> blacklist_store);
+                         std::unique_ptr<BlacklistStore> blacklist_store,
+                         std::unique_ptr<base::TickClock> tick_clock);
   ~SuggestionsServiceImpl() override;
 
   // SuggestionsService implementation.
@@ -78,15 +82,8 @@ class SuggestionsServiceImpl : public SuggestionsService,
   bool UndoBlacklistURL(const GURL& url) override;
   void ClearBlacklist() override;
 
-  base::TimeDelta blacklist_delay_for_testing() const {
-    return scheduling_delay_;
-  }
-  void set_blacklist_delay_for_testing(base::TimeDelta delay) {
-    scheduling_delay_ = delay;
-  }
-  bool has_pending_request_for_testing() const {
-    return !!pending_request_.get();
-  }
+  base::TimeDelta BlacklistDelayForTesting() const;
+  bool HasPendingRequestForTesting() const;
 
   // Determines which URL a blacklist request was for, irrespective of the
   // request's status. Returns false if |request| is not a blacklist request.
@@ -203,8 +200,12 @@ class SuggestionsServiceImpl : public SuggestionsService,
   // The local cache for temporary blacklist, until uploaded to the server.
   std::unique_ptr<BlacklistStore> blacklist_store_;
 
-  // Delay used when scheduling a blacklisting task.
-  base::TimeDelta scheduling_delay_;
+  std::unique_ptr<base::TickClock> tick_clock_;
+
+  // Backoff for scheduling blacklist upload tasks.
+  net::BackoffEntry blacklist_upload_backoff_;
+
+  base::OneShotTimer blacklist_upload_timer_;
 
   // Helper for fetching OAuth2 access tokens. This is non-null iff an access
   // token request is currently in progress.
