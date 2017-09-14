@@ -15,6 +15,8 @@
 
 namespace settings {
 
+using safe_browsing::ChromePasswordProtectionService;
+
 ChangePasswordHandler::ChangePasswordHandler(Profile* profile)
     : profile_(profile), service_(nullptr) {}
 
@@ -48,21 +50,43 @@ void ChangePasswordHandler::OnJavascriptDisallowed() {
 }
 
 void ChangePasswordHandler::OnGaiaPasswordChanged() {
-  AllowJavascript();
   CallJavascriptFunction("cr.webUIListenerCallback",
                          base::Value("change-password-on-dismiss"));
 }
 
 void ChangePasswordHandler::OnMarkingSiteAsLegitimate(const GURL& url) {
-  AllowJavascript();
   if (service_->unhandled_password_reuses().empty()) {
     CallJavascriptFunction("cr.webUIListenerCallback",
                            base::Value("change-password-on-dismiss"));
   }
 }
 
+void ChangePasswordHandler::InvokeActionForTesting(
+    ChromePasswordProtectionService::WarningAction action) {
+  if (!ChromePasswordProtectionService::ShouldShowChangePasswordSettingUI(
+          profile_))
+    return;
+
+  switch (action) {
+    case ChromePasswordProtectionService::CHANGE_PASSWORD: {
+      base::ListValue value;
+      HandleChangePassword(&value);
+      break;
+    }
+    default:
+      NOTREACHED();
+      break;
+  }
+}
+
+ChromePasswordProtectionService::WarningUIType
+ChangePasswordHandler::GetObserverType() {
+  return ChromePasswordProtectionService::CHROME_SETTINGS;
+}
+
 void ChangePasswordHandler::HandleChangePasswordPageShown(
     const base::ListValue* args) {
+  AllowJavascript();
   if (service_) {
     service_->OnWarningShown(
         web_ui()->GetWebContents(),
