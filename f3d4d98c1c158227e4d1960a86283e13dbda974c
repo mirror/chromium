@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "70db6049_c16f1966",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-14T23:27:40Z",
+      "side": 1,
+      "message": "The commit message still looks the same.",
+      "parentUuid": "b4fda6f4_a7becffe",
+      "revId": "f3d4d98c1c158227e4d1960a86283e13dbda974c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "414b0903_9045c4bf",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
