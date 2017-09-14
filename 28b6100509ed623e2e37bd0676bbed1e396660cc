@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0bd94fd0_08643eab",
+        "filename": "gpu/ipc/client/gpu_channel_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-14T16:12:27Z",
+      "side": 1,
+      "message": "message.is_sync() would be false anyway - as this is the reply message, its sender (i.e. the GPU process, recipient of the original sync message) doesn\u0027t expect a reply (see SyncMessage::GenerateReply which doesn\u0027t set_sync()).\nIt\u0027s ok though, IPC::SyncMessage::GetMessageId works on non-sync messages, provided it has the right header.\nTBH, a malicious/compromised GPU process can send arbitrary bits/data, which we need to handle gracefully (not cause elevation to the client, e.g. browser) - in this case, GetMessageId could fail to read the header (would return 0), send an id that doesn\u0027t correspond to a current sync message (would fail on l.271), send data that doesn\u0027t correspond to the corresponding sync message (would return failure on l.276). It could choose not to ever reply to a sync message. That would cause the sending thread to block forever, but that\u0027s no more no less true than before - it doesn\u0027t cause elevation though.\n\nNote that if the GPU process crashes (not malicious, just failing for any reason), the channel will get an error and we\u0027ll return failure to all current sync Send (see l.309), so we wouldn\u0027t block in that case. This is consistent with the previous behavior.",
+      "parentUuid": "90dd2d0c_fb259e06",
+      "range": {
+        "startLine": 269,
+        "startChar": 8,
+        "endLine": 269,
+        "endChar": 10
+      },
+      "revId": "28b6100509ed623e2e37bd0676bbed1e396660cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33fc5a1a_65ea19af",
         "filename": "gpu/ipc/client/gpu_channel_host.cc",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-14T01:13:52Z",
       "side": 1,
       "message": "Is there any chance that an incoming message (for example, for creation of a new window, like before) will still be handled here while the main thread\u0027s waiting for a sync reply, and this will attempt to post a task to the (blocked) main thread?\n\nI think I see the intent -- even if that happens, the task will just be queued up, and once the sync reply comes back and unblocks the main thread, it\u0027ll be processed in a non-reentrant fashion.",
+      "revId": "28b6100509ed623e2e37bd0676bbed1e396660cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1990f17e_e8fced2e",
+        "filename": "gpu/ipc/client/gpu_channel_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-14T16:12:27Z",
+      "side": 1,
+      "message": "Correct. While we are waiting on the main (or other) thread, the posted tasks for incoming messages will be queued up in that message loop, but never processed until we returned from the sync Send (and unwind the task that issued the Send). This is ok, because the GPU process never waits for the client before being able to make progress and satisfy the sync message.",
+      "parentUuid": "33fc5a1a_65ea19af",
       "revId": "28b6100509ed623e2e37bd0676bbed1e396660cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
