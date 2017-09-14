@@ -10,10 +10,11 @@ import "mojo/common/process_id.mojom";
 struct ProcessInfo {
   mojo.common.mojom.ProcessId pid;
   array<int64> ukm_source_ids;
+  array<int64> time_since_last_visible;
 };
 
 interface CoordinationUnitIntrospector {
   // Returns an array that describes the current topology of Chrome, with
   // respect to the relationship between processes and hosted frame URLs.
-  GetProcessToURLMap() => (array<ProcessInfo> process_infos);
+  GetProcessToURLMap() => (array<ProcessInfo> process_infos);  
 };
