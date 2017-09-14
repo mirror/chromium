@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2b75c74_f3bb9a6f",
+        "filename": "build/mac_toolchain.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-09-14T17:54:21Z",
+      "side": 1,
+      "message": "That\u0027s not the best way to do this; use instead:\n\n  target_license_plist_path \u003d os.path.join(\n      output_dir, \u0027Contents\u0027,\u0027Resources\u0027,\u0027LicenseInfo.plist\u0027)\n\nsame below.",
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca6f0c04_c925ebd2",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-09-14T17:54:21Z",
+      "side": 1,
+      "message": "have it pass the hostname, there\u0027s no need for an alias. Then remove lines 29-34",
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ecf4c8e_eebfa87e",
+        "filename": "build/swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-09-14T17:54:21Z",
+      "side": 1,
+      "message": "please put stdlib import first, then others.",
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "773e97ad_4202ca26",
+        "filename": "build/swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000487
+      },
+      "writtenOn": "2017-09-14T17:54:21Z",
+      "side": 1,
+      "message": "Make a main() function.",
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
