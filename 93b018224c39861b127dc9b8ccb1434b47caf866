@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c6c66a2_f8108049",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-14T09:02:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e7a3789_38ca7530",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfbf28c5_aad96986",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "860d13b6_469d383b",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-14T09:02:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfbf28c5_aad96986",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7084175a_edfd13a5",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-14T09:02:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60a83935_87002117",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f575a5ce_ecd64fc2",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
         "patchSetId": 9
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "6aa1f7b7_b61d7c7d",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-14T09:02:13Z",
+      "side": 1,
+      "message": "Hm, it\u0027s dict_iterator_proxy. Substituted by item, since it\u0027s the entry of dict items.",
+      "parentUuid": "f575a5ce_ecd64fc2",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f06ef5be_728d4844",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.h",
         "patchSetId": 9
@@ -84,6 +156,24 @@
       "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed4e4b1f_a705b3e1",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-14T09:02:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f06ef5be_728d4844",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "2b508ef8_bd94ad40",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-14T09:02:13Z",
+      "side": 1,
+      "message": "Yes, it will be extended in the future for certificate store v.2 by other purposes from system/keymaster/include/keymaster/android_keymaster.h",
+      "parentUuid": "3af9b413_319cbbed",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c683dad4_9d53a7ca",
         "filename": "components/arc/common/cert_store.mojom",
         "patchSetId": 9
@@ -132,6 +240,24 @@
       "writtenOn": "2017-09-13T10:06:07Z",
       "side": 1,
       "message": "Clarification: Any reasons to keep those params in struct?\nCan these be arguments of methods simply?",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "676e3af3_e2c78260",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-14T09:02:13Z",
+      "side": 1,
+      "message": "The main reason is to follow system/keymaster/include/keymaster/android_keymaster.h interface and the struct can be extended in the future for certificate store v.2 by additional_params if needed.",
+      "parentUuid": "c683dad4_9d53a7ca",
       "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

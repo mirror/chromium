@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c30fb9fa_596730ab",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-14T09:02:13Z",
+      "side": 1,
+      "message": "Could you explain more here? I don\u0027t understand this comment:(",
+      "parentUuid": "8dd614cc_3cd9bcbc",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17a40ad8_ae348669",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
         "patchSetId": 1
@@ -225,6 +243,24 @@
       "side": 1,
       "message": "not done \u003e RAII?\n\nI meant, I think unique_ptr can be used.\nOr, ScopedCERTList can be exposed?\n\nhttps://cs.chromium.org/chromium/src/net/cert/cert_verify_proc_nss.cc?q\u003dScopedCert\u0026sq\u003dpackage:chromium\u0026l\u003d50",
       "parentUuid": "01cf3a76_ac529193",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f08b8baf_1bad85b6",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1124166
+      },
+      "writtenOn": "2017-09-14T09:02:13Z",
+      "side": 1,
+      "message": "Exposed ScopedCERTCertList.",
+      "parentUuid": "1ae474e5_269ef193",
       "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
