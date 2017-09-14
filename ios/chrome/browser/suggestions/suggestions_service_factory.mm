@@ -12,6 +12,7 @@
 #include "base/sequenced_task_runner.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_worker_pool.h"
+#include "base/time/default_tick_clock.h"
 #include "components/browser_sync/profile_sync_service.h"
 #include "components/image_fetcher/core/image_fetcher.h"
 #include "components/image_fetcher/core/image_fetcher_impl.h"
@@ -101,7 +102,8 @@ SuggestionsServiceFactory::BuildServiceInstanceFor(
   return base::MakeUnique<SuggestionsServiceImpl>(
       signin_manager, token_service, sync_service,
       browser_state->GetRequestContext(), std::move(suggestions_store),
-      std::move(thumbnail_manager), std::move(blacklist_store));
+      std::move(thumbnail_manager), std::move(blacklist_store),
+      base::MakeUnique<base::DefaultTickClock>());
 }
 
 void SuggestionsServiceFactory::RegisterBrowserStatePrefs(
