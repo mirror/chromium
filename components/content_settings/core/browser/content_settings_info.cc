@@ -21,6 +21,17 @@ ContentSettingsInfo::ContentSettingsInfo(
 
 ContentSettingsInfo::~ContentSettingsInfo() {}
 
+ContentSetting ContentSettingsInfo::GetDefaultSetting() const {
+  const base::Value* initial_default =
+      website_settings_info()->initial_default_value();
+  DCHECK(initial_default);
+
+  int result = 0;
+  bool success = initial_default->GetAsInteger(&result);
+  DCHECK(success);
+  return static_cast<ContentSetting>(result);
+}
+
 bool ContentSettingsInfo::IsSettingValid(ContentSetting setting) const {
   return base::ContainsKey(valid_settings_, setting);
 }
