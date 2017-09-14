@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e212b7c_604c6045",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-14T21:09:48Z",
+      "side": 1,
+      "message": "Maybe this could be even more specific, e.g. \"Support the use_thin_lto build config on Windows\".",
+      "revId": "f3d4d98c1c158227e4d1960a86283e13dbda974c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414b0903_9045c4bf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-14T21:09:48Z",
+      "side": 1,
+      "message": "It would be nice to assert that is_clang and use_lld are set when use_thin_lto is true. I suspect it might fail in weird ways otherwise.",
+      "revId": "f3d4d98c1c158227e4d1960a86283e13dbda974c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df0f552_1dbe5620",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-14T21:09:48Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this live in build/config/win/BUILD.gn instead?",
+      "revId": "f3d4d98c1c158227e4d1960a86283e13dbda974c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe47e3ae_ade5f54c",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-14T21:09:48Z",
+      "side": 1,
+      "message": "What\u0027s the status on needing this one? I.e. should we rely on emitting our own PDBs instead? If not, there should be a todo with tracking bug here to get rid of it.",
+      "revId": "f3d4d98c1c158227e4d1960a86283e13dbda974c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8321b0f2_53602e7e",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-14T21:09:48Z",
+      "side": 1,
+      "message": "I think this needs a comment explaining what 4099 is (see e.g. how the /wd flags are commented in the default_warnings config below).",
+      "revId": "f3d4d98c1c158227e4d1960a86283e13dbda974c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85737bd2_8fe2b629",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 1547,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-14T21:09:48Z",
+      "side": 1,
+      "message": "Since use_thin_lto implies Clang, we could skip the outer is_clang check here and below.",
+      "revId": "f3d4d98c1c158227e4d1960a86283e13dbda974c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
