@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f468ce08_4a186d8a",
+        "filename": "ui/base/models/list_selection_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-14T21:03:58Z",
+      "side": 1,
+      "message": "\u003e Done.\n\u003e \n\u003e As background, my goal here was to reduce the line count and keep the diffstats roughly even in this file. My thinking was that IncrementFrom and DecrementFrom weren\u0027t particularly intuitive operations to begin with, so the overall cognitive complexity here was actually reduced by implementing these in terms of Move(). Seems like you see things differently, so I\u0027m happy to revert to the original behaviors.\n\nThat\u0027s a noble goal, but I encourage you to go for easy to follow maintainable code:) \u0027Easy to follow\u0027 likely varies depending upon who you ask so, it can be tricky to discern this.\n\n\u003e [And, to be clear -- there was no mathematical trick to the choice of kMaxIndex. the only thing \u0027magical\u0027 about kMaxIndex was that it was higher than any index currently in the selection model -- there are literally billions of other values that would give the same behavior.  The idea being that you can express insertion efficiently as a concatenation of a push_back() operation, followed by a Move of the back element into the desired position. And conversely, removal can be thought of as a move to back, followed by a pop-back (as in the the erase-remove idiom)]\n\nUnderstood. My point still holds though that the code was rather magical.",
+      "parentUuid": "8f4f3d8a_93d8214f",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "97ca3a2e514fa402dabc20caee8739be8b2576df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e5ea36f_552c5357",
         "filename": "ui/base/models/list_selection_model.cc",
         "patchSetId": 7

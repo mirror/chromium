@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "23c5f455_2458483e",
+        "filename": "ui/base/models/list_selection_model.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-14T21:03:58Z",
+      "side": 1,
+      "message": "Why did you decide to make these early out? As you saw, the previous code DCHECKd.",
+      "range": {
+        "startLine": 145,
+        "startChar": 6,
+        "endLine": 145,
+        "endChar": 16
+      },
+      "revId": "8a817ea155c0f9f7719d233f5c1ecc252a8daf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e766b809_25ab1721",
         "filename": "ui/base/models/list_selection_model.cc",
         "patchSetId": 12
@@ -18,6 +41,76 @@
         "startChar": 3,
         "endLine": 183,
         "endChar": 0
+      },
+      "revId": "8a817ea155c0f9f7719d233f5c1ecc252a8daf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af8b4b65_53e727ff",
+        "filename": "ui/base/models/list_selection_model.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-14T21:03:58Z",
+      "side": 1,
+      "message": "Thanks! I think this is much easier to read.",
+      "parentUuid": "e766b809_25ab1721",
+      "range": {
+        "startLine": 183,
+        "startChar": 3,
+        "endLine": 183,
+        "endChar": 0
+      },
+      "revId": "8a817ea155c0f9f7719d233f5c1ecc252a8daf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae7d9473_f8dd7ef0",
+        "filename": "ui/base/models/list_selection_model_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-14T21:03:58Z",
+      "side": 1,
+      "message": "Nice test coverage!",
+      "range": {
+        "startLine": 148,
+        "startChar": 3,
+        "endLine": 173,
+        "endChar": 76
+      },
+      "revId": "8a817ea155c0f9f7719d233f5c1ecc252a8daf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c202391c_03a37971",
+        "filename": "ui/base/models/table_model_observer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-14T21:03:58Z",
+      "side": 1,
+      "message": "has been",
+      "range": {
+        "startLine": 28,
+        "startChar": 34,
+        "endLine": 28,
+        "endChar": 42
       },
       "revId": "8a817ea155c0f9f7719d233f5c1ecc252a8daf47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
