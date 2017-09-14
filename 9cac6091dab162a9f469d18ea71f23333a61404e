@@ -640,6 +640,24 @@
     },
     {
       "key": {
+        "uuid": "1f309b70_f7325b02",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-14T19:22:24Z",
+      "side": 1,
+      "message": "\u003e Looks like it\u0027s decided to unroll it 4x. \n\nNot quite, it\u0027s just a tricky pre-amble\n\n        andq    $3, %rcx\n        je      .LBB0_4\n\nviz, jump to unroll stuff _only if the len is exactly divisible by 4_ :).  The lengths we deal with are 0 ...31.\n\n\u003e I guess what I\u0027m wondering is, is Clang right to unroll 4x or are we right to unroll it 16x?\n\nTLDR: the later.\n\nIn the code we are looking at, the 16x unroll stuff, Clang is not exactly great. Clang adds the 4x unroll code you noted to it, but that code is never used.\n\nConsider in https://godbolt.org/g/HYhQGr \n\n    while (len \u003e\u003d 4) {\n        s2 +\u003d (s1 +\u003d *buf++);\n        s2 +\u003d (s1 +\u003d *buf++);\n        s2 +\u003d (s1 +\u003d *buf++);\n        s2 +\u003d (s1 +\u003d *buf++);\n        len -\u003d 4;\n    }\n\ntherefore, len \u003c\u003d 3 after this loop.  Clang needs to decide if it wants to do the next C code loop ...\n\n    while (len--) {\n        s2 +\u003d (s1 +\u003d *buf++);\n    }\n\nFor that they use:\n\n.LBB0_9:\n        leaq    -1(%rdx), %r8\n        movq    %rdx, %rcx\n        andq    $3, %rcx .      // and the len with 3\n        je      .LBB0_12        // if 0 results, go to \"fancy unroll pre-amble\"\n        negq    %rcx\n\nBut len \u003c\u003d 3 always here, right?  So the go to \"fancy unroll pre-amble\" is never taken for len\u003d1,2,3.  It can be taken for len \u003d 0 mind.\n\nThus, for len\u003d1,2,3, the while (len--) {} is done, and len \u003d -1 when complete. The code then enters the \"fancy unroll pre-amble\", with len \u003d -1 || 0 only.\n\n.LBB0_12:                   // \"fancy unroll preamble\"\n        cmpq    $3, %r8     // compare to len to 3\n        jb      .LBB0_14    // if below, go to the exit .LBB0_14\n                            // but len is either -1 or 0 here\n                            // below 3 is therefore always true\n                            // thus .LBB0_14 is always taken\n.LBB0_13: \n        \"fancy unroll\"\n        ...\n        ...\n.LBB0_14: \"clean-up\"\n        retq\n\nClang has added unrolled code at LBB0_13 that cannot be entered / used.  Not wrong, but not needed either, seems like a Clang bug.",
+      "parentUuid": "945f1421_21e83ad1",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1eae378_20622253",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16
