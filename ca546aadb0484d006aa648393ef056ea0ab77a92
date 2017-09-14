@@ -22,6 +22,30 @@
       "revId": "ca546aadb0484d006aa648393ef056ea0ab77a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f744d2_d018d58d",
+        "filename": "tools/metrics/histograms/generate_expired_histograms_array.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1232219
+      },
+      "writtenOn": "2017-09-14T13:42:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "721bf63c_983ee326",
+      "range": {
+        "startLine": 101,
+        "startChar": 18,
+        "endLine": 101,
+        "endChar": 0
+      },
+      "revId": "ca546aadb0484d006aa648393ef056ea0ab77a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
