@@ -21,6 +21,7 @@
 #include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_checker.h"
 #include "chrome/browser/chrome_notification_types.h"
+#include "chrome/browser/chromeos/login/session/user_session_manager.h"
 #include "chrome/browser/chromeos/ownership/owner_settings_service_chromeos_factory.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/chromeos/settings/cros_settings.h"
@@ -188,9 +189,6 @@ OwnerSettingsServiceChromeOS::OwnerSettingsServiceChromeOS(
     : ownership::OwnerSettingsService(owner_key_util),
       device_settings_service_(device_settings_service),
       profile_(profile),
-      waiting_for_profile_creation_(true),
-      waiting_for_tpm_token_(true),
-      has_pending_fixups_(false),
       weak_factory_(this),
       store_settings_factory_(this) {
   if (TPMTokenLoader::IsInitialized()) {
@@ -213,6 +211,10 @@ OwnerSettingsServiceChromeOS::OwnerSettingsServiceChromeOS(
   registrar_.Add(this,
                  chrome::NOTIFICATION_PROFILE_CREATED,
                  content::Source<Profile>(profile_));
+
+  UserSessionManager::GetInstance()->WaitForEasyUnlockKeyOpsFinished(
+      base::Bind(&OwnerSettingsServiceChromeOS::OnEasyUnlockKeyOpsFinished,
+                 weak_factory_.GetWeakPtr()));
 }
 
 OwnerSettingsServiceChromeOS::~OwnerSettingsServiceChromeOS() {
@@ -244,6 +246,13 @@ void OwnerSettingsServiceChromeOS::OnTPMTokenReady(
 
   // TPMTokenLoader initializes the TPM and NSS database which is necessary to
   // determine ownership. Force a reload once we know these are initialized.
+  ReloadKeypair();
+}
+
+void OwnerSettingsServiceChromeOS::OnEasyUnlockKeyOpsFinished() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  waiting_for_easy_unlock_operation_finshed_ = false;
+
   ReloadKeypair();
 }
 
@@ -669,8 +678,10 @@ void OwnerSettingsServiceChromeOS::ReloadKeypairImpl(const base::Callback<
          const scoped_refptr<PrivateKey>& private_key)>& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (waiting_for_profile_creation_ || waiting_for_tpm_token_)
+  if (waiting_for_profile_creation_ || waiting_for_tpm_token_ ||
+      waiting_for_easy_unlock_operation_finshed_) {
     return;
+  }
 
   bool rv = BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
