@@ -29,6 +29,8 @@
 #include "extensions/browser/app_window/app_window_registry.h"
 #include "extensions/browser/process_manager.h"
 #include "services/service_manager/public/cpp/connector.h"
+#include "ui/aura/window.h"
+#include "ui/wm/public/activation_client.h"
 
 using ash::mojom::MediaCaptureState;
 
@@ -127,6 +129,19 @@ MediaCaptureState GetMediaCaptureStateOfAllWebContents(
   return media_state;
 }
 
+// Returns the active browser that has active browser window, if any.
+Browser* GetActiveBrowser() {
+  Browser* browser = BrowserList::GetInstance()->GetLastActive();
+  if (browser) {
+    aura::Window* window = browser->window()->GetNativeWindow();
+    wm::ActivationClient* client =
+        wm::GetActivationClient(window->GetRootWindow());
+    if (client->GetActiveWindow() == window)
+      return browser;
+  }
+  return nullptr;
+}
+
 }  // namespace
 
 MediaClient::MediaClient() : binding_(this), weak_ptr_factory_(this) {
@@ -153,6 +168,18 @@ void MediaClient::HandleMediaNextTrack() {
 }
 
 void MediaClient::HandleMediaPlayPause() {
+  // If there is an active browser, then instead of dispatching this event,
+  // handle browser media session play pause first.
+  Browser* browser = GetActiveBrowser();
+  if (browser) {
+    content::MediaSession* media_session = content::MediaSession::Get(
+        browser->tab_strip_model()->GetActiveWebContents());
+    if (media_session->IsActuallyPaused())
+      media_session->Resume(content::MediaSession::SuspendType::UI);
+    else
+      media_session->Suspend(content::MediaSession::SuspendType::UI);
+    return;
+  }
   extensions::MediaPlayerAPI::Get(ProfileManager::GetActiveUserProfile())
       ->media_player_event_router()
       ->NotifyTogglePlayState();
