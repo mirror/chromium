@@ -70,7 +70,7 @@ void NetworkQuietDetector::NetworkQuietTimerFired(TimerBase*) {
     return;
   network_quiet_reached_ = true;
   if (FrameResourceCoordinator::IsEnabled()) {
-    auto frame_resource_coordinator =
+    auto* frame_resource_coordinator =
         GetSupplementable()->GetFrame()->GetFrameResourceCoordinator();
     if (frame_resource_coordinator) {
       frame_resource_coordinator->SetProperty(
