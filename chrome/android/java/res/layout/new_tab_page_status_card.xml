@@ -34,14 +34,9 @@
          supposed to have 8dp margin while we have a 16dp margin at the parent
          level. -->
     <Button
-      android:id="@+id/status_action_button"
-      style="@style/ButtonCompatBorderless"
-      android:layout_marginTop="16dp"
-      android:layout_marginEnd="-8dp"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textAllCaps="true"
-      android:textColor="@color/light_active_color"
-      android:textSize="15sp" />
+        style="@style/SuggestionCardAction"
+        android:id="@+id/status_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
