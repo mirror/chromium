@@ -619,6 +619,23 @@ const char* const CookieMonster::kDefaultCookieableSchemes[] = {"http", "https",
 const int CookieMonster::kDefaultCookieableSchemesCount =
     arraysize(kDefaultCookieableSchemes);
 
+class CookieMonsterCookieChangedSubscription
+    : public CookieStore::CookieChangedSubscription {
+ public:
+  CookieMonsterCookieChangedSubscription(
+      std::unique_ptr<CookieStore::CookieChangedCallbackList::Subscription>
+          subscription)
+      : subscription_(std::move(subscription)) {}
+  ~CookieMonsterCookieChangedSubscription() override {}
+
+ private:
+  friend CookieMonster;
+  std::unique_ptr<CookieStore::CookieChangedCallbackList::Subscription>
+      subscription_;
+
+  DISALLOW_COPY_AND_ASSIGN(CookieMonsterCookieChangedSubscription);
+};
+
 std::unique_ptr<CookieStore::CookieChangedSubscription>
 CookieMonster::AddCallbackForCookie(const GURL& gurl,
                                     const std::string& name,
@@ -628,16 +645,18 @@ CookieMonster::AddCallbackForCookie(const GURL& gurl,
   std::pair<GURL, std::string> key(gurl, name);
   if (hook_map_.count(key) == 0)
     hook_map_[key] = std::make_unique<CookieChangedCallbackList>();
-  return hook_map_[key]->Add(
-      base::Bind(&RunAsync, base::ThreadTaskRunnerHandle::Get(), callback));
+  return base::MakeUnique<CookieMonsterCookieChangedSubscription>(
+      hook_map_[key]->Add(base::Bind(
+          &RunAsync, base::ThreadTaskRunnerHandle::Get(), callback)));
 }
 
 std::unique_ptr<CookieStore::CookieChangedSubscription>
 CookieMonster::AddCallbackForAllChanges(const CookieChangedCallback& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  return global_hook_map_->Add(
-      base::Bind(&RunAsync, base::ThreadTaskRunnerHandle::Get(), callback));
+  return base::MakeUnique<CookieMonsterCookieChangedSubscription>(
+      global_hook_map_->Add(base::Bind(
+          &RunAsync, base::ThreadTaskRunnerHandle::Get(), callback)));
 }
 
 bool CookieMonster::IsEphemeral() {
