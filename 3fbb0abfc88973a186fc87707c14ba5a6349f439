@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "902c4432_7b5bd9c5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-14T03:13:41Z",
+      "side": 1,
+      "message": "Can this move after the if (ChromeFeatureList#isInitialized()) (but still inside the sChromeHomeEnabled \u003d\u003d null block) since whatever sChromeHomeEnabled equals at the end of this call is what is reflected in the UI?",
+      "range": {
+        "startLine": 278,
+        "startChar": 12,
+        "endLine": 278,
+        "endChar": 34
+      },
+      "revId": "3fbb0abfc88973a186fc87707c14ba5a6349f439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c688f0ba_de962c0f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-14T03:13:41Z",
+      "side": 1,
+      "message": "Let\u0027s move this to ChromePreferenceManager.java.\n\nnit on the method name: how about setChromeHomeEnabledDate()?",
+      "range": {
+        "startLine": 345,
+        "startChar": 24,
+        "endLine": 345,
+        "endChar": 45
+      },
+      "revId": "3fbb0abfc88973a186fc87707c14ba5a6349f439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ab9bef7_9102fd52",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-14T03:13:41Z",
+      "side": 1,
+      "message": "nit: Can we use SimpleDateFormat here and avoid the DateFormat import?\n\nAlso, this is simple enough and only used once so I\u0027d prefer to see these two lines included in the method setting the SharedPreference rather than split into a separate method.",
+      "range": {
+        "startLine": 363,
+        "startChar": 8,
+        "endLine": 363,
+        "endChar": 18
+      },
+      "revId": "3fbb0abfc88973a186fc87707c14ba5a6349f439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

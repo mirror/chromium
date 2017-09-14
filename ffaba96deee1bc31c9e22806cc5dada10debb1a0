@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c5e97529_26eaee62",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-14T03:13:41Z",
+      "side": 1,
+      "message": "That makes sense, thanks for the explanation!",
+      "parentUuid": "4a4b5a18_e524b10c",
+      "range": {
+        "startLine": 468,
+        "startChar": 15,
+        "endLine": 473,
+        "endChar": 17
+      },
+      "revId": "ffaba96deee1bc31c9e22806cc5dada10debb1a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45a415ad_85b6084a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
         "patchSetId": 1
