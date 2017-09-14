@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ff07edb_22087363",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T13:11:28Z",
+      "side": 1,
+      "message": "maybe just personal style, but I\u0027d prefer to reserve On*() for external things calling into us to notify something. I\u0027d just call this Fail() or something, or better yet just use CommitCompleted(error) directly (and have that set the state_).",
+      "revId": "1bcb3a33d855f892dce401f683f3b26f8c58ef46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcefcd95_6cdb016f",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T13:11:28Z",
+      "side": 1,
+      "message": "I think it\u0027d work better if CommitCompleted does advance state to kCompleted.\n\nI\u0027d just have kCompleted and get rid of kCancelled. If you want to keep the status, you can have keep a net::Error completion_status_ member. WDYT?",
+      "revId": "1bcb3a33d855f892dce401f683f3b26f8c58ef46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f7887f0_49046cff",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T13:11:28Z",
+      "side": 1,
+      "message": "It\u0027s confusing that resource_type_ and resource_id_ are not about the same \"resource\".\n\nservice_worker_resource_id_? with some comment?",
+      "revId": "1bcb3a33d855f892dce401f683f3b26f8c58ef46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c794daf_13ec044c",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T13:11:28Z",
+      "side": 1,
+      "message": "can this be network_load_completed_ and moved to the network_ stuff?",
+      "revId": "1bcb3a33d855f892dce401f683f3b26f8c58ef46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95f28a68_59250745",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T13:11:28Z",
+      "side": 1,
+      "message": "resource_id_ seems better in this group. If we\u0027re going to use the name |cache_writer_|, maybe |cache_resource_id_| then :(\n\nProbably should just change SWCacheWriter name  (not in this patch)",
+      "revId": "1bcb3a33d855f892dce401f683f3b26f8c58ef46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21146acb_95d420a3",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T13:11:28Z",
+      "side": 1,
+      "message": "Could this be used as a non-class member instead? This class is a bit busy with members, and keeping track of the state by DCHECK(!pending_read_) at the beginning of OnDataAvailable() and resetting it to nullptr OnWriteDataComplete() makes it looks like there\u0027s a sequence of functions it just needs to live for, rather than for the lifetime of the class.",
+      "revId": "1bcb3a33d855f892dce401f683f3b26f8c58ef46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4985a6e_c2dfeb97",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T13:11:28Z",
+      "side": 1,
+      "message": "this is pretty easy to do:\n\n  std::string response;\n  EXPECT_TRUE(client_.response_body().is_valid());\n  EXPECT_TRUE(mojo::common::BlockingCopyToString(\n      client_.response_body_release(), \u0026response));\n  EXPECT_EQ(\"this body came from the network\", response);",
+      "revId": "1bcb3a33d855f892dce401f683f3b26f8c58ef46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "895041ab_56fd856e",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T13:11:28Z",
+      "side": 1,
+      "message": "this seems to fit at line 217 still",
+      "revId": "1bcb3a33d855f892dce401f683f3b26f8c58ef46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
