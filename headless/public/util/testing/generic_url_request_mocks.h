@@ -19,8 +19,7 @@
 
 namespace headless {
 
-class HEADLESS_EXPORT MockGenericURLRequestJobDelegate
-    : public GenericURLRequestJob::Delegate {
+class MockGenericURLRequestJobDelegate : public GenericURLRequestJob::Delegate {
  public:
   MockGenericURLRequestJobDelegate();
   ~MockGenericURLRequestJobDelegate() override;
