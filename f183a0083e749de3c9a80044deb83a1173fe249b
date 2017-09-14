@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ac6c9e0_a42df772",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 9588,
+      "author": {
+        "id": 1235104
+      },
+      "writtenOn": "2017-09-14T20:23:01Z",
+      "side": 1,
+      "message": "Localization caught this typo. Please fix in this and all other files where this typo appears (in codesearch, 7 files)",
+      "range": {
+        "startLine": 9588,
+        "startChar": 44,
+        "endLine": 9588,
+        "endChar": 51
+      },
+      "revId": "f183a0083e749de3c9a80044deb83a1173fe249b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
