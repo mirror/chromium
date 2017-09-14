@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "17653bd2_fd726274",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-14T21:19:39Z",
+      "side": 1,
+      "message": "+1, what he said :).",
+      "parentUuid": "75d1aeb8_6c846179",
+      "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0014b48f_c46d6b65",
         "filename": "tools/mb/mb_config.pyl",
         "patchSetId": 1
@@ -81,6 +99,24 @@
       "writtenOn": "2017-09-14T21:14:13Z",
       "side": 1,
       "message": "Why do you need this extra configuration?",
+      "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d0ec9e_67ec1a7c",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-14T21:19:39Z",
+      "side": 1,
+      "message": "more importantly, this won\u0027t actually work right. You need both the \u0027thin_lto\u0027 and \u0027lto\u0027 mixins to have an effect (thin_lto is disabled unless lto is also enabled).\n\nAt this point, I don\u0027t think we actually are doing anything with non-thin LTO in Chromium, are we? Maybe we should just collapse the two flags?",
+      "parentUuid": "79b8dfc1_5a42961a",
       "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
