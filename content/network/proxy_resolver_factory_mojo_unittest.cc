@@ -213,8 +213,7 @@ MockMojoProxyResolver::~MockMojoProxyResolver() {
       << "Actions remaining: " << get_proxy_actions_.size();
 }
 
-MockMojoProxyResolver::MockMojoProxyResolver() : binding_(this) {
-}
+MockMojoProxyResolver::MockMojoProxyResolver() : binding_(this) {}
 
 void MockMojoProxyResolver::AddGetProxyAction(GetProxyForUrlAction action) {
   get_proxy_actions_.push(action);
@@ -314,8 +313,7 @@ class Request {
 };
 
 Request::Request(ProxyResolver* resolver, const GURL& url)
-    : resolver_(resolver), url_(url), error_(0) {
-}
+    : resolver_(resolver), url_(url), error_(0) {}
 
 int Request::Resolve() {
   error_ = resolver_->GetProxyForURL(url_, &results_, callback_.callback(),

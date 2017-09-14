@@ -47,8 +47,8 @@ ChromeMojoProxyResolverFactory::~ChromeMojoProxyResolverFactory() {
 std::unique_ptr<base::ScopedClosureRunner>
 ChromeMojoProxyResolverFactory::CreateResolver(
     const std::string& pac_script,
-    mojo::InterfaceRequest<net::interfaces::ProxyResolver> req,
-    net::interfaces::ProxyResolverFactoryRequestClientPtr client) {
+    mojo::InterfaceRequest<content::mojom::ProxyResolver> req,
+    content::mojom::ProxyResolverFactoryRequestClientPtr client) {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (!resolver_factory_)
     CreateFactory();

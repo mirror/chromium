@@ -177,7 +177,6 @@ void MockProxyResolverV8Tracing::GetProxyForURL(
   request->reset(new RequestImpl(pending_job, this));
 }
 
-
 void MockProxyResolverV8Tracing::WaitForCancel() {
   while (std::find_if(pending_jobs_.begin(), pending_jobs_.end(),
                       [](const std::unique_ptr<Job>& job) {

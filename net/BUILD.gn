@@ -2720,12 +2720,6 @@ if (enable_net_mojo) {
       "dns/mojo_host_resolver_impl.cc",
       "dns/mojo_host_resolver_impl.h",
       "proxy/mojo_proxy_resolver_factory.h",
-      "proxy/proxy_resolver_factory_mojo.cc",
-      "proxy/proxy_resolver_factory_mojo.h",
-      "proxy/proxy_service_mojo.cc",
-      "proxy/proxy_service_mojo.h",
-      "url_request/url_request_context_builder_mojo.cc",
-      "url_request/url_request_context_builder_mojo.h",
     ]
 
     public_deps = [
@@ -2740,11 +2734,6 @@ if (enable_net_mojo) {
     sources = [
       "dns/host_resolver_mojo.cc",
       "dns/host_resolver_mojo.h",
-      "proxy/mojo_proxy_resolver_factory_impl.cc",
-      "proxy/mojo_proxy_resolver_factory_impl.h",
-      "proxy/mojo_proxy_resolver_impl.cc",
-      "proxy/mojo_proxy_resolver_impl.h",
-      "proxy/mojo_proxy_resolver_v8_tracing_bindings.h",
     ]
 
     deps = [

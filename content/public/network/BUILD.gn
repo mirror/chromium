@@ -21,15 +21,22 @@ target("source_set", "network_sources") {
   configs += [ "//content:content_implementation" ]
 
   sources = [
+    "mojo_proxy_resolver_factory.h",
+    "mojo_proxy_resolver_factory_impl.cc",
+    "mojo_proxy_resolver_factory_impl.h",
     "network_service.h",
+    "url_request_context_builder_mojo.cc",
+    "url_request_context_builder_mojo.h",
   ]
 
   deps = [
     "//base",
     "//content:export",
     "//content/common:mojo_bindings",
-    "//content/network:network_sources",
+    "//content/network:network_browser_sources",
+    "//content/network:network_utility_sources",
+    "//net",
   ]
 
-  allow_circular_includes_from = [ "//content/network:network_sources" ]
+  #allow_circular_includes_from = [ "//content/network:network_browser_sources" ]
 }

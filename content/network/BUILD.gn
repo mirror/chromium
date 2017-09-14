@@ -2,7 +2,10 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//net/features.gni")
 import("//services/service_manager/public/service_manifest.gni")
+
+enable_net_mojo = !is_ios && !is_proto_quic
 
 group("network") {
   visibility = [ "//content/*" ]  # This is an internal content API.
@@ -13,12 +16,13 @@ group("network") {
     ]
   } else {
     public_deps = [
-      ":network_sources",
+      ":network_browser_sources",
+      ":network_utility_sources",
     ]
   }
 }
 
-source_set("network_sources") {
+source_set("network_browser_sources") {
   # Depend on via ":network above.
   visibility = [
     ":network",
@@ -62,6 +66,38 @@ source_set("network_sources") {
     "//services/network/public/cpp",
     "//services/service_manager/public/cpp",
     "//services/service_manager/public/interfaces",
+  ]
+
+  if (enable_net_mojo) {
+    sources += [
+      "proxy_resolver_factory_mojo.cc",
+      "proxy_resolver_factory_mojo.h",
+      "proxy_service_mojo.cc",
+      "proxy_service_mojo.h",
+    ]
+
+    deps += [
+      "//net:net_browser_services",
+      "//net:net_utility_services",
+    ]
+  }
+}
+
+source_set("network_utility_sources") {
+  sources = [
+    "mojo_proxy_resolver_impl.cc",
+    "mojo_proxy_resolver_impl.h",
+    "mojo_proxy_resolver_v8_tracing_bindings.h",
+  ]
+
+  deps = [
+    "//base",
+    "//net:net_with_v8",
+  ]
+
+  public_deps = [
+    "//mojo/public/cpp/bindings",
+    "//net",
   ]
 }
 
