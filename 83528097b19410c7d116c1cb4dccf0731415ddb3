@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "821c6788_47eb5024",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 9
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-14T11:25:55Z",
+      "side": 1,
+      "message": "To give more detail, let me quote the grit documentation from https://www.chromium.org/developers/tools-we-use-in-chromium/grit/grit-users-guide\n\n\u003e The body of the \u003cmessage\u003e element is the text of the message. Inline in the text, you should use \u003cph\u003e elements to indicate nontranslateable sections. The \u003cph\u003e element has a single attribute, \u0027name\u0027, which you use to give the placeholder a name (which must be uppercase and should usually be descriptive, e.g. USERNAME or TIME_REMAINING). Apart from the nontranslateable text, the \u003cph\u003e element can contain a single\u003cex\u003e element which contains an example of what the placeholder could be replaced with. This is shown to the translator and could be e.g. \"Jói\" for a placeholder with a name of USERNAME.\n\nSo \u003cph\u003e elements are non-translatable and should be left as-is by the translation team, but they can include an example of how the code will modify the content. Code is free to do what it want, so it can search the value (SHARE_OPENING_ICON) to create a NSAttributedString, or it can do pattern substitution (which GetStringFUTF8 function do) to replace $1, $2, ... with values.\n\nIn your case, you would most likely use:\n\n  Signing in as \u003cph name\u003d\"NAME\"\u003e$1\u003cex\u003eJohn Doe\u003c/ex\u003e\u003c/ph\u003e\n\nSo the translation team will now that \u003cph\u003e will be substituted with a user name at runtime, and this correspond to the first parameter to GetStringFUTF8 (or its NSString wrapper variant).",
+      "parentUuid": "2a14ea44_f78f3122",
+      "range": {
+        "startLine": 561,
+        "startChar": 8,
+        "endLine": 561,
+        "endChar": 21
+      },
+      "revId": "83528097b19410c7d116c1cb4dccf0731415ddb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2dffbb3_798a05f0",
         "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
         "patchSetId": 9
