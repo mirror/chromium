@@ -143,8 +143,12 @@ WebString WebDocument::Title() const {
 }
 
 WebString WebDocument::ContentAsTextForTesting() const {
-  if (Element* document_element = ConstUnwrap<Document>()->documentElement())
-    return WebString(document_element->innerText());
+  if (Element* document_element = ConstUnwrap<Document>()->documentElement()) {
+    const bool convert_brs_to_newlines = true;
+    const bool skip_scripts_and_styles = true;
+    return WebString(document_element->textContent(convert_brs_to_newlines,
+                                                   skip_scripts_and_styles));
+  }
   return WebString();
 }
 

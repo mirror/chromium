@@ -86,7 +86,9 @@
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLDialogElement.h"
 #include "core/html/HTMLFrameOwnerElement.h"
+#include "core/html/HTMLScriptElement.h"
 #include "core/html/HTMLSlotElement.h"
+#include "core/html/HTMLStyleElement.h"
 #include "core/html/custom/CustomElement.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/LayoutBox.h"
@@ -1380,7 +1382,8 @@ const AtomicString& Node::lookupNamespaceURI(
   }
 }
 
-String Node::textContent(bool convert_brs_to_newlines) const {
+String Node::textContent(bool convert_brs_to_newlines,
+                         bool skip_scripts_and_styles) const {
   // This covers ProcessingInstruction and Comment that should return their
   // value when .textContent is accessed on them, but should be ignored when
   // iterated over as a descendant of a ContainerNode.
@@ -1401,7 +1404,10 @@ String Node::textContent(bool convert_brs_to_newlines) const {
     if (isHTMLBRElement(node) && convert_brs_to_newlines) {
       content.Append('\n');
     } else if (node.IsTextNode()) {
-      content.Append(ToText(node).data());
+      if (!skip_scripts_and_styles ||
+          (!Traversal<HTMLScriptElement>::FirstAncestor(node) &&
+           !Traversal<HTMLStyleElement>::FirstAncestor(node)))
+        content.Append(ToText(node).data());
     }
   }
   return content.ToString();
