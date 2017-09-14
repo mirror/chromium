@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17af9d4e_4209fb08",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-14T06:09:43Z",
+      "side": 1,
+      "message": "Nit: Make sure to update this in your buildflag CL.",
+      "revId": "9089174a64f579e8bf8ab079ac8ffd53d8ad003f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8748769c_2099ab0b",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-14T06:09:43Z",
+      "side": 1,
+      "message": "Are you sure this is where you want this, and not in NewIncognitoWindow() itself?  For example, it looks like this would miss usage of the \"go incognito\" button in the profile chooser window.",
+      "revId": "9089174a64f579e8bf8ab079ac8ffd53d8ad003f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
