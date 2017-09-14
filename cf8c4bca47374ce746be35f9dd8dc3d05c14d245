@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "6310d8d9_f42c68c9",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-14T18:50:09Z",
+      "side": 1,
+      "message": "After some manual testing, I found that:\n(1) if user navigate away from chrome://settings page  onJavascriptDisallowed() will be called\n(2) if user close chrome://settings page, onJavascriptDisallowed() will NOT be called, \n\nSo it seems I still need to call RemoveObserver() in dtor to make sure it is correctly unobserved.\nLet me know if I missed something here.\nUpdated comments too.",
+      "parentUuid": "ad39ea62_7e21b1c9",
+      "revId": "cf8c4bca47374ce746be35f9dd8dc3d05c14d245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f428db7a_f91d1d9e",
         "filename": "chrome/browser/ui/webui/settings/change_password_handler.h",
         "patchSetId": 16
