@@ -191,9 +191,10 @@ gpu::CollectInfoResult CollectDriverInfo(gpu::GPUInfo* gpu_info) {
 
   if (temp_surface == EGL_NO_SURFACE) {
     eglDestroyContextFn(temp_display, temp_context);
-    LOG(FATAL)
+    LOG(ERROR)
         << "failed to create a pbuffer surface for fetching driver strings. "
         << errorstr();
+    return gpu::kCollectInfoFatalFailure;
   }
 
   eglMakeCurrentFn(temp_display, temp_surface, temp_surface, temp_context);
