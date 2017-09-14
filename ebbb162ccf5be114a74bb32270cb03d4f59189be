@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89241d06_e50b1ab6",
+        "filename": "content/common/DEPS",
+        "patchSetId": 13
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-14T21:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "452a8851_f66543da",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f278c078_8e9fcc56",
         "filename": "third_party/WebKit/Source/core/dom/MessageChannel.cpp",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b51d090_7cf87b23",
+        "filename": "third_party/WebKit/Source/core/dom/MessageChannel.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-14T21:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f278c078_8e9fcc56",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cf478ac2_b3dc57f2",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-14T21:50:38Z",
+      "side": 1,
+      "message": "Yeah... although it feels slightly more redundant, since !IsEntangled already implies !IsNeutered... but of course the check is effectively the same as this explicit handle check, so changing it shouldn\u0027t be too bad. Changed here (and a couple of other places that had similar checks).",
+      "parentUuid": "7b8f942e_1dfcb859",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e5e0e56_ffbd6e20",
         "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020f0c2f_84549d90",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-14T21:50:38Z",
+      "side": 1,
+      "message": "Yeah, the various vector conversions are kind of annoying. I do think it might be best to just leave that for a future CL for now though, as there is more we can do other than just change types to use base::span.\n\nFor example in https://chromium-review.googlesource.com/c/chromium/src/+/665883/1 or https://chromium-review.googlesource.com/c/chromium/src/+/667401/1 at least this particular piece of code no longer has to convert between types anymore, instead that will be in blink specific struct traits for the MessagePortMessage struct. But I\u0027m not quite decided yet on what the best approach for something like that would be. Also something I\u0027d like to experiment with (but not sure when I\u0027ll get to that) is get rid of blink::MessagePortChannel completely, using just a mojo::ScopedMessagePipeHandle directly (with something to still be able to pass it over IPC). The code to read/write to a message pipe directly could actually be much simpler than the code needed to use the MessagePortChannel abstraction, especially if the serialization/deserialization is hidden in binding generated codes with typemaps and/or helper methods. And of course another possibility to simplify stuff would be to make MessagePort an actual mojom interface somehow, which also would let us offload most of what MessagePortChannel does to mojo bindings. So definitely still multiple steps of clean-up after this CL.",
+      "parentUuid": "8e5e0e56_ffbd6e20",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "09bebb0e_229b5c74",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-14T21:50:38Z",
+      "side": 1,
+      "message": "The comment for SetCallback \"This callback will be invoked on a background thread\" (and the comment for the MessageAvailable implementation) should hopefully make that clear, but yeah, doesn\u0027t hurt to also have a comment here.",
+      "parentUuid": "70dcfd88_78a3b807",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92158d74_3072ef33",
         "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
         "patchSetId": 13
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "c42ccaf0_c10c1293",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-14T21:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92158d74_3072ef33",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b089c5da_cb091b26",
         "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
         "patchSetId": 13
@@ -118,6 +226,24 @@
       "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2554b13_a61c8180",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-14T21:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b089c5da_cb091b26",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "1c99dc8c_47e6329f",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerRepositoryClient.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-14T21:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a83a5b15_f734dd5c",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bb2c78a_854ee28b",
         "filename": "third_party/WebKit/common/message_port/message_port_channel.h",
         "patchSetId": 13
@@ -169,6 +313,24 @@
       "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67bda8cf_08c29c92",
+        "filename": "third_party/WebKit/common/message_port/message_port_channel.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-14T21:50:38Z",
+      "side": 1,
+      "message": "Good point. Changed it to CreateFromHandles.",
+      "parentUuid": "5bb2c78a_854ee28b",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "ed5b19d9_3cd1b21b",
+        "filename": "third_party/WebKit/common/message_port/message_port_channel.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-14T21:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36fb44f6_25b10c94",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "675bdb18_dac83d46",
         "filename": "third_party/WebKit/public/BUILD.gn",
         "patchSetId": 13
@@ -203,6 +383,24 @@
       "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f85e321b_bf191135",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-14T21:50:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "675bdb18_dac83d46",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "1dea430d_a7e600da",
+        "filename": "third_party/WebKit/public/web/WebDOMMessageEvent.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-14T21:50:38Z",
+      "side": 1,
+      "message": "Not for this one. At least not without getting rid of the default argument values in the constructor below. Of course I could just have two constructors, one with and one without a ports argument to get the same API without having to have the default argument value be defined in the header file.\n\nChanging the WebVector to a base::span might actually also be enough to be able to get away with a forward declaration, as I guess that might work without having access to the full definition of its element type...",
+      "parentUuid": "331bfae9_3dc19d3f",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ad9ad2d_833bd9a1",
         "filename": "third_party/WebKit/public/web/WebSharedWorker.h",
         "patchSetId": 13
@@ -234,6 +450,41 @@
       "writtenOn": "2017-09-14T03:17:51Z",
       "side": 1,
       "message": "ditto: would a fwd decl suffice?",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a9b2b0_755fcd03",
+        "filename": "third_party/WebKit/public/web/WebSharedWorker.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-14T21:50:38Z",
+      "side": 1,
+      "message": "Here it would, done.",
+      "parentUuid": "4ad9ad2d_833bd9a1",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1aaa58bf_9d2b9313",
+        "filename": "third_party/WebKit/public/web/WebSharedWorkerRepositoryClient.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-14T21:50:38Z",
+      "side": 1,
+      "message": "I could also change this one to a forward declaration, if either the implementation of Connect() moves to a .cpp file, or it is changed to a pure virtual method. WDYT?",
       "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
