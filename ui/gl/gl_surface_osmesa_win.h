@@ -25,7 +25,8 @@ class GL_EXPORT GLSurfaceOSMesaWin : public GLSurfaceOSMesa {
   bool Initialize(GLSurfaceFormat format) override;
   void Destroy() override;
   bool IsOffscreen() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResult SwapBuffers(
+      std::vector<ui::LatencyInfo>* latency_info) override;
   bool SupportsPostSubBuffer() override;
   gfx::SwapResult PostSubBuffer(int x, int y, int width, int height) override;
 

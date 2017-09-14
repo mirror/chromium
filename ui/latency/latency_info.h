@@ -156,6 +156,10 @@ class LatencyInfo {
   static bool Verify(const std::vector<LatencyInfo>& latency_info,
                      const char* referring_msg);
 
+  // A helper to add INPUT_EVENT_LATENCY_TERMINATED_FRAME_SWAP_COMPONENT.
+  static void AddTerminatedFrameSwapComponent(
+      std::vector<LatencyInfo>* latency_info);
+
   // Copy LatencyComponents with type |type| from |other| into |this|.
   void CopyLatencyFrom(const LatencyInfo& other, LatencyComponentType type);
 

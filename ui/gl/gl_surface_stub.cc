@@ -19,7 +19,9 @@ bool GLSurfaceStub::IsOffscreen() {
   return false;
 }
 
-gfx::SwapResult GLSurfaceStub::SwapBuffers() {
+gfx::SwapResult GLSurfaceStub::SwapBuffers(
+    std::vector<ui::LatencyInfo>* latency_info) {
+  ui::LatencyInfo::AddTerminatedFrameSwapComponent(latency_info);
   return gfx::SwapResult::SWAP_ACK;
 }
 
