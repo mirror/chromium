@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da96ea09_ee8c069a",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-14T20:41:01Z",
+      "side": 1,
+      "message": "I\u0027m confused by this, especially since it is in BubbleViewDestroyed.",
+      "revId": "019aa712a7b0af1df2ed005be67d97ac06f8b016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
