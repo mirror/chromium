@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c48570f_6f4379f4",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-14T00:19:22Z",
+      "side": 1,
+      "message": "Where does the 0x7fffffff limitation come from?  Is it defined in the specification?",
+      "revId": "fe097b99028bba1592ce5e01b0b80e654e5a16ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
