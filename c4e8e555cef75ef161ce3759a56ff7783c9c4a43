@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fb4cef9_1cff440f",
+        "filename": "ui/gl/gl_switches.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-14T23:31:51Z",
+      "side": 1,
+      "message": "nit: these 2 flags don\u0027t exist in the .cc. remove from header?",
+      "revId": "c4e8e555cef75ef161ce3759a56ff7783c9c4a43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
