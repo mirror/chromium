@@ -162,6 +162,26 @@ enum class PlayPromiseRejectReason {
   kCount,
 };
 
+// Limits the range of playback rate.
+//
+// TODO(kylep): Revisit these.
+//
+// Vista has substantially lower performance than XP or Windows7. If you
+// speed up a video too much, it can't keep up, and rendering stops updating
+// except on the time bar. For really high speeds, audio becomes a bottleneck
+// and we just use up the data we have, which may not achieve the speed
+// requested, but will not crash the tab.
+//
+// A very slow speed, ie 0.00000001x, causes the machine to lock up. (It
+// seems like a busy loop). It gets unresponsive, although its not completely
+// dead.
+//
+// Also our timers are not very accurate (especially for ogg), which becomes
+// evident at low speeds and on Vista. Since other speeds are risky and
+// outside the norms, we think 1/16x to 16x is a safe and useful range for now.
+const double kMinRate = 0.0625;
+const double kMaxRate = 16.0;
+
 void ReportContentTypeResultToUMA(String content_type,
                                   MIMETypeRegistry::SupportsType result) {
   DEFINE_THREAD_SAFE_STATIC_LOCAL(
@@ -2135,8 +2155,20 @@ double HTMLMediaElement::playbackRate() const {
   return playback_rate_;
 }
 
-void HTMLMediaElement::setPlaybackRate(double rate) {
+void HTMLMediaElement::setPlaybackRate(double rate,
+                                       ExceptionState& exception_state) {
   BLINK_MEDIA_LOG << "setPlaybackRate(" << (void*)this << ", " << rate << ")";
+
+  // Limit rates to reasonable values by clamping.
+  // When |playback_rate_| is 0.0, the media is paused.
+  if (rate != 0.0 && (rate < kMinRate || rate > kMaxRate)) {
+    exception_state.ThrowDOMException(
+        kNotSupportedError,
+        "The value provided (" + String::Number(rate) + ") is not supported.");
+
+    // Do not update |playback_rate_|.
+    return;
+  }
 
   if (playback_rate_ != rate) {
     playback_rate_ = rate;
