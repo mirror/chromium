@@ -74,8 +74,7 @@ ui::TextInputClient* TextInputTestHelper::GetTextInputClient() const {
   return GetInputMethod()->GetTextInputClient();
 }
 
-void TextInputTestHelper::OnShowImeIfNeeded() {
-}
+void TextInputTestHelper::OnShowImeIfNeeded(bool transient_blur_check) {}
 
 void TextInputTestHelper::OnInputMethodDestroyed(
     const ui::InputMethod* input_method) {
