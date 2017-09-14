@@ -247,19 +247,22 @@ bool MP4StreamParser::ParseMoov(BoxReader* reader) {
     const SampleDescription& samp_descr =
         track->media.information.sample_table.description;
 
-    // TODO(wolenetz): When codec reconfigurations are supported, detect and
-    // send a codec reconfiguration for fragments using a sample description
-    // index different from the previous one. See https://crbug.com/748250.
     size_t desc_idx = 0;
-    for (size_t t = 0; t < moov_->extends.tracks.size(); t++) {
-      const TrackExtends& trex = moov_->extends.tracks[t];
-      if (trex.track_id == track->header.track_id) {
-        desc_idx = trex.default_sample_description_index;
-        break;
+    if (track->media.handler.type == kAudio ||
+        track->media.handler.type == kVideo) {
+      // TODO(wolenetz): When codec reconfigurations are supported, detect and
+      // send a codec reconfiguration for fragments using a sample description
+      // index different from the previous one. See https://crbug.com/748250.
+      for (size_t t = 0; t < moov_->extends.tracks.size(); t++) {
+        const TrackExtends& trex = moov_->extends.tracks[t];
+        if (trex.track_id == track->header.track_id) {
+          desc_idx = trex.default_sample_description_index;
+          break;
+        }
       }
+      RCHECK(desc_idx > 0);
+      desc_idx -= 1;  // BMFF descriptor index is one-based
     }
-    RCHECK(desc_idx > 0);
-    desc_idx -= 1;  // BMFF descriptor index is one-based
 
     if (track->media.handler.type == kAudio) {
       detected_audio_track_count++;
