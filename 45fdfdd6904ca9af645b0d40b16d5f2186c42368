@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9518bcbb_797dd5c4",
+        "filename": "services/ui/ws/ids.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-14T16:40:31Z",
+      "side": 1,
+      "message": "This function implies there is a 1:1 mapping between WindowId and ClientWindowId, which is not necessarily the case. I think this is error prone. Could you remove this?",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 43
+      },
+      "revId": "45fdfdd6904ca9af645b0d40b16d5f2186c42368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
