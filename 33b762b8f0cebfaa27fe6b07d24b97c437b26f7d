@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "711fe7bf_cafd11e8",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1129011
+      },
+      "writtenOn": "2017-09-14T19:58:40Z",
+      "side": 1,
+      "message": "Hmm, I think this should be static_cast, otherwise we\u0027re interpreting base class (leveldb::DB) as TrackedDB. It looks like it works now only because we\u0027re not touching TrackedDB specific stuff in GetOrCreateAllocatorDump().\n\nAlso, std::hex in DCHECK() above is not needed, since we\u0027re inserting pointer, which is always formatted as hex.",
+      "range": {
+        "startLine": 1354,
+        "startChar": 34,
+        "endLine": 1354,
+        "endChar": 50
+      },
+      "revId": "33b762b8f0cebfaa27fe6b07d24b97c437b26f7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
