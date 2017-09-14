@@ -301,9 +301,16 @@ Persistence.IsolatedFileSystem = class {
     else
       reader.readAsText(blob);
     await fileContentsLoadedPromise;
-    if (reader.error)
+    if (reader.error) {
+      console.error('Can\'t read file: ' + path + ': ' + reader.error);
       return null;
-    var result = reader.result;
+    }
+    try {
+      var result = reader.result;
+    } catch (e) {
+      result = null;
+      console.error('Can\'t read file: ' + path + ': ' + e);
+    }
     if (result === undefined)
       return null;
     return result;
