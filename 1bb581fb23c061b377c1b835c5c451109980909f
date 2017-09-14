@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "6513c849_73314ed6",
+        "filename": "docs/design/threading.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-14T14:45:18Z",
+      "side": 1,
+      "message": "This file is superseded by https://chromium.googlesource.com/chromium/src/+/lkcr/docs/threading_and_tasks.md (UI and IO threads, keeping the browser responsive, posting task, cancelling tasks) and https://chromium.googlesource.com/chromium/src/+/lkcr/docs/callback.md (Bind).",
+      "revId": "1bb581fb23c061b377c1b835c5c451109980909f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd60e6d_bcb754fd",
+        "filename": "docs/design/threading.md",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-14T14:45:18Z",
+      "side": 1,
+      "message": "Deprecated",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "1bb581fb23c061b377c1b835c5c451109980909f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa15eb48_9cf8d4b8",
         "filename": "ios/web/app/web_main_loop.mm",
         "patchSetId": 13
