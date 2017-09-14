@@ -335,6 +335,13 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
       feature_engagement::NewTabTrackerFactory::GetInstance()
           ->GetForProfile(profile())
           ->OnNewTabOpened();
+      if (feature_engagement::NewTabTrackerFactory::GetInstance()
+              ->GetForProfile(profile())
+              ->CloseBubble()) {
+        feature_engagement::NewTabTrackerFactory::GetInstance()
+            ->GetForProfile(profile())
+            ->OnPromoClosed();
+      }
 #endif
       NewTab(browser_);
       break;

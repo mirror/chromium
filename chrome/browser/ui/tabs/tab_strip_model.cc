@@ -925,6 +925,13 @@ void TabStripModel::ExecuteContextMenuCommand(
       feature_engagement::NewTabTrackerFactory::GetInstance()
           ->GetForProfile(profile_)
           ->OnNewTabOpened();
+      if (feature_engagement::NewTabTrackerFactory::GetInstance()
+              ->GetForProfile(profile_)
+              ->CloseBubble()) {
+        feature_engagement::NewTabTrackerFactory::GetInstance()
+            ->GetForProfile(profile_)
+            ->OnPromoClosed();
+      }
 #endif
 
       delegate()->AddTabAt(GURL(), context_index + 1, true);
