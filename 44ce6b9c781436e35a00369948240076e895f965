@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "406393b9_26fcd5a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-14T17:06:39Z",
+      "side": 1,
+      "message": "TEST\u003d line is missing?",
+      "revId": "44ce6b9c781436e35a00369948240076e895f965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee2f86b_d2b50ca3",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-14T17:06:39Z",
+      "side": 1,
+      "message": "IIUC, this needs to be called on UI thread? If so, could you add DCHECK_CURRENTLY_ON(UI)?",
+      "revId": "44ce6b9c781436e35a00369948240076e895f965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11df03e5_398df044",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-14T17:06:39Z",
+      "side": 1,
+      "message": "nit: Could you use BindOnce for consistency with other PostTask call in ARC code?",
+      "revId": "44ce6b9c781436e35a00369948240076e895f965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44443280_3f0141ce",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-14T17:06:39Z",
+      "side": 1,
+      "message": "Ditto. BindOnce, please.",
+      "revId": "44ce6b9c781436e35a00369948240076e895f965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2afeca7_4be5d51c",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-14T17:06:39Z",
+      "side": 1,
+      "message": "Clarification: is it ok to ignore the error here, instead of returning to the D-Bus method caller via ChromeVirtualFileRequestServiceProviderDelegate::HandleReadRequest?",
+      "revId": "44ce6b9c781436e35a00369948240076e895f965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d287a9b_546c02d9",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-14T17:06:39Z",
+      "side": 1,
+      "message": "nit: const GURL\u0026 ?",
+      "revId": "44ce6b9c781436e35a00369948240076e895f965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93dc1ad8_5cc3e87a",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-14T17:06:39Z",
+      "side": 1,
+      "message": "nit/optional: How about moving these below the |observer_list_|?\n|profile_| looks closer to |bridge_service_| etc.",
+      "revId": "44ce6b9c781436e35a00369948240076e895f965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
