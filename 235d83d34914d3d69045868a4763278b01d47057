@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "acff02de_568cdebf",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-14T15:52:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "332682c0_665c168e",
+      "range": {
+        "startLine": 1082,
+        "startChar": 9,
+        "endLine": 1082,
+        "endChar": 26
+      },
+      "revId": "235d83d34914d3d69045868a4763278b01d47057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99f789ff_dfd43068",
         "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "13db28f3_e76ec086",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-14T15:52:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99f789ff_dfd43068",
+      "range": {
+        "startLine": 1086,
+        "startChar": 6,
+        "endLine": 1086,
+        "endChar": 12
+      },
+      "revId": "235d83d34914d3d69045868a4763278b01d47057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24e37b72_dbc232a3",
         "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "235d83d34914d3d69045868a4763278b01d47057",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8ba6dc_b0c3530f",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-09-14T15:52:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24e37b72_dbc232a3",
+      "range": {
+        "startLine": 1091,
+        "startChar": 6,
+        "endLine": 1091,
+        "endChar": 12
+      },
+      "revId": "235d83d34914d3d69045868a4763278b01d47057",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
