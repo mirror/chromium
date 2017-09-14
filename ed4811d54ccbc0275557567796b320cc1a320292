@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "e6dddc0f_a03343ed",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-14T10:42:22Z",
+      "side": 1,
+      "message": "Let\u0027s go with InitiateInternalModuleScriptGraphFetching as you proposed.",
+      "parentUuid": "e01fc3cd_005ffc31",
+      "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "525ea6e1_66ef85e8",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
         "patchSetId": 13
