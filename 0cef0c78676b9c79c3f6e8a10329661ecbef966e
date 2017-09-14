@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b80c4d55_e6e3366e",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1105,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-14T09:43:02Z",
+      "side": 1,
+      "message": "RemoveAfterDelay post a task with a WeakPtr to the ExternalFileRemover. Since the variable is owned by the std::unique_ptr\u003c\u003e it will destroyed when it goes out of scope, so before the posted task executes. Moreover, ExternalFileRemover lifetime needs to be tied to that of ChromeBrowserState.\n\nTo me, this scream \"KeyedService\". It should be pretty straightforward to implement by doing:\n\n  class ExternalFileRemover : public KeyedService {\n   public:\n    ExternalFileRemover() \u003d default;\n    ~ExternalFileRemover() override \u003d default;\n\n    // Post a delayed task to clean up the files received from other applications.\n    // |callback| is called when the clean up has finished; it may be null.\n    virtual void RemoveAfterDelay(base::TimeDelta delay,\n                                  base::OnceClosure callback) \u003d 0;\n\n   private:\n    DISALLOW_COPY_AND_ASSIGN(ExternalFileRemover);\n  };\n\n  class ExternalFileRemoverImpl : public ExternalFileRemover,\n                                  public sessions::TabRestoreServiceObserver {\n   public:\n    ExternalFileRemoverImpl(\n        ios::ChromeBrowserState* browser_state,\n        sessions::TabRestoreService* tab_restore_service);\n    ~ExternalFileRemoverImpl() override;\n\n    // void ExternalFileRemover methods\n    void RemoveAfterDelay(base::TimeDelta delay,\n                          base::OnceClosure callback) override;\n\n    // KeyedService methods\n    void Shutdown() override;\n\n    // sessions::TabRestoreServiceObserver methods\n    void TabRestoreServiceChanged(sessions::TabRestoreService* service) override;\n    void TabRestoreServiceDestroyed(\n        sessions::TabRestoreService* service) override;\n\n   private:\n    struct DelayedFileRemoveRequest {\n      bool remove_all_files;\n      base::ScopedClosureRunner closure_runner;\n    };\n\n    void Remove(bool all_files, base::ScopedClosureRunner closure_runner);\n    void RemoveFiles(bool all_files, base::ScopedClosureRunner closure_runner);\n    NSSet* GetReferencedExternalFiles();\n\n    std::vector\u003cDelayedFileRemoveRequest\u003e delayed_file_remove_requests_;\n    sessions::TabRestoreService* tab_restore_service_ \u003d nullptr;\n    ios::ChromeBrowserState* browser_state_ \u003d nullptr;\n    base::WeakPtrFactory\u003cExternalFileRemover\u003e weak_ptr_factory_;\n\n    DISALLOW_COPY_AND_ASSIGN(ExternalFileRemoverImpl);\n  };\n\n  namespace {\n  void RunCallback(case::ScopedClosureRunner closure_runner) {}\n  }  // namespace\n\n  ExternalFileRemoverImpl::ExternalFileRemoverImpl(\n      ios::ChromeBrowserState* browser_state,\n      sessions::TabRestoreService* tab_restore_service)\n      : browser_state_(browser_state),\n        tab_restore_service(tab_restore_service_),\n        weak_ptr_factory_(this) {\n    DCHECK(tab_restore_service_);\n    tab_restore_service_-\u003eAddObserver(this);\n  }\n\n  ExternalFileRemoverImpl::~ExternalFileRemoverImpl() {\n    DCHECK(!tab_restore_service_);\n  }\n\n  void ExternalFileRemoverImpl::RemoveAfterDelay(base::TimeDelta delay,\n                                                 base::OnceClosure callback) {\n    DCHECK_CURRENTLY_ON(web::WebThread::UI);\n    bool remove_all_files \u003d delay \u003d\u003d base::TimeDelta::FromSeconds(0);\n    base::ThreadTaskRunnerHandle::Get()-\u003ePostDelayedTask(\n        base::Bind(\u0026ExternalFileRemoverImpl::RemoveFiles,\n                   weak_ptr_factory_.GetWeakPtr(),\n                   remove_all_files,\n                   base::ScopedClosureRunner(std::move(callback))));\n  }\n\n  ExternalFileRemoverImpl::Shutdown() {\n    if (tab_restore_service_) {\n      tab_restore_service_-\u003eRemoveObserver(this);\n      tab_restore_service_ \u003d nullptr;\n    }\n    delayed_file_remove_requests_.clear();\n  }\n\n  void ExternalFileRemoverImpl::TabRestoreServiceChanged(\n      sessions::TabRestoreService* service) {\n    if (!service-\u003eIsLoaded())\n      return;\n\n    tab_restore_service_-\u003eRemoveObserver(this);\n    tab_restore_service_ \u003d nullptr;\n\n    std::vector\u003cDelayedFileRemoveRequest\u003e delayed_file_remove_requests;\n    delayed_file_remove_requests \u003d std::move(delayed_file_remove_requests_);\n    for (DelayedFileRemoveRequest\u0026 request : delayed_file_remove_requests) {\n      RemoveFiles(request.remove_all_files, std::move(request.closure_runner));\n    }\n  }\n\n  void ExternalFileRemoverImpl::TabRestoreServiceDestroyed(\n      sessions::TabRestoreService* service) {\n    NOTREACHED() \u003c\u003c \"Should never happen as unregistration happen in Shutdown\";\n  }\n\n  void ExternalFileRemoverImpl::Remove(bool all_files,\n                                       base::ScopedClosureRunner closure_runner) {\n    if (!tab_restore_service_) {\n      RemoveFiles(all_files, std::move(closure_runner));\n      return;\n    }\n\n    DCHECK(!tab_restore_service_-\u003eIsLoaded());\n    DelayedFileRemoveRequest request \u003d { all_files, std::move(closure_runner) };\n    delayed_file_remove_requests_.push_back(std::move(request));\n    tab_restore_service_-\u003eLoadTabsFromLastSession();\n  }\n  \n  void ExternalFileRemover::RemoveFiles(bool all_files,\n                                        base::ScopedClosureRunner closure_runner) {\n    NSSet* referenced_files \u003d all_files ? GetReferencedExternalFiles() : nil;\n\n    const NSInteger kMinimumAgeInDays \u003d 30;\n    NSInteger age_in_days \u003d all_files ? 0 : kMinimumAgeInDays;\n\n    base::PostTaskWithTraitsAndReply(\n        FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND},\n        base::BindBlockArc(^{\n          [ExternalFileController removeFilesExcluding:referenced_files\n                                             olderThan:age_in_days];\n        }),\n        base::Bind(\u0026RunCallback, std::move(closure_runner));\n  }\n\n  \n  NSSet* ExternalFileRemoverImpl::GetReferencedExternalFiles() {\n    ...  // no changes\n  }\n\nThen this code would just do the following (assuming a factory exists):\n\n  ExternalFileRemoverFactory::GetForBrowserState(browser_state)\n      -\u003eRemoveAfterDelay(\n          base::TimeDelta::FromSeconds(kExternalFilesCleanupDelaySeconds),\n          base::OnceCallback());",
+      "range": {
+        "startLine": 1105,
+        "startChar": 4,
+        "endLine": 1105,
+        "endChar": 40
+      },
+      "revId": "0cef0c78676b9c79c3f6e8a10329661ecbef966e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d16b0c_5c2751ee",
+        "filename": "ios/chrome/browser/browsing_data/browsing_data_removal_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-14T09:43:02Z",
+      "side": 1,
+      "message": "ditto, this won\u0027t work",
+      "revId": "0cef0c78676b9c79c3f6e8a10329661ecbef966e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
