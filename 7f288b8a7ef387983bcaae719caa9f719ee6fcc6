@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a389443_fb6f1c12",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T16:37:13Z",
+      "side": 1,
+      "message": "these days we tend to avoid raw pointers / new as possible to avoid leaks while refactoring code.\nA safer way to rewrite this is:\n\nauto it_and_inserted \u003d dumps.emplace(process_id, base::MakeUnique\u003cProcessDump\u003e(nullptr))\nreturn it_and_inserted.second ? it.first : nullptr;",
+      "range": {
+        "startLine": 14,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 14
+      },
+      "revId": "7f288b8a7ef387983bcaae719caa9f719ee6fcc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef8d9e5d_75fd9aec",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T16:37:13Z",
+      "side": 1,
+      "message": "For readability I prefer to avoid auto if the full type stays in the line, makes it easier for the next person to quickly see the type.\nauto FTW instead to avoid longer things like map\u003cfoo,bar\u003e::consT_iterator etc etc",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 6
+      },
+      "revId": "7f288b8a7ef387983bcaae719caa9f719ee6fcc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed21909f_57efbae9",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T16:37:13Z",
+      "side": 1,
+      "message": "nit remove braces for cases where if () and the statement fit on a line",
+      "range": {
+        "startLine": 37,
+        "startChar": 12,
+        "endLine": 37,
+        "endChar": 14
+      },
+      "revId": "7f288b8a7ef387983bcaae719caa9f719ee6fcc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e426887_0b469d04",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T16:37:13Z",
+      "side": 1,
+      "message": "ditto about makeunique patterns",
+      "range": {
+        "startLine": 40,
+        "startChar": 1,
+        "endLine": 40,
+        "endChar": 45
+      },
+      "revId": "7f288b8a7ef387983bcaae719caa9f719ee6fcc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17806b5c_4ad04b3b",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T16:37:13Z",
+      "side": 1,
+      "message": "as a general comment I think would be better to keep the  \"Create\" methods private with some friend access, so it\u0027s clear that public clients are supposed to get read-only access to this",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 6
+      },
+      "revId": "7f288b8a7ef387983bcaae719caa9f719ee6fcc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "518a1caf_43e076f6",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T16:37:13Z",
+      "side": 1,
+      "message": "if possible I\u0027ll make all these const and initialized by the ctor.\nIf not make them private and add public accessors (again, so that it\u0027s read-only for clients)",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 31
+      },
+      "revId": "7f288b8a7ef387983bcaae719caa9f719ee6fcc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c30c5641_58885e5f",
+        "filename": "services/resource_coordinator/memory_instrumentation/graph_processor.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T16:37:13Z",
+      "side": 1,
+      "message": "if you don\u0027t need any state maybe you can just get rid of this class and have a global function in the memory_instrumentation namespace, something like\n\nnamespace memory_instrumentation {\nstd::unique_ptr\u003cGlobalDump\u003e ProcessGlobalDump(unique_ptr\u003cmojom::RawMemoryDump\u003e, ...options you might need)\n}",
+      "range": {
+        "startLine": 18,
+        "startChar": 1,
+        "endLine": 24,
+        "endChar": 46
+      },
+      "revId": "7f288b8a7ef387983bcaae719caa9f719ee6fcc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
