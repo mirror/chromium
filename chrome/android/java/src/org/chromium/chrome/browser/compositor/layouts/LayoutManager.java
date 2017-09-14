@@ -150,6 +150,11 @@ public class LayoutManager
         setNextLayout(null);
     }
 
+    @Override
+    public CompositorAnimationHandler getAnimationHandler() {
+        return mAnimationHandler;
+    }
+
     /**
      * @return The actual current time of the app in ms.
      */
