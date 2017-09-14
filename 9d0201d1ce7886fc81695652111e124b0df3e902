@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "23eaa5af_4583877c",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T10:01:26Z",
+      "side": 1,
+      "message": "Yeah, the centralized state would be clearer. I remade the state management using enums.",
+      "parentUuid": "c99bc85d_c43354d7",
+      "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48c57eae_11200455",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 27
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "48e120f4_34945bd1",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T10:01:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48c57eae_11200455",
+      "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa581fb9_966cd6f8",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
         "patchSetId": 27
@@ -65,6 +101,24 @@
       "writtenOn": "2017-09-14T05:57:59Z",
       "side": 1,
       "message": "My comment was meant more as an add-on, instead of replacing  the existing stuff: it\u0027s still good to mention is used for loading the script for a new (installing) service worker.\n\nThis is the URLLoader used for loading scripts for a new (installing) service worker. It fetches the script (the main script or imported script) from network, and returns the response to |client|, while also writing the response into service worker script storage.",
+      "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d35214c9_b348bf57",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T10:01:26Z",
+      "side": 1,
+      "message": "Hm... yeah, it\u0027s better to clearly mention it. Done.\n\nI thought \"fetches the script (the main script or imported script)\" implies this class is used for a new installing service worker, so omitted it.",
+      "parentUuid": "aa581fb9_966cd6f8",
       "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "126b06e4_4a197212",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T10:01:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8479e87f_c9bef024",
+      "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99cb9512_e72ce83f",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
         "patchSetId": 27
@@ -99,6 +171,24 @@
       "writtenOn": "2017-09-14T05:45:54Z",
       "side": 1,
       "message": "I see your point but I\u0027m not very happy with \"forwarding\", it sounds like the client is doing something special that makes it different than a normal client. \"forwarding_client\" sounds like the client is forwarding... much like \"receiving_client\" would mean the client is receiving.\n\nI\u0027m struggling to come up with a better name though. I still would prefer |client_| and |client_producer_| here.. Or |script_loader_client_| and |script_loader_producer_|?",
+      "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbff3223_96eefe02",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T10:01:26Z",
+      "side": 1,
+      "message": "Fair enough. Renamed as follows:\n\n|forwarding_client_| -\u003e |client_|\n|forwarding_producer_| -\u003e |client_producer_|\n|forwarding_consumer_| -\u003e |client_consumer_|",
+      "parentUuid": "99cb9512_e72ce83f",
       "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "42a291d5_a19d2480",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T10:01:26Z",
+      "side": 1,
+      "message": "We use MojoToNetIOBuffer in ServiceWorkerScriptURLLoader.\n\nUpdated the comment. Does this make sense?",
+      "parentUuid": "2a3a353a_0ec89410",
+      "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "864bbc15_7949f0ad",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
         "patchSetId": 27
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "e588e484_4110b2c1",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T10:01:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "864bbc15_7949f0ad",
+      "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7f0ad96_bab37245",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
         "patchSetId": 27
@@ -153,6 +279,24 @@
       "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd45f662_475281fc",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-14T10:01:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7f0ad96_bab37245",
+      "revId": "9d0201d1ce7886fc81695652111e124b0df3e902",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
