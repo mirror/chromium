@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11f425b3_7aa7767f",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1150655
+      },
+      "writtenOn": "2017-09-14T05:47:39Z",
+      "side": 1,
+      "message": "I am not sure how to address build failure for some platforms, as `kEnableAutomation` is also defined in chrome/common/chrome_switches.h.\n```\nerror: obj/chrome/common/libconstants.a(chrome_switches.o): multiple definition of \u0027switches::kEnableAutomation\u0027\nobj/content/public/common/common_sources/content_switches.o: previous definition here\n```\nOn the other hand, I cannot include chrome_switches from runtime_features, where I am using it.:(",
+      "revId": "1dcddaddf2033f56458188f64fe89e26b3db2810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
