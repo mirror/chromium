@@ -1017,6 +1017,24 @@
     },
     {
       "key": {
+        "uuid": "0d23eb9f_551f5d5c",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-14T17:15:34Z",
+      "side": 1,
+      "message": "I actually checked this, and surprisingly enough, this is valid shorthand for declaring a var of a certain type.\n\nSee variable declarations in https://github.com/google/closure-compiler/wiki/Annotating-Types\n\nconst /** number */ memUsed \u003d memory.total - memory.available + \u0027x\u0027;\n\nfails whereas\n\nconst memUsed \u003d memory.total - memory.available + \u0027x\u0027;\n\ndoes not.\n\nWhether or not it\u0027s valuable to annotate types that can be inferred is another question. Whatever decision we make, we should update the style guide to reflect that.",
+      "parentUuid": "5c663daa_2b906b7b",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05d7cf22_9065d5e2",
         "filename": "chrome/browser/resources/sys_internals/index.js",
         "patchSetId": 2

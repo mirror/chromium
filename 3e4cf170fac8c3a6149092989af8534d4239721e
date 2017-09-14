@@ -90,6 +90,69 @@
     },
     {
       "key": {
+        "uuid": "222a53d5_0f176b23",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-14T17:15:34Z",
+      "side": 1,
+      "message": "It would be better to have all the top level vars all grouped at the top so that they\u0027re easy to find.",
+      "revId": "3e4cf170fac8c3a6149092989af8534d4239721e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43570ca_f7e419ff",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-14T17:15:34Z",
+      "side": 1,
+      "message": "Call this doUpdate.",
+      "range": {
+        "startLine": 184,
+        "startChar": 10,
+        "endLine": 184,
+        "endChar": 19
+      },
+      "revId": "3e4cf170fac8c3a6149092989af8534d4239721e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c2d9c4_2a429675",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-14T17:15:34Z",
+      "side": 1,
+      "message": "Percentage",
+      "range": {
+        "startLine": 410,
+        "startChar": 4,
+        "endLine": 410,
+        "endChar": 21
+      },
+      "revId": "3e4cf170fac8c3a6149092989af8534d4239721e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c072c2b1_39366f07",
         "filename": "chrome/test/data/webui/sys_internals/page_switch_test.js",
         "patchSetId": 6

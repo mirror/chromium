@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "60948651_cb407cfb",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-14T17:15:34Z",
+      "side": 1,
+      "message": "I still would prefer the default values to be returned by a function. Maybe initDataSeries/GeneralInfo.\n\nGiven that initDataSeries is called basically immediately, and assigns all of the data series anyway, why not just have let dataSeries \u003d null, and then dataSeries \u003d initDataSeries() in initialize()?",
+      "parentUuid": "77462ed4_c392a021",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 2
+      },
+      "revId": "d7569cdc417077fe570d5d1afdda4ba500a8f71d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44bce4f4_93399be8",
         "filename": "chrome/browser/resources/sys_internals/index.js",
         "patchSetId": 4
