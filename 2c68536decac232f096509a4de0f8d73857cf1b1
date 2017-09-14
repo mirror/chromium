@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69ffd04b_3f8e8ef1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-14T15:26:35Z",
+      "side": 0,
+      "message": "Do compact infobars not have a default message any more? What if you kept this and override the translate message to return super.getAccessibilityText() + myText?",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 96
+      },
+      "revId": "2c68536decac232f096509a4de0f8d73857cf1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
