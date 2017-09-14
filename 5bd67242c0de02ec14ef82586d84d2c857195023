@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77d2b7db_a2292871",
+        "filename": "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-14T13:50:40Z",
+      "side": 1,
+      "message": "Why not just deleting the view?\nBTW, check that RemoveChildView below doesn\u0027t cause a memory leak. I suspect it does.",
+      "range": {
+        "startLine": 537,
+        "startChar": 18,
+        "endLine": 537,
+        "endChar": 28
+      },
+      "revId": "5bd67242c0de02ec14ef82586d84d2c857195023",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
