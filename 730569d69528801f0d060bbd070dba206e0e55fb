@@ -22,6 +22,30 @@
       "revId": "730569d69528801f0d060bbd070dba206e0e55fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecea64a3_b41bd9a8",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-09-14T23:55:48Z",
+      "side": 1,
+      "message": "I was reading this: https://engdoc.corp.google.com/eng/doc/devguide/coding/testing/unit-testing-best-practices.shtml?cl\u003dhead#structure\n\nand it mentioned we should assert at the end of our tests. I\u0027ve been doing it for the last ~10 CLs I\u0027ve landed with tests.",
+      "parentUuid": "22e4d0f0_1507601d",
+      "range": {
+        "startLine": 306,
+        "startChar": 2,
+        "endLine": 306,
+        "endChar": 8
+      },
+      "revId": "730569d69528801f0d060bbd070dba206e0e55fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
