@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ae5d1ad4_8541e878",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-14T05:55:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcf62861_880ae981",
+      "range": {
+        "startLine": 17,
+        "startChar": 11,
+        "endLine": 17,
+        "endChar": 39
+      },
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d18de6cd_f51e4d35",
         "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c66ebe07_085a207e",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-14T05:55:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d18de6cd_f51e4d35",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2429aec_e0e9559c",
         "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-06T15:05:27Z",
       "side": 1,
       "message": "Do you need the enum prefix here?",
+      "range": {
+        "startLine": 27,
+        "startChar": 9,
+        "endLine": 27,
+        "endChar": 37
+      },
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f1610a_60804b76",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-14T05:55:22Z",
+      "side": 1,
+      "message": "You do for enum classes.  They\u0027re much shorter now though.",
+      "parentUuid": "c2429aec_e0e9559c",
       "range": {
         "startLine": 27,
         "startChar": 9,
@@ -91,6 +163,30 @@
       "revId": "85842884177a6211e5763cf4fe45228753964acf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63cda1cb_a8651a7c",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-14T05:55:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f63cd502_6bb5b353",
+      "range": {
+        "startLine": 51,
+        "startChar": 37,
+        "endLine": 51,
+        "endChar": 44
+      },
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -129,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "6f82e4e9_3f602126",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-14T05:55:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c356df8e_ed0dcee8",
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba056fa3_69928f6d",
         "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
         "patchSetId": 4
@@ -149,6 +263,30 @@
       "revId": "85842884177a6211e5763cf4fe45228753964acf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87c6ec3_50cd68f3",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-14T05:55:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba056fa3_69928f6d",
+      "range": {
+        "startLine": 140,
+        "startChar": 31,
+        "endLine": 140,
+        "endChar": 39
+      },
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +313,30 @@
     },
     {
       "key": {
+        "uuid": "4af3c139_e0c84690",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-14T05:55:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa0592a2_d515242d",
+      "range": {
+        "startLine": 246,
+        "startChar": 8,
+        "endLine": 246,
+        "endChar": 34
+      },
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "441c8942_3097246a",
         "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
         "patchSetId": 4
@@ -198,6 +360,30 @@
     },
     {
       "key": {
+        "uuid": "f0212db1_d1a2febf",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-14T05:55:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "441c8942_3097246a",
+      "range": {
+        "startLine": 250,
+        "startChar": 8,
+        "endLine": 250,
+        "endChar": 34
+      },
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a96e77cf_7c722be6",
         "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/overlay_coordinator_test_util.h",
         "patchSetId": 4
@@ -218,6 +404,30 @@
       "revId": "85842884177a6211e5763cf4fe45228753964acf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba2366b_388a2ebf",
+        "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/overlay_coordinator_test_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-14T05:55:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a96e77cf_7c722be6",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -256,6 +466,24 @@
     },
     {
       "key": {
+        "uuid": "7a505de5_de204c3c",
+        "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/overlay_coordinator_test_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-14T05:55:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c28861f0_92e8ab46",
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d05c7da_52150784",
         "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/overlay_coordinator_test_util.mm",
         "patchSetId": 4
@@ -279,6 +507,30 @@
     },
     {
       "key": {
+        "uuid": "f00cddc3_61596e13",
+        "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/overlay_coordinator_test_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-14T05:55:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d05c7da_52150784",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 13
+      },
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "212d3dda_536b9bd6",
         "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/overlay_coordinator_test_util.mm",
         "patchSetId": 4
@@ -290,6 +542,30 @@
       "writtenOn": "2017-09-06T15:05:27Z",
       "side": 1,
       "message": "Any reason not to use the same AnimateAlongside technology here?",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 13
+      },
+      "revId": "85842884177a6211e5763cf4fe45228753964acf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a17a3e60_6af26f6f",
+        "filename": "ios/clean/chrome/browser/ui/overlays/test_helpers/overlay_coordinator_test_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-14T05:55:22Z",
+      "side": 1,
+      "message": "We use the transition coordinator there because we know that the function is called right after a presentation/dismissal action starts.  When we call that code in BrowserCoordinator, we know that if there\u0027s not transition coordinator, the presentation occurred with no animation and we can update state.  Since there\u0027s no guarantee when this function is called, we can\u0027t depend on that and must inspect view controller state directly.",
+      "parentUuid": "212d3dda_536b9bd6",
       "range": {
         "startLine": 22,
         "startChar": 2,
