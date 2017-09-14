@@ -53,6 +53,9 @@ class MediaSession {
   // |type| represents the origin of the request.
   virtual void Stop(SuspendType suspend_type) = 0;
 
+  // Return if the actual playback state is paused.
+  virtual bool IsActuallyPaused() const = 0;
+
   // Tell the media session a user action has performed.
   virtual void DidReceiveAction(blink::mojom::MediaSessionAction action) = 0;
 

@@ -395,6 +395,15 @@ void MediaSessionImpl::Stop(SuspendType suspend_type) {
   AbandonSystemAudioFocusIfNeeded();
 }
 
+bool MediaSessionImpl::IsActuallyPaused() const {
+  if (routed_service_ && routed_service_->playback_state() ==
+                             blink::mojom::MediaSessionPlaybackState::PLAYING) {
+    return false;
+  }
+
+  return !IsActive();
+}
+
 void MediaSessionImpl::StartDucking() {
   if (is_ducking_)
     return;
@@ -435,15 +444,6 @@ bool MediaSessionImpl::IsControllable() const {
   return audio_focus_state_ != State::INACTIVE &&
          audio_focus_type_ == AudioFocusManager::AudioFocusType::Gain &&
          one_shot_players_.empty();
-}
-
-bool MediaSessionImpl::IsActuallyPaused() const {
-  if (routed_service_ && routed_service_->playback_state() ==
-                             blink::mojom::MediaSessionPlaybackState::PLAYING) {
-    return false;
-  }
-
-  return !IsActive();
 }
 
 bool MediaSessionImpl::HasPepper() const {
