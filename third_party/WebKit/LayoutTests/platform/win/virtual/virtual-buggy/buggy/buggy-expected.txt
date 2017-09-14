@@ -1,0 +1,1 @@
+Win-only expectation in virtual test suite "virtual-buggy".

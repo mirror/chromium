@@ -538,5 +538,10 @@
     "prefix": "paint-timing",
     "base": "external/wpt/paint-timing",
     "args": ["--enable-threaded-compositing"]
+  },
+  {
+    "prefix": "virtual-buggy",
+    "base": "buggy",
+    "args": ["--garbage-arg"]
   }
 ]
