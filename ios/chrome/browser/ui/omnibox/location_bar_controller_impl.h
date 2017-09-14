@@ -44,6 +44,8 @@ class LocationBarControllerImpl : public LocationBarController {
                             id<BrowserCommands> dispatcher);
   ~LocationBarControllerImpl() override;
 
+  OmniboxViewIOS* GetEditView() { return edit_view_.get(); };
+
   // OmniboxEditController implementation
   void OnAutocompleteAccept(const GURL& url,
                             WindowOpenDisposition disposition,
@@ -86,6 +88,7 @@ class LocationBarControllerImpl : public LocationBarController {
   bool show_hint_text_;
   __strong UIButton* clear_text_button_;
   std::unique_ptr<OmniboxViewIOS> edit_view_;
+
   __strong OmniboxClearButtonBridge* clear_button_bridge_;
   // A bridge from a UIControl action to the dispatcher to display a page
   // info popup.

@@ -39,20 +39,21 @@ using base::UserMetricsAction;
 
 OmniboxPopupViewIOS::OmniboxPopupViewIOS(
     ios::ChromeBrowserState* browser_state,
-    OmniboxEditModel* edit_model,
+    OmniboxClient* client,
+    AutocompleteController* autocomplete_controller,
     OmniboxPopupViewSuggestionsDelegate* delegate,
+    OmniboxPopupModelDelegate* popup_model_delegate,
+
     id<OmniboxPopupPositioner> positioner)
     : model_(new OmniboxPopupModel(this,
-                                   edit_model,
-                                   edit_model->client(),
-                                   edit_model->autocomplete_controller())),
+                                   popup_model_delegate,
+                                   client,
+                                   autocomplete_controller)),
       delegate_(delegate),
       is_open_(false) {
   DCHECK(delegate);
   DCHECK(browser_state);
-  DCHECK(edit_model);
 
-  edit_model->set_popup_model(model_.get());
   std::unique_ptr<image_fetcher::IOSImageDataFetcherWrapper> imageFetcher =
       base::MakeUnique<image_fetcher::IOSImageDataFetcherWrapper>(
           browser_state->GetRequestContext());
@@ -117,12 +118,22 @@ gfx::Rect OmniboxPopupViewIOS::GetTargetBounds() {
   return gfx::Rect();
 }
 
-void OmniboxPopupViewIOS::SetTextAlignment(NSTextAlignment alignment) {
-  [popup_controller_ setTextAlignment:alignment];
-}
-
 bool OmniboxPopupViewIOS::IsOpen() const {
   return is_open_;
+}
+
+OmniboxPopupModel* OmniboxPopupViewIOS::model() const {
+  return model_.get();
+}
+
+#pragma mark - OmniboxPopupProvider
+
+bool OmniboxPopupViewIOS::IsPopupOpen() {
+  return is_open_;
+}
+
+void OmniboxPopupViewIOS::SetTextAlignment(NSTextAlignment alignment) {
+  [popup_controller_ setTextAlignment:alignment];
 }
 
 #pragma mark - OmniboxPopupViewControllerDelegate

@@ -20,6 +20,7 @@
 #include "ios/chrome/browser/chrome_url_constants.h"
 #include "ios/chrome/browser/experimental_flags.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
+#include "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_text_field_ios.h"
 #include "ios/chrome/browser/ui/omnibox/omnibox_view_ios.h"
 #include "ios/chrome/browser/ui/ui_util.h"

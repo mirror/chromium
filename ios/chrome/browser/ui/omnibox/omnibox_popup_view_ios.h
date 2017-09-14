@@ -13,15 +13,18 @@
 #include "base/strings/string16.h"
 #include "components/omnibox/browser/omnibox_popup_view.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_popup_mediator.h"
+#include "ios/chrome/browser/ui/omnibox/omnibox_popup_provider.h"
 #import "ios/chrome/browser/ui/omnibox/omnibox_popup_view_controller.h"
 
-class OmniboxEditModel;
 @class OmniboxPopupViewController;
 class OmniboxPopupModel;
 class OmniboxPopupViewSuggestionsDelegate;
 @protocol OmniboxPopupPositioner;
 struct AutocompleteMatch;
 @class OmniboxPopupPresenter;
+class OmniboxClient;
+class AutocompleteController;
+class OmniboxPopupModelDelegate;
 
 namespace ios {
 class ChromeBrowserState;
@@ -29,13 +32,19 @@ class ChromeBrowserState;
 
 // iOS implementation of AutocompletePopupView.
 class OmniboxPopupViewIOS : public OmniboxPopupView,
-                            public OmniboxPopupMediatorDelegate {
+                            public OmniboxPopupMediatorDelegate,
+                            public OmniboxPopupProvider {
  public:
   OmniboxPopupViewIOS(ios::ChromeBrowserState* browser_state,
-                      OmniboxEditModel* edit_model,
+                      OmniboxClient* client,
+                      AutocompleteController* autocomplete_controller,
                       OmniboxPopupViewSuggestionsDelegate* delegate,
+                      OmniboxPopupModelDelegate* popup_model_delegate,
                       id<OmniboxPopupPositioner> positioner);
   ~OmniboxPopupViewIOS() override;
+
+  // Popup model used for this.
+  OmniboxPopupModel* model() const;
 
   // AutocompletePopupView implementation.
   bool IsOpen() const override;
@@ -48,7 +57,10 @@ class OmniboxPopupViewIOS : public OmniboxPopupView,
   void OnDragCanceled() override {}
 
   void UpdateEditViewIcon();
-  void SetTextAlignment(NSTextAlignment alignment);
+
+  // OmniboxPopupProvider implemetation.
+  void SetTextAlignment(NSTextAlignment alignment) override;
+  bool IsPopupOpen() override;
 
   // OmniboxPopupViewControllerDelegate implementation.
   bool IsStarredMatch(const AutocompleteMatch& match) const override;
