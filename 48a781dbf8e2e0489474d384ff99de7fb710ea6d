@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "351780a7_d53a9ecd",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-14T21:50:54Z",
+      "side": 1,
+      "message": "is this necessary?",
+      "revId": "48a781dbf8e2e0489474d384ff99de7fb710ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c105d0cc_44d66ec8",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-14T21:50:54Z",
+      "side": 1,
+      "message": "please remove, see my comment below",
+      "revId": "48a781dbf8e2e0489474d384ff99de7fb710ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f935de_b16a5958",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-14T21:50:54Z",
+      "side": 1,
+      "message": "unused?",
+      "revId": "48a781dbf8e2e0489474d384ff99de7fb710ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80437066_532d6433",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-14T21:50:54Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "revId": "48a781dbf8e2e0489474d384ff99de7fb710ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b95117fb_a4d46d5c",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-14T21:50:54Z",
+      "side": 1,
+      "message": "For new code, please prefer std::make_unique\u003c\u003e (with #include \u003cmemory\u003e) over the base:: wrapper.\n(here and elsewhere)",
+      "revId": "48a781dbf8e2e0489474d384ff99de7fb710ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc75680_9a988637",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-14T21:50:54Z",
+      "side": 1,
+      "message": "How about getting the instance from the factory? https://chromium-review.googlesource.com/c/chromium/src/+/638692 shows how to do that for example.\n\nThat way, you can test more code e.g. ArcVoiceInteractionFrameworkServiceFactory::BuildServiceInstanceFor(), I think.",
+      "revId": "48a781dbf8e2e0489474d384ff99de7fb710ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a6808b6_cbda0854",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-14T21:50:54Z",
+      "side": 1,
+      "message": "nit: accessors can be protected:.",
+      "revId": "48a781dbf8e2e0489474d384ff99de7fb710ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4f8fd40_1f0ccbe9",
+        "filename": "components/arc/test/fake_voice_interaction_framework_instance.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-14T21:50:54Z",
+      "side": 1,
+      "message": "s/{}/\u003d default;/ please.",
+      "revId": "48a781dbf8e2e0489474d384ff99de7fb710ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a9432da_af25662b",
+        "filename": "components/arc/test/fake_voice_interaction_framework_instance.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-14T21:50:54Z",
+      "side": 1,
+      "message": "same",
+      "revId": "48a781dbf8e2e0489474d384ff99de7fb710ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18f0c355_f96477ff",
+        "filename": "components/arc/test/fake_voice_interaction_framework_instance.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-14T21:50:54Z",
+      "side": 1,
+      "message": "IWYU: can you #include \u003cstddef.h\u003e?",
+      "revId": "48a781dbf8e2e0489474d384ff99de7fb710ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
