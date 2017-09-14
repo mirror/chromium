@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c15f82d7_5c7969b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-14T21:20:26Z",
+      "side": 1,
+      "message": "nit: s/chrome home/Chrome Home here and below",
+      "range": {
+        "startLine": 489,
+        "startChar": 38,
+        "endLine": 489,
+        "endChar": 49
+      },
+      "revId": "a9ef88128cc5aa0740678bdbfeb5d92ee16c2fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b4c415_1f6965b2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-14T21:20:26Z",
+      "side": 1,
+      "message": "nit: s/chromeHomeIsEnabled/isChromeHomeEnabled",
+      "range": {
+        "startLine": 494,
+        "startChar": 56,
+        "endLine": 494,
+        "endChar": 75
+      },
+      "revId": "a9ef88128cc5aa0740678bdbfeb5d92ee16c2fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7bfbd11_34c66587",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-14T21:20:26Z",
+      "side": 1,
+      "message": "nit: combine these into one if check:\n\nif (chromeHomeIsEnabled \u0026\u0026 earliestDate \u003d\u003d null) {\n\n\n}",
+      "range": {
+        "startLine": 498,
+        "startChar": 1,
+        "endLine": 499,
+        "endChar": 45
+      },
+      "revId": "a9ef88128cc5aa0740678bdbfeb5d92ee16c2fcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
