@@ -463,6 +463,24 @@
       "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4759e0f8_6271630c",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-14T21:03:54Z",
+      "side": 1,
+      "message": "Can you invite me too?\n\nRegarding dave\u0027s earlier comments, things like can_resize, can_maximize (which I was going to add anyway to give better UX feedback) etc won\u0027t really solve the issue because Android can change their decision any time, so these are just informational and can become stale. If next moment you check can_reize, ARC++ app may become not resizeable on Android side. Android app may even switch from maximized to normal state, without asking chrome.\n\nI understand that this may not match xdg model, but we building ARC++. Like or not, Android does part of WM and not just simple client. I do agree that it\u0027s better to let server/chrome controls the state, but we need to work with Android team to give window control to us. Plus, upstreaming Android\nchange is way more difficult and trickier.\n\nUntil that happens, if we have to optimize for one, we need to optimize for ARC++, not for xdg. At the end of the day, it is us who have to make sure ChromeOS and Android works well together, not wayland folks.",
+      "parentUuid": "27330198_36de28ad",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
