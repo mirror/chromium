@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "233a1bfd_914feee6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-14T19:51:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4feb1b00_2b47fdaa",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 44
+      },
+      "revId": "76a8c3147053d5ed8e6e1a8f932a53b8b07ba803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3cb3173_fb6c5d0a",
         "filename": "/COMMIT_MSG",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "76a8c3147053d5ed8e6e1a8f932a53b8b07ba803",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b67215a6_9d3b0824",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-14T19:51:27Z",
+      "side": 1,
+      "message": "Done.  I took a stab at adding those points, but I\u0027m not sure they come across like I hope or if I\u0027m not making stuff up. :)",
+      "parentUuid": "b3cb3173_fb6c5d0a",
+      "range": {
+        "startLine": 11,
+        "startChar": 41,
+        "endLine": 11,
+        "endChar": 42
+      },
+      "revId": "76a8c3147053d5ed8e6e1a8f932a53b8b07ba803",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
