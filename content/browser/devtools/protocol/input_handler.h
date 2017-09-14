@@ -76,6 +76,13 @@ class InputHandler : public DevToolsDomainHandler,
       protocol::Maybe<int> modifiers,
       protocol::Maybe<double> timestamp,
       std::unique_ptr<DispatchTouchEventCallback> callback) override;
+      
+  void DispatchTouchEvent(
+      const std::string& type,
+      const std::string& button,
+      double x,
+      double y,
+      std::unique_ptr<DispatchTouchEventCallback> callback) override;
 
   Response EmulateTouchFromMouseEvent(const std::string& type,
                                       int x,

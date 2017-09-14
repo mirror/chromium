@@ -11,6 +11,22 @@
 #include "base/macros.h"
 #include "ui/events/keycodes/keyboard_codes.h"
 
+// Specifies the type of the pointer event
+enum PointerEventType {
+  kNotInitializedPointerEventType = 0,
+  kPressPointerEventType,
+  kMovePointerEventType,
+  kReleasePointerEventType,
+  kIdlePointerEventType
+};
+
+// Specifies the pointer buttons.
+enum PointerButton {
+  kLeftPointerButton = 0,
+  kMiddlePointerButton,
+  kRightPointerButton,
+};
+
 // Specifies the type of the mouse event.
 enum MouseEventType {
   kPressedMouseEventType = 0,
