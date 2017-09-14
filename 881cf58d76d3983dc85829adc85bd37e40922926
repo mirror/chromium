@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "efe6fccf_ed540247",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1852,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-14T23:07:11Z",
+      "side": 1,
+      "message": "The header is not removed on redirects. So, if https is redirected to http, then the header is not removed. Similarly, if https://foo.com is redirected to https://bar.com, then the header is not removed either.\n\nI am not sure how frequent these cases are. Also, information contained in client hints headers is not domain-specific. I am going to file bugs to track that work.\n\nAdded TODO for now.",
+      "parentUuid": "7e72db1d_df1342fb",
+      "revId": "881cf58d76d3983dc85829adc85bd37e40922926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88a14cef_9f6a9c63",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 10
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "945792e2_a54bc6af",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1871,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-14T23:07:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88a14cef_9f6a9c63",
+      "revId": "881cf58d76d3983dc85829adc85bd37e40922926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a48cdd2_265977bf",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 10
@@ -50,6 +86,24 @@
       "revId": "881cf58d76d3983dc85829adc85bd37e40922926",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29bd2d36_4fec0eae",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-14T23:07:11Z",
+      "side": 1,
+      "message": "Currently crbug.com/735518 tracks this. I am going to file more specific bugs when I remove TODOs https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/FrameFetchContext.cpp?q\u003df:webkit+f:framefetc+todo.*tbansal\u0026sq\u003dpackage:chromium\u0026l\u003d775",
+      "parentUuid": "7a48cdd2_265977bf",
+      "revId": "881cf58d76d3983dc85829adc85bd37e40922926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
