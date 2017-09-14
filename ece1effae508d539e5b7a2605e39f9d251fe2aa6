@@ -16,6 +16,24 @@
       "revId": "ece1effae508d539e5b7a2605e39f9d251fe2aa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf7cecc_25130126",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/CctOfflinePageModelObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-09-14T23:48:01Z",
+      "side": 1,
+      "message": "I was thinking com.google.chrome, and wasn\u0027t sure because I didn\u0027t see existing examples using that.  org.chromium.chrome works!",
+      "parentUuid": "cbd45528_8e840300",
+      "revId": "ece1effae508d539e5b7a2605e39f9d251fe2aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
