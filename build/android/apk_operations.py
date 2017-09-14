@@ -34,10 +34,10 @@ from pylib import constants
 from pylib.symbols import deobfuscator
 
 
-def _Colorize(color, text):
-  # |color| as a string to avoid pylint's no-member warning :(.
-  # pylint: disable=no-member
-  return getattr(colorama.Fore, color) + text + colorama.Fore.RESET
+def _Colorize(text, style=''):
+  return (style
+      + text
+      + colorama.Style.RESET_ALL)
 
 
 def _InstallApk(devices, apk, install_dict):
@@ -127,7 +127,8 @@ def _RunGdb(device, package_name, output_directory, target_cpu, extra_args,
     cmd.append('--target-arch=%s' % _TargetCpuToTargetArch(target_cpu))
   cmd.extend(extra_args)
   logging.warning('Running: %s', ' '.join(pipes.quote(x) for x in cmd))
-  print _Colorize('YELLOW', 'All subsequent output is from adb_gdb script.')
+  print _Colorize(
+      'All subsequent output is from adb_gdb script.', colorama.Fore.YELLOW)
   os.execv(gdb_script_path, cmd)
 
 
@@ -136,7 +137,8 @@ def _PrintPerDeviceOutput(devices, results, single_line=False):
     if not single_line and d is not devices[0]:
       sys.stdout.write('\n')
     sys.stdout.write(
-          _Colorize('YELLOW', '%s (%s):' % (d, d.build_description)))
+          _Colorize('{} ({}):'.format(d, d.build_description),
+                    colorama.Fore.YELLOW))
     sys.stdout.write(' ' if single_line else '\n')
     yield result
 
@@ -354,7 +356,7 @@ def _RunDiskUsage(devices, package_name, verbose):
     print 'Total: %skb (%.1fmb)' % (total, total / 1024.0)
 
 
-def _RunLogcat(device, package_name, verbose, mapping_path):
+def _RunLogcat(device, package_name, mapping_path, verbose):
   if mapping_path:
     try:
       deobfuscate = deobfuscator.Deobfuscator(mapping_path)
@@ -363,39 +365,88 @@ def _RunLogcat(device, package_name, verbose, mapping_path):
                        'Did you forget to build it?\n')
       sys.exit(1)
 
+  primary_pid = [None]
+
   def get_my_pids():
     my_pids = []
-    for pids in device.GetPids(package_name).values():
+    for name, pids in device.GetPids(package_name).items():
+      if ':' not in name:
+        primary_pid[0] = int(pids[0])
       my_pids.extend(pids)
     return [int(pid) for pid in my_pids]
 
+  def get_pid_style(pid, dim):
+    if pid == primary_pid[0]:
+      return colorama.Fore.WHITE
+    elif pid in my_pids:
+      # TODO(wnwen): Use one separate persistent color per process, pop LRU
+      return colorama.Fore.YELLOW
+    elif dim:
+      return colorama.Style.DIM
+    return ''
+
+  def get_priority_style(priority):
+    style = ''
+    if priority == 'E' or priority == 'F':
+      style = colorama.Back.RED
+    elif priority == 'W':
+      style = colorama.Back.YELLOW
+    elif priority == 'I':
+      style = colorama.Back.GREEN
+    elif priority == 'D':
+      style = colorama.Back.BLUE
+    return style + colorama.Style.BRIGHT + colorama.Fore.BLACK
+
   def process_line(line, fast=False):
-    if verbose:
-      if fast:
-        return
+    dim = False
+    if not line or line.startswith('------'):
+      return
+    tokens = line.split(None, 6)
+    date, invokation_time = tokens[0], tokens[1]
+    pid = int(tokens[2])
+    tid = int(tokens[3])
+    priority = tokens[4]
+    tag = tokens[5]
+    if len(tokens) > 6:
+      original_message = tokens[6]
+    else:  # Empty log message
+      original_message = ''
+    if tag[-1] == ':':
+      tag = tag[:-1]
     else:
-      if not line or line.startswith('------'):
-        return
-      tokens = line.split(None, 4)
-      pid = int(tokens[2])
-      priority = tokens[4]
-      if pid in my_pids or (not fast and priority == 'F'):
-        pass  # write
-      elif pid in not_my_pids:
-        return
-      elif fast:
+      original_message = original_message[2:]
+    if pid in my_pids or (not fast and
+        (priority == 'F' or  # Java crash dump
+         tag == 'ActivityManager' or  # Android system
+         priority == 'I' and tag == 'DEBUG')):  # Native crash dump
+      pass  # write
+    elif pid in not_my_pids:
+      dim = True
+    else:
+      if fast:
         # Skip checking whether our package spawned new processes.
         not_my_pids.add(pid)
-        return
+        dim = True
       else:
         # Check and add the pid if it is a new one from our package.
         my_pids.update(get_my_pids())
         if pid not in my_pids:
           not_my_pids.add(pid)
-          return
+          dim = True
+    messages = [original_message]
     if mapping_path:
-      line = '\n'.join(deobfuscate.TransformLines([line.rstrip()])) + '\n'
-    sys.stdout.write(line)
+      messages = deobfuscate.TransformLines(messages)
+    should_write = True
+    if dim and not verbose:
+      should_write = False
+    if should_write:
+      for message in messages:
+        pid_style = get_pid_style(pid, dim)
+        tag = _Colorize(tag, pid_style + colorama.Style.BRIGHT)
+        message = _Colorize(message, pid_style)
+        priority = _Colorize(priority, get_priority_style(priority))
+        sys.stdout.write('{} {} {} {} {} {}: {}\n'.format(
+            date, invokation_time, pid, tid, priority, tag, message))
 
   try:
     my_pids = set(get_my_pids())
@@ -805,8 +856,8 @@ class _LogcatCommand(_Command):
     mapping = self.args.proguard_mapping_path
     if self.args.no_deobfuscate:
       mapping = None
-    _RunLogcat(self.devices[0], self.args.package_name,
-               bool(self.args.verbose_count), mapping)
+    _RunLogcat(self.devices[0], self.args.package_name, mapping,
+               bool(self.args.verbose_count))
 
   def _RegisterExtraArgs(self, group):
     if self._from_wrapper_script:
