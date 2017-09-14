@@ -10,6 +10,7 @@
 #import "ios/clean/chrome/browser/ui/transitions/animators/zoom_transition_delegate.h"
 
 @protocol TabGridToolbarCommands;
+@protocol ToolsMenuCommands;
 
 // Container for the tab grid. This container contains the toolbar of the tab
 // grid. It also displays the tab grid associated with the current mode
@@ -17,7 +18,8 @@
 @interface TabGridContainerViewController
     : UIViewController<ZoomTransitionDelegate>
 
-@property(nonatomic, weak) id<TabGridToolbarCommands> dispatcher;
+@property(nonatomic, weak) id<TabGridToolbarCommands, ToolsMenuCommands>
+    dispatcher;
 
 // The tab grid to be displayed. Setting this property displays the |tabGrid|.
 @property(nonatomic, weak) UIViewController* tabGrid;

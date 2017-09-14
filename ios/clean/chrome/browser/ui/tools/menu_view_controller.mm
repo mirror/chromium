@@ -13,11 +13,11 @@
 #include "ios/chrome/grit/ios_theme_resources.h"
 #import "ios/clean/chrome/browser/ui/commands/find_in_page_visibility_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/navigation_commands.h"
-#import "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_button+factory.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_button.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_constants.h"
 #import "ios/clean/chrome/browser/ui/tools/menu_overflow_controls_stackview.h"
+#import "ios/clean/chrome/browser/ui/tools/tools_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/tools/tools_menu_item.h"
 #import "ios/third_party/material_components_ios/src/components/Typography/src/MaterialTypography.h"
 
@@ -53,6 +53,7 @@ const CGFloat kCloseButtonHeight = 44.0;
 
 @implementation MenuViewController
 @synthesize dispatcher = _dispatcher;
+@synthesize menuDispatcher = _menuDispatcher;
 @synthesize menuItems = _menuItems;
 @synthesize menuStackView = _menuStackView;
 @synthesize toolbarOverflowStackView = _toolbarOverflowStackView;
@@ -135,13 +136,19 @@ const CGFloat kCloseButtonHeight = 44.0;
     [menuButton.titleLabel setFont:[MDCTypography subheadFont]];
     [menuButton.titleLabel setTextAlignment:NSTextAlignmentNatural];
     menuButton.enabled = item.enabled;
-    [menuButton addTarget:self.dispatcher
-                   action:@selector(closeToolsMenu)
+    [menuButton addTarget:self.menuDispatcher
+                   action:@selector(dismissToolsMenu)
          forControlEvents:UIControlEventTouchUpInside];
     if (item.action) {
-      [menuButton addTarget:self.dispatcher
-                     action:item.action
-           forControlEvents:UIControlEventTouchUpInside];
+      if (item.local) {
+        [menuButton addTarget:self.menuDispatcher
+                       action:item.action
+             forControlEvents:UIControlEventTouchUpInside];
+      } else {
+        [menuButton addTarget:self.dispatcher
+                       action:item.action
+             forControlEvents:UIControlEventTouchUpInside];
+      }
     } else {
       // TODO(crbug.com/740793): Remove alert once all menu items have actions.
       [menuButton addTarget:self

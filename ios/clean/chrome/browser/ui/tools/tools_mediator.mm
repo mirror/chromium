@@ -4,9 +4,12 @@
 
 #import "ios/clean/chrome/browser/ui/tools/tools_mediator.h"
 
+#include <objc/runtime.h>
+
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #import "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.h"
+#import "ios/clean/chrome/browser/ui/settings/settings_commands.h"
 #import "ios/clean/chrome/browser/ui/tools/tools_consumer.h"
 #import "ios/clean/chrome/browser/ui/tools/tools_menu_item.h"
 #import "ios/clean/chrome/browser/ui/tools/tools_menu_model.h"
@@ -17,6 +20,22 @@
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
+
+namespace {
+BOOL ProtocolContainsSelector(Protocol* protocol, SEL selector) {
+  for (NSNumber* required in @[ @YES, @NO ]) {
+    unsigned int methodCount;
+    objc_method_description* methods = protocol_copyMethodDescriptionList(
+        protocol, required.boolValue, YES /* isInstanceMethod */, &methodCount);
+    for (unsigned int i = 0; i < methodCount; i++) {
+      if (selector == methods[i].name)
+        return YES;
+    }
+    free(methods);
+  }
+  return NO;
+}
+}
 
 @interface ToolsMediator ()<CRWWebStateObserver>
 @property(nonatomic, strong) id<ToolsConsumer> consumer;
@@ -92,6 +111,8 @@
       menuItem.title = l10n_util::GetNSStringWithFixup(modelItem.title_id);
       menuItem.action = NSSelectorFromString(modelItem.selector);
       menuItem.enabled = [self itemIsEnabledForCurrentConfiguration:modelItem];
+      menuItem.local = ProtocolContainsSelector(@protocol(SettingsCommands),
+                                                menuItem.action);
       [self.menuItems addObject:menuItem];
     }
   }

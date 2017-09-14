@@ -9,8 +9,11 @@
 @protocol SettingsCommands
 // Display the settings UI.
 - (void)showSettings;
-// Dismiss the settings UI.
+// Dismiss the settings UI from an external event.
 - (void)closeSettings;
+@optional
+// Dismiss the settings UI from an external event.
+- (void)dismissSettings;
 @end
 
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_COMMANDS_SETTINGS_COMMANDS_H_
