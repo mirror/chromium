@@ -214,6 +214,24 @@
     },
     {
       "key": {
+        "uuid": "72b3d9a8_2131a04c",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-14T07:43:42Z",
+      "side": 1,
+      "message": "That sounds good to me:)",
+      "parentUuid": "0ef4bf07_544504cf",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc0e7b1c_1859b3bb",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
         "patchSetId": 1
