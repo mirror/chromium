@@ -91,9 +91,10 @@
 
 #pragma mark - BookmarkHomeViewControllerDelegate
 
-- (void)
-bookmarkHomeViewControllerWantsDismissal:(BookmarkHomeViewController*)controller
-                        navigationToUrls:(const std::vector<GURL>&)urls {
+- (void)bookmarkHomeViewControllerWantsDismissal:
+            (BookmarkHomeViewController*)controller
+                                navigationToUrls:(const std::vector<GURL>&)urls
+                                     inIncognito:(BOOL)inIncognito {
   // TODO(crbug.com/695749): Test if the following works when adding bookmark
   // becomes available in chrome_clean_skeleton.
   // TODO(crbug.com/695749): See if we can share the code below from
