@@ -37,6 +37,7 @@
 #include "storage/browser/fileapi/isolated_context.h"
 #include "storage/common/fileapi/file_system_util.h"
 #include "url/gurl.h"
+#include "url/origin.h"
 
 namespace content {
 
@@ -204,6 +205,21 @@ class ChildProcessSecurityPolicyImpl::SecurityState {
     return base::ContainsKey(origin_set_, origin);
   }
 
+  void MarkAsContainingOrigin(const url::Origin& origin) {
+    contained_origins_.insert(origin);
+  }
+
+  bool ContainsOrigin(const url::Origin& origin) {
+    // Content from about:blank URLs inherits the origin from the document that
+    // loaded the URL, since the URL itself does not give any information about
+    // the origin.  Therefore if the caller of ContainsOrigin passes in an
+    // about:blank origin, it means that the information about the origin has
+    // already been lost by the caller somewhere along the way.
+    DCHECK(!origin.GetURL().IsAboutBlank());
+
+    return base::ContainsKey(contained_origins_, origin);
+  }
+
   // Determine whether permission has been granted to commit |url|.
   bool CanCommitURL(const GURL& url) {
     DCHECK(!url.SchemeIsBlob() && !url.SchemeIsFileSystem())
@@ -259,7 +275,7 @@ class ChildProcessSecurityPolicyImpl::SecurityState {
     return false;
   }
 
-  bool CanAccessDataForOrigin(const GURL& site_url) {
+  bool CanAccessCookiesForSite(const GURL& site_url) {
     if (origin_lock_.is_empty())
       return true;
     return origin_lock_ == site_url;
@@ -312,6 +328,9 @@ class ChildProcessSecurityPolicyImpl::SecurityState {
   // The set of URL origins to which the child process has been granted
   // permission.
   OriginSet origin_set_;
+
+  // The set of origins that have ever been committed in this child process.
+  OriginSet contained_origins_;
 
   // The set of files the child process is permited to upload to the web.
   FileMap file_permissions_;
@@ -1034,7 +1053,7 @@ bool ChildProcessSecurityPolicyImpl::ChildProcessHasPermissionsForFile(
   return state->second->HasPermissionsForFile(file, permissions);
 }
 
-bool ChildProcessSecurityPolicyImpl::CanAccessDataForOrigin(int child_id,
+bool ChildProcessSecurityPolicyImpl::CanAccessCookiesForURL(int child_id,
                                                             const GURL& url) {
   // It's important to call GetSiteForURL before acquiring |lock_|, since
   // GetSiteForURL consults IsIsolatedOrigin, which needs to grab the same
@@ -1052,7 +1071,7 @@ bool ChildProcessSecurityPolicyImpl::CanAccessDataForOrigin(int child_id,
     // workaround for https://crbug.com/600441
     return true;
   }
-  return state->second->CanAccessDataForOrigin(site_url);
+  return state->second->CanAccessCookiesForSite(site_url);
 }
 
 bool ChildProcessSecurityPolicyImpl::HasSpecificPermissionForOrigin(
@@ -1063,6 +1082,15 @@ bool ChildProcessSecurityPolicyImpl::HasSpecificPermissionForOrigin(
   if (state == security_state_.end())
     return false;
   return state->second->CanCommitOrigin(origin);
+}
+
+bool ChildProcessSecurityPolicyImpl::ContainsOrigin(int child_id,
+                                                    const url::Origin& origin) {
+  base::AutoLock lock(lock_);
+  SecurityStateMap::iterator state = security_state_.find(child_id);
+  if (state == security_state_.end())
+    return false;
+  return state->second->ContainsOrigin(origin);
 }
 
 void ChildProcessSecurityPolicyImpl::LockToOrigin(int child_id,
@@ -1182,6 +1210,15 @@ void ChildProcessSecurityPolicyImpl::RemoveIsolatedOriginForTesting(
     const url::Origin& origin) {
   base::AutoLock lock(lock_);
   isolated_origins_.erase(origin);
+}
+
+void ChildProcessSecurityPolicyImpl::MarkAsContainingOrigin(
+    int child_id,
+    const url::Origin& origin) {
+  base::AutoLock lock(lock_);
+  SecurityStateMap::iterator state = security_state_.find(child_id);
+  if (state != security_state_.end())
+    state->second->MarkAsContainingOrigin(origin);
 }
 
 }  // namespace content

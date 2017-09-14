@@ -207,6 +207,8 @@ class LazyInstance {
     }
   }
 
+  bool operator!=(Type* p) { return !(*this == p); }
+
   // MSVC gives a warning that the alignment expands the size of the
   // LazyInstance struct to make the size a multiple of the alignment. This
   // is expected in this case.

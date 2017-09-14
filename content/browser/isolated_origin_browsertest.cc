@@ -512,7 +512,9 @@ class StoragePartitonInterceptor
       public RenderProcessHostObserver {
  public:
   StoragePartitonInterceptor(RenderProcessHostImpl* rph,
-                             mojom::StoragePartitionServiceRequest request) {
+                             mojom::StoragePartitionServiceRequest request,
+                             const url::Origin& origin_to_inject)
+      : origin_to_inject_(origin_to_inject) {
     StoragePartitionImpl* storage_partition =
         static_cast<StoragePartitionImpl*>(rph->GetStoragePartition());
 
@@ -551,8 +553,7 @@ class StoragePartitonInterceptor
   // security checks can be tested.
   void OpenLocalStorage(const url::Origin& origin,
                         mojom::LevelDBWrapperRequest request) override {
-    url::Origin mismatched_origin(GURL("http://abc.foo.com"));
-    GetForwardingInterface()->OpenLocalStorage(mismatched_origin,
+    GetForwardingInterface()->OpenLocalStorage(origin_to_inject_,
                                                std::move(request));
   }
 
@@ -560,27 +561,86 @@ class StoragePartitonInterceptor
   // Keep a pointer to the original implementation of the service, so all
   // calls can be forwarded to it.
   mojom::StoragePartitionService* storage_partition_service_;
+
+  url::Origin origin_to_inject_;
 };
 
 void CreateTestStoragePartitionService(
+    const url::Origin& origin_to_inject,
     RenderProcessHostImpl* rph,
     mojom::StoragePartitionServiceRequest request) {
   // This object will register as RenderProcessHostObserver, so it will
   // clean itself automatically on process exit.
-  new StoragePartitonInterceptor(rph, std::move(request));
+  new StoragePartitonInterceptor(rph, std::move(request), origin_to_inject);
 }
 
 // Verify that an isolated renderer process cannot read localStorage of an
 // origin outside of its isolated site.
-// TODO(nasko): Write a test to verify the opposite - any non-isolated renderer
-// process cannot access data of an isolated site.
-IN_PROC_BROWSER_TEST_F(IsolatedOriginTest, LocalStorageOriginEnforcement) {
-  RenderProcessHostImpl::SetCreateStoragePartitionServiceFunction(
-      CreateTestStoragePartitionService);
+IN_PROC_BROWSER_TEST_F(
+    IsolatedOriginTest,
+    LocalStorageOriginEnforcement_IsolatedAccessingNonIsolated) {
+  auto* policy = ChildProcessSecurityPolicyImpl::GetInstance();
+
+  url::Origin mismatched_origin(GURL("http://abc.foo.com"));
+  ASSERT_FALSE(policy->IsIsolatedOrigin(mismatched_origin));
+  RenderProcessHostImpl::SetStoragePartitionServiceFactoryForTesting(
+      base::Bind(&CreateTestStoragePartitionService, mismatched_origin));
 
   GURL isolated_url(
       embedded_test_server()->GetURL("isolated.foo.com", "/title1.html"));
+  ASSERT_TRUE(policy->IsIsolatedOrigin(url::Origin(isolated_url)));
   EXPECT_TRUE(NavigateToURL(shell(), isolated_url));
+
+  content::RenderProcessHostWatcher crash_observer(
+      shell()->web_contents()->GetMainFrame()->GetProcess(),
+      content::RenderProcessHostWatcher::WATCH_FOR_PROCESS_EXIT);
+  // Use ignore_result here, since on Android the renderer process is
+  // terminated, but ExecuteScript still returns true. It properly returns
+  // false on all other platforms.
+  ignore_result(ExecuteScript(shell()->web_contents()->GetMainFrame(),
+                              "localStorage.length;"));
+  crash_observer.Wait();
+}
+
+// Verify that a non-isolated renderer process cannot read localStorage of an
+// isolated origin.
+IN_PROC_BROWSER_TEST_F(
+    IsolatedOriginTest,
+    LocalStorageOriginEnforcement_NonIsolatedAccessingIsolated) {
+  auto* policy = ChildProcessSecurityPolicyImpl::GetInstance();
+
+  GURL isolated_url(embedded_test_server()->GetURL("isolated.foo.com", "/"));
+  url::Origin isolated_origin(isolated_url);
+  ASSERT_TRUE(policy->IsIsolatedOrigin(url::Origin(isolated_origin)));
+  RenderProcessHostImpl::SetStoragePartitionServiceFactoryForTesting(
+      base::Bind(&CreateTestStoragePartitionService, isolated_origin));
+
+  GURL non_isolated_url(
+      embedded_test_server()->GetURL("blah.bar.com", "/title1.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), non_isolated_url));
+
+  content::RenderProcessHostWatcher crash_observer(
+      shell()->web_contents()->GetMainFrame()->GetProcess(),
+      content::RenderProcessHostWatcher::WATCH_FOR_PROCESS_EXIT);
+  // Use ignore_result here, since on Android the renderer process is
+  // terminated, but ExecuteScript still returns true. It properly returns
+  // false on all other platforms.
+  ignore_result(ExecuteScript(shell()->web_contents()->GetMainFrame(),
+                              "localStorage.length;"));
+  crash_observer.Wait();
+}
+
+// Verify that a web renderer process cannot read localStorage of an
+// extension origin.
+IN_PROC_BROWSER_TEST_F(IsolatedOriginTest,
+                       LocalStorageOriginEnforcement_WebAccessingExtension) {
+  url::Origin extension_origin(
+      GURL("chrome-extension://aihpiglmnhnhijdnjghpfnlledckkhja"));
+  RenderProcessHostImpl::SetStoragePartitionServiceFactoryForTesting(
+      base::Bind(&CreateTestStoragePartitionService, extension_origin));
+
+  GURL web_url(embedded_test_server()->GetURL("blah.bar.com", "/title1.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), web_url));
 
   content::RenderProcessHostWatcher crash_observer(
       shell()->web_contents()->GetMainFrame()->GetProcess(),

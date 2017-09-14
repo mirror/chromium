@@ -4,6 +4,11 @@
 
 #include "content/browser/frame_host/render_frame_message_filter.h"
 
+#include <memory>
+#include <string>
+#include <utility>
+#include <vector>
+
 #include "base/command_line.h"
 #include "base/debug/alias.h"
 #include "base/macros.h"
@@ -425,7 +430,7 @@ void RenderFrameMessageFilter::SetCookie(int32_t render_frame_id,
                                          const std::string& cookie) {
   ChildProcessSecurityPolicyImpl* policy =
       ChildProcessSecurityPolicyImpl::GetInstance();
-  if (!policy->CanAccessDataForOrigin(render_process_id_, url)) {
+  if (!policy->CanAccessCookiesForURL(render_process_id_, url)) {
     bad_message::ReceivedBadMessage(this,
                                     bad_message::RFMF_SET_COOKIE_BAD_ORIGIN);
     return;
@@ -462,7 +467,7 @@ void RenderFrameMessageFilter::GetCookies(int render_frame_id,
                                           GetCookiesCallback callback) {
   ChildProcessSecurityPolicyImpl* policy =
       ChildProcessSecurityPolicyImpl::GetInstance();
-  if (!policy->CanAccessDataForOrigin(render_process_id_, url)) {
+  if (!policy->CanAccessCookiesForURL(render_process_id_, url)) {
     bad_message::ReceivedBadMessage(this,
                                     bad_message::RFMF_GET_COOKIES_BAD_ORIGIN);
     std::move(callback).Run(std::string());
