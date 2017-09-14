@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c313a287_c6750a39",
+        "filename": "chrome/browser/metrics/thread_watcher_report_hang.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-14T21:28:47Z",
+      "side": 0,
+      "message": "Oh wow, yeah had assumed this was in components/ and there was a DEPS issue... this being in //chrome puzzles me as to why this include would ever have been problematic (done intentionally per above comment..?!)... oh well, done.",
+      "parentUuid": "89a1a13b_071e8620",
+      "range": {
+        "startLine": 92,
+        "startChar": 43,
+        "endLine": 92,
+        "endChar": 44
+      },
+      "revId": "297442d0e24dab5b3aa81f684aed820853a1d4a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79ad66d7_4d62a49f",
         "filename": "components/metrics/proto/execution_context.proto",
         "patchSetId": 13

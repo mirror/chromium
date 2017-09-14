@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62706c05_76fa0343",
+        "filename": "components/metrics/proto/execution_context.proto",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-14T21:28:47Z",
+      "side": 1,
+      "message": "Ok left them in as-is with a Deprecated comment and will follow-up for proto change after FILE thread is gone too.",
+      "parentUuid": "cd3b821c_3eba947d",
+      "revId": "b788dd96732aad7c4d298b7ea8469e702b0805d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f769e95_17fc8ee4",
         "filename": "ios/web/app/web_main_loop.mm",
         "patchSetId": 14
