@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cec49f6_97321dc4",
+        "filename": "components/payments/content/utility/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1149974
+      },
+      "writtenOn": "2017-09-14T19:50:40Z",
+      "side": 1,
+      "message": "I may suggest adding:\n\n   libfuzzer_options \u003d [ \"only_ascii\u003d1\" ]\n\nif the target doesn\u0027t really deal with non-printable characters (e.g. https://cs.chromium.org/chromium/src/testing/libfuzzer/fuzzers/BUILD.gn?type\u003dcs\u0026q\u003d%22only_ascii%22+file:.gn\u0026sq\u003dpackage:chromium\u0026l\u003d258)",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 11
+      },
+      "revId": "0f73d5aba379b7bceb75454c9823fe1d3ec83d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
