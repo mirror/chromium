@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fe95ab7_a0de511b",
+        "filename": "chrome/app/vector_icons/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-14T14:12:27Z",
+      "side": 1,
+      "message": "there\u0027s no 1x icon in this cl (?)",
+      "range": {
+        "startLine": 126,
+        "startChar": 33,
+        "endLine": 126,
+        "endChar": 38
+      },
+      "revId": "edb3a90d1d47d8b25fb99bc9b1e8ea0e3f0be41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e88c9529_eae2d237",
+        "filename": "chrome/browser/chromeos/ui/low_disk_notification.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-14T14:12:27Z",
+      "side": 1,
+      "message": "aside: I don\u0027t get why this is a switch instead of if/else as there are only two cases and you\u0027re not taking advantage of the compiler making sure all enum values are handled",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 8
+      },
+      "revId": "edb3a90d1d47d8b25fb99bc9b1e8ea0e3f0be41f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
