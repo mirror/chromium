@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c70c227_3990b200",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-09-14T19:23:11Z",
+      "side": 1,
+      "message": "nit, more specific: Use Skia\u0027s faster blur code",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 21
+      },
+      "revId": "7f41a45d4ccb9ffb12f11ac8934af576e0d165a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
