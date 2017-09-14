@@ -1,0 +1,21 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//chrome/common/features.gni")
+import("//tools/grit/grit_rule.gni")
+
+ziparchiver_out_dir = "$root_out_dir/resources/chromeos/zip_archiver"
+
+grit("ziparchiver_strings") {
+  source = "ziparchiver_strings.grd"
+  defines = chrome_grit_defines
+  outputs = [
+    "_locales/en/messages.json",
+  ]
+  output_dir = ziparchiver_out_dir
+
+  # Don't polute the extension directory with stamp and .d files.
+  depfile_dir = target_out_dir
+  resource_ids = ""
+}

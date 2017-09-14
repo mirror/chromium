@@ -742,7 +742,8 @@ unpacker.app = {
                           type: 'basic',
                           iconUrl: chrome.runtime.getManifest().icons[128],
                           title: entry.name,
-                          message: chrome.i18n.getMessage('mountingMessage'),
+                          message: chrome.i18n.getMessage(
+                              'ZIPARCHIVER_MOUNTING_MESSAGE'),
                         },
                         function() {});
                   }, unpacker.app.MOUNTING_NOTIFICATION_DELAY);
@@ -763,7 +764,8 @@ unpacker.app = {
                           type: 'basic',
                           iconUrl: chrome.runtime.getManifest().icons[128],
                           title: entry.name,
-                          message: chrome.i18n.getMessage('otherErrorMessage')
+                          message: chrome.i18n.getMessage(
+                              'ZIPARCHIVER_OTHER_ERROR_MESSAGE')
                         },
                         function() {});
                     if (opt_onError)
