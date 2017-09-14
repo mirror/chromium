@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "31e7ba0e_69d9f375",
+        "filename": "chrome/browser/resources/sys_internals/constants.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-14T04:21:00Z",
+      "side": 1,
+      "message": "Ok, but one thing I want to say is, if we use Closure Compiler, we need to define all the variable before use, that is, if we use |foo.bar| we need to define it like:\n/** @const {number} */\nfoo.bar \u003d 1;\n\nAnd if we use cr.define:\ncr.define(\u0027foo\u0027, ()\u003d\u003e{return {bar: 1};});\nconsole.log(foo.bar); // Error: bar never define in foo.\n\nWe need to add this before we use |foo.bar|:\ncr.define(\u0027foo\u0027, ()\u003d\u003e{return {bar: 1};});\n/** @const {number} */\nfoo.bar;\nconsole.log(foo.bar);\n\n\nSo if we define these constants in other file with cr.define, then we must declare them again to let closure compiler to do its job.\nTherefore, I prefer just put these constants inside the cr.define in index.js as local variables.",
+      "parentUuid": "ce909e6a_908407cd",
+      "revId": "3e4cf170fac8c3a6149092989af8534d4239721e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da3aef0e_2b0d1816",
         "filename": "chrome/browser/resources/sys_internals/constants.js",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "3e4cf170fac8c3a6149092989af8534d4239721e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad535356_e1533e66",
+        "filename": "chrome/browser/resources/sys_internals/constants.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-14T04:21:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da3aef0e_2b0d1816",
+      "revId": "3e4cf170fac8c3a6149092989af8534d4239721e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f4a243e9_5567d214",
+        "filename": "chrome/test/data/webui/sys_internals/page_switch_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-14T04:21:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c072c2b1_39366f07",
+      "revId": "3e4cf170fac8c3a6149092989af8534d4239721e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "acb102ae_d1c3797d",
         "filename": "chrome/test/data/webui/sys_internals/page_switch_test.js",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "3e4cf170fac8c3a6149092989af8534d4239721e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d67cada0_cea37fd3",
+        "filename": "chrome/test/data/webui/sys_internals/page_switch_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-14T04:21:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acb102ae_d1c3797d",
+      "revId": "3e4cf170fac8c3a6149092989af8534d4239721e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

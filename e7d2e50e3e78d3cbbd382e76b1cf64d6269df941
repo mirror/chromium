@@ -999,6 +999,24 @@
     },
     {
       "key": {
+        "uuid": "28d708e2_45385fb8",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-14T04:21:00Z",
+      "side": 1,
+      "message": "const /** number */ a \u003d \u0027str\u0027;\n//----------------------------\nERROR - initializing variable\n## found   : string\n## required: number\n## const /** number */ a \u003d \u0027str\u0027;\n##                         ^^^^^\n\nDOC: https://github.com/google/closure-compiler/wiki/Annotating-Types",
+      "parentUuid": "5c663daa_2b906b7b",
+      "revId": "e7d2e50e3e78d3cbbd382e76b1cf64d6269df941",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05d7cf22_9065d5e2",
         "filename": "chrome/browser/resources/sys_internals/index.js",
         "patchSetId": 2
