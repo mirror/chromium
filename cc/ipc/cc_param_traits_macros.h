@@ -14,9 +14,9 @@
 #include "cc/quads/surface_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/quads/tile_draw_quad.h"
-#include "cc/quads/yuv_video_draw_quad.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "components/viz/common/quads/draw_quad.h"
+#include "components/viz/common/quads/yuv_video_draw_quad.h"
 #include "components/viz/common/resources/resource_format.h"
 #include "components/viz/common/resources/returned_resource.h"
 #include "components/viz/common/resources/transferable_resource.h"
@@ -41,8 +41,8 @@ IPC_ENUM_TRAITS_MAX_VALUE(viz::ResourceFormat, viz::RESOURCE_FORMAT_MAX)
 
 // TODO(fsamuel): This trait belongs with skia code.
 IPC_ENUM_TRAITS_MAX_VALUE(SkBlendMode, SkBlendMode::kLastMode)
-IPC_ENUM_TRAITS_MAX_VALUE(cc::YUVVideoDrawQuad::ColorSpace,
-                          cc::YUVVideoDrawQuad::COLOR_SPACE_LAST)
+IPC_ENUM_TRAITS_MAX_VALUE(viz::YUVVideoDrawQuad::ColorSpace,
+                          viz::YUVVideoDrawQuad::COLOR_SPACE_LAST)
 IPC_ENUM_TRAITS_MAX_VALUE(cc::SurfaceDrawQuadType,
                           cc::SurfaceDrawQuadType::LAST)
 

@@ -205,8 +205,6 @@ cc_component("cc") {
     "quads/texture_draw_quad.h",
     "quads/tile_draw_quad.cc",
     "quads/tile_draw_quad.h",
-    "quads/yuv_video_draw_quad.cc",
-    "quads/yuv_video_draw_quad.h",
     "raster/bitmap_raster_buffer_provider.cc",
     "raster/bitmap_raster_buffer_provider.h",
     "raster/gpu_raster_buffer_provider.cc",

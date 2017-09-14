@@ -219,12 +219,12 @@ void CreateTestYUVVideoDrawQuad_FromVideoFrame(
     const gfx::Rect& visible_rect,
     ResourceProvider* resource_provider) {
   const bool with_alpha = (video_frame->format() == media::PIXEL_FORMAT_YV12A);
-  YUVVideoDrawQuad::ColorSpace color_space = YUVVideoDrawQuad::REC_601;
+  auto color_space = viz::YUVVideoDrawQuad::REC_601;
   int video_frame_color_space;
   if (video_frame->metadata()->GetInteger(
           media::VideoFrameMetadata::COLOR_SPACE, &video_frame_color_space) &&
       video_frame_color_space == media::COLOR_SPACE_JPEG) {
-    color_space = YUVVideoDrawQuad::JPEG;
+    color_space = viz::YUVVideoDrawQuad::JPEG;
   }
 
   gfx::ColorSpace video_color_space = video_frame->ColorSpace();
@@ -293,8 +293,8 @@ void CreateTestYUVVideoDrawQuad_FromVideoFrame(
                                tex_coord_rect.width() * uv_tex_size.width(),
                                tex_coord_rect.height() * uv_tex_size.height());
 
-  YUVVideoDrawQuad* yuv_quad =
-      render_pass->CreateAndAppendDrawQuad<YUVVideoDrawQuad>();
+  auto* yuv_quad =
+      render_pass->CreateAndAppendDrawQuad<viz::YUVVideoDrawQuad>();
   uint32_t bits_per_channel = 8;
   if (video_frame->format() == media::PIXEL_FORMAT_YUV420P10 ||
       video_frame->format() == media::PIXEL_FORMAT_YUV422P10 ||
@@ -552,10 +552,10 @@ void CreateTestYUVVideoDrawQuad_NV12(const SharedQuadState* shared_state,
                                      const gfx::Rect& rect,
                                      const gfx::Rect& visible_rect,
                                      ResourceProvider* resource_provider) {
-  YUVVideoDrawQuad::ColorSpace color_space = YUVVideoDrawQuad::REC_601;
+  auto color_space = viz::YUVVideoDrawQuad::REC_601;
   gfx::ColorSpace gfx_color_space = gfx::ColorSpace::CreateREC601();
   if (video_frame_color_space == media::COLOR_SPACE_JPEG) {
-    color_space = YUVVideoDrawQuad::JPEG;
+    color_space = viz::YUVVideoDrawQuad::JPEG;
     gfx_color_space = gfx::ColorSpace::CreateJpeg();
   }
 
@@ -591,8 +591,8 @@ void CreateTestYUVVideoDrawQuad_NV12(const SharedQuadState* shared_state,
                                tex_coord_rect.width() * uv_tex_size.width(),
                                tex_coord_rect.height() * uv_tex_size.height());
 
-  YUVVideoDrawQuad* yuv_quad =
-      render_pass->CreateAndAppendDrawQuad<YUVVideoDrawQuad>();
+  auto* yuv_quad =
+      render_pass->CreateAndAppendDrawQuad<viz::YUVVideoDrawQuad>();
   yuv_quad->SetNew(shared_state, rect, visible_rect, needs_blending,
                    ya_tex_coord_rect, uv_tex_coord_rect, ya_tex_size,
                    uv_tex_size, y_resource, u_resource, v_resource, a_resource,

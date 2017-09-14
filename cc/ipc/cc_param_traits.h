@@ -124,8 +124,8 @@ struct CC_IPC_EXPORT ParamTraits<viz::DrawQuad::Resources> {
 };
 
 template <>
-struct CC_IPC_EXPORT ParamTraits<cc::YUVVideoDrawQuad> {
-  typedef cc::YUVVideoDrawQuad param_type;
+struct CC_IPC_EXPORT ParamTraits<viz::YUVVideoDrawQuad> {
+  typedef viz::YUVVideoDrawQuad param_type;
   static void Write(base::Pickle* m, const param_type& p);
   static bool Read(const base::Pickle* m,
                    base::PickleIterator* iter,

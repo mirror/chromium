@@ -71,6 +71,8 @@ viz_component("common") {
     "quads/single_release_callback.h",
     "quads/texture_mailbox.cc",
     "quads/texture_mailbox.h",
+    "quads/yuv_video_draw_quad.cc",
+    "quads/yuv_video_draw_quad.h",
     "resources/buffer_to_texture_target_map.cc",
     "resources/buffer_to_texture_target_map.h",
     "resources/platform_color.h",

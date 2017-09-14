@@ -1143,8 +1143,7 @@ TEST_F(StructTraitsTest, YUVDrawQuad) {
   const uint32_t u_plane_resource_id = 1234;
   const uint32_t v_plane_resource_id = 2468;
   const uint32_t a_plane_resource_id = 7890;
-  const cc::YUVVideoDrawQuad::ColorSpace color_space =
-      cc::YUVVideoDrawQuad::JPEG;
+  const auto color_space = YUVVideoDrawQuad::JPEG;
   const gfx::ColorSpace video_color_space = gfx::ColorSpace::CreateJpeg();
   const float resource_offset = 1337.5f;
   const float resource_multiplier = 1234.6f;
@@ -1152,8 +1151,8 @@ TEST_F(StructTraitsTest, YUVDrawQuad) {
   const bool require_overlay = true;
 
   SharedQuadState* sqs = render_pass->CreateAndAppendSharedQuadState();
-  cc::YUVVideoDrawQuad* quad =
-      render_pass->CreateAndAppendDrawQuad<cc::YUVVideoDrawQuad>();
+  YUVVideoDrawQuad* quad =
+      render_pass->CreateAndAppendDrawQuad<YUVVideoDrawQuad>();
   quad->SetAll(sqs, rect, visible_rect, needs_blending, ya_tex_coord_rect,
                uv_tex_coord_rect, ya_tex_size, uv_tex_size, y_plane_resource_id,
                u_plane_resource_id, v_plane_resource_id, a_plane_resource_id,
@@ -1166,8 +1165,8 @@ TEST_F(StructTraitsTest, YUVDrawQuad) {
   ASSERT_EQ(render_pass->quad_list.size(), output->quad_list.size());
 
   ASSERT_EQ(material, output->quad_list.ElementAt(0)->material);
-  const cc::YUVVideoDrawQuad* out_quad =
-      cc::YUVVideoDrawQuad::MaterialCast(output->quad_list.ElementAt(0));
+  const YUVVideoDrawQuad* out_quad =
+      YUVVideoDrawQuad::MaterialCast(output->quad_list.ElementAt(0));
   EXPECT_EQ(rect, out_quad->rect);
   EXPECT_EQ(visible_rect, out_quad->visible_rect);
   EXPECT_EQ(needs_blending, out_quad->needs_blending);

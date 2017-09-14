@@ -36,7 +36,7 @@ using cc::SurfaceDrawQuad;
 using cc::TextureDrawQuad;
 using cc::TileDrawQuad;
 using cc::StreamVideoDrawQuad;
-using cc::YUVVideoDrawQuad;
+using viz::YUVVideoDrawQuad;
 using gfx::Transform;
 using viz::ResourceId;
 using viz::SharedQuadState;
