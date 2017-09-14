@@ -65,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "9dafc273_7211e724",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-14T15:37:41Z",
+      "side": 1,
+      "message": "I think the logout was unnecessary here.\nIf the Gaia cookie is empty, there is no need to logout, because the user is not logged in.",
+      "parentUuid": "285674e5_6ce03fdb",
+      "range": {
+        "startLine": 1019,
+        "startChar": 5,
+        "endLine": 1019,
+        "endChar": 10
+      },
+      "revId": "8174d875dbe74718ed0c6d9cbc26e7e5bd84816e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23b96d95_012f4ef5",
         "filename": "chrome/browser/signin/dice_browsertest.cc",
         "patchSetId": 7
@@ -76,6 +100,30 @@
       "writtenOn": "2017-09-14T15:29:59Z",
       "side": 1,
       "message": "Shouldn\u0027t we enable DICE before creating the reconcilor to avoid these calls that expose the internals of the reconcilor?",
+      "range": {
+        "startLine": 340,
+        "startChar": 7,
+        "endLine": 340,
+        "endChar": 17
+      },
+      "revId": "8174d875dbe74718ed0c6d9cbc26e7e5bd84816e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a2b3ec1_2d0361ac",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-14T15:37:41Z",
+      "side": 1,
+      "message": "Yes, but I don\u0027t know how to do this. \n\nThis is a problem of the base::Feature and Finch code. I spent quite some time trying to do it but failed.\nThe basic problem is that we need to enable Dice before the profile is created but after the FieldTrials are created, and I could not find a way to hook there in tests.",
+      "parentUuid": "23b96d95_012f4ef5",
       "range": {
         "startLine": 340,
         "startChar": 7,
@@ -145,6 +193,24 @@
       "writtenOn": "2017-09-14T15:29:59Z",
       "side": 1,
       "message": "Before are_primaries_equal was false if there were now accounts. Not it is true. I did not check whether this is a bad thing though.",
+      "revId": "8174d875dbe74718ed0c6d9cbc26e7e5bd84816e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496f8948_4c6f2449",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-14T15:37:41Z",
+      "side": 1,
+      "message": "Yes, and this is why I needed to slightly change a test.\nI think the new behavior is better, because it avoids a unnecessary call to logout.",
+      "parentUuid": "08221eff_40ecadab",
       "revId": "8174d875dbe74718ed0c6d9cbc26e7e5bd84816e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
