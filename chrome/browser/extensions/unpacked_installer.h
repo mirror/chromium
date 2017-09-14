@@ -15,7 +15,6 @@
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "extensions/browser/preload_check.h"
-#include "extensions/common/manifest.h"
 
 class ExtensionService;
 class Profile;
