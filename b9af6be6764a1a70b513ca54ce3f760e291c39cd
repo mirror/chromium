@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5c65306_38c7ba4f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-14T18:10:54Z",
+      "side": 1,
+      "message": "If we\u0027re restarted we\u0027ll never have any observers.  I think we need to either do the reflection trick to get these classes rebuilt or handle it some other way?",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 5
+      },
+      "revId": "b9af6be6764a1a70b513ca54ce3f760e291c39cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df304d37_4ba82db1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-14T18:10:54Z",
+      "side": 1,
+      "message": "IIUC this is called when *any* service or activity is removed from Chrome.  Maybe update javadoc above as it\u0027s not really when this service is removed I think.\n\nAlso IIRC there were some caveats around specific Android versions (See DownloadNotificationService).",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 5
+      },
+      "revId": "b9af6be6764a1a70b513ca54ce3f760e291c39cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed89905b_c18e694e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-14T18:10:54Z",
+      "side": 1,
+      "message": "\u003c\u003d 0 just to be safe imo",
+      "range": {
+        "startLine": 500,
+        "startChar": 40,
+        "endLine": 500,
+        "endChar": 42
+      },
+      "revId": "b9af6be6764a1a70b513ca54ce3f760e291c39cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379e6392_7499d921",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-14T18:10:54Z",
+      "side": 1,
+      "message": "sharedPrefs.edit().remove(onForegroundServiceRestarted).apply() is kind of nice too?",
+      "range": {
+        "startLine": 572,
+        "startChar": 8,
+        "endLine": 574,
+        "endChar": 23
+      },
+      "revId": "b9af6be6764a1a70b513ca54ce3f760e291c39cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
