@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bb14adb_5d5a9ca1",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-14T01:14:31Z",
+      "side": 1,
+      "message": "optional (since this \"false\" wasn\u0027t added in this CL): consider adding the argument name with booleans. e.g.\n\n        /*whitelist_only\u003d*/false, \u0026current_threat_type)) {\n\nSee:\nhttps://google.github.io/styleguide/cppguide.html#Implementation_Comments",
+      "revId": "cf8c4bca47374ce746be35f9dd8dc3d05c14d245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d874304f_ab153a55",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-14T01:14:31Z",
+      "side": 1,
+      "message": "Unless there\u0027s specific need to observer/unobserve in the ctor/dtor, please move these to (overrides of) OnJavascriptAllowed()/OnJavascriptDisallowed().\n\nWhy:\nPutting them in the ctor makes this active even when the settings is not being viewed/used. Putting them in the OnJavascriptAllowed/Disallowed makes the observer active while the webui is being viewed/used.\n\nOTOH:\nIf it\u0027s necessary to observe at all times, even when not in the webui, please add a comment explaining that (and why). (Because someone is likely to try to \u0027fix\u0027 it by moving this to OnJavascriptAllowed and accidentally break it if it really should be in the ctor).\n\nSee example:\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/webui/settings/on_startup_handler.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d33",
+      "revId": "cf8c4bca47374ce746be35f9dd8dc3d05c14d245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f428db7a_f91d1d9e",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-14T01:14:31Z",
+      "side": 1,
+      "message": "I\u0027m not against this comment style, but is there a style guide suggesting it? (I.e. why change from the style already used in the file)?",
+      "revId": "cf8c4bca47374ce746be35f9dd8dc3d05c14d245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
