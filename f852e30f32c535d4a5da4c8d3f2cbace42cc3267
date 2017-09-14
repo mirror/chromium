@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9725a79_d98d97d8",
+        "filename": "content/public/browser/media_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-14T00:13:45Z",
+      "side": 1,
+      "message": "is it ok to expose this method?",
+      "revId": "f852e30f32c535d4a5da4c8d3f2cbace42cc3267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
