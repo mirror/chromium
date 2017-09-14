@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89ee09e9_eaf81c1d",
+        "filename": "ui/webui/resources/cr_elements/cr_toast/cr_toast.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-14T09:29:02Z",
+      "side": 1,
+      "message": "Done, most of these are very close to the MD Spec for toasts, which is why I think they should be useful in general: https://material.io/guidelines/components/snackbars-toasts.html#snackbars-toasts-specs\n\nI turned all of them into variables, now though.",
+      "parentUuid": "b53de3f2_063a7e9b",
+      "revId": "cb6b331256d75433dec8210812b79bf9a794c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c9e8220_2b5e14b8",
         "filename": "ui/webui/resources/cr_elements/cr_toast/cr_toast.js",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "0a3610aa_8035590b",
+        "filename": "ui/webui/resources/cr_elements/cr_toast/cr_toast.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-14T09:29:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c9e8220_2b5e14b8",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 6
+      },
+      "revId": "cb6b331256d75433dec8210812b79bf9a794c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "365c66f2_931fab65",
         "filename": "ui/webui/resources/cr_elements/cr_toast/cr_toast.js",
         "patchSetId": 4
@@ -62,6 +104,30 @@
       "revId": "cb6b331256d75433dec8210812b79bf9a794c1fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0dd339_50ab1a21",
+        "filename": "ui/webui/resources/cr_elements/cr_toast/cr_toast.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-14T09:29:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "365c66f2_931fab65",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 5
+      },
+      "revId": "cb6b331256d75433dec8210812b79bf9a794c1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

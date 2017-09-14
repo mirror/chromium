@@ -228,6 +228,24 @@
       "revId": "44c6e50ffd02e1e1ed79ff03987a9aef59b4ddc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ceac7dd_5fdc7aae",
+        "filename": "ui/webui/resources/js/test_timer_proxy.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-14T09:29:02Z",
+      "side": 1,
+      "message": "Yes, this is only for tests (testing of other classes to be more specific). What would be a better location?",
+      "parentUuid": "75c65e76_fe29a037",
+      "revId": "44c6e50ffd02e1e1ed79ff03987a9aef59b4ddc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
