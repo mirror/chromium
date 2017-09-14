@@ -34,6 +34,24 @@
       "revId": "14ce4cb88a76350e86b09b376c34dcd4cdd0b083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca9314f_cafc93d1",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 9
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-09-14T01:46:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c171c09_00bbb914",
+      "revId": "14ce4cb88a76350e86b09b376c34dcd4cdd0b083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

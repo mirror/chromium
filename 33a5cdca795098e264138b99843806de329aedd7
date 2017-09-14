@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b96b084c_cf00988a",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 10
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-09-14T01:46:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c86c711_d9961530",
+      "revId": "33a5cdca795098e264138b99843806de329aedd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9db60645_1937930e",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIVariable.h",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-13T23:19:05Z",
       "side": 1,
       "message": "why is this api header written by hand? I know that it\u0027s not a property but other non properties are generated, e.g. \"all\"",
+      "revId": "33a5cdca795098e264138b99843806de329aedd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7249b7_19922f13",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIVariable.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-09-14T01:46:39Z",
+      "side": 1,
+      "message": "This and ApplyAtRule have hand written headers. They\u0027re not currently represented in CSSProperties.json, and adding them there causes problems elsewhere. It might be possible to add them to CSSProperties.json, but it will take some work and will need to be done separately. IMHO it\u0027s not worth it.",
+      "parentUuid": "9db60645_1937930e",
       "revId": "33a5cdca795098e264138b99843806de329aedd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
