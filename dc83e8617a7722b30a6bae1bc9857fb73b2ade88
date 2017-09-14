@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b033db0_258c85ac",
+        "filename": "chrome/browser/ui/cocoa/translate/translate_bubble_test_utils_cocoa.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-09-14T01:23:46Z",
+      "side": 1,
+      "message": "Do you intend for this be identical to the function above?\n\nAlso, this isn\u0027t used in this change, right? It\u0027s probably best not to introduce it until it\u0027s required.",
+      "range": {
+        "startLine": 47,
+        "startChar": 76,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "dc83e8617a7722b30a6bae1bc9857fb73b2ade88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
