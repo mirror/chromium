@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b2ccd7cd_fd95dffe",
+        "filename": "media/audio/audio_output_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-09-14T14:50:19Z",
+      "side": 1,
+      "message": "Ok. I added an extra bool instead of Optional\u003cbool\u003e since Optional\u003cbool\u003e is a bit dangerous (it is implicitly convertible to bool itself, so we might accidentally write \"x\" when we mean \"x.get()\").",
+      "parentUuid": "c6753f05_244d24f7",
+      "revId": "81720fdc8d33aac353dd571dc170634bbbe028d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f39b339_ea586061",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e89039ab_6aae4a9b",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 30776,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-09-14T14:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f39b339_ea586061",
+      "revId": "81720fdc8d33aac353dd571dc170634bbbe028d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95c1e9db_9156d37c",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "81720fdc8d33aac353dd571dc170634bbbe028d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0371b1_0f8cba10",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 30785,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-09-14T14:50:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95c1e9db_9156d37c",
+      "revId": "81720fdc8d33aac353dd571dc170634bbbe028d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
