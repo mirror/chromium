@@ -103,29 +103,6 @@ uint32_t GetStoragePartitionRemovalMask(uint32_t web_view_removal_mask) {
   return mask;
 }
 
-std::string WindowOpenDispositionToString(
-  WindowOpenDisposition window_open_disposition) {
-  switch (window_open_disposition) {
-    case WindowOpenDisposition::IGNORE_ACTION:
-      return "ignore";
-    case WindowOpenDisposition::SAVE_TO_DISK:
-      return "save_to_disk";
-    case WindowOpenDisposition::CURRENT_TAB:
-      return "current_tab";
-    case WindowOpenDisposition::NEW_BACKGROUND_TAB:
-      return "new_background_tab";
-    case WindowOpenDisposition::NEW_FOREGROUND_TAB:
-      return "new_foreground_tab";
-    case WindowOpenDisposition::NEW_WINDOW:
-      return "new_window";
-    case WindowOpenDisposition::NEW_POPUP:
-      return "new_popup";
-    default:
-      NOTREACHED() << "Unknown Window Open Disposition";
-      return "ignore";
-  }
-}
-
 static std::string TerminationStatusToString(base::TerminationStatus status) {
   switch (status) {
     case base::TERMINATION_STATUS_NORMAL_TERMINATION:
@@ -1436,7 +1413,7 @@ void WebViewGuest::RequestNewWindowPermission(WindowOpenDisposition disposition,
   // API can use it to set their partition attribute.
   request_info.SetString(webview::kStoragePartitionId, storage_partition_id);
   request_info.SetString(webview::kWindowOpenDisposition,
-                         WindowOpenDispositionToString(disposition));
+                         ui::DispositionToString(disposition));
 
   web_view_permission_helper_->
       RequestPermission(WEB_VIEW_PERMISSION_TYPE_NEW_WINDOW,

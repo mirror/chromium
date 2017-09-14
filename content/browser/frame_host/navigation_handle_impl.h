@@ -128,6 +128,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   bool HasUserGesture() override;
   ui::PageTransition GetPageTransition() override;
   bool IsExternalProtocol() override;
+  NavigationUIData* GetNavigationUIData() const override;
   net::Error GetNetErrorCode() override;
   RenderFrameHostImpl* GetRenderFrameHost() override;
   bool IsSameDocument() override;
@@ -354,10 +355,6 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
 
   // Called when the navigation is transferred to a different renderer.
   void Transfer();
-
-  NavigationUIData* navigation_ui_data() const {
-    return navigation_ui_data_.get();
-  }
 
   const GURL& base_url() { return base_url_; }
 
