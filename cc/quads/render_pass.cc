@@ -23,10 +23,10 @@
 #include "cc/quads/surface_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/quads/tile_draw_quad.h"
-#include "cc/quads/yuv_video_draw_quad.h"
 #include "components/viz/common/quads/copy_output_request.h"
 #include "components/viz/common/quads/draw_quad.h"
 #include "components/viz/common/quads/shared_quad_state.h"
+#include "components/viz/common/quads/yuv_video_draw_quad.h"
 #include "components/viz/common/traced_value.h"
 
 namespace {
@@ -298,7 +298,7 @@ viz::DrawQuad* RenderPass::CopyFromAndAppendDrawQuad(
       CopyFromAndAppendTypedDrawQuad<SurfaceDrawQuad>(quad);
       break;
     case viz::DrawQuad::YUV_VIDEO_CONTENT:
-      CopyFromAndAppendTypedDrawQuad<YUVVideoDrawQuad>(quad);
+      CopyFromAndAppendTypedDrawQuad<viz::YUVVideoDrawQuad>(quad);
       break;
     // RenderPass quads need to use specific CopyFrom function.
     case viz::DrawQuad::RENDER_PASS:

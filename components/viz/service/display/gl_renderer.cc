@@ -628,7 +628,7 @@ void GLRenderer::DoDrawQuad(const DrawQuad* quad,
       DrawTileQuad(cc::TileDrawQuad::MaterialCast(quad), clip_region);
       break;
     case DrawQuad::YUV_VIDEO_CONTENT:
-      DrawYUVVideoQuad(cc::YUVVideoDrawQuad::MaterialCast(quad), clip_region);
+      DrawYUVVideoQuad(YUVVideoDrawQuad::MaterialCast(quad), clip_region);
       break;
   }
 }
@@ -2108,7 +2108,7 @@ void GLRenderer::DrawContentQuadNoAA(const cc::ContentDrawQuadBase* quad,
   num_triangles_drawn_ += 2;
 }
 
-void GLRenderer::DrawYUVVideoQuad(const cc::YUVVideoDrawQuad* quad,
+void GLRenderer::DrawYUVVideoQuad(const YUVVideoDrawQuad* quad,
                                   const gfx::QuadF* clip_region) {
   SetBlendEnabled(quad->ShouldDrawWithBlending());
 
@@ -2133,13 +2133,13 @@ void GLRenderer::DrawYUVVideoQuad(const cc::YUVVideoDrawQuad* quad,
       !settings_->enable_color_correct_rendering) {
     dst_color_space = gfx::ColorSpace();
     switch (quad->color_space) {
-      case cc::YUVVideoDrawQuad::REC_601:
+      case YUVVideoDrawQuad::REC_601:
         src_color_space = gfx::ColorSpace::CreateREC601();
         break;
-      case cc::YUVVideoDrawQuad::REC_709:
+      case YUVVideoDrawQuad::REC_709:
         src_color_space = gfx::ColorSpace::CreateREC709();
         break;
-      case cc::YUVVideoDrawQuad::JPEG:
+      case YUVVideoDrawQuad::JPEG:
         src_color_space = gfx::ColorSpace::CreateJpeg();
         break;
     }

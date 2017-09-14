@@ -19,8 +19,8 @@
 #include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/surface_draw_quad.h"
 #include "cc/quads/tile_draw_quad.h"
-#include "cc/quads/yuv_video_draw_quad.h"
 #include "components/viz/common/quads/draw_quad.h"
+#include "components/viz/common/quads/yuv_video_draw_quad.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "third_party/skia/include/core/SkData.h"
 #include "third_party/skia/include/core/SkFlattenableSerialization.h"
@@ -359,7 +359,7 @@ void ParamTraits<cc::RenderPass>::Write(base::Pickle* m, const param_type& p) {
         WriteParam(m, *cc::StreamVideoDrawQuad::MaterialCast(quad));
         break;
       case viz::DrawQuad::YUV_VIDEO_CONTENT:
-        WriteParam(m, *cc::YUVVideoDrawQuad::MaterialCast(quad));
+        WriteParam(m, *viz::YUVVideoDrawQuad::MaterialCast(quad));
         break;
       case viz::DrawQuad::INVALID:
         break;
@@ -491,7 +491,7 @@ bool ParamTraits<cc::RenderPass>::Read(const base::Pickle* m,
         draw_quad = ReadDrawQuad<cc::StreamVideoDrawQuad>(m, iter, p);
         break;
       case viz::DrawQuad::YUV_VIDEO_CONTENT:
-        draw_quad = ReadDrawQuad<cc::YUVVideoDrawQuad>(m, iter, p);
+        draw_quad = ReadDrawQuad<viz::YUVVideoDrawQuad>(m, iter, p);
         break;
       case viz::DrawQuad::INVALID:
         break;
@@ -604,7 +604,7 @@ void ParamTraits<cc::RenderPass>::Log(const param_type& p, std::string* l) {
         LogParam(*cc::StreamVideoDrawQuad::MaterialCast(quad), l);
         break;
       case viz::DrawQuad::YUV_VIDEO_CONTENT:
-        LogParam(*cc::YUVVideoDrawQuad::MaterialCast(quad), l);
+        LogParam(*viz::YUVVideoDrawQuad::MaterialCast(quad), l);
         break;
       case viz::DrawQuad::INVALID:
         break;
@@ -867,8 +867,8 @@ void ParamTraits<viz::DrawQuad::Resources>::Log(const param_type& p,
   l->append("])");
 }
 
-void ParamTraits<cc::YUVVideoDrawQuad>::Write(base::Pickle* m,
-                                              const param_type& p) {
+void ParamTraits<viz::YUVVideoDrawQuad>::Write(base::Pickle* m,
+                                               const param_type& p) {
   ParamTraits<viz::DrawQuad>::Write(m, p);
   WriteParam(m, p.ya_tex_coord_rect);
   WriteParam(m, p.uv_tex_coord_rect);
@@ -881,9 +881,9 @@ void ParamTraits<cc::YUVVideoDrawQuad>::Write(base::Pickle* m,
   WriteParam(m, p.bits_per_channel);
 }
 
-bool ParamTraits<cc::YUVVideoDrawQuad>::Read(const base::Pickle* m,
-                                             base::PickleIterator* iter,
-                                             param_type* p) {
+bool ParamTraits<viz::YUVVideoDrawQuad>::Read(const base::Pickle* m,
+                                              base::PickleIterator* iter,
+                                              param_type* p) {
   return ParamTraits<viz::DrawQuad>::Read(m, iter, p) &&
          ReadParam(m, iter, &p->ya_tex_coord_rect) &&
          ReadParam(m, iter, &p->uv_tex_coord_rect) &&
@@ -894,12 +894,12 @@ bool ParamTraits<cc::YUVVideoDrawQuad>::Read(const base::Pickle* m,
          ReadParam(m, iter, &p->resource_offset) &&
          ReadParam(m, iter, &p->resource_multiplier) &&
          ReadParam(m, iter, &p->bits_per_channel) &&
-         p->bits_per_channel >= cc::YUVVideoDrawQuad::kMinBitsPerChannel &&
-         p->bits_per_channel <= cc::YUVVideoDrawQuad::kMaxBitsPerChannel;
+         p->bits_per_channel >= viz::YUVVideoDrawQuad::kMinBitsPerChannel &&
+         p->bits_per_channel <= viz::YUVVideoDrawQuad::kMaxBitsPerChannel;
 }
 
-void ParamTraits<cc::YUVVideoDrawQuad>::Log(const param_type& p,
-                                            std::string* l) {
+void ParamTraits<viz::YUVVideoDrawQuad>::Log(const param_type& p,
+                                             std::string* l) {
   l->append("(");
   ParamTraits<viz::DrawQuad>::Log(p, l);
   l->append(", ");

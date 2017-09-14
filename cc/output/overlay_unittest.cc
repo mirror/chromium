@@ -408,7 +408,7 @@ StreamVideoDrawQuad* CreateFullscreenCandidateVideoQuad(
       render_pass, render_pass->output_rect, transform);
 }
 
-YUVVideoDrawQuad* CreateFullscreenCandidateYUVVideoQuad(
+viz::YUVVideoDrawQuad* CreateFullscreenCandidateYUVVideoQuad(
     DisplayResourceProvider* parent_resource_provider,
     LayerTreeResourceProvider* child_resource_provider,
     const SharedQuadState* shared_quad_state,
@@ -422,12 +422,12 @@ YUVVideoDrawQuad* CreateFullscreenCandidateYUVVideoQuad(
       CreateResource(parent_resource_provider, child_resource_provider,
                      resource_size_in_pixels, is_overlay_candidate);
 
-  YUVVideoDrawQuad* overlay_quad =
-      render_pass->CreateAndAppendDrawQuad<YUVVideoDrawQuad>();
+  auto* overlay_quad =
+      render_pass->CreateAndAppendDrawQuad<viz::YUVVideoDrawQuad>();
   overlay_quad->SetNew(shared_quad_state, rect, rect, needs_blending,
                        tex_coord_rect, tex_coord_rect, resource_size_in_pixels,
                        resource_size_in_pixels, resource_id, resource_id,
-                       resource_id, resource_id, YUVVideoDrawQuad::REC_601,
+                       resource_id, resource_id, viz::YUVVideoDrawQuad::REC_601,
                        gfx::ColorSpace(), 0, 1.0, 8);
 
   return overlay_quad;
@@ -2042,7 +2042,7 @@ TEST_P(DCLayerOverlayTest, AllowRequiredNonAxisAlignedTransform) {
   feature_list.InitAndEnableFeature(
       features::kDirectCompositionNonrootOverlays);
   std::unique_ptr<RenderPass> pass = CreateRenderPass();
-  YUVVideoDrawQuad* yuv_quad = CreateFullscreenCandidateYUVVideoQuad(
+  viz::YUVVideoDrawQuad* yuv_quad = CreateFullscreenCandidateYUVVideoQuad(
       resource_provider_.get(), child_resource_provider_.get(),
       pass->shared_quad_state_list.back(), pass.get());
   yuv_quad->require_overlay = true;
@@ -2172,7 +2172,7 @@ TEST_P(DCLayerOverlayTest, MultiplePassDamageRect) {
     RenderPassId child_pass_id(5);
     std::unique_ptr<RenderPass> pass1 = CreateRenderPass();
     pass1->id = child_pass_id;
-    YUVVideoDrawQuad* yuv_quad = CreateFullscreenCandidateYUVVideoQuad(
+    viz::YUVVideoDrawQuad* yuv_quad = CreateFullscreenCandidateYUVVideoQuad(
         resource_provider_.get(), child_resource_provider_.get(),
         pass1->shared_quad_state_list.back(), pass1.get());
     yuv_quad->require_overlay = true;
