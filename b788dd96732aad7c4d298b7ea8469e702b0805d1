@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "51a46d02_2a161892",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-14T15:25:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f769e95_17fc8ee4",
+      "range": {
+        "startLine": 137,
+        "startChar": 31,
+        "endLine": 137,
+        "endChar": 38
+      },
+      "revId": "b788dd96732aad7c4d298b7ea8469e702b0805d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13884b3b_b99a7834",
         "filename": "ios/web/app/web_main_loop.mm",
         "patchSetId": 14
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "85edfbac_9e3af956",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-14T15:25:14Z",
+      "side": 1,
+      "message": "\u003e I think we want to assert that WebThread::ID_COUNT \u003d\u003d 2 otherwise this may break if someone adds a new thread between WebThread::UI and WebThread::IO.\n\u003e \n\u003e   static_assert(WebThread::ID_COUNT \u003d\u003d 2);\n\nGood point, done.\n\n\u003e \n\u003e BTW, since this is a static_assert, can this move the file scope? It does not depends on anything in that function.\n\nI prefer having the assert here as it\u0027s the logic here that depends on that being true (if moved at file scope I\u0027d have to comment on what depends on it).",
+      "parentUuid": "13884b3b_b99a7834",
+      "revId": "b788dd96732aad7c4d298b7ea8469e702b0805d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "292b6645_ceb41f02",
         "filename": "ios/web/app/web_main_loop.mm",
         "patchSetId": 14
@@ -56,6 +98,24 @@
       "revId": "b788dd96732aad7c4d298b7ea8469e702b0805d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7afd1462_8f7f0840",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-14T15:25:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "292b6645_ceb41f02",
+      "revId": "b788dd96732aad7c4d298b7ea8469e702b0805d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
