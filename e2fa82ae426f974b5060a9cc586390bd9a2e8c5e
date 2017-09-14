@@ -1,0 +1,282 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63e207e3_c7a30d32",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-14T21:01:48Z",
+      "side": 1,
+      "message": "This seems fragile; wouldn\u0027t it be better to:\n\n1. Format the output volume up-front, so we don\u0027t risk having the process run for an hour or two only for formatting to fail,losing us the results?\n\n2. If we have the output volume formatted up-front, we could have the output file written to it directly and avoid the copy. Or does copying at the end mean we can make assumptions about the specific FAT layout that otherwise might not apply?",
+      "revId": "e2fa82ae426f974b5060a9cc586390bd9a2e8c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1c60c43_1a44ee68",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-14T21:01:48Z",
+      "side": 1,
+      "message": "Eeeps, how do we know that this is always the right magic...?",
+      "revId": "e2fa82ae426f974b5060a9cc586390bd9a2e8c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e751e723_de7a5469",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-14T21:01:48Z",
+      "side": 1,
+      "message": "This file is getting kind of huge... should we split some of the functionality into their own modules?",
+      "revId": "e2fa82ae426f974b5060a9cc586390bd9a2e8c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d1980bf_ee7cf180",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-14T21:01:48Z",
+      "side": 1,
+      "message": "nit: Can we be a little more specific about the \"narrow path\"? e.g. does it assume a single file on the volume, does it assume the file is contiguous, etc?",
+      "revId": "e2fa82ae426f974b5060a9cc586390bd9a2e8c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ada2b29_1d0120b2",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-14T21:01:48Z",
+      "side": 1,
+      "message": "nit: We could use an mmap() for raw_img, which would behave just like the raw_img string without actually copying the whole thing into memory. ;)",
+      "revId": "e2fa82ae426f974b5060a9cc586390bd9a2e8c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "389331b5_82b99bd5",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-14T21:01:48Z",
+      "side": 1,
+      "message": "We\u0027re assuming these but not explicitly passing them to mkfs in the autorun - can we pass them explicitly, so we can be more confident that e.g. we won\u0027t get seemingly random failures if someone increases the FAT file size and triggers a bigger sector size?",
+      "revId": "e2fa82ae426f974b5060a9cc586390bd9a2e8c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf6e90c_e351a98f",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-14T21:01:48Z",
+      "side": 1,
+      "message": "nit: Can we wrap this with ( ) rather than \\ please? It\u0027s weird to see * \\ at the end of the line!\n\nnit: Might be helpful given lack of explicit types in Python to use _bytes as a suffix for this name, to make clear that it\u0027s a byte offset, not e.g. a sectors offset, later in this code.",
+      "revId": "e2fa82ae426f974b5060a9cc586390bd9a2e8c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fbf5cbd_13bdb3bd",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-14T21:01:48Z",
+      "side": 1,
+      "message": "nit: Is this an unexpected root directory, or an unexpected directory entry?",
+      "revId": "e2fa82ae426f974b5060a9cc586390bd9a2e8c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4b9d47_29ca797c",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-14T21:01:48Z",
+      "side": 1,
+      "message": "The , syntax alone is a little strange here; does writing (next_cluster,) work here? That would make it more obvious that the result is a tuple.\n\nOtherwise, could we just say structk.unpack(...)[0] to be a little more obvious?",
+      "revId": "e2fa82ae426f974b5060a9cc586390bd9a2e8c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d77ce45_e17b3f8e",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-14T21:01:48Z",
+      "side": 1,
+      "message": "nit: Can we provide a comment here to clarify these Magic Numbers? Or declare them as \"contants\" to clarify their meaning?",
+      "range": {
+        "startLine": 406,
+        "startChar": 23,
+        "endLine": 406,
+        "endChar": 29
+      },
+      "revId": "e2fa82ae426f974b5060a9cc586390bd9a2e8c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866b082d_831648cb",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-14T21:01:48Z",
+      "side": 1,
+      "message": "nit: c-\u003ecluster",
+      "revId": "e2fa82ae426f974b5060a9cc586390bd9a2e8c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e54c0260_de57fbf0",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-14T21:01:48Z",
+      "side": 1,
+      "message": "nit: Does data_base need to be inside, since it\u0027s a constant? Also, might it be better named data_offset_bytes or similar? Finally, should we assert it\u0027s value in relation to the root_dir_offset - it seems the value is actually the same, which is a little surprising at first glance, unless we\u0027re saying that the cluster Ids are relative to the root-dir position, or to the end of the FAT copies area?",
+      "revId": "e2fa82ae426f974b5060a9cc586390bd9a2e8c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cabf31c_18a67dbd",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-14T21:01:48Z",
+      "side": 1,
+      "message": "nit: clusters_data?",
+      "revId": "e2fa82ae426f974b5060a9cc586390bd9a2e8c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d2aaec_4a80cae9",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-14T21:01:48Z",
+      "side": 1,
+      "message": "Couldn\u0027t we iterate |cluster_data| doing individual write() operations, to avoid ballooning memory creating a single join()\u0027d string with the whole contents. You could do the iteration over the cluster-Id list, so that you avoid even collating copies of the custers in memory.\n\nAlso, since we know the eventual file-size up-front you could potentially use another mmap.mmap(), to copy the cluster data directly from source to destination without any in-memory overhead, though the end-of-file might be an issue when the file isn\u0027t a cluster-multiple in size.",
+      "revId": "e2fa82ae426f974b5060a9cc586390bd9a2e8c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da386fee_ebd6812f",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-14T21:01:48Z",
+      "side": 1,
+      "message": "nit: Wording; suggest \"Provide |img_filename| as a block device, to the guest. Guest will format it to FAT16 and copy the results JSON into it, for us to retrieve.\"",
+      "revId": "e2fa82ae426f974b5060a9cc586390bd9a2e8c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e250113_114ed6d0",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-14T21:01:48Z",
+      "side": 1,
+      "message": "nit: Are we correctly clearing/truncating/deleating the test summary output file in the case in which we fail to get the results from the img?",
+      "revId": "e2fa82ae426f974b5060a9cc586390bd9a2e8c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
