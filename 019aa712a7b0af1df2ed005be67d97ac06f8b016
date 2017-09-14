@@ -16,6 +16,24 @@
       "revId": "019aa712a7b0af1df2ed005be67d97ac06f8b016",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6d3c0f_b58b576f",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-14T22:14:22Z",
+      "side": 1,
+      "message": "Yeah its a bit confusing. From what I know:\n\nThis is called after HideBubble releases its bubble wrapper which closes the bubble widget asyncly, which then calls this.\nWhen we use the accelerator, it actually closes and opens the bubble [1]. From my runs it seems when that happens ShowPalette is always called before BubbleViewDestroyed, so bubble_ is often not null when we use the accelerator.\n\n1. https://cs.chromium.org/chromium/src/ui/views/bubble/tray_bubble_view.cc?dr\u003dCSs\u0026l\u003d189",
+      "parentUuid": "da96ea09_ee8c069a",
+      "revId": "019aa712a7b0af1df2ed005be67d97ac06f8b016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
