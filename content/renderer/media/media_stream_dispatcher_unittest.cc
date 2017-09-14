@@ -388,7 +388,7 @@ TEST_F(MediaStreamDispatcherTest, GetNonScreenCaptureDevices) {
   EXPECT_EQ(dispatcher_->video_session_id(stream_label1, 0),
             StreamDeviceInfo::kNoId);
 
-  // Verify that the request have been completed.
+  // Verify that the request has been completed.
   EXPECT_EQ(dispatcher_->label_stream_map_.size(), 0u);
   EXPECT_EQ(dispatcher_->requests_.size(), 0u);
 }
