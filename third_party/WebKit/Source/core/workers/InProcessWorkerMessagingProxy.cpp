@@ -53,7 +53,7 @@ namespace blink {
 
 struct InProcessWorkerMessagingProxy::QueuedTask {
   RefPtr<SerializedScriptValue> message;
-  MessagePortChannelArray channels;
+  Vector<MessagePortChannel> channels;
 };
 
 InProcessWorkerMessagingProxy::InProcessWorkerMessagingProxy(
@@ -115,7 +115,7 @@ void InProcessWorkerMessagingProxy::StartWorkerGlobalScope(
 
 void InProcessWorkerMessagingProxy::PostMessageToWorkerObject(
     RefPtr<SerializedScriptValue> message,
-    MessagePortChannelArray channels) {
+    Vector<MessagePortChannel> channels) {
   DCHECK(IsParentContextThread());
   if (!worker_object_ || AskedToTerminate())
     return;
@@ -128,7 +128,7 @@ void InProcessWorkerMessagingProxy::PostMessageToWorkerObject(
 
 void InProcessWorkerMessagingProxy::PostMessageToWorkerGlobalScope(
     RefPtr<SerializedScriptValue> message,
-    MessagePortChannelArray channels) {
+    Vector<MessagePortChannel> channels) {
   DCHECK(IsParentContextThread());
   if (AskedToTerminate())
     return;
