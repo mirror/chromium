@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "281d66da_5c20fe9a",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-14T01:43:11Z",
+      "side": 1,
+      "message": "nit: Since this is no longer a category I think turning these into properties makes more sense, and improves the documentation.",
+      "range": {
+        "startLine": 28,
+        "startChar": 18,
+        "endLine": 28,
+        "endChar": 35
+      },
+      "revId": "ccb083f68c3d6e91c6f41cfe32f522867f7315a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c891796e_8d5605ed",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_configuration.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-14T01:43:11Z",
+      "side": 1,
+      "message": "nit: Could you please make these read-only properties. I think the dot notation is way more common for UI configuration like view.backgroundColor,etc.",
+      "revId": "ccb083f68c3d6e91c6f41cfe32f522867f7315a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

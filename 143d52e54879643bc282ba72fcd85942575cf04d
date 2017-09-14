@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "2a7b6bfb_188934b9",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-14T01:43:11Z",
+      "side": 1,
+      "message": "You\u0027re right, could you please expand the comment with this information. That way we know that this object will be used to style both the toolbarVC and the factory buttons.",
+      "parentUuid": "881e78fd_b2ffd9ef",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 46
+      },
+      "revId": "143d52e54879643bc282ba72fcd85942575cf04d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d723d06_36f2e494",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button_factory.mm",
         "patchSetId": 6
