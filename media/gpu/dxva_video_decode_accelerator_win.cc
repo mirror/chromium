@@ -877,6 +877,8 @@ bool DXVAVideoDecodeAccelerator::CreateDX11DevManager() {
   angle_device_ = gl::QueryD3D11DeviceObjectFromANGLE();
   if (!angle_device_) {
     support_copy_nv12_textures_ = false;
+    support_share_nv12_textures_ = false;
+    DCHECK(!ShouldUseANGLEDevice());
   }
   if (ShouldUseANGLEDevice()) {
     RETURN_ON_FAILURE(angle_device_.Get(), "Failed to get d3d11 device", false);
