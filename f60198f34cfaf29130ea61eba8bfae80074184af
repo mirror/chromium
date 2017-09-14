@@ -22,6 +22,30 @@
       "revId": "f60198f34cfaf29130ea61eba8bfae80074184af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a6ec75b_1ccdf8c9",
+        "filename": "content/browser/service_worker/browser_side_controller_service_worker.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-14T17:15:24Z",
+      "side": 1,
+      "message": "The diff\u0027s not working well but almost all the code of this class\u0027s coming from existing browser_side_service_worker_event_dispatcher.{h,cc}, whose implementation was based on another mojom interface (service_worker_event_dispatcher.mojom) which heavily used IDs.  This class is supposed to go away very quickly in a next few patches and I didn\u0027t want to make a lot of changes in the existing code.  (Another a bit weak reason is that we need to fire the final callback in both success and failure cases on line 141, where we can\u0027t simply pass the callback to the two callback chains-- there\u0027re a few ways to work around this but storing the callback somewhere else is one of the common patterns)",
+      "parentUuid": "e55a1941_b231fdf5",
+      "range": {
+        "startLine": 156,
+        "startChar": 4,
+        "endLine": 156,
+        "endChar": 31
+      },
+      "revId": "f60198f34cfaf29130ea61eba8bfae80074184af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
