@@ -442,6 +442,13 @@ void ControllerImpl::OnDownloadUpdated(const DriverEntry& download) {
                             download.guid, download.bytes_downloaded));
 }
 
+bool ControllerImpl::IsTrackingDownload(const std::string& guid) const {
+  if (controller_state_ != State::READY)
+    return false;
+  Entry* entry = model_->Get(guid);
+  return !!entry;
+}
+
 void ControllerImpl::OnFileMonitorReady(bool success) {
   DCHECK(!startup_status_.file_monitor_ok.has_value());
   startup_status_.file_monitor_ok = success;
