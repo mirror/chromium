@@ -70,6 +70,30 @@
       "revId": "f4b2ce31e61e62b30f3f6fd419c7c18b25e0f789",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a4edd5_108f2600",
+        "filename": "components/history/core/browser/top_sites_database.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-09-14T21:05:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f59017b3_b6ebd888",
+      "range": {
+        "startLine": 389,
+        "startChar": 4,
+        "endLine": 389,
+        "endChar": 26
+      },
+      "revId": "f4b2ce31e61e62b30f3f6fd419c7c18b25e0f789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
