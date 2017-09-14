@@ -826,5 +826,9 @@
     "matches": [
       "chrome://bookmarks/*"
     ]
-  }]
+  }],
+  "zipArchiverPrivate": {
+    "dependencies": ["permission:zipArchiverPrivate"],
+    "contexts": ["blessed_extension"]
+  }
 }

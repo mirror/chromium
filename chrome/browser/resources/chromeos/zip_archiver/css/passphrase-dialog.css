@@ -8,6 +8,17 @@ paper-checkbox {
   -webkit-app-region: no-drag;
 }
 
+#input {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+#remember {
+  --paper-checkbox-checked-color: rgb(66, 133, 244); /* #4285f4 */
+}
+
 h3 {
   margin: 0;
 }

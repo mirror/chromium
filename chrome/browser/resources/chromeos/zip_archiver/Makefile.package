@@ -19,6 +19,7 @@ all:
 	cp -r css $(PACKAGE_DIR)/css
 	cp -r _locales $(PACKAGE_DIR)/_locales
 	cp manifest.json $(PACKAGE_DIR)/
+	cp manifest_guest.json $(PACKAGE_DIR)/
 	cp pnacl/$(PNACL_TARGET)/module.nmf $(PACKAGE_DIR)/
 	cp pnacl/$(PNACL_TARGET)/module.pexe $(PACKAGE_DIR)/
 	mkdir -p $(PACKAGE_DIR)/third-party

@@ -1,0 +1,38 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+[
+  {
+    "namespace":"zipArchiverPrivate",
+    "compiler_options": {
+      "implemented_in": "chrome/browser/chromeos/extensions/zip_archiver_private_api.h"
+    },
+    "description": "none",
+    "types": [
+    ],
+    "functions": [
+      {
+        "name": "getLocalizedStrings",
+        "type": "function",
+        "description": "Gets translated strings and initialization data.",
+        "nodoc": "true",
+        "parameters": [
+          {
+            "type": "function",
+            "name": "callback",
+            "parameters": [
+              {
+                "name": "result",
+                "type": "object",
+                "additionalProperties": {"type": "any"}
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "events": [
+    ]
+  }
+]

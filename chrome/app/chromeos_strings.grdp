@@ -78,6 +78,23 @@ Press any key to continue exploring.
     The current wallpaper is set by '<ph name="APP_NAME">$1</ph>'. You may need to uninstall '<ph name="APP_NAME">$1</ph>' before selecting a different wallpaper.
   </message>
 
+  <!-- Zip Archiver -->
+  <message desc="Title of the password input dialog." name="IDS_ZIPARCHIVER_PASSPHRASE_TITLE">
+    This file is password protected
+  </message>
+  <message desc="Label of the password input field." name="IDS_ZIPARCHIVER_PASSPHRASE_INPUT_LABEL">
+    Password
+  </message>
+  <message desc="Short name of the password accept button." name="IDS_ZIPARCHIVER_PASSPHRASE_ACCEPT">
+    Accept
+  </message>
+  <message desc="Short name of the password cancel button." name="IDS_ZIPARCHIVER_PASSPHRASE_CANCEL">
+    Cancel
+  </message>
+  <message desc="Title for of a checkbox whether the password should be remembered. Please keep it as short." name="IDS_ZIPARCHIVER_PASSPHRASE_REMEMBER">
+    Remember
+  </message>
+
   <!-- File Manager -->
   <message name="IDS_FILE_SYSTEM_PROVIDER_UNRESPONSIVE_WARNING" desc="A warning shown in a notification that an operation is taking longer than expected.">
     An operation is taking longer than expected. Do you want to abort it?

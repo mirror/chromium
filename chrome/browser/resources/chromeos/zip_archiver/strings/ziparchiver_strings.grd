@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<grit base_dir="." current_release="1" latest_public_release="0"
+      output_all_resource_defines="false" enc_check="möl" source_lang_id="en">
+  <outputs>
+    <output filename="_locales/en/messages.json" type="chrome_messages_json" lang="en"/>
+  </outputs>
+  <translations>
+  </translations>
+  <release allow_pseudo="false" seq="1">
+    <messages fallback_to_english="true">
+      <message desc="The locale you're translating into. For use in URL to localized pages.  e.g. http://www.google.com/?hl=en." name="IDS_LOCALE">
+        en
+      </message>
+      <message desc="The product name for Zip Archiver." name="IDS_ZIPARCHIVER_NAME">
+        Zip Archiver
+      </message>
+      <message desc="The product description, displayed in the Chrome Extensions page." name="IDS_ZIPARCHIVER_DESCRIPTION">
+        Zip Archiver - Open and pack ZIP files in Files app.
+      </message>
+      <message desc="Error message when opening an archive fails because of an unknown reason." name="IDS_ZIPARCHIVER_OTHER_ERROR_MESSAGE">
+        The archive format is not supported, or the file is broken.
+      </message>
+      <message desc="Message shown when opening an archive takes long time." name="IDS_ZIPARCHIVER_MOUNTING_MESSAGE">
+        Please wait, the archive is being scanned...
+      </message>
+    </messages>
+  </release>
+</grit>
