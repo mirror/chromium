@@ -25,6 +25,63 @@
     },
     {
       "key": {
+        "uuid": "0d378811_dfd6a250",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-09-14T16:23:15Z",
+      "side": 1,
+      "message": "These are the same resources as macOS, right? So macOS is getting title-casing for text field labels with this CL?\n\n(That\u0027s a good thing--we aren\u0027t capitalizing these and should be; I just want to double-check that we aren\u0027t adding a new resource here.)",
+      "revId": "9aa84f6fa3b1431b46f455829b1be02357f52c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3851b05_35359048",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-09-14T16:23:15Z",
+      "side": 1,
+      "message": "Checkboxes don\u0027t use title-casing\n\nhttps://developer.apple.com/macos/human-interface-guidelines/buttons/checkboxes/",
+      "revId": "9aa84f6fa3b1431b46f455829b1be02357f52c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c55b56_528a6650",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-09-14T16:23:15Z",
+      "side": 1,
+      "message": "Please remove formatter_data\u003d\"android_java\" from title-cased strings.",
+      "range": {
+        "startLine": 316,
+        "startChar": 294,
+        "endLine": 316,
+        "endChar": 323
+      },
+      "revId": "9aa84f6fa3b1431b46f455829b1be02357f52c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6c3f864_fd36d16b",
         "filename": "components/payments_strings.grdp",
         "patchSetId": 5
@@ -36,6 +93,30 @@
       "writtenOn": "2017-09-14T14:37:22Z",
       "side": 1,
       "message": "These validation messages look like full sentences to me and therefore should be sentence-cased. Can you provide examples of other iOS UI that shows title-cased validation messages?",
+      "range": {
+        "startLine": 475,
+        "startChar": 2,
+        "endLine": 475,
+        "endChar": 34
+      },
+      "revId": "9aa84f6fa3b1431b46f455829b1be02357f52c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538913e8_834c0545",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-09-14T16:23:15Z",
+      "side": 1,
+      "message": "+1; error messages and other descriptive UI text (not titles, buttons, or text-field labels) should be sentence-cased in general, and especially when they\u0027re complete sentences.",
+      "parentUuid": "a6c3f864_fd36d16b",
       "range": {
         "startLine": 475,
         "startChar": 2,
