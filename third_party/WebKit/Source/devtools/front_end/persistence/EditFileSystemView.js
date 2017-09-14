@@ -40,6 +40,7 @@ Persistence.EditFileSystemView = class extends UI.VBox {
     this.registerRequiredCSS('persistence/editFileSystemView.css');
     this._fileSystemPath = fileSystemPath;
 
+    /** @type {!Array<!Common.EventTarget.EventDescriptor>} */
     this._eventListeners = [
       Persistence.fileSystemMapping.addEventListener(
           Persistence.FileSystemMapping.Events.FileMappingAdded, this._update, this),
@@ -51,20 +52,35 @@ Persistence.EditFileSystemView = class extends UI.VBox {
           Persistence.IsolatedFileSystemManager.Events.ExcludedFolderRemoved, this._update, this)
     ];
 
+    this._mappingsList = new UI.ListWidget(this);
+    this._mappingsList.element.classList.add('file-system-list');
+    this._mappingsList.registerRequiredCSS('persistence/editFileSystemView.css');
+    var mappingsPlaceholder = createElementWithClass('div', 'file-system-list-empty');
+    var mappingsHeader = this.contentElement.createChild('div', 'file-system-header');
 
-    if (!Runtime.experiments.isEnabled('persistence2')) {
-      this._mappingsList = new UI.ListWidget(this);
-      this._mappingsList.element.classList.add('file-system-list');
-      this._mappingsList.registerRequiredCSS('persistence/editFileSystemView.css');
-      var mappingsPlaceholder = createElementWithClass('div', 'file-system-list-empty');
-      var mappingsHeader = this.contentElement.createChild('div', 'file-system-header');
+    this._enabledFileSystemPathsForInterceptionSetting =
+        Common.settings.createSetting('Persistence.enabledFileSystemPathsForInterception', {});
+    this._enabledFileSystemPathsForInterceptionSetting.addChangeListener(
+        this._enabledFilesystemInterceptionSettingChanged, this);
+    if (Runtime.experiments.isEnabled('persistence2')) {
+      var enabledFileSystemPaths = this._enabledFileSystemPathsForInterceptionSetting.get();
+      var labelForFilesystemPathInterceptions = UI.CheckboxLabel.create(
+          Common.UIString('Enable serving filesystem files'), !!enabledFileSystemPaths[fileSystemPath]);
+      this._enabledFileSystemPathsForInterceptionCheckbox = labelForFilesystemPathInterceptions.checkboxElement;
+      this._enabledFileSystemPathsForInterceptionCheckbox.addEventListener(
+          'change', this._enabledFileSystemPathsForInterceptionCheckboxChanged.bind(this), false);
+      mappingsHeader.createChild('span', 'file-system-header-text').textContent =
+          Common.UIString('Serve files as URL(s)');
+      mappingsHeader.createChild('div', 'filesystem-setting-wrapper').appendChild(labelForFilesystemPathInterceptions);
+    } else {
       mappingsHeader.createChild('div', 'file-system-header-text').textContent = Common.UIString('Mappings');
-      mappingsPlaceholder.textContent = Common.UIString('None');
-      mappingsHeader.appendChild(
-          UI.createTextButton(Common.UIString('Add'), this._addMappingButtonClicked.bind(this), 'add-button'));
-      this._mappingsList.setEmptyPlaceholder(mappingsPlaceholder);
-      this._mappingsList.show(this.contentElement);
     }
+
+    mappingsPlaceholder.textContent = Common.UIString('None');
+    mappingsHeader.appendChild(
+        UI.createTextButton(Common.UIString('Add'), this._addMappingButtonClicked.bind(this), 'add-button'));
+    this._mappingsList.setEmptyPlaceholder(mappingsPlaceholder);
+    this._mappingsList.show(this.contentElement);
 
     var excludedFoldersHeader = this.contentElement.createChild('div', 'file-system-header');
     excludedFoldersHeader.createChild('div', 'file-system-header-text').textContent =
@@ -85,6 +101,23 @@ Persistence.EditFileSystemView = class extends UI.VBox {
 
   dispose() {
     Common.EventTarget.removeEventListeners(this._eventListeners);
+    this._enabledFileSystemPathsForInterceptionSetting.removeChangeListener(
+        this._enabledFilesystemInterceptionSettingChanged, this);
+  }
+
+  _enabledFileSystemPathsForInterceptionCheckboxChanged() {
+    var enabledFileSystemPathsForInterception = this._enabledFileSystemPathsForInterceptionSetting.get();
+    if (this._enabledFileSystemPathsForInterceptionCheckbox.checked)
+      enabledFileSystemPathsForInterception[this._fileSystemPath] = true;
+    else
+      delete enabledFileSystemPathsForInterception[this._fileSystemPath];
+    this._enabledFileSystemPathsForInterceptionSetting.set(enabledFileSystemPathsForInterception);
+  }
+
+  _enabledFilesystemInterceptionSettingChanged() {
+    var enabledFileSystemPathsForInterception = this._enabledFileSystemPathsForInterceptionSetting.get();
+    this._enabledFileSystemPathsForInterceptionCheckbox.checked =
+        !!enabledFileSystemPathsForInterception[this._fileSystemPath];
   }
 
   _update() {
@@ -101,9 +134,6 @@ Persistence.EditFileSystemView = class extends UI.VBox {
       this._excludedFolders.push(folder);
       this._excludedFoldersList.appendItem(folder, true);
     }
-
-    if (Runtime.experiments.isEnabled('persistence2'))
-      return;
 
     this._mappingsList.clear();
     var mappings = Persistence.fileSystemMapping.mappingEntries(this._fileSystemPath);
@@ -259,6 +289,8 @@ Persistence.EditFileSystemView = class extends UI.VBox {
      * @this {Persistence.EditFileSystemView}
      */
     function pathPrefixValidator(item, index, input) {
+      if (Runtime.experiments.isEnabled('persistence2'))
+        return !!this._normalizePrefix(input.value);
       var prefix = this._normalizePrefix(input.value);
       for (var i = 0; i < this._mappings.length; ++i) {
         if (i !== index && this._mappings[i].pathPrefix === prefix)

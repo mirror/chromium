@@ -16,6 +16,10 @@
     flex: auto;
 }
 
+.filesystem-setting-wrapper {
+    flex: 8;
+}
+
 .add-button {
     margin-left: 10px;
     align-self: flex-start;
