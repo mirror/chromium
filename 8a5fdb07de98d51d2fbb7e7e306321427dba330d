@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18dd888c_499dfbce",
+        "filename": "ash/public/cpp/shell_window_ids.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-14T18:04:02Z",
+      "side": 1,
+      "message": "nit: This is also used by some other high-profile UI features worth noting here. Please update this sentence to \"Used by the shelf, status area, virtual keyboard, settings bubble, menus, etc. Also used by the PowerButtonController for animating lower-level containers.\"",
+      "revId": "8a5fdb07de98d51d2fbb7e7e306321427dba330d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a4f994_1d7f8392",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-14T18:04:02Z",
+      "side": 1,
+      "message": "Add a comment explaining why all buttons are hidden in this case, please also mention that the entire LoginShelfView should be hidden in these cases (maybe DCHECK that?).",
+      "revId": "8a5fdb07de98d51d2fbb7e7e306321427dba330d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
