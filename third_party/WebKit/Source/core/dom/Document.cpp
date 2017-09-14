@@ -2252,6 +2252,8 @@ void Document::UpdateStyle() {
   ClearChildNeedsStyleRecalc();
   ClearChildNeedsReattachLayoutTree();
 
+  EnsureStyleResolver();
+
   DCHECK(!NeedsStyleRecalc());
   DCHECK(!ChildNeedsStyleRecalc());
   DCHECK(!NeedsReattachLayoutTree());

@@ -4,6 +4,7 @@
 
 #include "core/css/parser/CSSLazyPropertyParserImpl.h"
 
+#include "core/css/StyleEngine.h"
 #include "core/css/parser/CSSLazyParsingState.h"
 #include "core/css/parser/CSSParserImpl.h"
 
@@ -20,8 +21,11 @@ CSSLazyPropertyParserImpl::CSSLazyPropertyParserImpl(CSSParserTokenRange block,
 
 StylePropertySet* CSSLazyPropertyParserImpl::ParseProperties() {
   lazy_state_->CountRuleParsed();
-  return CSSParserImpl::ParseDeclarationListForLazyStyle(
+  StylePropertySet* property_set = CSSParserImpl::ParseDeclarationListForLazyStyle(
       tokens_, lazy_state_->Context());
+  lazy_state_->GetRuleSet().UpdateInvalidationSetsForContentAttributeInternal(*property_set);
+  lazy_state_->GetStyleEngine().MarkGlobalRuleSetDirty();
+  return property_set;
 }
 
 }  // namespace blink
