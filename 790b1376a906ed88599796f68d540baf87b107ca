@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09269f5f_b709dbdf",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1110,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-14T08:34:12Z",
+      "side": 1,
+      "message": "net::NetworkTrafficAnnotationTag\nWebURLLoaderImpl::Context::GetTrafficAnnotationTag(\n    const blink::WebURLRequest\u0026 request) {\n  switch (request.GetRequestContext()) {\n    case WebURLRequest::kRequestContextUnspecified:\n    case WebURLRequest::kRequestContextAudio:\n    case WebURLRequest::kRequestContextBeacon:\n    case WebURLRequest::kRequestContextCSPReport:\n    case WebURLRequest::kRequestContextDownload:\n    case WebURLRequest::kRequestContextEventSource:\n    case WebURLRequest::kRequestContextFetch:\n    case WebURLRequest::kRequestContextFont:\n    case WebURLRequest::kRequestContextForm:\n    case WebURLRequest::kRequestContextFrame:\n    case WebURLRequest::kRequestContextHyperlink:\n    case WebURLRequest::kRequestContextIframe:\n    case WebURLRequest::kRequestContextImage:\n    case WebURLRequest::kRequestContextImageSet:\n    case WebURLRequest::kRequestContextImport:\n    case WebURLRequest::kRequestContextInternal:\n    case WebURLRequest::kRequestContextLocation:\n    case WebURLRequest::kRequestContextManifest:\n    case WebURLRequest::kRequestContextPing:\n    case WebURLRequest::kRequestContextPrefetch:\n    case WebURLRequest::kRequestContextScript:\n    case WebURLRequest::kRequestContextServiceWorker:\n    case WebURLRequest::kRequestContextSharedWorker:\n    case WebURLRequest::kRequestContextSubresource:\n    case WebURLRequest::kRequestContextStyle:\n    case WebURLRequest::kRequestContextTrack:\n    case WebURLRequest::kRequestContextVideo:\n    case WebURLRequest::kRequestContextWorker:\n    case WebURLRequest::kRequestContextXMLHttpRequest:\n    case WebURLRequest::kRequestContextXSLT:\n      break;\n\n    case WebURLRequest::kRequestContextEmbed:\n    case WebURLRequest::kRequestContextObject:\n    case WebURLRequest::kRequestContextPlugin:\n      return net::DefineNetworkTrafficAnnotation(\n          \"blink_extension_resource_loader\", R\"(\n        semantics {\n          sender: \"Blink Resource Loader\"\n          description:\n            \"Blink initiated request for resources required for NaCl instances \"\n            \"tagged with \u003cembed\u003e or \u003cobject\u003e, or installed extensions.\"\n          trigger:\n            \"An extension or NaCL instance may initiate a request at any time, \"\n            \"even in the background.\"\n          data: \"Anything the initiator wants to send.\"\n          destination: OTHER\n        }\n        policy {\n          cookies_allowed: YES\n          cookies_store: \"user\"\n          setting:\n            \"These requests cannot be disabled in settings, but they are \"\n            \"sent only if user installs extensions.\"\n          chrome_policy {\n            ExtensionInstallBlacklist {\n              ExtensionInstallBlacklist: {\n                entries: \u0027*\u0027\n              }\n            }\n          }\n        })\");\n\n    case WebURLRequest::kRequestContextFavicon:\n      return net::DefineNetworkTrafficAnnotation(\"favicon_loader\", R\"(\n        semantics {\n          sender: \"Blink Resource Loader\"\n          description:\n            \"Chrome sends a request to download favicon for a URL.\"\n          trigger:\n            \"Navigating to a URL.\"\n          data: \"None.\"\n          destination: WEBSITE\n        }\n        policy {\n          cookies_allowed: YES\n          cookies_store: \"user\"\n          setting: \"These requests cannot be disabled in settings.\"\n          policy_exception_justification:\n            \"Not implemented.\"\n        })\");\n  }\n  return net::DefineNetworkTrafficAnnotation(\"blink_resource_loader\", R\"(\n    semantics {\n      sender: \"Blink Resource Loader\"\n      description:\n        \"Blink initiated request, which includes all resources for \"\n        \"normal page loads, chrome URLs, and downloads.\"\n      trigger:\n        \"Navigating to a URL or downloading a file. A webpage, \"\n        \"ServiceWorker, or chrome:// page.\"\n      data: \"Anything the initiator wants to send.\"\n      destination: OTHER\n    }\n    policy {\n      cookies_allowed: YES\n      cookies_store: \"user\"\n      setting: \"These requests cannot be disabled in settings.\"\n      policy_exception_justification:\n        \"Not implemented. Without these requests, Chrome will be unable \"\n        \"to load any webpage.\"\n    })\");\n}",
+      "range": {
+        "startLine": 1005,
+        "startChar": 0,
+        "endLine": 1110,
+        "endChar": 1
+      },
+      "revId": "790b1376a906ed88599796f68d540baf87b107ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
