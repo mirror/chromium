@@ -757,6 +757,12 @@ be describing additional metrics about the same event.
       Size of process' working set.
     </summary>
   </metric>
+  <metric name="TimeSinceLastVisible">
+    <summary>
+      The time in seconds since the Tab became backgrounded. Only emmitted for
+      backgrounded tabs that are not sharing a process.
+    </summary>
+  </metric>
   <metric name="Total2.PrivateMemoryFootprint">
     <summary>
       Measure of total memory consumed by all processes.

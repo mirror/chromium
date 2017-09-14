@@ -77,6 +77,7 @@ void EmitBrowserMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
 
 void EmitRendererMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
                                ukm::SourceId ukm_source_id,
+                               int64_t time_since_last_visible,
                                ukm::UkmRecorder* ukm_recorder,
                                int number_of_extensions) {
   // UMA
@@ -96,6 +97,8 @@ void EmitRendererMemoryMetrics(const ProcessMemoryDumpPtr& pmd,
   builder.SetBlinkGC(pmd->chrome_dump->blink_gc_total_kb / 1024);
   builder.SetV8(pmd->chrome_dump->v8_total_kb / 1024);
   builder.SetNumberOfExtensions(number_of_extensions);
+  if (time_since_last_visible >= 0)
+    builder.SetTimeSinceLastVisible(time_since_last_visible);
 
   base::TimeDelta uptime =
       metrics::RendererUptimeTracker::Get()->GetProcessUptime(pmd->pid);
@@ -260,6 +263,7 @@ void ProcessMemoryMetricsEmitter::CollateResults() {
       }
       case memory_instrumentation::mojom::ProcessType::RENDERER: {
         ukm::SourceId ukm_source_id = ukm::UkmRecorder::GetNewSourceID();
+        int64_t time_since_last_visible = -1;
         // If there is more than one frame being hosted in a renderer, don't
         // emit any URLs. This is not ideal, but UKM does not support
         // multiple-URLs per entry, and we must have one entry per process.
@@ -268,11 +272,12 @@ void ProcessMemoryMetricsEmitter::CollateResults() {
               process_infos_[pmd->pid];
           if (process_info->ukm_source_ids.size() == 1) {
             ukm_source_id = process_info->ukm_source_ids[0];
+            time_since_last_visible = process_info->time_since_last_visible[0];
           }
         }
         int number_of_extensions = GetNumberOfExtensions(pmd->pid);
-        EmitRendererMemoryMetrics(pmd, ukm_source_id, GetUkmRecorder(),
-                                  number_of_extensions);
+        EmitRendererMemoryMetrics(pmd, ukm_source_id, time_since_last_visible,
+                                  GetUkmRecorder(), number_of_extensions);
         break;
       }
       case memory_instrumentation::mojom::ProcessType::GPU: {

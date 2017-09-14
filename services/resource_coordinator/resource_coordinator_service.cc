@@ -40,10 +40,6 @@ void ResourceCoordinatorService::OnStart() {
                                     base::Unretained(ref_factory_.get()),
                                     base::Unretained(this)));
 
-  registry_.AddInterface(
-      base::Bind(&CoordinationUnitIntrospectorImpl::BindToInterface,
-                 base::Unretained(&introspector_)));
-
   // Register new |CoordinationUnitGraphObserver| implementations here.
   auto tab_signal_generator_impl = base::MakeUnique<TabSignalGeneratorImpl>();
   registry_.AddInterface(
@@ -51,6 +47,12 @@ void ResourceCoordinatorService::OnStart() {
                  base::Unretained(tab_signal_generator_impl.get())));
   coordination_unit_manager_.RegisterObserver(
       std::move(tab_signal_generator_impl));
+
+  auto introspector = base::MakeUnique<CoordinationUnitIntrospectorImpl>();
+  registry_.AddInterface(
+      base::Bind(&CoordinationUnitIntrospectorImpl::BindToInterface,
+                 base::Unretained(introspector.get())));
+  coordination_unit_manager_.RegisterObserver(std::move(introspector));
 
   coordination_unit_manager_.RegisterObserver(
       base::MakeUnique<MetricsCollector>());
