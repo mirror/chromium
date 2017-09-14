@@ -34,6 +34,24 @@
       "revId": "e075eedb74d51467639edb2ea4def59c39c9e45a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "afd9e848_6365f87c",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-14T22:58:00Z",
+      "side": 1,
+      "message": "Totally. I had begun to worry that I\u0027d never need to know the hex magic intro to a FAT filesystem again!",
+      "parentUuid": "7c5ed968_cfd28204",
+      "revId": "e075eedb74d51467639edb2ea4def59c39c9e45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
