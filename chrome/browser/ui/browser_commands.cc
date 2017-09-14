@@ -112,6 +112,12 @@
 #include "components/rlz/rlz_tracker.h"  // nogncheck
 #endif
 
+#if defined(OS_WIN) || (defined(OS_LINUX) && !defined(OS_CHROMEOS))
+#include "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h"
+#include "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker_factory.h"
+#endif
+
+
 namespace {
 
 const char kOsOverrideForTabletSite[] = "Linux; Android 4.0.3";
@@ -552,6 +558,11 @@ void NewWindow(Browser* browser) {
 }
 
 void NewIncognitoWindow(Browser* browser) {
+#if defined(OS_WIN) || (defined(OS_LINUX) && !defined(OS_CHROMEOS))
+      feature_engagement::IncognitoWindowTrackerFactory::GetInstance()
+          ->GetForProfile(browser->profile())
+          ->OnIncognitoWindowOpened();
+#endif
   NewEmptyWindow(browser->profile()->GetOffTheRecordProfile());
 }
 
