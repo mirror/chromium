@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96c3741a_c119b875",
+        "filename": "components/autofill/core/browser/autofill_experiments.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-14T23:50:10Z",
+      "side": 1,
+      "message": "Would prefer kAutofillCreateDisusedDataForTest",
+      "revId": "f07ab51c47c61671fefc5902e890f417ece1a9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6935759a_2ad2b6aa",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-14T23:50:10Z",
+      "side": 1,
+      "message": "CreateDisusedTestAddresses/CreditCards?",
+      "revId": "f07ab51c47c61671fefc5902e890f417ece1a9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
