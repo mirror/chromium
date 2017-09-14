@@ -32,6 +32,7 @@
 #include "core/dom/events/ScopedEventQueue.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/Editor.h"
+#include "core/editing/FrameSelection.h"
 #include "core/editing/PlainTextRange.h"
 #include "core/editing/SelectionModifier.h"
 #include "core/editing/VisiblePosition.h"

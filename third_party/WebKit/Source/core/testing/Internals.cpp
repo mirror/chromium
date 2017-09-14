@@ -59,6 +59,7 @@
 #include "core/dom/TreeScope.h"
 #include "core/dom/ViewportDescription.h"
 #include "core/editing/Editor.h"
+#include "core/editing/FrameSelection.h"
 #include "core/editing/PlainTextRange.h"
 #include "core/editing/SurroundingText.h"
 #include "core/editing/VisiblePosition.h"
