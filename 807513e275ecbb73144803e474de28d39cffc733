@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a4ff064_829ef85f",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-14T21:06:59Z",
+      "side": 1,
+      "message": "nit: if (fadeout_layer_delegate_) might be cheaper than checking feature.",
+      "revId": "807513e275ecbb73144803e474de28d39cffc733",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
