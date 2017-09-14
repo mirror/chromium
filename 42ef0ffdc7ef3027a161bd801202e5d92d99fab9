@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c634483_4ee8c9fc",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-14T15:21:29Z",
+      "side": 1,
+      "message": "Seconding what Mike already commented, a quick search on the subject confirms what he just mentioned. Please check \"Data alignment for speed: myth or reality?\": \nhttps://lemire.me/blog/2012/05/31/data-alignment-for-speed-myth-or-reality/.\n\nIt seems that starting from 2010 onwards, Intel processors have improved remarkably on the way they handle unaligned memory access. I don\u0027t see much of a benefit of having to support legacy CPUs that are older than 7  years (as we get trapped in the legacy issue that is a curse in zlib).\n\nSo unless we have compelling data to prove its benefits, it is better to just simplify the code and remove this block.",
+      "revId": "42ef0ffdc7ef3027a161bd801202e5d92d99fab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
