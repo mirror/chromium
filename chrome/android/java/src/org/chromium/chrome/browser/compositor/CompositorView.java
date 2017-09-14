@@ -400,7 +400,7 @@ public class CompositorView
         mDrawingFinishedCallbacks = null;
         if (runnables == null) return;
         for (Runnable r : runnables) {
-            r.run();
+            postDelayed(r, 4000);
         }
     }
 
