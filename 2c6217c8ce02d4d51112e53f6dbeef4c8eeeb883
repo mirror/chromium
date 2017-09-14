@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a55046af_a3aefa29",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-14T11:07:13Z",
+      "side": 1,
+      "message": "Ack\n\nAs you need it for this CL, I am fine with that.",
+      "parentUuid": "4bf6cc9e_7c27e496",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 291,
+        "endChar": 1
+      },
+      "revId": "2c6217c8ce02d4d51112e53f6dbeef4c8eeeb883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7aceb12_6f229f4c",
         "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
         "patchSetId": 13
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "ACK\n\nI don\u0027t mind the duplication. Also it duplicates that calls now, but this may be not true later. There are a lot of other places where RefetchInTheBackgroundIfAppropriate is called, so I think it is relevant to know when it is called outside of the calls above.",
       "parentUuid": "b7aceb12_6f229f4c",
+      "range": {
+        "startLine": 664,
+        "startChar": 2,
+        "endLine": 664,
+        "endChar": 59
+      },
+      "revId": "2c6217c8ce02d4d51112e53f6dbeef4c8eeeb883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3ab2934d_70bc34eb",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-14T11:07:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "debf0c9e_fc72d437",
       "range": {
         "startLine": 664,
         "startChar": 2,
