@@ -105,6 +105,9 @@ class MockPasswordManagerClient : public StubPasswordManagerClient {
 class MockPasswordManagerDriver : public StubPasswordManagerDriver {
  public:
   MOCK_METHOD1(FillPasswordForm, void(const autofill::PasswordFormFillData&));
+  MOCK_METHOD1(AutofillDataReceived,
+               void(const std::map<autofill::FormData,
+                                   autofill::PasswordFormFieldPredictionMap>&));
   MOCK_METHOD0(GetPasswordManager, PasswordManager*());
   MOCK_METHOD0(GetPasswordAutofillManager, PasswordAutofillManager*());
 };
@@ -2028,6 +2031,60 @@ TEST_F(PasswordManagerTest, ManualFallbackForSaving_GeneratedPassword) {
   EXPECT_CALL(client_, HideManualFallbackForSaving());
   manager()->OnPasswordNoLongerGenerated(form);
   manager()->HideManualFallbackForSaving();
+}
+
+// Tests that Autofill predictions are processed correctly. For fields which
+// have multiple predictions, if at least one of these predictions can be
+// converted to a |PasswordFormFieldPredictionMap|, the predictions map is
+// updated accordingly.
+TEST_F(PasswordManagerTest, ProcessAutofillPredictions) {
+  // Create FormData form with two fields.
+  autofill::FormData form;
+  form.origin = GURL("http://foo.com");
+  autofill::FormFieldData field;
+  field.form_control_type = "text";
+
+  field.label = ASCIIToUTF16("username");
+  field.name = ASCIIToUTF16("username");
+  form.fields.push_back(field);
+
+  field.label = ASCIIToUTF16("password");
+  field.name = ASCIIToUTF16("password");
+  form.fields.push_back(field);
+
+  FormStructure form_structure(form);
+  std::vector<FormStructure*> forms;
+  forms.push_back(&form_structure);
+
+  autofill::AutofillQueryResponseContents response;
+  // For the first field, the |USERNAME| type information will be  contained in
+  // the field predictions (AutofillField::server_types_), not in the
+  // |AutofillField::server_type_|.
+  autofill::AutofillQueryResponseContents_Field* field0 = response.add_field();
+  field0->set_autofill_type(autofill::PHONE_HOME_NUMBER);
+  autofill::AutofillQueryResponseContents_Field_FieldPrediction*
+      field_prediction0 = field0->add_predictions();
+  field_prediction0->set_autofill_type(autofill::PHONE_HOME_NUMBER);
+  autofill::AutofillQueryResponseContents_Field_FieldPrediction*
+      field_prediction1 = field0->add_predictions();
+  field_prediction1->set_autofill_type(autofill::USERNAME);
+  // For the second field, the |PASSWORD| type information will be contained in
+  // the |AutofillField::server_type_|.
+  response.add_field()->set_autofill_type(autofill::PASSWORD);
+
+  std::string response_string;
+  ASSERT_TRUE(response.SerializeToString(&response_string));
+  FormStructure::ParseQueryResponse(response_string, forms);
+
+  // Simulate Autofill predictions: the first field is username, the second one
+  // is password.
+  std::map<autofill::FormData, autofill::PasswordFormFieldPredictionMap>
+      predictions;
+  predictions[form][form.fields[0]] = autofill::PREDICTION_USERNAME;
+  predictions[form][form.fields[1]] = autofill::PREDICTION_CURRENT_PASSWORD;
+  EXPECT_CALL(driver_, AutofillDataReceived(predictions));
+
+  manager()->ProcessAutofillPredictions(&driver_, forms);
 }
 
 }  // namespace password_manager
