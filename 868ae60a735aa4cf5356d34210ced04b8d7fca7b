@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c2c43f7_c7cc82bd",
+        "filename": "extensions/renderer/event_bindings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-14T15:23:48Z",
+      "side": 1,
+      "message": "Would it make sense to construct the Bookkeeper with an IPCMessageSender so it can handle making these calls?",
+      "revId": "868ae60a735aa4cf5356d34210ced04b8d7fca7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "505004dd_8221f455",
+        "filename": "extensions/renderer/event_bookkeeper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-14T15:23:48Z",
+      "side": 1,
+      "message": "It\u0027s documented above |filtered_listener_counts_|, but I think it would be more helpful to mention here that this is a pair of \u003cextensionId, event name\u003e.",
+      "revId": "868ae60a735aa4cf5356d34210ced04b8d7fca7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "365446ca_28ce9e40",
+        "filename": "extensions/renderer/event_bookkeeper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-14T15:23:48Z",
+      "side": 1,
+      "message": "What\u0027s the benefit in having all of these be lazy?  We avoid a tiny amount of initialization and memory usage when this class is allocated, but then we need to do dynamic allocation if/when we need them, which is significantly more expensive.  My guess would be that the cost of that heap allocation outweighs the benefit of avoiding instantiation at creation, since allocating empty maps should be exceedingly fast.  It would also make the code a bit less complicated, IMO.\n\nWDYT?  Is there another benefit to having these lazily constructed?",
+      "revId": "868ae60a735aa4cf5356d34210ced04b8d7fca7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
