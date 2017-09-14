@@ -1476,6 +1476,7 @@ void Editor::AddToKillRing(const EphemeralRange& range) {
 void Editor::ChangeSelectionAfterCommand(
     const SelectionInDOMTree& new_selection,
     const SetSelectionOptions& options) {
+  return;
   if (new_selection.IsNone())
     return;
 
@@ -1747,6 +1748,7 @@ void Editor::SetMarkedTextMatchesAreHighlighted(bool flag) {
 }
 
 void Editor::RespondToChangedSelection() {
+  return;
   GetSpellChecker().RespondToChangedSelection();
   Client().RespondToChangedSelection(
       &GetFrame(), GetFrame().Selection().GetSelectionInDOMTree().Type());
