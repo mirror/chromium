@@ -49,6 +49,9 @@ class CORE_EXPORT LayoutNGBlockFlow final : public LayoutBlockFlow {
     return physical_root_fragment_;
   }
 
+ protected:
+  void AddOverflowFromChildren() override;
+
  private:
   bool IsOfType(LayoutObjectType) const override;
 
