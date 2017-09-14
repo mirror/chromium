@@ -22,6 +22,30 @@
       "revId": "2f1696968cc3d0acbd6bad81b6db3df73e5ec324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "545881e7_bdbfff05",
+        "filename": "gin/v8_initializer.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-14T02:50:14Z",
+      "side": 1,
+      "message": "Agreed. done.\nIf this CL goes, I\u0027ll abandon the other CL.",
+      "parentUuid": "cdc90428_be7cae0d",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 37,
+        "endChar": 26
+      },
+      "revId": "2f1696968cc3d0acbd6bad81b6db3df73e5ec324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
