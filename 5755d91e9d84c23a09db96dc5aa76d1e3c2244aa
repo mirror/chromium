@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed27c2da_6697f64e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-14T21:08:53Z",
+      "side": 1,
+      "message": "Maybe simplify this to:\n\n\"Records whether a WebAPK has permission to display notifications.\"\n\nAt what time recordNotificationPermissionStatus() is called is an implementation detail of the caller",
+      "revId": "5755d91e9d84c23a09db96dc5aa76d1e3c2244aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "761acbb2_f021fd04",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-14T21:08:53Z",
+      "side": 1,
+      "message": "Maybe determineAppNotificationStatus() should be a separate method in the AIDL instead of being part of notifyNotification() - I prefer the name determineAppNotificationStatus() over checkNotificationPermission()\n\nHaving a separate method is more extensible. If we want to extract more data for UMA purposes we just need to add another function to the AIDL",
+      "revId": "5755d91e9d84c23a09db96dc5aa76d1e3c2244aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d86a7bf_a9e9c384",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-14T21:08:53Z",
+      "side": 1,
+      "message": "Can the variables on line 92 and 95 be inlined?",
+      "revId": "5755d91e9d84c23a09db96dc5aa76d1e3c2244aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
