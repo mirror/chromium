@@ -181,7 +181,10 @@ void SetDeviceLocalAccounts(chromeos::OwnerSettingsServiceChromeOS* service,
     list.Append(std::move(entry));
   }
 
-  service->Set(chromeos::kAccountsPrefDeviceLocalAccounts, list);
+  // service->Set(chromeos::kAccountsPrefDeviceLocalAccounts, list);
+  // #### Work around to make consumer kiosk management UI work on dev box.
+  chromeos::CrosSettings::Get()->Set(chromeos::kAccountsPrefDeviceLocalAccounts,
+                                     list);
 }
 
 std::vector<DeviceLocalAccount> GetDeviceLocalAccounts(
