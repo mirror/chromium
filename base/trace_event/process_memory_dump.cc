@@ -244,10 +244,6 @@ MemoryAllocatorDump* ProcessMemoryDump::GetOrCreateAllocatorDump(
 
 MemoryAllocatorDump* ProcessMemoryDump::CreateSharedGlobalAllocatorDump(
     const MemoryAllocatorDumpGuid& guid) {
-  // Global dumps are disabled in background mode.
-  if (dump_args_.level_of_detail == MemoryDumpLevelOfDetail::BACKGROUND)
-    return GetBlackHoleMad();
-
   // A shared allocator dump can be shared within a process and the guid could
   // have been created already.
   MemoryAllocatorDump* mad = GetSharedGlobalAllocatorDump(guid);
@@ -262,10 +258,6 @@ MemoryAllocatorDump* ProcessMemoryDump::CreateSharedGlobalAllocatorDump(
 
 MemoryAllocatorDump* ProcessMemoryDump::CreateWeakSharedGlobalAllocatorDump(
     const MemoryAllocatorDumpGuid& guid) {
-  // Global dumps are disabled in background mode.
-  if (dump_args_.level_of_detail == MemoryDumpLevelOfDetail::BACKGROUND)
-    return GetBlackHoleMad();
-
   MemoryAllocatorDump* mad = GetSharedGlobalAllocatorDump(guid);
   if (mad)
     return mad;
