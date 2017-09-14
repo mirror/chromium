@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "694ac4aa_e2358d47",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/the-img-element/decode/image-decode-path-changes-svg.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-14T12:06:00Z",
+      "side": 1,
+      "message": "Blink supports \"plain\" \u0027href\u0027, but (at least last I checked) Gecko did not (and possibly not WebKit either), so for that reason it might make sense to use \u0027href\u0027 in the XLink NS.",
+      "parentUuid": "9232754e_c9df33a1",
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff96fffb_208b4fc9",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/the-img-element/decode/image-decode-path-changes.html",
         "patchSetId": 3
@@ -166,6 +184,420 @@
       "writtenOn": "2017-09-14T01:28:22Z",
       "side": 1,
       "message": "Nit: this is not a good change because HTMLImageElement.decode() does not exist (there is no static decode method). Either img.decode() as before, or HTMLImageElement.prototype.decode(), is best.",
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e887d91b_5f5326a3",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-14T12:06:00Z",
+      "side": 1,
+      "message": "One of these ought to be enough. (I would use the first.)",
+      "range": {
+        "startLine": 179,
+        "startChar": 6,
+        "endLine": 179,
+        "endChar": 26
+      },
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d001c90_4d74fcb6",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-14T12:06:00Z",
+      "side": 1,
+      "message": "Maybe consistently refer to states (i.e either enums or not.)",
+      "range": {
+        "startLine": 187,
+        "startChar": 42,
+        "endLine": 187,
+        "endChar": 55
+      },
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe97c6d_b455c9df",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-14T12:06:00Z",
+      "side": 1,
+      "message": "Typo",
+      "range": {
+        "startLine": 200,
+        "startChar": 23,
+        "endLine": 200,
+        "endChar": 37
+      },
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4051f9e2_2b953a93",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-14T12:06:00Z",
+      "side": 1,
+      "message": "mutation",
+      "range": {
+        "startLine": 218,
+        "startChar": 43,
+        "endLine": 218,
+        "endChar": 53
+      },
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e25ce84_ffaf9004",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-14T12:06:00Z",
+      "side": 1,
+      "message": "than",
+      "range": {
+        "startLine": 219,
+        "startChar": 76,
+        "endLine": 219,
+        "endChar": 80
+      },
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b5ce5e6_182c8672",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-14T12:06:00Z",
+      "side": 1,
+      "message": "Blink coding-style generally prefer enumerations[1] for cases like this. (Personally I think this is isolated and well documented enough, but since I don\u0027t dictate coding style I figured I should mention it.)\n\n[1] https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#Prefer-enums-to-bools-for-function-parameters",
+      "range": {
+        "startLine": 503,
+        "startChar": 41,
+        "endLine": 503,
+        "endChar": 63
+      },
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea2838aa_fe651935",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-14T12:06:00Z",
+      "side": 1,
+      "message": "Not sure (can\u0027t think of a case) when this would actually happen. Maybe we could make this a DCHECK instead?",
+      "range": {
+        "startLine": 724,
+        "startChar": 2,
+        "endLine": 728,
+        "endChar": 3
+      },
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681d950c_b2b2c0e7",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-14T12:06:00Z",
+      "side": 1,
+      "message": "DecodeRequest* (the general rule is to use raw pointers on the stack, and Member\u003c\u003e as part of objects.)\n\n[This would also mean that the move() goes away and returning the promise can be done in a more straight-forward way, simplifying the code a bit.]",
+      "range": {
+        "startLine": 730,
+        "startChar": 2,
+        "endLine": 730,
+        "endChar": 23
+      },
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f51fc80d_0037f188",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-14T12:06:00Z",
+      "side": 1,
+      "message": "Since the DecodeRequest is on the GC heap, could we do WrapWeakPersistent here instead and get rid of the WeakPtrFactory? (With that I also think that DecodeRequest no longer needs finalization, which would be good.)",
+      "range": {
+        "startLine": 735,
+        "startChar": 48,
+        "endLine": 735,
+        "endChar": 72
+      },
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61d453a9_caf4b6dd",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 770,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-14T12:06:00Z",
+      "side": 1,
+      "message": "This looks like it might access other objects on the GC heap (|resolver_| first and foremost), which it shouldn\u0027t do. Remove this.",
+      "range": {
+        "startLine": 767,
+        "startChar": 0,
+        "endLine": 770,
+        "endChar": 13
+      },
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9a19359_189cc83b",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-14T12:06:00Z",
+      "side": 1,
+      "message": "Since the DecodeRequest (this) is GC\u0027d, on the stack and references |loader_|, they will not be deleted (swept by GC.) Hence this comment can be removed.",
+      "range": {
+        "startLine": 792,
+        "startChar": 0,
+        "endLine": 793,
+        "endChar": 64
+      },
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee3c8292_1f30258c",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-14T12:06:00Z",
+      "side": 1,
+      "message": "Could forward declare?",
+      "range": {
+        "startLine": 27,
+        "startChar": 27,
+        "endLine": 27,
+        "endChar": 41
+      },
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85648261_31fe6d03",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-14T12:06:00Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 35,
+        "startChar": 28,
+        "endLine": 35,
+        "endChar": 39
+      },
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381fbf9d_bb1505a3",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-14T12:06:00Z",
+      "side": 1,
+      "message": "Not really \"pending mutation\", but more like \"pending (micro)task\" - right? (Disregarding the awkward sync case [which technically is a bug].)",
+      "range": {
+        "startLine": 214,
+        "startChar": 8,
+        "endLine": 214,
+        "endChar": 23
+      },
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4326748b_1309eb97",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-14T12:06:00Z",
+      "side": 1,
+      "message": "...to be complete",
+      "range": {
+        "startLine": 221,
+        "startChar": 38,
+        "endLine": 221,
+        "endChar": 56
+      },
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47393ec4_84c67387",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-14T12:06:00Z",
+      "side": 1,
+      "message": "Instead of this, |loader_| could be cleared on Resolve/Reject and then a \"detached\" DecodeRequest would be ignored.",
+      "range": {
+        "startLine": 262,
+        "startChar": 9,
+        "endLine": 262,
+        "endChar": 19
+      },
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c96a8a52_778871df",
+        "filename": "third_party/WebKit/Source/core/loader/ImageLoader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-14T12:06:00Z",
+      "side": 1,
+      "message": "Could just use Member\u003c\u003e here, no?",
+      "range": {
+        "startLine": 263,
+        "startChar": 4,
+        "endLine": 263,
+        "endChar": 18
+      },
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd9dd4b_40f2515e",
+        "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-14T12:06:00Z",
+      "side": 1,
+      "message": "Mostly cosmetic, but could you add a blank line before as well (separating attributes from functions.)",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 91
+      },
       "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
