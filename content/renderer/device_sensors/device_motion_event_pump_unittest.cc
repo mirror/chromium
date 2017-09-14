@@ -114,7 +114,7 @@ class DeviceMotionEventPumpForTesting : public DeviceMotionEventPump {
         new device::SensorReadingSharedBufferReader(gyroscope_buffer_));
   }
 
-  void StartFireEvent() { DeviceMotionEventPump::DidStartIfPossible(); }
+  void StartFireEvent() { DeviceSensorEventPump::DidStartIfPossible(); }
 
   void SetAccelerometerSensorData(bool active, double x, double y, double z) {
     if (active) {
