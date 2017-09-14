@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d9eb2c6_8b30c325",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1869,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-14T00:05:37Z",
+      "side": 1,
+      "message": "resource percentage [based] approach?",
+      "range": {
+        "startLine": 1869,
+        "startChar": 45,
+        "endLine": 1869,
+        "endChar": 73
+      },
+      "revId": "262bf1419303ec18331a6e7edb38bb34e9bf334b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c6817a_f9c9989e",
+        "filename": "components/offline_pages/core/offline_page_feature.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-14T00:05:37Z",
+      "side": 1,
+      "message": "snapshot?",
+      "range": {
+        "startLine": 46,
+        "startChar": 30,
+        "endLine": 46,
+        "endChar": 36
+      },
+      "revId": "262bf1419303ec18331a6e7edb38bb34e9bf334b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
