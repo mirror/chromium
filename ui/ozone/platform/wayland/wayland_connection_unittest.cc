@@ -32,7 +32,7 @@ TEST(WaylandConnectionTest, UseUnstableVersion) {
   wl::FakeServer server;
   EXPECT_CALL(*server.xdg_shell(),
               UseUnstableVersion(XDG_SHELL_VERSION_CURRENT));
-  ASSERT_TRUE(server.Start());
+  ASSERT_TRUE(server.Start(5));
   WaylandConnection connection;
   ASSERT_TRUE(connection.Initialize());
   connection.StartProcessingEvents();
@@ -44,7 +44,7 @@ TEST(WaylandConnectionTest, UseUnstableVersion) {
 TEST(WaylandConnectionTest, Ping) {
   base::MessageLoopForUI message_loop;
   wl::FakeServer server;
-  ASSERT_TRUE(server.Start());
+  ASSERT_TRUE(server.Start(5));
   WaylandConnection connection;
   ASSERT_TRUE(connection.Initialize());
   connection.StartProcessingEvents();
@@ -63,7 +63,7 @@ TEST(WaylandConnectionTest, Ping) {
 TEST(WaylandConnectionTest, Output) {
   base::MessageLoopForUI message_loop;
   wl::FakeServer server;
-  ASSERT_TRUE(server.Start());
+  ASSERT_TRUE(server.Start(6));
   server.output()->SetRect(gfx::Rect(0, 0, 800, 600));
   WaylandConnection connection;
   ASSERT_TRUE(connection.Initialize());
