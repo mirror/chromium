@@ -1106,11 +1106,15 @@ inline void InlineFlowBox::AddTextBoxVisualOverflow(
           std::max(bottom_glyph_overflow, emphasis_mark_height);
   }
 
-  // If letter-spacing is negative, we should factor that into right layout
-  // overflow. Even in RTL, letter-spacing is applied to the right, so this is
-  // not an issue with left overflow.
-  right_glyph_overflow -=
-      std::min(0.0f, style.GetFont().GetFontDescription().LetterSpacing());
+  auto letter_spacing = style.GetFont().GetFontDescription().LetterSpacing();
+  if (letter_spacing < 0) {
+    auto before = right_glyph_overflow;
+#if 0
+    right_glyph_overflow -= letter_spacing;
+#endif
+    LOG(INFO) << text_box->LogicalWidth() << " " << before << " + "
+              << -letter_spacing << " = " << right_glyph_overflow;
+  }
 
   LayoutRectOutsets text_shadow_logical_outsets;
   if (ShadowList* text_shadow = style.TextShadow()) {
