@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f769e95_17fc8ee4",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-14T15:16:25Z",
+      "side": 1,
+      "message": "Either use \"io_message_loop_options\" here or rename \"io_message_loop_options\" to \"options\". Otherwise this won\u0027t compile :-)",
+      "range": {
+        "startLine": 137,
+        "startChar": 31,
+        "endLine": 137,
+        "endChar": 38
+      },
+      "revId": "b788dd96732aad7c4d298b7ea8469e702b0805d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13884b3b_b99a7834",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-14T15:16:25Z",
+      "side": 1,
+      "message": "I think we want to assert that WebThread::ID_COUNT \u003d\u003d 2 otherwise this may break if someone adds a new thread between WebThread::UI and WebThread::IO.\n\n  static_assert(WebThread::ID_COUNT \u003d\u003d 2);\n\nBTW, since this is a static_assert, can this move the file scope? It does not depends on anything in that function.",
+      "revId": "b788dd96732aad7c4d298b7ea8469e702b0805d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "292b6645_ceb41f02",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 14
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-14T15:16:25Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "b788dd96732aad7c4d298b7ea8469e702b0805d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
