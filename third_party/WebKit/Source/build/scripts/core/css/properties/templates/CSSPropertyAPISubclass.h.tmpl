@@ -35,6 +35,20 @@ class CSSParserLocalContext;
 class CSSProperty;
 class CSSValue;
 
+{% if property.is_property %}
+  {% if property.unique %}
+// Implements the '{{property.name}}' property
+  {% else %}
+// Implements multiple properties
+  {% endif %}
+{% else %}
+  {% if property.unique %}
+// Implements the '{{property.name}}' descriptor
+  {% else %}
+// Implements multiple descriptors
+  {% endif %}
+{% endif %}
+// See src/third_party/WebKit/Source/core/css/properties/README.md
 class {{api_classname}} : public CSSPropertyAPI {
  public:
   {% for api_method in property.api_methods %}
