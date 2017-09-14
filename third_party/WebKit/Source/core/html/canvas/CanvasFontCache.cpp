@@ -102,8 +102,7 @@ MutableStylePropertySet* CanvasFontCache::ParseFont(const String& font_string) {
     // the "inherit" and "initial" values must be ignored.
     const CSSValue* font_value =
         parsed_style->GetPropertyCSSValue(CSSPropertyFontSize);
-    if (font_value &&
-        (font_value->IsInitialValue() || font_value->IsInheritedValue()))
+    if (font_value && font_value->IsCSSWideKeyword())
       return nullptr;
     fetched_fonts_.insert(font_string, parsed_style);
     font_lru_list_.insert(font_string);
