@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89aaffe2_41063a27",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/remove-inline-layer-after-layout-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:58:48Z",
+      "side": 1,
+      "message": "Why this new invalidation?",
+      "revId": "fa20004b24c0aa8cab31e9f8aa5ab867aa5dc857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f750072d_56ab5b96",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-14T00:58:48Z",
+      "side": 1,
+      "message": "Could you add a couple of unittests with effects that have no output clip?",
+      "revId": "fa20004b24c0aa8cab31e9f8aa5ab867aa5dc857",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
