@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbd45528_8e840300",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/CctOfflinePageModelObserver.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-14T22:58:50Z",
+      "side": 1,
+      "message": "Many actions are hard coded, instead of just getting the package name and varying between dev/canary/beta/etc.  Eg: https://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java?rcl\u003df2ad20eea27a01bc6c9f20744e70c00434e84339\u0026l\u003d50\n \n\nLet\u0027s just use: org.chromium.chrome.browser.offlinepages.ACTION_FOO  - wdyt?",
+      "revId": "ece1effae508d539e5b7a2605e39f9d251fe2aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
