@@ -1844,7 +1844,7 @@ class VDATestSuite : public base::TestSuite {
                 new media::VideoDecodeAcceleratorTestEnvironment()));
 
 #if defined(OS_CHROMEOS)
-    ui::OzonePlatform::InitializeForUI();
+    ui::OzonePlatform::InitializeForUI(ui::OzonePlatform::InitParams());
 #endif
 
 #if BUILDFLAG(USE_VAAPI)
