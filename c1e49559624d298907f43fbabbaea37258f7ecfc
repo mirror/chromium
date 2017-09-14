@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a676d361_e6f95b53",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1623,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-14T21:29:43Z",
+      "side": 1,
+      "message": "Reset |easy_unlock_key_ops_finished_| to correctly reflect the state since this is also called when user unlocks a device.",
+      "revId": "c1e49559624d298907f43fbabbaea37258f7ecfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be90e5fd_0f9dacc3",
         "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
         "patchSetId": 3
@@ -16,6 +33,24 @@
       "revId": "c1e49559624d298907f43fbabbaea37258f7ecfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10417e62_b8773eb1",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1687,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-14T21:29:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "be90e5fd_0f9dacc3",
+      "revId": "c1e49559624d298907f43fbabbaea37258f7ecfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
