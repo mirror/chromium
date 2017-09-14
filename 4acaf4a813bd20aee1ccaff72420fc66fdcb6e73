@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6df14fa1_cba200a7",
+        "filename": "chrome/browser/extensions/api/context_menus/context_menu_apitest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-09-14T23:15:51Z",
+      "side": 1,
+      "message": "\u003e Should we also expect top_level_model_ to have exactly two items?\n\nAdded this check. \n\n\u003e Why does e2 come before e1 do we know? Would that always be the case? If so, add a quick comment.\n\nIn this patch, the extension living under path context_menus/simple/one was given the name \"Top-level extension 2 with context menu\". one/ should not have the name 2. The UI menu model organizes extension menu items in the context menu alphabetically by extension name, which was why e2 was preceding e1 here.\n\nThis mistake has been corrected in the next patch.\n\nLmk if you think that I should make it more obvious that this alphabetical ordering is occurring. One way to do this would be to rename |e1| and |e2| to something like |extension_aaa| and |extension_bbb|, respectively, and install |extension_aaa| after |extension_bbb|. \n\nAlternatively, since this was just a naming mistake and there is (not sure?) existing tests to verify that alphabetical ordering is preserved, I can remove the comment that I added on line 432 in patch 3.",
+      "parentUuid": "ff7c6788_07b2e19a",
+      "range": {
+        "startLine": 418,
+        "startChar": 0,
+        "endLine": 418,
+        "endChar": 65
+      },
+      "revId": "4acaf4a813bd20aee1ccaff72420fc66fdcb6e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ca56d8a_ed4d2213",
         "filename": "chrome/test/data/extensions/api_test/context_menus/simple/one/background.js",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "4acaf4a813bd20aee1ccaff72420fc66fdcb6e73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b13e0cd_ad828eb3",
+        "filename": "chrome/test/data/extensions/api_test/context_menus/simple/one/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-09-14T23:15:51Z",
+      "side": 1,
+      "message": "Definitely not needed. Removed.",
+      "parentUuid": "9ca56d8a_ed4d2213",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 39
+      },
+      "revId": "4acaf4a813bd20aee1ccaff72420fc66fdcb6e73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
