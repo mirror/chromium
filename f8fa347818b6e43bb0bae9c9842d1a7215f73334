@@ -243,6 +243,30 @@
     },
     {
       "key": {
+        "uuid": "e684ccf0_88fd8241",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-14T22:31:17Z",
+      "side": 1,
+      "message": "This class does not need the connection. This method needs a connection.",
+      "parentUuid": "cda9deaa_35149196",
+      "range": {
+        "startLine": 154,
+        "startChar": 26,
+        "endLine": 154,
+        "endChar": 49
+      },
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a70e726_9b1871dd",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
         "patchSetId": 7
@@ -325,6 +349,30 @@
       "side": 1,
       "message": "I was trying to consolidate the table names to a single place: the constants. And deriving all their uses from them.\nDo you think it\u0027d be better to remove the constants and have them written out everywhere?",
       "parentUuid": "fcf587e3_b1e74de0",
+      "range": {
+        "startLine": 188,
+        "startChar": 15,
+        "endLine": 188,
+        "endChar": 31
+      },
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4780d9c4_3d2f2557",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-14T22:31:17Z",
+      "side": 1,
+      "message": "Yes, mostly because you know exactly what table makes sense with provided list of columns.\n\nIt might be interesting to #DEFINE the list of columns thou. To make sure they come in the same order and so on.",
+      "parentUuid": "9f9cd4c2_7102612c",
       "range": {
         "startLine": 188,
         "startChar": 15,
