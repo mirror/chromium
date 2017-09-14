@@ -252,6 +252,8 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
   DCHECK(layout_result.PhysicalFragment());
   const NGPhysicalBoxFragment& physical_fragment =
       ToNGPhysicalBoxFragment(*layout_result.PhysicalFragment());
+  if (box_->IsLayoutNGBlockFlow())
+    ToLayoutNGBlockFlow(box_)->SetRootFragment(physical_fragment);
 
   if (box_->Style()->SpecifiesColumns()) {
     UpdateLegacyMultiColumnFlowThread(box_, constraint_space,

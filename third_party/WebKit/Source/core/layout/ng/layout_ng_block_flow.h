@@ -11,6 +11,7 @@
 
 namespace blink {
 
+class NGBlockNode;
 class NGBreakToken;
 class NGConstraintSpace;
 struct NGInlineNodeData;
@@ -48,6 +49,12 @@ class CORE_EXPORT LayoutNGBlockFlow final : public LayoutBlockFlow {
   RefPtr<const NGPhysicalBoxFragment> RootFragment() const {
     return physical_root_fragment_;
   }
+  void SetRootFragment(const NGPhysicalBoxFragment& fragment) {
+    physical_root_fragment_ = &fragment;
+  }
+
+ protected:
+  void AddOverflowFromChildren() override;
 
  private:
   bool IsOfType(LayoutObjectType) const override;
