@@ -88,6 +88,24 @@
       "revId": "c73379d1a241a238c7022bcefc7e777d1df4063d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fee1927_94743fbb",
+        "filename": "media/audio/alsa/alsa_input.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001872
+      },
+      "writtenOn": "2017-09-14T18:42:07Z",
+      "side": 1,
+      "message": "Thanks for looking into that.\n\nI gave 5ms as an example. In practice it could be any, irregular interval, but it is usually less then audio length (converted to time) that has been read. (you can see actual example I link late here)\n\nRegarding contract. It is violated already. In my example above, please end loop after step 2, and start step 3 from the new one. You will read exactly the same data, and therefor you get earlier timestamp which violates the contract. What this mean in practice, is that first timestamp is INACCURATE, and subsequent timestamps is EVEN MORE INACCURATE. And if we insist on the following OnData() contract - there will be no way to get accurate recording timestamps.\n\nHere are examples of timestamps (\"capture ts\" column) arriving to AudioInputController::SyncWriter if I change the code and use number of frames from the beginning of the function:\nhttps://docs.google.com/a/google.com/spreadsheets/d/1wZFq3nzmggH4owuJ1Zv6D3XFM0StdQZrLucKNb7mxuE/edit?usp\u003dsharing\n\n\"capture ts diff\" contains difference from the previous arrived ts, and as you can clearly see it is often negative (violates contract).\n\nI think the problem here is that underlying audio layer CAN NOT reliably tell us when the sound capturing is actually started. And that is the problem. I don\u0027t know how to solve unreliable Alsa timings, but at least I can get more reliable estimates.",
+      "parentUuid": "b92260e3_4cfc042d",
+      "revId": "c73379d1a241a238c7022bcefc7e777d1df4063d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
