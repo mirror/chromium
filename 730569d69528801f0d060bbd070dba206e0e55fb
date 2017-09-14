@@ -46,6 +46,30 @@
       "revId": "730569d69528801f0d060bbd070dba206e0e55fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8431fb15_5c7e95e1",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1206539
+      },
+      "writtenOn": "2017-09-14T23:57:32Z",
+      "side": 1,
+      "message": "asserts are used when there is only one thing to assert, because it terminates the test immediately.\n\nExpectations are used when you want to collect all the failures together.\n\nIn this test we have multiple conditions we are checking (we should consider changing that) but you should probably use EXPECT because you don\u0027t want the test to terminate on line 306 before line 307 gets executed.",
+      "parentUuid": "ecea64a3_b41bd9a8",
+      "range": {
+        "startLine": 306,
+        "startChar": 2,
+        "endLine": 306,
+        "endChar": 8
+      },
+      "revId": "730569d69528801f0d060bbd070dba206e0e55fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
