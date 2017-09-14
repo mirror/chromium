@@ -22,8 +22,8 @@
 #include "third_party/webrtc/rtc_base/stringutils.h"
 
 // This needs to be included after base/logging.h.
-#include "third_party/webrtc_overrides/webrtc/rtc_base/diagnostic_logging.h"
-#include "third_party/webrtc_overrides/webrtc/rtc_base/logging.h"
+#include "third_party/webrtc_overrides/rtc_base/diagnostic_logging.h"
+#include "third_party/webrtc_overrides/rtc_base/logging.h"
 
 #if defined(WEBRTC_MAC)
 #include "base/mac/mac_logging.h"
