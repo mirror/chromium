@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "base/strings/stringprintf.h"
+#include "headless/public/headless_export.h"
 #include "headless/public/util/managed_dispatch_url_request_job.h"
 #include "net/base/net_errors.h"
 
@@ -17,7 +18,8 @@ namespace headless {
 
 class URLRequestDispatcher;
 
-class FakeManagedDispatchURLRequestJob : public ManagedDispatchURLRequestJob {
+class HEADLESS_EXPORT FakeManagedDispatchURLRequestJob
+    : public ManagedDispatchURLRequestJob {
  public:
   FakeManagedDispatchURLRequestJob(URLRequestDispatcher* url_request_dispatcher,
                                    int id,
