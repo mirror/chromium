@@ -60,6 +60,8 @@ class ClientPolicyController {
   const std::vector<std::string>& GetNamespacesDisabledWhenPrefetchDisabled()
       const;
 
+  bool IsSuggested(const std::string& name_space) const;
+
   void AddPolicyForTest(const std::string& name_space,
                         const OfflinePageClientPolicyBuilder& builder);
 
