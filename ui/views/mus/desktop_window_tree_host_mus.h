@@ -16,7 +16,6 @@
 #include "ui/views/mus/mus_export.h"
 #include "ui/views/widget/desktop_aura/desktop_window_tree_host.h"
 #include "ui/views/widget/widget.h"
-#include "ui/views/widget/widget_observer.h"
 
 namespace wm {
 class CursorManager;
@@ -27,7 +26,6 @@ namespace views {
 class VIEWS_MUS_EXPORT DesktopWindowTreeHostMus
     : public DesktopWindowTreeHost,
       public MusClientObserver,
-      public WidgetObserver,
       public aura::FocusSynchronizerObserver,
       public aura::WindowObserver,
       public aura::WindowTreeHostMus {
@@ -127,9 +125,6 @@ class VIEWS_MUS_EXPORT DesktopWindowTreeHostMus
   // MusClientObserver:
   void OnWindowManagerFrameValuesChanged() override;
 
-  // WidgetObserver:
-  void OnWidgetActivationChanged(Widget* widget, bool active) override;
-
   // aura::FocusSynchronizerObserver:
   void OnActiveFocusClientChanged(aura::client::FocusClient* focus_client,
                                   aura::Window* focus_client_root) override;
@@ -152,8 +147,6 @@ class VIEWS_MUS_EXPORT DesktopWindowTreeHostMus
   // children who we're responsible for closing when we CloseNow().
   DesktopWindowTreeHostMus* parent_ = nullptr;
   std::set<DesktopWindowTreeHostMus*> children_;
-
-  bool is_active_ = false;
 
   std::unique_ptr<wm::CursorManager> cursor_manager_;
 
