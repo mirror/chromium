@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4c5c89ec_05ccbebb",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-14T09:36:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c73e6701_b934c2fe",
+      "range": {
+        "startLine": 63,
+        "startChar": 22,
+        "endLine": 63,
+        "endChar": 23
+      },
+      "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d15d8b1_f0e955ce",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
         "patchSetId": 13
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-12T07:37:17Z",
       "side": 1,
       "message": "How about s/InitiateIMSGF/InitiateSubgraphFetch/?",
+      "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e01fc3cd_005ffc31",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-14T09:36:52Z",
+      "side": 1,
+      "message": "This is not subgraph fetch, because |request| is the request for the top-level module.\n\nHow about InitiateInternalModuleScriptGraphFetching if IMSGF doesn\u0027t looks good?",
+      "parentUuid": "9d15d8b1_f0e955ce",
       "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "93de6fe9_bf342a70",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-14T09:36:52Z",
+      "side": 1,
+      "message": "Done.\n\n- I named the latter part FetchDescendants() as it mostly corresponds to (and will be more corresponding to after PR 2991 is applied) \"fetch the descendants\".\n- I kept Lines 233-253 in NotifyModuleLoadFinished(), and add an AdvanceState() call in FetchRootInline().",
+      "parentUuid": "525ea6e1_66ef85e8",
+      "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0d64539_83a31f93",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
         "patchSetId": 13
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "4e80e47f_22f2ec60",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-14T09:36:52Z",
+      "side": 1,
+      "message": "I named the factored out function as FetchDescendants().\nSo I just s/Complete/Finalize/.",
+      "parentUuid": "e0d64539_83a31f93",
+      "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4f67e4d_af73678f",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
         "patchSetId": 13
@@ -90,6 +168,24 @@
       "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e89f65e0_955226ab",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-14T09:36:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4f67e4d_af73678f",
+      "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "4ab8806a_c8351bc4",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-14T09:36:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "993d8963_f501edf9",
+      "range": {
+        "startLine": 108,
+        "startChar": 32,
+        "endLine": 108,
+        "endChar": 0
+      },
+      "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1912f16_9d55b999",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
         "patchSetId": 13
@@ -130,6 +250,24 @@
       "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a96106_2ede4cc5",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-14T09:36:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1912f16_9d55b999",
+      "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -153,6 +291,30 @@
       "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddd1f51d_a4216996",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinkerTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-09-14T09:36:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eeebdb61_a7775048",
+      "range": {
+        "startLine": 422,
+        "startChar": 33,
+        "endLine": 422,
+        "endChar": 0
+      },
+      "revId": "ed4811d54ccbc0275557567796b320cc1a320292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
