@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "474e85f7_87fff23c",
+        "filename": "mojo/public/cpp/bindings/lib/multiplex_router.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-14T17:25:24Z",
+      "side": 1,
+      "message": "This cannot use std::move(). That is because we continue to process queued messages after connection error (actually we don\u0027t notify the upper layer about connection error until all messages are processed). Therefore |endpoints_| must stay valid.",
+      "revId": "06124368f9aa91494dc4c5f41aff60e955dce89b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
