@@ -114,7 +114,7 @@ suite('drag and drop', function() {
     list = app.$$('bookmarks-list');
     rootFolderNode = app.$$('bookmarks-folder-node');
     dndManager = app.dndManager_;
-    dndManager.setTimerProxyForTesting(new bookmarks.TestTimerProxy());
+    dndManager.setTimerProxyForTesting(new TestTimerProxy());
     Polymer.dom.flush();
   });
 
@@ -431,7 +431,7 @@ suite('drag and drop', function() {
   });
 
   test('auto expander', function() {
-    var timerProxy = new bookmarks.TestTimerProxy();
+    var timerProxy = new TestTimerProxy();
     timerProxy.immediatelyResolveTimeouts = false;
 
     var autoExpander = dndManager.autoExpander_;

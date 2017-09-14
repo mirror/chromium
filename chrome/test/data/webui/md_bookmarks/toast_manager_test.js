@@ -28,7 +28,7 @@ suite('<bookmarks-toast-manager>', function() {
   });
 
   test('auto hide', function() {
-    var timerProxy = new bookmarks.TestTimerProxy();
+    var timerProxy = new TestTimerProxy();
     timerProxy.immediatelyResolveTimeouts = false;
     toastManager.timerProxy_ = timerProxy;
 
