@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d56cb198_e6af2a00",
+        "filename": "third_party/WebKit/Source/core/css/html.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-14T04:50:20Z",
+      "side": 1,
+      "message": "We should have \"user-select: contain; !important\" in \n\u003cdiv id\u003d\"inner-editor\u003e instead of INPUT/TEXTAREA. \nSince, user-select:auto in \u003cdiv id\u003d\"inner-editor\"\u003e doesn\u0027t use INPUT/TEXTAREA.\n\nNote: Blink hasn\u0027t implemented \"user-selection:contain\" yet. For now,\nwe can use \"user-select:text\".\n\nSorry, I\u0027m not sure how to specify \"inner-editor\" in UA shadow root.\n+tkent@ as master of forms.",
+      "revId": "5f16d31f2f81570d3e9c03fa3a520538bb14e01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
