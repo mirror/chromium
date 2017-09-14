@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "f6f475fa_966cce99",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-14T22:31:01Z",
+      "side": 1,
+      "message": "Doesn\u0027t this show the wallpaper manager? It\u0027s not a toggle. Rename the div or rename this something like showWallpaperManager.",
+      "parentUuid": "9332df12_599a422b",
+      "revId": "ffbaf9813bc5fa1eee14861c75b9765a320d9441",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c95a12ac_f1b05e60",
         "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.js",
         "patchSetId": 6

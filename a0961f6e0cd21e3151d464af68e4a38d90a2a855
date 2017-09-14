@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05788a49_aeb8419b",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_browser_proxy.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-14T22:31:01Z",
+      "side": 1,
+      "message": "See above for examples of correct comment formatting:\n/** One line. */\nor\n/**\n * More than\n * one line\n */\n\nIf a line wraps, it looks like this:\n\n/**\n * @return {!Promise\u003cboolean\u003e} Whether the wallpaper is policy\n *     controlled\n */",
+      "revId": "a0961f6e0cd21e3151d464af68e4a38d90a2a855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c0b427_75a4722c",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-14T22:31:01Z",
+      "side": 1,
+      "message": "Missed this before; we should use \u003ctemplate is\u003d\"dom-if\"\u003e instead of hidden here. (See below for examples)",
+      "revId": "a0961f6e0cd21e3151d464af68e4a38d90a2a855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e47b24_1606e2b3",
+        "filename": "chrome/browser/ui/webui/settings/appearance_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-14T22:31:01Z",
+      "side": 1,
+      "message": "This suggests that we might show the button, but it won\u0027t do anything? That would be strange. If we don\u0027t expect this to happen, put it in a DCHECK instead.\n\nOtherwise we should change IsWallpaperPolicyControlled() to CnaOpenWallpaperManager() (and rename all related methods / variables) and add this test there.",
+      "revId": "a0961f6e0cd21e3151d464af68e4a38d90a2a855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
