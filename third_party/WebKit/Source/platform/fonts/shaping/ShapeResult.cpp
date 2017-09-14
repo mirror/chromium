@@ -319,6 +319,7 @@ void ShapeResult::ApplySpacingImpl(
     int text_start_offset) {
   float offset = 0;
   float total_space = 0;
+  float space = 0;
   for (auto& run : runs_) {
     if (!run)
       continue;
@@ -334,7 +335,7 @@ void ShapeResult::ApplySpacingImpl(
         continue;
       }
 
-      float space = spacing.ComputeSpacing(
+      space = spacing.ComputeSpacing(
           run_start_index + glyph_data.character_index, offset);
       glyph_data.advance += space;
       total_space_for_run += space;
@@ -355,6 +356,12 @@ void ShapeResult::ApplySpacingImpl(
     total_space += total_space_for_run;
   }
   width_ += total_space;
+
+  // If letter-spacing is negative, we should factor that into right layout
+  // overflow. Even in RTL, letter-spacing is applied to the right, so this is
+  // not an issue with left overflow.
+  total_space -= space;
+
   // Glyph bounding box is in logical space.
   glyph_bounding_box_.SetWidth(glyph_bounding_box_.Width() + total_space);
 }
