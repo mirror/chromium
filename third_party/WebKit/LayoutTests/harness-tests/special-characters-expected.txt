@@ -3,10 +3,10 @@ PASS Unescaped \ in test name.
 PASS Escaped "\\" in test name.
 FAIL Unescaped "\\" in test message. Expected Error: \ character.
 FAIL Escaped "\\" in test message. Expected Error: "\\" character.
-PASS Unescaped \r
+PASS Unescaped 
  in test name.
 PASS Escaped "\r\n" in test name.
-FAIL Unescaped "\r\n" in test message. Expected Error: \r
+FAIL Unescaped "\r\n" in test message. Expected Error: 
  character.
 FAIL Escaped "\r\n" in test message. Expected Error: "\r\n" character.
 PASS Unescaped \0 in test name.
@@ -63,9 +63,9 @@ PASS Unescaped  in test name.
 PASS Escaped "\f" in test name.
 FAIL Unescaped "\f" in test message. Expected Error:  character.
 FAIL Escaped "\f" in test message. Expected Error: "\f" character.
-PASS Unescaped \r in test name.
+PASS Unescaped  in test name.
 PASS Escaped "\r" in test name.
-FAIL Unescaped "\r" in test message. Expected Error: \r character.
+FAIL Unescaped "\r" in test message. Expected Error:  character.
 FAIL Escaped "\r" in test message. Expected Error: "\r" character.
 PASS Unescaped  in test name.
 PASS Escaped "\x0e" in test name.
