@@ -145,6 +145,8 @@ class CORE_EXPORT PerformanceMonitor final
   void DidExecuteScript();
   void DidLoadResource();
 
+  void EmitLongTaskIdlenessSignal();
+
   std::pair<String, DOMWindow*> SanitizedAttribution(
       const HeapHashSet<Member<Frame>>& frame_contexts,
       Frame* observer_frame);
@@ -172,6 +174,9 @@ class CORE_EXPORT PerformanceMonitor final
       subscriptions_;
   double network_0_quiet_ = 0;
   double network_2_quiet_ = 0;
+  // Used as an indicator to report long task idle to Resource Coordinator when
+  // there's no long task being processed in 0.5 second.
+  double long_task_idle_ = -1;
 };
 
 }  // namespace blink

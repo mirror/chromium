@@ -6,7 +6,6 @@
 
 #include <utility>
 
-#include "base/values.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
 #include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
 #include "services/resource_coordinator/coordination_unit/page_coordination_unit_impl.h"
@@ -38,17 +37,17 @@ void TabSignalGeneratorImpl::OnFramePropertyChanged(
     const FrameCoordinationUnitImpl* frame_cu,
     const mojom::PropertyType property_type,
     int64_t value) {
-  if (property_type == mojom::PropertyType::kNetworkIdle) {
+  if (property_type == mojom::PropertyType::kLongTaskIdle ||
+      property_type == mojom::PropertyType::kNetworkIdle) {
     // Ignore when the signal doesn't come from main frame.
     if (!frame_cu->IsMainFrame())
       return;
-    // TODO(lpy) Combine CPU usage or long task idleness signal.
-    for (auto* parent : frame_cu->parents()) {
-      if (parent->id().type != CoordinationUnitType::kPage)
-        continue;
-      DISPATCH_TAB_SIGNAL(observers_, OnEventReceived, parent,
+    if (IsDoneLoading(frame_cu)) {
+      auto* page_cu = frame_cu->GetPageCoordinationUnit();
+      if (!page_cu)
+        return;
+      DISPATCH_TAB_SIGNAL(observers_, OnEventReceived, page_cu,
                           mojom::TabEvent::kDoneLoading);
-      break;
     }
   }
 }
@@ -67,6 +66,19 @@ void TabSignalGeneratorImpl::BindToInterface(
     resource_coordinator::mojom::TabSignalGeneratorRequest request,
     const service_manager::BindSourceInfo& source_info) {
   bindings_.AddBinding(this, std::move(request));
+}
+
+bool TabSignalGeneratorImpl::IsDoneLoading(
+    const FrameCoordinationUnitImpl* frame_cu) {
+  int64_t is_long_task_idle = 0;
+  int64_t is_network_idle = 0;
+  if (!frame_cu->GetProperty(mojom::PropertyType::kLongTaskIdle,
+                             &is_long_task_idle) ||
+      !frame_cu->GetProperty(mojom::PropertyType::kNetworkIdle,
+                             &is_network_idle)) {
+    return false;
+  }
+  return is_long_task_idle && is_network_idle;
 }
 
 }  // namespace resource_coordinator
