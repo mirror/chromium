@@ -28,6 +28,7 @@
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "components/infobars/core/infobar.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features.h"
+#include "content/public/browser/ssl_host_state_delegate.h"
 #include "content/public/browser/ssl_status.h"
 #include "content/public/common/content_switches.h"
 #include "device/base/mock_device_client.h"
@@ -728,6 +729,67 @@ TEST_F(PageInfoTest, InternalPage) {
   EXPECT_EQ(base::string16(), page_info()->organization_name());
 }
 #endif
+
+// Tests that metrics for the "Re-Enable Warnings" button on PageInfo are being
+// logged correctly.
+TEST_F(PageInfoTest, ReEnableWarningsMetrics) {
+  struct TestCase {
+    const std::string url;
+    const bool button_visible;
+    const bool button_clicked;
+  };
+
+  const TestCase kTestCases[] = {
+      {"https://example.test", false, false},
+      {"https://example.test", true, false},
+      {"https://example.test", true, true},
+  };
+
+  for (const auto& test : kTestCases) {
+    const char kGenericHistogram[] =
+        "interstitial.ssl.did_user_revoke_decisions2";
+    base::HistogramTester histograms;
+    ResetMockUI();
+    SetURL(test.url);
+    SetDefaultUIExpectations(mock_ui());
+    if (test.button_visible) {
+      // In the case where the button is visible, add an exception to the
+      // profile settings for the site.
+      HostContentSettingsMap* content_settings =
+          HostContentSettingsMapFactory::GetForProfile(profile());
+      std::unique_ptr<base::DictionaryValue> dict =
+          std::unique_ptr<base::DictionaryValue>(new base::DictionaryValue());
+      dict->SetKey(
+          "testkey",
+          base::Value(content::SSLHostStateDelegate::CertJudgment::ALLOWED));
+      content_settings->SetWebsiteSettingDefaultScope(
+          url(), GURL(), CONTENT_SETTINGS_TYPE_SSL_CERT_DECISIONS,
+          std::string(), std::move(dict));
+      ClearPageInfo();            // So settings get reloaded from profile.
+      if (test.button_clicked) {  // Case where button is visible and clicked.
+        page_info()->OnRevokeSSLErrorBypassButtonPressed();
+        page_info()->OnUIClosing();
+        histograms.ExpectTotalCount(kGenericHistogram, 1);
+        histograms.ExpectBucketCount(
+            kGenericHistogram,
+            PageInfo::SSLCertificateDecisionsDidRevoke::
+                USER_CERT_DECISIONS_REVOKED,
+            1);
+      } else {  // Case where button is visible but not clicked.
+        page_info()->OnUIClosing();
+        histograms.ExpectTotalCount(kGenericHistogram, 1);
+        histograms.ExpectBucketCount(
+            kGenericHistogram,
+            PageInfo::SSLCertificateDecisionsDidRevoke::
+                USER_CERT_DECISIONS_NOT_REVOKED,
+            1);
+      }
+    } else {  // Button was not visible, so check histogram is empty.
+      page_info()->OnUIClosing();
+      histograms.ExpectTotalCount(kGenericHistogram, 0);
+    }
+  }
+}
 
 // Tests that metrics are recorded on a PageInfo for pages with
 // various security levels.
