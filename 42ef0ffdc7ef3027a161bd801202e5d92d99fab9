@@ -34,6 +34,24 @@
       "revId": "42ef0ffdc7ef3027a161bd801202e5d92d99fab9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b967406d_161056ed",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-14T16:21:33Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t see much of a benefit of having to support legacy CPUs that are older than 7  years (as we get trapped in the legacy issue that is a curse in zlib).\n\n[noel: edited, assumed this comment added by calvalcanti@ later was meant to be here] \n\u003e Actually, older than 7 years (more like 9 years), as Nehalem was introduced in 2008:\nhttps://en.wikipedia.org/wiki/Nehalem_(microarchitecture)\n\n\u003e So unless we have compelling data to prove its benefits, it is better to just simplify the code and remove this block.\n\nYou might be forgetting that chrome has minimum support requirements. Last I spoke to robert.bradford about this subject, he reminded me that we did not need to run-time check SSE2, we could assume it because of our support requirements [1], and SSE2 is 2001.  Have our minimum support requirements changed?\n\n[1] https://codereview.chromium.org/1215793004\n\n\u003eFor the record, I don\u0027t want to delete this blindly, but I do think it\u0027s worth timing to see if it\u0027s necessary sooner rather than later.  If we leave it until later it\u0027ll become part of the furniture, maybe with no real benefit.\n\nOne problem therein, anyone got an old machine to measure on?  I certainly don\u0027t.",
+      "parentUuid": "dad9be41_ef20651c",
+      "revId": "42ef0ffdc7ef3027a161bd801202e5d92d99fab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
