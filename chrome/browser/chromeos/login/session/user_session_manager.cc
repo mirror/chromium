@@ -1636,20 +1636,26 @@ void UserSessionManager::UpdateEasyUnlockKeys(const UserContext& user_context) {
   // and RefreshKeys op expects a failure to stop. As a result, some tests would
   // timeout.
   // TODO(xiyuan): Revisit this when adding tests.
-  if (!base::SysInfo::IsRunningOnChromeOS())
+  if (!base::SysInfo::IsRunningOnChromeOS()) {
+    NotifyEasyUnlockKeyOpsFinished();
     return;
+  }
 
   // Only update Easy unlock keys for regular user.
   // TODO(xiyuan): Fix inconsistency user type of |user_context| introduced in
   // authenticator.
   const user_manager::User* user =
       user_manager::UserManager::Get()->FindUser(user_context.GetAccountId());
-  if (!user || !user->HasGaiaAccount())
+  if (!user || !user->HasGaiaAccount()) {
+    NotifyEasyUnlockKeyOpsFinished();
     return;
+  }
 
   // Bail if |user_context| does not have secret.
-  if (user_context.GetKey()->GetSecret().empty())
+  if (user_context.GetKey()->GetSecret().empty()) {
+    NotifyEasyUnlockKeyOpsFinished();
     return;
+  }
 
   const base::ListValue* device_list = nullptr;
   EasyUnlockService* easy_unlock_service = EasyUnlockService::GetForUser(*user);
@@ -1727,6 +1733,8 @@ void UserSessionManager::OnEasyUnlockKeyOpsFinished(
   EasyUnlockService* easy_unlock_service =
         EasyUnlockService::GetForUser(*user);
   easy_unlock_service->CheckCryptohomeKeysAndMaybeHardlock();
+
+  NotifyEasyUnlockKeyOpsFinished();
 }
 
 void UserSessionManager::ActiveUserChanged(
@@ -2003,6 +2011,25 @@ bool UserSessionManager::ShouldShowEolNotification(Profile* profile) {
 
   // Do not show end of life notification if this is a guest session
   return !profile->IsGuestSession();
+}
+
+void UserSessionManager::NotifyEasyUnlockKeyOpsFinished() {
+  DCHECK(!easy_unlock_key_ops_finished_);
+  easy_unlock_key_ops_finished_ = true;
+  for (auto& callback : easy_unlock_key_ops_finished_callbacks_) {
+    std::move(callback).Run();
+  }
+  easy_unlock_key_ops_finished_callbacks_.clear();
+}
+
+void UserSessionManager::WaitForEasyUnlockKeyOpsFinished(
+    base::OnceClosure callback) {
+  if (easy_unlock_key_ops_finished_) {
+    LOG(ERROR) << "WaitForEasyUnlockKeyOpsFinished inline";
+    std::move(callback).Run();
+    return;
+  }
+  easy_unlock_key_ops_finished_callbacks_.push_back(std::move(callback));
 }
 
 }  // namespace chromeos
