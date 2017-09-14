@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7ec23d22_2ac68051",
+        "filename": "components/update_client/protocol_builder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-09-14T18:14:39Z",
+      "side": 1,
+      "message": "comment not needed imo but up to you if you want to keep it.",
+      "revId": "8c08424e4701f406bb0e072f546fbb4d8ab22f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8cae6ad5_a903eb90",
         "filename": "components/update_client/protocol_builder.cc",
         "patchSetId": 7
