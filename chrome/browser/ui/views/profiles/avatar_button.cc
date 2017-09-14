@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "build/build_config.h"
 #include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -211,7 +212,6 @@ AvatarButton::AvatarButton(views::ButtonListener* listener,
 #elif defined(OS_WIN)
     DCHECK_EQ(AvatarButtonStyle::NATIVE, button_style);
     SetBorder(views::CreateEmptyBorder(kBorderInsets));
-#endif  // defined(OS_WIN)
   } else if (button_style == AvatarButtonStyle::THEMED) {
     const int kNormalImageSet[] = IMAGE_GRID(IDR_AVATAR_THEMED_BUTTON_NORMAL);
     const int kHoverImageSet[] = IMAGE_GRID(IDR_AVATAR_THEMED_BUTTON_HOVER);
@@ -219,7 +219,6 @@ AvatarButton::AvatarButton(views::ButtonListener* listener,
     SetButtonAvatar(IDR_AVATAR_THEMED_BUTTON_AVATAR);
     SetBorder(
         CreateThemedBorder(kNormalImageSet, kHoverImageSet, kPressedImageSet));
-#if defined(OS_WIN)
   } else if (base::win::GetVersion() < base::win::VERSION_WIN8) {
     const int kNormalImageSet[] = IMAGE_GRID(IDR_AVATAR_GLASS_BUTTON_NORMAL);
     const int kHoverImageSet[] = IMAGE_GRID(IDR_AVATAR_GLASS_BUTTON_HOVER);
