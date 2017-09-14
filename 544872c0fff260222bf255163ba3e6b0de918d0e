@@ -224,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "ac8033ca_6802d8b5",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-14T23:59:01Z",
+      "side": 1,
+      "message": "I am thinking about a case where suppose seccomp is enabled on Android and we start failing the process dumps. We would not add chrome dumps. I think 2 loops make the code more more complex. Just feel it is not worth this extra checks, and struct definitions for a case we do not really need to throw away. But if this will change the consistency of recorded metrics, it is fair to have a validity check.",
+      "parentUuid": "fb80e413_9f9cd156",
+      "range": {
+        "startLine": 519,
+        "startChar": 2,
+        "endLine": 519,
+        "endChar": 45
+      },
+      "revId": "544872c0fff260222bf255163ba3e6b0de918d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d504bfa_f1ba6f76",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 4
