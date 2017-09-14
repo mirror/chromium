@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb5980cf_cab07bee",
+        "filename": "device/hid/hid_connection_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-14T18:07:31Z",
+      "side": 1,
+      "message": "size - 1",
+      "range": {
+        "startLine": 41,
+        "startChar": 65,
+        "endLine": 41,
+        "endChar": 69
+      },
+      "revId": "8052b2c66fa1407bfd90dd5fefbaccb4ee4edeb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32afd708_d8b6c2c7",
+        "filename": "extensions/browser/api/hid/hid_api.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-14T18:07:31Z",
+      "side": 1,
+      "message": "This check is not particularly useful anymore.",
+      "revId": "8052b2c66fa1407bfd90dd5fefbaccb4ee4edeb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
