@@ -7,9 +7,9 @@
 #include "base/metrics/histogram_macros.h"
 #include "cc/base/math_util.h"
 #include "cc/quads/render_pass_draw_quad.h"
-#include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/yuv_video_draw_quad.h"
 #include "cc/resources/resource_provider.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
+#include "components/viz/common/quads/yuv_video_draw_quad.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gl/gl_switches.h"
@@ -20,7 +20,7 @@ namespace {
 
 DCLayerOverlayProcessor::DCLayerResult FromYUVQuad(
     ResourceProvider* resource_provider,
-    const YUVVideoDrawQuad* quad,
+    const viz::YUVVideoDrawQuad* quad,
     DCLayerOverlay* ca_layer_overlay) {
   for (const auto& resource : quad->resources) {
     if (!resource_provider->IsOverlayCandidate(resource))
@@ -58,7 +58,7 @@ gfx::RectF GetOcclusionBounds(const gfx::RectF& target_quad,
     const viz::DrawQuad* quad = *overlap_iter;
     gfx::RectF overlap_rect = ClippedQuadRectangle(quad);
     if (quad->material == viz::DrawQuad::SOLID_COLOR) {
-      SkColor color = SolidColorDrawQuad::MaterialCast(quad)->color;
+      SkColor color = viz::SolidColorDrawQuad::MaterialCast(quad)->color;
       float alpha = (SkColorGetA(color) * (1.0f / 255.0f)) * opacity;
       if (quad->ShouldDrawWithBlending() &&
           alpha < std::numeric_limits<float>::epsilon())
@@ -101,9 +101,9 @@ DCLayerOverlayProcessor::DCLayerResult DCLayerOverlayProcessor::FromDrawQuad(
   DCLayerResult result;
   switch (quad->material) {
     case viz::DrawQuad::YUV_VIDEO_CONTENT:
-      result =
-          FromYUVQuad(resource_provider, YUVVideoDrawQuad::MaterialCast(*quad),
-                      ca_layer_overlay);
+      result = FromYUVQuad(resource_provider,
+                           viz::YUVVideoDrawQuad::MaterialCast(*quad),
+                           ca_layer_overlay);
       break;
     default:
       return DC_LAYER_FAILED_UNSUPPORTED_QUAD;
@@ -185,7 +185,7 @@ QuadList::Iterator DCLayerOverlayProcessor::ProcessRenderPassDrawQuad(
   // with premultiplied alpha that reduces the opacity of the current content
   // by the opacity of the layer.
   it = render_pass->quad_list
-           .InsertBeforeAndInvalidateAllPointers<SolidColorDrawQuad>(
+           .InsertBeforeAndInvalidateAllPointers<viz::SolidColorDrawQuad>(
                it, pass_info.size());
   rpdq = nullptr;
   for (size_t i = 0; i < pass_info.size(); i++, ++it) {
@@ -201,7 +201,7 @@ QuadList::Iterator DCLayerOverlayProcessor::ProcessRenderPassDrawQuad(
     new_shared_quad_state->SetAll(new_transform, punch_through.rect,
                                   punch_through.rect, punch_through.rect, false,
                                   true, new_opacity, SkBlendMode::kDstOut, 0);
-    SolidColorDrawQuad* solid_quad = static_cast<SolidColorDrawQuad*>(*it);
+    auto* solid_quad = static_cast<viz::SolidColorDrawQuad*>(*it);
     solid_quad->SetAll(new_shared_quad_state, punch_through.rect,
                        punch_through.rect, false, 0xff000000, true);
     damage_rect->Union(gfx::ToEnclosingRect(ClippedQuadRectangle(solid_quad)));
@@ -368,8 +368,9 @@ bool DCLayerOverlayProcessor::ProcessForUnderlay(
         render_pass->shared_quad_state_list.AllocateAndCopyFrom(
             shared_quad_state);
     new_shared_quad_state->blend_mode = SkBlendMode::kDstOut;
-    SolidColorDrawQuad* replacement =
-        render_pass->quad_list.ReplaceExistingElement<SolidColorDrawQuad>(it);
+    auto* replacement =
+        render_pass->quad_list.ReplaceExistingElement<viz::SolidColorDrawQuad>(
+            it);
     replacement->SetAll(shared_quad_state, rect, rect, false, 0xff000000, true);
   } else {
     // When the opacity == 1.0, drawing with transparent will be done without

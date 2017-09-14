@@ -31,16 +31,16 @@ using cc::PictureDrawQuad;
 using cc::RenderPass;
 using cc::RenderPassDrawQuad;
 using cc::ResourceProvider;
-using cc::SolidColorDrawQuad;
-using cc::SurfaceDrawQuad;
-using cc::TextureDrawQuad;
+using viz::SurfaceDrawQuad;
 using cc::TileDrawQuad;
-using cc::StreamVideoDrawQuad;
-using cc::YUVVideoDrawQuad;
 using gfx::Transform;
 using viz::ResourceId;
 using viz::SharedQuadState;
+using viz::SolidColorDrawQuad;
+using viz::StreamVideoDrawQuad;
+using viz::TextureDrawQuad;
 using viz::TransferableResource;
+using viz::YUVVideoDrawQuad;
 
 namespace content {
 namespace {
@@ -121,8 +121,8 @@ class CCParamTraitsTest : public testing::Test {
         Compare(TileDrawQuad::MaterialCast(a), TileDrawQuad::MaterialCast(b));
         break;
       case viz::DrawQuad::SOLID_COLOR:
-        Compare(SolidColorDrawQuad::MaterialCast(a),
-                SolidColorDrawQuad::MaterialCast(b));
+        Compare(viz::SolidColorDrawQuad::MaterialCast(a),
+                viz::SolidColorDrawQuad::MaterialCast(b));
         break;
       case viz::DrawQuad::STREAM_VIDEO_CONTENT:
         Compare(StreamVideoDrawQuad::MaterialCast(a),
@@ -130,7 +130,7 @@ class CCParamTraitsTest : public testing::Test {
         break;
       case viz::DrawQuad::SURFACE_CONTENT:
         Compare(SurfaceDrawQuad::MaterialCast(a),
-                SurfaceDrawQuad::MaterialCast(b));
+                viz::SurfaceDrawQuad::MaterialCast(b));
         break;
       case viz::DrawQuad::YUV_VIDEO_CONTENT:
         Compare(YUVVideoDrawQuad::MaterialCast(a),
@@ -156,7 +156,8 @@ class CCParamTraitsTest : public testing::Test {
     EXPECT_EQ(a->tex_coord_rect, b->tex_coord_rect);
   }
 
-  void Compare(const SolidColorDrawQuad* a, const SolidColorDrawQuad* b) {
+  void Compare(const viz::SolidColorDrawQuad* a,
+               const viz::SolidColorDrawQuad* b) {
     EXPECT_EQ(a->color, b->color);
     EXPECT_EQ(a->force_anti_aliasing_off, b->force_anti_aliasing_off);
   }
@@ -167,7 +168,7 @@ class CCParamTraitsTest : public testing::Test {
     EXPECT_EQ(a->matrix, b->matrix);
   }
 
-  void Compare(const SurfaceDrawQuad* a, const SurfaceDrawQuad* b) {
+  void Compare(const viz::SurfaceDrawQuad* a, const viz::SurfaceDrawQuad* b) {
     EXPECT_EQ(a->surface_id, b->surface_id);
   }
 
@@ -369,8 +370,8 @@ TEST_F(CCParamTraitsTest, AllQuads) {
       pass_cmp->CreateAndAppendSharedQuadState();
   *shared_state3_cmp = *shared_state3_in;
 
-  SolidColorDrawQuad* solidcolor_in =
-      pass_in->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  auto* solidcolor_in =
+      pass_in->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   solidcolor_in->SetAll(shared_state3_in, arbitrary_rect3,
                         arbitrary_rect2_inside_rect3, arbitrary_bool1,
                         arbitrary_color, arbitrary_bool2);
@@ -387,11 +388,11 @@ TEST_F(CCParamTraitsTest, AllQuads) {
   viz::SurfaceId arbitrary_surface_id(
       kArbitraryFrameSinkId,
       viz::LocalSurfaceId(3, base::UnguessableToken::Create()));
-  SurfaceDrawQuad* surface_in =
+  viz::SurfaceDrawQuad* surface_in =
       pass_in->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
   surface_in->SetAll(shared_state3_in, arbitrary_rect2,
                      arbitrary_rect1_inside_rect2, arbitrary_bool1,
-                     arbitrary_surface_id, cc::SurfaceDrawQuadType::PRIMARY,
+                     arbitrary_surface_id, viz::SurfaceDrawQuadType::PRIMARY,
                      nullptr);
   pass_cmp->CopyFromAndAppendDrawQuad(surface_in);
 
@@ -509,8 +510,7 @@ TEST_F(CCParamTraitsTest, UnusedSharedQuadStates) {
                            gfx::Rect(), false, true, 1.f, SkBlendMode::kSrcOver,
                            0);
 
-  SolidColorDrawQuad* quad1 =
-      pass_in->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  auto* quad1 = pass_in->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   quad1->SetAll(shared_state1_in, gfx::Rect(10, 10), gfx::Rect(10, 10), false,
                 SK_ColorRED, false);
 
@@ -531,8 +531,7 @@ TEST_F(CCParamTraitsTest, UnusedSharedQuadStates) {
                            gfx::Rect(), false, true, 1.f, SkBlendMode::kSrcOver,
                            0);
 
-  SolidColorDrawQuad* quad2 =
-      pass_in->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  auto* quad2 = pass_in->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   quad2->SetAll(shared_state4_in, gfx::Rect(10, 10), gfx::Rect(10, 10), false,
                 SK_ColorRED, false);
 

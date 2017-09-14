@@ -11,13 +11,13 @@
 #include "cc/animation/animation_host.h"
 #include "cc/layers/append_quads_data.h"
 #include "cc/layers/solid_color_layer.h"
-#include "cc/quads/solid_color_draw_quad.h"
 #include "cc/test/fake_impl_task_runner_provider.h"
 #include "cc/test/fake_layer_tree_host.h"
 #include "cc/test/layer_test_common.h"
 #include "cc/test/test_task_graph_runner.h"
 #include "cc/trees/layer_tree_host_common.h"
 #include "cc/trees/single_thread_proxy.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -76,7 +76,8 @@ TEST(SolidColorLayerImplTest, VerifyCorrectBackgroundColorInQuad) {
 
   ASSERT_EQ(render_pass->quad_list.size(), 1U);
   EXPECT_EQ(
-      SolidColorDrawQuad::MaterialCast(render_pass->quad_list.front())->color,
+      viz::SolidColorDrawQuad::MaterialCast(render_pass->quad_list.front())
+          ->color,
       test_color);
 }
 
@@ -105,9 +106,9 @@ TEST(SolidColorLayerImplTest, VerifyCorrectOpacityInQuad) {
       render_pass.get(), &data);
 
   ASSERT_EQ(render_pass->quad_list.size(), 1U);
-  EXPECT_EQ(opacity,
-            SolidColorDrawQuad::MaterialCast(render_pass->quad_list.front())
-                ->shared_quad_state->opacity);
+  EXPECT_EQ(opacity, viz::SolidColorDrawQuad::MaterialCast(
+                         render_pass->quad_list.front())
+                         ->shared_quad_state->opacity);
   EXPECT_TRUE(render_pass->quad_list.front()->ShouldDrawWithBlending());
 }
 

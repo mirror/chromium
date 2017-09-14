@@ -380,7 +380,7 @@ class CCSerializationPerfTest : public testing::Test {
           arbitrary_bool1, arbitrary_bool1, arbitrary_float3,
           arbitrary_blend_mode3, arbitrary_context_id3);
       for (uint32_t j = 0; j < 5; ++j) {
-        SolidColorDrawQuad* solidcolor_in =
+        viz::SolidColorDrawQuad* solidcolor_in =
             pass_in->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
         solidcolor_in->SetAll(shared_state3_in, arbitrary_rect3,
                               arbitrary_rect2_inside_rect3, arbitrary_bool1,
@@ -406,7 +406,7 @@ class CCSerializationPerfTest : public testing::Test {
           render_pass->CreateAndAppendSharedQuadState();
         const gfx::Rect bounds(100, 100, 100, 100);
         const bool kForceAntiAliasingOff = true;
-        SolidColorDrawQuad* quad =
+        viz::SolidColorDrawQuad* quad =
             render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
         quad->SetNew(render_pass->shared_quad_state_list.back(), bounds, bounds,
                      SK_ColorRED, kForceAntiAliasingOff);

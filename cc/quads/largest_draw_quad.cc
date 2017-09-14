@@ -11,12 +11,12 @@
 #include "cc/quads/debug_border_draw_quad.h"
 #include "cc/quads/picture_draw_quad.h"
 #include "cc/quads/render_pass_draw_quad.h"
-#include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/stream_video_draw_quad.h"
-#include "cc/quads/surface_draw_quad.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/quads/tile_draw_quad.h"
-#include "cc/quads/yuv_video_draw_quad.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
+#include "components/viz/common/quads/stream_video_draw_quad.h"
+#include "components/viz/common/quads/surface_draw_quad.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
+#include "components/viz/common/quads/yuv_video_draw_quad.h"
 
 namespace {
 
@@ -36,12 +36,12 @@ struct MaxSize<> {
 constexpr size_t kLargestDrawQuadSize = MaxSize<cc::DebugBorderDrawQuad,
                                                 cc::PictureDrawQuad,
                                                 cc::RenderPassDrawQuad,
-                                                cc::SolidColorDrawQuad,
-                                                cc::StreamVideoDrawQuad,
-                                                cc::SurfaceDrawQuad,
-                                                cc::TextureDrawQuad,
+                                                viz::SolidColorDrawQuad,
+                                                viz::StreamVideoDrawQuad,
+                                                viz::SurfaceDrawQuad,
+                                                viz::TextureDrawQuad,
                                                 cc::TileDrawQuad,
-                                                cc::YUVVideoDrawQuad>::value;
+                                                viz::YUVVideoDrawQuad>::value;
 
 template <typename...>
 struct MaxAlign {};
@@ -60,12 +60,12 @@ constexpr size_t kLargestDrawQuadAlignment =
     MaxAlign<cc::DebugBorderDrawQuad,
              cc::PictureDrawQuad,
              cc::RenderPassDrawQuad,
-             cc::SolidColorDrawQuad,
-             cc::StreamVideoDrawQuad,
-             cc::SurfaceDrawQuad,
-             cc::TextureDrawQuad,
+             viz::SolidColorDrawQuad,
+             viz::StreamVideoDrawQuad,
+             viz::SurfaceDrawQuad,
+             viz::TextureDrawQuad,
              cc::TileDrawQuad,
-             cc::YUVVideoDrawQuad>::value;
+             viz::YUVVideoDrawQuad>::value;
 
 }  // namespace
 

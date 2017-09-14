@@ -24,9 +24,6 @@
 #include "cc/output/overlay_strategy_underlay_cast.h"
 #include "cc/quads/render_pass.h"
 #include "cc/quads/render_pass_draw_quad.h"
-#include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/stream_video_draw_quad.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/resources/display_resource_provider.h"
 #include "cc/resources/layer_tree_resource_provider.h"
 #include "cc/test/fake_output_surface_client.h"
@@ -35,6 +32,9 @@
 #include "cc/test/test_context_provider.h"
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "cc/test/test_web_graphics_context_3d.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
+#include "components/viz/common/quads/stream_video_draw_quad.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
 #include "components/viz/common/quads/texture_mailbox.h"
 #include "components/viz/service/display/gl_renderer.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -297,18 +297,18 @@ viz::ResourceId CreateResource(
   return parent_resource_id;
 }
 
-SolidColorDrawQuad* CreateSolidColorQuadAt(
+viz::SolidColorDrawQuad* CreateSolidColorQuadAt(
     const SharedQuadState* shared_quad_state,
     SkColor color,
     RenderPass* render_pass,
     const gfx::Rect& rect) {
-  SolidColorDrawQuad* quad =
-      render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  viz::SolidColorDrawQuad* quad =
+      render_pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   quad->SetNew(shared_quad_state, rect, rect, color, false);
   return quad;
 }
 
-TextureDrawQuad* CreateCandidateQuadAt(
+viz::TextureDrawQuad* CreateCandidateQuadAt(
     DisplayResourceProvider* parent_resource_provider,
     LayerTreeResourceProvider* child_resource_provider,
     const SharedQuadState* shared_quad_state,
@@ -325,8 +325,8 @@ TextureDrawQuad* CreateCandidateQuadAt(
       CreateResource(parent_resource_provider, child_resource_provider,
                      resource_size_in_pixels, is_overlay_candidate);
 
-  TextureDrawQuad* overlay_quad =
-      render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
+  auto* overlay_quad =
+      render_pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
   overlay_quad->SetNew(shared_quad_state, rect, rect, needs_blending,
                        resource_id, premultiplied_alpha, kUVTopLeft,
                        kUVBottomRight, SK_ColorTRANSPARENT, vertex_opacity,
@@ -336,7 +336,7 @@ TextureDrawQuad* CreateCandidateQuadAt(
   return overlay_quad;
 }
 
-TextureDrawQuad* CreateTransparentCandidateQuadAt(
+viz::TextureDrawQuad* CreateTransparentCandidateQuadAt(
     DisplayResourceProvider* parent_resource_provider,
     LayerTreeResourceProvider* child_resource_provider,
 
@@ -354,8 +354,8 @@ TextureDrawQuad* CreateTransparentCandidateQuadAt(
       CreateResource(parent_resource_provider, child_resource_provider,
                      resource_size_in_pixels, is_overlay_candidate);
 
-  TextureDrawQuad* overlay_quad =
-      render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
+  auto* overlay_quad =
+      render_pass->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
   overlay_quad->SetNew(shared_quad_state, rect, rect, needs_blending,
                        resource_id, premultiplied_alpha, kUVTopLeft,
                        kUVBottomRight, SK_ColorTRANSPARENT, vertex_opacity,
@@ -365,7 +365,7 @@ TextureDrawQuad* CreateTransparentCandidateQuadAt(
   return overlay_quad;
 }
 
-StreamVideoDrawQuad* CreateCandidateVideoQuadAt(
+viz::StreamVideoDrawQuad* CreateCandidateVideoQuadAt(
     DisplayResourceProvider* parent_resource_provider,
     LayerTreeResourceProvider* child_resource_provider,
     const SharedQuadState* shared_quad_state,
@@ -379,15 +379,15 @@ StreamVideoDrawQuad* CreateCandidateVideoQuadAt(
       CreateResource(parent_resource_provider, child_resource_provider,
                      resource_size_in_pixels, is_overlay_candidate);
 
-  StreamVideoDrawQuad* overlay_quad =
-      render_pass->CreateAndAppendDrawQuad<StreamVideoDrawQuad>();
+  auto* overlay_quad =
+      render_pass->CreateAndAppendDrawQuad<viz::StreamVideoDrawQuad>();
   overlay_quad->SetNew(shared_quad_state, rect, rect, needs_blending,
                        resource_id, resource_size_in_pixels, transform);
 
   return overlay_quad;
 }
 
-TextureDrawQuad* CreateFullscreenCandidateQuad(
+viz::TextureDrawQuad* CreateFullscreenCandidateQuad(
     DisplayResourceProvider* parent_resource_provider,
     LayerTreeResourceProvider* child_resource_provider,
     const SharedQuadState* shared_quad_state,
@@ -397,7 +397,7 @@ TextureDrawQuad* CreateFullscreenCandidateQuad(
                                render_pass, render_pass->output_rect);
 }
 
-StreamVideoDrawQuad* CreateFullscreenCandidateVideoQuad(
+viz::StreamVideoDrawQuad* CreateFullscreenCandidateVideoQuad(
     DisplayResourceProvider* parent_resource_provider,
     LayerTreeResourceProvider* child_resource_provider,
     const SharedQuadState* shared_quad_state,
@@ -408,7 +408,7 @@ StreamVideoDrawQuad* CreateFullscreenCandidateVideoQuad(
       render_pass, render_pass->output_rect, transform);
 }
 
-YUVVideoDrawQuad* CreateFullscreenCandidateYUVVideoQuad(
+viz::YUVVideoDrawQuad* CreateFullscreenCandidateYUVVideoQuad(
     DisplayResourceProvider* parent_resource_provider,
     LayerTreeResourceProvider* child_resource_provider,
     const SharedQuadState* shared_quad_state,
@@ -422,12 +422,12 @@ YUVVideoDrawQuad* CreateFullscreenCandidateYUVVideoQuad(
       CreateResource(parent_resource_provider, child_resource_provider,
                      resource_size_in_pixels, is_overlay_candidate);
 
-  YUVVideoDrawQuad* overlay_quad =
-      render_pass->CreateAndAppendDrawQuad<YUVVideoDrawQuad>();
+  auto* overlay_quad =
+      render_pass->CreateAndAppendDrawQuad<viz::YUVVideoDrawQuad>();
   overlay_quad->SetNew(shared_quad_state, rect, rect, needs_blending,
                        tex_coord_rect, tex_coord_rect, resource_size_in_pixels,
                        resource_size_in_pixels, resource_id, resource_id,
-                       resource_id, resource_id, YUVVideoDrawQuad::REC_601,
+                       resource_id, resource_id, viz::YUVVideoDrawQuad::REC_601,
                        gfx::ColorSpace(), 0, 1.0, 8);
 
   return overlay_quad;
@@ -437,8 +437,8 @@ void CreateOpaqueQuadAt(ResourceProvider* resource_provider,
                         const SharedQuadState* shared_quad_state,
                         RenderPass* render_pass,
                         const gfx::Rect& rect) {
-  SolidColorDrawQuad* color_quad =
-      render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  auto* color_quad =
+      render_pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   color_quad->SetNew(shared_quad_state, rect, rect, SK_ColorBLACK, false);
 }
 
@@ -448,8 +448,8 @@ void CreateOpaqueQuadAt(ResourceProvider* resource_provider,
                         const gfx::Rect& rect,
                         SkColor color) {
   DCHECK_EQ(255u, SkColorGetA(color));
-  SolidColorDrawQuad* color_quad =
-      render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  auto* color_quad =
+      render_pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   color_quad->SetNew(shared_quad_state, rect, rect, color, false);
 }
 
@@ -567,7 +567,7 @@ TEST(OverlayTest, OverlaysProcessorHasStrategy) {
 TEST_F(FullscreenOverlayTest, SuccessfulOverlay) {
   std::unique_ptr<RenderPass> pass = CreateRenderPass();
   gfx::Rect output_rect = pass->output_rect;
-  TextureDrawQuad* original_quad = CreateFullscreenCandidateQuad(
+  viz::TextureDrawQuad* original_quad = CreateFullscreenCandidateQuad(
       resource_provider_.get(), child_resource_provider_.get(),
       pass->shared_quad_state_list.back(), pass.get());
   unsigned original_resource_id = original_quad->resource_id();
@@ -628,7 +628,7 @@ TEST_F(FullscreenOverlayTest, AlphaFail) {
 
 TEST_F(FullscreenOverlayTest, ResourceSizeInPixelsFail) {
   std::unique_ptr<RenderPass> pass = CreateRenderPass();
-  TextureDrawQuad* original_quad = CreateFullscreenCandidateQuad(
+  viz::TextureDrawQuad* original_quad = CreateFullscreenCandidateQuad(
       resource_provider_.get(), child_resource_provider_.get(),
       pass->shared_quad_state_list.back(), pass.get());
   original_quad->set_resource_size_in_pixels(gfx::Size(64, 64));
@@ -742,7 +742,7 @@ TEST_F(FullscreenOverlayTest, RemoveFullscreenQuadFromQuadList) {
 
 TEST_F(SingleOverlayOnTopTest, SuccessfulOverlay) {
   std::unique_ptr<RenderPass> pass = CreateRenderPass();
-  TextureDrawQuad* original_quad = CreateFullscreenCandidateQuad(
+  viz::TextureDrawQuad* original_quad = CreateFullscreenCandidateQuad(
       resource_provider_.get(), child_resource_provider_.get(),
       pass->shared_quad_state_list.back(), pass.get());
   unsigned original_resource_id = original_quad->resource_id();
@@ -791,7 +791,7 @@ TEST_F(SingleOverlayOnTopTest, PrioritizeBiggerOne) {
 
   // Add a bigger quad below the previous one, but not occluded.
   const auto kBigCandidateRect = gfx::Rect(20, 20, 32, 32);
-  TextureDrawQuad* quad_big = CreateCandidateQuadAt(
+  viz::TextureDrawQuad* quad_big = CreateCandidateQuadAt(
       resource_provider_.get(), child_resource_provider_.get(),
       pass->shared_quad_state_list.back(), pass.get(), kBigCandidateRect);
   output_surface_->GetOverlayCandidateValidator()->AddExpectedRect(
@@ -940,7 +940,7 @@ TEST_F(SingleOverlayOnTopTest, MultipleRenderPasses) {
 
 TEST_F(SingleOverlayOnTopTest, AcceptBlending) {
   std::unique_ptr<RenderPass> pass = CreateRenderPass();
-  TextureDrawQuad* quad = CreateFullscreenCandidateQuad(
+  viz::TextureDrawQuad* quad = CreateFullscreenCandidateQuad(
       resource_provider_.get(), child_resource_provider_.get(),
       pass->shared_quad_state_list.back(), pass.get());
   quad->needs_blending = true;
@@ -964,7 +964,7 @@ TEST_F(SingleOverlayOnTopTest, AcceptBlending) {
 
 TEST_F(SingleOverlayOnTopTest, RejectBackgroundColor) {
   std::unique_ptr<RenderPass> pass = CreateRenderPass();
-  TextureDrawQuad* quad = CreateFullscreenCandidateQuad(
+  viz::TextureDrawQuad* quad = CreateFullscreenCandidateQuad(
       resource_provider_.get(), child_resource_provider_.get(),
       pass->shared_quad_state_list.back(), pass.get());
   quad->background_color = SK_ColorBLACK;
@@ -1457,8 +1457,8 @@ TEST_F(UnderlayTest, OverlayLayerUnderMainLayer) {
   EXPECT_EQ(2U, main_pass->quad_list.size());
   // The overlay quad should have changed to a SOLID_COLOR quad.
   EXPECT_EQ(main_pass->quad_list.back()->material, viz::DrawQuad::SOLID_COLOR);
-  SolidColorDrawQuad* quad =
-      static_cast<SolidColorDrawQuad*>(main_pass->quad_list.back());
+  auto* quad =
+      static_cast<viz::SolidColorDrawQuad*>(main_pass->quad_list.back());
   EXPECT_EQ(quad->rect, quad->visible_rect);
   EXPECT_EQ(false, quad->needs_blending);
   EXPECT_EQ(SK_ColorTRANSPARENT, quad->color);
@@ -1487,8 +1487,8 @@ TEST_F(UnderlayTest, AllowOnTop) {
   EXPECT_EQ(-1, candidate_list[0].plane_z_order);
   // The overlay quad should have changed to a SOLID_COLOR quad.
   EXPECT_EQ(main_pass->quad_list.front()->material, viz::DrawQuad::SOLID_COLOR);
-  SolidColorDrawQuad* quad =
-      static_cast<SolidColorDrawQuad*>(main_pass->quad_list.front());
+  auto* quad =
+      static_cast<viz::SolidColorDrawQuad*>(main_pass->quad_list.front());
   EXPECT_EQ(quad->rect, quad->visible_rect);
   EXPECT_EQ(false, quad->needs_blending);
   EXPECT_EQ(SK_ColorTRANSPARENT, quad->color);
@@ -2042,7 +2042,7 @@ TEST_P(DCLayerOverlayTest, AllowRequiredNonAxisAlignedTransform) {
   feature_list.InitAndEnableFeature(
       features::kDirectCompositionNonrootOverlays);
   std::unique_ptr<RenderPass> pass = CreateRenderPass();
-  YUVVideoDrawQuad* yuv_quad = CreateFullscreenCandidateYUVVideoQuad(
+  viz::YUVVideoDrawQuad* yuv_quad = CreateFullscreenCandidateYUVVideoQuad(
       resource_provider_.get(), child_resource_provider_.get(),
       pass->shared_quad_state_list.back(), pass.get());
   yuv_quad->require_overlay = true;
@@ -2172,7 +2172,7 @@ TEST_P(DCLayerOverlayTest, MultiplePassDamageRect) {
     RenderPassId child_pass_id(5);
     std::unique_ptr<RenderPass> pass1 = CreateRenderPass();
     pass1->id = child_pass_id;
-    YUVVideoDrawQuad* yuv_quad = CreateFullscreenCandidateYUVVideoQuad(
+    viz::YUVVideoDrawQuad* yuv_quad = CreateFullscreenCandidateYUVVideoQuad(
         resource_provider_.get(), child_resource_provider_.get(),
         pass1->shared_quad_state_list.back(), pass1.get());
     yuv_quad->require_overlay = true;

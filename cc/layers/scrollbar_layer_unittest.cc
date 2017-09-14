@@ -17,7 +17,6 @@
 #include "cc/layers/scrollbar_layer_interface.h"
 #include "cc/layers/solid_color_scrollbar_layer.h"
 #include "cc/layers/solid_color_scrollbar_layer_impl.h"
-#include "cc/quads/solid_color_draw_quad.h"
 #include "cc/resources/ui_resource_manager.h"
 #include "cc/test/fake_impl_task_runner_provider.h"
 #include "cc/test/fake_layer_tree_host.h"
@@ -40,6 +39,7 @@
 #include "cc/trees/scroll_node.h"
 #include "cc/trees/single_thread_proxy.h"
 #include "cc/trees/tree_synchronizer.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 

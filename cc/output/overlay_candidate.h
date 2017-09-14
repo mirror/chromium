@@ -22,12 +22,15 @@ namespace gfx {
 class Rect;
 }
 
+namespace viz {
+class StreamVideoDrawQuad;
+class TextureDrawQuad;
+}  // namespace viz
+
 namespace cc {
 
 class DisplayResourceProvider;
 class DrawQuad;
-class StreamVideoDrawQuad;
-class TextureDrawQuad;
 class TileDrawQuad;
 
 class CC_EXPORT OverlayCandidate {
@@ -104,13 +107,13 @@ class CC_EXPORT OverlayCandidate {
                                    bool y_flipped,
                                    OverlayCandidate* candidate);
   static bool FromTextureQuad(DisplayResourceProvider* resource_provider,
-                              const TextureDrawQuad* quad,
+                              const viz::TextureDrawQuad* quad,
                               OverlayCandidate* candidate);
   static bool FromTileQuad(DisplayResourceProvider* resource_provider,
                            const TileDrawQuad* quad,
                            OverlayCandidate* candidate);
   static bool FromStreamVideoQuad(DisplayResourceProvider* resource_provider,
-                                  const StreamVideoDrawQuad* quad,
+                                  const viz::StreamVideoDrawQuad* quad,
                                   OverlayCandidate* candidate);
 };
 

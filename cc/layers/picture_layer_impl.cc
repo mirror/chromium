@@ -22,13 +22,13 @@
 #include "cc/layers/solid_color_layer_impl.h"
 #include "cc/quads/debug_border_draw_quad.h"
 #include "cc/quads/picture_draw_quad.h"
-#include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/tile_draw_quad.h"
 #include "cc/tiles/tile_manager.h"
 #include "cc/tiles/tiling_set_raster_queue_all.h"
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/occlusion.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
 #include "components/viz/common/traced_value.h"
 #include "ui/gfx/geometry/quad_f.h"
 #include "ui/gfx/geometry/rect_conversions.h"
@@ -386,8 +386,8 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
               shared_quad_state->opacity;
           if (mask_type_ == Layer::LayerMaskType::MULTI_TEXTURE_MASK ||
               alpha >= std::numeric_limits<float>::epsilon()) {
-            SolidColorDrawQuad* quad =
-                render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+            auto* quad =
+                render_pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
             quad->SetNew(shared_quad_state, geometry_rect,
                          visible_geometry_rect, draw_info.solid_color(), false);
             ValidateQuadResources(quad);
@@ -407,8 +407,8 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
         // Fill the whole tile with the missing tile color.
         color = DebugColors::OOMTileBorderColor();
       }
-      SolidColorDrawQuad* quad =
-          render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+      auto* quad =
+          render_pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
       quad->SetNew(shared_quad_state, geometry_rect, visible_geometry_rect,
                    color, false);
       ValidateQuadResources(quad);

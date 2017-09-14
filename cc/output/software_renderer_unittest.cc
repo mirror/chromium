@@ -13,7 +13,6 @@
 #include "cc/output/software_output_device.h"
 #include "cc/quads/render_pass.h"
 #include "cc/quads/render_pass_draw_quad.h"
-#include "cc/quads/solid_color_draw_quad.h"
 #include "cc/quads/tile_draw_quad.h"
 #include "cc/test/animation_test_common.h"
 #include "cc/test/fake_output_surface.h"
@@ -24,6 +23,7 @@
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "components/viz/common/quads/copy_output_request.h"
 #include "components/viz/common/quads/copy_output_result.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkCanvas.h"
@@ -111,13 +111,13 @@ TEST_F(SoftwareRendererTest, SolidColorQuad) {
   shared_quad_state->SetAll(gfx::Transform(), outer_rect, outer_rect,
                             outer_rect, false, true, 1.0, SkBlendMode::kSrcOver,
                             0);
-  SolidColorDrawQuad* inner_quad =
-      root_render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  auto* inner_quad =
+      root_render_pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   inner_quad->SetNew(
       shared_quad_state, inner_rect, inner_rect, SK_ColorCYAN, false);
   inner_quad->visible_rect = visible_rect;
-  SolidColorDrawQuad* outer_quad =
-      root_render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  auto* outer_quad =
+      root_render_pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   outer_quad->SetNew(
       shared_quad_state, outer_rect, outer_rect, SK_ColorYELLOW, false);
 

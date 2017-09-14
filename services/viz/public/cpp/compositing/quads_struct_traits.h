@@ -10,12 +10,12 @@
 #include "cc/quads/debug_border_draw_quad.h"
 #include "cc/quads/picture_draw_quad.h"
 #include "cc/quads/render_pass_draw_quad.h"
-#include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/stream_video_draw_quad.h"
-#include "cc/quads/surface_draw_quad.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/quads/tile_draw_quad.h"
-#include "cc/quads/yuv_video_draw_quad.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
+#include "components/viz/common/quads/stream_video_draw_quad.h"
+#include "components/viz/common/quads/surface_draw_quad.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
+#include "components/viz/common/quads/yuv_video_draw_quad.h"
 #include "services/viz/public/cpp/compositing/filter_operation_struct_traits.h"
 #include "services/viz/public/cpp/compositing/filter_operations_struct_traits.h"
 #include "services/viz/public/cpp/compositing/shared_quad_state_struct_traits.h"
@@ -190,14 +190,14 @@ struct StructTraits<viz::mojom::RenderPassQuadStateDataView, viz::DrawQuad> {
 template <>
 struct StructTraits<viz::mojom::SolidColorQuadStateDataView, viz::DrawQuad> {
   static uint32_t color(const viz::DrawQuad& input) {
-    const cc::SolidColorDrawQuad* quad =
-        cc::SolidColorDrawQuad::MaterialCast(&input);
+    const viz::SolidColorDrawQuad* quad =
+        viz::SolidColorDrawQuad::MaterialCast(&input);
     return quad->color;
   }
 
   static bool force_anti_aliasing_off(const viz::DrawQuad& input) {
-    const cc::SolidColorDrawQuad* quad =
-        cc::SolidColorDrawQuad::MaterialCast(&input);
+    const viz::SolidColorDrawQuad* quad =
+        viz::SolidColorDrawQuad::MaterialCast(&input);
     return quad->force_anti_aliasing_off;
   }
 
@@ -208,21 +208,21 @@ struct StructTraits<viz::mojom::SolidColorQuadStateDataView, viz::DrawQuad> {
 template <>
 struct StructTraits<viz::mojom::StreamVideoQuadStateDataView, viz::DrawQuad> {
   static uint32_t resource_id(const viz::DrawQuad& input) {
-    const cc::StreamVideoDrawQuad* quad =
-        cc::StreamVideoDrawQuad::MaterialCast(&input);
-    return quad->resources.ids[cc::StreamVideoDrawQuad::kResourceIdIndex];
+    const viz::StreamVideoDrawQuad* quad =
+        viz::StreamVideoDrawQuad::MaterialCast(&input);
+    return quad->resources.ids[viz::StreamVideoDrawQuad::kResourceIdIndex];
   }
 
   static const gfx::Size& resource_size_in_pixels(const viz::DrawQuad& input) {
-    const cc::StreamVideoDrawQuad* quad =
-        cc::StreamVideoDrawQuad::MaterialCast(&input);
+    const viz::StreamVideoDrawQuad* quad =
+        viz::StreamVideoDrawQuad::MaterialCast(&input);
     return quad->overlay_resources
-        .size_in_pixels[cc::StreamVideoDrawQuad::kResourceIdIndex];
+        .size_in_pixels[viz::StreamVideoDrawQuad::kResourceIdIndex];
   }
 
   static const gfx::Transform& matrix(const viz::DrawQuad& input) {
-    const cc::StreamVideoDrawQuad* quad =
-        cc::StreamVideoDrawQuad::MaterialCast(&input);
+    const viz::StreamVideoDrawQuad* quad =
+        viz::StreamVideoDrawQuad::MaterialCast(&input);
     return quad->matrix;
   }
 
@@ -231,22 +231,24 @@ struct StructTraits<viz::mojom::StreamVideoQuadStateDataView, viz::DrawQuad> {
 };
 
 template <>
-struct EnumTraits<viz::mojom::SurfaceDrawQuadType, cc::SurfaceDrawQuadType> {
+struct EnumTraits<viz::mojom::SurfaceDrawQuadType, viz::SurfaceDrawQuadType> {
   static viz::mojom::SurfaceDrawQuadType ToMojom(
-      cc::SurfaceDrawQuadType surface_draw_quad_type);
+      viz::SurfaceDrawQuadType surface_draw_quad_type);
   static bool FromMojom(viz::mojom::SurfaceDrawQuadType input,
-                        cc::SurfaceDrawQuadType* out);
+                        viz::SurfaceDrawQuadType* out);
 };
 template <>
 struct StructTraits<viz::mojom::SurfaceQuadStateDataView, viz::DrawQuad> {
   static const viz::SurfaceId& surface(const viz::DrawQuad& input) {
-    const cc::SurfaceDrawQuad* quad = cc::SurfaceDrawQuad::MaterialCast(&input);
+    const viz::SurfaceDrawQuad* quad =
+        viz::SurfaceDrawQuad::MaterialCast(&input);
     return quad->surface_id;
   }
 
-  static cc::SurfaceDrawQuadType surface_draw_quad_type(
+  static viz::SurfaceDrawQuadType surface_draw_quad_type(
       const viz::DrawQuad& input) {
-    const cc::SurfaceDrawQuad* quad = cc::SurfaceDrawQuad::MaterialCast(&input);
+    const viz::SurfaceDrawQuad* quad =
+        viz::SurfaceDrawQuad::MaterialCast(&input);
     return quad->surface_draw_quad_type;
   }
 
@@ -257,52 +259,62 @@ struct StructTraits<viz::mojom::SurfaceQuadStateDataView, viz::DrawQuad> {
 template <>
 struct StructTraits<viz::mojom::TextureQuadStateDataView, viz::DrawQuad> {
   static uint32_t resource_id(const viz::DrawQuad& input) {
-    const cc::TextureDrawQuad* quad = cc::TextureDrawQuad::MaterialCast(&input);
+    const viz::TextureDrawQuad* quad =
+        viz::TextureDrawQuad::MaterialCast(&input);
     return quad->resource_id();
   }
 
   static const gfx::Size& resource_size_in_pixels(const viz::DrawQuad& input) {
-    const cc::TextureDrawQuad* quad = cc::TextureDrawQuad::MaterialCast(&input);
+    const viz::TextureDrawQuad* quad =
+        viz::TextureDrawQuad::MaterialCast(&input);
     return quad->resource_size_in_pixels();
   }
 
   static bool premultiplied_alpha(const viz::DrawQuad& input) {
-    const cc::TextureDrawQuad* quad = cc::TextureDrawQuad::MaterialCast(&input);
+    const viz::TextureDrawQuad* quad =
+        viz::TextureDrawQuad::MaterialCast(&input);
     return quad->premultiplied_alpha;
   }
 
   static const gfx::PointF& uv_top_left(const viz::DrawQuad& input) {
-    const cc::TextureDrawQuad* quad = cc::TextureDrawQuad::MaterialCast(&input);
+    const viz::TextureDrawQuad* quad =
+        viz::TextureDrawQuad::MaterialCast(&input);
     return quad->uv_top_left;
   }
 
   static const gfx::PointF& uv_bottom_right(const viz::DrawQuad& input) {
-    const cc::TextureDrawQuad* quad = cc::TextureDrawQuad::MaterialCast(&input);
+    const viz::TextureDrawQuad* quad =
+        viz::TextureDrawQuad::MaterialCast(&input);
     return quad->uv_bottom_right;
   }
 
   static uint32_t background_color(const viz::DrawQuad& input) {
-    const cc::TextureDrawQuad* quad = cc::TextureDrawQuad::MaterialCast(&input);
+    const viz::TextureDrawQuad* quad =
+        viz::TextureDrawQuad::MaterialCast(&input);
     return quad->background_color;
   }
 
   static base::span<const float> vertex_opacity(const viz::DrawQuad& input) {
-    const cc::TextureDrawQuad* quad = cc::TextureDrawQuad::MaterialCast(&input);
+    const viz::TextureDrawQuad* quad =
+        viz::TextureDrawQuad::MaterialCast(&input);
     return quad->vertex_opacity;
   }
 
   static bool y_flipped(const viz::DrawQuad& input) {
-    const cc::TextureDrawQuad* quad = cc::TextureDrawQuad::MaterialCast(&input);
+    const viz::TextureDrawQuad* quad =
+        viz::TextureDrawQuad::MaterialCast(&input);
     return quad->y_flipped;
   }
 
   static bool nearest_neighbor(const viz::DrawQuad& input) {
-    const cc::TextureDrawQuad* quad = cc::TextureDrawQuad::MaterialCast(&input);
+    const viz::TextureDrawQuad* quad =
+        viz::TextureDrawQuad::MaterialCast(&input);
     return quad->nearest_neighbor;
   }
 
   static bool secure_output_only(const viz::DrawQuad& input) {
-    const cc::TextureDrawQuad* quad = cc::TextureDrawQuad::MaterialCast(&input);
+    const viz::TextureDrawQuad* quad =
+        viz::TextureDrawQuad::MaterialCast(&input);
     return quad->secure_output_only;
   }
 
@@ -341,95 +353,96 @@ struct StructTraits<viz::mojom::TileQuadStateDataView, viz::DrawQuad> {
 };
 
 template <>
-struct EnumTraits<viz::mojom::YUVColorSpace, cc::YUVVideoDrawQuad::ColorSpace> {
+struct EnumTraits<viz::mojom::YUVColorSpace,
+                  viz::YUVVideoDrawQuad::ColorSpace> {
   static viz::mojom::YUVColorSpace ToMojom(
-      cc::YUVVideoDrawQuad::ColorSpace color_space);
+      viz::YUVVideoDrawQuad::ColorSpace color_space);
   static bool FromMojom(viz::mojom::YUVColorSpace input,
-                        cc::YUVVideoDrawQuad::ColorSpace* out);
+                        viz::YUVVideoDrawQuad::ColorSpace* out);
 };
 
 template <>
 struct StructTraits<viz::mojom::YUVVideoQuadStateDataView, viz::DrawQuad> {
   static const gfx::RectF& ya_tex_coord_rect(const viz::DrawQuad& input) {
-    const cc::YUVVideoDrawQuad* quad =
-        cc::YUVVideoDrawQuad::MaterialCast(&input);
+    const viz::YUVVideoDrawQuad* quad =
+        viz::YUVVideoDrawQuad::MaterialCast(&input);
     return quad->ya_tex_coord_rect;
   }
 
   static const gfx::RectF& uv_tex_coord_rect(const viz::DrawQuad& input) {
-    const cc::YUVVideoDrawQuad* quad =
-        cc::YUVVideoDrawQuad::MaterialCast(&input);
+    const viz::YUVVideoDrawQuad* quad =
+        viz::YUVVideoDrawQuad::MaterialCast(&input);
     return quad->uv_tex_coord_rect;
   }
 
   static const gfx::Size& ya_tex_size(const viz::DrawQuad& input) {
-    const cc::YUVVideoDrawQuad* quad =
-        cc::YUVVideoDrawQuad::MaterialCast(&input);
+    const viz::YUVVideoDrawQuad* quad =
+        viz::YUVVideoDrawQuad::MaterialCast(&input);
     return quad->ya_tex_size;
   }
 
   static const gfx::Size& uv_tex_size(const viz::DrawQuad& input) {
-    const cc::YUVVideoDrawQuad* quad =
-        cc::YUVVideoDrawQuad::MaterialCast(&input);
+    const viz::YUVVideoDrawQuad* quad =
+        viz::YUVVideoDrawQuad::MaterialCast(&input);
     return quad->uv_tex_size;
   }
 
   static uint32_t y_plane_resource_id(const viz::DrawQuad& input) {
-    const cc::YUVVideoDrawQuad* quad =
-        cc::YUVVideoDrawQuad::MaterialCast(&input);
+    const viz::YUVVideoDrawQuad* quad =
+        viz::YUVVideoDrawQuad::MaterialCast(&input);
     return quad->y_plane_resource_id();
   }
 
   static uint32_t u_plane_resource_id(const viz::DrawQuad& input) {
-    const cc::YUVVideoDrawQuad* quad =
-        cc::YUVVideoDrawQuad::MaterialCast(&input);
+    const viz::YUVVideoDrawQuad* quad =
+        viz::YUVVideoDrawQuad::MaterialCast(&input);
     return quad->u_plane_resource_id();
   }
 
   static uint32_t v_plane_resource_id(const viz::DrawQuad& input) {
-    const cc::YUVVideoDrawQuad* quad =
-        cc::YUVVideoDrawQuad::MaterialCast(&input);
+    const viz::YUVVideoDrawQuad* quad =
+        viz::YUVVideoDrawQuad::MaterialCast(&input);
     return quad->v_plane_resource_id();
   }
 
   static uint32_t a_plane_resource_id(const viz::DrawQuad& input) {
-    const cc::YUVVideoDrawQuad* quad =
-        cc::YUVVideoDrawQuad::MaterialCast(&input);
+    const viz::YUVVideoDrawQuad* quad =
+        viz::YUVVideoDrawQuad::MaterialCast(&input);
     return quad->a_plane_resource_id();
   }
 
-  static cc::YUVVideoDrawQuad::ColorSpace color_space(
+  static viz::YUVVideoDrawQuad::ColorSpace color_space(
       const viz::DrawQuad& input) {
-    const cc::YUVVideoDrawQuad* quad =
-        cc::YUVVideoDrawQuad::MaterialCast(&input);
+    const viz::YUVVideoDrawQuad* quad =
+        viz::YUVVideoDrawQuad::MaterialCast(&input);
     return quad->color_space;
   }
 
   static float resource_offset(const viz::DrawQuad& input) {
-    const cc::YUVVideoDrawQuad* quad =
-        cc::YUVVideoDrawQuad::MaterialCast(&input);
+    const viz::YUVVideoDrawQuad* quad =
+        viz::YUVVideoDrawQuad::MaterialCast(&input);
     return quad->resource_offset;
   }
 
   static float resource_multiplier(const viz::DrawQuad& input) {
-    const cc::YUVVideoDrawQuad* quad =
-        cc::YUVVideoDrawQuad::MaterialCast(&input);
+    const viz::YUVVideoDrawQuad* quad =
+        viz::YUVVideoDrawQuad::MaterialCast(&input);
     return quad->resource_multiplier;
   }
 
   static uint32_t bits_per_channel(const viz::DrawQuad& input) {
-    const cc::YUVVideoDrawQuad* quad =
-        cc::YUVVideoDrawQuad::MaterialCast(&input);
+    const viz::YUVVideoDrawQuad* quad =
+        viz::YUVVideoDrawQuad::MaterialCast(&input);
     return quad->bits_per_channel;
   }
   static gfx::ColorSpace video_color_space(const viz::DrawQuad& input) {
-    const cc::YUVVideoDrawQuad* quad =
-        cc::YUVVideoDrawQuad::MaterialCast(&input);
+    const viz::YUVVideoDrawQuad* quad =
+        viz::YUVVideoDrawQuad::MaterialCast(&input);
     return quad->video_color_space;
   }
   static bool require_overlay(const viz::DrawQuad& input) {
-    const cc::YUVVideoDrawQuad* quad =
-        cc::YUVVideoDrawQuad::MaterialCast(&input);
+    const viz::YUVVideoDrawQuad* quad =
+        viz::YUVVideoDrawQuad::MaterialCast(&input);
     return quad->require_overlay;
   }
 

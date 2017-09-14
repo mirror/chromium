@@ -17,13 +17,13 @@
 #include "cc/output/compositor_frame.h"
 #include "cc/quads/render_pass.h"
 #include "cc/quads/render_pass_draw_quad.h"
-#include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/surface_draw_quad.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/resources/display_resource_provider.h"
 #include "cc/test/fake_resource_provider.h"
 #include "cc/test/render_pass_test_utils.h"
 #include "cc/test/test_shared_bitmap_manager.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
+#include "components/viz/common/quads/surface_draw_quad.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
 #include "components/viz/common/resources/shared_bitmap_manager.h"
 #include "components/viz/common/surfaces/local_surface_id_allocator.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
@@ -202,8 +202,7 @@ class SurfaceAggregatorTest : public testing::Test {
       case DrawQuad::SOLID_COLOR: {
         ASSERT_EQ(DrawQuad::SOLID_COLOR, quad->material);
 
-        const auto* solid_color_quad =
-            cc::SolidColorDrawQuad::MaterialCast(quad);
+        const auto* solid_color_quad = SolidColorDrawQuad::MaterialCast(quad);
 
         EXPECT_EQ(expected_quad.color, solid_color_quad->color);
         break;
@@ -265,23 +264,21 @@ class SurfaceAggregatorTest : public testing::Test {
         layer_to_target_transform, gfx::Rect(layer_bounds), visible_layer_rect,
         clip_rect, is_clipped, are_contents_opaque, opacity, blend_mode, 0);
 
-    cc::SurfaceDrawQuad* surface_quad =
-        pass->CreateAndAppendDrawQuad<cc::SurfaceDrawQuad>();
-    cc::SurfaceDrawQuad* fallback_surface_quad = nullptr;
+    SurfaceDrawQuad* surface_quad =
+        pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
+    SurfaceDrawQuad* fallback_surface_quad = nullptr;
     if (fallback_surface_id.is_valid())
-      fallback_surface_quad =
-          pass->CreateAndAppendDrawQuad<cc::SurfaceDrawQuad>();
+      fallback_surface_quad = pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
 
     gfx::Rect quad_rect = gfx::Rect(surface_size);
     surface_quad->SetNew(pass->shared_quad_state_list.back(), quad_rect,
                          quad_rect, primary_surface_id,
-                         cc::SurfaceDrawQuadType::PRIMARY,
-                         fallback_surface_quad);
+                         SurfaceDrawQuadType::PRIMARY, fallback_surface_quad);
 
     if (fallback_surface_quad) {
       fallback_surface_quad->SetNew(pass->shared_quad_state_list.back(),
                                     quad_rect, quad_rect, fallback_surface_id,
-                                    cc::SurfaceDrawQuadType::FALLBACK, nullptr);
+                                    SurfaceDrawQuadType::FALLBACK, nullptr);
     }
   }
 
@@ -1254,7 +1251,7 @@ void AddSolidColorQuadWithBlendMode(const gfx::Size& size,
               clip_rect, is_clipped, are_contents_opaque, opacity, blend_mode,
               0);
 
-  auto* color_quad = pass->CreateAndAppendDrawQuad<cc::SolidColorDrawQuad>();
+  auto* color_quad = pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
   color_quad->SetNew(pass->shared_quad_state_list.back(), visible_layer_rect,
                      visible_layer_rect, color, force_anti_aliasing_off);
 }
@@ -1331,11 +1328,11 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, AggregateSharedQuadStateProperties) {
   AddSolidColorQuadWithBlendMode(SurfaceSize(), child_one_pass.get(),
                                  blend_modes[1]);
   auto* grandchild_surface_quad =
-      child_one_pass->CreateAndAppendDrawQuad<cc::SurfaceDrawQuad>();
+      child_one_pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
   grandchild_surface_quad->SetNew(
       child_one_pass->shared_quad_state_list.back(), gfx::Rect(SurfaceSize()),
       gfx::Rect(SurfaceSize()), grandchild_surface_id,
-      cc::SurfaceDrawQuadType::PRIMARY, nullptr);
+      SurfaceDrawQuadType::PRIMARY, nullptr);
   AddSolidColorQuadWithBlendMode(SurfaceSize(), child_one_pass.get(),
                                  blend_modes[3]);
   QueuePassAsFrame(std::move(child_one_pass), child_one_local_surface_id,
@@ -1360,19 +1357,19 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, AggregateSharedQuadStateProperties) {
   AddSolidColorQuadWithBlendMode(SurfaceSize(), root_pass.get(),
                                  blend_modes[0]);
   auto* child_one_surface_quad =
-      root_pass->CreateAndAppendDrawQuad<cc::SurfaceDrawQuad>();
+      root_pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
   child_one_surface_quad->SetNew(root_pass->shared_quad_state_list.back(),
                                  gfx::Rect(SurfaceSize()),
                                  gfx::Rect(SurfaceSize()), child_one_surface_id,
-                                 cc::SurfaceDrawQuadType::PRIMARY, nullptr);
+                                 SurfaceDrawQuadType::PRIMARY, nullptr);
   AddSolidColorQuadWithBlendMode(SurfaceSize(), root_pass.get(),
                                  blend_modes[4]);
   auto* child_two_surface_quad =
-      root_pass->CreateAndAppendDrawQuad<cc::SurfaceDrawQuad>();
+      root_pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
   child_two_surface_quad->SetNew(root_pass->shared_quad_state_list.back(),
                                  gfx::Rect(SurfaceSize()),
                                  gfx::Rect(SurfaceSize()), child_two_surface_id,
-                                 cc::SurfaceDrawQuadType::PRIMARY, nullptr);
+                                 SurfaceDrawQuadType::PRIMARY, nullptr);
   AddSolidColorQuadWithBlendMode(SurfaceSize(), root_pass.get(),
                                  blend_modes[6]);
 
@@ -2193,9 +2190,9 @@ void SubmitCompositorFrameWithResources(ResourceId* resource_ids,
   auto* sqs = pass->CreateAndAppendSharedQuadState();
   sqs->opacity = 1.f;
   if (child_id.is_valid()) {
-    auto* surface_quad = pass->CreateAndAppendDrawQuad<cc::SurfaceDrawQuad>();
+    auto* surface_quad = pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
     surface_quad->SetNew(sqs, gfx::Rect(0, 0, 1, 1), gfx::Rect(0, 0, 1, 1),
-                         child_id, cc::SurfaceDrawQuadType::PRIMARY, nullptr);
+                         child_id, SurfaceDrawQuadType::PRIMARY, nullptr);
   }
 
   for (size_t i = 0u; i < num_resource_ids; ++i) {
@@ -2204,7 +2201,7 @@ void SubmitCompositorFrameWithResources(ResourceId* resource_ids,
     // ResourceProvider is software, so only software resources are valid.
     resource.is_software = valid;
     frame.resource_list.push_back(resource);
-    auto* quad = pass->CreateAndAppendDrawQuad<cc::TextureDrawQuad>();
+    auto* quad = pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
     const gfx::Rect rect;
     const gfx::Rect visible_rect;
     bool needs_blending = false;
@@ -2457,11 +2454,10 @@ TEST_F(SurfaceAggregatorWithResourcesTest, SecureOutputTexture) {
     pass->SetNew(1, gfx::Rect(0, 0, 20, 20), gfx::Rect(), gfx::Transform());
     auto* sqs = pass->CreateAndAppendSharedQuadState();
     sqs->opacity = 1.f;
-    auto* surface_quad = pass->CreateAndAppendDrawQuad<cc::SurfaceDrawQuad>();
+    auto* surface_quad = pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
 
     surface_quad->SetNew(sqs, gfx::Rect(0, 0, 1, 1), gfx::Rect(0, 0, 1, 1),
-                         surface1_id, cc::SurfaceDrawQuadType::PRIMARY,
-                         nullptr);
+                         surface1_id, SurfaceDrawQuadType::PRIMARY, nullptr);
     pass->copy_requests.push_back(CopyOutputRequest::CreateStubForTesting());
 
     cc::CompositorFrame frame = test::MakeEmptyCompositorFrame();

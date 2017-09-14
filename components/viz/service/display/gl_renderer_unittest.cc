@@ -18,7 +18,6 @@
 #include "cc/output/overlay_strategy_single_on_top.h"
 #include "cc/output/overlay_strategy_underlay.h"
 #include "cc/output/texture_mailbox_deleter.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/resources/resource_provider.h"
 #include "cc/test/fake_impl_task_runner_provider.h"
 #include "cc/test/fake_layer_tree_host_impl.h"
@@ -33,6 +32,7 @@
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/quads/copy_output_request.h"
 #include "components/viz/common/quads/copy_output_result.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/context_support.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -1993,8 +1993,8 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
   bool nearest_neighbor = false;
   float vertex_opacity[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 
-  cc::TextureDrawQuad* overlay_quad =
-      root_pass->CreateAndAppendDrawQuad<cc::TextureDrawQuad>();
+  TextureDrawQuad* overlay_quad =
+      root_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
   overlay_quad->SetNew(
       root_pass->CreateAndAppendSharedQuadState(), gfx::Rect(viewport_size),
       gfx::Rect(viewport_size), needs_blending, parent_resource_id,
@@ -2019,7 +2019,7 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
                     gfx::Transform(), cc::FilterOperations());
   root_pass->has_transparent_background = false;
 
-  overlay_quad = root_pass->CreateAndAppendDrawQuad<cc::TextureDrawQuad>();
+  overlay_quad = root_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
   overlay_quad->SetNew(
       root_pass->CreateAndAppendSharedQuadState(), gfx::Rect(viewport_size),
       gfx::Rect(viewport_size), needs_blending, parent_resource_id,
@@ -2041,7 +2041,7 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
                     gfx::Transform(), cc::FilterOperations());
   root_pass->has_transparent_background = false;
 
-  overlay_quad = root_pass->CreateAndAppendDrawQuad<cc::TextureDrawQuad>();
+  overlay_quad = root_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
   overlay_quad->SetNew(
       root_pass->CreateAndAppendSharedQuadState(), gfx::Rect(viewport_size),
       gfx::Rect(viewport_size), needs_blending, parent_resource_id,
@@ -2185,8 +2185,8 @@ TEST_F(GLRendererTest, OverlaySyncTokensAreProcessed) {
   gfx::PointF uv_top_left(0, 0);
   gfx::PointF uv_bottom_right(1, 1);
 
-  cc::TextureDrawQuad* overlay_quad =
-      root_pass->CreateAndAppendDrawQuad<cc::TextureDrawQuad>();
+  TextureDrawQuad* overlay_quad =
+      root_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
   SharedQuadState* shared_state = root_pass->CreateAndAppendSharedQuadState();
   shared_state->SetAll(gfx::Transform(), gfx::Rect(viewport_size),
                        gfx::Rect(viewport_size), gfx::Rect(viewport_size),
@@ -2422,12 +2422,12 @@ TEST_F(GLRendererTest, DCLayerOverlaySwitch) {
           root_pass->CreateAndAppendSharedQuadState();
       shared_state->SetAll(gfx::Transform(), rect, rect, rect, false, false, 1,
                            SkBlendMode::kSrcOver, 0);
-      cc::YUVVideoDrawQuad* quad =
-          root_pass->CreateAndAppendDrawQuad<cc::YUVVideoDrawQuad>();
+      YUVVideoDrawQuad* quad =
+          root_pass->CreateAndAppendDrawQuad<YUVVideoDrawQuad>();
       quad->SetNew(shared_state, rect, rect, needs_blending, tex_coord_rect,
                    tex_coord_rect, rect.size(), rect.size(), parent_resource_id,
                    parent_resource_id, parent_resource_id, parent_resource_id,
-                   cc::YUVVideoDrawQuad::REC_601, gfx::ColorSpace(), 0, 1.0, 8);
+                   YUVVideoDrawQuad::REC_601, gfx::ColorSpace(), 0, 1.0, 8);
     }
 
     // A bunch of initialization that happens.

@@ -11,7 +11,7 @@
 #include "base/memory/ptr_util.h"
 #include "cc/cc_export.h"
 #include "cc/layers/layer_impl.h"
-#include "cc/quads/surface_draw_quad.h"
+#include "components/viz/common/quads/surface_draw_quad.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "components/viz/common/surfaces/surface_info.h"
 
@@ -52,9 +52,9 @@ class CC_EXPORT SurfaceLayerImpl : public LayerImpl {
   SurfaceLayerImpl(LayerTreeImpl* tree_impl, int id);
 
  private:
-  SurfaceDrawQuad* CreateSurfaceDrawQuad(
+  viz::SurfaceDrawQuad* CreateSurfaceDrawQuad(
       RenderPass* render_pass,
-      SurfaceDrawQuadType surface_draw_quad_type,
+      viz::SurfaceDrawQuadType surface_draw_quad_type,
       const viz::SurfaceInfo& surface_info,
       viz::SharedQuadState** common_shared_quad_state);
 

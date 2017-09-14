@@ -19,12 +19,12 @@
 #include "cc/base/math_util.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/quads/render_pass_draw_quad.h"
-#include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/surface_draw_quad.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/resources/display_resource_provider.h"
 #include "components/viz/common/quads/draw_quad.h"
 #include "components/viz/common/quads/shared_quad_state.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
+#include "components/viz/common/quads/surface_draw_quad.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support.h"
 #include "components/viz/service/surfaces/surface.h"
 #include "components/viz/service/surfaces/surface_client.h"
@@ -185,7 +185,7 @@ void SurfaceAggregator::UnrefResources(
 }
 
 void SurfaceAggregator::HandleSurfaceQuad(
-    const cc::SurfaceDrawQuad* surface_quad,
+    const SurfaceDrawQuad* surface_quad,
     const gfx::Transform& target_transform,
     const ClipData& clip_rect,
     cc::RenderPass* dest_pass,
@@ -461,15 +461,14 @@ void SurfaceAggregator::CopyQuadsToPass(
 
   for (auto* quad : source_quad_list) {
     if (quad->material == DrawQuad::SURFACE_CONTENT) {
-      const auto* surface_quad = cc::SurfaceDrawQuad::MaterialCast(quad);
+      const auto* surface_quad = SurfaceDrawQuad::MaterialCast(quad);
       // HandleSurfaceQuad may add other shared quad state, so reset the
       // current data.
       last_copied_source_shared_quad_state = nullptr;
 
       // The primary SurfaceDrawQuad should have already dealt with the fallback
       // DrawQuad.
-      if (surface_quad->surface_draw_quad_type ==
-          cc::SurfaceDrawQuadType::FALLBACK)
+      if (surface_quad->surface_draw_quad_type == SurfaceDrawQuadType::FALLBACK)
         continue;
 
       HandleSurfaceQuad(surface_quad, target_transform, clip_rect, dest_pass,
@@ -511,11 +510,11 @@ void SurfaceAggregator::CopyQuadsToPass(
         dest_quad = dest_pass->CopyFromAndAppendRenderPassDrawQuad(
             pass_quad, remapped_pass_id);
       } else if (quad->material == DrawQuad::TEXTURE_CONTENT) {
-        const auto* texture_quad = cc::TextureDrawQuad::MaterialCast(quad);
+        const auto* texture_quad = TextureDrawQuad::MaterialCast(quad);
         if (texture_quad->secure_output_only &&
             (!output_is_secure_ || copy_request_passes_.count(dest_pass->id))) {
           auto* solid_color_quad =
-              dest_pass->CreateAndAppendDrawQuad<cc::SolidColorDrawQuad>();
+              dest_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
           solid_color_quad->SetNew(dest_pass->shared_quad_state_list.back(),
                                    quad->rect, quad->visible_rect,
                                    SK_ColorBLACK, false);
@@ -721,7 +720,7 @@ gfx::Rect SurfaceAggregator::PrewalkTree(const SurfaceId& surface_id,
                                !!moved_pixel_passes_.count(remapped_pass_id);
     for (auto* quad : render_pass->quad_list) {
       if (quad->material == DrawQuad::SURFACE_CONTENT) {
-        const auto* surface_quad = cc::SurfaceDrawQuad::MaterialCast(quad);
+        const auto* surface_quad = SurfaceDrawQuad::MaterialCast(quad);
         gfx::Transform target_to_surface_transform(
             render_pass->transform_to_root_target,
             surface_quad->shared_quad_state->quad_to_target_transform);

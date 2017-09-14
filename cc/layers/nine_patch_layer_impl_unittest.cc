@@ -6,7 +6,6 @@
 
 #include "cc/layers/append_quads_data.h"
 #include "cc/layers/nine_patch_layer_impl.h"
-#include "cc/quads/texture_draw_quad.h"
 #include "cc/resources/ui_resource_bitmap.h"
 #include "cc/resources/ui_resource_client.h"
 #include "cc/test/fake_impl_task_runner_provider.h"
@@ -15,6 +14,7 @@
 #include "cc/test/geometry_test_utils.h"
 #include "cc/test/layer_test_common.h"
 #include "cc/trees/single_thread_proxy.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/geometry/rect_conversions.h"
@@ -100,7 +100,8 @@ void NinePatchLayerLayoutTest(const gfx::Size& bitmap_size,
   gfx::Rect bitmap_rect(bitmap_size);
   Region tex_remaining(bitmap_rect);
   for (auto* quad : quads) {
-    const TextureDrawQuad* tex_quad = TextureDrawQuad::MaterialCast(quad);
+    const viz::TextureDrawQuad* tex_quad =
+        viz::TextureDrawQuad::MaterialCast(quad);
     gfx::RectF tex_rect =
         gfx::BoundingRect(tex_quad->uv_top_left, tex_quad->uv_bottom_right);
     tex_rect.Scale(bitmap_size.width(), bitmap_size.height());
@@ -206,7 +207,8 @@ void NinePatchLayerLayoutTestWithOcclusion(const gfx::Size& bitmap_size,
   gfx::Rect bitmap_rect(bitmap_size);
   Region tex_remaining(bitmap_rect);
   for (auto* quad : quads) {
-    const TextureDrawQuad* tex_quad = TextureDrawQuad::MaterialCast(quad);
+    const viz::TextureDrawQuad* tex_quad =
+        viz::TextureDrawQuad::MaterialCast(quad);
     gfx::RectF tex_rect =
         gfx::BoundingRect(tex_quad->uv_top_left, tex_quad->uv_bottom_right);
     tex_rect.Scale(bitmap_size.width(), bitmap_size.height());

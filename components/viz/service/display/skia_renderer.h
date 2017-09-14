@@ -19,12 +19,13 @@ class OutputSurface;
 class PictureDrawQuad;
 class RenderPassDrawQuad;
 class ResourceProvider;
-class SolidColorDrawQuad;
 class TextureDrawQuad;
 class TileDrawQuad;
 }  // namespace cc
 
 namespace viz {
+class SolidColorDrawQuad;
+
 class VIZ_SERVICE_EXPORT SkiaRenderer : public cc::DirectRenderer {
  public:
   SkiaRenderer(const RendererSettings* settings,
@@ -68,8 +69,8 @@ class VIZ_SERVICE_EXPORT SkiaRenderer : public cc::DirectRenderer {
   void DrawDebugBorderQuad(const cc::DebugBorderDrawQuad* quad);
   void DrawPictureQuad(const cc::PictureDrawQuad* quad);
   void DrawRenderPassQuad(const cc::RenderPassDrawQuad* quad);
-  void DrawSolidColorQuad(const cc::SolidColorDrawQuad* quad);
-  void DrawTextureQuad(const cc::TextureDrawQuad* quad);
+  void DrawSolidColorQuad(const SolidColorDrawQuad* quad);
+  void DrawTextureQuad(const TextureDrawQuad* quad);
   void DrawTileQuad(const cc::TileDrawQuad* quad);
   void DrawUnsupportedQuad(const DrawQuad* quad);
   bool ShouldApplyBackgroundFilters(
