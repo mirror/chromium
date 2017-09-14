@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "736806f1_646a7f24",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-14T21:21:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc951206_911ab18a",
+      "range": {
+        "startLine": 17,
+        "startChar": 7,
+        "endLine": 17,
+        "endChar": 8
+      },
+      "revId": "8817e8a7267320b80689a3c9ec0303f964f5ebed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2501989_9d33d039",
         "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
         "patchSetId": 1
@@ -53,6 +77,24 @@
       "writtenOn": "2017-09-14T20:55:11Z",
       "side": 1,
       "message": "We have a similar method CheckEasyUnlockKeyOps and similar data fields running_easy_unlock_key_ops_, easy_unlock_key_ops_finished_callback_. It is slightly different but I think it is possible to consolidate them into your impl. Can you give it try?",
+      "revId": "8817e8a7267320b80689a3c9ec0303f964f5ebed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911505d4_00b1ff8f",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-14T21:21:03Z",
+      "side": 1,
+      "message": "Refactored bit, to combine both.",
+      "parentUuid": "afddb28b_6a9314ea",
       "revId": "8817e8a7267320b80689a3c9ec0303f964f5ebed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

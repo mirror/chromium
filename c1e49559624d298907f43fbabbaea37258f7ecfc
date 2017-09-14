@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be90e5fd_0f9dacc3",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1687,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-09-14T21:21:03Z",
+      "side": 1,
+      "message": "I left this flag to distinguish the case when AttemptRestart is called before FinalizeProfile",
+      "revId": "c1e49559624d298907f43fbabbaea37258f7ecfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
