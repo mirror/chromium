@@ -70,6 +70,41 @@
     },
     {
       "key": {
+        "uuid": "218f12ff_0c261b42",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-14T02:25:59Z",
+      "side": 1,
+      "message": "I think this is temporary movement for using the method, so at L.135, |reg_host| is putting back to the original place.\n\nHowever, the only call site seems WorkerContextStarted, so I think we can implement this like Taking a registration.\nhttps://cs.chromium.org/chromium/src/content/renderer/service_worker/service_worker_context_client.cc?sq\u003dpackage:chromium\u0026l\u003d777\n\nI\u0027m wondering if we should get one more refcount here. Do we need to keep ControllerState even after GetRegistration()?",
+      "parentUuid": "7fe740f8_807287fb",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc0e7b1c_1859b3bb",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-14T02:25:59Z",
+      "side": 1,
+      "message": "I prefer having a comment to shortly mention this retains the refcount of SWRegistration on the browser.",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1f584f43_6b309e10",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
         "patchSetId": 1
