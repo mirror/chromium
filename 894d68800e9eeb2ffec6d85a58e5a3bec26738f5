@@ -16,6 +16,24 @@
       "revId": "894d68800e9eeb2ffec6d85a58e5a3bec26738f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9face9e5_2866c8ea",
+        "filename": "chrome/browser/android/preferences/pref_service_bridge.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1231235
+      },
+      "writtenOn": "2017-09-14T17:07:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aba43731_7b2d7d92",
+      "revId": "894d68800e9eeb2ffec6d85a58e5a3bec26738f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
