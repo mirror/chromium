@@ -787,6 +787,8 @@ TEST_F(PermissionContextBaseTests, TestDismissVariations) {
 TEST_F(PermissionContextBaseTests, PushMessagingEmbargoEmbargoesNotifications) {
   GURL url("https://www.google.com");
   SetUpUrl(url);
+  base::test::ScopedFeatureList feature_list;
+  feature_list.InitAndEnableFeature(features::kBlockPromptsIfDismissedOften);
   DismissMultipleTimesAndExpectBlock(url, CONTENT_SETTINGS_TYPE_PUSH_MESSAGING,
                                      3);
   PermissionManager* permission_manager = PermissionManager::Get(profile());
