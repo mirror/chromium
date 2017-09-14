@@ -9,7 +9,6 @@
 #include "content/child/service_worker/service_worker_dispatcher.h"
 #include "content/child/service_worker/service_worker_handle_reference.h"
 #include "content/child/service_worker/service_worker_provider_context.h"
-#include "content/child/service_worker/service_worker_registration_handle_reference.h"
 #include "content/child/service_worker/web_service_worker_impl.h"
 #include "content/child/service_worker/web_service_worker_registration_impl.h"
 #include "content/child/thread_safe_sender.h"
@@ -53,19 +52,21 @@ class ServiceWorkerProviderContextTest : public testing::Test {
     dispatcher_.reset(new ServiceWorkerDispatcher(sender_.get(), nullptr));
   }
 
-  void CreateObjectInfoAndVersionAttributes(
+  blink::mojom::ServiceWorkerRegistrationObjectHostAssociatedRequest
+  CreateObjectInfoAndVersionAttributes(
       blink::mojom::ServiceWorkerRegistrationObjectInfoPtr* info,
       ServiceWorkerVersionAttributes* attrs) {
-    *info = blink::mojom::ServiceWorkerRegistrationObjectInfo::New();
-    (*info)->handle_id = 10;
-    (*info)->registration_id = 20;
-
     attrs->active.handle_id = 100;
     attrs->active.version_id = 200;
     attrs->waiting.handle_id = 101;
     attrs->waiting.version_id = 201;
     attrs->installing.handle_id = 102;
     attrs->installing.version_id = 202;
+
+    *info = blink::mojom::ServiceWorkerRegistrationObjectInfo::New();
+    (*info)->handle_id = 10;
+    (*info)->registration_id = 20;
+    return mojo::MakeRequest(&(*info)->host_ptr_info);
   }
 
   ThreadSafeSender* thread_safe_sender() { return sender_.get(); }
@@ -86,10 +87,11 @@ TEST_F(ServiceWorkerProviderContextTest, CreateForController) {
   // references to browser-side registration/worker representations.
   blink::mojom::ServiceWorkerRegistrationObjectInfoPtr registration_info;
   ServiceWorkerVersionAttributes version_attrs;
-  CreateObjectInfoAndVersionAttributes(&registration_info, &version_attrs);
-  std::unique_ptr<ServiceWorkerRegistrationHandleReference> registration =
-      ServiceWorkerRegistrationHandleReference::Adopt(
-          std::move(registration_info), thread_safe_sender());
+  blink::mojom::ServiceWorkerRegistrationObjectHostAssociatedRequest
+      host_request = CreateObjectInfoAndVersionAttributes(&registration_info,
+                                                          &version_attrs);
+  base::RunLoop().RunUntilIdle();
+  ASSERT_TRUE(host_request.is_pending());
   std::unique_ptr<ServiceWorkerHandleReference> installing =
       ServiceWorkerHandleReference::Adopt(version_attrs.installing,
                                           thread_safe_sender());
@@ -107,23 +109,24 @@ TEST_F(ServiceWorkerProviderContextTest, CreateForController) {
       dispatcher(), nullptr /* loader_factory_getter */);
 
   // The passed references should be adopted and owned by the provider context.
-  provider_context->SetRegistration(std::move(registration),
-                                    std::move(installing), std::move(waiting),
-                                    std::move(active));
+  provider_context->SaveRegistrationStartupInfo(
+      std::move(registration_info), std::move(installing), std::move(waiting),
+      std::move(active));
   EXPECT_EQ(0UL, ipc_sink()->message_count());
 
   // Destruction of the provider context should release references to the
   // associated registration and its versions.
   provider_context = nullptr;
-  ASSERT_EQ(4UL, ipc_sink()->message_count());
+  ASSERT_EQ(3UL, ipc_sink()->message_count());
   EXPECT_EQ(ServiceWorkerHostMsg_DecrementServiceWorkerRefCount::ID,
             ipc_sink()->GetMessageAt(0)->type());
   EXPECT_EQ(ServiceWorkerHostMsg_DecrementServiceWorkerRefCount::ID,
             ipc_sink()->GetMessageAt(1)->type());
   EXPECT_EQ(ServiceWorkerHostMsg_DecrementServiceWorkerRefCount::ID,
             ipc_sink()->GetMessageAt(2)->type());
-  EXPECT_EQ(ServiceWorkerHostMsg_DecrementRegistrationRefCount::ID,
-            ipc_sink()->GetMessageAt(3)->type());
+  // Mojo connection got broken.
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(host_request.is_pending());
 }
 
 }  // namespace content

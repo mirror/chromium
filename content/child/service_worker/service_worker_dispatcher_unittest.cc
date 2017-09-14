@@ -53,19 +53,21 @@ class ServiceWorkerDispatcherTest : public testing::Test {
     dispatcher_.reset(new ServiceWorkerDispatcher(sender_.get(), nullptr));
   }
 
-  void CreateObjectInfoAndVersionAttributes(
+  blink::mojom::ServiceWorkerRegistrationObjectHostAssociatedRequest
+  CreateObjectInfoAndVersionAttributes(
       blink::mojom::ServiceWorkerRegistrationObjectInfoPtr* info,
       ServiceWorkerVersionAttributes* attrs) {
-    *info = blink::mojom::ServiceWorkerRegistrationObjectInfo::New();
-    (*info)->handle_id = 10;
-    (*info)->registration_id = 20;
-
     attrs->active.handle_id = 100;
     attrs->active.version_id = 200;
     attrs->waiting.handle_id = 101;
     attrs->waiting.version_id = 201;
     attrs->installing.handle_id = 102;
     attrs->installing.version_id = 202;
+
+    *info = blink::mojom::ServiceWorkerRegistrationObjectInfo::New();
+    (*info)->handle_id = 10;
+    (*info)->registration_id = 20;
+    return mojo::MakeRequest(&(*info)->host_ptr_info);
   }
 
   bool ContainsServiceWorker(int handle_id) {
@@ -340,35 +342,50 @@ TEST_F(ServiceWorkerDispatcherTest, GetServiceWorker) {
 }
 
 TEST_F(ServiceWorkerDispatcherTest, GetOrCreateRegistration) {
-  blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info;
-  ServiceWorkerVersionAttributes attrs;
-  CreateObjectInfoAndVersionAttributes(&info, &attrs);
+  blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info1;
+  ServiceWorkerVersionAttributes attrs1;
+  blink::mojom::ServiceWorkerRegistrationObjectHostAssociatedRequest
+      host_request1 = CreateObjectInfoAndVersionAttributes(&info1, &attrs1);
+  int64_t registration_id1 = info1->registration_id;
+  int32_t handle_id1 = info1->handle_id;
+  base::RunLoop().RunUntilIdle();
+  ASSERT_TRUE(host_request1.is_pending());
 
   // Should return a registration object newly created with incrementing
   // the refcounts.
   scoped_refptr<WebServiceWorkerRegistrationImpl> registration1(
-      dispatcher()->GetOrCreateRegistration(info.Clone(), attrs));
+      dispatcher()->GetOrCreateRegistration(std::move(info1), attrs1));
   EXPECT_TRUE(registration1);
-  EXPECT_TRUE(ContainsRegistration(info->handle_id));
-  EXPECT_EQ(info->registration_id, registration1->RegistrationId());
-  ASSERT_EQ(4UL, ipc_sink()->message_count());
-  EXPECT_EQ(ServiceWorkerHostMsg_IncrementRegistrationRefCount::ID,
+  EXPECT_TRUE(ContainsRegistration(handle_id1));
+  EXPECT_EQ(registration_id1, registration1->RegistrationId());
+  // Mojo connection is valid.
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(host_request1.is_pending());
+  ASSERT_EQ(3UL, ipc_sink()->message_count());
+  EXPECT_EQ(ServiceWorkerHostMsg_IncrementServiceWorkerRefCount::ID,
             ipc_sink()->GetMessageAt(0)->type());
   EXPECT_EQ(ServiceWorkerHostMsg_IncrementServiceWorkerRefCount::ID,
             ipc_sink()->GetMessageAt(1)->type());
   EXPECT_EQ(ServiceWorkerHostMsg_IncrementServiceWorkerRefCount::ID,
             ipc_sink()->GetMessageAt(2)->type());
-  EXPECT_EQ(ServiceWorkerHostMsg_IncrementServiceWorkerRefCount::ID,
-            ipc_sink()->GetMessageAt(3)->type());
 
   ipc_sink()->ClearMessages();
 
+  blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info2;
+  ServiceWorkerVersionAttributes attrs2;
+  blink::mojom::ServiceWorkerRegistrationObjectHostAssociatedRequest
+      host_request2 = CreateObjectInfoAndVersionAttributes(&info2, &attrs2);
+  base::RunLoop().RunUntilIdle();
+  ASSERT_TRUE(host_request2.is_pending());
   // Should return the same registration object without incrementing the
   // refcounts.
   scoped_refptr<WebServiceWorkerRegistrationImpl> registration2(
-      dispatcher()->GetOrCreateRegistration(std::move(info), attrs));
+      dispatcher()->GetOrCreateRegistration(std::move(info2), attrs2));
   EXPECT_TRUE(registration2);
   EXPECT_EQ(registration1, registration2);
+  // Mojo connection got broken.
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(host_request2.is_pending());
   EXPECT_EQ(0UL, ipc_sink()->message_count());
 
   ipc_sink()->ClearMessages();
@@ -376,63 +393,80 @@ TEST_F(ServiceWorkerDispatcherTest, GetOrCreateRegistration) {
   // The registration dtor decrements the refcounts.
   registration1 = nullptr;
   registration2 = nullptr;
-  ASSERT_EQ(4UL, ipc_sink()->message_count());
+  ASSERT_EQ(3UL, ipc_sink()->message_count());
   EXPECT_EQ(ServiceWorkerHostMsg_DecrementServiceWorkerRefCount::ID,
             ipc_sink()->GetMessageAt(0)->type());
   EXPECT_EQ(ServiceWorkerHostMsg_DecrementServiceWorkerRefCount::ID,
             ipc_sink()->GetMessageAt(1)->type());
   EXPECT_EQ(ServiceWorkerHostMsg_DecrementServiceWorkerRefCount::ID,
             ipc_sink()->GetMessageAt(2)->type());
-  EXPECT_EQ(ServiceWorkerHostMsg_DecrementRegistrationRefCount::ID,
-            ipc_sink()->GetMessageAt(3)->type());
+  // Mojo connection got broken.
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(host_request1.is_pending());
 }
 
 TEST_F(ServiceWorkerDispatcherTest, GetOrAdoptRegistration) {
-  blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info;
-  ServiceWorkerVersionAttributes attrs;
-  CreateObjectInfoAndVersionAttributes(&info, &attrs);
+  blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info1;
+  ServiceWorkerVersionAttributes attrs1;
+  blink::mojom::ServiceWorkerRegistrationObjectHostAssociatedRequest
+      host_request1 = CreateObjectInfoAndVersionAttributes(&info1, &attrs1);
+  int64_t registration_id1 = info1->registration_id;
+  int32_t handle_id1 = info1->handle_id;
+  base::RunLoop().RunUntilIdle();
+  ASSERT_TRUE(host_request1.is_pending());
 
   // Should return a registration object newly created with adopting the
   // refcounts.
   scoped_refptr<WebServiceWorkerRegistrationImpl> registration1(
-      dispatcher()->GetOrAdoptRegistration(info.Clone(), attrs));
+      dispatcher()->GetOrCreateRegistration(std::move(info1), attrs1));
   EXPECT_TRUE(registration1);
-  EXPECT_TRUE(ContainsRegistration(info->handle_id));
-  EXPECT_EQ(info->registration_id, registration1->RegistrationId());
+  EXPECT_TRUE(ContainsRegistration(handle_id1));
+  EXPECT_EQ(registration_id1, registration1->RegistrationId());
+  // Mojo connection is valid.
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(host_request1.is_pending());
   EXPECT_EQ(0UL, ipc_sink()->message_count());
 
   ipc_sink()->ClearMessages();
 
+  blink::mojom::ServiceWorkerRegistrationObjectInfoPtr info2;
+  ServiceWorkerVersionAttributes attrs2;
+  blink::mojom::ServiceWorkerRegistrationObjectHostAssociatedRequest
+      host_request2 = CreateObjectInfoAndVersionAttributes(&info2, &attrs2);
+  base::RunLoop().RunUntilIdle();
+  ASSERT_TRUE(host_request2.is_pending());
   // Should return the same registration object without incrementing the
   // refcounts.
   scoped_refptr<WebServiceWorkerRegistrationImpl> registration2(
-      dispatcher()->GetOrAdoptRegistration(std::move(info), attrs));
+      dispatcher()->GetOrCreateRegistration(std::move(info2), attrs2));
   EXPECT_TRUE(registration2);
   EXPECT_EQ(registration1, registration2);
-  ASSERT_EQ(4UL, ipc_sink()->message_count());
+  // Mojo connection got broken.
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(host_request2.is_pending());
+  ASSERT_EQ(3UL, ipc_sink()->message_count());
   EXPECT_EQ(ServiceWorkerHostMsg_DecrementServiceWorkerRefCount::ID,
             ipc_sink()->GetMessageAt(0)->type());
   EXPECT_EQ(ServiceWorkerHostMsg_DecrementServiceWorkerRefCount::ID,
             ipc_sink()->GetMessageAt(1)->type());
   EXPECT_EQ(ServiceWorkerHostMsg_DecrementServiceWorkerRefCount::ID,
             ipc_sink()->GetMessageAt(2)->type());
-  EXPECT_EQ(ServiceWorkerHostMsg_DecrementRegistrationRefCount::ID,
-            ipc_sink()->GetMessageAt(3)->type());
 
   ipc_sink()->ClearMessages();
 
   // The registration dtor decrements the refcounts.
   registration1 = nullptr;
   registration2 = nullptr;
-  ASSERT_EQ(4UL, ipc_sink()->message_count());
+  ASSERT_EQ(3UL, ipc_sink()->message_count());
   EXPECT_EQ(ServiceWorkerHostMsg_DecrementServiceWorkerRefCount::ID,
             ipc_sink()->GetMessageAt(0)->type());
   EXPECT_EQ(ServiceWorkerHostMsg_DecrementServiceWorkerRefCount::ID,
             ipc_sink()->GetMessageAt(1)->type());
   EXPECT_EQ(ServiceWorkerHostMsg_DecrementServiceWorkerRefCount::ID,
             ipc_sink()->GetMessageAt(2)->type());
-  EXPECT_EQ(ServiceWorkerHostMsg_DecrementRegistrationRefCount::ID,
-            ipc_sink()->GetMessageAt(3)->type());
+  // Mojo connection got broken.
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(host_request1.is_pending());
 }
 
 }  // namespace content
