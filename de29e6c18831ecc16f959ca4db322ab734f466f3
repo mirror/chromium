@@ -246,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "c068c08e_ede59683",
+        "filename": "third_party/android_apk_signature_verifier/java/src/org/chromium/third_party/android/util/apk/ApkSignatureSchemeV2Verifier.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-09-14T13:43:43Z",
+      "side": 1,
+      "message": "SignatureException seems like it fits throughout. Think so?",
+      "parentUuid": "d9a6cc79_23973be9",
+      "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3cd7ecf_59289f3b",
         "filename": "third_party/android_apk_signature_verifier/java/src/org/chromium/third_party/android/util/apk/ApkSignatureSchemeV2Verifier.java",
         "patchSetId": 11
@@ -260,6 +278,24 @@
       "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b24a5411_5d660ac3",
+        "filename": "third_party/android_apk_signature_verifier/java/src/org/chromium/third_party/android/util/apk/ApkSignatureSchemeV2Verifier.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1174129
+      },
+      "writtenOn": "2017-09-14T13:43:43Z",
+      "side": 1,
+      "message": "Yes, replaced.",
+      "parentUuid": "a3cd7ecf_59289f3b",
+      "revId": "de29e6c18831ecc16f959ca4db322ab734f466f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
