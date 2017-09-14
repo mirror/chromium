@@ -2401,7 +2401,6 @@ if (enable_java_templates) {
 
       create_apk(_apk_rule) {
         apk_path = "${_final_apk_path_no_ext}-abi-${android_app_abi}.apk"
-        base_path = "$gen_dir/$_apk_rule"
 
         manifest_outputs = get_target_outputs(":${_manifest_rule}")
         android_manifest = manifest_outputs[1]
