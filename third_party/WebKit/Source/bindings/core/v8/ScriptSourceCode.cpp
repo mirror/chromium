@@ -6,29 +6,56 @@
 
 namespace blink {
 
+namespace {
+
+String TreatNullSourceAsEmpty(const String& source) {
+  // ScriptSourceCode allows for the representation of the null/not-there-really
+  // ScriptSourceCode value.  Encoded by way of a m_source.isNull() being true,
+  // with the nullary constructor to be used to construct such a value.
+  //
+  // Should the other constructors be passed a null string, that is interpreted
+  // as representing the empty script. Consequently, we need to disambiguate
+  // between such null string occurrences.  Do that by converting the latter
+  // case's null strings into empty ones.
+  if (source.IsNull())
+    return "";
+
+  return source;
+}
+
+KURL StripFragmentIdentifier(const KURL& url) {
+  if (url.IsEmpty())
+    return KURL();
+
+  if (!url.HasFragmentIdentifier())
+    return url;
+
+  KURL copy = url;
+  copy.RemoveFragmentIdentifier();
+  return copy;
+}
+
+}  // namespace
+
 ScriptSourceCode::ScriptSourceCode()
     : start_position_(TextPosition::MinimumPosition()) {}
 
 ScriptSourceCode::ScriptSourceCode(const String& source,
                                    const KURL& url,
                                    const TextPosition& start_position)
-    : source_(source), url_(url), start_position_(start_position) {
-  TreatNullSourceAsEmpty();
-  if (!url_.IsEmpty())
-    url_.RemoveFragmentIdentifier();
-}
+    : source_(TreatNullSourceAsEmpty(source)),
+      url_(StripFragmentIdentifier(url)),
+      start_position_(start_position) {}
 
 ScriptSourceCode::ScriptSourceCode(ScriptResource* resource)
     : ScriptSourceCode(nullptr, resource) {}
 
 ScriptSourceCode::ScriptSourceCode(ScriptStreamer* streamer,
                                    ScriptResource* resource)
-    : source_(resource->SourceText()),
+    : source_(TreatNullSourceAsEmpty(resource->SourceText())),
       resource_(resource),
       streamer_(streamer),
-      start_position_(TextPosition::MinimumPosition()) {
-  TreatNullSourceAsEmpty();
-}
+      start_position_(TextPosition::MinimumPosition()) {}
 
 ScriptSourceCode::~ScriptSourceCode() {}
 
@@ -37,13 +64,14 @@ DEFINE_TRACE(ScriptSourceCode) {
   visitor->Trace(streamer_);
 }
 
-const KURL& ScriptSourceCode::Url() const {
-  if (url_.IsEmpty() && resource_) {
-    url_ = resource_->GetResponse().Url();
-    if (!url_.IsEmpty())
-      url_.RemoveFragmentIdentifier();
-  }
-  return url_;
+KURL ScriptSourceCode::Url() const {
+  if (!url_.IsEmpty())
+    return url_;
+
+  if (resource_)
+    return StripFragmentIdentifier(resource_->GetResponse().Url());
+
+  return KURL();
 }
 
 String ScriptSourceCode::SourceMapUrl() const {
@@ -56,19 +84,6 @@ String ScriptSourceCode::SourceMapUrl() const {
     source_map_url = response.HttpHeaderField(HTTPNames::X_SourceMap);
   }
   return source_map_url;
-}
-
-void ScriptSourceCode::TreatNullSourceAsEmpty() {
-  // ScriptSourceCode allows for the representation of the null/not-there-really
-  // ScriptSourceCode value.  Encoded by way of a m_source.isNull() being true,
-  // with the nullary constructor to be used to construct such a value.
-  //
-  // Should the other constructors be passed a null string, that is interpreted
-  // as representing the empty script. Consequently, we need to disambiguate
-  // between such null string occurrences.  Do that by converting the latter
-  // case's null strings into empty ones.
-  if (source_.IsNull())
-    source_ = "";
 }
 
 }  // namespace blink
