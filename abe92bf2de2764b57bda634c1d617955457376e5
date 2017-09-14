@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78a4c397_787189a5",
+        "filename": "build/android/resource_sizes.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-14T17:51:11Z",
+      "side": 1,
+      "message": "Don\u0027t love having to walk the files to find this .ap_ file. Let\u0027s instead change the build to put it in a predictable place. I\u0027m thinking:\n\n$root_gen_dir/arsc/apks/Chrome.ap_\n\nWe\u0027d derive this path via:\n\n_apk_resources_path \u003d get_path_info(\"$root_gen_dir/arsc/\" + rebase_path(_final_apk_path, root_build_dir), \"dir\") + \"/\" + get_path_info(_final_apk_path, \"name\") + \".ap_\"\n\nThen this script we can hardcode to look for them in out_dir/gen/arsc/apks/Chrome.ap_",
+      "revId": "abe92bf2de2764b57bda634c1d617955457376e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
