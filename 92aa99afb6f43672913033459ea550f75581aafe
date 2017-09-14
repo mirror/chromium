@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e718cca1_8059dac8",
+        "filename": "components/safe_browsing/browser/browser_url_loader_throttle.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-14T22:53:11Z",
+      "side": 1,
+      "message": "Done.\n\n(There is also a comment about ignoring |proceed| and |showed_interstitial| in \nsafe_browsing_url_checker_impl.h where the callback signature is defined.)",
+      "parentUuid": "2adf6ed8_9de724a4",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 80
+      },
+      "revId": "92aa99afb6f43672913033459ea550f75581aafe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18c9b070_069a6ba5",
         "filename": "components/safe_browsing/renderer/websocket_sb_handshake_throttle_unittest.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "92aa99afb6f43672913033459ea550f75581aafe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db07ebc_cb9b8fb7",
+        "filename": "components/safe_browsing/renderer/websocket_sb_handshake_throttle_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-14T22:53:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18c9b070_069a6ba5",
+      "range": {
+        "startLine": 135,
+        "startChar": 42,
+        "endLine": 135,
+        "endChar": 49
+      },
+      "revId": "92aa99afb6f43672913033459ea550f75581aafe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
