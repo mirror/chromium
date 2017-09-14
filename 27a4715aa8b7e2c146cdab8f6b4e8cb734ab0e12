@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "629cb449_be6ebba8",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1094,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-14T05:43:45Z",
+      "side": 1,
+      "message": "Why don\u0027t you put this to kRequestContextFavicon: section? Actually we prefer switch statements with no \"default\", relying on the compiler warning for non-exhaustive switch statements.",
+      "range": {
+        "startLine": 1094,
+        "startChar": 13,
+        "endLine": 1094,
+        "endChar": 21
+      },
+      "revId": "27a4715aa8b7e2c146cdab8f6b4e8cb734ab0e12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
