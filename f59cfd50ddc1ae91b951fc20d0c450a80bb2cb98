@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e026cdd9_8d7c79f5",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-14T18:41:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9735bfd_e58d602c",
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d342336_ab28a179",
         "filename": "build/run_swarming_xcode_install.py",
         "patchSetId": 10
@@ -100,6 +118,24 @@
       "writtenOn": "2017-09-14T18:22:51Z",
       "side": 1,
       "message": "Is there some way to check that the previous command succeeded before proceeding?",
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e85bf4_a5a2d411",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-14T18:41:16Z",
+      "side": 1,
+      "message": "We call check_output, it should throw an error on non-zero and fail, no?",
+      "parentUuid": "5d342336_ab28a179",
       "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -123,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "699e939a_90a3467f",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-14T18:41:16Z",
+      "side": 1,
+      "message": "The goal is to not need this by Xcode 10 and move to CIPD.  This is our backup solution, used to roll to Xcode 9 earlier this week.  Updated comment with more information",
+      "parentUuid": "896a7ea1_c1aac396",
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc366772_fad6a109",
         "filename": "build/run_swarming_xcode_install.py",
         "patchSetId": 10
@@ -137,6 +191,24 @@
       "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52510235_3f5d379c",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-14T18:41:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc366772_fad6a109",
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "5042a0e2_0c03e97c",
+        "filename": "build/swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-14T18:41:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eed8bbb3_612e0793",
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a69d412c_f6c49e9e",
         "filename": "build/swarming_xcode_install.py",
         "patchSetId": 10
@@ -221,6 +311,30 @@
       "writtenOn": "2017-09-14T18:22:51Z",
       "side": 1,
       "message": "This constant is implicitly related to the run_swarming_xcode_install swarming dimension xcode version\u003d9.0 constant. Is there some way we can make this relationship explicit? Maybe all of these constants should be in a single file, and should be passed as arguments to this file?",
+      "range": {
+        "startLine": 21,
+        "startChar": 13,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "333dc3df_d9de3031",
+        "filename": "build/swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-14T18:41:16Z",
+      "side": 1,
+      "message": "I expect this script to be run once a year in the summer -- if not replaced by CIPD.  Next year the dimensions will likely be different, since we will target machines dba@ says are used by iOS, not just machines that have Xcode 9 installed.  I\u0027ll comment the other file noting that dimension is wrong and needs updating.",
+      "parentUuid": "a69d412c_f6c49e9e",
       "range": {
         "startLine": 21,
         "startChar": 13,
@@ -291,6 +405,30 @@
     },
     {
       "key": {
+        "uuid": "0b7a94cc_b68cd14f",
+        "filename": "build/swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-14T18:41:16Z",
+      "side": 1,
+      "message": "I think run_on_bots will show return codes.",
+      "parentUuid": "93aa8c73_82c1100c",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 16
+      },
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e7c2bd98_aaed34ae",
         "filename": "build/swarming_xcode_install.py",
         "patchSetId": 10
@@ -302,6 +440,24 @@
       "writtenOn": "2017-09-14T18:22:51Z",
       "side": 1,
       "message": "should this function have a return argument that we check here, and do something with?",
+      "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed223c55_4d72e2b6",
+        "filename": "build/swarming_xcode_install.py",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-14T18:41:16Z",
+      "side": 1,
+      "message": "I don\u0027t think so, we do the same thing in the mac_toolchain usage.",
+      "parentUuid": "e7c2bd98_aaed34ae",
       "revId": "f59cfd50ddc1ae91b951fc20d0c450a80bb2cb98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
