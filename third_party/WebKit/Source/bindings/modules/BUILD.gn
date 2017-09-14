@@ -200,3 +200,9 @@ source_set("generated") {
     "//v8",
   ]
 }
+
+generate_web_idl_container("core_web_idl_container") {
+  sources = modules_definition_idl_files + modules_dependency_idl_files
+  output = "WebIdlContainerForModules.pickle"
+  output_dir = bindings_modules_output_dir
+}
