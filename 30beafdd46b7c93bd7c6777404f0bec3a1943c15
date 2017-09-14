@@ -50,6 +50,47 @@
       "revId": "30beafdd46b7c93bd7c6777404f0bec3a1943c15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58469fdb_8e6e5788",
+        "filename": "chromeos/dbus/cryptohome_client.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-14T10:16:50Z",
+      "side": 1,
+      "message": "Recently, we landed CL:652047 which added a new callback type DBusCallback which uses base::Optional instead of DBusMethodCallStatus.\nCould you try using that?",
+      "parentUuid": "725a680b_975dff0c",
+      "revId": "30beafdd46b7c93bd7c6777404f0bec3a1943c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7743fd3_701712fa",
+        "filename": "chromeos/dbus/fake_cryptohome_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-14T10:16:50Z",
+      "side": 1,
+      "message": "This is not needed as we are already in CryptohomeClient\u0027s scope (i.e. FakeCryptohomeClient is a CryptohomeClient).",
+      "range": {
+        "startLine": 576,
+        "startChar": 32,
+        "endLine": 576,
+        "endChar": 50
+      },
+      "revId": "30beafdd46b7c93bd7c6777404f0bec3a1943c15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
