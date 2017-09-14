@@ -27,10 +27,11 @@ shared_library("port_monitor_dll") {
     ":lib",
     ":resources",
     "//base",
-    "//chrome/common:constants",
+    "//chrome/common:static_switches",
     "//chrome/common:version_header",
     "//cloud_print/common",
     "//cloud_print/virtual_driver/win",
+    "//content/public/common:constants",
   ]
 
   libs = [ "userenv.lib" ]
