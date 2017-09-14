@@ -10,6 +10,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/optional.h"
 #include "media/base/android/android_overlay.h"
+#include "media/base/overlay_info.h"
 #include "media/gpu/media_gpu_export.h"
 #include "ui/gfx/geometry/rect.h"
 
@@ -23,14 +24,8 @@ class MEDIA_GPU_EXPORT AndroidVideoSurfaceChooser {
     // Is an overlay required?
     bool is_required = false;
 
-    // Is the player currently in fullscreen?
-    bool is_fullscreen = false;
-
     // Should the overlay be marked as secure?
     bool is_secure = false;
-
-    // Is the player's frame hidden / closed?
-    bool is_frame_hidden = false;
 
     // Is the compositor willing to promote this?
     bool is_compositor_promotable = false;
@@ -60,16 +55,13 @@ class MEDIA_GPU_EXPORT AndroidVideoSurfaceChooser {
   // either synchronously or post one very soon.  |initial_factory| can be
   // an empty callback to indicate "no factory".
   virtual void Initialize(UseOverlayCB use_overlay_cb,
-                          UseSurfaceTextureCB use_surface_texture_cb,
-                          AndroidOverlayFactoryCB initial_factory,
-                          const State& initial_state) = 0;
+                          UseSurfaceTextureCB use_surface_texture_cb) = 0;
 
   // Notify us that a new factory has arrived and / or other state is available.
   // |*new_factory| may be an is_null() callback to indicate that the most
   // recent factory has been revoked.  |!new_factory.has_value()| results in no
   // change to the factory.
-  virtual void UpdateState(base::Optional<AndroidOverlayFactoryCB> new_factory,
-                           const State& new_state) = 0;
+  virtual void UpdateState(const State& state, OverlayInfo overlay_info) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(AndroidVideoSurfaceChooser);
