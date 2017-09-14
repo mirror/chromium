@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02c7c77c_cabcad75",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-14T01:20:23Z",
+      "side": 1,
+      "message": "I\u0027m not sure if a local const should be kFooBar or foo_bar style, but I\u0027m sure they should be consistent :). Please make these the same style. The foo_bar style seems common in this file.",
+      "revId": "782e1083941efc371dbf6403d0b493882399fe47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
