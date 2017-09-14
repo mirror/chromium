@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f74606b4_c7387eff",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-14T15:43:02Z",
+      "side": 1,
+      "message": "Colin: do you remember what was the issue with ChromeOS? Do they never load the tokens or something like that? See also the comment in account_reconcilor.cc.",
+      "parentUuid": "75c6ddc6_de01d38b",
+      "range": {
+        "startLine": 216,
+        "startChar": 18,
+        "endLine": 216,
+        "endChar": 29
+      },
+      "revId": "8174d875dbe74718ed0c6d9cbc26e7e5bd84816e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a53283e_eac5dc8c",
         "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
         "patchSetId": 7
