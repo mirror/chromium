@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a48f86c_ddff33d3",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-14T17:09:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bacdbcf_e7317015",
+      "revId": "bc31c6c109016c9c1a7139ea8ad74db65775c390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3bfa15e_292cf1fa",
         "filename": "chrome/browser/ui/webui/chromeos/network_element_localized_strings_provider.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-08T16:14:41Z",
       "side": 1,
       "message": "TODO: I don\u0027t think I actually need this since the new UI is in cr_components, not cr_elements.",
+      "revId": "bc31c6c109016c9c1a7139ea8ad74db65775c390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ecc460_9c4990e3",
+        "filename": "chrome/browser/ui/webui/chromeos/network_element_localized_strings_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-14T17:09:31Z",
+      "side": 1,
+      "message": "Actually this is fine; this is included in Settings and internet_detail_dialog; I was thinking of CrOncStrings.",
+      "parentUuid": "f3bfa15e_292cf1fa",
       "revId": "bc31c6c109016c9c1a7139ea8ad74db65775c390",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
