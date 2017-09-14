@@ -265,6 +265,24 @@
       "revId": "eba65e5dd9f1d69f9c24ece6d6167679eacff0e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba2e455f_f2bf18b1",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-14T08:27:12Z",
+      "side": 1,
+      "message": "if it does not compile, how about replacing the return at line 1067 with break, and move the return to the end of this function?",
+      "parentUuid": "1a5ce40d_369b5262",
+      "revId": "eba65e5dd9f1d69f9c24ece6d6167679eacff0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
