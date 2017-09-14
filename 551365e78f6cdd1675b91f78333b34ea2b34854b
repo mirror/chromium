@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a89c0c57_dae90aa8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-14T16:14:55Z",
+      "side": 1,
+      "message": "For merges, usually you don\u0027t need to wait for the reviewer. You can just add [Merge to M-62] in front of the title, and TBR\u003d\u003creviewer\u003e instead of R\u003d\u003creviewer\u003e.\n\n+1 it, start review, run git cl land.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 60
+      },
+      "revId": "551365e78f6cdd1675b91f78333b34ea2b34854b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
