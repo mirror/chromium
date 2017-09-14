@@ -199,4 +199,8 @@ void WorkerThreadDispatcher::RemoveWorkerData(
   }
 }
 
+EventBookkeeper* WorkerThreadDispatcher::GetEventBookkeeper() {
+  return &event_bookkeeper_;
+}
+
 }  // namespace extensions
