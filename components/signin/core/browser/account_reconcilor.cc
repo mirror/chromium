@@ -425,6 +425,22 @@ void AccountReconcilor::FinishReconcile() {
       are_primaries_equal = (first_account == gaia_accounts_[0].id);
   }
 
+  // If Sync is disabled, and there is no Gaia cookie, try the last known
+  // account.
+  if (first_account.empty()) {
+    for (const auto& account : chrome_accounts_) {
+      // Only use the cached account if it is actually present in the token
+      // service.
+      if (account == cached_first_account_) {
+        first_account = cached_first_account_;
+        break;
+      }
+    }
+  } else {
+    // Update the cached account.
+    cached_first_account_ = first_account;
+  }
+
   // If there are any accounts in the gaia cookie but not in chrome, then
   // those accounts need to be removed from the cookie.  This means we need
   // to blow the cookie away.
