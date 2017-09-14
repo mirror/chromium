@@ -10,7 +10,7 @@
 #import "ios/chrome/browser/ui/commands/command_dispatcher.h"
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
 #import "ios/chrome/browser/ui/settings/settings_navigation_controller.h"
-#import "ios/clean/chrome/browser/ui/commands/settings_commands.h"
+#import "ios/clean/chrome/browser/ui/settings/settings_commands.h"
 #import "ios/clean/chrome/browser/ui/settings/settings_main_page_coordinator.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -32,15 +32,21 @@ void TraverseCoordinatorHierarchy(BrowserCoordinator* coordinator,
 @interface SettingsCoordinator ()<SettingsNavigationControllerDelegate,
                                   UINavigationControllerDelegate>
 @property(nonatomic, strong) SettingsNavigationController* viewController;
+@property(nonatomic, strong) CommandDispatcher* router;
 @end
 
 @implementation SettingsCoordinator
 @synthesize viewController = _viewController;
+@synthesize router = _router;
 
 #pragma mark - BrowserCoordinator
 
 - (void)start {
   DCHECK(!self.browser->browser_state()->IsOffTheRecord());
+  self.router = [[CommandDispatcher alloc] init];
+  [self.router startDispatchingToTarget:self
+                            forSelector:@selector(dismissSettings)];
+
   SettingsMainPageCoordinator* mainPageCoordinator =
       [[SettingsMainPageCoordinator alloc] init];
   [self addChildCoordinator:mainPageCoordinator];
@@ -55,6 +61,18 @@ void TraverseCoordinatorHierarchy(BrowserCoordinator* coordinator,
   [super start];
 }
 
+- (void)stop {
+  [self.viewController settingsWillBeDismissed];
+  [super stop];
+}
+
+#pragma mark - Settings dismissal
+
+- (void)dismissSettings {
+  [self stop];
+  [self.parentCoordinator removeChildCoordinator:self];
+}
+
 #pragma mark - SettingsNavigationControllerDelegate
 
 - (void)closeSettingsAndOpenNewIncognitoTab {
@@ -64,7 +82,7 @@ void TraverseCoordinatorHierarchy(BrowserCoordinator* coordinator,
 }
 
 - (void)closeSettings {
-  [self.callableDispatcher closeSettings];
+  [static_cast<id<SettingsCommands>>(self.router) dismissSettings];
 }
 
 - (id)dispatcherForSettings {

@@ -6,6 +6,7 @@
 
 #import "ios/clean/chrome/browser/ui/tab_grid/tab_grid_toolbar.h"
 #import "ios/clean/chrome/browser/ui/tab_grid/tab_grid_toolbar_commands.h"
+#import "ios/clean/chrome/browser/ui/tools/tools_menu_commands.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -47,7 +48,8 @@
   [tabGrid didMoveToParentViewController:self];
 }
 
-- (void)setDispatcher:(id<TabGridToolbarCommands>)dispatcher {
+- (void)setDispatcher:
+    (id<TabGridToolbarCommands, ToolsMenuCommands>)dispatcher {
   _dispatcher = dispatcher;
   self.toolbar.dispatcher = dispatcher;
 }

@@ -13,5 +13,6 @@ source_set("presenters") {
 
   deps = [
     "//ios/clean/chrome/browser/ui/commands",
+    "//ios/clean/chrome/browser/ui/tools:tools_commands",
   ]
 }
