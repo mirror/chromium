@@ -30,7 +30,8 @@ class GL_EXPORT GLSurfaceOSMesa : public GLSurface {
               float scale_factor,
               bool has_alpha) override;
   bool IsOffscreen() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResult SwapBuffers(
+      std::vector<ui::LatencyInfo>* latency_info) override;
   gfx::Size GetSize() override;
   void* GetHandle() override;
   GLSurfaceFormat GetFormat() override;
@@ -54,7 +55,8 @@ class GL_EXPORT GLSurfaceOSMesaHeadless : public GLSurfaceOSMesa {
   GLSurfaceOSMesaHeadless();
 
   bool IsOffscreen() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResult SwapBuffers(
+      std::vector<ui::LatencyInfo>* latency_info) override;
 
  protected:
   ~GLSurfaceOSMesaHeadless() override;

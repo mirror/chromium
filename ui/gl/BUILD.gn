@@ -155,6 +155,7 @@ component("gl") {
     "//ui/events/platform",
     "//ui/gfx",
     "//ui/gfx/geometry",
+    "//ui/latency",
   ]
 
   data_deps = []

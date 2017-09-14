@@ -45,7 +45,8 @@ class ImageTransportSurfaceOverlayMac : public gl::GLSurface,
               float scale_factor,
               bool has_alpha) override;
   bool IsOffscreen() override;
-  gfx::SwapResult SwapBuffers() override;
+  gfx::SwapResult SwapBuffers(
+      std::vector<ui::LatencyInfo>* latency_info) override;
   gfx::SwapResult PostSubBuffer(int x, int y, int width, int height) override;
   bool SupportsPostSubBuffer() override;
   gfx::Size GetSize() override;
