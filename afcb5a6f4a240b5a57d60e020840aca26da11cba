@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09397e56_cef934ee",
+        "filename": "content/browser/service_worker/service_worker_dispatcher_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T01:53:02Z",
+      "side": 1,
+      "message": "change to auto + std::make_unique",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0598a565_3f800608",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T01:53:02Z",
+      "side": 1,
+      "message": "I\u0027m not so familiar with BindingSet. Why don\u0027t we need RemoveBinding() somewhere to balance out the AddBinding?",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "518807b5_0c70e7c4",
+        "filename": "content/child/service_worker/service_worker_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T01:53:02Z",
+      "side": 1,
+      "message": "nit: switch to auto + MakeRefCounted (same with line 287)",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe740f8_807287fb",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T01:53:02Z",
+      "side": 1,
+      "message": "Since we\u0027re doing std::move here it seems this function is really Taking a registration, not just Getting one. I.e., you can\u0027t call GetRegistration() multiple times.\n\nI\u0027m not sure we want to do that. Codesearch is not indexing GetRegistration() so I can\u0027t check the callsites now. But if we\u0027re going to Take registration here, we should make that clearer. Also, we\u0027re doing some Clone()ing below which makes it unclaer if we are Gettign or Taking.",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f584f43_6b309e10",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T01:53:02Z",
+      "side": 1,
+      "message": "Say that this interfaces lives on the browser process, it corresponds to one ServiceWorkerRegistration JavaScript object etc. The renderer uses it to ask the browser to do operations needed to implement ServiceWorkerRegistration methods.",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bdef20f_caec0ddc",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T01:53:02Z",
+      "side": 1,
+      "message": "Since the above is SWRegistrationObjectInfo, this should be SWRegistrationObjectHost.\n\nAnother reason is I think eventually we\u0027ll have one interface called ServiceWorkerHost for the running service worker(currently this is \"SWEventDispatcher\") and one called ServiceWorkerObjectHost for hosting the JS ServiceWorker object.",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c92a31_e669376a",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T01:53:02Z",
+      "side": 1,
+      "message": "I dont\u0027 really understand what clone does. It\u0027s cloning the interface or the request?",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
