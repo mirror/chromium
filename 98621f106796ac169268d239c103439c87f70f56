@@ -22,6 +22,30 @@
       "revId": "98621f106796ac169268d239c103439c87f70f56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f6a6387_dccf0e23",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-14T17:03:12Z",
+      "side": 1,
+      "message": "We actually use bitmap more here, e.g. bitmap_data and the name of the class has Bitmap in it. That said, WDYT of flipping the meaning of this to fetched_because_of_page_visit. It\u0027s wordier, but I fear that \u0027bitmap_fetched_on_demand\u0027 doesn\u0027t really convey anything and is easy to misunderstand. I think the meaning of fetched_because_of_page_visit is clearer. WDYT?",
+      "parentUuid": "91c2cb19_f65c9dfd",
+      "range": {
+        "startLine": 79,
+        "startChar": 32,
+        "endLine": 79,
+        "endChar": 0
+      },
+      "revId": "98621f106796ac169268d239c103439c87f70f56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
