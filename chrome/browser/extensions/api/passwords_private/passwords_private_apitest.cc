@@ -89,7 +89,9 @@ class TestDelegate : public PasswordsPrivateDelegate {
   }
 
   void RemoveSavedPassword(const std::string& origin,
-                           const std::string& username) override {
+                           const std::string& username,
+                           const std::string& username_element,
+                           const std::string& password_element) override {
     if (current_entries_.empty())
       return;
 
@@ -111,6 +113,8 @@ class TestDelegate : public PasswordsPrivateDelegate {
 
   void RequestShowPassword(const std::string& origin,
                            const std::string& username,
+                           const std::string& username_element,
+                           const std::string& password_element,
                            content::WebContents* web_contents) override {
     // Return a mocked password value.
     std::string plaintext_password(kPlaintextPassword);

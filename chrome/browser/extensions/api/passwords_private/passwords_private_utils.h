@@ -18,6 +18,11 @@ namespace extensions {
 // well as a URL that is linked to.
 api::passwords_private::UrlCollection CreateUrlCollectionFromForm(
     const autofill::PasswordForm& form);
-}
+
+// Obtains a collection of elements from the passed in form. This includes an
+// form in which the username and password were entered respectively.
+api::passwords_private::ElementCollection CreateElementCollectionFromForm(
+    const autofill::PasswordForm& form);
+}  // namespace extensions
 
 #endif  // CHROME_BROWSER_EXTENSIONS_API_PASSWORDS_PRIVATE_PASSWORDS_PRIVATE_UTILS_H_

@@ -6,6 +6,7 @@
 
 #include <tuple>
 
+#include "base/strings/utf_string_conversions.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/password_manager/core/browser/password_ui_utils.h"
 #include "url/gurl.h"
@@ -21,6 +22,14 @@ api::passwords_private::UrlCollection CreateUrlCollectionFromForm(
   urls.origin = form.signon_realm;
   urls.link = link_url.spec();
   return urls;
+}
+
+api::passwords_private::ElementCollection CreateElementCollectionFromForm(
+    const autofill::PasswordForm& form) {
+  api::passwords_private::ElementCollection elements;
+  elements.username = base::UTF16ToUTF8(form.username_element);
+  elements.password = base::UTF16ToUTF8(form.password_element);
+  return elements;
 }
 
 }  // namespace extensions
