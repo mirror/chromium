@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9ddf9e34_e7f53fe9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-14T09:23:13Z",
+      "side": 1,
+      "message": "Yes. I\u0027ve updated the CL description.",
+      "parentUuid": "78ae29b7_83fea690",
+      "range": {
+        "startLine": 10,
+        "startChar": 43,
+        "endLine": 10,
+        "endChar": 70
+      },
+      "revId": "4e76fbae9847cc644456e7ae2068810dc89a602e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38df3b55_542bd0d3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c6878618_86b5526f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkPromoHeader.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-14T09:23:13Z",
+      "side": 1,
+      "message": "My bad, sorry. Done",
+      "parentUuid": "38df3b55_542bd0d3",
+      "range": {
+        "startLine": 179,
+        "startChar": 8,
+        "endLine": 182,
+        "endChar": 0
+      },
+      "revId": "4e76fbae9847cc644456e7ae2068810dc89a602e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5bc296f_48b29a07",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/DisplayableProfileData.java",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "4e76fbae9847cc644456e7ae2068810dc89a602e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e03cbf45_a523d508",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/DisplayableProfileData.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-14T09:23:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5bc296f_48b29a07",
+      "range": {
+        "startLine": 21,
+        "startChar": 34,
+        "endLine": 21,
+        "endChar": 38
+      },
+      "revId": "4e76fbae9847cc644456e7ae2068810dc89a602e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
