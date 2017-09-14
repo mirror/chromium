@@ -25,7 +25,7 @@ const char kInitialPolicyHeader[] = "initial_header";
 class PolicyHeaderIOHelperTest : public testing::Test {
  public:
   PolicyHeaderIOHelperTest() {
-    task_runner_ = make_scoped_refptr(new base::TestSimpleTaskRunner());
+    task_runner_ = base::WrapRefCounted(new base::TestSimpleTaskRunner());
   }
   ~PolicyHeaderIOHelperTest() override {}
 

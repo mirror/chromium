@@ -23,7 +23,7 @@ void TaskRunnerTestBase::RunAllTasks() {
 }
 
 void TaskRunnerTestBase::SetUp() {
-  task_runner_ = make_scoped_refptr(new base::TestMockTimeTaskRunner(
+  task_runner_ = base::WrapRefCounted(new base::TestMockTimeTaskRunner(
       base::Time::Now(), base::TimeTicks::Now()));
   message_loop_.SetTaskRunner(task_runner_);
 }

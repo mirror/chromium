@@ -325,8 +325,9 @@ class CryptAuthBluetoothLowEnergyWeaveClientConnectionTest
     generator_ = nullptr;
     receiver_ = nullptr;
 
-    adapter_ = make_scoped_refptr(new NiceMock<device::MockBluetoothAdapter>());
-    task_runner_ = make_scoped_refptr(new base::TestSimpleTaskRunner());
+    adapter_ =
+        base::WrapRefCounted(new NiceMock<device::MockBluetoothAdapter>());
+    task_runner_ = base::WrapRefCounted(new base::TestSimpleTaskRunner());
 
     mock_bluetooth_device_ =
         base::MakeUnique<NiceMock<device::MockBluetoothDevice>>(
