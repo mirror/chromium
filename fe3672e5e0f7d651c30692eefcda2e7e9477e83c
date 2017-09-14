@@ -84,6 +84,24 @@
       "revId": "fe3672e5e0f7d651c30692eefcda2e7e9477e83c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b48d0c_315860ae",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-14T14:09:16Z",
+      "side": 1,
+      "message": "Previously scheme is handled by line 156-165. We don\u0027t treat scheme mismatch as out of scope url. By doing scheme check here, we lose all the information if scheme mismatch. Not sure if it is the expected behavior, could you confirm?\n\nfor scopeUrl \u003d \"https://www.google.com/map\"\nBefore\nhttp://www.google.com/map?A\u003da\u0026B\u003db resolves to\nhttps://www.google.com/map?A\u003da\u0026B\u003db\n\nNow:\nhttp://www.google.com/map?A\u003da\u0026B\u003db resolves to\nhttps://www.google.com/map\n\nAlso not sure what is the best way to take care of the ending /. startsWith check fails on authority, e,g, \"bob@google.com:80\".\nLooks like it\u0027s OK to have the current behavior, as appending / in the end won\u0027t change anything.",
+      "parentUuid": "25292121_bdf514e5",
+      "revId": "fe3672e5e0f7d651c30692eefcda2e7e9477e83c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
