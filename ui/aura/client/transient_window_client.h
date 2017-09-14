@@ -42,6 +42,10 @@ class AURA_EXPORT TransientWindowClient {
 AURA_EXPORT void SetTransientWindowClient(TransientWindowClient* client);
 AURA_EXPORT TransientWindowClient* GetTransientWindowClient();
 
+// Returns true if the children of |window| should be restacked by the
+// transient window related classes to honor transient window stacking.
+AURA_EXPORT bool ShouldRestackTransientChildren(Window* window);
+
 }  // namespace client
 }  // namespace aura
 

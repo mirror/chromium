@@ -145,18 +145,12 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
     REMOVE_TRANSIENT,
     REORDER,
     TRANSFORM,
-    // This is used when a REORDER *may* occur as the result of a transient
-    // child being added or removed. As there is no guarantee the move will
-    // actually happen (the window may be in place already) this change is not
-    // automatically removed. Instead the change is explicitly removed.
-    TRANSIENT_REORDER,
     VISIBLE,
   };
 
   // Contains data needed to identify a change from the server.
   struct ServerChangeData {
-    // Applies to ADD, ADD_TRANSIENT, REMOVE, REMOVE_TRANSIENT, REORDER and
-    // TRANSIENT_REORDER.
+    // Applies to ADD, ADD_TRANSIENT, REMOVE, REMOVE_TRANSIENT, and REORDER.
     Id child_id;
     // Applies to BOUNDS. This should be in dip.
     gfx::Rect bounds_in_dip;
@@ -253,8 +247,6 @@ class AURA_EXPORT WindowPortMus : public WindowPort, public WindowMus {
   std::unique_ptr<WindowMusChangeData> PrepareForServerVisibilityChange(
       bool value) override;
   void PrepareForDestroy() override;
-  void PrepareForTransientRestack(WindowMus* window) override;
-  void OnTransientRestackDone(WindowMus* window) override;
   void NotifyEmbeddedAppDisconnected() override;
   bool HasLocalLayerTreeFrameSink() override;
   float GetDeviceScaleFactor() override;
