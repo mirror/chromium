@@ -24,6 +24,7 @@
 #include "content/renderer/origin_trials/web_trial_token_validator_impl.h"
 #include "content/renderer/top_level_blame_context.h"
 #include "content/renderer/webpublicsuffixlist_impl.h"
+#include "third_party/WebKit/public/platform/file_utilities.mojom.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBFactory.h"
 #include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationType.h"
 
@@ -324,6 +325,8 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   std::unique_ptr<BlinkInterfaceProviderImpl> blink_interface_provider_;
 
   PossiblyAssociatedInterfacePtr<mojom::URLLoaderFactory> url_loader_factory_;
+
+  blink::mojom::FileUtilitiesHostPtrInfo file_utilities_host_info_;
 
   DISALLOW_COPY_AND_ASSIGN(RendererBlinkPlatformImpl);
 };
