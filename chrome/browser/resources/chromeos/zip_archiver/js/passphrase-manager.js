@@ -35,6 +35,11 @@ unpacker.PassphraseManager.prototype.getPassphrase = function() {
       return;
     }
 
+    if (this.rememberedPassphrase) {
+      fulfill(this.rememberedPassphrase);
+      return;
+    }
+
     // Ask user for a passphrase.
     chrome.app.window.create(
         '../html/passphrase.html',
