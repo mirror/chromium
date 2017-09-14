@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ad1698d_7cce75b8",
+        "filename": "base/task_scheduler/can_schedule_sequence_observer.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-14T03:50:04Z",
+      "side": 1,
+      "message": "This might make more sense as part of the TaskTracker since the TaskTracker expects certain action based off of the callback.\n\nThis is also interesting as the task tracker will generally reenter as a result of the callback.",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "ee5d0f9a9582bda48f19b713aab0c171325e854a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13300318_7c10af0f",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-14T03:50:04Z",
+      "side": 1,
+      "message": "The SchedulerWorker and the Delegate is now a durable OnMainEntry() called only once relationship. Would it make sense for the delegate to store a pointer here to avoid the set_worker() calls elsewhere?",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 58
+      },
+      "revId": "ee5d0f9a9582bda48f19b713aab0c171325e854a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18613d08_5b3a7a72",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-14T03:50:04Z",
+      "side": 1,
+      "message": "Folks will look at the tests to check the contract. Should we just allow this to be nullptr for non background sequences?",
+      "range": {
+        "startLine": 280,
+        "startChar": 2,
+        "endLine": 281,
+        "endChar": 35
+      },
+      "revId": "ee5d0f9a9582bda48f19b713aab0c171325e854a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36837cdb_8b8eb4de",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 652,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-14T03:50:04Z",
+      "side": 1,
+      "message": "Seems useful to have a method that\u0027s called something like PromoteBackgroundSequenceToPending() that can be used here and RunTask().",
+      "range": {
+        "startLine": 647,
+        "startChar": 8,
+        "endLine": 652,
+        "endChar": 9
+      },
+      "revId": "ee5d0f9a9582bda48f19b713aab0c171325e854a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0df8a3dc_82e189b4",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-14T03:50:04Z",
+      "side": 1,
+      "message": "Would it make the logic simpler if the caller had to call WillScheduleSequence() again? This way we don\u0027t have to manage the # ofscheduled sequences here and in WillScheduleSequence()",
+      "range": {
+        "startLine": 659,
+        "startChar": 10,
+        "endLine": 659,
+        "endChar": 48
+      },
+      "revId": "ee5d0f9a9582bda48f19b713aab0c171325e854a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f24723_ec5c198c",
+        "filename": "base/task_scheduler/task_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-14T03:50:04Z",
+      "side": 1,
+      "message": "It\u0027s worth noting that the caller doesn\u0027t have to maintain a pointer to the sequence. CanScheduleSequenceObserver::OnCanScheduleSequence contains all of the information needed to make a successful RunNextTask() call.",
+      "range": {
+        "startLine": 70,
+        "startChar": 29,
+        "endLine": 73,
+        "endChar": 40
+      },
+      "revId": "ee5d0f9a9582bda48f19b713aab0c171325e854a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
