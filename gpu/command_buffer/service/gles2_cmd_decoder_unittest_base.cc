@@ -208,7 +208,7 @@ void GLES2DecoderTestBase::InitDecoderWithWorkarounds(
   scoped_refptr<FeatureInfo> feature_info = new FeatureInfo(workarounds);
 
   group_ = scoped_refptr<ContextGroup>(new ContextGroup(
-      gpu_preferences_, false, &mailbox_manager_, memory_tracker_,
+      gpu_preferences_, false, &mailbox_manager_, &outputter_, memory_tracker_,
       &shader_translator_cache_, &framebuffer_completeness_cache_, feature_info,
       normalized_init.bind_generates_resource, &image_manager_,
       nullptr /* image_factory */, nullptr /* progress_reporter */,
@@ -2254,8 +2254,9 @@ void GLES2DecoderPassthroughTestBase::SetUp() {
 
   scoped_refptr<gles2::FeatureInfo> feature_info = new gles2::FeatureInfo();
   group_ = new gles2::ContextGroup(
-      gpu_preferences_, true, &mailbox_manager_, nullptr /* memory_tracker */,
-      &shader_translator_cache_, &framebuffer_completeness_cache_, feature_info,
+      gpu_preferences_, true, &mailbox_manager_, &outputter_,
+      nullptr /* memory_tracker */, &shader_translator_cache_,
+      &framebuffer_completeness_cache_, feature_info,
       context_creation_attribs_.bind_generates_resource, &image_manager_,
       nullptr /* image_factory */, nullptr /* progress_reporter */,
       GpuFeatureInfo(), &discardable_manager_);

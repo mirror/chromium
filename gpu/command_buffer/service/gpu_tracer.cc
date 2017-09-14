@@ -35,8 +35,6 @@ constexpr const char* kGpuTraceSourceNames[] = {
 static_assert(NUM_TRACER_SOURCES == arraysize(kGpuTraceSourceNames),
               "Trace source names must match enumeration.");
 
-static TraceOutputter* g_outputter_thread = NULL;
-
 TraceMarker::TraceMarker(const std::string& category, const std::string& name)
     : category_(category),
       name_(name),
@@ -48,20 +46,15 @@ TraceMarker::TraceMarker(const TraceMarker& other) = default;
 TraceMarker::~TraceMarker() {
 }
 
-scoped_refptr<TraceOutputter> TraceOutputter::Create(const std::string& name) {
-  if (!g_outputter_thread) {
-    g_outputter_thread = new TraceOutputter(name);
-  }
-  return g_outputter_thread;
-}
-
-TraceOutputter::TraceOutputter(const std::string& name)
-    : named_thread_(name.c_str()) {
+TraceOutputter::TraceOutputter()
+    // TODO(c.padhi): get proper thread name using
+    // gpu_timing_client_->GetTimerTypeName().
+    : named_thread_("TraceOutputter") {
   named_thread_.Start();
   named_thread_.Stop();
 }
 
-TraceOutputter::~TraceOutputter() { g_outputter_thread = NULL; }
+TraceOutputter::~TraceOutputter() {}
 
 void TraceOutputter::TraceDevice(GpuTracerSource source,
                                  const std::string& category,
@@ -124,7 +117,7 @@ void TraceOutputter::TraceServiceEnd(GpuTracerSource source,
       "channel", kGpuTraceSourceNames[source]);
 }
 
-GPUTrace::GPUTrace(scoped_refptr<Outputter> outputter,
+GPUTrace::GPUTrace(Outputter* outputter,
                    gl::GPUTimingClient* gpu_timing_client,
                    const GpuTracerSource source,
                    const std::string& category,
@@ -183,7 +176,7 @@ void GPUTrace::Process() {
   }
 }
 
-GPUTracer::GPUTracer(gles2::GLES2Decoder* decoder)
+GPUTracer::GPUTracer(GLES2Decoder* decoder)
     : gpu_trace_srv_category(TRACE_EVENT_API_GET_CATEGORY_GROUP_ENABLED(
           TRACE_DISABLED_BY_DEFAULT("gpu.service"))),
       gpu_trace_dev_category(TRACE_EVENT_API_GET_CATEGORY_GROUP_ENABLED(
@@ -191,11 +184,14 @@ GPUTracer::GPUTracer(gles2::GLES2Decoder* decoder)
       decoder_(decoder) {
   DCHECK(decoder_);
   gl::GLContext* context = decoder_->GetGLContext();
-  if (context) {
+  if (context)
     gpu_timing_client_ = context->CreateGPUTimingClient();
-  } else {
+  else
     gpu_timing_client_ = new gl::GPUTimingClient();
-  }
+
+  // ContextGroup can be NULL for tests.
+  if (decoder_->GetContextGroup())
+    outputter_ = decoder_->GetContextGroup()->outputter();
 
   disjoint_time_ = gpu_timing_client_->GetCurrentCPUTime();
 }
@@ -213,10 +209,6 @@ bool GPUTracer::BeginDecoding() {
 
   gpu_executing_ = true;
   if (IsTracing()) {
-    if (!outputter_) {
-      outputter_ = CreateOutputter(gpu_timing_client_->GetTimerTypeName());
-    }
-
     CheckDisjointStatus();
     // Begin a Trace for all active markers
     for (int n = 0; n < NUM_TRACER_SOURCES; n++) {
@@ -270,10 +262,6 @@ bool GPUTracer::Begin(const std::string& category, const std::string& name,
 
   // Push new marker from given 'source'
   markers_[source].push_back(TraceMarker(category, name));
-
-  if (!outputter_) {
-    outputter_ = CreateOutputter(gpu_timing_client_->GetTimerTypeName());
-  }
 
   // Create trace
   if (IsTracing()) {
@@ -378,10 +366,6 @@ const std::string& GPUTracer::CurrentName(GpuTracerSource source) const {
     return markers_[source].back().name_;
   }
   return base::EmptyString();
-}
-
-scoped_refptr<Outputter> GPUTracer::CreateOutputter(const std::string& name) {
-  return TraceOutputter::Create(name);
 }
 
 bool GPUTracer::CheckDisjointStatus() {

@@ -115,6 +115,7 @@ class Context : public base::RefCountedThreadSafe<Context>,
   std::unique_ptr<gpu::gles2::GLES2CmdHelper> gles2_cmd_helper_;
 
   gpu::gles2::MailboxManagerImpl mailbox_manager_;
+  gpu::gles2::TraceOutputter outputter_;
   gpu::gles2::ImageManager image_manager_;
   gpu::ServiceDiscardableManager discardable_manager_;
   gpu::gles2::ShaderTranslatorCache translator_cache_;

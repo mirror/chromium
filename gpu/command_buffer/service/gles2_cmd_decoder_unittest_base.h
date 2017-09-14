@@ -23,6 +23,7 @@
 #include "gpu/command_buffer/service/gles2_cmd_decoder_mock.h"
 #include "gpu/command_buffer/service/gles2_cmd_decoder_passthrough.h"
 #include "gpu/command_buffer/service/gpu_preferences.h"
+#include "gpu/command_buffer/service/gpu_tracer.h"
 #include "gpu/command_buffer/service/image_manager.h"
 #include "gpu/command_buffer/service/mailbox_manager_impl.h"
 #include "gpu/command_buffer/service/program_manager.h"
@@ -771,6 +772,7 @@ class GLES2DecoderTestBase : public ::testing::TestWithParam<bool>,
 
   GpuPreferences gpu_preferences_;
   MailboxManagerImpl mailbox_manager_;
+  TraceOutputter outputter_;
   ShaderTranslatorCache shader_translator_cache_;
   FramebufferCompletenessCache framebuffer_completeness_cache_;
   ImageManager image_manager_;
@@ -906,6 +908,7 @@ class GLES2DecoderPassthroughTestBase : public testing::Test,
   ContextCreationAttribHelper context_creation_attribs_;
   GpuPreferences gpu_preferences_;
   MailboxManagerImpl mailbox_manager_;
+  TraceOutputter outputter_;
   ShaderTranslatorCache shader_translator_cache_;
   FramebufferCompletenessCache framebuffer_completeness_cache_;
   ImageManager image_manager_;
