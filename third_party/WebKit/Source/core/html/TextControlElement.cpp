@@ -43,6 +43,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/HTMLBRElement.h"
+#include "core/html/HTMLDivElement.h"
 #include "core/html/parser/HTMLParserIdioms.h"
 #include "core/html/shadow/ShadowElementNames.h"
 #include "core/layout/LayoutBlock.h"
@@ -155,9 +156,37 @@ bool TextControlElement::IsPlaceholderEmpty() const {
   return attribute_value.GetString().Find(IsNotLineBreak) == kNotFound;
 }
 
+void TextControlElement::UpdatePlaceholderText() {
+  if (!SupportsPlaceholder())
+    return;
+
+  HTMLElement* placeholder = PlaceholderElement();
+
+  // If there is no placeholder value in the DOM, remove the placeholder from
+  // the ShadowDOM.
+  if (RemoveShadowPlaceholderIfEmpty(placeholder))
+    return;
+
+  // If there is not already a placeholder element, create one and insert it in
+  // the ShadowDOM.
+  if (!placeholder) {
+    placeholder = CreateShadowPlaceholderElement();
+
+    // Insert the new placeholder element
+    Element* container = UserAgentShadowRoot()->getElementById(
+        ShadowElementNames::TextFieldContainer());
+    Node* previous = container ? container : InnerEditorElement();
+    previous->parentNode()->InsertBefore(placeholder, previous);
+    SECURITY_DCHECK(placeholder->parentNode() == previous->parentNode());
+  }
+
+  // Set the placeholder text in the ShadowDOM placeholder.
+  placeholder->setTextContent(GetPlaceholderValue());
+}
+
 bool TextControlElement::PlaceholderShouldBeVisible() const {
-  return SupportsPlaceholder() && IsEmptyValue() && IsEmptySuggestedValue() &&
-         !IsPlaceholderEmpty();
+  return SupportsPlaceholder() && IsEmptyValue() &&
+         (!IsPlaceholderEmpty() || !IsEmptySuggestedValue());
 }
 
 HTMLElement* TextControlElement::PlaceholderElement() const {
@@ -759,6 +788,27 @@ void TextControlElement::ScheduleSelectEvent() {
   GetDocument().EnqueueAnimationFrameEvent(event);
 }
 
+HTMLElement* TextControlElement::CreateShadowPlaceholderElement() const {
+  HTMLElement* placeholder = HTMLDivElement::Create(GetDocument());
+  placeholder->SetShadowPseudoId(AtomicString("-webkit-input-placeholder"));
+  placeholder->setAttribute(idAttr, ShadowElementNames::Placeholder());
+  placeholder->SetInlineStyleProperty(
+      CSSPropertyDisplay, IsPlaceholderVisible() ? CSSValueBlock : CSSValueNone,
+      true);
+
+  return placeholder;
+}
+
+bool TextControlElement::RemoveShadowPlaceholderIfEmpty(
+    HTMLElement* placeholder) const {
+  if (GetPlaceholderValue().IsEmpty()) {
+    if (placeholder)
+      placeholder->remove(ASSERT_NO_EXCEPTION);
+    return true;
+  }
+  return false;
+}
+
 void TextControlElement::ParseAttribute(
     const AttributeModificationParams& params) {
   if (params.name == autocapitalizeAttr)
@@ -966,6 +1016,40 @@ String TextControlElement::DirectionForFormData() const {
   }
 
   return "ltr";
+}
+
+void TextControlElement::SetSuggestedValue(const String& value) {
+  suggested_value_ = value;
+  if (!InnerEditorValue().IsEmpty())
+    SetInnerEditorValue(value);
+
+  HTMLElement* placeholder = PlaceholderElement();
+
+  String new_placeholder_value = value;
+
+  // If the suggested value is empty, reset the ShadowDOM placeholder to reflect
+  // the placeholder in the DOM.
+  if (value.IsEmpty()) {
+    // If there is no placeholder value in the DOM, remove the placeholder from
+    // the ShadowDOM.
+    if (RemoveShadowPlaceholderIfEmpty(placeholder))
+      return;
+
+    // Reset the ShadowDOM placeholder value to the DOM placeholder value.
+    new_placeholder_value = GetPlaceholderValue();
+  }
+
+  if (!placeholder) {
+    placeholder = CreateShadowPlaceholderElement();
+    UserAgentShadowRoot()->InsertBefore(placeholder, InnerEditorElement());
+  }
+
+  // Set the new value in the ShadowDOM placeholder.
+  placeholder->setTextContent(new_placeholder_value);
+}
+
+const String& TextControlElement::SuggestedValue() const {
+  return suggested_value_;
 }
 
 HTMLElement* TextControlElement::InnerEditorElement() const {
