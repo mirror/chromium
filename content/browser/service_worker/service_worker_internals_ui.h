@@ -31,7 +31,7 @@ class ServiceWorkerInternalsUI
  public:
   typedef base::Callback<void(ServiceWorkerStatusCode)> StatusCallback;
   typedef void (ServiceWorkerVersion::*ServiceWorkerVersionMethod)(
-      const StatusCallback& callback);
+      base::OnceClosure callback);
 
   explicit ServiceWorkerInternalsUI(WebUI* web_ui);
 

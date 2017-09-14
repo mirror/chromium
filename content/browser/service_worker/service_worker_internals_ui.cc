@@ -84,7 +84,12 @@ void CallServiceWorkerVersionMethodWithVersionID(
     callback.Run(SERVICE_WORKER_ERROR_NOT_FOUND);
     return;
   }
-  (*version.get().*method)(callback);
+  // CallServiceWorkerVersionMethod() and
+  // CallServiceWorkerVersionMethodWithVersionID() is called only when calling
+  // ServiceWorkerVersion::StopWorker().
+  // It takes a base::OnceClosure for argument, so bind SERVICE_WORKER_OK to
+  // callback here.
+  (*version.get().*method)(base::BindOnce(callback, SERVICE_WORKER_OK));
 }
 
 std::vector<const Value*> ConvertToRawPtrVector(
