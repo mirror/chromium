@@ -110,11 +110,13 @@ Output.SPACE = ' ';
  * @const {Object<{msgId: string,
  *                 earconId: (string|undefined),
  *                 inherits: (string|undefined),
- *                 outputContextFirst: (boolean|undefined)}>}
+ *                 outputContextFirst: (boolean|undefined),
+ *                 ignoreAncestry: (boolean|undefined)}>}
  * msgId: the message id of the role.
  * earconId: an optional earcon to play when encountering the role.
  * inherits: inherits rules from this role.
  * outputContextFirst: where to place the context output.
+ * ignoreAncestry: ignores ancestry (context) output for this role.
  * @private
  */
 Output.ROLE_INFO_ = {
@@ -199,7 +201,8 @@ Output.ROLE_INFO_ = {
   toolbar: {msgId: 'role_toolbar'},
   toggleButton: {msgId: 'role_button', inherits: 'checkBox'},
   tree: {msgId: 'role_tree'},
-  treeItem: {msgId: 'role_treeitem'}
+  treeItem: {msgId: 'role_treeitem'},
+  window: {ignoreAncestry: true}
 };
 
 /**
@@ -1411,6 +1414,11 @@ Output.prototype = {
    * @private
    */
   ancestry_: function(node, prevNode, type, buff) {
+    if (Output.ROLE_INFO_[node.role] &&
+        Output.ROLE_INFO_[node.role].ignoreAncestry) {
+      return;
+    }
+
     // Expects |ancestors| to be ordered from root down to leaf. Outputs in
     // reverse; place context first nodes at the end.
     function byContextFirst(ancestors) {
