@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ff0adb6_79cedaa1",
+        "filename": "third_party/WebKit/LayoutTests/vr/getVRDisplays_detached.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-09-14T22:24:16Z",
+      "side": 1,
+      "message": "It looks like the expectation changed from the previous comment. Do I understand that correctly? If so, what caused that.\n\nAlso, I believe this string describes the test, which means it should say \"...*is* rejected...\", right?",
+      "revId": "8936453a00b811970b9bf152bab7f53446de6a7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0a80dd_2a16b2ac",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-09-14T22:24:16Z",
+      "side": 1,
+      "message": "nit: These should probably indicate that these are strings messages. For example, by adding ...Message to the end.\n\nI see this is not the case for WebUSB, though.",
+      "revId": "8936453a00b811970b9bf152bab7f53446de6a7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0d55b3_30a67724",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-09-14T22:24:16Z",
+      "side": 1,
+      "message": "\"cross-origin\"\n\nThis is what the code does.",
+      "range": {
+        "startLine": 33,
+        "startChar": 57,
+        "endLine": 33,
+        "endChar": 58
+      },
+      "revId": "8936453a00b811970b9bf152bab7f53446de6a7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f50d83af_40bb033b",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-09-14T22:24:16Z",
+      "side": 1,
+      "message": "What is the purpose of this check? Why was it added in https://chromium-review.googlesource.com/#/c/636663/?\n\nThere should be a frame gesture check in requestPresent(), but it appears we want to prevent even access to the devices in cross-origin iframe cases where there is no gesture. That seems reasonable due to the pose data being available. We should note this in a comment, though.",
+      "revId": "8936453a00b811970b9bf152bab7f53446de6a7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
