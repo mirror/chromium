@@ -5,7 +5,6 @@
 #include "cc/layers/append_quads_data.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/layers/render_surface_impl.h"
-#include "cc/quads/tile_draw_quad.h"
 #include "cc/test/fake_impl_task_runner_provider.h"
 #include "cc/test/fake_layer_tree_frame_sink.h"
 #include "cc/test/fake_layer_tree_host_impl.h"
@@ -17,6 +16,7 @@
 #include "cc/trees/layer_tree_impl.h"
 #include "cc/trees/single_thread_proxy.h"
 #include "components/viz/common/quads/shared_quad_state.h"
+#include "components/viz/common/quads/tile_draw_quad.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/transform.h"
@@ -66,7 +66,7 @@ class FakePictureLayerImplForRenderSurfaceTest : public FakePictureLayerImpl {
                                   max_contents_scale, contents_opaque());
     bool needs_blending = false;
     for (const auto& rect : quad_rects_) {
-      TileDrawQuad* quad = render_pass->CreateAndAppendDrawQuad<TileDrawQuad>();
+      auto* quad = render_pass->CreateAndAppendDrawQuad<viz::TileDrawQuad>();
       quad->SetNew(shared_quad_state, rect, rect, needs_blending, 0,
                    gfx::RectF(rect), bounds(), false, false);
     }

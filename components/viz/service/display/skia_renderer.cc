@@ -11,14 +11,14 @@
 #include "cc/output/output_surface.h"
 #include "cc/output/output_surface_frame.h"
 #include "cc/quads/debug_border_draw_quad.h"
-#include "cc/quads/picture_draw_quad.h"
 #include "cc/quads/render_pass_draw_quad.h"
-#include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/texture_draw_quad.h"
-#include "cc/quads/tile_draw_quad.h"
 #include "cc/resources/scoped_resource.h"
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/quads/copy_output_request.h"
+#include "components/viz/common/quads/picture_draw_quad.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
+#include "components/viz/common/quads/tile_draw_quad.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "skia/ext/opacity_filter_canvas.h"
 #include "third_party/skia/include/core/SkCanvas.h"
@@ -382,19 +382,19 @@ void SkiaRenderer::DoDrawQuad(const DrawQuad* quad,
       DrawDebugBorderQuad(cc::DebugBorderDrawQuad::MaterialCast(quad));
       break;
     case DrawQuad::PICTURE_CONTENT:
-      DrawPictureQuad(cc::PictureDrawQuad::MaterialCast(quad));
+      DrawPictureQuad(PictureDrawQuad::MaterialCast(quad));
       break;
     case DrawQuad::RENDER_PASS:
       DrawRenderPassQuad(cc::RenderPassDrawQuad::MaterialCast(quad));
       break;
     case DrawQuad::SOLID_COLOR:
-      DrawSolidColorQuad(cc::SolidColorDrawQuad::MaterialCast(quad));
+      DrawSolidColorQuad(SolidColorDrawQuad::MaterialCast(quad));
       break;
     case DrawQuad::TEXTURE_CONTENT:
-      DrawTextureQuad(cc::TextureDrawQuad::MaterialCast(quad));
+      DrawTextureQuad(TextureDrawQuad::MaterialCast(quad));
       break;
     case DrawQuad::TILED_CONTENT:
-      DrawTileQuad(cc::TileDrawQuad::MaterialCast(quad));
+      DrawTileQuad(TileDrawQuad::MaterialCast(quad));
       break;
     case DrawQuad::SURFACE_CONTENT:
       // Surface content should be fully resolved to other quad types before
@@ -433,7 +433,7 @@ void SkiaRenderer::DrawDebugBorderQuad(const cc::DebugBorderDrawQuad* quad) {
                               transformed_vertices, current_paint_);
 }
 
-void SkiaRenderer::DrawPictureQuad(const cc::PictureDrawQuad* quad) {
+void SkiaRenderer::DrawPictureQuad(const PictureDrawQuad* quad) {
   SkMatrix content_matrix;
   content_matrix.setRectToRect(gfx::RectFToSkRect(quad->tex_coord_rect),
                                gfx::RectFToSkRect(QuadVertexRect()),
@@ -481,7 +481,7 @@ void SkiaRenderer::DrawPictureQuad(const cc::PictureDrawQuad* quad) {
   raster_canvas->restore();
 }
 
-void SkiaRenderer::DrawSolidColorQuad(const cc::SolidColorDrawQuad* quad) {
+void SkiaRenderer::DrawSolidColorQuad(const SolidColorDrawQuad* quad) {
   gfx::RectF visible_quad_vertex_rect = cc::MathUtil::ScaleRectProportional(
       QuadVertexRect(), gfx::RectF(quad->rect), gfx::RectF(quad->visible_rect));
   current_paint_.setColor(quad->color);
@@ -491,7 +491,7 @@ void SkiaRenderer::DrawSolidColorQuad(const cc::SolidColorDrawQuad* quad) {
                             current_paint_);
 }
 
-void SkiaRenderer::DrawTextureQuad(const cc::TextureDrawQuad* quad) {
+void SkiaRenderer::DrawTextureQuad(const TextureDrawQuad* quad) {
   if (!IsSoftwareResource(quad->resource_id())) {
     DrawUnsupportedQuad(quad);
     return;
@@ -535,7 +535,7 @@ void SkiaRenderer::DrawTextureQuad(const cc::TextureDrawQuad* quad) {
     current_canvas_->restore();
 }
 
-void SkiaRenderer::DrawTileQuad(const cc::TileDrawQuad* quad) {
+void SkiaRenderer::DrawTileQuad(const TileDrawQuad* quad) {
   // |resource_provider_| can be NULL in resourceless software draws, which
   // should never produce tile quads in the first place.
   DCHECK(resource_provider_);

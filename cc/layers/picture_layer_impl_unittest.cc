@@ -18,7 +18,6 @@
 #include "cc/base/math_util.h"
 #include "cc/layers/append_quads_data.h"
 #include "cc/layers/picture_layer.h"
-#include "cc/quads/tile_draw_quad.h"
 #include "cc/test/fake_content_layer_client.h"
 #include "cc/test/fake_impl_task_runner_provider.h"
 #include "cc/test/fake_layer_tree_frame_sink.h"
@@ -37,6 +36,7 @@
 #include "cc/tiles/tiling_set_raster_queue_required.h"
 #include "cc/trees/layer_tree_impl.h"
 #include "components/viz/common/quads/draw_quad.h"
+#include "components/viz/common/quads/tile_draw_quad.h"
 #include "components/viz/common/resources/buffer_to_texture_target_map.h"
 #include "components/viz/test/begin_frame_args_test.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -1929,12 +1929,12 @@ TEST_F(PictureLayerImplTest,
   ASSERT_GT(render_pass->quad_list.size(), 9u);
   EXPECT_EQ(gfx::Rect(0, 0, 99, 99), render_pass->quad_list.front()->rect);
   EXPECT_EQ(gfx::RectF(0.f, 0.f, 99.f, 99.f),
-            TileDrawQuad::MaterialCast(render_pass->quad_list.front())
+            viz::TileDrawQuad::MaterialCast(render_pass->quad_list.front())
                 ->tex_coord_rect);
   EXPECT_EQ(gfx::Rect(99, 0, 100, 99),
             render_pass->quad_list.ElementAt(1)->rect);
   EXPECT_EQ(gfx::RectF(49.5f, 0.f, 50.f, 49.5f),
-            TileDrawQuad::MaterialCast(render_pass->quad_list.ElementAt(1))
+            viz::TileDrawQuad::MaterialCast(render_pass->quad_list.ElementAt(1))
                 ->tex_coord_rect);
 
   // Neither the high res nor the ideal tiles were considered as incomplete.

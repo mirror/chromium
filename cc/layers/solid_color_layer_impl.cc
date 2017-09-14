@@ -7,8 +7,8 @@
 #include <algorithm>
 
 #include "cc/layers/append_quads_data.h"
-#include "cc/quads/solid_color_draw_quad.h"
 #include "cc/trees/occlusion.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
 
 namespace cc {
 
@@ -59,8 +59,8 @@ void SolidColorLayerImpl::AppendSolidQuads(
       append_quads_data->visible_layer_area +=
           visible_quad_rect.width() * visible_quad_rect.height();
 
-      SolidColorDrawQuad* quad =
-          render_pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+      auto* quad =
+          render_pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
       quad->SetNew(
           shared_quad_state, quad_rect, visible_quad_rect, color, false);
     }

@@ -6,9 +6,9 @@
 
 #include "cc/output/compositor_frame.h"
 #include "cc/quads/render_pass_draw_quad.h"
-#include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/surface_draw_quad.h"
 #include "components/viz/common/quads/shared_quad_state.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
+#include "components/viz/common/quads/surface_draw_quad.h"
 #include "components/viz/test/compositor_frame_helpers.h"
 
 namespace viz {
@@ -27,8 +27,8 @@ void CreateSolidColorDrawQuad(cc::RenderPass* pass,
                               const gfx::Rect& root_rect,
                               const gfx::Rect& quad_rect) {
   CreateSharedQuadState(pass, transform, root_rect);
-  cc::SolidColorDrawQuad* color_quad =
-      pass->CreateAndAppendDrawQuad<cc::SolidColorDrawQuad>();
+  SolidColorDrawQuad* color_quad =
+      pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
   color_quad->SetNew(pass->shared_quad_state_list.back(), quad_rect, quad_rect,
                      SK_ColorYELLOW, false);
 }
@@ -53,10 +53,10 @@ void CreateSurfaceDrawQuad(cc::RenderPass* pass,
                            const gfx::Rect& quad_rect,
                            SurfaceId surface_id) {
   CreateSharedQuadState(pass, transform, root_rect);
-  cc::SurfaceDrawQuad* surface_quad =
-      pass->CreateAndAppendDrawQuad<cc::SurfaceDrawQuad>();
+  SurfaceDrawQuad* surface_quad =
+      pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
   surface_quad->SetNew(pass->shared_quad_state_list.back(), quad_rect,
-                       quad_rect, surface_id, cc::SurfaceDrawQuadType::PRIMARY,
+                       quad_rect, surface_id, SurfaceDrawQuadType::PRIMARY,
                        nullptr);
 }
 
@@ -97,7 +97,7 @@ void TestSurfaceHittestDelegate::AddInsetsForAcceptSurface(
 }
 
 bool TestSurfaceHittestDelegate::RejectHitTarget(
-    const cc::SurfaceDrawQuad* surface_quad,
+    const SurfaceDrawQuad* surface_quad,
     const gfx::Point& point_in_quad_space) {
   if (!insets_for_reject_.count(surface_quad->surface_id))
     return false;
@@ -113,7 +113,7 @@ bool TestSurfaceHittestDelegate::RejectHitTarget(
 }
 
 bool TestSurfaceHittestDelegate::AcceptHitTarget(
-    const cc::SurfaceDrawQuad* surface_quad,
+    const SurfaceDrawQuad* surface_quad,
     const gfx::Point& point_in_quad_space) {
   if (!insets_for_accept_.count(surface_quad->surface_id))
     return false;

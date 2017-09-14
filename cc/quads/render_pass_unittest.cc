@@ -9,9 +9,9 @@
 #include "base/memory/ptr_util.h"
 #include "cc/base/math_util.h"
 #include "cc/quads/render_pass_draw_quad.h"
-#include "cc/quads/solid_color_draw_quad.h"
 #include "cc/test/geometry_test_utils.h"
 #include "components/viz/common/quads/copy_output_request.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/effects/SkBlurImageFilter.h"
 #include "ui/gfx/transform.h"
@@ -97,8 +97,7 @@ TEST(RenderPassTest, CopyShouldBeIdenticalExceptIdAndQuads) {
   shared_state->SetAll(gfx::Transform(), gfx::Rect(), gfx::Rect(), gfx::Rect(),
                        false, false, 1, SkBlendMode::kSrcOver, 0);
 
-  SolidColorDrawQuad* color_quad =
-      pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  auto* color_quad = pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   color_quad->SetNew(pass->shared_quad_state_list.back(), gfx::Rect(),
                      gfx::Rect(), SkColor(), false);
 
@@ -151,14 +150,12 @@ TEST(RenderPassTest, CopyAllShouldBeIdentical) {
   shared_state1->SetAll(gfx::Transform(), gfx::Rect(0, 0, 1, 1), gfx::Rect(),
                         gfx::Rect(), false, false, 1, SkBlendMode::kSrcOver, 0);
 
-  SolidColorDrawQuad* color_quad1 =
-      pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  auto* color_quad1 = pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   color_quad1->SetNew(pass->shared_quad_state_list.back(),
                       gfx::Rect(1, 1, 1, 1), gfx::Rect(1, 1, 1, 1), SkColor(),
                       false);
 
-  SolidColorDrawQuad* color_quad2 =
-      pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  auto* color_quad2 = pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   color_quad2->SetNew(pass->shared_quad_state_list.back(),
                       gfx::Rect(2, 2, 2, 2), gfx::Rect(2, 2, 2, 2), SkColor(),
                       false);
@@ -168,14 +165,12 @@ TEST(RenderPassTest, CopyAllShouldBeIdentical) {
   shared_state2->SetAll(gfx::Transform(), gfx::Rect(0, 0, 2, 2), gfx::Rect(),
                         gfx::Rect(), false, false, 1, SkBlendMode::kSrcOver, 0);
 
-  SolidColorDrawQuad* color_quad3 =
-      pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  auto* color_quad3 = pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   color_quad3->SetNew(pass->shared_quad_state_list.back(),
                       gfx::Rect(3, 3, 3, 3), gfx::Rect(3, 3, 3, 3), SkColor(),
                       false);
 
-  SolidColorDrawQuad* color_quad4 =
-      pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  auto* color_quad4 = pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   color_quad4->SetNew(pass->shared_quad_state_list.back(),
                       gfx::Rect(4, 4, 4, 4), gfx::Rect(4, 4, 4, 4), SkColor(),
                       false);
@@ -210,8 +205,8 @@ TEST(RenderPassTest, CopyAllShouldBeIdentical) {
                                gfx::Rect(), gfx::Rect(), false, false, 1,
                                SkBlendMode::kSrcOver, 0);
 
-  SolidColorDrawQuad* contrib_quad =
-      contrib->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  auto* contrib_quad =
+      contrib->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   contrib_quad->SetNew(contrib->shared_quad_state_list.back(),
                        gfx::Rect(3, 3, 3, 3), gfx::Rect(3, 3, 3, 3), SkColor(),
                        false);
@@ -262,8 +257,7 @@ TEST(RenderPassTest, CopyAllWithCulledQuads) {
   shared_state1->SetAll(gfx::Transform(), gfx::Rect(0, 0, 1, 1), gfx::Rect(),
                         gfx::Rect(), false, false, 1, SkBlendMode::kSrcOver, 0);
 
-  SolidColorDrawQuad* color_quad1 =
-      pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  auto* color_quad1 = pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   color_quad1->SetNew(pass->shared_quad_state_list.back(),
                       gfx::Rect(1, 1, 1, 1), gfx::Rect(1, 1, 1, 1), SkColor(),
                       false);
@@ -283,8 +277,7 @@ TEST(RenderPassTest, CopyAllWithCulledQuads) {
   shared_state4->SetAll(gfx::Transform(), gfx::Rect(0, 0, 2, 2), gfx::Rect(),
                         gfx::Rect(), false, false, 1, SkBlendMode::kSrcOver, 0);
 
-  SolidColorDrawQuad* color_quad2 =
-      pass->CreateAndAppendDrawQuad<SolidColorDrawQuad>();
+  auto* color_quad2 = pass->CreateAndAppendDrawQuad<viz::SolidColorDrawQuad>();
   color_quad2->SetNew(pass->shared_quad_state_list.back(),
                       gfx::Rect(3, 3, 3, 3), gfx::Rect(3, 3, 3, 3), SkColor(),
                       false);
@@ -302,8 +295,7 @@ TEST(RenderPassTest, ReplacedQuadsShouldntMove) {
   std::unique_ptr<viz::SharedQuadState> quad_state =
       std::make_unique<viz::SharedQuadState>();
   QuadList quad_list;
-  SolidColorDrawQuad* quad =
-      quad_list.AllocateAndConstruct<SolidColorDrawQuad>();
+  auto* quad = quad_list.AllocateAndConstruct<viz::SolidColorDrawQuad>();
   gfx::Rect quad_rect(1, 2, 3, 4);
   quad->SetNew(quad_state.get(), quad_rect, quad_rect, SkColor(), false);
   quad_list.ReplaceExistingQuadWithOpaqueTransparentSolidColor(

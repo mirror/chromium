@@ -12,14 +12,14 @@
 #include "cc/output/output_surface_frame.h"
 #include "cc/output/software_output_device.h"
 #include "cc/quads/debug_border_draw_quad.h"
-#include "cc/quads/picture_draw_quad.h"
 #include "cc/quads/render_pass_draw_quad.h"
-#include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/texture_draw_quad.h"
-#include "cc/quads/tile_draw_quad.h"
 #include "cc/resources/scoped_resource.h"
 #include "components/viz/common/display/renderer_settings.h"
 #include "components/viz/common/quads/copy_output_request.h"
+#include "components/viz/common/quads/picture_draw_quad.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
+#include "components/viz/common/quads/texture_draw_quad.h"
+#include "components/viz/common/quads/tile_draw_quad.h"
 #include "skia/ext/opacity_filter_canvas.h"
 #include "third_party/skia/include/core/SkCanvas.h"
 #include "third_party/skia/include/core/SkColor.h"
@@ -276,19 +276,19 @@ void SoftwareRenderer::DoDrawQuad(const viz::DrawQuad* quad,
       DrawDebugBorderQuad(DebugBorderDrawQuad::MaterialCast(quad));
       break;
     case viz::DrawQuad::PICTURE_CONTENT:
-      DrawPictureQuad(PictureDrawQuad::MaterialCast(quad));
+      DrawPictureQuad(viz::PictureDrawQuad::MaterialCast(quad));
       break;
     case viz::DrawQuad::RENDER_PASS:
       DrawRenderPassQuad(RenderPassDrawQuad::MaterialCast(quad));
       break;
     case viz::DrawQuad::SOLID_COLOR:
-      DrawSolidColorQuad(SolidColorDrawQuad::MaterialCast(quad));
+      DrawSolidColorQuad(viz::SolidColorDrawQuad::MaterialCast(quad));
       break;
     case viz::DrawQuad::TEXTURE_CONTENT:
-      DrawTextureQuad(TextureDrawQuad::MaterialCast(quad));
+      DrawTextureQuad(viz::TextureDrawQuad::MaterialCast(quad));
       break;
     case viz::DrawQuad::TILED_CONTENT:
-      DrawTileQuad(TileDrawQuad::MaterialCast(quad));
+      DrawTileQuad(viz::TileDrawQuad::MaterialCast(quad));
       break;
     case viz::DrawQuad::SURFACE_CONTENT:
       // Surface content should be fully resolved to other quad types before
@@ -325,7 +325,7 @@ void SoftwareRenderer::DrawDebugBorderQuad(const DebugBorderDrawQuad* quad) {
                               4, transformed_vertices, current_paint_);
 }
 
-void SoftwareRenderer::DrawPictureQuad(const PictureDrawQuad* quad) {
+void SoftwareRenderer::DrawPictureQuad(const viz::PictureDrawQuad* quad) {
   SkMatrix content_matrix;
   content_matrix.setRectToRect(
       gfx::RectFToSkRect(quad->tex_coord_rect),
@@ -374,7 +374,7 @@ void SoftwareRenderer::DrawPictureQuad(const PictureDrawQuad* quad) {
   raster_canvas->restore();
 }
 
-void SoftwareRenderer::DrawSolidColorQuad(const SolidColorDrawQuad* quad) {
+void SoftwareRenderer::DrawSolidColorQuad(const viz::SolidColorDrawQuad* quad) {
   gfx::RectF visible_quad_vertex_rect = MathUtil::ScaleRectProportional(
       QuadVertexRect(), gfx::RectF(quad->rect), gfx::RectF(quad->visible_rect));
   current_paint_.setColor(quad->color);
@@ -384,7 +384,7 @@ void SoftwareRenderer::DrawSolidColorQuad(const SolidColorDrawQuad* quad) {
                             current_paint_);
 }
 
-void SoftwareRenderer::DrawTextureQuad(const TextureDrawQuad* quad) {
+void SoftwareRenderer::DrawTextureQuad(const viz::TextureDrawQuad* quad) {
   if (!IsSoftwareResource(quad->resource_id())) {
     DrawUnsupportedQuad(quad);
     return;
@@ -428,7 +428,7 @@ void SoftwareRenderer::DrawTextureQuad(const TextureDrawQuad* quad) {
     current_canvas_->restore();
 }
 
-void SoftwareRenderer::DrawTileQuad(const TileDrawQuad* quad) {
+void SoftwareRenderer::DrawTileQuad(const viz::TileDrawQuad* quad) {
   // |resource_provider_| can be NULL in resourceless software draws, which
   // should never produce tile quads in the first place.
   DCHECK(resource_provider_);

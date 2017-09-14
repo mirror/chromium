@@ -71,9 +71,9 @@ class TestSurfaceHittestDelegate : public SurfaceHittestDelegate {
                                  const gfx::Insets& inset);
 
   // SurfaceHittestDelegate implementation.
-  bool RejectHitTarget(const cc::SurfaceDrawQuad* surface_quad,
+  bool RejectHitTarget(const SurfaceDrawQuad* surface_quad,
                        const gfx::Point& point_in_quad_space) override;
-  bool AcceptHitTarget(const cc::SurfaceDrawQuad* surface_quad,
+  bool AcceptHitTarget(const SurfaceDrawQuad* surface_quad,
                        const gfx::Point& point_in_quad_space) override;
 
  private:

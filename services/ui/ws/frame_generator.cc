@@ -10,8 +10,8 @@
 #include "cc/output/compositor_frame.h"
 #include "cc/quads/render_pass.h"
 #include "cc/quads/render_pass_draw_quad.h"
-#include "cc/quads/surface_draw_quad.h"
 #include "components/viz/common/quads/shared_quad_state.h"
+#include "components/viz/common/quads/surface_draw_quad.h"
 
 namespace ui {
 
@@ -201,11 +201,11 @@ void FrameGenerator::DrawWindow(cc::RenderPass* pass) {
               bounds_at_origin /* clip_rect */, false /* is_clipped */,
               false /* are_contents_opaque */, 1.0f /* opacity */,
               SkBlendMode::kSrcOver, 0 /* sorting-context_id */);
-  auto* quad = pass->CreateAndAppendDrawQuad<cc::SurfaceDrawQuad>();
+  auto* quad = pass->CreateAndAppendDrawQuad<viz::SurfaceDrawQuad>();
   quad->SetAll(sqs, bounds_at_origin /* rect */,
                bounds_at_origin /* visible_rect */, true /* needs_blending*/,
                window_manager_surface_info_.id(),
-               cc::SurfaceDrawQuadType::PRIMARY, nullptr);
+               viz::SurfaceDrawQuadType::PRIMARY, nullptr);
 }
 
 void FrameGenerator::SetNeedsBeginFrame(bool needs_begin_frame) {

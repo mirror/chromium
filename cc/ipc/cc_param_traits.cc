@@ -16,11 +16,11 @@
 #include "cc/quads/debug_border_draw_quad.h"
 #include "cc/quads/largest_draw_quad.h"
 #include "cc/quads/render_pass_draw_quad.h"
-#include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/surface_draw_quad.h"
-#include "cc/quads/tile_draw_quad.h"
-#include "cc/quads/yuv_video_draw_quad.h"
 #include "components/viz/common/quads/draw_quad.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
+#include "components/viz/common/quads/surface_draw_quad.h"
+#include "components/viz/common/quads/tile_draw_quad.h"
+#include "components/viz/common/quads/yuv_video_draw_quad.h"
 #include "components/viz/common/surfaces/surface_id.h"
 #include "third_party/skia/include/core/SkData.h"
 #include "third_party/skia/include/core/SkFlattenableSerialization.h"
@@ -341,25 +341,25 @@ void ParamTraits<cc::RenderPass>::Write(base::Pickle* m, const param_type& p) {
         NOTREACHED();
         break;
       case viz::DrawQuad::TEXTURE_CONTENT:
-        WriteParam(m, *cc::TextureDrawQuad::MaterialCast(quad));
+        WriteParam(m, *viz::TextureDrawQuad::MaterialCast(quad));
         break;
       case viz::DrawQuad::RENDER_PASS:
         WriteParam(m, *cc::RenderPassDrawQuad::MaterialCast(quad));
         break;
       case viz::DrawQuad::SOLID_COLOR:
-        WriteParam(m, *cc::SolidColorDrawQuad::MaterialCast(quad));
+        WriteParam(m, *viz::SolidColorDrawQuad::MaterialCast(quad));
         break;
       case viz::DrawQuad::SURFACE_CONTENT:
-        WriteParam(m, *cc::SurfaceDrawQuad::MaterialCast(quad));
+        WriteParam(m, *viz::SurfaceDrawQuad::MaterialCast(quad));
         break;
       case viz::DrawQuad::TILED_CONTENT:
-        WriteParam(m, *cc::TileDrawQuad::MaterialCast(quad));
+        WriteParam(m, *viz::TileDrawQuad::MaterialCast(quad));
         break;
       case viz::DrawQuad::STREAM_VIDEO_CONTENT:
-        WriteParam(m, *cc::StreamVideoDrawQuad::MaterialCast(quad));
+        WriteParam(m, *viz::StreamVideoDrawQuad::MaterialCast(quad));
         break;
       case viz::DrawQuad::YUV_VIDEO_CONTENT:
-        WriteParam(m, *cc::YUVVideoDrawQuad::MaterialCast(quad));
+        WriteParam(m, *viz::YUVVideoDrawQuad::MaterialCast(quad));
         break;
       case viz::DrawQuad::INVALID:
         break;
@@ -473,25 +473,25 @@ bool ParamTraits<cc::RenderPass>::Read(const base::Pickle* m,
         NOTREACHED();
         return false;
       case viz::DrawQuad::SURFACE_CONTENT:
-        draw_quad = ReadDrawQuad<cc::SurfaceDrawQuad>(m, iter, p);
+        draw_quad = ReadDrawQuad<viz::SurfaceDrawQuad>(m, iter, p);
         break;
       case viz::DrawQuad::TEXTURE_CONTENT:
-        draw_quad = ReadDrawQuad<cc::TextureDrawQuad>(m, iter, p);
+        draw_quad = ReadDrawQuad<viz::TextureDrawQuad>(m, iter, p);
         break;
       case viz::DrawQuad::RENDER_PASS:
         draw_quad = ReadDrawQuad<cc::RenderPassDrawQuad>(m, iter, p);
         break;
       case viz::DrawQuad::SOLID_COLOR:
-        draw_quad = ReadDrawQuad<cc::SolidColorDrawQuad>(m, iter, p);
+        draw_quad = ReadDrawQuad<viz::SolidColorDrawQuad>(m, iter, p);
         break;
       case viz::DrawQuad::TILED_CONTENT:
-        draw_quad = ReadDrawQuad<cc::TileDrawQuad>(m, iter, p);
+        draw_quad = ReadDrawQuad<viz::TileDrawQuad>(m, iter, p);
         break;
       case viz::DrawQuad::STREAM_VIDEO_CONTENT:
-        draw_quad = ReadDrawQuad<cc::StreamVideoDrawQuad>(m, iter, p);
+        draw_quad = ReadDrawQuad<viz::StreamVideoDrawQuad>(m, iter, p);
         break;
       case viz::DrawQuad::YUV_VIDEO_CONTENT:
-        draw_quad = ReadDrawQuad<cc::YUVVideoDrawQuad>(m, iter, p);
+        draw_quad = ReadDrawQuad<viz::YUVVideoDrawQuad>(m, iter, p);
         break;
       case viz::DrawQuad::INVALID:
         break;
@@ -517,23 +517,24 @@ bool ParamTraits<cc::RenderPass>::Read(const base::Pickle* m,
     }
 
     draw_quad->shared_quad_state = p->shared_quad_state_list.back();
-    // If this quad is a fallback SurfaceDrawQuad then update the previous
-    // primary SurfaceDrawQuad to point to this quad.
+    // If this quad is a fallback viz::SurfaceDrawQuad then update the previous
+    // primary viz::SurfaceDrawQuad to point to this quad.
     if (draw_quad->material == viz::DrawQuad::SURFACE_CONTENT) {
-      const cc::SurfaceDrawQuad* surface_draw_quad =
-          cc::SurfaceDrawQuad::MaterialCast(draw_quad);
+      const viz::SurfaceDrawQuad* surface_draw_quad =
+          viz::SurfaceDrawQuad::MaterialCast(draw_quad);
       if (surface_draw_quad->surface_draw_quad_type ==
-          cc::SurfaceDrawQuadType::FALLBACK) {
-        // A fallback quad must immediately follow a primary SurfaceDrawQuad.
+          viz::SurfaceDrawQuadType::FALLBACK) {
+        // A fallback quad must immediately follow a primary
+        // viz::SurfaceDrawQuad.
         if (!last_draw_quad ||
             last_draw_quad->material != viz::DrawQuad::SURFACE_CONTENT) {
           return false;
         }
-        cc::SurfaceDrawQuad* last_surface_draw_quad =
-            static_cast<cc::SurfaceDrawQuad*>(last_draw_quad);
+        viz::SurfaceDrawQuad* last_surface_draw_quad =
+            static_cast<viz::SurfaceDrawQuad*>(last_draw_quad);
         // Only one fallback quad is currently supported.
         if (last_surface_draw_quad->surface_draw_quad_type !=
-            cc::SurfaceDrawQuadType::PRIMARY) {
+            viz::SurfaceDrawQuadType::PRIMARY) {
           return false;
         }
         last_surface_draw_quad->fallback_quad = surface_draw_quad;
@@ -586,25 +587,25 @@ void ParamTraits<cc::RenderPass>::Log(const param_type& p, std::string* l) {
         NOTREACHED();
         break;
       case viz::DrawQuad::TEXTURE_CONTENT:
-        LogParam(*cc::TextureDrawQuad::MaterialCast(quad), l);
+        LogParam(*viz::TextureDrawQuad::MaterialCast(quad), l);
         break;
       case viz::DrawQuad::RENDER_PASS:
         LogParam(*cc::RenderPassDrawQuad::MaterialCast(quad), l);
         break;
       case viz::DrawQuad::SOLID_COLOR:
-        LogParam(*cc::SolidColorDrawQuad::MaterialCast(quad), l);
+        LogParam(*viz::SolidColorDrawQuad::MaterialCast(quad), l);
         break;
       case viz::DrawQuad::SURFACE_CONTENT:
-        LogParam(*cc::SurfaceDrawQuad::MaterialCast(quad), l);
+        LogParam(*viz::SurfaceDrawQuad::MaterialCast(quad), l);
         break;
       case viz::DrawQuad::TILED_CONTENT:
-        LogParam(*cc::TileDrawQuad::MaterialCast(quad), l);
+        LogParam(*viz::TileDrawQuad::MaterialCast(quad), l);
         break;
       case viz::DrawQuad::STREAM_VIDEO_CONTENT:
-        LogParam(*cc::StreamVideoDrawQuad::MaterialCast(quad), l);
+        LogParam(*viz::StreamVideoDrawQuad::MaterialCast(quad), l);
         break;
       case viz::DrawQuad::YUV_VIDEO_CONTENT:
-        LogParam(*cc::YUVVideoDrawQuad::MaterialCast(quad), l);
+        LogParam(*viz::YUVVideoDrawQuad::MaterialCast(quad), l);
         break;
       case viz::DrawQuad::INVALID:
         break;
@@ -867,8 +868,8 @@ void ParamTraits<viz::DrawQuad::Resources>::Log(const param_type& p,
   l->append("])");
 }
 
-void ParamTraits<cc::YUVVideoDrawQuad>::Write(base::Pickle* m,
-                                              const param_type& p) {
+void ParamTraits<viz::YUVVideoDrawQuad>::Write(base::Pickle* m,
+                                               const param_type& p) {
   ParamTraits<viz::DrawQuad>::Write(m, p);
   WriteParam(m, p.ya_tex_coord_rect);
   WriteParam(m, p.uv_tex_coord_rect);
@@ -881,9 +882,9 @@ void ParamTraits<cc::YUVVideoDrawQuad>::Write(base::Pickle* m,
   WriteParam(m, p.bits_per_channel);
 }
 
-bool ParamTraits<cc::YUVVideoDrawQuad>::Read(const base::Pickle* m,
-                                             base::PickleIterator* iter,
-                                             param_type* p) {
+bool ParamTraits<viz::YUVVideoDrawQuad>::Read(const base::Pickle* m,
+                                              base::PickleIterator* iter,
+                                              param_type* p) {
   return ParamTraits<viz::DrawQuad>::Read(m, iter, p) &&
          ReadParam(m, iter, &p->ya_tex_coord_rect) &&
          ReadParam(m, iter, &p->uv_tex_coord_rect) &&
@@ -894,12 +895,12 @@ bool ParamTraits<cc::YUVVideoDrawQuad>::Read(const base::Pickle* m,
          ReadParam(m, iter, &p->resource_offset) &&
          ReadParam(m, iter, &p->resource_multiplier) &&
          ReadParam(m, iter, &p->bits_per_channel) &&
-         p->bits_per_channel >= cc::YUVVideoDrawQuad::kMinBitsPerChannel &&
-         p->bits_per_channel <= cc::YUVVideoDrawQuad::kMaxBitsPerChannel;
+         p->bits_per_channel >= viz::YUVVideoDrawQuad::kMinBitsPerChannel &&
+         p->bits_per_channel <= viz::YUVVideoDrawQuad::kMaxBitsPerChannel;
 }
 
-void ParamTraits<cc::YUVVideoDrawQuad>::Log(const param_type& p,
-                                            std::string* l) {
+void ParamTraits<viz::YUVVideoDrawQuad>::Log(const param_type& p,
+                                             std::string* l) {
   l->append("(");
   ParamTraits<viz::DrawQuad>::Log(p, l);
   l->append(", ");

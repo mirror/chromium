@@ -17,9 +17,11 @@ class Rect;
 class Transform;
 }
 
-namespace cc {
-
+namespace viz {
 class SolidColorDrawQuad;
+}
+
+namespace cc {
 class RenderPass;
 
 // Adds a new render pass with the provided properties to the given
@@ -31,20 +33,20 @@ RenderPass* AddRenderPass(RenderPassList* pass_list,
                           const FilterOperations& filters);
 
 // Adds a solid quad to a given render pass.
-SolidColorDrawQuad* AddQuad(RenderPass* pass,
-                            const gfx::Rect& rect,
-                            SkColor color);
+viz::SolidColorDrawQuad* AddQuad(RenderPass* pass,
+                                 const gfx::Rect& rect,
+                                 SkColor color);
 
 // Adds a solid quad to a given render pass and sets is_clipped=true.
-SolidColorDrawQuad* AddClippedQuad(RenderPass* pass,
-                                   const gfx::Rect& rect,
-                                   SkColor color);
+viz::SolidColorDrawQuad* AddClippedQuad(RenderPass* pass,
+                                        const gfx::Rect& rect,
+                                        SkColor color);
 
 // Adds a solid quad with a transform to a given render pass.
-SolidColorDrawQuad* AddTransformedQuad(RenderPass* pass,
-                                       const gfx::Rect& rect,
-                                       SkColor color,
-                                       const gfx::Transform& transform);
+viz::SolidColorDrawQuad* AddTransformedQuad(RenderPass* pass,
+                                            const gfx::Rect& rect,
+                                            SkColor color,
+                                            const gfx::Transform& transform);
 
 // Adds a render pass quad to an existing render pass.
 void AddRenderPassQuad(RenderPass* to_pass, RenderPass* contributing_pass);
