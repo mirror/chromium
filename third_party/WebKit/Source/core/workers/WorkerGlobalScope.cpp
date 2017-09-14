@@ -56,6 +56,7 @@
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/loader/fetch/MemoryCache.h"
 #include "platform/network/ContentSecurityPolicyParsers.h"
+#include "platform/origin_manifest/OriginManifestStoreClient.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -396,6 +397,7 @@ void WorkerGlobalScope::ApplyContentSecurityPolicyFromHeaders(
     SetContentSecurityPolicy(csp);
   }
   GetContentSecurityPolicy()->DidReceiveHeaders(headers);
+  SetContentSecurityPolicyFromOriginManifest();
   GetContentSecurityPolicy()->BindToExecutionContext(GetExecutionContext());
 }
 
@@ -409,6 +411,7 @@ void WorkerGlobalScope::ApplyContentSecurityPolicyFromVector(
     GetContentSecurityPolicy()->DidReceiveHeader(
         policy_and_type.first, policy_and_type.second,
         kContentSecurityPolicyHeaderSourceHTTP);
+  SetContentSecurityPolicyFromOriginManifest();
   GetContentSecurityPolicy()->BindToExecutionContext(GetExecutionContext());
 }
 
