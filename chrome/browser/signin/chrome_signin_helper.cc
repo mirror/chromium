@@ -234,8 +234,10 @@ void ProcessDiceHeaderUIThread(
   DCHECK(IsDiceFixAuthErrorsEnabled());
 
   content::WebContents* web_contents = web_contents_getter.Run();
-  if (!web_contents)
+  if (!web_contents) {
+    VLOG(1) << "No WebContents for DICE response, ignoring.";
     return;
+  }
 
   Profile* profile =
       Profile::FromBrowserContext(web_contents->GetBrowserContext());

@@ -1194,7 +1194,7 @@ void GaiaAuthFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
 
 // Retrieve the response headers from the request.  Must only be called after
 // the OnURLFetchComplete callback has run.
-#ifndef NDEBUG
+//#ifndef NDEBUG
   std::string headers;
   if (source->GetResponseHeaders())
     headers = net::HttpUtil::ConvertHeadersBackToHTTPResponse(
@@ -1202,7 +1202,7 @@ void GaiaAuthFetcher::OnURLFetchComplete(const net::URLFetcher* source) {
   DVLOG(2) << "Response " << url.spec() << ", code = " << response_code << "\n"
            << headers << "\n";
   DVLOG(2) << "data: " << data << "\n";
-#endif
+//#endif
 
   net::ResponseCookies cookies;
   GetCookiesFromResponse(source->GetResponseHeaders(), &cookies);
