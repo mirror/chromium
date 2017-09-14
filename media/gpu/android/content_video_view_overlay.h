@@ -17,11 +17,6 @@ namespace media {
 class ContentVideoViewOverlay
     : public ContentVideoViewOverlayAllocator::Client {
  public:
-  // This exists so we can bind construction into a callback returning
-  // std::unique_ptr<AndroidOverlay>.
-  static std::unique_ptr<AndroidOverlay> Create(int surface_id,
-                                                AndroidOverlayConfig config);
-
   // |config| is ignored except for callbacks.  Callbacks will not be called
   // before this returns.
   ContentVideoViewOverlay(int surface_id, AndroidOverlayConfig config);

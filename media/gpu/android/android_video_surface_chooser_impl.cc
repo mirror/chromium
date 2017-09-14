@@ -16,8 +16,10 @@ constexpr base::TimeDelta MinimumDelayAfterFailedOverlay =
 
 AndroidVideoSurfaceChooserImpl::AndroidVideoSurfaceChooserImpl(
     bool allow_dynamic,
+    const AndroidOverlayMojoFactoryCB& overlay_mojo_factory_cb,
     base::TickClock* tick_clock)
-    : allow_dynamic_(allow_dynamic),
+    : overlay_mojo_factory_cb_(std::move(overlay_mojo_factory_cb)),
+      allow_dynamic_(allow_dynamic),
       tick_clock_(tick_clock),
       weak_factory_(this) {
   // Use a DefaultTickClock if one wasn't provided.
@@ -31,85 +33,55 @@ AndroidVideoSurfaceChooserImpl::~AndroidVideoSurfaceChooserImpl() {}
 
 void AndroidVideoSurfaceChooserImpl::Initialize(
     UseOverlayCB use_overlay_cb,
-    UseSurfaceTextureCB use_surface_texture_cb,
-    AndroidOverlayFactoryCB initial_factory,
-    const State& initial_state) {
+    UseSurfaceTextureCB use_surface_texture_cb) {
   use_overlay_cb_ = std::move(use_overlay_cb);
   use_surface_texture_cb_ = std::move(use_surface_texture_cb);
+}
 
-  overlay_factory_ = std::move(initial_factory);
+void AndroidVideoSurfaceChooserImpl::UpdateState(const State& state,
+                                                 OverlayInfo overlay_info) {
+  DCHECK(allow_dynamic_ || !first_update_received_);
+  first_update_received_ = true;
+  current_state_ = state;
+  bool overlay_changed = !overlay_info.RefersToSameOverlayAs(overlay_info_);
+  overlay_info_ = std::move(overlay_info);
 
-  current_state_ = initial_state;
-
-  // Pre-M, we choose now.  This lets Choose() never worry about the pre-M path.
   if (!allow_dynamic_) {
-    if (overlay_factory_ &&
-        (current_state_.is_fullscreen || current_state_.is_secure ||
-         current_state_.is_required)) {
+    if (overlay_info_.HasValidOverlay() &&
+        (overlay_info_.is_fullscreen || state.is_secure || state.is_required)) {
       SwitchToOverlay();
     } else {
       SwitchToSurfaceTexture();
     }
-  } else {
-    Choose();
-  }
-}
-
-void AndroidVideoSurfaceChooserImpl::UpdateState(
-    base::Optional<AndroidOverlayFactoryCB> new_factory,
-    const State& new_state) {
-  current_state_ = new_state;
-
-  if (!new_factory) {
-    if (allow_dynamic_)
-      Choose();
     return;
   }
 
-  overlay_factory_ = std::move(*new_factory);
-
-  // If we started construction of an overlay, but it's not ready yet, then
-  // just drop it.  It's from the wrong factory.
-  if (overlay_)
+  if (overlay_changed) {
+    // Cancel the previous overlay if we had one.
     overlay_ = nullptr;
 
-  // Pre-M, we can't change the output surface.  Just stop here.
-  if (!allow_dynamic_) {
-    // If we still haven't told the client anything, then it's because an
-    // overlay factory was provided to Initialize(), and changed before the
-    // overlay request finished.  Switch to SurfaceTexture.  We could, I guess,
-    // try to use the new factory if any.
-    if (client_overlay_state_ == kUnknown)
-      SwitchToSurfaceTexture();
-    return;
-  }
-
-  // We're switching factories, so any existing overlay should be cancelled.
-  // We also clear the state back to Unknown so that there's no confusion about
-  // whether the client is using the 'right' overlay; it's not.  Any previous
-  // overlay was from the previous factory.
-  if (client_overlay_state_ == kUsingOverlay) {
-    overlay_ = nullptr;
-    client_overlay_state_ = kUnknown;
+    // The client's overlay is now the wrong one so clear the client state back
+    // to kUnknown.
+    if (client_overlay_state_ == kUsingOverlay)
+      client_overlay_state_ = kUnknown;
   }
 
   Choose();
 }
 
 void AndroidVideoSurfaceChooserImpl::Choose() {
-  // Pre-M, we decide based on whether we have or don't have a factory.  We
-  // shouldn't be called.
+  // Pre-M, we decide on the first update.
   DCHECK(allow_dynamic_);
 
   OverlayState new_overlay_state = kUsingSurfaceTexture;
 
   // In player element fullscreen, we want to use overlays if we can.
-  if (current_state_.is_fullscreen)
+  if (overlay_info_.is_fullscreen)
     new_overlay_state = kUsingOverlay;
 
-  // Try to use an overlay if possible for protected content.  If the compositor
-  // won't promote, though, it's okay if we switch out.  Set |is_required| in
-  // addition, if you don't want this behavior.
+  // Try to use an overlay if possible for protected content.  If the
+  // compositor won't promote, though, it's okay if we switch out.  Set
+  // |is_required| in addition, if you don't want this behavior.
   if (current_state_.is_secure)
     new_overlay_state = kUsingOverlay;
 
@@ -118,8 +90,9 @@ void AndroidVideoSurfaceChooserImpl::Choose() {
     new_overlay_state = kUsingSurfaceTexture;
 
   // If we're expecting a relayout, then don't transition to overlay if we're
-  // not already in one.  We don't want to transition out, though.  This lets us
-  // delay entering on a fullscreen transition until blink relayout is complete.
+  // not already in one.  We don't want to transition out, though.  This lets
+  // us delay entering on a fullscreen transition until blink relayout is
+  // complete.
   // TODO(liberato): Detect this more directly.
   if (current_state_.is_expecting_relayout &&
       client_overlay_state_ != kUsingOverlay)
@@ -127,8 +100,8 @@ void AndroidVideoSurfaceChooserImpl::Choose() {
 
   // If we're requesting an overlay, check that we haven't asked too recently
   // since the last failure.  This includes L1.  We don't bother to check for
-  // our current state, since using an overlay would imply that our most recent
-  // failure was long ago enough to pass this check earlier.
+  // our current state, since using an overlay would imply that our most
+  // recent failure was long ago enough to pass this check earlier.
   if (new_overlay_state == kUsingOverlay) {
     base::TimeDelta time_since_last_failure =
         tick_clock_->NowTicks() - most_recent_overlay_failure_;
@@ -137,19 +110,17 @@ void AndroidVideoSurfaceChooserImpl::Choose() {
   }
 
   // If our frame is hidden, then don't use overlays.
-  if (current_state_.is_frame_hidden)
+  if (overlay_info_.is_frame_hidden)
     new_overlay_state = kUsingSurfaceTexture;
 
-  // If an overlay is required, then choose one.  The only way we won't is if we
-  // don't have a factory or our request fails.
+  // If an overlay is required, then choose one.  The only way we won't is if
+  // we don't have a factory or our request fails.
   if (current_state_.is_required)
     new_overlay_state = kUsingOverlay;
 
-  // If we have no factory, then we definitely don't want to use overlays.
-  if (!overlay_factory_)
+  if (!overlay_info_.HasValidOverlay())
     new_overlay_state = kUsingSurfaceTexture;
 
-  // Make sure that we're in |new_overlay_state_|.
   if (new_overlay_state == kUsingSurfaceTexture)
     SwitchToSurfaceTexture();
   else
@@ -159,14 +130,13 @@ void AndroidVideoSurfaceChooserImpl::Choose() {
 void AndroidVideoSurfaceChooserImpl::SwitchToSurfaceTexture() {
   // Invalidate any outstanding deletion callbacks for any overlays that we've
   // provided to the client already.  We assume that it will eventually drop
-  // them in response to the callback.  Ready / failed callbacks aren't affected
-  // by this, since we own the overlay until those occur.  We're about to
-  // drop |overlay_|, if we have one, which cancels them.
+  // them in response to the callback.  Ready / failed callbacks aren't
+  // affected by this, since we own the overlay until those occur.  We're
+  // about to drop |overlay_|, if we have one, which cancels them.
   weak_factory_.InvalidateWeakPtrs();
 
-  // Cancel any outstanding overlay request, in case we're switching to overlay.
-  if (overlay_)
-    overlay_ = nullptr;
+  // Cancel any outstanding overlay request.
+  overlay_ = nullptr;
 
   // Notify the client to switch if it's in the wrong state.
   if (client_overlay_state_ != kUsingSurfaceTexture) {
@@ -176,24 +146,22 @@ void AndroidVideoSurfaceChooserImpl::SwitchToSurfaceTexture() {
 }
 
 void AndroidVideoSurfaceChooserImpl::SwitchToOverlay() {
-  // If there's already an overlay request outstanding, then do nothing.  We'll
+  // If there's already an overlay request outstanding, then do nothing. We'll
   // finish switching when it completes.
   if (overlay_)
     return;
 
-  // Do nothing if the client is already using an overlay.  Note that if one
-  // changes overlay factories, then this might not be true; an overlay from the
-  // old factory is not the same as an overlay from the new factory.  However,
-  // we assume that ReplaceOverlayFactory handles that.
+  // Do nothing if the client is already using an overlay.
   if (client_overlay_state_ == kUsingOverlay)
     return;
 
-  // We don't modify |client_overlay_state_| yet, since we don't call the client
-  // back yet.
+  // We don't modify |client_overlay_state_| yet, since we don't call the
+  // client back yet.
 
-  // Invalidate any outstanding callbacks.  This is needed only for the deletion
-  // callback, since for ready/failed callbacks, we still have ownership of the
-  // object.  If we delete the object, then callbacks are cancelled anyway.
+  // Invalidate any outstanding callbacks.  This is needed only for the
+  // deletion callback, since for ready/failed callbacks, we still have
+  // ownership of the object.  If we delete the object, then callbacks are
+  // cancelled anyway.
   weak_factory_.InvalidateWeakPtrs();
 
   AndroidOverlayConfig config;
@@ -206,7 +174,11 @@ void AndroidVideoSurfaceChooserImpl::SwitchToOverlay() {
       base::Bind(&AndroidVideoSurfaceChooserImpl::OnOverlayFailed,
                  weak_factory_.GetWeakPtr());
   config.rect = current_state_.initial_position;
-  overlay_ = overlay_factory_.Run(std::move(config));
+  overlay_ = overlay_info.HasValidRoutingToken()
+                 ? overlay_mojo_factory_cb.Run(overlay_info.routing_token,
+                                               std::move(config))
+                 : std::make_unique<ContentVideoViewOverlay>(
+                       overlay_info.surface_id, std::move(config));
   if (!overlay_)
     SwitchToSurfaceTexture();
 
@@ -217,12 +189,12 @@ void AndroidVideoSurfaceChooserImpl::SwitchToOverlay() {
 }
 
 void AndroidVideoSurfaceChooserImpl::OnOverlayReady(AndroidOverlay* overlay) {
-  // |overlay_| is the only overlay for which we haven't gotten a ready callback
-  // back yet.
+  // |overlay_| is the only overlay for which we haven't gotten a ready
+  // callback back yet.
   DCHECK_EQ(overlay, overlay_.get());
 
-  // Notify the overlay that we'd like to know if it's destroyed, so that we can
-  // update our internal state if the client drops it without being told.
+  // Notify the overlay that we'd like to know if it's destroyed, so that we
+  // can update our internal state if the client drops it without being told.
   overlay_->AddOverlayDeletedCallback(
       base::Bind(&AndroidVideoSurfaceChooserImpl::OnOverlayDeleted,
                  weak_factory_.GetWeakPtr()));
@@ -239,17 +211,17 @@ void AndroidVideoSurfaceChooserImpl::OnOverlayFailed(AndroidOverlay* overlay) {
   most_recent_overlay_failure_ = tick_clock_->NowTicks();
 
   // If the client isn't already using a SurfaceTexture, then switch to it.
-  // Note that this covers the case of kUnknown, when we might not have told the
-  // client anything yet.  That's important for Initialize, so that a failed
-  // overlay request still results in some callback to the client to know what
-  // surface to start with.
+  // Note that this covers the case of kUnknown, when we might not have told
+  // the client anything yet.  That's important for Initialize, so that a
+  // failed overlay request still results in some callback to the client to
+  // know what surface to start with.
   SwitchToSurfaceTexture();
 }
 
 void AndroidVideoSurfaceChooserImpl::OnOverlayDeleted(AndroidOverlay* overlay) {
   client_overlay_state_ = kUsingSurfaceTexture;
-  // We don't call SwitchToSurfaceTexture since the client dropped the overlay.
-  // It's already using SurfaceTexture.
+  // We don't call SwitchToSurfaceTexture since the client dropped the
+  // overlay. It's already using SurfaceTexture.
 }
 
 }  // namespace media

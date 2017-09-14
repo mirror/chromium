@@ -22,16 +22,9 @@ class FakeSurfaceChooser : public AndroidVideoSurfaceChooser {
   MOCK_METHOD0(MockInitialize, void());
   MOCK_METHOD0(MockUpdateState, void());
 
-  // Called by UpdateState if the factory is changed.  It is called with true if
-  // and only if the replacement factory isn't null.
-  MOCK_METHOD1(MockReplaceOverlayFactory, void(bool));
-
   void Initialize(UseOverlayCB use_overlay_cb,
-                  UseSurfaceTextureCB use_surface_texture_cb,
-                  AndroidOverlayFactoryCB initial_factory,
-                  const State& initial_state) override;
-  void UpdateState(base::Optional<AndroidOverlayFactoryCB> factory,
-                   const State& new_state) override;
+                  UseSurfaceTextureCB use_surface_texture_cb) override;
+  void UpdateState(const State& state, OverlayInfo overlay_info) override;
 
   // Calls the corresponding callback to choose the surface.
   void ProvideOverlay(std::unique_ptr<AndroidOverlay> overlay);
