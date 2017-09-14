@@ -22,13 +22,13 @@ created_and_committed_by_findit(A) :-
     A = label('Authored-and-Committed-by-Findit', need(_)).
 
 % This commit is pure revert of another commit.
-commit_is_pure_revert(R):-
+commit_is_pure_revert(R) :-
     gerrit:pure_revert(1),
     !,
     gerrit:commit_author(A),
     PureRevert = label('Is-Pure-Revert', ok(A)).
 
-commit_is_pure_revert(R):-
+commit_is_pure_revert(R) :-
     gerrit:pure_revert(U),
     U \= 1,
     R = label('Is-Pure-Revert', need(_)).
