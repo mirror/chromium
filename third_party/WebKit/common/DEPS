@@ -10,6 +10,7 @@ include_rules = [
     "+build",
     "+net",
     "+mojo",
+    "+storage/public/interfaces",
     "+testing/gmock/include/gmock",
     "+testing/gtest/include/gtest",
     "+third_party/WebKit/common",

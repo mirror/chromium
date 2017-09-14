@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "base/containers/span.h"
+#include "storage/public/interfaces/blobs.mojom.h"
 #include "third_party/WebKit/common/common_export.h"
 #include "third_party/WebKit/common/message_port/message_port_channel.h"
 
@@ -31,6 +32,9 @@ struct BLINK_COMMON_EXPORT MessagePortMessage {
 
   // Any ports being transfered as part of this message.
   std::vector<MessagePortChannel> ports;
+
+  // Blob handles for any blobs being send in this message.
+  std::vector<storage::mojom::SerializedBlobPtr> blobs;
 };
 
 }  // namespace blink

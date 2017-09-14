@@ -31,6 +31,7 @@
 #include "ipc/ipc_sync_message.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/common/message_port/message_port.mojom.h"
 
 using blink::MessagePortChannel;
 

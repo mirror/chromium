@@ -4,14 +4,34 @@
 
 #include "core/dom/BlinkMessagePortMessageStructTraits.h"
 
+#include "platform/RuntimeEnabledFeatures.h"
+#include "platform/blob/BlobData.h"
+
 namespace mojo {
+
+Vector<storage::mojom::blink::SerializedBlobPtr> StructTraits<
+    blink::mojom::blink::MessagePortMessage::DataView,
+    blink::BlinkMessagePortMessage>::blobs(blink::BlinkMessagePortMessage&
+                                               input) {
+  Vector<storage::mojom::blink::SerializedBlobPtr> result;
+  if (blink::RuntimeEnabledFeatures::MojoBlobsEnabled()) {
+    result.ReserveInitialCapacity(input.message->BlobDataHandles().size());
+    for (const auto& blob : input.message->BlobDataHandles()) {
+      result.push_back(storage::mojom::blink::SerializedBlob::New(
+          blob.value->Uuid(), blob.value->GetType(), blob.value->size(),
+          blob.value->CloneBlobPtr()));
+    }
+  }
+  return result;
+}
 
 bool StructTraits<blink::mojom::blink::MessagePortMessage::DataView,
                   blink::BlinkMessagePortMessage>::
     Read(blink::mojom::blink::MessagePortMessage::DataView data,
          blink::BlinkMessagePortMessage* out) {
   std::vector<mojo::ScopedMessagePipeHandle> ports;
-  if (!data.ReadPorts(&ports))
+  Vector<storage::mojom::blink::SerializedBlobPtr> blobs;
+  if (!data.ReadPorts(&ports) || !data.ReadBlobs(&blobs))
     return false;
 
   mojo::ArrayDataView<uint8_t> message_data;
@@ -24,6 +44,12 @@ bool StructTraits<blink::mojom::blink::MessagePortMessage::DataView,
   out->ports.ReserveCapacity(channels.size());
   out->ports.AppendRange(std::make_move_iterator(channels.begin()),
                          std::make_move_iterator(channels.end()));
+  for (auto& blob : blobs) {
+    out->message->BlobDataHandles().Set(
+        blob->uuid,
+        blink::BlobDataHandle::Create(blob->uuid, blob->content_type,
+                                      blob->size, blob->blob.PassInterface()));
+  }
   return true;
 }
 
