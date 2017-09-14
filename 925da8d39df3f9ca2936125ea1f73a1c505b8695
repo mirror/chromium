@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd98fcd6_1fe4a40b",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-14T01:06:13Z",
+      "side": 1,
+      "message": "I think it\u0027s better to pass by value so that we can move the suggestion vector.\n\nIn most cases we are passing a temporary property to AddSuggestionMarker(), in which case copy elision can prevent copying the parameter.",
+      "range": {
+        "startLine": 74,
+        "startChar": 27,
+        "endLine": 74,
+        "endChar": 60
+      },
+      "revId": "925da8d39df3f9ca2936125ea1f73a1c505b8695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e3de84f_7eaa287d",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-14T01:06:13Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 24,
+        "startChar": 19,
+        "endLine": 24,
+        "endChar": 52
+      },
+      "revId": "925da8d39df3f9ca2936125ea1f73a1c505b8695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c137340c_9b79a973",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerProperties.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-14T01:06:13Z",
+      "side": 1,
+      "message": "We should allow SuggestionMarker::ctor move suggestions SuggestionMarkerProperties.\n\nOne way is to add SuggestionMarker as a friend class.\n\nAnother way is to change return type of Suggestions() to Vector\u0026, which however breaks the immutability of the class.",
+      "revId": "925da8d39df3f9ca2936125ea1f73a1c505b8695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
