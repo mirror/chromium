@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce1d4aaf_33bbb945",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T21:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6428cac0_d004a11c",
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "136b1080_084259fb",
         "filename": "components/arc/power/arc_power_bridge.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-14T20:59:32Z",
       "side": 1,
       "message": "Then, can you add DCHECK?\n\n WakeLockInfo new_wake_lock \u003d { kInvalidId };\n switch (type) {\n   ...\n }\n DCHECK_NE(kInvalidId, new_wake_lock.id);",
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f15a4d2_4a915169",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T21:54:03Z",
+      "side": 1,
+      "message": "I am not sure what would be a right value to KInvalidId. Right now Add*WakeLock will only return positive numbers. But if for some reason Add*WakeLock returns negative numbers tomorrow, won\u0027t this fail runtime ?",
+      "parentUuid": "136b1080_084259fb",
       "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3c207c14_9a5da38e",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T21:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd48a23f_459cc59c",
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b606a0bf_5142cfa9",
         "filename": "components/arc/power/arc_power_bridge_unittest.cc",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5802edea_b3b0f62b",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T21:54:03Z",
+      "side": 1,
+      "message": "This is in reference to the Dan\u0027s comment on patch set 10. So that we don\u0027t leave one hanging around if the PolicyController is initialized for some reason. There is no potential case right now though.",
+      "parentUuid": "b606a0bf_5142cfa9",
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "4eaea050_6097a729",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T21:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9b2ec45_092a416e",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2efe5101_b67a28c0",
         "filename": "components/arc/power/arc_power_bridge_unittest.cc",
         "patchSetId": 12
@@ -107,6 +203,24 @@
       "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e674bcaf_651a283c",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T21:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2efe5101_b67a28c0",
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

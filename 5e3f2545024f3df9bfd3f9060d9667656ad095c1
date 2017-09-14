@@ -1014,6 +1014,30 @@
     },
     {
       "key": {
+        "uuid": "8860502e_ece19155",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T21:54:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a09ba08_9c2fee2d",
+      "range": {
+        "startLine": 293,
+        "startChar": 0,
+        "endLine": 296,
+        "endChar": 40
+      },
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c979a400_83c88612",
         "filename": "components/arc/power/arc_power_bridge_unittest.cc",
         "patchSetId": 10
