@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a3f2d978_699ebd2c",
+        "filename": "media/remoting/courier_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 753,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-09-14T01:06:51Z",
+      "side": 1,
+      "message": "ResetMeasurements() is called and the flag is cleared when we got the HAVE_ENOUGH RPC (Line 593 above). There will be some delay between the full frame was sent and when we got the HAVE_ENOUGH RPC. Will this delay be significantly? I expect receiver will send this RPC when it receives a frame. So the delay is like to extend the stabilization period a little bit. If we do think this delay is a concern, we may have to add callback to the DemuxerStreamAdapter to get notified. WDYT?",
+      "parentUuid": "caae833b_e438a349",
+      "range": {
+        "startLine": 753,
+        "startChar": 6,
+        "endLine": 753,
+        "endChar": 39
+      },
+      "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e076ed7_7cb0c606",
         "filename": "media/remoting/courier_renderer.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2525bc4_9693fa8f",
+        "filename": "media/remoting/courier_renderer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 910,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-09-14T01:06:51Z",
+      "side": 1,
+      "message": "Done. Thanks for the suggestion!",
+      "parentUuid": "9e076ed7_7cb0c606",
+      "range": {
+        "startLine": 894,
+        "startChar": 0,
+        "endLine": 910,
+        "endChar": 15
+      },
+      "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b89c16f6_dc5bc48a",
+        "filename": "media/remoting/courier_renderer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-09-14T01:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "535d18b9_d4545d0f",
+      "range": {
+        "startLine": 144,
+        "startChar": 54,
+        "endLine": 144,
+        "endChar": 61
+      },
+      "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b3736bc_d5287c50",
         "filename": "media/remoting/courier_renderer.h",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d0337d_bf6e8537",
+        "filename": "media/remoting/courier_renderer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-09-14T01:06:51Z",
+      "side": 1,
+      "message": "Done. Thanks for the suggestion!",
+      "parentUuid": "5b3736bc_d5287c50",
+      "range": {
+        "startLine": 147,
+        "startChar": 7,
+        "endLine": 147,
+        "endChar": 35
+      },
+      "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a50fdae5_64884ba8",
+        "filename": "media/remoting/courier_renderer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-09-14T01:06:51Z",
+      "side": 1,
+      "message": "Done. Thanks for the suggestion!",
+      "parentUuid": "30771b70_d72d1f14",
+      "range": {
+        "startLine": 219,
+        "startChar": 7,
+        "endLine": 219,
+        "endChar": 40
+      },
+      "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84aba79a_9b817ccf",
         "filename": "media/remoting/courier_renderer_unittest.cc",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "053c3fac_dc5c68e6",
+        "filename": "media/remoting/courier_renderer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-09-14T01:06:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "84aba79a_9b817ccf",
+      "range": {
+        "startLine": 358,
+        "startChar": 2,
+        "endLine": 358,
+        "endChar": 54
+      },
+      "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "ee4a9eff_a3f2c086",
+        "filename": "media/remoting/demuxer_stream_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-09-14T01:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "946fb926_579c5357",
+      "range": {
+        "startLine": 84,
+        "startChar": 7,
+        "endLine": 84,
+        "endChar": 30
+      },
+      "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b90946fc_38ed2103",
         "filename": "media/remoting/demuxer_stream_adapter.h",
         "patchSetId": 2
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "0d72ee09_1d01b451",
+        "filename": "media/remoting/demuxer_stream_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-09-14T01:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b90946fc_38ed2103",
+      "range": {
+        "startLine": 92,
+        "startChar": 5,
+        "endLine": 92,
+        "endChar": 13
+      },
+      "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bf38760_5079b002",
         "filename": "media/remoting/demuxer_stream_adapter.h",
         "patchSetId": 2
@@ -206,6 +398,30 @@
       "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e67fd422_7df4771d",
+        "filename": "media/remoting/demuxer_stream_adapter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-09-14T01:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bf38760_5079b002",
+      "range": {
+        "startLine": 93,
+        "startChar": 7,
+        "endLine": 93,
+        "endChar": 20
+      },
+      "revId": "bfd6f455f4ad6ffc98176544694c5175092989a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
