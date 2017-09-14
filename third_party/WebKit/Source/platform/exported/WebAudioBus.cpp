@@ -25,7 +25,6 @@
 #include "public/platform/WebAudioBus.h"
 
 #include "platform/audio/AudioBus.h"
-#include "platform/wtf/PassRefPtr.h"
 #include "platform/wtf/RefPtr.h"
 
 namespace blink {
@@ -85,7 +84,7 @@ float* WebAudioBus::ChannelData(unsigned channel_index) {
   return private_->Channel(channel_index)->MutableData();
 }
 
-PassRefPtr<AudioBus> WebAudioBus::Release() {
+RefPtr<AudioBus> WebAudioBus::Release() {
   RefPtr<AudioBus> audio_bus(AdoptRef(static_cast<AudioBus*>(private_)));
   private_ = 0;
   return audio_bus;
