@@ -319,10 +319,10 @@ IN_PROC_BROWSER_TEST_F(OmniboxViewViewsTest, CloseOmniboxPopupOnTextDrag) {
   match.destination_url = GURL("http://autocomplete-result/");
   match.allowed_to_be_default_match = true;
   matches.push_back(match);
-  const AutocompleteInput input(
-      base::ASCIIToUTF16("a"), base::string16::npos, std::string(), GURL(),
-      base::string16(), metrics::OmniboxEventProto::INVALID_SPEC, false, false,
-      true, true, false, TestSchemeClassifier());
+  AutocompleteInput input(base::ASCIIToUTF16("a"), base::string16::npos,
+                          std::string(), TestSchemeClassifier());
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
   results.AppendMatches(input, matches);
   results.SortAndCull(
       input, TemplateURLServiceFactory::GetForProfile(browser()->profile()));
@@ -367,11 +367,11 @@ IN_PROC_BROWSER_TEST_F(OmniboxViewViewsTest, MaintainCursorAfterFocusCycle) {
   match.destination_url = GURL("http://autocomplete-result/");
   match.allowed_to_be_default_match = true;
   matches.push_back(match);
-  const AutocompleteInput input(
-      base::ASCIIToUTF16("autocomplete-result"), 19, "autocomplete-result",
-      GURL("http://autocomplete-result/"), base::string16(),
-      metrics::OmniboxEventProto::INVALID_SPEC, false, false, true, true, false,
-      TestSchemeClassifier());
+  AutocompleteInput input(base::ASCIIToUTF16("autocomplete-result"), 19,
+                          "autocomplete-result", TestSchemeClassifier());
+  input.set_current_url(GURL("http://autocomplete-result/"));
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
   results.AppendMatches(input, matches);
   results.SortAndCull(
       input, TemplateURLServiceFactory::GetForProfile(browser()->profile()));

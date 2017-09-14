@@ -243,9 +243,11 @@ TEST_F(ZeroSuggestProviderTest, TestDoesNotReturnMatchesForPrefix) {
 
   std::string url("http://www.cnn.com/");
   AutocompleteInput input(base::ASCIIToUTF16(url), base::string16::npos,
-                          std::string(), GURL(url), base::string16(),
-                          metrics::OmniboxEventProto::INVALID_SPEC, true, false,
-                          true, true, false, TestSchemeClassifier());
+                          std::string(), TestSchemeClassifier());
+  input.set_current_url(GURL(url));
+  input.set_prevent_inline_autocomplete();
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
 
   // Set up the pref to cache the response from the previous run.
   std::string json_response("[\"\",[\"search1\", \"search2\", \"search3\"],"
@@ -271,9 +273,12 @@ TEST_F(ZeroSuggestProviderTest, TestMostVisitedCallback) {
   std::string current_url("http://www.foxnews.com/");
   std::string input_url("http://www.cnn.com/");
   AutocompleteInput input(base::ASCIIToUTF16(input_url), base::string16::npos,
-                          std::string(), GURL(current_url), base::string16(),
-                          metrics::OmniboxEventProto::OTHER, false, false, true,
-                          true, true, TestSchemeClassifier());
+                          std::string(), TestSchemeClassifier());
+  input.set_current_url(GURL(current_url));
+  input.set_current_page_classification(metrics::OmniboxEventProto::OTHER);
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
+  input.set_from_omnibox_focus();
   history::MostVisitedURLList urls;
   history::MostVisitedURL url(GURL("http://foo.com/"),
                               base::ASCIIToUTF16("Foo"));
@@ -302,9 +307,12 @@ TEST_F(ZeroSuggestProviderTest, TestMostVisitedNavigateToSearchPage) {
   std::string current_url("http://www.foxnews.com/");
   std::string input_url("http://www.cnn.com/");
   AutocompleteInput input(base::ASCIIToUTF16(input_url), base::string16::npos,
-                          std::string(), GURL(current_url), base::string16(),
-                          metrics::OmniboxEventProto::OTHER, false, false, true,
-                          true, true, TestSchemeClassifier());
+                          std::string(), TestSchemeClassifier());
+  input.set_current_url(GURL(current_url));
+  input.set_current_page_classification(metrics::OmniboxEventProto::OTHER);
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
+  input.set_from_omnibox_focus();
   history::MostVisitedURLList urls;
   history::MostVisitedURL url(GURL("http://foo.com/"),
                               base::ASCIIToUTF16("Foo"));
@@ -315,11 +323,16 @@ TEST_F(ZeroSuggestProviderTest, TestMostVisitedNavigateToSearchPage) {
   // Stop() doesn't always get called.
 
   std::string search_url("https://www.google.com/?q=flowers");
-  AutocompleteInput srp_input(
-      base::ASCIIToUTF16(search_url), base::string16::npos, std::string(),
-      GURL(search_url), base::string16(),
-      metrics::OmniboxEventProto::SEARCH_RESULT_PAGE_NO_SEARCH_TERM_REPLACEMENT,
-      false, false, true, true, true, TestSchemeClassifier());
+  AutocompleteInput srp_input(base::ASCIIToUTF16(search_url),
+                              base::string16::npos, std::string(),
+                              TestSchemeClassifier());
+  input.set_current_url(GURL(search_url));
+  input.set_current_page_classification(
+      metrics::OmniboxEventProto::
+          SEARCH_RESULT_PAGE_NO_SEARCH_TERM_REPLACEMENT);
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
+  input.set_from_omnibox_focus();
 
   provider_->Start(srp_input, false);
   EXPECT_TRUE(provider_->matches().empty());
@@ -338,9 +351,12 @@ TEST_F(ZeroSuggestProviderTest, TestPsuggestZeroSuggestCachingFirstRun) {
 
   std::string url("http://www.cnn.com/");
   AutocompleteInput input(base::ASCIIToUTF16(url), base::string16::npos,
-                          std::string(), GURL(url), base::string16(),
-                          metrics::OmniboxEventProto::INVALID_SPEC, true, false,
-                          true, true, true, TestSchemeClassifier());
+                          std::string(), TestSchemeClassifier());
+  input.set_current_url(GURL(url));
+  input.set_prevent_inline_autocomplete();
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
+  input.set_from_omnibox_focus();
 
   provider_->Start(input, false);
 
@@ -368,9 +384,12 @@ TEST_F(ZeroSuggestProviderTest, TestPsuggestZeroSuggestHasCachedResults) {
 
   std::string url("http://www.cnn.com/");
   AutocompleteInput input(base::ASCIIToUTF16(url), base::string16::npos,
-                          std::string(), GURL(url), base::string16(),
-                          metrics::OmniboxEventProto::INVALID_SPEC, true, false,
-                          true, true, true, TestSchemeClassifier());
+                          std::string(), TestSchemeClassifier());
+  input.set_current_url(GURL(url));
+  input.set_prevent_inline_autocomplete();
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
+  input.set_from_omnibox_focus();
 
   // Set up the pref to cache the response from the previous run.
   std::string json_response("[\"\",[\"search1\", \"search2\", \"search3\"],"
@@ -414,9 +433,12 @@ TEST_F(ZeroSuggestProviderTest, TestPsuggestZeroSuggestReceivedEmptyResults) {
 
   std::string url("http://www.cnn.com/");
   AutocompleteInput input(base::ASCIIToUTF16(url), base::string16::npos,
-                          std::string(), GURL(url), base::string16(),
-                          metrics::OmniboxEventProto::INVALID_SPEC, true, false,
-                          true, true, true, TestSchemeClassifier());
+                          std::string(), TestSchemeClassifier());
+  input.set_current_url(GURL(url));
+  input.set_prevent_inline_autocomplete();
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
+  input.set_from_omnibox_focus();
 
   // Set up the pref to cache the response from the previous run.
   std::string json_response("[\"\",[\"search1\", \"search2\", \"search3\"],"
