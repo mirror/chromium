@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8703e597_f7699922",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-14T15:29:59Z",
+      "side": 1,
+      "message": "Optional: Let\u0027s rename this to ShouldReconcile or CanReconcile?",
+      "range": {
+        "startLine": 191,
+        "startChar": 24,
+        "endLine": 191,
+        "endChar": 43
+      },
+      "revId": "6e8f6e4990036d22095ec7764333af5b00f32c01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

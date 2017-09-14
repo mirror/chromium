@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75c6ddc6_de01d38b",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-14T15:29:59Z",
+      "side": 1,
+      "message": "I think this means that we\u0027ll have to make sure that the reconcilor continues to work on ChromeOS (Colin hit a similar problem on ChromeOS when it was used in Kiosk mode and we had to revert his CL in emergency). And Unicorn folks want to use account reconcilor on ChromeOS in case the user signs in with a kids account.",
+      "range": {
+        "startLine": 216,
+        "startChar": 18,
+        "endLine": 216,
+        "endChar": 29
+      },
+      "revId": "8174d875dbe74718ed0c6d9cbc26e7e5bd84816e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a53283e_eac5dc8c",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-14T15:29:59Z",
+      "side": 1,
+      "message": "Optional (personal pref): \"started\" makes me think that the reconcile started. Maybe change the comment to \"enabled\"?",
+      "revId": "8174d875dbe74718ed0c6d9cbc26e7e5bd84816e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285674e5_6ce03fdb",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-14T15:29:59Z",
+      "side": 1,
+      "message": "Why isn\u0027t there any more call to LogoutAllAccounts in this case?",
+      "range": {
+        "startLine": 1019,
+        "startChar": 5,
+        "endLine": 1019,
+        "endChar": 10
+      },
+      "revId": "8174d875dbe74718ed0c6d9cbc26e7e5bd84816e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b96d95_012f4ef5",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-14T15:29:59Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we enable DICE before creating the reconcilor to avoid these calls that expose the internals of the reconcilor?",
+      "range": {
+        "startLine": 340,
+        "startChar": 7,
+        "endLine": 340,
+        "endChar": 17
+      },
+      "revId": "8174d875dbe74718ed0c6d9cbc26e7e5bd84816e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ac4464_5ba73662",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-14T15:29:59Z",
+      "side": 1,
+      "message": "We may need to make sure this does not break reconcilor on ChromeOS (see comment in the test). I think the most problematic case is when this is used with https://cs.chromium.org/chromium/src/chrome/browser/chromeos/settings/device_oauth2_token_service.h?q\u003dDeviceOa\u0026sq\u003dpackage:chromium\u0026l\u003d35 (this is the kiosk mode).\n\nWe may need to ask Colin what he did about this (or I need to search my reviews and emails).",
+      "range": {
+        "startLine": 107,
+        "startChar": 24,
+        "endLine": 107,
+        "endChar": 47
+      },
+      "revId": "8174d875dbe74718ed0c6d9cbc26e7e5bd84816e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2181a45a_63b52901",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-14T15:29:59Z",
+      "side": 1,
+      "message": "Nit: s/IsReconcilorEnabled/IsEnabled?",
+      "range": {
+        "startLine": 191,
+        "startChar": 24,
+        "endLine": 191,
+        "endChar": 43
+      },
+      "revId": "8174d875dbe74718ed0c6d9cbc26e7e5bd84816e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08221eff_40ecadab",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-14T15:29:59Z",
+      "side": 1,
+      "message": "Before are_primaries_equal was false if there were now accounts. Not it is true. I did not check whether this is a bad thing though.",
+      "revId": "8174d875dbe74718ed0c6d9cbc26e7e5bd84816e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
