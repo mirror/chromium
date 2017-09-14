@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59e57342_45c7f02d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/TabsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1488,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-14T15:23:04Z",
+      "side": 1,
+      "message": "If we wait for the overview mode to finish hiding, to ensure the new tab open animation has finished before activity tear down, does that also fix the exception you are seeing?\n\n e.g.\n\n       UiUtils.settleDownUI(InstrumentationRegistry.getInstrumentation());\n        CriteriaHelper.pollInstrumentationThread(new Criteria(\"Should be in overview mode\") {\n            @Override\n            public boolean isSatisfied() {\n                return !mActivityTestRule.getActivity().isInOverviewMode();\n            }\n        });",
+      "range": {
+        "startLine": 1486,
+        "startChar": 8,
+        "endLine": 1488,
+        "endChar": 75
+      },
+      "revId": "eb3fa1c62be16aed2a4a1f0fb4ce95b1f3f90fb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
