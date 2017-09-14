@@ -14,6 +14,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/threading/thread_checker.h"
+#include "base/unguessable_token.h"
 #include "extensions/common/features/feature.h"
 #include "extensions/common/permissions/api_permission_set.h"
 #include "extensions/renderer/module_system.h"
@@ -89,6 +90,10 @@ class ScriptContext : public RequestSender::Source {
 
   Feature::Context effective_context_type() const {
     return effective_context_type_;
+  }
+
+  const base::UnguessableToken& context_id() const {
+    return context_id_;
   }
 
   void set_module_system(std::unique_ptr<ModuleSystem> module_system) {
@@ -256,6 +261,8 @@ class ScriptContext : public RequestSender::Source {
 
   // The type of context.
   Feature::Context effective_context_type_;
+
+  base::UnguessableToken context_id_;
 
   // Owns and structures the JS that is injected to set up extension bindings.
   std::unique_ptr<ModuleSystem> module_system_;

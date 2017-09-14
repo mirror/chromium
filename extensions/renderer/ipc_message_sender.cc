@@ -109,6 +109,25 @@ class MainThreadIPCMessageSender : public IPCMessageSender {
         context->GetExtensionID(), event_name, filter, remove_lazy_listener));
   }
 
+  void SendOpenMessagePort(int routing_id, const PortId& port_id) override {
+    render_thread_->Send(
+        new ExtensionHostMsg_OpenMessagePort(routing_id, port_id));
+  }
+
+  void SendCloseMessagePort(int routing_id,
+                            const PortId& port_id,
+                            bool close_channel) override {
+    render_thread_->Send(new ExtensionHostMsg_CloseMessagePort(
+        routing_id, port_id, close_channel));
+  }
+
+  void SendPostMessageToPort(int routing_id,
+                             const PortId& port_id,
+                             const Message& message) override {
+    render_thread_->Send(new ExtensionHostMsg_PostMessage(
+        routing_id, port_id, message));
+  }
+
  private:
   content::RenderThread* const render_thread_;
 
@@ -216,6 +235,23 @@ class WorkerThreadIPCMessageSender : public IPCMessageSender {
     DCHECK_NE(kMainThreadId, content::WorkerThread::GetCurrentId());
     NOTIMPLEMENTED();
   }
+
+  void SendOpenMessagePort(int routing_id, const PortId& port_id) override {
+    NOTIMPLEMENTED();
+  }
+
+  void SendCloseMessagePort(int routing_id,
+                            const PortId& port_id,
+                            bool close_channel) override {
+    NOTIMPLEMENTED();
+  }
+
+  void SendPostMessageToPort(int routing_id,
+                             const PortId& port_id,
+                             const Message& message) override {
+    NOTIMPLEMENTED();
+  }
+
 
  private:
   WorkerThreadDispatcher* const dispatcher_;

@@ -91,6 +91,19 @@ ScriptContext* ScriptContextSet::GetContextByV8Context(
   return g_context_set ? g_context_set->GetByV8Context(v8_context) : nullptr;
 }
 
+ScriptContext* ScriptContextSet::GetContextById(
+    const base::UnguessableToken& id) {
+  // g_context_set can be null in unittests.
+  if (!g_context_set)
+    return nullptr;
+
+  for (ScriptContext* context : g_context_set->contexts_) {
+    if (context->context_id() == id)
+      return context;
+  }
+  return nullptr;
+}
+
 void ScriptContextSet::ForEach(
     const std::string& extension_id,
     content::RenderFrame* render_frame,
@@ -111,8 +124,8 @@ void ScriptContextSet::ForEach(
     }
 
     content::RenderFrame* context_render_frame = context->GetRenderFrame();
-    if (!context_render_frame)
-      continue;
+    // if (!context_render_frame)
+    //   continue;
 
     if (render_frame && render_frame != context_render_frame)
       continue;

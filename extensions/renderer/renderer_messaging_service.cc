@@ -20,6 +20,7 @@
 #include "extensions/common/extension_messages.h"
 #include "extensions/renderer/extension_bindings_system.h"
 #include "extensions/renderer/extension_port.h"
+#include "extensions/renderer/ipc_message_sender.h"
 #include "extensions/renderer/script_context.h"
 #include "extensions/renderer/script_context_set.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
@@ -40,7 +41,12 @@ void RendererMessagingService::ValidateMessagePort(
     const ScriptContextSet& context_set,
     const PortId& port_id,
     content::RenderFrame* render_frame) {
-  int routing_id = render_frame->GetRoutingID();
+  // TODO(devlin): In practice, |render_frame| should never be null here (unlike
+  // in other methods, where it legitimately can), but it can be in testing. It
+  // would be better to fake it somehow, but unfortunately, there's no good way
+  // to have a RenderFrame in a unittest. :(
+  int routing_id =
+      render_frame ? render_frame->GetRoutingID() : MSG_ROUTING_NONE;
 
   bool has_port = false;
   // The base::Unretained() below is safe since ScriptContextSet::ForEach is
@@ -53,8 +59,8 @@ void RendererMessagingService::ValidateMessagePort(
   // A reply is only sent if the port is missing, because the port is assumed to
   // exist unless stated otherwise.
   if (!has_port) {
-    content::RenderThread::Get()->Send(
-        new ExtensionHostMsg_CloseMessagePort(routing_id, port_id, false));
+    bindings_system_->GetIPCMessageSender()->SendCloseMessagePort(
+            routing_id, port_id, false);
   }
 }
 
@@ -66,24 +72,26 @@ void RendererMessagingService::DispatchOnConnect(
     const ExtensionMsg_ExternalConnectionInfo& info,
     const std::string& tls_channel_id,
     content::RenderFrame* restrict_to_render_frame) {
+  LOG(WARNING) << "Dispatch on connect";
   DCHECK(!target_port_id.is_opener);
   int routing_id = restrict_to_render_frame
                        ? restrict_to_render_frame->GetRoutingID()
                        : MSG_ROUTING_NONE;
   bool port_created = false;
+  LOG(WARNING) << "Iterating";
   context_set.ForEach(
       info.target_id, restrict_to_render_frame,
       base::Bind(&RendererMessagingService::DispatchOnConnectToScriptContext,
                  base::Unretained(this), target_port_id, channel_name, &source,
                  info, tls_channel_id, &port_created));
+  LOG(WARNING) << "Done: " << port_created;
   // Note: |restrict_to_render_frame| may have been deleted at this point!
 
+  IPCMessageSender* ipc_sender = bindings_system_->GetIPCMessageSender();
   if (port_created) {
-    content::RenderThread::Get()->Send(
-        new ExtensionHostMsg_OpenMessagePort(routing_id, target_port_id));
+    ipc_sender->SendOpenMessagePort(routing_id, target_port_id);
   } else {
-    content::RenderThread::Get()->Send(new ExtensionHostMsg_CloseMessagePort(
-        routing_id, target_port_id, false));
+    ipc_sender->SendCloseMessagePort(routing_id, target_port_id, false);
   }
 }
 
@@ -128,6 +136,7 @@ void RendererMessagingService::DispatchOnConnectToScriptContext(
     const std::string& tls_channel_id,
     bool* port_created,
     ScriptContext* script_context) {
+  LOG(WARNING) << "Maybe Dispatching";
   const base::UnguessableToken& context_id = GetContextId(script_context);
   // If the channel was opened by this same context, ignore it. This should only
   // happen when messages are sent to an entire process (rather than a single
@@ -135,6 +144,7 @@ void RendererMessagingService::DispatchOnConnectToScriptContext(
   if (context_id == target_port_id.context_id)
     return;
 
+  LOG(WARNING) << "Closer";
   // First, determine the event we'll use to connect.
   std::string target_extension_id = script_context->GetExtensionID();
   bool is_external = info.source_id != target_extension_id;
@@ -154,9 +164,11 @@ void RendererMessagingService::DispatchOnConnectToScriptContext(
   // be used in this context.
   if (!bindings_system_->HasEventListenerInContext(event_name,
                                                    script_context)) {
+    LOG(WARNING) << "No listener";
     return;
   }
   *port_created = true;
+  LOG(WARNING) << "Dispatching";
 
   DispatchOnConnectToListeners(script_context, target_port_id,
                                target_extension_id, channel_name, source, info,

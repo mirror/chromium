@@ -20,6 +20,10 @@
 
 class GURL;
 
+namespace base {
+class UnguessableToken;
+}
+
 namespace blink {
 class WebLocalFrame;
 class WebSecurityOrigin;
@@ -72,6 +76,8 @@ class ScriptContextSet {
   // Static equivalent of the above.
   static ScriptContext* GetContextByV8Context(
       const v8::Local<v8::Context>& context);
+  // Retrieve the ScriptContext with the given |id|.
+  static ScriptContext* GetContextById(const base::UnguessableToken& id);
 
   // Returns the ScriptContext corresponding to the V8 context that created the
   // given |object|.
