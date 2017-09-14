@@ -252,39 +252,22 @@ int64_t SharedSampler::GetSupportedFlags() const {
          REFRESH_TYPE_START_TIME | REFRESH_TYPE_CPU_TIME;
 }
 
-SharedSampler::Callbacks::Callbacks() {}
-
-SharedSampler::Callbacks::~Callbacks() {}
-
-SharedSampler::Callbacks::Callbacks(Callbacks&& other) {
-  on_idle_wakeups = std::move(other.on_idle_wakeups);
-  on_physical_memory = std::move(other.on_physical_memory);
-  on_start_time = std::move(other.on_start_time);
-  on_cpu_time = std::move(other.on_cpu_time);
-}
-
-void SharedSampler::RegisterCallbacks(
+void SharedSampler::RegisterCallback(
     base::ProcessId process_id,
-    const OnIdleWakeupsCallback& on_idle_wakeups,
-    const OnPhysicalMemoryCallback& on_physical_memory,
-    const OnStartTimeCallback& on_start_time,
-    const OnCpuTimeCallback& on_cpu_time) {
+    const OnSamplingCompleteCallback on_sampling_complete) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   if (process_id == 0)
     return;
 
-  Callbacks callbacks;
-  callbacks.on_idle_wakeups = on_idle_wakeups;
-  callbacks.on_physical_memory = on_physical_memory;
-  callbacks.on_start_time = on_start_time;
-  callbacks.on_cpu_time = on_cpu_time;
-  bool result = callbacks_map_.insert(
-      std::make_pair(process_id, std::move(callbacks))).second;
+  bool result =
+      callbacks_map_
+          .insert(std::make_pair(process_id, std::move(on_sampling_complete)))
+          .second;
   DCHECK(result);
 }
 
-void SharedSampler::UnregisterCallbacks(base::ProcessId process_id) {
+void SharedSampler::UnregisterCallback(base::ProcessId process_id) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   if (process_id == 0)
@@ -576,29 +559,25 @@ void SharedSampler::OnRefreshDone(
       }
     }
 
+    Results results;
     if (TaskManagerObserver::IsResourceRefreshEnabled(REFRESH_TYPE_IDLE_WAKEUPS,
                                                       refresh_flags_)) {
-      DCHECK(callback_entry.second.on_idle_wakeups);
-      callback_entry.second.on_idle_wakeups.Run(idle_wakeups_per_second);
+      results.idle_wakeups_per_second = idle_wakeups_per_second;
     }
-
     if (TaskManagerObserver::IsResourceRefreshEnabled(
         REFRESH_TYPE_PHYSICAL_MEMORY, refresh_flags_)) {
-      DCHECK(callback_entry.second.on_physical_memory);
-      callback_entry.second.on_physical_memory.Run(physical_bytes);
+      results.physical_bytes = physical_bytes;
     }
-
     if (TaskManagerObserver::IsResourceRefreshEnabled(REFRESH_TYPE_START_TIME,
                                                       refresh_flags_)) {
-      DCHECK(callback_entry.second.on_start_time);
-      callback_entry.second.on_start_time.Run(start_time);
+      results.start_time = start_time;
     }
-
     if (TaskManagerObserver::IsResourceRefreshEnabled(REFRESH_TYPE_CPU_TIME,
                                                       refresh_flags_)) {
-      DCHECK(callback_entry.second.on_cpu_time);
-      callback_entry.second.on_cpu_time.Run(cpu_time);
+      results.cpu_time = cpu_time;
     }
+    // TODO(wez): Make this conditional?
+    callback_entry.second.Run(std::move(results));
   }
 
   // Reset refresh_results_ to trigger RefreshOnWorkerThread next time Refresh
