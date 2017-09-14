@@ -390,6 +390,8 @@ TEST_F(ServiceWorkerVersionTest, ConcurrentStartAndStop) {
   ServiceWorkerStatusCode status1 = SERVICE_WORKER_ERROR_FAILED;
   ServiceWorkerStatusCode status2 = SERVICE_WORKER_ERROR_FAILED;
   ServiceWorkerStatusCode status3 = SERVICE_WORKER_ERROR_FAILED;
+  bool has_stopped1 = false;
+  bool has_stopped2 = false;
   version_->StartWorker(ServiceWorkerMetrics::EventType::UNKNOWN,
                         CreateReceiverOnCurrentThread(&status1));
   version_->StartWorker(ServiceWorkerMetrics::EventType::UNKNOWN,
@@ -409,25 +411,24 @@ TEST_F(ServiceWorkerVersionTest, ConcurrentStartAndStop) {
   EXPECT_EQ(SERVICE_WORKER_OK, status2);
   EXPECT_EQ(SERVICE_WORKER_OK, status3);
 
-  {
-    // Call StopWorker() multiple times.
-    bool has_stopped1 = false;
-    bool has_stopped2 = false;
-    version_->StopWorker(base::BindOnce(&VerifyCalled, &has_stopped1));
-    version_->StopWorker(base::BindOnce(&VerifyCalled, &has_stopped2));
+  // Call StopWorker() multiple times.
+  has_stopped1 = false;
+  has_stopped2 = false;
+  version_->StopWorker(base::BindOnce(&VerifyCalled, &has_stopped1));
+  version_->StopWorker(base::BindOnce(&VerifyCalled, &has_stopped2));
 
-    EXPECT_EQ(EmbeddedWorkerStatus::STOPPING, version_->running_status());
-    base::RunLoop().RunUntilIdle();
-    EXPECT_EQ(EmbeddedWorkerStatus::STOPPED, version_->running_status());
+  EXPECT_EQ(EmbeddedWorkerStatus::STOPPING, version_->running_status());
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(EmbeddedWorkerStatus::STOPPED, version_->running_status());
 
-    // All StopWorker should just succeed.
-    EXPECT_TRUE(has_stopped1);
-    EXPECT_TRUE(has_stopped2);
-  }
+  // All StopWorker should just succeed.
+  EXPECT_TRUE(has_stopped1);
+  EXPECT_TRUE(has_stopped2);
 
   // Start worker again.
   status1 = SERVICE_WORKER_ERROR_FAILED;
   status2 = SERVICE_WORKER_ERROR_FAILED;
+  has_stopped1 = false;
 
   version_->StartWorker(ServiceWorkerMetrics::EventType::UNKNOWN,
                         CreateReceiverOnCurrentThread(&status1));
@@ -436,24 +437,22 @@ TEST_F(ServiceWorkerVersionTest, ConcurrentStartAndStop) {
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, version_->running_status());
 
-  {
-    // Call StopWorker()
-    bool has_stopped = false;
-    version_->StopWorker(base::BindOnce(&VerifyCalled, &has_stopped));
+  // Call StopWorker()
+  has_stopped1 = false;
+  version_->StopWorker(base::BindOnce(&VerifyCalled, &has_stopped1));
 
-    // And try calling StartWorker while StopWorker is in queue.
-    version_->StartWorker(ServiceWorkerMetrics::EventType::UNKNOWN,
-                          CreateReceiverOnCurrentThread(&status2));
+  // And try calling StartWorker while StopWorker is in queue.
+  version_->StartWorker(ServiceWorkerMetrics::EventType::UNKNOWN,
+                        CreateReceiverOnCurrentThread(&status2));
 
-    EXPECT_EQ(EmbeddedWorkerStatus::STOPPING, version_->running_status());
-    base::RunLoop().RunUntilIdle();
-    EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, version_->running_status());
+  EXPECT_EQ(EmbeddedWorkerStatus::STOPPING, version_->running_status());
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(EmbeddedWorkerStatus::RUNNING, version_->running_status());
 
-    // All should just succeed.
-    EXPECT_EQ(SERVICE_WORKER_OK, status1);
-    EXPECT_EQ(SERVICE_WORKER_OK, status2);
-    EXPECT_TRUE(has_stopped);
-  }
+  // All should just succeed.
+  EXPECT_EQ(SERVICE_WORKER_OK, status1);
+  EXPECT_EQ(SERVICE_WORKER_OK, status2);
+  EXPECT_TRUE(has_stopped1);
 }
 
 TEST_F(ServiceWorkerVersionTest, DispatchEventToStoppedWorker) {
@@ -734,6 +733,7 @@ TEST_F(ServiceWorkerVersionTest, StaleUpdate_NonActiveWorker) {
 
 // Test that staleness is detected when starting a worker.
 TEST_F(ServiceWorkerVersionTest, StaleUpdate_StartWorker) {
+  bool has_stopped = false;
 
   // Starting the worker marks it as stale.
   version_->SetStatus(ServiceWorkerVersion::ACTIVATED);
@@ -744,7 +744,6 @@ TEST_F(ServiceWorkerVersionTest, StaleUpdate_StartWorker) {
   EXPECT_FALSE(version_->update_timer_.IsRunning());
 
   // Update is actually scheduled after the worker stops.
-  bool has_stopped = false;
   version_->StopWorker(base::BindOnce(&VerifyCalled, &has_stopped));
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(has_stopped);
@@ -1391,6 +1390,7 @@ TEST_F(ServiceWorkerFailToStartTest, FailingWorkerUsesNewRendererProcess) {
 
 TEST_F(ServiceWorkerFailToStartTest, RestartStalledWorker) {
   ServiceWorkerStatusCode status1 = SERVICE_WORKER_ERROR_MAX_VALUE;
+  bool has_stopped = false;
   version_->StartWorker(ServiceWorkerMetrics::EventType::FETCH_MAIN_FRAME,
                         CreateReceiverOnCurrentThread(&status1));
   base::RunLoop().RunUntilIdle();
@@ -1403,7 +1403,6 @@ TEST_F(ServiceWorkerFailToStartTest, RestartStalledWorker) {
 
   // StartWorker message will be sent again because OnStopped is called before
   // OnStarted.
-  bool has_stopped = false;
   version_->StopWorker(base::BindOnce(&VerifyCalled, &has_stopped));
   base::RunLoop().RunUntilIdle();
 

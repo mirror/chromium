@@ -35,6 +35,8 @@ class InterfaceRequestDataView;
 template <typename K, typename V>
 class MapDataView;
 
+class NativeStructDataView;
+
 class StringDataView;
 
 namespace internal {
@@ -52,6 +54,8 @@ class Array_Data;
 
 template <typename K, typename V>
 class Map_Data;
+
+class NativeStruct_Data;
 
 using String_Data = Array_Data<char>;
 
@@ -293,6 +297,14 @@ struct MojomTypeTraits<MapDataView<K, V>, false> {
   using DataAsArrayElement = Pointer<Data>;
 
   static const MojomTypeCategory category = MojomTypeCategory::MAP;
+};
+
+template <>
+struct MojomTypeTraits<NativeStructDataView, false> {
+  using Data = internal::NativeStruct_Data;
+  using DataAsArrayElement = Pointer<Data>;
+
+  static const MojomTypeCategory category = MojomTypeCategory::STRUCT;
 };
 
 template <>

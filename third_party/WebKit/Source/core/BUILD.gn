@@ -424,13 +424,13 @@ action("generated_testing_idls_internal_runtime_flags") {
 
   inputs = scripts_for_json5_files + [
              "../build/scripts/make_internal_runtime_flags.py",
-             "../platform/runtime_enabled_features.json5",
+             "../platform/RuntimeEnabledFeatures.json5",
              "../build/scripts/templates/InternalRuntimeFlags.h.tmpl",
              "../build/scripts/templates/InternalRuntimeFlags.idl.tmpl",
            ]
 
   args = [
-    rebase_path("../platform/runtime_enabled_features.json5", root_build_dir),
+    rebase_path("../platform/RuntimeEnabledFeatures.json5", root_build_dir),
     "--output_dir",
     "$rel_blink_core_gen_dir/testing",
   ]
@@ -516,7 +516,6 @@ code_generator("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSPropertyAPIAlignItems.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIAlignOrJustifyContent.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIAlignSelf.h",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPIAll.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIAnimationDirection.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIAnimationFillMode.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIAnimationIterationCount.h",
@@ -557,7 +556,6 @@ code_generator("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSPropertyAPID.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIDelay.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIDescriptorOnly.h",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPIDirection.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIDuration.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIFillOrStrokeOpacity.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIFilter.h",
@@ -656,7 +654,6 @@ code_generator("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSPropertyAPITransformOrigin.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPITransitionProperty.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPITranslate.h",
-    "$blink_core_output_dir/css/properties/CSSPropertyAPIUnicodeBidi.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIVerticalAlign.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIVisibility.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIWebkitBorderColor.h",
@@ -1134,7 +1131,7 @@ action("make_core_generated_origin_trials") {
 
   inputs = scripts_for_json5_files + [
              "../build/scripts/make_origin_trials.py",
-             "../platform/runtime_enabled_features.json5",
+             "../platform/RuntimeEnabledFeatures.json5",
              "../build/scripts/templates/OriginTrials.cpp.tmpl",
              "../build/scripts/templates/OriginTrials.h.tmpl",
            ]
@@ -1144,7 +1141,7 @@ action("make_core_generated_origin_trials") {
   ]
 
   args = [
-    rebase_path("../platform/runtime_enabled_features.json5", root_build_dir),
+    rebase_path("../platform/RuntimeEnabledFeatures.json5", root_build_dir),
     "--output_dir",
     "$rel_blink_core_gen_dir/origin_trials",
   ]

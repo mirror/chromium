@@ -48,6 +48,7 @@ class DownloadRequestLimiterTest : public ChromeRenderViewHostTestHarness {
         PermissionRequestManager::FromWebContents(web_contents());
     mock_permission_prompt_factory_.reset(
         new MockPermissionPromptFactory(manager));
+    manager->DisplayPendingRequests();
 
     UpdateExpectations(ACCEPT);
     cancel_count_ = continue_count_ = 0;

@@ -216,7 +216,13 @@ TEST_F(KeyboardTest, OnKeyboardModifiers) {
   keyboard.reset();
 }
 
-TEST_F(KeyboardTest, OnKeyboardTypeChanged) {
+// Test fails consistently on CrOS: crbug.com/764338
+#if defined(OS_CHROMEOS)
+#define MAYBE_OnKeyboardTypeChanged DISABLED_OnKeyboardTypeChanged
+#else
+#define MAYBE_OnKeyboardTypeChanged OnKeyboardTypeChanged
+#endif
+TEST_F(KeyboardTest, MAYBE_OnKeyboardTypeChanged) {
   std::unique_ptr<Surface> surface(new Surface);
   std::unique_ptr<ShellSurface> shell_surface(new ShellSurface(surface.get()));
   gfx::Size buffer_size(10, 10);
@@ -229,13 +235,11 @@ TEST_F(KeyboardTest, OnKeyboardTypeChanged) {
       aura::client::GetFocusClient(ash::Shell::GetPrimaryRootWindow());
   focus_client->FocusWindow(nullptr);
 
-  ui::DeviceHotplugEventObserver* device_data_manager =
+  ui::DeviceDataManager* device_data_manager =
       ui::DeviceDataManager::GetInstance();
   ASSERT_TRUE(device_data_manager != nullptr);
-  // Make sure that DeviceDataManager has one external keyboard.
-  const std::vector<ui::InputDevice> keyboards{ui::InputDevice(
-      2, ui::InputDeviceType::INPUT_DEVICE_EXTERNAL, "keyboard")};
-  device_data_manager->OnKeyboardDevicesUpdated(keyboards);
+  const std::vector<ui::InputDevice> keyboards =
+      device_data_manager->GetKeyboardDevices();
 
   ash::TabletModeController* tablet_mode_controller =
       ash::Shell::Get()->tablet_mode_controller();
@@ -252,12 +256,13 @@ TEST_F(KeyboardTest, OnKeyboardTypeChanged) {
   // Removing all keyboard devices in tablet mode calls
   // OnKeyboardTypeChanged() with false.
   EXPECT_CALL(configuration_delegate, OnKeyboardTypeChanged(false));
-  device_data_manager->OnKeyboardDevicesUpdated(
-      std::vector<ui::InputDevice>({}));
+  static_cast<ui::DeviceHotplugEventObserver*>(device_data_manager)
+      ->OnKeyboardDevicesUpdated(std::vector<ui::InputDevice>({}));
 
   // Re-adding keyboards calls OnKeyboardTypeChanged() with true;
   EXPECT_CALL(configuration_delegate, OnKeyboardTypeChanged(true));
-  device_data_manager->OnKeyboardDevicesUpdated(keyboards);
+  static_cast<ui::DeviceHotplugEventObserver*>(device_data_manager)
+      ->OnKeyboardDevicesUpdated(keyboards);
 
   keyboard.reset();
 

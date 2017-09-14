@@ -25,7 +25,6 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
-#include "base/version.h"
 #include "build/build_config.h"
 #include "chrome/common/child_process_logging.h"
 #include "chrome/common/chrome_constants.h"
@@ -48,7 +47,6 @@
 #include "extensions/features/features.h"
 #include "gpu/config/gpu_info.h"
 #include "gpu/config/gpu_util.h"
-#include "media/base/media_switches.h"
 #include "media/media_features.h"
 #include "net/http/http_util.h"
 #include "pdf/features.h"
@@ -85,13 +83,11 @@
 #include "ppapi/shared_impl/ppapi_permissions.h"  // nogncheck
 #endif
 
-#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-#include "media/cdm/cdm_paths.h"  // nogncheck
-#if defined(WIDEVINE_CDM_AVAILABLE) && !defined(WIDEVINE_CDM_IS_COMPONENT)
+#if defined(WIDEVINE_CDM_AVAILABLE) && BUILDFLAG(ENABLE_LIBRARY_CDMS) && \
+    !defined(WIDEVINE_CDM_IS_COMPONENT)
 #define WIDEVINE_CDM_AVAILABLE_NOT_COMPONENT
 #include "chrome/common/widevine_cdm_constants.h"
 #endif
-#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
 
 #if BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)
 #include "chrome/common/media/cdm_host_file_path.h"
@@ -552,27 +548,12 @@ void ChromeContentClient::AddContentDecryptionModules(
       const base::Version version(WIDEVINE_CDM_VERSION_STRING);
       DCHECK(version.IsValid());
       cdms->push_back(content::CdmInfo(kWidevineCdmType, version, cdm_path,
-                                       codecs_supported, kWidevineKeySystem,
-                                       false));
+                                       codecs_supported));
     }
 #endif  // defined(WIDEVINE_CDM_AVAILABLE_NOT_COMPONENT)
 
-#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
-    // Register Clear Key CDM if specified in command line.
-    base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-    std::string clear_key_cdm_path =
-        command_line->GetSwitchValueASCII(switches::kClearKeyCdmPathForTesting);
-    if (!clear_key_cdm_path.empty()) {
-      // TODO(crbug.com/764480): Remove this after we have a central place for
-      // External Clear Key (ECK) related information.
-      const char kExternalClearKeyKeySystem[] = "org.chromium.externalclearkey";
-      // Supported codecs are hard-coded in ExternalClearKeyProperties.
-      cdms->push_back(
-          content::CdmInfo(media::kClearKeyCdmType, base::Version("0.1.0.0"),
-                           base::FilePath::FromUTF8Unsafe(clear_key_cdm_path),
-                           {}, kExternalClearKeyKeySystem, true));
-    }
-#endif  // BUILDFLAG(ENABLE_LIBRARY_CDMS)
+    // TODO(jrummell): Add External Clear Key CDM for testing, if it's
+    // available.
   }
 
 #if BUILDFLAG(ENABLE_CDM_HOST_VERIFICATION)

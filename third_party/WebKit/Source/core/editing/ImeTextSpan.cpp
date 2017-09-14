@@ -48,8 +48,6 @@ ImeTextSpan::Type ConvertWebTypeToType(WebImeTextSpan::Type type) {
       return ImeTextSpan::Type::kComposition;
     case WebImeTextSpan::Type::kSuggestion:
       return ImeTextSpan::Type::kSuggestion;
-    case WebImeTextSpan::Type::kMisspellingSuggestion:
-      return ImeTextSpan::Type::kMisspellingSuggestion;
   }
 
   NOTREACHED();

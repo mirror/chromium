@@ -41,7 +41,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': '0f96bb303adfc712baba7830e036df1d0972d7f3',
+  'skia_revision': '09dfc4759e99229e7c74891a88596e8b9b3d9026',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
@@ -97,7 +97,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': '444bcc528f7bffd38cca580932213951db67ba59',
+  'catapult_revision': 'c4a8d9578ef113603e4de3120df944033a57e876',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.

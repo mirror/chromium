@@ -24,6 +24,7 @@ void PermissionsBrowserTest::SetUpOnMainThread() {
   PermissionRequestManager* manager = PermissionRequestManager::FromWebContents(
       browser()->tab_strip_model()->GetActiveWebContents());
   prompt_factory_.reset(new MockPermissionPromptFactory(manager));
+  manager->DisplayPendingRequests();
 
   ASSERT_TRUE(embedded_test_server()->Start());
 

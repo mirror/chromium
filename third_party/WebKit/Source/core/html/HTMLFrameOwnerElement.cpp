@@ -42,15 +42,11 @@
 
 namespace blink {
 
-namespace {
-
-using PluginSet = PersistentHeapHashSet<Member<PluginView>>;
-PluginSet& PluginsPendingDispose() {
-  DEFINE_STATIC_LOCAL(PluginSet, set, ());
+using PluginSet = HeapHashSet<Member<PluginView>>;
+static PluginSet& PluginsPendingDispose() {
+  DEFINE_STATIC_LOCAL(PluginSet, set, (new PluginSet));
   return set;
 }
-
-}  // namespace
 
 SubframeLoadingDisabler::SubtreeRootSet&
 SubframeLoadingDisabler::DisabledSubtreeRoots() {
@@ -58,19 +54,26 @@ SubframeLoadingDisabler::DisabledSubtreeRoots() {
   return nodes;
 }
 
-// static
-int HTMLFrameOwnerElement::PluginDisposeSuspendScope::suspend_count_ = 0;
+static unsigned g_plugin_dispose_suspend_count = 0;
+
+HTMLFrameOwnerElement::PluginDisposeSuspendScope::PluginDisposeSuspendScope() {
+  ++g_plugin_dispose_suspend_count;
+}
 
 void HTMLFrameOwnerElement::PluginDisposeSuspendScope::
     PerformDeferredPluginDispose() {
-  DCHECK_EQ(suspend_count_, 1);
-  suspend_count_ = 0;
-
   PluginSet dispose_set;
   PluginsPendingDispose().swap(dispose_set);
   for (const auto& plugin : dispose_set) {
     plugin->Dispose();
   }
+}
+
+HTMLFrameOwnerElement::PluginDisposeSuspendScope::~PluginDisposeSuspendScope() {
+  DCHECK_GT(g_plugin_dispose_suspend_count, 0u);
+  if (g_plugin_dispose_suspend_count == 1)
+    PerformDeferredPluginDispose();
+  --g_plugin_dispose_suspend_count;
 }
 
 HTMLFrameOwnerElement::HTMLFrameOwnerElement(const QualifiedName& tag_name,
@@ -156,10 +159,9 @@ bool HTMLFrameOwnerElement::IsKeyboardFocusable() const {
 }
 
 void HTMLFrameOwnerElement::DisposePluginSoon(PluginView* plugin) {
-  if (PluginDisposeSuspendScope::suspend_count_) {
+  if (g_plugin_dispose_suspend_count)
     PluginsPendingDispose().insert(plugin);
-    PluginDisposeSuspendScope::suspend_count_ |= 1;
-  } else
+  else
     plugin->Dispose();
 }
 

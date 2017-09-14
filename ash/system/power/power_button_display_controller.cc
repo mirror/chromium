@@ -6,8 +6,9 @@
 
 #include "ash/accessibility_delegate.h"
 #include "ash/media_controller.h"
+#include "ash/public/cpp/touchscreen_enabled_source.h"
 #include "ash/shell.h"
-#include "ash/touch/touch_devices_controller.h"
+#include "ash/shell_delegate.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/logging.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -152,7 +153,7 @@ void PowerButtonDisplayController::OnGotInitialBacklightsForcedOff(
 void PowerButtonDisplayController::UpdateTouchscreenStatus() {
   const bool enable_touchscreen =
       !backlights_forced_off_ && (screen_state_ != ScreenState::OFF_AUTO);
-  Shell::Get()->touch_devices_controller()->SetTouchscreenEnabled(
+  Shell::Get()->shell_delegate()->SetTouchscreenEnabled(
       enable_touchscreen, TouchscreenEnabledSource::GLOBAL);
 }
 

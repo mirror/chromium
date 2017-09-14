@@ -34,8 +34,8 @@ struct SerializeStructHelperTraits {
 };
 
 template <>
-struct SerializeStructHelperTraits<native::NativeStruct> {
-  using DataView = native::NativeStructDataView;
+struct SerializeStructHelperTraits<NativeStruct> {
+  using DataView = NativeStructDataView;
 };
 
 template <typename InputType, typename DataType>
@@ -375,10 +375,10 @@ TEST_F(StructTest, Versioning_NewToOld) {
 
 // Serialization test for native struct.
 TEST_F(StructTest, Serialization_NativeStruct) {
-  using Data = native::internal::NativeStruct_Data;
+  using Data = mojo::internal::NativeStruct_Data;
   {
     // Serialization of a null native struct.
-    native::NativeStructPtr native;
+    NativeStructPtr native;
 
     mojo::Message message;
     mojo::internal::SerializationContext context;
@@ -386,46 +386,46 @@ TEST_F(StructTest, Serialization_NativeStruct) {
     EXPECT_EQ(0u, SerializeStruct(native, &message, &context, &data));
     EXPECT_EQ(nullptr, data);
 
-    native::NativeStructPtr output_native;
-    mojo::internal::Deserialize<native::NativeStructDataView>(
-        data, &output_native, &context);
+    NativeStructPtr output_native;
+    mojo::internal::Deserialize<NativeStructDataView>(data, &output_native,
+                                                      &context);
     EXPECT_TRUE(output_native.is_null());
   }
 
   {
     // Serialization of a native struct with null data.
-    native::NativeStructPtr native(native::NativeStruct::New());
+    NativeStructPtr native(NativeStruct::New());
 
     mojo::Message message;
     mojo::internal::SerializationContext context;
     Data* data = nullptr;
-    EXPECT_EQ(32u, SerializeStruct(native, &message, &context, &data));
-    EXPECT_EQ(0u, data->data.Get()->size());
+    EXPECT_EQ(0u, SerializeStruct(native, &message, &context, &data));
+    EXPECT_EQ(nullptr, data);
 
-    native::NativeStructPtr output_native;
-    mojo::internal::Deserialize<native::NativeStructDataView>(
-        data, &output_native, &context);
-    EXPECT_TRUE(output_native->data.empty());
+    NativeStructPtr output_native;
+    mojo::internal::Deserialize<NativeStructDataView>(data, &output_native,
+                                                      &context);
+    EXPECT_TRUE(output_native.is_null());
   }
 
   {
-    native::NativeStructPtr native(native::NativeStruct::New());
+    NativeStructPtr native(NativeStruct::New());
     native->data = std::vector<uint8_t>{'X', 'Y'};
 
     mojo::Message message;
     mojo::internal::SerializationContext context;
     Data* data = nullptr;
-    EXPECT_EQ(40u, SerializeStruct(native, &message, &context, &data));
-    EXPECT_EQ(2u, data->data.Get()->size());
+    EXPECT_EQ(16u, SerializeStruct(native, &message, &context, &data));
+    EXPECT_NE(nullptr, data);
 
-    native::NativeStructPtr output_native;
-    mojo::internal::Deserialize<native::NativeStructDataView>(
-        data, &output_native, &context);
+    NativeStructPtr output_native;
+    mojo::internal::Deserialize<NativeStructDataView>(data, &output_native,
+                                                      &context);
     ASSERT_TRUE(output_native);
-    ASSERT_FALSE(output_native->data.empty());
-    EXPECT_EQ(2u, output_native->data.size());
-    EXPECT_EQ('X', output_native->data[0]);
-    EXPECT_EQ('Y', output_native->data[1]);
+    ASSERT_FALSE(output_native->data->empty());
+    EXPECT_EQ(2u, output_native->data->size());
+    EXPECT_EQ('X', (*output_native->data)[0]);
+    EXPECT_EQ('Y', (*output_native->data)[1]);
   }
 }
 

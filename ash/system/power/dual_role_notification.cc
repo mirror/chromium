@@ -7,7 +7,6 @@
 #include <set>
 
 #include "ash/resources/grit/ash_resources.h"
-#include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/power/power_status.h"
@@ -141,20 +140,16 @@ std::unique_ptr<Notification> DualRoleNotification::CreateNotification() {
         IDS_ASH_STATUS_TRAY_CHARGING_DUAL_ROLE_DEVICES_TITLE);
   }
 
-  std::unique_ptr<Notification> notification =
-      system_notifier::CreateSystemNotification(
-          message_center::NOTIFICATION_TYPE_SIMPLE, kDualRoleNotificationId,
-          title,
-          l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_DUAL_ROLE_MESSAGE),
-          ui::ResourceBundle::GetSharedInstance().GetImageNamed(
-              IDR_AURA_NOTIFICATION_LOW_POWER_CHARGER),
-          base::string16(), GURL(),
-          message_center::NotifierId(
-              message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierDualRole),
-          message_center::RichNotificationData(),
-          new DualRoleNotificationDelegate, kNotificationChargingUsbCIcon,
-          message_center::SystemNotificationWarningLevel::NORMAL);
+  std::unique_ptr<Notification> notification(new Notification(
+      message_center::NOTIFICATION_TYPE_SIMPLE, kDualRoleNotificationId, title,
+      l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_DUAL_ROLE_MESSAGE),
+      ui::ResourceBundle::GetSharedInstance().GetImageNamed(
+          IDR_AURA_NOTIFICATION_LOW_POWER_CHARGER),
+      base::string16(), GURL(),
+      message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
+                                 system_notifier::kNotifierDualRole),
+      message_center::RichNotificationData(),
+      new DualRoleNotificationDelegate));
   notification->set_priority(message_center::MIN_PRIORITY);
   return notification;
 }

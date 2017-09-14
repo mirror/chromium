@@ -112,9 +112,7 @@ class PermissionBubbleInteractiveUITest
 
     EXPECT_TRUE([browser()->window()->GetNativeWindow() isKeyWindow]);
     EXPECT_FALSE(decoration_test_api_->active());
-
-    // The PermissionRequestManager displays prompts asynchronously.
-    base::RunLoop().RunUntilIdle();
+    test_api_->manager()->DisplayPendingRequests();
 
     // The bubble should steal key focus when shown.
     EnsureWindowActive(test_api_->GetPromptWindow(), "show permission bubble");

@@ -24,6 +24,7 @@
 #include "core/CSSPropertyNames.h"
 #include "core/css/CSSValue.h"
 #include "core/css/properties/CSSPropertyAPI.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/text/TextDirection.h"
 #include "platform/text/WritingMode.h"
 #include "platform/wtf/Allocator.h"
@@ -94,6 +95,7 @@ class CSSProperty {
   static CSSPropertyID ResolveDirectionAwareProperty(CSSPropertyID,
                                                      TextDirection,
                                                      WritingMode);
+  static bool IsAffectedByAllProperty(CSSPropertyID);
 
   static void FilterEnabledCSSPropertiesIntoVector(const CSSPropertyID*,
                                                    size_t length,

@@ -91,7 +91,7 @@
 #include "core/probe/CoreProbes.h"
 #include "core/style/StyleInheritedVariables.h"
 #include "core/svg/SVGElement.h"
-#include "platform/runtime_enabled_features.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/wtf/StdLibExtras.h"
 
 namespace blink {
@@ -1492,8 +1492,7 @@ void StyleResolver::ApplyAllProperty(
     // c.f. http://dev.w3.org/csswg/css-cascade/#all-shorthand
     // We skip applyProperty when a given property is unicode-bidi or
     // direction.
-    if (!CSSPropertyAPI::Get(resolveCSSPropertyID(property_id))
-             .IsAffectedByAll())
+    if (!CSSProperty::IsAffectedByAllProperty(property_id))
       continue;
 
     if (!IsPropertyInWhitelist(property_whitelist_type, property_id,

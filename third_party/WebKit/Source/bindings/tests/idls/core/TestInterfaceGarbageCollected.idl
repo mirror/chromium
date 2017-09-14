@@ -8,5 +8,5 @@
     attribute TestInterfaceGarbageCollected attr1;
     void func(TestInterfaceGarbageCollected arg);
 
-    setlike<[TreatNullAs=EmptyString] DOMString>;
+    setlike<DOMString>;
 };

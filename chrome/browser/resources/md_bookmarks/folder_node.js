@@ -113,8 +113,6 @@ Polymer({
       xDirection = -1;
     } else if (e.key == 'ArrowRight') {
       xDirection = 1;
-    } else if (e.key == ' ') {
-      this.selectFolder_();
     } else {
       handled = false;
     }
@@ -366,10 +364,7 @@ Polymer({
    * @return {string}
    */
   getTabIndex_: function() {
-    // This returns a tab index of 0 for the cached selected folder when the
-    // search is active, even though this node is not technically selected. This
-    // allows the sidebar to be focusable during a search.
-    return this.selectedFolder_ == this.itemId ? '0' : '-1';
+    return this.isSelectedFolder_ ? '0' : '-1';
   },
 
   /**
@@ -394,15 +389,5 @@ Polymer({
   computeIsOpen_: function(openState, depth) {
     return openState != null ? openState :
                                depth <= FOLDER_OPEN_BY_DEFAULT_DEPTH;
-  },
-
-  /**
-   * @private
-   * @return {string}
-   */
-  getButtonAriaLabel_: function() {
-    return loadTimeData.getStringF(
-        this.isOpen ? 'sidebarNodeCollapseAxLabel' : 'sidebarNodeExpandAxLabel',
-        this.item_.title);
   },
 });

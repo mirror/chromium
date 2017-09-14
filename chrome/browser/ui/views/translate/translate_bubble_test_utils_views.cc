@@ -25,13 +25,6 @@ void PressTranslate(Browser* browser) {
   bubble->HandleButtonPressed(TranslateBubbleView::BUTTON_ID_TRANSLATE);
 }
 
-void PressRevert(Browser* browser) {
-  DCHECK(browser);
-  TranslateBubbleView* bubble = TranslateBubbleView::GetCurrentBubble();
-  DCHECK(bubble);
-  bubble->HandleButtonPressed(TranslateBubbleView::BUTTON_ID_SHOW_ORIGINAL);
-}
-
 }  // namespace test_utils
 
 }  // namespace translate

@@ -25,6 +25,14 @@ TEST_F(WTFHashTest, NestedStruct) {
                 blink::SimpleNestedStruct::New(blink::ContainsOther::New(1))));
 }
 
+TEST_F(WTFHashTest, UnmappedNativeStruct) {
+  // Just check that this template instantiation compiles.
+  ASSERT_EQ(::mojo::internal::Hash(::mojo::internal::kHashSeed,
+                                   blink::UnmappedNativeStruct::New()),
+            ::mojo::internal::Hash(::mojo::internal::kHashSeed,
+                                   blink::UnmappedNativeStruct::New()));
+}
+
 TEST_F(WTFHashTest, Enum) {
   // Just check that this template instantiation compiles.
 

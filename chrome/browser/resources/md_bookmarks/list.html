@@ -39,11 +39,8 @@
         user-select: none;
       }
     </style>
-    <iron-list id="list"
-        items="[[displayedList_]]"
-        hidden$="[[isEmptyList_(displayedList_.length)]]"
-        role="group"
-        aria-label="$i18n{listAxLabel}">
+    <iron-list id="list" items="[[displayedList_]]"
+        hidden$="[[isEmptyList_(displayedList_.length)]]" role="list">
       <template>
         <bookmarks-item item-id="[[item.id]]" draggable="true"
             tabindex$="[[tabIndex]]" iron-list-tab-index="[[tabIndex]]">

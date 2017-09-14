@@ -16,11 +16,9 @@
 namespace app_list {
 
 namespace {
-
 constexpr int kVerticalPadding = 11;
 constexpr int kHorizontalPadding = 16;
-
-}  // namespace
+}
 
 // Container of the search answer view.
 class SearchResultAnswerCardView::SearchAnswerContainerView
@@ -109,7 +107,7 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
  private:
   void UpdateBackgroundColor() {
     if (selected_) {
-      SetBackground(views::CreateSolidBackground(kAnswerCardSelectedColor));
+      SetBackground(views::CreateSolidBackground(kSelectedColor));
     } else {
       SetBackground(nullptr);
     }

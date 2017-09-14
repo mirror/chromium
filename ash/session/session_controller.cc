@@ -241,16 +241,8 @@ PrefService* SessionController::GetUserPrefServiceForUser(
   return nullptr;
 }
 
-PrefService* SessionController::GetLastActiveUserPrefService() const {
+PrefService* SessionController::GetLastActiveUserPrefService() {
   return last_active_user_prefs_;
-}
-
-PrefService* SessionController::GetActivePrefService() const {
-  // Use the active user prefs once they become available. Check the PrefService
-  // object instead of session state because prefs load is async after login.
-  if (last_active_user_prefs_)
-    return last_active_user_prefs_;
-  return signin_screen_prefs_.get();
 }
 
 void SessionController::AddObserver(SessionObserver* observer) {

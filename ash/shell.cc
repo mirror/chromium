@@ -93,7 +93,6 @@
 #include "ash/system/tray_caps_lock.h"
 #include "ash/system/web_notification/message_center_controller.h"
 #include "ash/touch/ash_touch_transform_controller.h"
-#include "ash/touch/touch_devices_controller.h"
 #include "ash/tray_action/tray_action.h"
 #include "ash/utility/screenshot_controller.h"
 #include "ash/virtual_keyboard_controller.h"
@@ -349,7 +348,6 @@ void Shell::RegisterProfilePrefs(PrefRegistrySimple* registry, bool for_test) {
   TrayCapsLock::RegisterProfilePrefs(registry, for_test);
   BluetoothPowerController::RegisterProfilePrefs(registry);
   LockScreenController::RegisterProfilePrefs(registry, for_test);
-  TouchDevicesController::RegisterProfilePrefs(registry);
 }
 
 views::NonClientFrameView* Shell::CreateDefaultNonClientFrameView(
@@ -831,9 +829,6 @@ Shell::~Shell() {
   // BluetoothPowerController depends on the PrefService and must be destructed
   // before it.
   bluetooth_power_controller_ = nullptr;
-  // TouchDevicesController depends on the PrefService and must be destructed
-  // before it.
-  touch_devices_controller_ = nullptr;
   // NightLightController depeneds on the PrefService and must be destructed
   // before it. crbug.com/724231.
   night_light_controller_ = nullptr;
@@ -852,8 +847,6 @@ void Shell::Init(const ShellInitParams& init_params) {
 
   if (NightLightController::IsFeatureEnabled())
     night_light_controller_ = base::MakeUnique<NightLightController>();
-
-  touch_devices_controller_ = std::make_unique<TouchDevicesController>();
 
   bluetooth_power_controller_ = base::MakeUnique<BluetoothPowerController>();
 

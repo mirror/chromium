@@ -120,6 +120,17 @@ gfx::Image ShellDelegateMus::GetDeprecatedAcceleratorImage() const {
   return gfx::Image();
 }
 
+bool ShellDelegateMus::GetTouchscreenEnabled(
+    TouchscreenEnabledSource source) const {
+  NOTIMPLEMENTED();
+  return true;
+}
+
+void ShellDelegateMus::SetTouchscreenEnabled(bool enabled,
+                                             TouchscreenEnabledSource source) {
+  NOTIMPLEMENTED();
+}
+
 ui::InputDeviceControllerClient*
 ShellDelegateMus::GetInputDeviceControllerClient() {
   if (!connector_)

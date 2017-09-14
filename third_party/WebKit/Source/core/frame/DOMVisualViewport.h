@@ -66,9 +66,6 @@ class DOMVisualViewport final : public EventTargetWithInlineData {
   double height() const;
   double scale() const;
 
-  DEFINE_ATTRIBUTE_EVENT_LISTENER(resize);
-  DEFINE_ATTRIBUTE_EVENT_LISTENER(scroll);
-
  private:
   explicit DOMVisualViewport(LocalDOMWindow*);
 

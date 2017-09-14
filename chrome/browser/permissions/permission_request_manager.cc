@@ -117,7 +117,7 @@ PermissionRequestManager::PermissionRequestManager(
       view_factory_(base::Bind(&PermissionPrompt::Create)),
       view_(nullptr),
       main_frame_has_fully_loaded_(false),
-      tab_is_visible_(web_contents->IsVisible()),
+      tab_can_show_prompts_(web_contents->IsVisible()),
       persist_(true),
       auto_response_for_test_(NONE),
       weak_factory_(this) {}
@@ -225,6 +225,24 @@ void PermissionRequestManager::CancelRequest(PermissionRequest* request) {
   NOTREACHED();  // Callers should not cancel requests that are not pending.
 }
 
+void PermissionRequestManager::DisplayPendingRequests() {
+  tab_can_show_prompts_ = true;
+
+  if (!main_frame_has_fully_loaded_)
+    return;
+
+  if (requests_.empty()) {
+    DequeueRequestsAndShowBubble();
+  } else {
+    // We switched tabs away and back while a prompt was active.
+#if defined(OS_ANDROID)
+    DCHECK(view_);
+#else
+    ShowBubble();
+#endif
+  }
+}
+
 void PermissionRequestManager::UpdateAnchorPosition() {
   if (view_)
     view_->UpdateAnchorPosition();
@@ -280,33 +298,11 @@ void PermissionRequestManager::WebContentsDestroyed() {
 }
 
 void PermissionRequestManager::WasShown() {
-  // This function can be called when the tab is already showing.
-  if (tab_is_visible_)
-    return;
-
-  tab_is_visible_ = true;
-
-  if (!main_frame_has_fully_loaded_)
-    return;
-
-  if (requests_.empty()) {
-    DequeueRequestsAndShowBubble();
-  } else {
-    // We switched tabs away and back while a prompt was active.
-#if defined(OS_ANDROID)
-    DCHECK(view_);
-#else
-    ShowBubble();
-#endif
-  }
+  DisplayPendingRequests();
 }
 
 void PermissionRequestManager::WasHidden() {
-  // This function can be called when the tab is not showing.
-  if (!tab_is_visible_)
-    return;
-
-  tab_is_visible_ = false;
+  tab_can_show_prompts_ = false;
 
 #if !defined(OS_ANDROID)
   if (view_)
@@ -375,7 +371,7 @@ void PermissionRequestManager::ScheduleShowBubble() {
 void PermissionRequestManager::DequeueRequestsAndShowBubble() {
   if (view_)
     return;
-  if (!main_frame_has_fully_loaded_ || !tab_is_visible_)
+  if (!main_frame_has_fully_loaded_ || !tab_can_show_prompts_)
     return;
   if (queued_requests_.empty())
     return;
@@ -397,7 +393,7 @@ void PermissionRequestManager::ShowBubble() {
   DCHECK(!view_);
   DCHECK(!requests_.empty());
   DCHECK(main_frame_has_fully_loaded_);
-  DCHECK(tab_is_visible_);
+  DCHECK(tab_can_show_prompts_);
 
   view_ = view_factory_.Run(web_contents(), this);
   PermissionUmaUtil::PermissionPromptShown(requests_);

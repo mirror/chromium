@@ -379,11 +379,7 @@ std::unique_ptr<DragImage> DataTransfer::CreateDragImageForFrame(
   float device_scale_factor = frame.GetPage()->DeviceScaleFactorDeprecated();
   float page_scale_factor = frame.GetPage()->GetVisualViewport().Scale();
 
-  // Exclude content not in the visual viewport.
-  auto viewport = frame.GetPage()->GetVisualViewport().VisibleRectInDocument();
-  FloatRect clipped_bounds = Intersection(css_bounds, viewport);
-
-  FloatRect device_bounds = DeviceSpaceBounds(clipped_bounds, frame);
+  FloatRect device_bounds = DeviceSpaceBounds(css_bounds, frame);
 
   AffineTransform transform;
   transform.Scale(device_scale_factor * page_scale_factor);

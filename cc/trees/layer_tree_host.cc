@@ -1458,7 +1458,9 @@ void LayerTreeHost::ElementIsAnimatingChanged(
 
 gfx::ScrollOffset LayerTreeHost::GetScrollOffsetForAnimation(
     ElementId element_id) const {
-  return property_trees()->scroll_tree.current_scroll_offset(element_id);
+  Layer* layer = LayerByElementId(element_id);
+  DCHECK(layer);
+  return layer->ScrollOffsetForAnimation();
 }
 
 void LayerTreeHost::QueueImageDecode(

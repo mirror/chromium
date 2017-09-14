@@ -138,7 +138,15 @@ void AccessibilityController::ObservePrefs(PrefService* prefs) {
 PrefService* AccessibilityController::GetActivePrefService() const {
   if (pref_service_for_test_)
     return pref_service_for_test_;
-  return Shell::Get()->session_controller()->GetActivePrefService();
+
+  SessionController* session = Shell::Get()->session_controller();
+  // Use the active user prefs once they become available. Check the PrefService
+  // object instead of session state because prefs load is async after login.
+  PrefService* user_prefs = session->GetLastActiveUserPrefService();
+  if (user_prefs)
+    return user_prefs;
+
+  return session->GetSigninScreenPrefService();
 }
 
 void AccessibilityController::UpdateLargeCursorFromPref() {

@@ -16,7 +16,6 @@
 
 #include "build/build_config.h"
 #include "ipc/ipc_message.h"
-#include "ipc/ipc_message_support_export.h"
 
 namespace base {
 class WaitableEvent;
@@ -26,7 +25,7 @@ namespace IPC {
 
 class MessageReplyDeserializer;
 
-class IPC_MESSAGE_SUPPORT_EXPORT SyncMessage : public Message {
+class IPC_EXPORT SyncMessage : public Message {
  public:
   SyncMessage(int32_t routing_id,
               uint32_t type,
@@ -80,7 +79,7 @@ class IPC_MESSAGE_SUPPORT_EXPORT SyncMessage : public Message {
 };
 
 // Used to deserialize parameters from a reply to a synchronous message
-class IPC_MESSAGE_SUPPORT_EXPORT MessageReplyDeserializer {
+class IPC_EXPORT MessageReplyDeserializer {
  public:
   virtual ~MessageReplyDeserializer() {}
   bool SerializeOutputParameters(const Message& msg);

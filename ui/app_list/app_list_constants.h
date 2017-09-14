@@ -30,7 +30,6 @@ APP_LIST_EXPORT extern const SkColor kDialogSeparatorColor;
 APP_LIST_EXPORT extern const SkColor kHighlightedColor;
 APP_LIST_EXPORT extern const SkColor kSelectedColor;
 APP_LIST_EXPORT extern const SkColor kGridSelectedColor;
-APP_LIST_EXPORT extern const SkColor kAnswerCardSelectedColor;
 
 APP_LIST_EXPORT extern const SkColor kPagerHoverColor;
 APP_LIST_EXPORT extern const SkColor kPagerNormalColor;
