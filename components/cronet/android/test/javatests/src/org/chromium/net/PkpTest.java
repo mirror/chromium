@@ -4,10 +4,18 @@
 
 package org.chromium.net;
 
+import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.SmallTest;
 
 import org.json.JSONObject;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.net.CronetTestRule.OnlyRunNativeCronet;
 import org.chromium.net.test.util.CertTestUtil;
@@ -24,7 +32,11 @@ import java.util.Set;
 /**
  * Public-Key-Pinning tests of Cronet Java API.
  */
-public class PkpTest extends CronetTestBase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class PkpTest {
+    @Rule
+    public CronetTestRule mTestRule = new CronetTestRule();
+
     private static final String CERT_USED = "quic_test.example.com.crt";
     private static final String[] CERTS_USED = {CERT_USED};
     private static final int DISTANT_FUTURE = Integer.MAX_VALUE;
@@ -42,22 +54,20 @@ public class PkpTest extends CronetTestBase {
     private String mServerHost; // test.example.com
     private String mDomain; // example.com
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         // Start QUIC Test Server
         System.loadLibrary("cronet_tests");
-        QuicTestServer.startQuicTestServer(getContext());
+        QuicTestServer.startQuicTestServer(InstrumentationRegistry.getContext());
         mServerUrl = QuicTestServer.getServerURL();
         mServerHost = QuicTestServer.getServerHost();
         mDomain = mServerHost.substring(mServerHost.indexOf('.') + 1, mServerHost.length());
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         QuicTestServer.shutdownQuicTestServer();
         shutdownCronetEngine();
-        super.tearDown();
     }
 
     /**
@@ -66,6 +76,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -85,6 +96,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -108,6 +120,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -128,6 +141,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -148,6 +162,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -167,6 +182,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -187,6 +203,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -207,6 +224,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testLocalTrustAnchorPinningEnforced() throws Exception {
@@ -226,6 +244,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testLocalTrustAnchorPinningNotEnforced() throws Exception {
@@ -244,6 +263,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -270,6 +290,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testHostNameArgumentValidation() throws Exception {
@@ -327,6 +348,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testNullArguments() throws Exception {
@@ -342,6 +364,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testIllegalArgumentExceptionWhenPinValueIsSHA1() throws Exception {
@@ -353,7 +376,7 @@ public class PkpTest extends CronetTestBase {
             // Expected exception
             return;
         }
-        fail("Expected IllegalArgumentException with pin value: " + Arrays.toString(sha1));
+        Assert.fail("Expected IllegalArgumentException with pin value: " + Arrays.toString(sha1));
     }
 
     /**
@@ -365,14 +388,14 @@ public class PkpTest extends CronetTestBase {
      * See http://crbug.com/568669
      */
     private void assertErrorResponse() {
-        assertNotNull("Expected an error", mListener.mError);
+        Assert.assertNotNull("Expected an error", mListener.mError);
         int errorCode = ((NetworkException) mListener.mError).getCronetInternalErrorCode();
         Set<Integer> expectedErrors = new HashSet<>();
         expectedErrors.add(NetError.ERR_QUIC_PROTOCOL_ERROR);
         expectedErrors.add(NetError.ERR_CONNECTION_REFUSED);
         expectedErrors.add(NetError.ERR_SSL_PINNED_KEY_NOT_IN_CERT_CHAIN);
-        assertTrue(String.format("Incorrect error code. Expected one of %s but received %s",
-                           expectedErrors, errorCode),
+        Assert.assertTrue(String.format("Incorrect error code. Expected one of %s but received %s",
+                                  expectedErrors, errorCode),
                 expectedErrors.contains(errorCode));
     }
 
@@ -381,17 +404,17 @@ public class PkpTest extends CronetTestBase {
      */
     private void assertSuccessfulResponse() {
         if (mListener.mError != null) {
-            fail("Did not expect an error but got error code "
+            Assert.fail("Did not expect an error but got error code "
                     + ((NetworkException) mListener.mError).getCronetInternalErrorCode());
         }
-        assertNotNull("Expected non-null response from the server", mListener.mResponseInfo);
-        assertEquals(200, mListener.mResponseInfo.getHttpStatusCode());
+        Assert.assertNotNull("Expected non-null response from the server", mListener.mResponseInfo);
+        Assert.assertEquals(200, mListener.mResponseInfo.getHttpStatusCode());
     }
 
     private void createCronetEngineBuilder(boolean bypassPinningForLocalAnchors, boolean knownRoot)
             throws Exception {
         // Set common CronetEngine parameters
-        mBuilder = new ExperimentalCronetEngine.Builder(getContext());
+        mBuilder = new ExperimentalCronetEngine.Builder(InstrumentationRegistry.getContext());
         mBuilder.enablePublicKeyPinningBypassForLocalTrustAnchors(bypassPinningForLocalAnchors);
         mBuilder.enableQuic(true);
         mBuilder.addQuicHint(QuicTestServer.getServerHost(), QuicTestServer.getServerPort(),
@@ -400,7 +423,8 @@ public class PkpTest extends CronetTestBase {
         JSONObject experimentalOptions = new JSONObject()
                                                  .put("HostResolverRules", hostResolverParams);
         mBuilder.setExperimentalOptions(experimentalOptions.toString());
-        mBuilder.setStoragePath(getTestStorage(getContext()));
+        mBuilder.setStoragePath(
+                CronetTestRule.getTestStorage(InstrumentationRegistry.getContext()));
         mBuilder.enableHttpCache(CronetEngine.Builder.HTTP_CACHE_DISK_NO_HTTP, 1000 * 1024);
         CronetTestUtil.setMockCertVerifierForTesting(
                 mBuilder, MockCertVerifier.createMockCertVerifier(CERTS_USED, knownRoot));
@@ -456,8 +480,8 @@ public class PkpTest extends CronetTestBase {
         try {
             addPkpSha256(hostName, generateSomeSha256(), INCLUDE_SUBDOMAINS, DISTANT_FUTURE);
         } catch (IllegalArgumentException ex) {
-            fail("Host name " + hostName + " should be valid but the exception was thrown: "
-                    + ex.toString());
+            Assert.fail("Host name " + hostName
+                    + " should be valid but the exception was thrown: " + ex.toString());
         }
     }
 
@@ -468,7 +492,7 @@ public class PkpTest extends CronetTestBase {
             // Expected exception.
             return;
         }
-        fail("Expected IllegalArgumentException when passing " + hostName + " host name");
+        Assert.fail("Expected IllegalArgumentException when passing " + hostName + " host name");
     }
 
     private void verifyExceptionWhenAddPkpArgumentIsNull(
@@ -482,12 +506,12 @@ public class PkpTest extends CronetTestBase {
             mBuilder.addPublicKeyPins(hostName, pins, INCLUDE_SUBDOMAINS, expirationDate);
         } catch (NullPointerException ex) {
             if (!shouldThrowNpe) {
-                fail("Null pointer exception was not expected: " + ex.toString());
+                Assert.fail("Null pointer exception was not expected: " + ex.toString());
             }
             return;
         }
         if (shouldThrowNpe) {
-            fail("NullPointerException was expected");
+            Assert.fail("NullPointerException was expected");
         }
     }
 }
