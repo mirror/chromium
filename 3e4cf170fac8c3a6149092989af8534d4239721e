@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "95fde0ed_a34165de",
+        "filename": "chrome/browser/resources/sys_internals/constants.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-14T05:52:54Z",
+      "side": 1,
+      "message": "This can work:\n\ncr.define(\u0027foo\u0027, function(){\n const /** number */ bar \u003d 1;\n return {bar: bar};\n});\n\ncr.define(\u0027foo\u0027, function() {\n console.log(foo.bar);\n return {};\n});\n\nSeems we need to define the variable and then return it, Otherwise the compilation will fault.",
+      "parentUuid": "31e7ba0e_69d9f375",
+      "revId": "3e4cf170fac8c3a6149092989af8534d4239721e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da3aef0e_2b0d1816",
         "filename": "chrome/browser/resources/sys_internals/constants.js",
         "patchSetId": 6
