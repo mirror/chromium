@@ -56,20 +56,21 @@ def _GetExpiredHistograms(histograms, base_date):
   Raises:
     Error if there is an expiry date that doesn't match expected format.
   """
-  expired_histograms_names = []
-  for name, content in histograms.items():
-    if "obsolete" in content or "expiry_date" not in content:
-      continue
-    expiry_date_str = content["expiry_date"]
-    try:
-      expiry_date = datetime.datetime.strptime(
-          expiry_date_str, extract_histograms.EXPIRY_DATE_PATTERN).date()
-    except ValueError:
-      raise Error("Unable to parse expiry date {date} in histogram {name}.".
-                  format(date=expiry_date_str, name=name))
-    if expiry_date < base_date:
-      expired_histograms_names.append(name)
-  return expired_histograms_names
+  # expired_histograms_names = []
+  # for name, content in histograms.items():
+  #   if "obsolete" in content or "expiry_date" not in content:
+  #     continue
+  #   expiry_date_str = content["expiry_date"]
+  #   try:
+  #     expiry_date = datetime.datetime.strptime(
+  #         expiry_date_str, extract_histograms.EXPIRY_DATE_PATTERN).date()
+  #   except ValueError:
+  #     raise Error("Unable to parse expiry date {date} in histogram {name}.".
+  #                 format(date=expiry_date_str, name=name))
+  #   if expiry_date < base_date:
+  #     expired_histograms_names.append(name)
+  # return expired_histograms_names
+  return histograms.keys()
 
 
 def _HashName(name):
