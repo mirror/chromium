@@ -43,6 +43,7 @@
 #include "core/fileapi/FileReaderLoaderClient.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/Settings.h"
+#include "core/frame/UseCounter.h"
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/html/FormData.h"
 #include "core/html/HTMLDocument.h"
@@ -60,6 +61,7 @@
 #include "core/xmlhttprequest/XMLHttpRequestUpload.h"
 #include "platform/FileMetadata.h"
 #include "platform/HTTPNames.h"
+#include "platform/Histogram.h"
 #include "platform/SharedBuffer.h"
 #include "platform/bindings/DOMWrapperWorld.h"
 #include "platform/bindings/ScriptState.h"
@@ -715,6 +717,15 @@ void XMLHttpRequest::open(const AtomicString& method,
       return;
     }
 
+    // Update histogram for usage of sync xhr within pagedismissal.
+    auto pagedismissal = GetDocument()->PageDismissalEventBeingDispatched();
+    if (pagedismissal != Document::kNoDismissal) {
+      UseCounter::Count(GetDocument(), WebFeature::kSyncXhrInPageDismissal);
+      DEFINE_STATIC_LOCAL(EnumerationHistogram, syncxhr_pagedismissal_histogram,
+                          ("XHR.Sync.PageDismissal", 5));
+      syncxhr_pagedismissal_histogram.Count(pagedismissal);
+    }
+
     // Here we just warn that firing sync XHR's may affect responsiveness.
     // Eventually sync xhr will be deprecated and an "InvalidAccessError"
     // exception thrown.
@@ -724,6 +735,16 @@ void XMLHttpRequest::open(const AtomicString& method,
       Deprecation::CountDeprecation(
           GetExecutionContext(),
           WebFeature::kXMLHttpRequestSynchronousInNonWorkerOutsideBeforeUnload);
+    }
+  } else if (async && GetExecutionContext()->IsDocument()) {
+    // Update histogram for usage of async xhr within pagedismissal.
+    auto pagedismissal = GetDocument()->PageDismissalEventBeingDispatched();
+    if (pagedismissal != Document::kNoDismissal) {
+      UseCounter::Count(GetDocument(), WebFeature::kAsyncXhrInPageDismissal);
+      DEFINE_STATIC_LOCAL(EnumerationHistogram,
+                          asyncxhr_pagedismissal_histogram,
+                          ("XHR.Async.PageDismissal", 5));
+      asyncxhr_pagedismissal_histogram.Count(pagedismissal);
     }
   }
 
