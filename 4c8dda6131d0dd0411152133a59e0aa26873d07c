@@ -16,6 +16,24 @@
       "revId": "4c8dda6131d0dd0411152133a59e0aa26873d07c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc1d9848_8f42591f",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-09-14T00:54:50Z",
+      "side": 1,
+      "message": "Agreed, it probably depends on how large the body is. Does background fetch will upload large files?\n\nstd::string is basically a buffer. We can read file to it, but need to be careful about the memory it used.",
+      "parentUuid": "55703a10_8dbf4c3c",
+      "revId": "4c8dda6131d0dd0411152133a59e0aa26873d07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
