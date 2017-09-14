@@ -46,4 +46,15 @@ bool GpuFeatureInfo::IsWorkaroundEnabled(int32_t workaround) const {
          this->enabled_gpu_driver_bug_workarounds.end();
 }
 
+bool GpuFeatureInfo::IsFeatureEnabled(GpuFeatureType feature) const {
+  DCHECK(feature >= 0 && feature < NUMBER_OF_GPU_FEATURE_TYPES);
+  switch (status_values[feature]) {
+    case kGpuFeatureStatusEnabled:
+    case kGpuFeatureStatusSoftware:
+      return true;
+    default:
+      return false;
+  }
+}
+
 }  // namespace gpu

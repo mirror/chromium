@@ -22,6 +22,7 @@ enum GpuFeatureStatus {
   kGpuFeatureStatusEnabled,
   kGpuFeatureStatusBlacklisted,
   kGpuFeatureStatusDisabled,
+  kGpuFeatureStatusSoftware,
   kGpuFeatureStatusUndefined,
   kGpuFeatureStatusMax
 };
@@ -36,6 +37,8 @@ struct GPU_EXPORT GpuFeatureInfo {
   void ApplyToGLContext(gl::GLContext* context) const;
 
   bool IsWorkaroundEnabled(int32_t workaround) const;
+
+  bool IsFeatureEnabled(GpuFeatureType feature) const;
 
   GpuFeatureInfo& operator=(const GpuFeatureInfo&);
   GpuFeatureInfo& operator=(GpuFeatureInfo&&);
