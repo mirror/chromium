@@ -294,6 +294,24 @@
     },
     {
       "key": {
+        "uuid": "dd2f0952_b024fe22",
+        "filename": "chrome/installer/zucchini/targets_affinity.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-14T14:55:28Z",
+      "side": 1,
+      "message": "I mean \"\u003d\u003d\" for \"\u003d\" above.",
+      "parentUuid": "5463bca5_f8e30735",
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6959a001_e0475f26",
         "filename": "chrome/installer/zucchini/targets_affinity_unittest.cc",
         "patchSetId": 8
