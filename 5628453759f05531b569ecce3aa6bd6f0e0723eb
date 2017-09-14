@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c66f226_c9582432",
+        "filename": "ui/aura/keyboard_lock/activator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-14T20:27:03Z",
+      "side": 1,
+      "message": "I find your names overly generic. Activator? Client? Hook? I realized they are in the keyboard_lock namespace, but I would prefer more descriptive names, e.g. KeyboardLockHook.",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 15
+      },
+      "revId": "5628453759f05531b569ecce3aa6bd6f0e0723eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "410252bd_e712ab81",
+        "filename": "ui/aura/keyboard_lock/activator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-14T20:27:03Z",
+      "side": 1,
+      "message": "Please add descriptions. It is not at all obvious what this is for and why it needs to be async.",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 65
+      },
+      "revId": "5628453759f05531b569ecce3aa6bd6f0e0723eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d32603f3_accdc70c",
+        "filename": "ui/aura/keyboard_lock/platform_hook.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-14T20:27:03Z",
+      "side": 1,
+      "message": "While not strictly necessary I favor tying this to a Widget. The reason for that is there is no need to *always* hook events, which this api lets you do. Tying the api to a widget allows you to enforce the hook is only enabled when the widget is active and fullscreen. Also, I don\u0027t think this needs to live in aura.",
+      "range": {
+        "startLine": 18,
+        "startChar": 6,
+        "endLine": 18,
+        "endChar": 19
+      },
+      "revId": "5628453759f05531b569ecce3aa6bd6f0e0723eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
