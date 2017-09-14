@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0190575_442c39e9",
+        "filename": "content/browser/tracing/tracing_controller_impl_data_sinks.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-14T14:52:30Z",
+      "side": 1,
+      "message": "How about these?",
+      "range": {
+        "startLine": 202,
+        "startChar": 8,
+        "endLine": 202,
+        "endChar": 27
+      },
+      "revId": "99bc928869b2e6ed21d4a42c6feb0130a6243cfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
