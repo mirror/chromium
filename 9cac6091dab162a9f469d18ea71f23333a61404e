@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5fd6f19_998d1e45",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-14T00:07:27Z",
+      "side": 1,
+      "message": "Missing (CC).",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97702a1c_7079702a",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-14T00:07:27Z",
+      "side": 1,
+      "message": "Is there a reason to include \u0027deflate.h\u0027 here?",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc27b784_a2d3243c",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-14T00:07:27Z",
+      "side": 1,
+      "message": "Probably won\u0027t change the ASM at all, but similarly to what you requested in the NEON patch, please move it outside of the loop.",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59959851_8a307f15",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-14T00:07:27Z",
+      "side": 1,
+      "message": "2 questions:\na) Can\u0027t you just hold all the constants as a single array like we did in the NEON patch?\n\nb) \u0027tap1\u0027 and \u0027tap2\u0027 are not quite descriptive. What about \u0027tap_upper\u0027 and \u0027tap_lower\u0027 or something like that?",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df88ab3_0c508140",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-14T00:07:27Z",
+      "side": 1,
+      "message": "While on ARM it doesn\u0027t matter (i.e. the compiler will map to the same instruction), I recall that in Intel may be a tad faster an alternative way of calculating the modulo using bitwise operators.",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "392e94de_10856c41",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-14T00:07:27Z",
+      "side": 1,
+      "message": "Maybe use the macro technique as in vanilla adler32 or verify if the compiler could unroll the loop for it.\n\nWhile at it, it may make sense to turn it into an inline function to reuse it at the bottom of the file.",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1eae378_20622253",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-14T00:07:27Z",
+      "side": 1,
+      "message": "I\u0027m not following it.\n\nYou plan to have both Archs implementation in the same file?",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0f2f488_d814351b",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-14T00:07:27Z",
+      "side": 1,
+      "message": "Please see previous comment about the inline function.\n\nAlso, is there any performance advantage in this format than what is used in vanilla adler32?\nI\u0027m referring to DO1 macro: https://cs.chromium.org/chromium/src/third_party/zlib/adler32.c?l\u003d16",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
