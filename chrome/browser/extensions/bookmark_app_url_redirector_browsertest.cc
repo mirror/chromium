@@ -2,11 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/json/json_reader.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/scoped_feature_list.h"
+#include "build/build_config.h"
+#include "chrome/app/chrome_command_ids.h"
 #include "chrome/browser/extensions/bookmark_app_helper.h"
 #include "chrome/browser/extensions/extension_browsertest.h"
+#include "chrome/browser/renderer_context_menu/render_view_context_menu_test_util.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/extensions/app_launch_params.h"
@@ -19,6 +23,7 @@
 #include "content/public/browser/notification_details.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/render_frame_host.h"
+#include "content/public/common/context_menu_params.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_frame_navigation_observer.h"
 #include "content/public/test/test_utils.h"
@@ -61,23 +66,81 @@ content::RenderFrameHost* GetIFrame(content::WebContents* web_contents) {
 }
 
 // Creates an <a> element, sets its href and target to |href| and |target|
-// respectively, adds it to the DOM, and clicks on it. Returns once the link
-// has loaded.
-void ClickLinkAndWait(content::WebContents* web_contents,
-                      const GURL& target_url,
-                      LinkTarget target) {
+// respectively and adds it to the DOM. Then it clicks on the link with
+// "Ctrl" and/or "Shift" based on |ctrl_key| and |shift_key|.
+void ClickLinkWithModifiersAndWait(content::WebContents* web_contents,
+                                   const GURL& target_url,
+                                   LinkTarget target,
+                                   bool ctrl_key,
+                                   bool shift_key) {
   ui_test_utils::UrlLoadObserver url_observer(
       target_url, content::NotificationService::AllSources());
   std::string script = base::StringPrintf(
+      // Create link element and append it to the page.
       "const link = document.createElement('a');"
       "link.href = '%s';"
       "link.target = '%s';"
+      "link.textContent = 'test link';"
       "document.body.appendChild(link);"
-      "const event = new MouseEvent('click', {'view': window});"
-      "link.dispatchEvent(event);",
+      // Get the coordinates for the center of the link element to send back.
+      "const bounds = link.getBoundingClientRect();"
+      "window.domAutomationController.send("
+      "JSON.stringify({"
+      "'x': Math.floor(bounds.left + bounds.width / 2),"
+      "'y': Math.floor(bounds.top + bounds.height / 2)}));",
       target_url.spec().c_str(),
       target == LinkTarget::SELF ? "_self" : "_blank");
-  EXPECT_TRUE(content::ExecuteScript(web_contents, script));
+  std::string result;
+  ASSERT_TRUE(
+      content::ExecuteScriptAndExtractString(web_contents, script, &result));
+
+  std::unique_ptr<base::Value> value = base::JSONReader::Read(result);
+  int x = value->FindKey("x")->GetInt();
+  int y = value->FindKey("y")->GetInt();
+
+  int modifiers = 0;
+  if (ctrl_key) {
+#if defined(OS_MACOSX)
+    modifiers |= blink::WebInputEvent::Modifiers::kMetaKey;
+#else
+    modifiers |= blink::WebInputEvent::Modifiers::kControlKey;
+#endif
+  }
+  if (shift_key)
+    modifiers |= blink::WebInputEvent::Modifiers::kShiftKey;
+
+  content::SimulateMouseClickAt(web_contents, modifiers,
+                                blink::WebMouseEvent::Button::kLeft,
+                                gfx::Point(x, y));
+
+  url_observer.Wait();
+}
+
+void ClickLinkAndWait(content::WebContents* web_contents,
+                      const GURL& target_url,
+                      LinkTarget target) {
+  ClickLinkWithModifiersAndWait(web_contents, target_url, target,
+                                false /* ctrl_key */, false /* shift_key */);
+}
+
+void CtrlClickLinkAndWait(content::WebContents* web_contents,
+                          const GURL& target_url) {
+  ClickLinkWithModifiersAndWait(web_contents, target_url, LinkTarget::SELF,
+                                true /* ctrl_key */, false /* shift_key */);
+}
+
+void ClickInContextMenuAndWait(content::RenderFrameHost* frame,
+                               const GURL& initial_url,
+                               const GURL& target_url,
+                               int context_menu_command_id) {
+  ui_test_utils::UrlLoadObserver url_observer(
+      target_url, content::NotificationService::AllSources());
+  content::ContextMenuParams params;
+  params.page_url = initial_url;
+  params.link_url = target_url;
+  TestRenderViewContextMenu menu(frame, params);
+  menu.Init();
+  menu.ExecuteCommand(context_menu_command_id, 0 /* event_flags */);
   url_observer.Wait();
 }
 
@@ -236,6 +299,24 @@ class BookmarkAppUrlRedirectorBrowserTest : public ExtensionBrowserTest {
     EXPECT_EQ(target_url, GetIFrame(initial_tab)->GetLastCommittedURL());
 
     return !HasFailure();
+  }
+
+  // Checks that no new windows are opened after running |action| and that a new
+  // tab has been opened in the background and navigated to |target_url|.
+  void TestTabActionOpensBackgroundTab(const GURL& target_url,
+                                       const base::Closure& action) {
+    size_t num_browsers = chrome::GetBrowserCount(profile());
+    int num_tabs = browser()->tab_strip_model()->count();
+    content::WebContents* initial_tab =
+        browser()->tab_strip_model()->GetActiveWebContents();
+
+    action.Run();
+
+    EXPECT_EQ(num_browsers, chrome::GetBrowserCount(profile()));
+    EXPECT_EQ(browser(), chrome::FindLastActive());
+    EXPECT_EQ(++num_tabs, browser()->tab_strip_model()->count());
+    EXPECT_EQ(initial_tab,
+              browser()->tab_strip_model()->GetActiveWebContents());
   }
 
   void ResetFeatureList() { scoped_feature_list_.reset(); }
@@ -424,6 +505,36 @@ IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, OutOfScopeUrlSelf) {
       base::Bind(&ClickLinkAndWait,
                  browser()->tab_strip_model()->GetActiveWebContents(),
                  out_of_scope_url, LinkTarget::SELF));
+}
+
+// Tests that Ctrl + clicking a link results in a new background tab and not in
+// a new app window.
+IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest, CtrlClickAppUrl) {
+  InstallTestBookmarkApp();
+  NavigateToLaunchingPage();
+
+  const GURL app_url = embedded_test_server()->GetURL(kAppUrlPath);
+  TestTabActionOpensBackgroundTab(
+      app_url, base::Bind(&CtrlClickLinkAndWait,
+                          browser()->tab_strip_model()->GetActiveWebContents(),
+                          app_url));
+}
+
+// Tests that clicking "Open in new tab" in the context menu results in a new
+// background tab and not in a new app window.
+IN_PROC_BROWSER_TEST_F(BookmarkAppUrlRedirectorBrowserTest,
+                       OpenInNewTabAppUrl) {
+  InstallTestBookmarkApp();
+  NavigateToLaunchingPage();
+
+  const GURL app_url = embedded_test_server()->GetURL(kAppUrlPath);
+  content::WebContents* initial_tab =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  TestTabActionOpensBackgroundTab(
+      app_url,
+      base::Bind(&ClickInContextMenuAndWait, initial_tab->GetMainFrame(),
+                 initial_tab->GetLastCommittedURL(), app_url,
+                 IDC_CONTENT_CONTEXT_OPENLINKNEWTAB));
 }
 
 // Tests that clicking links inside a website for an installed app doesn't open

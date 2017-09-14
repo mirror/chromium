@@ -912,8 +912,8 @@ void NavigationRequest::OnStartChecksComplete(
                                   : frame_tree_node_->parent()->IsMainFrame();
 
   std::unique_ptr<NavigationUIData> navigation_ui_data;
-  if (navigation_handle_->navigation_ui_data())
-    navigation_ui_data = navigation_handle_->navigation_ui_data()->Clone();
+  if (navigation_handle_->GetNavigationUIData())
+    navigation_ui_data = navigation_handle_->GetNavigationUIData()->Clone();
 
   bool is_for_guests_only =
       navigation_handle_->GetStartingSiteInstance()->GetSiteURL().
