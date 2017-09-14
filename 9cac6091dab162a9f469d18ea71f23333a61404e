@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "035e3dc5_40d8dbd5",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-14T17:20:06Z",
+      "side": 1,
+      "message": "Honestly I have no clue.  What do you normally put at the top of a file you write in Chromium?",
+      "parentUuid": "b5d05dec_b8f323f2",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97702a1c_7079702a",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16
