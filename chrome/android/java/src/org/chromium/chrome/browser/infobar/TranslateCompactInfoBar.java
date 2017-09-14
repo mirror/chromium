@@ -466,6 +466,13 @@ public class TranslateCompactInfoBar extends InfoBar
         dismissMenusAndSnackbars();
     }
 
+    @Override
+    public CharSequence getAccessibilityText() {
+        // TODO(googleo): Simple string concatenation may not work in some languages.
+        return getContext().getString(R.string.translate_button)
+                + getContext().getString(R.string.bottom_bar_screen_position);
+    }
+
     /**
      * Returns true if overflow menu is showing.  This is only used for automation testing.
      */
