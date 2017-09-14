@@ -22,6 +22,30 @@
       "revId": "d9d26fc4df328b39916e433b04a231cdb53bc0d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a7ab060_27915bfd",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29522,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-09-14T14:01:00Z",
+      "side": 1,
+      "message": "The connection time will be zero for those resources that use already opened sockets. So we should have roughly the same histogram count for the control and treatment but the treatment should have more zeros.\n\nFor the total resource download time we have Net.HttpJob.TotalTime* but it\u0027s reported for all completed HttpJobs. We could add a new histogram for the same subset of resources to allow direct comparison. WDYT?",
+      "parentUuid": "b00584ae_ea98f090",
+      "range": {
+        "startLine": 29522,
+        "startChar": 27,
+        "endLine": 29522,
+        "endChar": 36
+      },
+      "revId": "d9d26fc4df328b39916e433b04a231cdb53bc0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
