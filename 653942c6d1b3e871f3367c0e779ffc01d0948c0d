@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8cd063d_ecf21d97",
+        "filename": "media/test/pipeline_integration_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-14T02:19:58Z",
+      "side": 0,
+      "message": "This TODO was already TO-DONE (and then kClockless became default). Comment removed as drive-by in this CL.",
+      "range": {
+        "startLine": 503,
+        "startChar": 2,
+        "endLine": 503,
+        "endChar": 75
+      },
+      "revId": "653942c6d1b3e871f3367c0e779ffc01d0948c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
