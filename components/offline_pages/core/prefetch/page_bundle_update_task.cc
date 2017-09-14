@@ -137,7 +137,7 @@ PageBundleUpdateResult UpdateWithOperationResultsSync(
     const std::string operation_name,
     const std::vector<RenderPageInfo>& pages,
     sql::Connection* db) {
-  if (!db)
+  if (pages.empty() || !db)
     return false;
 
   sql::Transaction transaction(db);
