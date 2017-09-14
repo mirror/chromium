@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "8a2f4e00_4dc7dfba",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-14T22:28:01Z",
+      "side": 1,
+      "message": "We originally wanted this to be landed as-is in Clang, but it ended up behind a flag as a compromise, so I figured doing the flag change at the same time makes sense as it brings us the Clang version we want.\n\nI don\u0027t feel strongly about it though, I mostly want to get this roll landed. If you prefer to change the flag separately, let\u0027s do that.",
+      "parentUuid": "a8eb47c9_ad6a520d",
+      "revId": "22b0acbe55593a8fa6352744d92eb7110318ffaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fcba968e_e778cdbd",
         "filename": "build/config/compiler/BUILD.gn",
         "patchSetId": 6
