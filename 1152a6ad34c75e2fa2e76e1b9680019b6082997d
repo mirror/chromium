@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "beb1201e_a2e0ef09",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1222289
+      },
+      "writtenOn": "2017-09-14T21:23:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "75d1aeb8_6c846179",
+      "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0014b48f_c46d6b65",
         "filename": "tools/mb/mb_config.pyl",
         "patchSetId": 1
@@ -116,6 +134,24 @@
       "writtenOn": "2017-09-14T21:19:39Z",
       "side": 1,
       "message": "more importantly, this won\u0027t actually work right. You need both the \u0027thin_lto\u0027 and \u0027lto\u0027 mixins to have an effect (thin_lto is disabled unless lto is also enabled).\n\nAt this point, I don\u0027t think we actually are doing anything with non-thin LTO in Chromium, are we? Maybe we should just collapse the two flags?",
+      "parentUuid": "79b8dfc1_5a42961a",
+      "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a078698_049db860",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1222289
+      },
+      "writtenOn": "2017-09-14T21:23:01Z",
+      "side": 1,
+      "message": "The \u0027lto\u0027 config sets allow_posix_link_time_opt\u003dtrue, which does the right thing for enabling LTO on Linux, but causes (or did, last I checked) the build to fail on Windows.\n\nWhat I\u0027m doing here is enabling ThinLTO on Windows in the same places where the PGO build on Windows (using MSVC) uses LTO and PGO - except that I\u0027m gating it on use_thinlto instead of on is_official and full_wpo_on_official, so that we can start gathering data from a bot that builds with ThinLTO, without yet switching the is_official build over.",
       "parentUuid": "79b8dfc1_5a42961a",
       "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
