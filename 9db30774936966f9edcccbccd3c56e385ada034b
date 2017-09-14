@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6efea643_099f797e",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/float-overflow-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-14T01:54:14Z",
+      "side": 0,
+      "message": "Affirmative.",
+      "parentUuid": "677fa0e3_a0ad7deb",
+      "revId": "9db30774936966f9edcccbccd3c56e385ada034b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12d92102_5e731ecf",
         "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/float-overflow-right-expected.txt",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-14T00:58:48Z",
       "side": 0,
       "message": "In SPv1 mode this was also not composited?",
+      "revId": "9db30774936966f9edcccbccd3c56e385ada034b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3020d132_cfbfd429",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/float-overflow-right-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-14T01:54:14Z",
+      "side": 0,
+      "message": "Affirmative.",
+      "parentUuid": "12d92102_5e731ecf",
       "revId": "9db30774936966f9edcccbccd3c56e385ada034b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
