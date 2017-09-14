@@ -449,10 +449,6 @@ def main():
   generate(san, "san-x400address.pem")
 
   san = SubjectAltNameGenerator()
-  san.add_name(dns_name("foo.example.com"))
-  generate(san, "san-dnsname.pem")
-
-  san = SubjectAltNameGenerator()
   san.add_name(directory_name(n_us))
   generate(san, "san-directoryname.pem")
 
