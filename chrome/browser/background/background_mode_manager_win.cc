@@ -16,6 +16,7 @@
 #include "chrome/grit/generated_resources.h"
 #include "chrome/installer/util/auto_launch_util.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/common/content_switches.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/image/image_skia.h"
 #include "ui/message_center/notifier_settings.h"

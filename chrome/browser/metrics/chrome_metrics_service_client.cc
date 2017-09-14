@@ -89,6 +89,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/histogram_fetcher.h"
 #include "content/public/browser/notification_service.h"
+#include "content/public/common/content_switches.h"
 #include "extensions/features/features.h"
 #include "ppapi/features/features.h"
 #include "printing/features/features.h"

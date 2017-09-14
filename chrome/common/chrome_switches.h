@@ -213,7 +213,6 @@ extern const char kUnlimitedStorage[];
 extern const char kUnsafelyTreatInsecureOriginAsSecure[];
 extern const char kUnsafePacUrl[];
 extern const char kUserAgent[];
-extern const char kUserDataDir[];
 extern const char kValidateCrx[];
 extern const char kVersion[];
 extern const char kWindowPosition[];

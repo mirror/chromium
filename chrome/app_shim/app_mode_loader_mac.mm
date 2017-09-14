@@ -26,6 +26,7 @@
 #include "chrome/common/chrome_switches.h"
 #import "chrome/common/mac/app_mode_chrome_locator.h"
 #include "chrome/common/mac/app_mode_common.h"
+#include "content/public/common/content_switches.h"
 
 namespace {
 

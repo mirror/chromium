@@ -894,6 +894,10 @@ const char kVideoImageTextureTarget[] = "video-image-texture-target";
 // Set when Chromium should use a mobile user agent.
 const char kUseMobileUserAgent[] = "use-mobile-user-agent";
 
+// Specifies the user data directory, which is where the browser will look for
+// all of its state.
+const char kUserDataDir[] = "user-data-dir";
+
 // The contents of this flag are prepended to the utility process command line.
 // Useful values might be "valgrind" or "xterm -e gdb --args".
 const char kUtilityCmdPrefix[]              = "utility-cmd-prefix";

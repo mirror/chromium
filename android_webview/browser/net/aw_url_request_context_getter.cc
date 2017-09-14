@@ -29,10 +29,12 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/cookie_store_factory.h"
+#include "content/public/browser/ignore_errors_cert_verifier.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/url_constants.h"
 #include "net/base/cache_type.h"
+#include "net/cert/cert_verifier.h"
 #include "net/cookies/cookie_store.h"
 #include "net/dns/mapped_host_resolver.h"
 #include "net/extras/sqlite/sqlite_channel_id_store.h"
@@ -262,6 +264,12 @@ void AwURLRequestContextGetter::InitializeURLRequestContext() {
   builder.SetHttpAuthHandlerFactory(
       CreateAuthHandlerFactory(host_resolver.get()));
   builder.set_host_resolver(std::move(host_resolver));
+
+  std::unique_ptr<net::CertVerifier> cert_verifier =
+      net::CertVerifier::CreateDefault();
+  builder.SetCertVerifier(
+      content::IgnoreErrorsCertVerifier::MaybeWrapCertVerifier(
+          command_line, switches::kUserDataDir, std::move(cert_verifier)));
 
   url_request_context_ = builder.Build();
 #if DCHECK_IS_ON()

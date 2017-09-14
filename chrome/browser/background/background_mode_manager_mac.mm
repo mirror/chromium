@@ -14,6 +14,7 @@
 #include "chrome/grit/generated_resources.h"
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/common/content_switches.h"
 #include "ui/base/l10n/l10n_util.h"
 
 using content::BrowserThread;

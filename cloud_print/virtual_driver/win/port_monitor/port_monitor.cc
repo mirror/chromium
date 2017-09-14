@@ -32,6 +32,7 @@
 #include "cloud_print/virtual_driver/win/port_monitor/spooler_win.h"
 #include "cloud_print/virtual_driver/win/virtual_driver_consts.h"
 #include "cloud_print/virtual_driver/win/virtual_driver_helpers.h"
+#include "content/public/common/content_switches.h"
 
 namespace cloud_print {
 

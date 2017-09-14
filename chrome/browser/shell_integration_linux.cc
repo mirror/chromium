@@ -50,6 +50,7 @@
 #include "chrome/common/features.h"
 #include "chrome/grit/chrome_unscaled_resources.h"
 #include "components/version_info/version_info.h"
+#include "content/public/common/content_switches.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/image/image_family.h"
 #include "url/gurl.h"
