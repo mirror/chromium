@@ -10,6 +10,8 @@
 #include "ui/views/controls/native/native_view_host_wrapper.h"
 #include "ui/views/views_export.h"
 
+@class NativeViewHostMacScalingView;
+
 namespace views {
 
 class NativeViewHost;
@@ -29,7 +31,8 @@ class NativeViewHostMac : public NativeViewHostWrapper {
   void InstallClip(int x, int y, int w, int h) override;
   bool HasInstalledClip() override;
   void UninstallClip() override;
-  void ShowWidget(int x, int y, int w, int h) override;
+  void ShowWidget(int x, int y, int w, int h, int render_w, int render_h)
+      override;
   void HideWidget() override;
   void SetFocus() override;
   gfx::NativeViewAccessible GetNativeViewAccessible() override;
@@ -39,12 +42,14 @@ class NativeViewHostMac : public NativeViewHostWrapper {
   // Our associated NativeViewHost. Owns this.
   NativeViewHost* host_;
 
-  // Retain the native view as it may be destroyed at an unpredictable time.
-  base::scoped_nsobject<NSView> native_view_;
+  // Set when AttachNativeView() is called. This provides a scaling transform
+  // when ShowWidget() is called with a rendering size not equal to the region's
+  // size. When NativeViewDetaching() is called, this is destroyed.
+  base::scoped_nsobject<NativeViewHostMacScalingView> scaling_view_;
 
   DISALLOW_COPY_AND_ASSIGN(NativeViewHostMac);
 };
 
 }  // namespace views
 
-#endif  // UI_VIEWS_CONTROLS_NATIVE_NATIVE_VIEW_HOST_AURA_H_
+#endif  // UI_VIEWS_CONTROLS_NATIVE_NATIVE_VIEW_HOST_MAC_H_
