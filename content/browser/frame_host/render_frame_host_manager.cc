@@ -1159,10 +1159,11 @@ RenderFrameHostManager::GetSiteInstanceForNavigation(
       delegate_->GetLastCommittedNavigationEntryForRenderManager();
   BrowserContext* browser_context =
       delegate_->GetControllerForRenderManager().GetBrowserContext();
-  const GURL& current_effective_url = current_entry ?
-      SiteInstanceImpl::GetEffectiveURL(browser_context,
-                                        current_entry->GetURL()) :
-      render_frame_host_->GetSiteInstance()->GetSiteURL();
+  const GURL& current_effective_url =
+      !render_frame_host_->last_successful_url().is_empty()
+          ? SiteInstanceImpl::GetEffectiveURL(
+                browser_context, render_frame_host_->last_successful_url())
+          : render_frame_host_->GetSiteInstance()->GetSiteURL();
   bool current_is_view_source_mode = current_entry ?
       current_entry->IsViewSourceMode() : dest_is_view_source_mode;
   bool force_swap = ShouldSwapBrowsingInstancesForNavigation(
