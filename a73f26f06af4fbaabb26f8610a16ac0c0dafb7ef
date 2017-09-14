@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "82624f5b_3d79280f",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 13
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f1c4447_29723e2e",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf641e08_8e48cf1d",
         "filename": "base/win/com_base_util.h",
         "patchSetId": 13
@@ -39,6 +57,30 @@
       "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e8d2b6_7804893c",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "Done. Also renamed the .cc/.h file to reflect.",
+      "parentUuid": "cf641e08_8e48cf1d",
+      "range": {
+        "startLine": 18,
+        "startChar": 35,
+        "endLine": 18,
+        "endChar": 46
+      },
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "fe288cbf_b8e5656c",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "For these two issues:\n1) Done.\n2) Yes.",
+      "parentUuid": "21d3e686_fd48660d",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1662a8e7_44eac1f6",
         "filename": "base/win/com_base_util.h",
         "patchSetId": 13
@@ -106,6 +166,30 @@
       "writtenOn": "2017-09-14T06:45:27Z",
       "side": 1,
       "message": "Wow, __HrLoadAllImportsForDll is fantastic!\nSo, do we still need this kind of wrap functions?\n\nAll we need seems to have \"bool base::win::DelayLoad*\" methods in base/win/delay_load?",
+      "range": {
+        "startLine": 25,
+        "startChar": 20,
+        "endLine": 25,
+        "endChar": 42
+      },
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e88b452b_93ed4203",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "See my reply to Greg above.",
+      "parentUuid": "1662a8e7_44eac1f6",
       "range": {
         "startLine": 25,
         "startChar": 20,
@@ -171,6 +255,24 @@
     },
     {
       "key": {
+        "uuid": "6420f0b7_07f44d63",
+        "filename": "base/win/com_base_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c81478e0_9796d7b5",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8f2a93c_838b2088",
         "filename": "base/win/scoped_hstring.cc",
         "patchSetId": 13
@@ -185,6 +287,24 @@
       "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a5558b_50dacaa7",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8f2a93c_838b2088",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -228,6 +348,48 @@
     },
     {
       "key": {
+        "uuid": "e9616525_f8b59392",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "Done, sort of. If there\u0027s a better way, I\u0027m open to suggestions.",
+      "parentUuid": "7315a729_715f4ac6",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f97bfa78_139de298",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19d24063_ab357423",
+      "range": {
+        "startLine": 44,
+        "startChar": 59,
+        "endLine": 44,
+        "endChar": 66
+      },
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a338b523_9ccbda0a",
         "filename": "base/win/scoped_hstring.cc",
         "patchSetId": 13
@@ -251,6 +413,30 @@
     },
     {
       "key": {
+        "uuid": "5898943f_e6dc7273",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a338b523_9ccbda0a",
+      "range": {
+        "startLine": 49,
+        "startChar": 20,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ca203bf_c6fddf5a",
         "filename": "base/win/scoped_hstring.cc",
         "patchSetId": 13
@@ -265,6 +451,24 @@
       "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "792cfdd0_80061bc4",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ca203bf_c6fddf5a",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -285,6 +489,24 @@
     },
     {
       "key": {
+        "uuid": "ed2207ba_a9f44fcb",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9518620f_3d788e69",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "637b3b05_7da3db79",
         "filename": "base/win/scoped_hstring.cc",
         "patchSetId": 13
@@ -302,6 +524,24 @@
     },
     {
       "key": {
+        "uuid": "c8b940fa_bce0273c",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "Well, this has changed a lot since last CL. Take another look?",
+      "parentUuid": "637b3b05_7da3db79",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ceb585b_528952d9",
         "filename": "base/win/scoped_hstring.cc",
         "patchSetId": 13
@@ -313,6 +553,24 @@
       "writtenOn": "2017-09-13T14:25:05Z",
       "side": 1,
       "message": "grab the length here and use it to construct the StringPiece16 to avoid another strlen",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03961313_5f6f9601",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "Not sure what you mean... Is this obsolete due to recent changes?",
+      "parentUuid": "2ceb585b_528952d9",
       "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -342,6 +600,53 @@
     },
     {
       "key": {
+        "uuid": "19a30dd2_044c5ee5",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "When I do I start getting linker errors. For example:\n\nscoped_hstring_unittest.obj : error LNK2019: unresolved external symbol \"public: static void __cdecl base::win::ScopedHStringTraits::Free(struct HSTRING__ *)\" (?Free@ScopedHStringTraits@win@base@@SAXPAUHSTRING__@@@Z) referenced in function \"private: void __thiscall base::ScopedGeneric\u003cstruct HSTRING__ *,class base::win::ScopedHStringTraits\u003e::FreeIfNecessary(void)\" (?FreeIfNecessary@?$ScopedGeneric@PAUHSTRING__@@VScopedHStringTraits@win@base@@@base@@AAEXXZ)",
+      "parentUuid": "d20af55d_a9d1f93c",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 13
+      },
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e2e99f_9b0b64d5",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "On second thoughts, I\u0027m uncomfortable with inlining the WindowsDeleteString call here. I prefer to enclose all the Windows*String calls in the .cc file, if that\u0027s OK.",
+      "range": {
+        "startLine": 23,
+        "startChar": 14,
+        "endLine": 23,
+        "endChar": 20
+      },
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5fb58e6_2904682c",
         "filename": "base/win/scoped_hstring.h",
         "patchSetId": 13
@@ -356,6 +661,24 @@
       "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5c84786_7452ff1e",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5fb58e6_2904682c",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -435,6 +758,30 @@
     },
     {
       "key": {
+        "uuid": "432a4a64_442059d7",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb295026_31b33b2d",
+      "range": {
+        "startLine": 30,
+        "startChar": 35,
+        "endLine": 30,
+        "endChar": 41
+      },
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c15f663a_990535de",
         "filename": "base/win/scoped_hstring.h",
         "patchSetId": 13
@@ -470,6 +817,24 @@
     },
     {
       "key": {
+        "uuid": "b10fa53b_3a22a896",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cd3d1a2_8c2d4563",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "938e9af2_aa38a423",
         "filename": "base/win/scoped_hstring.h",
         "patchSetId": 13
@@ -487,6 +852,24 @@
     },
     {
       "key": {
+        "uuid": "24c74e25_a0ac40ba",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "I like the idea of providing a ctor with HSTRING, but using DISALLOW_COPY_AND_ASSIGN doesn\u0027t jive well with that, since the Create function then shows an error...\n\nerror C2248: \u0027base::win::ScopedHString::ScopedHString\u0027: cannot access private member declared in class \u0027base::win::ScopedHString\u0027\n\n... when trying to do ...\n\n   return ScopedHString(hstr);\n\nScratching my head a bit over that...",
+      "parentUuid": "938e9af2_aa38a423",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fafce94e_8b8d446b",
         "filename": "base/win/scoped_hstring_unittest.cc",
         "patchSetId": 13
@@ -498,6 +881,24 @@
       "writtenOn": "2017-09-14T06:45:27Z",
       "side": 1,
       "message": "may want to add a case to take invalid unicode string.",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11c579b3_b2a38a14",
+        "filename": "base/win/scoped_hstring_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-09-14T23:51:01Z",
+      "side": 1,
+      "message": "What are good examples and what are the expectations in the test?",
+      "parentUuid": "fafce94e_8b8d446b",
       "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
