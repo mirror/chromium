@@ -70,7 +70,6 @@ void ClassicPendingScript::StreamingFinished() {
   CheckState();
   DCHECK(streamer_);  // Should only be called by ScriptStreamer.
 
-  WTF::Closure done = std::move(streamer_done_);
   if (ready_state_ == kWaitingForStreaming) {
     FinishWaitingForStreaming();
   } else if (ready_state_ == kReadyStreaming) {
@@ -79,8 +78,8 @@ void ClassicPendingScript::StreamingFinished() {
     NOTREACHED();
   }
 
-  if (done)
-    done();
+  if (streamer_done_)
+    std::move(streamer_done_)();
 }
 
 void ClassicPendingScript::FinishWaitingForStreaming() {
@@ -244,6 +243,22 @@ void ClassicPendingScript::OnPurgeMemory() {
 bool ClassicPendingScript::StartStreamingIfPossible(
     ScriptStreamer::Type streamer_type,
     WTF::Closure done) {
+  if (IsCurrentlyStreaming())
+    return false;
+
+  // Edge case: StartStreamingIfPossible may be called *during* the processing
+  // of StreamingFinished of the very same object. In such a recursive call,
+  // IsCurrentlyStreaming may give the wrong result (since the state is still
+  // being updated). We use the presence of streamer_done_ to catch this and
+  // to ensure we just return without doing anything.
+  //
+  // (The call chain here is: StreamingFinished calls (indirectly)
+  // AdvanceReadyState, which calls Client()->PendingScriptFinished(). If the
+  // script client then calls ScriptRunner:TryStreamAny, we may end in this
+  // situation.)
+  if (streamer_done_)
+    return false;
+
   // We can start streaming in two states: While still loading
   // (kWaitingForResource), or after having loaded (kReady).
   if (ready_state_ != kWaitingForResource && ready_state_ != kReady)
