@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2a14ea44_f78f3122",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 9
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-14T09:14:29Z",
+      "side": 1,
+      "message": "The $1, $2... are used with GetNSStringF, as you did. But when you want to add an image, you use NSAttributedString (if the image is part of your string), so you can\u0027t use this C method. Instead of having a generic \"$1\" placeholder, you can give a specific name to the placeholder. It is just for convenience and because we don\u0027t have a helper method to add NSAttributedString to grit string.",
+      "parentUuid": "5f69c6d6_b0fb8e86",
+      "range": {
+        "startLine": 561,
+        "startChar": 8,
+        "endLine": 561,
+        "endChar": 21
+      },
+      "revId": "83528097b19410c7d116c1cb4dccf0731415ddb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2dffbb3_798a05f0",
         "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
         "patchSetId": 9
@@ -93,6 +117,30 @@
       "revId": "83528097b19410c7d116c1cb4dccf0731415ddb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de4da369_d7d6d589",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-14T09:14:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3650c983_307aaa1b",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 18
+      },
+      "revId": "83528097b19410c7d116c1cb4dccf0731415ddb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
