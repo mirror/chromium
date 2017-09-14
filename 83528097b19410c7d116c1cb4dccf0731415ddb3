@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "55428c3e_b38e1607",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-14T13:57:32Z",
+      "side": 1,
+      "message": "NOTREACHED() expands to DCHECK(false) but is more informative to someone reading the code (https://cs.chromium.org/chromium/src/base/logging.h?q\u003dNOTREACHED\u0026l\u003d946, it has a specific implementation on ChromeOS but this is a performance detail).\n\nAre you thinking of NOTIMPLEMENTED()?",
+      "parentUuid": "fcc381ba_c0ad5d92",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 18
+      },
+      "revId": "83528097b19410c7d116c1cb4dccf0731415ddb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9adcdef0_9588a06a",
         "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
         "patchSetId": 9
