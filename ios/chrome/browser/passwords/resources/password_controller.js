@@ -92,12 +92,32 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
     return __gCrWeb.common.removeQueryAndReferenceFromURL(absolute_url);
   };
 
+  var addButtonClickHandlers_ = function(form) {
+    debugger;
+    if (form.querySelector('input[type=submit]'))
+      return;
+    var buttons = form.querySelectorAll('button');
+    if (!buttons || buttons.length > 1)
+      return;
+    buttons[0].addEventListener('touchend', onSubmitButtonClick_);
+   };
+
+   var onSubmitButtonClick_ = function(evt) {
+     debugger;
+     __gCrWeb.message.invokeOnHost({
+        'command': 'document.submit',
+        'formName': __gCrWeb.common.getFormIdentifier(evt.currentTarget.form),
+        'href': document.location.href
+     });
+    };
+
   /**
    * Returns the password form with the given |name| as a JSON string.
    * @param {string} name The name of the form to extract.
    * @return {string} The password form.
    */
   __gCrWeb['getPasswordForm'] = function(name) {
+      debugger;
     var el = __gCrWeb.common.getFormElementFromIdentifier(name);
     if (!el)
       return 'noPasswordsFound';
@@ -412,6 +432,7 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
       var formData = __gCrWeb.getPasswordFormData(forms[i]);
       if (formData) {
         formDataList.push(formData);
+        addButtonClickHandlers_(forms[i]);
       }
     }
 
