@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91e5e0b0_15534171",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/password/PasswordEntryEditor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-14T15:19:10Z",
+      "side": 1,
+      "message": "unused now?",
+      "revId": "6843689c2f13b5b8b4f527cd6501b82363716179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
