@@ -142,11 +142,13 @@ IN_PROC_BROWSER_TEST_F(AutocompleteBrowserTest, MAYBE_Autocomplete) {
 
   {
     omnibox_view->model()->SetInputInProgress(true);
-    autocomplete_controller->Start(AutocompleteInput(
+    AutocompleteInput input(
         base::ASCIIToUTF16("chrome"), base::string16::npos, std::string(),
-        GURL(), base::string16(), metrics::OmniboxEventProto::NTP, true, false,
-        true, false, false,
-        ChromeAutocompleteSchemeClassifier(browser()->profile())));
+        ChromeAutocompleteSchemeClassifier(browser()->profile()));
+    input.set_current_page_classification(metrics::OmniboxEventProto::NTP);
+    input.set_prevent_inline_autocomplete();
+    input.set_allow_exact_keyword_match();
+    autocomplete_controller->Start(input);
 
     EXPECT_TRUE(autocomplete_controller->done());
     EXPECT_FALSE(location_bar->GetDestinationURL().is_valid());

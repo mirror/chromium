@@ -331,10 +331,11 @@ void HistoryQuickProviderTest::RunTestWithCursor(
     base::string16 expected_autocompletion) {
   SCOPED_TRACE(text);  // Minimal hint to query being run.
   base::RunLoop().RunUntilIdle();
-  AutocompleteInput input(
-      text, cursor_position, std::string(), GURL(), base::string16(),
-      metrics::OmniboxEventProto::INVALID_SPEC, prevent_inline_autocomplete,
-      false, true, true, false, TestSchemeClassifier());
+  AutocompleteInput input(text, cursor_position, std::string(),
+                          TestSchemeClassifier());
+  input.set_prevent_inline_autocomplete(prevent_inline_autocomplete);
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
   provider_->Start(input, false);
   EXPECT_TRUE(provider_->done());
 
@@ -746,9 +747,10 @@ TEST_F(HistoryQuickProviderTest, PreventInlineAutocomplete) {
 
 TEST_F(HistoryQuickProviderTest, DoesNotProvideMatchesOnFocus) {
   AutocompleteInput input(ASCIIToUTF16("popularsite"), base::string16::npos,
-                          std::string(), GURL(), base::string16(),
-                          metrics::OmniboxEventProto::INVALID_SPEC, false,
-                          false, true, true, true, TestSchemeClassifier());
+                          std::string(), TestSchemeClassifier());
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
+  input.set_from_omnibox_focus();
   provider().Start(input, false);
   EXPECT_TRUE(provider().matches().empty());
 }
