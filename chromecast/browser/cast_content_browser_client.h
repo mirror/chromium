@@ -124,6 +124,11 @@ class CastContentBrowserClient : public content::ContentBrowserClient {
                            content::WebPreferences* prefs) override;
   void ResourceDispatcherHostCreated() override;
   std::string GetApplicationLocale() override;
+  void GetGeolocationRequestContext(
+      base::OnceCallback<
+          void(const scoped_refptr<net::URLRequestContextGetter>)> callback)
+      override;
+  std::string GetGeolocationApiKey() override;
   content::QuotaPermissionContext* CreateQuotaPermissionContext() override;
   void GetQuotaSettings(
       content::BrowserContext* context,
