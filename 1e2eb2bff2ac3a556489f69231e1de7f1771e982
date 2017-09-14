@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9405092_7f992d81",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 9
+      },
+      "lineNbr": 1228,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-14T23:47:34Z",
+      "side": 1,
+      "message": "TBR\u0027ing Nico for this one, since I\u0027m not a build/ owner.",
+      "revId": "1e2eb2bff2ac3a556489f69231e1de7f1771e982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
