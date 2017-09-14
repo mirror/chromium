@@ -344,7 +344,7 @@ bool SQLiteChannelIDStore::Backend::EnsureDatabaseVersion() {
       statement.ColumnBlobAsVector(2, &encrypted_private_key);
       std::unique_ptr<crypto::ECPrivateKey> key(
           crypto::ECPrivateKey::CreateFromEncryptedPrivateKeyInfo(
-              encrypted_private_key, std::vector<uint8_t>()));
+              encrypted_private_key));
       if (!key || !key->ExportPrivateKey(&private_key)) {
         LOG(WARNING) << "Unable to parse encrypted private key when migrating "
                         "Channel ID database to version 6.";
@@ -389,7 +389,7 @@ bool SQLiteChannelIDStore::Backend::EnsureDatabaseVersion() {
       select.ColumnBlobAsVector(1, &encrypted_private_key);
       std::unique_ptr<crypto::ECPrivateKey> key(
           crypto::ECPrivateKey::CreateFromEncryptedPrivateKeyInfo(
-              encrypted_private_key, std::vector<uint8_t>()));
+              encrypted_private_key));
       if (!key || !key->ExportPrivateKey(&private_key)) {
         LOG(WARNING) << "Unable to parse encrypted private key when migrating "
                         "Channel ID database to version 6.";

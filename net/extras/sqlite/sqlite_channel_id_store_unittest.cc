@@ -14,7 +14,6 @@
 #include "base/run_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "crypto/ec_private_key.h"
-#include "net/cert/asn1_util.h"
 #include "net/ssl/channel_id_service.h"
 #include "net/ssl/ssl_client_cert_type.h"
 #include "net/test/cert_test_util.h"
@@ -61,12 +60,7 @@ class SQLiteChannelIDStoreTest : public testing::Test {
     ASSERT_TRUE(base::ReadFileToString(cert_path, cert_data));
     std::vector<uint8_t> private_key(key_data->size());
     memcpy(private_key.data(), key_data->data(), key_data->size());
-    base::StringPiece spki;
-    ASSERT_TRUE(asn1::ExtractSPKIFromDERCert(*cert_data, &spki));
-    std::vector<uint8_t> public_key(spki.size());
-    memcpy(public_key.data(), spki.data(), spki.size());
-    *key = crypto::ECPrivateKey::CreateFromEncryptedPrivateKeyInfo(private_key,
-                                                                   public_key);
+    *key = crypto::ECPrivateKey::CreateFromEncryptedPrivateKeyInfo(private_key);
   }
 
   static base::Time GetTestCertExpirationTime() {
