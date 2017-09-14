@@ -1451,7 +1451,6 @@ interface Document : Node
     attribute @@unscopables
     getter URL
     getter activeElement
-    getter addressSpace
     getter anchors
     getter applets
     getter body
