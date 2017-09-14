@@ -16,6 +16,24 @@
       "revId": "0d819ba838690e612b665020f4caea47dad24cde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64436142_189dfc6c",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerIsolateData.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-14T01:05:50Z",
+      "side": 1,
+      "message": "My slightly resistance is that it\u0027s fine here because this map doesn\u0027t really have to worry much about collision resistance (and at the moment it only has one use).\n\nI can move it if you\u0027d like, but if I do I\u0027d at least put a really scary looking comment above it. WDYT?",
+      "parentUuid": "fd4abc67_e79d7377",
+      "revId": "0d819ba838690e612b665020f4caea47dad24cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
