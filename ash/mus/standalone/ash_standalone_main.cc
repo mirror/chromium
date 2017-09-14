@@ -65,6 +65,11 @@ class ShellInit : public shell::ShellDelegateImpl, public ShellObserver {
     example_session_controller_client_->Initialize();
 
     window_watcher_ = base::MakeUnique<shell::WindowWatcher>();
+    // TODO(msw): Use TestShelfInitializer... 
+    // Shelf* shelf = Shell::GetPrimaryRootWindowController()->shelf();
+    // shelf->SetAlignment(SHELF_ALIGNMENT_BOTTOM);
+    // shelf->SetAutoHideBehavior(SHELF_AUTO_HIDE_BEHAVIOR_NEVER);
+
     shell::InitWindowTypeLauncher(base::Bind(&ShowViewsExamples));
 
     // Initialize the example app list presenter.

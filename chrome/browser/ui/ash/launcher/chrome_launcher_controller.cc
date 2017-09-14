@@ -250,6 +250,7 @@ ChromeLauncherController::ChromeLauncherController(Profile* profile,
 }
 
 ChromeLauncherController::~ChromeLauncherController() {
+  LOG(ERROR) << "MSW CLC DTOR"; 
   // Reset the BrowserStatusMonitor as it has a weak pointer to this.
   browser_status_monitor_.reset();
 

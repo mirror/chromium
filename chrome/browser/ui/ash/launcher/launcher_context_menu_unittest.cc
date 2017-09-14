@@ -35,30 +35,30 @@
 
 namespace {
 
-// A shell delegate that owns a ChromeLauncherController, like production.
-class ChromeLauncherTestShellDelegate : public ash::TestShellDelegate {
- public:
-  explicit ChromeLauncherTestShellDelegate(Profile* profile)
-      : profile_(profile) {}
+// // A shell delegate that owns a ChromeLauncherController, like production.
+// class ChromeLauncherTestShellDelegate : public ash::TestShellDelegate {
+//  public:
+//   explicit ChromeLauncherTestShellDelegate(Profile* profile)
+//       : profile_(profile) {}
 
-  ChromeLauncherController* controller() { return controller_.get(); }
+//   ChromeLauncherController* controller() { return controller_.get(); }
 
-  // ash::TestShellDelegate:
-  void ShelfInit() override {
-    if (!controller_) {
-      controller_ = base::MakeUnique<ChromeLauncherController>(
-          profile_, ash::Shell::Get()->shelf_model());
-      controller_->Init();
-    }
-  }
-  void ShelfShutdown() override { controller_.reset(); }
+//   // ash::TestShellDelegate:
+//   void ShelfInit() override {
+//     if (!controller_) {
+//       controller_ = base::MakeUnique<ChromeLauncherController>(
+//           profile_, ash::Shell::Get()->shelf_model());
+//       controller_->Init();
+//     }
+//   }
+//   void ShelfShutdown() override { controller_.reset(); }
 
- private:
-  Profile* profile_;
-  std::unique_ptr<ChromeLauncherController> controller_;
+//  private:
+//   Profile* profile_;
+//   std::unique_ptr<ChromeLauncherController> controller_;
 
-  DISALLOW_COPY_AND_ASSIGN(ChromeLauncherTestShellDelegate);
-};
+//   DISALLOW_COPY_AND_ASSIGN(ChromeLauncherTestShellDelegate);
+// };
 
 class LauncherContextMenuTest : public ash::AshTestBase {
  protected:
@@ -71,8 +71,8 @@ class LauncherContextMenuTest : public ash::AshTestBase {
   void SetUp() override {
     arc_test_.SetUp(&profile_);
     session_manager_ = base::MakeUnique<session_manager::SessionManager>();
-    shell_delegate_ = new ChromeLauncherTestShellDelegate(&profile_);
-    ash_test_helper()->set_test_shell_delegate(shell_delegate_);
+    // shell_delegate_ = new ChromeLauncherTestShellDelegate(&profile_);
+    // ash_test_helper()->set_test_shell_delegate(shell_delegate_);
     ash::AshTestBase::SetUp();
   }
 
@@ -102,12 +102,13 @@ class LauncherContextMenuTest : public ash::AshTestBase {
   Profile* profile() { return &profile_; }
 
   ChromeLauncherController* controller() {
-    return shell_delegate_->controller();
+    return nullptr; 
+    // return shell_delegate_->controller();
   }
 
  private:
   TestingProfile profile_;
-  ChromeLauncherTestShellDelegate* shell_delegate_ = nullptr;
+  // ChromeLauncherTestShellDelegate* shell_delegate_ = nullptr;
   ArcAppTest arc_test_;
   std::unique_ptr<session_manager::SessionManager> session_manager_;
 

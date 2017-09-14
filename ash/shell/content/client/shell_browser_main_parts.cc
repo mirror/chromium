@@ -100,6 +100,9 @@ void ShellBrowserMainParts::PreMainMessageLoopRun() {
   example_session_controller_client_->Initialize();
 
   window_watcher_ = base::MakeUnique<WindowWatcher>();
+  Shelf* shelf = Shell::GetPrimaryRootWindowController()->shelf();
+  shelf->SetAlignment(SHELF_ALIGNMENT_BOTTOM);
+  shelf->SetAutoHideBehavior(SHELF_AUTO_HIDE_BEHAVIOR_NEVER);
 
   ash::shell::InitWindowTypeLauncher(base::Bind(
       &views::examples::ShowExamplesWindowWithContent,

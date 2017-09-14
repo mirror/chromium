@@ -6,14 +6,9 @@
 #define ASH_TEST_SHELL_DELEGATE_H_
 
 #include <memory>
-#include <string>
 
 #include "ash/shell_delegate.h"
 #include "base/macros.h"
-
-namespace keyboard {
-class KeyboardUI;
-}
 
 namespace ash {
 
@@ -39,8 +34,6 @@ class TestShellDelegate : public ShellDelegate {
   void PreShutdown() override;
   void Exit() override;
   std::unique_ptr<keyboard::KeyboardUI> CreateKeyboardUI() override;
-  void ShelfInit() override;
-  void ShelfShutdown() override;
   void OpenUrlFromArc(const GURL& url) override;
   NetworkingConfigDelegate* GetNetworkingConfigDelegate() override;
   std::unique_ptr<WallpaperDelegate> CreateWallpaperDelegate() override;

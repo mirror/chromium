@@ -1615,6 +1615,8 @@ static_library("test_support_common") {
     "test_media_client.h",
     "test_screenshot_delegate.cc",
     "test_screenshot_delegate.h",
+    "test_shelf_initializer.cc",
+    "test_shelf_initializer.h",
     "test_shell_delegate.cc",
     "test_shell_delegate.h",
     "wallpaper/test_wallpaper_delegate.cc",

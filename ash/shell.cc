@@ -786,11 +786,8 @@ Shell::~Shell() {
   // shelf items in Chrome) so explicitly shutdown early.
   shelf_model()->DestroyItemDelegates();
 
-  // Notify the ShellDelegate that the shelf is shutting down.
-  // TODO(msw): Refine ChromeLauncherController lifetime management.
-  shell_delegate_->ShelfShutdown();
-
   // Removes itself as an observer of |pref_service_|.
+  LOG(ERROR) << "MSW shelf_controller_ destruction. (should be after CLC)"; 
   shelf_controller_.reset();
 
   shell_port_->Shutdown();
@@ -1274,10 +1271,6 @@ void Shell::InitializeShelf() {
   // Must occur after SessionController creation and user login.
   DCHECK(session_controller());
   DCHECK_GT(session_controller()->NumberOfLoggedInUsers(), 0);
-
-  // Notify the ShellDelegate that the shelf is being initialized.
-  // TODO(msw): Refine ChromeLauncherController lifetime management.
-  shell_delegate_->ShelfInit();
 
   if (!shelf_window_watcher_)
     shelf_window_watcher_ = base::MakeUnique<ShelfWindowWatcher>(shelf_model());
