@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4411f501_bb7ccca4",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-14T14:40:23Z",
+      "side": 1,
+      "message": "Why not using self?",
+      "range": {
+        "startLine": 85,
+        "startChar": 3,
+        "endLine": 85,
+        "endChar": 49
+      },
+      "revId": "c0592e69d58950cb1baeeb05675ef026b23b8ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6877ab8a_63b862f2",
+        "filename": "ios/clean/chrome/browser/ui/tools/tools_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-14T14:40:23Z",
+      "side": 1,
+      "message": "I don\u0027t like the fact that you are casting this as a ToolsMenuCommads/SettingsCommands even if it does not handle all methods from those protocols.",
+      "range": {
+        "startLine": 52,
+        "startChar": 21,
+        "endLine": 52,
+        "endChar": 56
+      },
+      "revId": "c0592e69d58950cb1baeeb05675ef026b23b8ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
