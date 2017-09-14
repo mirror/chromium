@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "76997dec_6aaefa51",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-14T23:38:10Z",
+      "side": 1,
+      "message": "Let\u0027s remove this line. It doesn\u0027t add any value and it\u0027s misleading since we\u0027re doing 313222 now.",
+      "revId": "22b0acbe55593a8fa6352744d92eb7110318ffaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ae1bea27_8efccc5b",
         "filename": "build/config/compiler/BUILD.gn",
         "patchSetId": 6
