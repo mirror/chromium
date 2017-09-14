@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fab10707_3f19ab7a",
+        "filename": "chrome/browser/resources/chromeos/chromevox/host/chrome/tts_background.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-14T22:52:28Z",
+      "side": 1,
+      "message": "Maybe add a comment next to this indicating \\u2022 is a bullet?",
+      "revId": "6a7ee3c9bba5e58a5d3da4e7bac3ccbd372673a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
