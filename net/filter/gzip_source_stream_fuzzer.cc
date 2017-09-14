@@ -22,7 +22,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
 
   const net::SourceStream::SourceType kGzipTypes[] = {
       net::SourceStream::TYPE_GZIP, net::SourceStream::TYPE_DEFLATE,
-      net::SourceStream::TYPE_GZIP_FALLBACK};
+      net::SourceStream::TYPE_GZIP_FALLBACK_DEPRECATED};
   net::SourceStream::SourceType type =
       data_provider.PickValueInArray(kGzipTypes);
   std::unique_ptr<net::GzipSourceStream> gzip_stream =

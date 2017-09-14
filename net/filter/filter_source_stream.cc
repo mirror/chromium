@@ -85,7 +85,7 @@ FilterSourceStream::SourceType FilterSourceStream::ParseEncodingType(
              base::LowerCaseEqualsASCII(encoding, kXGZip)) {
     return TYPE_GZIP;
   } else if (base::LowerCaseEqualsASCII(encoding, kSdch)) {
-    return TYPE_SDCH;
+    return TYPE_SDCH_DEPRECATED;
   } else {
     return TYPE_UNKNOWN;
   }

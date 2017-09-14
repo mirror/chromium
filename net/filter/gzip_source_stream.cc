@@ -20,7 +20,6 @@ namespace {
 
 const char kDeflate[] = "DEFLATE";
 const char kGzip[] = "GZIP";
-const char kGzipFallback[] = "GZIP_FALLBACK";
 
 // For deflate streams, if more than this many bytes have been received without
 // an error and without adding a Zlib header, assume the original stream had a
@@ -62,7 +61,7 @@ bool GzipSourceStream::Init() {
   memset(zlib_stream_.get(), 0, sizeof(z_stream));
 
   int ret;
-  if (type() == TYPE_GZIP || type() == TYPE_GZIP_FALLBACK) {
+  if (type() == TYPE_GZIP || type() == TYPE_GZIP_FALLBACK_DEPRECATED) {
     ret = inflateInit2(zlib_stream_.get(), -MAX_WBITS);
   } else {
     ret = inflateInit(zlib_stream_.get());
@@ -75,8 +74,6 @@ std::string GzipSourceStream::GetTypeAsString() const {
   switch (type()) {
     case TYPE_GZIP:
       return kGzip;
-    case TYPE_GZIP_FALLBACK:
-      return kGzipFallback;
     case TYPE_DEFLATE:
       return kDeflate;
     default:
@@ -280,7 +277,7 @@ bool GzipSourceStream::InsertZlibHeader() {
 // 1952 2.3.1, so if the first byte isn't the first byte of the gzip magic, and
 // this filter is checking whether it should fallback, then fallback.
 bool GzipSourceStream::ShouldFallbackToPlain(char first_byte) {
-  if (type() != TYPE_GZIP_FALLBACK)
+  if (type() != TYPE_GZIP_FALLBACK_DEPRECATED)
     return false;
   static const char kGzipFirstByte = 0x1f;
   return first_byte != kGzipFirstByte;
