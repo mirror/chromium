@@ -14,7 +14,7 @@ interface IWebApkApi {
     int getSmallIconId();
 
     // Display a notification.
-    void notifyNotification(String platformTag, int platformID, in Notification notification);
+    int notifyNotification(String platformTag, int platformID, in Notification notification);
 
     // Cancel a notification.
     void cancelNotification(String platformTag, int platformID);
