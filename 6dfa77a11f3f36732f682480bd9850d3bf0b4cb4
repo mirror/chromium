@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3275faf1_15b69927",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-09-14T03:30:55Z",
+      "side": 1,
+      "message": "nit:\nI think |version| can\u0027t be null.\nDCHECK(version) is enough?",
+      "revId": "6dfa77a11f3f36732f682480bd9850d3bf0b4cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
