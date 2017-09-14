@@ -217,6 +217,9 @@ class PLATFORM_EXPORT BitmapImage final : public Image {
 
   size_t frame_count_;
 
+  // The number of frames skipped while animating this image.
+  size_t num_of_frames_skipped_;
+
   RefPtr<WebTaskRunner> task_runner_;
 };
 
