@@ -105,7 +105,7 @@ UiElement* UiScene::GetUiElementByName(UiElementName name) const {
 std::vector<const UiElement*> UiScene::GetWorldElements() const {
   std::vector<const UiElement*> elements;
   ForAllElements(root_element_.get(), [&elements](UiElement* element) {
-    if (element->IsVisible() && !element->viewport_aware() &&
+    if (element->IsVisible() && !element->IsViewportAware() &&
         !element->is_overlay()) {
       elements.push_back(element);
     }
@@ -125,15 +125,16 @@ std::vector<const UiElement*> UiScene::GetOverlayElements() const {
 
 std::vector<const UiElement*> UiScene::GetViewportAwareElements() const {
   std::vector<const UiElement*> elements;
+
   ForAllElements(root_element_.get(), [&elements](UiElement* element) {
-    if (!element->viewport_aware())
+    if (!element->IsViewportAware())
       return;
 
     // Note that we need to exclude ViewportAwareRoot element. It is not a
     // visual element. Currently all of ViewportAwareRoot's children sets
     // viewport aware to true. So we check if the element's parent is a viewport
     // aware element to detect ViewportAwareRoot.
-    if (element->parent() && !element->parent()->viewport_aware())
+    if (element->parent() && !element->parent()->IsViewportAware())
       return;
 
     if (element->IsVisible()) {

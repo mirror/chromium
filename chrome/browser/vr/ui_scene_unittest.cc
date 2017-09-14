@@ -55,13 +55,11 @@ void MakeViewportAwareElements(UiScene* scene,
 
   element = base::MakeUnique<UiElement>();
   *child = element.get();
-  element->set_viewport_aware(true);
   element->set_draw_phase(0);
   viewport_aware_root->AddChild(std::move(element));
 
   element = base::MakeUnique<UiElement>();
   *grandchild = element.get();
-  element->set_viewport_aware(false);
   element->set_draw_phase(0);
   (*child)->AddChild(std::move(element));
 }
@@ -175,8 +173,8 @@ TEST(UiScene, ViewportAware) {
   MakeViewportAwareElements(&scene, &child, &grandchild);
 
   scene.OnBeginFrame(MicrosecondsToTicks(0), gfx::Vector3dF(0.f, 0.f, -1.0f));
-  EXPECT_TRUE(child->computed_viewport_aware());
-  EXPECT_TRUE(grandchild->computed_viewport_aware());
+  EXPECT_TRUE(child->IsViewportAware());
+  EXPECT_TRUE(grandchild->IsViewportAware());
 }
 
 TEST(UiScene, NoViewportAwareElementWhenNoVisibleChild) {
@@ -185,8 +183,10 @@ TEST(UiScene, NoViewportAwareElementWhenNoVisibleChild) {
   UiElement* grandchild = nullptr;
   MakeViewportAwareElements(&scene, &child, &grandchild);
 
+  scene.OnBeginFrame(MicrosecondsToTicks(0), gfx::Vector3dF(0.f, 0.f, -1.0f));
   EXPECT_FALSE(scene.GetViewportAwareElements().empty());
   child->SetVisible(false);
+  scene.OnBeginFrame(MicrosecondsToTicks(0), gfx::Vector3dF(0.f, 0.f, -1.0f));
   EXPECT_TRUE(scene.GetViewportAwareElements().empty());
 }
 

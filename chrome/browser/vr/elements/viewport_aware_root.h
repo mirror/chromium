@@ -23,6 +23,8 @@ class ViewportAwareRoot : public UiElement {
 
   void AdjustRotationForHeadPose(const gfx::Vector3dF& look_at) override;
 
+  bool IsViewportAware() const override;
+
  private:
   void OnUpdatedInheritedProperties() override;
   float viewport_aware_total_rotation_ = 0;

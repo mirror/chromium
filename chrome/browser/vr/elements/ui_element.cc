@@ -103,6 +103,16 @@ bool UiElement::IsVisible() const {
   return opacity_ > 0.0f && computed_opacity_ > 0.0f;
 }
 
+bool UiElement::IsViewportAware() const {
+  UiElement* parent = parent_;
+  while (parent) {
+    if (parent->IsViewportAware())
+      return true;
+    parent = parent->parent();
+  }
+  return false;
+}
+
 void UiElement::SetTransformOperations(
     const UiElementTransformOperations& ui_element_transform_operations) {
   animation_player_.TransitionTransformOperationsTo(
@@ -306,7 +316,6 @@ void UiElement::UpdateInheritedProperties() {
   gfx::Transform transform;
   transform.Scale(size_.width(), size_.height());
   set_computed_opacity(opacity_);
-  set_computed_viewport_aware(viewport_aware_);
 
   // Compute an inheritable transformation that can be applied to this element,
   // and it's children, if applicable.
@@ -315,8 +324,6 @@ void UiElement::UpdateInheritedProperties() {
   if (parent_) {
     inheritable.ConcatTransform(parent_->inheritable_transform());
     set_computed_opacity(computed_opacity() * parent_->opacity());
-    if (parent_->viewport_aware())
-      set_computed_viewport_aware(true);
   }
 
   transform.ConcatTransform(inheritable);

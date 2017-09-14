@@ -309,7 +309,6 @@ void UiSceneManager::CreateSecurityWarnings() {
   element->SetScale(kWarningDistance, kWarningDistance, 1);
   element->SetVisible(false);
   element->set_hit_testable(false);
-  element->set_viewport_aware(true);
   permanent_security_warning_ = element.get();
   scene_->AddUiElement(kWebVrViewportAwareRoot, std::move(element));
 
@@ -324,7 +323,6 @@ void UiSceneManager::CreateSecurityWarnings() {
   element->SetScale(kWarningDistance, kWarningDistance, 1);
   element->SetVisible(false);
   element->set_hit_testable(false);
-  element->set_viewport_aware(true);
   scene_->AddUiElement(kWebVrViewportAwareRoot, std::move(element));
 
   element = base::MakeUnique<ExitWarning>(1024);
@@ -335,7 +333,6 @@ void UiSceneManager::CreateSecurityWarnings() {
   element->SetScale(kExitWarningDistance, kExitWarningDistance, 1);
   element->SetVisible(false);
   element->set_hit_testable(false);
-  element->set_viewport_aware(true);
   exit_warning_ = element.get();
   scene_->AddUiElement(k2dBrowsingViewportAwareRoot, std::move(element));
 }
@@ -424,7 +421,6 @@ void UiSceneManager::CreateSplashScreen() {
       }),
       IDS_VR_POWERED_BY_CHROME_MESSAGE);
   text->set_name(kSplashScreenText);
-  text->set_viewport_aware(true);
   text->set_draw_phase(kPhaseForeground);
   text->set_hit_testable(false);
   text->SetSize(kSplashScreenTextWidthM, kSplashScreenTextHeightM);
@@ -564,7 +560,6 @@ void UiSceneManager::CreateWebVrUrlToast() {
   url_bar->set_name(kWebVrUrlToast);
   url_bar->set_opacity_when_visible(0.8);
   url_bar->set_draw_phase(kPhaseForeground);
-  url_bar->set_viewport_aware(true);
   url_bar->SetVisible(false);
   url_bar->set_hit_testable(false);
   url_bar->SetTranslate(0, kWebVrToastDistance * sin(kWebVrUrlToastRotationRad),
@@ -649,7 +644,6 @@ void UiSceneManager::CreateToasts() {
   element->SetScale(kWebVrToastDistance, kWebVrToastDistance, 1);
   element->SetVisible(false);
   element->set_hit_testable(false);
-  element->set_viewport_aware(true);
   exclusive_screen_toast_viewport_aware_ = element.get();
   scene_->AddUiElement(kWebVrViewportAwareRoot, std::move(element));
 }

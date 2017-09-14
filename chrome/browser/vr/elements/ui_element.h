@@ -120,14 +120,7 @@ class UiElement : public cc::AnimationTarget {
   bool hit_testable() const { return hit_testable_; }
   void set_hit_testable(bool hit_testable) { hit_testable_ = hit_testable; }
 
-  bool viewport_aware() const { return viewport_aware_; }
-  void set_viewport_aware(bool viewport_aware) {
-    viewport_aware_ = viewport_aware;
-  }
-  bool computed_viewport_aware() const { return computed_viewport_aware_; }
-  void set_computed_viewport_aware(bool computed_lock) {
-    computed_viewport_aware_ = computed_lock;
-  }
+  virtual bool IsViewportAware() const;
 
   bool is_overlay() const { return is_overlay_; }
   void set_is_overlay(bool is_overlay) { is_overlay_ = is_overlay; }
@@ -270,13 +263,6 @@ class UiElement : public cc::AnimationTarget {
 
   // If false, the reticle will not hit the element, even if visible.
   bool hit_testable_ = true;
-
-  // If true, the element will reposition itself to viewport if neccessary.
-  // TODO(bshe): We might be able to remove this state.
-  bool viewport_aware_ = false;
-
-  // The computed viewport aware, incorporating from parent objects.
-  bool computed_viewport_aware_ = false;
 
   // If true, then this element will be drawn in the world viewport, but above
   // all other elements.
