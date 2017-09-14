@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8ecf9a4_2fa42294",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-14T17:44:19Z",
+      "side": 1,
+      "message": "Would it make sense to move this to network-choose-mobile element (so the scan is done only if the cellular network is selected), or would that introduce too great of a delay for updating the found network list?\n\nAlso, should we re-scan when a cellular network is selected? If the network details dialog was shown for a while, network properties might already be stale when the cellular network is selected; do we care about this case?\n\nIf you think the rescan is best done here, than I\u0027m fine with it.",
+      "revId": "5949f0e9ce54f19b8fec0e01d787d9f41afd9fb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
