@@ -46,6 +46,30 @@
       "revId": "b52144f5179f5296510fefcb3e5dea3891b0bb84",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055fbc42_687410a9",
+        "filename": "content/browser/service_worker/service_worker_internals_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-14T01:17:12Z",
+      "side": 0,
+      "message": "I made some modifications that CallServiceWorkerVersionMethodWithVersionID() takes StatusCallback\u0026 as it has been, and passes ServiceWorkerVersion::StopWorker() to OnceClosure in which StatusCallback is bound with SERVICE_WORKER_OK.",
+      "parentUuid": "78055c4b_a8b13501",
+      "range": {
+        "startLine": 84,
+        "startChar": 4,
+        "endLine": 84,
+        "endChar": 49
+      },
+      "revId": "b52144f5179f5296510fefcb3e5dea3891b0bb84",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
