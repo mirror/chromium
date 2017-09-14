@@ -31,6 +31,7 @@
 #include "components/prefs/testing_pref_service.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "url/url_constants.h"
 
 using autofill::PasswordForm;
 using base::WaitableEvent;
@@ -969,5 +970,37 @@ TEST_F(PasswordStoreTest, SubscriptionAndUnsubscriptionFromSignInEvents) {
   store->ShutdownOnUIThread();
 }
 #endif
+
+// Verify that previously saved passwords for about:blank frames are not used
+// for autofill.  See https://crbug.com/756587.
+TEST_F(PasswordStoreTest, ExistingAboutBlankPasswordsAreIgnored) {
+  scoped_refptr<PasswordStoreDefault> store(new PasswordStoreDefault(
+      base::MakeUnique<LoginDatabase>(test_login_db_file_path())));
+  store->Init(syncer::SyncableService::StartSyncFlare(), nullptr);
+
+  PasswordForm form;
+  form.origin = GURL(url::kAboutBlankURL);
+  form.signon_realm = "about:";
+  form.action = GURL("https://foo.com/submit.html");
+  form.password_value = base::ASCIIToUTF16("pa55w0rd");
+  store->AddLogin(form);
+  WaitForPasswordStore();
+
+  MockPasswordStoreObserver mock_observer;
+  store->AddObserver(&mock_observer);
+
+  MockPasswordStoreConsumer mock_consumer;
+  PasswordStore::FormDigest matcher_form = {
+      PasswordForm::SCHEME_HTML, "about:", GURL(url::kAboutBlankURL)};
+  std::vector<std::unique_ptr<PasswordForm>> expected_forms;
+  EXPECT_CALL(mock_consumer,
+              OnGetPasswordStoreResultsConstRef(
+                  UnorderedPasswordFormElementsAre(&expected_forms)));
+  store->GetLogins(matcher_form, &mock_consumer);
+  WaitForPasswordStore();
+
+  store->RemoveObserver(&mock_observer);
+  store->ShutdownOnUIThread();
+}
 
 }  // namespace password_manager
