@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4446c502_0598fd58",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-09-14T01:36:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08254159_44e439ee",
+      "range": {
+        "startLine": 210,
+        "startChar": 70,
+        "endLine": 210,
+        "endChar": 94
+      },
+      "revId": "ffaba96deee1bc31c9e22806cc5dada10debb1a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90e2bd76_65a506ba",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-12T22:22:48Z",
       "side": 1,
       "message": "This block won\u0027t execute if Chrome Home isn\u0027t enabled because the control layout id won\u0027t be bottom_control_container.\n\nIn FeatureUtilities#isChromeHomeEnabled, we have a check to see if the SharedPreferences value matches the C++ experiment value. If it doesn\u0027t, we update the Chrome Home SharedPreference. Can we update the date SharedPreference in that block?\n\nFeatureUtilities is a designed as a helper class to determine whether or not certain features are enabled, so it fits there better than making ChromeActivity responsible for stashing the SharedPreference. Ideally we\u0027d have FeatureUtilities work with ChromePreferenceManager since that class is responsible for storing and retrieving various Android SharedPreferences.\n\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/util/FeatureUtilities.java?dr\u003dCSs\u0026q\u003dfeatureutil\u0026sq\u003dpackage:chromium\u0026l\u003d280",
+      "range": {
+        "startLine": 468,
+        "startChar": 15,
+        "endLine": 473,
+        "endChar": 17
+      },
+      "revId": "ffaba96deee1bc31c9e22806cc5dada10debb1a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a4b5a18_e524b10c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-09-14T01:36:13Z",
+      "side": 1,
+      "message": "Through tests, I found that using the ChromeFeatureList.isInitialized() check is unreliable.\nAll the information we need is available before that in sChromeHomeEnabled, so I put the log there. \nIf sChromeHomeEnabled is true, then we check to see if the key exists; we only add it if it does not.\nIf it\u0027s false then we remove it if it exists. \nThis works because sChromeHomeEnabled \u003d\u003d null only once per session.",
+      "parentUuid": "90e2bd76_65a506ba",
       "range": {
         "startLine": 468,
         "startChar": 15,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0deb19d0_a2382e3b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2258,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-09-14T01:36:13Z",
+      "side": 1,
+      "message": "fixed. it looks like each edit should have ended with \".apply()\" instead of calling \".apply()\" at the end of the method.",
+      "parentUuid": "45a415ad_85b6084a",
+      "range": {
+        "startLine": 2258,
+        "startChar": 4,
+        "endLine": 2258,
+        "endChar": 36
+      },
+      "revId": "ffaba96deee1bc31c9e22806cc5dada10debb1a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aca8ee14_fa84728b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "4fc62868_7e286014",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2261,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-09-14T01:36:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aca8ee14_fa84728b",
+      "range": {
+        "startLine": 2261,
+        "startChar": 16,
+        "endLine": 2261,
+        "endChar": 36
+      },
+      "revId": "ffaba96deee1bc31c9e22806cc5dada10debb1a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44370d3b_5e837445",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "ffaba96deee1bc31c9e22806cc5dada10debb1a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e1fc92a_b3ba10a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 2281,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-09-14T01:36:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44370d3b_5e837445",
+      "range": {
+        "startLine": 2280,
+        "startChar": 7,
+        "endLine": 2281,
+        "endChar": 53
+      },
+      "revId": "ffaba96deee1bc31c9e22806cc5dada10debb1a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
