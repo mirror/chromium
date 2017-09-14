@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a43836b_ea2ab5d4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/TabState.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-14T22:37:14Z",
+      "side": 1,
+      "message": "I wonder if there is a path where we don\u0027t save theme colors if Tab#isDefaultThemeColor() is true.  Ideally, the gray of normal mode wouldn\u0027t leak as a theme color to home either.  Probably harder here as we\u0027d have to choose some invalid color value to stash here as our signal that it was the default.",
+      "range": {
+        "startLine": 344,
+        "startChar": 44,
+        "endLine": 344,
+        "endChar": 54
+      },
+      "revId": "bef42e0242544732c3a835c9ed2480728d2f1421",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
