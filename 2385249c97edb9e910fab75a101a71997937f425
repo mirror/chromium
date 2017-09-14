@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00728647_6a5e203a",
+        "filename": "components/wallpaper/wallpaper_manager_base.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-14T23:01:26Z",
+      "side": 0,
+      "message": "I think this condition can be safely removed now? The codes were written at least more than 3 years ago (could not find the first history due to multiple times of code migration)",
+      "revId": "2385249c97edb9e910fab75a101a71997937f425",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
