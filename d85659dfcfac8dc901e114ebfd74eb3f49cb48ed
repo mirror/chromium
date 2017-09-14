@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0e721b66_51e53108",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-14T14:51:36Z",
+      "side": 1,
+      "message": "Hmm. I was doing to say it\u0027s problematic thread-wise, but it\u0027s actually OK since we\u0027re going to only need it for reopening the file, which we will always do on the right thread (it\u0027s only closing that happens on other threads). So removed this, and tweaked the comment on the owner field instead.",
+      "parentUuid": "63a5454a_55a2a5d2",
+      "range": {
+        "startLine": 40,
+        "startChar": 30,
+        "endLine": 40,
+        "endChar": 39
+      },
+      "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "161beb7f_24c95702",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285a3953_c5cd4df3",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-14T14:51:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "161beb7f_24c95702",
+      "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "6cef22e2_bcdcd4cc",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-14T14:51:36Z",
+      "side": 1,
+      "message": "I just made a value, since the caller uses std::move it gets move-constructed.\n\n(base::File is basically already a handle-like object, so heap allocating them feels like a waste)",
+      "parentUuid": "49123858_e93d2c38",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 28
+      },
+      "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "171da1ea_e5eed397",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 7
@@ -76,6 +142,24 @@
       "writtenOn": "2017-09-14T13:40:45Z",
       "side": 1,
       "message": "This state machine always moves forward, except that it starts with closed. How about adding a new state, such as TF_START or TF_INIT, so that it always moves forward and we can document it as such?\n\ne.g., move from:\n\nTF_CLOSED-\u003eTF_REGISTERED-\u003eTF_ACQUIRED-\u003eTF_CLOSED to\n\nTF_INIT-\u003eTF_REGISTERED-\u003eTF_ACQUIRED-\u003eTF_CLOSED",
+      "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2d0b6ef_717157c0",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-14T14:51:36Z",
+      "side": 1,
+      "message": "That actually turns out to not be the case, due to some complications involving how empty files for stream 2 are cleaned up. Added a comment, also hopefully making some of the lifetime stuff a bit more explicit.\n\nHmm, there is some naming confusing lurking since things inside TF_REGISTERED will be eventually eligible for having their files closed; tried to address that by renaming the state to TF_NO_REGISTRATION and AllClosed -\u003e NoActiveRegistrations",
+      "parentUuid": "171da1ea_e5eed397",
       "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "9756f7d6_17d5cf04",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-14T14:51:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3ae8fd0_d3a2dac6",
+      "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5675abd_cb0d5cd2",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 7
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "9aca9f62_dd7f7597",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-14T14:51:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a5675abd_cb0d5cd2",
+      "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41e82978_a6677cab",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 7
@@ -130,6 +250,24 @@
       "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "429261b1_89fbb477",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-14T14:51:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41e82978_a6677cab",
+      "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "9b84e822_ed7bd6d4",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-14T14:51:36Z",
+      "side": 1,
+      "message": "The never created half-commented out FindOrInsertFor, of course. Tidied up.",
+      "parentUuid": "e0e4bfc2_059a9efc",
+      "range": {
+        "startLine": 117,
+        "startChar": 5,
+        "endLine": 117,
+        "endChar": 39
+      },
+      "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5965ab79_a01db449",
         "filename": "net/disk_cache/simple/simple_file_tracker.h",
         "patchSetId": 7
@@ -176,6 +338,30 @@
       "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b048b66_137a769e",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-09-14T14:51:36Z",
+      "side": 1,
+      "message": "Moved to a better spot.",
+      "parentUuid": "5965ab79_a01db449",
+      "range": {
+        "startLine": 130,
+        "startChar": 5,
+        "endLine": 130,
+        "endChar": 62
+      },
+      "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
