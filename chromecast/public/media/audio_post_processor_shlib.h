@@ -50,11 +50,16 @@ class AudioPostProcessor {
   // AudioPostProcessor must always provide |frames| frames of data back
   // (may output 0’s)
   // |volume| is the Cast Volume applied to the stream (normalized to 0-1)
-  // AudioPostProcessor should assume that it has already been applied.
+  // |volume_db| is the actual attenuation in dB (-inf to 0), equivalent to
+  // VolumeMap::VolumeToDbFS(|volume|).
+  // AudioPostProcessor should assume that volume has already been applied.
   // Returns the current rendering delay of the filter in frames,
   // or negative if an error occurred during processing.
   // If an error occurred during processing, |data| should be unchanged.
-  virtual int ProcessFrames(float* data, int frames, float volume) = 0;
+  virtual int ProcessFrames(float* data,
+                            int frames,
+                            float volume,
+                            float volume_db) = 0;
 
   // Returns the number of frames of silence it will take for the
   // processor to come to rest.
