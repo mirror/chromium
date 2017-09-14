@@ -592,7 +592,7 @@ void WallpaperManager::RemoveUserWallpaperInfo(const AccountId& account_id) {
   DictionaryPrefUpdate wallpaper_colors_update(prefs,
                                                ash::prefs::kWallpaperColors);
   wallpaper_colors_update->RemoveWithoutPathExpansion(info.location, nullptr);
-  DeleteUserWallpapers(account_id, info.location);
+  DeleteUserWallpapers(account_id);
 }
 
 void WallpaperManager::OnPolicyFetched(const std::string& policy,
