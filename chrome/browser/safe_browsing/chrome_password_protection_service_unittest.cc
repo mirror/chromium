@@ -192,9 +192,9 @@ class ChromePasswordProtectionServiceTest
 TEST_F(ChromePasswordProtectionServiceTest,
        VerifyUserPopulationForPasswordOnFocusPing) {
   // Password field on focus pinging is enabled on !incognito && SBER.
-
   PasswordProtectionService::RequestOutcome reason;
   service_->ConfigService(false /*incognito*/, false /*SBER*/);
+
   EXPECT_FALSE(
       service_->IsPingingEnabled(kPasswordFieldOnFocusPinging, &reason));
   EXPECT_EQ(PasswordProtectionService::DISABLED_DUE_TO_USER_POPULATION, reason);
@@ -218,8 +218,8 @@ TEST_F(ChromePasswordProtectionServiceTest,
        VerifyUserPopulationForProtectedPasswordEntryPing) {
   // Protected password entry pinging is enabled for all safe browsing users.
   PasswordProtectionService::RequestOutcome reason;
-
   service_->ConfigService(false /*incognito*/, false /*SBER*/);
+
   EXPECT_TRUE(
       service_->IsPingingEnabled(kProtectedPasswordEntryPinging, &reason));
   service_->ConfigService(false /*incognito*/, true /*SBER*/);
@@ -238,10 +238,12 @@ TEST_F(ChromePasswordProtectionServiceTest, VerifyGetSyncAccountType) {
       SigninManagerFactory::GetForProfile(profile()));
   signin_manager->SetAuthenticatedAccountInfo(kTestAccountID, kTestEmail);
   SetUpSyncAccount(std::string(AccountTrackerService::kNoHostedDomainFound));
+  service_->InitializeAccountInfo();
   EXPECT_EQ(LoginReputationClientRequest::PasswordReuseEvent::GMAIL,
             service_->GetSyncAccountType());
 
   SetUpSyncAccount("example.edu");
+  service_->InitializeAccountInfo();
   EXPECT_EQ(LoginReputationClientRequest::PasswordReuseEvent::GSUITE,
             service_->GetSyncAccountType());
 }
