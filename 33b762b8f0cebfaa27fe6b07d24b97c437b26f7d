@@ -22,6 +22,30 @@
       "revId": "33b762b8f0cebfaa27fe6b07d24b97c437b26f7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "227d0e07_5b934dbc",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1354,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-14T20:32:58Z",
+      "side": 1,
+      "message": "Thanks for catching the cast issue! I agree, static_cast seems correct.",
+      "parentUuid": "711fe7bf_cafd11e8",
+      "range": {
+        "startLine": 1354,
+        "startChar": 34,
+        "endLine": 1354,
+        "endChar": 50
+      },
+      "revId": "33b762b8f0cebfaa27fe6b07d24b97c437b26f7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
