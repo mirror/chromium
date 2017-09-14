@@ -107,6 +107,7 @@ source_set("test_support") {
     "//ash:test_support_without_content",
     "//ash/public/cpp:ash_public_cpp",
     "//base",
+    "//components/exo/wayland",
     "//gpu",
     "//skia",
     "//testing/gtest",

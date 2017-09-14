@@ -18,6 +18,10 @@ specific_include_rules = {
     "+mojo/edk/embedder/embedder.h",
   ],
 
+  "run_all_perftests\.cc": [
+    "+mojo/edk/embedder/embedder.h",
+  ],
+
   "surface_unittest\.cc": [
     "+components/viz/test",
   ],
