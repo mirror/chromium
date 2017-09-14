@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ae06661_c9ed01b8",
+        "filename": "mojo/edk/system/ports/event.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-14T22:57:13Z",
+      "side": 1,
+      "message": "fundamental",
+      "range": {
+        "startLine": 25,
+        "startChar": 18,
+        "endLine": 25,
+        "endChar": 29
+      },
+      "revId": "9cf13394e17e659cfca9e26ab5ca7680a5589b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a2b3ab3_bc7b105d",
+        "filename": "mojo/edk/system/ports/event.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-14T22:57:13Z",
+      "side": 1,
+      "message": "You don\u0027t say? :D",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "9cf13394e17e659cfca9e26ab5ca7680a5589b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfd4abd6_7b789be0",
+        "filename": "mojo/edk/system/ports/port.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-14T22:57:13Z",
+      "side": 1,
+      "message": "that a?",
+      "range": {
+        "startLine": 114,
+        "startChar": 55,
+        "endLine": 114,
+        "endChar": 59
+      },
+      "revId": "9cf13394e17e659cfca9e26ab5ca7680a5589b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f55483dc_b579e29b",
+        "filename": "mojo/edk/system/ports/port.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-14T22:57:13Z",
+      "side": 1,
+      "message": "flushes",
+      "range": {
+        "startLine": 121,
+        "startChar": 15,
+        "endLine": 121,
+        "endChar": 21
+      },
+      "revId": "9cf13394e17e659cfca9e26ab5ca7680a5589b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
