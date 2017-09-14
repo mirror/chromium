@@ -29,3 +29,4 @@ Local Modifications:
  - 0002-uninitializedcheck.patch: default-initialize state->check, see
    crbug.com/697481
  - 0003-arm-inffast.patch: ARM optimized inflate using NEON.
+ - 0004-arm-adler32.patch: ARM optimized Adler32 checksum using NEON.
