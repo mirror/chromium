@@ -22,6 +22,30 @@
       "revId": "efe2891497678dc487e2f3d279e23a0db35c95c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c828bd17_d3438fb2",
+        "filename": "extensions/browser/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-14T17:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e775f47a_2c0c1dfe",
+      "range": {
+        "startLine": 148,
+        "startChar": 70,
+        "endLine": 148,
+        "endChar": 75
+      },
+      "revId": "efe2891497678dc487e2f3d279e23a0db35c95c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
