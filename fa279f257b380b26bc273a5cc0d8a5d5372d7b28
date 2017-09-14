@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f533962a_14fd9995",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-14T18:58:32Z",
+      "side": 1,
+      "message": "Please copy this comment to the commit message as well.",
+      "revId": "fa279f257b380b26bc273a5cc0d8a5d5372d7b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655a3a86_2af2b149",
+        "filename": "build/run_swarming_xcode_install.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-14T18:58:32Z",
+      "side": 1,
+      "message": "link to a crbug please.",
+      "revId": "fa279f257b380b26bc273a5cc0d8a5d5372d7b28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
