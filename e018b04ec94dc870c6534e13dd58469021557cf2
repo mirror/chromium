@@ -101,6 +101,64 @@
       "revId": "e018b04ec94dc870c6534e13dd58469021557cf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd490fc_35f11ab2",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4057,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-14T18:36:28Z",
+      "side": 1,
+      "message": "Yeah, CamelCase is consistent with command/event names.",
+      "parentUuid": "f62b44e0_79bb3468",
+      "revId": "e018b04ec94dc870c6534e13dd58469021557cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "167140e9_03fb5362",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4068,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-14T18:36:28Z",
+      "side": 1,
+      "message": "nit: usually every property takes a single line.",
+      "revId": "e018b04ec94dc870c6534e13dd58469021557cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d1d5276_173c4305",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4069,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-14T18:36:28Z",
+      "side": 1,
+      "message": "Useless description :)",
+      "range": {
+        "startLine": 4069,
+        "startChar": 25,
+        "endLine": 4069,
+        "endChar": 36
+      },
+      "revId": "e018b04ec94dc870c6534e13dd58469021557cf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
