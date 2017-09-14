@@ -9,6 +9,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/scoped_observer.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
+#import "ios/chrome/browser/ui/broadcaster/chrome_broadcast_observer.h"
 #import "ios/chrome/browser/ui/broadcaster/chrome_broadcaster.h"
 #import "ios/chrome/browser/ui/browser_list/browser.h"
 #import "ios/chrome/browser/ui/commands/command_dispatcher.h"
@@ -31,7 +32,8 @@
 #error "This file requires ARC support."
 #endif
 
-@interface TabCoordinator ()<CRWWebStateObserver,
+@interface TabCoordinator ()<ChromeBroadcastObserver,
+                             CRWWebStateObserver,
                              TabCommands,
                              WebStateListObserving>
 @property(nonatomic, strong) ZoomTransitionController* transitionController;
@@ -114,6 +116,10 @@
       [[FindInPageCoordinator alloc] init];
   [self addChildCoordinator:findInPageCoordinator];
 
+  // Register for broadcasts for the omnibox frame.
+  [self.browser->broadcaster() addObserver:self
+                               forSelector:@selector(broadcastOmniboxFrame:)];
+
   // PLACEHOLDER: Fix the order of events here. The ntpCoordinator was already
   // created above when |webCoordinator.webState = self.webState;| triggers
   // a load event, but then the webCoordinator stomps on the
@@ -131,6 +137,9 @@
     [self removeChildCoordinator:child];
   }
   _webStateObserver.reset();
+  [self.browser->broadcaster()
+      removeObserver:self
+         forSelector:@selector(broadcastOmniboxFrame:)];
   [self.dispatcher stopDispatchingToTarget:self];
   [self.navigationController stop];
 }
@@ -241,6 +250,12 @@
 
 - (void)loadURL:(web::NavigationManager::WebLoadParams)params {
   self.webState->GetNavigationManager()->LoadURLWithParams(params);
+}
+
+#pragma mark - ChromeBroadcastObserver
+
+- (void)broadcastOmniboxFrame:(CGRect)frame {
+  [self.viewController updateConstraintsForOmniboxFrame:frame];
 }
 
 @end
