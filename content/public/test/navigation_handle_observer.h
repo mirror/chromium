@@ -31,6 +31,7 @@ class NavigationHandleObserver : public WebContentsObserver {
   const GURL& last_committed_url() { return last_committed_url_; }
   ui::PageTransition page_transition() { return page_transition_; }
   net::Error net_error_code() { return net_error_code_; }
+  int64_t navigation_id() { return navigation_id_; }
 
  private:
   // A reference to the NavigationHandle so this class will track only
@@ -49,6 +50,7 @@ class NavigationHandleObserver : public WebContentsObserver {
   GURL expected_start_url_;
   GURL last_committed_url_;
   net::Error net_error_code_ = net::OK;
+  int64_t navigation_id_ = -1;
 
   DISALLOW_COPY_AND_ASSIGN(NavigationHandleObserver);
 };
