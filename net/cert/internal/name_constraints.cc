@@ -111,7 +111,6 @@ bool DNSNameMatches(base::StringPiece name,
 // a default initialized object), and it will be modified regardless of the
 // return value.
 WARN_UNUSED_RESULT bool ParseGeneralSubtrees(const der::Input& value,
-                                             bool is_critical,
                                              GeneralNames* subtrees,
                                              CertErrors* errors) {
   DCHECK(errors);
@@ -139,7 +138,6 @@ WARN_UNUSED_RESULT bool ParseGeneralSubtrees(const der::Input& value,
 
     if (!ParseGeneralName(
             raw_general_name,
-            is_critical ? GENERAL_NAME_ALL_TYPES : kSupportedNameTypes,
             GeneralNames::IP_ADDRESS_AND_NETMASK, subtrees, errors)) {
       errors->AddError(kFailedParsingGeneralName);
       return false;
@@ -204,10 +202,13 @@ bool NameConstraints::Parse(const der::Input& extension_value,
     return false;
   }
   if (had_permitted_subtrees &&
-      !ParseGeneralSubtrees(permitted_subtrees_value, is_critical,
-                            &permitted_subtrees_, errors)) {
+      !ParseGeneralSubtrees(permitted_subtrees_value, &permitted_subtrees_,
+                            errors)) {
     return false;
   }
+  constrained_name_types_ |=
+      permitted_subtrees_.present_name_types &
+      (is_critical ? GENERAL_NAME_ALL_TYPES : kSupportedNameTypes);
 
   bool had_excluded_subtrees = false;
   der::Input excluded_subtrees_value;
@@ -217,10 +218,13 @@ bool NameConstraints::Parse(const der::Input& extension_value,
     return false;
   }
   if (had_excluded_subtrees &&
-      !ParseGeneralSubtrees(excluded_subtrees_value, is_critical,
-                            &excluded_subtrees_, errors)) {
+      !ParseGeneralSubtrees(excluded_subtrees_value, &excluded_subtrees_,
+                            errors)) {
     return false;
   }
+  constrained_name_types_ |=
+      excluded_subtrees_.present_name_types &
+      (is_critical ? GENERAL_NAME_ALL_TYPES : kSupportedNameTypes);
 
   // RFC 5280 section 4.2.1.10:
   // Conforming CAs MUST NOT issue certificates where name constraints is an
@@ -376,11 +380,6 @@ bool NameConstraints::IsPermittedIP(const IPAddress& ip) const {
   }
 
   return false;
-}
-
-int NameConstraints::ConstrainedNameTypes() const {
-  return (permitted_subtrees_.present_name_types |
-          excluded_subtrees_.present_name_types);
 }
 
 }  // namespace net
