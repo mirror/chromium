@@ -1529,17 +1529,14 @@ void SigninScreenHandler::HandleRequestNewNoteAction(
       lock_screen_apps::StateController::Get();
 
   if (request_type == kNewNoteRequestTap) {
-    state_controller->HandleNewNoteRequestFromLockScreen(
-        lock_screen_apps::StateController::NewNoteRequestType::
-            kLockScreenUiTap);
+    state_controller->RequestNewLockScreenNote(
+        ash::mojom::NewLockScreenNoteRequestType::kLockScreenUiTap);
   } else if (request_type == kNewNoteRequestSwipe) {
-    state_controller->HandleNewNoteRequestFromLockScreen(
-        lock_screen_apps::StateController::NewNoteRequestType::
-            kLockScreenUiSwipe);
+    state_controller->RequestNewLockScreenNote(
+        ash::mojom::NewLockScreenNoteRequestType::kLockScreenUiSwipe);
   } else if (request_type == kNewNoteRequestKeyboard) {
-    state_controller->HandleNewNoteRequestFromLockScreen(
-        lock_screen_apps::StateController::NewNoteRequestType::
-            kLockScreenUiKeyboard);
+    state_controller->RequestNewLockScreenNote(
+        ash::mojom::NewLockScreenNoteRequestType::kLockScreenUiKeyboard);
   } else {
     NOTREACHED() << "Unknown request type " << request_type;
   }

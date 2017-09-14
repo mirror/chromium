@@ -17,11 +17,13 @@ void TestTrayActionClient::ClearCounts() {
   action_close_count_ = 0;
 }
 
-void TestTrayActionClient::RequestNewLockScreenNote() {
+void TestTrayActionClient::RequestNewLockScreenNote(
+    mojom::NewLockScreenNoteRequestType type) {
   action_requests_count_++;
 }
 
-void TestTrayActionClient::CloseLockScreenNote() {
+void TestTrayActionClient::CloseLockScreenNote(
+    mojom::CloseLockScreenNoteReason reason) {
   action_close_count_++;
 }
 

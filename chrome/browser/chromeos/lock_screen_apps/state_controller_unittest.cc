@@ -275,9 +275,9 @@ class TestTrayAction : public ash::mojom::TrayAction {
     observed_states_.push_back(state);
   }
 
-  void SendNewNoteRequest() {
+  void SendNewNoteRequest(ash::mojom::NewLockScreenNoteRequestType type) {
     ASSERT_TRUE(client_);
-    client_->RequestNewLockScreenNote();
+    client_->RequestNewLockScreenNote(type);
   }
 
   const std::vector<TrayActionState>& observed_states() const {
@@ -555,7 +555,8 @@ class LockScreenAppStateTest : public BrowserWithTestWindowTest {
     if (target_state == TrayActionState::kAvailable)
       return true;
 
-    tray_action()->SendNewNoteRequest();
+    tray_action()->SendNewNoteRequest(
+        ash::mojom::NewLockScreenNoteRequestType::kLockScreenUiTap);
     state_controller_->FlushTrayActionForTesting();
 
     ClearObservedStates();
@@ -877,7 +878,8 @@ TEST_F(LockScreenAppStateTest, AppManagerNoApp) {
   EXPECT_EQ(0u, observer()->observed_states().size());
   EXPECT_EQ(0u, tray_action()->observed_states().size());
 
-  tray_action()->SendNewNoteRequest();
+  tray_action()->SendNewNoteRequest(
+      ash::mojom::NewLockScreenNoteRequestType::kLockScreenUiSwipe);
 
   EXPECT_EQ(TrayActionState::kNotAvailable,
             state_controller()->GetLockScreenNoteState());
@@ -994,7 +996,8 @@ TEST_F(LockScreenAppStateTest, HandleActionWhenNotAvaiable) {
   ASSERT_EQ(TrayActionState::kNotAvailable,
             state_controller()->GetLockScreenNoteState());
 
-  tray_action()->SendNewNoteRequest();
+  tray_action()->SendNewNoteRequest(
+      ash::mojom::NewLockScreenNoteRequestType::kLockScreenUiSwipe);
   state_controller()->FlushTrayActionForTesting();
 
   EXPECT_EQ(0u, observer()->observed_states().size());
@@ -1005,7 +1008,8 @@ TEST_F(LockScreenAppStateTest, HandleAction) {
   ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kAvailable,
                                       true /* enable_app_launch */));
 
-  tray_action()->SendNewNoteRequest();
+  tray_action()->SendNewNoteRequest(
+      ash::mojom::NewLockScreenNoteRequestType::kLockScreenUiSwipe);
   state_controller()->FlushTrayActionForTesting();
 
   ExpectObservedStatesMatch({TrayActionState::kLaunching},
@@ -1013,7 +1017,8 @@ TEST_F(LockScreenAppStateTest, HandleAction) {
   ClearObservedStates();
   EXPECT_EQ(1, app_manager()->launch_count());
 
-  tray_action()->SendNewNoteRequest();
+  tray_action()->SendNewNoteRequest(
+      ash::mojom::NewLockScreenNoteRequestType::kLockScreenUiSwipe);
   state_controller()->FlushTrayActionForTesting();
 
   // There should be no state change - the state_controller was already in
@@ -1027,7 +1032,8 @@ TEST_F(LockScreenAppStateTest, HandleActionWithLaunchFailure) {
   ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kAvailable,
                                       false /* enable_app_launch */));
 
-  tray_action()->SendNewNoteRequest();
+  tray_action()->SendNewNoteRequest(
+      ash::mojom::NewLockScreenNoteRequestType::kLockScreenUiSwipe);
   state_controller()->FlushTrayActionForTesting();
 
   EXPECT_EQ(TrayActionState::kAvailable,
@@ -1039,7 +1045,8 @@ TEST_F(LockScreenAppStateTest, HandleActionWithLaunchFailure) {
 
   EXPECT_EQ(1, app_manager()->launch_count());
 
-  tray_action()->SendNewNoteRequest();
+  tray_action()->SendNewNoteRequest(
+      ash::mojom::NewLockScreenNoteRequestType::kLockScreenUiSwipe);
   state_controller()->FlushTrayActionForTesting();
 
   EXPECT_EQ(TrayActionState::kAvailable,
@@ -1125,7 +1132,8 @@ TEST_F(LockScreenAppStateTest, AppWindowRegistration) {
       CreateNoteTakingWindow(lock_screen_profile(), app());
   EXPECT_FALSE(app_window->window());
 
-  tray_action()->SendNewNoteRequest();
+  tray_action()->SendNewNoteRequest(
+      ash::mojom::NewLockScreenNoteRequestType::kLockScreenUiSwipe);
   state_controller()->FlushTrayActionForTesting();
 
   EXPECT_EQ(TrayActionState::kLaunching,
@@ -1277,7 +1285,8 @@ TEST_F(LockScreenAppStateTest, AppWindowClosedOnNoteTakingAppChange) {
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(app_window()->closed());
 
-  tray_action()->SendNewNoteRequest();
+  tray_action()->SendNewNoteRequest(
+      ash::mojom::NewLockScreenNoteRequestType::kLockScreenUiSwipe);
   state_controller()->FlushTrayActionForTesting();
 
   std::unique_ptr<TestAppWindow> app_window =
@@ -1346,7 +1355,8 @@ TEST_F(LockScreenAppStateTest, FocusCyclerDelegateGetsSetOnAppWindowCreation) {
   ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kAvailable,
                                       true /* enable_app_launch */));
 
-  tray_action()->SendNewNoteRequest();
+  tray_action()->SendNewNoteRequest(
+      ash::mojom::NewLockScreenNoteRequestType::kLockScreenUiSwipe);
   state_controller()->FlushTrayActionForTesting();
 
   EXPECT_FALSE(focus_cycler_delegate()->HasHandler());
@@ -1409,7 +1419,8 @@ TEST_F(LockScreenAppStateTest, CloseNoteInActiveState) {
   ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kActive,
                                       true /* enable_app_launch */));
 
-  state_controller()->CloseLockScreenNote();
+  state_controller()->CloseLockScreenNote(
+      ash::mojom::CloseLockScreenNoteReason::kUnlockButtonPressed);
   state_controller()->FlushTrayActionForTesting();
 
   EXPECT_EQ(TrayActionState::kAvailable,
@@ -1426,7 +1437,8 @@ TEST_F(LockScreenAppStateTest, CloseNoteWhileLaunching) {
   ASSERT_TRUE(InitializeNoteTakingApp(TrayActionState::kLaunching,
                                       true /* enable_app_launch */));
 
-  state_controller()->CloseLockScreenNote();
+  state_controller()->CloseLockScreenNote(
+      ash::mojom::CloseLockScreenNoteReason::kUnlockButtonPressed);
   state_controller()->FlushTrayActionForTesting();
 
   EXPECT_EQ(TrayActionState::kAvailable,

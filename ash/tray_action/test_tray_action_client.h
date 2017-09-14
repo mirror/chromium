@@ -24,8 +24,9 @@ class TestTrayActionClient : public mojom::TrayActionClient {
   int action_close_count() const { return action_close_count_; }
 
   // mojom::TrayActionClient:
-  void RequestNewLockScreenNote() override;
-  void CloseLockScreenNote() override;
+  void RequestNewLockScreenNote(
+      mojom::NewLockScreenNoteRequestType type) override;
+  void CloseLockScreenNote(mojom::CloseLockScreenNoteReason reason) override;
 
  private:
   mojo::Binding<mojom::TrayActionClient> binding_;

@@ -77,12 +77,16 @@ void TrayAction::RequestNewLockScreenNote() {
 
   // An action state can be kAvailable only if |tray_action_client_| is set.
   DCHECK(tray_action_client_);
-  tray_action_client_->RequestNewLockScreenNote();
+  tray_action_client_->RequestNewLockScreenNote(
+      mojom::NewLockScreenNoteRequestType::kTrayAction);
 }
 
 void TrayAction::CloseLockScreenNote() {
-  if (tray_action_client_)
-    tray_action_client_->CloseLockScreenNote();
+  if (tray_action_client_) {
+    // TODO: pass the reason arg.
+    tray_action_client_->CloseLockScreenNote(
+        mojom::CloseLockScreenNoteReason::kUnlockButtonPressed);
+  }
 }
 
 void TrayAction::FlushMojoForTesting() {
