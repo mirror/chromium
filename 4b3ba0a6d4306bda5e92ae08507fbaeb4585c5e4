@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63385a08_ebb7fa7a",
+        "filename": "chrome/app/chrome_crash_reporter_client_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T07:55:28Z",
+      "side": 1,
+      "message": "for",
+      "range": {
+        "startLine": 177,
+        "startChar": 20,
+        "endLine": 177,
+        "endChar": 21
+      },
+      "revId": "4b3ba0a6d4306bda5e92ae08507fbaeb4585c5e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e162f4_c6ce1144",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T07:55:28Z",
+      "side": 1,
+      "message": "I\u0027m not sure if there\u0027s a preference, but you could also consider using base::debug::Alias and then rely on minidumps (crash keys might be considered a big hammer, not sure). See eg https://codereview.chromium.org/2580793004",
+      "revId": "4b3ba0a6d4306bda5e92ae08507fbaeb4585c5e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
