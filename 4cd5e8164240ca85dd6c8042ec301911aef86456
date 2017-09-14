@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "898408c7_79c3a355",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-14T01:27:56Z",
+      "side": 1,
+      "message": "typo: hte -\u003e the",
+      "revId": "4cd5e8164240ca85dd6c8042ec301911aef86456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3747621b_b7899991",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-14T01:27:56Z",
+      "side": 1,
+      "message": "setUp -\u003e setup",
+      "revId": "4cd5e8164240ca85dd6c8042ec301911aef86456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da41056_b59cdd14",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-14T01:27:56Z",
+      "side": 1,
+      "message": "I was wondering if we really need to ClearStackCache here.\nWill user lose the cache position if chrome is quit when bookmark is opening?",
+      "revId": "4cd5e8164240ca85dd6c8042ec301911aef86456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94a1b32_7d67d7aa",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 967,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-14T01:27:56Z",
+      "side": 1,
+      "message": "do we need to check if node is the child of _rootNode here?\n(or do the parent-child checking at GetBookmarkUIStackCache?)",
+      "revId": "4cd5e8164240ca85dd6c8042ec301911aef86456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "349bf092_fbd70c78",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-14T01:27:56Z",
+      "side": 1,
+      "message": "should we scroll to the folder of the coming path node when bookmarkPath.count\u003e1\nor TODO this later?",
+      "revId": "4cd5e8164240ca85dd6c8042ec301911aef86456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad70692_70f0cd26",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-14T01:27:56Z",
+      "side": 1,
+      "message": "the the -\u003e that the",
+      "revId": "4cd5e8164240ca85dd6c8042ec301911aef86456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
