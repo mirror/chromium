@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8672813c_9258c986",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-14T12:28:08Z",
+      "side": 1,
+      "message": "I had this same question and went over with Daria.\n\nCan\u0027t do filtering at the prefs level because some policies aren\u0027t implemented as prefs/CrosSettings - people look at the PolicyMap directly.\n\nCan\u0027t easily modify just the PolicyMap because much of the logic we have to implement policy defaults/default values live in the code that maps from proto-\u003ePolicyMap. So you can\u0027t just delete items from the PolicyMap and feel confident that you are reverting to the correct default values.\n\nSo this is why we filter the incoming proto, *before* all of the code to interpret the proto is invoked - we filter the proto then process the proto as if those policies just weren\u0027t set.",
+      "parentUuid": "80f3bf0f_b0965cef",
+      "revId": "0b1974322d196f35f5c27d0624f2ab2bd183e22d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e0acbab_3b3af8d2",
         "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
         "patchSetId": 26
