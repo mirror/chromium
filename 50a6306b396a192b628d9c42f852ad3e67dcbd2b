@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7668e19_b3997ea8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T15:00:08Z",
+      "side": 1,
+      "message": "I typically prefix CLs with the area, something like:\n\nmemory-infra: Enable LevelDB global dumps in background mode\n\nAlso might be nice to have few lines in the commit message that describe why we are doing this.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 69
+      },
+      "revId": "50a6306b396a192b628d9c42f852ad3e67dcbd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "261ea06d_8e5e23bf",
+        "filename": "base/trace_event/memory_dump_manager_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T15:00:08Z",
+      "side": 1,
+      "message": "add these to the SummaryOnlyWhitelisting TEST_F ?",
+      "range": {
+        "startLine": 775,
+        "startChar": 29,
+        "endLine": 775,
+        "endChar": 66
+      },
+      "revId": "50a6306b396a192b628d9c42f852ad3e67dcbd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc89ad26_7a6ed48b",
+        "filename": "base/trace_event/memory_infra_background_whitelist.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T15:00:08Z",
+      "side": 1,
+      "message": "nit remove curly braces. There isn\u0027t a preference in the coding style other than \"stay consistent with the rest of the file\". Historically we (memroy-infra code) always went for omitting braces for cases where the if () stays in one line and the statement in the body also fits in one line . IMHO they don\u0027t add too much value, but reduce the clutter and make the file more scrollable.",
+      "range": {
+        "startLine": 271,
+        "startChar": 64,
+        "endLine": 271,
+        "endChar": 65
+      },
+      "revId": "50a6306b396a192b628d9c42f852ad3e67dcbd2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
