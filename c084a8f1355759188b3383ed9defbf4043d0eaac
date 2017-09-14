@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dadbe5d2_3ec42297",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-blink-features\u003dLayoutNG",
+        "patchSetId": 3
+      },
+      "lineNbr": 4095,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-14T23:46:37Z",
+      "side": 1,
+      "message": "There is a bit of risk in converting tests that are failing, since you might break them more and not notice. Can you confirm that the failure cause is still the same?",
+      "range": {
+        "startLine": 4095,
+        "startChar": 6,
+        "endLine": 4095,
+        "endChar": 9
+      },
+      "revId": "c084a8f1355759188b3383ed9defbf4043d0eaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8208f293_ab76696e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/input-events/input-events-cut-paste-manual.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-14T23:46:37Z",
+      "side": 1,
+      "message": "I\u0027d call it actualEventLog.",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 28
+      },
+      "revId": "c084a8f1355759188b3383ed9defbf4043d0eaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57aa015c_0ddbe7d7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/input-events/input-events-cut-paste-manual.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-14T23:46:37Z",
+      "side": 1,
+      "message": "Lowercase clipboard, I think.",
+      "revId": "c084a8f1355759188b3383ed9defbf4043d0eaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
