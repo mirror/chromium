@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a6c7efa_70bee210",
+        "filename": "ash/system/web_notification/web_notification_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 515,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-14T14:07:58Z",
+      "side": 1,
+      "message": "you\u0027re drawing the icon at 16x16 when the icon is defined at 18x18, so this is indeed an error",
+      "range": {
+        "startLine": 515,
+        "startChar": 8,
+        "endLine": 515,
+        "endChar": 30
+      },
+      "revId": "352d15b93e5eec2b7d34289e133dba83a33dc8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
