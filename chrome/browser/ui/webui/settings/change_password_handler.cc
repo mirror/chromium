@@ -18,12 +18,7 @@ namespace settings {
 ChangePasswordHandler::ChangePasswordHandler(Profile* profile)
     : profile_(profile), service_(nullptr) {}
 
-ChangePasswordHandler::~ChangePasswordHandler() {
-  // Remove |this| from |service_|'s observer list if it is still in the list.
-  // This could happen if user closes the chrome://settings page.
-  if (service_)
-    service_->RemoveObserver(this);
-}
+ChangePasswordHandler::~ChangePasswordHandler() {}
 
 void ChangePasswordHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
