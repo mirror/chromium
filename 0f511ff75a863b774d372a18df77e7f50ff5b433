@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c81f28f4_30562c91",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-09-14T22:35:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cc64dd8_46739887",
+      "revId": "0f511ff75a863b774d372a18df77e7f50ff5b433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d2083ed_a436dc6b",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "0f511ff75a863b774d372a18df77e7f50ff5b433",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9478504_6dbcaa65",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-09-14T22:35:28Z",
+      "side": 1,
+      "message": "Ahh, not really. I didn\u0027t notice we already used the word \"footer\" here. I can change the name of the argument and this variable to be consistent.",
+      "parentUuid": "2d2083ed_a436dc6b",
+      "revId": "0f511ff75a863b774d372a18df77e7f50ff5b433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fc360387_3ee52c62",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-09-14T22:35:28Z",
+      "side": 1,
+      "message": "I\u0027m slightly more inclined to keep it this way to make the code more symmetric.",
+      "parentUuid": "1fbdb566_7cdfb327",
+      "revId": "0f511ff75a863b774d372a18df77e7f50ff5b433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "edf63775_48ac7125",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "0f511ff75a863b774d372a18df77e7f50ff5b433",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa4c2e1_c2b04dc7",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-09-14T22:35:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "edf63775_48ac7125",
+      "revId": "0f511ff75a863b774d372a18df77e7f50ff5b433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
