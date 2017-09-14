@@ -16,6 +16,24 @@
       "revId": "d18114b3e463caf888f4f0eef727f32b6b2ca028",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b9a986_01c51039",
+        "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetector.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-09-14T01:58:55Z",
+      "side": 1,
+      "message": "If we could use signal from performance monitor, that would be ideal. :)",
+      "parentUuid": "36f8a0fa_66221345",
+      "revId": "d18114b3e463caf888f4f0eef727f32b6b2ca028",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
