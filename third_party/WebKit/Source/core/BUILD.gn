@@ -292,6 +292,17 @@ jumbo_source_set("testing") {
     "testing/v8/WebCoreTestSupport.cpp",
     "testing/v8/WebCoreTestSupport.h",
   ]
+  if (snake_case_source_files) {
+    sources += [
+      "$blink_core_output_dir/testing/internal_settings_generated.cc",
+      "$blink_core_output_dir/testing/internal_settings_generated.h",
+    ]
+  } else {
+    sources += [
+      "$blink_core_output_dir/testing/InternalSettingsGenerated.cpp",
+      "$blink_core_output_dir/testing/InternalSettingsGenerated.h",
+    ]
+  }
 
   # Compile the sources produced by these IDL file lists.
   testing_idl_files =
