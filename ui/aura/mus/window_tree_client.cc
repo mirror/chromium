@@ -28,6 +28,7 @@
 #include "services/ui/public/interfaces/window_manager.mojom.h"
 #include "services/ui/public/interfaces/window_manager_window_tree_factory.mojom.h"
 #include "ui/aura/client/aura_constants.h"
+#include "ui/aura/client/aura_constants_internal.h"
 #include "ui/aura/client/drag_drop_client.h"
 #include "ui/aura/client/transient_window_client.h"
 #include "ui/aura/env.h"
@@ -560,6 +561,11 @@ WindowMus* WindowTreeClient::NewWindowFromWindowData(
   WindowMus* window_mus = window_port_mus_ptr;
   SetWindowTypeFromProperties(window, window_data.properties);
   window->Init(ui::LAYER_NOT_DRAWN);
+  // Children of windows created from another client need to be restacked by
+  // the client that created them. To do otherwise means two clients will
+  // attempt to restack the same windows, leading to raciness (and most likely
+  // be rejected by the server anyway).
+  window->SetProperty(client::kRestackTransientChildren, false);
   SetLocalPropertiesFromServerProperties(window_mus, window_data);
   window_mus->SetBoundsFromServer(
       gfx::ConvertRectToDIP(window_mus->GetDeviceScaleFactor(),
@@ -905,6 +911,7 @@ void WindowTreeClient::OnWindowMusRemoveChild(WindowMus* parent,
 void WindowTreeClient::OnWindowMusMoveChild(WindowMus* parent,
                                             size_t current_index,
                                             size_t dest_index) {
+  DCHECK_NE(current_index, dest_index);
   // TODO: add checks to ensure this can work, e.g. we own the parent.
   const uint32_t change_id = ScheduleInFlightChange(
       base::MakeUnique<CrashInFlightChange>(parent, ChangeType::REORDER));
@@ -2288,31 +2295,6 @@ void WindowTreeClient::OnTransientChildWindowRemoved(Window* parent,
       ScheduleInFlightChange(base::MakeUnique<CrashInFlightChange>(
           child_mus, ChangeType::REMOVE_TRANSIENT_WINDOW_FROM_PARENT));
   tree_->RemoveTransientWindowFromParent(change_id, child_mus->server_id());
-}
-
-void WindowTreeClient::OnWillRestackTransientChildAbove(
-    Window* parent,
-    Window* transient_child) {
-  DCHECK(parent->parent());
-  // See comments in OnTransientChildWindowAdded() for details on early return.
-  if (!IsWindowKnown(parent->parent()))
-    return;
-
-  DCHECK_EQ(parent->parent(), transient_child->parent());
-  WindowMus::Get(parent->parent())
-      ->PrepareForTransientRestack(WindowMus::Get(transient_child));
-}
-
-void WindowTreeClient::OnDidRestackTransientChildAbove(
-    Window* parent,
-    Window* transient_child) {
-  DCHECK(parent->parent());
-  // See comments in OnTransientChildWindowAdded() for details on early return.
-  if (!IsWindowKnown(parent->parent()))
-    return;
-  DCHECK_EQ(parent->parent(), transient_child->parent());
-  WindowMus::Get(parent->parent())
-      ->OnTransientRestackDone(WindowMus::Get(transient_child));
 }
 
 uint32_t WindowTreeClient::CreateChangeIdForDrag(WindowMus* window) {

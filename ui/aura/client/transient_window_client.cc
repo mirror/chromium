@@ -4,6 +4,8 @@
 
 #include "ui/aura/client/transient_window_client.h"
 
+#include "ui/aura/client/aura_constants_internal.h"
+
 namespace aura {
 namespace client {
 
@@ -19,6 +21,10 @@ void SetTransientWindowClient(TransientWindowClient* client) {
 
 TransientWindowClient* GetTransientWindowClient() {
   return instance;
+}
+
+bool ShouldRestackTransientChildren(Window* window) {
+  return window->GetProperty(kRestackTransientChildren);
 }
 
 }  // namespace client

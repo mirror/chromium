@@ -80,6 +80,8 @@ component("aura") {
   sources = [
     "aura_export.h",
     "client/aura_constants.cc",
+    "client/aura_constants_internal.cc",
+    "client/aura_constants_internal.h",
     "client/capture_client.cc",
     "client/cursor_client.cc",
     "client/cursor_client_observer.cc",
