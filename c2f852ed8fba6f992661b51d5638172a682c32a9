@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7f74311_d7277b7d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Toolbar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-14T20:59:06Z",
+      "side": 1,
+      "message": "Why this?",
+      "revId": "c2f852ed8fba6f992661b51d5638172a682c32a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
