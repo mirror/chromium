@@ -9,16 +9,18 @@
 #include "cc/output/direct_renderer.h"
 #include "ui/latency/latency_info.h"
 
-namespace cc {
-
+namespace viz {
 class TextureMailboxDeleter;
+}
+
+namespace cc {
 
 class CC_EXPORT VulkanRenderer : public DirectRenderer {
  public:
   VulkanRenderer(const RendererSettings* settings,
                  OutputSurface* output_surface,
                  ResourceProvider* resource_provider,
-                 TextureMailboxDeleter* texture_mailbox_deleter,
+                 viz::TextureMailboxDeleter* texture_mailbox_deleter,
                  int highp_threshold_min);
   ~VulkanRenderer() override;
 

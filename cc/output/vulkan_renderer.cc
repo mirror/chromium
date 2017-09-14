@@ -15,11 +15,12 @@ void VulkanRenderer::SwapBuffers(std::vector<ui::LatencyInfo> latency_info) {
   output_surface_->SwapBuffers(std::move(output_frame));
 }
 
-VulkanRenderer::VulkanRenderer(const RendererSettings* settings,
-                               OutputSurface* output_surface,
-                               ResourceProvider* resource_provider,
-                               TextureMailboxDeleter* texture_mailbox_deleter,
-                               int highp_threshold_min)
+VulkanRenderer::VulkanRenderer(
+    const RendererSettings* settings,
+    OutputSurface* output_surface,
+    ResourceProvider* resource_provider,
+    viz::TextureMailboxDeleter* texture_mailbox_deleter,
+    int highp_threshold_min)
     : DirectRenderer(settings, output_surface, resource_provider) {}
 
 void VulkanRenderer::DidChangeVisibility() {
