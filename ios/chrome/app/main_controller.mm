@@ -113,6 +113,7 @@
 #import "ios/chrome/browser/ui/commands/show_signin_command.h"
 #import "ios/chrome/browser/ui/commands/start_voice_search_command.h"
 #import "ios/chrome/browser/ui/downloads/download_manager_controller.h"
+#import "ios/chrome/browser/ui/external_file_remover.h"
 #import "ios/chrome/browser/ui/first_run/first_run_util.h"
 #import "ios/chrome/browser/ui/first_run/welcome_to_chrome_view_controller.h"
 #import "ios/chrome/browser/ui/fullscreen_controller.h"
@@ -225,10 +226,12 @@ void RegisterComponentsForUpdate() {
 // can be set to |NONE| when not in use.
 enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 
+// The delay, in seconds, for cleaning external files.
+const int kExternalFilesCleanupDelaySeconds = 60;
+
 }  // namespace
 
 @interface MainController ()<BrowserStateStorageSwitching,
-                             BrowsingDataRemovalControllerDelegate,
                              PrefObserverDelegate,
                              SettingsNavigationControllerDelegate,
                              TabModelObserver,
@@ -808,7 +811,7 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 - (BrowsingDataRemovalController*)browsingDataRemovalController {
   if (!_browsingDataRemovalController) {
     _browsingDataRemovalController =
-        [[BrowsingDataRemovalController alloc] initWithDelegate:self];
+        [[BrowsingDataRemovalController alloc] init];
   }
   return _browsingDataRemovalController;
 }
@@ -897,22 +900,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 
 - (void)cleanDeviceSharingManager {
   [_browserViewWrangler cleanDeviceSharingManager];
-}
-
-#pragma mark - BrowsingDataRemovalControllerDelegate methods
-
-- (void)removeExternalFilesForBrowserState:
-            (ios::ChromeBrowserState*)browserState
-                         completionHandler:(ProceduralBlock)completionHandler {
-  // TODO(crbug.com/648940): Move this logic from BVC into
-  // BrowsingDataRemovalController thereby eliminating the need for
-  // BrowsingDataRemovalControllerDelegate. .
-  if (_mainBrowserState == browserState) {
-    [self.mainBVC removeExternalFilesImmediately:YES
-                               completionHandler:completionHandler];
-  } else if (completionHandler) {
-    dispatch_async(dispatch_get_main_queue(), completionHandler);
-  }
 }
 
 #pragma mark - Startup tasks
@@ -1112,9 +1099,18 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
 }
 
 - (void)scheduleTasksRequiringBVCWithBrowserState {
-  if (GetApplicationContext()->WasLastShutdownClean())
-    [self.mainBVC removeExternalFilesImmediately:NO completionHandler:nil];
-
+  if (GetApplicationContext()->WasLastShutdownClean()) {
+    DCHECK_CURRENTLY_ON(web::WebThread::UI);
+    DCHECK(!_mainBrowserState->IsOffTheRecord());
+    std::unique_ptr<ExternalFileRemover> externalFileRemover =
+        std::make_unique<ExternalFileRemover>(_mainBrowserState);
+    // Delay the cleanup of the unreferenced files to not impact startup
+    // performance.
+    externalFileRemover->RemoveAfterDelay(
+        base::TimeDelta::FromSeconds(kExternalFilesCleanupDelaySeconds),
+        base::BindBlockArc(^{
+        }));
+  }
   [self scheduleShowPromo];
 }
 
