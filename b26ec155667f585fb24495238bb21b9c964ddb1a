@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26cacff8_82376e5a",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwConsoleMessage.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-14T14:26:21Z",
+      "side": 1,
+      "message": "no enums, and remove that comment again",
+      "revId": "b26ec155667f585fb24495238bb21b9c964ddb1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
