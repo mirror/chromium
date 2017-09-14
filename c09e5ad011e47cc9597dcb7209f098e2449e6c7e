@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c710163_12d24442",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-14T14:06:26Z",
+      "side": 1,
+      "message": "It is good practice to give your commit a meaningful title and also a detailed description of what exactly you did. There is no need to report the title of the bug report, as the bug is linked anyway.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 58
+      },
+      "revId": "c09e5ad011e47cc9597dcb7209f098e2449e6c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e84c2225_10f9383f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-14T14:06:26Z",
+      "side": 1,
+      "message": "This used to work in Rietveld (the old code review tool), but somehow Gerrit didn\u0027t manage to pick up this line. I added the other reviewers as well.",
+      "revId": "c09e5ad011e47cc9597dcb7209f098e2449e6c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "240f6e4b_6f3248ca",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-14T14:06:26Z",
+      "side": 1,
+      "message": "Good catch!",
+      "range": {
+        "startLine": 82,
+        "startChar": 5,
+        "endLine": 82,
+        "endChar": 58
+      },
+      "revId": "c09e5ad011e47cc9597dcb7209f098e2449e6c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec6c4fd6_85091cfa",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-14T14:06:26Z",
+      "side": 1,
+      "message": "base::StringPrintf works for this, but arguably base::JoinString is better here, as its name is more descriptive and allows you to avoid repeating yourself.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 76
+      },
+      "revId": "c09e5ad011e47cc9597dcb7209f098e2449e6c7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
