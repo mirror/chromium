@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13616ada_6b730d9b",
+        "filename": "ios/chrome/browser/ui/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-09-14T23:45:28Z",
+      "side": 1,
+      "message": "My plan is to move these files to chrome/browser/external_files? since they are not really /ui related. But will do that in a followup CL since this one is large enough already.",
+      "range": {
+        "startLine": 227,
+        "startChar": 5,
+        "endLine": 227,
+        "endChar": 34
+      },
+      "revId": "2e1944a6925876ef719ca39d35fe4ec0c5703b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
