@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd9b07f7_7bcc701b",
+        "filename": "device/u2f/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-14T22:48:33Z",
+      "side": 1,
+      "message": "Add this source file directly to the device_unittests target in ../BUILD.gn as is done for the other U2F tests.",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 33
+      },
+      "revId": "ae39d638f84ff66fbbaf2b6eb8d4fa8ee5e1c434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "134228be_4cdce61f",
+        "filename": "device/u2f/u2f_ble_frames.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-14T22:48:33Z",
+      "side": 1,
+      "message": "Since the type name is short please be explicit here as it is not immediately obvious what is returned by frame_.data().",
+      "range": {
+        "startLine": 130,
+        "startChar": 2,
+        "endLine": 130,
+        "endChar": 6
+      },
+      "revId": "ae39d638f84ff66fbbaf2b6eb8d4fa8ee5e1c434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a04385ce_23d68dd7",
+        "filename": "device/u2f/u2f_ble_frames_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-14T22:48:33Z",
+      "side": 1,
+      "message": "Please don\u0027t use auto in this context because it is not clear what type GetSomeData() returns and the type name is short.",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 6
+      },
+      "revId": "ae39d638f84ff66fbbaf2b6eb8d4fa8ee5e1c434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b4c3876_3dae3980",
+        "filename": "device/u2f/u2f_ble_frames_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-14T22:48:33Z",
+      "side": 1,
+      "message": "Use an empty initializer list and let it infer the type,\n\n{}",
+      "range": {
+        "startLine": 124,
+        "startChar": 49,
+        "endLine": 124,
+        "endChar": 71
+      },
+      "revId": "ae39d638f84ff66fbbaf2b6eb8d4fa8ee5e1c434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1191fe99_8cb55932",
+        "filename": "device/u2f/u2f_ble_frames_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-14T22:48:33Z",
+      "side": 1,
+      "message": "Use an initializer list like this and let it infer the vector type,\n\n{static_cast\u003cuint8_t\u003e(code)}",
+      "range": {
+        "startLine": 140,
+        "startChar": 22,
+        "endLine": 140,
+        "endChar": 72
+      },
+      "revId": "ae39d638f84ff66fbbaf2b6eb8d4fa8ee5e1c434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
