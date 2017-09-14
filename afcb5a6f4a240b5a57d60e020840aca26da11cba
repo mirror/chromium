@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "0ef4bf07_544504cf",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-09-14T06:59:38Z",
+      "side": 1,
+      "message": "I confirmed that the refcount returned by this function is eventually held by blink::SWRegistration, which corresponds with JavaScript object ServiceWorkerGlobalScope#registration. I can\u0027t see any reason that SWProviderContext needs to hold another refcount, when ServiceWorkerGlobalScope#registration destroys, SWRegistration in browser side should just destroy as it is expected to only serve ServiceWorkerGlobalScope#registration related operations. WDYT?\n\nI plan to rename these 2 functions as {Save,Take}RegistrationStartupInfo, and remove SWRegistrationObjectHost.Clone() method.\n\nAnd yeah we can still hold other information in ControllerState, such as registration_id, SWRegistrationOptions etc. I agree we can summarize all helpful information of SWRegistrationObject\u0026SWObject together into another new dedicated struct in future.",
+      "parentUuid": "096fc465_209006d7",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc0e7b1c_1859b3bb",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom",
         "patchSetId": 1
