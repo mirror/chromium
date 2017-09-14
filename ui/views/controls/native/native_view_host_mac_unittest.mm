@@ -100,6 +100,21 @@ TEST_F(NativeViewHostMacTest, Attach) {
   DestroyHost();
 }
 
+// Test that the content windows' bounds are set to the correct values while the
+// rendering size is equal or not equal to the View size.
+TEST_F(NativeViewHostMacTest, ContentViewPositionAndSize) {
+  CreateHost();
+  toplevel()->SetBounds(gfx::Rect(0, 0, 100, 100));
+
+  native_host()->ShowWidget(5, 10, 100, 100, 200, 200);
+  EXPECT_NSEQ(NSMakeRect(0, 0, 200, 200), [native_view_ frame]);
+
+  native_host()->ShowWidget(10, 25, 50, 50, 50, 50);
+  EXPECT_NSEQ(NSMakeRect(0, 0, 50, 50), [native_view_ frame]);
+
+  DestroyHost();
+}
+
 // Ensure the native view is hidden along with its host, and when detaching, or
 // when attaching to a host that is already hidden.
 TEST_F(NativeViewHostMacTest, NativeViewHidden) {
