@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f824047_af3b342c",
+        "filename": "net/traffic_annotation/network_traffic_annotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-14T16:10:03Z",
+      "side": 1,
+      "message": "Can we use constexpr rather than #define?\n\n(I\u0027m kind of wondering the same about the various #defines for constant network annotations below, now that I look more closely. But I guess a followup would be better for those)",
+      "revId": "adbcc74ea12d5660fa081262f4d3f71034b13bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
