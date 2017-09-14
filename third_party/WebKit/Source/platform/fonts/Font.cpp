@@ -132,13 +132,15 @@ bool Font::DrawText(PaintCanvas* canvas,
                     const TextRunPaintInfo& run_info,
                     const FloatPoint& point,
                     float device_scale_factor,
-                    const PaintFlags& flags) const {
+                    const PaintFlags& flags,
+                    bool printing) const {
   // Don't draw anything while we are using custom fonts that are in the process
   // of loading.
   if (ShouldSkipDrawing())
     return false;
 
-  ShapeResultBloberizer bloberizer(*this, device_scale_factor);
+  ShapeResultBloberizer bloberizer(*this, device_scale_factor,
+      printing ? ShapeResultBloberizer::kIncludeUTF8Text : 0);
   CachingWordShaper word_shaper(*this);
   ShapeResultBuffer buffer;
   word_shaper.FillResultBuffer(run_info, &buffer);
@@ -151,13 +153,15 @@ bool Font::DrawText(PaintCanvas* canvas,
                     const NGTextFragmentPaintInfo& text_info,
                     const FloatPoint& point,
                     float device_scale_factor,
-                    const PaintFlags& flags) const {
+                    const PaintFlags& flags,
+                    bool printing) const {
   // Don't draw anything while we are using custom fonts that are in the process
   // of loading.
   if (ShouldSkipDrawing())
     return false;
 
-  ShapeResultBloberizer bloberizer(*this, device_scale_factor);
+  ShapeResultBloberizer bloberizer(*this, device_scale_factor,
+      printing ? ShapeResultBloberizer::kIncludeUTF8Text : 0);
   bloberizer.FillGlyphs(text_info.text, text_info.from, text_info.to,
                         text_info.shape_result);
   DrawBlobs(canvas, flags, bloberizer.Blobs(), point);
@@ -331,7 +335,7 @@ void Font::GetTextIntercepts(const TextRunPaintInfo& run_info,
     return;
 
   ShapeResultBloberizer bloberizer(
-      *this, device_scale_factor, ShapeResultBloberizer::Type::kTextIntercepts);
+      *this, device_scale_factor, 0, ShapeResultBloberizer::Type::kTextIntercepts);
   CachingWordShaper word_shaper(*this);
   ShapeResultBuffer buffer;
   word_shaper.FillResultBuffer(run_info, &buffer);
@@ -349,7 +353,7 @@ void Font::GetTextIntercepts(const NGTextFragmentPaintInfo& text_info,
     return;
 
   ShapeResultBloberizer bloberizer(
-      *this, device_scale_factor, ShapeResultBloberizer::Type::kTextIntercepts);
+      *this, device_scale_factor, 0, ShapeResultBloberizer::Type::kTextIntercepts);
   bloberizer.FillGlyphs(text_info.text, text_info.from, text_info.to,
                         text_info.shape_result);
 
