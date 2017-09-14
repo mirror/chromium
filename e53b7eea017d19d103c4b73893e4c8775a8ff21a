@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "816d9449_7c5c01fd",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 1642,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-14T20:54:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2a77f3a_6849a9a4",
+      "revId": "e53b7eea017d19d103c4b73893e4c8775a8ff21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7beea237_fe3429f6",
         "filename": "build/config/android/internal_rules.gni",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "e53b7eea017d19d103c4b73893e4c8775a8ff21a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72af36e2_78eb6c5f",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 1684,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-14T20:54:53Z",
+      "side": 1,
+      "message": "Unless we move the post_processed_resource_packaged_apk somewhere else, we need this to differentiate between the two files?",
+      "parentUuid": "7beea237_fe3429f6",
+      "revId": "e53b7eea017d19d103c4b73893e4c8775a8ff21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
