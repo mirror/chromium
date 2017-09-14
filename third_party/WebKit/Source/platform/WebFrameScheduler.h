@@ -25,6 +25,7 @@ class WebFrameScheduler {
   enum class ThrottlingState {
     kThrottled,
     kNotThrottled,
+    kStopped,
   };
 
   class ActiveConnectionHandle {
@@ -62,6 +63,10 @@ class WebFrameScheduler {
   // Set whether this frame is suspended. Only unthrottledTaskRunner tasks are
   // allowed to run on a suspended frame.
   virtual void SetPaused(bool) {}
+
+  // Tells the scheduler that loading should stop, because the tab has been
+  // in background, on Android for 5 minutes.
+  virtual void OnStopLoadingInBackground() {}
 
   // Set whether this frame is cross origin w.r.t. the top level frame. Cross
   // origin frames may use a different scheduling policy from same origin
