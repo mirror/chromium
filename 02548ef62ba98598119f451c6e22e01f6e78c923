@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "149484af_ab80e2a9",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/NQETest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-14T23:18:10Z",
+      "side": 1,
+      "message": "final",
+      "revId": "02548ef62ba98598119f451c6e22e01f6e78c923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d75ad2b_283daf81",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/NQETest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-14T23:18:10Z",
+      "side": 1,
+      "message": "Can we statically import this function and put this line back into one line?",
+      "revId": "02548ef62ba98598119f451c6e22e01f6e78c923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea83b7a0_677abd73",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/NQETest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-14T23:18:10Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "02548ef62ba98598119f451c6e22e01f6e78c923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cebd6666_afdd18ce",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/NQETest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-09-14T23:18:10Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "02548ef62ba98598119f451c6e22e01f6e78c923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
