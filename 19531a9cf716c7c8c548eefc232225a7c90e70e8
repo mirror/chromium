@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1594ace_61185997",
+        "filename": "ui/ozone/platform/wayland/wayland_keyboard_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-09-14T12:18:13Z",
+      "side": 1,
+      "message": "maybe put these somewhere that they could be used in wayland_connection_unittest.cc, wayland_surface_factory_unittest.cc, etc.\n\nin some raw integer literals is being used.",
+      "revId": "19531a9cf716c7c8c548eefc232225a7c90e70e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cabf501c_6eb2e1b7",
+        "filename": "ui/ozone/platform/wayland/wayland_window.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1175809
+      },
+      "writtenOn": "2017-09-14T12:18:13Z",
+      "side": 1,
+      "message": "I think it should be Object rather than Objects.",
+      "revId": "19531a9cf716c7c8c548eefc232225a7c90e70e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
