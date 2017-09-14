@@ -19,6 +19,42 @@
     },
     {
       "key": {
+        "uuid": "b8762876_31a1479f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a0233e4_eed69c2d",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a327c023_9c58e013",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a0233e4_eed69c2d",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be6845eb_12bffecd",
         "filename": "components/arc/common/power.mojom",
         "patchSetId": 10
@@ -33,6 +69,24 @@
       "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74cd9c7b_d38ae818",
+        "filename": "components/arc/common/power.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be6845eb_12bffecd",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +113,30 @@
     },
     {
       "key": {
+        "uuid": "71e28039_bec274aa",
+        "filename": "components/arc/common/power.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Hi Luis,\nThe idea was to have a seperate API. Please look at the Dan and Eric\u0027s comment above.",
+      "parentUuid": "31a36e63_6deacbb4",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 45
+      },
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f5342bd_a4b9afba",
         "filename": "components/arc/power/arc_power_bridge.cc",
         "patchSetId": 10
@@ -82,6 +160,30 @@
     },
     {
       "key": {
+        "uuid": "cd7065ac_79c0083c",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f5342bd_a4b9afba",
+      "range": {
+        "startLine": 27,
+        "startChar": 26,
+        "endLine": 27,
+        "endChar": 29
+      },
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cadcacf_673f48f1",
         "filename": "components/arc/power/arc_power_bridge.cc",
         "patchSetId": 10
@@ -96,6 +198,24 @@
       "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fba42a9b_6bf61040",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cadcacf_673f48f1",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +236,24 @@
     },
     {
       "key": {
+        "uuid": "5f76fc2e_d73a9ff9",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4057a45d_e7887b58",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "feab0c99_0f96a6f7",
         "filename": "components/arc/power/arc_power_bridge.cc",
         "patchSetId": 10
@@ -130,6 +268,24 @@
       "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "547bbe6c_e66f144b",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "feab0c99_0f96a6f7",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -150,6 +306,24 @@
     },
     {
       "key": {
+        "uuid": "a39af3a8_7521369e",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "689d4c52_8b6fe08d",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98aefb68_4b1acb9b",
         "filename": "components/arc/power/arc_power_bridge.h",
         "patchSetId": 10
@@ -164,6 +338,24 @@
       "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6682eaa4_05a86e27",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98aefb68_4b1acb9b",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +382,30 @@
     },
     {
       "key": {
+        "uuid": "2b9f96bc_0f3e5e35",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20828359_be4ec51d",
+      "range": {
+        "startLine": 65,
+        "startChar": 26,
+        "endLine": 65,
+        "endChar": 35
+      },
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe054cb9_7a0db43d",
         "filename": "components/arc/power/arc_power_bridge.h",
         "patchSetId": 10
@@ -210,6 +426,30 @@
       "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c554f9d9_7c08df6e",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe054cb9_7a0db43d",
+      "range": {
+        "startLine": 80,
+        "startChar": 22,
+        "endLine": 80,
+        "endChar": 30
+      },
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -236,6 +476,30 @@
     },
     {
       "key": {
+        "uuid": "6b38bcfa_d55aa061",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6505dd8_70363d0f",
+      "range": {
+        "startLine": 92,
+        "startChar": 22,
+        "endLine": 92,
+        "endChar": 28
+      },
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bf0f1fa_834b5447",
         "filename": "components/arc/power/arc_power_bridge_unittest.cc",
         "patchSetId": 10
@@ -253,6 +517,24 @@
     },
     {
       "key": {
+        "uuid": "13f36e54_3d306af0",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bf0f1fa_834b5447",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "147e2df2_b7202af2",
         "filename": "components/arc/power/arc_power_bridge_unittest.cc",
         "patchSetId": 10
@@ -267,6 +549,24 @@
       "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dca8f8c_1a453242",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "147e2df2_b7202af2",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -310,6 +610,48 @@
     },
     {
       "key": {
+        "uuid": "8a9f803e_3b065476",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19141e25_f0414f68",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 65
+      },
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b87910c6_cc0db810",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87b91444_25d29b29",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6be550c4_3809455c",
         "filename": "components/arc/power/arc_power_bridge_unittest.cc",
         "patchSetId": 10
@@ -324,6 +666,24 @@
       "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a6db9e9_e03fbdc7",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6be550c4_3809455c",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -361,6 +721,24 @@
     },
     {
       "key": {
+        "uuid": "9f321fa1_fe38bb65",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7bc214e_900d955a",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45498403_1ae2fc33",
         "filename": "components/arc/power/arc_power_bridge_unittest.cc",
         "patchSetId": 10
@@ -375,6 +753,24 @@
       "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c42e900f_2e93d75a",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45498403_1ae2fc33",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -401,6 +797,30 @@
     },
     {
       "key": {
+        "uuid": "3f3fcce3_f53bf966",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "876fdd02_6e8dc725",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 48
+      },
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5acef28_9640cac8",
         "filename": "components/arc/power/arc_power_bridge_unittest.cc",
         "patchSetId": 10
@@ -415,6 +835,24 @@
       "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa5a4a2_dfe056de",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5acef28_9640cac8",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -452,6 +890,24 @@
     },
     {
       "key": {
+        "uuid": "98e1129e_b29da923",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11ae9c96_7f5bbfee",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "625800ad_067da429",
         "filename": "components/arc/power/arc_power_bridge_unittest.cc",
         "patchSetId": 10
@@ -469,6 +925,24 @@
     },
     {
       "key": {
+        "uuid": "771246fd_b00236ef",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "625800ad_067da429",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c979a400_83c88612",
         "filename": "components/arc/power/arc_power_bridge_unittest.cc",
         "patchSetId": 10
@@ -483,6 +957,24 @@
       "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f019236_96438f29",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-14T20:33:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c979a400_83c88612",
+      "revId": "5e3f2545024f3df9bfd3f9060d9667656ad095c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
