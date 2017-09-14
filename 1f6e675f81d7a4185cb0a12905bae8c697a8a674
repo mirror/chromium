@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "2b2b31e4_54e4e2a8",
+        "filename": "build/toolchain/mac/compile_xcassets.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-14T07:24:14Z",
+      "side": 1,
+      "message": "Yes, the correct fix is to use the partial Info.plist, but this requires a bit of change to GN (to detect the app icon asset name, to pass the correct flags to the script and to list the correct generated outputs) and to our templates (to merge the partial Info.plist).",
+      "parentUuid": "32400c39_719c4037",
+      "revId": "1f6e675f81d7a4185cb0a12905bae8c697a8a674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "196198a3_4093585e",
         "filename": "ios/chrome/app/resources/Info.plist",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "b3b43798_fe34e27b",
+        "filename": "ios/chrome/app/resources/Info.plist",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-14T07:24:14Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "196198a3_4093585e",
+      "revId": "1f6e675f81d7a4185cb0a12905bae8c697a8a674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5e62fe3f_6b63fdb9",
         "filename": "ios/chrome/app/resources/app_icons.xcassets/app_icons.appiconset/Contents.json",
         "patchSetId": 1
@@ -64,6 +100,24 @@
       "writtenOn": "2017-09-14T00:18:35Z",
       "side": 1,
       "message": "Presumably this is removed before distribution by Apple with app thinning?",
+      "revId": "1f6e675f81d7a4185cb0a12905bae8c697a8a674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f90bfe79_179c9748",
+        "filename": "ios/chrome/app/resources/app_icons.xcassets/app_icons.appiconset/Contents.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-14T07:24:14Z",
+      "side": 1,
+      "message": "I hope so. But even if it is not, this is only a warning (or at least I understand it as a warning since the error is prefixed by \"Though you are not required to fix the following issues, we wanted to make you aware of them:\").",
+      "parentUuid": "5e62fe3f_6b63fdb9",
       "revId": "1f6e675f81d7a4185cb0a12905bae8c697a8a674",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
