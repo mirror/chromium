@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "689905ea_b87db6ce",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1914,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-14T23:34:12Z",
+      "side": 1,
+      "message": "you can add \"-android.webkit.ValueCallback\" to android_webview/DEPS, then added it back for android_webview/glue/DEPS. I think that should roughly do the same thing\n\nI don\u0027t think anything outside of webview will ever try importing random android.webkit classes, so don\u0027t need to enforce it all that widely",
+      "revId": "be21e05308f10cc201be2e3acdd9c76969e3b368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
