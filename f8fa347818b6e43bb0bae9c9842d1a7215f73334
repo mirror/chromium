@@ -154,6 +154,176 @@
       "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd60ab44_99396583",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-14T20:21:52Z",
+      "side": 1,
+      "message": "Can this just be a static method?  Not sure why we need an object here.",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b44ba43_4e84a43c",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-14T20:21:52Z",
+      "side": 1,
+      "message": "I\u0027d prefer if you used the actual alter table code that lives in the cc file here.",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36bbbfb0_898939f1",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-14T20:21:52Z",
+      "side": 1,
+      "message": "perhaps a helper method for these checks would reduce code?\n\nEXPECT_TRUE(AllTablesExist())",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49670ba4_a0ec69ac",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-14T20:21:52Z",
+      "side": 1,
+      "message": "I don\u0027t understand this test.  Are you testing MetaTable?  Should this test be part of that class?",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cc0431b_647826ea",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-14T20:21:52Z",
+      "side": 1,
+      "message": "ASSERT?",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b89dbbd_ed55927e",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-14T20:21:52Z",
+      "side": 1,
+      "message": "It might make sense to insert test data in the unaffected tables, so that you can test the data doesn\u0027t change when create or update happens.",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0baddddc_e0015c1b",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-14T20:21:52Z",
+      "side": 1,
+      "message": "This comment isn\u0027t necessary, since Version1 will always be this.",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1a40ce5_97c927fa",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-14T20:21:52Z",
+      "side": 1,
+      "message": "Same.",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b97fdd_5263e343",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-14T20:21:52Z",
+      "side": 1,
+      "message": "ASSERT?",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b462e52_5ead4224",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-14T20:21:52Z",
+      "side": 1,
+      "message": "ASSERT",
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
