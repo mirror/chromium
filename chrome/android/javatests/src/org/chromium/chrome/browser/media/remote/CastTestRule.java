@@ -538,7 +538,7 @@ public class CastTestRule extends ChromeActivityTestRule<ChromeActivity> {
                 ((float) (rect.left + rect.right)) / 2);
         int clickY = (int) core.getRenderCoordinates().fromLocalCssToPix(
                              ((float) (rect.top + rect.bottom)) / 2)
-                + core.getTopControlsHeightPix();
+                + tab.getTopControlsHeight();
         // Click using a virtual mouse, since a touch may result in a disambiguation pop-up.
         ClickUtils.mouseSingleClickView(getInstrumentation(), tab.getView(), clickX, clickY);
     }

@@ -144,9 +144,10 @@ public class VrShellImpl
         ContentViewCore activeContentViewCore =
                 mActivity.getActivityTab().getActiveContentViewCore();
         assert activeContentViewCore != null;
+        View activeContentView = mActivity.getActivityTab().getContentView();
         mLastContentDpr = activeContentViewCore.getDeviceScaleFactor();
-        mLastContentWidth = activeContentViewCore.getViewportWidthPix() / mLastContentDpr;
-        mLastContentHeight = activeContentViewCore.getViewportHeightPix() / mLastContentDpr;
+        mLastContentWidth = activeContentView.getWidth() / mLastContentDpr;
+        mLastContentHeight = activeContentView.getHeight() / mLastContentDpr;
 
         mInterceptNavigationDelegate = new InterceptNavigationDelegateImpl(
                 new VrExternalNavigationDelegate(mActivity.getActivityTab()),
@@ -458,7 +459,6 @@ public class VrShellImpl
         Point size = new Point(surfaceWidth, surfaceHeight);
         mContentVirtualDisplay.update(size, dpr, null, null, null, null, null);
         if (mTab != null && mTab.getContentViewCore() != null) {
-            mTab.getContentViewCore().onSizeChanged(surfaceWidth, surfaceHeight, 0, 0);
             nativeOnPhysicalBackingSizeChanged(
                     mNativeVrShell, mTab.getWebContents(), surfaceWidth, surfaceHeight);
         }

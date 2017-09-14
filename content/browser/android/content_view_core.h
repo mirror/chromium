@@ -166,6 +166,9 @@ class ContentViewCore : public WebContentsObserver {
                    const base::android::JavaParamRef<jobject>& obj,
                    jfloat dipScale);
 
+  int GetBrowserControlsLayoutHeightPix(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj);
   jint GetBackgroundColor(JNIEnv* env, jobject obj);
   void SetAllowJavascriptInterfacesInspection(
       JNIEnv* env,
@@ -249,19 +252,11 @@ class ContentViewCore : public WebContentsObserver {
   // the Activity context.
   base::android::ScopedJavaLocalRef<jobject> GetContext() const;
 
-  // Returns the viewport size after accounting for the viewport offset.
-  gfx::Size GetViewSize() const;
-
   bool IsFullscreenRequiredForOrientationLock() const;
 
   // --------------------------------------------------------------------------
   // Methods called from native code
   // --------------------------------------------------------------------------
-
-  gfx::Size GetViewportSizeDip() const;
-  bool DoBrowserControlsShrinkBlinkSize() const;
-  float GetTopControlsHeightDip() const;
-  float GetBottomControlsHeightDip() const;
 
   void UpdateCursor(const content::CursorInfo& info);
   void OnTouchDown(const base::android::ScopedJavaLocalRef<jobject>& event);
@@ -293,10 +288,6 @@ class ContentViewCore : public WebContentsObserver {
                                           int64_t time_ms,
                                           float x,
                                           float y) const;
-
-  gfx::Size GetViewportSizePix() const;
-  int GetTopControlsHeightPix() const;
-  int GetBottomControlsHeightPix() const;
 
   void SendGestureEvent(const blink::WebGestureEvent& event);
 
