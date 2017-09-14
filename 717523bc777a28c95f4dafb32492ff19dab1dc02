@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0057dd9_1cec7a74",
+        "filename": "content/browser/service_worker/service_worker_version.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-14T04:10:37Z",
+      "side": 1,
+      "message": "Can we make it even clearer with a bug number, i.e. \u0027TODO(crbug.com/755477): LegacyStatusCallback which does not use OnceCallback is deprecated and should be removed soon.\u0027",
+      "revId": "717523bc777a28c95f4dafb32492ff19dab1dc02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
