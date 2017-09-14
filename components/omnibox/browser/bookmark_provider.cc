@@ -6,6 +6,8 @@
 
 #include <algorithm>
 #include <functional>
+#include <iostream>
+#include <iterator>
 #include <vector>
 
 #include "base/macros.h"
@@ -46,6 +48,9 @@ void BookmarkProvider::Start(const AutocompleteInput& input,
 }
 
 BookmarkProvider::~BookmarkProvider() {}
+
+double krb_cumulative_time2 = 0;
+unsigned krb_cumulative_times2;
 
 void BookmarkProvider::DoAutocomplete(const AutocompleteInput& input) {
   // We may not have a bookmark model for some unit tests.
@@ -93,11 +98,18 @@ void BookmarkProvider::DoAutocomplete(const AutocompleteInput& input) {
   }
 
   // Sort and clip the resulting matches.
-  size_t num_matches =
-      std::min(matches_.size(), AutocompleteProvider::kMaxMatches);
-  std::partial_sort(matches_.begin(), matches_.begin() + num_matches,
-                    matches_.end(), AutocompleteMatch::MoreRelevant);
-  matches_.resize(num_matches);
+  struct timeval tv1;
+  gettimeofday(&tv1, 0);
+  matches_.sort(AutocompleteMatch::MoreRelevant);
+  if (matches_.size() > AutocompleteProvider::kMaxMatches)
+    matches_.resize(AutocompleteProvider::kMaxMatches);
+  struct timeval tv2;
+  gettimeofday(&tv2, 0);
+  krb_cumulative_time2 += (tv2.tv_sec - tv1.tv_sec) * 1000000 +
+      tv2.tv_usec - tv1.tv_usec;
+  ++krb_cumulative_times2;
+  std::cout << "partial sort " << (krb_cumulative_time2 / krb_cumulative_times2)
+      << "\n";
 }
 
 namespace {
