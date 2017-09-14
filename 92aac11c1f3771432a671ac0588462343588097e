@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "32b9a805_3d86d068",
+        "filename": "components/offline_pages/core/client_policy_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-14T19:53:16Z",
+      "side": 1,
+      "message": "nit: suggestedArticlePolicyBuilder",
+      "revId": "92aac11c1f3771432a671ac0588462343588097e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08442868_95d9a5df",
         "filename": "components/offline_pages/core/client_policy_controller.cc",
         "patchSetId": 8
@@ -25,6 +42,47 @@
     },
     {
       "key": {
+        "uuid": "fb7107dc_9e553d8a",
+        "filename": "components/offline_pages/core/client_policy_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-14T19:53:16Z",
+      "side": 1,
+      "message": "I think this is a mistake, please revert to 30.",
+      "parentUuid": "08442868_95d9a5df",
+      "range": {
+        "startLine": 67,
+        "startChar": 48,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "92aac11c1f3771432a671ac0588462343588097e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56896ef9_6a093c23",
+        "filename": "components/offline_pages/core/client_policy_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-14T19:53:16Z",
+      "side": 1,
+      "message": "optional change:\n\nThis could be more concisely written as:\nsuggestedArticlePolicy.SetIsSupportedByDownload(IsOfflinePagesPrefetchingUIEnabled())\n\nwhich would allow you to keep the same formatting as the other policies.",
+      "revId": "92aac11c1f3771432a671ac0588462343588097e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c847e613_9b155b36",
         "filename": "components/offline_pages/core/client_policy_controller.h",
         "patchSetId": 8
@@ -42,6 +100,40 @@
         "endLine": 63,
         "endChar": 18
       },
+      "revId": "92aac11c1f3771432a671ac0588462343588097e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67562225_77ae24b7",
+        "filename": "components/offline_pages/core/client_policy_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-14T19:53:16Z",
+      "side": 1,
+      "message": "nit: add GetNamespacesWithSuggestedItems?",
+      "revId": "92aac11c1f3771432a671ac0588462343588097e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ab81484_439fd293",
+        "filename": "components/offline_pages/core/offline_page_client_policy.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-14T19:53:16Z",
+      "side": 1,
+      "message": ", is_suggested(false)",
       "revId": "92aac11c1f3771432a671ac0588462343588097e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
