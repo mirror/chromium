@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1f8718a3_0adddfa2",
+        "filename": "extensions/renderer/event_bindings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-14T23:05:40Z",
+      "side": 1,
+      "message": "It certainly does. I started changing the code to make EventBookkeeper a member of EventBindings but ran into static methods (e.g. EventBindings::DispatchEventInContext and such) which require EventBookkeeper. So it won\u0027t be trivial. Maybe this is OK for now w/ TODO? LMK if you had a simpler way in mind.",
+      "parentUuid": "3c2c43f7_c7cc82bd",
+      "revId": "868ae60a735aa4cf5356d34210ced04b8d7fca7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "505004dd_8221f455",
         "filename": "extensions/renderer/event_bookkeeper.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "58888dca_58c357b3",
+        "filename": "extensions/renderer/event_bookkeeper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-14T23:05:40Z",
+      "side": 1,
+      "message": "Done. Changed string-\u003eExtensionId.",
+      "parentUuid": "505004dd_8221f455",
+      "revId": "868ae60a735aa4cf5356d34210ced04b8d7fca7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "365446ca_28ce9e40",
         "filename": "extensions/renderer/event_bookkeeper.h",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-14T15:23:48Z",
       "side": 1,
       "message": "What\u0027s the benefit in having all of these be lazy?  We avoid a tiny amount of initialization and memory usage when this class is allocated, but then we need to do dynamic allocation if/when we need them, which is significantly more expensive.  My guess would be that the cost of that heap allocation outweighs the benefit of avoiding instantiation at creation, since allocating empty maps should be exceedingly fast.  It would also make the code a bit less complicated, IMO.\n\nWDYT?  Is there another benefit to having these lazily constructed?",
+      "revId": "868ae60a735aa4cf5356d34210ced04b8d7fca7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3168b36_520bcf60",
+        "filename": "extensions/renderer/event_bookkeeper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-14T23:05:40Z",
+      "side": 1,
+      "message": "Good q. This is/was preserving the current lazy nature of these variables through LAZY_INSTANCE.. So there wasn\u0027t anything new I was shooting for with this.\n\n1) In the case where these are  never used, then there is a benefit to not construct them at all. But again, I can\u0027t see how an extension can *not* use any event code.\n\n2) For filters, I can see how its corresponding maps will be infrequently used, as most of the events do not use/support filters.\n\nDoes #1 and #2 sound right-ish?\nI\u0027ve changed the code to:\n  make listener_counts_ stack allocated\n  make filter related containers still be dynamic allocated\n  keep unmanaged_listeners_ untouched to retain leaky behavior\n\nThen again, this didn\u0027t make the code simple enough :) So let me know your thoughts.",
+      "parentUuid": "365446ca_28ce9e40",
       "revId": "868ae60a735aa4cf5356d34210ced04b8d7fca7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
