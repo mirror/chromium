@@ -158,6 +158,8 @@ ChromeAPIPermissions::GetAllPermissions() const {
        APIPermissionInfo::kFlagCannotBeOptional},
       {APIPermission::kWallpaperPrivate, "wallpaperPrivate",
        APIPermissionInfo::kFlagCannotBeOptional},
+      {APIPermission::kZipArchiverPrivate, "zipArchiverPrivate",
+       APIPermissionInfo::kFlagCannotBeOptional},
       {APIPermission::kWebstorePrivate, "webstorePrivate",
        APIPermissionInfo::kFlagCannotBeOptional},
       {APIPermission::kStreamsPrivate, "streamsPrivate",
