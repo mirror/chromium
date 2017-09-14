@@ -16,6 +16,24 @@
       "revId": "5949f0e9ce54f19b8fec0e01d787d9f41afd9fb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef090395_b42c0ec8",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-14T19:53:11Z",
+      "side": 1,
+      "message": "The scan identifies the list of networks to be selected. However we always show network-choose-mobile if scanning is supported (which we should probably check also) so I will move this to network-choose-mobile.\n\nThat also raises the question of what to do when the list is empty. I will go ahead and address as well.\n\nOn further consideration I think we can move all of the network selection handling to network-choose-mobile, so thanks for the suggestion :)",
+      "parentUuid": "d8ecf9a4_2fa42294",
+      "revId": "5949f0e9ce54f19b8fec0e01d787d9f41afd9fb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
