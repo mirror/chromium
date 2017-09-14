@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80f3bf0f_b0965cef",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-09-14T12:16:23Z",
+      "side": 1,
+      "message": "Please add a comment explaining what this does. As it stands, I do not understand it:\n\nWe receive a policy proto from the server, parse it and persist it. This new controller seems to modify the proto. How? Why? Does the policy sent by the server need some fixing up? Are we using a derivative of the policy instead of the policy itself? If so, why do we store that derivative in the policy proto, not somewhere else, e.g. prefs?",
+      "revId": "0b1974322d196f35f5c27d0624f2ab2bd183e22d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e0acbab_3b3af8d2",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-09-14T12:16:23Z",
+      "side": 1,
+      "message": "Nit: const method.",
+      "revId": "0b1974322d196f35f5c27d0624f2ab2bd183e22d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
