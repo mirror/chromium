@@ -499,6 +499,25 @@
       "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d909727d_a39db432",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-14T22:28:36Z",
+      "side": 1,
+      "message": "Chrome\u0027s compositor will because that\u0027s what we have to obey, or we may need to add some coordination to resolve the conflict. The truth is that we have two components that want to control the state.\n\nI fully understand that\u0027s wayland/xdg model and I also agree that that\u0027s better model in general. The truth is that we\u0027re building ARC++/Android, and Android does not match that model naturally.\n\nIt\u0027s not client \"initialted\". It\u0027s client \"controlled\".\n\nAndroid can maximize it without asking us, and we can\u0027t simply change it various app/cts compatibility reasons. It doesn\u0027t mean that can\u0027t change it but changing it means we change Android framework, and it has to be upstreamed.",
+      "parentUuid": "3f9d60bc_a0aafc84",
+      "tag": "mailMessageId\u003d\u003cCAFg5JwBOMCPaASUAwy\u003dUCa\u003dUQhNVU4zi9rHUt5B9F04dPjJuug@mail.gmail.com\u003e",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
