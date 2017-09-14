@@ -4,6 +4,8 @@
 
 #include "android_webview/browser/aw_metrics_service_client.h"
 
+#include <vector>
+
 #include "android_webview/browser/aw_metrics_log_uploader.h"
 #include "android_webview/common/aw_switches.h"
 #include "android_webview/common/aw_version_info_values.h"
@@ -17,6 +19,8 @@
 #include "base/lazy_instance.h"
 #include "base/path_service.h"
 #include "base/strings/string16.h"
+#include "base/strings/string_number_conversions.h"
+#include "base/strings/string_util.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_worker_pool.h"
 #include "components/metrics/call_stack_profile_metrics_provider.h"
@@ -65,6 +69,29 @@ version_info::Channel GetChannelFromPackageName() {
   // We can't determine the channel for stand-alone WebView, since it has the
   // same package name across channels. It will always be "unknown".
   return version_info::ChannelFromPackageName(package_name.c_str());
+}
+
+// WebView Metrics are sampled based on GUID value. Convert the GUID to a uint,
+// then check whether it's below some fraction of UINT_MAX.
+bool CheckInSample(const std::string& client_id) {
+  std::string client_id_no_hyphens;
+  base::RemoveChars(client_id, "-", &client_id_no_hyphens);
+
+  std::vector<uint8_t> client_id_bytes;
+  // A 128-bit client ID value should be 16 bytes long.
+  if (!base::HexStringToBytes(client_id_no_hyphens, &client_id_bytes) ||
+      client_id_bytes.size() != 16) {
+    LOG(ERROR) << "Failed to check WebView metrics sampling; "
+                  "invalid client ID: "
+               << client_id_no_hyphens;
+    return false;
+  }
+
+  unsigned truncated_value;
+  DCHECK(sizeof(truncated_value) <= client_id_bytes.size());
+  memcpy(&truncated_value, client_id_bytes.data(), sizeof(truncated_value));
+
+  return truncated_value < UINT_MAX / 10u;  // Sample at 10%.
 }
 
 }  // namespace
@@ -157,6 +184,8 @@ void AwMetricsServiceClient::InitializeWithClientId() {
   DCHECK_EQ(g_client_id.Get().length(), GUID_SIZE);
   pref_service_->SetString(metrics::prefs::kMetricsClientID, g_client_id.Get());
 
+  in_sample_ = CheckInSample(g_client_id.Get());
+
   metrics_state_manager_ = metrics::MetricsStateManager::Create(
       pref_service_, this, base::string16(), base::Bind(&StoreClientInfo),
       base::Bind(&LoadClientInfo));
@@ -188,22 +217,22 @@ void AwMetricsServiceClient::InitializeWithClientId() {
 
 bool AwMetricsServiceClient::IsConsentGiven() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  return is_enabled_;
+  return consent_;
 }
 
-void AwMetricsServiceClient::SetMetricsEnabled(bool enabled) {
+bool AwMetricsServiceClient::IsReportingEnabled() {
+  return consent_ && in_sample_ && CheckSDKVersionForMetrics();
+}
+
+void AwMetricsServiceClient::SetHaveMetricsConsent(bool consent) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  if (!CheckSDKVersionForMetrics())
-    return;
-
-  if (is_enabled_ != enabled) {
-    if (enabled) {
-      metrics_service_->Start();
-    } else {
-      metrics_service_->Stop();
-    }
-    is_enabled_ = enabled;
+  consent_ = consent;
+  // Receiving this call is the last step in determining whether metrics should
+  // be enabled; if so, start metrics. There's no need for a matching Stop()
+  // call, since SetHaveMetricsConsent(false) never happens, and WebView has no
+  // shutdown sequence.
+  if (IsReportingEnabled()) {
+    metrics_service_->Start();
   }
 }
 
@@ -262,18 +291,19 @@ base::TimeDelta AwMetricsServiceClient::GetStandardUploadInterval() {
 }
 
 AwMetricsServiceClient::AwMetricsServiceClient()
-    : is_enabled_(false),
-      pref_service_(nullptr),
+    : pref_service_(nullptr),
       request_context_(nullptr),
-      channel_(version_info::Channel::UNKNOWN) {}
+      channel_(version_info::Channel::UNKNOWN),
+      consent_(false),
+      in_sample_(false) {}
 
 AwMetricsServiceClient::~AwMetricsServiceClient() {}
 
 // static
-void SetMetricsEnabled(JNIEnv* env,
-                       const base::android::JavaParamRef<jclass>& jcaller,
-                       jboolean enabled) {
-  g_lazy_instance_.Pointer()->SetMetricsEnabled(enabled);
+void SetHaveMetricsConsent(JNIEnv* env,
+                           const base::android::JavaParamRef<jclass>& jcaller,
+                           jboolean consent) {
+  g_lazy_instance_.Pointer()->SetHaveMetricsConsent(consent);
 }
 
 }  // namespace android_webview
