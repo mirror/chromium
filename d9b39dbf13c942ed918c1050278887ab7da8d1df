@@ -16,6 +16,24 @@
       "revId": "d9b39dbf13c942ed918c1050278887ab7da8d1df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c632e145_0af9d01e",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-09-14T00:50:29Z",
+      "side": 1,
+      "message": "This has been discussed before, but there are enough subtle differences to make code sharing difficult.\n\nFor example, display item list applies border radius clip using clip region, not a pair of isolating/blending layers, thus inter-operates with blend mode easily. The composited counterpart needs to swap blending operation carefully to make it right.\n\nFor another example, non-AA rect clips can be applied as property state in composited layers, but the display item list counterpart needs to manage proper nesting of begin/end clip items.",
+      "parentUuid": "3e247a92_1da50542",
+      "revId": "d9b39dbf13c942ed918c1050278887ab7da8d1df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
