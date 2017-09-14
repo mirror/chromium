@@ -73,6 +73,10 @@ struct FaviconRawBitmapResult {
 
   // The icon type of the containing favicon.
   IconType icon_type;
+
+  // Indicates whether the bitmap was downloaded on-demand (without visiting its
+  // site).
+  bool bitmap_on_demand;
 };
 
 // Define type with same structure as FaviconRawBitmapResult for passing data to
