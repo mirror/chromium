@@ -481,6 +481,24 @@
       "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f9d60bc_a0aafc84",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-14T22:03:33Z",
+      "side": 1,
+      "message": "xdg-shell set_maximized will request that the compositor maximize the shell surface. no guarantee that the compositor will respect it (maybe the current state of chrome currently prevents it). if the compositor decides to honor it then client gets notified by a state change event (configure event). the compositor will know when the client has produced contents that matches as specific state through the configure_ack request that contains a serial from the configure event. a compositor can use this mechanism to do animations and be sure to never produce a bad frame. it allows for both client initiated state changes and compositor initiated state changes without race conditions.\n\nI\u0027m not against us doing something unique for arc++ if needed. If we do then I think that protocol needs to be properly documented so it\u0027s easy to understand how it works (generally and in corner cases) and it\u0027s clear that it\u0027s not going to be a pain to maintain. I think we also need to have the implementation integrate well with the code we maintain for upstream interfaces as that will reduce the burden needed to maintain the code.",
+      "parentUuid": "4759e0f8_6271630c",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
