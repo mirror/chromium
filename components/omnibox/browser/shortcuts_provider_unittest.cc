@@ -735,9 +735,10 @@ TEST_F(ShortcutsProviderTest, DeleteMatch) {
 
 TEST_F(ShortcutsProviderTest, DoesNotProvideOnFocus) {
   AutocompleteInput input(ASCIIToUTF16("about:o"), base::string16::npos,
-                          std::string(), GURL(), base::string16(),
-                          metrics::OmniboxEventProto::INVALID_SPEC, false,
-                          false, true, true, true, TestSchemeClassifier());
+                          std::string(), TestSchemeClassifier());
+  input.set_allow_exact_keyword_match();
+  input.set_want_asynchronous_matches();
+  input.set_from_omnibox_focus();
   provider_->Start(input, false);
   EXPECT_TRUE(provider_->matches().empty());
 }
