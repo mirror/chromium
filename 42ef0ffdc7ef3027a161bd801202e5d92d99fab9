@@ -70,6 +70,24 @@
       "revId": "42ef0ffdc7ef3027a161bd801202e5d92d99fab9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8592523_c39cd9f5",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-14T16:54:08Z",
+      "side": 1,
+      "message": "Right, last I looked the summary is:\n  - Linux and Windows can assume SSE2.\n  - Mac and x86 Android can assume SSSE3.\n  - ARMv7 Android can assume NEON but not VFPv4 (FMA+F16 support).\n  - No interesting ARMv8 chip beyond the baseline is in users\u0027 hands.\n\nIf we ever bump that Mac minimum to 10.12, that\u0027ll raise the bar to SSE4.1 (but not SSE4.2).",
+      "parentUuid": "951fe8b2_1fc5e90d",
+      "revId": "42ef0ffdc7ef3027a161bd801202e5d92d99fab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
