@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0995ca1e_3d58998f",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-14T09:23:22Z",
+      "side": 1,
+      "message": "What is this __block in there for? This will prevent the block from retaining the object… Can you remove it?",
+      "range": {
+        "startLine": 128,
+        "startChar": 7,
+        "endLine": 128,
+        "endChar": 14
+      },
+      "revId": "079b19087ac12cec0b75404077ea3de754c6bf06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
