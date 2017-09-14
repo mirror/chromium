@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4cfb1bc_c9dc491f",
+        "filename": "ash/resources/vector_icons/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-14T14:20:56Z",
+      "side": 1,
+      "message": "nit: Can you name the file notification_mobile_data or something similar? Just \"data\" is a little ambiguous.",
+      "revId": "8090548624db1cd231203e6e837d05fddb507c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc4e2b9_81dee181",
+        "filename": "chrome/browser/chromeos/status/data_promo_notification.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-14T14:20:56Z",
+      "side": 1,
+      "message": "nit: If this icon is only used in chrome/browser code, can you put the icon file in //chrome/app/vector_icons?",
+      "revId": "8090548624db1cd231203e6e837d05fddb507c3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
