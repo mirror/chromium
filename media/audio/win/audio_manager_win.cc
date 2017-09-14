@@ -5,13 +5,16 @@
 #include "media/audio/win/audio_manager_win.h"
 
 #include <windows.h>
+
 #include <objbase.h>  // This has to be before initguid.h
+
 #include <initguid.h>
 #include <mmsystem.h>
 #include <setupapi.h>
 #include <stddef.h>
 
 #include <memory>
+#include <utility>
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
@@ -169,69 +172,6 @@ void AudioManagerWin::InitializeOnAudioThread() {
   output_device_listener_.reset(new AudioDeviceListenerWin(BindToCurrentLoop(
       base::Bind(&AudioManagerWin::NotifyAllOutputDeviceChangeListeners,
                  base::Unretained(this)))));
-}
-
-base::string16 AudioManagerWin::GetAudioInputDeviceModel() {
-  // Get the default audio capture device and its device interface name.
-  DWORD device_id = 0;
-  waveInMessage(reinterpret_cast<HWAVEIN>(WAVE_MAPPER),
-                DRVM_MAPPER_PREFERRED_GET,
-                reinterpret_cast<DWORD_PTR>(&device_id), NULL);
-  ULONG device_interface_name_size = 0;
-  waveInMessage(reinterpret_cast<HWAVEIN>(device_id),
-                DRV_QUERYDEVICEINTERFACESIZE,
-                reinterpret_cast<DWORD_PTR>(&device_interface_name_size), 0);
-  size_t bytes_in_char16 = sizeof(base::string16::value_type);
-  DCHECK_EQ(0u, device_interface_name_size % bytes_in_char16);
-  if (device_interface_name_size <= bytes_in_char16)
-    return base::string16();  // No audio capture device.
-
-  base::string16 device_interface_name;
-  base::string16::value_type* name_ptr = base::WriteInto(
-      &device_interface_name, device_interface_name_size / bytes_in_char16);
-  waveInMessage(reinterpret_cast<HWAVEIN>(device_id), DRV_QUERYDEVICEINTERFACE,
-                reinterpret_cast<DWORD_PTR>(name_ptr),
-                static_cast<DWORD_PTR>(device_interface_name_size));
-
-  // Enumerate all audio devices and find the one matching the above device
-  // interface name.
-  HDEVINFO device_info = SetupDiGetClassDevs(
-      &AM_KSCATEGORY_AUDIO, 0, 0, DIGCF_DEVICEINTERFACE | DIGCF_PRESENT);
-  if (device_info == INVALID_HANDLE_VALUE)
-    return base::string16();
-
-  DWORD interface_index = 0;
-  SP_DEVICE_INTERFACE_DATA interface_data;
-  interface_data.cbSize = sizeof(interface_data);
-  while (SetupDiEnumDeviceInterfaces(device_info, 0, &AM_KSCATEGORY_AUDIO,
-                                     interface_index++, &interface_data)) {
-    // Query the size of the struct, allocate it and then query the data.
-    SP_DEVINFO_DATA device_data;
-    device_data.cbSize = sizeof(device_data);
-    DWORD interface_detail_size = 0;
-    SetupDiGetDeviceInterfaceDetail(device_info, &interface_data, 0, 0,
-                                    &interface_detail_size, &device_data);
-    if (!interface_detail_size)
-      continue;
-
-    std::unique_ptr<char[]> interface_detail_buffer(
-        new char[interface_detail_size]);
-    SP_DEVICE_INTERFACE_DETAIL_DATA* interface_detail =
-        reinterpret_cast<SP_DEVICE_INTERFACE_DETAIL_DATA*>(
-            interface_detail_buffer.get());
-    interface_detail->cbSize = interface_detail_size;
-    if (!SetupDiGetDeviceInterfaceDetail(
-            device_info, &interface_data, interface_detail,
-            interface_detail_size, NULL, &device_data))
-      return base::string16();
-
-    bool device_found = (device_interface_name == interface_detail->DevicePath);
-
-    if (device_found)
-      return GetDeviceAndDriverInfo(device_info, &device_data);
-  }
-
-  return base::string16();
 }
 
 void AudioManagerWin::GetAudioDeviceNamesImpl(bool input,
