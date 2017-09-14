@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "882da168_94cfee2d",
+        "filename": "ui/app_list/views/search_result_answer_card_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-14T00:19:30Z",
+      "side": 1,
+      "message": "nit: unrelated to your CL, but let\u0027s insert an empty line before to match prevailing style",
+      "revId": "328f528e7c8a5f47c47b50dd04814c965473f96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "187c430d_36ec9e04",
+        "filename": "ui/app_list/views/search_result_answer_card_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-14T00:19:30Z",
+      "side": 1,
+      "message": "optional nit: Usually if a const is used in only one place, I would put it close to where it is used.",
+      "revId": "328f528e7c8a5f47c47b50dd04814c965473f96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcb227d3_af8ff046",
+        "filename": "ui/app_list/views/search_result_answer_card_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-14T00:19:30Z",
+      "side": 1,
+      "message": "nit: insert an empty line before the closing } and add \"// namespace\" comment.",
+      "revId": "328f528e7c8a5f47c47b50dd04814c965473f96a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
