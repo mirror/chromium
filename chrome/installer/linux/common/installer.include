@@ -183,11 +183,13 @@ stage_install_common() {
   # ANGLE
   if [ "${CHANNEL}" != "stable" ]; then
     for file in libEGL.so libGLESv2.so; do
-      buildfile="${BUILDDIR}/${file}"
-      strippedfile="${buildfile}.stripped"
-      debugfile="${buildfile}.debug"
-      "${BUILDDIR}/installer/common/eu-strip" -o "${strippedfile}" -f "${debugfile}" "${buildfile}"
-      install -m 644 "${strippedfile}" "${STAGEDIR}/${INSTALLDIR}/${file}"
+      if [ -f "${file}" ]; then
+        buildfile="${BUILDDIR}/${file}"
+        strippedfile="${buildfile}.stripped"
+        debugfile="${buildfile}.debug"
+        "${BUILDDIR}/installer/common/eu-strip" -o "${strippedfile}" -f "${debugfile}" "${buildfile}"
+        install -m 644 "${strippedfile}" "${STAGEDIR}/${INSTALLDIR}/${file}"
+      fi
     done
   fi
 
