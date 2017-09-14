@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2ef6d121_14f3b9f8",
+        "filename": "testing/libfuzzer/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-09-14T22:17:18Z",
+      "side": 1,
+      "message": "What about this one?",
+      "parentUuid": "76cc6d2b_240ef794",
+      "range": {
+        "startLine": 33,
+        "startChar": 22,
+        "endLine": 33,
+        "endChar": 48
+      },
+      "revId": "b479261acd062fb6c8714f7eef727c7d40e540c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bfe7edb_2e16b7b3",
         "filename": "testing/libfuzzer/libprotobuf-mutator.md",
         "patchSetId": 6
@@ -183,6 +207,24 @@
       "side": 1,
       "message": "Done\n\nI\u0027m not actually sure typical users would have a need for it though. Doesn\u0027t it only make debugging libprotobuf-mutator\u0027s code easier, not debugging one\u0027s own code (TextFormat::PrintString can be used on any Message object, by fuzzer writers). \nAm I misunderstanding how it makes debugging easier?",
       "parentUuid": "b3cc8ca8_42aea2b3",
+      "revId": "b479261acd062fb6c8714f7eef727c7d40e540c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f46da939_cede53bc",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-09-14T22:17:18Z",
+      "side": 1,
+      "message": "not sure. maybe are you right",
+      "parentUuid": "3aca44af_b9beaff8",
       "revId": "b479261acd062fb6c8714f7eef727c7d40e540c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

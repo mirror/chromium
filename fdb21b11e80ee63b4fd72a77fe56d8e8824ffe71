@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42a31870_c447a43c",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001348
+      },
+      "writtenOn": "2017-09-14T22:17:18Z",
+      "side": 1,
+      "message": "spaces?",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 4
+      },
+      "revId": "fdb21b11e80ee63b4fd72a77fe56d8e8824ffe71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
