@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6428cac0_d004a11c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-14T20:59:32Z",
+      "side": 1,
+      "message": "Since you\u0027ve added unit tests,\n\nTEST\u003dtry\n\nwould make the CL look better :)",
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "136b1080_084259fb",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-14T20:59:32Z",
+      "side": 1,
+      "message": "Then, can you add DCHECK?\n\n WakeLockInfo new_wake_lock \u003d { kInvalidId };\n switch (type) {\n   ...\n }\n DCHECK_NE(kInvalidId, new_wake_lock.id);",
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd48a23f_459cc59c",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-14T20:59:32Z",
+      "side": 1,
+      "message": "space after this line? (like L68)",
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b606a0bf_5142cfa9",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-14T20:59:32Z",
+      "side": 1,
+      "message": "qq: when does this return true?",
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9b2ec45_092a416e",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-14T20:59:32Z",
+      "side": 1,
+      "message": "Since you moved the code to dtor, reset() is not really necessary now. It\u0027s automatic.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2efe5101_b67a28c0",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-14T20:59:32Z",
+      "side": 1,
+      "message": "Can you mention this will delete |fake_power_manager_client_|?",
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
