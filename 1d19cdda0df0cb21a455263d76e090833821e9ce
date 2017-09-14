@@ -127,6 +127,24 @@
     },
     {
       "key": {
+        "uuid": "5794f211_fd7eeb8a",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-14T05:59:30Z",
+      "side": 1,
+      "message": "Using newly introduce MarkerMap class providing AddInternal() and common RemoveXXX().\n\nDMC holds MarkerMap and provide API for common operation.\n\nStack allocated SuggetionMarkerController provides suggestion marker specific operations. Because of SMC holds MarkerMap pointer. We don\u0027t need\nlasting SMC in DMC as xiaochengh@ mentioned.\n\nSuggestionMarkerController::SuggetionMarkerController(\n  DMC* dmc) : marker_map(dmc-\u003eGetMarkerMap()) {}",
+      "parentUuid": "a77c0d61_2e5c0487",
+      "revId": "1d19cdda0df0cb21a455263d76e090833821e9ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8874c3f8_6a42a781",
         "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.cpp",
         "patchSetId": 3
