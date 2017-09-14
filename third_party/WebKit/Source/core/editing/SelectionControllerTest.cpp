@@ -4,8 +4,8 @@
 
 #include "core/editing/SelectionController.h"
 
-#include "core/editing/EditingTestBase.h"
 #include "core/editing/FrameSelection.h"
+#include "core/editing/testing/EditingTestBase.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/input/EventHandler.h"

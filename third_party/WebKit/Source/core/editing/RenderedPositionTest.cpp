@@ -6,8 +6,8 @@
 
 #include "build/build_config.h"
 #include "core/css/CSSStyleDeclaration.h"
-#include "core/editing/EditingTestBase.h"
 #include "core/editing/VisibleUnits.h"
+#include "core/editing/testing/EditingTestBase.h"
 
 namespace blink {
 
