@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3516fcf8_4cdb4f36",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "I added a comment explaining it. We are not unregistering layers on the pending tree once it is activated, so this keeps the recycle layers from driving animations.\n\nAnd in general, avoids doing work if the layer is never going to be drawn.",
+      "parentUuid": "a0554e75_14d61bb6",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c068866a_cf9fba7e",
         "filename": "cc/layers/picture_layer_impl.cc",
         "patchSetId": 18
@@ -33,6 +51,24 @@
       "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89294cd7_f2deefc2",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c068866a_cf9fba7e",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "de991098_b0a1cacb",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1511,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6414dd4_86def974",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83177843_ca5a828e",
         "filename": "cc/paint/discardable_image_map.cc",
         "patchSetId": 18
@@ -67,6 +121,24 @@
       "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "862cee7e_5f985830",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "We are moving the PaintImage when constructing the DrawImage. So the local var is to avoid accessing the object after its moved.",
+      "parentUuid": "83177843_ca5a828e",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "32d29a55_43bc04f1",
+        "filename": "cc/paint/discardable_image_map_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "The metadata should be tested by the current expectations. I added some more to ensure that the frame index matches. FWIW, the frame_index being copied here will never be used, we always override it at playback time.",
+      "parentUuid": "99316649_4e4e3284",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37c17641_f6d8ab70",
         "filename": "cc/paint/paint_image_unittest.cc",
         "patchSetId": 18
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-14T00:30:18Z",
       "side": 1,
       "message": "Add a test for a frame other than 0?",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a08d0f0a_9821113c",
+        "filename": "cc/paint/paint_image_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "I\u0027m not sure what that would be testing. The aim of the test is making sure that Decode only uses the frame_index passed by the caller and ignores the recorded value, which is tested because the recorded index is different from the value passed (0u vs 1u).",
+      "parentUuid": "37c17641_f6d8ab70",
       "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "545559d2_7b9c0ae8",
+        "filename": "cc/raster/raster_source.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bcbadbd4_42e39757",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e950a12_773c98f7",
         "filename": "cc/trees/image_animation_controller.cc",
         "patchSetId": 18
@@ -135,6 +261,24 @@
       "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82322605_cb87506f",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "Yes, the entire logic here is replicating the animation behaviour in BitmapImage.",
+      "parentUuid": "6e950a12_773c98f7",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "935bf192_e726624a",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a471c28_2e198c72",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8043ef0d_7bf13f7d",
         "filename": "cc/trees/image_animation_controller.h",
         "patchSetId": 18
@@ -169,6 +331,24 @@
       "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987afa09_5c13c44d",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8043ef0d_7bf13f7d",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "89b16424_73b15616",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "2 Layers could have the same image.",
+      "parentUuid": "2bc6881d_12396b31",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b51d2a23_f34f940f",
         "filename": "cc/trees/image_animation_controller.h",
         "patchSetId": 18
@@ -203,6 +401,24 @@
       "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ff4c6f_7794a965",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b51d2a23_f34f940f",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "09291f18_6b910051",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "593fa8b6_61a31829",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40babdc0_a1abbe28",
         "filename": "cc/trees/image_animation_controller.h",
         "patchSetId": 18
@@ -237,6 +471,24 @@
       "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6440d897_e4cb5e3f",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "Done. I think it should be animations\u0027 (http://www.grammarbook.com/punctuation/apostro.asp, rule 2a. :P)",
+      "parentUuid": "40babdc0_a1abbe28",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "ca42596c_558cfa99",
+        "filename": "cc/trees/image_animation_controller_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "Thanks. :D",
+      "parentUuid": "161f2e60_72e3fde8",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c043aa9d_fac8894d",
         "filename": "cc/trees/layer_tree_host_impl.h",
         "patchSetId": 18
@@ -271,6 +541,24 @@
       "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b714172_78231357",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 908,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c043aa9d_fac8894d",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "9be01c83_f0092204",
+        "filename": "third_party/WebKit/Source/platform/exported/WebRuntimeFeatures.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "RenderThreadImpl calls this if the switch is enabled.",
+      "parentUuid": "db0f4185_4d6e4cc1",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a7263e9_b53e2d98",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 18
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "01bdad14_187b8fd0",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "This is fixing how the completion state is set on a PaintImage. Currently it is based on whether the frame being painted was fully received, when it should be set based on whether the entire image has been loaded.",
+      "parentUuid": "1a7263e9_b53e2d98",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d61398d6_01acff3e",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 18
@@ -322,6 +646,24 @@
       "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c1a97d_29c39186",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "That change is throughout this class, but I think that\u0027s the intended behaviour. The code in here assumes that the repetition count will be known once it has reached the last frame, when it is actually known once the complete image has been loaded. The DeferredImageDecoder in fact locks the value once we have all the data (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/graphics/DeferredImageDecoder.cpp?sq\u003dpackage:chromium\u0026l\u003d312). I don\u0027t think we mean to use an incorrect value here if the correct value is known.",
+      "parentUuid": "d61398d6_01acff3e",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -348,6 +690,30 @@
     },
     {
       "key": {
+        "uuid": "3f2e1980_e2618f7b",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ede8faf_d28cd9be",
+      "range": {
+        "startLine": 101,
+        "startChar": 7,
+        "endLine": 101,
+        "endChar": 30
+      },
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dea5946f_25bbfc31",
         "filename": "third_party/WebKit/Source/platform/graphics/DeferredImageDecoder.cpp",
         "patchSetId": 18
@@ -365,6 +731,24 @@
     },
     {
       "key": {
+        "uuid": "ac30b344_be4e5260",
+        "filename": "third_party/WebKit/Source/platform/graphics/DeferredImageDecoder.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "Earlier frame_data_ was storing the original duration and we would override each time the caller queries it. I changed it so we just store the duration with the override in frame_data_ itself.",
+      "parentUuid": "dea5946f_25bbfc31",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9dd3b3a0_51f9247d",
         "filename": "third_party/WebKit/Source/platform/graphics/Image.cpp",
         "patchSetId": 18
@@ -379,6 +763,24 @@
       "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed699450_faa3e446",
+        "filename": "third_party/WebKit/Source/platform/graphics/Image.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "I kept the behaviour as-is for other image subclasses when fixing the completion state bug(None of them mark their frames complete in CurrentFrameIsComplete, except StaticBitmapImage). I\u0027ll take up fixing rest of the cases in a follow-up.",
+      "parentUuid": "9dd3b3a0_51f9247d",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

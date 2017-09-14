@@ -430,6 +430,30 @@
     },
     {
       "key": {
+        "uuid": "7edd4ae2_9dcf9d42",
+        "filename": "cc/layers/picture_layer_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12efa4e1_e92956fb",
+      "range": {
+        "startLine": 116,
+        "startChar": 16,
+        "endLine": 116,
+        "endChar": 40
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afa1d80e_18ac0fc4",
         "filename": "cc/trees/image_animation_controller.cc",
         "patchSetId": 14
@@ -580,6 +604,30 @@
       "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdbb53ec_ab45ce32",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d6171431_5a055527",
+      "range": {
+        "startLine": 242,
+        "startChar": 2,
+        "endLine": 242,
+        "endChar": 62
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -871,6 +919,24 @@
     },
     {
       "key": {
+        "uuid": "2dfbd566_3651b7fd",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c290ad56_a78bd3b1",
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d6687f4_ca406894",
         "filename": "cc/trees/image_animation_controller.h",
         "patchSetId": 14
@@ -977,6 +1043,30 @@
     },
     {
       "key": {
+        "uuid": "fe5fe73f_f14fa59b",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "381aff16_7bac6941",
+      "range": {
+        "startLine": 62,
+        "startChar": 21,
+        "endLine": 62,
+        "endChar": 79
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b03a525d_91acd936",
         "filename": "cc/trees/image_animation_controller.h",
         "patchSetId": 14
@@ -1036,6 +1126,30 @@
       "side": 1,
       "message": "Yeah the problem is that PushPropertiesTo takes a thing to push properties to, this is really just Activate?",
       "parentUuid": "db7e5e4f_d08dca9d",
+      "range": {
+        "startLine": 88,
+        "startChar": 9,
+        "endLine": 88,
+        "endChar": 28
+      },
+      "revId": "7f044da1683ba55103e9d4d05189f98b228b5728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cddbd808_4aeb39cf",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-14T19:44:16Z",
+      "side": 1,
+      "message": "Its a single object tracking pending/active state, like SyncedProperty which is shared across the pending/active layer. And I\u0027m used to SyncedProperty being one of my favourite classes. :P",
+      "parentUuid": "99592124_25758e55",
       "range": {
         "startLine": 88,
         "startChar": 9,
