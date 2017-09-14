@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a1148725_002ba923",
+        "filename": "components/autofill/core/browser/autofill_field.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-09-14T12:58:02Z",
+      "side": 1,
+      "message": "\u003e do we need this one here? \n\u003e \n\u003e We cannot remove fields from proto, but here it is ok.\n\nYes, as we discussed this field is still used by autofill code, so for now it should not be removed.",
+      "parentUuid": "4b1cc050_22259306",
+      "range": {
+        "startLine": 172,
+        "startChar": 2,
+        "endLine": 172,
+        "endChar": 31
+      },
+      "revId": "97833785f5abad4c2a80f6d6575a5d6e1d5c9c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "401a518a_e56c5855",
         "filename": "components/autofill/core/browser/autofill_field.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-13T12:42:42Z",
       "side": 1,
       "message": "I would moved it to the current place of |server_type|.",
+      "range": {
+        "startLine": 220,
+        "startChar": 6,
+        "endLine": 220,
+        "endChar": 19
+      },
+      "revId": "97833785f5abad4c2a80f6d6575a5d6e1d5c9c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c59a11d_2264a88b",
+        "filename": "components/autofill/core/browser/autofill_field.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-09-14T12:58:02Z",
+      "side": 1,
+      "message": "\u003e I would moved it to the current place of |server_type|.\n\nI have moved it just next to |server_type_|, just to be easier for readers to see that instead of |server_type_| from now on, they should use the field below.",
+      "parentUuid": "401a518a_e56c5855",
       "range": {
         "startLine": 220,
         "startChar": 6,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "81522480_b5d2dd36",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-09-14T12:58:02Z",
+      "side": 1,
+      "message": "\u003e I believe it is safer to call |has_predictions| or so.\n\nYes, this was my option too at first, but then after consulting https://developers.google.com/protocol-buffers/docs/reference/cpp-generated, I have seen that\nfor \"Repeated Embedded Message Fields\", there is no generation of this method: has_foo(). Therefore, I chose using foo_size(), i.e. predictions_size().",
+      "parentUuid": "c4de643d_96ffe3c2",
+      "range": {
+        "startLine": 517,
+        "startChar": 10,
+        "endLine": 517,
+        "endChar": 48
+      },
+      "revId": "97833785f5abad4c2a80f6d6575a5d6e1d5c9c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7420352a_0ee9219c",
         "filename": "components/autofill/core/browser/proto/server.proto",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "97833785f5abad4c2a80f6d6575a5d6e1d5c9c28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "638df500_85ddcc01",
+        "filename": "components/autofill/core/browser/proto/server.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-09-14T12:58:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7420352a_0ee9219c",
+      "range": {
+        "startLine": 32,
+        "startChar": 44,
+        "endLine": 32,
+        "endChar": 61
+      },
+      "revId": "97833785f5abad4c2a80f6d6575a5d6e1d5c9c28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
