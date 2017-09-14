@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "13e3c12d_65704f34",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-14T16:35:31Z",
+      "side": 1,
+      "message": "Makes sense. Thanks!",
+      "parentUuid": "6aa1f7b7_b61d7c7d",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f06ef5be_728d4844",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.h",
         "patchSetId": 9
@@ -229,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "ed999420_d71739b4",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-14T16:35:31Z",
+      "side": 1,
+      "message": "Oh, I found that those values are extracted keymaster_defs.h, right?\nIf so, please comment it.\nAlso;\n1) How about using the same value for each enums. E.g., ALGORITHM_EC \u003d 3.\n2) IIUC, these enums/structs looks NOT a simple extraction from the file. So, is it possible to skip defining unnecessary enums and fields like this? It should be possible to extend it later.",
+      "parentUuid": "2b508ef8_bd94ad40",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c683dad4_9d53a7ca",
         "filename": "components/arc/common/cert_store.mojom",
         "patchSetId": 9
@@ -258,6 +294,24 @@
       "side": 1,
       "message": "The main reason is to follow system/keymaster/include/keymaster/android_keymaster.h interface and the struct can be extended in the future for certificate store v.2 by additional_params if needed.",
       "parentUuid": "c683dad4_9d53a7ca",
+      "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28fb1dc0_0b140992",
+        "filename": "components/arc/common/cert_store.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-14T16:35:31Z",
+      "side": 1,
+      "message": "The class uses Request/Response structs to share the serialization / deserialization APIs. However, this is not the case.\nMojo supports versioned arguments, so there looks no benefit to use struct for that perspective, as well.\nAlso, because CertHost class is not related to the AndroidKeymaster class directly, I couldn\u0027t find reasons to share the Request/Response struct style with the class.\n\nSo, I prefer standard Mojo API style, to be consistent with other mojom files in this directory, and for simplicity.\nAlso, it enforces Host to support new args for new version.\nAny thoughts?",
+      "parentUuid": "676e3af3_e2c78260",
       "revId": "93b018224c39861b127dc9b8ccb1434b47caf866",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "4c587134_46d7bbca",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-14T16:35:31Z",
+      "side": 1,
+      "message": "I just meant, you\u0027d need to declare dependency by explicit DependsOn() call in the ctor.\nchrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc has an example.",
+      "parentUuid": "c30fb9fa_596730ab",
+      "revId": "8c7fdcb509b5490b98764ca808a59359e361359c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17a40ad8_ae348669",
         "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
         "patchSetId": 1
