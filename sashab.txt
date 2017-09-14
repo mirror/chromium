@@ -1,0 +1,144 @@
+
+Changes:
+https://crrev.com/2818673002 Removed some cyclic #includes from Source/web
+https://crrev.com/2907133002 Move WebAXObject.cpp to core/ (WIP)
+https://crrev.com/2911423002 Move AXRange from AXObjectImpl to AXObject
+https://crrev.com/2914743003 Add conversion from AXObject to WebAXObject
+https://crrev.com/2919593004 Remove dependency of ColorChooserPopupUIController on ChromeClientImpl
+https://crrev.com/2914743002 Rename AXObjectVector to AXObjectImplVector
+https://crrev.com/2913753004 Make AXObject garbage collected
+https://crrev.com/2916483002 Convert a bunch of WebAXObject methods to macros
+https://crrev.com/2913613003 Made WebFactory::SetInstance private
+https://crrev.com/2909223002 Renamed WebViewBase::ChromeClient to GetChromeClient
+https://crrev.com/2887523003 Introduced WebFactory and WebFactoryImpl for constructing web/ classes
+https://crrev.com/2876393002 Clean up duplicate Page methods
+https://crrev.com/2872133003 Remove dependency of WebNode.cpp on AXObjectImpl
+https://crrev.com/2876453003 Move enums from AXObjectImpl to AXObject
+https://crrev.com/2880993002 Introduce AXObjectCacheBase in core/ and remove WebNode dependency
+https://crrev.com/2883143004 Removed dependency of InspectorOverlayAgent on ChromeClientImpl
+https://crrev.com/2886653002 Removed dependency of ExternalDateTimeChooser on ChromeClientImpl
+https://crrev.com/2884803004 Removed dependency of PopupMenuImpl on ChromeClientImpl
+https://crrev.com/2858493002 Rename AXObject to AXObjectImpl in modules/ and web/
+https://crrev.com/2887613002 Revert of Rename AXObject to AXObjectImpl in modules/ and web/ (patchset #9 id:160001 of https://codereview.chromium.org/2858493002/ )
+https://crrev.com/2883203002 Revert of Rename AXObject to AXObjectImpl in modules/ and web/ (patchset #9 id:160001 of https://codereview.chromium.org/2858493002/ )
+https://crrev.com/2646733002 Move SpinButtonElement's Timer to TaskRunnerTimer
+https://crrev.com/2876613003 Added DCHECKs to FrameDetached implementations
+https://crrev.com/2649013002 Add a way to store nested ComputedStyle classes (WIP)
+https://crrev.com/2773893002 Remove FrameHost class
+https://crrev.com/2779983003 Add DCHECK to WebViewPlugin helper to assert WebFrameClient params.
+https://crrev.com/2827483003 Remove cyclic dependency from ContextLifecycleObserver (WIP)
+https://crrev.com/2644533003 Added CSSPropertyFontUtils which holds font parsing methods.
+https://crrev.com/2106073005 Add fast-path for propagated variable changes (WIP)
+https://crrev.com/2874133002 Removed WebFrameClient.cpp from Source/web
+https://crrev.com/2882923002 Remove dependency of DateTimeChooserImpl on ChromeClientImpl
+https://crrev.com/2642783005 Implements CSSPropertyAPI for the line-height property.
+https://crrev.com/2641123002 Implements CSSPropertyAPI for the font-family property.
+https://crrev.com/2643793004 Implements CSSPropertyAPI for the font-size property.
+https://crrev.com/2785583003 Remove redundant WebLocalFrame* parameter from didCreateDocumentElement
+https://crrev.com/2786593002 Remove redundant WebLocalFrame* in runScriptsAtDocumentElementAvailable
+https://crrev.com/2782783002 Remove redundant WebLocalFrame* parameter from didFinishDocumentLoad
+https://crrev.com/2781993004 Remove redundant WebLocalFrame* parameter from didCreateNewDocument
+https://crrev.com/2780993003 Remove redundant WebLocalFrame* parameter from didCreateDataSource
+https://crrev.com/2863043002 Move SubFrameCount methods to Frame
+https://crrev.com/2855113002 Start moving methods to AXObjectImpl
+https://crrev.com/2855103002 Rename AXObject to AXObjectImpl
+https://crrev.com/2859123002 Move WebEntities to platform/
+https://crrev.com/2855803003 Remove redundant WebLocalFrame* parameter from DidFinishDocumentLoad
+https://crrev.com/2854793002 Remove redundant WebLocalFrame* parameter from DidCreateScriptContext
+https://crrev.com/2839353002 Revert of Remove post_launch_on_client_thread_called (patchset #2 id:20001 of https://codereview.chromium.org/2843063002/ )
+https://crrev.com/2844523004 Marked external/wpt/media-source/mediasource-remove.html as flaky
+https://crrev.com/2838503002 Remove redundant WebLocalFrame* parameter from WillReleaseScriptContext
+https://crrev.com/2842763004 Mark virtual/mojo-loading/http/tests/inspector/network/waterfall-images.html as flaky
+https://crrev.com/2842903003 Revert of Update V8 to version 6.0.66. (patchset #1 id:1 of https://codereview.chromium.org/2837923002/ )
+https://crrev.com/2837523002 Add ASSERTs to WebFrameTest to ensure frame parameters are correct
+https://crrev.com/2830003002 Remove redundant WebLocalFrame* parameter from DidChangeScrollOffset
+https://crrev.com/2839083002 Revert of DevTools: fix aggregated donut chart cache population (patchset #1 id:1 of https://codereview.chromium.org/2840463003/ )
+https://crrev.com/2845473002 Revert of [EasyUnlock] Update BluetoothLowEnergyConnectionFinder to look for EIDs. (patchset #7 id:120001 of https://codereview.chromium.org/2841743003/ )
+https://crrev.com/2829923003 Remove redundant WebLocalFrame* parameter from DidReceiveTitle
+https://crrev.com/2831583004 Remove redundant WebLocalFrame* parameter from DidClearWindowObject
+https://crrev.com/2787113003 Add DCHECKs to WebFrameTest to ensure frame parameters are correct (wip)
+https://crrev.com/2833713002 Remove redundant WebLocalFrame* parameter from WillSendRequest
+https://crrev.com/2833623004 Remove redundant WebLocalFrame* parameter from DidCommitProvisionalLoad
+https://crrev.com/2827193002 Remove redundant WebLocalFrame* parameter from DidFailProvisionalLoad
+https://crrev.com/2824803005 Remove redundant WebLocalFrame* parameter from DidMatchCSS
+https://crrev.com/2793503002 Remove redundant WebLocalFrame* parameter from didFinishLoad
+https://crrev.com/2808333007 Removed redundant third_party/WebKit prefixes from #includes in WebKit
+https://crrev.com/2784323003 Remove redundant WebLocalFrame* parameter from didNavigateWithinPage
+https://crrev.com/2793523002 Remove redundant WebLocalFrame* parameter from runScriptsAtDocumentIdle
+https://crrev.com/c/544727 Moved a bunch of web/ tests to core/
+https://crrev.com/c/544483 Moved DocumentLoadingRenderingTest.cpp to core/frame
+https://crrev.com/c/549598 Move WebDocumentSubresourceFilterTest to core/exported
+https://crrev.com/c/549519 Added TODO to make core/ data directory for test data
+https://crrev.com/c/547158 Moved a bunch of tests from web/tests to platform/
+https://crrev.com/c/549815 Moved ScreenWakeLockTest from web/ to modules/wake_lock
+https://crrev.com/c/544422 Move TextSelectionRepaintTest to core/paint
+https://crrev.com/c/544739 Moved FakeWebPlugin and dependent tests to core/exported
+https://crrev.com/c/544421 Move a bunch of tests to core/layout
+https://crrev.com/c/544749 Move a bunch of tests to core/page and core/input
+https://crrev.com/c/544641 Move WindowProxyTest to bindings/core/v8
+https://crrev.com/c/544589 Move LinkElementLoadingTest and MediaElementFillingViewportTest to core/
+https://crrev.com/c/541179 Moved WebFormElementObserverImpl to core/exported
+https://crrev.com/c/544747 Moved KeyboardTest and LinkSelectionTest to core/editing
+https://crrev.com/c/542556 Moved clear location tests from web/ to core/
+https://crrev.com/c/541159 Moved a bunch of tests from web/ to core/
+https://crrev.com/c/536578 Removed WebLocalFrameImpl::DevToolsAgentImpl() method
+https://crrev.com/c/538420 Move WebHitTestResult.cpp to core/exported
+https://crrev.com/c/535375 Introduced temporary class WebDevToolsAgentBase in core/
+https://crrev.com/c/541236 Moved ActivityLoggerTest AnimationSimTest to core/
+https://crrev.com/c/542198 Moved clear location tests from web/ to core/
+https://crrev.com/c/542099 Moved clear location tests from web/ to core/
+https://crrev.com/c/539438 Move WebNodeTest and WebAssociatedURLLoaderImplTest to core/exported
+https://crrev.com/c/538405 Merge MediaKeysClientImpl up into MediaKeysClient
+https://crrev.com/c/538547 Move WebSurroundingText.cpp to core/exported
+https://crrev.com/c/535298 Move web/ExternalPopupMenuTest.cpp to core/html/forms
+https://crrev.com/c/538406 Move PrerendererClientImpl from web/ to core/loader
+https://crrev.com/c/538314 Moved Storage(Quota)ClientImpl with parent classes
+https://crrev.com/c/538501 Moved WebInputEvent to platform/exported
+https://crrev.com/c/538433 Moved Storage(Quota)ClientImpl from web/ to modules/
+https://crrev.com/c/538313 Move WebFrameSerializer/Impl from web/ to core/exported
+https://crrev.com/c/536579 Added TODO to NavigatorContentUtilsClientMock
+https://crrev.com/c/535197 Move PopupMenuImpl to core/html/forms and rename to InternalPopup
+https://crrev.com/c/535195 Merged NavigatorContentUtilsClient and NavigatorContentUtilsClientImpl
+https://crrev.com/c/536374 Move InspectorOverlayAgent, WebDevToolsAgentImpl and PageOverlay to core
+https://crrev.com/c/527721 Merge PopupMenu with PopupMenuImpl
+https://crrev.com/c/535218 Move PopupMenu to core/html/forms
+https://crrev.com/c/527015 Move PopupMenu from platform/ to core/page
+https://crrev.com/c/526536 Move a bunch of ChromeClientImpl dependencies out of web/
+https://crrev.com/c/526815 Move RemoteFrameOwner from web/ to core/frame
+https://crrev.com/c/526895 Move ColorChooser controllers from web/ to core/html/forms
+https://crrev.com/c/522503 Move WebSharedWorkerImpl to core/exported
+
+Reviews:
+https://crrev.com/2860673002 Change all test cases to use WebViewBase instead of WebViewImpl.
+https://crrev.com/2900593002 Move many more classes to use WebLocalFrameBase over WebLocalFrameImpl.
+https://crrev.com/2886113002 Introduce WebPluginContainerBase to abstract WebPluginContainerImpl.
+https://crrev.com/2863913002 Change AudioOutputDeviceClientImpl to use WebLocalFrameBase and move to modules.
+https://crrev.com/2858243003 Move WebColorSuggestion and ColorChooserUIController to core/exported/.
+https://crrev.com/2877363002 Move more classes over to use WebLocalFrameBase instead of WebLocalFrameImpl.
+https://crrev.com/2878623002 Introduce WebRemoteFrameBase to break dependencies on WebRemoteFrameImpl.
+https://crrev.com/2867433002 Remove commented out code inadvertantly checked in.
+https://crrev.com/2863853002 Introduce the class webLocalFrameBase anf make WebLocalFrameImpl derived it.
+https://crrev.com/2831833002 Move WebAssociatedURLLoaderImpl.* from web/ -> core/export/.
+https://crrev.com/2827123004 Move WorkerContentSettingsClient.* from web/ -> core/workers/.
+https://crrev.com/2821223002 Move SharedWorkerRepositoryClient & WebAssociatedURLLoaderImpl to core/exported/.
+https://crrev.com/2820103004 Move FindInPageCoordinates & CompoisitonUnderlineVectorBuilder to core/exported.
+https://crrev.com/2807213005 ListMarkerText.cpp: Delete dead code.
+https://crrev.com/2589923002 Add a hardcoded list of methods that need a "Get" prefix.
+https://crrev.com/c/629138 [Sublime Text] Update instructions for SublimeClang to use a newer libclang.so
+https://crrev.com/c/544362 Remove redundant WebLocalFrame* parameter from WebFrameClient callbacks.
+https://crrev.com/c/544726 Moves WebDevToolsAgentImpl to core.
+https://crrev.com/c/547379 Create controller/ component in blink.
+https://crrev.com/c/530725 Move web/WebPepperSocket to modules/websockets
+https://crrev.com/c/542356 Removes explicit use of WebFrameWidgetImpl.
+https://crrev.com/c/538972 Move PageOverlay and InspectorOverlayAgent from web/ to core/.
+https://crrev.com/c/541095 Moves AXObject.h and cpp back to modules. WebNode includes AXObjectCache.h to use a static helper method.  No core/ code refers to AXObject, just to AXObjectCache. 
+https://crrev.com/c/540895 Move WebPagePopupImpl.* from web/ -> core/exported/.
+https://crrev.com/c/540577 Move WebLeakDetector from web/ to modules/exported/.
+https://crrev.com/c/539535 Move WebTestingSupport.cpp from web/ -> modules/exported.
+https://crrev.com/c/538445 Moved STATIC_ASSERT_ENUM definition to platform/wtf
+https://crrev.com/c/538416 Merge PrerendererClientImpl into PrerendererClient.
+https://crrev.com/c/538172 Move web/resources to core/html/forms/
+https://crrev.com/c/521751 Make WebLocalFrame 1:1 with TestWebFrameClient
+https://crrev.com/c/533635 Add tools/sublime/OWNERS
+https://crrev.com/c/520822 Move WebSettingsImpl from web/ to core/exported/.
+https://crrev.com/c/520542 Replaces WebNode::AccessibilityObject with WebAXObject static function.

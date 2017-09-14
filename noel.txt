@@ -1,0 +1,85 @@
+
+Changes:
+https://crrev.com/2937643002 [WIP] Reitveld OWNERS test via Chrome Butler
+https://crrev.com/2906243002 Revert of Allow storing multiple replacements on SpellCheckResult (patchset #11 id:200001 of https://codereview.chromium.org/2848943002/ )
+https://crrev.com/2857353002 Convert Spellcheck host MessageFilter IPC to mojo
+https://crrev.com/2828313002 Convert render process component common Spellcheck IPC to mojo
+https://crrev.com/2823083003 [wip-test] Test if any bot test calls renderer SpellCheck IPC
+https://crrev.com/2825623002 [qcms] Fix integer overflow in lut_inverse_interp16
+https://crrev.com/2827573003 Skia color space fuzzer: use a locally defined Hash function
+https://crrev.com/2815303003 [qcms] Disable advisory asserts when running in libfuzzer
+https://crrev.com/2807083002 Add LLVM fuzzer: QCMS color space and color transform
+https://crrev.com/2809623002 Move APNG fuzzer seeds to png-suite/samples/animated
+https://crrev.com/2797473003 Add LLVM fuzzer: Skia color space and color transform
+https://crrev.com/2796893002 [qcms] Fix overflow when reading parametric gamma curves
+https://crrev.com/2796923002 [qcms] Only accept valid input ranges when reading VCGT formula
+https://crrev.com/2788393003 Add color profile testing/libfuzzer/fuzzers/dicts/icc.dict
+https://crrev.com/2793883002 Add APNG fuzzer seeds to png-suite
+https://crrev.com/c/660019 zlib adler_smid.c
+https://crrev.com/c/657749 use zlib contrib adler_smid.c
+https://crrev.com/c/653337 zlib contrib adler_smid.c
+https://crrev.com/c/647952 Add loss less webp to chrome test/data
+https://crrev.com/c/609054 zlib measurement patch
+https://crrev.com/c/594752 [WIP] RenderFrameHost mojo interface broker
+https://crrev.com/c/567841 Devtools: Support 8 (#RRGGBBAA) and 4 (#RGBA) value hex colors
+https://crrev.com/c/560926 [CSS4] Accept 8 (#RRGGBBAA) and 4 (#RGBA) value hex colors
+https://crrev.com/c/572890 Skia color space fuzzer: mix input and output color transform formats
+https://crrev.com/c/572503 Add AwSettings test: Test CSS 8 & 4 hex color support
+https://crrev.com/c/567840 master
+https://crrev.com/c/558540 color-profile-reflection: try using one level of runAfterLayoutAndPaint
+https://crrev.com/c/562841 Rename utility process ReleaseProcessIfNeeded to ReleaseProcess
+https://crrev.com/c/558526 Remove utility process batch mode support and its IPCs
+https://crrev.com/c/548615 Rename chrome/common/chrome_utility_messages.h
+https://crrev.com/c/554632 Revert "Revert "Rename chrome/common/chrome_utility_messages.h""
+https://crrev.com/c/538519 Convert utility process Shell Handler Win IPC to mojo
+https://crrev.com/c/515323 Convert SpellCheckPanel SpellCheckPanelHost IPC to mojo
+https://crrev.com/c/513767 Test git cl upload --similarity=X --gerrit
+https://crrev.com/c/505648 Convert Spellcheck host MessageFilter IPC to mojo
+https://crrev.com/c/504547 Add Open My Editor (OME) support for Chromium Gerrit code reviews
+https://crrev.com/c/499867 Convert Spellcheck host MessageFilter IPC to mojo
+https://crrev.com/c/487341 Convert render process component common Spellcheck IPC to mojo
+
+Reviews:
+https://crrev.com/2880953002 ImageDecodeBench currently reports the mean without reporting standard deviation / variance. This means we cannot perfectly compare before & after measurements -- we need to make sure the central limit theorem has enough samples to maintain consistent standard deviation / variance between runs.
+https://crrev.com/2920663002 Class/struct layout optimization for blink Resource related classes
+https://crrev.com/2907143002 Remove unnecessary decoded frame size overflow check
+https://crrev.com/2936373002 Revert of media: add video capture device for ARC++ camera HAL v3 (patchset #36 id:700001 of https://codereview.chromium.org/2837273004/ )
+https://crrev.com/2893023003 Add raster timing to ImageDecodeBench
+https://crrev.com/2911253003 [Reland] Allow storing multiple replacements on SpellCheckResult
+https://crrev.com/2897953002 Remove loop unrolling code in UpdateYUVComponentSizes
+https://crrev.com/2892403003 Simplify image decoder selection.
+https://crrev.com/2880533002 Resume ImageDecodeBench packeted runs where it left off
+https://crrev.com/2885983004 Remove DEFINE_STATIC_REF calls from header files
+https://crrev.com/2884803002 Reland of Fix ImageAnimation constant names after Blink renaming (patchset #1 id:1 of https://codereview.chromium.org/2878363003/ )
+https://crrev.com/2857753002 Fix ImageAnimation constant names after Blink renaming
+https://crrev.com/2856993002 Fix comments after Blink rename
+https://crrev.com/2841823003 Rebaseline some test post-Skia roll
+https://crrev.com/2794403002 Rebaseline some color profile tests
+https://crrev.com/2455543002 Convert PDF component IPC to mojo.
+https://crrev.com/2790983002 Rebaseline images/color-profile-background-image-space.html
+https://crrev.com/2782283002 Rebaseline images/color-profile-layer.html
+https://crrev.com/c/611492 NEON implementation for Adler32
+https://crrev.com/c/587702 Reject requestMediaSystemKeyAccess calls when EME is disabled by feature policy
+https://crrev.com/c/646242 Add image decode performance to new harness
+https://crrev.com/c/654467 ImageDecodeBench: Initialize mojo and create a MessageLoop.
+https://crrev.com/c/644512 Run "git cl format" on third_party/zlib.
+https://crrev.com/c/648908 Use an associated interface for web_database_impl to ensure ordered delivery.
+https://crrev.com/c/624772 Pref service: fix incognito support.
+https://crrev.com/c/622458 Mojofy the DatabaseMsg IPC used for WebDatabase calls from browser to renderer.
+https://crrev.com/c/562943 Migrate IPCs between the browser and service processes to mojo.
+https://crrev.com/c/627118 GIF: check for failure when decoding prior frame
+https://crrev.com/c/594675 Long tasks v2: add probe for v8.compile
+https://crrev.com/c/585338 Convert SetSearchURLs to mojo.
+https://crrev.com/c/584553 Rename mojo instant.mojom to search.mojom
+https://crrev.com/c/576098 Renamed CreateDecoder helper functions in Image decoder tests
+https://crrev.com/c/564914 Remove the deprecated Channel creation API for content child processes.
+https://crrev.com/c/557580 Pref service: Expose local state prefs to mash as a service.
+https://crrev.com/c/574988 Unship frames() animation timing function
+https://crrev.com/c/554653 Pref service: Bypass the encapsulation.
+https://crrev.com/c/552218 Unship frames() animation timing function
+https://crrev.com/c/553428 Revert "Revert "Rename chrome/common/chrome_utility_messages.h""
+https://crrev.com/c/553427 Revert "Rename chrome/common/chrome_utility_messages.h"
+https://crrev.com/c/536553 Change UtilityProcessMojoClient to support SequencedTaskRunner.
+https://crrev.com/c/538674 Rearrange includes and use more forward declarations for classes in platform/image-decoders
+https://crrev.com/c/536215 Remove ability to change CSSGridLayout flag at runtime for testing
+https://crrev.com/c/525153 Pref service: improve readme wording

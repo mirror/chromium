@@ -1,0 +1,121 @@
+
+Changes:
+https://crrev.com/2871453002 Delete widget tree (FrameView::parent_)
+https://crrev.com/2855523002 Deleted Widget/FrameViewBase.
+https://crrev.com/2845583002 Remove FrameViewBase as base class of RemoteFrameView.
+https://crrev.com/2873213002 Add PlatformFrameView class.
+https://crrev.com/2868173002 Add PlatformLocalFrame class.
+https://crrev.com/2869563003 [Test] In FrameView::SetParentVisible do not call SetNeedsCompositingUpdate
+https://crrev.com/2869623002 [Test] In FrameView::Dispose, do not call HTMLFrameOwnerElement::SetWidget(nullptr)
+https://crrev.com/2860893004 Fix layout team link
+https://crrev.com/2849383002 Remove FrameView::Root
+https://crrev.com/2849403002 Use non-const ref for LocalFrame::LocalFrameRoot and FrameTree::Top
+https://crrev.com/2836813002 Move ScrollbarManager from core to platform and use as Scrollbar parent
+https://crrev.com/2843693003 Move methods from FrameViewBase to FrameView.
+https://crrev.com/2834573005 Scrollbar no longer inherits from FrameViewBase.
+https://crrev.com/2832883003 Remove unneeded Convert* methods and move many from FrameViewBase to FrameView.
+https://crrev.com/2829963002 Ensure scrollable_area is never null by using ref rather than pointer
+https://crrev.com/2824753005 Rename HostWindow to PlatformChromeClient
+https://crrev.com/2822423002 Remove unneeded InspectorOverlay::ScheduleUpdate CHECK
+https://crrev.com/2829613002 Remove ScheduleAnimation proxy methods, call HostWindow directly
+https://crrev.com/2826893003 Remove ScrollableArea::GetFrameViewBase and move
+https://crrev.com/2823853003 [TEST] Do not add Scrollbar as child of FrameView.
+https://crrev.com/2823153002 [TEST] IsFrameViewScrollbar
+https://crrev.com/2814643003 Remove FrameViewBase as base class of PluginView.
+https://crrev.com/2810873007 Replace LayoutPart::GetFrameViewBase with ChildFrameView
+https://crrev.com/2809913004 Revert of Remove unneeded calls to plugin.SetParentVisible. (patchset #3 id:40001 of https://codereview.chromium.org/2808723002/ )
+https://crrev.com/2810593002 Set plugin focus by implementing HTMLPlugInElement::SetFocused.
+https://crrev.com/2806223002 Use FrameView rather than FrameViewBase for WebInputEventConversion
+https://crrev.com/2808723002 Remove unneeded calls to plugin.SetParentVisible.
+https://crrev.com/2792473002 [TEST] Do not suspend for frame
+https://crrev.com/2791543002 [TEST] Do not suspend for plugin
+https://crrev.com/2791553002 [TEST] Do not suspend for scrollbar
+https://crrev.com/2797943002 Update Document handling of Widget/FrameViewBase focus.
+https://crrev.com/2764313002 Move plugins to be stored in HTMLPlugInElement.
+https://crrev.com/2790283002 Use PluginView type rather than FrameViewBase for v8 Script object.
+https://crrev.com/c/612023 Webagents API, implementations for autofill and dom_distiller
+https://crrev.com/c/627554 DOM Distiller Web Agent runs and invokes mojo call to browser.
+https://crrev.com/c/612030 Remove unused blink public/web imports
+https://crrev.com/c/607739 Web Agents DOM Distiller
+https://crrev.com/c/602832 Fix enable-dom-distiller flag name
+https://crrev.com/c/585338 Convert SetSearchURLs to mojo.
+https://crrev.com/c/595019 Convert IPC ChromeViewMsg_WebUIJavaScript to mojo
+https://crrev.com/c/584152 Convert SetClientSidePhishingDetection to mojo
+https://crrev.com/c/584689 Convert SetNavigationCorrectionInfo to mojo
+https://crrev.com/c/584553 Rename mojo instant.mojom to search.mojom
+https://crrev.com/c/580119 Move CreateServiceWorkerLinkResource from LocalFrameClientImpl to [Core|Modules]Initializer
+https://crrev.com/c/579894 Add CoreInitializer::GetInstance, change CallModules.. to virtual.
+https://crrev.com/c/577491 Put all ModulesInitializer callbacks in CoreInitializer
+https://crrev.com/c/527862 Push UpdateGeometry logic from Layout to EmbeddedContentView.
+https://crrev.com/c/558589 Move mhtml files from web/tests/data to core/testing/data
+https://crrev.com/c/558570 Move web/tests/data to core/testing/data
+https://crrev.com/c/558745 Remove unneeded import of cwv_language_detection_result.h
+https://crrev.com/c/557700 Move web/tests/scheduler tests to core/testing
+https://crrev.com/c/549540 Further CHECKS to detect how LocalFrameView is being attached.
+https://crrev.com/c/530725 Move web/WebPepperSocket to modules/websockets
+https://crrev.com/c/542055 Add more CHECKs to figure out how view is still attached when frame is detached
+https://crrev.com/c/537932 Move linux, mac, win from web/ to core/
+https://crrev.com/c/538172 Move web/resources to core/html/forms/
+https://crrev.com/c/536616 Remove dead code WillDestroyScrollableArea from LocalFrame::Detach
+https://crrev.com/c/536555 Remove TODOs for LocalFrame::Detach call to SetFocusedFrame
+https://crrev.com/c/535194 Add CHECKS to see that FrameView is detached before Frame
+https://crrev.com/c/535335 Add CHECKS to see that FrameView is detached before Frame
+https://crrev.com/c/535295 Add CHECKS to see that FrameView is detached before Frame
+https://crrev.com/c/536213 Remove dead code SetFocusedFrame, WillDestroyScrollableArea from LocalFrame::Detach
+https://crrev.com/c/535293 Add CHECKS to see that FrameView is detached before Frame
+https://crrev.com/c/532735 Move web/LinkHighlightImpl to core/paint.
+https://crrev.com/c/532454 Move web/tests/FrameTestHelpers to core/frame.
+https://crrev.com/c/532477 Move web/FullScreenController to core/frame.
+https://crrev.com/c/530445 Rename [Attach|Detach] to *[To|From]Layout
+https://crrev.com/c/520862 Use FrameTree for UpdateGeometries rather than registering LayoutPart.
+https://crrev.com/c/527980 [TEST] Plugin calls ReportGeometry in SetFrameRect rather than Layout calling it
+https://crrev.com/c/513702 Check is_attached_ explicitly rather than using ParentFrameView() == nullptr as proxy
+https://crrev.com/c/517553 Rename FrameOrPlugin (and Widget and FrameViewBase) to EmbeddedContentView
+https://crrev.com/c/518066 Renamed Layout[Part] and [Part]Painter to *EmbeddedContent*
+https://crrev.com/c/507468 Only use deferred operation for plugin dispose.
+https://crrev.com/c/525195 Leave Dispose for Document::Shutdown
+https://crrev.com/c/505947 Debug information with FrameOrPluginState checking all operations.
+https://crrev.com/c/518065 [TEST] HTMLPlugInElement::DetachLayoutTree calls SetPersistedPlugin
+https://crrev.com/c/517449 [TEST] HTMLPlugInElement::LoadPlugin calls SetPersistedPlugin
+https://crrev.com/c/517548 [TEST] HTMLPlugInElement::LoadPlugin SetWidget from persisted plugin.
+https://crrev.com/c/517551 [TEST] Do not persist plugins
+https://crrev.com/c/522302 [TEST] Check if LocalFrameView::ShouldThrottleRendering changes during UpdateGeometry
+https://crrev.com/c/522282 [TEST] Check if LocalFrameView::UpdateGeometries ever has GetLayoutViewItem().IsNull()
+https://crrev.com/c/522462 Add PluginView::Element, use non const ref.
+https://crrev.com/c/522183 [TEST] Check if LocalFrameView::ShouldThrottleRendering calls CheckDoesNotNeedLayout
+https://crrev.com/c/518764 Rename HTMLFrameOwnerElement to HTMLEmbeddedContentElement
+https://crrev.com/c/520825 s/IsFrameView/IsLocalFrameView
+https://crrev.com/c/518664 SYD platform arch team watching blink web
+https://crrev.com/c/518705 SYD platform arch team watching blink web
+https://crrev.com/c/513743 Store plugin in HTMLPlugInElement and only defer plugin dispose. Bug: 637460
+https://crrev.com/c/517543 Make LocalFrameView::UpdateViewportIntersectionsForSubtree virtual on FrameView
+https://crrev.com/c/516903 FrameView as common base class for LocalFrameView and RemoteFrameView.
+https://crrev.com/c/516862 Rename FrameView to LocalFrameView.  This matches naming for Frame / LocalFrame / RemoteFrame.
+https://crrev.com/c/511685 [TEST] No SetParentVisible after dispose
+https://crrev.com/c/511923 [TEST] Set detached in dispose
+https://crrev.com/c/512427 [TEST] No SetParentVisible or RemoveScrollableArea after dispose
+https://crrev.com/c/507467 Remove Widget Tree FrameView::parent_
+https://crrev.com/c/513682 Check is_attached_ explicitly rather than using ParentFrameView() == nullptr as proxy
+https://crrev.com/c/509410 [TEST] 4 state no RemoveChild
+https://crrev.com/c/509670 [TEST] 3 state no SetParent
+https://crrev.com/c/509374 [TEST] 2 state with SetParent
+https://crrev.com/c/509650 [TEST] 1 SetParent with state
+https://crrev.com/c/505956 Remove FrameView::children_ field as part of removing Widget tree
+
+Reviews:
+https://crrev.com/2896563002 This CL moves many more classes over to use WebLocalFrameBase from
+https://crrev.com/2895413002 WebRuntimeFeatures moved to platform/
+https://crrev.com/2868373002 Revert V8 to the version rolled before 6.0.181.
+https://crrev.com/2854793002 Remove redundant WebLocalFrame* parameter from DidCreateScriptContext
+https://crrev.com/2857523002 Revert of Remove FrameView::Root (patchset #2 id:20001 of https://codereview.chromium.org/2849383002/ )
+https://crrev.com/2832133002 Define ZoomToFindInPageRect in public/web/WebView.h & overload in WebViewImpl.
+https://crrev.com/2833693002 Move SharedWorkerRepositoryClientImpl from web/ to core/exported/.
+https://crrev.com/2826373002 Move CompositionUnderlineVectorBuilder.* from web/ -> core/editing/.
+https://crrev.com/2832713002 Move WebDataSourceImpl from web/ -> core/exported/.
+https://crrev.com/2837503002 Move (Resize|Rotation)ViewportAnchor.* from web/ to core/frame/.
+https://crrev.com/2827193002 Remove redundant WebLocalFrame* parameter from DidFailProvisionalLoad
+https://crrev.com/2828493003 Move FindInPagesCoordinates.* from web/ -> core/editing/.
+https://crrev.com/c/601909 SearchBouncer: Add comment about safety of Unretained
+https://crrev.com/c/544727 Moved a bunch of web/ tests to core/
+https://crrev.com/c/527874 Rename FrameViewTest -> LocalFrameViewTest
+https://crrev.com/c/500028 Remove plugin occlusion support from Blink.

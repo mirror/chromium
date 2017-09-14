@@ -1,0 +1,133 @@
+
+Changes:
+https://crrev.com/2928703005 Revert of cc: Move SkShader construction to a single spot in PaintShader (patchset #8 id:140001 of https://codereview.chromium.org/2893083002/ )
+https://crrev.com/2608163003 Change single-interface mojo bindings to use SequencedTaskRunner.
+https://crrev.com/2812863002 Pref service: Add a ScopedDictionaryPrefUpdate to track value changes.
+https://crrev.com/2561003002 Add mojo structs for ScopedFD and ScopedHandle.
+https://crrev.com/2791893002 Pref service: Batch pref updates.
+https://crrev.com/2694843003 Add field-initializing factory static methods to generated mojo unions.
+https://crrev.com/2803023005 Switch base::Value typemapping to be by value instead of by unique_ptr.
+https://crrev.com/2745563005 Pref service: add support for tracked prefs.
+https://crrev.com/2792503002 Add a Java InterfaceProvider and an instance to each RenderFrameHost.
+https://crrev.com/2792853002 Revert of Don't require DEPS OWNERS when moving lines around in a DEPS file. (patchset #3 id:40001 of https://codereview.chromium.org/2768063004/ )
+https://crrev.com/2782803002 Move tracked prefs into services/preferences/tracked.
+https://crrev.com/c/654467 ImageDecodeBench: Initialize mojo and create a MessageLoop.
+https://crrev.com/c/651832 Fix {local,session}Storage event dispatch with document.domain set.
+https://crrev.com/c/624772 Pref service: fix incognito support.
+https://crrev.com/c/637051 Remove NOTIFICATION_RESOURCE_RECEIVED_REDIRECT.
+https://crrev.com/c/637055 Remove NOTIFICATION_RENDER_VIEW_HOST_WILL_CLOSE_RENDER_VIEW.
+https://crrev.com/c/616505 Unify classic ash and mash access to local state prefs.
+https://crrev.com/c/562943 Migrate IPCs between the browser and service processes to mojo.
+https://crrev.com/c/511562 DCHECK that a NullableString16 is non-null when accessing its string.
+https://crrev.com/c/630420 Remove NotificationService notifications only used by SessionService.
+https://crrev.com/c/620287 Remove the DB thread spinning at the end of profile browsertests.
+https://crrev.com/c/618426 Revert "fix window bounds transformation from dip to pixel."
+https://crrev.com/c/605027 Maintain a connection to each profile's PrefService from ash.
+https://crrev.com/c/580115 WIP: Reconnect to prefs from mash when the active profile changes.
+https://crrev.com/c/580174 Ignore: hackery to make gerrit let me upload another CL based off https://chromium-review.googlesource.com/c/580538/.
+https://crrev.com/c/564914 Remove the deprecated Channel creation API for content child processes.
+https://crrev.com/c/557580 Pref service: Expose local state prefs to mash as a service.
+https://crrev.com/c/544717 Mojo: restrict user-provided task runners to SingleThreadTaskRunners.
+https://crrev.com/c/554653 Pref service: Bypass the encapsulation.
+https://crrev.com/c/567783 Migrate RenderProcessHostImpl from the FILE thread to task scheduler.
+https://crrev.com/c/544448 Change LazyInstances in mojo/public/cpp to be leaky.
+https://crrev.com/c/526914 Move the pref service from the IO thread to a task scheduler sequence.
+https://crrev.com/c/541116 Remove unused includes in mojo bindings.
+https://crrev.com/c/497110 Add tracing of mojo callbacks and mojo message (de)serialisation times.
+https://crrev.com/c/536553 Change UtilityProcessMojoClient to support SequencedTaskRunner.
+https://crrev.com/c/538312 Support SequencedTaskRunner in //services/service_manager/public.
+https://crrev.com/c/497371 Allow mojo bindings to run on SequencedTaskRunner.
+https://crrev.com/c/525253 Pref service: filter initial values returned at connection time.
+https://crrev.com/c/482739 Convert web manifest IPCs to use mojo.
+https://crrev.com/c/527724 Allow ERROR_KEY_DELETED in the DCHECK in RegistryHashStoreContentsWin::Reset().
+https://crrev.com/c/528045 Revert "DevTools: remove stray error messages while devtools on devtools."
+https://crrev.com/c/528044 Revert "DevTools: remove stray error messages while devtools on devtools (2)"
+https://crrev.com/c/527959 Enable PrefService by default.
+https://crrev.com/c/528032 Revert "memory-infra: Stop using RequestGlobalDump in MemoryDumpManagerTest"
+https://crrev.com/c/527834 Expect Failure for virtual/gpu-rasterization/images/color-profile-{group,layer,layer-filter}.html.
+https://crrev.com/c/513645 Pref service: add support for foreign and public prefs.
+https://crrev.com/c/522303 Pref service: provide eventual consistency with multiple writers.
+https://crrev.com/c/499947 Make SyncHandleRegistry sequence-local.
+https://crrev.com/c/517604 Enable PrefService by default.
+https://crrev.com/c/514942 Change prefs::ConnectToPrefService() to take local pref stores.
+https://crrev.com/c/513644 Split ScopedPrefConnectionBuilder out from PrefStoreManagerImpl.
+https://crrev.com/c/487769 Use ScopedDictionaryPrefUpdate in extensions.
+https://crrev.com/c/510410 Remove android dependencies on non-android blink mojoms.
+https://crrev.com/c/509409 Check that prefs are serializable in TestingPrefStore and JsonPrefStore.
+https://crrev.com/c/509669 Change NullableString16 to wrap a base::Optional<base::string16>.
+https://crrev.com/c/509333 Change ImportantFileWriterTest to use a MockTimer.
+https://crrev.com/c/509328 Handle SerializeData() failures gracefully in ImportantFileWriter.
+https://crrev.com/c/497233 Report manifest URL changes to WebContentsObservers.
+https://crrev.com/c/498367 Use a flat map constructor for base::DictionaryValue when deserialising.
+https://crrev.com/c/497227 Only send the necessary parent data from catalog to service manager.
+https://crrev.com/c/497347 Remove some copies and double lookups in service manager and catalog.
+https://crrev.com/c/492586 DO NOT SUBMIT: Enable the PrefService feature for testing.
+https://crrev.com/c/487768 Use ScopedDictionaryPrefUpdate in content settings.
+https://crrev.com/c/494368 Use a single PrefStoreRegistryPtr for layered  pref store registration.
+https://crrev.com/c/494407 Don't request the default pref store from the pref service.
+https://crrev.com/c/476370 Pref service: Add a ScopedDictionaryPrefUpdate to track value changes.
+https://crrev.com/c/479038 Fix a use-after-free in base::Value copy assignment operator.
+https://crrev.com/c/476392 Fix invalid generated Java mojo bindings for unions of imported unions.
+https://crrev.com/c/476390 Fix a use-after-free in InterceptablePrefFilter.
+
+Reviews:
+https://crrev.com/2943983003 chrome/blink: Add functionality for in-product help for media elements.
+https://crrev.com/2905903002 Delete the PreferenceMACs on profile deletion.
+https://crrev.com/2971083002 gpu: Reduce direct use of BrowserGpuMemoryBufferManager.
+https://crrev.com/2856083002 Pref service: support for incognito prefs
+https://crrev.com/2895323002 Change string data instead of binary in content settings.
+https://crrev.com/2879243003 Regsiter Ash prefs in mash
+https://crrev.com/2865253002 Clean up MimeHandlerViewGuest.
+https://crrev.com/2793443003 Replaced NOTIFICATION_BROWSER_CLOSING by BrowserListObserver::OnBrowserCloseStarted event. 
+https://crrev.com/2869333002 Initialize test configuration to a default value.
+https://crrev.com/2872193004 Added some missing bucket labels to the CLD3 language detection conflict
+https://crrev.com/2849463006 Add documentation on servicification recipes
+https://crrev.com/2799393003 Add a browser-side kill switch to getInstalledRelatedApps.
+https://crrev.com/2791903003 Pref service: have Mash and Chrome connect to the right pref stores
+https://crrev.com/c/651340 Servicifying net::MojoProxyResolverFactory.
+https://crrev.com/c/654561 Mojofy the DatabaseHostMessage sync IPC messages.
+https://crrev.com/c/627965 mojo-ify plugin placeholder renderer->host messages
+https://crrev.com/c/652011 Web Share Target (desktop): Fail gracefully if manifest URL is blank.
+https://crrev.com/c/569468 Add a new typemap for base::Value using value semantics
+https://crrev.com/c/624762 Converts ChromeViewMsg_SetWindowFeatures to mojo.
+https://crrev.com/c/630419 Added David (committer friend of the language team) to language OWNERS.
+https://crrev.com/c/627521 Allowed the language detection client to bind to multiple render frames.
+https://crrev.com/c/611094 Add temporary dump to track https://crbug.com/752822.
+https://crrev.com/c/611691 Checked that the page hasn't been navigated away on language detection IPC.
+https://crrev.com/c/604478 cros: Refine local state prefs usage in ash
+https://crrev.com/c/600747 [net_interfaces] Extract ip_endpoint.mojom from host_resolver_service.mojom
+https://crrev.com/c/585338 Convert SetSearchURLs to mojo.
+https://crrev.com/c/601329 cros: Restore ash::Shell::GetActiveUserPrefService
+https://crrev.com/c/590247 Remove |RenderViewImpl::enabled_bindings_| field.
+https://crrev.com/c/593528 Move web/SpinLockTest to //base.
+https://crrev.com/c/590356 mash: Connect to the correct user profile pref service on startup
+https://crrev.com/c/578705 Adds an indepedent language detection client to non-iOS Chrome, behind an experiment flag.
+https://crrev.com/c/560926 [CSS4] Accept 8 (#RRGGBBAA) and 4 (#RGBA) value hex colors
+https://crrev.com/c/558854 navigator.share: Fixed renderer crash if Navigator is detached.
+https://crrev.com/c/558595 Web Share: Update implementation to match recent spec changes.
+https://crrev.com/c/558526 Remove utility process batch mode support and its IPCs
+https://crrev.com/c/554850 Removed web share layout tests that duplicate web platform tests:
+https://crrev.com/c/544383 navigator.share: Made error message for missing Mojo interface clearer.
+https://crrev.com/c/554651 Layout test expectations: Moved web-share manual tests to NeverFixTests.
+https://crrev.com/c/554403 Web Share layout tests: Update to synchronize with WPT manual tests.
+https://crrev.com/c/548615 Rename chrome/common/chrome_utility_messages.h
+https://crrev.com/c/552142 Revert "Enable PrefService by default."
+https://crrev.com/c/544384 Enable Web Share API by default on Android.
+https://crrev.com/c/538519 Convert utility process Shell Handler Win IPC to mojo
+https://crrev.com/c/541255 navigator.share: Hide method entirely on non-secure context.
+https://crrev.com/c/505833 Preferences: require incognito writes to be explicit
+https://crrev.com/c/541237 webshare tests: Minor tweak to exception checking.
+https://crrev.com/c/520903 Incognito prefs: use the Mojo pref service if enabled
+https://crrev.com/c/538385 navigator.share: Reject with TypeError if invalid url.
+https://crrev.com/c/536560 ShareData IDL definition: Match Web Share draft spec.
+https://crrev.com/c/541235 Pref service: remove obsolete PrefObserverStore todo
+https://crrev.com/c/536383 WebShare Layout Tests: Added some new tests and misc. updates.
+https://crrev.com/c/515323 Convert SpellCheckPanel SpellCheckPanelHost IPC to mojo
+https://crrev.com/c/523464 pref service: add a readme
+https://crrev.com/c/523364 pref service: simplify client connection API
+https://crrev.com/c/514902 Pref service: support for incognito prefs
+https://crrev.com/c/505648 Convert Spellcheck host MessageFilter IPC to mojo
+https://crrev.com/c/514842 Generalize OverlayUserPrefStore
+https://crrev.com/c/487341 Convert render process component common Spellcheck IPC to mojo
+https://crrev.com/c/502387 Prefs: don't map pref keys in incognito
+https://crrev.com/c/497113 Pref service: don't send default values to the service
