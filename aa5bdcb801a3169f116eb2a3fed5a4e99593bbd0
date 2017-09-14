@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e11427cc_24f229fc",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-14T15:36:46Z",
+      "side": 1,
+      "message": "nit: If we only need the FrameSinkId then that would be more appropriate to pass in here.",
+      "range": {
+        "startLine": 561,
+        "startChar": 47,
+        "endLine": 561,
+        "endChar": 74
+      },
+      "revId": "aa5bdcb801a3169f116eb2a3fed5a4e99593bbd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
