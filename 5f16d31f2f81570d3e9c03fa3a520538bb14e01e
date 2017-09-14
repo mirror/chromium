@@ -34,6 +34,24 @@
       "revId": "5f16d31f2f81570d3e9c03fa3a520538bb14e01e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc42bed5_08587344",
+        "filename": "third_party/WebKit/Source/core/css/html.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-09-14T07:57:52Z",
+      "side": 1,
+      "message": "I tried this in PS5. It seems to work. But I see two problems:\n\n1. \u003cinput readonly style\u003d\"user-select: none\" value\u003d\"Chrome 61 cannot select this.\"\u003e - but with PS5, Chrome would ignore *all* user-select styling of \u003cinput\u003e and \u003ctextarea\u003e. Is that change in behavior OK? I thought we only wanted to avoid inherited user-select styling of text controls. \n\n2. My new test DisabledInputDoesNotInheritUserSelect fails. Maybe I need to tweak the test? When I manually test to select within an \u003cinput disabled\u003e it works fine.",
+      "parentUuid": "91df3757_1fbef05d",
+      "revId": "5f16d31f2f81570d3e9c03fa3a520538bb14e01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
