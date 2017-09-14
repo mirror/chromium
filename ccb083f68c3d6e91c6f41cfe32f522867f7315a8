@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "748a33d5_7c1c6140",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_button_factory.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-14T14:20:08Z",
+      "side": 1,
+      "message": "If this is a property, by looking at the API I would presume that the returned button is shared between the caller and the factory. And that all people calling it would have the same object.\n\nHaving a method like that make it clearer that it is a new button returned.",
+      "parentUuid": "281d66da_5c20fe9a",
+      "range": {
+        "startLine": 28,
+        "startChar": 18,
+        "endLine": 28,
+        "endChar": 35
+      },
+      "revId": "ccb083f68c3d6e91c6f41cfe32f522867f7315a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c891796e_8d5605ed",
         "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_configuration.h",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "ccb083f68c3d6e91c6f41cfe32f522867f7315a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "700a6d48_1b5f623e",
+        "filename": "ios/clean/chrome/browser/ui/toolbar/toolbar_configuration.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-14T14:20:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c891796e_8d5605ed",
+      "revId": "ccb083f68c3d6e91c6f41cfe32f522867f7315a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
