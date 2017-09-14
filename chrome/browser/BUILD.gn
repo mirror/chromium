@@ -4120,6 +4120,7 @@ if (is_android) {
       "../android/java/src/org/chromium/chrome/browser/offlinepages/downloads/OfflinePageDownloadBridge.java",
       "../android/java/src/org/chromium/chrome/browser/offlinepages/downloads/OfflinePageNotificationBridge.java",
       "../android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchBackgroundTask.java",
+      "../android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
       "../android/java/src/org/chromium/chrome/browser/omnibox/AnswersImage.java",
       "../android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteController.java",
       "../android/java/src/org/chromium/chrome/browser/omnibox/OmniboxPrerender.java",

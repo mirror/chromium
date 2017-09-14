@@ -34,6 +34,9 @@
 #include "content/public/browser/web_ui.h"
 #include "net/base/network_change_notifier.h"
 
+#include "base/android/jni_string.h"
+#include "jni/PrefetchedPagesNotifier_jni.h"
+
 namespace offline_internals {
 
 namespace {
@@ -298,8 +301,14 @@ void OfflineInternalsUIMessageHandler::HandleScheduleNwake(
   CHECK(args->Get(0, &callback_id));
 
   if (prefetch_service_) {
-    prefetch_service_->GetPrefetchBackgroundTaskHandler()
-        ->EnsureTaskScheduled();
+    // prefetch_service_->GetPrefetchBackgroundTaskHandler()
+    //    ->EnsureTaskScheduled();
+    //
+    //
+    JNIEnv* env = base::android::AttachCurrentThread();
+    Java_PrefetchedPagesNotifier_showNotification(
+        env,
+        base::android::ConvertUTF8ToJavaString(env, "www.timesofindia.com"));
   }
   ResolveJavascriptCallback(*callback_id, base::Value("Scheduled."));
 }
