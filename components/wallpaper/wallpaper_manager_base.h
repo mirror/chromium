@@ -421,8 +421,7 @@ class WALLPAPER_EXPORT WallpaperManagerBase {
   virtual void ClearDisposableWallpaperCache();
 
   // Deletes all |account_id| related custom wallpapers and directories.
-  virtual void DeleteUserWallpapers(const AccountId& account_id,
-                                    const std::string& path_to_file);
+  virtual void DeleteUserWallpapers(const AccountId& account_id);
 
   // Gets the CommandLine representing the current process's command line.
   virtual base::CommandLine* GetCommandLine();
