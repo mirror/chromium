@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "bd2f7219_8f3706a6",
+        "filename": "content/browser/service_worker/service_worker_registration_handle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-14T03:32:17Z",
+      "side": 1,
+      "message": "(Connection error/close removes the binding, so we don\u0027t call RemoveBinding very often)",
+      "parentUuid": "0598a565_3f800608",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "518807b5_0c70e7c4",
         "filename": "content/child/service_worker/service_worker_dispatcher.cc",
         "patchSetId": 1
@@ -153,6 +171,24 @@
       "writtenOn": "2017-09-14T03:16:00Z",
       "side": 1,
       "message": "Yeah Line135 is restoring the associated ptr info, looks somehow tricky.. If we can make sure ControllerState does not need to keep the refcount for ever, then we can Take the registration object here completely, and also no need to introduce the Clone() method. I\u0027ll look into the logic around that to try to get a conclusion.",
+      "parentUuid": "218f12ff_0c261b42",
+      "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096fc465_209006d7",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-14T03:32:17Z",
+      "side": 1,
+      "message": "+1 to make it clearer that it Takes, it feels these {Set,Get}Registration methods are pretty confusing by their names, sounds like they could be renamed like SetRegistrationStartupInfo/TakeRegistrationStartupInfo or something like that.\n\nOn the other hand having some controller-specific state \naround during ServiceWorkerProviderContext\u0027s life time seems useful to me (I have some WIP patch that assumed the state), would we maybe introduce a simple, dedicated struct like ServiceWorkerRegistrationStartupInfo and reset it on TakeRegistration()?\n\n(And these changes could be probably done in a separate patch)",
       "parentUuid": "218f12ff_0c261b42",
       "revId": "afcb5a6f4a240b5a57d60e020840aca26da11cba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
