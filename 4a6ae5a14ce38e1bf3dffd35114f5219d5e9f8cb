@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c376ba3_7d557d51",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-blink-features\u003dLayoutNG",
+        "patchSetId": 3
+      },
+      "lineNbr": 4080,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-14T19:00:24Z",
+      "side": 1,
+      "message": "The crash/failure expectation means that we can\u0027t be sure that the converted tests still work as intended, for example if they\u0027re failing due to a new an unexpected reason. Can you remove these expectations entirely and see exactly which bots are failing in which way? If at least one configuration is passing reliably, then we can know that you didn\u0027t accidentally break the test.",
+      "range": {
+        "startLine": 4080,
+        "startChar": 26,
+        "endLine": 4080,
+        "endChar": 29
+      },
+      "revId": "4a6ae5a14ce38e1bf3dffd35114f5219d5e9f8cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d994aa8_9466c779",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/dialog-autofocus-multiple-times.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-14T19:00:24Z",
+      "side": 1,
+      "message": "This can be similarly simplified into a single test.",
+      "range": {
+        "startLine": 8,
+        "startChar": 4,
+        "endLine": 8,
+        "endChar": 26
+      },
+      "revId": "4a6ae5a14ce38e1bf3dffd35114f5219d5e9f8cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e159eb2_e9cfec65",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/dialog-autofocus-multiple-times.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-14T19:00:24Z",
+      "side": 1,
+      "message": "This depends on window.foo looking for elements with the ID \"foo\", which is a pretty terrible part of the web platform. Can you do `var dlg \u003d getElementById(\"dlg\")` explicitly?",
+      "range": {
+        "startLine": 19,
+        "startChar": 16,
+        "endLine": 19,
+        "endChar": 20
+      },
+      "revId": "4a6ae5a14ce38e1bf3dffd35114f5219d5e9f8cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a804dc43_1320ea38",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/dialog-autofocus.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-14T19:00:24Z",
+      "side": 1,
+      "message": "Rather than a test and an async_test, I think this will be simpler as a single promise_test using a promise-vending waitUntilLoadedAndAutofocused:\n\npromise_test(() \u003d\u003e {\n  return waitUntilLoadedAndAutofocused().then(() \u003d\u003e {\n    // all the stuff inside onloadedAndFocusedTest.step.\n  });\n}, \"autofocus when a modal dialog is opened\");",
+      "range": {
+        "startLine": 8,
+        "startChar": 4,
+        "endLine": 8,
+        "endChar": 26
+      },
+      "revId": "4a6ae5a14ce38e1bf3dffd35114f5219d5e9f8cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8caaa125_622cbcd6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/dialog-autofocus.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-14T19:00:24Z",
+      "side": 1,
+      "message": "This is in reference to Node::NeedsReattachLayoutTree() and the terminology doesn\u0027t quite make sense outside of WebKit. Maybe call it \"recreating layout\"?",
+      "range": {
+        "startLine": 24,
+        "startChar": 11,
+        "endLine": 24,
+        "endChar": 15
+      },
+      "revId": "4a6ae5a14ce38e1bf3dffd35114f5219d5e9f8cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd26ab7d_e610fcb4",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/dialog-autofocus.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-14T19:00:24Z",
+      "side": 1,
+      "message": "Maybe s/autofocus runs again/dialog focusing steps run/, per https://html.spec.whatwg.org/multipage/interactive-elements.html#dom-dialog-showmodal",
+      "range": {
+        "startLine": 40,
+        "startChar": 11,
+        "endLine": 40,
+        "endChar": 15
+      },
+      "revId": "4a6ae5a14ce38e1bf3dffd35114f5219d5e9f8cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5500893f_16f89a5d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/dialog-autofocus.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-14T19:00:24Z",
+      "side": 1,
+      "message": "This is fine, but I like omitting the \"Tests \" prefix in test titles, this one would be fine as just \"autofocus when a modal dialog is opened\".",
+      "range": {
+        "startLine": 50,
+        "startChar": 10,
+        "endLine": 50,
+        "endChar": 19
+      },
+      "revId": "4a6ae5a14ce38e1bf3dffd35114f5219d5e9f8cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d97c071_33faafcf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/interactive-elements/the-dialog-element/resources/common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-14T19:00:24Z",
+      "side": 1,
+      "message": "May I suggest turning this helper into a promise-vending one? Just drop the callback and wrap in new Promise(resolve) { } and call resolve() instead.",
+      "range": {
+        "startLine": 1,
+        "startChar": 9,
+        "endLine": 1,
+        "endChar": 38
+      },
+      "revId": "4a6ae5a14ce38e1bf3dffd35114f5219d5e9f8cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
