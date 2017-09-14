@@ -9,10 +9,10 @@
 #include "base/logging.h"
 #include "cc/base/math_util.h"
 #include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/stream_video_draw_quad.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/quads/tile_draw_quad.h"
 #include "cc/resources/display_resource_provider.h"
+#include "components/viz/common/quads/stream_video_draw_quad.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/vector3d_f.h"
 
@@ -213,7 +213,7 @@ bool OverlayCandidate::FromDrawQuad(DisplayResourceProvider* resource_provider,
                           candidate);
     case viz::DrawQuad::STREAM_VIDEO_CONTENT:
       return FromStreamVideoQuad(resource_provider,
-                                 StreamVideoDrawQuad::MaterialCast(quad),
+                                 viz::StreamVideoDrawQuad::MaterialCast(quad),
                                  candidate);
     default:
       break;
@@ -319,7 +319,7 @@ bool OverlayCandidate::FromTileQuad(DisplayResourceProvider* resource_provider,
 // static
 bool OverlayCandidate::FromStreamVideoQuad(
     DisplayResourceProvider* resource_provider,
-    const StreamVideoDrawQuad* quad,
+    const viz::StreamVideoDrawQuad* quad,
     OverlayCandidate* candidate) {
   if (!FromDrawQuadResource(resource_provider, quad, quad->resource_id(), false,
                             candidate)) {

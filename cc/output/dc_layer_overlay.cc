@@ -8,8 +8,8 @@
 #include "cc/base/math_util.h"
 #include "cc/quads/render_pass_draw_quad.h"
 #include "cc/quads/solid_color_draw_quad.h"
-#include "cc/quads/yuv_video_draw_quad.h"
 #include "cc/resources/resource_provider.h"
+#include "components/viz/common/quads/yuv_video_draw_quad.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gl/gl_switches.h"
@@ -20,7 +20,7 @@ namespace {
 
 DCLayerOverlayProcessor::DCLayerResult FromYUVQuad(
     ResourceProvider* resource_provider,
-    const YUVVideoDrawQuad* quad,
+    const viz::YUVVideoDrawQuad* quad,
     DCLayerOverlay* ca_layer_overlay) {
   for (const auto& resource : quad->resources) {
     if (!resource_provider->IsOverlayCandidate(resource))
@@ -101,9 +101,9 @@ DCLayerOverlayProcessor::DCLayerResult DCLayerOverlayProcessor::FromDrawQuad(
   DCLayerResult result;
   switch (quad->material) {
     case viz::DrawQuad::YUV_VIDEO_CONTENT:
-      result =
-          FromYUVQuad(resource_provider, YUVVideoDrawQuad::MaterialCast(*quad),
-                      ca_layer_overlay);
+      result = FromYUVQuad(resource_provider,
+                           viz::YUVVideoDrawQuad::MaterialCast(*quad),
+                           ca_layer_overlay);
       break;
     default:
       return DC_LAYER_FAILED_UNSUPPORTED_QUAD;

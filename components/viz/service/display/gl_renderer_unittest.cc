@@ -2422,12 +2422,12 @@ TEST_F(GLRendererTest, DCLayerOverlaySwitch) {
           root_pass->CreateAndAppendSharedQuadState();
       shared_state->SetAll(gfx::Transform(), rect, rect, rect, false, false, 1,
                            SkBlendMode::kSrcOver, 0);
-      cc::YUVVideoDrawQuad* quad =
-          root_pass->CreateAndAppendDrawQuad<cc::YUVVideoDrawQuad>();
+      YUVVideoDrawQuad* quad =
+          root_pass->CreateAndAppendDrawQuad<YUVVideoDrawQuad>();
       quad->SetNew(shared_state, rect, rect, needs_blending, tex_coord_rect,
                    tex_coord_rect, rect.size(), rect.size(), parent_resource_id,
                    parent_resource_id, parent_resource_id, parent_resource_id,
-                   cc::YUVVideoDrawQuad::REC_601, gfx::ColorSpace(), 0, 1.0, 8);
+                   YUVVideoDrawQuad::REC_601, gfx::ColorSpace(), 0, 1.0, 8);
     }
 
     // A bunch of initialization that happens.

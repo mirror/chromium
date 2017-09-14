@@ -35,12 +35,12 @@ using cc::SolidColorDrawQuad;
 using cc::SurfaceDrawQuad;
 using cc::TextureDrawQuad;
 using cc::TileDrawQuad;
-using cc::StreamVideoDrawQuad;
-using cc::YUVVideoDrawQuad;
 using gfx::Transform;
 using viz::ResourceId;
 using viz::SharedQuadState;
+using viz::StreamVideoDrawQuad;
 using viz::TransferableResource;
+using viz::YUVVideoDrawQuad;
 
 namespace content {
 namespace {
