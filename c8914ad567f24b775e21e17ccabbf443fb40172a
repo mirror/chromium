@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "a0de28e4_94297150",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-14T08:40:40Z",
+      "side": 1,
+      "message": "OK.",
+      "parentUuid": "4c9ce257_c46ca5ff",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 12
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a76d4c9_7663e00c",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 25
@@ -166,6 +190,30 @@
       "side": 1,
       "message": "I understand the problem, but what is the better way to solve it?\nI need convert WeeklyTime and Interval to Dictionary value for DeviceSettingsProvider and DeviceCloudPolicyChromeOS.\n\nIs it better just to create a function:\n\n  std::unique_ptr\u003cbase::DictionaryValue\u003e WeeklyTimeToValue(WeeklyTime weekly_time)\n\nWithoun any additional functions it will be big ugly function which converts DeviceOffHoursProto to DictionaryValue :(",
       "parentUuid": "6a76d4c9_7663e00c",
+      "range": {
+        "startLine": 44,
+        "startChar": 41,
+        "endLine": 44,
+        "endChar": 48
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f2063c_d3561cb9",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-14T08:40:40Z",
+      "side": 1,
+      "message": "So the whole point of putting this stuff in a Value is so you can store it in prefs, I guess. Who will read those prefs?\n\nMy concern is you\u0027re baking things like \"day_of_week\" in two places - here, and in another place where you\u0027re reading out the values from prefs, which is weird (effectively, you are serializing here, and deserializing elsewhere). But maybe that\u0027s OK/cleanest - who is reading the prefs that you set?",
+      "parentUuid": "0127025e_f508faa2",
       "range": {
         "startLine": 44,
         "startChar": 41,
@@ -718,6 +766,30 @@
     },
     {
       "key": {
+        "uuid": "f116c476_e14700bb",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-14T08:40:40Z",
+      "side": 1,
+      "message": "I don\u0027t understand the use case, actually - maybe we should chat in person about this so I can understand.",
+      "parentUuid": "4a67c15f_8c0b828d",
+      "range": {
+        "startLine": 187,
+        "startChar": 54,
+        "endLine": 187,
+        "endChar": 62
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a831eb0c_58b6bc77",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 25
@@ -812,6 +884,30 @@
     },
     {
       "key": {
+        "uuid": "6a2ca090_ba74c45f",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-14T08:40:40Z",
+      "side": 1,
+      "message": "Seems like you should always stop and restart the timer if you get a new OffHours policy - I don\u0027t understand why we\u0027d want to keep the previous timer.",
+      "parentUuid": "526e32d7_c5645f96",
+      "range": {
+        "startLine": 289,
+        "startChar": 28,
+        "endLine": 289,
+        "endChar": 34
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a20e96b_4be7aa6c",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 25
@@ -859,6 +955,30 @@
     },
     {
       "key": {
+        "uuid": "eb1494c1_4a940e66",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-14T08:40:40Z",
+      "side": 1,
+      "message": "Are you sure? What if the device is offline when it goes to sleep and stays offline when it wakes up?",
+      "parentUuid": "971e6f16_27d55662",
+      "range": {
+        "startLine": 294,
+        "startChar": 2,
+        "endLine": 294,
+        "endChar": 8
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "605facbc_e5789a74",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
         "patchSetId": 25
@@ -894,6 +1014,30 @@
       "side": 1,
       "message": "It\u0027s triggered when the device wakes up.\nWhen device wakes up we apply OffHours policy.",
       "parentUuid": "605facbc_e5789a74",
+      "range": {
+        "startLine": 310,
+        "startChar": 31,
+        "endLine": 310,
+        "endChar": 47
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16932c01_45401691",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-14T08:40:40Z",
+      "side": 1,
+      "message": "No, it\u0027s triggered when networks change. Even if the device sleeps and wakes up, it seems like we should update our timers, but not necessarily notify observers because we don\u0027t know if OffHours mode has changed or not?",
+      "parentUuid": "85259eac_518b3350",
       "range": {
         "startLine": 310,
         "startChar": 31,
@@ -1188,6 +1332,30 @@
     },
     {
       "key": {
+        "uuid": "9a5be512_3907c1e8",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-14T08:40:40Z",
+      "side": 1,
+      "message": "No, you can\u0027t throw exceptions. Who is calling UpdateOffHoursMode()? You should return an error to that code and let *them* call AttemptUserExit().\n\nI think it\u0027s better to make this testable now even if you don\u0027t write the tests because it\u0027ll require some code restructuring.",
+      "parentUuid": "f31bf784_954d8306",
+      "range": {
+        "startLine": 355,
+        "startChar": 12,
+        "endLine": 355,
+        "endChar": 27
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fed4266_d137ca17",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
         "patchSetId": 25
@@ -1223,6 +1391,30 @@
       "side": 1,
       "message": "I want to say that after we remove |ignored_policies| from proto\nthe system will use default values of this policies which comes from field annotation in ChromeDeviceSettingsProto.",
       "parentUuid": "6fed4266_d137ca17",
+      "range": {
+        "startLine": 34,
+        "startChar": 30,
+        "endLine": 34,
+        "endChar": 35
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4c3e210_21a49a57",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-14T08:40:40Z",
+      "side": 1,
+      "message": "OK, that\u0027s probably not worth pointing out, but if you do want to point it out I\u0027d say \"The system will revert to the default behavior for the removed policies\".",
+      "parentUuid": "ca9c6ee2_4025ec77",
       "range": {
         "startLine": 34,
         "startChar": 30,
@@ -1329,6 +1521,30 @@
     },
     {
       "key": {
+        "uuid": "483d104e_00c619a6",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-14T08:40:40Z",
+      "side": 1,
+      "message": "Yes, my point wasn\u0027t that I wanted you to explain it to me, but rather I wanted you to document it for future readers of the code :)",
+      "parentUuid": "cd1429bb_e4460edb",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb900441_04aed3b6",
         "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
         "patchSetId": 25
@@ -1411,6 +1627,30 @@
       "side": 1,
       "message": "This function is called when\n* Current \"OffHours\" interval ends\n* Next \"OffHours\" interval starts\n\nAnd we need to get actual proto and re-apply \"OffHours\" policy.\nAfter that \"OffHours\" mode could be changed.\n\ni.e. if intervals \u003d [[Mon, 12:00, Mon 13:00), [Mon, 12:30, Mon, 13:30)]\nWhen first interval is ended \"OffHours\" mode continues because of second interval.",
       "parentUuid": "5b92e18d_b47e8a78",
+      "range": {
+        "startLine": 52,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 42
+      },
+      "revId": "c8914ad567f24b775e21e17ccabbf443fb40172a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8810de5f_10aa51e4",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-14T08:40:40Z",
+      "side": 1,
+      "message": "OK, that makes sense - what I\u0027d do is change the documentation for this routine to just say when OffHours mode starts or ends. I\u0027d probably also change this code to pass a boolean so the caller understands if OffHours mode is active right now or not, since that\u0027s relevant to observers.",
+      "parentUuid": "987f67b1_89ebf3f5",
       "range": {
         "startLine": 52,
         "startChar": 17,
