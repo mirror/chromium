@@ -52,6 +52,24 @@
       "revId": "4c8dda6131d0dd0411152133a59e0aa26873d07c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c0fbb4_6a81837d",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-09-14T21:35:14Z",
+      "side": 1,
+      "message": "Yeah, for resumption, it might depend on the purpose of the payload.\n\nFor resumption, currently DownloadItem::Resume don\u0027t have a way to insert additional data. That\u0027s another issue.",
+      "parentUuid": "d4d3d124_aed9807a",
+      "revId": "4c8dda6131d0dd0411152133a59e0aa26873d07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
