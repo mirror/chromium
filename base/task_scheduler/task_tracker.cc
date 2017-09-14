@@ -185,10 +185,40 @@ class TaskTracker::State {
   DISALLOW_COPY_AND_ASSIGN(State);
 };
 
-TaskTracker::TaskTracker()
+struct TaskTracker::PendingBackgroundSequence {
+  PendingBackgroundSequence(scoped_refptr<Sequence> sequence_in,
+                            TimeTicks next_task_sequenced_time_in,
+                            CanScheduleSequenceObserver* observer_in)
+      : sequence(std::move(sequence_in)),
+        next_task_sequenced_time(next_task_sequenced_time_in),
+        observer(observer_in) {}
+  PendingBackgroundSequence(PendingBackgroundSequence&& other) = default;
+  ~PendingBackgroundSequence() = default;
+  PendingBackgroundSequence& operator=(PendingBackgroundSequence&& other) =
+      default;
+  bool operator<(const PendingBackgroundSequence& other) const {
+    return next_task_sequenced_time < other.next_task_sequenced_time;
+  }
+  bool operator>(const PendingBackgroundSequence& other) const {
+    return next_task_sequenced_time > other.next_task_sequenced_time;
+  }
+
+  // A background sequence waiting to be scheduled.
+  scoped_refptr<Sequence> sequence;
+
+  // The sequenced time of the next task in |sequence|.
+  TimeTicks next_task_sequenced_time;
+
+  // An observer to notify when |sequence| can be scheduled.
+  CanScheduleSequenceObserver* observer;
+};
+
+TaskTracker::TaskTracker(int max_num_scheduled_background_sequences)
     : state_(new State),
       flush_cv_(flush_lock_.CreateConditionVariable()),
       shutdown_lock_(&flush_lock_),
+      max_num_scheduled_background_sequences_(
+          max_num_scheduled_background_sequences),
       task_latency_histograms_{
           {GetTaskLatencyHistogram("BackgroundTaskPriority"),
            GetTaskLatencyHistogram("BackgroundTaskPriority.MayBlock")},
@@ -236,9 +266,59 @@ bool TaskTracker::WillPostTask(const Task* task) {
   return true;
 }
 
-bool TaskTracker::RunNextTask(Sequence* sequence) {
+scoped_refptr<Sequence> TaskTracker::WillScheduleSequence(
+    scoped_refptr<Sequence> sequence,
+    CanScheduleSequenceObserver* observer) {
+  const SequenceSortKey sort_key = sequence->GetSortKey();
+
+  // A foreground sequence can always be scheduled.
+  if (sort_key.priority() != TaskPriority::BACKGROUND) {
+    subtle::NoBarrier_AtomicIncrement(&num_scheduled_foreground_sequences_, 1);
+    return sequence;
+  }
+
+  // It is convenient not to have to specify an observer when scheduling
+  // foreground sequences in tests.
+  DCHECK(observer);
+
+  AutoSchedulerLock auto_lock(background_lock_);
+
+  // A background sequence can only be scheduled when no foreground tasks are
+  // pending and less than |max_num_scheduled_background_sequences_| background
+  // sequences are scheduled.
+  if (num_scheduled_background_sequences_ <
+          max_num_scheduled_background_sequences_ &&
+      !HasScheduledForegroundSequences()) {
+    ++num_scheduled_background_sequences_;
+    return sequence;
+  }
+
+  pending_background_sequences_.emplace(
+      std::move(sequence), sort_key.next_task_sequenced_time(), observer);
+  return nullptr;
+}
+
+scoped_refptr<Sequence> TaskTracker::RunNextTask(
+    scoped_refptr<Sequence> sequence,
+    CanScheduleSequenceObserver* observer) {
   DCHECK(sequence);
 
+  const SequenceSortKey sort_key = sequence->GetSortKey();
+
+  // If |sequence| is background, check if it's allowed to run. If not, add it
+  // to |pending_background_sequences_| and return nullptr.
+  if (sort_key.priority() == TaskPriority::BACKGROUND) {
+    AutoSchedulerLock auto_lock(background_lock_);
+    if (HasScheduledForegroundSequences()) {
+      --num_scheduled_background_sequences_;
+      DCHECK_GE(num_scheduled_background_sequences_, 0);
+      pending_background_sequences_.emplace(
+          std::move(sequence), sort_key.next_task_sequenced_time(), observer);
+      return nullptr;
+    }
+  }
+
+  // Run the next task in |sequence|.
   std::unique_ptr<Task> task = sequence->TakeTask();
   DCHECK(task);
 
@@ -247,17 +327,25 @@ bool TaskTracker::RunNextTask(Sequence* sequence) {
   const bool can_run_task = BeforeRunTask(shutdown_behavior);
   const bool is_delayed = !task->delayed_run_time.is_null();
 
-  if (can_run_task) {
-    PerformRunTask(std::move(task), sequence);
+  RunOrSkipTask(std::move(task), sequence.get(), can_run_task);
+  if (can_run_task)
     AfterRunTask(shutdown_behavior);
-  }
 
   if (!is_delayed)
     DecrementNumPendingUndelayedTasks();
 
   OnRunNextTaskCompleted();
 
-  return sequence->Pop();
+  // Allow |sequence| to be rescheduled by returning it if:
+  // 1) It's not empty after popping a task from it, and,
+  // 2) The next task in |sequence| is allowed to run at this moment.
+  // If 1) is false, |sequence| will be rescheduled when a task is added to it.
+  // If 2) is false, |observer| wil be notified when |sequence| can be
+  // rescheduled.
+  const bool sequence_is_empty_after_pop = sequence->Pop();
+  return MaybeScheduleBackgroundSequencesAfterRunTask(
+      sort_key.priority() == TaskPriority::BACKGROUND,
+      sequence_is_empty_after_pop ? nullptr : std::move(sequence), observer);
 }
 
 bool TaskTracker::HasShutdownStarted() const {
@@ -281,8 +369,9 @@ void TaskTracker::SetHasShutdownStartedForTesting() {
   state_->StartShutdown();
 }
 
-void TaskTracker::PerformRunTask(std::unique_ptr<Task> task,
-                                 Sequence* sequence) {
+void TaskTracker::RunOrSkipTask(std::unique_ptr<Task> task,
+                                Sequence* sequence,
+                                bool can_run_task) {
   RecordTaskLatencyHistogram(task.get());
 
   const bool previous_singleton_allowed =
@@ -318,21 +407,25 @@ void TaskTracker::PerformRunTask(std::unique_ptr<Task> task,
           new ThreadTaskRunnerHandle(task->single_thread_task_runner_ref));
     }
 
-    TRACE_TASK_EXECUTION(kRunFunctionName, *task);
+    if (can_run_task) {
+      TRACE_TASK_EXECUTION(kRunFunctionName, *task);
 
-    const char* const execution_mode =
-        task->single_thread_task_runner_ref
-            ? kSingleThreadExecutionMode
-            : (task->sequenced_task_runner_ref ? kSequencedExecutionMode
-                                               : kParallelExecutionMode);
-    // TODO(gab): In a better world this would be tacked on as an extra arg
-    // to the trace event generated above. This is not possible however until
-    // http://crbug.com/652692 is resolved.
-    TRACE_EVENT1("task_scheduler", "TaskTracker::RunTask", "task_info",
-                 std::make_unique<TaskTracingInfo>(task->traits, execution_mode,
-                                                   sequence_token));
+      const char* const execution_mode =
+          task->single_thread_task_runner_ref
+              ? kSingleThreadExecutionMode
+              : (task->sequenced_task_runner_ref ? kSequencedExecutionMode
+                                                 : kParallelExecutionMode);
+      // TODO(gab): In a better world this would be tacked on as an extra arg
+      // to the trace event generated above. This is not possible however until
+      // http://crbug.com/652692 is resolved.
+      TRACE_EVENT1("task_scheduler", "TaskTracker::RunTask", "task_info",
+                   std::make_unique<TaskTracingInfo>(
+                       task->traits, execution_mode, sequence_token));
 
-    debug::TaskAnnotator().RunTask(kQueueFunctionName, task.get());
+      debug::TaskAnnotator().RunTask(kQueueFunctionName, task.get());
+    }
+
+    task.reset();
   }
 
   ThreadRestrictions::SetWaitAllowed(previous_wait_allowed);
@@ -389,6 +482,10 @@ void TaskTracker::PerformShutdown() {
           num_block_shutdown_tasks_posted_during_shutdown_);
     }
   }
+}
+
+bool TaskTracker::HasScheduledForegroundSequences() const {
+  return subtle::NoBarrier_Load(&num_scheduled_foreground_sequences_) > 0;
 }
 
 #if DCHECK_IS_ON()
@@ -524,6 +621,71 @@ void TaskTracker::DecrementNumPendingUndelayedTasks() {
     AutoSchedulerLock auto_lock(flush_lock_);
     flush_cv_->Signal();
   }
+}
+
+scoped_refptr<Sequence>
+TaskTracker::MaybeScheduleBackgroundSequencesAfterRunTask(
+    bool is_background,
+    scoped_refptr<Sequence> sequence,
+    CanScheduleSequenceObserver* observer) {
+  bool was_last_foreground_sequence = false;
+  if (!is_background && !sequence) {
+    auto new_num_scheduled_foreground_sequences =
+        subtle::NoBarrier_AtomicIncrement(&num_scheduled_foreground_sequences_,
+                                          -1);
+    DCHECK_GE(new_num_scheduled_foreground_sequences, 0);
+    was_last_foreground_sequence = new_num_scheduled_foreground_sequences == 0;
+  }
+
+  if (was_last_foreground_sequence || is_background) {
+    Sequence* const sequence_raw = sequence.get();
+    const TimeTicks next_task_sequenced_time =
+        sequence ? sequence->GetSortKey().next_task_sequenced_time()
+                 : TimeTicks();
+    std::vector<PendingBackgroundSequence> background_sequences_to_schedule;
+
+    {
+      AutoSchedulerLock auto_lock(background_lock_);
+
+      if (is_background) {
+        --num_scheduled_background_sequences_;
+        DCHECK_GE(num_scheduled_background_sequences_, 0);
+        if (sequence) {
+          pending_background_sequences_.emplace(
+              std::move(sequence), next_task_sequenced_time, observer);
+        }
+      }
+
+      if (!HasScheduledForegroundSequences()) {
+        while (num_scheduled_background_sequences_ <
+                   max_num_scheduled_background_sequences_ &&
+               !pending_background_sequences_.empty()) {
+          ++num_scheduled_background_sequences_;
+          // The const_cast on top is okay since the PendingBackgroundSequence
+          // is transactionnaly being popped from
+          // |pending_background_sequences_| right after and the move doesn't
+          // alter the sort order (a requirement for the Windows STL's
+          // consistency debug-checks for std::priority_queue::top()).
+          background_sequences_to_schedule.push_back(
+              std::move(const_cast<PendingBackgroundSequence&>(
+                  pending_background_sequences_.top())));
+          pending_background_sequences_.pop();
+        }
+      }
+    }
+
+    for (const PendingBackgroundSequence& pending_background_sequence :
+         background_sequences_to_schedule) {
+      if (pending_background_sequence.sequence == sequence_raw) {
+        sequence = std::move(pending_background_sequence.sequence);
+      } else {
+        pending_background_sequence.observer->OnCanScheduleSequence(
+            std::move(pending_background_sequence.sequence));
+      }
+    }
+  }
+
+  return sequence;
 }
 
 void TaskTracker::RecordTaskLatencyHistogram(Task* task) {
