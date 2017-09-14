@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "431de917_2d8f7afc",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1136999
+      },
+      "writtenOn": "2017-09-14T16:18:08Z",
+      "side": 1,
+      "message": "Is this guaranteed to distinguish between package names and other things? What other sorts of names might be used?",
+      "range": {
+        "startLine": 49,
+        "startChar": 9,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "89bca13bb102b85e8c9244d44ac4d8f4062c78dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03750f2d_3343c346",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1136999
+      },
+      "writtenOn": "2017-09-14T16:18:08Z",
+      "side": 1,
+      "message": "This should be implementable as a template method, something like:\n\ntemplate\u003ctypename RequestPtr, typename Response, typename Callback\u003e void ArcCertStoreBridge::ExecuteRequest(RequestPtr request, Response response, const Callback\u0026 callback) {\n  response-\u003eerror \u003d mojom::Error::ERROR_UNIMPLEMENTED;\n\n  if (!channel_enabled_) {\n    LOG(WARNING) \u003c\u003c \"ARC certificate store channel is not enabled.\";\n    callback.Run(std::move(response));\n    return;\n  }\n  // TODO(pbond): implement.\n  callback.Run(std::move(response));\n}\n\nThen the others, e.g. Update, can be just:\n\nvoid ArcCertStoreBridge::Update(mojom::UpdateOperationRequestPtr request, const UpdateCallback\u0026 callback) {\n  DVLOG(1) \u003c\u003c \"ArcCertStoreBridge::Update\";\n  ExecuteRequest(request, mojom::UpdateOperationResponse::New(), callback);\n}",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 36
+      },
+      "revId": "89bca13bb102b85e8c9244d44ac4d8f4062c78dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec3cdb6c_2a4aaf06",
+        "filename": "chrome/browser/chromeos/arc/enterprise/arc_cert_store_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1136999
+      },
+      "writtenOn": "2017-09-14T16:18:08Z",
+      "side": 1,
+      "message": "Nit: Consider creating named references to item.first and item.second.",
+      "range": {
+        "startLine": 279,
+        "startChar": 29,
+        "endLine": 279,
+        "endChar": 39
+      },
+      "revId": "89bca13bb102b85e8c9244d44ac4d8f4062c78dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
