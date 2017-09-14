@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fe9cdc1_1f9e271a",
+        "filename": "base/command_line.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-14T00:12:14Z",
+      "side": 1,
+      "message": "Hmm, I don\u0027t see any calls to this method being added in your CL.  Am I just missing them?",
+      "range": {
+        "startLine": 187,
+        "startChar": 64,
+        "endLine": 187,
+        "endChar": 0
+      },
+      "revId": "ecd88e94f0e118c4084ba1e1259bb3d0e22211df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf1fdedd_5ae0a724",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-14T00:12:14Z",
+      "side": 1,
+      "message": "nit: Please restore this line of the comment.",
+      "revId": "ecd88e94f0e118c4084ba1e1259bb3d0e22211df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65aa8d1c_e0befc8e",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-14T00:12:14Z",
+      "side": 1,
+      "message": "Is it ok to include a comma if the |enabled| string was previously empty?  Same question applies below.",
+      "range": {
+        "startLine": 353,
+        "startChar": 14,
+        "endLine": 353,
+        "endChar": 15
+      },
+      "revId": "ecd88e94f0e118c4084ba1e1259bb3d0e22211df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
