@@ -174,6 +174,24 @@
       "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08c0822_6b26a425",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1222289
+      },
+      "writtenOn": "2017-09-14T21:32:14Z",
+      "side": 1,
+      "message": "+1 on simplifying things.\n\nHowever, I would like to hold off on that until we have some more data from the Windows ThinLTO bot I\u0027m setting up here.\n\nThe reason is that I\u0027m currently following the pattern of the MSVC PGO setup, but that may not actually be the right thing to do. With a bit of luck, we can put all the ThinLTO support in a single spot (and possibly even get rid of full LTO support, as Dirk and Peter suggested). However, it depends on what the tradeoff between build time and run time performance turns out to be.",
+      "parentUuid": "66a2a065_1f5ef32c",
+      "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
