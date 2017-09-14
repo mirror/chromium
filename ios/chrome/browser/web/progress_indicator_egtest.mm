@@ -7,6 +7,7 @@
 #include "base/mac/foundation_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/stringprintf.h"
+#import "base/test/ios/wait_util.h"
 #include "base/time/time.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #include "ios/chrome/test/app/navigation_test_util.h"
@@ -71,8 +72,16 @@ id<GREYMatcher> ProgressViewWithProgress(CGFloat progress) {
 class InfinitePendingResponseProvider : public HtmlResponseProvider {
  public:
   explicit InfinitePendingResponseProvider(const GURL& url) : url_(url) {}
-  ~InfinitePendingResponseProvider() override {}
+  ~InfinitePendingResponseProvider() override { DCHECK(!in_infinite_loop_); }
 
+  void Abort() {
+    abort_ = true;
+    base::test::ios::WaitUntilCondition(
+        ^bool {
+          return !in_infinite_loop_;
+        },
+        false, base::TimeDelta::FromSeconds(10));
+  }
   // HtmlResponseProvider overrides:
   bool CanHandleRequest(const Request& request) override {
     return request.url == url_ ||
@@ -82,16 +91,17 @@ class InfinitePendingResponseProvider : public HtmlResponseProvider {
       const Request& request,
       scoped_refptr<net::HttpResponseHeaders>* headers,
       std::string* response_body) override {
-    if (request.url == url_) {
-      *headers = GetDefaultResponseHeaders();
-      *response_body =
-          base::StringPrintf("<p>%s</p><img src='%s'/>", kPageText,
-                             GetInfinitePendingResponseUrl().spec().c_str());
-    } else if (request.url == GetInfinitePendingResponseUrl()) {
-      base::PlatformThread::Sleep(base::TimeDelta::FromDays(1));
-    } else {
-      NOTREACHED();
+    if (request.url == GetInfinitePendingResponseUrl()) {
+      in_infinite_loop_ = true;
+      while (!abort_) {
+        base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(10));
+      }
+      in_infinite_loop_ = false;
     }
+    *headers = GetDefaultResponseHeaders();
+    *response_body =
+        base::StringPrintf("<p>%s</p><img src='%s'/>", kPageText,
+                           GetInfinitePendingResponseUrl().spec().c_str());
   }
 
  private:
@@ -104,6 +114,10 @@ class InfinitePendingResponseProvider : public HtmlResponseProvider {
 
   // Main page URL that never finish loading.
   GURL url_;
+
+  // Whether Abort|
+  bool abort_;
+  bool in_infinite_loop_;
 };
 
 }  // namespace
@@ -141,9 +155,11 @@ class InfinitePendingResponseProvider : public HtmlResponseProvider {
   // Load a page which never finishes loading.
   const GURL infinitePendingURL =
       web::test::HttpServer::MakeUrl(kInfinitePendingPageURL);
-  web::test::SetUpHttpServer(
-      base::MakeUnique<InfinitePendingResponseProvider>(infinitePendingURL));
-
+  auto uniqueInfinitePendingProvider =
+      base::MakeUnique<InfinitePendingResponseProvider>(infinitePendingURL);
+  InfinitePendingResponseProvider* infinitePendingProvider =
+      uniqueInfinitePendingProvider.get();
+  web::test::SetUpHttpServer(std::move(uniqueInfinitePendingProvider));
   // The page being loaded never completes, so call the LoadUrl helper that
   // does not wait for the page to complete loading.
   chrome_test_util::LoadUrl(infinitePendingURL);
@@ -156,6 +172,7 @@ class InfinitePendingResponseProvider : public HtmlResponseProvider {
       assertWithMatcher:grey_sufficientlyVisible()];
 
   [ChromeEarlGreyUI waitForToolbarVisible:YES];
+  infinitePendingProvider->Abort();
 }
 
 // Tests that the progress indicator is shown and has expected progress value
@@ -175,8 +192,11 @@ class InfinitePendingResponseProvider : public HtmlResponseProvider {
   web::test::SetUpSimpleHttpServer(responses);
 
   // Add responseProvider for page that never finishes loading.
-  web::test::AddResponseProvider(
-      base::MakeUnique<InfinitePendingResponseProvider>(infinitePendingURL));
+  auto uniqueInfinitePendingProvider =
+      base::MakeUnique<InfinitePendingResponseProvider>(infinitePendingURL);
+  InfinitePendingResponseProvider* infinitePendingProvider =
+      uniqueInfinitePendingProvider.get();
+  web::test::AddResponseProvider(std::move(uniqueInfinitePendingProvider));
 
   // Load form first.
   [ChromeEarlGrey loadURL:formURL];
@@ -192,6 +212,7 @@ class InfinitePendingResponseProvider : public HtmlResponseProvider {
       assertWithMatcher:grey_sufficientlyVisible()];
 
   [ChromeEarlGreyUI waitForToolbarVisible:YES];
+  infinitePendingProvider->Abort();
 }
 
 // Tests that the progress indicator disappears after form has been submitted.
