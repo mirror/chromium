@@ -11,8 +11,8 @@
 #include "ash/test/ash_test_helper.h"
 #include "cc/base/math_util.h"
 #include "cc/output/compositor_frame.h"
-#include "cc/quads/solid_color_draw_quad.h"
 #include "cc/trees/layer_tree_settings.h"
+#include "components/viz/common/quads/solid_color_draw_quad.h"
 #include "services/ui/public/interfaces/window_manager_constants.mojom.h"
 #include "ui/aura/env.h"
 #include "ui/aura/window.h"
@@ -51,7 +51,7 @@ bool FindColorQuad(const cc::CompositorFrame& frame,
     if (quad->material != viz::DrawQuad::Material::SOLID_COLOR)
       continue;
 
-    auto* color_quad = cc::SolidColorDrawQuad::MaterialCast(quad);
+    auto* color_quad = viz::SolidColorDrawQuad::MaterialCast(quad);
     if (color_quad->color != color)
       continue;
     if (GetQuadBoundsInScreen(quad) == screen_rect)
