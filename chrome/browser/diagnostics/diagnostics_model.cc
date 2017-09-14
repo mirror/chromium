@@ -19,6 +19,7 @@
 #include "chrome/browser/diagnostics/sqlite_diagnostics.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
+#include "content/public/common/content_switches.h"
 
 namespace diagnostics {
 

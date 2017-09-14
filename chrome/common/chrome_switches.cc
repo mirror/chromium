@@ -743,10 +743,6 @@ const char kUnsafePacUrl[] = "unsafe-pac-url";
 // A string used to override the default user agent with a custom one.
 const char kUserAgent[]                     = "user-agent";
 
-// Specifies the user data directory, which is where the browser will look for
-// all of its state.
-const char kUserDataDir[]                   = "user-data-dir";
-
 // Examines a .crx for validity and prints the result.
 const char kValidateCrx[]                   = "validate-crx";
 
