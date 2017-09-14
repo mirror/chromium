@@ -52,6 +52,24 @@
       "revId": "370204210ac02810ec1765024f09bfd25ac53009",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f683d5f_2b90a315",
+        "filename": "tools/idl_parser/test_parser/callback_web.idl",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-14T01:18:32Z",
+      "side": 1,
+      "message": "Yes, but it must be done in another CL, which may update code generators together.",
+      "parentUuid": "0515a7d8_3636b6b2",
+      "revId": "370204210ac02810ec1765024f09bfd25ac53009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
