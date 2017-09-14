@@ -190,6 +190,10 @@ base::string16 PermissionsBubbleDialogDelegateView::GetWindowTitle() const {
 }
 
 void PermissionsBubbleDialogDelegateView::AddedToWidget() {
+  // In non-Harmony mode, make the title the same font size as the bubble's body
+  // text.
+  if (ChromeLayoutProvider::Get()->IsHarmonyMode())
+    return;
   std::unique_ptr<views::Label> title =
       views::BubbleFrameView::CreateDefaultTitleLabel(GetWindowTitle());
   title->SetFontList(ui::ResourceBundle::GetSharedInstance().GetFontList(
