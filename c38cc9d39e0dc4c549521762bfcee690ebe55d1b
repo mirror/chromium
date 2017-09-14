@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33185fbd_5f19fc2a",
+        "filename": "gpu/command_buffer/service/gpu_tracer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-09-14T14:55:56Z",
+      "side": 1,
+      "message": "Now that TraceOutputter has been moved out of GPUTracer, we do not have access to gpu_timing_client_-\u003eGetTimerTypeName(). So, should we add a setter to Outputter that sets the thread name from GPUTracer, may be just after l.194 below?\nPlease let me know if you have any other approach in your mind.",
+      "range": {
+        "startLine": 52,
+        "startChar": 39,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "c38cc9d39e0dc4c549521762bfcee690ebe55d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
