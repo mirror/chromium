@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fd412d6_4fe203ed",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T05:05:39Z",
+      "side": 1,
+      "message": "define these down at line 415 since they aren\u0027t used until there",
+      "revId": "5566c3adffb92a2e6fd6210ad37dddea25033934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdcb844f_c9cf1bd0",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T05:05:39Z",
+      "side": 1,
+      "message": "this line doesn\u0027t do anything since we set |has_stopped| again in line 441.\n\nI would write these using blocks to limit the scope of these local variables:\n\n{\n  bool has_stopped1 \u003d false;\n  bool has_stopped2 \u003d false;\n  ...\n  EXPECT_TRUE(has_stopped1);\n  EXPECT_TRUE(has_stopped2);\n}\n\n{\n  bool has_stopped \u003d false;\n  ...\n  EXPECT_TRUE(has_stopped);\n}\n\nThat\u0027s better than reusing the variable for different purposes.",
+      "revId": "5566c3adffb92a2e6fd6210ad37dddea25033934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e9c6cb_e83a3b5d",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T05:05:39Z",
+      "side": 1,
+      "message": "set this just above where it\u0027s used, at line 747",
+      "revId": "5566c3adffb92a2e6fd6210ad37dddea25033934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1544e7dd_701b3ea9",
+        "filename": "content/browser/service_worker/service_worker_version_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1393,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-14T05:05:39Z",
+      "side": 1,
+      "message": "set this right above line 1406",
+      "revId": "5566c3adffb92a2e6fd6210ad37dddea25033934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
