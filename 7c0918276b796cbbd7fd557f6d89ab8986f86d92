@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58a9bf45_cec35331",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/framework.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-09-14T11:13:59Z",
+      "side": 1,
+      "message": "nit: -s at the end, also above",
+      "range": {
+        "startLine": 107,
+        "startChar": 48,
+        "endLine": 107,
+        "endChar": 58
+      },
+      "revId": "7c0918276b796cbbd7fd557f6d89ab8986f86d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d384bc_35b17901",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/framework.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-09-14T11:13:59Z",
+      "side": 1,
+      "message": "is this expected and good? Should extensions need to know whether PlzNavigate is enabled? I honestly don\u0027t understand the implications.",
+      "range": {
+        "startLine": 107,
+        "startChar": 3,
+        "endLine": 107,
+        "endChar": 25
+      },
+      "revId": "7c0918276b796cbbd7fd557f6d89ab8986f86d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c60f708d_e1193fbf",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/manifest.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-09-14T11:13:59Z",
+      "side": 1,
+      "message": "is this needed?",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 11
+      },
+      "revId": "7c0918276b796cbbd7fd557f6d89ab8986f86d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8026524_49b77d1b",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-09-14T11:13:59Z",
+      "side": 1,
+      "message": "Instead of piping this all the way through, can GetMatchingListeners make a decision whether a bit in extra_info_spec is set that enables sending the origin?",
+      "range": {
+        "startLine": 653,
+        "startChar": 39,
+        "endLine": 653,
+        "endChar": 57
+      },
+      "revId": "7c0918276b796cbbd7fd557f6d89ab8986f86d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dd6e4bb_8880b475",
+        "filename": "extensions/browser/api/web_request/web_request_event_details.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-09-14T11:13:59Z",
+      "side": 1,
+      "message": "Can we move this code to web_request_permissions.h/cc?",
+      "revId": "7c0918276b796cbbd7fd557f6d89ab8986f86d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4833bf60_e88579a4",
+        "filename": "extensions/common/api/web_request.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-09-14T11:13:59Z",
+      "side": 1,
+      "message": "nit: two spaces.",
+      "range": {
+        "startLine": 207,
+        "startChar": 107,
+        "endLine": 207,
+        "endChar": 108
+      },
+      "revId": "7c0918276b796cbbd7fd557f6d89ab8986f86d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a92c3c4a_d5fba40a",
+        "filename": "extensions/common/api/web_request.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-09-14T11:13:59Z",
+      "side": 1,
+      "message": "nit: space before true (same below)",
+      "range": {
+        "startLine": 207,
+        "startChar": 57,
+        "endLine": 207,
+        "endChar": 61
+      },
+      "revId": "7c0918276b796cbbd7fd557f6d89ab8986f86d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
