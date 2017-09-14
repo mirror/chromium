@@ -1855,6 +1855,8 @@ bool Document::NeedsFullLayoutTreeUpdate() const {
     return false;
   if (style_engine_->NeedsActiveStyleUpdate())
     return true;
+  if (style_engine_->NeedsWhitespaceReattachment())
+    return true;
   if (!use_elements_needing_update_.IsEmpty())
     return true;
   if (NeedsStyleRecalc())
@@ -2236,12 +2238,14 @@ void Document::UpdateStyle() {
       if (viewport_defining != ViewportDefiningElement())
         ViewportDefiningElementDidChange();
     }
+    GetStyleEngine().MarkForWhitespaceReattachment();
     PropagateStyleToViewport(change);
     if (document_element->NeedsReattachLayoutTree() ||
         document_element->ChildNeedsReattachLayoutTree()) {
       TRACE_EVENT0("blink,blink_style", "Document::rebuildLayoutTree");
       WhitespaceAttacher whitespace_attacher;
       document_element->RebuildLayoutTree(whitespace_attacher);
+      GetStyleEngine().ClearWhitespaceReattachSet();
     }
   } else if (change == kForce) {
     GetLayoutViewItem().SetStyle(StyleResolver::StyleForViewport(*this));
@@ -4669,8 +4673,8 @@ void Document::NodeWillBeRemoved(Node& n) {
   if (ContainsV1ShadowTree())
     n.CheckSlotChangeBeforeRemoved();
 
-  if (n.InActiveDocument() && n.IsElementNode())
-    GetStyleEngine().ElementWillBeRemoved(ToElement(n));
+  if (n.InActiveDocument())
+    GetStyleEngine().NodeWillBeRemoved(n);
 }
 
 void Document::DidInsertText(const CharacterData& text,
