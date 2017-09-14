@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6df1887e_2726fc2c",
+        "filename": "chrome/browser/resources/sys_internals/index.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-14T18:12:56Z",
+      "side": 1,
+      "message": "FWIW, there is already a cr-drawer implementation at https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/cr_drawer/, which would have eliminated the need to re-implement a drawer and write tests for it. (You can see it in action in chrome://settings).",
+      "revId": "ab282b75eeeb65de1ac7af7a70c953e2d5b79b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb78132e_35579a0d",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-14T18:12:56Z",
+      "side": 1,
+      "message": "Why don\u0027t you return a Promise from this function and also from closeDrawer? Then you don\u0027t need to store PromiseResolver instances. See related comment in tests.",
+      "revId": "ab282b75eeeb65de1ac7af7a70c953e2d5b79b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54feccb1_7aafb92e",
+        "filename": "chrome/test/data/webui/sys_internals/page_drawer_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-14T18:12:56Z",
+      "side": 1,
+      "message": "Unnecessary line.",
+      "revId": "ab282b75eeeb65de1ac7af7a70c953e2d5b79b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "499bf2be_1f0ac9aa",
+        "filename": "chrome/test/data/webui/sys_internals/page_drawer_test.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-14T18:12:56Z",
+      "side": 1,
+      "message": "Follow from comment about openDrawer/closeDrawer in index.js:\n\nThen you would be able to do\n\nreturn SysInternals.openDrawer().then(\n    function() {\n      checkOpen();\n      return SysInternals.closeDrawer();\n    }).then(function() {\n      checkClose();\n      return SysInternals.openDrawer();\n    }).then(checkOpen);\n\nand there would be no need to expose PromiseResolver instances from SysInternals.",
+      "revId": "ab282b75eeeb65de1ac7af7a70c953e2d5b79b1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
