@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9baa6adf_446d31db",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/the-img-element/decode/image-decode-path-changes-svg.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-09-14T01:28:22Z",
+      "side": 1,
+      "message": "I believe we have a convention of using .tentative.html for things where there\u0027s no spec yet.",
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ead75f_b45e13b5",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/the-img-element/decode/image-decode-path-changes-svg.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-09-14T01:28:22Z",
+      "side": 1,
+      "message": "I just noticed the long timeout here and elsewhere. What is the reason for it?",
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9232754e_c9df33a1",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/the-img-element/decode/image-decode-path-changes-svg.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-09-14T01:28:22Z",
+      "side": 1,
+      "message": "I think these days href is supposed to work the same as xlink:href. Does Chrome implement that yet? If so we should test. If not we can leave it for later, when we figure out the SVG spec business.",
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff96fffb_208b4fc9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/the-img-element/decode/image-decode-path-changes.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-09-14T01:28:22Z",
+      "side": 1,
+      "message": "s/unload/onload/g",
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "138ab0de_6efe76c7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/the-img-element/decode/image-decode-path-changes.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-09-14T01:28:22Z",
+      "side": 1,
+      "message": "This should be wrapped in t.step_func so that any exceptions that occur are sent to the harness. (None should occur, but who knows...)",
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "835b349c_f67326ce",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/the-img-element/decode/image-decode-path-changes.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-09-14T01:28:22Z",
+      "side": 1,
+      "message": "Nit: null, not empty string, is the usual way to reset this. (I believe any non-function will reset it, but it\u0027s weird.)",
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c066dbe3_85e81b44",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/the-img-element/decode/image-decode-path-changes.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-09-14T01:28:22Z",
+      "side": 1,
+      "message": "assert_not_equals",
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "934effff_758eda39",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/the-img-element/decode/image-decode-path-changes.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-09-14T01:28:22Z",
+      "side": 1,
+      "message": "You can do this instead:\n\nresolve(Promise.all([first_promise, second_promise]));\n\n(resolve() accepts promise arguments. If the promise rejects, then the corresponding promise for resolve() will reject, and thus the test will fail.)",
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3107005_278443ff",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/the-img-element/decode/image-decode-picture.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-09-14T01:28:22Z",
+      "side": 1,
+      "message": "Great tests.\n\nIt may be worth adding one that uses HTML markup above the \u003cscript\u003e element, possibly with multiple \u003csource\u003es.",
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9047a214_d082fd70",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/embedded-content/the-img-element/decode/image-decode.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-09-14T01:28:22Z",
+      "side": 1,
+      "message": "Nit: this is not a good change because HTMLImageElement.decode() does not exist (there is no static decode method). Either img.decode() as before, or HTMLImageElement.prototype.decode(), is best.",
+      "revId": "c9e899f69015682b7b40521685548fa80af1f97d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
