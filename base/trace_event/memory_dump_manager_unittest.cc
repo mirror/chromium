@@ -63,6 +63,9 @@ const char* const kTestMDPWhitelist[] = {
     kWhitelistedMDPName, kBackgroundButNotSummaryWhitelistedMDPName, nullptr};
 const char* const kTestMDPWhitelistForSummary[] = {kWhitelistedMDPName,
                                                    nullptr};
+const char* const kTestDumpNameWhitelist[] = {"test/heap", "test/hex/0x?",
+                                              nullptr};
+
 void RegisterDumpProvider(
     MemoryDumpProvider* mdp,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
@@ -751,6 +754,7 @@ TEST_F(MemoryDumpManagerTest, SummaryOnlyWhitelisting) {
   // Summary only MDPs are a subset of background MDPs.
   SetDumpProviderWhitelistForTesting(kTestMDPWhitelist);
   SetDumpProviderSummaryWhitelistForTesting(kTestMDPWhitelistForSummary);
+  SetAllocatorDumpNameWhitelistForTesting(kTestDumpNameWhitelist);
 
   // Standard provider with default options (create dump for current process).
   MockMemoryDumpProvider summaryMdp;
@@ -767,6 +771,22 @@ TEST_F(MemoryDumpManagerTest, SummaryOnlyWhitelisting) {
   EXPECT_TRUE(RequestProcessDumpAndWait(MemoryDumpType::SUMMARY_ONLY,
                                         MemoryDumpLevelOfDetail::BACKGROUND));
   DisableTracing();
+
+  // Test whitelisted entries.
+  bool is_whitelist = IsMemoryAllocatorDumpNameWhitelisted("test/heap");
+  ASSERT_TRUE(is_whitelist);
+
+  // Global dumps should be whitelisted.
+  is_whitelist = IsMemoryAllocatorDumpNameWhitelisted("global/13456");
+  ASSERT_TRUE(is_whitelist);
+
+  // Random names should not.
+  is_whitelist = IsMemoryAllocatorDumpNameWhitelisted("random/heap");
+  ASSERT_FALSE(is_whitelist);
+
+  // Check hex processing.
+  is_whitelist = IsMemoryAllocatorDumpNameWhitelisted("test/hex/0x13489");
+  ASSERT_TRUE(is_whitelist);
 }
 
 // Tests the basics of the UnregisterAndDeleteDumpProviderSoon(): the
