@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5f69c6d6_b0fb8e86",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 9
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-14T09:03:24Z",
+      "side": 1,
+      "message": "Done\nI looked at those two examples: IDS_IOS_READING_LIST_EMPTY_MESSAGE and IDS_IOS_CONTEXT_MENU_SEARCHWEBFORIMAGE\nCould you explain to me the difference between\n\n\u003e \u003cph name\u003d\"SHARE_OPENING_ICON\"\u003eSHARE_OPENING_ICON\u003cex\u003eMenu \u003e Share \u003e Read Later\u003c/ex\u003e\u003c/ph\u003e\n\nand\n\n\u003e \u003cph name\u003d\"SEARCH_ENGINE\"\u003e$1\u003cex\u003eGoogle\u003c/ex\u003e\u003c/ph\u003e\n\nMore concretely, why in the first example, there is SHARE_OPENING_ICON instead of $1? And in the second, why is there $1 instead of SEARCH_ENGINE then? How does it differ when using this string in ObjC++ code?",
+      "parentUuid": "5cc89323_41971d04",
+      "range": {
+        "startLine": 561,
+        "startChar": 8,
+        "endLine": 561,
+        "endChar": 21
+      },
+      "revId": "83528097b19410c7d116c1cb4dccf0731415ddb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2dffbb3_798a05f0",
         "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-14T07:23:25Z",
       "side": 1,
       "message": "Use NOTREACHED instead of DECHED(false).\nMaybe you could use GREYFail() instead, but I am not sure it is working in -setUp. If it is, it would be way better, as NOTREACHED are harder to debug.",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 18
+      },
+      "revId": "83528097b19410c7d116c1cb4dccf0731415ddb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3650c983_307aaa1b",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-14T09:03:24Z",
+      "side": 1,
+      "message": "Done\nYes, I can use GREYFail()",
+      "parentUuid": "e2dffbb3_798a05f0",
       "range": {
         "startLine": 54,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7d221553_5b75cc29",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-14T09:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9adcdef0_9588a06a",
+      "range": {
+        "startLine": 63,
+        "startChar": 13,
+        "endLine": 63,
+        "endChar": 34
+      },
+      "revId": "83528097b19410c7d116c1cb4dccf0731415ddb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd26df62_fddc4cb1",
         "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
         "patchSetId": 9
@@ -91,6 +163,30 @@
       "revId": "83528097b19410c7d116c1cb4dccf0731415ddb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c69584f_6674032d",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-14T09:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd26df62_fddc4cb1",
+      "range": {
+        "startLine": 121,
+        "startChar": 17,
+        "endLine": 121,
+        "endChar": 39
+      },
+      "revId": "83528097b19410c7d116c1cb4dccf0731415ddb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "af0d4189_e59a3bd7",
+        "filename": "ios/chrome/browser/passwords/ios_chrome_password_manager_client.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-14T09:03:24Z",
+      "side": 1,
+      "message": "Done\nIt\u0027s not used here, there is already a logic checking this preference, which is used indirectly by this client. https://cs.chromium.org/chromium/src/components/password_manager/core/browser/password_bubble_experiment.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d47\nI think I forgot to delete it from CL",
+      "parentUuid": "bf50519f_4ba758bf",
+      "range": {
+        "startLine": 107,
+        "startChar": 20,
+        "endLine": 107,
+        "endChar": 47
+      },
+      "revId": "83528097b19410c7d116c1cb4dccf0731415ddb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5de68e60_94e693f0",
         "filename": "ios/chrome/browser/passwords/password_controller.mm",
         "patchSetId": 9
@@ -137,6 +257,30 @@
       "revId": "83528097b19410c7d116c1cb4dccf0731415ddb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533b3101_d21a8171",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 717,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-14T09:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5de68e60_94e693f0",
+      "range": {
+        "startLine": 717,
+        "startChar": 25,
+        "endLine": 717,
+        "endChar": 30
+      },
+      "revId": "83528097b19410c7d116c1cb4dccf0731415ddb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

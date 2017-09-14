@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "042d30b2_d005e044",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-14T09:03:24Z",
+      "side": 1,
+      "message": "My intention was for this class to test this one snackbar. Since it doesn\u0027t do anything more then appear and disappear, I don\u0027t think we need to add more tests here.",
+      "parentUuid": "18b65e54_f53085af",
+      "revId": "1913a37dad1b12b642bf385a77a0ab86893d5258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a729dbc2_f1fa5413",
         "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "1913a37dad1b12b642bf385a77a0ab86893d5258",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1e507c8_664f10c0",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-14T09:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a729dbc2_f1fa5413",
+      "revId": "1913a37dad1b12b642bf385a77a0ab86893d5258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d4830ee9_4fb30587",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-14T09:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7d11d9d_55323cbc",
+      "revId": "1913a37dad1b12b642bf385a77a0ab86893d5258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab3c8e61_0eee1fac",
         "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "1913a37dad1b12b642bf385a77a0ab86893d5258",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2125d99b_aa3833f3",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-14T09:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab3c8e61_0eee1fac",
+      "revId": "1913a37dad1b12b642bf385a77a0ab86893d5258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +162,30 @@
       "revId": "1913a37dad1b12b642bf385a77a0ab86893d5258",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae731fd_d6002bc2",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-09-14T09:03:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc2f7d29_391a44b6",
+      "range": {
+        "startLine": 109,
+        "startChar": 18,
+        "endLine": 109,
+        "endChar": 34
+      },
+      "revId": "1913a37dad1b12b642bf385a77a0ab86893d5258",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
