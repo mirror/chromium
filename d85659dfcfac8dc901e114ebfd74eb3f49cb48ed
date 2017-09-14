@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63a5454a_55a2a5d2",
+        "filename": "net/disk_cache/simple/simple_file_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-14T13:40:45Z",
+      "side": 1,
+      "message": "This copy of the path is unfortunate. On Windows, the cache path is likely to be 70+ characters and we\u0027re writing this CL due to their being thousands of open entries.\n\nExample windows base path:\nc:\\Users\\username\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Cache\n\nHow about calling owner-\u003epath() when necessary?",
+      "range": {
+        "startLine": 40,
+        "startChar": 30,
+        "endLine": 40,
+        "endChar": 39
+      },
+      "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161beb7f_24c95702",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-14T13:40:45Z",
+      "side": 1,
+      "message": "Add comment that owner *must* call Close before its destruction.",
+      "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49123858_e93d2c38",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-14T13:40:45Z",
+      "side": 1,
+      "message": "I don\u0027t believe the style guide permits rvalue references here:\n\nUse rvalue references only to define move constructors and move assignment operators (as described in Copyable and Movable Types) and, in conjunction with std::forward, to support perfect forwarding.\n\nSuggest std::unique_ptr\u003cbase::File\u003e instead?",
+      "range": {
+        "startLine": 59,
+        "startChar": 16,
+        "endLine": 59,
+        "endChar": 28
+      },
+      "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "171da1ea_e5eed397",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-14T13:40:45Z",
+      "side": 1,
+      "message": "This state machine always moves forward, except that it starts with closed. How about adding a new state, such as TF_START or TF_INIT, so that it always moves forward and we can document it as such?\n\ne.g., move from:\n\nTF_CLOSED-\u003eTF_REGISTERED-\u003eTF_ACQUIRED-\u003eTF_CLOSED to\n\nTF_INIT-\u003eTF_REGISTERED-\u003eTF_ACQUIRED-\u003eTF_CLOSED",
+      "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3ae8fd0_d3a2dac6",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-14T13:40:45Z",
+      "side": 1,
+      "message": "nit: Can you use a for-each loop here? We have a slight preference for it so long as it makes sense.",
+      "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5675abd_cb0d5cd2",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-14T13:40:45Z",
+      "side": 1,
+      "message": "nit: suggest newline above here for ease of reading",
+      "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41e82978_a6677cab",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-14T13:40:45Z",
+      "side": 1,
+      "message": "suggest newline above here to show it\u0027s not part of the above comment.",
+      "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e4bfc2_059a9efc",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-14T13:40:45Z",
+      "side": 1,
+      "message": "\"this one\", as opposed to which other one?",
+      "range": {
+        "startLine": 117,
+        "startChar": 5,
+        "endLine": 117,
+        "endChar": 39
+      },
+      "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5965ab79_a01db449",
+        "filename": "net/disk_cache/simple/simple_file_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-14T13:40:45Z",
+      "side": 1,
+      "message": "Is this comment about the key to tracked_files_ or the key to the std::vector\u003cTrackedFiles\u003e that it contains?",
+      "range": {
+        "startLine": 130,
+        "startChar": 5,
+        "endLine": 130,
+        "endChar": 62
+      },
+      "revId": "d85659dfcfac8dc901e114ebfd74eb3f49cb48ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
