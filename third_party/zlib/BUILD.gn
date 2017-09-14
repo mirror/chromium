@@ -32,6 +32,27 @@ static_library("zlib_x86_simd") {
   configs += [ "//build/config/compiler:no_chromium_code" ]
 }
 
+source_set("zlib_adler32_simd") {
+  visibility = [ ":*" ]
+
+  # FIXME: add NEON implementation to adler32_simd.c
+
+  if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
+    sources = [
+      "adler32_simd.c",
+      "adler32_simd.h",
+    ]
+
+    defines = [ "ADLER32_SIMD_SSSE3" ]
+    if (!is_win || is_clang) {
+      cflags = [ "-mssse3" ]
+    }
+  }
+
+  configs -= [ "//build/config/compiler:chromium_code" ]
+  configs += [ "//build/config/compiler:no_chromium_code" ]
+}
+
 config("zlib_warnings") {
   if (is_clang && !is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
     cflags = [ "-Wno-incompatible-pointer-types" ]
@@ -75,6 +96,18 @@ static_library("zlib") {
     "zutil.h",
   ]
 
+  defines = []
+  deps = []
+
+  if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
+    sources += [ "x86.c" ]
+
+    defines += [ "ADLER32_SIMD_SSSE3" ]
+    deps += [ ":zlib_adler32_simd" ]
+  }
+
+  deps += [ ":zlib_x86_simd" ]
+
   if (current_cpu == "arm" || current_cpu == "arm64") {
     if (arm_use_neon) {
       sources -= [
@@ -89,10 +122,6 @@ static_library("zlib") {
     }
   }
 
-  if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
-    sources += [ "x86.c" ]
-  }
-
   configs -= [ "//build/config/compiler:chromium_code" ]
   configs += [
     "//build/config/compiler:no_chromium_code",
@@ -102,9 +131,6 @@ static_library("zlib") {
   ]
 
   public_configs = [ ":zlib_config" ]
-  deps = [
-    ":zlib_x86_simd",
-  ]
 }
 
 config("minizip_warnings") {
@@ -150,5 +176,6 @@ static_library("minizip") {
     # Must be after no_chromium_code for warning flags to be ordered correctly.
     ":minizip_warnings",
   ]
+
   public_configs = [ ":zlib_config" ]
 }
