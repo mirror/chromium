@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ccaf4e2_106a9336",
+        "filename": "components/autofill/core/browser/autofill_field.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-14T14:31:42Z",
+      "side": 1,
+      "message": "const std::vector\u003cAutofillQueryResponseContents::Field::FieldPrediction\u003e\u0026",
+      "range": {
+        "startLine": 56,
+        "startChar": 6,
+        "endLine": 56,
+        "endChar": 72
+      },
+      "revId": "a9b869e03793ca25291216f7b444b99538b89af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e42154_4287e202",
+        "filename": "components/autofill/core/browser/autofill_field.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-14T14:31:42Z",
+      "side": 1,
+      "message": "server_predictions_? It is not only type anymore.",
+      "range": {
+        "startLine": 176,
+        "startChar": 6,
+        "endLine": 176,
+        "endChar": 19
+      },
+      "revId": "a9b869e03793ca25291216f7b444b99538b89af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f862bebc_b9b70748",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-14T14:31:42Z",
+      "side": 1,
+      "message": "what is the type of |predictions|? can we just assign it |server_types| (i.e. no loop is needed)?",
+      "range": {
+        "startLine": 522,
+        "startChar": 59,
+        "endLine": 522,
+        "endChar": 72
+      },
+      "revId": "a9b869e03793ca25291216f7b444b99538b89af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db79ed09_357d0abe",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3792,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-14T14:31:42Z",
+      "side": 1,
+      "message": "You can use testing::ElementsAre.\nexample https://chromium-review.googlesource.com/c/chromium/src/+/663863/5/components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+      "range": {
+        "startLine": 3790,
+        "startChar": 0,
+        "endLine": 3792,
+        "endChar": 72
+      },
+      "revId": "a9b869e03793ca25291216f7b444b99538b89af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c02169a4_38b6474f",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-14T14:31:42Z",
+      "side": 1,
+      "message": "I would remove it. To me, it is confusing.",
+      "range": {
+        "startLine": 108,
+        "startChar": 6,
+        "endLine": 109,
+        "endChar": 14
+      },
+      "revId": "a9b869e03793ca25291216f7b444b99538b89af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d83db04_cf7514b3",
+        "filename": "components/password_manager/core/browser/password_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-14T14:31:42Z",
+      "side": 1,
+      "message": "a bit confusing, IMO. Then what happen if prediction is single? I would remove it.\n\n\u003d\u003e \"If at least one of field predictions can be...\"",
+      "range": {
+        "startLine": 2036,
+        "startChar": 59,
+        "endLine": 2037,
+        "endChar": 28
+      },
+      "revId": "a9b869e03793ca25291216f7b444b99538b89af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16c88fde_09b66fec",
+        "filename": "components/password_manager/core/browser/password_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2040,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-14T14:31:42Z",
+      "side": 1,
+      "message": "Thanks for adding this! :)",
+      "range": {
+        "startLine": 2040,
+        "startChar": 0,
+        "endLine": 2040,
+        "endChar": 57
+      },
+      "revId": "a9b869e03793ca25291216f7b444b99538b89af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a634af69_24e5d4d9",
+        "filename": "components/password_manager/core/browser/password_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2062,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-14T14:31:42Z",
+      "side": 1,
+      "message": "The comment is factually correct, but I would rephrase it. From the comment, it may seem that |USERNAME| is forbidden to be in |server_type_|. But we want say that an autofill related vote may displace a password related vote if there are multiple prediction for the field.\n\nMy suggestion:\n\"If there are multiple prediction for the field, |AutofillField::server_type_| will store only autofill vote, but not password vote. |AutofillField::server_types_| should store all predictions.\"",
+      "range": {
+        "startLine": 2060,
+        "startChar": 2,
+        "endLine": 2062,
+        "endChar": 35
+      },
+      "revId": "a9b869e03793ca25291216f7b444b99538b89af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ce2244_4f2311e1",
+        "filename": "components/password_manager/core/browser/password_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2072,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-14T14:31:42Z",
+      "side": 1,
+      "message": "I would remove the comment (single prediction would work anyway), but insert a blank line to split sections of code.\nFor consistency, fill |predictions| as well.",
+      "range": {
+        "startLine": 2071,
+        "startChar": 2,
+        "endLine": 2072,
+        "endChar": 39
+      },
+      "revId": "a9b869e03793ca25291216f7b444b99538b89af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9150e0ec_27bb2aaf",
+        "filename": "components/password_manager/core/browser/password_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2080,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-14T14:31:42Z",
+      "side": 1,
+      "message": "How about that?\n\"Check that Autofill predictions are converted to password related predictions.\"\n\nTo me, \"first is username...\" is obvious from the code, don\u0027t just duplicate the code in words.",
+      "range": {
+        "startLine": 2079,
+        "startChar": 2,
+        "endLine": 2080,
+        "endChar": 17
+      },
+      "revId": "a9b869e03793ca25291216f7b444b99538b89af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
