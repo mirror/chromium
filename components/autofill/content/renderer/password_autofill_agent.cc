@@ -360,6 +360,7 @@ void UpdateFieldValueAndPropertiesMaskMap(
     const base::string16* value,
     FieldPropertiesMask added_flags,
     FieldValueAndPropertiesMaskMap* field_value_and_properties_map) {
+  //  LOG(ERROR) << element.Value().Utf8() << " " << added_flags;
   FieldValueAndPropertiesMaskMap::iterator it =
       field_value_and_properties_map->find(element);
   if (it != field_value_and_properties_map->end()) {
