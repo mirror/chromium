@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "572c464c_f2848932",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-14T17:22:11Z",
+      "side": 1,
+      "message": "Could be rephrased slightly:\nIn _update_single_file_content(): support functions in the replace_list, and respect the --run flag.",
+      "revId": "4a1c9facb41385b932f2c7b22eb97b2d8e190b22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
