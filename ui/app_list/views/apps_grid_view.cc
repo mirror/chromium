@@ -328,7 +328,10 @@ AppsGridView::AppsGridView(ContentsView* contents_view)
     AddChildView(all_apps_indicator_);
 
     fadeout_layer_delegate_.reset(new FadeoutLayerDelegate);
-    layer()->SetMaskLayer(fadeout_layer_delegate_->layer());
+    // TODO(newcomer): Improve implementation of the mask layer so we can enable
+    // it on all devices crbug.com/765292.
+    if (features::IsAppListMaskLayerEnabled())
+      layer()->SetMaskLayer(fadeout_layer_delegate_->layer());
 
     expand_arrow_view_ =
         new ExpandArrowView(contents_view_, contents_view_->app_list_view());
