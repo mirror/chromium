@@ -51,7 +51,10 @@ UiElement::~UiElement() {
 }
 
 void UiElement::Render(UiElementRenderer* renderer,
-                       const gfx::Transform& view_proj_matrix) const {}
+                       const gfx::Transform& view_proj_matrix,
+                       UiElement::RenderStatus* status) const {
+  *status = kRenderStatusNoRenderRoutine;
+}
 
 void UiElement::Initialize() {}
 
@@ -83,6 +86,12 @@ void UiElement::Animate(const base::TimeTicks& time) {
   last_frame_time_ = time;
 }
 
+bool UiElement::WillRender() const {
+  RenderStatus status = kRenderStatusOk;
+  Render(nullptr, gfx::Transform(), &status);
+  return IsVisible() && status == kRenderStatusOk;
+}
+
 bool UiElement::IsHitTestable() const {
   return IsVisible() && hit_testable_;
 }
@@ -99,6 +108,7 @@ void UiElement::SetVisible(bool visible) {
 void UiElement::SetVisibleImmediately(bool visible) {
   opacity_ = visible ? opacity_when_visible_ : 0.0;
 }
+
 
 bool UiElement::IsVisible() const {
   return opacity_ > 0.0f && computed_opacity_ > 0.0f;
@@ -307,7 +317,6 @@ void UiElement::UpdateInheritedProperties() {
   gfx::Transform transform;
   transform.Scale(size_.width(), size_.height());
   set_computed_opacity(opacity_);
-  set_computed_viewport_aware(viewport_aware_);
 
   // Compute an inheritable transformation that can be applied to this element,
   // and it's children, if applicable.
@@ -316,8 +325,6 @@ void UiElement::UpdateInheritedProperties() {
   if (parent_) {
     inheritable.ConcatTransform(parent_->inheritable_transform());
     set_computed_opacity(computed_opacity() * parent_->opacity());
-    if (parent_->viewport_aware())
-      set_computed_viewport_aware(true);
   }
 
   transform.ConcatTransform(inheritable);

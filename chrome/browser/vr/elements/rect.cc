@@ -36,7 +36,10 @@ void Rect::NotifyClientColorAnimated(SkColor color,
 }
 
 void Rect::Render(UiElementRenderer* renderer,
-                  const gfx::Transform& view_proj_matrix) const {
+                  const gfx::Transform& view_proj_matrix,
+                  UiElement::RenderStatus* status) const {
+  if (!renderer)
+    return;
   renderer->DrawGradientQuad(view_proj_matrix, edge_color_, center_color_,
                              computed_opacity(), size(), corner_radius());
 }

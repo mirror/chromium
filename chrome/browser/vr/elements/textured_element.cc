@@ -55,7 +55,10 @@ void TexturedElement::UpdateElementSize() {
 }
 
 void TexturedElement::Render(UiElementRenderer* renderer,
-                             const gfx::Transform& view_proj_matrix) const {
+                             const gfx::Transform& view_proj_matrix,
+                             UiElement::RenderStatus* status) const {
+  if (!renderer)
+    return;
   if (!g_initialized_for_testing_) {
     if (!initialized_)
       return;

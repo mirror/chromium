@@ -19,8 +19,9 @@ ContentElement::ContentElement(ContentInputDelegate* delegate)
 ContentElement::~ContentElement() = default;
 
 void ContentElement::Render(UiElementRenderer* renderer,
-                            const gfx::Transform& view_proj_matrix) const {
-  if (!texture_id_)
+                            const gfx::Transform& view_proj_matrix,
+                            UiElement::RenderStatus* status) const {
+  if (!texture_id_ || !renderer)
     return;
   gfx::RectF copy_rect(0, 0, 1, 1);
   renderer->DrawTexturedQuad(

@@ -28,7 +28,10 @@ void Grid::NotifyClientColorAnimated(SkColor color,
 }
 
 void Grid::Render(UiElementRenderer* renderer,
-                  const gfx::Transform& view_proj_matrix) const {
+                  const gfx::Transform& view_proj_matrix,
+                  UiElement::RenderStatus* status) const {
+  if (!renderer)
+    return;
   renderer->DrawGradientGridQuad(view_proj_matrix, edge_color(), center_color(),
                                  grid_color_, gridline_count_,
                                  computed_opacity());

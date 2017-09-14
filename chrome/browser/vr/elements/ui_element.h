@@ -68,8 +68,16 @@ class UiElement : public cc::AnimationTarget {
   // Indicates whether the element should be tested for cursor input.
   bool IsHitTestable() const;
 
+  enum RenderStatus {
+    kRenderStatusNoRenderRoutine = 0,
+    kRenderStatusOk,
+  };
+
+  // Overrides of this function need not set |status|. It is used to detect
+  // elements for which no rendering will ever occur, even if visible.
   virtual void Render(UiElementRenderer* renderer,
-                      const gfx::Transform& view_proj_matrix) const;
+                      const gfx::Transform& view_proj_matrix,
+                      RenderStatus* status) const;
 
   virtual void Initialize();
 
@@ -101,6 +109,8 @@ class UiElement : public cc::AnimationTarget {
 
   int id() const { return id_; }
 
+  bool WillRender() const;
+
   // If true, the object has a non-zero opacity.
   bool IsVisible() const;
   // For convenience, sets opacity to |opacity_when_visible_|.
@@ -119,18 +129,6 @@ class UiElement : public cc::AnimationTarget {
 
   bool hit_testable() const { return hit_testable_; }
   void set_hit_testable(bool hit_testable) { hit_testable_ = hit_testable; }
-
-  bool viewport_aware() const { return viewport_aware_; }
-  void set_viewport_aware(bool viewport_aware) {
-    viewport_aware_ = viewport_aware;
-  }
-  bool computed_viewport_aware() const { return computed_viewport_aware_; }
-  void set_computed_viewport_aware(bool computed_lock) {
-    computed_viewport_aware_ = computed_lock;
-  }
-
-  bool is_overlay() const { return is_overlay_; }
-  void set_is_overlay(bool is_overlay) { is_overlay_ = is_overlay; }
 
   bool scrollable() const { return scrollable_; }
   void set_scrollable(bool scrollable) { scrollable_ = scrollable; }
@@ -270,17 +268,6 @@ class UiElement : public cc::AnimationTarget {
 
   // If false, the reticle will not hit the element, even if visible.
   bool hit_testable_ = true;
-
-  // If true, the element will reposition itself to viewport if neccessary.
-  // TODO(bshe): We might be able to remove this state.
-  bool viewport_aware_ = false;
-
-  // The computed viewport aware, incorporating from parent objects.
-  bool computed_viewport_aware_ = false;
-
-  // If true, then this element will be drawn in the world viewport, but above
-  // all other elements.
-  bool is_overlay_ = false;
 
   // A signal to the input routing machinery that this element accepts scrolls.
   bool scrollable_ = false;

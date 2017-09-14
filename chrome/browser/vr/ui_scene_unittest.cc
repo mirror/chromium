@@ -53,13 +53,11 @@ void MakeViewportAwareElements(UiScene* scene,
 
   element = base::MakeUnique<UiElement>();
   *child = element.get();
-  element->set_viewport_aware(true);
   element->set_draw_phase(0);
   viewport_aware_root->AddChild(std::move(element));
 
   element = base::MakeUnique<UiElement>();
   *grandchild = element.get();
-  element->set_viewport_aware(false);
   element->set_draw_phase(0);
   (*child)->AddChild(std::move(element));
 }
