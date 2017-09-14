@@ -1025,7 +1025,7 @@ SDK.MultitargetNetworkManager = class extends Common.Object {
    */
   async _requestIntercepted(interceptedRequest) {
     for (var pattern of this._requestInterceptorMap.keysArray()) {
-      if (SDK.RequestInterceptor.patternMatchedLength(pattern, interceptedRequest.request.url) === -1)
+      if (SDK.RequestInterceptor.patternMatchedIndex(pattern, interceptedRequest.request.url) === -1)
         continue;
       for (var requestInterceptor of this._requestInterceptorMap.get(pattern)) {
         console.assert(requestInterceptor.enabled());
@@ -1105,7 +1105,7 @@ SDK.RequestInterceptor = class {
    * @param {string} input
    * @return {number}
    */
-  static patternMatchedLength(pattern, input) {
+  static patternMatchedIndex(pattern, input) {
     if (!pattern.length)
       return -1;
     var parts = [];

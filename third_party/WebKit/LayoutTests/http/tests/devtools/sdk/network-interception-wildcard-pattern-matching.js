@@ -35,7 +35,7 @@
   function checkPattern(pattern, input) {
     TestRunner.addResult("Checking Pattern: " + pattern);
     TestRunner.addResult("Input: " + input);
-    TestRunner.addResult("Result: " + SDK.RequestInterceptor.patternMatchedLength(pattern, input));
+    TestRunner.addResult("Result: " + SDK.RequestInterceptor.patternMatchedIndex(pattern, input));
     TestRunner.addResult("");
   }
 })();
