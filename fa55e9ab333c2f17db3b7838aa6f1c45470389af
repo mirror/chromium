@@ -46,6 +46,76 @@
       "revId": "fa55e9ab333c2f17db3b7838aa6f1c45470389af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "629b6d3b_001ca1e6",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-14T14:49:12Z",
+      "side": 1,
+      "message": "I agree that this seems atypical, and in general we keep the public API of coordinators minimal to reduce coupling.",
+      "parentUuid": "f0d02058_96f386c4",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "fa55e9ab333c2f17db3b7838aa6f1c45470389af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac353106_bcb1e563",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-14T14:49:12Z",
+      "side": 1,
+      "message": "If this method is used, its name should be dismissActiveTabWithCompletion:",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 25
+      },
+      "revId": "fa55e9ab333c2f17db3b7838aa6f1c45470389af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46a959db_ef29bdac",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-14T14:49:12Z",
+      "side": 1,
+      "message": "Rather than rely on completion blocks, I\u0027d prefer to leverage the coordinator state mechanism to manage this kind of transition (I realize it can\u0027t do it as-is).",
+      "range": {
+        "startLine": 78,
+        "startChar": 38,
+        "endLine": 78,
+        "endChar": 48
+      },
+      "revId": "fa55e9ab333c2f17db3b7838aa6f1c45470389af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
