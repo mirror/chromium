@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67c3839b_720ba4fe",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-14T18:46:52Z",
+      "side": 1,
+      "message": "Ah, good catch. Done.",
+      "parentUuid": "7aaa02a5_412e30ad",
+      "revId": "ec821882f67289eed010ecbf243ce237577046b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59c19e16_aff69c35",
         "filename": "third_party/WebKit/Source/core/css/invalidation/StyleInvalidator.cpp",
         "patchSetId": 1
