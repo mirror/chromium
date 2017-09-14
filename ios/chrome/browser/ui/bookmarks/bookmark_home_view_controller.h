@@ -77,6 +77,8 @@ class BookmarkNode;
 // method is currently used in case of handset only. In the future it
 // will be used by both cases.
 - (void)dismissModals;
+
+// Sets root node on this instance of the view controller.
 - (void)setRootNode:(const bookmarks::BookmarkNode*)rootNode;
 
 @end
