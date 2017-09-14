@@ -14,6 +14,7 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "base/process/process_handle.h"
 #include "base/sequence_checker.h"
 #include "base/sequenced_task_runner.h"
@@ -40,26 +41,25 @@ class SharedSampler : public base::RefCountedThreadSafe<SharedSampler> {
   // Below are the types of callbacks that are invoked on the UI thread
   // when the refresh is done on the worker thread.
   // These callbacks are passed via RegisterCallbacks.
-  using OnIdleWakeupsCallback = base::Callback<void(int)>;
-  using OnPhysicalMemoryCallback = base::Callback<void(int64_t)>;
-  using OnStartTimeCallback = base::Callback<void(base::Time)>;
-  using OnCpuTimeCallback = base::Callback<void(base::TimeDelta)>;
+  struct Results {
+    base::Optional<int> idle_wakeups_per_second;
+    base::Optional<int64_t> physical_bytes;
+    base::Optional<base::Time> start_time;
+    base::Optional<base::TimeDelta> cpu_time;
+  };
+  using OnSamplingCompleteCallback = base::Callback<void(Results)>;
 
   // Returns a combination of refresh flags supported by the shared sampler.
   int64_t GetSupportedFlags() const;
 
   // Registers task group specific callbacks.
-  void RegisterCallbacks(base::ProcessId process_id,
-                         const OnIdleWakeupsCallback& on_idle_wakeups,
-                         const OnPhysicalMemoryCallback& on_physical_memory,
-                         const OnStartTimeCallback& on_start_time,
-                         const OnCpuTimeCallback& on_cpu_time);
+  void RegisterCallback(base::ProcessId process_id,
+                        const OnSamplingCompleteCallback on_sampling_complete);
 
   // Unregisters task group specific callbacks.
-  void UnregisterCallbacks(base::ProcessId process_id);
+  void UnregisterCallback(base::ProcessId process_id);
 
-  // Refreshes the expensive process' stats (for now only idle wakeups per
-  // second) on the worker thread.
+  // Triggers a refresh of the expensive process' stats, on the worker thread.
   void Refresh(base::ProcessId process_id, int64_t refresh_flags);
 
 #if defined(OS_WIN)
@@ -74,25 +74,9 @@ class SharedSampler : public base::RefCountedThreadSafe<SharedSampler> {
   friend class base::RefCountedThreadSafe<SharedSampler>;
   ~SharedSampler();
 
+  typedef std::map<base::ProcessId, OnSamplingCompleteCallback> CallbacksMap;
+
 #if defined(OS_WIN)
-  // The UI-thread callbacks in TaskGroup registered with RegisterCallbacks and
-  // to be called when refresh on the worker thread is done.
-  struct Callbacks {
-    Callbacks();
-    Callbacks(Callbacks&& other);
-    ~Callbacks();
-
-    OnIdleWakeupsCallback on_idle_wakeups;
-    OnPhysicalMemoryCallback on_physical_memory;
-    OnStartTimeCallback on_start_time;
-    OnCpuTimeCallback on_cpu_time;
-
-   private:
-    DISALLOW_COPY_AND_ASSIGN(Callbacks);
-  };
-
-  typedef std::map<base::ProcessId, Callbacks> CallbacksMap;
-
   // Contains all results of refresh for a single process.
   struct RefreshResult {
     base::ProcessId process_id;
@@ -105,6 +89,7 @@ class SharedSampler : public base::RefCountedThreadSafe<SharedSampler> {
   typedef std::vector<RefreshResult> RefreshResults;
 
   // Posted on the worker thread to do the actual refresh.
+  // TODO(wez): Check threading constraints?
   std::unique_ptr<RefreshResults> RefreshOnWorkerThread();
 
   // Called on UI thread when the refresh is done.
@@ -119,6 +104,7 @@ class SharedSampler : public base::RefCountedThreadSafe<SharedSampler> {
 
   // Captures a snapshot of data for all chrome processes.
   // Runs on the worker thread.
+  // TODO(wez): Check threading constraints?
   std::unique_ptr<ProcessDataSnapshot> CaptureSnapshot();
 
   // Produce refresh results by diffing two snapshots.
