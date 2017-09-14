@@ -427,6 +427,24 @@
       "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d949d85f_66f2066e",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-14T03:37:31Z",
+      "side": 1,
+      "message": "IIUC xdg\u0027s set_maximized asks the server to maximize, and it\u0027s up to the server whether to maximize immediately without waiting for the new frame, or whether to maximize after AckConfigure. So, if we want to wait, then we will have a pending window state. Such state can be kept in pending_configs_, but it\u0027s semantically the same as pending_window_state_, just named differently. Am I missing something?",
+      "parentUuid": "483d6a32_23afd8a4",
+      "revId": "3efdb3442d096af69d6be14dfb8fb979e8d228d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
