@@ -8,6 +8,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "media/base/media_log.h"
+#include "media/cdm/cdm_module.h"
 #include "media/mojo/services/interface_factory_impl.h"
 #include "media/mojo/services/mojo_media_client.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
@@ -15,7 +16,6 @@
 
 namespace media {
 
-// TODO(xhwang): Hook up MediaLog when possible.
 MediaService::MediaService(std::unique_ptr<MojoMediaClient> mojo_media_client)
     : mojo_media_client_(std::move(mojo_media_client)) {
   DCHECK(mojo_media_client_);
@@ -26,6 +26,8 @@ MediaService::MediaService(std::unique_ptr<MojoMediaClient> mojo_media_client)
 MediaService::~MediaService() {}
 
 void MediaService::OnStart() {
+  DVLOG(1) << __func__;
+
   ref_factory_.reset(new service_manager::ServiceContextRefFactory(
       base::Bind(&service_manager::ServiceContext::RequestQuit,
                  base::Unretained(context()))));
@@ -36,6 +38,8 @@ void MediaService::OnBindInterface(
     const service_manager::BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
+  DVLOG(1) << __func__ << ": interface_name = " << interface_name;
+
   registry_.BindInterface(interface_name, std::move(interface_pipe));
 }
 
@@ -47,6 +51,21 @@ bool MediaService::OnServiceManagerConnectionLost() {
 
 void MediaService::Create(mojom::MediaServiceRequest request) {
   bindings_.AddBinding(this, std::move(request));
+}
+
+void MediaService::PreSandboxStartup(const base::FilePath& cdm_path) {
+  DVLOG(1) << __func__ << ": cdm_path = " << cdm_path.value();
+
+  if (is_cdm_preloaded_) {
+    DCHECK_EQ(cdm_path, CdmModule::GetInstance()->GetCdmPath());
+    return;
+  }
+
+  is_cdm_preloaded_ = true;
+  CdmModule::GetInstance()->Initialize(cdm_path);
+
+  // This may trigger the sandbox to be sealed.
+  mojo_media_client_->OnPreSandboxStartupFinished();
 }
 
 void MediaService::CreateInterfaceFactory(
