@@ -102,9 +102,9 @@ bool MockInputMethod::IsCandidatePopupOpen() const {
   return false;
 }
 
-void MockInputMethod::ShowImeIfNeeded() {
+void MockInputMethod::ShowImeIfNeeded(bool transient_blur_check) {
   for (InputMethodObserver& observer : observer_list_)
-    observer.OnShowImeIfNeeded();
+    observer.OnShowImeIfNeeded(transient_blur_check);
 }
 
 void MockInputMethod::AddObserver(InputMethodObserver* observer) {

@@ -78,8 +78,7 @@ bool DummyInputMethod::IsCandidatePopupOpen() const {
   return false;
 }
 
-void DummyInputMethod::ShowImeIfNeeded() {
-}
+void DummyInputMethod::ShowImeIfNeeded(bool transient_blur_check) {}
 
 void DummyInputMethod::AddObserver(InputMethodObserver* observer) {
 }

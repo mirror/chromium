@@ -290,7 +290,7 @@ class KeyboardControllerTest : public testing::TestWithParam<bool>,
     ui::InputMethod* input_method = ui()->GetInputMethod();
     input_method->SetFocusedTextInputClient(client);
     if (client && client->GetTextInputType() != ui::TEXT_INPUT_TYPE_NONE) {
-      input_method->ShowImeIfNeeded();
+      input_method->ShowImeIfNeeded(false);
       if (controller_->ui()->GetContentsWindow()->bounds().height() == 0) {
         // Set initial bounds for test keyboard window.
         controller_->ui()->GetContentsWindow()->SetBounds(

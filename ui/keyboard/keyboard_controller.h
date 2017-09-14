@@ -163,7 +163,7 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   void OnFocus() override {}
   void OnInputMethodDestroyed(const ui::InputMethod* input_method) override {}
   void OnTextInputStateChanged(const ui::TextInputClient* client) override;
-  void OnShowImeIfNeeded() override;
+  void OnShowImeIfNeeded(bool transient_blur_check) override;
 
   // Sets the bounds of the container window. Shows the keyboard if contents
   // is first loaded and show_on_content_update_ is true. Called by
@@ -198,6 +198,9 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   // Reports error histogram in case lingering in an intermediate state.
   void ReportLingeringState();
 
+  // Returns true if the keyboard was dismissed only a short time ago.
+  bool IsTransientBlur() const;
+
   std::unique_ptr<KeyboardUI> ui_;
   KeyboardLayoutDelegate* layout_delegate_;
   std::unique_ptr<aura::Window> container_;
@@ -220,6 +223,9 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   gfx::Rect current_keyboard_bounds_;
 
   KeyboardControllerState state_;
+
+  // The timestamp (in seconds) when the keyboard was last dismissed.
+  double last_close_time_seconds_;
 
   static KeyboardController* instance_;
 

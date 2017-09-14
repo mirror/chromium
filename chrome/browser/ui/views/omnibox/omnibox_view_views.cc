@@ -564,7 +564,7 @@ bool OmniboxViewViews::IsImeShowingPopup() const {
 }
 
 void OmniboxViewViews::ShowImeIfNeeded() {
-  GetInputMethod()->ShowImeIfNeeded();
+  GetInputMethod()->ShowImeIfNeeded(false);
 }
 
 void OmniboxViewViews::OnMatchOpened(AutocompleteMatch::Type match_type) {
