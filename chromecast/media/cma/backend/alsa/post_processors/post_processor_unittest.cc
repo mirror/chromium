@@ -29,7 +29,7 @@ void TestDelay(AudioPostProcessor* pp, int sample_rate) {
   std::vector<float> data = GetSineData(kNumFrames, kSinFreq, sample_rate);
   std::vector<float> expected = GetSineData(kNumFrames, kSinFreq, sample_rate);
 
-  int delay_frames = pp->ProcessFrames(data.data(), kNumFrames, 1.0);
+  int delay_frames = pp->ProcessFrames(data.data(), kNumFrames, 1.0, 0.0);
   int delayed_frames = 0;
 
   // PostProcessors that run in dedicated threads may need to delay
@@ -40,7 +40,7 @@ void TestDelay(AudioPostProcessor* pp, int sample_rate) {
       EXPECT_EQ(0.0f, data[i]) << i;
     }
     std::vector<float> data = GetSineData(kNumFrames, kSinFreq, sample_rate);
-    delay_frames = pp->ProcessFrames(data.data(), kNumFrames, 1.0);
+    delay_frames = pp->ProcessFrames(data.data(), kNumFrames, 1.0, 0.0);
 
     ASSERT_GE(delay_frames, delayed_frames);
   }
@@ -68,7 +68,7 @@ void TestRingingTime(AudioPostProcessor* pp, int sample_rate) {
   // Send a second of data to excite the filter.
   for (int i = 0; i < sample_rate; i += kNumFrames) {
     data = GetSineData(kNumFrames, kSinFreq, sample_rate);
-    pp->ProcessFrames(data.data(), kNumFrames, 1.0);
+    pp->ProcessFrames(data.data(), kNumFrames, 1.0, 0.0);
   }
   // Compute the amplitude of the last buffer
   float original_amplitude = SineAmplitude(data, kNumChannels);
@@ -83,7 +83,7 @@ void TestRingingTime(AudioPostProcessor* pp, int sample_rate) {
     while (frames_remaining > 0) {
       frames_to_process = std::min(frames_to_process, frames_remaining);
       data.assign(frames_to_process * kNumChannels, 0);
-      pp->ProcessFrames(data.data(), frames_to_process, 1.0);
+      pp->ProcessFrames(data.data(), frames_to_process, 1.0, 0.0);
       frames_remaining -= frames_to_process;
     }
   }
@@ -91,7 +91,7 @@ void TestRingingTime(AudioPostProcessor* pp, int sample_rate) {
   // Send a little more data and ensure the amplitude is < 1% the original.
   const int probe_frames = 100;
   data.assign(probe_frames * kNumChannels, 0);
-  pp->ProcessFrames(data.data(), probe_frames, 1.0);
+  pp->ProcessFrames(data.data(), probe_frames, 1.0, 0.0);
 
   EXPECT_LE(SineAmplitude(data, probe_frames * kNumChannels),
             original_amplitude * 0.01);
@@ -105,7 +105,7 @@ void TestPassthrough(AudioPostProcessor* pp, int sample_rate) {
   std::vector<float> data = GetSineData(kNumFrames, kSinFreq, sample_rate);
   std::vector<float> expected = GetSineData(kNumFrames, kSinFreq, sample_rate);
 
-  int delay_frames = pp->ProcessFrames(data.data(), kNumFrames, 1.0);
+  int delay_frames = pp->ProcessFrames(data.data(), kNumFrames, 1.0, 0.0);
   int delayed_frames = 0;
 
   // PostProcessors that run in dedicated threads may need to delay
@@ -116,7 +116,7 @@ void TestPassthrough(AudioPostProcessor* pp, int sample_rate) {
       EXPECT_EQ(0.0f, data[i]) << i;
     }
     std::vector<float> data = GetSineData(kNumFrames, kSinFreq, sample_rate);
-    delay_frames = pp->ProcessFrames(data.data(), kNumFrames, 1.0);
+    delay_frames = pp->ProcessFrames(data.data(), kNumFrames, 1.0, 0.0);
 
     ASSERT_GE(delay_frames, delayed_frames);
   }
