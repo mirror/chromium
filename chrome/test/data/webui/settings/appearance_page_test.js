@@ -9,6 +9,7 @@ class TestAppearanceBrowserProxy extends TestBrowserProxy {
       'getDefaultZoom',
       'getThemeInfo',
       'isSupervised',
+      'isWallpaperPolicyControlled',
       'openWallpaperManager',
       'useDefaultTheme',
       'useSystemTheme',
@@ -23,6 +24,9 @@ class TestAppearanceBrowserProxy extends TestBrowserProxy {
 
     /** @private */
     this.isHomeUrlValid_ = true;
+
+    /** @private */
+    this.isWallpaperPolicyControlled_ = true;
   }
 
   /** @override */
@@ -41,6 +45,12 @@ class TestAppearanceBrowserProxy extends TestBrowserProxy {
   isSupervised() {
     this.methodCalled('isSupervised');
     return this.isSupervised_;
+  }
+
+  /** @override */
+  isWallpaperPolicyControlled() {
+    this.methodCalled('isWallpaperPolicyControlled');
+    return Promise.resolve(this.isWallpaperPolicyControlled_);
   }
 
   /** @override */
@@ -79,6 +89,11 @@ class TestAppearanceBrowserProxy extends TestBrowserProxy {
    */
   setValidStartupPageResponse(isValid) {
     this.isHomeUrlValid_ = isValid;
+  }
+
+  /** @param {boolean} Whether the wallpaper is policy controlled. */
+  setIsWallpaperPolicyControlled(isPolicyControlled) {
+    this.isWallpaperPolicyControlled_ = isPolicyControlled;
   }
 }
 
@@ -124,6 +139,19 @@ suite('AppearanceHandler', function() {
       assertTrue(!!button);
       MockInteractions.tap(button);
       return appearanceBrowserProxy.whenCalled('openWallpaperManager');
+    });
+
+    test('wallpaperPolicyControlled', function() {
+      // Should show the wallpaper policy indicator and disable the toggle
+      // button if the wallpaper is policy controlled.
+      appearanceBrowserProxy.setIsWallpaperPolicyControlled(true);
+      createAppearancePage();
+      return appearanceBrowserProxy.whenCalled('isWallpaperPolicyControlled')
+          .then(function() {
+            Polymer.dom.flush();
+            assertFalse(appearancePage.$$('#wallpaperPolicyIndicator').hidden);
+            assertTrue(appearancePage.$$('#wallpaperToggleButton').disabled);
+          });
     });
   } else {
     test('noWallpaperManager', function() {

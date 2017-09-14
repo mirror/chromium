@@ -4,12 +4,19 @@
 
 #include "chrome/browser/ui/webui/settings/appearance_handler.h"
 
+#include "ash/shell.h"
+#include "ash/wallpaper/wallpaper_delegate.h"
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/values.h"
+#include "chrome/browser/chromeos/profiles/profile_helper.h"
+#include "chrome/browser/policy/profile_policy_connector.h"
+#include "chrome/browser/policy/profile_policy_connector_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/themes/theme_service.h"
 #include "chrome/browser/themes/theme_service_factory.h"
+#include "components/policy/core/common/policy_service.h"
+#include "components/policy/policy_constants.h"
 #include "content/public/browser/web_ui.h"
 
 #if defined(OS_CHROMEOS)
@@ -43,6 +50,11 @@ void AppearanceHandler::RegisterMessages() {
       "openWallpaperManager",
       base::Bind(&AppearanceHandler::HandleOpenWallpaperManager,
                  base::Unretained(this)));
+
+  web_ui()->RegisterMessageCallback(
+      "isWallpaperPolicyControlled",
+      base::Bind(&AppearanceHandler::IsWallpaperPolicyControlled,
+                 base::Unretained(this)));
 #endif
 }
 
@@ -60,9 +72,33 @@ void AppearanceHandler::HandleUseSystemTheme(const base::ListValue* args) {
 #endif
 
 #if defined(OS_CHROMEOS)
+void AppearanceHandler::IsWallpaperPolicyControlled(
+    const base::ListValue* args) {
+  CHECK_EQ(args->GetSize(), 1U);
+  const base::Value* callback_id;
+  CHECK(args->Get(0, &callback_id));
+  AllowJavascript();
+
+  bool is_policy_controlled = false;
+  if (Profile* profile = chromeos::ProfileHelper::Get()->GetProfileByUser(
+          user_manager::UserManager::Get()->GetActiveUser())) {
+    policy::PolicyService* policy_service =
+        policy::ProfilePolicyConnectorFactory::GetForBrowserContext(profile)
+            ->policy_service();
+    if (policy_service
+            ->GetPolicies(policy::PolicyNamespace(policy::POLICY_DOMAIN_CHROME,
+                                                  std::string()))
+            .Get(policy::key::kWallpaperImage)) {
+      is_policy_controlled = true;
+    }
+  }
+  ResolveJavascriptCallback(*callback_id, base::Value(is_policy_controlled));
+}
+
 void AppearanceHandler::HandleOpenWallpaperManager(
     const base::ListValue* /*args*/) {
-  chromeos::WallpaperManager::Get()->Open();
+  if (ash::Shell::Get()->wallpaper_delegate()->CanOpenSetWallpaperPage())
+    chromeos::WallpaperManager::Get()->Open();
 }
 #endif
 
