@@ -189,6 +189,8 @@ Polymer({
     };
     this.didSetFocus_ = false;
     this.getNetworkDetails_();
+    if (type == CrOnc.Type.CELLULAR)
+      this.networkingPrivate.requestNetworkScan(CrOnc.Type.CELLULAR);
   },
 
   /** @private */
@@ -607,10 +609,12 @@ Polymer({
     this.networkingPrivate.startActivate(this.guid);
   },
 
-  /** @private */
-  onChooseMobileTap_: function() {
-    // TODO(stevenjb): Integrate ChooseMobileNetworkDialog with WebUI.
-    chrome.send('addNetwork', [this.networkProperties.Type]);
+  /**
+   * @param {!Event} event
+   * @private
+   */
+  onChooseMobileChange_: function(event) {
+    this.networkingPrivate.selectCellularMobileNetwork(this.guid, event.detail);
   },
 
   /** @const {string} */

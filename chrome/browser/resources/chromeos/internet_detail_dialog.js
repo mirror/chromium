@@ -129,6 +129,11 @@ Polymer({
       return;
     }
     this.networkProperties = properties;
+    var type = this.networkProperties.Type;
+    // Request a Cellular scan to populate the network-choose-mobile element
+    // with the latest scan results (Cellular.FoundNetworks).
+    if (!this.networkPropertiesReceived_ && type == CrOnc.Type.CELLULAR)
+      this.networkingPrivate.requestNetworkScan(type);
     this.networkPropertiesReceived_ = true;
   },
 
@@ -216,6 +221,24 @@ Polymer({
   isCellular_: function(networkProperties) {
     return networkProperties.Type == CrOnc.Type.CELLULAR &&
         !!networkProperties.Cellular;
+  },
+
+  /**
+   * @param {!CrOnc.NetworkProperties} networkProperties
+   * @return {boolean}
+   * @private
+   */
+  showCellularChooseNetwork_: function(networkProperties) {
+    return networkProperties.Type == CrOnc.Type.CELLULAR &&
+        !!this.get('Cellular.SupportNetworkScan', this.networkProperties);
+  },
+
+  /**
+   * @param {!Event} event
+   * @private
+   */
+  onChooseMobileChange_: function(event) {
+    this.networkingPrivate.selectCellularMobileNetwork(this.guid, event.detail);
   },
 
   /**
