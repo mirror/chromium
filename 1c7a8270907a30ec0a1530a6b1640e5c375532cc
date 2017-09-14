@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d23424d8_71696175",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-14T19:37:08Z",
+      "side": 1,
+      "message": "Add a comment explaining why?",
+      "revId": "1c7a8270907a30ec0a1530a6b1640e5c375532cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888e5b04_7f3e63df",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-14T19:37:08Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you use MediaElement().ShouldShowControls() ?",
+      "revId": "1c7a8270907a30ec0a1530a6b1640e5c375532cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
