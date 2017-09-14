@@ -16,6 +16,24 @@
       "revId": "fe097b99028bba1592ce5e01b0b80e654e5a16ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41470df0_92de8656",
+        "filename": "third_party/WebKit/Source/core/html/HTMLCanvasElement.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1115754
+      },
+      "writtenOn": "2017-09-14T00:43:28Z",
+      "side": 1,
+      "message": "See my other answer :) Also SetUnsignedIntegralAttribute uses the same constant internally.",
+      "parentUuid": "7c48570f_6f4379f4",
+      "revId": "fe097b99028bba1592ce5e01b0b80e654e5a16ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
