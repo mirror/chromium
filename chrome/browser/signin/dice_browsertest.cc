@@ -324,6 +324,8 @@ class DiceBrowserTestBase : public InProcessBrowserTest,
     command_line->AppendSwitchASCII(switches::kGaiaUrl, base_url.spec());
     command_line->AppendSwitchASCII(switches::kGoogleApisUrl, base_url.spec());
     command_line->AppendSwitchASCII(switches::kLsoUrl, base_url.spec());
+    command_line->AppendSwitchASCII(
+        "--vmodule", "dice_response_handler=1,chrome_signin_helper=1");
   }
 
   void SetUpOnMainThread() override {
@@ -422,14 +424,8 @@ class DiceFixAuthErrorsBrowserTest : public DiceBrowserTestBase {
       : DiceBrowserTestBase(AccountConsistencyMethod::kDiceFixAuthErrors) {}
 };
 
-// This test is flaky on Windows, see https://crbug.com/741652
-#if defined(OS_WIN)
-#define MAYBE_Signin DISABLED_Signin
-#else
-#define MAYBE_Signin Signin
-#endif
 // Checks that signin on Gaia triggers the fetch for a refresh token.
-IN_PROC_BROWSER_TEST_F(DiceBrowserTest, MAYBE_Signin) {
+IN_PROC_BROWSER_TEST_F(DiceBrowserTest, Signin) {
   // Navigate to Gaia and sign in.
   NavigateToURL(kSigninURL);
 

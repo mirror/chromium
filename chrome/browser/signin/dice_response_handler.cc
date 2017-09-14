@@ -272,6 +272,7 @@ void DiceResponseHandler::ProcessDiceSigninHeader(
   DCHECK(!gaia_id.empty());
   DCHECK(!email.empty());
   DCHECK(!authorization_code.empty());
+  VLOG(1) << "Start processing Dice signin response";
   RecordDiceResponseHeader(kSignin);
 
   if (!CanGetTokenForAccount(gaia_id, email)) {
@@ -296,6 +297,7 @@ void DiceResponseHandler::ProcessDiceSignoutHeader(
     const std::vector<std::string>& gaia_ids,
     const std::vector<std::string>& emails) {
   DCHECK_EQ(gaia_ids.size(), emails.size());
+  VLOG(1) << "Start processing Dice signout response";
   if (!signin::IsAccountConsistencyDiceEnabled()) {
     // Ignore signout responses when using kDiceFixAuthErrors.
     DCHECK_EQ(signin::AccountConsistencyMethod::kDiceFixAuthErrors,
