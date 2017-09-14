@@ -25,7 +25,8 @@
 #include "media/base/video_decoder.h"
 #include "media/video/video_decode_accelerator.h"
 
-template <class T> class scoped_refptr;
+template <class T>
+class scoped_refptr;
 
 namespace base {
 class SharedMemory;
@@ -45,9 +46,8 @@ class MediaLog;
 // AcceleratedVideoDecoderMsg_Decode and friends.  Can be created on any thread
 // but must be accessed and destroyed on GpuVideoAcceleratorFactories's
 // GetMessageLoop().
-class MEDIA_EXPORT GpuVideoDecoder
-    : public VideoDecoder,
-      public VideoDecodeAccelerator::Client {
+class MEDIA_EXPORT GpuVideoDecoder : public VideoDecoder,
+                                     public VideoDecodeAccelerator::Client {
  public:
   GpuVideoDecoder(GpuVideoAcceleratorFactories* factories,
                   const RequestOverlayInfoCB& request_overlay_info_cb,
@@ -86,19 +86,14 @@ class MEDIA_EXPORT GpuVideoDecoder
   static const char kDecoderName[];
 
  private:
-  enum State {
-    kNormal,
-    kDrainingDecoder,
-    kDecoderDrained,
-    kError
-  };
+  enum State { kNormal, kDrainingDecoder, kDecoderDrained, kError };
 
   // A SHMBuffer and the DecoderBuffer its data came from.
   struct PendingDecoderBuffer;
 
   typedef std::map<int32_t, PictureBuffer> PictureBufferMap;
 
-  void DeliverFrame(const scoped_refptr<VideoFrame>& frame);
+  void DeliverFrame(const Scoped_refptr<VideoFrame>& frame);
 
   // Static method is to allow it to run even after GVD is deleted.
   static void ReleaseMailbox(base::WeakPtr<GpuVideoDecoder> decoder,
@@ -109,8 +104,8 @@ class MEDIA_EXPORT GpuVideoDecoder
   // Indicate the picture buffer can be reused by the decoder.
   void ReusePictureBuffer(int64_t picture_buffer_id);
 
-  void RecordBufferData(
-      const BitstreamBuffer& bitstream_buffer, const DecoderBuffer& buffer);
+  void RecordBufferData(const BitstreamBuffer& bitstream_buffer,
+                        const DecoderBuffer& buffer);
   void GetBufferData(int32_t id,
                      base::TimeDelta* timetamp,
                      gfx::Rect* visible_rect,
