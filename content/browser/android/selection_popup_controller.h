@@ -37,6 +37,7 @@ class SelectionPopupController : public RenderWidgetHostConnector {
   void OnSelectWordAroundCaretAck(bool did_select,
                                   int start_adjust,
                                   int end_adjust);
+  void OnShowUnhandledTapUIIfNeeded(int x, int y);
 
  private:
   ~SelectionPopupController() override {}
