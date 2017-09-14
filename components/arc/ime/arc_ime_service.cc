@@ -262,7 +262,7 @@ void ArcImeService::OnCancelComposition() {
 void ArcImeService::ShowImeIfNeeded() {
   ui::InputMethod* const input_method = GetInputMethod();
   if (input_method && input_method->GetTextInputClient() == this) {
-    input_method->ShowImeIfNeeded();
+    input_method->ShowImeIfNeeded(false);
   }
 }
 

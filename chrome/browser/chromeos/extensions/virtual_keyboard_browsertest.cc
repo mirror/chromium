@@ -88,7 +88,7 @@ void VirtualKeyboardBrowserTest::ShowVirtualKeyboard() {
   aura::Window* window = ash::Shell::GetPrimaryRootWindow();
   ui::InputMethod* input_method = window->GetHost()->GetInputMethod();
   ASSERT_TRUE(input_method);
-  input_method->ShowImeIfNeeded();
+  input_method->ShowImeIfNeeded(false);
 }
 
 content::RenderViewHost* VirtualKeyboardBrowserTest::GetKeyboardRenderViewHost(

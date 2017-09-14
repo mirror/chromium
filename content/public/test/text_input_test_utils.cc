@@ -216,7 +216,9 @@ class InputMethodObserverAura : public TestInputMethodObserver,
   void OnTextInputStateChanged(const ui::TextInputClient* client) override {}
   void OnInputMethodDestroyed(const ui::InputMethod* input_method) override {}
 
-  void OnShowImeIfNeeded() override { on_show_ime_if_needed_callback_.Run(); }
+  void OnShowImeIfNeeded(bool transient_blur_check) override {
+    on_show_ime_if_needed_callback_.Run();
+  }
 
   ui::InputMethod* input_method_;
   const ui::TextInputClient* text_input_client_;
