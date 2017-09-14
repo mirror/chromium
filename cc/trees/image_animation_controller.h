@@ -168,6 +168,9 @@ class CC_EXPORT ImageAnimationController {
     // Set if the animation has been started.
     bool animation_started_ = false;
 
+    // The number of frames skipped while trying to catch up this animation.
+    size_t num_of_frames_skipped_ = 0u;
+
     // Whether the image is known to be completely loaded in the most recent
     // recording received.
     PaintImage::CompletionState completion_state_ =
