@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac7ba10c_472aaa52",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-14T05:35:52Z",
+      "side": 1,
+      "message": "nit: Please remove a trailing whitespace.",
+      "revId": "43a5b8cd37457686204d7e78135cc03ea3b24689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b66a456_6b0a3697",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-14T05:35:52Z",
+      "side": 1,
+      "message": "Q: When do we pass a |range| returning true for |IsNull()|?",
+      "revId": "43a5b8cd37457686204d7e78135cc03ea3b24689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "423a7c2c_ec6c6c49",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-14T05:35:52Z",
+      "side": 1,
+      "message": "Q: Could you explain when we have selection state |kNone| in\n|new_range.InvalidationSet()|?\n\nHere is my understanding of this patch:\n\n1. Set selection state to |kNone| in |old_range| and collection into |old_selected_objects|.\n2. Compute |new_range| and mark/invalidation; (old ^ new) \u0026 new\n - set selection state in |new_range|.\n - invalidate if layout object not in |old_range|\n3. Invalidate layout objects in |old_range| but not in |new_range|; (old ^ new) \u0026 old\n\nIt is hard to read as above in this change due by naming of functions and\nvariables.",
+      "revId": "43a5b8cd37457686204d7e78135cc03ea3b24689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b9c67cd_e08fe1dd",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-14T05:35:52Z",
+      "side": 1,
+      "message": "I think we don\u0027t need to hold old selection state for invalidating\nnew/old selection boundaries. It can be done by comparing |new_ragne|\nand |old_range|.",
+      "revId": "43a5b8cd37457686204d7e78135cc03ea3b24689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e7a2ac8_583007c8",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-14T05:35:52Z",
+      "side": 1,
+      "message": "nit: s/Previous/Old/\nSince we use |old_selection|, it is better to use \"old\".\nAlso, \"last\"[1] is better than \"previous\" since we use \"previous\" as\ndirection of tree, e.g. Node#previousSibling.",
+      "revId": "43a5b8cd37457686204d7e78135cc03ea3b24689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
