@@ -34,6 +34,24 @@
       "revId": "a17acf54902eadf3e91985dccbed35d2a2b8bc9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1279cb_f1487d80",
+        "filename": "components/exo/keyboard_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-09-14T01:03:36Z",
+      "side": 1,
+      "message": "Thank you for pointing out. I removed the wrong comment.\n\nI ran tests in parallel by changing LaunchUnitTestsSerially to LaunchUnitTests in run_all_tests.cc. With this change, it passes 5 times in a row.",
+      "parentUuid": "83dc640a_c39cae07",
+      "revId": "a17acf54902eadf3e91985dccbed35d2a2b8bc9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
