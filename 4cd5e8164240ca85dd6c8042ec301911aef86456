@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a3f6473_521fb7f6",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-14T08:00:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "898408c7_79c3a355",
+      "revId": "4cd5e8164240ca85dd6c8042ec301911aef86456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3747621b_b7899991",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "4cd5e8164240ca85dd6c8042ec301911aef86456",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "083cbaa1_4d7ba999",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-14T08:00:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3747621b_b7899991",
+      "revId": "4cd5e8164240ca85dd6c8042ec301911aef86456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "895d7042_c3f11ea0",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 958,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-14T08:00:18Z",
+      "side": 1,
+      "message": "I have added an explanation of why this is required here. \nThe reason is that when the user is popping off the UI stack, viewWillAppear is called. If the cache still exists we end up recreating the UI stack.\n\nThe user losing cache position if chrome quits exactly when this is opening, is probably a corner case we can live with?",
+      "parentUuid": "9da41056_b59cdd14",
+      "revId": "4cd5e8164240ca85dd6c8042ec301911aef86456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d94a1b32_7d67d7aa",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "4cd5e8164240ca85dd6c8042ec301911aef86456",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3532a0_be888ee6",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 967,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-14T08:00:18Z",
+      "side": 1,
+      "message": "If the order of nodes has changed, then after a sync, we still show old order, but everything is empty. Just checking parent child reln won\u0027t really help, as the node could have moved to another node at another level. Thanks for this comment Marti. We should recreate the bookmark path, based on what the user was viewing last, instead of caching the path. Made changes accordingly.",
+      "parentUuid": "d94a1b32_7d67d7aa",
+      "revId": "4cd5e8164240ca85dd6c8042ec301911aef86456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a2fe7571_b0a53769",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 971,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-14T08:00:18Z",
+      "side": 1,
+      "message": "With the new changes this is not possible. As the path to the final folder might change based on changes to model. So its hard to cache the scroll positions on these intermediate views. We could still look for the position of the node etc, but its i guess too much for now. So let\u0027s think about this later.",
+      "parentUuid": "349bf092_fbd70c78",
+      "revId": "4cd5e8164240ca85dd6c8042ec301911aef86456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ad70692_70f0cd26",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "4cd5e8164240ca85dd6c8042ec301911aef86456",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77d6d5cb_603c1156",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-14T08:00:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ad70692_70f0cd26",
+      "revId": "4cd5e8164240ca85dd6c8042ec301911aef86456",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
