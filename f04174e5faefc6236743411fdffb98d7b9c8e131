@@ -16,6 +16,24 @@
       "revId": "f04174e5faefc6236743411fdffb98d7b9c8e131",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc6d6c87_3f473611",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1244,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-09-14T22:57:26Z",
+      "side": 1,
+      "message": "per our offline discussion, it is used in the next patch in the series.",
+      "parentUuid": "bb240ea9_61fc9d81",
+      "revId": "f04174e5faefc6236743411fdffb98d7b9c8e131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
