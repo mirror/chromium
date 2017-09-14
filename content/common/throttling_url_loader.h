@@ -74,6 +74,12 @@ class CONTENT_EXPORT ThrottlingURLLoader : public mojom::URLLoaderClient,
   // Disconnects the client connection and releases the URLLoader.
   void DisconnectClient();
 
+  // Sets the forwarding client to receive all the responses. This is useful
+  // for intercepting the response by other components.
+  void set_forwarding_client(mojom::URLLoaderClient* client) {
+    forwarding_client_ = client;
+  }
+
  private:
   ThrottlingURLLoader(
       std::vector<std::unique_ptr<URLLoaderThrottle>> throttles,
