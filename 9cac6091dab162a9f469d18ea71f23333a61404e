@@ -694,6 +694,24 @@
     },
     {
       "key": {
+        "uuid": "a6a32d04_8fab0a84",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1193769
+      },
+      "writtenOn": "2017-09-14T20:07:34Z",
+      "side": 1,
+      "message": "I\u0027m sorry, you\u0027re misreading the assembly at https://godbolt.org/g/vewsR7.\nOnce again, we need to have more faith in our compiler.  :)\n\nThis definitely is a simple 4x unroll, and executes the 4x loop if either len\nis an exact multiple of 4 on its way in, or after executing the first len%4\niterations and there are still more to go.  You can see this yourself by\nrunning the code under a profiler.\n\nFirst we extract s1 and s2, and jump to the end if len \u003d\u003d 0:\n\n        movzwl  %di, %eax\n        shrl    $16, %edi\n        testq   %rdx, %rdx\n        je      .LBB0_6\n\nNow look to see if len (%rdx) is a multiple of 4, and if so jump to .LBB0_4,\nalso storing len-1 into %r8.  %r8 will hold this len-1 the whole way through,\nand %rcx here is set to len % 4.\n\n        leaq    -1(%rdx), %r8\n        movq    %rdx, %rcx\n        andq    $3, %rcx\n        je      .LBB0_4\n\nFor now let\u0027s say len%4 \u003d\u003d 0 and we take the branch to .LBB0_4.\n\n  .LBB0_4:\n        cmpq    $3, %r8\n        jb      .LBB0_6\n\nThis block does double duty and will come back later, but here when we\u0027re\ncoming through already aligned, it\u0027s behavior is trivial.  It jumps to the end\nif len-1 \u003c 3 with an unsigned comparison.  We know len % 4 \u003d\u003d 0, so it\u0027s not\npossible for len-1 to be less than 3.  (Even if len were 0, len-1 is ~0,\ngreater than 3.)\n\nSo we fall through to .LBB0_5 and go four at a time, then exit.  Cool.\n\n  .LBB0_5:\n        movzbl  (%rsi), %ecx\n        addl    %eax, %ecx\n        addl    %ecx, %edi\n        movzbl  1(%rsi), %eax\n        addl    %ecx, %eax\n        addl    %eax, %edi\n        movzbl  2(%rsi), %ecx\n        addl    %eax, %ecx\n        addl    %ecx, %edi\n        movzbl  3(%rsi), %eax\n        addl    %ecx, %eax\n        addl    %eax, %edi\n        addq    $4, %rsi\n        addq    $-4, %rdx\n        jne     .LBB0_5\n  .LBB0_6:\n        shll    $16, %edi\n        orl     %eax, %edi\n        movl    %edi, %eax\n        retq\n\nNow let\u0027s go back and say we didn\u0027t take that first branch to .LBB0_4.  Next\nthing we do is negate len % 4 (%rcx), which we\u0027re going to use as our counter\nup to zero.  We know it\u0027s non-zero, so we\u0027ll get right into the loop one at a\ntime, terminating when %rcx hits zero.\n\n        negq    %rcx\n  .LBB0_3:\n        decq    %rdx\n        movzbl  (%rsi), %r9d\n        incq    %rsi\n        addl    %r9d, %eax\n        addl    %eax, %edi\n        incq    %rcx\n        jne     .LBB0_3\n\nNow we fall through to .LBB0_4  and hit that same check, was our original len-1 \u003c 3?  If so,\nwe\u0027re done, jump to .LBB0_6.  _If not_, we fall trhough to .LBB0_5 and continue 4 at a time\nuntil done.\n\n  .LBB0_4:\n        cmpq    $3, %r8\n        jb      .LBB0_6\n  .LBB0_5\n        ...",
+      "parentUuid": "1f309b70_f7325b02",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1eae378_20622253",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16
