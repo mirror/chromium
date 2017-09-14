@@ -413,12 +413,10 @@ void ManagePasswordsBubbleView::AutoSigninView::OnTimer() {
 // ManagePasswordsBubbleView::PendingView -------------------------------------
 
 // A view offering the user the ability to save credentials. Contains a
-// single ManagePasswordItemsView, along with a "Save Passwords" button,
-// a "Never" button and an "Edit" button to edit username field.
-class ManagePasswordsBubbleView::PendingView
-    : public views::View,
-      public views::ButtonListener,
-      public views::FocusChangeListener {
+// single ManagePasswordItemsView, along with a "Save Passwords" button
+// and a "Never" button.
+class ManagePasswordsBubbleView::PendingView : public views::View,
+                                               public views::ButtonListener {
  public:
   explicit PendingView(ManagePasswordsBubbleView* parent);
   ~PendingView() override;
@@ -427,25 +425,18 @@ class ManagePasswordsBubbleView::PendingView
   void CreateAndSetLayout();
   // views::ButtonListener:
   void ButtonPressed(views::Button* sender, const ui::Event& event) override;
-  // views::FocusChangeListener:
-  void OnWillChangeFocus(View* focused_before, View* focused_now) override;
-  void OnDidChangeFocus(View* focused_before, View* focused_now) override;
-  // views::View:
-  bool OnKeyPressed(const ui::KeyEvent& event) override;
+
   gfx::Size CalculatePreferredSize() const override;
 
   void ToggleEditingState(bool accept_changes);
 
   ManagePasswordsBubbleView* parent_;
 
-  views::Button* edit_button_;
   views::Button* save_button_;
   views::Button* never_button_;
   views::View* username_field_;
   views::View* password_field_;
   views::ToggleImageButton* password_view_button_;
-
-  bool editing_;
 
   DISALLOW_COPY_AND_ASSIGN(PendingView);
 };
@@ -453,13 +444,11 @@ class ManagePasswordsBubbleView::PendingView
 ManagePasswordsBubbleView::PendingView::PendingView(
     ManagePasswordsBubbleView* parent)
     : parent_(parent),
-      edit_button_(nullptr),
       save_button_(nullptr),
       never_button_(nullptr),
       username_field_(nullptr),
       password_field_(nullptr),
-      password_view_button_(nullptr),
-      editing_(false) {
+      password_view_button_(nullptr) {
   CreateAndSetLayout();
   parent_->set_initially_focused_view(save_button_);
 }
@@ -469,12 +458,6 @@ void ManagePasswordsBubbleView::PendingView::CreateAndSetLayout() {
   layout->set_minimum_size(gfx::Size(kDesiredBubbleWidth, 0));
 
   // Create the edit, save and never buttons.
-  if (!edit_button_ &&
-      base::FeatureList::IsEnabled(
-          password_manager::features::kEnableUsernameCorrection)) {
-    edit_button_ = views::MdTextButton::CreateSecondaryUiButton(
-        this, l10n_util::GetStringUTF16(IDS_PASSWORD_MANAGER_EDIT_BUTTON));
-  }
   if (!save_button_) {
     save_button_ = views::MdTextButton::CreateSecondaryUiBlueButton(
         this, l10n_util::GetStringUTF16(IDS_PASSWORD_MANAGER_SAVE_BUTTON));
@@ -487,7 +470,8 @@ void ManagePasswordsBubbleView::PendingView::CreateAndSetLayout() {
 
   // Credentials row.
   if (!parent_->model()->pending_password().username_value.empty() ||
-      edit_button_) {
+      base::FeatureList::IsEnabled(
+          password_manager::features::kEnableUsernameCorrection)) {
     // Create the eye icon if password selection feature is on.
     if (base::FeatureList::IsEnabled(
             password_manager::features::kEnablePasswordSelection) &&
@@ -498,14 +482,15 @@ void ManagePasswordsBubbleView::PendingView::CreateAndSetLayout() {
     const autofill::PasswordForm* password_form =
         &parent_->model()->pending_password();
     DCHECK(!username_field_);
-    if (editing_) {
+    if (base::FeatureList::IsEnabled(
+            password_manager::features::kEnableUsernameCorrection)) {
       username_field_ = GenerateUsernameEditable(*password_form).release();
     } else {
       username_field_ = GenerateUsernameLabel(*password_form).release();
     }
 
     DCHECK(!password_field_);
-    if (password_view_button_ && editing_ &&
+    if (password_view_button_ &&
         password_form->other_possible_passwords.size() > 1) {
       password_field_ = GeneratePasswordDropdownView(*password_form).release();
     } else {
@@ -521,13 +506,8 @@ void ManagePasswordsBubbleView::PendingView::CreateAndSetLayout() {
                views::DISTANCE_DIALOG_CONTENT_MARGIN_BOTTOM_CONTROL));
   }
   // Button row.
-  ColumnSetType column_set_type =
-      edit_button_ ? TRIPLE_BUTTON_COLUMN_SET : DOUBLE_BUTTON_COLUMN_SET;
-  BuildColumnSet(layout, column_set_type);
-  layout->StartRow(0, column_set_type);
-  if (column_set_type == TRIPLE_BUTTON_COLUMN_SET) {
-    layout->AddView(edit_button_);
-  }
+  BuildColumnSet(layout, DOUBLE_BUTTON_COLUMN_SET);
+  layout->StartRow(0, DOUBLE_BUTTON_COLUMN_SET);
   layout->AddView(save_button_);
   layout->AddView(never_button_);
 }
@@ -538,11 +518,23 @@ ManagePasswordsBubbleView::PendingView::~PendingView() {
 void ManagePasswordsBubbleView::PendingView::ButtonPressed(
     views::Button* sender,
     const ui::Event& event) {
-  if (sender == edit_button_) {
-    ToggleEditingState(false);
-    return;
-  }
   if (sender == save_button_) {
+    if (base::FeatureList::IsEnabled(
+            password_manager::features::kEnableUsernameCorrection)) {
+      if (password_view_button_ &&
+          parent_->model()->pending_password().other_possible_passwords.size() >
+              1) {
+        parent_->model()->OnCredentialEdited(
+            static_cast<views::Textfield*>(username_field_)->text(),
+            parent_->model()->pending_password().other_possible_passwords.at(
+                static_cast<views::Combobox*>(password_field_)
+                    ->selected_index()));
+      } else {
+        parent_->model()->OnCredentialEdited(
+            static_cast<views::Textfield*>(username_field_)->text(),
+            parent_->model()->pending_password().password_value);
+      }
+    }
     parent_->model()->OnSaveClicked();
     if (parent_->model()->ReplaceToShowPromotionIfNeeded()) {
       parent_->Refresh();
@@ -560,68 +552,11 @@ void ManagePasswordsBubbleView::PendingView::ButtonPressed(
   parent_->CloseBubble();
 }
 
-void ManagePasswordsBubbleView::PendingView::OnWillChangeFocus(
-    View* focused_before,
-    View* focused_now) {
-  // Nothing to do here.
-}
-
-void ManagePasswordsBubbleView::PendingView::OnDidChangeFocus(
-    View* focused_before,
-    View* focused_now) {
-  if (editing_ && focused_now != username_field_ &&
-      focused_now != password_field_) {
-    ToggleEditingState(true);
-  }
-}
-
-bool ManagePasswordsBubbleView::PendingView::OnKeyPressed(
-    const ui::KeyEvent& event) {
-  if (editing_ && (event.key_code() == ui::KeyboardCode::VKEY_RETURN ||
-                   event.key_code() == ui::KeyboardCode::VKEY_ESCAPE)) {
-    ToggleEditingState(event.key_code() == ui::KeyboardCode::VKEY_RETURN);
-    return true;
-  }
-  return false;
-}
-
 gfx::Size ManagePasswordsBubbleView::PendingView::CalculatePreferredSize()
     const {
   return gfx::Size(kDesiredBubbleWidth,
                    GetLayoutManager()->GetPreferredHeightForWidth(
                        this, kDesiredBubbleWidth));
-}
-
-void ManagePasswordsBubbleView::PendingView::ToggleEditingState(
-    bool accept_changes) {
-  if (editing_ && accept_changes) {
-    parent_->model()->OnUsernameEdited(
-        static_cast<views::Textfield*>(username_field_)->text());
-    if (password_view_button_ &&
-        parent_->model()->pending_password().other_possible_passwords.size() >
-            1) {
-      parent_->model()->OnPasswordSelected(
-          parent_->model()->pending_password().other_possible_passwords.at(
-              static_cast<views::Combobox*>(password_field_)
-                  ->selected_index()));
-    }
-  }
-  editing_ = !editing_;
-  edit_button_->SetEnabled(!editing_);
-  RemoveChildView(username_field_);
-  username_field_ = nullptr;
-  RemoveChildView(password_field_);
-  password_field_ = nullptr;
-  CreateAndSetLayout();
-  Layout();
-  if (editing_) {
-    GetFocusManager()->SetFocusedView(username_field_);
-    GetFocusManager()->AddFocusChangeListener(this);
-  } else {
-    GetFocusManager()->RemoveFocusChangeListener(this);
-    GetFocusManager()->SetFocusedView(save_button_);
-  }
-  parent_->SizeToContents();
 }
 
 // ManagePasswordsBubbleView::ManageView --------------------------------------
