@@ -754,6 +754,7 @@ TEST_F(AutofillTableTest, AutofillProfile) {
   home_profile.SetRawInfo(ADDRESS_HOME_COUNTRY, ASCIIToUTF16("US"));
   home_profile.SetRawInfo(PHONE_HOME_WHOLE_NUMBER, ASCIIToUTF16("18181234567"));
   home_profile.set_language_code("en");
+  home_profile.SetValidityFromBitfieldValue(6);
 
   Time pre_creation_time = Time::Now();
   EXPECT_TRUE(table_->AddAutofillProfile(home_profile));
@@ -836,6 +837,7 @@ TEST_F(AutofillTableTest, AutofillProfile) {
   billing_profile.SetRawInfo(ADDRESS_HOME_COUNTRY, ASCIIToUTF16("US"));
   billing_profile.SetRawInfo(PHONE_HOME_WHOLE_NUMBER,
                              ASCIIToUTF16("18181230000"));
+  billing_profile.SetValidityFromBitfieldValue(54);
   Time pre_modification_time_2 = Time::Now();
   EXPECT_TRUE(table_->UpdateAutofillProfile(billing_profile));
   Time post_modification_time_2 = Time::Now();
@@ -1610,6 +1612,25 @@ TEST_F(AutofillTableTest, Autofill_GetAllAutofillEntries_TwoSame) {
                              CompareAutofillEntries);
 
   CompareAutofillEntrySets(entry_set, expected_entries);
+}
+
+TEST_F(AutofillTableTest, AutofillProfileValidityBitfield) {
+  // Add an autofill profile with a non default validity state.
+  const int kValidityBitfieldValue = 1984;
+  AutofillProfile profile;
+  profile.set_origin(std::string());
+  profile.SetRawInfo(NAME_FIRST, ASCIIToUTF16("John"));
+  profile.SetRawInfo(NAME_LAST, ASCIIToUTF16("Smith"));
+  profile.SetValidityFromBitfieldValue(kValidityBitfieldValue);
+
+  // Add the profile to the table.
+  EXPECT_TRUE(table_->AddAutofillProfile(profile));
+
+  // Get the profile from the table and make sure the validity was set.
+  std::unique_ptr<AutofillProfile> db_profile =
+      table_->GetAutofillProfile(profile.guid());
+  ASSERT_TRUE(db_profile);
+  EXPECT_EQ(kValidityBitfieldValue, db_profile->GetValidityBitfieldValue());
 }
 
 TEST_F(AutofillTableTest, SetGetServerCards) {
