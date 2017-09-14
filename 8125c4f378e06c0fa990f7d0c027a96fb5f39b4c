@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1066466c_d98aa8d2",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-09-14T16:40:51Z",
+      "side": 1,
+      "message": "Actually, FontFace will be split with a Document version and a Worker version (on a follow up CL). I\u0027ll make the worker version use the new one while the document version can keep using the old one.",
+      "parentUuid": "985cbd5e_48ebc083",
+      "range": {
+        "startLine": 19,
+        "startChar": 18,
+        "endLine": 19,
+        "endChar": 34
+      },
+      "revId": "8125c4f378e06c0fa990f7d0c027a96fb5f39b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95609813_f419921a",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserContext.h",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "8125c4f378e06c0fa990f7d0c027a96fb5f39b4c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f25da2d_ae3fef87",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserContext.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-09-14T16:40:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95609813_f419921a",
+      "revId": "8125c4f378e06c0fa990f7d0c027a96fb5f39b4c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
