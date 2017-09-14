@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e72db1d_df1342fb",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1852,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-14T20:56:28Z",
+      "side": 1,
+      "message": "If this is only allowed on https, can you verify that http cannot be redirected to https. or at least that this header is removed for that redirect.",
+      "revId": "881cf58d76d3983dc85829adc85bd37e40922926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a14cef_9f6a9c63",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1871,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-14T20:56:28Z",
+      "side": 1,
+      "message": "s/request header can be added/request header is added/",
+      "revId": "881cf58d76d3983dc85829adc85bd37e40922926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a48cdd2_265977bf",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 1872,
+      "author": {
+        "id": 1166490
+      },
+      "writtenOn": "2017-09-14T20:56:28Z",
+      "side": 1,
+      "message": "is there a bug for this?",
+      "revId": "881cf58d76d3983dc85829adc85bd37e40922926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
