@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e39fab9f_ce9048cc",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilderTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3612,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-14T03:22:38Z",
+      "side": 0,
+      "message": "This test is moved into PaintPropertyTreeUpdateTests.cpp",
+      "revId": "778279c9d06879103f0f0698849eff541204e159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
