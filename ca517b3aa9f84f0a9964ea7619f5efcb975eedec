@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e463f347_7229d916",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-14T22:53:40Z",
+      "side": 1,
+      "message": "We need a new OMNIBOX_INCOGNITO_RESULTS_CHROME_HOME_MODERN_LAYOUT_BG_COLOR (or something like that perhaps less verbose) since this change should only be made when modern is enabled.",
+      "range": {
+        "startLine": 122,
+        "startChar": 30,
+        "endLine": 122,
+        "endChar": 76
+      },
+      "revId": "ca517b3aa9f84f0a9964ea7619f5efcb975eedec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918c7803_a68095c1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-14T22:53:40Z",
+      "side": 1,
+      "message": "We should only update text colors when modern is enabled. I think this is going to affect regular Chrome as well.",
+      "range": {
+        "startLine": 404,
+        "startChar": 7,
+        "endLine": 405,
+        "endChar": 83
+      },
+      "revId": "ca517b3aa9f84f0a9964ea7619f5efcb975eedec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
