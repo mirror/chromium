@@ -109,12 +109,23 @@
       next();
     },
     function checkContextFilter(next) {
-      Console.ConsoleView.instance()._filter.setContext('context1');
+      var filter = new Console.ConsoleFilter('context1', {
+        key: Console.ConsoleViewFilter.FilterType.Context,
+        text: 'context1',
+        negative: false
+      });
+      Console.ConsoleView.instance()._filter.onSidebarFilterChanged(filter);
+      dumpVisibleMessages();
+      next();
+    },
+    function checkDefaultFilter(next) {
+      var consoleView = Console.ConsoleView.instance();
+      consoleView._filter.onSidebarFilterChanged(consoleView._sidebar._defaultFilter);
       dumpVisibleMessages();
       next();
     },
     function checkAllContextsFilter(next) {
-      Console.ConsoleView.instance()._filter.setContext(Console.ConsoleSidebar.AllContextsFilter);
+      Console.ConsoleView.instance()._filter.onSidebarFilterChanged(null);
       dumpVisibleMessages();
       next();
     },
