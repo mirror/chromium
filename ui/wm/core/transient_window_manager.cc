@@ -137,15 +137,7 @@ void TransientWindowManager::RestackTransientDescendants() {
       base::AutoReset<Window*> resetter(
           &descendant_manager->stacking_target_,
           window_);
-      for (aura::client::TransientWindowClientObserver& observer :
-           TransientWindowController::Get()->observers_) {
-        observer.OnWillRestackTransientChildAbove(window_, *it);
-      }
       parent->StackChildAbove((*it), window_);
-      for (aura::client::TransientWindowClientObserver& observer :
-           TransientWindowController::Get()->observers_) {
-        observer.OnDidRestackTransientChildAbove(window_, *it);
-      }
     }
   }
 }
