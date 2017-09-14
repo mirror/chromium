@@ -117,6 +117,30 @@
       "revId": "404b211f41283a2a9118e939a99d5199ed40e8d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e5f6f9_198ad774",
+        "filename": "chrome/browser/ui/views/try_chrome_dialog.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-14T07:27:09Z",
+      "side": 1,
+      "message": "Ooops. My editor tried to be too smart when wrapping the line. Done.",
+      "parentUuid": "ba0d9dd1_1af4df03",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 58,
+        "endChar": 36
+      },
+      "revId": "404b211f41283a2a9118e939a99d5199ed40e8d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
