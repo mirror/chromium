@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "16984ea5_be473fff",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-14T01:55:46Z",
+      "side": 1,
+      "message": "I would like to separate the two: UpdateUi() is only responsible to make sure the correct set of buttons are shown. It\u0027s the ShelfWidget\u0027s responsibility to control which view to show. Just as the buttons themselves cannot decide if they are shown or not.",
+      "parentUuid": "957ed26c_cfcbb316",
+      "revId": "f6bdb9cc9e3fbdd8788abba919de8a12a5017e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92fc8b57_4ee07c75",
         "filename": "ash/shelf/login_shelf_view.h",
         "patchSetId": 14

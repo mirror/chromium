@@ -355,6 +355,24 @@
     },
     {
       "key": {
+        "uuid": "f0f1a3c1_82f14393",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-14T01:55:46Z",
+      "side": 1,
+      "message": "This is a complicated issue. I checked that the tests had correct setup (the session state is ACTIVE, and LoginShelfView is hidden properly), but |GetShelfWidget()-\u003eGetContentsView()-\u003eGetPreferredSize().width()| calculates the width of the largest login shelf button if they are not invisible during active session. This has something to do with how GetPreferredSize() was defined by the layout managers of |ShelfWidget::DelegateView| and |LoginShelfView| respectively. So we are comparing two very different things here: the width of the shelf when it\u0027s aligned to the right (set to 48), and the width of largest login shelf button (could be more than 48 and shouldn\u0027t have an upper limit). (login shelf will always be at bottom.) I think it makes sense to set invisible to the login shelf buttons. This may avoid unforeseen bugs.",
+      "parentUuid": "c2c388a1_d25456f0",
+      "revId": "e1213ff121094e3da98f61c8adb8e9c8d4466fdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd6d7b03_b1a2fc77",
         "filename": "ash/shelf/login_shelf_view.h",
         "patchSetId": 12
