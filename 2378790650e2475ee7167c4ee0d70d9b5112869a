@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1f63144_8022f223",
+        "filename": "base/trace_event/memory_infra_background_whitelist.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T12:21:09Z",
+      "side": 1,
+      "message": "given that this is used only in one place I\u0027ll just use the string inline and not define a constant. It just adds an extra hop when reading the code.\n(and if this was needed, this should have been const char kGlobalPrefix[] \u003d \"global\")",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 247,
+        "endChar": 27
+      },
+      "revId": "2378790650e2475ee7167c4ee0d70d9b5112869a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f9ad61_af161439",
+        "filename": "base/trace_event/memory_infra_background_whitelist.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T12:21:09Z",
+      "side": 1,
+      "message": "not needed (See below)",
+      "range": {
+        "startLine": 248,
+        "startChar": 0,
+        "endLine": 248,
+        "endChar": 32
+      },
+      "revId": "2378790650e2475ee7167c4ee0d70d9b5112869a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78653514_fece9b42",
+        "filename": "base/trace_event/memory_infra_background_whitelist.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T12:21:09Z",
+      "side": 1,
+      "message": "Use base/strings/string_util.h\n\nif (StartsWith(name, \"global\", CompareCase::SENSITIVE))\n  return true;",
+      "revId": "2378790650e2475ee7167c4ee0d70d9b5112869a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66a1eee1_c5607b69",
+        "filename": "base/trace_event/memory_infra_background_whitelist_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-14T12:21:09Z",
+      "side": 1,
+      "message": "we have the other whitelist tests in memory_dump_manager_unittests.cc, I\u0027d just piggy back on those",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 3
+      },
+      "revId": "2378790650e2475ee7167c4ee0d70d9b5112869a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
