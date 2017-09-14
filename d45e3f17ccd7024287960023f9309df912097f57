@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f26e621_091e0f75",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-14T20:42:59Z",
+      "side": 1,
+      "message": "This patch is #2 of #3 -- it won\u0027t work until we plumb the atomic add/remove event all the way to ListSelectionModel. \n\nPatch #1 was doing the TableView -\u003e ListSelectionModel part of the plumbing.\nPatch #2 (this one) does the WebContentsTaskProvider -\u003e TaskManagerImpl plumbing.\nPatch #3 completes the middle part, which is TaskManagerImpl -\u003e TaskManagerTableModel -\u003e TableView\n\nYou might enjoy looking at the commit comment for my (draft) patch #3 here: https://chromium-review.googlesource.com/c/chromium/src/+/665176 , as it explains this in more detail.\n\nAnd yes, it\u0027ll work when there are multiple rows selected in the task manager!",
+      "parentUuid": "7ccb3152_657fc2b0",
+      "range": {
+        "startLine": 12,
+        "startChar": 26,
+        "endLine": 13,
+        "endChar": 52
+      },
+      "revId": "d45e3f17ccd7024287960023f9309df912097f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "648bf90d_fda78328",
         "filename": "/COMMIT_MSG",
         "patchSetId": 7
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e6f6c888_ecc6c1c0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-14T20:42:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "648bf90d_fda78328",
+      "range": {
+        "startLine": 24,
+        "startChar": 31,
+        "endLine": 24,
+        "endChar": 40
+      },
+      "revId": "d45e3f17ccd7024287960023f9309df912097f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19b2a964_0377ca9f",
         "filename": "chrome/browser/task_manager/providers/web_contents/web_contents_task_provider.cc",
         "patchSetId": 7
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-14T19:40:08Z",
       "side": 1,
       "message": "This code is somewhat duplicated wrt what is in WebContentsEntry::CreateTaskForFrame.  Are there good options for deduplicating?  Or is it not worth it?",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 78
+      },
+      "revId": "d45e3f17ccd7024287960023f9309df912097f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea44ed2_34964645",
+        "filename": "chrome/browser/task_manager/providers/web_contents/web_contents_task_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-14T20:42:59Z",
+      "side": 1,
+      "message": "I\u0027ve tried a couple things, and haven\u0027t found anything particularly satisfactory:\n\n - If you try to just hoist the CreateTask() / new SubframeTask into a factory function, it\u0027s a little weird because you have to either plumb in a bool to say which kind to create, or else you have to assign main_frame_site_instance_ earlier in CreateTaskForFrame so that it\u0027s the right value when the factory function reads it. Moreover, you need to think about ownership more -- there\u0027s a temptation to return a unique_ptr that, because of the multiply-listed-in-a-map ownership semantics used here, is immediately release()\u0027d. It just comes out gross.\n\n - ReplaceTaskForSiteInstance is definitely a sub-case of CreateTaskForFrame, except it needs a different announcement behavior (as explained by the \"// Subtle:\" comment) and also a different behavior when (frames_it \u003d\u003d frames_by_site_instance_.end()) -- in the ReplaceTaskForSiteInstance/RenderFrameReady case, we want to do nothing, whereas in the CreateTaskForFrame we want to register the original task.\n\nAt the end I went with the copy/paste because it seemed actually the clearest option. It definitely /feels/ like there ought to be a way to factor this, but what you run up against is that WebContentsEntry::CreateTaskForFrame is already pretty sequential and factored very well to do exactly what it does, reading and mutating a bunch of data structures in a particular order, and introducing helper functions would actually obscure what\u0027s going on.",
+      "parentUuid": "19b2a964_0377ca9f",
       "range": {
         "startLine": 210,
         "startChar": 0,
