@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f263419a_752e8d83",
+        "filename": "media/gpu/d3d11_video_decode_accelerator_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-14T21:55:11Z",
+      "side": 1,
+      "message": "will update the state machine to include an error state, and handle this appropriately in some later CL.",
+      "range": {
+        "startLine": 258,
+        "startChar": 2,
+        "endLine": 258,
+        "endChar": 7
+      },
+      "revId": "8a7ea662041c049161a1b30a568bd29b4d66da5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
