@@ -46,6 +46,30 @@
       "revId": "04e948130407d8dae2ea17bcea151a0e5dfd04c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c2a8140f_eec7cbe8",
+        "filename": "components/vector_icons/close_16.icon",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-14T19:53:35Z",
+      "side": 1,
+      "message": "the 1x version, when it exists, is not just a scaled version of the 2x icon. Scaling alone doesn\u0027t guarantee a crisp looking image at small pixel counts.\n\nThe 16 in the name of the icon refers to DIP. This definition was created in the context of a 2x dsf (e.g. retina display) which explains the 32, but is really just an artifact of how it was delivered by the designer. It would work the same if all numbers in this file were multiplied by a constant (such as 0.5).",
+      "parentUuid": "f6322004_0a216c6d",
+      "range": {
+        "startLine": 6,
+        "startChar": 19,
+        "endLine": 6,
+        "endChar": 21
+      },
+      "revId": "04e948130407d8dae2ea17bcea151a0e5dfd04c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
