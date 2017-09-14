@@ -358,9 +358,11 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   void UpdatePushedSuggestionsSubscriptionDueToStatusChange(
       RemoteSuggestionsStatus new_status);
 
-  // Converts the cached suggestions in the given |category| to content
-  // suggestions and notifies the observer.
-  void NotifyNewSuggestions(Category category, const CategoryContent& content);
+  // Converts the cached |suggestions| in the given |category| to content
+  // suggestions and notifies the observer. The category must be available, if
+  // you call this function.
+  void NotifyNewSuggestions(Category category,
+                            const RemoteSuggestion::PtrVector& suggestions);
 
   // Updates the internal status for |category| to |category_status_| and
   // notifies the content suggestions observer if it changed.
