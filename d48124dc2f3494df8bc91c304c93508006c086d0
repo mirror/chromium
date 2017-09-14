@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad3ad282_f9e6e61b",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/MainActivityTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-14T20:28:30Z",
+      "side": 1,
+      "message": "Maybe change the test name to testIgnoreIntentUrlOutOfScopeBecauseOfScheme()\nI think that this name better reflects what the test is testing\n\nFor the test description perhaps \"rewrites the intent URL with start URL\" -\u003e \"ignores the intent URL and uses the manifest start URL\"\n\nPlease also mention loggedIntentUrlParam in the test description",
+      "revId": "d48124dc2f3494df8bc91c304c93508006c086d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c3a0748_fe125f32",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/MainActivityTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-14T20:28:30Z",
+      "side": 1,
+      "message": "What is this test case testing? If it is testing the case of the path being out of scope of |manifestScope|, the path should be the only reason that |intentStartUrl| is not in the scope of |manifestScope|.\n\nAn example of a test case would be\nintentStartUrl \u003d \"https://google.com/maps/\"\nmanifestScope \u003d \"https://www.google.com/maps/contrib/\"",
+      "revId": "d48124dc2f3494df8bc91c304c93508006c086d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41569e38_7c5aa067",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/WebApkUtilsTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-14T20:28:30Z",
+      "side": 1,
+      "message": "Can you fix the test description.\n\n\"is set and {@link intentStartUrl} is outside of the scope specified in the manifest meta data.\"",
+      "revId": "d48124dc2f3494df8bc91c304c93508006c086d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d136fadb_562f09d5",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-14T20:28:30Z",
+      "side": 1,
+      "message": "Nit: We can move this line to inside the if() statement on line 144 and do\n\nreturn startUrl;\n\non line 149.",
+      "revId": "d48124dc2f3494df8bc91c304c93508006c086d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a1c98d_001df69f",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-14T20:28:30Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you be testing the equality of the host and scheme?\n\nwww.google.com is not within the scope of www.google.co (for the country of Columbia)\nwww.google.cat (for the community of Catelonia) is not within the scope of www.google.ca\nhttps://www.google.com is not in the scope http://www.google.com\n\nNit: Check the scheme first, then the host, then the path because thats the order that the components appear in a URL",
+      "revId": "d48124dc2f3494df8bc91c304c93508006c086d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
