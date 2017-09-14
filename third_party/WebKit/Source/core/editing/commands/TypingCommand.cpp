@@ -113,7 +113,8 @@ SelectionInDOMTree CreateSelection(const size_t start,
   return selection;
 }
 
-bool CanAppendNewLineFeedToSelection(const VisibleSelection& selection) {
+bool CanAppendNewLineFeedToSelection(const VisibleSelection& selection,
+                                     const Document& document) {
   Element* element = selection.RootEditableElement();
   if (!element)
     return false;
@@ -121,6 +122,11 @@ bool CanAppendNewLineFeedToSelection(const VisibleSelection& selection) {
   BeforeTextInsertedEvent* event =
       BeforeTextInsertedEvent::Create(String("\n"));
   element->DispatchEvent(event);
+  if (!selection.IsValidFor(document)) {
+    // editing/inserting/insert-data-disconnect-nodes-on-webkitBeforeTextInserted.html
+    // reaches here
+    return false;
+  }
   return event->GetText().length();
 }
 
@@ -622,7 +628,7 @@ void TypingCommand::InsertTextRunWithoutNewlines(const String& text,
 }
 
 void TypingCommand::InsertLineBreak(EditingState* editing_state) {
-  if (!CanAppendNewLineFeedToSelection(EndingVisibleSelection()))
+  if (!CanAppendNewLineFeedToSelection(EndingVisibleSelection(), GetDocument()))
     return;
 
   ApplyCommandToComposite(InsertLineBreakCommand::Create(GetDocument()),
@@ -633,7 +639,7 @@ void TypingCommand::InsertLineBreak(EditingState* editing_state) {
 }
 
 void TypingCommand::InsertParagraphSeparator(EditingState* editing_state) {
-  if (!CanAppendNewLineFeedToSelection(EndingVisibleSelection()))
+  if (!CanAppendNewLineFeedToSelection(EndingVisibleSelection(), GetDocument()))
     return;
 
   ApplyCommandToComposite(
