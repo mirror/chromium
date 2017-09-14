@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
@@ -90,6 +91,11 @@ public class SuggestionsCarouselAdapter
         }
 
         notifyDataSetChanged();
+    }
+
+    @VisibleForTesting
+    public List<SnippetArticle> getSuggestions() {
+        return mSuggestionsList;
     }
 
     private class OfflineModelObserver extends SuggestionsOfflineModelObserver<SnippetArticle> {
