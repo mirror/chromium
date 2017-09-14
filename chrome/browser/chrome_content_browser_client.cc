@@ -211,6 +211,7 @@
 #include "device/usb/public/interfaces/device_manager.mojom.h"
 #include "extensions/features/features.h"
 #include "google_apis/gaia/gaia_urls.h"
+#include "google_apis/google_api_keys.h"
 #include "gpu/config/gpu_switches.h"
 #include "media/audio/audio_manager.h"
 #include "media/media_features.h"
@@ -794,6 +795,13 @@ void InvokeCallbackOnThread(
   task_runner->PostTask(FROM_HERE, base::Bind(std::move(callback), result));
 }
 #endif
+
+// Gets the URL request context for the browser process.
+// Must be called on the UI thread.
+net::URLRequestContextGetter* GetSystemRequestContextFromBrowserProcess() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  return g_browser_process->system_request_context();
+}
 
 }  // namespace
 
@@ -2100,6 +2108,19 @@ ChromeContentBrowserClient::OverrideRequestContextForURL(
 #endif
 
   return NULL;
+}
+
+void ChromeContentBrowserClient::GetGeolocationRequestContext(
+    base::OnceCallback<void(const scoped_refptr<net::URLRequestContextGetter>)>
+        callback) {
+  BrowserThread::PostTaskAndReplyWithResult(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&GetSystemRequestContextFromBrowserProcess),
+      std::move(callback));
+}
+
+std::string ChromeContentBrowserClient::GetGeolocationApiKey() {
+  return google_apis::GetAPIKey();
 }
 
 QuotaPermissionContext*
