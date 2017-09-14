@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44372c2a_235666c6",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1153876
+      },
+      "writtenOn": "2017-09-14T02:12:45Z",
+      "side": 0,
+      "message": "I think this sequence of events could pose a problem:\n1) |showSelectionMenu()| is called which then sets |mPendingShowActionMode| to true\n2) The word is selected so |SELECTION_HANDLES_SHOWN| is triggered. This causes us to show the floating menu and set |mPendingShowActionMode| to false.\n3) |onClassified()| is called which means we adjust the selection.\n4) |SELECTION_HANDLES_MOVED| is triggered from the adjustment. Since |mPendingShowActionMode| is false we don\u0027t call |showActionModeOrClearOnFailure()| which means the new SmartSelect menu items won\u0027t be displayed.\n\nI know that the |mPendingShowActionMode| is hacky and brittle so the following suggestion might not work. But maybe you could set |mPendingShowActionMode| to true in |onClassified()| after the |mWebContents.adjustSelectionByCharacterOffset()| call instead of in |showSelectionMenu()|.",
+      "revId": "c7c2478a9d32c09251bd2ec0e2a2cd92134d9c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
