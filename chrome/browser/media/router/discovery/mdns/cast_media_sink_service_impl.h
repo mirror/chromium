@@ -55,7 +55,8 @@ class CastMediaSinkServiceImpl
   void RecordDeviceCounts() override;
 
   // Opens cast channels on the IO thread.
-  virtual void OpenChannels(std::vector<MediaSinkInternal> cast_sinks);
+  virtual void OpenChannels(std::vector<MediaSinkInternal> cast_sinks,
+                            bool from_cache);
 
   void OnDialSinkAdded(const MediaSinkInternal& sink);
 
@@ -124,7 +125,8 @@ class CastMediaSinkServiceImpl
   // |backoff_entry|: backoff entry passed to |OnChannelOpened| callback.
   void OpenChannel(const net::IPEndPoint& ip_endpoint,
                    const MediaSinkInternal& cast_sink,
-                   std::unique_ptr<net::BackoffEntry> backoff_entry);
+                   std::unique_ptr<net::BackoffEntry> backoff_entry,
+                   bool from_cache);
 
   // Invoked when opening cast channel on IO thread completes.
   // |cast_sink|: Cast sink created from mDNS service description or DIAL sink.
@@ -134,6 +136,7 @@ class CastMediaSinkServiceImpl
   // ownership of |socket|.
   void OnChannelOpened(const MediaSinkInternal& cast_sink,
                        std::unique_ptr<net::BackoffEntry> backoff_entry,
+                       bool from_cache,
                        cast_channel::CastSocket* socket);
 
   // Invoked by |OnChannelOpened| if opening cast channel failed. It will retry
@@ -146,14 +149,16 @@ class CastMediaSinkServiceImpl
   // |error_state|: erorr encountered when opending cast channel.
   void OnChannelErrorMayRetry(MediaSinkInternal cast_sink,
                               std::unique_ptr<net::BackoffEntry> backoff_entry,
-                              cast_channel::ChannelError error_state);
+                              cast_channel::ChannelError error_state,
+                              bool from_cache);
 
   // Invoked when opening cast channel on IO thread succeeds.
   // |cast_sink|: Cast sink created from mDNS service description or DIAL sink.
   // |socket|: raw pointer of newly created cast channel. Does not take
   // ownership of |socket|.
   void OnChannelOpenSucceeded(MediaSinkInternal cast_sink,
-                              cast_channel::CastSocket* socket);
+                              cast_channel::CastSocket* socket,
+                              bool from_cache);
 
   // Invoked when opening cast channel on IO thread fails after all retry
   // attempts.

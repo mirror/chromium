@@ -47,16 +47,37 @@ void DialDeviceCountMetrics::RecordDeviceCounts(size_t available_device_count,
   UMA_HISTOGRAM_COUNTS_100(kHistogramDialKnownDeviceCount, known_device_count);
 }
 
+// static
 const char CastDeviceCountMetrics::kHistogramCastKnownDeviceCount[] =
     "MediaRouter.Cast.Discovery.KnownDevicesCount";
 const char CastDeviceCountMetrics::kHistogramCastConnectedDeviceCount[] =
     "MediaRouter.Cast.Discovery.ConnectedDevicesCount";
+const char CastDeviceCountMetrics::kHistogramCastCachedSinksAvailableCount[] =
+    "MediaRouter.Cast.Discovery.CachedSinksAvailableCount";
+const char CastDeviceCountMetrics::kHistogramCastCachedSinkResolved[] =
+    "MediaRouter.Cast.Discovery.CachedSinkResolved";
 
 void CastDeviceCountMetrics::RecordDeviceCounts(size_t available_device_count,
                                                 size_t known_device_count) {
   UMA_HISTOGRAM_COUNTS_100(kHistogramCastConnectedDeviceCount,
                            available_device_count);
   UMA_HISTOGRAM_COUNTS_100(kHistogramCastKnownDeviceCount, known_device_count);
+}
+
+void CastDeviceCountMetrics::RecordCachedSinksAvailableCount(
+    size_t cached_sink_count) {
+  UMA_HISTOGRAM_COUNTS_100(kHistogramCastCachedSinksAvailableCount,
+                           cached_sink_count);
+}
+
+void CastDeviceCountMetrics::RecordResolvedFromCacheFirst() {
+  UMA_HISTOGRAM_ENUMERATION(kHistogramCastCachedSinkResolved, kResolvedFirst,
+                            kTotalCount);
+}
+
+void CastDeviceCountMetrics::RecordResolvedFromCacheLate() {
+  UMA_HISTOGRAM_ENUMERATION(kHistogramCastCachedSinkResolved, kResolvedLate,
+                            kTotalCount);
 }
 
 }  // namespace media_router

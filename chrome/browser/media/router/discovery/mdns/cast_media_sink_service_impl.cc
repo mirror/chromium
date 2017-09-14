@@ -156,7 +156,8 @@ void CastMediaSinkServiceImpl::RecordDeviceCounts() {
 }
 
 void CastMediaSinkServiceImpl::OpenChannels(
-    std::vector<MediaSinkInternal> cast_sinks) {
+    std::vector<MediaSinkInternal> cast_sinks,
+    bool from_cache) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   known_ip_endpoints_.clear();
@@ -165,7 +166,8 @@ void CastMediaSinkServiceImpl::OpenChannels(
     const net::IPEndPoint& ip_endpoint = cast_sink.cast_data().ip_endpoint;
     known_ip_endpoints_.insert(ip_endpoint);
     OpenChannel(ip_endpoint, cast_sink,
-                base::MakeUnique<net::BackoffEntry>(&backoff_policy_));
+                base::MakeUnique<net::BackoffEntry>(&backoff_policy_),
+                from_cache);
   }
 
   MediaSinkServiceBase::RestartTimer();
@@ -204,7 +206,7 @@ void CastMediaSinkServiceImpl::OnError(const cast_channel::CastSocket& socket,
   auto cast_sink_it = current_sinks_map_.find(ip_endpoint.address());
   if (cast_sink_it != current_sinks_map_.end()) {
     OnChannelErrorMayRetry(cast_sink_it->second, std::move(backoff_entry),
-                           error_state);
+                           error_state, false);
     return;
   }
 
@@ -237,15 +239,18 @@ void CastMediaSinkServiceImpl::OnNetworksChanged(
   if (cache_entry == sink_cache_.end())
     return;
 
+  metrics_.RecordCachedSinksAvailableCount(cache_entry->second.size());
+
   DVLOG(2) << "Cache restored " << cache_entry->second.size()
            << " sink(s) for network " << network_id;
-  OpenChannels(cache_entry->second);
+  OpenChannels(cache_entry->second, true);
 }
 
 void CastMediaSinkServiceImpl::OpenChannel(
     const net::IPEndPoint& ip_endpoint,
     const MediaSinkInternal& cast_sink,
-    std::unique_ptr<net::BackoffEntry> backoff_entry) {
+    std::unique_ptr<net::BackoffEntry> backoff_entry,
+    bool from_cache) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   if (!pending_for_open_ip_endpoints_.insert(ip_endpoint).second) {
     DVLOG(2) << "Pending opening request for " << ip_endpoint.ToString()
@@ -259,13 +264,14 @@ void CastMediaSinkServiceImpl::OpenChannel(
   cast_socket_service_->OpenSocket(
       ip_endpoint, net_log_,
       base::BindOnce(&CastMediaSinkServiceImpl::OnChannelOpened, AsWeakPtr(),
-                     cast_sink, std::move(backoff_entry)),
+                     cast_sink, std::move(backoff_entry), from_cache),
       this);
 }
 
 void CastMediaSinkServiceImpl::OnChannelOpened(
     const MediaSinkInternal& cast_sink,
     std::unique_ptr<net::BackoffEntry> backoff_entry,
+    bool from_cache,
     cast_channel::CastSocket* socket) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(socket);
@@ -276,17 +282,18 @@ void CastMediaSinkServiceImpl::OnChannelOpened(
     backoff_entry->InformOfRequest(succeeded);
 
   if (succeeded) {
-    OnChannelOpenSucceeded(cast_sink, socket);
+    OnChannelOpenSucceeded(cast_sink, socket, from_cache);
   } else {
     OnChannelErrorMayRetry(cast_sink, std::move(backoff_entry),
-                           socket->error_state());
+                           socket->error_state(), from_cache);
   }
 }
 
 void CastMediaSinkServiceImpl::OnChannelErrorMayRetry(
     MediaSinkInternal cast_sink,
     std::unique_ptr<net::BackoffEntry> backoff_entry,
-    cast_channel::ChannelError error_state) {
+    cast_channel::ChannelError error_state,
+    bool from_cache) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   const net::IPEndPoint& ip_endpoint = cast_sink.cast_data().ip_endpoint;
@@ -308,15 +315,25 @@ void CastMediaSinkServiceImpl::OnChannelErrorMayRetry(
       FROM_HERE,
       base::BindOnce(&CastMediaSinkServiceImpl::OpenChannel, AsWeakPtr(),
                      ip_endpoint, std::move(cast_sink),
-                     std::move(backoff_entry)),
+                     std::move(backoff_entry), from_cache),
       delay);
 }
 
 void CastMediaSinkServiceImpl::OnChannelOpenSucceeded(
     MediaSinkInternal cast_sink,
-    cast_channel::CastSocket* socket) {
+    cast_channel::CastSocket* socket,
+    bool from_cache) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(socket);
+
+  if (from_cache) {
+    if (base::ContainsKey(current_sinks_map_,
+                          cast_sink.cast_data().ip_endpoint.address())) {
+      metrics_.RecordResolvedFromCacheLate();
+    } else {
+      metrics_.RecordResolvedFromCacheFirst();
+    }
+  }
 
   media_router::CastSinkExtraData extra_data = cast_sink.cast_data();
   extra_data.capabilities = cast_channel::CastDeviceCapability::AUDIO_OUT;
@@ -354,7 +371,7 @@ void CastMediaSinkServiceImpl::OnDialSinkAdded(const MediaSinkInternal& sink) {
   // TODO(crbug.com/753175): Dual discovery should not try to open cast channel
   // for non-Cast device.
   OpenChannel(ip_endpoint, CreateCastSinkFromDialSink(sink),
-              base::MakeUnique<net::BackoffEntry>(&backoff_policy_));
+              base::MakeUnique<net::BackoffEntry>(&backoff_policy_), false);
 }
 
 // static
@@ -396,7 +413,7 @@ void CastMediaSinkServiceImpl::AttemptConnection(
     const net::IPEndPoint& ip_endpoint = cast_sink.cast_data().ip_endpoint;
     if (!base::ContainsKey(current_sinks_map_, ip_endpoint.address())) {
       OpenChannel(ip_endpoint, cast_sink,
-                  base::MakeUnique<net::BackoffEntry>(&backoff_policy_));
+                  base::MakeUnique<net::BackoffEntry>(&backoff_policy_), false);
     }
   }
 }

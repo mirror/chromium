@@ -48,11 +48,23 @@ class DialDeviceCountMetrics : public DeviceCountMetrics {
 // Metrics for Cast device counts.
 class CastDeviceCountMetrics : public DeviceCountMetrics {
  public:
+  enum CachedSinkResolution {
+    kResolvedFirst = 0,
+    kResolvedLate = 1,
+
+    kTotalCount = 2,
+  };
+
   static const char kHistogramCastKnownDeviceCount[];
   static const char kHistogramCastConnectedDeviceCount[];
+  static const char kHistogramCastCachedSinksAvailableCount[];
+  static const char kHistogramCastCachedSinkResolved[];
 
   void RecordDeviceCounts(size_t available_device_count,
                           size_t known_device_count) override;
+  void RecordCachedSinksAvailableCount(size_t cached_sink_count);
+  void RecordResolvedFromCacheFirst();
+  void RecordResolvedFromCacheLate();
 };
 
 }  // namespace media_router

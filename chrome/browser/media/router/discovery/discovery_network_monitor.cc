@@ -12,7 +12,9 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/task_runner_util.h"
+#include "base/time/default_tick_clock.h"
 #include "chrome/browser/media/router/discovery/discovery_network_list.h"
+#include "chrome/browser/media/router/discovery/discovery_network_monitor_metric_observer.h"
 #include "net/base/network_interfaces.h"
 
 namespace media_router {
@@ -40,6 +42,7 @@ std::string ComputeNetworkId(
 }
 
 base::LazyInstance<DiscoveryNetworkMonitor>::Leaky g_discovery_monitor;
+std::unique_ptr<DiscoveryNetworkMonitorMetricObserver> g_metric_observer;
 
 }  // namespace
 
@@ -94,10 +97,14 @@ DiscoveryNetworkMonitor::DiscoveryNetworkMonitor()
       network_info_function_(&GetDiscoveryNetworkInfoList) {
   DETACH_FROM_SEQUENCE(sequence_checker_);
   net::NetworkChangeNotifier::AddNetworkChangeObserver(this);
+  g_metric_observer = base::MakeUnique<DiscoveryNetworkMonitorMetricObserver>(
+      base::MakeUnique<base::DefaultTickClock>(),
+      base::MakeUnique<DiscoveryNetworkMonitorMetrics>());
 }
 
 DiscoveryNetworkMonitor::~DiscoveryNetworkMonitor() {
   net::NetworkChangeNotifier::RemoveNetworkChangeObserver(this);
+  g_metric_observer.reset();
 }
 
 void DiscoveryNetworkMonitor::SetNetworkInfoFunctionForTest(

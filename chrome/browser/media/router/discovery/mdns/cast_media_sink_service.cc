@@ -194,9 +194,9 @@ void CastMediaSinkService::OnDnsSdEvent(
   }
 
   task_runner_->PostTask(
-      FROM_HERE,
-      base::BindOnce(&CastMediaSinkServiceImpl::OpenChannels,
-                     cast_media_sink_service_impl_->AsWeakPtr(), cast_sinks_));
+      FROM_HERE, base::BindOnce(&CastMediaSinkServiceImpl::OpenChannels,
+                                cast_media_sink_service_impl_->AsWeakPtr(),
+                                cast_sinks_, false));
 }
 
 void CastMediaSinkService::OnDialSinkAdded(const MediaSinkInternal& sink) {
