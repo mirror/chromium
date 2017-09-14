@@ -34,6 +34,24 @@
       "revId": "0d819ba838690e612b665020f4caea47dad24cde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1189d1aa_a662af80",
+        "filename": "third_party/WebKit/Source/platform/bindings/V8PerIsolateData.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-14T03:24:06Z",
+      "side": 1,
+      "message": "I see.  Then, can we make SimplePtrHash inherit from WTF::PtrHash\u003cconst void\u003e?\nThen, I think we don\u0027t need to define Equal nor safe_to_compare_to_empty_or_deleted.  We only need to define the specialized GetHash.",
+      "parentUuid": "64436142_189dfc6c",
+      "revId": "0d819ba838690e612b665020f4caea47dad24cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
