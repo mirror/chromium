@@ -22,6 +22,30 @@
       "revId": "0f73d5aba379b7bceb75454c9823fe1d3ec83d96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01eb5c3a_a29c49d7",
+        "filename": "components/payments/content/utility/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-14T20:36:00Z",
+      "side": 1,
+      "message": "Actually, web app manifests may contain non-ASCII characters in web app name, for example.",
+      "parentUuid": "5cec49f6_97321dc4",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 11
+      },
+      "revId": "0f73d5aba379b7bceb75454c9823fe1d3ec83d96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
