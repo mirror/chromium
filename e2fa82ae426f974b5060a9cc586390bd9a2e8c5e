@@ -90,6 +90,30 @@
     },
     {
       "key": {
+        "uuid": "9c1c46da_cc68202b",
+        "filename": "build/fuchsia/runner_common.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-09-14T21:39:15Z",
+      "side": 1,
+      "message": "Aha, thanks, /dev/class/block/000 is much better.",
+      "parentUuid": "35840a2d_297ac070",
+      "range": {
+        "startLine": 214,
+        "startChar": 42,
+        "endLine": 214,
+        "endChar": 50
+      },
+      "revId": "e2fa82ae426f974b5060a9cc586390bd9a2e8c5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1c60c43_1a44ee68",
         "filename": "build/fuchsia/runner_common.py",
         "patchSetId": 5
