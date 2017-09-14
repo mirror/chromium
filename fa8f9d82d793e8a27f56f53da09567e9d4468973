@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b3d13fb_81a68bf4",
+        "filename": "net/cert/symantec_roots.inc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-14T17:57:53Z",
+      "side": 1,
+      "message": "So because this will be included in two translation units, we still want to do the .h and .cc split here, as we otherwise end up with duplicate copies.",
+      "revId": "fa8f9d82d793e8a27f56f53da09567e9d4468973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1316b11e_34f8b177",
+        "filename": "net/cert/x509_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-14T17:57:53Z",
+      "side": 1,
+      "message": "So I generally push back on any _util additions, since they end up being dumping grounds, and end up creating sort of \u0027catch-all\u0027 dependencies.\n\nIsAnyCertificateInRootList seems like it it\u0027d be in hash_value.h (and is very similar to the existing IsSHA256HashInSortedArray, which we could consider using)\n\nFor IsLegacySymantecCert, we could just create //net/cert/symantec_certs.h with had\n\nNET_EXPORT IsLegacySymantecCert\n\nNET_EXPORT_PRIVATE kSymantecRoots\nNET_EXPORT_PRIVATE kSymantecRootsLength",
+      "revId": "fa8f9d82d793e8a27f56f53da09567e9d4468973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
