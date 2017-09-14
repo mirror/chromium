@@ -161,6 +161,30 @@
     },
     {
       "key": {
+        "uuid": "b16c7626_32f2b98e",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-14T19:35:57Z",
+      "side": 1,
+      "message": "OK, I misunderstood, and didn\u0027t realize you were looking at the file holistically :)\n\nJust to verify my understanding: these callbacks don\u0027t call AllowJavascript currently, you are merely warning me never to do that?\n\nI added an OnJavascriptDisallowed method that invalidates ptrs from the weak_ptr_factory, let me know if this is what you meant.",
+      "parentUuid": "abc92f52_fd959b28",
+      "range": {
+        "startLine": 330,
+        "startChar": 2,
+        "endLine": 330,
+        "endChar": 17
+      },
+      "revId": "383af1dbac57a97e256ab6479021bda98fe08aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d53ba71_6b2bd7ea",
         "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
         "patchSetId": 6
@@ -175,6 +199,24 @@
       "revId": "383af1dbac57a97e256ab6479021bda98fe08aa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba4b115_5e9d7f67",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-14T19:35:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d53ba71_6b2bd7ea",
+      "revId": "383af1dbac57a97e256ab6479021bda98fe08aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
