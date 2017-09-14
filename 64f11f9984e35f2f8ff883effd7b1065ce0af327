@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe381dd8_ee3049e3",
+        "filename": "chrome/browser/ui/cocoa/constrained_window/constrained_window_control_utils.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-14T23:55:54Z",
+      "side": 1,
+      "message": "nit: I don\u0027t understand this comment. But probably because I have very little knowledge in cocoa layout.",
+      "revId": "64f11f9984e35f2f8ff883effd7b1065ce0af327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82bb1a19_75660377",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_cocoa.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-14T23:55:54Z",
+      "side": 1,
+      "message": "Q: On linux/win/chromeos, clicking on any button will close the dialog automatically (no need to specifically call Close..() ). Not sure if it is the same case for Cocoa. Could you try removing this line?",
+      "revId": "64f11f9984e35f2f8ff883effd7b1065ce0af327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc97be0a_9f8c56ff",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_dialog_cocoa.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-14T23:55:54Z",
+      "side": 1,
+      "message": "same here.",
+      "revId": "64f11f9984e35f2f8ff883effd7b1065ce0af327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "085b5ea7_bd19c9f2",
+        "filename": "chrome/browser/ui/cocoa/password_reuse_warning_view_controller.mm",
+        "patchSetId": 20
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-14T23:55:54Z",
+      "side": 1,
+      "message": "Can you try it if works with RTL language? \n\ncommand-line flag to turn on RTL\n-NSForceRightToLeftWritingDirection YES -AppleTextDirection YES --force-ui-direction\u003drtl --enable-features\u003dMacRTL",
+      "revId": "64f11f9984e35f2f8ff883effd7b1065ce0af327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
