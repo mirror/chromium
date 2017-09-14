@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "740dbc72_c6a7a095",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-data-disconnect-nodes-on-webkitBeforeTextInserted.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-14T18:22:32Z",
+      "side": 1,
+      "message": "nit: please remove trailing spaces.",
+      "range": {
+        "startLine": 34,
+        "startChar": 104,
+        "endLine": 34,
+        "endChar": 108
+      },
+      "revId": "7be63c73b9bbee4bafb735dd09471fe0682c9689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cfc73f6_15cca8fc",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-14T18:22:32Z",
+      "side": 1,
+      "message": "It seems that the extra |document| parameter is not needed, as it\u0027s always implied by |selection|:\n\n- If |selection| is null, |element| is also null, in which case we don\u0027t need |document|\n- If |element| is non-null, |document| must be |element-\u003eGetDocument()| (*)\n\n(*) unless the stored ending selection is already invalid when we enter this function, in which case it\u0027s a different bug.",
+      "revId": "7be63c73b9bbee4bafb735dd09471fe0682c9689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b6e251a_447d8325",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-14T18:22:32Z",
+      "side": 1,
+      "message": "I think we should also check document availability since event handler can detach frame:\n\ndocument.GetFrame() \u0026\u0026 document.GetFrame()-\u003eGetDocument() \u003d\u003d document\n\nI wish we have a less hacky way doing that...\n\nHow about making CompositeEditCommand a DocumentShutdownObserver? The overhead doesn\u0027t seem to be big, since the observer is notified only once during the lifetime of a document.",
+      "revId": "7be63c73b9bbee4bafb735dd09471fe0682c9689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8086ee6_d86e1478",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 1
