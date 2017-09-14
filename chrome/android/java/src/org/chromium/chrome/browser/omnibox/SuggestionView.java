@@ -82,7 +82,8 @@ class SuggestionView extends ViewGroup {
 
     private final int mDarkTitleColorStandardFont;
     private final int mLightTitleColorStandardFont;
-    private final int mUrlColor;
+    private final int mDarkUrlStandardColor;
+    private final int mLightUrlStandardColor;
 
     private OmniboxResultItem mSuggestionItem;
     private OmniboxSuggestion mSuggestion;
@@ -127,7 +128,10 @@ class SuggestionView extends ViewGroup {
                 ApiCompatibilityUtils.getColor(resources, R.color.url_emphasis_default_text);
         mLightTitleColorStandardFont =
                 ApiCompatibilityUtils.getColor(resources, R.color.url_emphasis_light_default_text);
-        mUrlColor = ApiCompatibilityUtils.getColor(resources, R.color.suggestion_url);
+        mDarkUrlStandardColor =
+                ApiCompatibilityUtils.getColor(resources, R.color.suggestion_url_normal);
+        mLightUrlStandardColor =
+                ApiCompatibilityUtils.getColor(resources, R.color.suggestion_url_incognito);
 
         TypedArray a = getContext().obtainStyledAttributes(
                 new int [] {R.attr.selectableItemBackground});
@@ -396,6 +400,11 @@ class SuggestionView extends ViewGroup {
                                                           : mLightTitleColorStandardFont;
     }
 
+    private int getStandardUrlColor() {
+        return (mUseDarkColors == null || mUseDarkColors) ? mDarkUrlStandardColor
+                                                          : mLightUrlStandardColor;
+    }
+
     @Override
     public void setSelected(boolean selected) {
         super.setSelected(selected);
@@ -475,7 +484,7 @@ class SuggestionView extends ViewGroup {
 
         // Force left-to-right rendering for URLs. See UrlBar constructor for details.
         if (isUrl) {
-            textLine.setTextColor(mUrlColor);
+            textLine.setTextColor(getStandardUrlColor());
             ApiCompatibilityUtils.setTextDirection(textLine, TEXT_DIRECTION_LTR);
         } else {
             textLine.setTextColor(getStandardFontColor());
