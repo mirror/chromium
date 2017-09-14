@@ -1,0 +1,8 @@
+Tests reading service worker sync registrations.
+installed!
+No sync registrations expected
+Status: ok, tags: []
+Triggering syncs
+Should be a single registration
+Status: ok, tags: [tag1 1 pending, tag2 1 pending]
+
