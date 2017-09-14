@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f0301710_cdde7653",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-09-14T20:40:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "82b1a36b_eee4796a",
+      "revId": "4b73e49c4838c9c004b6ad1955d9ad23c353dfb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "464e1f80_31f1ca41",
         "filename": "components/offline_pages/core/client_policy_controller.cc",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "7e04fb9c_b6069f3e",
+        "filename": "components/offline_pages/core/client_policy_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-09-14T20:40:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "464e1f80_31f1ca41",
+      "range": {
+        "startLine": 67,
+        "startChar": 40,
+        "endLine": 67,
+        "endChar": 51
+      },
+      "revId": "4b73e49c4838c9c004b6ad1955d9ad23c353dfb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a06c6214_75db1959",
         "filename": "components/offline_pages/core/downloads/download_ui_item.h",
         "patchSetId": 5
@@ -56,6 +98,24 @@
       "revId": "4b73e49c4838c9c004b6ad1955d9ad23c353dfb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "303ae933_0a401110",
+        "filename": "components/offline_pages/core/downloads/download_ui_item.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-09-14T20:40:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a06c6214_75db1959",
+      "revId": "4b73e49c4838c9c004b6ad1955d9ad23c353dfb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
