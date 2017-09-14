@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f43b83d9_3148fe3a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Toolbar.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-14T20:01:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "601af331_189ac80a",
+      "revId": "6033508c5d31eb078f7916d6f51b33d069490419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e8507a1_d37774c3",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/softDropDownButton.css",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-13T22:43:46Z",
       "side": 1,
       "message": "Don\u0027t we have more instances of this, not only in console?",
+      "revId": "6033508c5d31eb078f7916d6f51b33d069490419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e42172c_74a77162",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/softDropDownButton.css",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-14T20:01:37Z",
+      "side": 1,
+      "message": "Today, it\u0027s the only one.  Alternatively, we could introduce UI.SoftDropDown.p.setWidth(), but there\u0027s only one client for now.",
+      "parentUuid": "9e8507a1_d37774c3",
       "revId": "6033508c5d31eb078f7916d6f51b33d069490419",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
