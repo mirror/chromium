@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80911fe4_c89479c4",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-14T17:09:43Z",
+      "side": 0,
+      "message": "Is this contributing to some of our job failures?  We sometimes get printers installed without a uri.",
+      "range": {
+        "startLine": 264,
+        "startChar": 35,
+        "endLine": 264,
+        "endChar": 45
+      },
+      "revId": "203cde68da4027686010acc79918a578afcd1aef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46d42179_37e18e83",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-14T17:09:43Z",
+      "side": 0,
+      "message": "Was this call redundant or was it here to handle a specific situation?",
+      "range": {
+        "startLine": 430,
+        "startChar": 1,
+        "endLine": 430,
+        "endChar": 34
+      },
+      "revId": "203cde68da4027686010acc79918a578afcd1aef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
