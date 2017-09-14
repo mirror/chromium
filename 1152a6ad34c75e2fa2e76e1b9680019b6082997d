@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75d1aeb8_6c846179",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-09-14T21:14:13Z",
+      "side": 1,
+      "message": "I think this naming scheme was a mistake; the new Windows CFI bots I added are named using the same ClangToTWin* pattern as the other Clang ToT bots. Can you rename this one to match?",
+      "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b8dfc1_5a42961a",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-09-14T21:14:13Z",
+      "side": 1,
+      "message": "Why do you need this extra configuration?",
+      "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
