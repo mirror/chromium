@@ -22,6 +22,30 @@
       "revId": "78c43b1b98b03e75cc1ef5bfadffd16d7584a7a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "520ce5f4_6d58f9dc",
+        "filename": "components/feature_engagement/features.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-14T23:04:48Z",
+      "side": 1,
+      "message": "You\u0027re correct for the views as being a reason (we\u0027re not showing on Mac because of this). For CrOS, I asked James and Rachel about this and they said they both have no strong feelings about why we\u0027re not showing this right now. I think it would be easy to change it to show on CrOS if requirements change later.",
+      "parentUuid": "70b1ebf9_c062ec89",
+      "range": {
+        "startLine": 6,
+        "startChar": 2,
+        "endLine": 6,
+        "endChar": 74
+      },
+      "revId": "78c43b1b98b03e75cc1ef5bfadffd16d7584a7a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
