@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "99f47190_aa639e3a",
+        "filename": "chrome/browser/permissions/permission_context_base_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 791,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-14T01:26:58Z",
+      "side": 1,
+      "message": "It\u0027s not needed to fix the test - I thought it would be better to have in general to make the test more robust (e.g. in case it ever gets turned off). I can get rid of it if you like?",
+      "parentUuid": "ee8b2089_984d74b3",
+      "range": {
+        "startLine": 791,
+        "startChar": 2,
+        "endLine": 791,
+        "endChar": 14
+      },
+      "revId": "8f9d21ddcb2dc5359e344bc73432a1c52c9bd6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6508479a_e2ffebe6",
         "filename": "chrome/browser/permissions/permission_decision_auto_blocker.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "8f9d21ddcb2dc5359e344bc73432a1c52c9bd6e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "920a9d50_4fc46998",
+        "filename": "chrome/browser/permissions/permission_decision_auto_blocker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-14T01:26:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6508479a_e2ffebe6",
+      "range": {
+        "startLine": 259,
+        "startChar": 7,
+        "endLine": 259,
+        "endChar": 34
+      },
+      "revId": "8f9d21ddcb2dc5359e344bc73432a1c52c9bd6e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
