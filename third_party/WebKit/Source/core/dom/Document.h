@@ -46,6 +46,7 @@
 #include "core/dom/DocumentShutdownObserver.h"
 #include "core/dom/DocumentTiming.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/dom/FrameRequestCallbackCollection.h"
 #include "core/dom/MutationObserver.h"
 #include "core/dom/ScriptedIdleTaskController.h"
 #include "core/dom/SynchronousMutationNotifier.h"
@@ -115,7 +116,6 @@ class ExceptionState;
 class FloatQuad;
 class FloatRect;
 class FormController;
-class FrameRequestCallback;
 class HTMLAllCollection;
 class HTMLBodyElement;
 class HTMLCollection;
@@ -1148,7 +1148,7 @@ class CORE_EXPORT Document : public ContainerNode,
 
   const DocumentTiming& GetTiming() const { return document_timing_; }
 
-  int RequestAnimationFrame(FrameRequestCallback*);
+  int RequestAnimationFrame(FrameRequestCallbackCollection::FrameCallback*);
   void CancelAnimationFrame(int id);
   void ServiceScriptedAnimations(double monotonic_animation_start_time);
 

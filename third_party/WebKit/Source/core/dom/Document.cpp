@@ -85,7 +85,6 @@
 #include "core/dom/ElementTraversal.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/FlatTreeTraversal.h"
-#include "core/dom/FrameRequestCallback.h"
 #include "core/dom/LayoutTreeBuilderTraversal.h"
 #include "core/dom/LiveNodeList.h"
 #include "core/dom/MutationObserver.h"
@@ -5894,6 +5893,7 @@ void Document::InitSecurityContext(const DocumentInit& initializer) {
         kSandboxAll &
         ~(kSandboxPopups | kSandboxPropagatesToAuxiliaryBrowsingContexts);
   }
+
   // In the common case, create the security context from the currently
   // loading URL with a fresh content security policy.
   EnforceSandboxFlags(sandbox_flags);
@@ -6402,7 +6402,8 @@ ScriptedAnimationController& Document::EnsureScriptedAnimationController() {
   return *scripted_animation_controller_;
 }
 
-int Document::RequestAnimationFrame(FrameRequestCallback* callback) {
+int Document::RequestAnimationFrame(
+    FrameRequestCallbackCollection::FrameCallback* callback) {
   return EnsureScriptedAnimationController().RegisterCallback(callback);
 }
 
