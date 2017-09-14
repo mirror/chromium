@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ec2a8e7_95573e03",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-14T07:58:55Z",
+      "side": 1,
+      "message": "nit: I think that debug_logger and debug_logger_raw would fit better into naming conventions in our team.",
+      "range": {
+        "startLine": 517,
+        "startChar": 2,
+        "endLine": 518,
+        "endChar": 66
+      },
+      "revId": "2c6217c8ce02d4d51112e53f6dbeef4c8eeeb883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f3c2e1_96b4c74f",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-14T07:58:55Z",
+      "side": 1,
+      "message": "nit: This change seems orthogonal to the CL, isn\u0027t it?",
+      "range": {
+        "startLine": 287,
+        "startChar": 0,
+        "endLine": 291,
+        "endChar": 1
+      },
+      "revId": "2c6217c8ce02d4d51112e53f6dbeef4c8eeeb883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7aceb12_6f229f4c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-14T07:58:55Z",
+      "side": 1,
+      "message": "I would prefer\n - either removing this call as it duplicates the 4 calls above\n - or removing the 4 calls above and log TriggerType here in the message.",
+      "range": {
+        "startLine": 664,
+        "startChar": 2,
+        "endLine": 664,
+        "endChar": 59
+      },
+      "revId": "2c6217c8ce02d4d51112e53f6dbeef4c8eeeb883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60eda1f_1eb5113d",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-14T07:58:55Z",
+      "side": 1,
+      "message": "Could you also log more details here if the function returns false?\n\nThese would be two separate messages: \n - if the first clause is false, it is \n\"due to privacy, next fetch is allowed after \" \u003c\u003c background_fetches_allowed_after_;\n - if the second clause is false, it is\n\"next fetch is scheduled after \" \u003c\u003c first_allowed_fetch_time \u003c\u003c \" (as last fetch attempt occured at \" \u003c\u003c last_fetch_attempt_time \u003c\u003c \")\";\n\nThis is a bit silly because the strings would be composed even if logger is disabled. Maybe exposing another static bool function Logger::IsLoggingEnabled() that the callers can use to avoid creating the parameters for Log()?\n\nCan you see any smarter (language) construct to achieve this optimization?",
+      "range": {
+        "startLine": 762,
+        "startChar": 3,
+        "endLine": 762,
+        "endChar": 0
+      },
+      "revId": "2c6217c8ce02d4d51112e53f6dbeef4c8eeeb883",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
