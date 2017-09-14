@@ -77,6 +77,29 @@
     },
     {
       "key": {
+        "uuid": "1662a8e7_44eac1f6",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-14T06:45:27Z",
+      "side": 1,
+      "message": "Wow, __HrLoadAllImportsForDll is fantastic!\nSo, do we still need this kind of wrap functions?\n\nAll we need seems to have \"bool base::win::DelayLoad*\" methods in base/win/delay_load?",
+      "range": {
+        "startLine": 25,
+        "startChar": 20,
+        "endLine": 25,
+        "endChar": 42
+      },
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92be5d77_3dd8669a",
         "filename": "base/win/com_base_util_unittest.cc",
         "patchSetId": 13
@@ -123,6 +146,46 @@
       "writtenOn": "2017-09-13T14:25:05Z",
       "side": 1,
       "message": "i think it\u0027s cleaner for this to take a base::StringPiece16 so that wcslen isn\u0027t needed.",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d24063_ab357423",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-14T06:45:27Z",
+      "side": 1,
+      "message": "just \": ScopedGeneric(hstr) {}\" does not work?",
+      "range": {
+        "startLine": 44,
+        "startChar": 59,
+        "endLine": 44,
+        "endChar": 66
+      },
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7315a729_715f4ac6",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-14T06:45:27Z",
+      "side": 1,
+      "message": "Could you have a DCHECK to ensure that Preload... was called beforehand?\nI\u0027m afraid that calling unresolved delayed load dll methods would crash?",
       "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -186,6 +249,23 @@
     },
     {
       "key": {
+        "uuid": "637b3b05_7da3db79",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-14T06:45:27Z",
+      "side": 1,
+      "message": "I guess we want to ignore this error in most cases rather than assuming it as empty string.\nThis fails on invalid unicode characters, but conversion itself finishes with padding 0xFFFD for such invalid code places.\n\nHow about just ignoring the error, or taking an argument \"bool allow_invalid_unicode \u003d true\" so that callers can skip this error by default?",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2ceb585b_528952d9",
         "filename": "base/win/scoped_hstring.cc",
         "patchSetId": 13
@@ -220,6 +300,23 @@
         "endLine": 22,
         "endChar": 13
       },
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5fb58e6_2904682c",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-14T06:45:27Z",
+      "side": 1,
+      "message": "Probably, you need explanations and some code examples here.\nUsers may not notice that this class requires PreloadrequiredFunctions() before using.",
       "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -261,6 +358,47 @@
     },
     {
       "key": {
+        "uuid": "970dd977_6df5c3ef",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-14T06:45:27Z",
+      "side": 1,
+      "message": "Hum... current code just initializes ScopedHString with a nullptr for error cases. It does not do something special for errors. So, my personal opinion is this does not meat the bar to use another method for initialization. In both designs, what callers need is to call is_valid() after the instantiation. Also, when we avoid such errors in constructors, initialization method would return error information that constructors can not.\n\nBut using Create to return a smart pointer is a pattern I often see. So, I\u0027m neutral on this. So feel free to skip this comment.",
+      "parentUuid": "1a3725e0_286fe6ac",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb295026_31b33b2d",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-14T06:45:27Z",
+      "side": 1,
+      "message": "Another choice is to use Create for char16* and constructor for HSTRING. But it\u0027s up to you.",
+      "range": {
+        "startLine": 30,
+        "startChar": 35,
+        "endLine": 30,
+        "endChar": 41
+      },
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c15f663a_990535de",
         "filename": "base/win/scoped_hstring.h",
         "patchSetId": 13
@@ -278,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "1cd3d1a2_8c2d4563",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-14T06:45:27Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "c15f663a_990535de",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "938e9af2_aa38a423",
         "filename": "base/win/scoped_hstring.h",
         "patchSetId": 13
@@ -289,6 +445,23 @@
       "writtenOn": "2017-09-13T14:25:05Z",
       "side": 1,
       "message": "DISALLOW_COPY_AND_ASSIGN?",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fafce94e_8b8d446b",
+        "filename": "base/win/scoped_hstring_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-14T06:45:27Z",
+      "side": 1,
+      "message": "may want to add a case to take invalid unicode string.",
       "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
