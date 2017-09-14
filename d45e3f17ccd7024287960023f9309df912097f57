@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ccb3152_657fc2b0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-14T19:40:08Z",
+      "side": 1,
+      "message": "I did see the comment marked as subtle in WebContentsEntry::CreateTaskForFrame, but I still don\u0027t understand how the selection can follow an entry that is removed and re-added.  I assume this works even in case when multiple rows are selected in the task manager?",
+      "range": {
+        "startLine": 12,
+        "startChar": 26,
+        "endLine": 13,
+        "endChar": 52
+      },
+      "revId": "d45e3f17ccd7024287960023f9309df912097f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "648bf90d_fda78328",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-14T19:40:08Z",
+      "side": 1,
+      "message": "nit: Did you mean field?",
+      "range": {
+        "startLine": 24,
+        "startChar": 31,
+        "endLine": 24,
+        "endChar": 40
+      },
+      "revId": "d45e3f17ccd7024287960023f9309df912097f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19b2a964_0377ca9f",
+        "filename": "chrome/browser/task_manager/providers/web_contents/web_contents_task_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-14T19:40:08Z",
+      "side": 1,
+      "message": "This code is somewhat duplicated wrt what is in WebContentsEntry::CreateTaskForFrame.  Are there good options for deduplicating?  Or is it not worth it?",
+      "range": {
+        "startLine": 210,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 78
+      },
+      "revId": "d45e3f17ccd7024287960023f9309df912097f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
