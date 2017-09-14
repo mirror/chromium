@@ -10,6 +10,8 @@
 #include <memory>
 #include <vector>
 
+#include "crypto/scoped_nss_types.h"
+
 namespace net {
 
 struct FreeCERTCertificate {
@@ -20,6 +22,11 @@ struct FreeCERTCertificate {
 
 typedef std::unique_ptr<CERTCertificate, FreeCERTCertificate>
     ScopedCERTCertificate;
+
+typedef std::unique_ptr<
+    CERTCertList,
+    crypto::NSSDestroyer<CERTCertList, CERT_DestroyCertList>>
+    ScopedCERTCertList;
 
 using ScopedCERTCertificateList = std::vector<ScopedCERTCertificate>;
 
