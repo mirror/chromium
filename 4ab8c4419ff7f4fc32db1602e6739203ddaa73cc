@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bdf08bc_b539c79f",
+        "filename": "build/toolchain/gcc_toolchain.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1202434
+      },
+      "writtenOn": "2017-09-14T20:18:24Z",
+      "side": 1,
+      "message": "The issue is this should be:\n\n${extra_asmflags}",
+      "range": {
+        "startLine": 317,
+        "startChar": 99,
+        "endLine": 317,
+        "endChar": 116
+      },
+      "revId": "4ab8c4419ff7f4fc32db1602e6739203ddaa73cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
