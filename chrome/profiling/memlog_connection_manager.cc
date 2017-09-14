@@ -98,11 +98,8 @@ void MemlogConnectionManager::OnConnectionCompleteThunk(
                             weak_factory_.GetWeakPtr(), pid));
 }
 
-bool MemlogConnectionManager::DumpProcess(
-    base::ProcessId pid,
-    std::unique_ptr<base::DictionaryValue> metadata,
-    const std::vector<memory_instrumentation::mojom::VmRegionPtr>& maps,
-    base::File output_file) {
+void MemlogConnectionManager::DumpProcess(DumpProcessArgs args,
+                                          bool hop_to_connection_thread) {
   base::AutoLock lock(connections_lock_);
 
   // Lock all connections to prevent deallocations of atoms from
@@ -115,22 +112,32 @@ bool MemlogConnectionManager::DumpProcess(
         base::MakeUnique<base::AutoLock>(*connection->parser->GetLock()));
   }
 
-  auto it = connections_.find(pid);
+  auto it = connections_.find(args.pid);
   if (it == connections_.end()) {
-    DLOG(ERROR) << "No connections found for memory dump for pid:" << pid;
-    return false;
+    DLOG(ERROR) << "No connections found for memory dump for pid:" << args.pid;
+    std::move(args.callback).Run(false);
+    return;
   }
 
   Connection* connection = it->second.get();
 
+  if (hop_to_connection_thread) {
+    connection->thread.task_runner()->PostTask(
+        FROM_HERE,
+        base::BindOnce(&MemlogConnectionManager::HopToConnectionThread,
+                       weak_factory_.GetWeakPtr(), std::move(args),
+                       base::ThreadTaskRunnerHandle::Get()));
+    return;
+  }
+
   std::ostringstream oss;
-  ExportAllocationEventSetToJSON(pid, connection->tracker.live_allocs(), maps,
-                                 oss, std::move(metadata), kMinSizeThreshold,
-                                 kMinCountThreshold);
+  ExportAllocationEventSetToJSON(args.pid, connection->tracker.live_allocs(),
+                                 args.maps, oss, std::move(args.metadata),
+                                 kMinSizeThreshold, kMinCountThreshold);
   std::string reply = oss.str();
 
   // Pass ownership of the underlying fd/HANDLE to zlib.
-  base::PlatformFile platform_file = output_file.TakePlatformFile();
+  base::PlatformFile platform_file = args.file.TakePlatformFile();
 #if defined(OS_WIN)
   // The underlying handle |platform_file| is also closed when |fd| is closed.
   int fd = _open_osfhandle(reinterpret_cast<intptr_t>(platform_file), 0);
@@ -140,13 +147,23 @@ bool MemlogConnectionManager::DumpProcess(
   gzFile gz_file = gzdopen(fd, "w");
   if (!gz_file) {
     DLOG(ERROR) << "Cannot compress trace file";
-    return false;
+    std::move(args.callback).Run(false);
+    return;
   }
 
   size_t written_bytes = gzwrite(gz_file, reply.c_str(), reply.size());
   gzclose(gz_file);
 
-  return written_bytes == reply.size();
+  std::move(args.callback).Run(written_bytes == reply.size());
+}
+
+void MemlogConnectionManager::HopToConnectionThread(
+    DumpProcessArgs args,
+    scoped_refptr<base::SequencedTaskRunner> task_runner) {
+  task_runner->PostTask(
+      FROM_HERE,
+      base::BindOnce(&MemlogConnectionManager::DumpProcess,
+                     weak_factory_.GetWeakPtr(), std::move(args), false));
 }
 
 void MemlogConnectionManager::DumpProcessForTracing(
@@ -198,5 +215,10 @@ void MemlogConnectionManager::DumpProcessForTracing(
 
   std::move(callback).Run(std::move(buffer), reply.size());
 }
+
+MemlogConnectionManager::DumpProcessArgs::DumpProcessArgs() = default;
+MemlogConnectionManager::DumpProcessArgs::~DumpProcessArgs() = default;
+MemlogConnectionManager::DumpProcessArgs::DumpProcessArgs(DumpProcessArgs&&) =
+    default;
 
 }  // namespace profiling
