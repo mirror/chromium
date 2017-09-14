@@ -197,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "710bff8d_a8d4fe51",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-14T17:50:12Z",
+      "side": 1,
+      "message": "You are implementing the same public API as zlib, so it certainly makes sense to add \nCopyright (C) 1995-2011, 2017 Mark Adler\n\nI noticed that all code contributed to zlib has part of the copyright attributed to Mark (not sure if that is a hard requirement, but kind of makes sense if you have to maintain the code for 22 years).\n\nMaybe follow it up with Copyright (C) The Chromium project 2017 or whatever is the format used.\n\nIf you consider that this implementation is similar enough to the NEON code, I *guess* that would be the case of adding Copyright (C) 2017 ARM Holdings Inc.\n\nIn any case, my understanding is that ARM has signed the CLA which grants the use of the code/modification/redistribution by the Chromium project, respecting copyrights.\n\nAgain, I\u0027m no lawyer.\n:-)",
+      "parentUuid": "77f0b6b6_bb3f29c0",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97702a1c_7079702a",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16
