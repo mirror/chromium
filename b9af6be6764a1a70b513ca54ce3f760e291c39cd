@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d0b10d39_b08549f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-09-14T22:19:25Z",
+      "side": 1,
+      "message": "Ahhh I see what you mean now! Have implemented DownloadForegroundServiceObservers as a helper class to deal with this.",
+      "parentUuid": "f5c65306_38c7ba4f",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 5
+      },
+      "revId": "b9af6be6764a1a70b513ca54ce3f760e291c39cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df304d37_4ba82db1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "b9af6be6764a1a70b513ca54ce3f760e291c39cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3531fd_a22dc0a1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundService.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-09-14T22:19:25Z",
+      "side": 1,
+      "message": "Ah I see, I changed the wording of the comment after looking it up in the Android Developers guide. I don\u0027t see anything specific re: versions in DNS--I tried to copy the functionality as much as possible in the first place!",
+      "parentUuid": "df304d37_4ba82db1",
+      "range": {
+        "startLine": 113,
+        "startChar": 4,
+        "endLine": 117,
+        "endChar": 5
+      },
+      "revId": "b9af6be6764a1a70b513ca54ce3f760e291c39cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3d46b2a3_a5bf5b0d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-09-14T22:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed89905b_c18e694e",
+      "range": {
+        "startLine": 500,
+        "startChar": 40,
+        "endLine": 500,
+        "endChar": 42
+      },
+      "revId": "b9af6be6764a1a70b513ca54ce3f760e291c39cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "379e6392_7499d921",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "b9af6be6764a1a70b513ca54ce3f760e291c39cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6ad1b9_b64bbf64",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadNotificationService2.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 574,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-09-14T22:19:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "379e6392_7499d921",
+      "range": {
+        "startLine": 572,
+        "startChar": 8,
+        "endLine": 574,
+        "endChar": 23
+      },
+      "revId": "b9af6be6764a1a70b513ca54ce3f760e291c39cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
