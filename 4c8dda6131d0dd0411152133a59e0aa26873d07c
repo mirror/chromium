@@ -34,6 +34,24 @@
       "revId": "4c8dda6131d0dd0411152133a59e0aa26873d07c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4d3d124_aed9807a",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-14T20:55:30Z",
+      "side": 1,
+      "message": "I think it might make more sense to always ask the client for the body.  bgfetch will have to persist it anyway for their own queuing, so maybe we could send back the id and ask for the body stream on start.  I don\u0027t know what that means for resumption though, although resumption with uploads is a concept we still need to think through.",
+      "parentUuid": "cc1d9848_8f42591f",
+      "revId": "4c8dda6131d0dd0411152133a59e0aa26873d07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
