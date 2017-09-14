@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90dd2d0c_fb259e06",
+        "filename": "gpu/ipc/client/gpu_channel_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-14T01:13:52Z",
+      "side": 1,
+      "message": "Should there be a check of message.is_sync() first or is it OK to rely on SyncMessage::GetMessageId returning 0 if it isn\u0027t a sync reply?",
+      "range": {
+        "startLine": 269,
+        "startChar": 8,
+        "endLine": 269,
+        "endChar": 10
+      },
+      "revId": "28b6100509ed623e2e37bd0676bbed1e396660cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33fc5a1a_65ea19af",
+        "filename": "gpu/ipc/client/gpu_channel_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-14T01:13:52Z",
+      "side": 1,
+      "message": "Is there any chance that an incoming message (for example, for creation of a new window, like before) will still be handled here while the main thread\u0027s waiting for a sync reply, and this will attempt to post a task to the (blocked) main thread?\n\nI think I see the intent -- even if that happens, the task will just be queued up, and once the sync reply comes back and unblocks the main thread, it\u0027ll be processed in a non-reentrant fashion.",
+      "revId": "28b6100509ed623e2e37bd0676bbed1e396660cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
