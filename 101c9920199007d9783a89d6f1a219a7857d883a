@@ -16,6 +16,24 @@
       "revId": "101c9920199007d9783a89d6f1a219a7857d883a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7a44fa_0e95a2a0",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-cookie.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-09-14T06:27:11Z",
+      "side": 1,
+      "message": "Very good point! Thanks for pointing that out!",
+      "parentUuid": "b075c315_3cfe7243",
+      "revId": "101c9920199007d9783a89d6f1a219a7857d883a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
