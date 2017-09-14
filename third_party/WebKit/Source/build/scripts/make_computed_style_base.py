@@ -4,16 +4,18 @@
 # found in the LICENSE file.
 
 import math
+import types
 
 import json5_generator
 import template_expander
-import make_style_builder
 import keyword_utils
 import bisect
+import css_properties_utils
+from core.css import css_properties
 
 from name_utilities import (
     enum_for_css_keyword, enum_type_name, enum_value_name, class_member_name, method_name,
-    class_name, join_names
+    class_name, join_names, lower_first, upper_camel_case
 )
 from itertools import chain
 
@@ -578,14 +580,73 @@ def _evaluate_rare_inherit_group(all_properties, properties_ranking_file,
             property_["field_group"] = "->".join(group_tree)
 
 
-class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
+def set_if_none(property_, key, value):
+    if property_[key] is None:
+        property_[key] = value
+
+
+def apply_field_naming_defaults(field):
+    upper_camel = upper_camel_case(field['name'])
+    set_if_none(field, 'name_for_methods', upper_camel.replace('Webkit', ''))
+    name = field['name_for_methods']
+    simple_type_name = str(field['type_name']).split('::')[-1]
+    set_if_none(field, 'type_name', 'E' + name)
+    set_if_none(field, 'getter', name if simple_type_name != name else 'Get' + name)
+    set_if_none(field, 'setter', 'Set' + name)
+    set_if_none(field, 'inherited', False)
+    set_if_none(field, 'initial', 'Initial' + name)
+    if 'css_property' in field:
+        field['should_declare_functions'] = field['css_property']['should_declare_functions']
+
+
+def apply_property_naming_defaults(property_):
+    # TODO(meade): Delete this once all methods are moved to CSSPropertyAPIs.
+    # TODO(shend): Use name_utilities for manipulating names.
+    # TODO(shend): Rearrange the code below to separate assignment and set_if_none
+    upper_camel = upper_camel_case(property_['name'])
+    set_if_none(
+        property_, 'name_for_methods', upper_camel.replace('Webkit', ''))
+    name = property_['name_for_methods']
+    simple_type_name = str(property_['type_name']).split('::')[-1]
+    set_if_none(property_, 'type_name', 'E' + name)
+    set_if_none(
+        property_, 'getter', name if simple_type_name != name else 'Get' + name)
+    set_if_none(property_, 'setter', 'Set' + name)
+    set_if_none(property_, 'inherited', False)
+    set_if_none(property_, 'initial', 'Initial' + name)
+
+    if property_['custom_all']:
+        property_['custom_initial'] = True
+        property_['custom_inherit'] = True
+        property_['custom_value'] = True
+    if property_['inherited']:
+        property_['is_inherited_setter'] = 'Set' + name + 'IsInherited'
+    property_['should_declare_functions'] = \
+        not property_['use_handlers_for'] \
+        and not property_['longhands'] \
+        and not property_['direction_aware'] \
+        and not property_['builder_skip'] \
+        and property_['is_property']
+    # Functions should only be used in StyleBuilder if the CSSPropertyAPI
+    # class is shared or not implemented yet (shared classes are denoted by
+    # api_class = "some string").
+    property_['use_api_in_stylebuilder'] = \
+        property_['should_declare_functions'] \
+        and not (property_['custom_initial'] or
+                 property_['custom_inherit'] or
+                 property_['custom_value']) \
+        and property_['api_class'] \
+        and isinstance(property_['api_class'], types.BooleanType)
+
+
+class ComputedStyleBaseWriter(css_properties.CSSProperties):
     def __init__(self, json5_file_paths):
         # Read CSSProperties.json5
         super(ComputedStyleBaseWriter, self).__init__([json5_file_paths[0]])
 
         # Ignore shorthand properties
         for property_ in self._properties.values():
-            if property_['field_template'] is not None:
+            if len(property_["fields"]) > 0:
                 assert not property_['longhands'], \
                     "Shorthand '{}' cannot have a field_template.".format(property_['name'])
 
@@ -596,30 +657,28 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
         # the generated enum will have the same order and continuity as
         # CSSProperties.json5 and we can get the longest continuous segment.
         # Thereby reduce the switch case statement to the minimum.
-        css_properties = keyword_utils.sort_keyword_properties_by_canonical_order(css_properties,
-                                                                                  json5_file_paths[3],
-                                                                                  self.json5_file.parameters)
-
-        for property_ in css_properties:
-            # Set default values for extra parameters in ComputedStyleExtraFields.json5.
-            property_['custom_copy'] = False
-            property_['custom_compare'] = False
-            property_['mutable'] = False
-
+        self._fields = css_properties_utils.get_fields_from_css_properties(css_properties,
+                                                                           json5_file_paths[1],
+                                                                           self.json5_file.parameters)
+        keyword_utils.sort_keyword_properties_by_canonical_order(self._fields.values(),
+                                                                 json5_file_paths[3],
+                                                                 self.json5_file.parameters)
+        for property_ in self._properties.values():
+            apply_property_naming_defaults(property_)
         # Read ComputedStyleExtraFields.json5 using the parameter specification from the CSS properties file.
         extra_fields = json5_generator.Json5File.load_from_files(
             [json5_file_paths[1]],
             default_parameters=self.json5_file.parameters
         ).name_dictionaries
 
-        for property_ in extra_fields:
+        all_properties = self._fields.values() + extra_fields
+
+        for property_ in all_properties:
             if property_['mutable']:
                 assert property_['field_template'] == 'monotonic_flag', \
                     'mutable keyword only implemented for monotonic_flag'
-            make_style_builder.apply_property_naming_defaults(property_)
-
-        all_properties = css_properties + extra_fields
-
+            apply_field_naming_defaults(property_)
+        # ----------------------------------------------------------------------------------------------
         self._generated_enums = _create_enums(all_properties)
 
         # Organise fields into a tree structure where the root group
@@ -651,7 +710,7 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
     def generate_base_computed_style_h(self):
         return {
             'input_files': self._input_files,
-            'properties': self._properties,
+            'properties': self._fields,
             'enums': self._generated_enums,
             'include_paths': self._include_paths,
             'computed_style': self._root_group,
@@ -662,7 +721,7 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
     def generate_base_computed_style_cpp(self):
         return {
             'input_files': self._input_files,
-            'properties': self._properties,
+            'properties': self._fields,
             'enums': self._generated_enums,
             'include_paths': self._include_paths,
             'computed_style': self._root_group,
@@ -673,7 +732,7 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
     def generate_base_computed_style_constants(self):
         return {
             'input_files': self._input_files,
-            'properties': self._properties,
+            'properties': self._fields,
             'enums': self._generated_enums,
         }
 

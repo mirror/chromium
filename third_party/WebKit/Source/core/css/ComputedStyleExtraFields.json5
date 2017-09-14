@@ -20,6 +20,135 @@
       default: false,
     },
 
+    // - longhands: ["property", "other-property"]
+    // The property is a shorthand for several other properties.
+    longhands: {
+    },
+
+    // - field_group
+    // Name of the group that this field belongs to. Fields in the same group are stored
+    // together as a nested class inside ComputedStyle and dynamically allocated on use.
+    // Leave this out if the field is stored directly on ComputedStyle.
+    // If you want to auto group this property use: field_group: "*[->subgroup]".
+    // If you use the auto grouping function check if your property is in CSSPropertiesRanking.json5
+    // -  If yes, only provide: field_group: "*"
+    // -  If no, you can specify a subgroup following the asterisk: field_group: "*[->subgroup]"
+    field_group: {
+      value_type: "str"
+    },
+
+    // - field_size
+    // Number of bits needed to store this field. Only used for storage_only
+    // fields. If specified, the field will be stored as bit field. Otherwise
+    // it will be stored as a normal data member.
+    field_size: {
+      valid_type: "int",
+    },
+
+    // - field_template
+    // Affects how the interface to this field is generated.
+    // TODO(sashab, meade): Remove this once TypedOM types are specified for
+    // every property, since this value can be inferred from that.
+    field_template: {
+      valid_values: [
+        // Field is stored as an enum and has a initial/getter/setter/resetter.
+        // If include_paths is empty, we would also generate the corresponding
+        // enum definition in ComputedStyleConstants.h.
+        "keyword",
+        // Field can take on any subset of values from a list of keywords.
+        "multi_keyword",
+        // Field stores a primitive value like int/bool. The type is specified by
+        // type_name. The interface has a initial/getter/setter/resetter.
+        "primitive",
+        // Field is stored as a bool, whose default value is false
+        // and can only be set to true. Has a initial/getter/setter.
+        "monotonic_flag",
+        // Field has type specified at type_name and has a getter/setter.
+        // Also has a setter taking an rvalue reference. Cannot be packed.
+        "external",
+        // Only the storage is generated. The interface is handwritten.
+        "storage_only",
+        // Field is stored as a wrapper_pointer_name to a class.
+        "pointer",
+        // Preset "length" for external and Length class
+        // This preset represents:  field_template: "external"
+        //                          type_name: "Length"
+        //                          include_paths: ["platform/Length.h"]
+        "<[a-z]+>"
+      ],
+    },
+
+    // - include_paths: ["path/to/file1.h", "path/to/file2.h"]
+    // List of files containing the definitions of types in 'type_name'. Each of
+    // these files will appear as a #include in ComputedStyleBase.h. For
+    // example, if the type_name is 'Vector<String>', include_paths should be
+    // ["platform/wtf/Vector.h", "platform/wtf/text/WTFString.h"]
+    include_paths: {
+      default: [],
+    },
+
+    // Name of the pointer type that wraps this field (e.g. RefPtr).
+    // Can only be set if the field template is storage_only.
+    wrapper_pointer_name: {
+      valid_type: "str",
+      valid_values: ["RefPtr", "Persistent", "std::unique_ptr"],
+    },
+
+    // - keywords: ["keyword1", "keyword2"]
+    // This specifies all valid keyword values for the property.
+    // TODO(sashab): Once all properties are represented here, delete
+    // CSSValueKeywords.in and use this list instead.
+    keywords: {
+      default: [],
+    },
+
+    // - default_value: "keyword-value"
+    // This specifies the default value for this field.
+    // - for keyword fields, this is the initial keyword
+    // - for other fields, this is a string containg the C++ expression
+    //   that is used to initialise the field.
+    default_value: {
+    },
+
+    // - inherited
+    // The property will inherit by default if no value is specified, typically
+    // mentioned in specifications as "Inherited: yes"
+    inherited: {
+      default: false,
+      valid_type: "bool",
+    },
+
+    // - name_for_methods: "BlendMode"
+    // Tweaks how we choose defaults for getter, setter, initial and type_name.
+    // For example, setting this to BlendMode will make us use a setter of setBlendMode
+    // - initial
+    // The initial value accessor on the ComputedStyle, defaults to e.g. initialBoxShadow
+    // - getter
+    // The ComputedStyle getter, defaults to e.g. borderBottomLeft
+    // - setter
+    // The ComputedStyle setter, defaults to e.g. setBorderBottomLeft
+    // - type_name
+    // The computed type for the property. Only required for the default value
+    // application, defaults to e.g. EDisplay
+    name_for_methods: {
+    },
+    getter: {
+    },
+    setter: {
+    },
+    initial: {
+    },
+    type_name: {
+    },
+
+    // - computed_style_custom_functions: Any function specified in the list is not automatically
+    // generated in ComputedStyle. Use this when a generated function is not correct.
+    computed_style_custom_functions: {
+      default: [],
+      valid_type: "list",
+      valid_values: ["getter", "setter", "reset", "mutable"],
+    },
+
     // The rest is the same as CSSProperties.json5, but the only relevant ones in
     // this file are:
     // name, field_template, include_paths, default_value, type_name, keyword,
@@ -49,29 +178,11 @@
       field_group: "surround",
     },
     {
-      name: "BorderTopColorIsCurrentColor",
-      field_template: "primitive",
-      default_value: "true",
-      type_name: "bool",
-      field_group: "surround",
-    },
-    {
       name: "BorderBottomColorIsCurrentColor",
       field_template: "primitive",
       default_value: "true",
       type_name: "bool",
       field_group: "surround",
-    },
-    {
-      name: "OriginalDisplay",
-      field_template: "keyword",
-      default_value: "inline",
-      type_name: "EDisplay",
-      keywords: [
-          "inline", "block", "list-item", "inline-block", "table", "inline-table", "table-row-group", "table-header-group",
-          "table-footer-group", "table-row", "table-column-group", "table-column", "table-cell", "table-caption", "-webkit-box",
-          "-webkit-inline-box", "flex", "inline-flex", "grid", "inline-grid", "contents", "flow-root", "none",
-      ],
     },
     {
       name: "InsideLink",

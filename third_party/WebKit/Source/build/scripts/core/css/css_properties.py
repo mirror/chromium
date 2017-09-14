@@ -105,5 +105,6 @@ class CSSProperties(json5_generator.Writer):
 
         self.last_unresolved_property_id = max(property_["enum_value"] for property_ in self._properties_including_aliases)
 
+
     def properties(self):
         return self._properties
