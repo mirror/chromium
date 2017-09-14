@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74765a72_9a215c47",
+        "filename": "ui/views/widget/native_widget_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1235784
+      },
+      "writtenOn": "2017-09-14T01:48:48Z",
+      "side": 1,
+      "message": "I feel like I should post here instead to prevent extra work being done during draw?",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 24
+      },
+      "revId": "8e60031808a9d2c0041f1927bed9a70d2054f192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
