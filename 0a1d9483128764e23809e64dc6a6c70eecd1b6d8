@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbec4e1d_72aa574b",
+        "filename": "content/common/throttling_url_loader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-14T23:34:35Z",
+      "side": 1,
+      "message": "this also includes the request being deferred, right?",
+      "range": {
+        "startLine": 105,
+        "startChar": 42,
+        "endLine": 105,
+        "endChar": 66
+      },
+      "revId": "0a1d9483128764e23809e64dc6a6c70eecd1b6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e979e21e_fd9777f5",
+        "filename": "content/common/throttling_url_loader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-14T23:34:35Z",
+      "side": 1,
+      "message": "nit: *the* last?",
+      "range": {
+        "startLine": 112,
+        "startChar": 5,
+        "endLine": 112,
+        "endChar": 9
+      },
+      "revId": "0a1d9483128764e23809e64dc6a6c70eecd1b6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ad49efb_31aa51e7",
+        "filename": "content/common/throttling_url_loader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-14T23:34:35Z",
+      "side": 1,
+      "message": "Is it correct that \"blocked\" and \"deferred\" are used inter-changably? IMO \"deferred\" sounds better because:\n- it is more commonly used in relevant code;\n- \"deferred\" means it could be \"resumed\"; while sometimes people use \"blocked\" to mean that the request is \"stopped\"/\"canceled\".\n\nWDYT?",
+      "range": {
+        "startLine": 112,
+        "startChar": 49,
+        "endLine": 112,
+        "endChar": 56
+      },
+      "revId": "0a1d9483128764e23809e64dc6a6c70eecd1b6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b07d061_87430078",
+        "filename": "content/common/throttling_url_loader.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-14T23:34:35Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN?",
+      "revId": "0a1d9483128764e23809e64dc6a6c70eecd1b6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af084776_390e0bc4",
+        "filename": "content/common/throttling_url_loader_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 668,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-14T23:34:35Z",
+      "side": 1,
+      "message": "nit: maybe also check the state of throttle2?",
+      "revId": "0a1d9483128764e23809e64dc6a6c70eecd1b6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
