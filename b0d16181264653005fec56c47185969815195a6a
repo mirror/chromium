@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cf92045f_c1f35c53",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/unavailable_feature_dialogs/unavailable_feature_dialog_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-14T22:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7057fd1e_3d564323",
+      "revId": "b0d16181264653005fec56c47185969815195a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b4e526d_9cfc1a35",
         "filename": "ios/clean/chrome/browser/ui/dialogs/unavailable_feature_dialogs/unavailable_feature_dialog_mediator.mm",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4fad3128_05b68b7a",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/unavailable_feature_dialogs/unavailable_feature_dialog_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-14T22:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b4e526d_9cfc1a35",
+      "range": {
+        "startLine": 26,
+        "startChar": 31,
+        "endLine": 26,
+        "endChar": 37
+      },
+      "revId": "b0d16181264653005fec56c47185969815195a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a44096ff_87cb073e",
         "filename": "ios/clean/chrome/browser/ui/dialogs/unavailable_feature_dialogs/unavailable_feature_dialog_mediator.mm",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "b0d16181264653005fec56c47185969815195a6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61a73569_e44642db",
+        "filename": "ios/clean/chrome/browser/ui/dialogs/unavailable_feature_dialogs/unavailable_feature_dialog_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-14T22:46:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a44096ff_87cb073e",
+      "revId": "b0d16181264653005fec56c47185969815195a6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
