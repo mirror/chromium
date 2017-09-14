@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42953337_815b672b",
+        "filename": "net/cert/x509_certificate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-14T22:25:32Z",
+      "side": 1,
+      "message": "Unused",
+      "revId": "e06b00516e5ddf3e5fff9206b2d7ba853de607f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3baef3_cbb6df9f",
+        "filename": "net/cert/x509_certificate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-14T22:25:32Z",
+      "side": 1,
+      "message": "Unused",
+      "revId": "e06b00516e5ddf3e5fff9206b2d7ba853de607f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d3f829d_5379b400",
+        "filename": "net/cert/x509_certificate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-14T22:25:32Z",
+      "side": 1,
+      "message": "Unused (I think was unused previously)",
+      "revId": "e06b00516e5ddf3e5fff9206b2d7ba853de607f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee18ef84_ad3b2ae0",
+        "filename": "net/cert/x509_certificate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-14T22:25:32Z",
+      "side": 1,
+      "message": "Unused",
+      "revId": "e06b00516e5ddf3e5fff9206b2d7ba853de607f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "786106c7_d6e5f8d5",
+        "filename": "net/cert/x509_certificate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-14T22:25:32Z",
+      "side": 1,
+      "message": "Unused",
+      "revId": "e06b00516e5ddf3e5fff9206b2d7ba853de607f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87712a78_058e249b",
+        "filename": "net/cert/x509_certificate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-14T22:25:32Z",
+      "side": 1,
+      "message": "Unused (I think was unused previously)",
+      "revId": "e06b00516e5ddf3e5fff9206b2d7ba853de607f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
