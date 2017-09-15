@@ -602,6 +602,7 @@ class CONTENT_EXPORT RenderFrameImpl
   blink::WebEffectiveConnectionType GetEffectiveConnectionType() override;
   bool IsClientLoFiActiveForFrame() override;
   bool ShouldUseClientLoFiForRequest(const blink::WebURLRequest&) override;
+  void DispatchFrameVisible() override;
   void DidBlockFramebust(const blink::WebURL& url) override;
   void AbortClientNavigation() override;
   void DidChangeSelection(bool is_empty_selection) override;
@@ -1467,6 +1468,7 @@ class CONTENT_EXPORT RenderFrameImpl
     bool client_redirect;
     blink::WebTriggeringEventInfo triggering_event_info;
     bool cache_disabled;
+    bool is_delayed_subframe_request;
     blink::WebFormElement form;
     blink::WebSourceLocation source_location;
 

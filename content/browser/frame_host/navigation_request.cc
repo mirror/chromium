@@ -511,7 +511,8 @@ void NavigationRequest::CreateNavigationHandle() {
                                    nav_entry_id_,
                                    false,  // started_in_context_menu
                                    common_params_.should_check_main_world_csp,
-                                   begin_params_.is_form_submission);
+                                   begin_params_.is_form_submission,
+                                   common_params_.is_delayed_subframe_request);
 
   if (!frame_tree_node->navigation_request()) {
     // A callback could have cancelled this request synchronously in which case
@@ -1156,6 +1157,11 @@ NavigationRequest::CheckLegacyProtocolInSubresource() const {
   parent->AddMessageToConsole(CONSOLE_MESSAGE_LEVEL_WARNING, console_message);
 
   return LegacyProtocolInSubresourceCheckResult::BLOCK_REQUEST;
+}
+
+void NavigationRequest::OnFrameVisible() {
+  if (navigation_handle_)
+    navigation_handle_->OnFrameVisible();
 }
 
 }  // namespace content

@@ -15,6 +15,7 @@
 #include "content/browser/frame_host/ancestor_throttle.h"
 #include "content/browser/frame_host/data_url_navigation_throttle.h"
 #include "content/browser/frame_host/debug_urls.h"
+#include "content/browser/frame_host/delayed_subframe_throttle.h"
 #include "content/browser/frame_host/form_submission_throttle.h"
 #include "content/browser/frame_host/frame_tree_node.h"
 #include "content/browser/frame_host/mixed_content_navigation_throttle.h"
@@ -76,12 +77,13 @@ std::unique_ptr<NavigationHandleImpl> NavigationHandleImpl::Create(
     int pending_nav_entry_id,
     bool started_from_context_menu,
     CSPDisposition should_check_main_world_csp,
-    bool is_form_submission) {
+    bool is_form_submission,
+    bool is_delayed_subframe_request) {
   return std::unique_ptr<NavigationHandleImpl>(new NavigationHandleImpl(
       url, redirect_chain, frame_tree_node, is_renderer_initiated,
       is_same_document, navigation_start, pending_nav_entry_id,
       started_from_context_menu, should_check_main_world_csp,
-      is_form_submission));
+      is_form_submission, is_delayed_subframe_request));
 }
 
 NavigationHandleImpl::NavigationHandleImpl(
@@ -94,7 +96,8 @@ NavigationHandleImpl::NavigationHandleImpl(
     int pending_nav_entry_id,
     bool started_from_context_menu,
     CSPDisposition should_check_main_world_csp,
-    bool is_form_submission)
+    bool is_form_submission,
+    bool is_delayed_subframe_request)
     : url_(url),
       has_user_gesture_(false),
       transition_(ui::PAGE_TRANSITION_LINK),
@@ -130,12 +133,16 @@ NavigationHandleImpl::NavigationHandleImpl(
       should_check_main_world_csp_(should_check_main_world_csp),
       is_form_submission_(is_form_submission),
       expected_render_process_host_id_(ChildProcessHost::kInvalidUniqueID),
+      is_delayed_subframe_request_(is_delayed_subframe_request),
       weak_factory_(this) {
   TRACE_EVENT_ASYNC_BEGIN2("navigation", "NavigationHandle", this,
                            "frame_tree_node",
                            frame_tree_node_->frame_tree_node_id(), "url",
                            url_.possibly_invalid_spec());
   DCHECK(!navigation_start.is_null());
+
+  LOG(WARNING) << "NavigationHandleImpl(): is_delayed_subframe_request_="
+               << is_delayed_subframe_request_ << " url=" << url_;
 
   site_url_ = SiteInstance::GetSiteForURL(frame_tree_node_->current_frame_host()
                                               ->GetSiteInstance()
@@ -579,8 +586,9 @@ void NavigationHandleImpl::WillStartRequest(
     return;
   }
 
-  if (!IsRendererDebugURL(url_))
+  if (!IsRendererDebugURL(url_)) {
     RegisterNavigationThrottles();
+  }
 
   if (IsBrowserSideNavigationEnabled())
     navigation_ui_data_ = GetDelegate()->GetNavigationUIData(this);
@@ -1196,6 +1204,15 @@ void NavigationHandleImpl::RegisterNavigationThrottles() {
   AddThrottle(AncestorThrottle::MaybeCreateThrottleFor(this));
   AddThrottle(FormSubmissionThrottle::MaybeCreateThrottleFor(this));
 
+  if (is_delayed_subframe_request_) {
+    auto delayed_subframe_throttle =
+        DelayedSubframeThrottle::MaybeCreateThrottleFor(this);
+    if (delayed_subframe_throttle) {
+      weak_delayed_subframe_throttle_ = delayed_subframe_throttle->GetWeakPtr();
+      AddThrottle(std::move(delayed_subframe_throttle));
+    }
+  }
+
   // Check for mixed content. This is done after the AncestorThrottle and the
   // FormSubmissionThrottle so that when folks block mixed content with a CSP
   // policy, they don't get a warning. They'll still get a warning in the
@@ -1274,6 +1291,24 @@ NavigationThrottle* NavigationHandleImpl::GetDeferringThrottle() const {
   if (next_index_ == 0)
     return nullptr;
   return throttles_[next_index_ - 1].get();
+}
+
+void NavigationHandleImpl::OnFrameVisible() {
+  LOG(WARNING)
+      << "NavigationHandleImpl::OnFrameVisible: is_delayed_subframe_request_="
+      << is_delayed_subframe_request_ << " url=" << GetURL();
+
+  if (!is_delayed_subframe_request_)
+    return;
+  is_delayed_subframe_request_ = false;
+
+  if (!weak_delayed_subframe_throttle_)
+    return;
+  weak_delayed_subframe_throttle_->Unthrottle();
+
+  if (GetDeferringThrottle() != weak_delayed_subframe_throttle_.get())
+    return;
+  Resume(weak_delayed_subframe_throttle_.get());
 }
 
 }  // namespace content

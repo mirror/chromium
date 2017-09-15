@@ -23,6 +23,7 @@
 
 #include "core/CoreExport.h"
 #include "core/dom/Document.h"
+#include "core/dom/ElementVisibilityObserver.h"
 #include "core/frame/DOMWindow.h"
 #include "core/frame/EmbeddedContentView.h"
 #include "core/frame/FrameOwner.h"
@@ -160,6 +161,8 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   bool IsLocal() const final { return true; }
   bool IsRemote() const final { return false; }
 
+  void FrameVisible(LocalFrame*, bool visible);
+
   bool IsFrameOwnerElement() const final { return true; }
 
   virtual ReferrerPolicy ReferrerPolicyAttribute() {
@@ -167,6 +170,7 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   }
 
   Member<Frame> content_frame_;
+  Member<ElementVisibilityObserver> visibility_observer_;
   Member<EmbeddedContentView> embedded_content_view_;
   SandboxFlags sandbox_flags_;
 
