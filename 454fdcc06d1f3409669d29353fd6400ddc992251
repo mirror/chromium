@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80f8d122_88f91d5c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/types/scripted/SVGLength-px-with-context.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-15T14:28:48Z",
+      "side": 1,
+      "message": "This should use the initial font-size (which is _usually_ 16px, but not guaranteed.) So, set \u0027font-size: initial\u0027 on an element and then read the computed style for fontSize. (Very similar to what calculateXHeight does but with different properties.)",
+      "range": {
+        "startLine": 23,
+        "startChar": 20,
+        "endLine": 23,
+        "endChar": 23
+      },
+      "revId": "454fdcc06d1f3409669d29353fd6400ddc992251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f22ecef3_3f4bd29e",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/types/scripted/SVGLength-px-with-context.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-15T14:28:48Z",
+      "side": 1,
+      "message": "This should either be much smaller. We are also at the liberty of choosing a better px value so that we don\u0027t need to use the \u0027approx\u0027 assertion.\nThe only exception would be for cases where we don\u0027t have good enough control of the values involved. So maybe needed in the EM and EX cases, but all the others should be possible to use regular equals for.",
+      "range": {
+        "startLine": 52,
+        "startChar": 69,
+        "endLine": 52,
+        "endChar": 72
+      },
+      "revId": "454fdcc06d1f3409669d29353fd6400ddc992251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b58747_c174851d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/svg/types/scripted/SVGLength-px.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-15T14:28:48Z",
+      "side": 1,
+      "message": "(See comments below for this case as well.)",
+      "range": {
+        "startLine": 74,
+        "startChar": 2,
+        "endLine": 74,
+        "endChar": 22
+      },
+      "revId": "454fdcc06d1f3409669d29353fd6400ddc992251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
