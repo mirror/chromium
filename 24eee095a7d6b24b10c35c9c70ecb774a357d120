@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf226464_ced72dbe",
+        "filename": "components/viz/host/hit_test/hit_test_query.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-15T08:00:44Z",
+      "side": 1,
+      "message": "Origin could in theory be a valid location though. Maybe check the return value of TransformLocationForTargetRecursively() instead?",
+      "revId": "24eee095a7d6b24b10c35c9c70ecb774a357d120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0620fef7_5af7b27f",
+        "filename": "components/viz/host/hit_test/hit_test_query.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-15T08:00:44Z",
+      "side": 1,
+      "message": "Can we walk up the tree from |target| all the way up to the root first, so that at each step, we know which branch to take? Instead of walking the entire tree until we find the target?",
+      "revId": "24eee095a7d6b24b10c35c9c70ecb774a357d120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
