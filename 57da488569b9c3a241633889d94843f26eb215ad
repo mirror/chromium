@@ -22,6 +22,30 @@
       "revId": "57da488569b9c3a241633889d94843f26eb215ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cd7ea39_ee76606b",
+        "filename": "gpu/config/gpu_info_collector_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1230791
+      },
+      "writtenOn": "2017-09-15T23:58:56Z",
+      "side": 1,
+      "message": "Done. Except for the one in get_func. If you want that to be non-crashing I think I could either add a bool lookup_failed and check it after all the lookups or add a check to the macro (gross).",
+      "parentUuid": "74af3dcd_4e10a2a9",
+      "range": {
+        "startLine": 197,
+        "startChar": 11,
+        "endLine": 197,
+        "endChar": 14
+      },
+      "revId": "57da488569b9c3a241633889d94843f26eb215ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
