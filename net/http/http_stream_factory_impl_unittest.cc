@@ -394,7 +394,8 @@ class CapturePreconnectsSocketPool : public ParentPool {
   void RequestSockets(const std::string& group_name,
                       const void* socket_params,
                       int num_sockets,
-                      const NetLogWithSource& net_log) override {
+                      const NetLogWithSource& net_log,
+                      HttpRequestInfo::RequestMotivation motivation) override {
     last_num_streams_ = num_sockets;
   }
 
