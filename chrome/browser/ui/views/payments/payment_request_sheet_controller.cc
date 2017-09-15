@@ -160,7 +160,8 @@ class BorderedScrollView : public views::ScrollView {
   };
 
   BorderedScrollView() : views::ScrollView() {
-    SetBackgroundColor(SK_ColorWHITE);
+    SetBackground(views::CreateThemedSolidBackground(
+        this, ui::NativeTheme::kColorId_WindowBackground));
     SetBorder(views::CreateBorderPainter(
         base::MakeUnique<BorderedScrollViewBorderPainter>(
             GetNativeTheme()->GetSystemColor(
@@ -212,7 +213,8 @@ std::unique_ptr<views::View> PaymentRequestSheetController::CreateView() {
   if (GetSheetId(&sheet_id))
     view->set_id(static_cast<int>(sheet_id));
 
-  view->SetBackground(views::CreateSolidBackground(SK_ColorWHITE));
+  view->SetBackground(views::CreateThemedSolidBackground(
+      view.get(), ui::NativeTheme::kColorId_WindowBackground));
 
   // Paint the sheets to layers, otherwise the MD buttons (which do paint to a
   // layer) won't do proper clipping.
@@ -247,7 +249,8 @@ std::unique_ptr<views::View> PaymentRequestSheetController::CreateView() {
   content_view_ = new views::View;
   content_view_->SetPaintToLayer();
   content_view_->layer()->SetFillsBoundsOpaquely(true);
-  content_view_->SetBackground(views::CreateSolidBackground(SK_ColorWHITE));
+  content_view_->SetBackground(views::CreateThemedSolidBackground(
+      content_view_, ui::NativeTheme::kColorId_WindowBackground));
   content_view_->set_id(static_cast<int>(DialogViewID::CONTENT_VIEW));
   pane_layout->AddView(content_view_);
   pane_->SizeToPreferredSize();
@@ -347,11 +350,11 @@ std::unique_ptr<views::View> PaymentRequestSheetController::CreateFooterView() {
       views::GridLayout::CreateAndInstall(container.get());
 
   views::ColumnSet* columns = layout->AddColumnSet(0);
-  columns->AddColumn(views::GridLayout::LEADING, views::GridLayout::CENTER,
-                     0, views::GridLayout::USE_PREF, 0, 0);
+  columns->AddColumn(views::GridLayout::LEADING, views::GridLayout::CENTER, 0,
+                     views::GridLayout::USE_PREF, 0, 0);
   columns->AddPaddingColumn(1, 0);
-  columns->AddColumn(views::GridLayout::TRAILING, views::GridLayout::CENTER,
-                     0, views::GridLayout::USE_PREF, 0, 0);
+  columns->AddColumn(views::GridLayout::TRAILING, views::GridLayout::CENTER, 0,
+                     views::GridLayout::USE_PREF, 0, 0);
 
   layout->StartRow(0, 0);
   std::unique_ptr<views::View> extra_view = CreateExtraFooterView();
