@@ -63,8 +63,21 @@ class BackgroundFetchServiceTest : public BackgroundFetchTestBase {
     run_loop.Run();
   }
 
-  // TODO(harkness): Add tests for UpdateUI() when its functionality has been
-  // implemented.
+  // Synchronous wrapper for BackgroundFetchServiceImpl::UpdateUI().
+  // Should be wrapped in ASSERT_NO_FATAL_FAILURE().
+  void UpdateUI(const BackgroundFetchRegistrationId& registration_id,
+                const std::string& title,
+                blink::mojom::BackgroundFetchError* out_error) {
+    DCHECK(out_error);
+
+    base::RunLoop run_loop;
+    service_->UpdateUI(registration_id.service_worker_registration_id(),
+                       registration_id.origin(), registration_id.id(), title,
+                       base::BindOnce(&BackgroundFetchServiceTest::DidGetError,
+                                      base::Unretained(this),
+                                      run_loop.QuitClosure(), out_error));
+    run_loop.Run();
+  }
 
   // Synchronous wrapper for BackgroundFetchServiceImpl::Abort().
   // Should be wrapped in ASSERT_NO_FATAL_FAILURE().
@@ -75,7 +88,7 @@ class BackgroundFetchServiceTest : public BackgroundFetchTestBase {
     base::RunLoop run_loop;
     service_->Abort(registration_id.service_worker_registration_id(),
                     registration_id.origin(), registration_id.id(),
-                    base::BindOnce(&BackgroundFetchServiceTest::DidAbort,
+                    base::BindOnce(&BackgroundFetchServiceTest::DidGetError,
                                    base::Unretained(this),
                                    run_loop.QuitClosure(), out_error));
 
@@ -157,9 +170,9 @@ class BackgroundFetchServiceTest : public BackgroundFetchTestBase {
     quit_closure.Run();
   }
 
-  void DidAbort(base::Closure quit_closure,
-                blink::mojom::BackgroundFetchError* out_error,
-                blink::mojom::BackgroundFetchError error) {
+  void DidGetError(base::Closure quit_closure,
+                   blink::mojom::BackgroundFetchError* out_error,
+                   blink::mojom::BackgroundFetchError error) {
     *out_error = error;
 
     quit_closure.Run();
@@ -508,10 +521,51 @@ TEST_F(BackgroundFetchServiceTest, FetchFailEventDispatch) {
   }
 }
 
+TEST_F(BackgroundFetchServiceTest, UpdateUI) {
+  // This test starts a new Background Fetch, completes the registration, and
+  // checks that updates to the title using UpdateUI are successfully reflected
+  // back when calling GetRegistration.
+  // TODO(delphick): Add tests that UpdateUI() updates the UI of any existing
+  // notifications, rather than merely updating the stored title.
+
+  BackgroundFetchRegistrationId registration_id;
+  ASSERT_TRUE(CreateRegistrationId(kExampleId, &registration_id));
+
+  std::vector<ServiceWorkerFetchRequest> requests;
+  requests.emplace_back();  // empty, but valid
+
+  BackgroundFetchOptions options;
+  options.title = "1st title";
+
+  blink::mojom::BackgroundFetchError error;
+  BackgroundFetchRegistration registration;
+
+  // Create the registration.
+  ASSERT_NO_FATAL_FAILURE(
+      Fetch(registration_id, requests, options, &error, &registration));
+  ASSERT_EQ(blink::mojom::BackgroundFetchError::NONE, error);
+  ASSERT_EQ(options.title, registration.title);
+
+  std::string second_title = "2nd title";
+
+  // Immediately update the title. This should succeed.
+  ASSERT_NO_FATAL_FAILURE(UpdateUI(registration_id, second_title, &error));
+  EXPECT_EQ(blink::mojom::BackgroundFetchError::NONE, error);
+
+  BackgroundFetchRegistration second_registration;
+
+  // GetRegistration should now resolve with the updated title.
+  ASSERT_NO_FATAL_FAILURE(
+      GetRegistration(registration_id, &error, &second_registration));
+  ASSERT_EQ(blink::mojom::BackgroundFetchError::NONE, error);
+  EXPECT_NE(options.title, second_registration.title);
+  EXPECT_EQ(second_title, second_registration.title);
+}
+
 TEST_F(BackgroundFetchServiceTest, Abort) {
   // This test starts a new Background Fetch, completes the registration, and
   // then aborts the Background Fetch mid-process. Tests all of StartFetch(),
-  // GetActiveFetches() and GetActiveIdsForServiceWorkerRegistration().
+  // GetActiveFetches() and GetIdsForServiceWorkerRegistration().
 
   BackgroundFetchRegistrationId registration_id;
   ASSERT_TRUE(CreateRegistrationId(kExampleId, &registration_id));
