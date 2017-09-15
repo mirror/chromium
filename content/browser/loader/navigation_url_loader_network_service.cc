@@ -195,13 +195,22 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
   // This could be called multiple times to follow a chain of redirects.
   void Restart() {
+    LOG(ERROR) << "Restart handler_index_ " << handler_index_
+               << " default_loader_used_: " << default_loader_used_;
+    // If the default loader (network) was not used, clears |url_loader_| here
+    // to create a new loader for the next request at MaybeStartLoader().
+    if (!default_loader_used_) {
+      url_loader_.reset();
+    }
     handler_index_ = 0;
     received_response_ = false;
     MaybeStartLoader(StartLoaderCallback());
   }
 
   void MaybeStartLoader(StartLoaderCallback start_loader_callback) {
+    LOG(ERROR) << "MaybeStartLoader " << !!start_loader_callback;
     if (start_loader_callback) {
+      LOG(ERROR) << "ThrottlingURLLoader::CreateLoaderAndStart --";
       default_loader_used_ = false;
       url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
           std::move(start_loader_callback),
@@ -221,6 +230,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     }
 
     if (handler_index_ < handlers_.size()) {
+      LOG(ERROR) << "MaybeCreateLoader " << handler_index_;
       handlers_[handler_index_++]->MaybeCreateLoader(
           *resource_request_, resource_context_,
           base::BindOnce(&URLLoaderRequestController::MaybeStartLoader,
@@ -230,6 +240,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
     if (url_loader_) {
       DCHECK(!redirect_info_.new_url.is_empty());
+      LOG(ERROR) << "url_loader_->FollowRedirect ";
       url_loader_->FollowRedirect();
       return;
     }
@@ -242,6 +253,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       factory = default_url_loader_factory_getter_->GetNetworkFactory()->get();
       default_loader_used_ = true;
     }
+    LOG(ERROR) << "ThrottlingURLLoader::CreateLoaderAndStart ==";
     url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
         factory,
         GetContentClient()->browser()->CreateURLLoaderThrottles(
@@ -252,6 +264,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   }
 
   void FollowRedirect() {
+    LOG(ERROR) << "URLLoaderRequestController::FollowRedirect "
+               << redirect_info_.new_url;
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     DCHECK(url_loader_);
     DCHECK(!response_url_loader_);
@@ -322,8 +336,9 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     resource_request_->referrer_policy =
         Referrer::NetReferrerPolicyToBlinkReferrerPolicy(
             redirect_info_.new_referrer_policy);
-
+    LOG(ERROR) << "calling Restart";
     Restart();
+    LOG(ERROR) << "calling Restart done";
   }
 
   // Ownership of the URLLoaderFactoryPtrInfo instance is transferred to the
@@ -338,6 +353,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       const ResourceResponseHead& head,
       const base::Optional<net::SSLInfo>& ssl_info,
       mojom::DownloadedTempFilePtr downloaded_file) override {
+    LOG(ERROR) << "NavigationURLLoaderNetworkService::"
+                  "URLLoaderRequestController::OnReceiveResponse";
     received_response_ = true;
     // If the default loader (network) was used to handle the URL load request
     // we need to see if the handlers want to potentially create a new loader
@@ -362,6 +379,8 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
   void OnReceiveRedirect(const net::RedirectInfo& redirect_info,
                          const ResourceResponseHead& head) override {
+    LOG(ERROR) << "NavigationURLLoaderNetworkService::"
+                  "URLLoaderRequestController::OnReceiveResponse";
     if (--redirect_limit_ == 0) {
       OnComplete(ResourceRequestCompletionStatus(net::ERR_TOO_MANY_REDIRECTS));
       return;
@@ -568,6 +587,7 @@ NavigationURLLoaderNetworkService::~NavigationURLLoaderNetworkService() {
 }
 
 void NavigationURLLoaderNetworkService::FollowRedirect() {
+  LOG(ERROR) << "NavigationURLLoaderNetworkService::FollowRedirect";
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&URLLoaderRequestController::FollowRedirect,
@@ -593,6 +613,7 @@ void NavigationURLLoaderNetworkService::OnReceiveRedirect(
     const net::RedirectInfo& redirect_info,
     scoped_refptr<ResourceResponse> response) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  LOG(ERROR) << "NavigationURLLoaderNetworkService::OnReceiveRedirect";
   delegate_->OnRequestRedirected(redirect_info, std::move(response));
 }
 
