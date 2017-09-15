@@ -16,6 +16,24 @@
       "revId": "398990826f949d2904d710652184e51fea121dd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac7ae54_1416a6c5",
+        "filename": "components/omnibox/browser/autocomplete_classifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T16:52:26Z",
+      "side": 0,
+      "message": "Zerosuggest will occasionally cause the popup to open when the omnibox is focused, but it triggers rarely AFAIK.  mpearson might be able to get you better numbers on how often this triggers (or know who would).",
+      "parentUuid": "98e7e076_b3c41aa8",
+      "revId": "398990826f949d2904d710652184e51fea121dd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
