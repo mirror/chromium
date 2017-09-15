@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2363edc3_687e9343",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-15T17:00:06Z",
+      "side": 1,
+      "message": "I thought we had determined that the iOS port switched to BoringSSL (M51) before this code ever shipped there. (Does this code even ship on iOS at all? Chrome for iOS is weird.)",
+      "parentUuid": "d41cad6c_70532c74",
+      "revId": "0e9d676f0ff24fe56d226488d3d0d85721ff1726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49ac3282_045124e9",
         "filename": "components/gcm_driver/crypto/proto/gcm_encryption_data.proto",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "0e9d676f0ff24fe56d226488d3d0d85721ff1726",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd8c242_2957b20f",
+        "filename": "components/gcm_driver/crypto/proto/gcm_encryption_data.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-15T17:00:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49ac3282_045124e9",
+      "revId": "0e9d676f0ff24fe56d226488d3d0d85721ff1726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
