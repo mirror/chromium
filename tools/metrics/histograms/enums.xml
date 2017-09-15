@@ -39835,6 +39835,12 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="1" label="Installation started from the add to homescreen menu"/>
 </enum>
 
+<enum name="WebApkNotificationPermissionStatus">
+  <int value="0" label="WebAPK notification permission disabled"/>
+  <int value="1" label="WebAPK notification permission enabled"/>
+  <int value="2" label="WebAPK notification permission unknown"/>
+</enum>
+
 <enum name="WebApkOpenResult">
   <int value="0" label="Open an installed WebAPK successfully"/>
   <int value="1" label="(Obsolete) Launch intent for WebAPK is null"/>

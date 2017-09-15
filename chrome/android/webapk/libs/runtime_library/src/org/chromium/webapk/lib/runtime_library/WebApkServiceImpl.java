@@ -4,13 +4,18 @@
 
 package org.chromium.webapk.lib.runtime_library;
 
+import android.app.AppOpsManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.RemoteException;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 /**
  * Implements services offered by the WebAPK to Chrome.
@@ -21,6 +26,11 @@ public class WebApkServiceImpl extends IWebApkApi.Stub {
     public static final String KEY_HOST_BROWSER_UID = "host_browser_uid";
 
     private static final String TAG = "WebApkServiceImpl";
+
+    /** Order is same as WebApkNotificationPermissionStatus#enums.xml **/
+    private static final int NOTIFICATION_STATUS_DISABLED = 0;
+    private static final int NOTIFICATION_STATUS_ENABLED = 1;
+    private static final int NOTIFICATION_STATUS_UNKNOWN = 2;
 
     private final Context mContext;
 
@@ -70,6 +80,35 @@ public class WebApkServiceImpl extends IWebApkApi.Stub {
     @Override
     public void cancelNotification(String platformTag, int platformID) {
         getNotificationManager().cancel(platformTag, platformID);
+    }
+
+    public int determineAppNotificationStatus() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            return NOTIFICATION_STATUS_UNKNOWN;
+        }
+
+        final String packageName = mContext.getPackageName();
+        final int uid = mContext.getApplicationInfo().uid;
+        final AppOpsManager appOpsManager =
+                (AppOpsManager) mContext.getSystemService(Context.APP_OPS_SERVICE);
+        try {
+            Class appOpsManagerClass = Class.forName(AppOpsManager.class.getName());
+
+            @SuppressWarnings("unchecked")
+            final Method checkOpNoThrowMethod = appOpsManagerClass.getMethod(
+                    "checkOpNoThrow", Integer.TYPE, Integer.TYPE, String.class);
+
+            final Field opPostNotificationField =
+                    appOpsManagerClass.getDeclaredField("OP_POST_NOTIFICATION");
+
+            int value = (int) opPostNotificationField.get(Integer.class);
+            int status = (int) checkOpNoThrowMethod.invoke(appOpsManager, value, uid, packageName);
+
+            if (status == AppOpsManager.MODE_ALLOWED) return NOTIFICATION_STATUS_ENABLED;
+            return NOTIFICATION_STATUS_DISABLED;
+        } catch (Throwable e) {
+        }
+        return NOTIFICATION_STATUS_UNKNOWN;
     }
 
     private NotificationManager getNotificationManager() {
