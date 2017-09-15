@@ -140,6 +140,30 @@
       "revId": "8252425cb4f0875f9e3bcc3958287c455fc66af5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "414f348b_dd12a60b",
+        "filename": "ios/chrome/browser/web/progress_indicator_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-15T07:41:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "85a88b67_279b26c4",
+      "range": {
+        "startLine": 92,
+        "startChar": 21,
+        "endLine": 92,
+        "endChar": 39
+      },
+      "revId": "8252425cb4f0875f9e3bcc3958287c455fc66af5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
