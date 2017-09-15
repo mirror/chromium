@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0d009ed_79bf09bc",
+        "filename": "chrome/browser/media/cdm_storage_id.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T02:38:58Z",
+      "side": 1,
+      "message": "Just wondering: how do we ensure this is always true?",
+      "revId": "c61bc854a18a799526cce494caf5ad1229dc4971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b1a604_03b8429a",
+        "filename": "chrome/browser/media/platform_verification_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T02:38:58Z",
+      "side": 1,
+      "message": "Nit: DLOG",
+      "revId": "c61bc854a18a799526cce494caf5ad1229dc4971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d7c519a_1be30243",
+        "filename": "chrome/browser/media/platform_verification_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T02:38:58Z",
+      "side": 1,
+      "message": "Please write std::string() instead of \"\".",
+      "revId": "c61bc854a18a799526cce494caf5ad1229dc4971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
