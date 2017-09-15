@@ -98,6 +98,18 @@ class PrefRegistrySyncable;
 // Returns a vector of edit nodes.
 - (std::vector<const bookmarks::BookmarkNode*>)getEditNodesInVector;
 
+// Returns if current root node has bookmarks or folders.
+- (BOOL)hasBookmarksOrFolders;
+
+// Returns if current root node allows new folder to be created on it.
+- (BOOL)allowsNewFolder;
+
+// Returns the row position that is visible.
+- (CGFloat)contentPosition;
+
+// Scrolls the table view to the desired row position.
+- (void)setContentPosition:(CGFloat)position;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_BOOKMARKS_BOOKMARK_TABLE_VIEW_H_
