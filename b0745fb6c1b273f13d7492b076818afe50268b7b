@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ad6e753_da1f3a28",
+        "filename": "extensions/renderer/script_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-15T20:30:23Z",
+      "side": 1,
+      "message": "I was curious if this would result in a performance hit by adding this to every context, but then I see we already do this per context through MessagingBindings. Can you confirm?",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 52
+      },
+      "revId": "b0745fb6c1b273f13d7492b076818afe50268b7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
