@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "29bfc899_ce578af0",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_browser_proxy.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-15T21:54:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05788a49_aeb8419b",
+      "revId": "a0961f6e0cd21e3151d464af68e4a38d90a2a855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45c0b427_75a4722c",
         "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "a0961f6e0cd21e3151d464af68e4a38d90a2a855",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90b2a064_aeeca1f4",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-15T21:54:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45c0b427_75a4722c",
+      "revId": "a0961f6e0cd21e3151d464af68e4a38d90a2a855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -83,6 +119,24 @@
       "side": 1,
       "message": "You\u0027ll want to check with someone more familiar with the feature.",
       "parentUuid": "0568d2ec_c0b2104e",
+      "revId": "a0961f6e0cd21e3151d464af68e4a38d90a2a855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92d3f7c4_fdd7dc7c",
+        "filename": "chrome/browser/ui/webui/settings/appearance_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-15T21:54:08Z",
+      "side": 1,
+      "message": "Please check the description for the detail.Thanks.",
+      "parentUuid": "fbdbdc66_f7857c93",
       "revId": "a0961f6e0cd21e3151d464af68e4a38d90a2a855",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
