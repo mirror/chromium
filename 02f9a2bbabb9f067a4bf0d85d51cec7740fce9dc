@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5554dee7_3ad9633a",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-15T20:42:52Z",
+      "side": 1,
+      "message": "nit: I think this \u0027if\u0027 test is unnecessary.",
+      "revId": "02f9a2bbabb9f067a4bf0d85d51cec7740fce9dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
