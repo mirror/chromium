@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
@@ -102,7 +103,7 @@ void TraySupervisedUser::CreateOrUpdateNotification() {
           base::string16() /* display_source */, GURL(),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierSupervisedUser),
+              mojom::kNotifierSupervisedUser),
           message_center::RichNotificationData(), nullptr,
           kNotificationSupervisedIcon,
           message_center::SystemNotificationWarningLevel::NORMAL);

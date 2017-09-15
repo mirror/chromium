@@ -4,6 +4,7 @@
 
 #include "ash/system/network/sms_observer.h"
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/system/system_notifier.h"
 #include "ash/system/tray/tray_constants.h"
@@ -42,7 +43,7 @@ void ShowNotification(const base::DictionaryValue* message,
           ash::kSystemMenuSmsIcon, ash::kMenuIconSize, ash::kMenuIconColor)),
       base::string16(), GURL(),
       message_center::NotifierId(message_center::NotifierId::APPLICATION,
-                                 ash::system_notifier::kNotifierSms),
+                                 ash::mojom::kNotifierSms),
       message_center::RichNotificationData(), nullptr);
   message_center->AddNotification(std::move(notification));
 }

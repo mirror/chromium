@@ -8,6 +8,7 @@
 
 #include "ash/metrics/user_metrics_action.h"
 #include "ash/metrics/user_metrics_recorder.h"
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shell.h"
@@ -67,7 +68,7 @@ void ScreenCaptureTrayItem::CreateOrUpdateNotification() {
           base::string16() /* display_source */, GURL(),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierScreenCapture),
+              mojom::kNotifierScreenCapture),
           data, new tray::ScreenNotificationDelegate(this),
           kNotificationScreenshareIcon,
           message_center::SystemNotificationWarningLevel::NORMAL);
