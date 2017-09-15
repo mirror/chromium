@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6ad7442_0e77a98a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acdc5b8b_654fcc01",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5417f3a5_9b03a34e",
         "filename": "net/ntlm/ntlm.cc",
         "patchSetId": 13
@@ -33,6 +51,24 @@
       "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37724ad_a11d869c",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5417f3a5_9b03a34e",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "63fe5adf_51a8e74d",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Item 1?",
+      "parentUuid": "7013397f_a98070b2",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4007b67a_5e0b6cb8",
         "filename": "net/ntlm/ntlm.cc",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4d612ef_1ec00643",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Checking for them and updated commented.",
+      "parentUuid": "4007b67a_5e0b6cb8",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b31bceb1_6d4077c3",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe99271d_74e68a74",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31eb3336_5d6b7674",
         "filename": "net/ntlm/ntlm.cc",
         "patchSetId": 13
@@ -101,6 +191,24 @@
       "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c513951_6fc27a2e",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31eb3336_5d6b7674",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "05c5ce8e_3681edcc",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "I\u0027ll look at that in a follow up.",
+      "parentUuid": "e69374a8_070d6363",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1642160b_014a0923",
         "filename": "net/ntlm/ntlm.h",
         "patchSetId": 13
@@ -135,6 +261,24 @@
       "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b159a509_2105a92f",
+        "filename": "net/ntlm/ntlm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1642160b_014a0923",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "a9473f2b_04f9691e",
+        "filename": "net/ntlm/ntlm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0e64631_ec96b03a",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0ecac3f_c0e27017",
         "filename": "net/ntlm/ntlm.h",
         "patchSetId": 13
@@ -169,6 +331,24 @@
       "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3f21bf_ff846c55",
+        "filename": "net/ntlm/ntlm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "The implementation didn\u0027t rely on it, but I updated the docs.",
+      "parentUuid": "c0ecac3f_c0e27017",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "e084ed08_2152cb4e",
+        "filename": "net/ntlm/ntlm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "That CL is stacked on top, because it deletes some of the built in crypto from mozilla and it can\u0027t do that until the CL to switch over to the new implementation lands and deletes the old code.",
+      "parentUuid": "8eeda007_635a0ab4",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bae34024_03725efd",
         "filename": "net/ntlm/ntlm.h",
         "patchSetId": 13
@@ -203,6 +401,24 @@
       "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5495bac5_7112c619",
+        "filename": "net/ntlm/ntlm.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Key exchange mostly seems relevant for the connectionless mode. Updated the comment. If we find a need to do it in future we can implement it then.",
+      "parentUuid": "bae34024_03725efd",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "a4a4c524_306e8eb1",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd76d198_eb6daa1e",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5107bd47_462adf44",
         "filename": "net/ntlm/ntlm_buffer_reader.cc",
         "patchSetId": 13
@@ -237,6 +471,24 @@
       "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb3178c4_93a1953d",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5107bd47_462adf44",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "a66daa4d_75144c6a",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adbcc875_99a9f77d",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41585adf_a9644ea0",
         "filename": "net/ntlm/ntlm_buffer_reader.cc",
         "patchSetId": 13
@@ -268,6 +538,24 @@
       "writtenOn": "2017-09-12T22:49:36Z",
       "side": 1,
       "message": "let\u0027s move the sec_buf.length \u003d\u003d 0 and sec_buf.length \u003c kAvPairHeaderLen checks into ReadTargetInfo(). The latter is already there.",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48bcae6e_92a6fd22",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "I\u0027m going to make this change in the other BufferReader CL - otherwise I\u0027ll have to merge it because doing SetCursor without this check here would be wrong.",
+      "parentUuid": "41585adf_a9644ea0",
       "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "7f0e5803_838256e3",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Yes - the other CL removes this. https://chromium-review.googlesource.com/c/chromium/src/+/656137/2/net/ntlm/ntlm_buffer_reader.cc#216",
+      "parentUuid": "e28fbc25_0258e614",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3197ce6_88a62361",
         "filename": "net/ntlm/ntlm_buffer_reader_unittest.cc",
         "patchSetId": 13
@@ -302,6 +608,24 @@
       "writtenOn": "2017-09-12T22:49:36Z",
       "side": 1,
       "message": "Could you add at test for a zero length buffer for completeness? This is especially the case if you follow the prior request to move the zero check into ReadTargetInfo().",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7207d83_140fc4e3",
+        "filename": "net/ntlm/ntlm_buffer_reader_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Done in the other CL.",
+      "parentUuid": "a3197ce6_88a62361",
       "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -325,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "8e928a42_3ead716f",
+        "filename": "net/ntlm/ntlm_buffer_reader_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f435eab_d5352bea",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47b4da24_386397f2",
         "filename": "net/ntlm/ntlm_buffer_reader_unittest.cc",
         "patchSetId": 13
@@ -339,6 +681,24 @@
       "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e968f6d2_d78505dd",
+        "filename": "net/ntlm/ntlm_buffer_reader_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "The first terminator has avid\u003d0x0000 and avlen\u003d0x0001. A terminator (avid\u003d0) must have 0 length. Updated comment.",
+      "parentUuid": "47b4da24_386397f2",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -359,6 +719,24 @@
     },
     {
       "key": {
+        "uuid": "fd9f0a73_fa92f598",
+        "filename": "net/ntlm/ntlm_buffer_reader_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6af31764_b6619eee",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "839f6b44_7818259a",
         "filename": "net/ntlm/ntlm_client.h",
         "patchSetId": 13
@@ -373,6 +751,24 @@
       "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa30404_645d1c1f",
+        "filename": "net/ntlm/ntlm_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "I just assumed clang format would mess them up. It does split [index] to a separate line - but not as bad as I thought.",
+      "parentUuid": "839f6b44_7818259a",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +789,24 @@
     },
     {
       "key": {
+        "uuid": "0b9fa7a2_932aa059",
+        "filename": "net/ntlm/ntlm_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "27034999_453f1d68",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "733be0d4_e8f64512",
         "filename": "net/ntlm/ntlm_client.h",
         "patchSetId": 13
@@ -407,6 +821,24 @@
       "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9cc3679_9cc7a972",
+        "filename": "net/ntlm/ntlm_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "733be0d4_e8f64512",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -427,6 +859,24 @@
     },
     {
       "key": {
+        "uuid": "9a511bff_11be10fb",
+        "filename": "net/ntlm/ntlm_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93a7de08_72429aa8",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "165b99e7_d3de953d",
         "filename": "net/ntlm/ntlm_client.h",
         "patchSetId": 13
@@ -441,6 +891,24 @@
       "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da9be429_49f7c0e8",
+        "filename": "net/ntlm/ntlm_client.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Updated comment. Will leave changing type to if/when we change the way the clock mocking is done.",
+      "parentUuid": "165b99e7_d3de953d",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -461,6 +929,24 @@
     },
     {
       "key": {
+        "uuid": "8cc073f5_191c1dc5",
+        "filename": "net/ntlm/ntlm_constants.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1aaaed58_9a7be036",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c88f652e_150c87cc",
         "filename": "net/ntlm/ntlm_constants.h",
         "patchSetId": 13
@@ -475,6 +961,24 @@
       "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364e371c_c735e13c",
+        "filename": "net/ntlm/ntlm_constants.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c88f652e_150c87cc",
+      "revId": "92613dd3d75c5a9418817d400bedef54690b770f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

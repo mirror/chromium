@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "563a0ccd_8caea491",
+        "filename": "net/ntlm/ntlm.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "The above CL is +1\u0027d and I will land before this one so this can be updated.",
+      "parentUuid": "18cbe58f_f9e3386b",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7632c91f_87a40fe9",
         "filename": "net/ntlm/ntlm.cc",
         "patchSetId": 8
@@ -1245,6 +1263,24 @@
       "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42599085_0e33b3a2",
+        "filename": "net/ntlm/ntlm_buffer_reader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-15T18:56:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f2a4e044_f2fdb1df",
+      "revId": "0ab3d45a0faa6ab8bffc37df148c244dce4c9fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
