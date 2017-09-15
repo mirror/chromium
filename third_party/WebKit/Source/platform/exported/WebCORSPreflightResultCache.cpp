@@ -164,11 +164,18 @@ bool WebCORSPreflightResultCacheItem::Parse(
 }
 
 bool WebCORSPreflightResultCacheItem::AllowsCrossOriginMethod(
+    WebURLRequest::FetchCredentialsMode credentials_mode,
     const WebString& method,
     WebString& error_description) const {
   if (methods_.find(method.Ascii().data()) != methods_.end() ||
-      FetchUtils::IsCORSSafelistedMethod(method))
+      FetchUtils::IsCORSSafelistedMethod(method)) {
     return true;
+  }
+
+  if (!FetchUtils::ShouldTreatCredentialsModeAsInclude(credentials_mode) &&
+      methods_.find("*") != methods_.end()) {
+    return true;
+  }
 
   error_description.Assign(WebString::FromASCII("Method " + method.Ascii() +
                                                 " is not allowed by "
@@ -206,7 +213,7 @@ bool WebCORSPreflightResultCacheItem::AllowsRequest(
   if (!credentials_ &&
       FetchUtils::ShouldTreatCredentialsModeAsInclude(credentials_mode))
     return false;
-  if (!AllowsCrossOriginMethod(method, ignored_explanation))
+  if (!AllowsCrossOriginMethod(credentials_mode, method, ignored_explanation))
     return false;
   if (!AllowsCrossOriginHeaders(request_headers, ignored_explanation))
     return false;
