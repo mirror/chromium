@@ -42,6 +42,23 @@
     },
     {
       "key": {
+        "uuid": "c420a7e0_03fb087d",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-15T22:59:17Z",
+      "side": 1,
+      "message": "no message here?",
+      "revId": "2529c7ce1d21858675008b7e7a5af0e8ca45a0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02434d25_bcc40985",
         "filename": "chrome/browser/resources/settings/printing_page/cups_printers.js",
         "patchSetId": 3
@@ -151,6 +168,23 @@
         "endLine": 507,
         "endChar": 52
       },
+      "revId": "2529c7ce1d21858675008b7e7a5af0e8ca45a0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40c9775a_7b3922c5",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-15T22:59:17Z",
+      "side": 1,
+      "message": "Agreed. I don\u0027t think you should skip calling OnAdedPrinterCommon() here.",
       "revId": "2529c7ce1d21858675008b7e7a5af0e8ca45a0cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
