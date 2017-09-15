@@ -20,6 +20,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/autofill/content/renderer/form_autofill_util.h"
+#include "components/autofill/content/renderer/html_based_username_detector.h"
 #include "components/autofill/core/common/autofill_regex_constants.h"
 #include "components/autofill/core/common/autofill_regexes.h"
 #include "components/autofill/core/common/autofill_util.h"
@@ -127,8 +128,9 @@ PasswordForm::Layout SequenceToLayout(base::StringPiece layout_sequence) {
   if (re2::RE2::FullMatch(
           re2::StringPiece(layout_sequence.data(),
                            base::checked_cast<int>(layout_sequence.size())),
-          g_login_and_signup_matcher.Get()))
+          g_login_and_signup_matcher.Get())) {
     return PasswordForm::Layout::LAYOUT_LOGIN_AND_SIGNUP;
+  }
   return PasswordForm::Layout::LAYOUT_OTHER;
 }
 
@@ -354,8 +356,9 @@ void FindVisiblePasswordAndVisibleUsernameBeforePassword(
   for (auto& control_element : form.control_elements) {
     const WebInputElement* input_element = ToWebInputElement(&control_element);
     if (!input_element || !input_element->IsEnabled() ||
-        !input_element->IsTextField())
+        !input_element->IsTextField()) {
       continue;
+    }
 
     if (!form_util::IsWebElementVisible(*input_element))
       continue;
@@ -435,8 +438,9 @@ bool GetPasswordForm(
         layout_sequence.push_back('P');
       } else {
         if (FieldHasNonscriptModifiedValue(field_value_and_properties_map,
-                                           *input_element))
+                                           *input_element)) {
           ++number_of_non_empty_text_non_password_fields;
+        }
         if (element_is_invisible && ignore_invisible_usernames)
           continue;
         layout_sequence.push_back('N');
@@ -489,9 +493,10 @@ bool GetPasswordForm(
           // unlike username_element, other_possible_usernames is used only for
           // autofill, not for form identification, and blank autofill entries
           // are not useful, so we do not collect empty strings.
-          if (!input_element->Value().IsEmpty())
+          if (!input_element->Value().IsEmpty()) {
             other_possible_usernames.push_back(
                 MakePossibleUsernamePair(*input_element));
+          }
         } else {
           // The first element marked with autocomplete='username'. Take the
           // hint and treat it as the username (overruling the tentative choice
@@ -514,9 +519,10 @@ bool GetPasswordForm(
           // alternative, at least for now.
           if (username_element.IsNull())
             latest_input_element = *input_element;
-          if (!input_element->Value().IsEmpty())
+          if (!input_element->Value().IsEmpty()) {
             other_possible_usernames.push_back(
                 MakePossibleUsernamePair(*input_element));
+          }
         }
       }
     }
@@ -525,6 +531,18 @@ bool GetPasswordForm(
   if (passwords.empty())
     return false;
 
+  // Call HTML based username detector.
+  if (username_element.IsNull()) {
+    GetUsernameFieldBasedOnHtmlAttributes(
+        form.control_elements, password_form->form_data, &username_element);
+    if (!username_element.IsNull()) {
+      ExcludeUsernameFromOtherUsernamesList(
+          MakePossibleUsernamePair(username_element),
+          &other_possible_usernames);
+    }
+  }
+
+  // Base heuristic.
   WebInputElement password;
   WebInputElement new_password;
   WebInputElement confirmation_password;
@@ -556,10 +574,11 @@ bool GetPasswordForm(
       username_element = last_text_input_before_password[password];
     if (username_element.IsNull() && !new_password.IsNull())
       username_element = last_text_input_before_password[new_password];
-    if (!username_element.IsNull())
+    if (!username_element.IsNull()) {
       ExcludeUsernameFromOtherUsernamesList(
           MakePossibleUsernamePair(username_element),
           &other_possible_usernames);
+    }
   }
   password_form->layout = SequenceToLayout(layout_sequence);
 
@@ -613,9 +632,10 @@ bool GetPasswordForm(
     password_form->password_element = FieldName(password, "anonymous_password");
     blink::WebString password_value = password.Value();
     if (FieldHasNonscriptModifiedValue(field_value_and_properties_map,
-                                       password))
+                                       password)) {
       password_value = blink::WebString::FromUTF16(
           *field_value_and_properties_map->at(password).first);
+    }
     password_form->password_value = password_value.Utf16();
   }
   if (!new_password.IsNull()) {
@@ -716,12 +736,14 @@ std::unique_ptr<PasswordForm> CreatePasswordFormFromWebForm(
   if (!WebFormElementToFormData(
           web_form, blink::WebFormControlElement(),
           field_value_and_properties_map, form_util::EXTRACT_NONE,
-          &password_form->form_data, NULL /* FormFieldData */))
+          &password_form->form_data, NULL /* FormFieldData */)) {
     return std::unique_ptr<PasswordForm>();
+  }
 
   if (!GetPasswordForm(synthetic_form, password_form.get(),
-                       field_value_and_properties_map, form_predictions))
+                       field_value_and_properties_map, form_predictions)) {
     return std::unique_ptr<PasswordForm>();
+  }
   return password_form;
 }
 
@@ -742,11 +764,13 @@ std::unique_ptr<PasswordForm> CreatePasswordFormFromUnownedInputElements(
           synthetic_form.fieldsets, synthetic_form.control_elements, nullptr,
           frame.GetDocument(), field_value_and_properties_map,
           form_util::EXTRACT_NONE, &password_form->form_data,
-          nullptr /* FormFieldData */))
+          nullptr /* FormFieldData */)) {
     return std::unique_ptr<PasswordForm>();
+  }
   if (!GetPasswordForm(synthetic_form, password_form.get(),
-                       field_value_and_properties_map, form_predictions))
+                       field_value_and_properties_map, form_predictions)) {
     return std::unique_ptr<PasswordForm>();
+  }
 
   // No actual action on the form, so use the the origin as the action.
   password_form->action = password_form->origin;
