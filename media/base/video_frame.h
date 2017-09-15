@@ -92,6 +92,32 @@ class MEDIA_EXPORT VideoFrame : public base::RefCountedThreadSafe<VideoFrame> {
     DISALLOW_COPY_AND_ASSIGN(SyncTokenClient);
   };
 
+  class Buffer {
+   public:
+    virtual ~Buffer() {}
+
+    virtual size_t size() const = 0;
+    virtual void resize(size_t data_size) = 0;
+    virtual const uint8_t* data() const = 0;
+    virtual uint8_t* data() = 0;
+  };
+
+  class BasicBuffer : public Buffer {
+   public:
+    explicit BasicBuffer(size_t data_size);
+    virtual ~BasicBuffer();
+
+    size_t size() const final;
+    void resize(size_t data_size);
+    const uint8_t* data() const final;
+    uint8_t* data() final;
+
+   private:
+    std::vector<uint8_t> data_;
+
+    DISALLOW_COPY_AND_ASSIGN(BasicBuffer);
+  };
+
   // Call prior to CreateFrame to ensure validity of frame configuration. Called
   // automatically by VideoDecoderConfig::IsValidConfig().
   static bool IsValidConfig(VideoPixelFormat format,

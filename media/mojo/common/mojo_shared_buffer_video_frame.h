@@ -29,6 +29,52 @@ class MojoSharedBufferVideoFrame : public VideoFrame {
       base::Callback<void(mojo::ScopedSharedBufferHandle buffer,
                           size_t capacity)>;
 
+  class MojoBuffer : public Buffer {
+   public:
+    explicit MojoBuffer(size_t data_size)
+        : data_size_(0), shared_buffer_mapping_(nullptr) {
+      Init(data_size);
+    }
+
+    size_t size() const final { return data_size_; }
+    void resize(size_t data_size) final { Init(data_size); }
+    const uint8_t* data() const final {
+      return reinterpret_cast<const uint8_t*>(shared_buffer_mapping_.get());
+    }
+    uint8_t* data() final {
+      return reinterpret_cast<uint8_t*>(shared_buffer_mapping_.get());
+    }
+
+    const mojo::SharedBufferHandle& Handle() const {
+      return shared_buffer_handle_.get();
+    }
+    bool is_valid() const {
+      return shared_buffer_handle_.is_valid() && data_size_ > 0;
+    }
+
+   private:
+    void Init(size_t data_size) {
+      mojo::ScopedSharedBufferHandle handle =
+          mojo::SharedBufferHandle::Create(data_size);
+      if (!handle.is_valid())
+        return;
+
+      shared_buffer_handle_ = std::move(handle);
+
+      shared_buffer_mapping_ = shared_buffer_handle_->Map(data_size);
+      if (!shared_buffer_mapping_)
+        return;
+
+      data_size_ = data_size;
+    }
+
+    size_t data_size_;
+    mojo::ScopedSharedBufferHandle shared_buffer_handle_;
+    mojo::ScopedSharedBufferMapping shared_buffer_mapping_;
+
+    DISALLOW_COPY_AND_ASSIGN(MojoBuffer);
+  };
+
   static scoped_refptr<MojoSharedBufferVideoFrame>
   WrapMojoSharedBufferVideoFrame(
       const scoped_refptr<MojoSharedBufferVideoFrame>& frame);
