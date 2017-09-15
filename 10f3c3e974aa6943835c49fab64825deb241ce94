@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f55f6965_dc857e36",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-09-15T18:22:46Z",
+      "side": 1,
+      "message": "Have you considered replacing this entire function with https://docs.python.org/2/library/tokenize.html? It\u0027s technically a tokenizer for python, but things like operators, identifiers, and braces are pretty universal across languages.",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 17
+      },
+      "revId": "10f3c3e974aa6943835c49fab64825deb241ce94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b74682c_31251001",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-09-15T18:22:46Z",
+      "side": 1,
+      "message": "Since this function is only called three times, and two of those are directly consecutive calls which differ only in context\u003dTrue/False, consider making this argument trigger \"in addition to\" rather than \"instead of\". Then the function could have return type \"if context\u003dFalse, a list of token strings. if context\u003dTrue, a list of token strings and a list of TokenContexts\". Save yourself one big O(n) operation.",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 77
+      },
+      "revId": "10f3c3e974aa6943835c49fab64825deb241ce94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58340c73_d72a8e6b",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-09-15T18:22:46Z",
+      "side": 1,
+      "message": "Any particular reason you write one file to disk but send the other via stdin? It\u0027s probably faster than writing both to disk, but is it sufficiently faster to make a noticeable difference? If it isn\u0027t, I would suggest writing both to disk and then getting stdout via a simple \"subprocess.CheckOutput\" instead of separate Popen and communicate calls.\n\nAlternatively, if you were taking this approach for the speedup, consider using https://docs.python.org/2/library/difflib.html to compute diffs in memory without having to write anything out to disk or start any subprocesses.",
+      "revId": "10f3c3e974aa6943835c49fab64825deb241ce94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea81ef3_647ed180",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-09-15T18:22:46Z",
+      "side": 1,
+      "message": "Given that you compute the changed tokens from the previous tokens and current tokens (performing another diff of your own), it seems inefficient to get the previous_data by asking git to perform a diff and then applying that backwards patch. Why don\u0027t you just ask git for the file contents at the previous hash, and skip the whole diff/apply step?",
+      "range": {
+        "startLine": 235,
+        "startChar": 37,
+        "endLine": 235,
+        "endChar": 66
+      },
+      "revId": "10f3c3e974aa6943835c49fab64825deb241ce94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "938f671f_d6c6c0c5",
+        "filename": "tools/uberblame.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-09-15T18:22:46Z",
+      "side": 1,
+      "message": "This results in an asynchronous output of \"Created new window in existing browser session\", which for me gets printed after the main program has exited and my terminal has produced a new prompt. It would be good if you could silence that output or wait for it before exiting.",
+      "revId": "10f3c3e974aa6943835c49fab64825deb241ce94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
