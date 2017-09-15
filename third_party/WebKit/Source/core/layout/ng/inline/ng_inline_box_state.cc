@@ -213,7 +213,7 @@ void NGInlineLayoutStateStack::AddBoxFragmentPlaceholder(
   unsigned fragment_end = line_box->Children().size();
   box_placeholders_.push_back(BoxFragmentPlaceholder{
       box->fragment_start, fragment_end, box->item, size, box->border_edges});
-  line_box->AddChild(nullptr, offset);
+  line_box->AddChild(static_cast<NGPhysicalFragment*>(nullptr), offset);
 }
 
 // Create box fragments and construct a tree from the placeholders.
