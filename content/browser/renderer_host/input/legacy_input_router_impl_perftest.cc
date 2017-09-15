@@ -219,8 +219,7 @@ class LegacyInputRouterImplPerfTest : public testing::Test {
  public:
   LegacyInputRouterImplPerfTest()
       : scoped_task_environment_(
-            base::test::ScopedTaskEnvironment::MainThreadType::UI),
-        last_input_id_(0) {}
+            base::test::ScopedTaskEnvironment::MainThreadType::UI) {}
   ~LegacyInputRouterImplPerfTest() override {}
 
  protected:
@@ -278,14 +277,11 @@ class LegacyInputRouterImplPerfTest : public testing::Test {
 
   size_t AckCount() const { return disposition_handler_->ack_count(); }
 
-  int64_t NextLatencyID() { return ++last_input_id_; }
-
   ui::LatencyInfo CreateLatencyInfo() {
     ui::LatencyInfo latency;
     latency.AddLatencyNumber(
-        ui::INPUT_EVENT_LATENCY_SCROLL_UPDATE_ORIGINAL_COMPONENT, 1, 0);
-    latency.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT, 1,
-                             NextLatencyID());
+        ui::INPUT_EVENT_LATENCY_SCROLL_UPDATE_ORIGINAL_COMPONENT, 1);
+    latency.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT, 1);
     return latency;
   }
 
@@ -352,7 +348,6 @@ class LegacyInputRouterImplPerfTest : public testing::Test {
 
  private:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
-  int64_t last_input_id_;
   std::unique_ptr<NullIPCSender> sender_;
   std::unique_ptr<NullInputRouterClient> client_;
   std::unique_ptr<NullInputDispositionHandler> disposition_handler_;

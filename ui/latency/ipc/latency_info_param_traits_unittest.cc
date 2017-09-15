@@ -17,10 +17,10 @@ TEST(LatencyInfoParamTraitsTest, Basic) {
   LatencyInfo latency;
   latency.set_trace_id(5);
   ASSERT_FALSE(latency.terminated());
-  latency.AddLatencyNumber(INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, 1234, 0);
-  latency.AddLatencyNumber(INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT, 1234, 100);
+  latency.AddLatencyNumber(INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, 1234);
+  latency.AddLatencyNumber(INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT, 1234);
   latency.AddLatencyNumber(INPUT_EVENT_LATENCY_TERMINATED_FRAME_SWAP_COMPONENT,
-                           1234, 0);
+                           1234);
 
   EXPECT_EQ(5, latency.trace_id());
   EXPECT_TRUE(latency.terminated());
@@ -42,7 +42,6 @@ TEST(LatencyInfoParamTraitsTest, Basic) {
   EXPECT_TRUE(output.FindLatency(INPUT_EVENT_LATENCY_BEGIN_RWH_COMPONENT,
                                  1234,
                                  &rwh_comp));
-  EXPECT_EQ(100, rwh_comp.sequence_number);
   EXPECT_EQ(1u, rwh_comp.event_count);
 
   EXPECT_TRUE(output.FindLatency(

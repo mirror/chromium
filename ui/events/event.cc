@@ -567,8 +567,8 @@ MouseEvent::MouseEvent(const base::NativeEvent& native_event)
       changed_button_flags_(GetChangedMouseButtonFlagsFromNative(native_event)),
       pointer_details_(GetMousePointerDetailsFromNative(native_event)) {
   latency()->AddLatencyNumberWithTimestamp(
-      INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, 0, 0, time_stamp(), 1);
-  latency()->AddLatencyNumber(INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+      INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, 0, time_stamp(), 1);
+  latency()->AddLatencyNumber(INPUT_EVENT_LATENCY_UI_COMPONENT, 0);
   if (type() == ET_MOUSE_PRESSED || type() == ET_MOUSE_RELEASED)
     SetClickCount(GetRepeatCount(*this));
 }
@@ -634,7 +634,7 @@ MouseEvent::MouseEvent(EventType type,
       changed_button_flags_(changed_button_flags),
       pointer_details_(pointer_details) {
   DCHECK_NE(ET_MOUSEWHEEL, type);
-  latency()->AddLatencyNumber(INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+  latency()->AddLatencyNumber(INPUT_EVENT_LATENCY_UI_COMPONENT, 0);
   if (this->type() == ET_MOUSE_MOVED && IsAnyButton())
     SetType(ET_MOUSE_DRAGGED);
 }
@@ -834,8 +834,8 @@ TouchEvent::TouchEvent(const base::NativeEvent& native_event)
       should_remove_native_touch_id_mapping_(false),
       pointer_details_(GetTouchPointerDetailsFromNative(native_event)) {
   latency()->AddLatencyNumberWithTimestamp(
-      INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, 0, 0, time_stamp(), 1);
-  latency()->AddLatencyNumber(INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+      INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, 0, time_stamp(), 1);
+  latency()->AddLatencyNumber(INPUT_EVENT_LATENCY_UI_COMPONENT, 0);
 
   FixRotationAngle();
   if (type() == ET_TOUCH_RELEASED || type() == ET_TOUCH_CANCELLED)
@@ -888,7 +888,7 @@ TouchEvent::TouchEvent(EventType type,
       may_cause_scrolling_(false),
       should_remove_native_touch_id_mapping_(false),
       pointer_details_(pointer_details) {
-  latency()->AddLatencyNumber(INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+  latency()->AddLatencyNumber(INPUT_EVENT_LATENCY_UI_COMPONENT, 0);
   FixRotationAngle();
 }
 
@@ -1144,8 +1144,8 @@ KeyEvent::KeyEvent(const base::NativeEvent& native_event, int event_flags)
       code_(CodeFromNative(native_event)),
       is_char_(IsCharFromNative(native_event)) {
   latency()->AddLatencyNumberWithTimestamp(
-      INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, 0, 0, time_stamp(), 1);
-  latency()->AddLatencyNumber(INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+      INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, 0, time_stamp(), 1);
+  latency()->AddLatencyNumber(INPUT_EVENT_LATENCY_UI_COMPONENT, 0);
 
   if (IsRepeated(*this))
     set_flags(flags() | ui::EF_IS_REPEAT);

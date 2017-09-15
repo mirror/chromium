@@ -194,8 +194,7 @@ void MouseWheelEventQueue::ProcessMouseWheelAck(
           SendScrollBegin(scroll_update, false);
         ui::LatencyInfo latency = ui::LatencyInfo(ui::SourceEventType::WHEEL);
         latency.AddLatencyNumber(
-            ui::INPUT_EVENT_LATENCY_GENERATE_SCROLL_UPDATE_FROM_MOUSE_WHEEL, 0,
-            0);
+            ui::INPUT_EVENT_LATENCY_GENERATE_SCROLL_UPDATE_FROM_MOUSE_WHEEL, 0);
         client_->ForwardGestureEventWithLatencyInfo(scroll_update, latency);
       }
 
@@ -228,7 +227,7 @@ void MouseWheelEventQueue::ProcessMouseWheelAck(
           ui::LatencyInfo latency = ui::LatencyInfo(ui::SourceEventType::WHEEL);
           latency.AddLatencyNumber(
               ui::INPUT_EVENT_LATENCY_GENERATE_SCROLL_UPDATE_FROM_MOUSE_WHEEL,
-              0, 0);
+              0);
           client_->ForwardGestureEventWithLatencyInfo(scroll_update, latency);
         }
 

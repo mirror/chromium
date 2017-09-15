@@ -188,7 +188,7 @@ PassThroughImageTransportSurface::StartSwapBuffers() {
   base::TimeTicks swap_time = base::TimeTicks::Now();
   for (auto& latency : latency_info_) {
     latency.AddLatencyNumberWithTimestamp(
-        ui::INPUT_EVENT_GPU_SWAP_BUFFER_COMPONENT, 0, 0, swap_time, 1);
+        ui::INPUT_EVENT_GPU_SWAP_BUFFER_COMPONENT, 0, swap_time, 1);
   }
 
   std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info(
@@ -205,7 +205,7 @@ void PassThroughImageTransportSurface::FinishSwapBuffers(
   bool has_browser_snapshot_request = false;
   for (auto& latency : *latency_info) {
     latency.AddLatencyNumberWithTimestamp(
-        ui::INPUT_EVENT_LATENCY_TERMINATED_FRAME_SWAP_COMPONENT, 0, 0,
+        ui::INPUT_EVENT_LATENCY_TERMINATED_FRAME_SWAP_COMPONENT, 0,
         swap_ack_time, 1);
     has_browser_snapshot_request |= latency.FindLatency(
         ui::BROWSER_SNAPSHOT_FRAME_NUMBER_COMPONENT, nullptr);

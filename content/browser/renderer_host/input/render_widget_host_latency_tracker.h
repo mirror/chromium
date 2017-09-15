@@ -88,7 +88,6 @@ class CONTENT_EXPORT RenderWidgetHostLatencyTracker
       const ui::LatencyInfo::LatencyComponent& end_component) override;
 
   ukm::SourceId ukm_source_id_;
-  int64_t last_event_id_;
   int64_t latency_component_id_;
   float device_scale_factor_;
   bool has_seen_first_gesture_scroll_update_;
