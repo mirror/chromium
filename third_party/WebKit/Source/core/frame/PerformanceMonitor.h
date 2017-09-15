@@ -11,6 +11,7 @@
 #include "core/timing/SubTaskAttribution.h"
 #include "platform/Timer.h"
 #include "platform/heap/Handle.h"
+#include "platform/loader/fetch/Resource.h"
 #include "platform/scheduler/base/task_time_observer.h"
 #include "platform/wtf/text/AtomicString.h"
 #include "public/platform/WebThread.h"
@@ -101,7 +102,8 @@ class CORE_EXPORT PerformanceMonitor final
                        DocumentLoader*,
                        ResourceRequest&,
                        const ResourceResponse&,
-                       const FetchInitiatorInfo&);
+                       const FetchInitiatorInfo&,
+                       Resource::Type);
   void DidFailLoading(unsigned long, DocumentLoader*, const ResourceError&);
   void DidFinishLoading(unsigned long,
                         DocumentLoader*,

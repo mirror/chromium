@@ -1023,7 +1023,8 @@ TEST_F(FrameFetchContextTest, DispatchWillSendRequestWhenDetached) {
 
   dummy_page_holder = nullptr;
 
-  fetch_context->DispatchWillSendRequest(1, request, response, initiator_info);
+  fetch_context->DispatchWillSendRequest(1, request, response, Resource::kRaw,
+                                         initiator_info);
   // Should not crash.
 }
 
