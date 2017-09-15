@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "882dd345_d4f5a72b",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-15T23:08:14Z",
+      "side": 1,
+      "message": "This should probably be \u0027Printer Unreachable\u0027 or similar but weifangsun@ will clarify.",
+      "range": {
+        "startLine": 1116,
+        "startChar": 6,
+        "endLine": 1116,
+        "endChar": 49
+      },
+      "revId": "082be36cefa37f73f4d7e8fa589b388eafd216c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66907e92_133780f1",
         "filename": "chrome/app/settings_strings.grdp",
         "patchSetId": 2
@@ -13,6 +36,24 @@
       "writtenOn": "2017-09-14T22:46:05Z",
       "side": 1,
       "message": "The Dbus error does not currently have a registered message as the code I used as a reference does not currently log any message on Dbus errors.",
+      "revId": "082be36cefa37f73f4d7e8fa589b388eafd216c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32d0d79_78f88e52",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1118,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-15T23:08:14Z",
+      "side": 1,
+      "message": "We can reuse the fatal error message for dbus errors since it\u0027s generally unrecoverable.  Also, user\u0027s won\u0027t know what DBus is anyway.",
+      "parentUuid": "66907e92_133780f1",
       "revId": "082be36cefa37f73f4d7e8fa589b388eafd216c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
