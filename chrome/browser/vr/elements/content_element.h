@@ -7,13 +7,13 @@
 
 #include "base/macros.h"
 #include "chrome/browser/vr/content_input_delegate.h"
-#include "chrome/browser/vr/elements/ui_element.h"
+#include "chrome/browser/vr/elements/renderable_element.h"
 
 namespace vr {
 
 class UiElementRenderer;
 
-class ContentElement : public UiElement {
+class ContentElement : public RenderableElement {
  public:
   explicit ContentElement(ContentInputDelegate* delegate);
   ~ContentElement() override;
