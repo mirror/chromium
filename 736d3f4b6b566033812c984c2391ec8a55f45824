@@ -16,6 +16,24 @@
       "revId": "736d3f4b6b566033812c984c2391ec8a55f45824",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b8c3c45_3813c0fa",
+        "filename": "tools/perf/page_sets/android_screen_restoration_shared_state.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-15T16:45:03Z",
+      "side": 1,
+      "message": "I tried adding\nSUPPORTED_PLATFORMS \u003d [story.expectations.ALL_MOBILE]\nto the benchmark class XrWebVrStatic. It still hits this check. Stack trace is:\n  File \"tools/perf/run_benchmark\", line 26, in \u003cmodule\u003e\n    sys.exit(main())\n  File \"tools/perf/run_benchmark\", line 22, in main\n    return benchmark_runner.main(config, [trybot_command.Trybot])\n  File \"/usr/local/google/code/chromium/src/third_party/catapult/telemetry/telemetry/benchmark_runner.py\", line 352, in main\n    return command_instance.Run(options)\n  File \"/usr/local/google/code/chromium/src/third_party/catapult/telemetry/telemetry/benchmark_runner.py\", line 222, in Run\n    return min(255, self._benchmark().Run(args))\n  File \"/usr/local/google/code/chromium/src/third_party/catapult/telemetry/telemetry/benchmark.py\", line 108, in Run\n    return story_runner.RunBenchmark(self, finder_options)\n  File \"/usr/local/google/code/chromium/src/third_party/catapult/telemetry/telemetry/internal/story_runner.py\", line 332, in RunBenchmark\n    expectations\u003dexpectations, metadata\u003dbenchmark.GetMetadata())\n  File \"/usr/local/google/code/chromium/src/third_party/catapult/telemetry/telemetry/internal/story_runner.py\", line 203, in Run\n    _RunStoryAndProcessErrorIfNeeded(story, results, state, test)\n  File \"/usr/local/google/code/chromium/src/third_party/catapult/telemetry/telemetry/internal/story_runner.py\", line 99, in _RunStoryAndProcessErrorIfNeeded\n    if not state.CanRunStory(story):\n  File \"/usr/local/google/code/chromium/src/third_party/catapult/common/py_trace_event/py_trace_event/trace_event_impl/decorators.py\", line 75, in traced_function\n    return func(*args, **kwargs)\n  File \"/usr/local/google/code/chromium/src/third_party/catapult/telemetry/telemetry/page/shared_page_state.py\", line 286, in CanRunStory\n    page)\n  File \"/usr/local/google/code/chromium/src/third_party/catapult/common/py_trace_event/py_trace_event/trace_event_impl/decorators.py\", line 75, in traced_function\n    return func(*args, **kwargs)\n  File \"/usr/local/google/code/chromium/src/tools/perf/page_sets/android_screen_restoration_shared_state.py\", line 24, in CanRunOnBrowser",
+      "parentUuid": "57528236_6e392c0e",
+      "revId": "736d3f4b6b566033812c984c2391ec8a55f45824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
