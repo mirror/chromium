@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e24c0c0_1ea0441d",
+        "filename": "net/filter/filter_source_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-15T16:22:27Z",
+      "side": 1,
+      "message": "I\u0027d be inclined to just eliminate this clause and return type unknown; why keep scanning for SDCH encoding?  Obviously, this means eliminating kSdch as well.",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 88,
+        "endChar": 31
+      },
+      "revId": "56cfe73121d097a9ec4d3e512f7d2cd221a17047",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
