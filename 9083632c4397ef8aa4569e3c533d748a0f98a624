@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "7bc26af2_bb36c66c",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-15T21:22:50Z",
+      "side": 1,
+      "message": "What I\u0027d like to avoid is ad hoc workarounds to deal with the fact that you can\u0027t currently ask the question \"what value will a you have when your animation is done\". If that\u0027s not what the flag or timeout is doing, then this seems fine.\n\nIf we do want to ask this question (we do in other places in the vr code), my concrete suggestion is this\n * we add the AnimationPlayer methods, and\n * we add UiElement::GetTargetFoo methods that, internally, talk to the animation system.\n * update other code to talk to the GetTargetFoo methods and never the AnimationPlayer.\n\nThere is precedent for this: https://cs.chromium.org/chromium/src/ui/compositor/layer.h?rcl\u003ddb89c2a839aa591ed52093c71d6a05893c50765d\u0026l\u003d157",
+      "parentUuid": "589717e8_bce23a36",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d95ed610_6081c115",
         "filename": "chrome/browser/vr/elements/transient_element.cc",
         "patchSetId": 2
