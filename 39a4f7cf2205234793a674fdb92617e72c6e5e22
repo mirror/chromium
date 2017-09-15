@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50b482b6_db7f9af6",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-15T19:31:31Z",
+      "side": 1,
+      "message": "Please test with\n- navigating directly to a page\n- navigating from one settings page to another settings page\nThose two use different code paths.\nI\u0027m concerned that this.path might not be set up in both paths. Ya may need window.location.pathname here.",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4605941e_5bb0db6a",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-15T19:31:31Z",
+      "side": 1,
+      "message": "Would it work to wrap the whole function with the \u003cif\u003e instead of just the contents?",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
