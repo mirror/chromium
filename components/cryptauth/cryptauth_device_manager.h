@@ -88,7 +88,7 @@ class CryptAuthDeviceManager : public SyncScheduler::Delegate,
   // sync attempt is already in progress, this function does nothing.
   // |invocation_reason| specifies the reason that the sync was triggered,
   // which is upload to the server.
-  void ForceSyncNow(InvocationReason invocation_reason);
+  virtual void ForceSyncNow(InvocationReason invocation_reason);
 
   // Returns the timestamp of the last successful sync. If no sync
   // has ever been made, then returns a null base::Time object.
