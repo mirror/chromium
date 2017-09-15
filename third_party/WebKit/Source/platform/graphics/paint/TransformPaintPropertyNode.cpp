@@ -4,6 +4,7 @@
 
 #include "platform/graphics/paint/TransformPaintPropertyNode.h"
 
+#include "platform/geometry/GeometryAsJSON.h"
 #include "platform/graphics/paint/PropertyTreeState.h"
 
 namespace blink {
@@ -31,30 +32,31 @@ TransformPaintPropertyNode::NearestScrollTranslationNode() const {
   return *transform;
 }
 
-String TransformPaintPropertyNode::ToString() const {
-  auto transform = String::Format(
-      "parent=%p transform=%s origin=%s flattensInheritedTransform=%s "
-      "renderingContextId=%x directCompositingReasons=%s "
-      "compositorElementId=%s",
-      Parent(), matrix_.ToString().Ascii().data(),
-      origin_.ToString().Ascii().data(),
-      flattens_inherited_transform_ ? "yes" : "no", rendering_context_id_,
-      CompositingReasonsAsString(direct_compositing_reasons_).Ascii().data(),
-      compositor_element_id_.ToString().c_str());
-  if (scroll_) {
-    return String::Format("%s scroll=%p", transform.Utf8().data(),
-                          scroll_.Get());
+std::unique_ptr<JSONObject> TransformPaintPropertyNode::ToJSON() const {
+  auto json = JSONObject::Create();
+  if (Parent())
+    json->SetString("parent", String::Format("%p", Parent()));
+  if (!matrix_.IsIdentity())
+    json->SetArray("matrix", TransformAsJSONArray(matrix_));
+  if (!matrix_.IsIdentityOrTranslation())
+    json->SetArray("origin", Point3DAsJSONArray(origin_));
+  if (!flattens_inherited_transform_)
+    json->SetBoolean("flattensInheritedTransform", false);
+  if (rendering_context_id_) {
+    json->SetString("renderingContextId",
+                    String::Format("%x", rendering_context_id_));
   }
-  return transform;
+  if (direct_compositing_reasons_ != kCompositingReasonNone) {
+    json->SetString("directCompositingReasons",
+                    CompositingReasonsAsString(direct_compositing_reasons_));
+  }
+  if (compositor_element_id_) {
+    json->SetString("compositorElementId",
+                    compositor_element_id_.ToString().c_str());
+  }
+  if (scroll_)
+    json->SetString("scroll", String::Format("%p", scroll_.Get()));
+  return json;
 }
-
-#if DCHECK_IS_ON()
-
-String TransformPaintPropertyNode::ToTreeString() const {
-  return blink::PropertyTreeStatePrinter<blink::TransformPaintPropertyNode>()
-      .PathAsString(this);
-}
-
-#endif
 
 }  // namespace blink

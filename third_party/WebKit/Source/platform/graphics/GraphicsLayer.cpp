@@ -830,7 +830,7 @@ void GraphicsLayer::AddTransformJSONProperties(
     json.SetArray("transform", TransformAsJSONArray(transform_));
 
   if (!transform_.IsIdentityOrTranslation())
-    json.SetArray("origin", PointAsJSONArray(transform_origin_));
+    json.SetArray("origin", Point3DAsJSONArray(transform_origin_));
 
   AddFlattenInheritedTransformJSON(json);
 
