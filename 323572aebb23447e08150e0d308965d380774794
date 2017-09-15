@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "732d3573_008334bc",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-15T18:57:10Z",
+      "side": 1,
+      "message": "nit: \"if the event\"",
+      "revId": "323572aebb23447e08150e0d308965d380774794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6184d6d5_8817d0a0",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-15T18:57:10Z",
+      "side": 1,
+      "message": "It\u0027s a little odd that the app-list/back button would handle the window selector explicitly. This file shouldn\u0027t start accumulating logic to make the back button do all sorts of interesting behavior. Instead, the window selector controller should register a pre-target handler or similar to consume the back event and do this itself.\n\nIf you can\u0027t address that advice, at least make this function name convey that it performs an action, rather than simply returns the state of overview mode, consider something like SendEventToOverviewMode.",
+      "revId": "323572aebb23447e08150e0d308965d380774794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec628e90_13c975d1",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-15T18:57:10Z",
+      "side": 1,
+      "message": "nit: DCHECK doesn\u0027t seem necessary, if window_selector_controller might be null, test for that instead.",
+      "revId": "323572aebb23447e08150e0d308965d380774794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35236695_6f1c3b3f",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-15T18:57:10Z",
+      "side": 1,
+      "message": "Instead of partly duplicating the logic in GenerateAndSendBackEvent, consider extracting a file-local helper function to get the key event type from the original event type.",
+      "revId": "323572aebb23447e08150e0d308965d380774794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f1541d9_7dca2ad1",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-15T18:57:10Z",
+      "side": 1,
+      "message": "optional nit: you can probably remove \"Generate and\" to make this a one-liner.",
+      "revId": "323572aebb23447e08150e0d308965d380774794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b35a7a9_907d9330",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-15T18:57:10Z",
+      "side": 1,
+      "message": "nit: consider just CreateTestWindow() with no args?",
+      "revId": "323572aebb23447e08150e0d308965d380774794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ea8ac3_4284e1d7",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-15T18:57:10Z",
+      "side": 1,
+      "message": "aside: It would be nice if this whole file used EventGenerator instead.",
+      "revId": "323572aebb23447e08150e0d308965d380774794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
