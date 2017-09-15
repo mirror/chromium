@@ -4580,16 +4580,14 @@ static void LiveNodeListBaseWriteBarrier(void* parent,
 }
 
 void Document::RegisterNodeList(const LiveNodeListBase* list) {
-  DCHECK(!node_lists_[list->InvalidationType()].Contains(list));
-  node_lists_[list->InvalidationType()].insert(list);
+  node_lists_.Add(list, 1u << list->InvalidationType());
   LiveNodeListBaseWriteBarrier(this, list);
   if (list->IsRootedAtTreeScope())
     lists_invalidated_at_document_.insert(list);
 }
 
 void Document::UnregisterNodeList(const LiveNodeListBase* list) {
-  DCHECK(node_lists_[list->InvalidationType()].Contains(list));
-  node_lists_[list->InvalidationType()].erase(list);
+  node_lists_.Remove(list, 1u << list->InvalidationType());
   if (list->IsRootedAtTreeScope()) {
     DCHECK(lists_invalidated_at_document_.Contains(list));
     lists_invalidated_at_document_.erase(list);
@@ -4597,14 +4595,12 @@ void Document::UnregisterNodeList(const LiveNodeListBase* list) {
 }
 
 void Document::RegisterNodeListWithIdNameCache(const LiveNodeListBase* list) {
-  DCHECK(!node_lists_[kInvalidateOnIdNameAttrChange].Contains(list));
-  node_lists_[kInvalidateOnIdNameAttrChange].insert(list);
+  node_lists_.Add(list, 1u << kInvalidateOnIdNameAttrChange);
   LiveNodeListBaseWriteBarrier(this, list);
 }
 
 void Document::UnregisterNodeListWithIdNameCache(const LiveNodeListBase* list) {
-  DCHECK(node_lists_[kInvalidateOnIdNameAttrChange].Contains(list));
-  node_lists_[kInvalidateOnIdNameAttrChange].erase(list);
+  node_lists_.Remove(list, 1u << kInvalidateOnIdNameAttrChange);
 }
 
 void Document::AttachNodeIterator(NodeIterator* ni) {
@@ -6802,9 +6798,9 @@ bool Document::hasFocus() const {
 
 template <unsigned type>
 bool ShouldInvalidateNodeListCachesForAttr(
-    const HeapHashSet<WeakMember<const LiveNodeListBase>> node_lists[],
+    const MaskedObjectTracker<const LiveNodeListBase>& node_lists,
     const QualifiedName& attr_name) {
-  if (!node_lists[type].IsEmpty() &&
+  if (node_lists.MatchesMask(1u << (type)) &&
       LiveNodeListBase::ShouldInvalidateTypeOnAttributeChange(
           static_cast<NodeListInvalidationType>(type), attr_name))
     return true;
@@ -6813,7 +6809,7 @@ bool ShouldInvalidateNodeListCachesForAttr(
 
 template <>
 bool ShouldInvalidateNodeListCachesForAttr<kNumNodeListInvalidationTypes>(
-    const HeapHashSet<WeakMember<const LiveNodeListBase>>[],
+    const MaskedObjectTracker<const LiveNodeListBase>&,
     const QualifiedName&) {
   return false;
 }
@@ -6825,12 +6821,7 @@ bool Document::ShouldInvalidateNodeListCaches(
         kDoNotInvalidateOnAttributeChanges + 1>(node_lists_, *attr_name);
   }
 
-  for (int type = 0; type < kNumNodeListInvalidationTypes; ++type) {
-    if (!node_lists_[type].IsEmpty())
-      return true;
-  }
-
-  return false;
+  return node_lists_.MatchesMask(~0u);
 }
 
 void Document::InvalidateNodeListCaches(const QualifiedName* attr_name) {
@@ -6988,8 +6979,7 @@ DEFINE_TRACE(Document) {
   visitor->Trace(current_script_stack_);
   visitor->Trace(script_runner_);
   visitor->Trace(lists_invalidated_at_document_);
-  for (int i = 0; i < kNumNodeListInvalidationTypes; ++i)
-    visitor->Trace(node_lists_[i]);
+  visitor->Trace(node_lists_);
   visitor->Trace(top_layer_elements_);
   visitor->Trace(elem_sheet_);
   visitor->Trace(node_iterators_);
