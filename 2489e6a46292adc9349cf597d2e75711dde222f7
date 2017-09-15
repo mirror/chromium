@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "aa450fe1_e119e438",
+        "filename": "net/spdy/chromium/spdy_stream.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-09-15T18:39:02Z",
+      "side": 1,
+      "message": "Yes, you are right, sorry I didn\u0027t think about that.  I\u0027ll leave this part though for the time being, I\u0027m not convinced that it would make the code any simpler or easier to read.  If you think it\u0027s worth refactoring here, I can revisit in a follow-up CL.",
+      "parentUuid": "040f77b2_ffc66501",
+      "revId": "2489e6a46292adc9349cf597d2e75711dde222f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84970438_4c8f69bf",
         "filename": "net/spdy/chromium/spdy_stream.h",
         "patchSetId": 1
@@ -104,6 +122,24 @@
       "revId": "2489e6a46292adc9349cf597d2e75711dde222f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cddda16_a3132980",
+        "filename": "net/spdy/chromium/spdy_stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-09-15T18:39:02Z",
+      "side": 1,
+      "message": "Thank you for the great idea, I didn\u0027t even know about it!",
+      "parentUuid": "e01b4f84_74e4d3a0",
+      "revId": "2489e6a46292adc9349cf597d2e75711dde222f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
