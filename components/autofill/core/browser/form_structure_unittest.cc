@@ -3768,7 +3768,14 @@ TEST_F(FormStructureTest, ParseQueryResponse) {
   forms.push_back(&form_structure2);
 
   AutofillQueryResponseContents response;
-  response.add_field()->set_autofill_type(7);
+  AutofillQueryResponseContents_Field* field0 = response.add_field();
+  field0->set_autofill_type(7);
+  AutofillQueryResponseContents_Field_FieldPrediction* field_prediction0 =
+      field0->add_predictions();
+  field_prediction0->set_autofill_type(7);
+  AutofillQueryResponseContents_Field_FieldPrediction* field_prediction1 =
+      field0->add_predictions();
+  field_prediction1->set_autofill_type(22);
   response.add_field()->set_autofill_type(30);
   response.add_field()->set_autofill_type(9);
   response.add_field()->set_autofill_type(0);
@@ -3780,9 +3787,15 @@ TEST_F(FormStructureTest, ParseQueryResponse) {
   ASSERT_GE(forms[0]->field_count(), 2U);
   ASSERT_GE(forms[1]->field_count(), 2U);
   EXPECT_EQ(7, forms[0]->field(0)->server_type());
+  ASSERT_EQ(2U, forms[0]->field(0)->server_predictions().size());
+  EXPECT_EQ(7U, forms[0]->field(0)->server_predictions()[0].autofill_type());
+  EXPECT_EQ(22U, forms[0]->field(0)->server_predictions()[1].autofill_type());
   EXPECT_EQ(30, forms[0]->field(1)->server_type());
+  EXPECT_EQ(30U, forms[0]->field(1)->server_predictions()[0].autofill_type());
   EXPECT_EQ(9, forms[1]->field(0)->server_type());
+  EXPECT_EQ(9U, forms[1]->field(0)->server_predictions()[0].autofill_type());
   EXPECT_EQ(0, forms[1]->field(1)->server_type());
+  EXPECT_EQ(0U, forms[1]->field(1)->server_predictions()[0].autofill_type());
 }
 
 TEST_F(FormStructureTest, ParseQueryResponseAuthorDefinedTypes) {
