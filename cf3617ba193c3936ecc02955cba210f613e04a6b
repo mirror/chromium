@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03aa01f5_f23a47d7",
+        "filename": "third_party/WebKit/LayoutTests/css3/motion-path/place-center-top.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-15T20:13:28Z",
+      "side": 1,
+      "message": "PhilipJ mentioned web platform tests on the intent thread and I agree it would be a good idea since it helps future implementations. Can you make these tests web platform tests?",
+      "revId": "cf3617ba193c3936ecc02955cba210f613e04a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd4d2a06_cb173421",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1519,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-15T20:13:28Z",
+      "side": 1,
+      "message": "Why is this nullptr instead of layout_object?",
+      "revId": "cf3617ba193c3936ecc02955cba210f613e04a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38c55cb3_3bcb7fa0",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-15T20:13:28Z",
+      "side": 1,
+      "message": "Will this calculation be correct for SVG? Can you add a test with SVG where it\u0027s nonzero?",
+      "revId": "cf3617ba193c3936ecc02955cba210f613e04a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40396125_329b8e72",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-15T20:13:28Z",
+      "side": 1,
+      "message": "I don\u0027t think the absolute bounding box is really what we want since it\u0027s in viewport coordinates. This also feels a little wrong because this is a FloatRect whereas all other values are in LayoutUnits. Which rect does the spec require here? Can you add a test that covers this area better?",
+      "revId": "cf3617ba193c3936ecc02955cba210f613e04a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8354626e_91cf2404",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 2070,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-15T20:13:28Z",
+      "side": 1,
+      "message": "This seems to be the first case where we\u0027re passing in a LayoutObject to computed style. I\u0027d like someone more familiar with style/ to check whether that makes sense. For example, an alternative would be to pass an optional struct for motion path that contains the parent bounding box and offset.\n\nIf you don\u0027t go with a struct, can you better document this LayoutObject value with a comment above both ApplyTransform functions? Something about it being the object that has the motion path style. Could we even assert that the layout object\u0027s style has motion path?",
+      "revId": "cf3617ba193c3936ecc02955cba210f613e04a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
