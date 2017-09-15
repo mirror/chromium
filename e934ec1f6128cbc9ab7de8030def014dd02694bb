@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4d15d84a_def3c719",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-15T09:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a10064df_e415d96f",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb92c4e6_4095c611",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 35
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0e156eb1_701fe0ab",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-15T09:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb92c4e6_4095c611",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f10e2c99_e720a7af",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 35
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-15T01:34:31Z",
       "side": 1,
       "message": "Not sure this comment is helpful... especially we\u0027re not continuing here, we\u0027re finishing. Code looks self-documenting without the comment.",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53809b14_5bc9fb3b",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-15T09:26:55Z",
+      "side": 1,
+      "message": "Removed this comment.",
+      "parentUuid": "f10e2c99_e720a7af",
       "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "77ebf1e0_5fd688d3",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-15T09:26:55Z",
+      "side": 1,
+      "message": "I meant to determine the buffer size from the typical script size in UMA and leave it as a TODO for now because the patchset is already large and does multiple things. But, yeah, this is not so actionable and instead we should file an issue if it\u0027s needed.\n\n-\u003e Removed.",
+      "parentUuid": "487bbae7_3990df8b",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22e9ad18_74e236f0",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 35
@@ -105,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "e50aee79_5db1c217",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-15T09:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22e9ad18_74e236f0",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5dc7693_267cd414",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 35
@@ -116,6 +206,24 @@
       "writtenOn": "2017-09-15T01:34:31Z",
       "side": 1,
       "message": "I\u0027m kinda confused by all this MojoToNetPendingBuffer stuff, but I guess it\u0027s needed because CacheWriter isn\u0027t mojofied. Seems simpler if we could just give a data pipe to CacheWriter (not in this patch).",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0c0901e_4db28775",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-15T09:26:55Z",
+      "side": 1,
+      "message": "Yes, this is necessary for the reason.\n\nSG \u003e using mojo buffers in the cache writer.",
+      "parentUuid": "b5dc7693_267cd414",
       "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +247,24 @@
     },
     {
       "key": {
+        "uuid": "c87f58a2_b0af80a2",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-15T09:26:55Z",
+      "side": 1,
+      "message": "It\u0027s just for the initial state. I was asked by someone before in a different CL to add such the initial state even if the state will be changed soon. I have no strong opinion here, but as you commented, I\u0027m thinking to add a separate Start() function and we may need it later anyway.",
+      "parentUuid": "69d2d4df_d25f2ced",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ccccb81b_857f08af",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
         "patchSetId": 35
@@ -156,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "7afddb15_13982e51",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-15T09:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccccb81b_857f08af",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82b2b009_cd944864",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
         "patchSetId": 35
@@ -167,6 +311,24 @@
       "writtenOn": "2017-09-15T01:34:31Z",
       "side": 1,
       "message": "looking further, looks like we only use this in the ctor, so it can just be local variable there?",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df498a4c_2628bc6a",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-15T09:26:55Z",
+      "side": 1,
+      "message": "Good catch. Done.",
+      "parentUuid": "82b2b009_cd944864",
       "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -190,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "ddd86729_d8607e0f",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-15T09:26:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99da7bdd_3345ac52",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6992425_9fac2c89",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
         "patchSetId": 35
@@ -207,6 +387,24 @@
     },
     {
       "key": {
+        "uuid": "080d9647_5f4def15",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-15T09:26:55Z",
+      "side": 1,
+      "message": "Hm... probably we have different perspectives here.\n\nI feel this class is a kind of the repeater (relayer?) between the service worker in the renderer process and the network service. In the perspective, \"forwarding\" sounds not strange to me. On the other hand, I\u0027m also convinced that the comments etc should be written for the client of this class and \"forwarding\" sounds strange to the client.\n\nReplaced all \"forward(ing)\" with \"respond(ing)\".",
+      "parentUuid": "c6992425_9fac2c89",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "213b7d2b_6103ffaa",
         "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
         "patchSetId": 35
@@ -218,6 +416,24 @@
       "writtenOn": "2017-09-15T01:34:31Z",
       "side": 1,
       "message": "dont need to add the test in this patch, but it\u0027d be good to test an empty response body.",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78bd7c67_90b8ad06",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-15T09:26:55Z",
+      "side": 1,
+      "message": "Added a TODO.",
+      "parentUuid": "213b7d2b_6103ffaa",
       "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
