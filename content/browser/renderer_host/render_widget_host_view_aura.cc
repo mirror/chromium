@@ -84,6 +84,7 @@
 #include "ui/compositor/compositor_vsync_manager.h"
 #include "ui/compositor/dip_util.h"
 #include "ui/display/screen.h"
+#include "ui/events/base_event_utils.h"
 #include "ui/events/blink/blink_event_util.h"
 #include "ui/events/blink/web_input_event.h"
 #include "ui/events/event.h"
@@ -136,6 +137,11 @@ using blink::WebTouchEvent;
 namespace content {
 
 namespace {
+
+// The maximum amount of time between the loss of focus from a text field that
+// dismisses the IME and the time a text-field gains focus, such that they
+// should both be considered part of the same text editing session.
+constexpr double kTransientBlurToleranceSeconds = 2.0;
 
 #if defined(OS_WIN)
 
@@ -405,6 +411,7 @@ RenderWidgetHostViewAura::RenderWidgetHostViewAura(RenderWidgetHost* host,
       event_handler_(new RenderWidgetHostViewEventHandler(host_, this, this)),
       frame_sink_id_(IsMus() ? viz::FrameSinkId()
                              : host_->AllocateFrameSinkId(is_guest_view_hack_)),
+      text_field_blur_timestamp_(0),
       weak_ptr_factory_(this) {
   if (!is_guest_view_hack_)
     host_->SetView(this);
@@ -2328,9 +2335,30 @@ void RenderWidgetHostViewAura::OnUpdateTextInputStateCalled(
     GetInputMethod()->OnTextInputTypeChanged(this);
 
   const TextInputState* state = text_input_manager_->GetTextInputState();
+
+  const double now = ui::EventTimeStampToSeconds(ui::EventTimeForNow());
+
+  const bool is_blur_event =
+      did_update_state && (!state || state->type == ui::TEXT_INPUT_TYPE_NONE);
+
+  if (is_blur_event)
+    text_field_blur_timestamp_ = now;
+
   if (state && state->show_ime_if_needed &&
       GetInputMethod()->GetTextInputClient() == this) {
-    GetInputMethod()->ShowImeIfNeeded();
+    const bool always_show_ime = !state->only_show_ime_if_transient_blur;
+
+    // If the last time the IME was dismissed was less than 2 seconds ago, then
+    // this re-focus (even if it was caused by an asynchronous JS event), should
+    // be considered part of the same intention that showed the virtual keyboard
+    // initially.
+    const double time_since_last_blur = now - text_field_blur_timestamp_;
+    const bool is_transient_blur =
+        time_since_last_blur < kTransientBlurToleranceSeconds;
+
+    if (always_show_ime || is_transient_blur) {
+      GetInputMethod()->ShowImeIfNeeded();
+    }
   }
 
   if (auto* render_widget_host =
