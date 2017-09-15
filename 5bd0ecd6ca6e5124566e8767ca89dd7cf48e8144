@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1caa2581_7aeedd11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T05:41:11Z",
+      "side": 1,
+      "message": "Nit: its",
+      "range": {
+        "startLine": 25,
+        "startChar": 56,
+        "endLine": 25,
+        "endChar": 60
+      },
+      "revId": "5bd0ecd6ca6e5124566e8767ca89dd7cf48e8144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7455af82_dc09cf70",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T05:41:11Z",
+      "side": 1,
+      "message": "Huh, this feels kind of unusual.\n\nIs it used from different threads because of workers? Is it possible that web database should be going through a context-bound interface provider rather than through a process-level interface provider?",
+      "revId": "5bd0ecd6ca6e5124566e8767ca89dd7cf48e8144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
