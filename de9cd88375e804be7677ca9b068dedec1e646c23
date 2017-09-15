@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1005f213_db40f6c3",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintChunksToCcLayerTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-15T22:33:22Z",
+      "side": 1,
+      "message": "Can you add one more test of two nested effects with an intermediate clip\nstate between them, and the inner effect has a null clip?\nT to verify that the inner effect gets the right clip setup in its output.",
+      "revId": "de9cd88375e804be7677ca9b068dedec1e646c23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
