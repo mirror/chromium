@@ -16,6 +16,24 @@
       "revId": "b5853ee8983407bcbfb44446f998a673f95b5432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b1a0989_8f698261",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-09-15T05:12:02Z",
+      "side": 1,
+      "message": "As this is not ref-counted.\nbase::BindOnce(\u0026StopAllWorkersCallback::sendSuccess, std::move(callback));\nshould be better fit.",
+      "parentUuid": "e8cc8202_0d6d73bb",
+      "revId": "b5853ee8983407bcbfb44446f998a673f95b5432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
