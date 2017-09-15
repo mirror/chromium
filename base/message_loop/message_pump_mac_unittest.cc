@@ -6,6 +6,8 @@
 
 #include "base/mac/scoped_cftyperef.h"
 #include "base/macros.h"
+#include "base/message_loop/message_loop.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace base {
@@ -105,4 +107,64 @@ TEST(MessagePumpMacTest, TestInvalidatedTimerReuse) {
   CFRunLoopRemoveTimer(CFRunLoopGetCurrent(), test_timer,
                        kMessageLoopExclusiveRunLoopMode);
 }
+
+TEST(MessagePumpMacTest, ScopedPumpMessagesInPrivateModes) {
+  int counter = 0;
+  auto Increment = BindRepeating([](int* i) { ++*i; }, &counter);
+  MessageLoopForUI message_loop;
+
+  CFRunLoopMode kRegular = kCFRunLoopDefaultMode;
+  CFRunLoopMode kPrivate = CFSTR("NSUnhighlightMenuRunLoopMode");
+
+  // Make sure both modes are empty to start.
+  while (CFRunLoopRunInMode(kRegular, 0, true) == kCFRunLoopRunHandledSource)
+    ;
+  while (CFRunLoopRunInMode(kPrivate, 0, true) == kCFRunLoopRunHandledSource)
+    ;
+
+  // Work is seen when running in the default mode.
+  ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, Increment);
+  EXPECT_EQ(0, counter);
+  EXPECT_EQ(kCFRunLoopRunHandledSource, CFRunLoopRunInMode(kRegular, 0, true));
+  EXPECT_EQ(1, counter);
+  EXPECT_EQ(kCFRunLoopRunTimedOut, CFRunLoopRunInMode(kRegular, 0, true));
+  EXPECT_EQ(1, counter);
+
+  // But not seen when running in a private mode.
+  ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, Increment);
+  EXPECT_EQ(1, counter);
+  EXPECT_EQ(kCFRunLoopRunTimedOut, CFRunLoopRunInMode(kPrivate, 0, true));
+  EXPECT_EQ(1, counter);  // No change.
+
+  {
+    ScopedPumpMessagesInPrivateModes allow_private;
+    // Now the work should be seen.
+    EXPECT_EQ(kCFRunLoopRunHandledSource,
+              CFRunLoopRunInMode(kPrivate, 0, true));
+    EXPECT_EQ(2, counter);
+    EXPECT_EQ(kCFRunLoopRunTimedOut, CFRunLoopRunInMode(kPrivate, 0, true));
+    EXPECT_EQ(2, counter);
+
+    // The regular mode should also work the same.
+    ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, Increment);
+    EXPECT_EQ(kCFRunLoopRunHandledSource,
+              CFRunLoopRunInMode(kRegular, 0, true));
+    EXPECT_EQ(3, counter);
+    EXPECT_EQ(kCFRunLoopRunTimedOut, CFRunLoopRunInMode(kRegular, 0, true));
+    EXPECT_EQ(3, counter);
+  }
+
+  // And now the scoper is out of scope, private modes should no longer see it.
+  ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE, Increment);
+  EXPECT_EQ(3, counter);
+  EXPECT_EQ(kCFRunLoopRunTimedOut, CFRunLoopRunInMode(kPrivate, 0, true));
+  EXPECT_EQ(3, counter);  // No change.
+
+  // Only regular modes see it.
+  EXPECT_EQ(kCFRunLoopRunHandledSource, CFRunLoopRunInMode(kRegular, 0, true));
+  EXPECT_EQ(4, counter);
+  EXPECT_EQ(kCFRunLoopRunTimedOut, CFRunLoopRunInMode(kRegular, 0, true));
+  EXPECT_EQ(4, counter);
+}
+
 }  // namespace base
