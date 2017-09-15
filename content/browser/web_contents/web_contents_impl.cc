@@ -4356,39 +4356,29 @@ bool WebContentsImpl::HasAccessedInitialDocument() {
 
 void WebContentsImpl::UpdateTitleForEntry(NavigationEntry* entry,
                                           const base::string16& title) {
-  // For file URLs without a title, use the pathname instead. In the case of a
-  // synthesized title, we don't want the update to count toward the "one set
-  // per page of the title to history."
-  base::string16 final_title;
-  bool explicit_set;
-  if (entry && entry->GetURL().SchemeIsFile() && title.empty()) {
-    final_title = base::UTF8ToUTF16(entry->GetURL().ExtractFileName());
-    explicit_set = false;  // Don't count synthetic titles toward the set limit.
-  } else {
-    base::TrimWhitespace(title, base::TRIM_ALL, &final_title);
-    explicit_set = true;
-  }
+  base::string16 clean_title;
+  base::TrimWhitespace(title, base::TRIM_ALL, &clean_title);
 
   // If a page is created via window.open and never navigated,
   // there will be no navigation entry. In this situation,
   // |page_title_when_no_navigation_entry_| will be used for page title.
   if (entry) {
-    if (final_title == entry->GetTitle())
+    if (clean_title == entry->GetTitle())
       return;  // Nothing changed, don't bother.
 
-    entry->SetTitle(final_title);
+    entry->SetTitle(clean_title);
   } else {
-    if (page_title_when_no_navigation_entry_ == final_title)
+    if (page_title_when_no_navigation_entry_ == clean_title)
       return;  // Nothing changed, don't bother.
 
-    page_title_when_no_navigation_entry_ = final_title;
+    page_title_when_no_navigation_entry_ = clean_title;
   }
 
   // Lastly, set the title for the view.
-  view_->SetPageTitle(final_title);
+  view_->SetPageTitle(entry->GetTitleForDisplay());
 
   for (auto& observer : observers_)
-    observer.TitleWasSet(entry, explicit_set);
+    observer.TitleWasSet(entry);
 
   // Broadcast notifications when the UI should be updated.
   if (entry == controller_.GetEntryAtOffset(0))
