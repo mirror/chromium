@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be1b6721_85a7d756",
+        "filename": "net/extras/sqlite/sqlite_channel_id_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-15T02:20:32Z",
+      "side": 1,
+      "message": "nharper: Any thoughts on when we might be able to remove this? I imagine by now anyone with keys that haven\u0027t been converted has probably also expired all their bound cookies and we can maybe just drop the keys on the floor instead?",
+      "revId": "40984ada0893aa2821a9917a3b2f25b343c5949b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
