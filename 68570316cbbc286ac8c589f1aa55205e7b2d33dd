@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3dce9ae_53a25208",
+        "filename": "components/omnibox/browser/omnibox_field_trial.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-15T20:58:29Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "68570316cbbc286ac8c589f1aa55205e7b2d33dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
