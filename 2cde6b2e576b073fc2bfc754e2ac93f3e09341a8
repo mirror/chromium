@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cd6fb9b_36753146",
+        "filename": "net/cert/x509_certificate_known_roots_win.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-15T14:43:58Z",
+      "side": 1,
+      "message": "I mentioned this in another comment, but just to make it clear what\u0027s going on here, I changed this to be a SHA256HashValue so that it\u0027s the same as the Symantec list, so that they can both go into IsSHA256InSortedArray.",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 28
+      },
+      "revId": "2cde6b2e576b073fc2bfc754e2ac93f3e09341a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

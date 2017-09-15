@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e09f5b00_6354710e",
+        "filename": "net/cert/symantec_roots.inc",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-15T14:43:58Z",
+      "side": 1,
+      "message": "Done. I might be confused but I think this turns kCTRequiredPolicies into a static initializer which isn\u0027t allowed, so I put kCTRequiredPolicies as a static const inside a function to avoid the static initializer (as suggested by https://chromium.googlesource.com/chromium/src/+/master/docs/static_initializers.md).",
+      "parentUuid": "5b3d13fb_81a68bf4",
+      "revId": "fa8f9d82d793e8a27f56f53da09567e9d4468973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1316b11e_34f8b177",
         "filename": "net/cert/x509_util.h",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-14T17:57:53Z",
       "side": 1,
       "message": "So I generally push back on any _util additions, since they end up being dumping grounds, and end up creating sort of \u0027catch-all\u0027 dependencies.\n\nIsAnyCertificateInRootList seems like it it\u0027d be in hash_value.h (and is very similar to the existing IsSHA256HashInSortedArray, which we could consider using)\n\nFor IsLegacySymantecCert, we could just create //net/cert/symantec_certs.h with had\n\nNET_EXPORT IsLegacySymantecCert\n\nNET_EXPORT_PRIVATE kSymantecRoots\nNET_EXPORT_PRIVATE kSymantecRootsLength",
+      "revId": "fa8f9d82d793e8a27f56f53da09567e9d4468973",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30a48b28_ac61849d",
+        "filename": "net/cert/x509_util.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-15T14:43:58Z",
+      "side": 1,
+      "message": "\u003e So I generally push back on any _util additions, since they end up being dumping grounds, and end up creating sort of \u0027catch-all\u0027 dependencies.\n\u003e \n\u003e IsAnyCertificateInRootList seems like it it\u0027d be in hash_value.h (and is very similar to the existing IsSHA256HashInSortedArray, which we could consider using)\n\nDone. I changed the signature of IsSHA256HashInSortedArray a bit (and its one callsite with kKnownRootCertSHA256Hashes) to take a SHA256HashValue array so that we can use it within the new IsAnySHA256HashInSortedArray.\n\n\u003e \n\u003e For IsLegacySymantecCert, we could just create //net/cert/symantec_certs.h with had\n\u003e \n\u003e NET_EXPORT IsLegacySymantecCert\n\u003e \n\u003e NET_EXPORT_PRIVATE kSymantecRoots\n\u003e NET_EXPORT_PRIVATE kSymantecRootsLength\n\nDone.",
+      "parentUuid": "1316b11e_34f8b177",
       "revId": "fa8f9d82d793e8a27f56f53da09567e9d4468973",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
