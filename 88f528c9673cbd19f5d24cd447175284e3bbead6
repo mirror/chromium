@@ -68,6 +68,30 @@
       "revId": "88f528c9673cbd19f5d24cd447175284e3bbead6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d349d46b_ae731065",
+        "filename": "ui/gfx/canvas.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-15T17:22:39Z",
+      "side": 1,
+      "message": "Wouldn\u0027t that:\n- Fundamentally change existing behavior? I guess it\u0027s not a big deal because almost nothing changes image_scale_ currently?\n- Require a stack of saved values that stays in sync with the underlying saved canvas contexts?  Can be done, if you think it\u0027s warranted.",
+      "parentUuid": "f175befa_24012ff9",
+      "range": {
+        "startLine": 147,
+        "startChar": 13,
+        "endLine": 147,
+        "endChar": 17
+      },
+      "revId": "88f528c9673cbd19f5d24cd447175284e3bbead6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
