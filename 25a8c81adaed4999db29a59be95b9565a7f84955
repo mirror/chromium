@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31b31cb8_2aa6bf19",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/resources/inspected-page-helpers.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-15T05:30:47Z",
+      "side": 1,
+      "message": "There are just a couple (~5) tests which use it. Let\u0027s add it there manually. I\u0027d like to avoid page helpers as much as possible.\n\nI also don\u0027t like the idea of collecting output in page as a generic mechanism.",
+      "revId": "25a8c81adaed4999db29a59be95b9565a7f84955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a70487af_717f7b1a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/resources/inspected-page.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-15T05:30:47Z",
+      "side": 1,
+      "message": "We should not have helper scripts:\n- they are not preserved when you navigate to url;\n- they will affect any tests which work with scripts/resources/html.",
+      "revId": "25a8c81adaed4999db29a59be95b9565a7f84955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
