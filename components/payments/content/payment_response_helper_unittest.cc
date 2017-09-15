@@ -111,9 +111,9 @@ TEST_F(PaymentResponseHelperTest, GeneratePaymentResponse_SupportedMethod) {
 
   // "visa" is specified directly in the supportedMethods so it is returned
   // as the method name.
-  PaymentResponseHelper helper("en-US", spec(), test_instrument(),
-                               test_payment_request_delegate(), test_address(),
-                               test_address(), this);
+  PaymentResponseHelper helper(
+      nullptr, GURL(), GURL(), "en-US", spec(), test_instrument(),
+      test_payment_request_delegate(), test_address(), test_address(), this);
   EXPECT_EQ("visa", response()->method_name);
   EXPECT_EQ(
       "{\"billingAddress\":"
@@ -150,9 +150,9 @@ TEST_F(PaymentResponseHelperTest, GeneratePaymentResponse_BasicCard) {
                                     std::move(method_data));
 
   // "basic-card" is specified so it is returned as the method name.
-  PaymentResponseHelper helper("en-US", spec(), test_instrument(),
-                               test_payment_request_delegate(), test_address(),
-                               test_address(), this);
+  PaymentResponseHelper helper(
+      nullptr, GURL(), GURL(), "en-US", spec(), test_instrument(),
+      test_payment_request_delegate(), test_address(), test_address(), this);
   EXPECT_EQ("basic-card", response()->method_name);
   EXPECT_EQ(
       "{\"billingAddress\":"
@@ -191,9 +191,9 @@ TEST_F(PaymentResponseHelperTest, GeneratePaymentResponse_ShippingAddress) {
   RecreateSpecWithOptionsAndDetails(std::move(options), std::move(details),
                                     GetMethodDataForVisa());
 
-  PaymentResponseHelper helper("en-US", spec(), test_instrument(),
-                               test_payment_request_delegate(), test_address(),
-                               test_address(), this);
+  PaymentResponseHelper helper(
+      nullptr, GURL(), GURL(), "en-US", spec(), test_instrument(),
+      test_payment_request_delegate(), test_address(), test_address(), this);
 
   // Check that all the expected values were set.
   EXPECT_EQ("US", response()->shipping_address->country);
@@ -220,9 +220,9 @@ TEST_F(PaymentResponseHelperTest, GeneratePaymentResponse_ContactDetails_All) {
   options->request_payer_email = true;
   RecreateSpecWithOptions(std::move(options));
 
-  PaymentResponseHelper helper("en-US", spec(), test_instrument(),
-                               test_payment_request_delegate(), test_address(),
-                               test_address(), this);
+  PaymentResponseHelper helper(
+      nullptr, GURL(), GURL(), "en-US", spec(), test_instrument(),
+      test_payment_request_delegate(), test_address(), test_address(), this);
 
   // Check that all the expected values were set.
   EXPECT_EQ("John H. Doe", response()->payer_name.value());
@@ -238,9 +238,9 @@ TEST_F(PaymentResponseHelperTest, GeneratePaymentResponse_ContactDetails_Some) {
   options->request_payer_name = true;
   RecreateSpecWithOptions(std::move(options));
 
-  PaymentResponseHelper helper("en-US", spec(), test_instrument(),
-                               test_payment_request_delegate(), test_address(),
-                               test_address(), this);
+  PaymentResponseHelper helper(
+      nullptr, GURL(), GURL(), "en-US", spec(), test_instrument(),
+      test_payment_request_delegate(), test_address(), test_address(), this);
 
   // Check that the name was set, but not the other values.
   EXPECT_EQ("John H. Doe", response()->payer_name.value());
@@ -259,9 +259,9 @@ TEST_F(PaymentResponseHelperTest,
                              base::UTF8ToUTF16("(515) 123-1234"));
   RecreateSpecWithOptions(std::move(options));
 
-  PaymentResponseHelper helper("en-US", spec(), test_instrument(),
-                               test_payment_request_delegate(), test_address(),
-                               test_address(), this);
+  PaymentResponseHelper helper(
+      nullptr, GURL(), GURL(), "en-US", spec(), test_instrument(),
+      test_payment_request_delegate(), test_address(), test_address(), this);
 
   // Check that the phone was formatted.
   EXPECT_EQ("+15151231234", response()->payer_phone.value());

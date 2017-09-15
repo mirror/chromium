@@ -177,12 +177,16 @@ void PaymentRequestState::RemoveObserver(Observer* observer) {
   observers_.RemoveObserver(observer);
 }
 
-void PaymentRequestState::GeneratePaymentResponse() {
+void PaymentRequestState::GeneratePaymentResponse(
+    content::BrowserContext* browser_context,
+    const GURL& top_level_origin,
+    const GURL& frame_origin) {
   DCHECK(is_ready_to_pay());
 
   // Once the response is ready, will call back into OnPaymentResponseReady.
   response_helper_ = base::MakeUnique<PaymentResponseHelper>(
-      app_locale_, spec_, selected_instrument_, payment_request_delegate_,
+      browser_context, top_level_origin, frame_origin, app_locale_, spec_,
+      selected_instrument_, payment_request_delegate_,
       selected_shipping_profile_, selected_contact_profile_, this);
 }
 

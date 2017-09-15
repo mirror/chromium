@@ -113,7 +113,9 @@ class PaymentRequestState : public PaymentResponseHelper::Delegate,
 
   // Initiates the generation of the PaymentResponse. Callers should check
   // |is_ready_to_pay|, which is inexpensive.
-  void GeneratePaymentResponse();
+  void GeneratePaymentResponse(content::BrowserContext* browser_context,
+                               const GURL& top_level_origin,
+                               const GURL& frame_origin);
 
   // Record the use of the data models that were used in the Payment Request.
   void RecordUseStats();

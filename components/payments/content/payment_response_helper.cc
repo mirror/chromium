@@ -13,13 +13,18 @@
 #include "components/autofill/core/browser/autofill_data_util.h"
 #include "components/autofill/core/browser/autofill_type.h"
 #include "components/payments/content/payment_request_spec.h"
+#include "components/payments/content/service_worker_payment_instrument.h"
 #include "components/payments/core/payment_request_data_util.h"
 #include "components/payments/core/payment_request_delegate.h"
 #include "components/payments/core/payments_validators.h"
+#include "content/public/browser/browser_context.h"
 
 namespace payments {
 
 PaymentResponseHelper::PaymentResponseHelper(
+    content::BrowserContext* browser_context,
+    const GURL& top_level_origin,
+    const GURL& frame_origin,
     const std::string& app_locale,
     PaymentRequestSpec* spec,
     PaymentInstrument* selected_instrument,
@@ -64,7 +69,14 @@ PaymentResponseHelper::PaymentResponseHelper(
 
   // Start to get the instrument details. Will call back into
   // OnInstrumentDetailsReady.
-  selected_instrument_->InvokePaymentApp(this);
+  if (selected_instrument_->type() ==
+      PaymentInstrument::Type::SERVICE_WORKER_APP) {
+    (static_cast<ServiceWorkerPaymentInstrument*>(selected_instrument_))
+        ->InvokePaymentApp(browser_context, top_level_origin, frame_origin,
+                           spec_->details(), spec_->method_data(), this);
+  } else {
+    selected_instrument_->InvokePaymentApp(this);
+  }
 }
 
 PaymentResponseHelper::~PaymentResponseHelper() {}
