@@ -326,6 +326,17 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     Restart();
   }
 
+  // Navigation is intercepted, transfer the |resource_request_|, |url_loader_|
+  // and the |completion_status_| to the new owner. The new owner is
+  // responsible for handling all the mojom::URLLoaderClient callbacks from now
+  // on.
+  void OnNavigationIntercepted(
+      NavigationURLLoader::NavigationInterceptionCB callback) {
+    std::move(callback).Run(std::move(resource_request_),
+                            std::move(url_loader_),
+                            std::move(completion_status_));
+  }
+
   // Ownership of the URLLoaderFactoryPtrInfo instance is transferred to the
   // caller.
   mojom::URLLoaderFactoryPtrInfo GetSubresourceURLLoaderFactory() {
@@ -411,6 +422,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       if (MaybeCreateLoaderForResponse(ResourceResponseHead()))
         return;
     }
+    completion_status_ = completion_status;
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(&NavigationURLLoaderNetworkService::OnComplete, owner_,
@@ -471,6 +483,12 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   // Set to true if we receive a valid response from a URLLoader, i.e.
   // URLLoaderClient::OnReceivedResponse() is called.
   bool received_response_ = false;
+
+  // The completion status if it has been received. This is needed to handle
+  // the case that the response is intercepted by download, and OnComplete() is
+  // already called while we are transferring the |url_loader_| and response
+  // body to download code.
+  base::Optional<ResourceRequestCompletionStatus> completion_status_;
 
   DISALLOW_COPY_AND_ASSIGN(URLLoaderRequestController);
 };
@@ -575,6 +593,15 @@ void NavigationURLLoaderNetworkService::FollowRedirect() {
 }
 
 void NavigationURLLoaderNetworkService::ProceedWithResponse() {}
+
+void NavigationURLLoaderNetworkService::OnNavigationIntercepted(
+    NavigationURLLoader::NavigationInterceptionCB callback) {
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&URLLoaderRequestController::OnNavigationIntercepted,
+                     base::Unretained(request_controller_.get()),
+                     std::move(callback)));
+}
 
 void NavigationURLLoaderNetworkService::OnReceiveResponse(
     scoped_refptr<ResourceResponse> response,
