@@ -164,6 +164,30 @@
       "revId": "8252425cb4f0875f9e3bcc3958287c455fc66af5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5d349173_4f61a4d2",
+        "filename": "ios/chrome/browser/web/progress_indicator_egtest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-15T15:51:33Z",
+      "side": 1,
+      "message": "Sorry, my suggestion was to use GREYAssert(testing::WaitUntilConditionOrTimeout). DCHECK bring down the whole suite, while GREYAssert only current test. Not a big deal though.",
+      "parentUuid": "414f348b_dd12a60b",
+      "range": {
+        "startLine": 92,
+        "startChar": 21,
+        "endLine": 92,
+        "endChar": 39
+      },
+      "revId": "8252425cb4f0875f9e3bcc3958287c455fc66af5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
