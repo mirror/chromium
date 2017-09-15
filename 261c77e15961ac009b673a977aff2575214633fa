@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68105429_9937a7c8",
+        "filename": "ios/chrome/browser/web/progress_indicator_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-15T07:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a9b7f58_d6d3b9c3",
+      "revId": "261c77e15961ac009b673a977aff2575214633fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5daf8600_48a9ee05",
         "filename": "ios/chrome/browser/web/progress_indicator_egtest.mm",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "261c77e15961ac009b673a977aff2575214633fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d221d3_24e747ce",
+        "filename": "ios/chrome/browser/web/progress_indicator_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-15T07:41:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5daf8600_48a9ee05",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 14
+      },
+      "revId": "261c77e15961ac009b673a977aff2575214633fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
