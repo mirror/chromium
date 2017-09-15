@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7b8c895_eb19a294",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-15T10:07:26Z",
+      "side": 1,
+      "message": "I thought ATM it\u0027s not possible to test this code either manually or automatically, but realized that adding unit tests is possible.\nAdded unit tests.",
+      "parentUuid": "406393b9_26fcd5a0",
+      "revId": "44ce6b9c781436e35a00369948240076e895f965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aee2f86b_d2b50ca3",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "44ce6b9c781436e35a00369948240076e895f965",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc937932_2f599ddd",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-15T10:07:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aee2f86b_d2b50ca3",
+      "revId": "44ce6b9c781436e35a00369948240076e895f965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "31d6509d_9d8013dd",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-15T10:07:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11df03e5_398df044",
+      "revId": "44ce6b9c781436e35a00369948240076e895f965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44443280_3f0141ce",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4dd3c00d_2705c770",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-15T10:07:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44443280_3f0141ce",
+      "revId": "44ce6b9c781436e35a00369948240076e895f965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2afeca7_4be5d51c",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.cc",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-09-14T17:06:39Z",
       "side": 1,
       "message": "Clarification: is it ok to ignore the error here, instead of returning to the D-Bus method caller via ChromeVirtualFileRequestServiceProviderDelegate::HandleReadRequest?",
+      "revId": "44ce6b9c781436e35a00369948240076e895f965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5002b0b2_059ab25f",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-15T10:07:26Z",
+      "side": 1,
+      "message": "Makes sense.\nChanged the code to return false.",
+      "parentUuid": "a2afeca7_4be5d51c",
       "revId": "44ce6b9c781436e35a00369948240076e895f965",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "79e0e5b8_bd40a5ac",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-15T10:07:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d287a9b_546c02d9",
+      "revId": "44ce6b9c781436e35a00369948240076e895f965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93dc1ad8_5cc3e87a",
         "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.h",
         "patchSetId": 3
@@ -115,6 +223,24 @@
       "writtenOn": "2017-09-14T17:06:39Z",
       "side": 1,
       "message": "nit/optional: How about moving these below the |observer_list_|?\n|profile_| looks closer to |bridge_service_| etc.",
+      "revId": "44ce6b9c781436e35a00369948240076e895f965",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce69c0a_28c6177a",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-15T10:07:26Z",
+      "side": 1,
+      "message": "Makes sense.\nDone.",
+      "parentUuid": "93dc1ad8_5cc3e87a",
       "revId": "44ce6b9c781436e35a00369948240076e895f965",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
