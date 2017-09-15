@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a8a3d476_b795bfe3",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-15T23:42:39Z",
+      "side": 1,
+      "message": "Second thought.. DCHECK() might make better sense here. Though,        GetPasswordProtectionService(profile_)  could return nullptr for users who turned off safe browsing, they should never see these two buttons. \n\nChanged back to DCHECK(). Thanks!",
+      "parentUuid": "5ebef4f0_c4606d07",
+      "revId": "6ebd7df2deec1b5221d2cc72b027db8c3e83a917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2024da4f_b84fdbe5",
         "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "6ebd7df2deec1b5221d2cc72b027db8c3e83a917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9e4eaac_e61ca2d8",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-15T23:42:39Z",
+      "side": 1,
+      "message": "This is due to the new change introduced in \nhttps://chromium-review.googlesource.com/c/chromium/src/+/663761/10/chrome/browser/ssl/security_state_tab_helper.cc\n\nNow showing password reuse page info bubble requires two conditions:\n(1) threat type is SB_THREAT_TYPE_PASSWORD_REUSE\n(2) User haven\u0027t changed their Gaia password yet\n\nUpdateSecurityState() only triggers the 1st condition.",
+      "parentUuid": "2024da4f_b84fdbe5",
+      "revId": "6ebd7df2deec1b5221d2cc72b027db8c3e83a917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
