@@ -115,7 +115,7 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
     ctx.save();
     ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
     ctx.clearRect(0, 0, this._width, this._height);
-    this._drawHorizontalGrid(ctx);
+    ctx.save();
     ctx.translate(0, 16);  // Reserve space for the scale bar.
     for (var chartInfo of this._controlPane.charts()) {
       if (!this._controlPane.isActive(chartInfo.metrics[0].name))
@@ -123,6 +123,8 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
       this._drawChart(ctx, chartInfo, graphHeight);
       ctx.translate(0, graphHeight);
     }
+    ctx.restore();
+    this._drawHorizontalGrid(ctx);
     ctx.restore();
   }
 
@@ -160,9 +162,11 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
     var bottomPadding = 8;
     var extraSpace = 1.05;
     var max = this._calcMax(chartInfo) * extraSpace;
+    var stackedChartBaseLandscape = chartInfo.stacked ? new Map() : null;
+    chartInfo.metrics.forEach((metricInfo, index) => {
+      this._drawMetric(ctx, chartInfo, metricInfo, height - bottomPadding, max, index > 0 ? stackedChartBaseLandscape : null);
+    });
     this._drawVerticalGrid(ctx, height - bottomPadding, max, chartInfo);
-    for (var metricInfo of chartInfo.metrics)
-      this._drawMetric(ctx, chartInfo, metricInfo, height - bottomPadding, max);
     ctx.restore();
   }
 
@@ -247,8 +251,9 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
    * @param {!Timeline.PerformanceMonitor.MetricInfo} metricInfo
    * @param {number} height
    * @param {number} scaleMax
+   * @param {!Map<number, number>=} stackedChartBaseLandscape
    */
-  _drawMetric(ctx, chartInfo, metricInfo, height, scaleMax) {
+  _drawMetric(ctx, chartInfo, metricInfo, height, scaleMax, stackedChartBaseLandscape) {
     var topPadding = 5;
     var visibleHeight = height - topPadding;
     if (visibleHeight < 1)
@@ -273,8 +278,14 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
     }
     for (var i = this._metricsBuffer.length - 1; i >= 0; --i) {
       var metrics = this._metricsBuffer[i];
-      var y = calcY(metrics.metrics.get(metricName));
-      x = (metrics.timestamp - startTime) * pixelsPerMs;
+      var timestamp = metrics.timestamp;
+      var value = metrics.metrics.get(metricName);
+      if (stackedChartBaseLandscape) {
+        value += stackedChartBaseLandscape.get(timestamp) || 0;
+        stackedChartBaseLandscape.set(timestamp, value);
+      }
+      var y = calcY(value);
+      x = (timestamp - startTime) * pixelsPerMs;
       if (smooth) {
         var midX = (lastX + x) / 2;
         ctx.bezierCurveTo(midX, lastY, midX, y, x, y);
@@ -284,15 +295,18 @@ Timeline.PerformanceMonitor = class extends UI.HBox {
       }
       lastX = x;
       lastY = y;
-      if (metrics.timestamp < startTime)
+      if (timestamp < startTime)
         break;
     }
     ctx.strokeStyle = color;
     ctx.lineWidth = 0.5;
     ctx.stroke();
     ctx.lineTo(x, calcY(0));
-    ctx.fillStyle = color;
-    ctx.globalAlpha = 0.05;
+    ctx.fillStyle = color;//Common.Color.parse('white').blendWith(Common.Color.parse(color).setAlpha(0.1)).asString(null);
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.fill();
+    ctx.globalAlpha = 0.2;
+    ctx.globalCompositeOperation = 'source-over';
     ctx.fill();
     ctx.restore();
 
@@ -369,17 +383,20 @@ Timeline.PerformanceMonitor.ControlPane = class {
       {
         title: Common.UIString('CPU usage'),
         metrics: [
-          {name: 'TaskDuration', color: 'red'}, {name: 'ScriptDuration', color: 'orange'},
-          {name: 'LayoutDuration', color: 'blueviolet'}, {name: 'RecalcStyleDuration', color: 'violet'}
+          {name: 'TaskDuration', color: '#999'},
+          {name: 'LayoutDuration', color: 'blueviolet'}, {name: 'RecalcStyleDuration', color: 'violet'}, {name: 'ScriptDuration', color: 'orange'}
         ],
         format: format.Percent,
         smooth: true,
+        stacked: true,
+        color: 'red',
         max: 1
       },
       {
         title: Common.UIString('JS heap size'),
-        metrics: [{name: 'JSHeapUsedSize', color: 'blue'}, {name: 'JSHeapTotalSize', color: '#99f'}],
+        metrics: [{name: 'JSHeapTotalSize', color: '#99f'}, {name: 'JSHeapUsedSize', color: 'blue'}],
         format: format.Bytes,
+        color: 'blue'
       },
       {title: Common.UIString('DOM Nodes'), metrics: [{name: 'NodeCount', color: 'green'}]},
       {title: Common.UIString('JS event listeners'), metrics: [{name: 'JSEventListenerCount', color: 'yellowgreen'}]},
@@ -450,7 +467,7 @@ Timeline.PerformanceMonitor.MetricIndicator = class {
    * @param {function(boolean)} onToggle
    */
   constructor(parent, info, active, onToggle) {
-    var color = info.metrics[0].color;
+    var color = info.color || info.metrics[0].color;
     this._info = info;
     this._active = active;
     this._onToggle = onToggle;
