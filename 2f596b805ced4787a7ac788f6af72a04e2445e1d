@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cc9c926_eaa6f317",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_metrics.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-15T19:11:02Z",
+      "side": 1,
+      "message": "nit: Please document that this enum is used to back an UMA histogram, and should therefore be treated as append-only.",
+      "range": {
+        "startLine": 22,
+        "startChar": 53,
+        "endLine": 22,
+        "endChar": 0
+      },
+      "revId": "2f596b805ced4787a7ac788f6af72a04e2445e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
