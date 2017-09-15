@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c292390a_2a20b6a3",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerProperties.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-15T19:15:14Z",
+      "side": 1,
+      "message": "Seems that we don\u0027t have a good way to support moving.\n\nIn this case, we should still return const ref here to at least eliminate one copy...\n\nEverything else LGTM.",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 24,
+        "endChar": 30
+      },
+      "revId": "2e3cfc608b9adea99b5262efccad876667cc0ed6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
