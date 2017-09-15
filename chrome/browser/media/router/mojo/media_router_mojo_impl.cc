@@ -109,7 +109,7 @@ void MediaRouterMojoImpl::RegisterMediaRouteProvider(
 void MediaRouterMojoImpl::OnIssue(const IssueInfo& issue) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DVLOG_WITH_INSTANCE(1) << "OnIssue " << issue.title;
-  issue_manager_.AddIssue(issue);
+  GetIssueManager()->AddIssue(issue);
 }
 
 void MediaRouterMojoImpl::OnSinksReceived(
@@ -285,16 +285,6 @@ void MediaRouterMojoImpl::SendRouteBinaryMessage(
     SendRouteMessageCallback callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DoSendRouteBinaryMessage(route_id, std::move(data), std::move(callback));
-}
-
-void MediaRouterMojoImpl::AddIssue(const IssueInfo& issue_info) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  issue_manager_.AddIssue(issue_info);
-}
-
-void MediaRouterMojoImpl::ClearIssue(const Issue::Id& issue_id) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  issue_manager_.ClearIssue(issue_id);
 }
 
 void MediaRouterMojoImpl::OnUserGesture() {
@@ -482,16 +472,6 @@ void MediaRouterMojoImpl::UnregisterMediaRoutesObserver(
   it->second->observers.RemoveObserver(observer);
   if (!it->second->observers.might_have_observers())
     DoStopObservingMediaRoutes(source_id);
-}
-
-void MediaRouterMojoImpl::RegisterIssuesObserver(IssuesObserver* observer) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  issue_manager_.RegisterObserver(observer);
-}
-
-void MediaRouterMojoImpl::UnregisterIssuesObserver(IssuesObserver* observer) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-  issue_manager_.UnregisterObserver(observer);
 }
 
 void MediaRouterMojoImpl::RegisterRouteMessageObserver(
