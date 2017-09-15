@@ -115,6 +115,7 @@ bool FEComposite::AffectsTransparentPixels() const {
 FloatRect FEComposite::MapInputs(const FloatRect& rect) const {
   FloatRect i1 = InputEffect(0)->MapRect(rect);
   FloatRect i2 = InputEffect(1)->MapRect(rect);
+
   switch (type_) {
     case FECOMPOSITE_OPERATOR_IN:
       // 'in' has output only in the intersection of both inputs.
