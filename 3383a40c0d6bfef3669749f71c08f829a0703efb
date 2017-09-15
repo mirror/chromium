@@ -255,6 +255,29 @@
     },
     {
       "key": {
+        "uuid": "7ba2f633_f98d3319",
+        "filename": "content/browser/background_fetch/background_fetch_test_base.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-15T13:36:42Z",
+      "side": 1,
+      "message": "Nit: Change this to const GURL\u0026. Ditto in MockBackgroundFetchDelegate::RegisterResponse.",
+      "range": {
+        "startLine": 144,
+        "startChar": 10,
+        "endLine": 144,
+        "endChar": 21
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "282d52d9_39303ef2",
         "filename": "content/browser/background_fetch/background_fetch_test_browser_context.cc",
         "patchSetId": 18
@@ -271,6 +294,213 @@
         "startChar": 21,
         "endLine": 18,
         "endChar": 32
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87b92266_5f761a79",
+        "filename": "content/test/mock_background_fetch_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-15T13:36:42Z",
+      "side": 1,
+      "message": "When reading a call to |TestResponseBuilder(false, kFirstResponseCode)|, it\u0027s not clear without looking it up what the boolean means. In this case, I think it\u0027d be clearer to remove that parameter, and just set succeeded_ to (response_code \u003e\u003d 200 \u0026\u0026 response_code \u003c 300).",
+      "range": {
+        "startLine": 22,
+        "startChar": 41,
+        "endLine": 22,
+        "endChar": 55
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c701cb7_a44ef8b1",
+        "filename": "content/test/mock_background_fetch_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-15T13:36:42Z",
+      "side": 1,
+      "message": "Nit: just {url} without the explicit conversion should suffice, unless MakeUnique is doing something awkward; then you can also remove the import of \u003cvector\u003e. Also use std::make_unique instead.",
+      "range": {
+        "startLine": 80,
+        "startChar": 48,
+        "endLine": 80,
+        "endChar": 72
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c29449d_29cc7040",
+        "filename": "content/test/mock_background_fetch_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-15T13:36:42Z",
+      "side": 1,
+      "message": "It\u0027s very unlikely that calls to this will be properly wrapped in ASSERT_NO_FATAL_FAILURES, and so this failure might not be noticed - the function will just return here, and I\u0027m not even sure if the error will be logged at all. In general it\u0027s unusual for reusable mock classes like this that aren\u0027t defined as part of a test file to use ASSERT/EXPECT. Just use if (!...Create...) NOTREACHED() [or CHECK if you want to save a line of code, though Peter tends to prefer DCHECK/NOTREACHED] instead, which will guarantee that any failures will be seen, and remove the #include of gtest.h.",
+      "range": {
+        "startLine": 91,
+        "startChar": 6,
+        "endLine": 91,
+        "endChar": 17
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68098031_962b33e2",
+        "filename": "content/test/mock_background_fetch_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-15T13:36:42Z",
+      "side": 1,
+      "message": "You never seem to actually write the data to response_path?",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 54
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "378323c7_b28591d8",
+        "filename": "content/test/mock_background_fetch_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-15T13:36:42Z",
+      "side": 1,
+      "message": "Nit: add a DCHECK_EQ(0u, url_responses_.count(url))",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 44
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151d4636_006dfdd4",
+        "filename": "content/test/mock_background_fetch_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-15T13:36:42Z",
+      "side": 1,
+      "message": "Nit: If you want it to only be created by the builder, you could make the Builder an inner class that calls a private constructor.\n\nAnd I\u0027m not quite sure what \"defines the ownership semantics\" actually means?",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 10
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd6b950_b63caa0c",
+        "filename": "content/test/mock_background_fetch_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-15T13:36:42Z",
+      "side": 1,
+      "message": "Nit: DISALLOW_COPY_AND_ASSIGN?",
+      "range": {
+        "startLine": 31,
+        "startChar": 1,
+        "endLine": 31,
+        "endChar": 2
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca9f7cc_0ba9a62b",
+        "filename": "content/test/mock_background_fetch_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-15T13:36:42Z",
+      "side": 1,
+      "message": "Add a comment, e.g. \"Single-use responses registered for specific URLs.\"",
+      "range": {
+        "startLine": 71,
+        "startChar": 55,
+        "endLine": 71,
+        "endChar": 69
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1c257f1_defca8ff",
+        "filename": "content/test/mock_background_fetch_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-15T13:36:42Z",
+      "side": 1,
+      "message": "The values of this map are never used. Remove it, or make it a std::set\u003cstd::string\u003e seen_guids_?",
+      "range": {
+        "startLine": 72,
+        "startChar": 55,
+        "endLine": 72,
+        "endChar": 70
       },
       "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
