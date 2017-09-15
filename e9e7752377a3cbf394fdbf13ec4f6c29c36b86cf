@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a51d9cf_cd81809d",
+        "filename": "ios/chrome/browser/ui/payments/payment_items_display_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-15T16:53:07Z",
+      "side": 1,
+      "message": "Re: specify the width in the initWithFrame:\nthe width and the height seems to be necessary. Without those the view containing the button is not visible.\nRe: going full constraints:\nadding the top and bottom constraints will set the height of the button to the full height of the bar. We want the button to be vertically centered.",
+      "parentUuid": "cc3fdb40_2039f066",
+      "range": {
+        "startLine": 96,
+        "startChar": 7,
+        "endLine": 96,
+        "endChar": 38
+      },
+      "revId": "e9e7752377a3cbf394fdbf13ec4f6c29c36b86cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "488e8be4_ba305319",
         "filename": "ios/chrome/browser/ui/payments/payment_request_view_controller.mm",
         "patchSetId": 3
