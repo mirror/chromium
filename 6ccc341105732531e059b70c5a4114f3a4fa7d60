@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6cab86b1_eaf516c8",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-15T01:47:45Z",
+      "side": 1,
+      "message": "merge these 2 if cases together with || ?",
+      "range": {
+        "startLine": 991,
+        "startChar": 0,
+        "endLine": 997,
+        "endChar": 3
+      },
+      "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "631d8ce6_74b9920b",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-15T01:47:45Z",
+      "side": 1,
+      "message": "bookmakrs -\u003e bookmarks",
+      "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30194b92_bcf6dc68",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-15T01:47:45Z",
+      "side": 1,
+      "message": "not sure if we can reuse bookmark_utils.cc#GetBookmarkNodeByID  (or GetNodeByID)",
+      "range": {
+        "startLine": 38,
+        "startChar": 31,
+        "endLine": 38,
+        "endChar": 45
+      },
+      "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a7bb223_b72110c2",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-15T01:47:45Z",
+      "side": 1,
+      "message": "bookmakr -\u003e bookmark",
+      "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be8be883_02f84b92",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-15T01:47:45Z",
+      "side": 1,
+      "message": "as as -\u003e as",
+      "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2260dff9_5c5ac6fe",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-15T01:47:45Z",
+      "side": 1,
+      "message": "do we need DCHECK(bookmark) here?\n(like bookmark_editor_base_controller.mm#selectionPathForNode)",
+      "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5a01ad7_8ee6631c",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 1779,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-15T01:47:45Z",
+      "side": 1,
+      "message": "Just curious, what if the middle node, folder 2 is removed here?  Do we need to test it in another egtest?",
+      "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f6d4de_901c8017",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 2130,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-15T01:47:45Z",
+      "side": 1,
+      "message": "Do we need restoring of y position (with/without orientation changed) in egtest? or unittest is enough already?",
+      "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
