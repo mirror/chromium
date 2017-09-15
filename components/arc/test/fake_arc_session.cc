@@ -15,20 +15,19 @@ FakeArcSession::FakeArcSession() = default;
 
 FakeArcSession::~FakeArcSession() = default;
 
-void FakeArcSession::StartForLoginScreen() {
-  is_for_login_screen_ = true;
+void FakeArcSession::StartMiniInstance() {
   if (boot_failure_emulation_enabled_) {
     for (auto& observer : observer_list_)
       observer.OnSessionStopped(boot_failure_reason_);
   }
 }
 
-bool FakeArcSession::IsForLoginScreen() {
-  return is_for_login_screen_;
+bool FakeArcSession::IsStartRequested() {
+  return start_requested_;
 }
 
 void FakeArcSession::Start() {
-  is_for_login_screen_ = false;
+  start_requested_ = true;
   if (boot_failure_emulation_enabled_) {
     for (auto& observer : observer_list_)
       observer.OnSessionStopped(boot_failure_reason_);

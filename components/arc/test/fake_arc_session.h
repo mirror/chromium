@@ -20,8 +20,8 @@ class FakeArcSession : public ArcSession {
   ~FakeArcSession() override;
 
   // ArcSession overrides:
-  void StartForLoginScreen() override;
-  bool IsForLoginScreen() override;
+  void StartMiniInstance() override;
+  bool IsStartRequested() override;
   void Start() override;
   void Stop() override;
   void OnShutdown() override;
@@ -48,7 +48,7 @@ class FakeArcSession : public ArcSession {
   ArcStopReason boot_failure_reason_;
 
   bool boot_suspended_ = false;
-  bool is_for_login_screen_ = false;
+  bool start_requested_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(FakeArcSession);
 };

@@ -204,7 +204,7 @@ void ArcSessionRunner::OnSessionStopped(ArcStopReason stop_reason) {
 
   // The observers should be agnostic to the existence of the limited-purpose
   // instance.
-  const bool notify_observers = !arc_session_->IsForLoginScreen();
+  const bool notify_observers = arc_session_->IsStartRequested();
 
   arc_session_->RemoveObserver(this);
   arc_session_.reset();
@@ -255,7 +255,7 @@ void ArcSessionRunner::EmitLoginPromptVisibleCalled() {
   arc_session_ = factory_.Run();
   arc_session_->AddObserver(this);
   state_ = State::STARTING_FOR_LOGIN_SCREEN;
-  arc_session_->StartForLoginScreen();
+  arc_session_->StartMiniInstance();
 }
 
 }  // namespace arc

@@ -42,17 +42,18 @@ class ArcSession {
       ArcBridgeService* arc_bridge_service);
   virtual ~ArcSession();
 
-  // Starts an instance for login screen. The instance is not a fully functional
-  // one, and Observer::OnSessionReady() will *never* be called.
-  virtual void StartForLoginScreen() = 0;
+  // Starts a mini instance. The instance is not a fully functional one,
+  // and Observer::OnSessionReady() will *never* be called, unless it is
+  // upgraded to full instance.
+  virtual void StartMiniInstance() = 0;
 
-  // Returns true if StartForLoginScreen() has been called but Start() hasn't.
-  virtual bool IsForLoginScreen() = 0;
+  // Returns true if Start() has been called.
+  virtual bool IsStartRequested() = 0;
 
   // Starts and bootstraps a connection with the instance. The Observer's
   // OnSessionReady() will be called if the bootstrapping is successful, or
   // OnSessionStopped() if it is not. Start() should not be called twice or
-  // more. When StartForLoginScreen() has already been called, Start() turns
+  // more. When StartMiniInstance() has already been called, Start() turns
   // the mini instance to a fully functional one.
   virtual void Start() = 0;
 
