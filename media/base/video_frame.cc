@@ -142,6 +142,8 @@ bool RequiresEvenSizeAllocation(VideoPixelFormat format) {
   return false;
 }
 
+VideoFrame::BasicBuffer::BasicBuffer(size_t data_size) : data_(data_size) {}
+
 // static
 bool VideoFrame::IsValidConfig(VideoPixelFormat format,
                                StorageType storage_type,
