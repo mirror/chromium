@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "3bd1f6de_411bf526",
+        "filename": "components/autofill/core/browser/autofill_field.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-15T04:01:38Z",
+      "side": 1,
+      "message": "std::move(types) if you leave the param as pass by value.\n\nyou could also take is as an rvalue ref.",
+      "range": {
+        "startLine": 58,
+        "startChar": 20,
+        "endLine": 58,
+        "endChar": 25
+      },
+      "revId": "a9b869e03793ca25291216f7b444b99538b89af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00e42154_4287e202",
         "filename": "components/autofill/core/browser/autofill_field.h",
         "patchSetId": 3
@@ -71,6 +94,30 @@
     },
     {
       "key": {
+        "uuid": "367628a5_23431f00",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-15T04:01:38Z",
+      "side": 1,
+      "message": "// perhaps\nserver_types.assign(current_field-\u003epredictions().begin(),\n                    current_field-\u003epredictions().end());",
+      "parentUuid": "f862bebc_b9b70748",
+      "range": {
+        "startLine": 522,
+        "startChar": 59,
+        "endLine": 522,
+        "endChar": 72
+      },
+      "revId": "a9b869e03793ca25291216f7b444b99538b89af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db79ed09_357d0abe",
         "filename": "components/autofill/core/browser/form_structure_unittest.cc",
         "patchSetId": 3
@@ -94,6 +141,29 @@
     },
     {
       "key": {
+        "uuid": "fc6121cf_f5962565",
+        "filename": "components/autofill/core/browser/proto/server.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-15T04:01:38Z",
+      "side": 1,
+      "message": "note that there are clients other than Chrome who consume these responses. So, server side, this needs to stick around post deprecation, for older clients.",
+      "range": {
+        "startLine": 32,
+        "startChar": 21,
+        "endLine": 32,
+        "endChar": 34
+      },
+      "revId": "a9b869e03793ca25291216f7b444b99538b89af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c02169a4_38b6474f",
         "filename": "components/password_manager/core/browser/password_manager.cc",
         "patchSetId": 3
@@ -105,6 +175,30 @@
       "writtenOn": "2017-09-14T14:31:42Z",
       "side": 1,
       "message": "I would remove it. To me, it is confusing.",
+      "range": {
+        "startLine": 108,
+        "startChar": 6,
+        "endLine": 109,
+        "endChar": 14
+      },
+      "revId": "a9b869e03793ca25291216f7b444b99538b89af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06166f2e_2812355d",
+        "filename": "components/password_manager/core/browser/password_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-15T04:01:38Z",
+      "side": 1,
+      "message": "Is one of the platform\u0027s compilers complaining that not all control paths return if you leave this as \"default: return false;\" ?\n\nAnd another platform\u0027s complier complains about missing case values if you delete it?  :)",
+      "parentUuid": "c02169a4_38b6474f",
       "range": {
         "startLine": 108,
         "startChar": 6,
