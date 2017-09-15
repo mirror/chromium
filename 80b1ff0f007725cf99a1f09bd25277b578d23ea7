@@ -34,6 +34,24 @@
       "revId": "80b1ff0f007725cf99a1f09bd25277b578d23ea7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d6036f_f6a12d12",
+        "filename": "third_party/WebKit/Source/bindings/scripts/interface_dependency_resolver.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-15T04:36:15Z",
+      "side": 1,
+      "message": "The page has a note which says that we may want to converge the style and I\u0027d prefer not to add new lines that exceeds 80 chars in general.",
+      "parentUuid": "ac83188e_ab8954a8",
+      "revId": "80b1ff0f007725cf99a1f09bd25277b578d23ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
