@@ -52295,6 +52295,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="OutdatedUpgradeBubble.Dismiss">
+  <owner>mad@chromium.org</owner>
+  <summary>
+    Counts the number of times the user clicked on the close [x] of the outdated
+    upgrade bubble, or dismissed it by clicking outside or pressing escape.
+  </summary>
+</histogram>
+
 <histogram name="OutdatedUpgradeBubble.NumLaterPerEnableAU">
   <owner>mad@chromium.org</owner>
   <summary>
