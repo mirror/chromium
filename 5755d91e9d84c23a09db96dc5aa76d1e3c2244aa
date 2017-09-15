@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5fba22a0_f0764056",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-15T15:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed27c2da_6697f64e",
+      "revId": "5755d91e9d84c23a09db96dc5aa76d1e3c2244aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "761acbb2_f021fd04",
         "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "0d4435f8_ab1aac98",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-15T15:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "761acbb2_f021fd04",
+      "revId": "5755d91e9d84c23a09db96dc5aa76d1e3c2244aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d86a7bf_a9e9c384",
         "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "5755d91e9d84c23a09db96dc5aa76d1e3c2244aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c57a2af_897eead9",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-15T15:50:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d86a7bf_a9e9c384",
+      "revId": "5755d91e9d84c23a09db96dc5aa76d1e3c2244aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
