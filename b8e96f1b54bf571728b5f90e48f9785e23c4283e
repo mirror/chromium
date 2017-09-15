@@ -141,6 +141,30 @@
       "revId": "b8e96f1b54bf571728b5f90e48f9785e23c4283e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4701a4f7_56d3a277",
+        "filename": "extensions/common/features/simple_feature.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-15T01:58:50Z",
+      "side": 1,
+      "message": "\u003e \u003e What do you mean by \"some statics can be shared between tests\"? That state of tests run in a single process can influence each other?\n\u003e \n\u003e Yep - tests within a single test suite aren\u0027t always fully cleaned up.  Most are (including things like the ExtensionsClient), but rogue statics have bitten us before.  Unfortunately, I have yet to find documentation on what the rules for this are.\n\u003e \n\u003e \u003e Then something like ScopedCurrentChannel should work.\n\u003e \u003e \n\u003e \u003e For our current testing needs, even the following should suffice:\n\u003e \u003e -----\n\u003e \u003e void SimpleFeature::set_ignore_channel_for_testing(bool val) {\n\u003e \u003e   ignore_channel_for_testing_ \u003d val; /*this is base::Optional*/\n\u003e \u003e }\n\u003e \u003e \n\u003e \u003e And whenever we need to retrieve it:\n\u003e \u003e \n\u003e \u003e bool ignore_channel \u003d ignore_channel_for_testing_ ? *ignore_channel_for_testing_ : ShouldIgnoreChannel();\n\u003e \u003e -----\n\u003e \n\u003e Hmm... not sure how that helps.  If test A runs and the ignore_channel static is set, then the ignore_channel static may be incorrect for test B.  If we explicitly set ignore_channel_for_testing, then we are no longer testing the circumstances under which channel is ignored.\n\nMaybe consider using the ScopedCurrentChannel approach if it seems fine, as discussed on chat. Else this can be cached on some other static, which is properly torn down between tests. Otherwise, this lgtm.",
+      "parentUuid": "96be2a73_c12df742",
+      "range": {
+        "startLine": 565,
+        "startChar": 10,
+        "endLine": 565,
+        "endChar": 22
+      },
+      "revId": "b8e96f1b54bf571728b5f90e48f9785e23c4283e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
