@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cbdf872_dfe37593",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-15T15:08:26Z",
+      "side": 1,
+      "message": "Suggestion: I think the FinishReconcile is too complicated (it is getting larger and larger). Could we get add a function that returns the first_account to be used in the reconcilor that does all this - something like GetFirstAccountAfterFinishReconcile.",
+      "range": {
+        "startLine": 416,
+        "startChar": 6,
+        "endLine": 416,
+        "endChar": 26
+      },
+      "revId": "bb2430ea5a630fb2b92f862520348c3e6c16560d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d925904e_916e38f1",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-15T15:08:26Z",
+      "side": 1,
+      "message": "If there is not first_account here, then we may want just to set it to the first account in the token service (or is that already the primary_account_ even when sync is disabled?).",
+      "range": {
+        "startLine": 438,
+        "startChar": 5,
+        "endLine": 438,
+        "endChar": 0
+      },
+      "revId": "bb2430ea5a630fb2b92f862520348c3e6c16560d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "597be647_43c9a322",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-15T15:08:26Z",
+      "side": 1,
+      "message": "I think we should always set cached_first_account_ \u003d first_account, even when there the list of accounts in the token service is empty.",
+      "range": {
+        "startLine": 442,
+        "startChar": 3,
+        "endLine": 442,
+        "endChar": 0
+      },
+      "revId": "bb2430ea5a630fb2b92f862520348c3e6c16560d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72a82002_2750d4ef",
+        "filename": "components/signin/core/browser/account_reconcilor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-15T15:08:26Z",
+      "side": 1,
+      "message": "s/cached/last_known_first_account_",
+      "range": {
+        "startLine": 258,
+        "startChar": 14,
+        "endLine": 258,
+        "endChar": 20
+      },
+      "revId": "bb2430ea5a630fb2b92f862520348c3e6c16560d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
