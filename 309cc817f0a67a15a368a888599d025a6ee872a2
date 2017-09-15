@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f6af7f6_b2d49f65",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-15T19:56:40Z",
+      "side": 1,
+      "message": "did you already make this static in another change?\n\ninstead of making it static, it\u0027d probably be cleaner to follow the pattern used elsewhere: define an interface within ComponentUpdaterServiceProvider, similar to this (untested code; may have typoes):\n\n  class Delegate {\n   public:\n    virtual void LoadComponent(...) \u003d 0;\n\n   protected:\n    virtual Delegate() \u003d default;\n    virtual ~Delegate() \u003d default;\n\n   private:\n    DISALLOW_COPY_AND_ASSIGN(Delegate);\n  };\n\nthen make ComponentUpdateServiceProvider\u0027s c\u0027tor take a Delegate, and make c/b/chromeos pass it a Delegate implementation that calls the real LoadComponent method.\n\nsee proxy_resolution_service_provider.h for an example of this.",
+      "revId": "309cc817f0a67a15a368a888599d025a6ee872a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380fdae5_01d65109",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-15T19:56:40Z",
+      "side": 1,
+      "message": "you might want to make this a private method the class and bind it to a weak pointer in LoadComponent. otherwise, i\u0027m worried about the possibility for shutdown crashes if d-bus gets shut down while a component is still loading. (in practice, we may shut down d-bus last, but it still feels a bit safer to me to use a weak pointer here.)",
+      "revId": "309cc817f0a67a15a368a888599d025a6ee872a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbdb4a17_4edf6c11",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-15T19:56:40Z",
+      "side": 1,
+      "message": "maybe consider also returning an error here instead of an empty string if |result| is empty?",
+      "revId": "309cc817f0a67a15a368a888599d025a6ee872a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353dd9c5_29eb5ed8",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-15T19:56:40Z",
+      "side": 1,
+      "message": "it feels like an error if the caller doesn\u0027t supply a component name. if that\u0027s true, it\u0027d be better to return a d-bus error here instead of an empty string.",
+      "revId": "309cc817f0a67a15a368a888599d025a6ee872a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb8a9073_e0fa2e08",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-15T19:56:40Z",
+      "side": 1,
+      "message": "nit: \"on failure\"",
+      "range": {
+        "startLine": 25,
+        "startChar": 66,
+        "endLine": 25,
+        "endChar": 73
+      },
+      "revId": "309cc817f0a67a15a368a888599d025a6ee872a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3c2626_a9942a6f",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-15T19:56:40Z",
+      "side": 1,
+      "message": "can\u0027t you just use the interface constant directly inside of the class instead of passing it in? the other providers that use a passed-in interface name are just that way because they\u0027re being used in multiple services since they haven\u0027t been migrated out of LibCrosService yet.",
+      "revId": "309cc817f0a67a15a368a888599d025a6ee872a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d330c882_f17ecbbc",
+        "filename": "chromeos/dbus/services/org.chromium.ComponentUpdaterService.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-15T19:56:40Z",
+      "side": 1,
+      "message": "i don\u0027t think you want to allow everyone to call this. who will actually be calling it? something running as root?",
+      "revId": "309cc817f0a67a15a368a888599d025a6ee872a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
