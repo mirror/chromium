@@ -4,6 +4,8 @@
 
 #include "chrome/browser/media/router/mojo/media_router_desktop.h"
 
+#include "chrome/browser/media/router/discovery/dial/dial_media_sink_service_proxy.h"
+#include "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h"
 #include "chrome/browser/media/router/event_page_request_manager.h"
 #include "chrome/browser/media/router/event_page_request_manager_factory.h"
 #include "chrome/browser/media/router/media_router_factory.h"
@@ -17,7 +19,15 @@
 
 namespace media_router {
 
-MediaRouterDesktop::~MediaRouterDesktop() = default;
+MediaRouterDesktop::~MediaRouterDesktop() {
+  if (dial_media_sink_service_proxy_) {
+    dial_media_sink_service_proxy_->Stop();
+    dial_media_sink_service_proxy_->ClearObserver(
+        cast_media_sink_service_.get());
+  }
+  if (cast_media_sink_service_)
+    cast_media_sink_service_->Stop();
+}
 
 // static
 void MediaRouterDesktop::BindToRequest(const extensions::Extension* extension,
@@ -32,10 +42,13 @@ void MediaRouterDesktop::BindToRequest(const extensions::Extension* extension,
 }
 
 void MediaRouterDesktop::OnUserGesture() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   MediaRouterMojoImpl::OnUserGesture();
   // Allow MRPM to intelligently update sinks and observers by passing in a
   // media source.
   UpdateMediaSinks(MediaSourceForDesktop().id());
+  if (cast_media_sink_service_)
+    cast_media_sink_service_->ForceDiscovery();
 
 #if defined(OS_WIN)
   EnsureMdnsDiscoveryEnabled();
@@ -44,7 +57,6 @@ void MediaRouterDesktop::OnUserGesture() {
 
 void MediaRouterDesktop::OnConnectionError() {
   request_manager_->OnMojoConnectionError();
-  binding_.Close();
   MediaRouterMojoImpl::OnConnectionError();
 }
 
@@ -59,6 +71,7 @@ void MediaRouterDesktop::SyncStateToMediaRouteProvider() {
     media_route_provider_->EnableMdnsDiscovery();
 #endif
   MediaRouterMojoImpl::SyncStateToMediaRouteProvider();
+  StartDiscovery();
 }
 
 MediaRouterDesktop::MediaRouterDesktop(content::BrowserContext* context,
@@ -67,7 +80,6 @@ MediaRouterDesktop::MediaRouterDesktop(content::BrowserContext* context,
       request_manager_(
           EventPageRequestManagerFactory::GetApiForBrowserContext(context)),
       extension_provider_(context, mojo::MakeRequest(&media_route_provider_)),
-      binding_(this),
       weak_factory_(this) {
   DCHECK(request_manager_);
 #if defined(OS_WIN)
@@ -123,15 +135,42 @@ void MediaRouterDesktop::BindToMojoRequest(
     mojo::InterfaceRequest<mojom::MediaRouter> request,
     const extensions::Extension& extension) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  binding_.Bind(std::move(request));
-  binding_.set_connection_error_handler(base::BindOnce(
-      &MediaRouterDesktop::OnConnectionError, base::Unretained(this)));
+  MediaRouterMojoImpl::BindToMojoRequest(std::move(request));
 
   request_manager_->SetExtensionId(extension.id());
   if (!provider_version_was_recorded_) {
     MediaRouterMojoMetrics::RecordMediaRouteProviderVersion(extension);
     provider_version_was_recorded_ = true;
+  }
+}
+
+void MediaRouterDesktop::StartDiscovery() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DVLOG(1) << "StartDiscovery";
+
+  if (media_router::CastDiscoveryEnabled()) {
+    if (!cast_media_sink_service_) {
+      cast_media_sink_service_ = base::MakeRefCounted<CastMediaSinkService>(
+          base::BindRepeating(&MediaRouterMojoImpl::ProvideSinks,
+                              weak_factory_.GetWeakPtr(), "cast"),
+          context(),
+          content::BrowserThread::GetTaskRunnerForThread(
+              content::BrowserThread::IO));
+    }
+    cast_media_sink_service_->Start();
+  }
+
+  if (media_router::DialLocalDiscoveryEnabled()) {
+    if (!dial_media_sink_service_proxy_) {
+      dial_media_sink_service_proxy_ =
+          base::MakeRefCounted<DialMediaSinkServiceProxy>(
+              base::BindRepeating(&MediaRouterMojoImpl::ProvideSinks,
+                                  weak_factory_.GetWeakPtr(), "dial"),
+              context());
+      dial_media_sink_service_proxy_->SetObserver(
+          cast_media_sink_service_.get());
+    }
+    dial_media_sink_service_proxy_->Start();
   }
 }
 
