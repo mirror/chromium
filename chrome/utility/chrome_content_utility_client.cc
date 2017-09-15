@@ -25,6 +25,7 @@
 #include "content/public/common/content_switches.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/simple_connection_filter.h"
+#include "content/public/network/mojo_proxy_resolver_factory_impl.h"
 #include "content/public/utility/utility_thread.h"
 #include "courgette/courgette.h"
 #include "courgette/third_party/bsdiff/bsdiff.h"
@@ -40,7 +41,7 @@
 #include "chrome/utility/importer/profile_import_impl.h"
 #include "chrome/utility/importer/profile_import_service.h"
 #include "chrome/utility/media_router/dial_device_description_parser_impl.h"
-#include "net/proxy/mojo_proxy_resolver_factory_impl.h"  // nogncheck
+#include "content/public/network/url_request_context_builder_mojo.h"
 #include "net/proxy/proxy_resolver_v8.h"
 #endif  // !defined(OS_ANDROID)
 
@@ -196,9 +197,10 @@ class SafeArchiveAnalyzerImpl : public chrome::mojom::SafeArchiveAnalyzer {
 
 #if !defined(OS_ANDROID)
 void CreateProxyResolverFactory(
-    net::interfaces::ProxyResolverFactoryRequest request) {
-  mojo::MakeStrongBinding(base::MakeUnique<net::MojoProxyResolverFactoryImpl>(),
-                          std::move(request));
+    content::mojom::ProxyResolverFactoryRequest request) {
+  mojo::MakeStrongBinding(
+      base::MakeUnique<content::MojoProxyResolverFactoryImpl>(),
+      std::move(request));
 }
 
 class ResourceUsageReporterImpl : public chrome::mojom::ResourceUsageReporter {
@@ -278,7 +280,7 @@ void ChromeContentUtilityClient::UtilityThreadStarted() {
     registry->AddInterface(base::Bind(&FilePatcherImpl::Create),
                            base::ThreadTaskRunnerHandle::Get());
 #if !defined(OS_ANDROID)
-    registry->AddInterface<net::interfaces::ProxyResolverFactory>(
+    registry->AddInterface<content::mojom::ProxyResolverFactory>(
         base::Bind(CreateProxyResolverFactory),
         base::ThreadTaskRunnerHandle::Get());
     registry->AddInterface(base::Bind(CreateResourceUsageReporter),
