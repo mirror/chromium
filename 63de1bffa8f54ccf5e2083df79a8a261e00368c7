@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6f0afcf4_661d2afc",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-15T09:42:57Z",
+      "side": 1,
+      "message": "Ah good point. This is fine then.",
+      "parentUuid": "08723c96_3a9be407",
+      "range": {
+        "startLine": 55,
+        "startChar": 42,
+        "endLine": 55,
+        "endChar": 69
+      },
+      "revId": "63de1bffa8f54ccf5e2083df79a8a261e00368c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc961a6a_d49ca1fe",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/suggestions/ContextualSuggestionsTest.java",
         "patchSetId": 3
@@ -249,6 +273,30 @@
       "revId": "63de1bffa8f54ccf5e2083df79a8a261e00368c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d2496d63_f6355570",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/suggestions/SuggestionsCarouselTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-15T09:42:57Z",
+      "side": 1,
+      "message": "Good point, the second one would not work. but I\u0027m surprised `doReturn(false).when()` would call the real function...",
+      "parentUuid": "2c56501e_758ea2f5",
+      "range": {
+        "startLine": 80,
+        "startChar": 8,
+        "endLine": 80,
+        "endChar": 39
+      },
+      "revId": "63de1bffa8f54ccf5e2083df79a8a261e00368c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
