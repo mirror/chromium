@@ -33,6 +33,7 @@
 #include "base/synchronization/lock.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
+#include "crypto/nss_util.h"
 #include "net/base/elements_upload_data_stream.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/io_buffer.h"
@@ -872,6 +873,7 @@ void SetMessageLoopForNSSHttpIO() {
 }
 
 void EnsureNSSHttpIOInit() {
+  crypto::EnsureNSSInit();
   g_ocsp_io_loop.Get().StartUsing();
   g_ocsp_nss_initialization.Get();
 }
