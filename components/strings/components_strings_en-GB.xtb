@@ -895,7 +895,7 @@
 <translation id="8103161714697287722">Payment Method</translation>
 <translation id="8118489163946903409">Payment method</translation>
 <translation id="8131740175452115882">Confirm</translation>
-<translation id="8134994873729925007"><ph name="HOST_NAME" />’s server <ph name="BEGIN_ABBR" />DNS address<ph name="END_ABBR" /> could not be found.</translation>
+<translation id="8134994873729925007"><ph name="HOST_NAME" />’s server <ph name="BEGIN_ABBR" />IP address<ph name="END_ABBR" /> could not be found.</translation>
 <translation id="8149426793427495338">Your computer went to sleep.</translation>
 <translation id="8150722005171944719">The file at <ph name="URL" /> is not readable.  It may have been removed, moved or file permissions may be preventing access.</translation>
 <translation id="8184538546369750125">Use global default (Allow)</translation>
