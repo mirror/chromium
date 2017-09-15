@@ -2,20 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef NET_PROXY_MOJO_PROXY_RESOLVER_FACTORY_H_
-#define NET_PROXY_MOJO_PROXY_RESOLVER_FACTORY_H_
+#ifndef CONTENT_PUBLIC_NETWORK_PROXY_MOJO_PROXY_RESOLVER_FACTORY_H_
+#define CONTENT_PUBLIC_NETWORK_PROXY_MOJO_PROXY_RESOLVER_FACTORY_H_
 
+#include <map>
 #include <memory>
+#include <string>
 
 #include "base/callback_helpers.h"
+#include "content/common/content_export.h"
+#include "content/public/common/proxy_resolver.mojom.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
 #include "net/interfaces/host_resolver_service.mojom.h"
-#include "net/interfaces/proxy_resolver_service.mojom.h"
 
-namespace net {
+namespace content {
 
 // Factory for connecting to Mojo ProxyResolver services.
-class MojoProxyResolverFactory {
+class CONTENT_EXPORT MojoProxyResolverFactory {
  public:
   // Connect to a new ProxyResolver service using request |req|, using
   // |host_resolver| as the DNS resolver. The return value should be released
@@ -23,13 +26,13 @@ class MojoProxyResolverFactory {
   // Note: The connection request |req| may be resolved asynchronously.
   virtual std::unique_ptr<base::ScopedClosureRunner> CreateResolver(
       const std::string& pac_script,
-      mojo::InterfaceRequest<interfaces::ProxyResolver> req,
-      interfaces::ProxyResolverFactoryRequestClientPtr client) = 0;
+      mojo::InterfaceRequest<mojom::ProxyResolver> req,
+      mojom::ProxyResolverFactoryRequestClientPtr client) = 0;
 
  protected:
   virtual ~MojoProxyResolverFactory() = default;
 };
 
-}  // namespace net
+}  // namespace content
 
-#endif  // NET_PROXY_MOJO_PROXY_RESOLVER_FACTORY_H_
+#endif  // CONTENT_PUBLIC_NETWORK_PROXY_MOJO_PROXY_RESOLVER_FACTORY_H_

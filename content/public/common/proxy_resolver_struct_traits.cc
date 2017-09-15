@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "net/proxy/mojo_proxy_struct_traits.h"
+#include "content/public/common/proxy_resolver_struct_traits.h"
 
 #include "base/logging.h"
 #include "net/base/host_port_pair.h"
@@ -11,54 +11,54 @@
 
 namespace mojo {
 
-net::interfaces::ProxyScheme
-EnumTraits<net::interfaces::ProxyScheme, net::ProxyServer::Scheme>::ToMojom(
+content::mojom::ProxyScheme
+EnumTraits<content::mojom::ProxyScheme, net::ProxyServer::Scheme>::ToMojom(
     net::ProxyServer::Scheme scheme) {
   using net::ProxyServer;
   switch (scheme) {
     case ProxyServer::SCHEME_INVALID:
-      return net::interfaces::ProxyScheme::INVALID;
+      return content::mojom::ProxyScheme::INVALID;
     case ProxyServer::SCHEME_DIRECT:
-      return net::interfaces::ProxyScheme::DIRECT;
+      return content::mojom::ProxyScheme::DIRECT;
     case ProxyServer::SCHEME_HTTP:
-      return net::interfaces::ProxyScheme::HTTP;
+      return content::mojom::ProxyScheme::HTTP;
     case ProxyServer::SCHEME_SOCKS4:
-      return net::interfaces::ProxyScheme::SOCKS4;
+      return content::mojom::ProxyScheme::SOCKS4;
     case ProxyServer::SCHEME_SOCKS5:
-      return net::interfaces::ProxyScheme::SOCKS5;
+      return content::mojom::ProxyScheme::SOCKS5;
     case ProxyServer::SCHEME_HTTPS:
-      return net::interfaces::ProxyScheme::HTTPS;
+      return content::mojom::ProxyScheme::HTTPS;
     case ProxyServer::SCHEME_QUIC:
-      return net::interfaces::ProxyScheme::QUIC;
+      return content::mojom::ProxyScheme::QUIC;
   }
   NOTREACHED();
-  return net::interfaces::ProxyScheme::INVALID;
+  return content::mojom::ProxyScheme::INVALID;
 }
 
-bool EnumTraits<net::interfaces::ProxyScheme, net::ProxyServer::Scheme>::
-    FromMojom(net::interfaces::ProxyScheme scheme,
+bool EnumTraits<content::mojom::ProxyScheme, net::ProxyServer::Scheme>::
+    FromMojom(content::mojom::ProxyScheme scheme,
               net::ProxyServer::Scheme* out) {
   using net::ProxyServer;
   switch (scheme) {
-    case net::interfaces::ProxyScheme::INVALID:
+    case content::mojom::ProxyScheme::INVALID:
       *out = ProxyServer::SCHEME_INVALID;
       return true;
-    case net::interfaces::ProxyScheme::DIRECT:
+    case content::mojom::ProxyScheme::DIRECT:
       *out = ProxyServer::SCHEME_DIRECT;
       return true;
-    case net::interfaces::ProxyScheme::HTTP:
+    case content::mojom::ProxyScheme::HTTP:
       *out = ProxyServer::SCHEME_HTTP;
       return true;
-    case net::interfaces::ProxyScheme::SOCKS4:
+    case content::mojom::ProxyScheme::SOCKS4:
       *out = ProxyServer::SCHEME_SOCKS4;
       return true;
-    case net::interfaces::ProxyScheme::SOCKS5:
+    case content::mojom::ProxyScheme::SOCKS5:
       *out = ProxyServer::SCHEME_SOCKS5;
       return true;
-    case net::interfaces::ProxyScheme::HTTPS:
+    case content::mojom::ProxyScheme::HTTPS:
       *out = ProxyServer::SCHEME_HTTPS;
       return true;
-    case net::interfaces::ProxyScheme::QUIC:
+    case content::mojom::ProxyScheme::QUIC:
       *out = ProxyServer::SCHEME_QUIC;
       return true;
   }
@@ -66,7 +66,7 @@ bool EnumTraits<net::interfaces::ProxyScheme, net::ProxyServer::Scheme>::
 }
 
 base::StringPiece
-StructTraits<net::interfaces::ProxyServerDataView, net::ProxyServer>::host(
+StructTraits<content::mojom::ProxyServerDataView, net::ProxyServer>::host(
     const net::ProxyServer& s) {
   if (s.scheme() == net::ProxyServer::SCHEME_DIRECT ||
       s.scheme() == net::ProxyServer::SCHEME_INVALID) {
@@ -75,7 +75,7 @@ StructTraits<net::interfaces::ProxyServerDataView, net::ProxyServer>::host(
   return s.host_port_pair().host();
 }
 
-uint16_t StructTraits<net::interfaces::ProxyServerDataView,
+uint16_t StructTraits<content::mojom::ProxyServerDataView,
                       net::ProxyServer>::port(const net::ProxyServer& s) {
   if (s.scheme() == net::ProxyServer::SCHEME_DIRECT ||
       s.scheme() == net::ProxyServer::SCHEME_INVALID) {
@@ -84,8 +84,8 @@ uint16_t StructTraits<net::interfaces::ProxyServerDataView,
   return s.host_port_pair().port();
 }
 
-bool StructTraits<net::interfaces::ProxyServerDataView, net::ProxyServer>::Read(
-    net::interfaces::ProxyServerDataView data,
+bool StructTraits<content::mojom::ProxyServerDataView, net::ProxyServer>::Read(
+    content::mojom::ProxyServerDataView data,
     net::ProxyServer* out) {
   net::ProxyServer::Scheme scheme;
   if (!data.ReadScheme(&scheme))
@@ -106,8 +106,8 @@ bool StructTraits<net::interfaces::ProxyServerDataView, net::ProxyServer>::Read(
   return true;
 }
 
-bool StructTraits<net::interfaces::ProxyInfoDataView, net::ProxyInfo>::Read(
-    net::interfaces::ProxyInfoDataView data,
+bool StructTraits<content::mojom::ProxyInfoDataView, net::ProxyInfo>::Read(
+    content::mojom::ProxyInfoDataView data,
     net::ProxyInfo* out) {
   std::vector<net::ProxyServer> proxy_servers;
   if (!data.ReadProxyServers(&proxy_servers))
