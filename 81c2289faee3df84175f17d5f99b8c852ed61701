@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8fd972b_e6ac65fa",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-15T21:18:21Z",
+      "side": 1,
+      "message": "This class is largely taken from the old SaveToStringBodyHandler.  If it makes things easier on you, I can split this into two CLs:  One adds this class / splits apart SaveToStringBodyHandler and slightly modifies SimpleURLLoaderImpl, and the other only adds the download-to-file stuff.",
+      "range": {
+        "startLine": 43,
+        "startChar": 18,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68bd2ea7_ee7eb178",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-15T21:18:21Z",
+      "side": 1,
+      "message": "This is inlined (Other than OnDone, which needs SimpleURLLoaderImpl to be declared first), while SaveToStringBodyHandler is not inlined.  I\u0027d like to switch SaveToStringBodyHandler to being inlined in a followup CL.",
+      "range": {
+        "startLine": 231,
+        "startChar": 6,
+        "endLine": 231,
+        "endChar": 28
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dcb672d_e858257f",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-15T21:18:21Z",
+      "side": 1,
+      "message": "Priority is unclear here.  This could be anything from a background download no one cares about to a foreground one.  We could pick a priority based on the ResourceRequest priority or something (Medium and higher -\u003e USER_BLOCKING, LOW -\u003e USER_VISIBLE, LOWEST+IDLE -\u003eBACKGROUND?)",
+      "range": {
+        "startLine": 303,
+        "startChar": 21,
+        "endLine": 303,
+        "endChar": 29
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4afb87d_0b936189",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-15T21:18:21Z",
+      "side": 1,
+      "message": "Unfortunately, I don\u0027t see a way to make this happen in tests, without either injecting test-only way to fake a failure (Via a global, or mocking out a wrapper around the logic to write to files), or adding a way to download to a base::File passed as input (And then passing in a File with only read permissions - FileStreamTest.WriteError does that).",
+      "range": {
+        "startLine": 397,
+        "startChar": 22,
+        "endLine": 397,
+        "endChar": 36
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
