@@ -1045,7 +1045,6 @@ public class LocationBarLayout extends FrameLayout
             // Focus change caused by a close-tab may result in an invalid current tab.
             if (mToolbarDataProvider.hasTab()) {
                 setUrlToPageUrl();
-                emphasizeUrl();
             }
             // Moving focus away from UrlBar(EditText) to a non-editable focus holder, such as
             // ToolbarPhone, won't automatically hide keyboard app, but restart it with TYPE_NULL,
@@ -1390,7 +1389,6 @@ public class LocationBarLayout extends FrameLayout
         updateLocationBarIconContainerVisibility();
         // Since we emphasize the scheme of the URL based on the security type, we need to
         // refresh the emphasis.
-        mUrlBar.deEmphasizeUrl();
         emphasizeUrl();
         mIsEmphasizingHttpsScheme = shouldEmphasizeHttpsScheme;
     }
@@ -2157,7 +2155,6 @@ public class LocationBarLayout extends FrameLayout
         }
 
         if (setUrlBarText(url, mToolbarDataProvider.getText())) {
-            mUrlBar.deEmphasizeUrl();
             emphasizeUrl();
         }
     }
