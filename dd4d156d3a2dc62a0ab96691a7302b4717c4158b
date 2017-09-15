@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "2e71f44f_44b759a5",
+        "filename": "third_party/zlib/adler32.c",
+        "patchSetId": 26
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-15T17:57:19Z",
+      "side": 1,
+      "message": "In retrospect, since there is no longer validation of the parameters, in this test case the SSE3 code would happily proceed incorrectly with this call:\nsimd \u003d adler32_simd(0, NULL, 1024);",
+      "parentUuid": "7c867509_67dd23a7",
+      "revId": "dd4d156d3a2dc62a0ab96691a7302b4717c4158b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "342715b2_7a50ba51",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 26
