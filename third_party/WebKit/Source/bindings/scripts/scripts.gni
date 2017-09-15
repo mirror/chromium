@@ -58,6 +58,19 @@ idl_compiler_files =
         ],
         "abspath")
 
+web_idl_scripts = get_path_info([
+                                  "web_idl/argument.py",
+                                  "web_idl/container.py",
+                                  "web_idl/definition.py",
+                                  "web_idl/dictionary.py",
+                                  "web_idl/extended_attributes.py",
+                                  "web_idl/interface.py",
+                                  "web_idl/literal.py",
+                                  "web_idl/namespace.py",
+                                  "web_idl/types.py",
+                                ],
+                                "abspath")
+
 # Calls the compute_interfaces_info_individual script.
 #
 # Parameters:
@@ -528,5 +541,27 @@ template("generate_conditional_features") {
     # http://crbug.com/358074
     deps = invoker.deps +
            [ "//third_party/WebKit/Source/bindings/modules:interfaces_info" ]
+  }
+}
+
+template("generate_web_idl_container") {
+  action(target_name) {
+    script = "//third_party/WebKit/Source/bindings/scripts/generate_web_idl_container.py"
+    output_dir = invoker.output_dir
+    output_file_name = invoker.output
+    output_path = "${output_dir}/${output_file_name}"
+    inputs = web_idl_scripts + invoker.sources
+    outputs = [
+      output_path,
+    ]
+
+    # List input file names in a temporary file.
+    response_file_contents = rebase_path(invoker.sources, root_build_dir)
+    args = [
+      "--idl-files-list",
+      "{{response_file_name}}",
+      "--output",
+      rebase_path(output_path, root_build_dir),
+    ]
   }
 }
