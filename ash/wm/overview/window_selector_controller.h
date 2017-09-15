@@ -14,6 +14,7 @@
 #include "ash/wm/overview/window_selector_delegate.h"
 #include "base/macros.h"
 #include "base/time/time.h"
+#include "ui/events/event_handler.h"
 
 namespace ash {
 class WindowSelector;
@@ -21,7 +22,8 @@ class WindowSelectorTest;
 
 // Manages a window selector which displays an overview of all windows and
 // allows selecting a window to activate it.
-class ASH_EXPORT WindowSelectorController : public WindowSelectorDelegate {
+class ASH_EXPORT WindowSelectorController : public WindowSelectorDelegate,
+                                            public ui::EventHandler {
  public:
   WindowSelectorController();
   ~WindowSelectorController() override;
@@ -59,6 +61,9 @@ class ASH_EXPORT WindowSelectorController : public WindowSelectorDelegate {
       std::unique_ptr<DelayedAnimationObserver> animation) override;
   void RemoveAndDestroyAnimationObserver(
       DelayedAnimationObserver* animation) override;
+
+  // ui::EventHandler:
+  void OnKeyEvent(ui::KeyEvent* event) override;
 
  private:
   friend class WindowSelectorTest;

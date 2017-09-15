@@ -721,6 +721,7 @@ Shell::~Shell() {
 
   // Has to happen before ~MruWindowTracker.
   window_cycle_controller_.reset();
+  RemovePreTargetHandler(window_selector_controller_.get());
   window_selector_controller_.reset();
 
   // |split_view_controller_| needs to be deleted after
@@ -987,6 +988,7 @@ void Shell::Init(const ShellInitParams& init_params) {
   accelerator_controller_ = shell_port_->CreateAcceleratorController();
   tablet_mode_controller_ = base::MakeUnique<TabletModeController>();
   shelf_controller_ = base::MakeUnique<ShelfController>();
+  AddPreTargetHandler(window_selector_controller_.get());
 
   magnifier_key_scroll_handler_ = MagnifierKeyScroller::CreateHandler();
   AddPreTargetHandler(magnifier_key_scroll_handler_.get());

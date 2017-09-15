@@ -576,12 +576,12 @@ void AppListButton::GenerateAndSendBackEvent(
     const ui::LocatedEvent& original_event) {
   ui::EventType event_type;
   switch (original_event.type()) {
-    case ui::ET_MOUSE_PRESSED:
     case ui::ET_GESTURE_TAP_DOWN:
+    case ui::ET_MOUSE_PRESSED:
       event_type = ui::ET_KEY_PRESSED;
       break;
-    case ui::ET_MOUSE_RELEASED:
     case ui::ET_GESTURE_TAP:
+    case ui::ET_MOUSE_RELEASED:
       event_type = ui::ET_KEY_RELEASED;
       break;
     default:

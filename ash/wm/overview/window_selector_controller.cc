@@ -176,6 +176,20 @@ void WindowSelectorController::RemoveAndDestroyAnimationObserver(
       delayed_animations_.end());
 }
 
+void WindowSelectorController::OnKeyEvent(ui::KeyEvent* event) {
+  if (!IsSelecting())
+    return;
+
+  if (event->key_code() != ui::VKEY_BROWSER_BACK)
+    return;
+
+  if (event->type() == ui::ET_KEY_RELEASED)
+    ToggleOverview();
+
+  event->StopPropagation();
+  event->SetHandled();
+}
+
 void WindowSelectorController::OnSelectionStarted() {
   if (!last_selection_time_.is_null()) {
     UMA_HISTOGRAM_LONG_TIMES("Ash.WindowSelector.TimeBetweenUse",
