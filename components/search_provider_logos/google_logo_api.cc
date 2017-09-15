@@ -276,6 +276,9 @@ std::unique_ptr<EncodedLogo> GoogleNewParseLogoResponse(
 
   auto logo = base::MakeUnique<EncodedLogo>();
 
+  // The ID is optional.
+  ddljson->GetInteger("id", &logo->metadata.id);
+
   // Check if the main image is animated.
   bool is_animated = false;
   const base::DictionaryValue* image = nullptr;

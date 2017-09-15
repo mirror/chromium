@@ -40,6 +40,8 @@ struct LogoMetadata {
   // clicked. If |animated_url| is not empty, |encoded_image| refers to a call
   // to action image.
   GURL animated_url;
+  // An ID for the current logo. Recorded in metrics.
+  int id;
 
   // For use by LogoService ---------------------------------------------------
 
