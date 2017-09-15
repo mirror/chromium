@@ -22,6 +22,30 @@
       "revId": "0ad237bd2ba7d8c4cee724b6bd527e84458f80dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dac851e_c0cb690b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-15T12:28:51Z",
+      "side": 0,
+      "message": "Oh, I did not realize that. I just felt weird about adding the status as a parameter and do only a DCHECK on it.\n\nDone.\n\nThe solution you are proposing does not work as category_contents_[category] needs an nullary constructor of CategoryContent. I did it by repeating the search within DCHECKs. If you see a better (readable) way, please let me know.",
+      "parentUuid": "0ab2dac5_2e70a55f",
+      "range": {
+        "startLine": 1417,
+        "startChar": 2,
+        "endLine": 1417,
+        "endChar": 52
+      },
+      "revId": "0ad237bd2ba7d8c4cee724b6bd527e84458f80dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

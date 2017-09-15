@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "348466fb_545360bd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-15T12:28:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4da67dd4_8b6c57ef",
+      "range": {
+        "startLine": 9,
+        "startChar": 29,
+        "endLine": 9,
+        "endChar": 38
+      },
+      "revId": "54ae1773ae2ee2cec2d4bcc989557db18092daf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9445132a_25d54929",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-14T15:48:23Z",
       "side": 1,
       "message": "Why is this necessary? Can\u0027t you add a new category status instead?",
+      "range": {
+        "startLine": 13,
+        "startChar": 64,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "54ae1773ae2ee2cec2d4bcc989557db18092daf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e08d84_57b700ad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-15T12:28:51Z",
+      "side": 1,
+      "message": "Yes, we could do it that way. Still, this is the preferred way, for the UI.",
+      "parentUuid": "9445132a_25d54929",
       "range": {
         "startLine": 13,
         "startChar": 64,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "491bd4f6_b6b902cd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-15T12:28:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f38be156_3dd3345a",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 13
+      },
+      "revId": "54ae1773ae2ee2cec2d4bcc989557db18092daf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80e64f79_f567286e",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "54ae1773ae2ee2cec2d4bcc989557db18092daf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "319e7e37_96b2b6e7",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-15T12:28:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80e64f79_f567286e",
+      "range": {
+        "startLine": 361,
+        "startChar": 4,
+        "endLine": 362,
+        "endChar": 42
+      },
+      "revId": "54ae1773ae2ee2cec2d4bcc989557db18092daf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
