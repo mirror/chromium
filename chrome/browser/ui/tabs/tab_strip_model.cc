@@ -921,13 +921,18 @@ void TabStripModel::ExecuteContextMenuCommand(
       UMA_HISTOGRAM_ENUMERATION("Tab.NewTab",
                                 TabStripModel::NEW_TAB_CONTEXT_MENU,
                                 TabStripModel::NEW_TAB_ENUM_COUNT);
-#if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
-      feature_engagement::NewTabTrackerFactory::GetInstance()
-          ->GetForProfile(profile_)
-          ->OnNewTabOpened();
-#endif
-
       delegate()->AddTabAt(GURL(), context_index + 1, true);
+      {
+#if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
+        feature_engagement::NewTabTracker* new_tab_tracker =
+            feature_engagement::NewTabTrackerFactory::GetInstance()
+                ->GetForProfile(profile_);
+        new_tab_tracker->OnNewTabOpened();
+        if (new_tab_tracker->CloseBubble()) {
+          new_tab_tracker->OnPromoClosed();
+        }
+#endif
+      }
       break;
 
     case CommandReload: {
