@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a599caa5_628286dd",
+        "filename": "third_party/WebKit/Source/core/dom/FrameRequestCallback.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-15T13:37:00Z",
+      "side": 1,
+      "message": "nit: put a space before https",
+      "revId": "77bcd6e5e4daaeb9d3a44dc22dec6772a4851b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95653221_8340d4a5",
+        "filename": "third_party/WebKit/Source/core/dom/FrameRequestCallbackCollection.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-15T13:37:00Z",
+      "side": 1,
+      "message": "Optional:\nIt is allowed to use names like variables for simple getters/setters.\nSo you can name these accessors like\n  int id() const { return id_; }\n  void set_id(int id) { id_ \u003d id; }\nhttps://google.github.io/styleguide/cppguide.html#Function_Names",
+      "revId": "77bcd6e5e4daaeb9d3a44dc22dec6772a4851b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63a1669_83f8d631",
+        "filename": "third_party/WebKit/Source/core/dom/FrameRequestCallbackCollection.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-15T13:37:00Z",
+      "side": 1,
+      "message": "If you use CamelCase for this, SetUseLegacyTimeBase(...)",
+      "revId": "77bcd6e5e4daaeb9d3a44dc22dec6772a4851b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
