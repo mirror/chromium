@@ -10,6 +10,7 @@
 #include "ui/base/models/tree_node_model.h"
 #include "ui/views/context_menu_controller.h"
 #include "ui/views/controls/button/button.h"
+#include "ui/views/controls/tree/tree_view.h"
 #include "ui/views/controls/tree/tree_view_controller.h"
 #include "ui/views/examples/example_base.h"
 
@@ -21,13 +22,13 @@ namespace views {
 
 class LabelButton;
 class MenuRunner;
-class TreeView;
 
 namespace examples {
 
 class VIEWS_EXAMPLES_EXPORT TreeViewExample
     : public ExampleBase,
       public ButtonListener,
+      public TreeView::DrawingProvider,
       public TreeViewController,
       public ContextMenuController,
       public ui::SimpleMenuModel::Delegate {
@@ -54,6 +55,14 @@ class VIEWS_EXAMPLES_EXPORT TreeViewExample
 
   // ButtonListener:
   void ButtonPressed(Button* sender, const ui::Event& event) override;
+
+  // TreeView::DrawingProvider:
+  SkColor GetBackgroundColorForNode(TreeView* tree_view,
+                                    ui::TreeModelNode* node) override;
+  SkColor GetTextColorForNode(TreeView* tree_view,
+                              ui::TreeModelNode* node) override;
+  base::string16 GetAuxiliaryTextForNode(TreeView* tree_view,
+                                         ui::TreeModelNode* node) override;
 
   // TreeViewController:
   void OnTreeViewSelectionChanged(TreeView* tree_view) override;

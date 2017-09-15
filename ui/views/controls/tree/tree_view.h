@@ -41,6 +41,21 @@ class VIEWS_EXPORT TreeView : public View,
                               public FocusChangeListener,
                               public PrefixDelegate {
  public:
+  // A DrawingProvider is responsible for customizing the drawing of individual
+  // nodes in the tree.
+  class DrawingProvider {
+   public:
+    DrawingProvider();
+    virtual ~DrawingProvider();
+
+    virtual SkColor GetBackgroundColorForNode(TreeView* tree_view,
+                                              ui::TreeModelNode* node);
+    virtual SkColor GetTextColorForNode(TreeView* tree_view,
+                                        ui::TreeModelNode* node);
+    virtual base::string16 GetAuxiliaryTextForNode(TreeView* tree_view,
+                                                   ui::TreeModelNode* node);
+  };
+
   // The tree view's class name.
   static const char kViewClassName[];
 
@@ -119,6 +134,12 @@ class VIEWS_EXPORT TreeView : public View,
   int GetRowForNode(ui::TreeModelNode* node);
 
   views::Textfield* editor() { return editor_; }
+
+  void set_drawing_provider(DrawingProvider* provider) {
+    drawing_provider_ = provider;
+  }
+
+  DrawingProvider* drawing_provider() { return drawing_provider_; }
 
   // View overrides:
   void Layout() override;
@@ -305,6 +326,9 @@ class VIEWS_EXPORT TreeView : public View,
   // Returns the bounds for a node's text label.
   gfx::Rect GetTextBoundsForNode(InternalNode* node);
 
+  // Returns the bounds of a node's auxiliary text label.
+  gfx::Rect GetAuxiliaryTextBoundsForNode(InternalNode* node);
+
   // Implementation of GetTextBoundsForNode. Separated out as some callers
   // already know the row/depth.
   gfx::Rect GetForegroundBoundsForNodeImpl(InternalNode* node,
@@ -408,6 +432,13 @@ class VIEWS_EXPORT TreeView : public View,
   int text_offset_;
 
   std::unique_ptr<PrefixSelector> selector_;
+
+  // The default drawing provider for this TreeView.
+  DrawingProvider default_drawing_provider_;
+
+  // The current drawing provider for this TreeView. Defaults to
+  // |default_drawing_provider_|.
+  DrawingProvider* drawing_provider_;
 
   DISALLOW_COPY_AND_ASSIGN(TreeView);
 };
