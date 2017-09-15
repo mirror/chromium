@@ -42,11 +42,11 @@ class HTMLMarqueeElement final : public HTMLElement {
 
   bool IsHorizontal() const;
 
-  int scrollAmount() const;
-  void setScrollAmount(int, ExceptionState&);
+  unsigned scrollAmount() const;
+  void setScrollAmount(unsigned, ExceptionState&);
 
-  int scrollDelay() const;
-  void setScrollDelay(int, ExceptionState&);
+  unsigned scrollDelay() const;
+  void setScrollDelay(unsigned, ExceptionState&);
 
   int loop() const;
   void setLoop(int, ExceptionState&);
