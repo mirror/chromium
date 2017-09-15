@@ -123,16 +123,23 @@ typedef NS_ENUM(NSInteger, ItemType) {
     // height of the bar. We don't want that for the button so we use a UIView
     // here to contain the button instead and the button is vertically centered
     // inside the full bar height.
-    UIView* buttonView = [[UIView alloc] initWithFrame:CGRectZero];
-    [buttonView addSubview:_payButton];
     // Navigation bar button items are aligned with the trailing edge of the
     // screen. Make the enclosing view larger here. The pay button will be
     // aligned with the leading edge of the enclosing view leaving an inset on
     // the trailing edge.
-    CGRect buttonViewBounds = buttonView.bounds;
-    buttonViewBounds.size.width =
-        [_payButton frame].size.width + kButtonEdgeInset;
-    buttonView.bounds = buttonViewBounds;
+    UIView* buttonView = [[UIView alloc]
+        initWithFrame:CGRectMake(0, 0,
+                                 _payButton.frame.size.width + kButtonEdgeInset,
+                                 _payButton.frame.size.height)];
+    [buttonView addSubview:_payButton];
+
+    // The flexible trailing margin does not work in RTL. Move the
+    // button forward as much as the inset.
+    if (UseRTLLayout()) {
+      _payButton.frame =
+          CGRectMake(kButtonEdgeInset, 0, _payButton.frame.size.width,
+                     _payButton.frame.size.height);
+    }
 
     UIBarButtonItem* payButtonItem =
         [[UIBarButtonItem alloc] initWithCustomView:buttonView];
