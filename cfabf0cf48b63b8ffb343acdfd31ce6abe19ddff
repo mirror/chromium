@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "6e3f4955_d14db751",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-15T10:54:35Z",
+      "side": 1,
+      "message": "This issue description is super informative!",
+      "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae3f875_1fe1de7a",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-15T10:54:35Z",
+      "side": 1,
+      "message": "Ah... I know this is not from your code but this hurts readability. I think we can probably mock this with MockRenderProcessHost and its OverridingBinderForTesting, could we try that or have a TODO for that? (Feel free to add my ldap there for the latter)",
+      "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9f26168_e506c284",
         "filename": "content/browser/shared_worker/shared_worker_service_impl_unittest.cc",
         "patchSetId": 10
@@ -65,6 +99,40 @@
     },
     {
       "key": {
+        "uuid": "b256a3f5_0b760ada",
+        "filename": "content/common/shared_worker/shared_worker_host.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-15T10:54:35Z",
+      "side": 1,
+      "message": "I\u0027d like to add \u0027in the browser process\u0027 after \u0027corresponding host\u0027",
+      "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2100cb0_5457d8c3",
+        "filename": "content/common/shared_worker/shared_worker_info.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-15T10:54:35Z",
+      "side": 1,
+      "message": "While we\u0027re here can we add a short comment for this?  Something like... \u0027A set of meta data that is necessary to create a new shared worker context. Populated when a new SharedWorker object is created in the parent context (e.g. Document), and passed onto the destination child process where the shared worker runs.\u0027",
+      "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f37cb2f_66880698",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 10
@@ -76,6 +144,40 @@
       "writtenOn": "2017-09-15T09:28:51Z",
       "side": 1,
       "message": "Can you indent this line?",
+      "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22254811_1b057b65",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-15T10:54:35Z",
+      "side": 1,
+      "message": "nit: trigging -\u003e triggering",
+      "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f1435bc_63af39f7",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-15T10:54:35Z",
+      "side": 1,
+      "message": "WorkerMsg_Connect -\u003e mojom::SharedWorker::Connect()",
       "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
