@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad58f65_52d08bae",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-15T06:13:39Z",
+      "side": 1,
+      "message": "looking at the crash report, i don\u0027t see any reference to |support_share_nv12_textures_| between here and the crash...?",
+      "revId": "4702d0dae7870127f521943bcae9f00f95e65c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
