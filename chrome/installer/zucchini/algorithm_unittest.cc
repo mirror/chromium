@@ -100,4 +100,35 @@ TEST(Algorithm, RangeCovers) {
   EXPECT_FALSE(RangeCovers<uint32_t>(0xFFFFFFFFU, +2, 0));
 }
 
+TEST(Algorithm, InclusiveClip) {
+  EXPECT_EQ(1U, InclusiveClip<uint32_t>(1U, 0U, 9U));
+  EXPECT_EQ(1U, InclusiveClip<uint32_t>(1U, 1U, 9U));
+  EXPECT_EQ(5U, InclusiveClip<uint32_t>(1U, 5U, 9U));
+  EXPECT_EQ(8U, InclusiveClip<uint32_t>(1U, 8U, 9U));
+  EXPECT_EQ(9U, InclusiveClip<uint32_t>(1U, 9U, 9U));
+  EXPECT_EQ(9U, InclusiveClip<uint32_t>(1U, 10U, 9U));
+  EXPECT_EQ(9U, InclusiveClip<uint32_t>(1U, 0xFFFFFFFFU, 9U));
+  EXPECT_EQ(42U, InclusiveClip<uint32_t>(42U, 0U, 42U));
+  EXPECT_EQ(42U, InclusiveClip<uint32_t>(42U, 41U, 42U));
+  EXPECT_EQ(42U, InclusiveClip<uint32_t>(42U, 42U, 42U));
+  EXPECT_EQ(42U, InclusiveClip<uint32_t>(42U, 43U, 42U));
+  EXPECT_EQ(0U, InclusiveClip<uint32_t>(0U, 0U, 0U));
+  EXPECT_EQ(0xFFFFFFFF,
+            InclusiveClip<uint32_t>(0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF));
+}
+
+TEST(Algorithm, Ceil) {
+  EXPECT_EQ(0U, ceil<uint32_t>(0U, 2U));
+  EXPECT_EQ(2U, ceil<uint32_t>(1U, 2U));
+  EXPECT_EQ(2U, ceil<uint32_t>(2U, 2U));
+  EXPECT_EQ(4U, ceil<uint32_t>(3U, 2U));
+  EXPECT_EQ(4U, ceil<uint32_t>(4U, 2U));
+  EXPECT_EQ(11U, ceil<uint32_t>(10U, 11U));
+  EXPECT_EQ(11U, ceil<uint32_t>(11U, 11U));
+  EXPECT_EQ(22U, ceil<uint32_t>(12U, 11U));
+  EXPECT_EQ(22U, ceil<uint32_t>(21U, 11U));
+  EXPECT_EQ(22U, ceil<uint32_t>(22U, 11U));
+  EXPECT_EQ(33U, ceil<uint32_t>(23U, 11U));
+}
+
 }  // namespace zucchini

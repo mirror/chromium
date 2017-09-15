@@ -11,6 +11,7 @@
 #include <type_traits>
 
 #include "base/logging.h"
+#include "chrome/installer/zucchini/algorithm.h"
 
 namespace zucchini {
 
@@ -18,15 +19,21 @@ namespace zucchini {
 struct BufferRegion {
   // size_t is used to match BufferViewBase::size_type, which is used when
   // indexing in a buffer view.
-  size_t offset;
-  size_t size;
-
+  size_t lo() const { return offset; }
+  size_t hi() const { return offset + size; }
+  // Returns |v| clipped to the inclusive range |[lo(), hi()]|.
+  size_t InclusiveClip(size_t v) const {
+    return zucchini::InclusiveClip(lo(), v, hi());
+  }
   friend bool operator==(const BufferRegion& a, const BufferRegion& b) {
     return a.offset == b.offset && a.size == b.size;
   }
   friend bool operator!=(const BufferRegion& a, const BufferRegion& b) {
     return !(a == b);
   }
+
+  size_t offset;
+  size_t size;
 };
 
 namespace internal {
@@ -64,6 +71,11 @@ class BufferViewBase {
 
   BufferViewBase(const BufferViewBase&) = default;
   BufferViewBase& operator=(const BufferViewBase&) = default;
+
+  void Reset(iterator first, size_type size) {
+    first_ = first;
+    last_ = first_ + size;
+  }
 
   // Iterators
 
@@ -145,6 +157,16 @@ class BufferViewBase {
 
 using ConstBufferView = internal::BufferViewBase<const uint8_t>;
 using MutableBufferView = internal::BufferViewBase<uint8_t>;
+
+template <class T>
+const T& ReinterpretAs(ConstBufferView::iterator first) {
+  return *reinterpret_cast<const T*>(first);
+}
+
+template <class T>
+T& ReinterpretAs(MutableBufferView::iterator first) {
+  return *reinterpret_cast<T*>(first);
+}
 
 }  // namespace zucchini
 

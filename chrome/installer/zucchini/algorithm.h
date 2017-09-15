@@ -30,6 +30,24 @@ bool RangeCovers(T begin, T size, T value) {
   return begin <= value && value - begin < size;
 }
 
+// Returns the integer in inclusive range |[lo, hi]| that's closest to |value|.
+// This departs from the usual usage of semi-inclusive ranges, but is useful
+// because (1) sentinels can use this, (2) a valid output always exists. It is
+// assumed that |lo <= hi|.
+template <class T>
+T InclusiveClip(T lo, T value, T hi) {
+  static_assert(std::is_unsigned<T>::value, "Value type must be unsigned.");
+  return value <= lo ? lo : (value >= hi ? hi : value);
+}
+
+// Returns the minimum multiple of |m| that's no less than |x|. Assumes |m > 0|
+// and |x| is sufficiently small so that no overflow occurs.
+template <class T>
+constexpr T ceil(T x, T m) {
+  static_assert(std::is_unsigned<T>::value, "Value type must be unsigned.");
+  return T((x + m - 1) / m) * m;
+}
+
 }  // namespace zucchini
 
 #endif  // CHROME_INSTALLER_ZUCCHINI_ALGORITHM_H_
