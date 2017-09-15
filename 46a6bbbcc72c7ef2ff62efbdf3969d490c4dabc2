@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "364f73e6_e394a00f",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-15T19:10:32Z",
+      "side": 1,
+      "message": "If we have WRITE, READ, WRITE I believe we\u0027re going to get into a long posttask loop here.\n\nThe final WRITE will come up, and see that readers isn\u0027t empty, and call ProcessQueuedTransactions at the end of this function. Which will come back here and try again.\n\nI think we clearly need a unittest with a WRITE, READ, WRITE scenario.",
+      "revId": "46a6bbbcc72c7ef2ff62efbdf3969d490c4dabc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
