@@ -117,6 +117,29 @@
     },
     {
       "key": {
+        "uuid": "cf92494e_ae2877c6",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-15T13:55:04Z",
+      "side": 1,
+      "message": "why do we need that? Let\u0027s concatenate name and id and search for special words within it.",
+      "range": {
+        "startLine": 361,
+        "startChar": 0,
+        "endLine": 362,
+        "endChar": 65
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9bda903_d9b529c8",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 12
@@ -133,6 +156,75 @@
         "startChar": 47,
         "endLine": 476,
         "endChar": 61
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f25a2ed_49aedceb",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-15T13:55:04Z",
+      "side": 1,
+      "message": "don\u0027t forget to remove this when https://chromium-review.googlesource.com/c/chromium/src/+/667114 is landed.",
+      "range": {
+        "startLine": 538,
+        "startChar": 4,
+        "endLine": 542,
+        "endChar": 5
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b1357d8_c1e66fc8",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-15T13:55:04Z",
+      "side": 1,
+      "message": "I would move it to line 570 and append with \"... for username detection\".",
+      "range": {
+        "startLine": 545,
+        "startChar": 2,
+        "endLine": 545,
+        "endChar": 20
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d277e0ca_83b56ccd",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-15T13:55:04Z",
+      "side": 1,
+      "message": "thanks for checking the whole file about curly brackets  :)",
+      "range": {
+        "startLine": 577,
+        "startChar": 4,
+        "endLine": 577,
+        "endChar": 37
       },
       "revId": "b416be913da5024a43be41090f9139c33f9f9004",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
