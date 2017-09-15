@@ -8,6 +8,7 @@
 #include "ash/ash_export.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/timer/timer.h"
 #include "chromeos/dbus/power_manager_client.h"
 #include "ui/events/devices/input_device_event_observer.h"
 #include "ui/events/event_handler.h"
@@ -22,6 +23,24 @@ class ASH_EXPORT PowerButtonDisplayController
       public ui::EventHandler,
       public ui::InputDeviceEventObserver {
  public:
+  // Helper class used by tests to access internal state.
+  class ASH_EXPORT TestApi {
+   public:
+    explicit TestApi(PowerButtonDisplayController* controller);
+    ~TestApi();
+
+    // Returns true when |screen_on_timer_| is running.
+    bool ScreenOnTimerIsRunning() const;
+
+    // Emulates |screen_on_timer_| timeout.
+    void TriggerScreenOnTimeout();
+
+   private:
+    PowerButtonDisplayController* controller_;  // Not owned.
+
+    DISALLOW_COPY_AND_ASSIGN(TestApi);
+  };
+
   // Screen state as communicated by D-Bus signals from powerd about backlight
   // brightness changes.
   enum class ScreenState {
@@ -71,11 +90,18 @@ class ASH_EXPORT PowerButtonDisplayController
   // or |screen_state_| is OFF_AUTO.
   void UpdateTouchscreenStatus();
 
+  // Called by |screen_on_timer_| to set |screen_state_|.
+  void OnScreenOnTimeout();
+
   // Current screen state.
   ScreenState screen_state_ = ScreenState::ON;
 
   // Current forced-off state of backlights.
   bool backlights_forced_off_ = false;
+
+  // Started/Stopped when non-zero/zero brightness level is received. Runs
+  // OnScreenOnTimeout() to set screen_state_ to ScreenState::ON.
+  base::OneShotTimer screen_on_timer_;
 
   base::WeakPtrFactory<PowerButtonDisplayController> weak_ptr_factory_;
 

@@ -19,6 +19,10 @@ namespace ash {
 
 namespace {
 
+// Amount of time to wait to set screen on state after non-zero brightness level
+// signal is received.
+constexpr int kScreenOnTimeoutMs = 500;
+
 // Returns true if device is a convertible/tablet device, otherwise false.
 bool IsTabletModeSupported() {
   TabletModeController* tablet_mode_controller =
@@ -35,6 +39,22 @@ bool IsTabletModeActive() {
 }
 
 }  // namespace
+
+PowerButtonDisplayController::TestApi::TestApi(
+    PowerButtonDisplayController* controller)
+    : controller_(controller) {}
+
+PowerButtonDisplayController::TestApi::~TestApi() = default;
+
+bool PowerButtonDisplayController::TestApi::ScreenOnTimerIsRunning() const {
+  return controller_->screen_on_timer_.IsRunning();
+}
+
+void PowerButtonDisplayController::TestApi::TriggerScreenOnTimeout() {
+  DCHECK(ScreenOnTimerIsRunning());
+  controller_->OnScreenOnTimeout();
+  controller_->screen_on_timer_.Stop();
+}
 
 PowerButtonDisplayController::PowerButtonDisplayController()
     : weak_ptr_factory_(this) {
@@ -85,10 +105,17 @@ void PowerButtonDisplayController::PowerManagerRestarted() {
 void PowerButtonDisplayController::BrightnessChanged(int level,
                                                      bool user_initiated) {
   const ScreenState old_state = screen_state_;
-  if (level != 0)
-    screen_state_ = ScreenState::ON;
-  else
+  if (level != 0) {
+    // Chrome may receive non-zero brighness level signal before the actual
+    // screen is turned on. Start a timer to set screen on state to ensure that
+    // the state represents the actual screen state.
+    screen_on_timer_.Start(
+        FROM_HERE, base::TimeDelta::FromMilliseconds(kScreenOnTimeoutMs), this,
+        &PowerButtonDisplayController::OnScreenOnTimeout);
+  } else {
+    screen_on_timer_.Stop();
     screen_state_ = user_initiated ? ScreenState::OFF : ScreenState::OFF_AUTO;
+  }
 
   // Disable the touchscreen when the screen is turned off due to inactivity:
   // https://crbug.com/743291
@@ -154,6 +181,11 @@ void PowerButtonDisplayController::UpdateTouchscreenStatus() {
       !backlights_forced_off_ && (screen_state_ != ScreenState::OFF_AUTO);
   Shell::Get()->touch_devices_controller()->SetTouchscreenEnabled(
       enable_touchscreen, TouchscreenEnabledSource::GLOBAL);
+}
+
+void PowerButtonDisplayController::OnScreenOnTimeout() {
+  screen_state_ = ScreenState::ON;
+  UpdateTouchscreenStatus();
 }
 
 }  // namespace ash

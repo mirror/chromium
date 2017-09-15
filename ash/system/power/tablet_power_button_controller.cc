@@ -161,7 +161,7 @@ void TabletPowerButtonController::OnPowerButtonEvent(
       force_off_on_button_up_ = false;
     }
 
-    last_button_down_time_ = tick_clock_->NowTicks();
+    last_button_down_time_ = timestamp;
     screen_off_when_power_button_down_ =
         display_controller_->screen_state() !=
         PowerButtonDisplayController::ScreenState::ON;
@@ -173,7 +173,7 @@ void TabletPowerButtonController::OnPowerButtonEvent(
       return;
 
     const base::TimeTicks previous_up_time = last_button_up_time_;
-    last_button_up_time_ = tick_clock_->NowTicks();
+    last_button_up_time_ = timestamp;
 
     if (max_accelerometer_samples_) {
       base::TimeDelta duration = last_button_up_time_ - last_button_down_time_;
