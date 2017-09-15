@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f95452ba_acb3d9c2",
+        "filename": "net/spdy/chromium/spdy_stream.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-15T15:15:44Z",
+      "side": 1,
+      "message": "Can we compose this method using IncreaseSendWindowSize and DecreaseSendWindowSize?",
+      "revId": "2489e6a46292adc9349cf597d2e75711dde222f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84970438_4c8f69bf",
+        "filename": "net/spdy/chromium/spdy_stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-15T15:15:44Z",
+      "side": 1,
+      "message": "nit: maybe add a short comment on what the \"overflows\" here refers to, and the RFC7540 section number here.\n\nSomething along the line of:\nReturn false if |send_window_size_|, the flow control window, becomes more than 2^31-1 after the update. RFC7540 section 6.9.2.\n\n\nDo we return false if it becomes less than -2^31+1? If not, can we also add a comment here?",
+      "revId": "2489e6a46292adc9349cf597d2e75711dde222f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

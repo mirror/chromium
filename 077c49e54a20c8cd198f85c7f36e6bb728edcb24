@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "549f8f7e_49e0f955",
+        "filename": "net/spdy/chromium/spdy_stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-15T15:15:44Z",
+      "side": 0,
+      "message": "nit: Deletion of this line is probably not related to this CL. I am not sure why it is deleted. Can we move it off to a separate CL?",
+      "revId": "077c49e54a20c8cd198f85c7f36e6bb728edcb24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
