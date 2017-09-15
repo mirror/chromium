@@ -34,6 +34,24 @@
       "revId": "4702d0dae7870127f521943bcae9f00f95e65c2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0b53d5_6517a719",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-15T17:20:33Z",
+      "side": 1,
+      "message": "but if ShouldUseANGLEDevice() and |!angle_device_|, then wouldn\u0027t it exit early @884 and not reach 929 (775 and 820 in the crash report)?",
+      "parentUuid": "024ae645_9c75eb0b",
+      "revId": "4702d0dae7870127f521943bcae9f00f95e65c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
