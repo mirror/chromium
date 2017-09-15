@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab55ae1c_0d2087e0",
+        "filename": "ios/chrome/browser/ntp_tiles/most_visited_sites_observer_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-15T12:23:22Z",
+      "side": 1,
+      "message": "I\u0027ve never seen this before, does this initialize the member to nil?",
+      "range": {
+        "startLine": 42,
+        "startChar": 51,
+        "endLine": 42,
+        "endChar": 54
+      },
+      "revId": "7a187f12058a11c92feffa67cbd2812cbda317e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e30149e_13a6a1d7",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_model_snapshot.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-15T12:23:22Z",
+      "side": 1,
+      "message": "Does this work as expected?",
+      "range": {
+        "startLine": 32,
+        "startChar": 20,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "7a187f12058a11c92feffa67cbd2812cbda317e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e086e1_2bd55c1f",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-09-15T12:23:22Z",
+      "side": 1,
+      "message": "With ARC, Obj-C ivars are initialized to nil, so I think this is unnecessary.",
+      "range": {
+        "startLine": 29,
+        "startChar": 31,
+        "endLine": 29,
+        "endChar": 34
+      },
+      "revId": "7a187f12058a11c92feffa67cbd2812cbda317e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
