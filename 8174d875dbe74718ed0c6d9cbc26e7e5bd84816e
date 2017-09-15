@@ -394,6 +394,24 @@
       "revId": "8174d875dbe74718ed0c6d9cbc26e7e5bd84816e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea68eff_3cd577da",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1243494
+      },
+      "writtenOn": "2017-09-15T17:32:04Z",
+      "side": 1,
+      "message": "If ListAccounts returns an empty list, the cookies are already invalid and Logout will have no effect.\n\n(assuming ListAccounts was called with the same headers that would be sent with a regular user-initiated request (ChannelID in particular))",
+      "parentUuid": "238b626f_8f67e29d",
+      "revId": "8174d875dbe74718ed0c6d9cbc26e7e5bd84816e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
