@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b283dee5_890828a4",
+        "filename": "chrome/installer/zucchini/targets_affinity.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d875bddb_50b900fa",
+      "range": {
+        "startLine": 28,
+        "startChar": 38,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3322056_1fa210a2",
         "filename": "chrome/installer/zucchini/targets_affinity.cc",
         "patchSetId": 8
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "958b611f_7940eb0b",
+        "filename": "chrome/installer/zucchini/targets_affinity.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3322056_1fa210a2",
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d04d0717_7cc8c658",
         "filename": "chrome/installer/zucchini/targets_affinity.cc",
         "patchSetId": 8
@@ -53,6 +95,30 @@
       "writtenOn": "2017-09-14T03:02:44Z",
       "side": 1,
       "message": "Continuing \"obviousness\" discussion of this check: This is just the inverse of line 31? Anyway I\u0027ll leave it to you.",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 65
+      },
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53cb50eb_cc518536",
+        "filename": "chrome/installer/zucchini/targets_affinity.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:11:38Z",
+      "side": 1,
+      "message": "This check implies that new_targets are sorted, so I think it\u0027s good to have it.",
+      "parentUuid": "d04d0717_7cc8c658",
       "range": {
         "startLine": 38,
         "startChar": 5,
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "368e0e7f_59ba4f46",
+        "filename": "chrome/installer/zucchini/targets_affinity.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "992d59de_b37cc0cd",
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de28de84_a7d423ab",
         "filename": "chrome/installer/zucchini/targets_affinity.cc",
         "patchSetId": 8
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "036cf0df_18bd301a",
+        "filename": "chrome/installer/zucchini/targets_affinity.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de28de84_a7d423ab",
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84f068bd_585d7fd0",
         "filename": "chrome/installer/zucchini/targets_affinity.cc",
         "patchSetId": 8
@@ -113,6 +215,24 @@
       "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ef6b0a_e1bcae44",
+        "filename": "chrome/installer/zucchini/targets_affinity.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84f068bd_585d7fd0",
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "81c94eb6_4f1ffe11",
+        "filename": "chrome/installer/zucchini/targets_affinity.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8444ef2e_98c10cf1",
+      "range": {
+        "startLine": 33,
+        "startChar": 72,
+        "endLine": 33,
+        "endChar": 73
+      },
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72a39d1a_a80694ef",
         "filename": "chrome/installer/zucchini/targets_affinity.h",
         "patchSetId": 8
@@ -162,6 +306,30 @@
     },
     {
       "key": {
+        "uuid": "7356b6e4_e1620733",
+        "filename": "chrome/installer/zucchini/targets_affinity.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72a39d1a_a80694ef",
+      "range": {
+        "startLine": 34,
+        "startChar": 41,
+        "endLine": 34,
+        "endChar": 62
+      },
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "579bcfdb_f4659429",
         "filename": "chrome/installer/zucchini/targets_affinity.h",
         "patchSetId": 8
@@ -182,6 +350,30 @@
       "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cb83b79_1fe6a99c",
+        "filename": "chrome/installer/zucchini/targets_affinity.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "579bcfdb_f4659429",
+      "range": {
+        "startLine": 36,
+        "startChar": 64,
+        "endLine": 36,
+        "endChar": 65
+      },
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +423,54 @@
     },
     {
       "key": {
+        "uuid": "c2aca36e_0696e3d7",
+        "filename": "chrome/installer/zucchini/targets_affinity.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ccc0a4e_ad1d9d8e",
+      "range": {
+        "startLine": 41,
+        "startChar": 26,
+        "endLine": 41,
+        "endChar": 32
+      },
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "32372e8b_31ed6d9e",
+        "filename": "chrome/installer/zucchini/targets_affinity.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:11:38Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be",
+      "parentUuid": "405bbbfe_c66f503c",
+      "range": {
+        "startLine": 41,
+        "startChar": 64,
+        "endLine": 41,
+        "endChar": 72
+      },
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2e8646a_1b36430e",
         "filename": "chrome/installer/zucchini/targets_affinity.h",
         "patchSetId": 8
@@ -242,6 +482,30 @@
       "writtenOn": "2017-09-14T03:02:44Z",
       "side": 1,
       "message": "This is an index into an array, and not an offset into image. Should use int, or define new type (also for old_key(s), new_key(s)).",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 12
+      },
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70d14c3d_3e33adfd",
+        "filename": "chrome/installer/zucchini/targets_affinity.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:11:38Z",
+      "side": 1,
+      "message": "This one is tricky, because |old_key| is coming from Reference::target (where file offset was replaced by index in table). Not sure how to deal with this.",
+      "parentUuid": "c2e8646a_1b36430e",
       "range": {
         "startLine": 48,
         "startChar": 4,
@@ -274,6 +538,30 @@
       "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e1a8c6f_b670b3d0",
+        "filename": "chrome/installer/zucchini/targets_affinity.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:11:38Z",
+      "side": 1,
+      "message": "This is only for zucchini-gen. I added a class-level comment.",
+      "parentUuid": "a1ed07bc_b4566cfa",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 10
+      },
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -312,6 +600,24 @@
     },
     {
       "key": {
+        "uuid": "9aca6b29_ae5537fc",
+        "filename": "chrome/installer/zucchini/targets_affinity.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd2f0952_b024fe22",
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6959a001_e0475f26",
         "filename": "chrome/installer/zucchini/targets_affinity_unittest.cc",
         "patchSetId": 8
@@ -323,6 +629,30 @@
       "writtenOn": "2017-09-14T03:02:44Z",
       "side": 1,
       "message": "Why is this reused? Can it live inside the lambda?",
+      "range": {
+        "startLine": 19,
+        "startChar": 18,
+        "endLine": 19,
+        "endChar": 34
+      },
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a407a7_e3cf43c3",
+        "filename": "chrome/installer/zucchini/targets_affinity_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:11:38Z",
+      "side": 1,
+      "message": "The intended usage is that the same object is going to be updated.",
+      "parentUuid": "6959a001_e0475f26",
       "range": {
         "startLine": 19,
         "startChar": 18,
@@ -358,6 +688,30 @@
     },
     {
       "key": {
+        "uuid": "38265d68_01ab71d1",
+        "filename": "chrome/installer/zucchini/targets_affinity_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:11:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82d5cbe2_b153f763",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 5
+      },
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16e97ea8_f60af5c7",
         "filename": "chrome/installer/zucchini/targets_affinity_unittest.cc",
         "patchSetId": 8
@@ -369,6 +723,30 @@
       "writtenOn": "2017-09-14T03:02:44Z",
       "side": 1,
       "message": "Why is this reused? Can it live inside the lambda?",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 35
+      },
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c268783b_b98385d9",
+        "filename": "chrome/installer/zucchini/targets_affinity_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:11:38Z",
+      "side": 1,
+      "message": "Same as above",
+      "parentUuid": "16e97ea8_f60af5c7",
       "range": {
         "startLine": 72,
         "startChar": 2,
