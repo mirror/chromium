@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "add538b2_aa226872",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-15T20:15:06Z",
+      "side": 1,
+      "message": "I have wrestled with a number of options for solving this in my patch https://chromium-review.googlesource.com/c/chromium/src/+/658068\n\nI\u0027ve considered\n * an is-renderable or can-be-visible bit as you say\n * a variant of Render which takes an out parameter to which you can write error conditions (including not having a Render routine)\n * deriving from a Renderable class.\n\nI\u0027ve tried the last of the three.",
+      "parentUuid": "11dc5f91_7c329af8",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71fa092e_2f0c088f",
         "filename": "chrome/browser/vr/ui_scene.cc",
         "patchSetId": 2
