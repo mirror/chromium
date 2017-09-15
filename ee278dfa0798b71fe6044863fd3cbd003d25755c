@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d55fade4_26374dc5",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-09-15T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49a8e1f5_261c2ce1",
+      "revId": "ee278dfa0798b71fe6044863fd3cbd003d25755c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd21e842_ee117a37",
         "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
         "patchSetId": 16
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-15T03:54:12Z",
       "side": 1,
       "message": "However, if there\u0027s some reason we can\u0027t get rid of the null check above, I\u0027m curious why it doesn\u0027t default to true if the frame isn\u0027t attached?",
+      "revId": "ee278dfa0798b71fe6044863fd3cbd003d25755c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab11466_671604fe",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-09-15T19:16:17Z",
+      "side": 1,
+      "message": "It\u0027s irrelevant now, but I don\u0027t really know when web_frame_-\u003eclient() could be null. The default setting is we shouldn\u0027t block WebGL, thus, false.",
+      "parentUuid": "bd21e842_ee117a37",
       "revId": "ee278dfa0798b71fe6044863fd3cbd003d25755c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cd450c93_9a5ab2d6",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-09-15T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f50d36b4_acb3cb9b",
+      "revId": "ee278dfa0798b71fe6044863fd3cbd003d25755c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e028c25b_ccea2fa4",
         "filename": "third_party/WebKit/public/web/WebFrameClient.h",
         "patchSetId": 16
@@ -67,6 +121,24 @@
       "revId": "ee278dfa0798b71fe6044863fd3cbd003d25755c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a05c137a_a1792b0e",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-09-15T19:16:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e028c25b_ccea2fa4",
+      "revId": "ee278dfa0798b71fe6044863fd3cbd003d25755c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
