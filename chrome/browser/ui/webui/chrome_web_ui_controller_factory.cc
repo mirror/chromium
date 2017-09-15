@@ -407,12 +407,6 @@ WebUIFactoryFunction GetWebUIFactoryFunction(WebUI* web_ui,
   // Downloads list on Android uses the built-in download manager.
   if (url.host_piece() == chrome::kChromeUIDownloadsHost)
     return &NewWebUI<MdDownloadsUI>;
-  // Material Design feedback. Feedback is implemented separately in
-  // Android.
-  if (url.host_piece() == chrome::kChromeUIFeedbackHost &&
-      ::switches::MdFeedbackEnabled()) {
-    return &NewWebUI<MdFeedbackUI>;
-  }
   // Identity API is not available on Android.
   if (url.host_piece() == chrome::kChromeUIIdentityInternalsHost)
     return &NewWebUI<IdentityInternalsUI>;
