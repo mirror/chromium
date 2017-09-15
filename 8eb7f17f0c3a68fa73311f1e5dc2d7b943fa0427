@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab26867_cb941d7f",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 6507,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-15T22:19:24Z",
+      "side": 0,
+      "message": "Given ChromeOS has native printing now, shall we just remove this?",
+      "range": {
+        "startLine": 6507,
+        "startChar": 43,
+        "endLine": 6507,
+        "endChar": 61
+      },
+      "revId": "8eb7f17f0c3a68fa73311f1e5dc2d7b943fa0427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
