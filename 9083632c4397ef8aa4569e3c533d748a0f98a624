@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1160e734_fcf15d1f",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-15T20:12:10Z",
+      "side": 1,
+      "message": "Agree that the name is weird. I think it might make more sense to rename this OnBeginFrame and the base class happens to animate in it.",
+      "parentUuid": "0bd2f7cb_26ddee6c",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15c1aa8e_f05b6394",
         "filename": "chrome/browser/vr/elements/transient_element.cc",
         "patchSetId": 2
