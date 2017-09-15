@@ -16,6 +16,24 @@
       "revId": "4702d0dae7870127f521943bcae9f00f95e65c2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "024ae645_9c75eb0b",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-15T17:10:10Z",
+      "side": 1,
+      "message": "The reference is inside ShouldUseANGLEDevice()",
+      "parentUuid": "dad58f65_52d08bae",
+      "revId": "4702d0dae7870127f521943bcae9f00f95e65c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
