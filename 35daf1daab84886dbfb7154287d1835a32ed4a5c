@@ -16,6 +16,23 @@
       "revId": "35daf1daab84886dbfb7154287d1835a32ed4a5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93fb0816_8b9d1e38",
+        "filename": "ios/chrome/browser/ui/main/main_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-15T11:07:34Z",
+      "side": 0,
+      "message": "Does the rootViewController assignment above call setFrame?  If not, how does the MC\u0027s view get sized properly without this line?",
+      "revId": "35daf1daab84886dbfb7154287d1835a32ed4a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
