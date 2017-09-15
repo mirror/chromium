@@ -46,6 +46,30 @@
       "revId": "2c68536decac232f096509a4de0f8d73857cf1b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6532960_df92ccf0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-15T14:46:27Z",
+      "side": 0,
+      "message": "ReaderModeInfoBar is a compact infobar. I don\u0027t think you need a view to return a default value. In any case, the default can be overridden by simply not calling super in getAccessibilityText in the TranslateCompactInfoBar, which it appears you already do.",
+      "parentUuid": "c7b189e6_e83f259c",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 96
+      },
+      "revId": "2c68536decac232f096509a4de0f8d73857cf1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
