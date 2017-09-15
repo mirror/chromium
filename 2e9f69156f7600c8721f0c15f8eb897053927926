@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66e92562_43419166",
+        "filename": "third_party/WebKit/Source/platform/fonts/shaping/ShapeResult.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-15T05:51:57Z",
+      "side": 1,
+      "message": "We always want to ceil widths for each fragment/InlineBox, correct? There are some tests that fail only on Mac due to 1px positioning, they maybe the same cause.",
+      "revId": "2e9f69156f7600c8721f0c15f8eb897053927926",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
