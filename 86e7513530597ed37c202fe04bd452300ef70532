@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd96f250_cb6a26f3",
+        "filename": "chrome/browser/autocomplete/keyword_extensions_delegate_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T01:09:47Z",
+      "side": 1,
+      "message": "Nit: Slightly simpler:\n\n  bool deletable \u003d suggestion.deletable \u0026\u0026 *suggestion.deletable;\n\nYou can even inline this below if you get down to one usage.",
+      "revId": "86e7513530597ed37c202fe04bd452300ef70532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6aa2bb8_ba52bb96",
+        "filename": "chrome/browser/autocomplete/keyword_extensions_delegate_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T01:09:47Z",
+      "side": 1,
+      "message": "This line shouldn\u0027t be necessary, we already set this when creating the match.",
+      "revId": "86e7513530597ed37c202fe04bd452300ef70532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f69e775_60f466c4",
+        "filename": "components/omnibox/browser/keyword_extensions_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T01:09:47Z",
+      "side": 1,
+      "message": "Nit: This comment is a bit vague (can we be asked to delete any KeywordProvider suggestion?).  Maybe something more like \"Called when the asks to delete a match an extension previously marked deletable.\"",
+      "revId": "86e7513530597ed37c202fe04bd452300ef70532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "993095f4_edb8ec1e",
+        "filename": "components/omnibox/browser/keyword_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T01:09:47Z",
+      "side": 1,
+      "message": "How come we\u0027re changing the inheritance like this?  I don\u0027t see why we need any of the BaseSearchProvider functionality to implement deletion for extension matches, and it adds complexity.",
+      "revId": "86e7513530597ed37c202fe04bd452300ef70532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
