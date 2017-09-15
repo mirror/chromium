@@ -28,6 +28,7 @@ class SelectionSample final {
   static SelectionInDOMTree SetSelectionText(HTMLElement*,
                                              const std::string& selection_text);
 
+  static HTMLElement* ConvertTemplatesToShadowRootsForTesring(HTMLElement*);
   // Note: We don't add namespace declaration if |ContainerNode| doesn't
   // have it.
   // Note: We don't escape "--" in comment.

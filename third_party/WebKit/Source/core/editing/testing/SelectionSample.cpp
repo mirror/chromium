@@ -9,14 +9,40 @@
 
 #include "core/dom/Attribute.h"
 #include "core/dom/CharacterData.h"
+#include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/ProcessingInstruction.h"
+#include "core/dom/ShadowRootInit.h"
 #include "core/editing/EditingUtilities.h"
+#include "core/html/HTMLCollection.h"
+#include "core/html/HTMLTemplateElement.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
 namespace {
+
+void ConvertTemplatesToShadowRoots(HTMLElement* element) {
+  HTMLCollection* templates = element->getElementsByTagName("template");
+  for (unsigned int i = 0; i < templates->length(); i++) {
+    Element* template_element = templates->item(i);
+    const AtomicString& data_mode = template_element->getAttribute("data-mode");
+    DCHECK_EQ(data_mode, "open");
+
+    Element* parent = template_element->parentElement();
+    parent->RemoveChild(template_element);
+    ShadowRootInit init;
+    init.setMode("open");
+    Document* document = element->ownerDocument();
+    ShadowRoot* shadow_root =
+        parent->attachShadow(ToScriptStateForMainWorld(document->GetFrame()),
+                             init, ASSERT_NO_EXCEPTION);
+    Node* child_node =
+        document->importNode(toHTMLTemplateElement(template_element)->content(),
+                             true, ASSERT_NO_EXCEPTION);
+    shadow_root->appendChild(child_node, ASSERT_NO_EXCEPTION);
+  }
+}
 
 // Parse selection text notation into Selection object.
 template <typename Strategy>
@@ -307,6 +333,12 @@ class Serializer final {
 };
 
 }  // namespace
+
+HTMLElement* SelectionSample::ConvertTemplatesToShadowRootsForTesring(
+    HTMLElement* element) {
+  ConvertTemplatesToShadowRoots(element);
+  return element;
+}
 
 SelectionInDOMTree SelectionSample::SetSelectionText(
     HTMLElement* element,
