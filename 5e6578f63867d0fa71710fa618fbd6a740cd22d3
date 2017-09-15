@@ -34,6 +34,24 @@
       "revId": "5e6578f63867d0fa71710fa618fbd6a740cd22d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c81cfbd6_67e4010f",
+        "filename": "content/browser/service_manager/service_manager_context.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-15T23:38:38Z",
+      "side": 1,
+      "message": "LOL, I meant \"Getter\" as an alternative to \"Callback\", completely forgetting that the URLRequestContext here was actually a URLRequestContextGetter itself. Blargh, as you say.\n\nI suggest SetRequestContextProducer.",
+      "parentUuid": "a4a8ce31_f8de9100",
+      "revId": "5e6578f63867d0fa71710fa618fbd6a740cd22d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
