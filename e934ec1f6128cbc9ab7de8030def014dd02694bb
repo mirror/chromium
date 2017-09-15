@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a10064df_e415d96f",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-15T01:34:31Z",
+      "side": 1,
+      "message": "(optional suggestion) WDYT of something like the following for this section?\n// URLLoaderClient for network loader /////////////////////////////\n\n\n\n// end of URLLoaderClient ////////////////////////////////////////// \n\nI think it\u0027d help readability a bit since functions like OnComplete and CommitCompleted look similar.",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f10e2c99_e720a7af",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-15T01:34:31Z",
+      "side": 1,
+      "message": "Not sure this comment is helpful... especially we\u0027re not continuing here, we\u0027re finishing. Code looks self-documenting without the comment.",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6422649_fd622657",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-15T01:34:31Z",
+      "side": 1,
+      "message": "is this TODO actionable? Why would we tweak it, when would we know the TODO can be fixed?",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22e9ad18_74e236f0",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-15T01:34:31Z",
+      "side": 1,
+      "message": "Notifies -\u003e Notify",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5dc7693_267cd414",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-15T01:34:31Z",
+      "side": 1,
+      "message": "I\u0027m kinda confused by all this MojoToNetPendingBuffer stuff, but I guess it\u0027s needed because CacheWriter isn\u0027t mojofied. Seems simpler if we could just give a data pipe to CacheWriter (not in this patch).",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d2d4df_d25f2ced",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-15T01:34:31Z",
+      "side": 1,
+      "message": "btw I\u0027m assuming we\u0027re using kNotStarted because the plan is to add a new function Start() someday?",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccccb81b_857f08af",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-15T01:34:31Z",
+      "side": 1,
+      "message": "maybe OnNetworkDataAvailable is a tad bit clearer",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82b2b009_cd944864",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-15T01:34:31Z",
+      "side": 1,
+      "message": "looking further, looks like we only use this in the ctor, so it can just be local variable there?",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99da7bdd_3345ac52",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-15T01:34:31Z",
+      "side": 1,
+      "message": "\"a fetched script\" sounds abstract...\n\n// Used for fetching the script from network.",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6992425_9fac2c89",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.h",
+        "patchSetId": 35
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-15T01:34:31Z",
+      "side": 1,
+      "message": "// Used for forwarding the fetched script to the service worker in a renderer.\n\nI\u0027m still a bit unsure about this \"forwarding\" thing, this is our class\u0027s primary client that initiated the request, the class\u0027s primary job as a URLLoader is to respond to the request. I\u0027d wordsmith it more by saying \"// Used for responding with the fetched script to this loader\u0027s client, which is the service worker in the renderer\"... but if you feel forwarding is clearer it\u0027s OK.",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "213b7d2b_6103ffaa",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader_unittest.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-15T01:34:31Z",
+      "side": 1,
+      "message": "dont need to add the test in this patch, but it\u0027d be good to test an empty response body.",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
