@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e0b3629_4550aaf3",
+        "filename": "third_party/WebKit/Source/core/frame/VisualViewport.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-15T09:55:52Z",
+      "side": 1,
+      "message": "while you\u0027re here, mind changing this to nullptr?",
+      "range": {
+        "startLine": 706,
+        "startChar": 15,
+        "endLine": 706,
+        "endChar": 17
+      },
+      "revId": "cf05768caaf4f13113f95eb1c23326107a36ddd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
