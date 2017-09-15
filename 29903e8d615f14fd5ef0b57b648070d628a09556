@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26bcfeb8_8441e9c2",
+        "filename": "components/offline_pages/core/prefetch/page_bundle_update_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-15T15:57:20Z",
+      "side": 1,
+      "message": "Why not check pages_.empty here?  Then just call FinishedWork and return.",
+      "revId": "29903e8d615f14fd5ef0b57b648070d628a09556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0978942_f8a50621",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-15T15:57:20Z",
+      "side": 1,
+      "message": "optional nit: might be cleaner to pass a closure?",
+      "revId": "29903e8d615f14fd5ef0b57b648070d628a09556",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
