@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "219b0bea_a4a7fd7c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-15T23:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "710c0db2_ac5d580c",
+      "revId": "db77754dd5db56a45d1c49f54380ab0b96ec747c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12b7fd2f_99862fbf",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "db77754dd5db56a45d1c49f54380ab0b96ec747c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e33fb1_1c27d891",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-15T23:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12b7fd2f_99862fbf",
+      "revId": "db77754dd5db56a45d1c49f54380ab0b96ec747c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5f14f6d1_a96cf90f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-15T23:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4465377a_8ea9bd5b",
+      "revId": "db77754dd5db56a45d1c49f54380ab0b96ec747c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb7be953_f7e6c1d7",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 11
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-14T20:36:09Z",
       "side": 1,
       "message": "This function should move to ConsoleFilter. I\u0027d call it applyFilter(ConsoleModel.ConsoleMessage):boolean, and make it also increment counters.",
+      "revId": "db77754dd5db56a45d1c49f54380ab0b96ec747c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b60bd3e4_e5933cad",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1167,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-15T23:19:02Z",
+      "side": 1,
+      "message": "Done*,**\n\n*sidebar and the text filter bar uses our nice new ConsoleFilter.  I\u0027ll migrate the other things in followup CLs.\n**After conflating incrementation with shouldBeVisible, I had to\n- plumb sidebar into the ConsoleViewFilter\n- introduce sidebar.applyFilters()\n- introduce sidebar.resetItemCounters()\nwhich feels... a little weird to me",
+      "parentUuid": "fb7be953_f7e6c1d7",
       "revId": "db77754dd5db56a45d1c49f54380ab0b96ec747c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "db77754dd5db56a45d1c49f54380ab0b96ec747c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96e94895_e7d5705d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 11
+      },
+      "lineNbr": 1269,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-15T23:19:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd2d2c85_03753d3d",
+      "revId": "db77754dd5db56a45d1c49f54380ab0b96ec747c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
