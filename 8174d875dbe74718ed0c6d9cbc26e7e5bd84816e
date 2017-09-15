@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "f985198e_2445bb03",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-15T11:21:16Z",
+      "side": 1,
+      "message": "Mihai sent me the bug reference: https://crbug.com/749535\nAnd indeed ChromeOS just never loads the tokens in some cases.\n\nMihai: however when you say: \"we\u0027ll have to make sure that the reconcilor continues to work on ChromeOS\":\n- is the reconcilor actually ever used on ChromeOS?\n- does it actually work and do the right things in those bizarre cases where the tokens are never loaded?\n\nTo me it seems that the whole point of the Reconcilor is moot if the tokens are never loaded, and it seems reasonable to just never run the reconcilor in that case (which would be the behavior after my CL).\n\nWhat do you think?",
+      "parentUuid": "f74606b4_c7387eff",
+      "range": {
+        "startLine": 216,
+        "startChar": 18,
+        "endLine": 216,
+        "endChar": 29
+      },
+      "revId": "8174d875dbe74718ed0c6d9cbc26e7e5bd84816e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a53283e_eac5dc8c",
         "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
         "patchSetId": 7
