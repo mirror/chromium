@@ -22,6 +22,30 @@
       "revId": "bd1b59e1e5fe1d15372c7ab394f9db853083c822",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "539438d8_c7921757",
+        "filename": "ios/clean/chrome/browser/ui/root/root_coordinator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-15T13:50:57Z",
+      "side": 1,
+      "message": "Removed the protocol",
+      "parentUuid": "12d66f5a_e1675120",
+      "range": {
+        "startLine": 14,
+        "startChar": 25,
+        "endLine": 14,
+        "endChar": 45
+      },
+      "revId": "bd1b59e1e5fe1d15372c7ab394f9db853083c822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
