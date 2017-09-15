@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "62831353_34faee2d",
+        "filename": "ios/chrome/browser/ui/commands/show_mail_composer_command.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-09-15T22:19:27Z",
+      "side": 1,
+      "message": "Overall solution to the command/context issue is to rename this to ShowMailComposerContext.",
+      "parentUuid": "9e317c4f_f165d78c",
+      "revId": "f951a23fae061e433dda73218dae8fad6e504199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02471538_84dbeefd",
         "filename": "ios/chrome/browser/ui/commands/show_mail_composer_command.mm",
         "patchSetId": 4
@@ -168,6 +186,30 @@
       "writtenOn": "2017-09-15T22:00:51Z",
       "side": 1,
       "message": "From Coding Guidelines for Cocoa : \"Most protocols group related methods that aren’t associated with any class in particular. This type of protocol should be named so that the protocol won’t be confused with a class. A common convention is to use a gerund (“...ing”) form.\"\n\nhttps://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingBasics.html#//apple_ref/doc/uid/20001281-1002242-BBCIJGDB",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "f951a23fae061e433dda73218dae8fad6e504199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a258a5ce_18c9c376",
+        "filename": "ios/chrome/browser/webui/mail_composer_presenter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-09-15T22:19:27Z",
+      "side": 1,
+      "message": "I assume delegate is an exception?",
+      "parentUuid": "eb619752_02a8696f",
       "range": {
         "startLine": 13,
         "startChar": 10,
