@@ -730,6 +730,24 @@
     },
     {
       "key": {
+        "uuid": "e88f19fc_520df2be",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-15T03:07:38Z",
+      "side": 1,
+      "message": "Suggests to me that we don\u0027t need the while (len \u003c\u003d 4) {} since Clang handles that for us ...\n\n\u003e Once again, we need to have more faith in our compiler.  :)\n\nAmen to that, we hear ya :)  Uploading a patch to drop the extra while loop, PTAL.\n\nAnd if ^^^ makes sense, then we could now re-use the existing adler32 code instead of having it echoed in adler32_simd_ ...\n\nUploading a patch for that too, bumps into Adenilson\u0027s change though.",
+      "parentUuid": "4f400e60_ada1f96c",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1eae378_20622253",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16
