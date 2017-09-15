@@ -13,10 +13,10 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "chrome/browser/ui/passwords/password_manager_porter.h"
 #include "components/password_manager/core/browser/password_store.h"
 #include "components/password_manager/core/browser/password_store_consumer.h"
 #include "components/prefs/pref_member.h"
-#include "ui/shell_dialogs/select_file_dialog.h"
 
 namespace autofill {
 struct PasswordForm;
@@ -72,6 +72,14 @@ class PasswordManagerPresenter
 
   // Returns true if the user is authenticated.
   virtual bool IsUserAuthenticated();
+
+  // Trigger the password import procedure, allowing the user to load passwords
+  // from a file.
+  void ImportPasswords(content::WebContents* web_contents);
+
+  // Trigger the password export procedure, allowing the user to save all their
+  // passwords to a file.
+  void ExportPasswords(content::WebContents* web_contents);
 
  private:
   friend class PasswordManagerPresenterTest;
@@ -151,6 +159,8 @@ class PasswordManagerPresenter
 
   // UI view that owns this presenter.
   PasswordUIView* password_view_;
+
+  PasswordManagerPorter password_manager_porter_;
 
   DISALLOW_COPY_AND_ASSIGN(PasswordManagerPresenter);
 };

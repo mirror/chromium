@@ -74,6 +74,14 @@ class PasswordsPrivateDelegate : public KeyedService {
   virtual void RequestShowPassword(const std::string& origin_url,
                                    const std::string& username,
                                    content::WebContents* web_contents) = 0;
+
+  // Trigger the password import procedure, allowing the user to select a file
+  // containing passwords to import.
+  virtual void ImportPasswords(content::WebContents* web_contents) = 0;
+
+  // Trigger the password export procedure, allowing the user to save a file
+  // containing their passwords.
+  virtual void ExportPasswords(content::WebContents* web_contents) = 0;
 };
 
 }  // namespace extensions
