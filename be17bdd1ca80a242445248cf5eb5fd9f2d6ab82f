@@ -34,6 +34,24 @@
       "revId": "be17bdd1ca80a242445248cf5eb5fd9f2d6ab82f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ba16236_50d56306",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-15T17:39:49Z",
+      "side": 1,
+      "message": "Where are they made exclusive?\n\nhttps://cs.chromium.org/chromium/src/net/http/http_cache.cc?sq\u003dpackage:chromium\u0026l\u003d1271 shows that if there is a writer, then we won\u0027t start a reader. But I don\u0027t see anything stopping a writer once a reader is started.",
+      "parentUuid": "9cbe53f7_f06b5640",
+      "revId": "be17bdd1ca80a242445248cf5eb5fd9f2d6ab82f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
