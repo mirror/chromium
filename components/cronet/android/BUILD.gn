@@ -456,8 +456,8 @@ instrumentation_test_apk("cronet_sample_test_apk") {
     "//base:base_java",
     "//base:base_java_test_support",
     "//net/android:net_java_test_support",
-    "//third_party/android_support_test_runner:runner_java",
     "//third_party/android_support_test_runner:rules_java",
+    "//third_party/android_support_test_runner:runner_java",
     "//third_party/junit",
   ]
   additional_apks = [ "//net/android:net_test_support_apk" ]
@@ -585,8 +585,8 @@ android_library("cronet_smoketests_native_java") {
     ":cronet_test_apk_java",
     "//base:base_java",
     "//base:base_java_test_support",
-    "//third_party/junit",
     "//third_party/android_support_test_runner:runner_java",
+    "//third_party/junit",
     "//third_party/netty4:netty_all_java",
   ]
 }
@@ -661,7 +661,6 @@ android_library("cronet_javatests") {
     "test/javatests/src/org/chromium/net/BrotliTest.java",
     "test/javatests/src/org/chromium/net/Criteria.java",
     "test/javatests/src/org/chromium/net/CronetEngineBuilderTest.java",
-    "test/javatests/src/org/chromium/net/CronetTestBase.java",
     "test/javatests/src/org/chromium/net/CronetTestCommon.java",
     "test/javatests/src/org/chromium/net/CronetTestRule.java",
     "test/javatests/src/org/chromium/net/CronetTestBaseTest.java",
@@ -753,8 +752,8 @@ android_library("cronet_smoketests_platform_only_java") {
   deps = [
     ":cronet_api_java",
     "//base:base_java_test_support",
-    "//third_party/junit",
     "//third_party/android_support_test_runner:runner_java",
+    "//third_party/junit",
     "//third_party/netty4:netty_all_java",
   ]
 }
@@ -805,8 +804,8 @@ android_library("cronet_smoketests_missing_native_library_java") {
     ":cronet_test_apk_java",
     "//base:base_java",
     "//base:base_java_test_support",
-    "//third_party/junit",
     "//third_party/android_support_test_runner:runner_java",
+    "//third_party/junit",
     "//third_party/netty4:netty_all_java",
   ]
 }
