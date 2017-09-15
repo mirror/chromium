@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "44fcf524_7ac2cc73",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-15T20:32:41Z",
+      "side": 1,
+      "message": "That would be much clearer.",
+      "parentUuid": "1160e734_fcf15d1f",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15c1aa8e_f05b6394",
         "filename": "chrome/browser/vr/elements/transient_element.cc",
         "patchSetId": 2
@@ -48,6 +66,47 @@
       "writtenOn": "2017-09-15T20:05:30Z",
       "side": 1,
       "message": "Rather than using will_be_visible_ and maintaining it, please add and use vr::AnimationPlayer::GetTargetFloatValue. Also, if you add the other \"Target\" methods for the other animated types while you\u0027re in there, you can close crbug.com/754822",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f67cff_a89c9f08",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-15T20:32:41Z",
+      "side": 1,
+      "message": "Heh, I had suggested losing all knowledge of animation.  To me, whether the thing is set to be visible or not is separate from whether it happens to be animating.  Personally I would have also used the extra flag or a variant of.  But, the \"flag\" could be done differently, like keeping the timestamp of the future timeout time.  If the timestamp is 0, we\u0027re not visible.  If it\u0027s non zero, we\u0027re visible.  If it\u0027s non-zero but less than the current time, we\u0027ve timed out, and should go invisible and zero the timestamp.  *handwaves*  Or something.",
+      "parentUuid": "15c1aa8e_f05b6394",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d95ed610_6081c115",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-15T20:32:41Z",
+      "side": 1,
+      "message": "initialization",
+      "range": {
+        "startLine": 23,
+        "startChar": 44,
+        "endLine": 23,
+        "endChar": 57
+      },
       "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
