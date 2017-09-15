@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "892b56de_2925ca9a",
+        "filename": "net/socket/socket_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-09-15T17:55:19Z",
+      "side": 1,
+      "message": "Is it possible that it would have been non-blocking before this call? (i.e. do you have to save and restore the state, rather than simply setting non-blocking after connect()?",
+      "revId": "320249ac73b5758a3fe8f9e087408b3370d7eaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
