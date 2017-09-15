@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "7bfe8fef_14d42257",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T20:40:14Z",
+      "side": 1,
+      "message": "I have no objections.  I think what you wrote is clear, safe, and sufficiently performant.",
+      "parentUuid": "8fd1ed1e_2b95eb75",
+      "revId": "c1a6f6cbb5b2b5edfb348bbabc26fd2cde6e5d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a90a6e9b_d0ac31ee",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
         "patchSetId": 3
