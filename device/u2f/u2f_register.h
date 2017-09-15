@@ -7,7 +7,7 @@
 
 #include <vector>
 
-#include "u2f_request.h"
+#include "device/u2f/u2f_request.h"
 
 namespace device {
 
@@ -15,13 +15,15 @@ class U2fRegister : public U2fRequest {
  public:
   U2fRegister(const std::vector<uint8_t>& challenge_hash,
               const std::vector<uint8_t>& app_param,
-              const ResponseCallback& cb);
+              const ResponseCallback& cb,
+              device::mojom::HidManager* hid_manager);
   ~U2fRegister() override;
 
   static std::unique_ptr<U2fRequest> TryRegistration(
       const std::vector<uint8_t>& challenge_hash,
       const std::vector<uint8_t>& app_param,
-      const ResponseCallback& cb);
+      const ResponseCallback& cb,
+      device::mojom::HidManager* hid_manager);
 
  private:
   void TryDevice() override;

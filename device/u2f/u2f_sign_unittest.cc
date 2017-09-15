@@ -7,12 +7,11 @@
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/test/test_io_thread.h"
-#include "device/base/mock_device_client.h"
-#include "device/hid/mock_hid_service.h"
-#include "device/test/test_device_client.h"
-#include "mock_u2f_device.h"
+#include "device/hid/public/interfaces/hid.mojom.h"
+#include "device/u2f/fake_hid_impl_for_testing.h"
+#include "device/u2f/mock_u2f_device.h"
+#include "device/u2f/u2f_sign.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "u2f_sign.h"
 
 namespace device {
 class U2fSignTest : public testing::Test {
@@ -22,15 +21,9 @@ class U2fSignTest : public testing::Test {
             base::test::ScopedTaskEnvironment::MainThreadType::UI),
         io_thread_(base::TestIOThread::kAutoStart) {}
 
-  void SetUp() override {
-    MockHidService* hid_service = device_client_.hid_service();
-    hid_service->FirstEnumerationComplete();
-  }
-
  protected:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   base::TestIOThread io_thread_;
-  device::MockDeviceClient device_client_;
 };
 
 class TestSignCallback {
@@ -70,9 +63,12 @@ TEST_F(U2fSignTest, TestSignSuccess) {
   EXPECT_CALL(*device.get(), TryWink(testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::WinkDoNothing));
   TestSignCallback cb;
-  std::unique_ptr<U2fRequest> request =
-      U2fSign::TrySign(handles, std::vector<uint8_t>(32),
-                       std::vector<uint8_t>(32), cb.callback());
+  device::mojom::HidManagerPtr hid_manager;
+  FakeHidManager fake_hid_manager_impl(mojo::MakeRequest(&hid_manager));
+
+  std::unique_ptr<U2fRequest> request = U2fSign::TrySign(
+      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
+      cb.callback(), hid_manager.get());
   request->Start();
   request->AddDeviceForTesting(std::move(device));
   std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
@@ -96,10 +92,12 @@ TEST_F(U2fSignTest, TestDelayedSuccess) {
       .Times(2)
       .WillRepeatedly(testing::Invoke(MockU2fDevice::WinkDoNothing));
   TestSignCallback cb;
+  device::mojom::HidManagerPtr hid_manager;
+  FakeHidManager fake_hid_manager_impl(mojo::MakeRequest(&hid_manager));
 
-  std::unique_ptr<U2fRequest> request =
-      U2fSign::TrySign(handles, std::vector<uint8_t>(32),
-                       std::vector<uint8_t>(32), cb.callback());
+  std::unique_ptr<U2fRequest> request = U2fSign::TrySign(
+      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
+      cb.callback(), hid_manager.get());
   request->Start();
   request->AddDeviceForTesting(std::move(device));
   std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
@@ -131,9 +129,12 @@ TEST_F(U2fSignTest, TestMultipleHandles) {
       .WillOnce(testing::Invoke(MockU2fDevice::WinkDoNothing));
 
   TestSignCallback cb;
-  std::unique_ptr<U2fRequest> request =
-      U2fSign::TrySign(handles, std::vector<uint8_t>(32),
-                       std::vector<uint8_t>(32), cb.callback());
+  device::mojom::HidManagerPtr hid_manager;
+  FakeHidManager fake_hid_manager_impl(mojo::MakeRequest(&hid_manager));
+
+  std::unique_ptr<U2fRequest> request = U2fSign::TrySign(
+      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
+      cb.callback(), hid_manager.get());
   request->Start();
   request->AddDeviceForTesting(std::move(device));
   std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
@@ -164,9 +165,12 @@ TEST_F(U2fSignTest, TestMultipleDevices) {
       .WillOnce(testing::Invoke(MockU2fDevice::WinkDoNothing));
 
   TestSignCallback cb;
-  std::unique_ptr<U2fRequest> request =
-      U2fSign::TrySign(handles, std::vector<uint8_t>(32),
-                       std::vector<uint8_t>(32), cb.callback());
+  device::mojom::HidManagerPtr hid_manager;
+  FakeHidManager fake_hid_manager_impl(mojo::MakeRequest(&hid_manager));
+
+  std::unique_ptr<U2fRequest> request = U2fSign::TrySign(
+      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
+      cb.callback(), hid_manager.get());
   request->Start();
   request->AddDeviceForTesting(std::move(device0));
   request->AddDeviceForTesting(std::move(device1));
@@ -201,9 +205,12 @@ TEST_F(U2fSignTest, TestFakeEnroll) {
       .WillOnce(testing::Invoke(MockU2fDevice::WinkDoNothing));
 
   TestSignCallback cb;
-  std::unique_ptr<U2fRequest> request =
-      U2fSign::TrySign(handles, std::vector<uint8_t>(32),
-                       std::vector<uint8_t>(32), cb.callback());
+  device::mojom::HidManagerPtr hid_manager;
+  FakeHidManager fake_hid_manager_impl(mojo::MakeRequest(&hid_manager));
+
+  std::unique_ptr<U2fRequest> request = U2fSign::TrySign(
+      handles, std::vector<uint8_t>(32), std::vector<uint8_t>(32),
+      cb.callback(), hid_manager.get());
   request->Start();
   request->AddDeviceForTesting(std::move(device0));
   request->AddDeviceForTesting(std::move(device1));
