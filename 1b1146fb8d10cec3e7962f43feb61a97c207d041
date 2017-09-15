@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddb0e7e6_6fa2bbf8",
+        "filename": "chrome/browser/resources/print_preview/print_preview.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-15T22:53:56Z",
+      "side": 1,
+      "message": "Nit: Let\u0027s use ES6 arrow function to avoid the call to bind(this).",
+      "revId": "1b1146fb8d10cec3e7962f43feb61a97c207d041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
