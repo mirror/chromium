@@ -16,6 +16,24 @@
       "revId": "dbeb0880a01729d2e2554159fee53ef42e2f4e0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac6a031a_03e6f52e",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-15T13:33:30Z",
+      "side": 1,
+      "message": "To be clear, experimental list is not supported at the server end and was only supported at client end. Since this CL removes the support it basically means we are back to the original behavior where there was no experimental list.",
+      "parentUuid": "d9b1bacd_c20d83e8",
+      "revId": "dbeb0880a01729d2e2554159fee53ef42e2f4e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
