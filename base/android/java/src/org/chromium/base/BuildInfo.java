@@ -28,7 +28,7 @@ public class BuildInfo {
 
     @SuppressWarnings("deprecation")
     @CalledByNative
-    private static String[] getAll() {
+    public static String[] getAll() {
         try {
             String packageName = ContextUtils.getApplicationContext().getPackageName();
             PackageManager pm = ContextUtils.getApplicationContext().getPackageManager();

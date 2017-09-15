@@ -278,6 +278,8 @@ chrome_java_sources = [
   "java/src/org/chromium/chrome/browser/crash/MinidumpLogcatPrepender.java",
   "java/src/org/chromium/chrome/browser/crash/MinidumpUploadRetry.java",
   "java/src/org/chromium/chrome/browser/crash/MinidumpUploadService.java",
+  "java/src/org/chromium/chrome/browser/crash/PureJavaExceptionHandler.java",
+  "java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
   "java/src/org/chromium/chrome/browser/customtabs/ClientManager.java",
   "java/src/org/chromium/chrome/browser/customtabs/CustomButtonParams.java",
   "java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
