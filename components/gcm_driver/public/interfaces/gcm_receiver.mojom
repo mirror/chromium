@@ -1,0 +1,68 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module gcm.mojom;
+
+import "net/interfaces/ip_endpoint.mojom";
+
+const string kGCMServiceName = "gcm";
+
+// GCMReceiver operation result (see components/gcm_driver/gcm_receiver.h).
+enum GCMResult {
+  SUCCESS,
+  INVALID_PARAMETER,
+  GCM_DISABLED,
+  AYSNC_OPERATION_PENDING,
+  NETWORK_ERROR,
+  SERVER_ERROR,
+  TTL_EXCEEDED,
+  UNKNOWN_ERROR,
+};
+
+// common/gcm_messages.h
+struct GCMIncomingMessage {
+  map<string, string> data;
+  string collapse_key;
+  string sender_id;
+  string raw_data;
+  bool decrypted;
+};
+
+// gcm_client.h
+struct GCMSendErrorDetails {
+  string message_id;
+  map<string, string> additional_data;
+  GCMResult result;
+};
+
+interface GCMReceiver {
+  [Sync]
+  GetGCMHandler(string app_id) => (GCMHandler handler);
+  AddGCMHandler(string app_id, GCMHandler handler);
+  RemoveGCMHandler(string app_id);
+
+  AddConnectionObserver(GCMConnectionObserver observer);
+  RemoveConnectionObserver(GCMConnectionObserver observer);
+
+  IsIdle();
+
+  EnsureStarted();
+  Shutdown();
+
+  Register(string app_id, array<string> sender_id) => (string iid_token, GCMResult result);
+};
+
+interface GCMHandler {
+  ShutdownHandler();
+  OnStoreReset();
+  OnMessage(string app_id, GCMIncomingMessage message);
+  OnMessagesDeleted(string app_id);
+  OnSendError(string app_id, GCMSendErrorDetails send_error_details);
+  OnSendAcknowledged(string app_id, string message_id);
+};
+
+interface GCMConnectionObserver {
+  OnConnected(net.interfaces.IPEndPoint ip_endpoint);
+  OnDisconnected();
+};

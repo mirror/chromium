@@ -2,6 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//services/service_manager/public/cpp/service.gni")
+
 static_library("gcm_driver") {
   sources = [
     "android/component_jni_registrar.cc",
@@ -189,4 +191,37 @@ source_set("unit_tests") {
       "gcm_stats_recorder_impl_unittest.cc",
     ]
   }
+}
+
+source_set("gcm_receiver") {
+  sources = [
+    "gcm_receiver_impl.cc",
+    "gcm_receiver_impl.h",
+  ]
+
+  deps = [
+    "//base",
+    "//components/gcm_driver",
+    "//components/prefs",
+    "//mojo/public/cpp/bindings",
+    "//net",
+    "//services/service_manager/public/cpp",
+  ]
+}
+
+service("gcm") {
+  sources = [
+    "gcm_service.cc",
+    "gcm_service.h",
+    "main.cc",
+  ]
+
+  deps = [
+    ":gcm_receiver",
+    "//components/gcm_driver/public/interfaces",
+    "//mojo/common",
+    "//mojo/public/cpp/bindings",
+    "//mojo/public/cpp/system",
+    "//services/service_manager/public/cpp",
+  ]
 }
