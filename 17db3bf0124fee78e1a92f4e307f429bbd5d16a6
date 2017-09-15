@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bc177e9_9d320bac",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-15T07:59:20Z",
+      "side": 1,
+      "message": "It seems we don\u0027t need |host_defined_options|.",
+      "revId": "17db3bf0124fee78e1a92f4e307f429bbd5d16a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e881625_431d2c9b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-15T07:59:20Z",
+      "side": 1,
+      "message": "A little concern that ToV8HostDefinedOptions() would be much heavier than v8::PrimitiveArray() (just an empty handle).\n\nWhat about the following way?\n\nCompileScriptInternal(..., const ReferrerScriptInfo* referrer_info) {\n  ...\n  v8::ScriptOrigin origin(...,\n      referrer_info ? referrer_info.ToV8HostDefinedOptions(isolate)\n                    : v8::PrimitiveArray());\n  ...\n}\n\nCompileScript(... w/o ReferrerScriptInfo) {\n  CompileScriptInternal(..., nullptr);\n}\n\nCompileScript(..., const ReferrerScriptInfo\u0026 referrer_info) {\n  CompileScriptInternal(..., \u0026referrer_info);\n}",
+      "revId": "17db3bf0124fee78e1a92f4e307f429bbd5d16a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
