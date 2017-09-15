@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d86c5bbd_45b1f319",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-15T05:23:20Z",
+      "side": 1,
+      "message": "The callback declaration in chromeos/dbus/dbus_method_call_status.h and the original code both use \"result\" as the argument name.\nPlease prefer using \"result\".\n\nThe same goes for others.",
+      "range": {
+        "startLine": 1182,
+        "startChar": 25,
+        "endLine": 1182,
+        "endChar": 33
+      },
+      "revId": "b7c07911c5003a5600461d543991947ba36dee3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13078fe1_c673bbc1",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-15T05:23:20Z",
+      "side": 1,
+      "message": "This is a bit difficult to understand especially when negated.\nHow about explicitly calling has_value(), at least when the expression is negated, for better readability?",
+      "range": {
+        "startLine": 1183,
+        "startChar": 17,
+        "endLine": 1183,
+        "endChar": 41
+      },
+      "revId": "b7c07911c5003a5600461d543991947ba36dee3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9be4cbb_c1e4d34e",
+        "filename": "chrome/browser/chromeos/app_mode/kiosk_profile_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-15T05:23:20Z",
+      "side": 1,
+      "message": "How about using has_value()?\nIt should be less ambiguous especially when the value type is bool.",
+      "range": {
+        "startLine": 107,
+        "startChar": 9,
+        "endLine": 107,
+        "endChar": 28
+      },
+      "revId": "b7c07911c5003a5600461d543991947ba36dee3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35826d0_ee3a7eac",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-15T05:23:20Z",
+      "side": 1,
+      "message": "Could you leave the logic unchanged?\nThis is not related to the main topic of this CL, and can be safely done in a separate CL.\n\nThe same goes for others.",
+      "revId": "b7c07911c5003a5600461d543991947ba36dee3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
