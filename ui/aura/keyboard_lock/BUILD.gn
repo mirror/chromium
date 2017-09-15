@@ -1,0 +1,37 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+static_library("keyboard_lock") {
+  sources = [
+    "activator.h",
+    "active_client_key_event_filter.h",
+    "active_client_tracker.h",
+    "client.h",
+    "hook.h",
+    "host.h",
+    "special_key_detector.cc",
+    "special_key_detector.h",
+    "observer.h",
+    "platform_hook.cc",
+    "platform_hook.h",
+    "platform_hook_null.cc",
+    "platform_hook_null.h",
+    "platform_hook_win.cc",
+    "platform_hook_win.h",
+    "state_keeper.cc",
+    "state_keeper.h",
+    "state_keeper_collection.h",
+    "types.h",
+  ]
+
+  deps = [
+    "//base",
+  ]
+
+  public_deps = [
+    "//ui/events",
+    "//ui/events:dom_keycode_converter",
+    "//ui/events/platform:key_event_filter",
+  ]
+}
