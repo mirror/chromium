@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "baa637e5_13da116e",
+        "filename": "ui/aura/keyboard_lock/activator.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-09-15T14:55:27Z",
+      "side": 1,
+      "message": "Sorry, I have made a mistake in the last comment. These function should be asynchronous, because the underlying PlatformHook::Register / Unregister may be asynchronous, e.g. an IPC call.",
+      "parentUuid": "4611d6b5_114162c2",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 65
+      },
+      "revId": "5628453759f05531b569ecce3aa6bd6f0e0723eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d32603f3_accdc70c",
         "filename": "ui/aura/keyboard_lock/platform_hook.h",
         "patchSetId": 14
