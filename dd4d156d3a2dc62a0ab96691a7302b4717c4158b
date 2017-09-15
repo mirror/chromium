@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cfdd6b5_7ae85f5d",
+        "filename": "third_party/zlib/names.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-15T16:25:13Z",
+      "side": 1,
+      "message": "The reason this symbols are redefined is to avoid link clashes with other zlibs inside of Chrome (like in PDFium) and the system\u0027s zlib.\n\nFor the first case, PDFium now uses Chromium\u0027s zlib and no longer ships another copy of zlib. For the second, you should not have clashes with zlib (e.g. they don\u0027t define \u0027adler32_simd\u0027).",
+      "revId": "dd4d156d3a2dc62a0ab96691a7302b4717c4158b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
