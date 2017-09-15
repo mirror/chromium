@@ -34,6 +34,7 @@
 #include "core/css/CSSPropertyEquality.h"
 #include "core/css/properties/CSSPropertyAPI.h"
 #include "core/css/resolver/StyleResolver.h"
+#include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutTheme.h"
 #include "core/layout/TextAutosizer.h"
 #include "core/style/AppliedTextDecoration.h"
@@ -874,18 +875,20 @@ InterpolationQuality ComputedStyle::GetInterpolationQuality() const {
 void ComputedStyle::ApplyTransform(
     TransformationMatrix& result,
     const LayoutSize& border_box_size,
+    const LayoutObject* layout_object,
     ApplyTransformOrigin apply_origin,
     ApplyMotionPath apply_motion_path,
     ApplyIndependentTransformProperties apply_independent_transform_properties)
     const {
   ApplyTransform(result, FloatRect(FloatPoint(), FloatSize(border_box_size)),
-                 apply_origin, apply_motion_path,
+                 layout_object, apply_origin, apply_motion_path,
                  apply_independent_transform_properties);
 }
 
 void ComputedStyle::ApplyTransform(
     TransformationMatrix& result,
     const FloatRect& bounding_box,
+    const LayoutObject* layout_object,
     ApplyTransformOrigin apply_origin,
     ApplyMotionPath apply_motion_path,
     ApplyIndependentTransformProperties apply_independent_transform_properties)
@@ -925,8 +928,10 @@ void ComputedStyle::ApplyTransform(
       Scale()->Apply(result, box_size);
   }
 
-  if (apply_motion_path == kIncludeMotionPath)
-    ApplyMotionPathTransform(origin_x, origin_y, bounding_box, result);
+  if (apply_motion_path == kIncludeMotionPath) {
+    ApplyMotionPathTransform(origin_x, origin_y, bounding_box, layout_object,
+                             result);
+  }
 
   for (const auto& operation : Transform().Operations())
     operation->Apply(result, box_size);
@@ -944,15 +949,42 @@ void ComputedStyle::ApplyMotionPathTransform(
     float origin_x,
     float origin_y,
     const FloatRect& bounding_box,
+    const LayoutObject* layout_object,
     TransformationMatrix& transform) const {
-  // TODO(ericwilligers): crbug.com/638055 Apply offset-position.
-  if (!OffsetPath()) {
+  const LengthPoint& position = OffsetPosition();
+  const BasicShape* path = OffsetPath();
+  if (position.X() == Length(kAuto) && !path) {
     return;
   }
-  const LengthPoint& position = OffsetPosition();
   const LengthPoint& anchor = OffsetAnchor();
+
+  LayoutSize offsetFromContainer;
+  FloatRect parentAbsoluteBoundingBox;
+  if (layout_object && layout_object->Parent()) {
+    parentAbsoluteBoundingBox =
+        layout_object->Parent()->AbsoluteBoundingBoxFloatRect();
+    offsetFromContainer =
+        layout_object->OffsetFromContainer(layout_object->Parent());
+  }
+
+  if (position.X() != Length(kAuto)) {
+    transform.Translate(
+        FloatValueForLength(position.X(), parentAbsoluteBoundingBox.Width()) -
+            offsetFromContainer.Width().ToFloat(),
+        FloatValueForLength(position.Y(), parentAbsoluteBoundingBox.Height()) -
+            offsetFromContainer.Height().ToFloat());
+  }
+
+  if (!path) {
+    const LengthPoint& usedAnchor =
+        (anchor.X() == Length(kAuto)) ? position : anchor;
+    transform.Translate(
+        -FloatValueForLength(usedAnchor.X(), bounding_box.Width()),
+        -FloatValueForLength(usedAnchor.Y(), bounding_box.Height()));
+    return;
+  }
+
   const Length& distance = OffsetDistance();
-  const BasicShape* path = OffsetPath();
   const StyleOffsetRotation& rotate = OffsetRotate();
 
   FloatPoint point;
