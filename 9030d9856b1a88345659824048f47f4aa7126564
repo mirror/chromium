@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02b4b5ab_cfd717a7",
+        "filename": "chrome/test/base/chrome_unit_test_suite.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-15T16:08:58Z",
+      "side": 1,
+      "message": "Not needed anymore",
+      "revId": "9030d9856b1a88345659824048f47f4aa7126564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
