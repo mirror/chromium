@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cc664ed_b68a21fd",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-15T21:28:23Z",
+      "side": 1,
+      "message": "shouldnt\u0027 this be intentStartUrl? I guess it\u0027s sorta garbage in, garbage out but seems more correct to not muck with inputs if we dont\u0027 understand the state.",
+      "range": {
+        "startLine": 137,
+        "startChar": 48,
+        "endLine": 137,
+        "endChar": 56
+      },
+      "revId": "3eb46e8d8730946b67f86ee31bfcc5d5cf5ed294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ed65f80_66198de9",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-15T21:28:23Z",
+      "side": 1,
+      "message": "flip the order of these two if statements (most webapks wont\u0027 have a LOGGED_INTENT_URL_PARAM) so no need to do the string parsign.",
+      "range": {
+        "startLine": 142,
+        "startChar": 17,
+        "endLine": 142,
+        "endChar": 26
+      },
+      "revId": "3eb46e8d8730946b67f86ee31bfcc5d5cf5ed294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
