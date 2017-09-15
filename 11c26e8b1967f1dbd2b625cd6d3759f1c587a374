@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5bc478f7_3add6fee",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-15T21:01:43Z",
+      "side": 1,
+      "message": "Plumb it here as well.",
+      "revId": "11c26e8b1967f1dbd2b625cd6d3759f1c587a374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a18c48ff_d3a6df54",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 623,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-15T21:01:43Z",
+      "side": 1,
+      "message": "Are you sure we need these if blocks now?",
+      "revId": "11c26e8b1967f1dbd2b625cd6d3759f1c587a374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3a2817_5b1c471e",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-15T21:01:43Z",
+      "side": 1,
+      "message": "Should we do this all the time?",
+      "revId": "11c26e8b1967f1dbd2b625cd6d3759f1c587a374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe01637_ea2ef9e5",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-15T21:01:43Z",
+      "side": 1,
+      "message": "drop it",
+      "range": {
+        "startLine": 683,
+        "startChar": 4,
+        "endLine": 683,
+        "endChar": 11
+      },
+      "revId": "11c26e8b1967f1dbd2b625cd6d3759f1c587a374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1029272d_4541fd14",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-15T21:01:43Z",
+      "side": 1,
+      "message": "ToResourceType(...)",
+      "range": {
+        "startLine": 750,
+        "startChar": 32,
+        "endLine": 750,
+        "endChar": 48
+      },
+      "revId": "11c26e8b1967f1dbd2b625cd6d3759f1c587a374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
