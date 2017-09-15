@@ -5,8 +5,8 @@
 #ifndef VRDisplay_h
 #define VRDisplay_h
 
+#include "bindings/core/v8/v8_frame_request_callback.h"
 #include "core/dom/Document.h"
-#include "core/dom/FrameRequestCallback.h"
 #include "core/dom/SuspendableObject.h"
 #include "core/dom/events/EventTarget.h"
 #include "device/vr/vr_service.mojom-blink.h"
@@ -28,7 +28,6 @@ class GLES2Interface;
 namespace blink {
 
 class NavigatorVR;
-class ScriptedAnimationController;
 class VRController;
 class VREyeParameters;
 class VRFrameData;
@@ -68,7 +67,7 @@ class VRDisplay final : public EventTargetWithInlineData,
 
   VREyeParameters* getEyeParameters(const String&);
 
-  int requestAnimationFrame(FrameRequestCallback*);
+  int requestAnimationFrame(V8FrameRequestCallback*);
   void cancelAnimationFrame(int id);
 
   ScriptPromise requestPresent(ScriptState*,
