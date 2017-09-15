@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4791c8c_bc42dd1a",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-15T16:59:36Z",
+      "side": 1,
+      "message": "nit: maybe also add a EXPECT_EQ(expected_total, cached_area1-\u003earea_memory_used())?",
+      "revId": "69ef68b030d79fa579a82dab63da96752b3e2378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a146aea0_a07cb50a",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-15T16:59:36Z",
+      "side": 1,
+      "message": "I wonder if it might make sense to move these constants to content/common/dom_storage/dom_storage_types.h (although you\u0027d have to rename them to make it a bit clearer that it is the renderer side cache then). That way the relation between these values and per-area quota is easier to see.\n\nAlso curious how you picked these values (not that they don\u0027t seem reasonable, just curious).",
+      "revId": "69ef68b030d79fa579a82dab63da96752b3e2378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a209af6_499b419a",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-15T16:59:36Z",
+      "side": 1,
+      "message": "any particular reason this is an explicit memory comparison, rather than base::SysInfo::IsLowEndDevice()?",
+      "revId": "69ef68b030d79fa579a82dab63da96752b3e2378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c4fa9a3_fd48155b",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-15T16:59:36Z",
+      "side": 1,
+      "message": "would it make sense to UMA log the size of the cache here? and not sure what other histograms might make sense, but it probably makes sense to have some metrics to (try to) see the effect of this code.\nMaybe a helpful one would also be how often this method returns something from the cache, where the returned area had refcount one vs refcount !\u003d 1. That could show you at least the benefit of the cache.",
+      "revId": "69ef68b030d79fa579a82dab63da96752b3e2378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d295f5c_764d879c",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-15T16:59:36Z",
+      "side": 1,
+      "message": "not saying this eviction strategy is wrong, but it seems somewhat arbitrary to clear origins in alphabetical order until the size is under the limit. On the browser side if we total size \u003e limit we just clear everything we can, rather than only clearing some subset until we\u0027re under the limit. Might at least be something to consider (and at least make sure we have metrics we can use to compare one eviction strategy to another).",
+      "revId": "69ef68b030d79fa579a82dab63da96752b3e2378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19447bde_26382aaf",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-15T16:59:36Z",
+      "side": 1,
+      "message": "why this break (and related, why the two loops)? couldn\u0027t you just have one while (it !\u003d end \u0026\u0026 size \u003e limit) loop?",
+      "revId": "69ef68b030d79fa579a82dab63da96752b3e2378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
