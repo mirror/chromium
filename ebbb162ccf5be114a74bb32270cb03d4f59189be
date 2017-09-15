@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "8eaa4a59_22524428",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-15T07:08:13Z",
+      "side": 1,
+      "message": "Fair enough about deferring the vector stuff; I can live with this being a little messy in the meantime.\n\nI\u0027m less sure about using a message pipe handle directly, because there is some non-trivial work done there that I\u0027m not super eager to mix with the DOM message port logic.",
+      "parentUuid": "020f0c2f_84549d90",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70dcfd88_78a3b807",
         "filename": "third_party/WebKit/Source/core/dom/MessagePort.cpp",
         "patchSetId": 13
@@ -485,6 +503,24 @@
       "writtenOn": "2017-09-14T21:50:38Z",
       "side": 1,
       "message": "I could also change this one to a forward declaration, if either the implementation of Connect() moves to a .cpp file, or it is changed to a pure virtual method. WDYT?",
+      "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe720afd_0b4e6ff6",
+        "filename": "third_party/WebKit/public/web/WebSharedWorkerRepositoryClient.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-09-15T07:08:13Z",
+      "side": 1,
+      "message": "Pure virtual would be my ideal. I\u0027m okay with leaving includes of these if they\u0027re helpful; I just figured some of them looked like they ought to compile with just the forward declaration.",
+      "parentUuid": "1aaa58bf_9d2b9313",
       "revId": "ebbb162ccf5be114a74bb32270cb03d4f59189be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
