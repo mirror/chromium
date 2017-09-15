@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19b6227f_0827f4f1",
+        "filename": "ash/shell_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T16:18:26Z",
+      "side": 0,
+      "message": "Hooray! So nice to see these go away.",
+      "revId": "9d7d4cdcd74dd80bd99a36b11a1d48f0e301b841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e867ace4_cf87bcb5",
+        "filename": "ash/test_shell_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T16:18:26Z",
+      "side": 0,
+      "message": "So nice to see this going away too.",
+      "revId": "9d7d4cdcd74dd80bd99a36b11a1d48f0e301b841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
