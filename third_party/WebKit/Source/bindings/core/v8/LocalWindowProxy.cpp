@@ -226,6 +226,8 @@ void LocalWindowProxy::CreateContext() {
       v8::Local<v8::ObjectTemplate> global_template =
           V8Window::domTemplate(isolate, *world_)->InstanceTemplate();
       CHECK(!global_template.IsEmpty());
+      TRACE_EVENT1("v8", "ContextCreation", "IsMainFrame",
+                   GetFrame()->IsMainFrame());
       context = v8::Context::New(isolate, &extension_configuration,
                                  global_template, global_proxy);
       VLOG(1) << "A context is created NOT from snapshot";
