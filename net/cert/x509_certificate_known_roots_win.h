@@ -7,6 +7,10 @@
 
 #include <stdint.h>
 
+#include "net/base/hash_value.h"
+
+namespace net {
+
 // This is a union of Microsoft trust roots over time, from 01 January
 // 2007 through 13 June 2017.
 //
@@ -16,7 +20,7 @@
 //
 // Note that these *are not* trust anchors for Chromium. They are only used to
 // distinguish `real' root CAs from roots that were user-installed.
-static const uint8_t kKnownRootCertSHA256Hashes[][32] = {
+static const SHA256HashValue kKnownRootCertSHA256Hashes[] = {
     // C=US, O=Network Solutions L.L.C., CN=Network Solutions Certificate
     // Authority
     {0x00, 0x16, 0x86, 0xCD, 0x18, 0x1F, 0x83, 0xA1, 0xB1, 0x21, 0x7D,
@@ -2064,5 +2068,10 @@ static const uint8_t kKnownRootCertSHA256Hashes[][32] = {
      0x4E, 0x68, 0x68, 0x22, 0xF3, 0xAC, 0x0F, 0x1C, 0x5E, 0x0C, 0x2D,
      0x5C, 0x0E, 0xB2, 0x48, 0x4C, 0xE7, 0xE2, 0x54, 0x0F, 0xD0},
 };
+
+static const kKnownRootCertSHA256HashesLength =
+    arraysize(kKnownRootCertSHA256Hashes);
+
+}  // namespace net
 
 #endif  // NET_CERT_X509_CERTIFICATE_KNOWN_ROOTS_WIN_H_
