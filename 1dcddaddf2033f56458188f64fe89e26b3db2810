@@ -16,6 +16,24 @@
       "revId": "1dcddaddf2033f56458188f64fe89e26b3db2810",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1cd4d31_dc89245d",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-09-15T10:02:11Z",
+      "side": 1,
+      "message": "Can you do it the other way around? i.e. Remove the switch from chrome_switches and replace its uses with the one you added in content_switches?",
+      "parentUuid": "11f425b3_7aa7767f",
+      "revId": "1dcddaddf2033f56458188f64fe89e26b3db2810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
