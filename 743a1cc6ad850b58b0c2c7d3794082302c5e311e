@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "079d68ce_5cd79c81",
+        "filename": "content/renderer/media/webrtc/two_keys_adapter_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-15T09:56:00Z",
+      "side": 1,
+      "message": "Update comment to explain what the return value points to.",
+      "range": {
+        "startLine": 36,
+        "startChar": 41,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "743a1cc6ad850b58b0c2c7d3794082302c5e311e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea6a180b_0b188adf",
+        "filename": "content/renderer/media/webrtc/webrtc_media_stream_adapter_map_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-15T09:56:00Z",
+      "side": 1,
+      "message": "Can you add some tests with lookup by secondary key?",
+      "revId": "743a1cc6ad850b58b0c2c7d3794082302c5e311e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
