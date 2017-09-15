@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fb08bfd0_6b1e6d57",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-15T15:50:46Z",
+      "side": 1,
+      "message": "Thanks!. Done.",
+      "parentUuid": "2aa699ae_4a874c0e",
+      "revId": "72e09a3d79f3e714bf5e09dea558a9f043f92e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d36ca007_587825d1",
         "filename": "content/renderer/browser_plugin/browser_plugin.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-14T22:59:23Z",
       "side": 1,
       "message": "Not sure if this is relevant, but it looks like this is making the same assumption that |IsEmpty()| indicates uninitialised.",
+      "revId": "72e09a3d79f3e714bf5e09dea558a9f043f92e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd4cb98_081afb53",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-15T15:50:46Z",
+      "side": 1,
+      "message": "Yes you are correct. I did not change this deliberately since the other changes seemed to have fixed the regression and I was trying to avoid any excess changes. But taking a second look I believe here as well we should call ViewRectsChanged when |view_rect_| has value. So I changed this logic as well. Also we are heading over to having other guests use OOPIF from now on. So it will only be affecting PDFs and it should be safe to change this part.",
+      "parentUuid": "d36ca007_587825d1",
       "revId": "72e09a3d79f3e714bf5e09dea558a9f043f92e5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "72e09a3d79f3e714bf5e09dea558a9f043f92e5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dee03f0_2fe10a64",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-09-15T15:50:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "90728f4d_2a475e41",
+      "revId": "72e09a3d79f3e714bf5e09dea558a9f043f92e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
