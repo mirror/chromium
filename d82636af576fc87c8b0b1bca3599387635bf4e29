@@ -16,6 +16,24 @@
       "revId": "d82636af576fc87c8b0b1bca3599387635bf4e29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a08fe00_bea2e189",
+        "filename": "components/arc/common/midis.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1181480
+      },
+      "writtenOn": "2017-09-15T17:59:31Z",
+      "side": 1,
+      "message": "Yup it will. This patch is to establish the endpoint handles successfully.",
+      "parentUuid": "37ad70e7_adb19782",
+      "revId": "d82636af576fc87c8b0b1bca3599387635bf4e29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
