@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7bd2a8c_2778fc62",
+        "filename": "chromeos/network/network_state_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1311,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-15T18:00:31Z",
+      "side": 0,
+      "message": "Networks with update_received \u003d false do not have type set yet so MatchesType will log an error. Fix that by testing update_received first.",
+      "revId": "97455ea878d0a16b42c21605f3a24f135700cf04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
