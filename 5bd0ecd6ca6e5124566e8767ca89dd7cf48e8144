@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6a930be4_591b5380",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-09-15T06:11:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1caa2581_7aeedd11",
+      "range": {
+        "startLine": 25,
+        "startChar": 56,
+        "endLine": 25,
+        "endChar": 60
+      },
+      "revId": "5bd0ecd6ca6e5124566e8767ca89dd7cf48e8144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7455af82_dc09cf70",
         "filename": "content/renderer/renderer_blink_platform_impl.cc",
         "patchSetId": 11
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-15T05:41:11Z",
       "side": 1,
       "message": "Huh, this feels kind of unusual.\n\nIs it used from different threads because of workers? Is it possible that web database should be going through a context-bound interface provider rather than through a process-level interface provider?",
+      "revId": "5bd0ecd6ca6e5124566e8767ca89dd7cf48e8144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "640d85a9_dbf6087d",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-09-15T06:11:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure of the exact code paths, it weaves in and out of sqllite.\n\nI think this code is an improvement on the original IPC it\u0027s replacing, which used a SyncMessageFilter to send everything out on the IO thread. While we can try and improve the APIs where possible I don\u0027t think it\u0027s a realistic goal to re-architect it entirely - that\u0027d be a task for the WebDB owners I think. WDYT?",
+      "parentUuid": "7455af82_dc09cf70",
       "revId": "5bd0ecd6ca6e5124566e8767ca89dd7cf48e8144",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
