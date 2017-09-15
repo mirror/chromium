@@ -145,7 +145,7 @@ class WaitForStringHelper {
   std::unique_ptr<std::string> response_body_;
 
   DISALLOW_COPY_AND_ASSIGN(WaitForStringHelper);
-};
+};test
 
 // Request handler for the embedded test server that returns a response body
 // with the length indicated by the query string.
