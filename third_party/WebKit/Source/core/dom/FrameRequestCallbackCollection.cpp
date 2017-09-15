@@ -4,7 +4,6 @@
 
 #include "core/dom/FrameRequestCallbackCollection.h"
 
-#include "core/dom/FrameRequestCallback.h"
 #include "core/inspector/InspectorTraceEvents.h"
 #include "core/probe/CoreProbes.h"
 
@@ -15,8 +14,7 @@ FrameRequestCallbackCollection::FrameRequestCallbackCollection(
     : context_(context) {}
 
 FrameRequestCallbackCollection::CallbackId
-FrameRequestCallbackCollection::RegisterCallback(
-    FrameRequestCallback* callback) {
+FrameRequestCallbackCollection::RegisterCallback(FrameCallback* callback) {
   FrameRequestCallbackCollection::CallbackId id = ++next_callback_id_;
   callback->cancelled_ = false;
   callback->id_ = id;
@@ -62,7 +60,7 @@ void FrameRequestCallbackCollection::ExecuteCallbacks(
   // First, generate a list of callbacks to consider.  Callbacks registered from
   // this point on are considered only for the "next" frame, not this one.
   DCHECK(callbacks_to_invoke_.IsEmpty());
-  callbacks_to_invoke_.swap(callbacks_);
+  swap(callbacks_to_invoke_, callbacks_);
 
   for (const auto& callback : callbacks_to_invoke_) {
     if (!callback->cancelled_) {
@@ -72,9 +70,9 @@ void FrameRequestCallbackCollection::ExecuteCallbacks(
       probe::UserCallback probe(context_, "requestAnimationFrame",
                                 AtomicString(), true);
       if (callback->use_legacy_time_base_)
-        callback->handleEvent(high_res_now_ms_legacy);
+        callback->invoke(high_res_now_ms_legacy);
       else
-        callback->handleEvent(high_res_now_ms);
+        callback->invoke(high_res_now_ms);
     }
   }
 
@@ -85,6 +83,32 @@ DEFINE_TRACE(FrameRequestCallbackCollection) {
   visitor->Trace(callbacks_);
   visitor->Trace(callbacks_to_invoke_);
   visitor->Trace(context_);
+}
+
+DEFINE_TRACE_WRAPPERS(FrameRequestCallbackCollection) {
+  for (const auto& callback : callbacks_)
+    visitor->TraceWrappers(callback);
+  for (const auto& callback_to_invoke : callbacks_to_invoke_)
+    visitor->TraceWrappers(callback_to_invoke);
+}
+
+FrameRequestCallbackCollection::V8FrameCallback::V8FrameCallback(
+    V8FrameRequestCallback* callback)
+    : callback_(callback) {}
+
+DEFINE_TRACE(FrameRequestCallbackCollection::V8FrameCallback) {
+  visitor->Trace(callback_);
+  FrameRequestCallbackCollection::FrameCallback::Trace(visitor);
+}
+
+DEFINE_TRACE_WRAPPERS(FrameRequestCallbackCollection::V8FrameCallback) {
+  visitor->TraceWrappers(callback_);
+  FrameRequestCallbackCollection::FrameCallback::TraceWrappers(visitor);
+}
+
+void FrameRequestCallbackCollection::V8FrameCallback::invoke(
+    double highResTime) {
+  callback_->call(nullptr, highResTime);
 }
 
 }  // namespace blink
