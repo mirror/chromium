@@ -169,6 +169,24 @@
       "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1169a1b_4f0c48ea",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-09-15T21:36:00Z",
+      "side": 1,
+      "message": "_loadDatabaseNames only loads the list of databases and not the list of object stores/indexes. Calling _loadDatabase(id, false) here will load the list of object stores/indexes for the database without refreshing the object store entries. Should this be moved to a separate function?",
+      "parentUuid": "8b221eaa_9a044e50",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
