@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe60344b_09d42b96",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionHandler.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-15T14:41:06Z",
+      "side": 1,
+      "message": "Oh I just realized that we do in fact need to unregister PureJavaExceptionHandler.\nJavaExceptionReporter wraps the existing exception handler if there is one so we\u0027d end up double-reporting when it gets installed",
+      "range": {
+        "startLine": 38,
+        "startChar": 52,
+        "endLine": 38,
+        "endChar": 86
+      },
+      "revId": "53bacf42efc120088de98ca503e84f63eeb4811d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19635b29_dd007dee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-15T14:41:06Z",
+      "side": 1,
+      "message": "still needs tests",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 38
+      },
+      "revId": "53bacf42efc120088de98ca503e84f63eeb4811d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b674ae7_68140ccc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-15T14:41:06Z",
+      "side": 1,
+      "message": "add a comment about keeping this stuff in sync with native (and also update native to refer to this with a comment)",
+      "revId": "53bacf42efc120088de98ca503e84f63eeb4811d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce2d3c0c_07f240fe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-15T14:41:06Z",
+      "side": 1,
+      "message": "every time you use mBoundary, you append \"--\" to it? Why? Why don\u0027t you just make this part of mBoundary? Same with this reference to RN",
+      "range": {
+        "startLine": 73,
+        "startChar": 18,
+        "endLine": 73,
+        "endChar": 24
+      },
+      "revId": "53bacf42efc120088de98ca503e84f63eeb4811d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31b84d49_da68cf41",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-15T14:41:06Z",
+      "side": 1,
+      "message": "this will hit an NPE if init failed. I\u0027m not convinced it\u0027s worth pulling out the |initMinidumpFile| method. If it was part of createReport, you can exit as soon as you hit an exception",
+      "range": {
+        "startLine": 80,
+        "startChar": 12,
+        "endLine": 80,
+        "endChar": 31
+      },
+      "revId": "53bacf42efc120088de98ca503e84f63eeb4811d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c964ef_d2e6b145",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-15T14:41:06Z",
+      "side": 1,
+      "message": "don\u0027t use throwable - be specific with exception types",
+      "range": {
+        "startLine": 93,
+        "startChar": 17,
+        "endLine": 93,
+        "endChar": 26
+      },
+      "revId": "53bacf42efc120088de98ca503e84f63eeb4811d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b533bde_2f64b5bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-15T14:41:06Z",
+      "side": 1,
+      "message": "Please make these named constants in BuildInfo",
+      "range": {
+        "startLine": 105,
+        "startChar": 40,
+        "endLine": 105,
+        "endChar": 41
+      },
+      "revId": "53bacf42efc120088de98ca503e84f63eeb4811d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a0afe88_320c8296",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-15T14:41:06Z",
+      "side": 1,
+      "message": "nit: remove the null check and just have the default case return an empty string",
+      "range": {
+        "startLine": 109,
+        "startChar": 12,
+        "endLine": 109,
+        "endChar": 19
+      },
+      "revId": "53bacf42efc120088de98ca503e84f63eeb4811d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -46,6 +46,30 @@
       "revId": "ba0aeefa9190a13567c764f237df5d86349e71a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d3b82a9_8363d04d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/MinidumpUploadService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-15T14:41:06Z",
+      "side": 0,
+      "message": "Ok, then move the rest of this function to another package-protected function called |tryUploadCrashDumpNow|",
+      "parentUuid": "bdf59d49_3af698b4",
+      "range": {
+        "startLine": 299,
+        "startChar": 16,
+        "endLine": 299,
+        "endChar": 47
+      },
+      "revId": "ba0aeefa9190a13567c764f237df5d86349e71a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
