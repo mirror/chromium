@@ -537,6 +537,12 @@ class scoped_refptr {
 
   T* get() const { return ptr_; }
 
+  T* LeakRef() WARN_UNUSED_RESULT {
+    T* ptr = ptr_;
+    ptr_ = nullptr;
+    return ptr;
+  }
+
   T& operator*() const {
     assert(ptr_ != nullptr);
     return *ptr_;
