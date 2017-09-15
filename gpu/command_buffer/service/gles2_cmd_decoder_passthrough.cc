@@ -128,8 +128,9 @@ GLES2DecoderPassthroughImpl::BoundTexture::operator=(BoundTexture&&) = default;
 GLES2DecoderPassthroughImpl::GLES2DecoderPassthroughImpl(
     GLES2DecoderClient* client,
     CommandBufferServiceBase* command_buffer_service,
+    Outputter* outputter,
     ContextGroup* group)
-    : GLES2Decoder(command_buffer_service),
+    : GLES2Decoder(command_buffer_service, outputter),
       client_(client),
       commands_to_process_(0),
       debug_marker_manager_(),
