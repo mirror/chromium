@@ -81,6 +81,24 @@
       "revId": "9702ca1db2b4ac817540388dd0831c667b8c1e00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e5d9e5_69c4222e",
+        "filename": "content/common/child_histogram.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T05:49:42Z",
+      "side": 1,
+      "message": "Given that this is bound once, the position we\u0027ve been taking is that for \"bind once at creation\" kind of things, using a factory that takes the \"constructor\" arguments and returns an interface pointer that\u0027s bound to an impl that\u0027s fully constructed. Can we do that here?\n\n(I\u0027ll talk with the Mojo team and see if we can find a way to wrap this; it\u0027s a fairly common request and writing the boilerplate is somewhat sad.)",
+      "parentUuid": "33560d23_e27e88e1",
+      "revId": "9702ca1db2b4ac817540388dd0831c667b8c1e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
