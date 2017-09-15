@@ -88,6 +88,9 @@ class PLATFORM_EXPORT ResourceFetcher
     return cached_resources_map_;
   }
 
+  void HoldResourcesFromPreviousFetcher(ResourceFetcher*);
+  void ClearResourcesFromPreviousFetcher();
+
   // Binds the given Resource instance to this ResourceFetcher instance to
   // start loading the Resource actually.
   // Usually, RequestResource() calls this method internally, but needs to
@@ -261,6 +264,8 @@ class PLATFORM_EXPORT ResourceFetcher
 
   DocumentResourceMap cached_resources_map_;
   HeapHashSet<WeakMember<Resource>> document_resources_;
+
+  HeapHashSet<Member<Resource>> resources_from_previous_fetcher_;
 
   HeapHashMap<PreloadKey, Member<Resource>> preloads_;
   HeapVector<Member<Resource>> matched_preloads_;
