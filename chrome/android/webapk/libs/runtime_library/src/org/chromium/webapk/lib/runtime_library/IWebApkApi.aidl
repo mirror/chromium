@@ -13,6 +13,9 @@ interface IWebApkApi {
     // Gets the id of the icon to represent WebAPK notifications in status bar.
     int getSmallIconId();
 
+    // Get the notification permission status.
+    int getNotificationStatus();
+
     // Display a notification.
     void notifyNotification(String platformTag, int platformID, in Notification notification);
 

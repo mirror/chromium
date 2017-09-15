@@ -40,6 +40,9 @@ public class WebApkUma {
     public static final int UPDATE_REQUEST_QUEUED_MAX = 3;
 
     // This enum is used to back UMA histograms, and should therefore be treated as append-only.
+    public static final int NOTIFICATION_PERMISSION_STATUS_MAX = 3;
+
+    // This enum is used to back UMA histograms, and should therefore be treated as append-only.
     public static final int GOOGLE_PLAY_INSTALL_SUCCESS = 0;
     public static final int GOOGLE_PLAY_INSTALL_FAILED_NO_DELEGATE = 1;
     public static final int GOOGLE_PLAY_INSTALL_FAILED_TO_CONNECT_TO_SERVICE = 2;
@@ -95,6 +98,16 @@ public class WebApkUma {
     public static void recordWebApkOpenAttempt(int type) {
         assert type >= 0 && type < WEBAPK_OPEN_MAX;
         RecordHistogram.recordEnumeratedHistogram("WebApk.OpenFromMenu", type, WEBAPK_OPEN_MAX);
+    }
+
+    /**
+     * Records whether a WebAPK has permission to display the notification when receive that
+     * notification.
+     */
+    public static void recordNotificationPermissionStatus(int status) {
+        assert status >= 0 && status < NOTIFICATION_PERMISSION_STATUS_MAX;
+        RecordHistogram.recordEnumeratedHistogram("WebApk.Notification.Permission.Status", status,
+                NOTIFICATION_PERMISSION_STATUS_MAX);
     }
 
     /**
