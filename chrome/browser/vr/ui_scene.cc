@@ -129,6 +129,9 @@ std::vector<const UiElement*> UiScene::GetViewportAwareElements() const {
     if (!element->viewport_aware())
       return;
 
+    if (element->transient_element())
+      return;
+
     // Note that we need to exclude ViewportAwareRoot element. It is not a
     // visual element. Currently all of ViewportAwareRoot's children sets
     // viewport aware to true. So we check if the element's parent is a viewport

@@ -63,7 +63,7 @@ class UiElement : public cc::AnimationTarget {
 
   virtual void PrepareToDraw();
 
-  void Animate(const base::TimeTicks& time);
+  virtual void Animate(const base::TimeTicks& time);
 
   // Indicates whether the element should be tested for cursor input.
   bool IsHitTestable() const;
@@ -116,6 +116,9 @@ class UiElement : public cc::AnimationTarget {
   void set_requires_layout(bool requires_layout) {
     requires_layout_ = requires_layout;
   }
+
+  bool transient_element() const { return transient_element_; }
+  void set_transient_element() { transient_element_ = true; }
 
   bool hit_testable() const { return hit_testable_; }
   void set_hit_testable(bool hit_testable) { hit_testable_ = hit_testable; }
@@ -303,6 +306,11 @@ class UiElement : public cc::AnimationTarget {
 
   // The computed opacity, incorporating opacity of parent objects.
   float computed_opacity_ = 1.0f;
+
+  // TODO(ymalik): We currently use this bit to exclude transient elements from
+  // UiScene::GetViewportAwareElements. We should remove this when we have a
+  // less hacky solution.
+  bool transient_element_ = false;
 
   // If anchoring is specified, the translation will be relative to the
   // specified edge(s) of the parent, rather than the center.  A parent object
