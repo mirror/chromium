@@ -86,7 +86,6 @@ LayerImpl::LayerImpl(LayerTreeImpl* tree_impl, int id)
 
   DCHECK(layer_tree_impl_);
   layer_tree_impl_->RegisterLayer(this);
-  layer_tree_impl_->AddToElementMap(this);
 
   SetNeedsPushProperties();
 }
@@ -94,7 +93,6 @@ LayerImpl::LayerImpl(LayerTreeImpl* tree_impl, int id)
 LayerImpl::~LayerImpl() {
   DCHECK_EQ(DRAW_MODE_NONE, current_draw_mode_);
   layer_tree_impl_->UnregisterLayer(this);
-  layer_tree_impl_->RemoveFromElementMap(this);
   TRACE_EVENT_OBJECT_DELETED_WITH_ID(
       TRACE_DISABLED_BY_DEFAULT("cc.debug"), "cc::LayerImpl", this);
 }
@@ -646,9 +644,7 @@ void LayerImpl::SetElementId(ElementId element_id) {
                "LayerImpl::SetElementId", "element",
                element_id.AsValue().release());
 
-  layer_tree_impl_->RemoveFromElementMap(this);
   element_id_ = element_id;
-  layer_tree_impl_->AddToElementMap(this);
 
   SetNeedsPushProperties();
 }
@@ -661,8 +657,6 @@ void LayerImpl::SetMutableProperties(uint32_t properties) {
                "LayerImpl::SetMutableProperties", "properties", properties);
 
   mutable_properties_ = properties;
-  // If this layer is already in the element map, update its properties.
-  layer_tree_impl_->AddToElementMap(this);
 }
 
 void LayerImpl::SetPosition(const gfx::PointF& position) {
