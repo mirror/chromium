@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "0fe25511_674fbdb9",
+        "filename": "components/payments/content/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-15T17:32:36Z",
+      "side": 1,
+      "message": "What\u0027s the specific reason to not depend on MOJO for iOS? \n\nI am asking since currently ios_payment_instrument.h derives from payment_instrument.h, and I am working on another CL to implement InvokePaymentApp for service worker payment handler, in which I have to change the interface to provider PaymentRequestEventData. Looks hard to not depend on mojo header files.",
+      "parentUuid": "c3b2af43_3d06a150",
+      "range": {
+        "startLine": 48,
+        "startChar": 5,
+        "endLine": 48,
+        "endChar": 38
+      },
+      "revId": "3b2fb63def5480540794e803be7061391255154a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8145281_fd43048f",
         "filename": "components/payments/content/manifest_verifier.cc",
         "patchSetId": 16
