@@ -1036,8 +1036,6 @@ void ExtensionService::BlockAllExtensions() {
     if (!CanBlockExtension(extension.get()))
       continue;
 
-    registry_->RemoveEnabled(id);
-    registry_->RemoveDisabled(id);
     registry_->RemoveTerminated(id);
 
     registry_->AddBlocked(extension.get());
@@ -1375,9 +1373,8 @@ void ExtensionService::OnAllExternalProvidersReady() {
 
 void ExtensionService::UnloadExtension(const std::string& extension_id,
                                        UnloadedExtensionReason reason) {
-  // Make sure the extension gets deleted after we return from this function.
-  int include_mask =
-      ExtensionRegistry::EVERYTHING & ~ExtensionRegistry::TERMINATED;
+  // Don't try to unload an extension that was already unloaded.
+  int include_mask = ExtensionRegistry::ENABLED | ExtensionRegistry::DISABLED;
   scoped_refptr<const Extension> extension(
       registry_->GetExtensionById(extension_id, include_mask));
 
@@ -1397,7 +1394,11 @@ void ExtensionService::UnloadExtension(const std::string& extension_id,
   // Clean up if the extension is meant to be enabled after a reload.
   reloading_extensions_.erase(extension->id());
 
-  if (registry_->disabled_extensions().Contains(extension->id())) {
+  if (registry_->enabled_extensions().Contains(extension->id())) {
+    // Remove the extension from the enabled list.
+    registry_->RemoveEnabled(extension->id());
+    NotifyExtensionUnloaded(extension.get(), reason);
+  } else {
     registry_->RemoveDisabled(extension->id());
     // Make sure the profile cleans up its RequestContexts when an already
     // disabled extension is unloaded (since they are also tracking the disabled
@@ -1405,10 +1406,6 @@ void ExtensionService::UnloadExtension(const std::string& extension_id,
     system_->UnregisterExtensionWithRequestContexts(extension_id, reason);
     // Don't send the unloaded notification. It was sent when the extension
     // was disabled.
-  } else {
-    // Remove the extension from the enabled list.
-    registry_->RemoveEnabled(extension->id());
-    NotifyExtensionUnloaded(extension.get(), reason);
   }
 
   content::NotificationService::current()->Notify(
