@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "914650e5_9e3e0d8d",
+        "filename": "third_party/WebKit/Source/core/svg/graphics/SVGImage.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-15T22:35:58Z",
+      "side": 1,
+      "message": "I\u0027m not sure if I\u0027m doing the correct thing here. Should the completion_state be based on the load_state_ being kLoadCompleted instead?",
+      "range": {
+        "startLine": 723,
+        "startChar": 2,
+        "endLine": 723,
+        "endChar": 28
+      },
+      "revId": "9f02bf6dda3085b6d5d9e8a8f8cc8b2012695584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
