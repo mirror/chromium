@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2d3049f_b5e295a3",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-15T02:36:12Z",
+      "side": 1,
+      "message": "Can you move the init assignment here?",
+      "revId": "e69c61ade404c5e7d603390716785af3df64fd77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "093120c6_5501ff2c",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002603
+      },
+      "writtenOn": "2017-09-15T02:36:12Z",
+      "side": 1,
+      "message": "Add a comma to the end of each of these\n\nuser: 0,\n\nand then reformat",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 60
+      },
+      "revId": "e69c61ade404c5e7d603390716785af3df64fd77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
