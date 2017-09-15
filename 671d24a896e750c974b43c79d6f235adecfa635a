@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d25cb125_2375416f",
+        "filename": "chrome/browser/chromeos/policy/device_status_collector.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-09-15T14:58:12Z",
+      "side": 1,
+      "message": "1: Can you extend DeviceStatusCollectorTest::VersionInfo to cover this?\n2: Nit: const pointer.",
+      "revId": "671d24a896e750c974b43c79d6f235adecfa635a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
