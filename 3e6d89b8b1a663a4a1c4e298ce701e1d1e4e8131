@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c034060_ff6901a8",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:55:25Z",
+      "side": 1,
+      "message": "Should we be doing this before OnNewTabOpened(), in case that wants to synchronously open a promo?  Otherwise, it seems like we might open a promo and then immediately close it.\n\nNit: Pull out the factory instance into a temp, since most of the verbiage here is repeatedly refetching that.",
+      "revId": "3e6d89b8b1a663a4a1c4e298ce701e1d1e4e8131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35635e04_74d4faf4",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:55:25Z",
+      "side": 1,
+      "message": "Same comments",
+      "revId": "3e6d89b8b1a663a4a1c4e298ce701e1d1e4e8131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7314131d_944df20e",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:55:25Z",
+      "side": 1,
+      "message": "Same comments",
+      "revId": "3e6d89b8b1a663a4a1c4e298ce701e1d1e4e8131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c51b6636_b72360d1",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:55:25Z",
+      "side": 1,
+      "message": "Hmm, does this work right after a first bubble?  It looks like closing won\u0027t null out |new_tab_promo_| anywhere, so calling CloseBubble() on a second bubble will potentially deref garbage.\n\nNit: Simpler:\n\n  if (!new_tab_promo_)\n    return false;\n  new_tab_promo_-\u003eCloseBubble();\n  return true;\n\nEven simpler, if we can rely on |new_tab_promo_| not being nulled synchronously by CloseBubble():\n\n  if (new_tab_promo_)\n    new_tab_promo_-\u003eCloseBubble();\n  return !!new_tab_promo_;",
+      "revId": "3e6d89b8b1a663a4a1c4e298ce701e1d1e4e8131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c361818_76cd4f63",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:55:25Z",
+      "side": 1,
+      "message": "Nit: Mention what the bool is for (e.g. \"As with CloseBubbleForLastActiveBrowser(), returns whether a bubble was actually closed.\")",
+      "revId": "3e6d89b8b1a663a4a1c4e298ce701e1d1e4e8131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
