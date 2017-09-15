@@ -37,6 +37,8 @@
 #include "platform/wtf/Deque.h"
 #include "platform/wtf/Vector.h"
 
+struct hb_glyph_info_t;
+
 namespace blink {
 
 class Font;
@@ -71,6 +73,7 @@ class PLATFORM_EXPORT HarfBuzzShaper final {
 
  private:
   struct RangeData;
+  struct BufferSlice;
 
   // Shapes a single seqment, as identified by the RunSegmenterRange parameter,
   // one or more times taking font fallback into account. The start and end
@@ -90,6 +93,24 @@ class PLATFORM_EXPORT HarfBuzzShaper final {
 
   bool CollectFallbackHintChars(const Deque<HolesQueueItem>&,
                                 Vector<UChar32>& hint) const;
+
+  BufferSlice ComputeSlice(RangeData*,
+                           const HolesQueueItem& current_queue_item,
+                           const hb_glyph_info_t*,
+                           unsigned num_glyphs,
+                           unsigned old_glyph_index,
+                           unsigned new_glyph_index) const;
+
+  void QueueCharacters(RangeData*,
+                       const SimpleFontData* current_font,
+                       bool& font_cycle_queued,
+                       const BufferSlice&) const;
+
+  void CommitGlyphs(RangeData*,
+                    const SimpleFontData* current_font,
+                    UScriptCode current_run_script,
+                    ShapeResult*,
+                    const BufferSlice&) const;
 
   const UChar* text_;
   unsigned text_length_;
