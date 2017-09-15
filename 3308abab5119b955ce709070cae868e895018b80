@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c41cc154_10dfb42b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-15T02:34:22Z",
+      "side": 1,
+      "message": "nit: Space after : missing.",
+      "range": {
+        "startLine": 12,
+        "startChar": 4,
+        "endLine": 12,
+        "endChar": 10
+      },
+      "revId": "3308abab5119b955ce709070cae868e895018b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39682f96_8e316685",
         "filename": "chrome/browser/resources/chromeos/zip_archiver/js/passphrase-manager.js",
         "patchSetId": 3
