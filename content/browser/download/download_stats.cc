@@ -1078,7 +1078,8 @@ void RecordOriginStateOnResumption(bool is_partial,
 namespace {
 
 // Enumeration for histogramming purposes.
-// DO NOT CHANGE THE ORDERING OF THESE VALUES.
+// These values are written to logs.  New enum values can be added, but existing
+// enums must never be renumbered or deleted and reused.
 enum DownloadConnectionSecurity {
   DOWNLOAD_SECURE,  // Final download url and its redirects all use https
   DOWNLOAD_TARGET_INSECURE,  // Final download url uses http, redirects are all
@@ -1087,7 +1088,9 @@ enum DownloadConnectionSecurity {
                                // one redirect uses http
   DOWNLOAD_REDIRECT_TARGET_INSECURE,  // Final download url uses http, and at
                                       // least one redirect uses http
-  DOWNLOAD_NONE_HTTPX,  // Final download url uses scheme other than http/https
+  DOWNLOAD_NONE_HTTPX,  // Final download url uses scheme other than
+                        // http/https/ftp
+  DOWNLOAD_TARGET_FTP,  // Final download url uses ftp scheme
   DOWNLOAD_CONNECTION_SECURITY_MAX
 };
 
@@ -1113,6 +1116,8 @@ void RecordDownloadConnectionSecurity(const GURL& download_url,
                                            : DOWNLOAD_REDIRECT_INSECURE
                 : is_redirect_chain_secure ? DOWNLOAD_TARGET_INSECURE
                                            : DOWNLOAD_REDIRECT_TARGET_INSECURE;
+  } else if (download_url.SchemeIs("ftp")) {
+    state = DOWNLOAD_TARGET_FTP;
   }
 
   UMA_HISTOGRAM_ENUMERATION("Download.TargetConnectionSecurity", state,
