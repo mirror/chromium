@@ -26,7 +26,7 @@ commit_is_pure_revert(R) :-
     gerrit:pure_revert(1),
     !,
     gerrit:commit_author(A),
-    PureRevert = label('Is-Pure-Revert', ok(A)).
+    R = label('Is-Pure-Revert', ok(A)).
 
 commit_is_pure_revert(R) :-
     gerrit:pure_revert(U),
