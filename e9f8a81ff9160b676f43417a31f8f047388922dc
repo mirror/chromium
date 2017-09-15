@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de261c84_ecb5e793",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/lazy-loaded-style.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T13:54:24Z",
+      "side": 1,
+      "message": "In general, I think it\u0027s better to have -expected.html instead of generated -expected.png and -expected.txt. Here, we want to check that lazy init of controls will behave the same as non-lazy init so it seems that you should be able to create an -expected.html.",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c4e3d59_b81c2055",
+        "filename": "third_party/WebKit/Source/core/css/CSSDefaultStyleSheets.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T13:54:24Z",
+      "side": 1,
+      "message": "Could you remove media_rules by making the call inside `ParseUASheet`?",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bce7659_58d15bbf",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T13:54:24Z",
+      "side": 1,
+      "message": "Do you use this?",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae0bc58_465a02bc",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T13:54:24Z",
+      "side": 1,
+      "message": "I think you need to rebase :)",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf54d0c_48a20f93",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T13:54:24Z",
+      "side": 1,
+      "message": "style: you seem to wrap lines way before 80 characters",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "230fb4f2_74aba668",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T13:54:24Z",
+      "side": 1,
+      "message": "Should this method and the one above be `const`?",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e276abcb_826de3fc",
+        "filename": "third_party/WebKit/Source/platform/ResourceLoader.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T13:54:24Z",
+      "side": 1,
+      "message": "Double-include :)",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5267dca8_d9ad9fb0",
+        "filename": "third_party/WebKit/Source/platform/ResourceLoader.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T13:54:24Z",
+      "side": 1,
+      "message": "This ssems a bit strong as it would crash on stable and add code overhead too. Should we early return an empty string instead? Maybe we could DCHECK too.",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10384583_5f694504",
+        "filename": "third_party/WebKit/Source/platform/ResourceLoader.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T13:54:24Z",
+      "side": 1,
+      "message": "Do you need this include?",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1092387d_599d9eca",
+        "filename": "third_party/WebKit/Source/platform/heap/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T13:54:24Z",
+      "side": 1,
+      "message": "You don\u0027t touch platform/heap/. Why did you have to change this BUILD file?",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
