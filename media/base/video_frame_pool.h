@@ -17,6 +17,8 @@ class TickClock;
 
 namespace media {
 
+class VideoFrameProvider;
+
 // Simple VideoFrame pool used to avoid unnecessarily allocating and destroying
 // VideoFrame objects. The pool manages the memory for the VideoFrame
 // returned by CreateFrame(). When one of these VideoFrames is destroyed,
@@ -28,6 +30,8 @@ namespace media {
 class MEDIA_EXPORT VideoFramePool {
  public:
   VideoFramePool();
+  explicit VideoFramePool(
+      std::unique_ptr<VideoFrameProvider> video_frame_provider);
   ~VideoFramePool();
 
   // Returns a frame from the pool that matches the specified
@@ -52,6 +56,7 @@ class MEDIA_EXPORT VideoFramePool {
 
  private:
   class PoolImpl;
+  std::unique_ptr<VideoFrameProvider> video_frame_provider_;
   scoped_refptr<PoolImpl> pool_;
 
   DISALLOW_COPY_AND_ASSIGN(VideoFramePool);

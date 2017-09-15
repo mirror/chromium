@@ -36,6 +36,7 @@
 #include "media/base/bind_to_current_loop.h"
 #include "media/base/decoder_buffer.h"
 #include "media/base/media_switches.h"
+#include "media/base/video_frame_provider.h"
 
 // Include libvpx header files.
 // VPX_CODEC_DISABLE_COMPAT excludes parts of the libvpx API that provide
@@ -448,6 +449,16 @@ VpxVideoDecoder::VpxVideoDecoder()
     : state_(kUninitialized),
       vpx_codec_(nullptr),
       vpx_codec_alpha_(nullptr),
+      weak_factory_(this) {
+  thread_checker_.DetachFromThread();
+}
+
+VpxVideoDecoder::VpxVideoDecoder(
+    std::unique_ptr<VideoFrameProvider> video_frame_provider)
+    : state_(kUninitialized),
+      vpx_codec_(nullptr),
+      vpx_codec_alpha_(nullptr),
+      frame_pool_(std::move(video_frame_provider)),
       weak_factory_(this) {
   thread_checker_.DetachFromThread();
 }
