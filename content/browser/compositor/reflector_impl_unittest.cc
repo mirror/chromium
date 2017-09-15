@@ -85,7 +85,7 @@ class TestOutputSurface : public BrowserCompositorOutputSurface {
 
   void SetFlip(bool flip) { capabilities_.flipped_output_surface = flip; }
 
-  void BindToClient(cc::OutputSurfaceClient* client) override {}
+  void BindToClient(viz::OutputSurfaceClient* client) override {}
   void EnsureBackbuffer() override {}
   void DiscardBackbuffer() override {}
   void BindFramebuffer() override {}
@@ -220,8 +220,8 @@ TEST_F(ReflectorImplTest, CheckInvertedOutputSurface) {
 
 #if defined(USE_OZONE)
 TEST_F(ReflectorImplTest, CheckOverlayNoReflector) {
-  cc::OverlayCandidateList list;
-  cc::OverlayCandidate plane_1, plane_2;
+  viz::OverlayCandidateList list;
+  viz::OverlayCandidate plane_1, plane_2;
   plane_1.plane_z_order = 0;
   plane_2.plane_z_order = 1;
   list.push_back(plane_1);
@@ -232,8 +232,8 @@ TEST_F(ReflectorImplTest, CheckOverlayNoReflector) {
 
 TEST_F(ReflectorImplTest, CheckOverlaySWMirroring) {
   SetUpReflector();
-  cc::OverlayCandidateList list;
-  cc::OverlayCandidate plane_1, plane_2;
+  viz::OverlayCandidateList list;
+  viz::OverlayCandidate plane_1, plane_2;
   plane_1.plane_z_order = 0;
   plane_2.plane_z_order = 1;
   list.push_back(plane_1);
