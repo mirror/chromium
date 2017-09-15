@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c475ce6_fbcd83dc",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-15T09:05:32Z",
+      "side": 1,
+      "message": "You can write\nvirtual Element* Next(Element*) \u003d 0;\nfor all virtual member functions in this class.\n\n(this is called pure virtual function, which almost corresponds to Java\u0027s abstract class)",
+      "revId": "2ef495f8c964832ab53279af4e7b61e4bd14176d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27724ff8_c17eb4d8",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-15T09:05:32Z",
+      "side": 1,
+      "message": "You can remove this line.",
+      "revId": "2ef495f8c964832ab53279af4e7b61e4bd14176d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ead855_6adfb43e",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-15T09:05:32Z",
+      "side": 1,
+      "message": "add \u0027final\u0027",
+      "revId": "2ef495f8c964832ab53279af4e7b61e4bd14176d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da423714_ef7dad4b",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-15T09:05:32Z",
+      "side": 1,
+      "message": "You can remove this line.",
+      "revId": "2ef495f8c964832ab53279af4e7b61e4bd14176d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd688f8_6a16816b",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-15T09:05:32Z",
+      "side": 1,
+      "message": "You can remove this line.",
+      "revId": "2ef495f8c964832ab53279af4e7b61e4bd14176d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "922146e4_903cfc0a",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-15T09:05:32Z",
+      "side": 1,
+      "message": "You can remove this line.",
+      "revId": "2ef495f8c964832ab53279af4e7b61e4bd14176d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b76e3c42_cc58e196",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-15T09:05:32Z",
+      "side": 1,
+      "message": "Hmm... you removed braces on line 607, while added here for one-line body.\nPlease be consistent in a file.",
+      "revId": "2ef495f8c964832ab53279af4e7b61e4bd14176d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
