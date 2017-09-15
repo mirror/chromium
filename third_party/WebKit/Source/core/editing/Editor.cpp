@@ -178,7 +178,7 @@ Editor::RevealSelectionScope::~RevealSelectionScope() {
   DCHECK(editor_->prevent_reveal_selection_);
   --editor_->prevent_reveal_selection_;
   if (!editor_->prevent_reveal_selection_) {
-    editor_->GetFrame().Selection().RevealSelection(
+    editor_->GetFrameSelection().RevealSelection(
         ScrollAlignment::kAlignToEdgeIfNeeded, kRevealExtent);
   }
 }
@@ -187,7 +187,7 @@ Editor::RevealSelectionScope::~RevealSelectionScope() {
 // we should use the target control's selection for this editing operation.
 SelectionInDOMTree Editor::SelectionForCommand(Event* event) {
   const SelectionInDOMTree selection =
-      GetFrame().Selection().GetSelectionInDOMTree();
+      GetFrameSelection().GetSelectionInDOMTree();
   if (!event)
     return selection;
   // If the target is a text control, and the current selection is outside of
@@ -280,7 +280,7 @@ bool Editor::HandleTextEvent(TextEvent* event) {
   // needs coordination with JS. Enable for plaintext only for now and collect
   // feedback.
   if (data == " " && !CanEditRichly() &&
-      IsCaretAtStartOfWrappedLine(GetFrame().Selection())) {
+      IsCaretAtStartOfWrappedLine(GetFrameSelection())) {
     InsertLineBreak();
   }
 
@@ -353,12 +353,12 @@ static HTMLImageElement* ImageElementFromImageDocument(Document* document) {
 bool Editor::CanCopy() const {
   if (ImageElementFromImageDocument(GetFrame().GetDocument()))
     return true;
-  FrameSelection& selection = GetFrame().Selection();
+  FrameSelection& selection = GetFrameSelection();
   if (!selection.IsAvailable())
     return false;
   return selection.ComputeVisibleSelectionInDOMTreeDeprecated().IsRange() &&
          !IsInPasswordFieldWithUnrevealedPassword(
-             GetFrame().Selection().ComputeVisibleSelectionInDOMTree().Start());
+             selection.ComputeVisibleSelectionInDOMTree().Start());
 }
 
 bool Editor::CanPaste() const {
@@ -366,7 +366,7 @@ bool Editor::CanPaste() const {
 }
 
 bool Editor::CanDelete() const {
-  FrameSelection& selection = GetFrame().Selection();
+  FrameSelection& selection = GetFrameSelection();
   return selection.ComputeVisibleSelectionInDOMTreeDeprecated().IsRange() &&
          selection.ComputeVisibleSelectionInDOMTree().RootEditableElement();
 }
@@ -379,7 +379,7 @@ bool Editor::SmartInsertDeleteEnabled() const {
 
 bool Editor::CanSmartCopyOrDelete() const {
   return SmartInsertDeleteEnabled() &&
-         GetFrame().Selection().Granularity() == TextGranularity::kWord;
+         GetFrameSelection().Granularity() == TextGranularity::kWord;
 }
 
 bool Editor::IsSelectTrailingWhitespaceEnabled() const {
@@ -491,7 +491,7 @@ bool Editor::TryDHTMLCopy() {
   // needs to be audited.  See http://crbug.com/590369 for more details.
   GetFrame().GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
   if (IsInPasswordField(
-          GetFrame().Selection().ComputeVisibleSelectionInDOMTree().Start()))
+          GetFrameSelection().ComputeVisibleSelectionInDOMTree().Start()))
     return false;
 
   return !DispatchCPPEvent(EventTypeNames::copy, kDataTransferWritable);
@@ -502,7 +502,7 @@ bool Editor::TryDHTMLCut() {
   // needs to be audited.  See http://crbug.com/590369 for more details.
   GetFrame().GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
   if (IsInPasswordField(
-          GetFrame().Selection().ComputeVisibleSelectionInDOMTree().Start()))
+          GetFrameSelection().ComputeVisibleSelectionInDOMTree().Start()))
     return false;
 
   return !DispatchCPPEvent(EventTypeNames::cut, kDataTransferWritable);
@@ -557,7 +557,7 @@ void Editor::PasteWithPasteboard(Pasteboard* pasteboard) {
 
 void Editor::WriteSelectionToPasteboard() {
   KURL url = GetFrame().GetDocument()->Url();
-  String html = GetFrame().Selection().SelectedHTMLForClipboard();
+  String html = GetFrameSelection().SelectedHTMLForClipboard();
   String plain_text = GetFrame().SelectedTextForClipboard();
   Pasteboard::GeneralPasteboard()->WriteHTML(html, url, plain_text,
                                              CanSmartCopyOrDelete());
@@ -659,7 +659,7 @@ void Editor::ReplaceSelectionWithFragment(DocumentFragment* fragment,
                                           InputEvent::InputType input_type) {
   DCHECK(!GetFrame().GetDocument()->NeedsLayoutTreeUpdate());
   const VisibleSelection& selection =
-      GetFrame().Selection().ComputeVisibleSelectionInDOMTree();
+      GetFrameSelection().ComputeVisibleSelectionInDOMTree();
   if (selection.IsNone() || !selection.IsContentEditable() || !fragment)
     return;
 
@@ -815,13 +815,13 @@ Element* Editor::FindEventTargetFrom(const VisibleSelection& selection) const {
 
 Element* Editor::FindEventTargetFromSelection() const {
   return FindEventTargetFrom(
-      GetFrame().Selection().ComputeVisibleSelectionInDOMTreeDeprecated());
+      GetFrameSelection().ComputeVisibleSelectionInDOMTreeDeprecated());
 }
 
 void Editor::ApplyStyle(StylePropertySet* style,
                         InputEvent::InputType input_type) {
   const VisibleSelection& selection =
-      GetFrame().Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
+      GetFrameSelection().ComputeVisibleSelectionInDOMTreeDeprecated();
   if (selection.IsNone())
     return;
   if (selection.IsCaret()) {
@@ -873,7 +873,7 @@ bool Editor::SelectionStartHasStyle(CSSPropertyID property_id,
   EditingStyle* style_to_check = EditingStyle::Create(property_id, value);
   EditingStyle* style_at_start =
       EditingStyleUtilities::CreateStyleAtSelectionStart(
-          GetFrame().Selection().ComputeVisibleSelectionInDOMTreeDeprecated(),
+          GetFrameSelection().ComputeVisibleSelectionInDOMTreeDeprecated(),
           property_id == CSSPropertyBackgroundColor, style_to_check->Style());
   return style_to_check->TriStateOfStyle(style_at_start);
 }
@@ -882,13 +882,13 @@ TriState Editor::SelectionHasStyle(CSSPropertyID property_id,
                                    const String& value) const {
   return EditingStyle::Create(property_id, value)
       ->TriStateOfStyle(
-          GetFrame().Selection().ComputeVisibleSelectionInDOMTreeDeprecated());
+          GetFrameSelection().ComputeVisibleSelectionInDOMTreeDeprecated());
 }
 
 String Editor::SelectionStartCSSPropertyValue(CSSPropertyID property_id) {
   EditingStyle* selection_style =
       EditingStyleUtilities::CreateStyleAtSelectionStart(
-          GetFrame().Selection().ComputeVisibleSelectionInDOMTreeDeprecated(),
+          GetFrameSelection().ComputeVisibleSelectionInDOMTreeDeprecated(),
           property_id == CSSPropertyBackgroundColor);
   if (!selection_style || !selection_style->Style())
     return String();
@@ -1081,7 +1081,7 @@ bool Editor::InsertLineBreak() {
     return false;
 
   VisiblePosition caret =
-      GetFrame().Selection().ComputeVisibleSelectionInDOMTree().VisibleStart();
+      GetFrameSelection().ComputeVisibleSelectionInDOMTree().VisibleStart();
   bool align_to_edge = IsEndOfEditableOrNonEditableContent(caret);
   DCHECK(GetFrame().GetDocument());
   if (!TypingCommand::InsertLineBreak(*GetFrame().GetDocument()))
@@ -1101,7 +1101,7 @@ bool Editor::InsertParagraphSeparator() {
     return InsertLineBreak();
 
   VisiblePosition caret =
-      GetFrame().Selection().ComputeVisibleSelectionInDOMTree().VisibleStart();
+      GetFrameSelection().ComputeVisibleSelectionInDOMTree().VisibleStart();
   bool align_to_edge = IsEndOfEditableOrNonEditableContent(caret);
   DCHECK(GetFrame().GetDocument());
   EditingState editing_state;
@@ -1127,7 +1127,7 @@ void Editor::Cut(EditorCommandSource source) {
   GetFrame().GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   if (source == kCommandFromMenuOrKeyBinding &&
-      !GetFrame().Selection().SelectionHasFocus())
+      !GetFrameSelection().SelectionHasFocus())
     return;
 
   // TODO(yosin) We should use early return style here.
@@ -1173,11 +1173,11 @@ void Editor::Copy(EditorCommandSource source) {
   GetFrame().GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   if (source == kCommandFromMenuOrKeyBinding &&
-      !GetFrame().Selection().SelectionHasFocus())
+      !GetFrameSelection().SelectionHasFocus())
     return;
 
   if (EnclosingTextControl(
-          GetFrame().Selection().ComputeVisibleSelectionInDOMTree().Start())) {
+          GetFrameSelection().ComputeVisibleSelectionInDOMTree().Start())) {
     Pasteboard::GeneralPasteboard()->WritePlainText(
         GetFrame().SelectedTextForClipboard(),
         CanSmartCopyOrDelete() ? Pasteboard::kCanSmartReplace
@@ -1207,7 +1207,7 @@ void Editor::Paste(EditorCommandSource source) {
   GetFrame().GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   if (source == kCommandFromMenuOrKeyBinding &&
-      !GetFrame().Selection().SelectionHasFocus())
+      !GetFrameSelection().SelectionHasFocus())
     return;
 
   ResourceFetcher* loader = GetFrame().GetDocument()->Fetcher();
@@ -1249,7 +1249,7 @@ void Editor::PasteAsPlainText(EditorCommandSource source) {
   GetFrame().GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   if (source == kCommandFromMenuOrKeyBinding &&
-      !GetFrame().Selection().SelectionHasFocus())
+      !GetFrameSelection().SelectionHasFocus())
     return;
 
   PasteAsPlainTextWithPasteboard(Pasteboard::GeneralPasteboard());
@@ -1396,9 +1396,9 @@ void Editor::RevealSelectionAfterEditingOperation(
     RevealExtentOption reveal_extent_option) {
   if (prevent_reveal_selection_)
     return;
-  if (!GetFrame().Selection().IsAvailable())
+  if (!GetFrameSelection().IsAvailable())
     return;
-  GetFrame().Selection().RevealSelection(alignment, reveal_extent_option);
+  GetFrameSelection().RevealSelection(alignment, reveal_extent_option);
 }
 
 // TODO(yosin): We should move |Transpose()| into |ExecuteTranspose()| in
@@ -1482,11 +1482,11 @@ void Editor::ChangeSelectionAfterCommand(
   // See <rdar://problem/5729315> Some shouldChangeSelectedDOMRange contain
   // Ranges for selections that are no longer valid
   bool selection_did_not_change_dom_position =
-      new_selection == GetFrame().Selection().GetSelectionInDOMTree();
-  GetFrame().Selection().SetSelection(
+      new_selection == GetFrameSelection().GetSelectionInDOMTree();
+  GetFrameSelection().SetSelection(
       new_selection,
       SetSelectionOptions::Builder(options)
-          .SetShouldShowHandle(GetFrame().Selection().IsHandleVisible())
+          .SetShouldShowHandle(GetFrameSelection().IsHandleVisible())
           .Build());
 
   // Some editing operations change the selection visually without affecting its
@@ -1501,7 +1501,7 @@ void Editor::ChangeSelectionAfterCommand(
   // sequence, but we want to do these things (matches AppKit).
   if (selection_did_not_change_dom_position) {
     Client().RespondToChangedSelection(
-        frame_, GetFrame().Selection().GetSelectionInDOMTree().Type());
+        frame_, GetFrameSelection().GetSelectionInDOMTree().Type());
   }
 }
 
@@ -1578,7 +1578,7 @@ void Editor::ComputeAndSetTypingStyle(StylePropertySet* style,
 
 bool Editor::FindString(const String& target, FindOptions options) {
   VisibleSelection selection =
-      GetFrame().Selection().ComputeVisibleSelectionInDOMTreeDeprecated();
+      GetFrameSelection().ComputeVisibleSelectionInDOMTreeDeprecated();
 
   // TODO(yosin) We should make |findRangeOfString()| to return
   // |EphemeralRange| rather than|Range| object.
@@ -1589,11 +1589,11 @@ bool Editor::FindString(const String& target, FindOptions options) {
   if (!result_range)
     return false;
 
-  GetFrame().Selection().SetSelection(
+  GetFrameSelection().SetSelection(
       SelectionInDOMTree::Builder()
           .SetBaseAndExtent(EphemeralRange(result_range))
           .Build());
-  GetFrame().Selection().RevealSelection();
+  GetFrameSelection().RevealSelection();
   return true;
 }
 
@@ -1749,7 +1749,7 @@ void Editor::SetMarkedTextMatchesAreHighlighted(bool flag) {
 void Editor::RespondToChangedSelection() {
   GetSpellChecker().RespondToChangedSelection();
   Client().RespondToChangedSelection(
-      &GetFrame(), GetFrame().Selection().GetSelectionInDOMTree().Type());
+      frame_, GetFrameSelection().GetSelectionInDOMTree().Type());
   SetStartNewKillRingSequence(true);
 }
 
@@ -1757,9 +1757,13 @@ SpellChecker& Editor::GetSpellChecker() const {
   return GetFrame().GetSpellChecker();
 }
 
+FrameSelection& Editor::GetFrameSelection() const {
+  return GetFrame().Selection();
+}
+
 void Editor::ToggleOverwriteModeEnabled() {
   overwrite_mode_enabled_ = !overwrite_mode_enabled_;
-  GetFrame().Selection().SetShouldShowBlockCursor(overwrite_mode_enabled_);
+  GetFrameSelection().SetShouldShowBlockCursor(overwrite_mode_enabled_);
 }
 
 // TODO(tkent): This is a workaround of some crash bugs in the editing code,
