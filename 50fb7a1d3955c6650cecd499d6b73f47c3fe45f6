@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4b4a9b6_8eec0b5f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-15T22:59:37Z",
+      "side": 1,
+      "message": "ultra nit: I\u0027d go with \"Rename\" instead of \"Renamed\". I think that\u0027s more common in Chromium.",
+      "revId": "50fb7a1d3955c6650cecd499d6b73f47c3fe45f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
