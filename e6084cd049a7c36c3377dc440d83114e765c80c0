@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "553ddd19_d7527123",
+        "filename": "content/renderer/accessibility/render_accessibility_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-09-15T12:28:48Z",
+      "side": 1,
+      "message": "Why did you choose the loading task queue? HandleAXEvent doesn\u0027t look loading-related, so the timer task queue would make more sense?",
+      "revId": "e6084cd049a7c36c3377dc440d83114e765c80c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
