@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f0eeaad9_3b4a182a",
+        "filename": "chrome/browser/autocomplete/keyword_extensions_delegate_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-09-15T17:57:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd96f250_cb6a26f3",
+      "revId": "86e7513530597ed37c202fe04bd452300ef70532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6aa2bb8_ba52bb96",
         "filename": "chrome/browser/autocomplete/keyword_extensions_delegate_impl.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "86e7513530597ed37c202fe04bd452300ef70532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772c38be_da1151dc",
+        "filename": "chrome/browser/autocomplete/keyword_extensions_delegate_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-09-15T17:57:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6aa2bb8_ba52bb96",
+      "revId": "86e7513530597ed37c202fe04bd452300ef70532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -67,6 +103,24 @@
       "revId": "86e7513530597ed37c202fe04bd452300ef70532",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0714339_5f337f8c",
+        "filename": "components/omnibox/browser/keyword_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-09-15T17:57:06Z",
+      "side": 1,
+      "message": "Agreed. KeywordProvider has been reverted back to inherit from AutocompleteProvider.  \n\nWe don\u0027t need the BaseSearchProvider functionality, which does add unnecessary complexity. By inheriting from BaseSearchProvider, I was trying to avoid duplicating the BaseSearchProvider::DeleteMatchFromMatches code here.",
+      "parentUuid": "993095f4_edb8ec1e",
+      "revId": "86e7513530597ed37c202fe04bd452300ef70532",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
