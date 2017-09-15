@@ -300,6 +300,24 @@
       "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b44e504c_1f79367e",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-15T01:19:57Z",
+      "side": 1,
+      "message": "I\u0027m happy with the \"do it everywhere the same\" approach if it works. PGO has a whole bunch of complexity that we should be trying to get rid of, not emulate. But, I don\u0027t know what the tradeoffs in performance and build times are.\n\nAnd, I\u0027m not the toolchain person, so y\u0027all need to figure out first amongst yourselves which approach you want to take :).",
+      "parentUuid": "000cfa79_97f15fa3",
+      "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
