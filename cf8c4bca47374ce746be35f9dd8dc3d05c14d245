@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "8f71dfd7_b566f8a0",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-15T18:50:36Z",
+      "side": 1,
+      "message": "maybe:\n\n1) I may be misunderstanding, but IIUC this is used to track how many entries are made into the map and the reason it\u0027s a map rather than a counter is avoid double counting. If that is so, could this get by with just an int64_t (or even an int32_t) hash of the Origin to save space? Again IIUC the price of a hash collision would just be a slight variance in a histogram stat. Since a collision is unlikely and the effect would be inconsequential, saving the bytes seems useful.\n\n2) It also looks like the value in the map (the navigation ID) isn\u0027t really used, so would a std::set work here (to avoid storing map values).\n\n(If I\u0027m wrong, please just let me know).",
+      "revId": "cf8c4bca47374ce746be35f9dd8dc3d05c14d245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d874304f_ab153a55",
         "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
         "patchSetId": 16
@@ -84,6 +101,24 @@
       "side": 1,
       "message": "After some manual testing, I found that:\n(1) if user navigate away from chrome://settings page  onJavascriptDisallowed() will be called\n(2) if user close chrome://settings page, onJavascriptDisallowed() will NOT be called, \n\nSo it seems I still need to call RemoveObserver() in dtor to make sure it is correctly unobserved.\nLet me know if I missed something here.\nUpdated comments too.",
       "parentUuid": "ad39ea62_7e21b1c9",
+      "revId": "cf8c4bca47374ce746be35f9dd8dc3d05c14d245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1415976a_eb31c9a0",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-15T18:50:36Z",
+      "side": 1,
+      "message": "You are correct, though there\u0027s a preferred way to deal with that :)\n\nI should have pointed out ScopedObserver better in the example I linked to. A ScopedObserver is a helper class to help unobserve all the things its owner is observing.\n\nSince this is only observing one thing, I\u0027m not sure a ScopedObserver is useful, but I wanted to mention it. You may choose whether you\u0027d like to use ScopedObserver here since it\u0027s just one thing. If this starts observing more things, then I\u0027d ask that this use ScopedObserver.\n\nSee:\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/webui/settings/on_startup_handler.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d64\n\nhttps://cs.chromium.org/chromium/src/base/scoped_observer.h?l\u003d21\u0026gsn\u003dScopedObserver",
+      "parentUuid": "6310d8d9_f42c68c9",
       "revId": "cf8c4bca47374ce746be35f9dd8dc3d05c14d245",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
