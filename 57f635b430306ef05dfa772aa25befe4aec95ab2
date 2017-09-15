@@ -16,6 +16,24 @@
       "revId": "57f635b430306ef05dfa772aa25befe4aec95ab2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db3b5a5_05315fee",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-15T22:32:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73e13f86_20ed9575",
+      "revId": "57f635b430306ef05dfa772aa25befe4aec95ab2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5e9a6f6f_844a31c5",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-15T22:32:39Z",
+      "side": 1,
+      "message": "Thanks for the detailed explanation!",
+      "parentUuid": "bff8f656_d46ae915",
+      "revId": "17ce5211efdbc0c9afb792f148808e9436994c69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7652ee07_ef3ea95c",
         "filename": "extensions/renderer/gin_port_unittest.cc",
         "patchSetId": 3
