@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "631c630d_82b0f9cf",
+        "filename": "cc/resources/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-15T19:17:28Z",
+      "side": 0,
+      "message": "There\u0027s no reference to this file in cc/ other than from DEPS files so I removed them.",
+      "revId": "b56861ce85a6ac609fdfc85a3014cbe7d755c55b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
