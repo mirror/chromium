@@ -282,6 +282,24 @@
       "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "000cfa79_97f15fa3",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1222289
+      },
+      "writtenOn": "2017-09-15T01:13:02Z",
+      "side": 1,
+      "message": "It\u0027s a trade-off between build time, memory required for the build, and binary size on the one hand, and run-time performance on the other hand. When using MSVC, the choice was made to apply PGO and LTO only to parts of the code. For Clang on Windows, that may or may not be the right trade-off. If we\u0027re happy to say \"just do it the same way we do it on Linux\", I\u0027m happy to change crrev.com/c/667944 to do that, and get rid of allow_posix_link_time_opt while I\u0027m at it, and then we won\u0027t need this special case here.",
+      "parentUuid": "237aa526_4c1016af",
+      "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
