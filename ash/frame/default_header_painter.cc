@@ -47,7 +47,9 @@ void TileRoundRect(gfx::Canvas* canvas,
                    const cc::PaintFlags& flags,
                    const gfx::Rect& bounds,
                    int corner_radius) {
+#if 1
   SkRect rect = gfx::RectToSkRect(bounds);
+  //rect.fBottom += 1;
   const SkScalar corner_radius_scalar = SkIntToScalar(corner_radius);
   SkScalar radii[8] = {corner_radius_scalar,
                        corner_radius_scalar,  // top-left
@@ -60,6 +62,9 @@ void TileRoundRect(gfx::Canvas* canvas,
   SkPath path;
   path.addRoundRect(rect, radii, SkPath::kCW_Direction);
   canvas->DrawPath(path, flags);
+#else
+  canvas->FillRect(bounds, flags.getColor());
+#endif
 }
 
 // Returns the FontList to use for the title.
@@ -143,6 +148,8 @@ void DefaultHeaderPainter::PaintHeader(gfx::Canvas* canvas, Mode mode) {
   int active_alpha = activation_animation_->CurrentValueBetween(0, 255);
   flags.setColor(color_utils::AlphaBlend(active_frame_color_,
                                          inactive_frame_color_, active_alpha));
+  //flags.setStyle(cc::PaintFlags::kStrokeAndFill_Style);
+  //flags.setStrokeWidth(SkIntToScalar(0));
   flags.setAntiAlias(true);
   TileRoundRect(canvas, flags, GetLocalBounds(), corner_radius);
 
