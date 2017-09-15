@@ -339,9 +339,9 @@ void TestRunnerBindings::Install(
           if (!window.testRunner) {
             return;
           }
+          window.testRunner.waitUntilDone();
           const target = document.documentElement;
           if (target != null && target.classList.contains('reftest-wait')) {
-            window.testRunner.waitUntilDone();
             const observer = new MutationObserver(function(mutations) {
               mutations.forEach(function(mutation) {
                 if (!target.classList.contains('reftest-wait')) {
@@ -351,6 +351,8 @@ void TestRunnerBindings::Install(
             });
             const config = {attributes: true};
             observer.observe(target, config);
+          } else {
+            document.fonts.ready.then(() => window.testRunner.notifyDone());
           }
         });)"));
   }
