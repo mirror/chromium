@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "405c6743_8507accd",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bubble_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-15T03:19:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6172baf_c85d736c",
+      "revId": "df038dfd861322951c1855c41a9e224ca48abe40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fa92a50_bf968656",
         "filename": "chrome/browser/ui/views/bookmarks/bookmark_bubble_view_browsertest.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "13144c4d_512b370d",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bubble_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-15T03:19:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fa92a50_bf968656",
+      "revId": "df038dfd861322951c1855c41a9e224ca48abe40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e34c45ef_095ac889",
         "filename": "ui/views/bubble/bubble_dialog_delegate.cc",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "df038dfd861322951c1855c41a9e224ca48abe40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ae403cc_08a2ad98",
+        "filename": "ui/views/bubble/bubble_dialog_delegate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-15T03:19:43Z",
+      "side": 1,
+      "message": "Done. I think we would have to nuke this tho ;), and replace it with a data member (similar to |title_margins_|). Since, there\u0027s not much support for modifying BubbleFrameView parameters after this method returns, and overriding CreateNonClientFrameView in a subclass is error-prone since most of the other logic here is necessary.",
+      "parentUuid": "e34c45ef_095ac889",
+      "revId": "df038dfd861322951c1855c41a9e224ca48abe40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
