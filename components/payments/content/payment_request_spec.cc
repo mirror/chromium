@@ -9,9 +9,9 @@
 #include "base/feature_list.h"
 #include "base/logging.h"
 #include "base/strings/utf_string_conversions.h"
+#include "components/payments/content/payment_instrument.h"
 #include "components/payments/content/payment_request_converter.h"
 #include "components/payments/core/features.h"
-#include "components/payments/core/payment_instrument.h"
 #include "components/payments/core/payment_method_data.h"
 #include "components/payments/core/payment_request_data_util.h"
 #include "components/strings/grit/components_strings.h"
@@ -83,13 +83,14 @@ PaymentRequestSpec::PaymentRequestSpec(
     const std::string& app_locale)
     : options_(std::move(options)),
       details_(std::move(details)),
+      method_data_(std::move(method_data)),
       app_locale_(app_locale),
       selected_shipping_option_(nullptr) {
   if (observer)
     AddObserver(observer);
   UpdateSelectedShippingOption(/*after_update=*/false);
   PopulateValidatedMethodData(
-      method_data, &supported_card_networks_, &basic_card_specified_networks_,
+      method_data_, &supported_card_networks_, &basic_card_specified_networks_,
       &supported_card_networks_set_, &supported_card_types_set_,
       &url_payment_method_identifiers_, &stringified_method_data_);
 }

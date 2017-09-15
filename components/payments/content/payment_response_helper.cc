@@ -16,10 +16,14 @@
 #include "components/payments/core/payment_request_data_util.h"
 #include "components/payments/core/payment_request_delegate.h"
 #include "components/payments/core/payments_validators.h"
+#include "content/public/browser/browser_context.h"
 
 namespace payments {
 
 PaymentResponseHelper::PaymentResponseHelper(
+    content::BrowserContext* browser_context,
+    const GURL& top_level_origin,
+    const GURL& frame_origin,
     const std::string& app_locale,
     PaymentRequestSpec* spec,
     PaymentInstrument* selected_instrument,
@@ -64,7 +68,9 @@ PaymentResponseHelper::PaymentResponseHelper(
 
   // Start to get the instrument details. Will call back into
   // OnInstrumentDetailsReady.
-  selected_instrument_->InvokePaymentApp(this);
+  selected_instrument_->InvokePaymentApp(browser_context, top_level_origin,
+                                         frame_origin, spec_->details(),
+                                         spec_->method_data(), this);
 }
 
 PaymentResponseHelper::~PaymentResponseHelper() {}

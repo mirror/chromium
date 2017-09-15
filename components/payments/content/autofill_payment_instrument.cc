@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/payments/core/autofill_payment_instrument.h"
+#include "components/payments/content/autofill_payment_instrument.h"
 
 #include <algorithm>
 #include <memory>
@@ -20,6 +20,7 @@
 #include "components/payments/core/basic_card_response.h"
 #include "components/payments/core/payment_request_base_delegate.h"
 #include "components/payments/core/payment_request_data_util.h"
+#include "content/public/browser/browser_context.h"
 
 namespace payments {
 
@@ -45,6 +46,11 @@ AutofillPaymentInstrument::AutofillPaymentInstrument(
 AutofillPaymentInstrument::~AutofillPaymentInstrument() {}
 
 void AutofillPaymentInstrument::InvokePaymentApp(
+    content::BrowserContext* browser_context,
+    const GURL& top_level_origin,
+    const GURL& frame_origin,
+    const mojom::PaymentDetails& details,
+    const std::vector<mojom::PaymentMethodDataPtr>& method_data,
     PaymentInstrument::Delegate* delegate) {
   DCHECK(delegate);
   // There can be only one FullCardRequest going on at a time. If |delegate_| is

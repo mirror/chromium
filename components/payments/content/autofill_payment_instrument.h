@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_PAYMENTS_CORE_AUTOFILL_PAYMENT_INSTRUMENT_H_
-#define COMPONENTS_PAYMENTS_CORE_AUTOFILL_PAYMENT_INSTRUMENT_H_
+#ifndef COMPONENTS_PAYMENTS_CONTENT_AUTOFILL_PAYMENT_INSTRUMENT_H_
+#define COMPONENTS_PAYMENTS_CONTENT_AUTOFILL_PAYMENT_INSTRUMENT_H_
 
 #include <set>
 #include <string>
@@ -15,8 +15,8 @@
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "components/autofill/core/browser/payments/full_card_request.h"
+#include "components/payments/content/payment_instrument.h"
 #include "components/payments/core/address_normalizer.h"
-#include "components/payments/core/payment_instrument.h"
 
 namespace payments {
 
@@ -41,7 +41,13 @@ class AutofillPaymentInstrument
   ~AutofillPaymentInstrument() override;
 
   // PaymentInstrument:
-  void InvokePaymentApp(PaymentInstrument::Delegate* delegate) override;
+  void InvokePaymentApp(
+      content::BrowserContext* browser_context,
+      const GURL& top_level_origin,
+      const GURL& frame_origin,
+      const mojom::PaymentDetails& details,
+      const std::vector<mojom::PaymentMethodDataPtr>& method_data,
+      PaymentInstrument::Delegate* delegate) override;
   bool IsCompleteForPayment() const override;
   bool IsExactlyMatchingMerchantRequest() const override;
   base::string16 GetMissingInfoLabel() const override;
@@ -107,4 +113,4 @@ class AutofillPaymentInstrument
 
 }  // namespace payments
 
-#endif  // COMPONENTS_PAYMENTS_CORE_AUTOFILL_PAYMENT_INSTRUMENT_H_
+#endif  // COMPONENTS_PAYMENTS_CONTENT_AUTOFILL_PAYMENT_INSTRUMENT_H_

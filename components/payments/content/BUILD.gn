@@ -4,8 +4,12 @@
 
 static_library("content") {
   sources = [
+    "autofill_payment_instrument.cc",
+    "autofill_payment_instrument.h",
     "can_make_payment_query_factory.cc",
     "can_make_payment_query_factory.h",
+    "payment_instrument.cc",
+    "payment_instrument.h",
     "payment_request.cc",
     "payment_request.h",
     "payment_request_converter.cc",
@@ -67,6 +71,7 @@ static_library("utils") {
 source_set("unit_tests") {
   testonly = true
   sources = [
+    "autofill_payment_instrument_unittest.cc",
     "payment_request_spec_unittest.cc",
     "payment_request_state_unittest.cc",
     "payment_response_helper_unittest.cc",

@@ -7,8 +7,8 @@
 
 #include "base/macros.h"
 #include "components/autofill/core/browser/autofill_profile.h"
+#include "components/payments/content/payment_instrument.h"
 #include "components/payments/core/address_normalizer.h"
-#include "components/payments/core/payment_instrument.h"
 #include "third_party/WebKit/public/platform/modules/payments/payment_request.mojom.h"
 
 namespace payments {
@@ -29,7 +29,10 @@ class PaymentResponseHelper : public PaymentInstrument::Delegate,
   };
 
   // The spec, selected_instrument and delegate cannot be null.
-  PaymentResponseHelper(const std::string& app_locale,
+  PaymentResponseHelper(content::BrowserContext* browser_context,
+                        const GURL& top_level_origin,
+                        const GURL& frame_origin,
+                        const std::string& app_locale,
                         PaymentRequestSpec* spec,
                         PaymentInstrument* selected_instrument,
                         PaymentRequestDelegate* payment_request_delegate,

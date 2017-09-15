@@ -5,8 +5,10 @@
 #ifndef COMPONENTS_PAYMENTS_CONTENT_SERVICE_WORKER_PAYMENT_INSTRUMENT_H_
 #define COMPONENTS_PAYMENTS_CONTENT_SERVICE_WORKER_PAYMENT_INSTRUMENT_H_
 
-#include "components/payments/core/payment_instrument.h"
+#include "components/payments/content/payment_instrument.h"
 #include "content/public/browser/stored_payment_app.h"
+#include "third_party/WebKit/public/platform/modules/payments/payment_app.mojom.h"
+#include "third_party/WebKit/public/platform/modules/payments/payment_request.mojom.h"
 
 namespace payments {
 
@@ -18,7 +20,13 @@ class ServiceWorkerPaymentInstrument : public PaymentInstrument {
   ~ServiceWorkerPaymentInstrument() override;
 
   // PaymentInstrument:
-  void InvokePaymentApp(PaymentInstrument::Delegate* delegate) override;
+  void InvokePaymentApp(
+      content::BrowserContext* browser_context,
+      const GURL& top_level_origin,
+      const GURL& frame_origin,
+      const mojom::PaymentDetails& details,
+      const std::vector<mojom::PaymentMethodDataPtr>& method_data,
+      Delegate* delegate) override;
   bool IsCompleteForPayment() const override;
   bool IsExactlyMatchingMerchantRequest() const override;
   base::string16 GetMissingInfoLabel() const override;
@@ -34,8 +42,13 @@ class ServiceWorkerPaymentInstrument : public PaymentInstrument {
   const gfx::ImageSkia* icon_image_skia() const override;
 
  private:
+  void OnPaymentAppInvoked(mojom::PaymentHandlerResponsePtr response);
+
   std::unique_ptr<content::StoredPaymentApp> stored_payment_app_info_;
   std::unique_ptr<gfx::ImageSkia> icon_image_;
+  Delegate* delegate_;
+
+  base::WeakPtrFactory<ServiceWorkerPaymentInstrument> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerPaymentInstrument);
 };

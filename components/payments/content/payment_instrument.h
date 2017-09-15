@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_PAYMENTS_CORE_PAYMENT_INSTRUMENT_H_
-#define COMPONENTS_PAYMENTS_CORE_PAYMENT_INSTRUMENT_H_
+#ifndef COMPONENTS_PAYMENTS_CONTENT_PAYMENT_INSTRUMENT_H_
+#define COMPONENTS_PAYMENTS_CONTENT_PAYMENT_INSTRUMENT_H_
 
 #include <set>
 #include <string>
@@ -13,7 +13,13 @@
 #include "base/strings/string16.h"
 #include "build/build_config.h"
 #include "components/autofill/core/browser/credit_card.h"
+#include "third_party/WebKit/public/platform/modules/payments/payment_request.mojom.h"
 #include "ui/gfx/image/image_skia.h"
+#include "url/gurl.h"
+
+namespace content {
+class BrowserContext;
+}
 
 namespace payments {
 
@@ -39,7 +45,13 @@ class PaymentInstrument {
   virtual ~PaymentInstrument();
 
   // Will call into the |delegate| (can't be null) on success or error.
-  virtual void InvokePaymentApp(Delegate* delegate) = 0;
+  virtual void InvokePaymentApp(
+      content::BrowserContext* browser_context,
+      const GURL& top_level_origin,
+      const GURL& frame_origin,
+      const mojom::PaymentDetails& details,
+      const std::vector<mojom::PaymentMethodDataPtr>& method_data,
+      Delegate* delegate) = 0;
   // Returns whether the instrument is complete to be used as a payment method
   // without further editing.
   virtual bool IsCompleteForPayment() const = 0;
@@ -83,4 +95,4 @@ class PaymentInstrument {
 
 }  // namespace payments
 
-#endif  // COMPONENTS_PAYMENTS_CORE_PAYMENT_INSTRUMENT_H_
+#endif  // COMPONENTS_PAYMENTS_CONTENT_PAYMENT_INSTRUMENT_H_
