@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "83aa4403_4ff47ecd",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ClipboardTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-09-15T16:15:47Z",
+      "side": 1,
+      "message": "Nice! I used AtomicReference in the past, but I think this is much cleaner",
+      "revId": "fdb91ed2e255bd3c02f5f8e1df59ec81af58258e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aee89707_62883f5b",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/ClipboardTest.java",
         "patchSetId": 3
@@ -19,6 +36,40 @@
         "endLine": 65,
         "endChar": 60
       },
+      "revId": "fdb91ed2e255bd3c02f5f8e1df59ec81af58258e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98ecdad5_01e5d8aa",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ClipboardTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-09-15T16:15:47Z",
+      "side": 1,
+      "message": "I think this should run on Ui thread too, despite it does not cause any issues currently on instr thread",
+      "revId": "fdb91ed2e255bd3c02f5f8e1df59ec81af58258e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4007176_d707135f",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/MediaSessionTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-09-15T16:15:47Z",
+      "side": 1,
+      "message": "Hmm, I believe either ContentJUnit4ClassRunner or RestrictionSkipCheck should do this properly, instead of an adhoc solution here. So probably adding something like `if (!CommandLine.isInitialized()) CommandLine.init(new String[] {});` into RestrictionSkipCheck.",
       "revId": "fdb91ed2e255bd3c02f5f8e1df59ec81af58258e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
