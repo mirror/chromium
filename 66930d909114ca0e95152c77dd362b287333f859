@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ddd59d39_bc9db3cd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-09-15T09:11:48Z",
+      "side": 1,
+      "message": "You left some debug code in.",
+      "range": {
+        "startLine": 514,
+        "startChar": 52,
+        "endLine": 514,
+        "endChar": 60
+      },
+      "revId": "66930d909114ca0e95152c77dd362b287333f859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
