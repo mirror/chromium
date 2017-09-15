@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc755314_30dfa7ec",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-15T17:35:18Z",
+      "side": 1,
+      "message": "Implementation or it didn\u0027t happen.\n\nIn all fairness, I don\u0027t think you are using that.",
+      "revId": "48e6954cfea3069ee02639059501f9cdcb1ba4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd98855_a9a3f8ba",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-15T17:35:18Z",
+      "side": 1,
+      "message": "We may have discussed that, but why are we not deleting the DB entry first?\n\nThis is worth capturing in the comment in code, once we have a satisfying answer.",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 25
+      },
+      "revId": "48e6954cfea3069ee02639059501f9cdcb1ba4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38eab350_a3c8e395",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-15T17:35:18Z",
+      "side": 1,
+      "message": "What if it fails in that step? What do we do?",
+      "range": {
+        "startLine": 75,
+        "startChar": 10,
+        "endLine": 75,
+        "endChar": 40
+      },
+      "revId": "48e6954cfea3069ee02639059501f9cdcb1ba4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a856d2b7_00e97afb",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-15T17:35:18Z",
+      "side": 1,
+      "message": "My initial thought was: Does this call work with 3 arguments?\n\nMy second thought is: Why is everything called a page info?\nThe way I understand it is that we have more than one class with similar name. Let\u0027s fix/discuss that.",
+      "range": {
+        "startLine": 76,
+        "startChar": 27,
+        "endLine": 76,
+        "endChar": 39
+      },
+      "revId": "48e6954cfea3069ee02639059501f9cdcb1ba4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08c92da_928e3b4a",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-15T17:35:18Z",
+      "side": 1,
+      "message": "Hence the comment below, please remove this line.",
+      "range": {
+        "startLine": 199,
+        "startChar": 17,
+        "endLine": 199,
+        "endChar": 58
+      },
+      "revId": "48e6954cfea3069ee02639059501f9cdcb1ba4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

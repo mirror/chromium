@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c8fa8679_0b6506a3",
+        "filename": "components/offline_pages/core/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-15T17:35:18Z",
+      "side": 1,
+      "message": "Was that resolved properly?",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 38
+      },
+      "revId": "fa438808582e14fc43e89b914ed98e17d8881964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e642fe3e_e7621d0b",
         "filename": "components/offline_pages/core/model/delete_page_task.cc",
         "patchSetId": 4
