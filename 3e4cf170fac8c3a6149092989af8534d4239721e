@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "c1797d2f_5668035e",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-15T00:58:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "222a53d5_0f176b23",
+      "revId": "3e4cf170fac8c3a6149092989af8534d4239721e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d43570ca_f7e419ff",
         "filename": "chrome/browser/resources/sys_internals/index.js",
         "patchSetId": 6
@@ -130,6 +148,30 @@
     },
     {
       "key": {
+        "uuid": "4997ad12_29b44f72",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-15T00:58:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d43570ca_f7e419ff",
+      "range": {
+        "startLine": 184,
+        "startChar": 10,
+        "endLine": 184,
+        "endChar": 19
+      },
+      "revId": "3e4cf170fac8c3a6149092989af8534d4239721e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62c2d9c4_2a429675",
         "filename": "chrome/browser/resources/sys_internals/index.js",
         "patchSetId": 6
@@ -150,6 +192,30 @@
       "revId": "3e4cf170fac8c3a6149092989af8534d4239721e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf4c52e7_3210e5c6",
+        "filename": "chrome/browser/resources/sys_internals/index.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1230199
+      },
+      "writtenOn": "2017-09-15T00:58:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62c2d9c4_2a429675",
+      "range": {
+        "startLine": 410,
+        "startChar": 4,
+        "endLine": 410,
+        "endChar": 21
+      },
+      "revId": "3e4cf170fac8c3a6149092989af8534d4239721e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
