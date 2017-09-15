@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b9cc8ee_66091f40",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1400,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-15T23:36:44Z",
+      "side": 0,
+      "message": "swapping these cases so the comments for the disabled case are easier to follow",
+      "range": {
+        "startLine": 1400,
+        "startChar": 0,
+        "endLine": 1400,
+        "endChar": 67
+      },
+      "revId": "ad80c35e4b4481bb2f19b069f7305a4b6b9726dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
