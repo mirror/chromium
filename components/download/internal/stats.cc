@@ -20,6 +20,24 @@ namespace {
 // bucket.
 const int64_t kMaxFileSizeKB = 4 * 1024 * 1024; /* 4GB */
 
+// Enum used by UMA metrics to track various reasons of pausing a download.
+enum class PauseReason {
+  // The download was paused due to unsatisfied device criteria.
+  UNMET_DEVICE_CRITERIA = 0,
+
+  // The download was paused by client.
+  PAUSE_BY_CLIENT = 1,
+
+  // The download was paused due to external download.
+  EXTERNAL_DOWNLOAD = 2,
+
+  // The download was paused due to navigation.
+  EXTERNAL_NAVIGATION = 3,
+
+  // The count of entries for the enum.
+  COUNT = 4,
+};
+
 // Converts DownloadTaskType to histogram suffix.
 // Should maps to suffix string in histograms.xml.
 std::string TaskTypeToHistogramSuffix(DownloadTaskType task_type) {
@@ -223,6 +241,33 @@ void LogDownloadCompletion(CompletionType type,
 
   name.append(".").append(CompletionTypeToHistogramSuffix(type));
   base::UmaHistogramCustomCounts(name, file_size_kb, 1, kMaxFileSizeKB, 50);
+}
+
+void LogDownloadPauseReason(base::Optional<DriverEntry> driver_entry,
+                            bool unmet_device_criteria,
+                            bool pause_by_client,
+                            bool external_navigation,
+                            bool external_download) {
+  bool currently_in_progress =
+      driver_entry.has_value() &&
+      driver_entry->state == DriverEntry::State::IN_PROGRESS;
+  bool move_to_pause = unmet_device_criteria || pause_by_client ||
+                       external_navigation || external_download;
+  if (!currently_in_progress || !move_to_pause)
+    return;
+
+  PauseReason reason;
+  if (unmet_device_criteria)
+    reason = PauseReason::UNMET_DEVICE_CRITERIA;
+  if (pause_by_client)
+    reason = PauseReason::PAUSE_BY_CLIENT;
+  if (external_navigation)
+    reason = PauseReason::EXTERNAL_NAVIGATION;
+  if (external_download)
+    reason = PauseReason::EXTERNAL_DOWNLOAD;
+
+  base::UmaHistogramEnumeration("Download.Service.PauseReason", reason,
+                                PauseReason::COUNT);
 }
 
 void LogModelOperationResult(ModelAction action, bool success) {
