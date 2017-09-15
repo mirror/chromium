@@ -8,6 +8,7 @@
 #include "base/bind_helpers.h"
 #include "base/lazy_instance.h"
 #include "base/task_scheduler/delayed_task_manager.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "base/task_scheduler/task_tracker.h"
 #include "base/threading/thread_local.h"
 
@@ -42,6 +43,16 @@ class SchedulerParallelTaskRunner : public TaskRunner {
   bool PostDelayedTask(const Location& from_here,
                        OnceClosure closure,
                        TimeDelta delay) override {
+    // This check serves the purpose of an effective WeakPtr on |worker_pool|. A
+    // WeakPtr can't be used here because there's no such thing as a thread-safe
+    // WeakPtr. However, if a caller is sequenced with the destruction of the
+    // TaskScheduler instance (e.g. caller on main thread after Shutdown()) it
+    // can unracily determine that posting is not possible via this check (and
+    // TSan should catch the odd case where a PostTask call actually races with
+    // the destruction of the TaskScheduler instance).
+    if (!TaskScheduler::GetInstance())
+      return false;
+
     // Post the task as part of a one-off single-task Sequence.
     return worker_pool_->PostTaskWithSequence(
         std::make_unique<Task>(from_here, std::move(closure), traits_, delay),
@@ -77,6 +88,16 @@ class SchedulerSequencedTaskRunner : public SequencedTaskRunner {
   bool PostDelayedTask(const Location& from_here,
                        OnceClosure closure,
                        TimeDelta delay) override {
+    // This check serves the purpose of an effective WeakPtr on |worker_pool|. A
+    // WeakPtr can't be used here because there's no such thing as a thread-safe
+    // WeakPtr. However, if a caller is sequenced with the destruction of the
+    // TaskScheduler instance (e.g. caller on main thread after Shutdown()) it
+    // can unracily determine that posting is not possible via this check (and
+    // TSan should catch the odd case where a PostTask call actually races with
+    // the destruction of the TaskScheduler instance).
+    if (!TaskScheduler::GetInstance())
+      return false;
+
     std::unique_ptr<Task> task =
         std::make_unique<Task>(from_here, std::move(closure), traits_, delay);
     task->sequenced_task_runner_ref = this;
