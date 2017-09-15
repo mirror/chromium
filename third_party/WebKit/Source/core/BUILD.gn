@@ -441,6 +441,7 @@ css_properties("make_core_generated_computed_style_base") {
     "../build/scripts/templates/ComputedStyleBaseConstants.h.tmpl",
     "../build/scripts/keyword_utils.py",
     "../build/scripts/css_properties_utils.py",
+    "../build/scripts/css_property_field_writer.py",
   ]
   outputs = [
     "$blink_core_output_dir/ComputedStyleBase.h",
@@ -459,6 +460,7 @@ css_properties("make_core_generated_css_value_id_mappings") {
     "../build/scripts/templates/CSSValueIDMappingsGenerated.h.tmpl",
     "../build/scripts/keyword_utils.py",
     "../build/scripts/css_properties_utils.py",
+    "../build/scripts/css_property_field_writer.py",
   ]
   outputs = [
     "$blink_core_output_dir/CSSValueIDMappingsGenerated.h",
@@ -467,9 +469,13 @@ css_properties("make_core_generated_css_value_id_mappings") {
 
 css_properties("make_core_generated_css_property_api_baseclass") {
   script = "../build/scripts/core/css/properties/make_css_property_api_base.py"
+  in_files = [
+    "css/ComputedStyleExtraFields.json5",
+  ]
   other_inputs = [
     "../build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl",
     "../build/scripts/core/css/properties/templates/CSSPropertyAPI.h.tmpl",
+    "../build/scripts/css_property_field_writer.py",
   ]
   outputs = [
     "$blink_core_output_dir/css/properties/CSSPropertyAPI.cpp",
@@ -483,6 +489,7 @@ code_generator("make_core_generated_css_property_apis") {
       "../build/scripts/core/css/properties/make_css_property_api_headers.py"
   json_inputs = [
     "css/CSSProperties.json5",
+    "css/ComputedStyleExtraFields.json5",
     "css/properties/CSSPropertyAPIMethods.json5",
   ]
   templates = [ "../build/scripts/core/css/properties/templates/CSSPropertyAPISubclass.h.tmpl" ]
@@ -767,6 +774,7 @@ css_properties("make_core_generated_style_builder") {
     "../build/scripts/templates/StyleBuilder.cpp.tmpl",
     "../build/scripts/templates/StyleBuilderFunctions.cpp.tmpl",
     "../build/scripts/templates/StyleBuilderFunctions.h.tmpl",
+    "../build/scripts/css_property_field_writer.py",
   ]
   outputs = [
     "$blink_core_output_dir/StyleBuilder.cpp",

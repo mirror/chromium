@@ -5,9 +5,8 @@
 
 import json5_generator
 import template_expander
-import make_style_builder
+import css_property_field_writer
 import keyword_utils
-import css_properties_utils
 from name_utilities import enum_for_css_keyword, enum_value_name
 
 
@@ -97,26 +96,14 @@ def _find_enum_longest_continuous_segment(property_, name_to_position_dictionary
     return enum_pair_list, enum_segment, longest_segment
 
 
-class CSSValueIDMappingsWriter(make_style_builder.StyleBuilderWriter):
+class CSSValueIDMappingsWriter(css_property_field_writer.CSSPropertyFieldWriter):
     def __init__(self, json5_file_path):
-        super(CSSValueIDMappingsWriter, self).__init__([json5_file_path[0]])
+        super(CSSValueIDMappingsWriter, self).__init__(json5_file_path[0], json5_file_path[2],
+                                                       css_value_id_path=json5_file_path[1])
         self._outputs = {
             'CSSValueIDMappingsGenerated.h': self.generate_css_value_mappings,
         }
         self.css_values_dictionary_file = json5_file_path[1]
-        css_properties = [value for value in self._properties.values() if not value['longhands']]
-        # We sort the enum values based on each value's position in
-        # the keywords as listed in CSSProperties.json5. This will ensure that if there is a continuous
-        # segment in CSSProperties.json5 matching the segment in this enum then
-        # the generated enum will have the same order and continuity as
-        # CSSProperties.json5 and we can get the longest continuous segment.
-        # Thereby reduce the switch case statement to the minimum.
-        self._fields = css_properties_utils.get_fields_from_css_properties(css_properties,
-                                                                           json5_file_path[2],
-                                                                           self.json5_file.parameters)
-        keyword_utils.sort_keyword_properties_by_canonical_order(self._fields.values(),
-                                                                 json5_file_path[1],
-                                                                 self.json5_file.parameters)
 
 
     @template_expander.use_jinja('templates/CSSValueIDMappingsGenerated.h.tmpl')
