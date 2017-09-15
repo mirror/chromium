@@ -16,6 +16,24 @@
       "revId": "95e5a9f7c667b9310d4b4c7ae9f6c2e19b320f20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bba46968_7154535f",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-09-15T00:27:26Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like it makes a new ContextProvder, just uses the one that was binded to it if it exists.\n\nWhat am I supposed to see when I kill the GPU process?",
+      "parentUuid": "0fd32e8f_cc20ba0a",
+      "revId": "95e5a9f7c667b9310d4b4c7ae9f6c2e19b320f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
