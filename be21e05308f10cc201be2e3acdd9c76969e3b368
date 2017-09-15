@@ -16,6 +16,24 @@
       "revId": "be21e05308f10cc201be2e3acdd9c76969e3b368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e328de2_1f97ad74",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 1914,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-09-15T00:09:24Z",
+      "side": 1,
+      "message": "This syntax doesn\u0027t work. I don\u0027t think checkdeps.py is designed to handle this case (it maps classname -\u003e file path, but there\u0027s no file path for Android framework classes).",
+      "parentUuid": "689905ea_b87db6ce",
+      "revId": "be21e05308f10cc201be2e3acdd9c76969e3b368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
