@@ -257,6 +257,23 @@ Response ServiceWorkerHandler::StopWorker(const std::string& version_id) {
   return Response::OK();
 }
 
+void ServiceWorkerHandler::StopAllWorkers(
+    std::unique_ptr<StopAllWorkersCallback> callback) {
+  if (!enabled_) {
+    callback->sendFailure(CreateDomainNotEnabledErrorResponse());
+    return;
+  }
+  if (!context_) {
+    callback->sendFailure(CreateContextErrorResponse());
+    return;
+  }
+  context_->StopAllServiceWorkers(base::BindOnce(
+      [](std::unique_ptr<StopAllWorkersCallback> callback) {
+        callback->sendSuccess();
+      },
+      std::move(callback)));
+}
+
 Response ServiceWorkerHandler::UpdateRegistration(
     const std::string& scope_url) {
   if (!enabled_)
