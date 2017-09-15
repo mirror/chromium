@@ -20,8 +20,8 @@
 #include "services/service_manager/public/cpp/interface_provider.h"
 #include "ui/base/l10n/l10n_util.h"
 #else  // defined(OS_ANDROID)
+#include "content/public/network/mojo_proxy_resolver_factory_impl.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
-#include "net/proxy/mojo_proxy_resolver_factory_impl.h"
 #endif  // !defined(OS_ANDROID)
 
 namespace {
@@ -47,8 +47,8 @@ ChromeMojoProxyResolverFactory::~ChromeMojoProxyResolverFactory() {
 std::unique_ptr<base::ScopedClosureRunner>
 ChromeMojoProxyResolverFactory::CreateResolver(
     const std::string& pac_script,
-    mojo::InterfaceRequest<net::interfaces::ProxyResolver> req,
-    net::interfaces::ProxyResolverFactoryRequestClientPtr client) {
+    mojo::InterfaceRequest<content::mojom::ProxyResolver> req,
+    content::mojom::ProxyResolverFactoryRequestClientPtr client) {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (!resolver_factory_)
     CreateFactory();
@@ -73,8 +73,9 @@ void ChromeMojoProxyResolverFactory::CreateFactory() {
   DCHECK(!resolver_factory_);
 
 #if defined(OS_ANDROID)
-  mojo::MakeStrongBinding(base::MakeUnique<net::MojoProxyResolverFactoryImpl>(),
-                          mojo::MakeRequest(&resolver_factory_));
+  mojo::MakeStrongBinding(
+      base::MakeUnique<content::MojoProxyResolverFactoryImpl>(),
+      mojo::MakeRequest(&resolver_factory_));
 #else   // !defined(OS_ANDROID)
   DCHECK(!weak_utility_process_host_);
 

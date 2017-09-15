@@ -362,6 +362,7 @@ mojom("interfaces") {
     "mutable_network_traffic_annotation_tag.mojom",
     "network_service.mojom",
     "network_service_test.mojom",
+    "proxy_resolver.mojom",
     "push_messaging_status.mojom",
     "url_loader.mojom",
     "url_loader_factory.mojom",
@@ -370,6 +371,7 @@ mojom("interfaces") {
 
   public_deps = [
     "//mojo/common:common_custom_types",
+    "//net/interfaces",
     "//url/mojo:url_mojom_gurl",
     "//url/mojo:url_mojom_origin",
   ]
