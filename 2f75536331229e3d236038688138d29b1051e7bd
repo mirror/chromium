@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70a2f85d_ff0f86b1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-15T02:09:57Z",
+      "side": 1,
+      "message": "This whole thing needs to be surrounded in a block that allows disk reads to avoid Strict Mode violations \n\nStrictMode.ThreadPolicy oldPolicy \u003d StrictMode.allowThreadDiskWrites();\ntry {\n    // everything currently in the method\n} finally {\n    StrictMode.setThreadPolicy(oldPolicy);\n}",
+      "range": {
+        "startLine": 494,
+        "startChar": 23,
+        "endLine": 494,
+        "endChar": 47
+      },
+      "revId": "2f75536331229e3d236038688138d29b1051e7bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
