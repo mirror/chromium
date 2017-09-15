@@ -5,6 +5,7 @@
 typemaps = [
   "//components/autofill/content/common/autofill_types.typemap",
   "//components/content_settings/core/common/content_settings.typemap",
+  "//components/gcm_driver/public/interfaces/gcm_receiver.typemap",
   "//components/nacl/common/nacl.typemap",
   "//components/password_manager/content/common/credential_manager.typemap",
   "//components/signin/public/interfaces/account_id.typemap",

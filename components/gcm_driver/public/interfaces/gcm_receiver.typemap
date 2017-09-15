@@ -1,0 +1,25 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+mojom = "//components/gcm_driver/public/interfaces/gcm_receiver.mojom"
+
+public_headers = [ "//components/gcm_driver/gcm_client.h" ]
+
+traits_headers = [ "//components/gcm_driver/gcm_receiver_typemap_traits.h" ]
+
+sources = [
+  "//components/gcm_driver/gcm_receiver_typemap_traits.cc",
+]
+
+deps = [
+  "//base",
+  "//components/gcm_driver",
+  "//mojo/common:struct_traits",
+]
+
+type_mappings = [
+  "gcm.mojom.GCMResult=gcm::GCMClient::Result",
+  "gcm.mojom.GCMIncomingMessage=gcm::IncomingMessage",
+  "gcm.mojom.GCMSendErrorDetails=gcm::GCMClient::SendErrorDetails",
+]
