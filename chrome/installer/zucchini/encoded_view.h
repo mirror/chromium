@@ -9,7 +9,10 @@
 #include <stdint.h>
 
 #include <iterator>
+#include <utility>
+#include <vector>
 
+#include "base/macros.h"
 #include "chrome/installer/zucchini/image_index.h"
 #include "chrome/installer/zucchini/image_utils.h"
 
@@ -117,14 +120,25 @@ class EncodedView {
   // |image_index| is the annotated image being adapted, and is required to
   // remain valid for the lifetime of the object.
   explicit EncodedView(const ImageIndex& image_index);
+  ~EncodedView();
 
   // Projects |location| to a scalar value that describes the content at a
   // higher level of abstraction.
   value_type Projection(offset_t location) const;
 
+  bool IsToken(offset_t location) const {
+    return image_index_.IsToken(location);
+  }
+
   // Returns the cardinality of the projection, i.e., the upper bound on
   // values returned by Projection().
   value_type Cardinality() const;
+
+  void UpdateLabels(PoolTag pool, std::vector<size_t>&& labels, size_t bound) {
+    DCHECK_EQ(labels.size(), image_index_.at(pool).size());
+    pools_[pool.value()].labels = std::move(labels);
+    pools_[pool.value()].bound = bound;
+  }
 
   const ImageIndex& image_index() const { return image_index_; }
 
@@ -138,7 +152,21 @@ class EncodedView {
   }
 
  private:
+  struct PoolInfo {
+    PoolInfo();
+    PoolInfo(PoolInfo&&);
+    ~PoolInfo();
+
+    std::vector<size_t> labels;
+    size_t bound = 0;
+
+    // DISALLOW_COPY_AND_ASSIGN(PoolInfo);
+  };
+
   const ImageIndex& image_index_;
+  std::vector<PoolInfo> pools_;
+
+  DISALLOW_COPY_AND_ASSIGN(EncodedView);
 };
 
 }  // namespace zucchini
