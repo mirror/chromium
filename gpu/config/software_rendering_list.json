@@ -1326,7 +1326,11 @@
         },
         {
           "gl_renderer": ".*Gallium.*llvmpipe.*"
-        }
+        },
+	{
+	  "vendor_id": "0xffff",
+	  "device_id": ["0xffff"]
+	}
       ],
       "features": [
         "all"
