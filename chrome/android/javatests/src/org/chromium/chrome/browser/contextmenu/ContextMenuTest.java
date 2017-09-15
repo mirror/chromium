@@ -142,6 +142,33 @@ public class ContextMenuTest implements CustomMainActivityStart {
     @MediumTest
     @Feature({"Browser"})
     @RetryOnFailure
+    public void testCopyLinkTextSimple() throws Throwable {
+        Tab tab = mDownloadTestRule.getActivity().getActivityTab();
+        ContextMenuUtils.selectContextMenuItem(InstrumentationRegistry.getInstrumentation(),
+                mDownloadTestRule.getActivity(), tab, "testLink", R.id.contextmenu_copy_link_text);
+
+        Assert.assertEquals(
+                "Clipboard text was not what was expected", "Test Link", getClipboardText());
+    }
+
+    @Test
+    @MediumTest
+    @Feature({"Browser"})
+    @RetryOnFailure
+    public void testCopyLinkTextComplex() throws Throwable {
+        Tab tab = mDownloadTestRule.getActivity().getActivityTab();
+        ContextMenuUtils.selectContextMenuItem(InstrumentationRegistry.getInstrumentation(),
+                mDownloadTestRule.getActivity(), tab, "copyLinkTextComplex",
+                R.id.contextmenu_copy_link_text);
+
+        Assert.assertEquals("Clipboard text was not what was expected",
+                "This is pretty extreme \n(newline). ", getClipboardText());
+    }
+
+    @Test
+    @MediumTest
+    @Feature({"Browser"})
+    @RetryOnFailure
     public void testLongPressOnImage() throws InterruptedException, TimeoutException {
         checkOpenImageInNewTab(
                 "testImage", "/chrome/test/data/android/contextmenu/test_image.png");
