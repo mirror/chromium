@@ -22,5 +22,4 @@ api::passwords_private::UrlCollection CreateUrlCollectionFromForm(
   urls.link = link_url.spec();
   return urls;
 }
-
 }  // namespace extensions

@@ -44,11 +44,9 @@ class PasswordsPrivateDelegateImpl : public PasswordsPrivateDelegate,
   void SendPasswordExceptionsList() override;
   void GetPasswordExceptionsList(
       const ExceptionEntriesCallback& callback) override;
-  void RemoveSavedPassword(
-      const std::string& origin_url, const std::string& username) override;
+  void RemoveSavedPassword(int index) override;
   void RemovePasswordException(const std::string& exception_url) override;
-  void RequestShowPassword(const std::string& origin_url,
-                           const std::string& username,
+  void RequestShowPassword(int index,
                            content::WebContents* web_contents) override;
 
   // PasswordUIView implementation.
@@ -81,11 +79,9 @@ class PasswordsPrivateDelegateImpl : public PasswordsPrivateDelegate,
   // has been initialized or by deferring it until initialization has completed.
   void ExecuteFunction(const base::Closure& callback);
 
-  void RemoveSavedPasswordInternal(
-      const std::string& origin_url, const std::string& username);
+  void RemoveSavedPasswordInternal(int index);
   void RemovePasswordExceptionInternal(const std::string& exception_url);
-  void RequestShowPasswordInternal(const std::string& origin_url,
-                                   const std::string& username,
+  void RequestShowPasswordInternal(int index,
                                    content::WebContents* web_contents);
 
   // Not owned by this class.
@@ -117,10 +113,6 @@ class PasswordsPrivateDelegateImpl : public PasswordsPrivateDelegate,
   // The WebContents used when invoking this API. Used to fetch the
   // NativeWindow for the window where the API was called.
   content::WebContents* web_contents_;
-
-  // Map from origin URL and username to the index of |password_list_| at which
-  // the corresponding entry resides.
-  std::map<std::string, size_t> login_pair_to_index_map_;
 
   // Map from password exception URL to the index of |password_exception_list_|
   // at which the correponding entry resides.
