@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d125df63_b3c3f439",
+        "filename": "chrome/browser/ssl/security_state_tab_helper_browser_tests.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1341,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-15T01:57:50Z",
+      "side": 1,
+      "message": "js_result doesn\u0027t seem used. use plain content::ExecuteScript",
+      "range": {
+        "startLine": 1341,
+        "startChar": 19,
+        "endLine": 1341,
+        "endChar": 0
+      },
+      "revId": "13d4bf6de9c27699270155925263656cdf6e78f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
