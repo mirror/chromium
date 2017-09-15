@@ -306,8 +306,8 @@ bool IsScrollableNode(const Node* node) {
   return false;
 }
 
-Node* ScrollableEnclosingBoxOrParentFrameForNodeInDirection(WebFocusType type,
-                                                            Node* node) {
+Node* OverflowBoxOrParentFrameForNodeInDirection(WebFocusType type,
+                                                 Node* node) {
   DCHECK(node);
   Node* parent = node;
   do {
@@ -316,10 +316,31 @@ Node* ScrollableEnclosingBoxOrParentFrameForNodeInDirection(WebFocusType type,
       parent = ToDocument(parent)->GetFrame()->DeprecatedLocalOwner();
     else
       parent = parent->ParentOrShadowHostNode();
-  } while (parent && !CanScrollInDirection(parent, type) &&
-           !parent->IsDocumentNode());
+  } while (parent && !parent->IsDocumentNode() &&
+           !HasOverflowInDirection(parent, type));
 
   return parent;
+}
+
+bool HasOverflowInDirection(const Node* container, WebFocusType type) {
+  DCHECK(container && !container->IsDocumentNode());
+  if (LayoutObject* layout_object = container->GetLayoutObject()) {
+    switch (type) {
+      case kWebFocusTypeLeft:
+      case kWebFocusTypeRight:
+        return layout_object->IsBox() &&
+               ToLayoutBox(layout_object)->ScrollsOverflowX();
+      case kWebFocusTypeUp:
+      case kWebFocusTypeDown:
+        return layout_object->IsBox() &&
+               ToLayoutBox(layout_object)->ScrollsOverflowY();
+      default:
+        NOTREACHED();
+        return false;
+    }
+  }
+
+  return false;
 }
 
 bool CanScrollInDirection(const Node* container, WebFocusType type) {

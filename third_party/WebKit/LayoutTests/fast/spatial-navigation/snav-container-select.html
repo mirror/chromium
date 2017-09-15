@@ -1,0 +1,75 @@
+<html>
+  <!--
+    This test ensures the correctness of a basic aspect of spatial navigation traversal
+    routines: focusable elements in same overfow containers (e.g. <div>) should have
+    more priority.
+
+    * Pre-conditions:
+    1) DRT support for spatial navivation enable/disable.
+
+    * Navigation steps:
+    1) Loads this page, focus goes to "start" automatically.
+    2) Move focus down to the visible focusable element in overflow div.
+
+    * Expected results:
+    Focus should move to "expected target" named focusable element.
+  -->
+
+  <head>
+    <style type="text/css">
+      div.scroll {
+        position: relative;
+        height: 200px;
+        width: 500px;
+        overflow-y: scroll;
+      }
+
+      a {
+        position: absolute;
+      }
+    </style>
+
+    <script src="../../resources/js-test.js"></script>
+    <script src="resources/spatial-navigation-utils.js"></script>
+    <script type="application/javascript">
+
+    var resultMap = [
+      ["Down", "expected"],
+      ["DONE", "DONE"]
+    ];
+
+    if (window.testRunner) {
+      testRunner.dumpAsText();
+      testRunner.overridePreference("WebKitTabToLinksPreferenceKey", 1);
+      testRunner.overridePreference("WebKitSpatialNavigationEnabled", 1);
+      testRunner.waitUntilDone();
+    }
+
+    function runTest()
+    {
+      // starting the test itself: get to a known place.
+      document.getElementById("start").focus();
+
+      initTest(resultMap, testCompleted);
+    }
+
+    function testCompleted()
+    {
+      if (window.testRunner)
+        testRunner.notifyDone();
+    }
+
+    window.onload = runTest;
+
+    </script>
+  </head>
+  <body>
+    <div class="scroll">
+      <a href="#" id="start" style="top: 70px; left: 100px;">start</a>
+      <a href="#" id="expected" style="top: 150px; left: 250px;">expected target</a>
+    </div>
+    <a href="#" id="unexpected" style="top: 250px; left: 110px;">unexpected target</a>
+    <div id="console"></div>
+  </body>
+</html>
+

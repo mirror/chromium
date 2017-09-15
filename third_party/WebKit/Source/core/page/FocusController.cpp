@@ -1419,14 +1419,14 @@ bool FocusController::AdvanceFocusDirectionally(WebFocusType type) {
   LayoutRect starting_rect;
   if (focused_element) {
     if (!HasOffscreenRect(focused_element)) {
-      container = ScrollableEnclosingBoxOrParentFrameForNodeInDirection(
-          type, focused_element);
+      container =
+          OverflowBoxOrParentFrameForNodeInDirection(type, focused_element);
       starting_rect = NodeRectInAbsoluteCoordinates(focused_element,
                                                     true /* ignore border */);
     } else if (isHTMLAreaElement(*focused_element)) {
       HTMLAreaElement& area = toHTMLAreaElement(*focused_element);
       if (area.ImageElement()) {
-        container = ScrollableEnclosingBoxOrParentFrameForNodeInDirection(
+        container = OverflowBoxOrParentFrameForNodeInDirection(
             type, area.ImageElement());
         starting_rect = VirtualRectForAreaElementAndDirection(area, type);
       }
@@ -1439,8 +1439,7 @@ bool FocusController::AdvanceFocusDirectionally(WebFocusType type) {
         AdvanceFocusDirectionallyInContainer(container, starting_rect, type);
     starting_rect =
         NodeRectInAbsoluteCoordinates(container, true /* ignore border */);
-    container =
-        ScrollableEnclosingBoxOrParentFrameForNodeInDirection(type, container);
+    container = OverflowBoxOrParentFrameForNodeInDirection(type, container);
     if (container && container->IsDocumentNode())
       ToDocument(container)->UpdateStyleAndLayoutIgnorePendingStylesheets();
   } while (!consumed && container);
