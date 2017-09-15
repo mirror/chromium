@@ -108,6 +108,29 @@
       "revId": "48e6954cfea3069ee02639059501f9cdcb1ba4a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0bd4dc1_449a8926",
+        "filename": "components/offline_pages/core/model/delete_page_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-15T18:17:32Z",
+      "side": 1,
+      "message": "Per Justin\u0027s comment on my GetPagesTask, lets use the following convention:\nCreateTaskMatching*  e.g.\nCreateTaskMatchingClientIds\nCreateTaskMatchingOfflineIds.\n\nIs that OK?",
+      "range": {
+        "startLine": 53,
+        "startChar": 41,
+        "endLine": 53,
+        "endChar": 65
+      },
+      "revId": "48e6954cfea3069ee02639059501f9cdcb1ba4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
