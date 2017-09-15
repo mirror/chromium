@@ -41,39 +41,18 @@ def apply_computed_style_builder_function_parameters(property_):
     if not property_['should_declare_application_functions']:
         return
 
-    if property_['custom_all']:
-        property_['custom_initial'] = True
-        property_['custom_inherit'] = True
-        property_['custom_value'] = True
-
-    name = property_['name_for_methods']
-    if not name:
-        name = upper_camel_case(property_['name']).replace('Webkit', '')
-    simple_type_name = str(property_['type_name']).split('::')[-1]
-
-    set_if_none(property_, 'name_for_methods', name)
-    set_if_none(property_, 'type_name', 'E' + name)
-    set_if_none(
-        property_, 'getter', name if simple_type_name != name else 'Get' + name)
-    set_if_none(property_, 'setter', 'Set' + name)
-    set_if_none(property_, 'inherited', False)
-    set_if_none(property_, 'initial', 'Initial' + name)
-
-    if property_['inherited']:
-        property_['is_inherited_setter'] = 'Set' + name + 'IsInherited'
-
 
 class CSSPropertyAPIHeadersWriter(CSSPropertyAPIWriter):
     def __init__(self, json5_file_paths):
-        super(CSSPropertyAPIHeadersWriter, self).__init__([json5_file_paths[0]])
-        assert len(json5_file_paths) == 2,\
+        super(CSSPropertyAPIHeadersWriter, self).__init__(json5_file_paths)
+        assert len(json5_file_paths) == 3, \
             ('CSSPropertyAPIHeadersWriter requires 2 input json5 files, ' +
              'got {}.'.format(len(json5_file_paths)))
 
         # Map of API method name -> (return_type, parameters)
         self._api_methods = {}
         api_methods = json5_generator.Json5File.load_from_files(
-            [json5_file_paths[1]])
+            [json5_file_paths[2]])
         for api_method in api_methods.name_dictionaries:
             self._api_methods[api_method['name']] = ApiMethod(
                 name=api_method['name'],
@@ -83,7 +62,7 @@ class CSSPropertyAPIHeadersWriter(CSSPropertyAPIWriter):
         self.validate_input()
 
         self._outputs = {}
-        for property_ in self.properties().values():
+        for property_ in self._properties.values():
             if property_['api_class'] is None:
                 continue
             methods = []

@@ -34,22 +34,20 @@ from core.css import css_properties
 import json5_generator
 from name_utilities import lower_first, upper_camel_case
 import template_expander
-import make_computed_style_base
+import css_property_field_writer
 
 
-class StyleBuilderWriter(css_properties.CSSProperties):
+class StyleBuilderWriter(css_property_field_writer.CSSPropertyFieldWriter):
     filters = {
         'lower_first': lower_first,
     }
 
     def __init__(self, json5_file_path):
-        super(StyleBuilderWriter, self).__init__([json5_file_path[0]])
+        super(StyleBuilderWriter, self).__init__(json5_file_path[0], json5_file_path[1])
         self._outputs = {('StyleBuilderFunctions.h'): self.generate_style_builder_functions_h,
                          ('StyleBuilderFunctions.cpp'): self.generate_style_builder_functions_cpp,
                          ('StyleBuilder.cpp'): self.generate_style_builder,
                         }
-        for property_ in self._properties.values():
-            make_computed_style_base.apply_property_naming_defaults(property_)
 
 
     @template_expander.use_jinja('templates/StyleBuilderFunctions.h.tmpl',

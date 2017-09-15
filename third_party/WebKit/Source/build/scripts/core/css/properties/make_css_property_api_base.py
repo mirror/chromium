@@ -11,7 +11,7 @@ import json5_generator
 import template_expander
 
 from collections import namedtuple
-from core.css import css_properties
+import css_property_field_writer
 
 
 class ApiClassData(
@@ -19,9 +19,9 @@ class ApiClassData(
     pass
 
 
-class CSSPropertyAPIWriter(css_properties.CSSProperties):
+class CSSPropertyAPIWriter(css_property_field_writer.CSSPropertyFieldWriter):
     def __init__(self, json5_file_paths):
-        super(CSSPropertyAPIWriter, self).__init__([json5_file_paths[0]])
+        super(CSSPropertyAPIWriter, self).__init__(json5_file_paths[0], json5_file_paths[1])
         self._outputs = {
             'CSSPropertyAPI.h': self.generate_property_api_header,
             'CSSPropertyAPI.cpp': self.generate_property_api_implementation,
