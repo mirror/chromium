@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "dd2b3162_4b1c74b2",
+        "filename": "chrome/installer/zucchini/algorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T20:33:11Z",
+      "side": 1,
+      "message": "?  DCHECK_LE(lo, hi);",
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45b2c0c8_1dfb0c7c",
         "filename": "chrome/installer/zucchini/buffer_view.h",
         "patchSetId": 1
@@ -42,6 +59,23 @@
         "endLine": 75,
         "endChar": 12
       },
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8378aeed_fba7e058",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T20:33:11Z",
+      "side": 1,
+      "message": "the presence of this method as non-virtual assumes that subclasses don\u0027t need any special behavior when Reset is called. instead of this, how about changing from (for example):\n  cur_reloc_units_.Reset(end_it_, 0);\nto:\n  cur_reloc_units_ \u003d BufferSource(end_it_, 0)\n?",
       "revId": "69688303a911e88872264b4d4c68472f00968efa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -71,6 +105,80 @@
     },
     {
       "key": {
+        "uuid": "caba5b9b_33d08749",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T20:33:11Z",
+      "side": 1,
+      "message": "first -\u003e iter or something",
+      "range": {
+        "startLine": 162,
+        "startChar": 49,
+        "endLine": 162,
+        "endChar": 54
+      },
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6055f7ed_8a0ffe21",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T20:33:11Z",
+      "side": 1,
+      "message": "DereferenceAs seems more accurate since this is getting at the thing under the iterator.",
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "861e74d8_45791ede",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T20:33:11Z",
+      "side": 1,
+      "message": "hmm, this impl assumes that the iterator is itself simply a pointer to the underlying thing. it just so happens that this is true for ConstBufferView::iterator, but it isn\u0027t obvious since that isn\u0027t true of iterators in general. although it\u0027s odd looking how about \u0026*first, which is the general way to get a pointer to the thing beneath an iterator? otherwise, maybe add a comment or a static assert that the iterator is simply a pointer.",
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba24b825_2fd34799",
+        "filename": "chrome/installer/zucchini/reloc_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T20:33:11Z",
+      "side": 1,
+      "message": "will DCHECK_NE work here?",
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c22ba751_bc3523e9",
         "filename": "chrome/installer/zucchini/reloc_utils.h",
         "patchSetId": 1
@@ -87,6 +195,63 @@
         "startChar": 46,
         "endLine": 31,
         "endChar": 66
+      },
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4604c1e6_e93c63dd",
+        "filename": "chrome/installer/zucchini/reloc_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T20:33:11Z",
+      "side": 1,
+      "message": "probably isn\u0027t needed, but how about specifying the type anyway:\n  enum : size_t { ... };",
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "199ebabf_85bab815",
+        "filename": "chrome/installer/zucchini/reloc_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T20:33:11Z",
+      "side": 1,
+      "message": "nit: it probably writes the results and _then_ returns true. :-)",
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7099dd0_0cf4729b",
+        "filename": "chrome/installer/zucchini/reloc_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T20:33:11Z",
+      "side": 1,
+      "message": "nit: block_offsets -\u003e reloc_block_offsets",
+      "range": {
+        "startLine": 52,
+        "startChar": 63,
+        "endLine": 52,
+        "endChar": 76
       },
       "revId": "69688303a911e88872264b4d4c68472f00968efa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
