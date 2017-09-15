@@ -445,7 +445,7 @@ public class TileGroup implements MostVisitedSites.Observer {
     }
 
     @VisibleForTesting
-    TileSetupDelegate getTileSetupDelegate() {
+    public TileSetupDelegate getTileSetupDelegate() {
         return mTileSetupDelegate;
     }
 

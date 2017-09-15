@@ -16,4 +16,7 @@
     <item android:id="@+id/action_history"
          android:title="@string/menu_history"
          android:icon="@drawable/ic_watch_later_24dp" />
+    <item android:id="@+id/action_launcher"
+        android:title="@string/menu_history"
+        android:icon="@drawable/ic_launcher"/>
 </menu>

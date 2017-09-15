@@ -128,6 +128,8 @@ public class BottomSheetMetrics extends EmptyBottomSheetObserver {
             RecordUserAction.record("Android.ChromeHome.ShowIncognitoHome");
         } else if (newContent.getType() == BottomSheetContentController.TYPE_PLACEHOLDER) {
             // Intentionally do nothing; the placeholder is not user triggered.
+        } else if (newContent.getType() == BottomSheetContentController.TYPE_LAUNCHER) {
+            // do nothing
         } else {
             assert false;
         }

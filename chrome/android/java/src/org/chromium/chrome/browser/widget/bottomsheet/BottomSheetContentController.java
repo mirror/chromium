@@ -57,7 +57,7 @@ public class BottomSheetContentController extends BottomNavigationView
         implements OnNavigationItemSelectedListener {
     /** The different types of content that may be displayed in the bottom sheet. */
     @IntDef({TYPE_SUGGESTIONS, TYPE_DOWNLOADS, TYPE_BOOKMARKS, TYPE_HISTORY, TYPE_INCOGNITO_HOME,
-            TYPE_PLACEHOLDER})
+            TYPE_PLACEHOLDER, TYPE_LAUNCHER})
     @Retention(RetentionPolicy.SOURCE)
     public @interface ContentType {}
     public static final int TYPE_SUGGESTIONS = 0;
@@ -66,6 +66,7 @@ public class BottomSheetContentController extends BottomNavigationView
     public static final int TYPE_HISTORY = 3;
     public static final int TYPE_INCOGNITO_HOME = 4;
     public static final int TYPE_PLACEHOLDER = 5;
+    public static final int TYPE_LAUNCHER = 6;
 
     // R.id.action_home is overloaded, so an invalid ID is used to reference the incognito version
     // of the home content.
@@ -355,6 +356,9 @@ public class BottomSheetContentController extends BottomNavigationView
             content = new HistorySheetContent(mActivity, mSnackbarManager);
         } else if (navItemId == INCOGNITO_HOME_ID) {
             content = new IncognitoBottomSheetContent(mActivity);
+        } else if (navItemId == R.id.action_launcher) {
+            content = new LauncherBottomSheetContent(
+                    mActivity, mBottomSheet, mTabModelSelector, mSnackbarManager);
         }
 
         mBottomSheetContents.put(navItemId, content);
