@@ -4,6 +4,7 @@
 import logging
 
 from telemetry.page import shared_page_state
+from telemetry.internal.backends.chrome import android_browser_backend
 
 
 class AndroidScreenRestorationSharedState(shared_page_state.SharedPageState):
@@ -20,7 +21,8 @@ class AndroidScreenRestorationSharedState(shared_page_state.SharedPageState):
       self._EnsureScreenOn()
 
   def CanRunOnBrowser(self, browser_info, _):
-    if not browser_info.browser_type.startswith('android'):
+    if not isinstance(browser_info.browser.browser_backed,
+                      android_browser_backend.AndroidBrowserBackend):
       logging.warning('Browser is non-Android, skipping test')
       return False
     return True
