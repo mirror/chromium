@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78d3267e_32b05cd4",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T15:50:12Z",
+      "side": 1,
+      "message": "nit: document why you are doing this (as a reader it\u0027s not immediately obvious to me that mdlogin implies views-shelf implies container differences)",
+      "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6442ff6d_f6b0ba46",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T15:50:12Z",
+      "side": 1,
+      "message": "Why do you have to check for UNKNOWN here?",
+      "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ffbad05_887817f7",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T15:50:12Z",
+      "side": 1,
+      "message": "nit: \"using session_manager::SessionState\" might make this function easier to read",
+      "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74024952_dbc38a59",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T15:50:12Z",
+      "side": 1,
+      "message": "nit: Document why it has to be this way, rather than just observing SessionController directly.",
+      "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de56efa0_d337b8c0",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T15:50:12Z",
+      "side": 1,
+      "message": "nit: just ImageSkia, unless there\u0027s a strong reason for it to be const.",
+      "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b64a1832_7acc292a",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T15:50:12Z",
+      "side": 1,
+      "message": "Why do these need to be cached, vs. looking them up from the canonical copies when you need them? I\u0027ve had problems in the past with UI classes keeping independent copies of model/controller state.",
+      "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5cdaf3_f1db0321",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T15:50:12Z",
+      "side": 1,
+      "message": "I don\u0027t think the session state can ever transition *in* to the unknown state. I would skip this case.\n\nHowever, I would add a check for the initial state above.",
+      "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c976eeb_a35a5f3b",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T15:50:12Z",
+      "side": 1,
+      "message": "Nice tests. Easy to read.",
+      "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ccc76c9_60bb2214",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T15:50:12Z",
+      "side": 1,
+      "message": "nit: Prefer AshTestBase::SimulateUserLogin() unless it has to be this function. If SimulateUserLogin() works you can delete the comment too.",
+      "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695e3c81_1da62e1b",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T15:50:12Z",
+      "side": 1,
+      "message": "Nice test. I like the comment/action/expectation rhythm.",
+      "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
