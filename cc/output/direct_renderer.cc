@@ -644,7 +644,7 @@ bool DirectRenderer::UseRenderPass(const RenderPass* render_pass) {
   if (!texture->id()) {
     texture->Allocate(size, RenderPassTextureHint(render_pass),
                       BackbufferFormat(),
-                      current_frame()->current_render_pass->color_space);
+                      current_frame()->current_render_pass->color_space, true);
   } else if (render_pass->cache_render_pass &&
              !render_pass->has_damage_from_contributing_content) {
     return false;

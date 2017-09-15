@@ -185,6 +185,81 @@ class CC_EXPORT ResourceProvider
                       const uint8_t* image,
                       const gfx::Size& image_size);
 
+  // The following lock classes are part of the ResourceProvider API and
+  // are needed to read the resource contents in the same gl context.
+  class CC_EXPORT ScopedLocalReadLockGL {
+   public:
+    ScopedLocalReadLockGL(ResourceProvider* resource_provider,
+                          viz::ResourceId resource_id);
+    ~ScopedLocalReadLockGL();
+
+    GLuint texture_id() const { return texture_id_; }
+    GLenum target() const { return target_; }
+    const gfx::Size& size() const { return size_; }
+    const gfx::ColorSpace& color_space() const { return color_space_; }
+
+   private:
+    ResourceProvider* const resource_provider_;
+    const viz::ResourceId resource_id_;
+
+    GLuint texture_id_;
+    GLenum target_;
+    gfx::Size size_;
+    gfx::ColorSpace color_space_;
+
+    DISALLOW_COPY_AND_ASSIGN(ScopedLocalReadLockGL);
+  };
+
+  // The following lock classes are part of the ResourceProvider API and
+  // are needed to write the resource contents in the same gl context.
+  class CC_EXPORT ScopedLocalWriteLockGL {
+   public:
+    ScopedLocalWriteLockGL(ResourceProvider* resource_provider,
+                           viz::ResourceId resource_id);
+    ~ScopedLocalWriteLockGL();
+
+    GLenum target() const { return target_; }
+    viz::ResourceFormat format() const { return format_; }
+    const gfx::Size& size() const { return size_; }
+
+    // Will return an invalid color space unless
+    // |enable_color_correct_rasterization| is true.
+    const gfx::ColorSpace& color_space_for_raster() const {
+      return color_space_;
+    }
+
+    void set_generate_mipmap() { generate_mipmap_ = true; }
+
+    // Returns texture id on compositor context, allocating if necessary.
+    GLuint GetTexture();
+
+   private:
+    void LazyAllocate(gpu::gles2::GLES2Interface* gl, GLuint texture_id);
+
+    void AllocateGpuMemoryBuffer(gpu::gles2::GLES2Interface* gl,
+                                 GLuint texture_id);
+
+    void AllocateTexture(gpu::gles2::GLES2Interface* gl, GLuint texture_id);
+
+    ResourceProvider* const resource_provider_;
+    const viz::ResourceId resource_id_;
+
+    // The following are copied from the resource.
+    ResourceProvider::ResourceType type_;
+    gfx::Size size_;
+    viz::ResourceFormat format_;
+    gfx::BufferUsage usage_;
+    gfx::ColorSpace color_space_;
+    GLuint texture_id_;
+    GLenum target_;
+    ResourceProvider::TextureHint hint_;
+    std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer_;
+    GLuint image_id_;
+    bool allocated_;
+    bool generate_mipmap_ = false;
+
+    DISALLOW_COPY_AND_ASSIGN(ScopedLocalWriteLockGL);
+  };
 
   // The following lock classes are part of the ResourceProvider API and are
   // needed to read and write the resource contents. The user must ensure
@@ -532,6 +607,9 @@ class CC_EXPORT ResourceProvider
   Resource* LockForWrite(viz::ResourceId id);
   void UnlockForWrite(Resource* resource);
 
+  Resource* LockForLocalWrite(viz::ResourceId id);
+  void UnlockForLocalWrite(Resource* resource);
+
   void PopulateSkBitmapWithResource(SkBitmap* sk_bitmap,
                                     const Resource* resource);
 
@@ -622,6 +700,9 @@ class CC_EXPORT ResourceProvider
                                        const gfx::ColorSpace& color_space);
 
   void CreateTexture(Resource* resource);
+
+  const Resource* LockForLocalRead(viz::ResourceId id);
+  void UnlockForLocalRead(viz::ResourceId id);
 
   bool IsGLContextLost() const;
 
