@@ -6,6 +6,7 @@
 
 #include "core/editing/EditingTestBase.h"
 #include "core/editing/FrameSelection.h"
+#include "core/editing/SelectionTemplate.h"
 #include "core/editing/commands/TypingCommand.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/layout/LayoutTheme.h"

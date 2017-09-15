@@ -6,6 +6,7 @@
 
 #include "core/dom/ProcessingInstruction.h"
 #include "core/editing/EditingTestBase.h"
+#include "core/editing/SelectionTemplate.h"
 
 namespace blink {
 
