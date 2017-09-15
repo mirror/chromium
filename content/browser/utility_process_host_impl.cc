@@ -62,7 +62,8 @@ class UtilitySandboxedProcessLauncherDelegate
         sandbox_type_(sandbox_type) {
     DCHECK(sandbox_type_ == SANDBOX_TYPE_NO_SANDBOX ||
            sandbox_type_ == SANDBOX_TYPE_UTILITY ||
-           sandbox_type_ == SANDBOX_TYPE_NETWORK);
+           sandbox_type_ == SANDBOX_TYPE_NETWORK ||
+           sandbox_type_ == SANDBOX_TYPE_DELAYED);
   }
 
   ~UtilitySandboxedProcessLauncherDelegate() override {}
