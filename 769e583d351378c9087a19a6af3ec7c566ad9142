@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "822c8a33_4d69f7c9",
+        "filename": "chrome/browser/resources/md_extensions/shortcut_input.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-15T19:23:52Z",
+      "side": 1,
+      "message": "@apply(--cr-primary-text);",
+      "revId": "769e583d351378c9087a19a6af3ec7c566ad9142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
