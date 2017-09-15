@@ -12,7 +12,8 @@ from telemetry import story
 class CTPage(page_module.Page):
 
   def __init__(self, url, page_set, shared_page_state_class, archive_data_file,
-               traffic_setting, run_page_interaction_callback):
+               traffic_setting, run_navigate_steps,
+               run_page_interaction_callback):
     super(CTPage, self).__init__(
         url=url,
         page_set=page_set,
@@ -20,10 +21,14 @@ class CTPage(page_module.Page):
         traffic_setting=traffic_setting,
         name=url)
     self.archive_data_file = archive_data_file
+    self._run_navigate_steps = run_navigate_steps
     self._run_page_interaction_callback = run_page_interaction_callback
 
   def RunNavigateSteps(self, action_runner):
-    action_runner.Navigate(self.url)
+    if self._run_navigate_steps:
+      self._run_navigate_steps(self, action_runner)
+    else:
+      action_runner.Navigate(self.url)
 
   def RunPageInteractions(self, action_runner):
     if self._run_page_interaction_callback:
