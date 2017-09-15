@@ -16,6 +16,24 @@
       "revId": "a371f7bb794ce9ded2c16556822620624d4032fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bff28cc4_5f0b4c2a",
+        "filename": "ash/wm/overview/window_selector_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2115,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-15T00:21:38Z",
+      "side": 0,
+      "message": "It seems to only cause problems when one window is snapped.",
+      "parentUuid": "f193dc26_7a6a692c",
+      "revId": "a371f7bb794ce9ded2c16556822620624d4032fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
