@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "d749e71c_d998bb54",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-15T20:10:26Z",
+      "side": 1,
+      "message": "nit: indent 2 more spaces",
+      "range": {
+        "startLine": 64,
+        "startChar": 10,
+        "endLine": 64,
+        "endChar": 12
+      },
+      "revId": "3f97a2bc40b0476e60da46df806e0eb89d2fce88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8bffd49_b01b7622",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-15T20:10:26Z",
+      "side": 1,
+      "message": "nit: indent 2 more spaces here also",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 52
+      },
+      "revId": "3f97a2bc40b0476e60da46df806e0eb89d2fce88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "312e2e7a_e8e6ee08",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-15T20:10:26Z",
+      "side": 1,
+      "message": "This looks a bit odd when disabled. Get feedback from UX on how this should look. Can be fixed in a separate CL.",
+      "range": {
+        "startLine": 69,
+        "startChar": 10,
+        "endLine": 69,
+        "endChar": 18
+      },
+      "revId": "3f97a2bc40b0476e60da46df806e0eb89d2fce88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bcfd4151_0694d0f8",
         "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
         "patchSetId": 5

@@ -219,6 +219,30 @@
     },
     {
       "key": {
+        "uuid": "8e973d1b_fba704d2",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-15T20:10:26Z",
+      "side": 1,
+      "message": "The function will only be called once b/c it has no dependencies.\nI\u0027m not sure I understand your question.",
+      "parentUuid": "2f4e6a1e_093ea76f",
+      "range": {
+        "startLine": 218,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 19
+      },
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f27c6c6_274d6ce1",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
         "patchSetId": 4
@@ -254,6 +278,30 @@
       "side": 1,
       "message": "No, it\u0027s set with a flag, so Chrome needs to be restarted each time the value changes: having the value at page load is sufficient.",
       "parentUuid": "8f27c6c6_274d6ce1",
+      "range": {
+        "startLine": 219,
+        "startChar": 4,
+        "endLine": 219,
+        "endChar": 30
+      },
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "39de8345_36a0ef97",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-09-15T20:10:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "65dc5b29_e6dccf52",
       "range": {
         "startLine": 219,
         "startChar": 4,
