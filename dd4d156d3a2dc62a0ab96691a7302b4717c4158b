@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "648b1f8f_5d4c1592",
+        "filename": "third_party/zlib/adler32.c",
+        "patchSetId": 26
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-15T16:38:08Z",
+      "side": 1,
+      "message": "I like that you tested for a NULL buffer before calling into the optimized code (as that free us from having to test for it in there).\n\nOn the other hand, it is a valid use case that a complaint Adler-32 implementation has to return 1L for a NULL buffer.\n\nIn this scenario (unless I\u0027m misreading), this specific test case that is part of the unit tests I wrote to validate the NEON code would fail in the SSE implementation.",
+      "revId": "dd4d156d3a2dc62a0ab96691a7302b4717c4158b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "342715b2_7a50ba51",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 26
