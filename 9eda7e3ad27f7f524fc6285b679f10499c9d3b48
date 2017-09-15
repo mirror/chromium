@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aaef92a_40623767",
+        "filename": "ios/web/navigation/navigation_manager_impl.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-15T22:16:35Z",
+      "side": 1,
+      "message": "Did you intend to add this line uncommented?  I agree with what you\u0027re saying in the CL description for how behavior should change, but I don\u0027t think this is the correct fix.  Let\u0027s say there are 3 NavigationItems with the following types: DESKTOP \u003d\u003e NONE \u003d\u003e MOBILE.  If you start at DESKTOP and tap the forward button twice, you would incorrectly skip reconstructing the WKWebView.  The correct fix would be to calculate |previous_item| such that it\u0027s the last NavigationItem with a non-NONE UA type.",
+      "revId": "9eda7e3ad27f7f524fc6285b679f10499c9d3b48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
