@@ -10,7 +10,6 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
-#include "device/geolocation/fake_access_token_store.h"
 #include "device/geolocation/fake_location_provider.h"
 #include "device/geolocation/geolocation_delegate.h"
 #include "device/geolocation/geoposition.h"
@@ -97,27 +96,34 @@ class FakeGeolocationDelegate : public GeolocationDelegate {
   DISALLOW_COPY_AND_ASSIGN(FakeGeolocationDelegate);
 };
 
+// Simple request context callback that immediately produces a (null)
+// URLRequestContextGetter. Sufficient to trigger LocationArbitrator to continue
+// initialization its NetworkLocationProvider.
+void DummyRequestContextCallback(
+    base::OnceCallback<void(scoped_refptr<net::URLRequestContextGetter>)>
+        response_callback) {
+  std::move(response_callback)
+      .Run(scoped_refptr<net::URLRequestContextGetter>());
+}
+
 class TestingLocationArbitrator : public LocationArbitrator {
  public:
   TestingLocationArbitrator(
       const LocationProviderUpdateCallback& callback,
-      const scoped_refptr<AccessTokenStore>& access_token_store,
-      std::unique_ptr<GeolocationDelegate> delegate)
-      : LocationArbitrator(std::move(delegate), std::string() /* api_key */),
+      std::unique_ptr<GeolocationDelegate> delegate,
+      GeolocationProvider::RequestContextCallback request_context_callback)
+      : LocationArbitrator(std::move(delegate),
+                           request_context_callback,
+                           std::string() /* api_key */),
         cell_(nullptr),
-        gps_(nullptr),
-        access_token_store_(access_token_store) {
+        gps_(nullptr) {
     SetUpdateCallback(callback);
   }
 
   base::Time GetTimeNow() const override { return GetTimeNowForTest(); }
 
-  scoped_refptr<AccessTokenStore> NewAccessTokenStore() override {
-    return access_token_store_;
-  }
-
   std::unique_ptr<LocationProvider> NewNetworkLocationProvider(
-      const scoped_refptr<net::URLRequestContextGetter>& context,
+      scoped_refptr<net::URLRequestContextGetter> context,
       const std::string& api_key) override {
     cell_ = new FakeLocationProvider;
     return base::WrapUnique(cell_);
@@ -136,26 +142,27 @@ class TestingLocationArbitrator : public LocationArbitrator {
   // |gps_| to |gps_location_provider_|
   FakeLocationProvider* cell_;
   FakeLocationProvider* gps_;
-  const scoped_refptr<AccessTokenStore> access_token_store_;
 };
 
 class GeolocationLocationArbitratorTest : public testing::Test {
  protected:
   GeolocationLocationArbitratorTest()
-      : access_token_store_(new NiceMock<FakeAccessTokenStore>),
-        observer_(new MockLocationObserver),
+      : observer_(new MockLocationObserver),
         delegate_(new GeolocationDelegate) {}
 
   // Initializes |arbitrator_|, with the possibility of injecting a specific
-  // |delegate|, otherwise a default, no-op GeolocationDelegate is used.
-  void InitializeArbitrator(std::unique_ptr<GeolocationDelegate> delegate) {
+  // |delegate| or |request_context_callback|, otherwise default, no-op
+  // implementations are used.
+  void InitializeArbitrator(
+      std::unique_ptr<GeolocationDelegate> delegate,
+      GeolocationProvider::RequestContextCallback request_context_callback) {
     if (delegate)
       delegate_ = std::move(delegate);
     const LocationProvider::LocationProviderUpdateCallback callback =
         base::Bind(&MockLocationObserver::OnLocationUpdate,
                    base::Unretained(observer_.get()));
     arbitrator_.reset(new TestingLocationArbitrator(
-        callback, access_token_store_, std::move(delegate_)));
+        callback, std::move(delegate_), request_context_callback));
   }
 
   // testing::Test
@@ -181,7 +188,6 @@ class GeolocationLocationArbitratorTest : public testing::Test {
 
   FakeLocationProvider* gps() { return arbitrator_->gps_; }
 
-  const scoped_refptr<FakeAccessTokenStore> access_token_store_;
   const std::unique_ptr<MockLocationObserver> observer_;
   std::unique_ptr<TestingLocationArbitrator> arbitrator_;
   std::unique_ptr<GeolocationDelegate> delegate_;
@@ -189,15 +195,14 @@ class GeolocationLocationArbitratorTest : public testing::Test {
 };
 
 TEST_F(GeolocationLocationArbitratorTest, CreateDestroy) {
-  EXPECT_TRUE(access_token_store_.get());
-  InitializeArbitrator(nullptr);
+  InitializeArbitrator(nullptr, GeolocationProvider::RequestContextCallback());
   EXPECT_TRUE(arbitrator_);
   arbitrator_.reset();
   SUCCEED();
 }
 
 TEST_F(GeolocationLocationArbitratorTest, OnPermissionGranted) {
-  InitializeArbitrator(nullptr);
+  InitializeArbitrator(nullptr, GeolocationProvider::RequestContextCallback());
   EXPECT_FALSE(arbitrator_->HasPermissionBeenGrantedForTest());
   arbitrator_->OnPermissionGranted();
   EXPECT_TRUE(arbitrator_->HasPermissionBeenGrantedForTest());
@@ -208,17 +213,13 @@ TEST_F(GeolocationLocationArbitratorTest, OnPermissionGranted) {
 }
 
 TEST_F(GeolocationLocationArbitratorTest, NormalUsage) {
-  InitializeArbitrator(nullptr);
-  ASSERT_TRUE(access_token_store_.get());
+  InitializeArbitrator(nullptr, base::Bind(&DummyRequestContextCallback));
   ASSERT_TRUE(arbitrator_);
 
   EXPECT_FALSE(cell());
   EXPECT_FALSE(gps());
   arbitrator_->StartProvider(false);
 
-  EXPECT_TRUE(access_token_store_->access_token_map_.empty());
-
-  access_token_store_->NotifyDelegateTokensLoaded();
   ASSERT_TRUE(cell());
   EXPECT_TRUE(gps());
   EXPECT_EQ(FakeLocationProvider::LOW_ACCURACY, cell()->state_);
@@ -247,7 +248,8 @@ TEST_F(GeolocationLocationArbitratorTest, CustomSystemProviderOnly) {
   fake_delegate->set_use_network(false);
 
   std::unique_ptr<GeolocationDelegate> delegate(fake_delegate);
-  InitializeArbitrator(std::move(delegate));
+  InitializeArbitrator(std::move(delegate),
+                       GeolocationProvider::RequestContextCallback());
   ASSERT_TRUE(arbitrator_);
 
   EXPECT_FALSE(cell());
@@ -285,16 +287,13 @@ TEST_F(GeolocationLocationArbitratorTest,
   fake_delegate->set_use_network(true);
 
   std::unique_ptr<GeolocationDelegate> delegate(fake_delegate);
-  InitializeArbitrator(std::move(delegate));
+  InitializeArbitrator(std::move(delegate),
+                       base::Bind(&DummyRequestContextCallback));
   ASSERT_TRUE(arbitrator_);
 
   EXPECT_FALSE(cell());
   EXPECT_FALSE(gps());
   arbitrator_->StartProvider(false);
-
-  EXPECT_TRUE(access_token_store_->access_token_map_.empty());
-
-  access_token_store_->NotifyDelegateTokensLoaded();
 
   ASSERT_TRUE(cell());
   EXPECT_FALSE(gps());
@@ -322,9 +321,8 @@ TEST_F(GeolocationLocationArbitratorTest,
 }
 
 TEST_F(GeolocationLocationArbitratorTest, SetObserverOptions) {
-  InitializeArbitrator(nullptr);
+  InitializeArbitrator(nullptr, base::Bind(&DummyRequestContextCallback));
   arbitrator_->StartProvider(false);
-  access_token_store_->NotifyDelegateTokensLoaded();
   ASSERT_TRUE(cell());
   ASSERT_TRUE(gps());
   EXPECT_EQ(FakeLocationProvider::LOW_ACCURACY, cell()->state_);
@@ -338,9 +336,8 @@ TEST_F(GeolocationLocationArbitratorTest, SetObserverOptions) {
 }
 
 TEST_F(GeolocationLocationArbitratorTest, Arbitration) {
-  InitializeArbitrator(nullptr);
+  InitializeArbitrator(nullptr, base::Bind(&DummyRequestContextCallback));
   arbitrator_->StartProvider(false);
-  access_token_store_->NotifyDelegateTokensLoaded();
   ASSERT_TRUE(cell());
   ASSERT_TRUE(gps());
 
@@ -415,9 +412,8 @@ TEST_F(GeolocationLocationArbitratorTest, Arbitration) {
 }
 
 TEST_F(GeolocationLocationArbitratorTest, TwoOneShotsIsNewPositionBetter) {
-  InitializeArbitrator(nullptr);
+  InitializeArbitrator(nullptr, base::Bind(&DummyRequestContextCallback));
   arbitrator_->StartProvider(false);
-  access_token_store_->NotifyDelegateTokensLoaded();
   ASSERT_TRUE(cell());
   ASSERT_TRUE(gps());
 
@@ -434,7 +430,6 @@ TEST_F(GeolocationLocationArbitratorTest, TwoOneShotsIsNewPositionBetter) {
       new FakeLocationProvider);
 
   arbitrator_->StartProvider(false);
-  access_token_store_->NotifyDelegateTokensLoaded();
 
   // Advance the time a short while to simulate successive calls.
   AdvanceTimeNow(base::TimeDelta::FromMilliseconds(5));

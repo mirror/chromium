@@ -14,19 +14,18 @@
 #include "base/macros.h"
 #include "base/strings/string16.h"
 #include "base/time/time.h"
-#include "device/geolocation/access_token_store.h"
 #include "device/geolocation/geolocation_export.h"
 #include "device/geolocation/geolocation_provider.h"
 #include "device/geolocation/geoposition.h"
 #include "device/geolocation/location_provider.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "url/gurl.h"
 
 namespace net {
 class URLRequestContextGetter;
 }
 
 namespace device {
-class AccessTokenStore;
 class GeolocationDelegate;
 class LocationProvider;
 
@@ -41,6 +40,8 @@ class DEVICE_GEOLOCATION_EXPORT LocationArbitrator : public LocationProvider {
   static const int64_t kFixStaleTimeoutMilliseconds;
 
   LocationArbitrator(std::unique_ptr<GeolocationDelegate> delegate,
+                     const GeolocationProvider::RequestContextCallback
+                         request_context_callback,
                      const std::string& api_key);
   ~LocationArbitrator() override;
 
@@ -58,9 +59,8 @@ class DEVICE_GEOLOCATION_EXPORT LocationArbitrator : public LocationProvider {
  protected:
   // These functions are useful for injection of dependencies in derived
   // testing classes.
-  virtual scoped_refptr<AccessTokenStore> NewAccessTokenStore();
   virtual std::unique_ptr<LocationProvider> NewNetworkLocationProvider(
-      const scoped_refptr<net::URLRequestContextGetter>& context,
+      scoped_refptr<net::URLRequestContextGetter> context,
       const std::string& api_key);
   virtual std::unique_ptr<LocationProvider> NewSystemLocationProvider();
   virtual base::Time GetTimeNow() const;
@@ -68,17 +68,17 @@ class DEVICE_GEOLOCATION_EXPORT LocationArbitrator : public LocationProvider {
  private:
   friend class TestingLocationArbitrator;
 
-  scoped_refptr<AccessTokenStore> GetAccessTokenStore();
-
   // Provider will either be added to |providers_| or
   // deleted on error (e.g. it fails to start).
   void RegisterProvider(std::unique_ptr<LocationProvider> provider);
-
   void RegisterSystemProvider();
-  void OnAccessTokenStoresLoaded(
-      AccessTokenStore::AccessTokenMap access_token_map,
-      const scoped_refptr<net::URLRequestContextGetter>& context_getter);
+
+  // Tell all registered providers to start.
   bool DoStartProviders();
+
+  // Response callback for request_context_callback_.
+  void OnRequestContextResponse(
+      scoped_refptr<net::URLRequestContextGetter> context_getter);
 
   // Gets called when a provider has a new position.
   void OnLocationUpdate(const LocationProvider* provider,
@@ -92,17 +92,16 @@ class DEVICE_GEOLOCATION_EXPORT LocationArbitrator : public LocationProvider {
                            bool from_same_provider) const;
 
   const std::unique_ptr<GeolocationDelegate> delegate_;
+  const GeolocationProvider::RequestContextCallback request_context_callback_;
   const std::string api_key_;
 
-  scoped_refptr<AccessTokenStore> access_token_store_;
   LocationProvider::LocationProviderUpdateCallback arbitrator_update_callback_;
 
-  // The CancelableCallback will prevent OnAccessTokenStoresLoaded from being
-  // called multiple times by calling Reset() at the time of binding.
-  base::CancelableCallback<void(
-      AccessTokenStore::AccessTokenMap,
-      const scoped_refptr<net::URLRequestContextGetter>&)>
-      token_store_callback_;
+  // CancelableCallback to prevent OnRequestContextReponse from being called
+  // multiple times in case request_context_callback_ is invoked multiple times.
+  base::CancelableCallback<void(scoped_refptr<net::URLRequestContextGetter>)>
+      request_context_response_callback_;
+
   std::vector<std::unique_ptr<LocationProvider>> providers_;
   bool enable_high_accuracy_;
   // The provider which supplied the current |position_|
