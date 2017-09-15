@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97b7425b_866f61f6",
+        "filename": "ui/aura/window_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1958,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-15T07:47:42Z",
+      "side": 1,
+      "message": "gmock is not allowed in aura. Can you follow the pattern of the other tests?",
+      "revId": "51132561d02bf9fb75bd1938c3ad196b25a296de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
