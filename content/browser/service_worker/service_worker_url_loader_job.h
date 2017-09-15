@@ -122,6 +122,8 @@ class CONTENT_EXPORT ServiceWorkerURLLoaderJob : public mojom::URLLoader,
   // Calls CommitResponseHeaders() if we haven't sent headers yet,
   // and CommitCompleted() with error code.
   void DeliverErrorResponse();
+  // Returns true if |response_head_| is a redirect response.
+  bool MayBeCommitRedirect();
 
   // mojom::URLLoader:
   void FollowRedirect() override;
