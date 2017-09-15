@@ -285,6 +285,30 @@
     },
     {
       "key": {
+        "uuid": "ca1f4ee7_181faa06",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3792,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-15T12:42:27Z",
+      "side": 1,
+      "message": "\u003e As we discussed, it is alright for now to leave it like this, because with testing::ElementsAre, the comparison of messages is not supported and also we only want to check from that struct the |autofill_type|.\n\ngot it. thanks for checking.",
+      "parentUuid": "9f942ad6_4cf0817c",
+      "range": {
+        "startLine": 3790,
+        "startChar": 0,
+        "endLine": 3792,
+        "endChar": 72
+      },
+      "revId": "a9b869e03793ca25291216f7b444b99538b89af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc6121cf_f5962565",
         "filename": "components/autofill/core/browser/proto/server.proto",
         "patchSetId": 3
@@ -320,6 +344,30 @@
       "side": 1,
       "message": "Ack",
       "parentUuid": "fc6121cf_f5962565",
+      "range": {
+        "startLine": 32,
+        "startChar": 21,
+        "endLine": 32,
+        "endChar": 34
+      },
+      "revId": "a9b869e03793ca25291216f7b444b99538b89af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "68faf09a_331802e1",
+        "filename": "components/autofill/core/browser/proto/server.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-15T12:42:27Z",
+      "side": 1,
+      "message": "\u003e note that there are clients other than Chrome who consume these responses. So, server side, this needs to stick around post deprecation, for older clients.\n\nRoger: just to double check, do you mean we should fill both |autofill_type| and |predictions| on server-side? Yes, we are going to.",
+      "parentUuid": "3450e183_9cdc0459",
       "range": {
         "startLine": 32,
         "startChar": 21,
@@ -494,6 +542,30 @@
       "revId": "a9b869e03793ca25291216f7b444b99538b89af9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd1b70e7_bdaea139",
+        "filename": "components/password_manager/core/browser/password_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2040,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-15T12:42:27Z",
+      "side": 1,
+      "message": "\u003e \u003e Thanks for adding this! :)\n\u003e \n\u003e No worries. :)\n\nAck.",
+      "parentUuid": "6f301c1e_3ce45459",
+      "range": {
+        "startLine": 2040,
+        "startChar": 0,
+        "endLine": 2040,
+        "endChar": 57
+      },
+      "revId": "a9b869e03793ca25291216f7b444b99538b89af9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bc2c93e_97eb332c",
+        "filename": "components/autofill/core/browser/form_structure_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3794,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-15T12:42:27Z",
+      "side": 1,
+      "message": "Please add ASSERT for the size of |server_predictions|. the same below.",
+      "range": {
+        "startLine": 3794,
+        "startChar": 2,
+        "endLine": 3794,
+        "endChar": 78
+      },
+      "revId": "18ad9fe093bc1c45eb009f31b1ee6ee0b0e92a79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
