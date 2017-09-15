@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d5b9aa0_46776892",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-15T11:20:31Z",
+      "side": 1,
+      "message": "space",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 18
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d95efc_c45214cd",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-15T11:20:31Z",
+      "side": 1,
+      "message": "did you translate only \"password\"? not family name, first name?",
+      "range": {
+        "startLine": 72,
+        "startChar": 18,
+        "endLine": 72,
+        "endChar": 34
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd7ed857_c5343c40",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-15T11:20:31Z",
+      "side": 1,
+      "message": "we can check only name. See https://cs.chromium.org/chromium/src/components/autofill/content/renderer/form_autofill_util.cc?rcl\u003d33d75239787b24f3f2b6bdcd60b0ab5e0746681a\u0026l\u003d1373",
+      "range": {
+        "startLine": 342,
+        "startChar": 12,
+        "endLine": 342,
+        "endChar": 67
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a343611_f8e8d4c5",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-15T11:20:31Z",
+      "side": 1,
+      "message": "I dislike that we duplicate the logic from GetPasswordForm. Let\u0027s finish this CL https://chromium-review.googlesource.com/c/chromium/src/+/667114. Use |all_possible_usernames| as an input for GetUsernameFieldBasedOnHtmlAttributes.",
+      "range": {
+        "startLine": 347,
+        "startChar": 10,
+        "endLine": 351,
+        "endChar": 62
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "424a085f_7aec3a23",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-15T11:20:31Z",
+      "side": 1,
+      "message": "we prefer TODO(crbug.com/XXXXX). Resolve TODOs (if it is high priority and not very big effort) or file a bug that blocks crbug.com/699530",
+      "range": {
+        "startLine": 360,
+        "startChar": 15,
+        "endLine": 360,
+        "endChar": 32
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9bda903_d9b529c8",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-15T11:20:31Z",
+      "side": 1,
+      "message": "it should be static. We don\u0027t want to create it on every call.",
+      "range": {
+        "startLine": 476,
+        "startChar": 47,
+        "endLine": 476,
+        "endChar": 61
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
