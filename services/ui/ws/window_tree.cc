@@ -657,9 +657,9 @@ bool WindowTree::SetFocus(const ClientWindowId& window_id) {
   DVLOG(3) << "SetFocusedWindow client=" << id_
            << " client window_id=" << window_id.ToString()
            << " window=" << DebugWindowId(window);
-  if (!currently_focused && !window) {
-    DVLOG(1) << "SetFocus failed (no focused window to clear)";
-    return false;
+  if (currently_focused == window) {
+    DVLOG(1) << "SetFocus to existing focused window, succeeding";
+    return true;
   }
 
   Display* display = GetDisplay(window);
@@ -675,9 +675,8 @@ bool WindowTree::SetFocus(const ClientWindowId& window_id) {
 
   Operation op(this, window_server_, OperationType::SET_FOCUS);
   bool success = window_server_->SetFocusedWindow(window);
-  if (!success) {
+  if (!success)
     DVLOG(1) << "SetFocus failed (could not SetFocusedWindow)";
-  }
   return success;
 }
 
