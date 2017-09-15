@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42a44dd8_0420de00",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/controls/toggle-class-with-state-source.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T15:52:29Z",
+      "side": 1,
+      "message": "s/paused/was_paused/",
+      "revId": "a04fd772fff7e0e43c78e235a48b43539ece9bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f570bd0_d9b1e4c4",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/toggle-class-with-state-source-error.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T15:52:29Z",
+      "side": 1,
+      "message": "s/then/catch/",
+      "revId": "a04fd772fff7e0e43c78e235a48b43539ece9bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75424d78_d7b9caf4",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T15:52:29Z",
+      "side": 1,
+      "message": "Assuming it\u0027s the only usage of classList() in MediaControls, you could use setValue(\"\")",
+      "revId": "a04fd772fff7e0e43c78e235a48b43539ece9bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e610c708_2e19a483",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 523,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T15:52:29Z",
+      "side": 1,
+      "message": "If it\u0027s not too complicated, maybe it would be worth looking at State() and see if the classes for the state are not already set in which case you could early return instead of removing the classes and adding them back?",
+      "revId": "a04fd772fff7e0e43c78e235a48b43539ece9bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "400ab132_43831100",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T15:52:29Z",
+      "side": 1,
+      "message": "Drop the `default` case so you are handling all cases and if a new one is added, it will fail to compile.",
+      "revId": "a04fd772fff7e0e43c78e235a48b43539ece9bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f56a9d4a_9db66a54",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T15:52:29Z",
+      "side": 1,
+      "message": "If media is playing with HAVE_ENOUGH_DATA, it sounds that this condition would trigger, right? Should this be \u003c\u003d HAVE_CURRENT_DATA?",
+      "revId": "a04fd772fff7e0e43c78e235a48b43539ece9bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "679a5edd_24f21857",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T15:52:29Z",
+      "side": 1,
+      "message": "If you do the optimisation suggested above, you might want to drop this.",
+      "revId": "a04fd772fff7e0e43c78e235a48b43539ece9bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbf48b01_c0401715",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T15:52:29Z",
+      "side": 1,
+      "message": "Should this be named \"paused\"?",
+      "revId": "a04fd772fff7e0e43c78e235a48b43539ece9bda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
