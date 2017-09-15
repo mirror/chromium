@@ -16,6 +16,10 @@
   ],
   "objectPaintInvalidations": [
     {
+      "object": "LayoutBlockFlow (positioned) DIV id='div'",
+      "reason": "selection"
+    },
+    {
       "object": "LayoutImage IMG",
       "reason": "selection"
     },
