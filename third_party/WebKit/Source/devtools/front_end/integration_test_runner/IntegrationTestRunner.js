@@ -126,6 +126,11 @@ TestRunner.evaluateFunctionInOverlay = function(func, callback) {
       .then(result => void callback(result.object.value));
 };
 
+TestRunner.dumpPageOutput = async function() {
+  const output = await TestRunner.evaluateInPageAsync('JSON.stringify(self._output)');
+  TestRunner._results = TestRunner._results.concat(JSON.parse(output.value));
+};
+
 /**
  * @param {boolean} passCondition
  * @param {string} failureText
