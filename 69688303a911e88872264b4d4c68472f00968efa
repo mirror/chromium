@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a43ae623_d23da952",
+        "filename": "chrome/installer/zucchini/algorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:03:51Z",
+      "side": 1,
+      "message": "Renamed to InclusiveClamp(), and changed param order to (value, lo, hi).",
+      "parentUuid": "87acf658_b12170a9",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 15
+      },
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd2b3162_4b1c74b2",
         "filename": "chrome/installer/zucchini/algorithm.h",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "69688303a911e88872264b4d4c68472f00968efa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d5863e9_3edaf188",
+        "filename": "chrome/installer/zucchini/algorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:03:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd2b3162_4b1c74b2",
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +121,48 @@
       "revId": "69688303a911e88872264b4d4c68472f00968efa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d04322_b37c8372",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:03:51Z",
+      "side": 1,
+      "message": "Going with BufferSource(first, size).",
+      "parentUuid": "45b2c0c8_1dfb0c7c",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 12
+      },
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c60a80b6_457d8594",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:03:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8378aeed_fba7e058",
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +229,72 @@
     },
     {
       "key": {
+        "uuid": "fbb977fc_ebb00bb8",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:03:51Z",
+      "side": 1,
+      "message": "Removed the function in favor of BufferView::read().",
+      "parentUuid": "6055f7ed_8a0ffe21",
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a17b573c_f8470e44",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:03:51Z",
+      "side": 1,
+      "message": "Ah okay. Replaced!",
+      "parentUuid": "a23895c3_01669c40",
+      "range": {
+        "startLine": 162,
+        "startChar": 9,
+        "endLine": 162,
+        "endChar": 22
+      },
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9607aff_65b44000",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:03:51Z",
+      "side": 1,
+      "message": "Removed the function in favor of BufferView::read().",
+      "parentUuid": "caba5b9b_33d08749",
+      "range": {
+        "startLine": 162,
+        "startChar": 49,
+        "endLine": 162,
+        "endChar": 54
+      },
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "861e74d8_45791ede",
         "filename": "chrome/installer/zucchini/buffer_view.h",
         "patchSetId": 1
@@ -162,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "f1ecc0a1_5e7492e0",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:03:51Z",
+      "side": 1,
+      "message": "Removed the function in favor of BufferView::read().",
+      "parentUuid": "861e74d8_45791ede",
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba24b825_2fd34799",
         "filename": "chrome/installer/zucchini/reloc_utils.cc",
         "patchSetId": 1
@@ -173,6 +341,24 @@
       "writtenOn": "2017-09-15T20:33:11Z",
       "side": 1,
       "message": "will DCHECK_NE work here?",
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa0dc590_7e4db032",
+        "filename": "chrome/installer/zucchini/reloc_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:03:51Z",
+      "side": 1,
+      "message": "This wouldn\u0027t compile since DCHECK infra (logging::MakeCheckOpValueString()) doesn\u0027t know how to print an iterator. Leaving as-is.",
+      "parentUuid": "ba24b825_2fd34799",
       "revId": "69688303a911e88872264b4d4c68472f00968efa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -202,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "f7707cd1_3bd2c8a9",
+        "filename": "chrome/installer/zucchini/reloc_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:03:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c22ba751_bc3523e9",
+      "range": {
+        "startLine": 31,
+        "startChar": 46,
+        "endLine": 31,
+        "endChar": 66
+      },
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4604c1e6_e93c63dd",
         "filename": "chrome/installer/zucchini/reloc_utils.h",
         "patchSetId": 1
@@ -213,6 +423,24 @@
       "writtenOn": "2017-09-15T20:33:11Z",
       "side": 1,
       "message": "probably isn\u0027t needed, but how about specifying the type anyway:\n  enum : size_t { ... };",
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6314aa7a_1c956d90",
+        "filename": "chrome/installer/zucchini/reloc_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:03:51Z",
+      "side": 1,
+      "message": "Using ptrdiff_t, since the use case compares the difference of two iterators, and size_t gives warning on signed / unsigned comparison.\n\nAlso, using ptrdiff_t (from \u003cstddef.h\u003e) instead of std::ptrdiff_t (from \u003ccstddef\u003e).",
+      "parentUuid": "4604c1e6_e93c63dd",
       "revId": "69688303a911e88872264b4d4c68472f00968efa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -259,6 +487,48 @@
     },
     {
       "key": {
+        "uuid": "127ed003_b57d7e79",
+        "filename": "chrome/installer/zucchini/reloc_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:03:51Z",
+      "side": 1,
+      "message": "Indeed. :)",
+      "parentUuid": "199ebabf_85bab815",
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06ee5518_e81810ee",
+        "filename": "chrome/installer/zucchini/reloc_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:03:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7099dd0_0cf4729b",
+      "range": {
+        "startLine": 52,
+        "startChar": 63,
+        "endLine": 52,
+        "endChar": 76
+      },
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ef04fb4_50854647",
         "filename": "chrome/installer/zucchini/reloc_utils.h",
         "patchSetId": 1
@@ -282,6 +552,30 @@
     },
     {
       "key": {
+        "uuid": "83913df7_51c98f3d",
+        "filename": "chrome/installer/zucchini/reloc_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:03:51Z",
+      "side": 1,
+      "message": "Ah nice! Changed it to use R-value.",
+      "parentUuid": "9ef04fb4_50854647",
+      "range": {
+        "startLine": 97,
+        "startChar": 24,
+        "endLine": 97,
+        "endChar": 34
+      },
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab45afb8_927a83d5",
         "filename": "chrome/installer/zucchini/reloc_utils_unittest.cc",
         "patchSetId": 1
@@ -293,6 +587,30 @@
       "writtenOn": "2017-09-15T20:03:05Z",
       "side": 1,
       "message": "If this is initialized inline, then we don\u0027t need braces.",
+      "range": {
+        "startLine": 94,
+        "startChar": 27,
+        "endLine": 94,
+        "endChar": 36
+      },
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcdba646_04ea1526",
+        "filename": "chrome/installer/zucchini/reloc_utils_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:03:51Z",
+      "side": 1,
+      "message": "Do you mean\n  EXPECT_TRUE(Initialize(image_raw, 0U, 0U));\n? This doesn\u0027t compile (wrong number of param). Or do you mean\n  EXPECT_TRUE(Initialize(ParseHexString(\"\"), 0U, 0U));\nwhich is bad since Initialize() grabs buffer of its input param, and should not be given a temporary.",
+      "parentUuid": "ab45afb8_927a83d5",
       "range": {
         "startLine": 94,
         "startChar": 27,
