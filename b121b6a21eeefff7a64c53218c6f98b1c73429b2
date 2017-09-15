@@ -22,6 +22,30 @@
       "revId": "b121b6a21eeefff7a64c53218c6f98b1c73429b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a224c7a3_bbb56a7c",
+        "filename": "base/android/java/templates/BuildConfig.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001352
+      },
+      "writtenOn": "2017-09-15T13:48:52Z",
+      "side": 1,
+      "message": "IIRC, one of the main reasons why we\u0027ll be switching back to crazy linker is because there is a bug in the system linker that causes Chrome to write 2 MiB to the disk everytime it is started (!). See https://bugs.chromium.org/p/chromium/issues/detail?id\u003d719977 for details.",
+      "parentUuid": "0aae3939_a677348a",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 72
+      },
+      "revId": "b121b6a21eeefff7a64c53218c6f98b1c73429b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
