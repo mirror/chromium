@@ -37,6 +37,8 @@ static_library("internal") {
     "file_monitor.h",
     "file_monitor_impl.cc",
     "file_monitor_impl.h",
+    "logger_impl.cc",
+    "logger_impl.h",
     "model.h",
     "model_impl.cc",
     "model_impl.h",
