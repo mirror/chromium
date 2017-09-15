@@ -48,9 +48,9 @@ const char* const kSystemFontsForFontconfig[] = {
     "/usr/share/fonts/truetype/msttcorefonts/Verdana_Italic.ttf",
     // The DejaVuSans font is used by the css2.1 tests.
     "/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans.ttf",
-    "/usr/share/fonts/truetype/ttf-indic-fonts-core/lohit_hi.ttf",
-    "/usr/share/fonts/truetype/ttf-indic-fonts-core/lohit_ta.ttf",
-    "/usr/share/fonts/truetype/ttf-indic-fonts-core/MuktiNarrow.ttf",
+    // "/usr/share/fonts/truetype/ttf-indic-fonts-core/lohit_hi.ttf",
+    // "/usr/share/fonts/truetype/ttf-indic-fonts-core/lohit_ta.ttf",
+    // "/usr/share/fonts/truetype/ttf-indic-fonts-core/MuktiNarrow.ttf",
 };
 
 const size_t kNumSystemFontsForFontconfig =
