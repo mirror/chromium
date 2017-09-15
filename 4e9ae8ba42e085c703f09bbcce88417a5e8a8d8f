@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0d027e2_7f223841",
+        "filename": "third_party/crc32c/src",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-15T23:55:14Z",
+      "side": 1,
+      "message": "Did you check in this by mistake?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 58
+      },
+      "revId": "4e9ae8ba42e085c703f09bbcce88417a5e8a8d8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
