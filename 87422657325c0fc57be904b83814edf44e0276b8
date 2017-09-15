@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "93f9f429_a8d7eae5",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_box_state.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-15T16:56:54Z",
+      "side": 1,
+      "message": "Good idea, will do.",
+      "parentUuid": "2c58b095_67e4c4a8",
+      "range": {
+        "startLine": 216,
+        "startChar": 33,
+        "endLine": 216,
+        "endChar": 51
+      },
+      "revId": "87422657325c0fc57be904b83814edf44e0276b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fa30eaa_2a5be796",
         "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_box_fragment_builder.h",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-15T16:53:04Z",
       "side": 1,
       "message": "Do we need the LayoutResult version? Can\u0027t we do AddChild(result-\u003eroot())?",
+      "range": {
+        "startLine": 33,
+        "startChar": 44,
+        "endLine": 33,
+        "endChar": 58
+      },
+      "revId": "87422657325c0fc57be904b83814edf44e0276b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11aca522_5eb09519",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_box_fragment_builder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-15T16:56:54Z",
+      "side": 1,
+      "message": "Currently we discard abspos within inline blocks. We need to take this to line box and propagate to its parent box fragment. That code wasn\u0027t done yet though.",
+      "parentUuid": "6fa30eaa_2a5be796",
       "range": {
         "startLine": 33,
         "startChar": 44,
