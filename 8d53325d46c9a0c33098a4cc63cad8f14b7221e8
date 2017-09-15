@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "139e92f1_2f84ff0d",
+        "filename": "third_party/WebKit/LayoutTests/editing/pasteboard/copy-cut-paste-supported.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T01:44:48Z",
+      "side": 1,
+      "message": "nit: Let\u0027s provide more information when this test file runs on browser.\n\nassert_true(window.testRunner !\u003d\u003d undefined, \u0027This test requires testRunner\u0027);\ntestRunner.setJavaScriptCanAccessClipboard(false);",
+      "revId": "8d53325d46c9a0c33098a4cc63cad8f14b7221e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf29113_e5a6d76c",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2065,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T01:44:48Z",
+      "side": 1,
+      "message": "nit: s/Settings*/const Settings* const/",
+      "revId": "8d53325d46c9a0c33098a4cc63cad8f14b7221e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9739c00e_e48c83fa",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2066,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T01:44:48Z",
+      "side": 1,
+      "message": "nit: s/bool/const bool/",
+      "revId": "8d53325d46c9a0c33098a4cc63cad8f14b7221e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
