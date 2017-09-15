@@ -29,6 +29,7 @@
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
 #include "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h"
 #include "chrome/browser/feature_engagement/new_tab/new_tab_tracker_factory.h"
+#include "chrome/browser/ui/views/feature_promos/new_tab_promo_bubble_view.h"
 #endif
 
 namespace {
@@ -86,11 +87,25 @@ void NewTabButton::ShowPromoForLastActiveBrowser() {
   browser->tabstrip()->new_tab_button()->ShowPromo();
 }
 
+// static
+bool NewTabButton::CloseBubbleForLastActiveBrowser() {
+  BrowserView* browser = static_cast<BrowserView*>(
+      BrowserList::GetInstance()->GetLastActive()->window());
+  return browser->tabstrip()->new_tab_button()->CloseBubble();
+}
+
 void NewTabButton::ShowPromo() {
   // Owned by its native widget. Will be destroyed as its widget is destroyed.
-  new_tab_promo_ = NewTabPromoBubbleView::CreateOwned(GetVisibleBounds());
+  new_tab_promo_ = NewTabPromoBubbleView::CreateOwned(this);
   new_tab_promo_observer_.Add(new_tab_promo_->GetWidget());
   SchedulePaint();
+}
+
+bool NewTabButton::CloseBubble() {
+  if (new_tab_promo_) {
+    new_tab_promo_->CloseBubble();
+  }
+  return !!new_tab_promo_;
 }
 
 #if defined(OS_WIN)
@@ -195,6 +210,7 @@ bool NewTabButton::GetHitTestMask(gfx::Path* mask) const {
 
 void NewTabButton::OnWidgetDestroying(views::Widget* widget) {
 #if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
+  new_tab_promo_ = nullptr;
   feature_engagement::NewTabTrackerFactory::GetInstance()
       ->GetForProfile(tab_strip_->controller()->GetProfile())
       ->OnPromoClosed();

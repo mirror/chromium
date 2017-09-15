@@ -362,12 +362,16 @@ bool BrowserTabStripController::IsCompatibleWith(TabStrip* other) const {
 }
 
 void BrowserTabStripController::CreateNewTab() {
-#if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
-  feature_engagement::NewTabTrackerFactory::GetInstance()
-      ->GetForProfile(browser_view_->browser()->profile())
-      ->OnNewTabOpened();
-#endif
   model_->delegate()->AddTabAt(GURL(), -1, true);
+#if !defined(OS_ANDROID) && !defined(OS_CHROMEOS) && !defined(OS_MACOSX)
+  auto* new_tab_tracker =
+      feature_engagement::NewTabTrackerFactory::GetInstance()->GetForProfile(
+          browser_view_->browser()->profile());
+  new_tab_tracker->OnNewTabOpened();
+  if (new_tab_tracker->CloseBubble()) {
+    new_tab_tracker->OnPromoClosed();
+  }
+#endif
 }
 
 void BrowserTabStripController::CreateNewTabWithLocation(
