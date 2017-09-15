@@ -22,6 +22,30 @@
       "revId": "7a187f12058a11c92feffa67cbd2812cbda317e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8d07e59_d1f8e81d",
+        "filename": "ios/chrome/browser/ui/elements/selector_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T15:43:08Z",
+      "side": 0,
+      "message": "It is a property that is @synthesized. Since the property is now marked \"weak\", @synthesized can also generate the ivar (did not work with \"assign\" and \"__unsafe_unretained\"). So, no the protocol cannot be removed AFAICT.",
+      "parentUuid": "cc96746b_c9d9add6",
+      "range": {
+        "startLine": 17,
+        "startChar": 25,
+        "endLine": 17,
+        "endChar": 52
+      },
+      "revId": "7a187f12058a11c92feffa67cbd2812cbda317e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
