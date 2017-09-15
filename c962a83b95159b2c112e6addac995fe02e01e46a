@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d4529733_95aca342",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-15T15:07:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74a07b6e_04a12bf9",
+      "revId": "c962a83b95159b2c112e6addac995fe02e01e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87eeb98d_970f5577",
         "filename": "content/renderer/media/video_track_adapter.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "c962a83b95159b2c112e6addac995fe02e01e46a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "627f9977_6740b505",
+        "filename": "content/renderer/media/video_track_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-15T15:07:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87eeb98d_970f5577",
+      "revId": "c962a83b95159b2c112e6addac995fe02e01e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "97ffc8dd_f2c42e8b",
+        "filename": "content/renderer/media/video_track_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-15T15:07:06Z",
+      "side": 1,
+      "message": "It\u0027s not possible to enter the if without |track_frame_callback| being set.\nAdded the break you propose anyway plus a DCHECK(track_frame_callback).",
+      "parentUuid": "859dea91_03117a5b",
+      "revId": "c962a83b95159b2c112e6addac995fe02e01e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "727a32d0_b6383b93",
         "filename": "content/renderer/media/video_track_adapter.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "c962a83b95159b2c112e6addac995fe02e01e46a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f82c2f_a9e0dbba",
+        "filename": "content/renderer/media/video_track_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-09-15T15:07:06Z",
+      "side": 1,
+      "message": "Nice catch. I believe std::move(*track_frame_callback) might be necessary, and if it\u0027s not, it\u0027s at least an optimization.\nrelease() is not necessary or desirable because we want the pointer to be deleted.",
+      "parentUuid": "727a32d0_b6383b93",
+      "revId": "c962a83b95159b2c112e6addac995fe02e01e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
