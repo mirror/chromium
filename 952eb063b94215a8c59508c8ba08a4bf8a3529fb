@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab2078ca_7c190d2d",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-09-15T22:06:04Z",
+      "side": 1,
+      "message": "no, there is cast here from std::unique_ptr\u003cResourceDownloader, std::__1::default_delete\u003cResourceDownloader\u003e\u003e to unique_ptr\u003cResourceDownloader, BrowserThread::DeleteOnIOThread\u003e, the destructor is different.",
+      "parentUuid": "41f28345_78912817",
+      "range": {
+        "startLine": 179,
+        "startChar": 11,
+        "endLine": 179,
+        "endChar": 18
+      },
+      "revId": "952eb063b94215a8c59508c8ba08a4bf8a3529fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1b2b869_fd4fffcc",
         "filename": "content/browser/loader/navigation_url_loader.h",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "952eb063b94215a8c59508c8ba08a4bf8a3529fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb71fba_a36beaef",
+        "filename": "content/browser/loader/navigation_url_loader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-09-15T22:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1b2b869_fd4fffcc",
+      "revId": "952eb063b94215a8c59508c8ba08a4bf8a3529fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "0d98dceb_7930b76e",
+        "filename": "content/browser/loader/navigation_url_loader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-09-15T22:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc9c426c_7d3741cf",
+      "range": {
+        "startLine": 75,
+        "startChar": 39,
+        "endLine": 75,
+        "endChar": 63
+      },
+      "revId": "952eb063b94215a8c59508c8ba08a4bf8a3529fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ee43730_5aed1de7",
         "filename": "content/common/throttling_url_loader.h",
         "patchSetId": 3
@@ -85,6 +151,30 @@
       "revId": "952eb063b94215a8c59508c8ba08a4bf8a3529fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9792784b_2fa519cd",
+        "filename": "content/common/throttling_url_loader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-09-15T22:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ee43730_5aed1de7",
+      "range": {
+        "startLine": 77,
+        "startChar": 51,
+        "endLine": 77,
+        "endChar": 60
+      },
+      "revId": "952eb063b94215a8c59508c8ba08a4bf8a3529fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
