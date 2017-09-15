@@ -32,7 +32,8 @@ std::unique_ptr<VideoDecoder> MojoMediaClient::CreateVideoDecoder(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     MediaLog* media_log,
     mojom::CommandBufferIdPtr command_buffer_id,
-    OutputWithReleaseMailboxCB output_cb) {
+    OutputWithReleaseMailboxCB output_cb,
+    const std::string& decoder_name) {
   return nullptr;
 }
 

@@ -33,7 +33,8 @@ class InterfaceFactoryImpl : public mojom::InterfaceFactory {
 
   // mojom::InterfaceFactory implementation.
   void CreateAudioDecoder(mojom::AudioDecoderRequest request) final;
-  void CreateVideoDecoder(mojom::VideoDecoderRequest request) final;
+  void CreateVideoDecoder(mojom::VideoDecoderRequest request,
+                          const std::string& decoder_name) final;
   void CreateRenderer(const std::string& audio_device_id,
                       mojom::RendererRequest request) final;
   void CreateCdm(mojom::ContentDecryptionModuleRequest request) final;
