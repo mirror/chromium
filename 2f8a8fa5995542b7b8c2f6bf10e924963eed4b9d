@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5bf5a7f_a9eccc04",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 42
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-15T08:56:54Z",
+      "side": 1,
+      "message": "Please also comment what this value is for. (E.g. \"Buffer size for reading script data from the network.\")",
+      "revId": "2f8a8fa5995542b7b8c2f6bf10e924963eed4b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
