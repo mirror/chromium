@@ -34,6 +34,24 @@
       "revId": "5653d825e59acc7abb37a7e8401cce40e187736d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c99991_0c98efea",
+        "filename": "third_party/WebKit/Source/core/dom/Node.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T05:45:49Z",
+      "side": 1,
+      "message": "Oh I see. I meeds |is_pritting()|.\n\nSo, we should implement in WebDocument::ContentAsTextForTesting().\n\nstd::string DumpLayout(WebLocalFrame* frame,\n                       const LayoutTestRuntimeFlags\u0026 flags) {\n...\n  if (flags.dump_as_text()) {\n    result \u003d DumpFrameHeaderIfNeeded(frame);\n    if (flags.is_printing() \u0026\u0026 frame-\u003eGetDocument().IsHTMLDocument()) {\n      result +\u003d WebFrameContentDumper::DumpLayoutTreeAsText(\n                    frame, WebFrameContentDumper::kLayoutAsTextPrinting)\n                    .Utf8();\n    } else {\n      result +\u003d frame-\u003eGetDocument().ContentAsTextForTesting().Utf8();\n    }",
+      "parentUuid": "4f45a5b4_f450a1ca",
+      "revId": "5653d825e59acc7abb37a7e8401cce40e187736d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
