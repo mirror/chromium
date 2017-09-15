@@ -99,6 +99,8 @@ source_set("web") {
     "net/certificate_policy_cache.cc",
     "net/cookie_notification_bridge.h",
     "net/cookie_notification_bridge.mm",
+    "net/cookies/wk_http_system_cookie_store.h",
+    "net/cookies/wk_http_system_cookie_store.mm",
     "net/crw_cert_verification_controller.h",
     "net/crw_cert_verification_controller.mm",
     "net/crw_request_tracker_delegate.h",
