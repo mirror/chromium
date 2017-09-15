@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "70fe68c5_0fcef250",
+        "filename": "third_party/WebKit/Source/core/dom/FrameRequestCallback.idl",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-15T13:58:20Z",
+      "side": 1,
+      "message": "Please use this URL.  We prefer \"living standard\".\n\nhttps://html.spec.whatwg.org/multipage/window-object.html#framerequestcallback",
+      "parentUuid": "a599caa5_628286dd",
+      "revId": "77bcd6e5e4daaeb9d3a44dc22dec6772a4851b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95653221_8340d4a5",
         "filename": "third_party/WebKit/Source/core/dom/FrameRequestCallbackCollection.h",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-15T13:37:00Z",
       "side": 1,
       "message": "Optional:\nIt is allowed to use names like variables for simple getters/setters.\nSo you can name these accessors like\n  int id() const { return id_; }\n  void set_id(int id) { id_ \u003d id; }\nhttps://google.github.io/styleguide/cppguide.html#Function_Names",
+      "revId": "77bcd6e5e4daaeb9d3a44dc22dec6772a4851b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ea7aa6a_b41bb610",
+        "filename": "third_party/WebKit/Source/core/dom/FrameRequestCallbackCollection.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-15T13:58:20Z",
+      "side": 1,
+      "message": "Blink has a different style rule than Chromium, unfortunately.  :(\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#use-for-all-function-names\n\nEven if it\u0027s a simple getter or setter, use |CamelCase|.\n\nFor |GetCancelled|, you should be interested in:\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/blink-c++.md#precede-boolean-values-with-words-like-is_and-did",
+      "parentUuid": "95653221_8340d4a5",
       "revId": "77bcd6e5e4daaeb9d3a44dc22dec6772a4851b0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
