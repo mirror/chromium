@@ -324,6 +324,9 @@ class DiceBrowserTestBase : public InProcessBrowserTest,
     command_line->AppendSwitchASCII(switches::kGaiaUrl, base_url.spec());
     command_line->AppendSwitchASCII(switches::kGoogleApisUrl, base_url.spec());
     command_line->AppendSwitchASCII(switches::kLsoUrl, base_url.spec());
+    command_line->AppendSwitchASCII(
+        "--vmodule",
+        "dice_response_handler=1,chrome_signin_helper=1,gaia_auth_fetcher=2");
   }
 
   void SetUpOnMainThread() override {
@@ -398,6 +401,33 @@ class DiceBrowserTestBase : public InProcessBrowserTest,
     EXPECT_EQ(count, reconcilor_unblocked_count_);
   }
 
+  // Waits until the token request is sent to the server and the response is
+  // received.
+  void WaitForTokenReceived() {
+    base::RunLoop().RunUntilIdle();
+    if (!token_requested_) {
+      // TODO: something cleaner.
+      base::RunLoop run_loop;
+      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+          FROM_HERE, run_loop.QuitClosure(),
+          base::TimeDelta::FromMilliseconds(1000));
+      run_loop.Run();
+      EXPECT_FALSE(token_requested_);
+    }
+    EXPECT_TRUE(token_requested_);
+    base::RunLoop().RunUntilIdle();
+    if (!refresh_token_available_) {
+      // TODO: something cleaner.
+      base::RunLoop run_loop;
+      base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+          FROM_HERE, run_loop.QuitClosure(),
+          base::TimeDelta::FromMilliseconds(1000));
+      run_loop.Run();
+      EXPECT_FALSE(refresh_token_available_);
+    }
+    EXPECT_TRUE(refresh_token_available_);
+  }
+
   net::EmbeddedTestServer https_server_;
   AccountConsistencyMethod account_consistency_method_;
   std::unique_ptr<signin::ScopedAccountConsistency> scoped_account_consistency_;
@@ -422,14 +452,8 @@ class DiceFixAuthErrorsBrowserTest : public DiceBrowserTestBase {
       : DiceBrowserTestBase(AccountConsistencyMethod::kDiceFixAuthErrors) {}
 };
 
-// This test is flaky on Windows, see https://crbug.com/741652
-#if defined(OS_WIN)
-#define MAYBE_Signin DISABLED_Signin
-#else
-#define MAYBE_Signin Signin
-#endif
 // Checks that signin on Gaia triggers the fetch for a refresh token.
-IN_PROC_BROWSER_TEST_F(DiceBrowserTest, MAYBE_Signin) {
+IN_PROC_BROWSER_TEST_F(DiceBrowserTest, Signin) {
   // Navigate to Gaia and sign in.
   NavigateToURL(kSigninURL);
 
@@ -440,9 +464,7 @@ IN_PROC_BROWSER_TEST_F(DiceBrowserTest, MAYBE_Signin) {
             dice_request_header_);
 
   // Check that the token was requested and added to the token service.
-  base::RunLoop().RunUntilIdle();
-  EXPECT_TRUE(token_requested_);
-  EXPECT_TRUE(refresh_token_available_);
+  WaitForTokenReceived();
   EXPECT_TRUE(GetTokenService()->RefreshTokenIsAvailable(GetMainAccountID()));
   // Sync should not be enabled.
   EXPECT_TRUE(GetSigninManager()->GetAuthenticatedAccountId().empty());
@@ -472,9 +494,7 @@ IN_PROC_BROWSER_TEST_F(DiceBrowserTest, MAYBE_Reauth) {
             dice_request_header_);
 
   // Check that the token was requested and added to the token service.
-  base::RunLoop().RunUntilIdle();
-  EXPECT_TRUE(token_requested_);
-  EXPECT_TRUE(refresh_token_available_);
+  WaitForTokenReceived();
   EXPECT_EQ(GetMainAccountID(),
             GetSigninManager()->GetAuthenticatedAccountId());
   // Old token must be revoked silently.
@@ -642,9 +662,7 @@ IN_PROC_BROWSER_TEST_F(DiceFixAuthErrorsBrowserTest, ReauthFixAuthError) {
             dice_request_header_);
 
   // Check that the token was requested and added to the token service.
-  base::RunLoop().RunUntilIdle();
-  EXPECT_TRUE(token_requested_);
-  EXPECT_TRUE(refresh_token_available_);
+  WaitForTokenReceived();
   EXPECT_EQ(GetMainAccountID(),
             GetSigninManager()->GetAuthenticatedAccountId());
   // Old token must be revoked silently.
