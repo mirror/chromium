@@ -22,6 +22,30 @@
       "revId": "79d62c10fbc433363ee710b715bc0f6c13f32433",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e07023bf_97e48dac",
+        "filename": "skia/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000164
+      },
+      "writtenOn": "2017-09-15T15:27:15Z",
+      "side": 1,
+      "message": "As I understand it, iOS does not allow us to use our own decoders, so we don\u0027t build any. So this is correct to continue building SkImageGenerator_none.cpp on iOS.",
+      "parentUuid": "b7aec6f1_8306e477",
+      "range": {
+        "startLine": 295,
+        "startChar": 17,
+        "endLine": 295,
+        "endChar": 73
+      },
+      "revId": "79d62c10fbc433363ee710b715bc0f6c13f32433",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
