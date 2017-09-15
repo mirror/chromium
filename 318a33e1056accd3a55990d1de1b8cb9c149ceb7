@@ -16,6 +16,23 @@
       "revId": "318a33e1056accd3a55990d1de1b8cb9c149ceb7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6690134_09da9809",
+        "filename": "third_party/WebKit/Source/bindings/scripts/code_generator.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-15T05:58:29Z",
+      "side": 1,
+      "message": "Is it better to define a list and use \u0027in\u0027?\n\nNO_CONVERT_NAMES \u003d [\u0027OriginTrials\u0027, \u0027HTMLNames\u0027, \u0027SVGNames\u0027]\nif name.lower() !\u003d name and name not in NO_CONVERT_NAMES:\n  ...",
+      "revId": "318a33e1056accd3a55990d1de1b8cb9c149ceb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
