@@ -65,7 +65,7 @@ static int GetTransformId(const TransformPaintPropertyNode* transform,
     json->SetArray("transform", TransformAsJSONArray(transform->Matrix()));
 
   if (!transform->Matrix().IsIdentityOrTranslation())
-    json->SetArray("origin", PointAsJSONArray(transform->Origin()));
+    json->SetArray("origin", Point3DAsJSONArray(transform->Origin()));
 
   if (!transform->FlattensInheritedTransform())
     json->SetBoolean("flattenInheritedTransform", false);

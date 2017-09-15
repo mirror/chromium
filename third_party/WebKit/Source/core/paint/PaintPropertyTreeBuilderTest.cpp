@@ -3745,6 +3745,8 @@ TEST_P(PaintPropertyTreeBuilderTest, ScrollBoundsOffset) {
   EXPECT_EQ(IntPoint(20, 20), scroll_node->Offset());
   EXPECT_EQ(TransformationMatrix().Translate(7, 11),
             scroll_properties->PaintOffsetTranslation()->Matrix());
+
+  PrintTo(*scroll_properties->PaintOffsetTranslation(), &std::cout);
 }
 
 }  // namespace blink

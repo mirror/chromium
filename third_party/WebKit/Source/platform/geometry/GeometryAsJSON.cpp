@@ -4,9 +4,17 @@
 
 #include "platform/geometry/GeometryAsJSON.h"
 
+#include "platform/geometry/FloatPoint3D.h"
 #include "platform/transforms/TransformationMatrix.h"
 
 namespace blink {
+
+std::unique_ptr<JSONArray> Point3DAsJSONArray(const FloatPoint3D& point) {
+  auto array = PointAsJSONArray(point);
+  if (point.Z())
+    array->PushDouble(point.Z());
+  return array;
+}
 
 static double RoundCloseToZero(double number) {
   return std::abs(number) < 1e-7 ? 0 : number;
