@@ -6,11 +6,58 @@
 
 #include "base/json/json_reader.h"
 #include "base/memory/ptr_util.h"
+#include "base/strings/string16.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "content/browser/devtools/protocol/protocol.h"
 
 namespace content {
 namespace protocol {
+
+namespace {
+
+const char hex_digits[17] = "0123456789ABCDEF";
+
+inline void AppendEscapedChar(StringBuilder& builder, uint16_t c) {
+  switch (c) {
+    case '\b':
+      builder.append("\\b");
+      return;
+    case '\f':
+      builder.append("\\f");
+      return;
+    case '\n':
+      builder.append("\\n");
+      return;
+    case '\r':
+      builder.append("\\r");
+      return;
+    case '\t':
+      builder.append("\\t");
+      return;
+    case '\\':
+      builder.append("\\\\");
+      return;
+    case '"':
+      builder.append("\\\"");
+      return;
+  }
+
+  if (c < 32 || c > 126 || c == '<' || c == '>') {
+    builder.append("\\u");
+    uint16_t number = c;
+    for (size_t j = 0; j < 4; ++j) {
+      char digit = hex_digits[(number & 0xF000) >> 12];
+      builder.append(digit);
+      number <<= 4;
+    }
+  } else {
+    // Latin1
+    builder.append(c);
+  }
+}
+
+}  // anonymous namespace
 
 std::unique_ptr<protocol::Value> toProtocolValue(
     const base::Value* value, int depth) {
@@ -142,6 +189,16 @@ void StringBuilder::append(char c) {
 
 void StringBuilder::append(const char* characters, size_t length) {
   string_.append(characters, length);
+}
+
+// static
+void StringUtil::builderAppendQuotedString(StringBuilder& builder,
+                                           const String& str) {
+  builder.append('"');
+  base::string16 str16 = base::UTF8ToUTF16(str);
+  for (unsigned i = 0; i < str16.length(); ++i)
+    AppendEscapedChar(builder, str16[i]);
+  builder.append('"');
 }
 
 std::string StringBuilder::toString() {

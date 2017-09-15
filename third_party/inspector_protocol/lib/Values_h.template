@@ -239,6 +239,8 @@ private:
     std::vector<std::unique_ptr<Value>> m_data;
 };
 
+void escapeStringForJSON(const String& str, StringBuilder* dst);
+
 {% for namespace in config.protocol.namespace %}
 } // namespace {{namespace}}
 {% endfor %}
