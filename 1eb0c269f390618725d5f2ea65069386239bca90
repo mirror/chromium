@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b8dd64c_a3b54734",
+        "filename": "chrome/browser/browser_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-15T20:42:07Z",
+      "side": 1,
+      "message": "There is also SVG icons:print, see [1] and [2].\n\n[1] https://www.webcomponents.org/element/PolymerElements/iron-icons/demo/demo/index.html\n[2] https://cs.chromium.org/chromium/src/third_party/polymer/v1_0/components-chromium/iron-icons/iron-icons.html?l\u003d228\n\nShould we extract it to a separate SVG file and use that instead of adding new PNG files?\n\nEdit: I guess we would need to ask a designer to make a \"shared printer\" SVG icon to migrate to SVG. Maybe worth filing a new bug for this.",
+      "revId": "1eb0c269f390618725d5f2ea65069386239bca90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "606e578f_2fc5b215",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-15T20:42:07Z",
+      "side": 1,
+      "message": "Nit: Template literals are technically not yet in the \"allowed\" ES6 features list, https://chromium.googlesource.com/chromium/src/+/master/docs/es6_chromium.md#Template-Literals. I think they are useful enough we should start the process of allowing them too.",
+      "revId": "1eb0c269f390618725d5f2ea65069386239bca90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
