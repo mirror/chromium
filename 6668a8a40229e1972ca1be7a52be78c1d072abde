@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c8f9bb3_966e2280",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-15T14:30:32Z",
+      "side": 1,
+      "message": "GetCurrentValue()?",
+      "range": {
+        "startLine": 91,
+        "startChar": 18,
+        "endLine": 91,
+        "endChar": 37
+      },
+      "revId": "6668a8a40229e1972ca1be7a52be78c1d072abde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7832a931_b592e1ff",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-15T14:30:32Z",
+      "side": 1,
+      "message": "is theming really on the roadmap? seems like you could just remove this todo",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 73
+      },
+      "revId": "6668a8a40229e1972ca1be7a52be78c1d072abde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
