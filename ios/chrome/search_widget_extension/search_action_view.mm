@@ -80,8 +80,11 @@ const CGFloat kIconSize = 35;
     [NSLayoutConstraint activateConstraints:ui_util::CreateSameConstraints(
                                                 secondaryEffectView, stack)];
     UIImage* iconImage = [UIImage imageNamed:imageName];
-    iconImage =
-        [iconImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    if (base::ios::IsRunningOnIOS10OrLater()) {
+      iconImage =
+          [iconImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    }
+
     UIImageView* icon = [[UIImageView alloc] initWithImage:iconImage];
     icon.translatesAutoresizingMaskIntoConstraints = NO;
     if (base::ios::IsRunningOnIOS10OrLater()) {
