@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "51fc794f_8661a853",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-15T11:31:19Z",
+      "side": 1,
+      "message": "I agree that with static_casting, it would have been possible to deliberately break things, but at a certain point it becomes the responsibility of the caller -- if you\u0027re calling a method accepting an enum that is not explicitly non-exhaustive with a statically cast integer outside the range of the enum, you\u0027re going to be aware you\u0027re doing something unusual. It\u0027s easy enough to break something if you want to, especially messing around with the type system.",
+      "parentUuid": "3262b567_7dd03553",
+      "range": {
+        "startLine": 52,
+        "startChar": 11,
+        "endLine": 52,
+        "endChar": 16
+      },
+      "revId": "5d4c627d9c9b7e9ce2b8cc63b3e8bf863a80c39a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "064c98ac_0b666e3c",
         "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
         "patchSetId": 2

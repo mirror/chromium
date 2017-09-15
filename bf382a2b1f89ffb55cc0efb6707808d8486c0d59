@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8f9b4952_fceb8aff",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_apitest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-15T11:31:19Z",
+      "side": 1,
+      "message": "Ah, that\u0027s a sensible idea.",
+      "parentUuid": "c9120626_6399659b",
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3838defa_bc6efbcb",
         "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02e7adc4_b4a894b1",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-15T11:31:19Z",
+      "side": 1,
+      "message": "Whoops, I moved the Boolean to passwords_section.js, and forgot to remove the check here.",
+      "parentUuid": "3838defa_bc6efbcb",
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "894614ca_5cedb82d",
+        "filename": "chrome/browser/resources/settings/basic_page/basic_page.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-15T11:31:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a988936c_0c6e4cb9",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "4fe0005f_39858bd7",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-15T11:31:19Z",
+      "side": 1,
+      "message": "Before the import/export feature is taken from behind the feature flag, the interface and behaviour will change (possibly quite significantly), including the UI, so a minimal simple UI seems like the best use of time for now.\n\nI\u0027ve tried hcarmona\u0027s suggestion, and added inline header buttons instead.\nThere\u0027s a new screenshot here: https://bugs.chromium.org/p/chromium/issues/attachment?aid\u003d302644\u0026inline\u003d1",
+      "parentUuid": "83eb2d80_439495ac",
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6502c36b_c286b574",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
         "patchSetId": 4
@@ -105,6 +183,30 @@
       "writtenOn": "2017-09-14T21:15:00Z",
       "side": 1,
       "message": "This might make more sense as a function:\n\n  /**\n   * @return {boolean}\n   * @private\n   */\n  showImportExportPasswords_: function() {\n    return loadTimeData.valueExists(\u0027showImportExportPasswords\u0027) \u0026\u0026\n        loadTimeData.getBoolean(\u0027showImportExportPasswords\u0027);\n  },\n\nand you can have:\n\n\u003ctemplate is\u003d\"dom-if\" if\u003d\"[[showImportExportPasswords_()]]\"\u003e",
+      "range": {
+        "startLine": 218,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 19
+      },
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4e6a1e_093ea76f",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-15T11:31:19Z",
+      "side": 1,
+      "message": "Is this still the case if the value is constant?",
+      "parentUuid": "6502c36b_c286b574",
       "range": {
         "startLine": 218,
         "startChar": 0,
@@ -140,6 +242,30 @@
     },
     {
       "key": {
+        "uuid": "65dc5b29_e6dccf52",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-15T11:31:19Z",
+      "side": 1,
+      "message": "No, it\u0027s set with a flag, so Chrome needs to be restarted each time the value changes: having the value at page load is sufficient.",
+      "parentUuid": "8f27c6c6_274d6ce1",
+      "range": {
+        "startLine": 219,
+        "startChar": 4,
+        "endLine": 219,
+        "endChar": 30
+      },
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c862bde_7e4f31d2",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
         "patchSetId": 4
@@ -160,6 +286,30 @@
       "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79fa4464_7d8faeab",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-15T11:31:19Z",
+      "side": 1,
+      "message": "Ah, I was slightly confused by the event flow, but these don\u0027t appear to be necessary. I\u0027ve removed them.",
+      "parentUuid": "3c862bde_7e4f31d2",
+      "range": {
+        "startLine": 243,
+        "startChar": 0,
+        "endLine": 244,
+        "endChar": 39
+      },
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +336,30 @@
     },
     {
       "key": {
+        "uuid": "9f637bb8_643c41bb",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-15T11:31:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18845287_a1648191",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fccab6a_07b87c64",
         "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
         "patchSetId": 4
@@ -206,6 +380,30 @@
       "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "757d679b_7d743310",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-15T11:31:19Z",
+      "side": 1,
+      "message": "I\u0027ll add a clarifying comment.\n(The pattern actually seems not to be so uncommon in the code base: https://cs.chromium.org/search/?q\u003dstatic_cast%3C.*?%3E%5C(reinterpret_cast%3Cu?intptr_t%3E%5C(.*?%5C)\u0026sq\u003dpackage:chromium\u0026type\u003dcs)",
+      "parentUuid": "4fccab6a_07b87c64",
+      "range": {
+        "startLine": 129,
+        "startChar": 10,
+        "endLine": 129,
+        "endChar": 27
+      },
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +430,30 @@
     },
     {
       "key": {
+        "uuid": "6532cb9d_9d72bce5",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-15T11:31:19Z",
+      "side": 1,
+      "message": "Sorry, not quite sure why I placed it there.",
+      "parentUuid": "549cc798_b7da1088",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 35
+      },
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01de40a3_38be352b",
         "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
         "patchSetId": 4
@@ -252,6 +474,30 @@
       "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2227cf2_e5eb277e",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1230382
+      },
+      "writtenOn": "2017-09-15T11:31:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01de40a3_38be352b",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 37
+      },
+      "revId": "bf382a2b1f89ffb55cc0efb6707808d8486c0d59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
