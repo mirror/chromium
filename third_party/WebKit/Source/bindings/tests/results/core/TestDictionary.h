@@ -77,6 +77,13 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   }
   inline void setBooleanMember(bool);
 
+  bool hasClampStringSequenceMember() const { return has_clamp_string_sequence_member_; }
+  const Vector<String>& clampStringSequenceMember() const {
+    DCHECK(has_clamp_string_sequence_member_);
+    return clamp_string_sequence_member_;
+  }
+  void setClampStringSequenceMember(const Vector<String>&);
+
   bool hasCreateMember() const { return has_create_member_; }
   bool createMember() const {
     DCHECK(has_create_member_);
@@ -311,6 +318,7 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   bool has_any_in_record_member_ = false;
   bool has_applicable_to_type_long_member_ = false;
   bool has_boolean_member_ = false;
+  bool has_clamp_string_sequence_member_ = false;
   bool has_create_member_ = false;
   bool has_double_or_null_member_ = false;
   bool has_double_or_string_sequence_member_ = false;
@@ -334,6 +342,7 @@ class CORE_EXPORT TestDictionary : public IDLDictionaryBase {
   int32_t applicable_to_type_long_member_;
   String applicable_to_type_string_member_;
   bool boolean_member_;
+  Vector<String> clamp_string_sequence_member_;
   bool create_member_;
   Dictionary dictionary_member_;
   double double_or_null_member_;
