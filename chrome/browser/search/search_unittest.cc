@@ -66,14 +66,11 @@ class SearchTest : public BrowserWithTestWindowTest {
     TemplateURLData data;
     data.SetShortName(base::ASCIIToUTF16("foo.com"));
     data.SetURL("http://foo.com/url?bar={searchTerms}");
-    data.instant_url = "http://foo.com/instant?"
-        "{google:forceInstantResults}foo=foo#foo=foo&strk";
     if (set_ntp_url) {
       data.new_tab_url = (insecure_ntp_url ? "http" : "https") +
           std::string("://foo.com/newtab?strk");
     }
     data.alternate_urls.push_back("http://foo.com/alt#quux={searchTerms}");
-    data.search_terms_replacement_key = "strk";
 
     TemplateURL* template_url =
         template_url_service->Add(base::MakeUnique<TemplateURL>(data));
@@ -87,17 +84,9 @@ class SearchTest : public BrowserWithTestWindowTest {
     TemplateURLService* template_url_service =
         TemplateURLServiceFactory::GetForProfile(profile());
 
-    static const char kInstantURLWithStrk[] =
-        "http://foo.com/instant?foo=foo#foo=foo&strk";
-    static const char kInstantURLNoStrk[] =
-        "http://foo.com/instant?foo=foo#foo=foo";
-
     TemplateURLData data;
     data.SetShortName(base::ASCIIToUTF16("foo.com"));
     data.SetURL("http://foo.com/url?bar={searchTerms}");
-    data.instant_url = (has_search_term_replacement_key ?
-        kInstantURLWithStrk : kInstantURLNoStrk);
-    data.search_terms_replacement_key = "strk";
 
     TemplateURL* template_url =
         template_url_service->Add(base::MakeUnique<TemplateURL>(data));
@@ -491,12 +480,8 @@ TEST_F(SearchTest, SearchProviderWithPort) {
   TemplateURLData data;
   data.SetShortName(base::ASCIIToUTF16("localhost"));
   data.SetURL("https://[::1]:1993/url?bar={searchTerms}");
-  data.instant_url =
-      "https://[::1]:1993/instant?"
-      "{google:forceInstantResults}foo=foo#foo=foo&strk";
   data.new_tab_url = "https://[::1]:1993/newtab?strk";
   data.alternate_urls.push_back("https://[::1]:1993/alt#quux={searchTerms}");
-  data.search_terms_replacement_key = "strk";
 
   TemplateURL* template_url =
       template_url_service->Add(base::MakeUnique<TemplateURL>(data));
@@ -523,9 +508,7 @@ class SearchURLTest : public SearchTest {
         TemplateURLServiceFactory::GetForProfile(profile());
     TemplateURLData data;
     data.SetShortName(base::ASCIIToUTF16("Google"));
-    data.SetURL("{google:baseURL}search?"
-                "{google:instantExtendedEnabledParameter}q={searchTerms}");
-    data.search_terms_replacement_key = "espv";
+    data.SetURL("{google:baseURL}search?q={searchTerms}");
     template_url_ =
         template_url_service->Add(base::MakeUnique<TemplateURL>(data));
     template_url_service->SetUserSelectedDefaultSearchProvider(template_url_);
