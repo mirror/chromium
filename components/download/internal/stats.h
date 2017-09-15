@@ -149,6 +149,11 @@ void LogRecoveryOperation(Entry::State to_state);
 void LogDownloadCompletion(CompletionType type,
                            uint64_t file_size_bytes);
 
+// Logs the effect of navigation on active download.
+void LogNavigationEffect(bool should_block_on_navigation,
+                         bool is_paused,
+                         bool new_entry);
+
 // Logs statistics about the result of a model operation.  Used to track failure
 // cases.
 void LogModelOperationResult(ModelAction action, bool success);

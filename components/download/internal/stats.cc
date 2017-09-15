@@ -20,6 +20,25 @@ namespace {
 // bucket.
 const int64_t kMaxFileSizeKB = 4 * 1024 * 1024; /* 4GB */
 
+// Enum used by UMA metrics to track various effects of external navigation on
+// individual downloads.
+enum class NavigationEffect {
+  // The download state was not affected by the navigation.
+  NONE = 0,
+
+  // Download couldn't be started due to active navigation.
+  DEFER = 1,
+
+  // An in-progress download was paused due to navigation.
+  PAUSE = 2,
+
+  // A paused download was resumed after navigation completion.
+  RESUME = 3,
+
+  // The count of entries for the enum.
+  COUNT = 4,
+};
+
 // Converts DownloadTaskType to histogram suffix.
 // Should maps to suffix string in histograms.xml.
 std::string TaskTypeToHistogramSuffix(DownloadTaskType task_type) {
@@ -223,6 +242,25 @@ void LogDownloadCompletion(CompletionType type,
 
   name.append(".").append(CompletionTypeToHistogramSuffix(type));
   base::UmaHistogramCustomCounts(name, file_size_kb, 1, kMaxFileSizeKB, 50);
+}
+
+void LogNavigationEffect(bool should_block_on_navigation,
+                         bool is_paused,
+                         bool new_entry) {
+  base::UmaHistogramBoolean("Download.Service.Navigation.ShouldBlock",
+                            should_block_on_navigation);
+
+  NavigationEffect action = NavigationEffect::NONE;
+  if (new_entry) {
+    if (should_block_on_navigation)
+      action = NavigationEffect::DEFER;
+  } else if (!is_paused && should_block_on_navigation) {
+    action = NavigationEffect::PAUSE;
+  } else if (is_paused && !should_block_on_navigation) {
+    action = NavigationEffect::RESUME;
+  }
+  base::UmaHistogramEnumeration("Download.Service.Navigation.Effect", action,
+                                NavigationEffect::COUNT);
 }
 
 void LogModelOperationResult(ModelAction action, bool success) {
