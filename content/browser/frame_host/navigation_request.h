@@ -175,6 +175,8 @@ class CONTENT_EXPORT NavigationRequest : public NavigationURLLoaderDelegate {
 
   int nav_entry_id() const { return nav_entry_id_; }
 
+  void OnFrameVisible();
+
  private:
   // This enum describes the result of a Content Security Policy (CSP) check for
   // the request.

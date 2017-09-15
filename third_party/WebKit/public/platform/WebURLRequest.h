@@ -366,6 +366,9 @@ class WebURLRequest {
   // in-between.
   BLINK_PLATFORM_EXPORT void SetIsSameDocumentNavigation(bool);
 
+  BLINK_PLATFORM_EXPORT bool IsDelayedSubframeRequest() const;
+  BLINK_PLATFORM_EXPORT void SetDelayedSubframeRequest(bool);
+
 #if INSIDE_BLINK
   BLINK_PLATFORM_EXPORT ResourceRequest& ToMutableResourceRequest();
   BLINK_PLATFORM_EXPORT const ResourceRequest& ToResourceRequest() const;

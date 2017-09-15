@@ -61,6 +61,7 @@ struct CONTENT_EXPORT CommonNavigationParams {
                          FrameMsg_Navigate_Type::Value navigation_type,
                          bool allow_download,
                          bool should_replace_current_entry,
+                         bool is_delayed_subframe_request,
                          base::TimeTicks ui_timestamp,
                          FrameMsg_UILoadMetricsReportType::Value report_type,
                          const GURL& base_url_for_data_url,
@@ -98,6 +99,9 @@ struct CONTENT_EXPORT CommonNavigationParams {
   // PlzNavigate: this is used by client-side redirects to indicate that when
   // the navigation commits, it should commit in the existing page.
   bool should_replace_current_entry;
+
+  // Set when blink decides not to load a subframe.
+  bool is_delayed_subframe_request;
 
   // Timestamp of the user input event that triggered this navigation. Empty if
   // the navigation was not triggered by clicking on a link or by receiving an

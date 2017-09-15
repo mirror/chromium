@@ -179,6 +179,8 @@ const char kDisableGpuSandbox[]             = "disable-gpu-sandbox";
 // Manager can be used to terminate the offending process in this case.
 const char kDisableHangMonitor[]            = "disable-hang-monitor";
 
+const char kEnableLazyFrameLoading[] = "enable-lazy-frame-loading";
+
 // Disable the RenderThread's HistogramCustomizer.
 const char kDisableHistogramCustomizer[]    = "disable-histogram-customizer";
 
@@ -653,9 +655,6 @@ const char kMHTMLGeneratorOption[]          = "mhtml-generator-option";
 const char kMHTMLSkipNostoreMain[]          = "skip-nostore-main";
 const char kMHTMLSkipNostoreAll[]           = "skip-nostore-all";
 
-// Use a Mojo-based LocalStorage implementation.
-const char kMojoLocalStorage[]              = "mojo-local-storage";
-
 // Mutes audio sent to the audio device so it is not audible during
 // automated testing.
 const char kMuteAudio[]                     = "mute-audio";
@@ -863,7 +862,6 @@ const char kTestType[]                      = "test-type";
 
 // Enable support for touch event feature detection.
 const char kTouchEventFeatureDetection[] = "touch-events";
-
 // The values the kTouchEventFeatureDetection switch may have, as in
 // --touch-events=disabled.
 //   auto: enabled at startup when an attached touchscreen is present.

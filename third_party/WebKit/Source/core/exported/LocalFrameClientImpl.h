@@ -221,6 +221,8 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   bool ShouldUseClientLoFiForRequest(const ResourceRequest&) override;
 
+  void DispatchFrameVisible() override;
+
   KURL OverrideFlashEmbedWithHTML(const KURL&) override;
 
   void SetHasReceivedUserGesture(bool received_previously) override;

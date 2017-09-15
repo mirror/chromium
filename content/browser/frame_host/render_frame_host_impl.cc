@@ -877,6 +877,7 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
                         OnDidAddMessageToConsole)
     IPC_MESSAGE_HANDLER(FrameHostMsg_Detach, OnDetach)
     IPC_MESSAGE_HANDLER(FrameHostMsg_FrameFocused, OnFrameFocused)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_FrameVisible, OnFrameVisible)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidStartProvisionalLoad,
                         OnDidStartProvisionalLoad)
     IPC_MESSAGE_HANDLER(FrameHostMsg_DidFailProvisionalLoadWithError,
@@ -1352,6 +1353,14 @@ void RenderFrameHostImpl::OnDetach() {
 
 void RenderFrameHostImpl::OnFrameFocused() {
   delegate_->SetFocusedFrame(frame_tree_node_, GetSiteInstance());
+}
+
+void RenderFrameHostImpl::OnFrameVisible() {
+  if (!is_active())
+    return;
+
+  if (frame_tree_node_->navigation_request())
+    frame_tree_node_->navigation_request()->OnFrameVisible();
 }
 
 void RenderFrameHostImpl::OnOpenURL(const FrameHostMsg_OpenURL_Params& params) {
@@ -3169,7 +3178,7 @@ void RenderFrameHostImpl::NavigateToInterstitialURL(const GURL& data_url) {
   DCHECK(data_url.SchemeIs(url::kDataScheme));
   CommonNavigationParams common_params(
       data_url, Referrer(), ui::PAGE_TRANSITION_LINK,
-      FrameMsg_Navigate_Type::DIFFERENT_DOCUMENT, false, false,
+      FrameMsg_Navigate_Type::DIFFERENT_DOCUMENT, false, false, false,
       base::TimeTicks::Now(), FrameMsg_UILoadMetricsReportType::NO_REPORT,
       GURL(), GURL(), PREVIEWS_OFF, base::TimeTicks::Now(), "GET", nullptr,
       base::Optional<SourceLocation>(),

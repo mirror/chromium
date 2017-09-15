@@ -358,6 +358,7 @@ IPC_STRUCT_TRAITS_BEGIN(content::CommonNavigationParams)
   IPC_STRUCT_TRAITS_MEMBER(navigation_type)
   IPC_STRUCT_TRAITS_MEMBER(allow_download)
   IPC_STRUCT_TRAITS_MEMBER(should_replace_current_entry)
+  IPC_STRUCT_TRAITS_MEMBER(is_delayed_subframe_request)
   IPC_STRUCT_TRAITS_MEMBER(ui_timestamp)
   IPC_STRUCT_TRAITS_MEMBER(report_type)
   IPC_STRUCT_TRAITS_MEMBER(base_url_for_data_url)
@@ -1109,6 +1110,8 @@ IPC_MESSAGE_ROUTED2(FrameHostMsg_RenderProcessGone,
 
 // Sent by the renderer when the frame becomes focused.
 IPC_MESSAGE_ROUTED0(FrameHostMsg_FrameFocused)
+
+IPC_MESSAGE_ROUTED0(FrameHostMsg_FrameVisible)
 
 // Sent when the renderer starts a provisional load for a frame.
 IPC_MESSAGE_ROUTED3(FrameHostMsg_DidStartProvisionalLoad,

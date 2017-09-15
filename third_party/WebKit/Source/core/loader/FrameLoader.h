@@ -222,6 +222,8 @@ class CORE_EXPORT FrameLoader final {
 
   void ClientDroppedNavigation();
 
+  void FrameVisible();
+
  private:
   bool PrepareRequestForThisFrame(FrameLoadRequest&);
   FrameLoadType DetermineFrameLoadType(const FrameLoadRequest&);

@@ -147,6 +147,11 @@ void SetRuntimeFeaturesDefaultsAndUpdateFromArgs(
   if (command_line.HasSwitch(switches::kForceDisplayList2dCanvas))
     WebRuntimeFeatures::ForceDisplayList2dCanvas(true);
 
+  if (base::FeatureList::IsEnabled(features::kLazyFrameLoading) ||
+      command_line.HasSwitch(switches::kEnableLazyFrameLoading)) {
+    WebRuntimeFeatures::EnableLazyFrameLoading(true);
+  }
+
   if (command_line.HasSwitch(switches::kEnableWebGLDraftExtensions))
     WebRuntimeFeatures::EnableWebGLDraftExtensions(true);
 
