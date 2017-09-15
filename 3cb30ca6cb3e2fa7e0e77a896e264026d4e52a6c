@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "13d2e85a_50bd8439",
+        "filename": "cc/paint/discardable_image_map_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-15T23:36:57Z",
+      "side": 1,
+      "message": "Good point. I just noticed we use base::Optional in DrawImage for other similar params (color space), which are known only at rasterization time. Changed it to a base::Optional as well instead.",
+      "parentUuid": "dd157032_66b12bb1",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37c17641_f6d8ab70",
         "filename": "cc/paint/paint_image_unittest.cc",
         "patchSetId": 18
