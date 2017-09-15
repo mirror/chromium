@@ -337,6 +337,7 @@ source_set("ui_internal") {
     "//ios/chrome/browser/web:tab_helper_delegates",
     "//ios/chrome/browser/web:web_internal",
     "//ios/chrome/browser/web_state_list",
+    "//ios/chrome/browser/webui",
     "//ios/chrome/common",
     "//ios/net",
     "//ios/public/provider/chrome/browser",
