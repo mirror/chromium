@@ -120,17 +120,12 @@ FetchResponseData* FetchResponseData::CreateCORSFilteredResponse(
   FetchResponseData* response =
       new FetchResponseData(kCORSType, status_, status_message_);
   response->SetURLList(url_list_);
+  response->cors_exposed_header_names_ = exposed_headers;
   for (const auto& header : header_list_->List()) {
     const String& name = header.first;
-    const bool explicitly_exposed =
-        exposed_headers.find(name.Ascii().data()) != exposed_headers.end();
     if (WebCORS::IsOnAccessControlResponseHeaderWhitelist(name) ||
-        (explicitly_exposed &&
+        (exposed_headers.find(name.Ascii().data()) != exposed_headers.end() &&
          !FetchUtils::IsForbiddenResponseHeaderName(name))) {
-      if (explicitly_exposed) {
-        response->cors_exposed_header_names_.emplace(name.Ascii().data(),
-                                                     name.Ascii().length());
-      }
       response->header_list_->Append(name, header.second);
     }
   }
