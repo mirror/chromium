@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "182da912_8d2375d8",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-09-15T17:10:22Z",
+      "side": 1,
+      "message": "s/height/heightConstraint/",
+      "range": {
+        "startLine": 58,
+        "startChar": 49,
+        "endLine": 58,
+        "endChar": 55
+      },
+      "revId": "0778f304222d281093ef1b7b0dc790abd28909b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "590ce738_a930c855",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_toolbar.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-09-15T17:10:22Z",
+      "side": 1,
+      "message": "optional nit:\n\nI think it feels more natural to write:\n\n[objectThatWeWantToModify.fooAnchor\n  constraintEqualToAnchor:objectThatWillNotChange.fooAnchor];\n\nIn your case, it would be:\n[_stackView.leadingAnchor\n            constraintEqualToAnchor:self.safeAreaLayoutGuide.leadingAnchor],",
+      "range": {
+        "startLine": 201,
+        "startChar": 9,
+        "endLine": 201,
+        "endChar": 43
+      },
+      "revId": "0778f304222d281093ef1b7b0dc790abd28909b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
