@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "840ebdb7_fa2a4c0a",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-15T20:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "249cd77c_296ab4e0",
+      "revId": "c1a6f6cbb5b2b5edfb348bbabc26fd2cde6e5d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1ae918f_89f7a095",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "c1a6f6cbb5b2b5edfb348bbabc26fd2cde6e5d88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fd1ed1e_2b95eb75",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-15T20:30:50Z",
+      "side": 1,
+      "message": "\u003e The simpler version is better for the reasons you mention.\n\u003e \n\u003e Another route would be to pull the spec()s out of each URL and do a string insertion of \"s\" after the fourth character of |origin|, then string-compare them.  This will be faster than ReplaceComponents() and simpler than a component-by-component comparison.  It should be safe if both URLs are guaranteed to be valid.\n\nIf you have no objections, I\u0027ll stick with this simple approach.  It\u0027s more direct as to its meaning.   It\u0027s also less likely to break.  (For example, it appears there is something called as suborigin scheme: \"http-so\" and \"https-so\", which would also pass your proposed test.)",
+      "parentUuid": "b1ae918f_89f7a095",
+      "revId": "c1a6f6cbb5b2b5edfb348bbabc26fd2cde6e5d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3cccd05f_b8fb3ce9",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-15T20:30:50Z",
+      "side": 1,
+      "message": "\u003e Nit: Maybe \"follow it before assuming it\u0027s valid.\"?\n\nI see what you\u0027re getting at.  Did a different phrasing.",
+      "parentUuid": "a90a6e9b_d0ac31ee",
+      "revId": "c1a6f6cbb5b2b5edfb348bbabc26fd2cde6e5d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bedd921_53289cfe",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "c1a6f6cbb5b2b5edfb348bbabc26fd2cde6e5d88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb96617b_fc630d5a",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-15T20:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bedd921_53289cfe",
+      "revId": "c1a6f6cbb5b2b5edfb348bbabc26fd2cde6e5d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ed724bd7_7d0b0510",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-15T20:30:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47fc3649_392d86c0",
+      "revId": "c1a6f6cbb5b2b5edfb348bbabc26fd2cde6e5d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "709aab37_4f8e02f6",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "c1a6f6cbb5b2b5edfb348bbabc26fd2cde6e5d88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3067c108_37110292",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-15T20:30:50Z",
+      "side": 1,
+      "message": "\u003e Nit: https://google/ -\u003e the HTTPS version of the domain\n\u003e \n\u003e (This keeps the comment accurate if more such domains are added)\n\nDone, though with an additional clarifying comment.",
+      "parentUuid": "709aab37_4f8e02f6",
+      "revId": "c1a6f6cbb5b2b5edfb348bbabc26fd2cde6e5d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "3c4b6d7b_666b21a3",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-15T20:30:50Z",
+      "side": 1,
+      "message": "\u003e No, you\u0027re fine.  fetcher_ will only be replaced once the call returns, and Create() does not require callers to preserve the passed-in reference beyond the return of the call.  (Requiring that would be extremely unusual, and I double-checked in this case.)\n\nThanks for checking!",
+      "parentUuid": "16d4cf76_74796fe8",
+      "revId": "c1a6f6cbb5b2b5edfb348bbabc26fd2cde6e5d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd26a2c5_91a2e427",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
         "patchSetId": 3
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "6b03bec6_904b25db",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-15T20:30:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cd26a2c5_91a2e427",
+      "revId": "c1a6f6cbb5b2b5edfb348bbabc26fd2cde6e5d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16337b80_63b21a10",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
         "patchSetId": 3
@@ -152,6 +296,24 @@
       "revId": "c1a6f6cbb5b2b5edfb348bbabc26fd2cde6e5d88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8990b5a7_2ab3c6b3",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-15T20:30:50Z",
+      "side": 1,
+      "message": "Done.\n\n(Good suggestion; it reads better now.)",
+      "parentUuid": "16337b80_63b21a10",
+      "revId": "c1a6f6cbb5b2b5edfb348bbabc26fd2cde6e5d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
