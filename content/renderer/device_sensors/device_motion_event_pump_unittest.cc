@@ -2,10 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#define _USE_MATH_DEFINES  // For VC++ to get M_PI. This has to be first.
+
 #include "content/renderer/device_sensors/device_motion_event_pump.h"
 
 #include <string.h>
 
+#include <cmath>
 #include <memory>
 
 #include "base/location.h"
@@ -35,6 +38,9 @@ constexpr uint64_t kReadingBufferSize =
 
 constexpr uint64_t kSharedBufferSizeInBytes =
     kReadingBufferSize * static_cast<uint64_t>(device::mojom::SensorType::LAST);
+
+// Conversion ratio from radians to degrees.
+constexpr double kRadiansToDegrees = 180.0 / M_PI;
 
 }  // namespace
 
@@ -245,11 +251,11 @@ TEST_F(DeviceMotionEventPumpTest, AllSensorsAreActive) {
   EXPECT_EQ(6, received_data.acceleration_z);
 
   EXPECT_TRUE(received_data.has_rotation_rate_alpha);
-  EXPECT_EQ(7, received_data.rotation_rate_alpha);
+  EXPECT_EQ(7 * kRadiansToDegrees, received_data.rotation_rate_alpha);
   EXPECT_TRUE(received_data.has_rotation_rate_beta);
-  EXPECT_EQ(8, received_data.rotation_rate_beta);
+  EXPECT_EQ(8 * kRadiansToDegrees, received_data.rotation_rate_beta);
   EXPECT_TRUE(received_data.has_rotation_rate_gamma);
-  EXPECT_EQ(9, received_data.rotation_rate_gamma);
+  EXPECT_EQ(9 * kRadiansToDegrees, received_data.rotation_rate_gamma);
 }
 
 TEST_F(DeviceMotionEventPumpTest, TwoSensorsAreActive) {
@@ -276,11 +282,11 @@ TEST_F(DeviceMotionEventPumpTest, TwoSensorsAreActive) {
   EXPECT_FALSE(received_data.has_acceleration_z);
 
   EXPECT_TRUE(received_data.has_rotation_rate_alpha);
-  EXPECT_EQ(7, received_data.rotation_rate_alpha);
+  EXPECT_EQ(7 * kRadiansToDegrees, received_data.rotation_rate_alpha);
   EXPECT_TRUE(received_data.has_rotation_rate_beta);
-  EXPECT_EQ(8, received_data.rotation_rate_beta);
+  EXPECT_EQ(8 * kRadiansToDegrees, received_data.rotation_rate_beta);
   EXPECT_TRUE(received_data.has_rotation_rate_gamma);
-  EXPECT_EQ(9, received_data.rotation_rate_gamma);
+  EXPECT_EQ(9 * kRadiansToDegrees, received_data.rotation_rate_gamma);
 }
 
 TEST_F(DeviceMotionEventPumpTest, NoActiveSensors) {
