@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "247c8450_d1ccabea",
+        "filename": "tools/grit/grit/grd_reader_unittest.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-15T02:02:06Z",
+      "side": 1,
+      "message": "I don\u0027t think you need this. |output| is also declared below within the with-block, but used below that.",
+      "revId": "75363a5a9ce79778dbc9b48ad0bc8a2551d28785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f60e316b_ea78f748",
+        "filename": "tools/grit/grit/grd_reader_unittest.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-15T02:02:06Z",
+      "side": 1,
+      "message": "Or you can call temp_dir.GetPath(\u0027sub.grp\u0027), and not worry if |tmp_path| contains a slash on the end.",
+      "revId": "75363a5a9ce79778dbc9b48ad0bc8a2551d28785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bf3672c_b86e874f",
+        "filename": "tools/grit/grit/tool/build.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-15T02:02:06Z",
+      "side": 1,
+      "message": "nit: Can we do this after line 341?",
+      "revId": "75363a5a9ce79778dbc9b48ad0bc8a2551d28785",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

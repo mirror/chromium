@@ -104,6 +104,24 @@
       "revId": "8b3fe3fa16c7928cbffd17508f93e73dace559bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bbaedbd_0b7eac36",
+        "filename": "tools/grit/grit_rule.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-15T02:02:06Z",
+      "side": 1,
+      "message": "Is set_sources_assignment_filter() the magic bit that makes:\n\nsources \u003d grit_outputs\npak_grit_outputs \u003d grit_outputs - sources\n\nnot turn into:\n\npak_grit_outputs \u003d grit_outputs - grit_outputs?",
+      "parentUuid": "4df7e11e_838a7cff",
+      "revId": "8b3fe3fa16c7928cbffd17508f93e73dace559bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
