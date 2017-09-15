@@ -978,6 +978,11 @@ public class BottomSheet
         // If the desired content is already showing, do nothing.
         if (mSheetContent == content) return;
 
+        if (content == null) {
+            mSheetContent = null;
+            return;
+        }
+
         View newToolbar =
                 content.getToolbarView() != null ? content.getToolbarView() : mDefaultToolbarView;
         View oldToolbar = mSheetContent != null && mSheetContent.getToolbarView() != null
