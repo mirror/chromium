@@ -1,0 +1,769 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2df9ed2c_80d7152d",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "Would this be needed in .h ?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f83c993_ae28565f",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "s/arbitrary/arbitrarily/",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15376511_14eb785a",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "s/VDA/VDAs/",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d78f04_d4e172a1",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "// static",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39944e13_040c0105",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "Assign in .h instead?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c89858d_4dedaecf",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "s/ArcVideoDecodeAccelerator/VideoDecodeAccelerator mojo interface/ ?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9705abf_f01cbda2",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "These defines are unused?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0646cb7_eb450810",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "DVLOGF(2)",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b7b3dc_ce167fb1",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "Could we send the whole Picture as is instead for consistency?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6d584cd_a48d8932",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "Would it make sense to convert it in traits as well?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df23a09_c8278f41",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "Perhaps VLOGF?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f37a979_091a0514",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "Perhaps call ConvertErrorCode() only once and reuse the result?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45d4579a_d8c7cd6b",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "Do we need to run, shouldn\u0027t we rather drop them?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a88f06_204faa87",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "Perhaps we could send this from the caller of this method instead.",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc966bf_6da2c863",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9a6227d_f3268ad7",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "DCHECK_CALLED_ON_VALID_THREAD ?\nHere and possibly in other methods where it could be missing?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91fb8325_9c698bdf",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "s/prfoile/profile/",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9a63b4_bc49870e",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "Re-initialization not allowed.",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b0411bb_5a76f69a",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "Could we call this method InitializeTask, call it from Initialize, return only the Result from InitializeTask, and do FinishInitialize from Initialize to save on repeating these three lines?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ac5d217_ee52689c",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "I think this used to be ILLEGAL_STATE?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6178cbe2_f6d18cdd",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "s/ArcVideoDecodeAccelerator //\n\ns/VLOGF/DVLOGF/",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69cb1a53_8bbe36ec",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "Do we need to notify error?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9491246a_3c91abd5",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "Could we pass the whole BitstreamBuffer through IPC instead?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e81dc29a_d1b2b7e7",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "This would easily crash the GPU process if we were sent too large of a number. Could we instead send over int32_t, or at least gracefully fail using IsValueInRangeForNumericType instead of CHECKing?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf25c39_17599e04",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "In RunPendingRequestsUntilBusy(), could we just keep the front request on the pending queue if it\u0027s a reset or flush, and call its callback and pop once we get the Notify for it?\nThen we wouldn\u0027t need to store it separately?\n\nAlso, I think then we wouldn\u0027t need to have state_ at all, but instead could just check if pending requests was non-empty?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bafb8f1_12567fc2",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "Unused?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca77fff_710e0eb3",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "Please add a short comment explaining what this class is for.",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20bd7ade_e9c45ac5",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "Could this be static in .cc ?\nAlso, do we need to #include something to pull in base::ScopedFD?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f44ebd3_7e9bc1fc",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "We could just pass int fd perhaps?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e735b2_fc81dcbb",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "s/track the/track of the/",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "856b2193_d42f8742",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "s/int/size_t/ ?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bad284a_55e1313e",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "Do we need to specify uint32_t here?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc4086ae_5853d594",
+        "filename": "chrome/gpu/gpu_arc_video_decode_accelerator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "OnceClosure?\n\nalso need to include base/callback_forward.h ?\n\nAlso perhaps just s/GAVDAState/State/, since there are no other states used in this class?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71807654_49ec7451",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "s/defined/defines/",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b589494c_b6548493",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "s/that/whether/\n\nA synchronous call does not have a callback, only async calls have callbacks, please clarify.",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03f227c_66c5e436",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "s/  / /\n\nWe also use a callback for Initialize.",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34683f3d_f1a03c6b",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "s/to/for/",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc047b8_557dd6fc",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "s/storngly/strongly/\n\nWhat do you mean by \"dont\u0027t refer this design\" ?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "039adf15_08f8e20f",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "s/resulst/results/",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d9bd927_8641972f",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "s/for/by/",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a229bac5_7ed37cdd",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "Please explain what it means to bind. Isn\u0027t this a leftover from previous BindDmabuf and BindSharedMemory calls that have been removed?\n\nCould you make this more aligned with VDA::Import* call?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5148281_4d688f2d",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "|crop_rect| specifies the crop rectangle within the picture buffer to be displayed; |bitstream_id| specifies which source BitstreamBuffer the frame was decoded from.",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b0629e8_c3712888",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "Called when an asynchronous error happens, for example, illegal state, error while decoding the stream, or a platform/system error.",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a613212_876815db",
+        "filename": "components/arc/common/video_decode_accelerator.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "What about errors to Reset and Flush() ? Please specify.",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f703f5d5_68bdc69d",
+        "filename": "components/arc/video_accelerator/video_accelerator_struct_traits.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:16:56Z",
+      "side": 1,
+      "message": "VLOG(1) perhaps?",
+      "revId": "df0ff8a09f948ad764bc0baa3edfa61777a355a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
