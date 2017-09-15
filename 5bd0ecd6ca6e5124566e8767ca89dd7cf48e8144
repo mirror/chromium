@@ -99,6 +99,24 @@
       "revId": "5bd0ecd6ca6e5124566e8767ca89dd7cf48e8144",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adea21d9_fe341506",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1356,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-09-15T06:30:35Z",
+      "side": 1,
+      "message": "Capabilities Broker work will probably deal with this as well.",
+      "parentUuid": "7371bfbf_8d95a240",
+      "revId": "5bd0ecd6ca6e5124566e8767ca89dd7cf48e8144",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
