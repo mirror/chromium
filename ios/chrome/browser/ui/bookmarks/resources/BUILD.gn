@@ -192,3 +192,12 @@ imageset("bookmark_white_move") {
     "bookmark_white_move.imageset/bookmark_white_move@3x.png",
   ]
 }
+
+imageset("ic_folder_open_black") {
+  sources = [
+    "ic_folder_open_black.imageset/Contents.json",
+    "ic_folder_open_black.imageset/ic_folder_open_black.png",
+    "ic_folder_open_black.imageset/ic_folder_open_black@2x.png",
+    "ic_folder_open_black.imageset/ic_folder_open_black@3x.png",
+  ]
+}
