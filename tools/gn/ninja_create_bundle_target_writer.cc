@@ -138,8 +138,28 @@ void NinjaCreateBundleTargetWriter::WriteCopyBundleFileRuleSteps(
 
 void NinjaCreateBundleTargetWriter::WriteCompileAssetsCatalogStep(
     std::vector<OutputFile>* output_files) {
-  if (target_->bundle_data().assets_catalog_sources().empty())
+  if (target_->bundle_data().assets_catalog_sources().empty() &&
+      target_->bundle_data().partial_info_plist().is_null())
     return;
+
+  // If there are no asset catalog to compile but the "partial_info_plist" is
+  // non-empty, then add a target to generate an empty file (to avoid breaking
+  // code that depends on this file existence).
+  if (target_->bundle_data().assets_catalog_sources().empty()) {
+    DCHECK(!target_->bundle_data().partial_info_plist().is_null());
+
+    OutputFile partial_info_plist =
+        OutputFile(settings_->build_settings(),
+                   target_->bundle_data().partial_info_plist());
+    output_files->push_back(partial_info_plist);
+
+    out_ << "build ";
+    path_output_.WriteFile(out_, partial_info_plist);
+    out_ << ": " << GetNinjaRulePrefixForToolchain(settings_)
+         << Toolchain::ToolTypeToName(Toolchain::TYPE_STAMP) << std::endl;
+
+    return;
+  }
 
   OutputFile input_dep = WriteCompileAssetsCatalogInputDepsStamp(
       target_->bundle_data().assets_catalog_deps());
@@ -167,6 +187,17 @@ void NinjaCreateBundleTargetWriter::WriteCompileAssetsCatalogStep(
 
   out_ << "  product_type = " << target_->bundle_data().product_type()
        << std::endl;
+
+  if (!target_->bundle_data().partial_info_plist().is_null()) {
+    OutputFile partial_info_plist =
+        OutputFile(settings_->build_settings(),
+                   target_->bundle_data().partial_info_plist());
+    output_files->push_back(partial_info_plist);
+
+    out_ << "  partial_info_plist = ";
+    path_output_.WriteFile(out_, partial_info_plist);
+    out_ << std::endl;
+  }
 }
 
 OutputFile
