@@ -90,6 +90,7 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
       unsigned long identifier,
       ResourceRequest&,
       const ResourceResponse& redirect_response,
+      Resource::Type,
       const FetchInitiatorInfo& = FetchInitiatorInfo()) override;
   void DispatchDidLoadResourceFromMemoryCache(unsigned long identifier,
                                               const ResourceRequest&,
