@@ -91,6 +91,23 @@
     },
     {
       "key": {
+        "uuid": "698edf7f_1dc85389",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 26
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-15T18:19:28Z",
+      "side": 1,
+      "message": "Nit: maybe reverse the order to be aligned with the NEON implementation?",
+      "revId": "dd4d156d3a2dc62a0ab96691a7302b4717c4158b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "342715b2_7a50ba51",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 26
