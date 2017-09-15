@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d41cad6c_70532c74",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-15T10:00:51Z",
+      "side": 1,
+      "message": "That\u0027s not correct - it shipped with NSS for the iOS port.",
+      "revId": "0e9d676f0ff24fe56d226488d3d0d85721ff1726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49ac3282_045124e9",
+        "filename": "components/gcm_driver/crypto/proto/gcm_encryption_data.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-15T10:00:51Z",
+      "side": 1,
+      "message": "reserved 3;  // public_key_x509, now deleted.",
+      "revId": "0e9d676f0ff24fe56d226488d3d0d85721ff1726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
