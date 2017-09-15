@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "276064a1_9c09541a",
+        "filename": "gpu/config/gpu_util.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-15T01:49:03Z",
+      "side": 1,
+      "message": "Is this accurate? sugoi@ recently landed a patch which makes blacklisting accelerated WebGL 2.0 fall back to using SwiftShader, similarly to WebGL 1.0. Or, another question: why doesn\u0027t this test against blacklisted_features exist in GetWebGLFeatureStatus?",
+      "range": {
+        "startLine": 93,
+        "startChar": 11,
+        "endLine": 93,
+        "endChar": 39
+      },
+      "revId": "4a2bed32dff5b045d6e33128b65e444f524a25a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf2a5771_68f3f1c9",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasRenderingContextHost.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-15T01:49:03Z",
+      "side": 1,
+      "message": "Small grammar issue: I would say \"...blocked because WebGL contexts were lost...\".",
+      "revId": "4a2bed32dff5b045d6e33128b65e444f524a25a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "131f5501_95d31d65",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-09-15T01:49:03Z",
+      "side": 1,
+      "message": "Grammar issue: \"caused context loss...\".",
+      "range": {
+        "startLine": 695,
+        "startChar": 18,
+        "endLine": 695,
+        "endChar": 24
+      },
+      "revId": "4a2bed32dff5b045d6e33128b65e444f524a25a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
