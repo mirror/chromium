@@ -1667,6 +1667,7 @@ jumbo_source_set("unit_tests") {
     "paint/TextSelectionRepaintTest.cpp",
     "paint/VideoPainterTest.cpp",
     "paint/compositing/CompositedLayerMappingTest.cpp",
+    "paint/compositing/CompositingInputsUpdaterTest.cpp",
     "paint/compositing/CompositingReasonFinderTest.cpp",
     "paint/compositing/CompositorWorkerTest.cpp",
     "paint/compositing/PaintLayerCompositorTest.cpp",
