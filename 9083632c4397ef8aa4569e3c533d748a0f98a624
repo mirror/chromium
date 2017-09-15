@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15c1aa8e_f05b6394",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-15T20:05:30Z",
+      "side": 1,
+      "message": "Rather than using will_be_visible_ and maintaining it, please add and use vr::AnimationPlayer::GetTargetFloatValue. Also, if you add the other \"Target\" methods for the other animated types while you\u0027re in there, you can close crbug.com/754822",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13363b04_8a9f02f0",
+        "filename": "chrome/browser/vr/ui_scene_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-15T20:05:30Z",
+      "side": 1,
+      "message": "That\u0027s this for?",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
