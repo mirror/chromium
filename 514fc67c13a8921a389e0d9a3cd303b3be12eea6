@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0310256a_f0f0ff14",
+        "filename": "tools/clang/plugins/FindBadConstructsConsumer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T19:36:08Z",
+      "side": 0,
+      "message": "OK, I wanted to get rid of this, but the things using DiagnosticsEngine::Report are triggering in Blink (the scheduler code has things that inherit from base::RefCounted but don\u0027t follow best practices).\n\nI\u0027ll leave this in place, but land the rest of this CL (since it\u0027s still useful to get rid of emitWarning).\n\nI\u0027ll have to break the plugin apart into smaller subchunks to solve the next problem though.",
+      "revId": "514fc67c13a8921a389e0d9a3cd303b3be12eea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
