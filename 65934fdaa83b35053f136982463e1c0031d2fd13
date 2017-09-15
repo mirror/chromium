@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c76647d_d7897a52",
+        "filename": "chrome/browser/ui/app_list/app_list_view_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-15T16:38:53Z",
+      "side": 1,
+      "message": "This can go too since NOTIFICATION_APP_TERMINATING is no longer observed.",
+      "revId": "65934fdaa83b35053f136982463e1c0031d2fd13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33d70ef9_d576c1da",
+        "filename": "ui/app_list/views/contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-15T16:38:53Z",
+      "side": 1,
+      "message": "nit: STATE_CUSTOM_LAUNCHER_PAGE -\u003e DEPRECATED_STATE_CUSTOM_LAUNCHER_PAGE\n\nto make it more clear to future readers.",
+      "range": {
+        "startLine": 426,
+        "startChar": 23,
+        "endLine": 426,
+        "endChar": 49
+      },
+      "revId": "65934fdaa83b35053f136982463e1c0031d2fd13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
