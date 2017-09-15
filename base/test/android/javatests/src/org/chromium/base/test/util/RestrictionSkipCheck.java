@@ -11,6 +11,7 @@ import android.text.TextUtils;
 
 import org.junit.runners.model.FrameworkMethod;
 
+import org.chromium.base.CommandLine;
 import org.chromium.base.Log;
 import org.chromium.base.SysUtils;
 
@@ -49,6 +50,9 @@ public class RestrictionSkipCheck extends SkipCheck {
     }
 
     protected boolean restrictionApplies(String restriction) {
+        if (!CommandLine.isInitialized()) {
+            CommandLine.init(null);
+        }
         if (TextUtils.equals(restriction, Restriction.RESTRICTION_TYPE_LOW_END_DEVICE)
                 && !SysUtils.isLowEndDevice()) {
             return true;
