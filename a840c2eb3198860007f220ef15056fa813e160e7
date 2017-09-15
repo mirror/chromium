@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78a3fd27_417aeb1d",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:20:44Z",
+      "side": 1,
+      "message": "You can call LayoutObject::SetSelectionState() as\n\nlayout_object-\u003eLayoutObject::SetSelectionState(...);",
+      "revId": "a840c2eb3198860007f220ef15056fa813e160e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
