@@ -34,6 +34,7 @@
 #include "core/dom/ContextLifecycleObserver.h"
 #include "modules/ModulesExport.h"
 #include "modules/accessibility/AXObject.h"
+#include "modules/accessibility/AXRelationCache.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/HashMap.h"
@@ -176,10 +177,14 @@ class MODULES_EXPORT AXObjectCacheImpl
 
   // Returns true if the given object's position in the tree was due to
   // aria-owns.
-  bool IsAriaOwned(const AXObject*) const;
+  bool IsAriaOwned(const AXObject* object) const {
+    return relation_cache_->IsAriaOwned(object);
+  }
 
   // Returns the parent of the given object due to aria-owns.
-  AXObject* GetAriaOwnedParent(const AXObject*) const;
+  AXObject* GetAriaOwnedParent(const AXObject* object) const {
+    return relation_cache_->GetAriaOwnedParent(object);
+  }
 
   // Given an object that has an aria-owns attributes, and a vector of ids from
   // the value of that attribute, updates the internal state to reflect the new
@@ -192,13 +197,9 @@ class MODULES_EXPORT AXObjectCacheImpl
   // updateTreeIfElementIdIsAriaOwned.
   void UpdateAriaOwns(const AXObject* owner,
                       const Vector<String>& id_vector,
-                      HeapVector<Member<AXObject>>& owned_children);
-
-  // Given an element in the DOM tree that was either just added or whose id
-  // just changed, check to see if another object wants to be its parent due to
-  // aria-owns. If so, update the tree by calling childrenChanged() on the
-  // potential owner, possibly reparenting this element.
-  void UpdateTreeIfElementIdIsAriaOwned(Element*);
+                      HeapVector<Member<AXObject>>& owned_children) {
+    relation_cache_->UpdateAriaOwns(owner, id_vector, owned_children);
+  }
 
   // Synchronously returns whether or not we currently have permission to
   // call AOM event listeners.
@@ -231,39 +232,12 @@ class MODULES_EXPORT AXObjectCacheImpl
 
   HashSet<AXID> ids_in_use_;
 
+  AXRelationCache* relation_cache_;
+
 #if DCHECK_IS_ON()
   // Verified when finalizing.
   bool has_been_disposed_ = false;
 #endif
-
-  //
-  // Aria-owns
-  //
-
-  // Map from the AXID of the owner to the AXIDs of the children.
-  // This is a validated map, it doesn't contain illegal, duplicate,
-  // or cyclical matches, or references to IDs that don't exist.
-  HashMap<AXID, Vector<AXID>> aria_owner_to_children_mapping_;
-
-  // Map from the AXID of a child to the AXID of the parent that owns it.
-  HashMap<AXID, AXID> aria_owned_child_to_owner_mapping_;
-
-  // Map from the AXID of a child to the AXID of its real parent in the tree if
-  // we ignored aria-owns. This is needed in case the owner no longer wants to
-  // own it.
-  HashMap<AXID, AXID> aria_owned_child_to_real_parent_mapping_;
-
-  // Map from the AXID of any object with an aria-owns attribute to the set of
-  // ids of its children. This is *unvalidated*, it includes ids that may not
-  // currently exist in the tree.
-  HashMap<AXID, HashSet<String>> aria_owner_to_ids_mapping_;
-
-  // Map from an ID (the ID attribute of a DOM element) to the set of elements
-  // that want to own that ID. This is *unvalidated*, it includes possible
-  // duplicates.  This is used so that when an element with an ID is added to
-  // the tree or changes its ID, we can quickly determine if it affects an
-  // aria-owns relationship.
-  HashMap<String, std::unique_ptr<HashSet<AXID>>> id_to_aria_owners_mapping_;
 
   TaskRunnerTimer<AXObjectCacheImpl> notification_post_timer_;
   HeapVector<std::pair<Member<AXObject>, AXNotification>>
