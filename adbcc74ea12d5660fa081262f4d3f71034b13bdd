@@ -16,6 +16,24 @@
       "revId": "adbcc74ea12d5660fa081262f4d3f71034b13bdd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "424a16a5_24af5370",
+        "filename": "net/traffic_annotation/network_traffic_annotation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-09-15T05:14:45Z",
+      "side": 1,
+      "message": "Done,\nI open another channel to discuss the other issues.",
+      "parentUuid": "3f824047_af3b342c",
+      "revId": "adbcc74ea12d5660fa081262f4d3f71034b13bdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
