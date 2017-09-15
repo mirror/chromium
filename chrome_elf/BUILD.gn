@@ -85,6 +85,7 @@ static_library("test_stubs") {
   deps = [
     "//base",
     "//chrome/common:constants",
+    "//content/public/common:static_switches",
   ]
 }
 
