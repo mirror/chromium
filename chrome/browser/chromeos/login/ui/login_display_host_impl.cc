@@ -378,7 +378,8 @@ class LoginDisplayHostImpl::LoginWidgetDelegate : public views::WidgetDelegate {
 LoginDisplayHostImpl::LoginDisplayHostImpl(const gfx::Rect& wallpaper_bounds)
     : wallpaper_bounds_(wallpaper_bounds),
       pointer_factory_(this),
-      animation_weak_ptr_factory_(this) {
+      animation_weak_ptr_factory_(this),
+      startup_sound_played_(StartupUtils::IsOobeCompleted()) {
   if (ash_util::IsRunningInMash()) {
     // Animation, and initializing hidden, are not currently supported for Mash.
     finalize_animation_type_ = ANIMATION_NONE;
