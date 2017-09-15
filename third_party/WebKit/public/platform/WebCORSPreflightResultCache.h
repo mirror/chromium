@@ -54,7 +54,8 @@ class BLINK_PLATFORM_EXPORT WebCORSPreflightResultCacheItem
   bool AllowsCrossOriginMethod(WebURLRequest::FetchCredentialsMode,
                                const WebString& method,
                                WebString& error_description) const;
-  bool AllowsCrossOriginHeaders(const WebHTTPHeaderMap&,
+  bool AllowsCrossOriginHeaders(WebURLRequest::FetchCredentialsMode,
+                                const WebHTTPHeaderMap&,
                                 WebString& error_description) const;
   bool AllowsRequest(WebURLRequest::FetchCredentialsMode,
                      const WebString& method,
