@@ -33,6 +33,24 @@
       "revId": "35daf1daab84886dbfb7154287d1835a32ed4a5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7637591_1aa85485",
+        "filename": "ios/chrome/browser/ui/main/main_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-15T12:12:06Z",
+      "side": 0,
+      "message": "I think the default resize mask for a VC\u0027s view is flex width and flex height, so they will expand to fill their superview\u0027s bounds?",
+      "parentUuid": "93fb0816_8b9d1e38",
+      "revId": "35daf1daab84886dbfb7154287d1835a32ed4a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
