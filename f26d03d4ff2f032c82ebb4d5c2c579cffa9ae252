@@ -69,6 +69,24 @@
       "revId": "f26d03d4ff2f032c82ebb4d5c2c579cffa9ae252",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8bd8d9d_8cb38d45",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-15T16:04:22Z",
+      "side": 1,
+      "message": "sounds reasonable.",
+      "parentUuid": "6395ec67_a78501ca",
+      "revId": "f26d03d4ff2f032c82ebb4d5c2c579cffa9ae252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
