@@ -186,6 +186,24 @@
       "revId": "db2c348fb7807fdf032d5ac68be3476f04958bfd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2514f06_f5e37dea",
+        "filename": "base/message_loop/message_loop_perftest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-15T13:48:27Z",
+      "side": 1,
+      "message": "Ah ok, can this be clarified in a meta comment at the top of the file? As a dev I\u0027d otherwise assume some kind of bot monitors these and I don\u0027t have to worry about regressing if CQ passes per these tests\u0027 existence.",
+      "parentUuid": "5e246a54_81ecd124",
+      "revId": "db2c348fb7807fdf032d5ac68be3476f04958bfd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
