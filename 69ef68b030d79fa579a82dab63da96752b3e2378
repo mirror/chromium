@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f3b7c1dc_691a422e",
+        "filename": "content/renderer/dom_storage/local_storage_cached_area_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-15T23:33:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4791c8c_bc42dd1a",
+      "revId": "69ef68b030d79fa579a82dab63da96752b3e2378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a146aea0_a07cb50a",
         "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-15T16:59:36Z",
       "side": 1,
       "message": "I wonder if it might make sense to move these constants to content/common/dom_storage/dom_storage_types.h (although you\u0027d have to rename them to make it a bit clearer that it is the renderer side cache then). That way the relation between these values and per-area quota is easier to see.\n\nAlso curious how you picked these values (not that they don\u0027t seem reasonable, just curious).",
+      "revId": "69ef68b030d79fa579a82dab63da96752b3e2378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f131806_c297b824",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-15T23:33:45Z",
+      "side": 1,
+      "message": "local_storage_context_mojo.cc and dom_storage_context_impl.cc have the cache limits defined in the file. So, i defined them here.\n\nI picked half of the limits defined on browser side, since browser caches for multiple renderers. But, I didn\u0027t want to make this code complex I picked a number which works for both android and desktop for high end. I can do ifdef android to make them consistently half of browser numbers if you prefer.\n\nI will come back to fix this if we find memory regressions.",
+      "parentUuid": "a146aea0_a07cb50a",
       "revId": "69ef68b030d79fa579a82dab63da96752b3e2378",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "04f5d9ca_a852a1d0",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-15T23:33:45Z",
+      "side": 1,
+      "message": "Actually true. IsLowEndDevice is more consistent. I was thinking it is easier to read the code if i defined the comparison here.",
+      "parentUuid": "8a209af6_499b419a",
+      "revId": "69ef68b030d79fa579a82dab63da96752b3e2378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c4fa9a3_fd48155b",
         "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "69ef68b030d79fa579a82dab63da96752b3e2378",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6554289d_fc4e319b",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-15T23:33:45Z",
+      "side": 1,
+      "message": "The most information we get will be number of times cache was used / number of total db::open.\nWe also have LocalStorage.MojoSizeInKB recorded every time new database is loaded in memory. If we just observed the reduction in this data-transferred metric, we can see the success.",
+      "parentUuid": "5c4fa9a3_fd48155b",
+      "revId": "69ef68b030d79fa579a82dab63da96752b3e2378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "57990b16_38927c84",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-15T23:33:45Z",
+      "side": 1,
+      "message": "True. Made it evict all unreferenced areas. It feels too much complexity to try and compare strategies here. I can only think of finch. But, yes i added some metrics to see effectiveness. Maybe we can change it later if it\u0027s not very effective.",
+      "parentUuid": "0d295f5c_764d879c",
+      "revId": "69ef68b030d79fa579a82dab63da96752b3e2378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19447bde_26382aaf",
         "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "69ef68b030d79fa579a82dab63da96752b3e2378",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bd1ae3e_77e28ef2",
+        "filename": "content/renderer/dom_storage/local_storage_cached_areas.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-09-15T23:33:45Z",
+      "side": 1,
+      "message": "I was worried about iterator validity. fixed.",
+      "parentUuid": "19447bde_26382aaf",
+      "revId": "69ef68b030d79fa579a82dab63da96752b3e2378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
