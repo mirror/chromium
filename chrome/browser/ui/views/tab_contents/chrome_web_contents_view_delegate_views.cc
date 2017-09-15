@@ -7,7 +7,6 @@
 #include <utility>
 
 #include "chrome/browser/defaults.h"
-#include "chrome/browser/ui/aura/tab_contents/web_drag_bookmark_handler_aura.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
@@ -19,10 +18,13 @@
 #include "content/public/browser/render_widget_host_view.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/browser/web_contents_delegate.h"
-#include "ui/aura/window.h"
 #include "ui/views/focus/focus_manager.h"
 #include "ui/views/view_tracker.h"
 #include "ui/views/widget/widget.h"
+
+#if defined(USE_AURA)
+#include "chrome/browser/ui/aura/tab_contents/web_drag_bookmark_handler_aura.h"
+#endif
 
 ChromeWebContentsViewDelegateViews::ChromeWebContentsViewDelegateViews(
     content::WebContents* web_contents)
@@ -38,6 +40,7 @@ gfx::NativeWindow ChromeWebContentsViewDelegateViews::GetNativeWindow() {
   return browser ? browser->window()->GetNativeWindow() : nullptr;
 }
 
+#if defined(USE_AURA)
 content::WebDragDestDelegate*
     ChromeWebContentsViewDelegateViews::GetDragDestDelegate() {
   // We install a chrome specific handler to intercept bookmark drags for the
@@ -45,6 +48,7 @@ content::WebDragDestDelegate*
   bookmark_handler_.reset(new WebDragBookmarkHandlerAura);
   return bookmark_handler_.get();
 }
+#endif  // USE_AURA
 
 bool ChromeWebContentsViewDelegateViews::Focus() {
   SadTabHelper* sad_tab_helper = SadTabHelper::FromWebContents(web_contents_);
@@ -101,6 +105,7 @@ ChromeWebContentsViewDelegateViews::BuildMenu(
     content::WebContents* web_contents,
     const content::ContextMenuParams& params) {
   std::unique_ptr<RenderViewContextMenuBase> menu;
+#if defined(USE_AURA)
   content::RenderFrameHost* focused_frame = web_contents->GetFocusedFrame();
   // If the frame tree does not have a focused frame at this point, do not
   // bother creating RenderViewContextMenuViews.
@@ -110,6 +115,7 @@ ChromeWebContentsViewDelegateViews::BuildMenu(
     menu.reset(RenderViewContextMenuViews::Create(focused_frame, params));
     menu->Init();
   }
+#endif  // USE_AURA
   return menu;
 }
 
@@ -139,7 +145,7 @@ void ChromeWebContentsViewDelegateViews::SizeChanged(const gfx::Size& size) {
     sad_tab->GetWidget()->SetBounds(gfx::Rect(size));
 }
 
-aura::Window* ChromeWebContentsViewDelegateViews::GetActiveNativeView() {
+gfx::NativeView ChromeWebContentsViewDelegateViews::GetActiveNativeView() {
   return web_contents_->GetFullscreenRenderWidgetHostView() ?
       web_contents_->GetFullscreenRenderWidgetHostView()->GetNativeView() :
       web_contents_->GetNativeView();
@@ -164,6 +170,7 @@ void ChromeWebContentsViewDelegateViews::SetInitialFocus() {
   }
 }
 
+#if defined(USE_AURA)
 namespace chrome {
 
 content::WebContentsViewDelegate* CreateWebContentsViewDelegate(
@@ -172,3 +179,4 @@ content::WebContentsViewDelegate* CreateWebContentsViewDelegate(
 }
 
 }  // namespace chrome
+#endif  // USE_AURA

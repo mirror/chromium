@@ -9,9 +9,12 @@
 
 #include <memory>
 
+#include "base/mac/scoped_nsobject.h"
 #include "base/macros.h"
 #include "components/renderer_context_menu/context_menu_delegate.h"
 #include "content/public/browser/web_contents_view_delegate.h"
+
+@class FocusTracker;
 
 class RenderViewContextMenuBase;
 class WebDragBookmarkHandlerMac;
@@ -37,6 +40,9 @@ class ChromeWebContentsViewDelegateMac
   content::WebDragDestDelegate* GetDragDestDelegate() override;
   void ShowContextMenu(content::RenderFrameHost* render_frame_host,
                        const content::ContextMenuParams& params) override;
+  bool Focus() override;
+  void StoreFocus() override;
+  void RestoreFocus() override;
 
   // Overridden from ContextMenuDelegate.
   std::unique_ptr<RenderViewContextMenuBase> BuildMenu(
@@ -44,11 +50,14 @@ class ChromeWebContentsViewDelegateMac
       const content::ContextMenuParams& params) override;
   void ShowMenu(std::unique_ptr<RenderViewContextMenuBase> menu) override;
 
- protected:
-  content::WebContents* web_contents() { return web_contents_; }
-
  private:
   content::RenderWidgetHostView* GetActiveRenderWidgetHostView();
+  void SetInitialFocus();
+
+  // Returns the fullscreen view, if one exists; otherwise, returns the content
+  // native view. This ensures that the view currently attached to a NSWindow is
+  // being used to query or set first responder state.
+  gfx::NativeView GetNativeViewForFocus() const;
 
   // The context menu. Callbacks are asynchronous so we need to keep it around.
   std::unique_ptr<RenderViewContextMenuBase> context_menu_;
@@ -58,6 +67,10 @@ class ChromeWebContentsViewDelegateMac
 
   // The WebContents that owns the view.
   content::WebContents* web_contents_;
+
+  // Keeps track of which NSView has focus so we can restore the focus when
+  // focus returns.
+  base::scoped_nsobject<FocusTracker> focus_tracker_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeWebContentsViewDelegateMac);
 };

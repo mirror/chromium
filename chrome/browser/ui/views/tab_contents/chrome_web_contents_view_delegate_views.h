@@ -14,10 +14,6 @@
 
 class RenderViewContextMenuBase;
 
-namespace aura {
-class Window;
-}
-
 namespace content {
 class WebContents;
 class WebDragDestDelegate;
@@ -42,7 +38,9 @@ class ChromeWebContentsViewDelegateViews
 
   // Overridden from WebContentsViewDelegate:
   gfx::NativeWindow GetNativeWindow() override;
+#if defined(USE_AURA)
   content::WebDragDestDelegate* GetDragDestDelegate() override;
+#endif
   void StoreFocus() override;
   void RestoreFocus() override;
   bool Focus() override;
@@ -58,7 +56,7 @@ class ChromeWebContentsViewDelegateViews
   void ShowMenu(std::unique_ptr<RenderViewContextMenuBase> menu) override;
 
  private:
-  aura::Window* GetActiveNativeView();
+  gfx::NativeView GetActiveNativeView();
   views::Widget* GetTopLevelWidget();
   views::FocusManager* GetFocusManager();
   void SetInitialFocus();
@@ -70,8 +68,10 @@ class ChromeWebContentsViewDelegateViews
   // between uses so that it won't go out of scope before we're done with it.
   std::unique_ptr<RenderViewContextMenuBase> context_menu_;
 
+#if defined(USE_AURA)
   // The chrome specific delegate that receives events from WebDragDest.
   std::unique_ptr<content::WebDragDestDelegate> bookmark_handler_;
+#endif
 
   content::WebContents* web_contents_;
 

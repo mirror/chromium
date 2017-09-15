@@ -28,7 +28,6 @@
 #include "skia/ext/skia_utils_mac.h"
 #import "third_party/mozilla/NSPasteboard+Utils.h"
 #include "ui/base/clipboard/custom_data_helper.h"
-#import "ui/base/cocoa/focus_tracker.h"
 #include "ui/base/dragdrop/cocoa_dnd_util.h"
 #include "ui/display/screen.h"
 #include "ui/gfx/image/image_skia_util_mac.h"
@@ -212,21 +211,9 @@ void WebContentsViewMac::SizeContents(const gfx::Size& size) {
   // previous implementation.
 }
 
-gfx::NativeView WebContentsViewMac::GetNativeViewForFocus() const {
-  RenderWidgetHostView* rwhv =
-      web_contents_->GetFullscreenRenderWidgetHostView();
-  if (!rwhv)
-    rwhv = web_contents_->GetRenderWidgetHostView();
-  return rwhv ? rwhv->GetNativeView() : nil;
-}
-
 void WebContentsViewMac::Focus() {
-  gfx::NativeView native_view = GetNativeViewForFocus();
-  NSWindow* window = [native_view window];
-  [window makeFirstResponder:native_view];
-  if (![window isVisible])
-    return;
-  [window makeKeyAndOrderFront:nil];
+  if (delegate_)
+    delegate_->Focus();
 }
 
 void WebContentsViewMac::SetInitialFocus() {
@@ -237,28 +224,13 @@ void WebContentsViewMac::SetInitialFocus() {
 }
 
 void WebContentsViewMac::StoreFocus() {
-  gfx::NativeView native_view = GetNativeViewForFocus();
-  // We're explicitly being asked to store focus, so don't worry if there's
-  // already a view saved.
-  focus_tracker_.reset(
-      [[FocusTracker alloc] initWithWindow:[native_view window]]);
+  if (delegate_)
+    delegate_->StoreFocus();
 }
 
 void WebContentsViewMac::RestoreFocus() {
-  gfx::NativeView native_view = GetNativeViewForFocus();
-  // TODO(avi): Could we be restoring a view that's no longer in the key view
-  // chain?
-  if (!(focus_tracker_.get() &&
-        [focus_tracker_ restoreFocusInWindow:[native_view window]])) {
-    // Fall back to the default focus behavior if we could not restore focus.
-    // TODO(shess): If location-bar gets focus by default, this will
-    // select-all in the field.  If there was a specific selection in
-    // the field when we navigated away from it, we should restore
-    // that selection.
-    SetInitialFocus();
-  }
-
-  focus_tracker_.reset(nil);
+  if (delegate_)
+    delegate_->RestoreFocus();
 }
 
 DropData* WebContentsViewMac::GetDropData() const {

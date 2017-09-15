@@ -6,21 +6,36 @@
 
 #include "chrome/browser/ui/sad_tab_helper.h"
 #include "chrome/browser/ui/views/sad_tab_view.h"
+#include "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views.h"
 #include "content/public/browser/web_contents.h"
 #include "ui/base/ui_features.h"
+#include "ui/views/focus/focus_manager.h"
+#include "ui/views/view.h"
 #include "ui/views/widget/widget.h"
 
 ChromeWebContentsViewDelegateViewsMac::ChromeWebContentsViewDelegateViewsMac(
     content::WebContents* web_contents)
-    : ChromeWebContentsViewDelegateMac(web_contents) {}
+    : ChromeWebContentsViewDelegateMac(web_contents) {
+  views_delegate_.reset(new ChromeWebContentsViewDelegateViews(web_contents));
+}
+
+ChromeWebContentsViewDelegateViewsMac::
+    ~ChromeWebContentsViewDelegateViewsMac() {}
 
 void ChromeWebContentsViewDelegateViewsMac::SizeChanged(const gfx::Size& size) {
-  SadTabHelper* sad_tab_helper = SadTabHelper::FromWebContents(web_contents());
-  if (!sad_tab_helper)
-    return;
-  SadTabView* sad_tab = static_cast<SadTabView*>(sad_tab_helper->sad_tab());
-  if (sad_tab)
-    sad_tab->GetWidget()->SetBounds(gfx::Rect(size));
+  views_delegate_->SizeChanged(size);
+}
+
+bool ChromeWebContentsViewDelegateViewsMac::Focus() {
+  return views_delegate_->Focus();
+}
+
+void ChromeWebContentsViewDelegateViewsMac::StoreFocus() {
+  views_delegate_->StoreFocus();
+}
+
+void ChromeWebContentsViewDelegateViewsMac::RestoreFocus() {
+  views_delegate_->RestoreFocus();
 }
 
 #if BUILDFLAG(MAC_VIEWS_BROWSER)
