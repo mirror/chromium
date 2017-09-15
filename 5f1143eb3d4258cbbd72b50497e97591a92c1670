@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63e74393_f4cb4870",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-15T00:19:52Z",
+      "side": 1,
+      "message": "nit: There shouldn\u0027t be a need for static casts.s",
+      "range": {
+        "startLine": 26,
+        "startChar": 76,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1083e0ad_b51f0bb0",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-15T00:19:52Z",
+      "side": 1,
+      "message": "nit: Please document that this enum is used to back an UMA histogram, and should therefore be treated as append-only.",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb585092_6aa716d1",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-15T00:19:52Z",
+      "side": 1,
+      "message": "nit: The UMA_HISTOGRAM_* macros expand to a fair bit of C++ code, so it would be nice to coalesce these into a single wrapper function if it\u0027s not too annoying elsewhere.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 1
+      },
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f17ec2_39426d8f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 33584,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-15T00:19:52Z",
+      "side": 1,
+      "message": "nit: Please document when this is recorded.",
+      "range": {
+        "startLine": 33584,
+        "startChar": 64,
+        "endLine": 33584,
+        "endChar": 0
+      },
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
