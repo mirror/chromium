@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "988b7617_234b8925",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1710,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-15T17:30:38Z",
+      "side": 1,
+      "message": "do we need to check \u0026\u0026 mBottomSheet !\u003d null?\n\nI think we might want (/ need to fix the proguard warning) to combine this like:\n\nint omniboxResultsColorForNonIncognito \u003d OMNIBOX_RESULTS_BG_COLOR;\nint omniboxResultsColorForIncognito \u003d OMNIBOX_INCOGNITO_RESULTS_BG_COLOR;\nif (FeatureUtilities.isChromeHomeModernEnabled() \u0026\u0026 mBottomSheet !\u003d null) {\n    omniboxResultsColorForNonIncognito \u003d OMNIBOX_RESULTS_CHROME_HOME_MODERN_BG_COLOR;\n    omniboxResultsColorForIncognito \u003d OMNIBOX_INCOGNITO_RESULTS_CHROME_HOME_MODERN_BG_COLOR;\n}\n\nThen we\u0027re branching only once.",
+      "range": {
+        "startLine": 1710,
+        "startChar": 63,
+        "endLine": 1710,
+        "endChar": 88
+      },
+      "revId": "bb90d7e909f18d72b6575d8db2a3cd7ce7cbe88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26b75847_621fcac7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
         "patchSetId": 6
@@ -31,6 +54,23 @@
       "side": 1,
       "message": "Hannah says to use 100% white.",
       "parentUuid": "26b75847_621fcac7",
+      "revId": "bb90d7e909f18d72b6575d8db2a3cd7ce7cbe88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "989207d1_4ee20262",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-15T17:30:38Z",
+      "side": 1,
+      "message": "Do we need to check the bottom sheet null here too?  i.e. should this affect the search activity or not?  We might need to keep mUseModernDesign at the class level.",
       "revId": "bb90d7e909f18d72b6575d8db2a3cd7ce7cbe88b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
