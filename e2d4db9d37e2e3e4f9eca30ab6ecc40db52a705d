@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a123860a_e274ad16",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioNode/tail-processing.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-15T20:51:41Z",
+      "side": 1,
+      "message": "Heh. I think I used 1/32768 because that\u0027s the value of the LSB of a 16-bit audio sample.  I need to add some more comments here, I think.",
+      "parentUuid": "4e641c27_9e3f5f43",
+      "range": {
+        "startLine": 273,
+        "startChar": 42,
+        "endLine": 273,
+        "endChar": 47
+      },
+      "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45df2692_76888bcc",
         "filename": "third_party/WebKit/LayoutTests/webaudio/AudioNode/tail-processing.html",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21df0cd_daff84ed",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/AudioNode/tail-processing.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-15T20:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45df2692_76888bcc",
+      "range": {
+        "startLine": 320,
+        "startChar": 15,
+        "endLine": 320,
+        "endChar": 18
+      },
+      "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "17817847_392fcb4c",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/DynamicsCompressor/dynamicscompressor-clear-internal-state.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-15T20:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90ff386f_c24cdd9d",
+      "range": {
+        "startLine": 23,
+        "startChar": 37,
+        "endLine": 23,
+        "endChar": 41
+      },
+      "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83ea137b_a4ae6a55",
         "filename": "third_party/WebKit/LayoutTests/webaudio/DynamicsCompressor/dynamicscompressor-clear-internal-state.html",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c301343b_429ff0eb",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/DynamicsCompressor/dynamicscompressor-clear-internal-state.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-15T20:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83ea137b_a4ae6a55",
+      "range": {
+        "startLine": 56,
+        "startChar": 39,
+        "endLine": 56,
+        "endChar": 48
+      },
+      "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f9ed6784_91a16c54",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AnalyserNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-15T20:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0774dda_74c06afe",
+      "range": {
+        "startLine": 182,
+        "startChar": 9,
+        "endLine": 182,
+        "endChar": 14
+      },
+      "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa82191f_d12fd475",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioNode.h",
         "patchSetId": 6
@@ -137,6 +257,30 @@
       "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c2417b7_0fe06469",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioNode.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-15T20:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa82191f_d12fd475",
+      "range": {
+        "startLine": 185,
+        "startChar": 39,
+        "endLine": 185,
+        "endChar": 43
+      },
+      "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "39f42d75_1a3d59fc",
+        "filename": "third_party/WebKit/Source/modules/webaudio/ConvolverNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-15T20:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3e702f2_e94c2602",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 169,
+        "endChar": 13
+      },
+      "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08573a21_dd4068a2",
         "filename": "third_party/WebKit/Source/modules/webaudio/DeferredTaskHandler.cpp",
         "patchSetId": 6
@@ -183,6 +351,30 @@
       "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b899df50_feabab4a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/DeferredTaskHandler.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-15T20:51:41Z",
+      "side": 1,
+      "message": "Good catch. Don\u0027t know why I did that since it\u0027s a RefPtr.",
+      "parentUuid": "08573a21_dd4068a2",
+      "range": {
+        "startLine": 180,
+        "startChar": 40,
+        "endLine": 180,
+        "endChar": 58
+      },
+      "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "1ea0b120_ba5a3777",
+        "filename": "third_party/WebKit/Source/modules/webaudio/DynamicsCompressorNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-15T20:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bf27dee_d2118c98",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 128,
+        "endChar": 13
+      },
+      "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d810f9a_559cb4e9",
         "filename": "third_party/WebKit/Source/modules/webaudio/IIRDSPKernel.cpp",
         "patchSetId": 6
@@ -229,6 +445,30 @@
       "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14212f18_4b51578c",
+        "filename": "third_party/WebKit/Source/modules/webaudio/IIRDSPKernel.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-15T20:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d810f9a_559cb4e9",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 13
+      },
+      "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "6ac6f645_e4c321e0",
+        "filename": "third_party/WebKit/Source/modules/webaudio/PannerNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-15T20:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3127b511_6c35428e",
+      "range": {
+        "startLine": 648,
+        "startChar": 19,
+        "endLine": 648,
+        "endChar": 25
+      },
+      "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9283780a_b062f715",
         "filename": "third_party/WebKit/Source/modules/webaudio/WaveShaperDSPKernel.cpp",
         "patchSetId": 6
@@ -275,6 +539,30 @@
       "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e99298c8_fbc49460",
+        "filename": "third_party/WebKit/Source/modules/webaudio/WaveShaperDSPKernel.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-15T20:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9283780a_b062f715",
+      "range": {
+        "startLine": 184,
+        "startChar": 2,
+        "endLine": 185,
+        "endChar": 13
+      },
+      "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "3e814731_458c8fe0",
+        "filename": "third_party/WebKit/Source/platform/audio/AudioDSPKernelProcessor.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-15T20:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f306b2d5_430ce334",
+      "range": {
+        "startLine": 140,
+        "startChar": 2,
+        "endLine": 141,
+        "endChar": 13
+      },
+      "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bbccdab_cc32cc1d",
         "filename": "third_party/WebKit/Source/platform/audio/DynamicsCompressor.h",
         "patchSetId": 6
@@ -321,6 +633,30 @@
       "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb7f3db7_9f42b9b9",
+        "filename": "third_party/WebKit/Source/platform/audio/DynamicsCompressor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-09-15T20:51:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bbccdab_cc32cc1d",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 14
+      },
+      "revId": "e2d4db9d37e2e3e4f9eca30ab6ecc40db52a705d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
