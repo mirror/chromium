@@ -1,0 +1,262 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdb5147a_c1b1526d",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 4925,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-15T22:00:51Z",
+      "side": 1,
+      "message": "nit: s/context/command ?",
+      "range": {
+        "startLine": 4925,
+        "startChar": 51,
+        "endLine": 4925,
+        "endChar": 58
+      },
+      "revId": "f951a23fae061e433dda73218dae8fad6e504199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e317c4f_f165d78c",
+        "filename": "ios/chrome/browser/ui/commands/show_mail_composer_command.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-15T22:00:51Z",
+      "side": 1,
+      "message": "This is not a command anymore, so we probably need to find a different name for this class",
+      "revId": "f951a23fae061e433dda73218dae8fad6e504199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02471538_84dbeefd",
+        "filename": "ios/chrome/browser/ui/commands/show_mail_composer_command.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-15T22:00:51Z",
+      "side": 1,
+      "message": "Is there a value in having nil instead of empty array? nil arrays often require special handling code, which is almost never the case for empty arrays.",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 21
+      },
+      "revId": "f951a23fae061e433dda73218dae8fad6e504199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097214bd_c8e8d09d",
+        "filename": "ios/chrome/browser/ui/webui/net_export/net_export_ui.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-15T22:00:51Z",
+      "side": 1,
+      "message": "nit: s/include/import",
+      "range": {
+        "startLine": 28,
+        "startChar": 1,
+        "endLine": 28,
+        "endChar": 8
+      },
+      "revId": "f951a23fae061e433dda73218dae8fad6e504199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c049bb_507fd3e3",
+        "filename": "ios/chrome/browser/ui/webui/net_export/net_export_ui.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-15T22:00:51Z",
+      "side": 1,
+      "message": "alert_title_string_id",
+      "range": {
+        "startLine": 187,
+        "startChar": 6,
+        "endLine": 187,
+        "endChar": 24
+      },
+      "revId": "f951a23fae061e433dda73218dae8fad6e504199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddbeb4aa_bcaf1844",
+        "filename": "ios/chrome/browser/ui/webui/net_export/net_export_ui.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-15T22:00:51Z",
+      "side": 1,
+      "message": "s/context/command ?",
+      "range": {
+        "startLine": 190,
+        "startChar": 27,
+        "endLine": 190,
+        "endChar": 34
+      },
+      "revId": "f951a23fae061e433dda73218dae8fad6e504199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c179d2_5115aa02",
+        "filename": "ios/chrome/browser/ui/webui/net_export/net_export_ui.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-15T22:00:51Z",
+      "side": 1,
+      "message": "No need for these DCHECKs the code will crash anyway",
+      "range": {
+        "startLine": 198,
+        "startChar": 9,
+        "endLine": 198,
+        "endChar": 15
+      },
+      "revId": "f951a23fae061e433dda73218dae8fad6e504199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb619752_02a8696f",
+        "filename": "ios/chrome/browser/webui/mail_composer_presenter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-15T22:00:51Z",
+      "side": 1,
+      "message": "From Coding Guidelines for Cocoa : \"Most protocols group related methods that aren’t associated with any class in particular. This type of protocol should be named so that the protocol won’t be confused with a class. A common convention is to use a gerund (“...ing”) form.\"\n\nhttps://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingBasics.html#//apple_ref/doc/uid/20001281-1002242-BBCIJGDB",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "f951a23fae061e433dda73218dae8fad6e504199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc8f68b_58542dc2",
+        "filename": "ios/chrome/browser/webui/mail_composer_presenter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-15T22:00:51Z",
+      "side": 1,
+      "message": "From Coding Guidelines for Cocoa: \"Make the word before the argument describe the argument.\" \n\nComposer / command / context should be the same thing.\n\nhttps://developer.apple.com/library/content/documentation/Cocoa/Conceptual/CodingGuidelines/Articles/NamingMethods.html#//apple_ref/doc/uid/20001282-1001751-BCIJHEDH",
+      "range": {
+        "startLine": 17,
+        "startChar": 26,
+        "endLine": 17,
+        "endChar": 49
+      },
+      "revId": "f951a23fae061e433dda73218dae8fad6e504199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f3718bb_0467b50a",
+        "filename": "ios/chrome/browser/webui/net_export_tab_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-15T22:00:51Z",
+      "side": 1,
+      "message": "Please add tests for this class",
+      "range": {
+        "startLine": 13,
+        "startChar": 9,
+        "endLine": 13,
+        "endChar": 15
+      },
+      "revId": "f951a23fae061e433dda73218dae8fad6e504199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c90c7de_6803892b",
+        "filename": "ios/chrome/browser/webui/net_export_tab_helper.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-15T22:00:51Z",
+      "side": 1,
+      "message": "Looks like existing pattern is to use \u003cFeature\u003eTabHelperDelegate. Do you want to follow it?",
+      "revId": "f951a23fae061e433dda73218dae8fad6e504199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d11c89_356dc1a2",
+        "filename": "ios/chrome/browser/webui/net_export_tab_helper.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-15T22:00:51Z",
+      "side": 1,
+      "message": "Do you need this?",
+      "revId": "f951a23fae061e433dda73218dae8fad6e504199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
