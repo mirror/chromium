@@ -49,6 +49,10 @@ namespace storage {
 class SpecialStoragePolicy;
 }
 
+namespace origin_manifest {
+class OriginManifestStoreImpl;
+}
+
 namespace content {
 
 namespace mojom {
@@ -282,6 +286,8 @@ class CONTENT_EXPORT BrowserContext : public base::SupportsUserData {
   // Returns a random salt string that is used for creating media device IDs.
   // Returns a random string by default.
   virtual std::string GetMediaDeviceIDSalt();
+
+  virtual origin_manifest::OriginManifestStoreImpl* GetOriginManifestStore();
 
   // Utility function useful for embedders. Only needs to be called if
   // 1) The embedder needs to use a new salt, and

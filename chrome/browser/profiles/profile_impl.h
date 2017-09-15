@@ -19,6 +19,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_impl_io_data.h"
 #include "chrome/common/features.h"
+#include "components/origin_manifest/origin_manifest_store_impl.h"
 #include "components/prefs/pref_change_registrar.h"
 #include "content/public/browser/content_browser_client.h"
 #include "extensions/features/features.h"
@@ -106,6 +107,7 @@ class ProfileImpl : public Profile {
       bool in_memory) override;
   void RegisterInProcessServices(StaticServiceMap* services) override;
   std::string GetMediaDeviceIDSalt() override;
+  origin_manifest::OriginManifestStoreImpl* GetOriginManifestStore() override;
 
   // Profile implementation:
   scoped_refptr<base::SequencedTaskRunner> GetIOTaskRunner() override;
@@ -270,6 +272,11 @@ class ProfileImpl : public Profile {
   // BrowserContextKeyedService instead.
   // See https://crbug.com/713733
   scoped_refptr<MediaDeviceIDSalt> media_device_id_salt_;
+
+  // TODO(dhausknecht): Suck it, I hang it in here anyway! But don't start
+  // crying, I will move it later. Promise!
+  std::unique_ptr<origin_manifest::OriginManifestStoreImpl>
+      origin_manifest_store_;
 
   // STOP!!!! DO NOT ADD ANY MORE ITEMS HERE!!!!
   //

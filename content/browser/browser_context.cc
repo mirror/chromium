@@ -575,4 +575,9 @@ std::string BrowserContext::CreateRandomMediaDeviceIDSalt() {
   return salt;
 }
 
+origin_manifest::OriginManifestStoreImpl*
+BrowserContext::GetOriginManifestStore() {
+  return nullptr;
+}
+
 }  // namespace content

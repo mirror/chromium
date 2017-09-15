@@ -409,6 +409,7 @@ ProfileImpl::ProfileImpl(
       io_data_(this),
       last_session_exit_type_(EXIT_NORMAL),
       start_time_(Time::Now()),
+      origin_manifest_store_(nullptr),
       delegate_(delegate),
       predictor_(nullptr) {
   TRACE_EVENT0("browser,startup", "ProfileImpl::ctor")
@@ -647,6 +648,9 @@ void ProfileImpl::DoFinalInit() {
                 media_cache_max_size, extensions_cookie_path, GetPath(),
                 predictor_, session_cookie_mode, GetSpecialStoragePolicy(),
                 CreateDomainReliabilityMonitor(local_state));
+
+  origin_manifest_store_.reset(
+      new origin_manifest::OriginManifestStoreImpl(GetRequestContext()));
 
 #if BUILDFLAG(ENABLE_PLUGINS)
   ChromePluginServiceFilter::GetInstance()->RegisterResourceContext(
@@ -1124,6 +1128,11 @@ void ProfileImpl::RegisterInProcessServices(StaticServiceMap* services) {
 
 std::string ProfileImpl::GetMediaDeviceIDSalt() {
   return media_device_id_salt_->GetSalt();
+}
+
+origin_manifest::OriginManifestStoreImpl*
+ProfileImpl::GetOriginManifestStore() {
+  return origin_manifest_store_.get();
 }
 
 bool ProfileImpl::IsSameProfile(Profile* profile) {

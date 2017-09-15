@@ -1,0 +1,22 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+static_library("origin_manifest") {
+  sources = [
+    "origin_manifest_fetcher.cc",
+    "origin_manifest_fetcher.h",
+    "origin_manifest_store_client.cc",
+    "origin_manifest_store_client.h",
+    "origin_manifest_store_impl.cc",
+    "origin_manifest_store_impl.h",
+    "sqlite_persistent_origin_manifest_store.cc",
+    "sqlite_persistent_origin_manifest_store.h",
+  ]
+
+  deps = [
+    "//base",
+    "//components/origin_manifest/interfaces",
+    "//net",
+  ]
+}

@@ -1,0 +1,51 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module origin_manifest.mojom;
+
+// Origin Manifest structures
+struct OriginManifest {
+  string origin;
+  string version;
+  string json;
+  //int64 creationdate;
+  //int64 expirydate;
+};
+
+struct CORSPreflight {
+  CORSNoCredentials? nocredentials;
+  CORSWithCredentials? withcredentials;
+};
+
+struct CORSNoCredentials {
+  array<string> origins;
+};
+
+struct CORSWithCredentials {
+  array<string> origins;
+};
+
+enum CSPMode {
+  ENFORCE,
+  REPORT_ONLY
+};
+
+struct ContentSecurityPolicy {
+  string policy;
+  CSPMode disposition;
+  bool allowOverride;
+};
+
+// Interfaces
+interface OriginManifestStore {
+  SayHello();
+  Get(string origin) => (OriginManifest? om);
+  GetOrFetch(string origin, string version) => (OriginManifest? om);
+  //Remove(string origin) => ();
+
+  [Sync]
+  GetCORSPreflight(string origin) => (CORSPreflight? corspreflight);
+  [Sync]
+  GetContentSecurityPolicies(string origin) => (array<ContentSecurityPolicy> csps);
+};
