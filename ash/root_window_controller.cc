@@ -902,13 +902,6 @@ void RootWindowController::CreateContainers() {
   wm::SetSnapsChildrenToPhysicalPixelBoundary(lock_container);
   lock_container->SetProperty(kUsesScreenCoordinatesKey, true);
 
-  aura::Window* lock_action_handler_container =
-      CreateContainer(kShellWindowId_LockActionHandlerContainer,
-                      "LockActionHandlerContainer", lock_screen_containers);
-  wm::SetSnapsChildrenToPhysicalPixelBoundary(lock_action_handler_container);
-  ::wm::SetChildWindowVisibilityChangesAnimated(lock_action_handler_container);
-  lock_action_handler_container->SetProperty(kUsesScreenCoordinatesKey, true);
-
   aura::Window* lock_modal_container =
       CreateContainer(kShellWindowId_LockSystemModalContainer,
                       "LockSystemModalContainer", lock_screen_containers);
@@ -916,6 +909,13 @@ void RootWindowController::CreateContainers() {
   ::wm::SetChildWindowVisibilityChangesAnimated(lock_modal_container);
   lock_modal_container->SetProperty(kUsesScreenCoordinatesKey, true);
   wm::SetChildrenUseExtendedHitRegionForWindow(lock_modal_container);
+
+  aura::Window* lock_action_handler_container = CreateContainer(
+      kShellWindowId_LockActionHandlerContainer, "LockActionHandlerContainer",
+      lock_screen_related_containers);
+  wm::SetSnapsChildrenToPhysicalPixelBoundary(lock_action_handler_container);
+  ::wm::SetChildWindowVisibilityChangesAnimated(lock_action_handler_container);
+  lock_action_handler_container->SetProperty(kUsesScreenCoordinatesKey, true);
 
   aura::Window* status_container =
       CreateContainer(kShellWindowId_StatusContainer, "StatusContainer",
