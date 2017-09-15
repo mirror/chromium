@@ -1,0 +1,164 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10b4dc71_9e59237d",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-15T03:35:04Z",
+      "side": 1,
+      "message": "I don\u0027t think this should be syncable.\n\nIf I use autofill at home on my personal devices, it should not be disabled there because I also  have a chrome profile on my work device, where my admin has disabled autofill.",
+      "revId": "f232c7f9d33517a297b3944763e6641edee0e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a057eb77_bcc74f22",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-15T03:35:04Z",
+      "side": 1,
+      "message": "hmmm... I\u0027m suddenly wondering how often we\u0027ve been logging stats for users who have autofill disabled.  :|",
+      "range": {
+        "startLine": 417,
+        "startChar": 6,
+        "endLine": 417,
+        "endChar": 25
+      },
+      "revId": "f232c7f9d33517a297b3944763e6641edee0e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12fa3d3a_c88ab2e7",
+        "filename": "components/autofill/core/browser/autofill_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-15T03:35:04Z",
+      "side": 1,
+      "message": "IsCreditCardAutofillEnabled() perhaps?",
+      "range": {
+        "startLine": 206,
+        "startChar": 15,
+        "endLine": 206,
+        "endChar": 34
+      },
+      "revId": "f232c7f9d33517a297b3944763e6641edee0e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fdc5ada_cc9e4995",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4680,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-15T03:35:04Z",
+      "side": 1,
+      "message": "Also add tests validating that autofill:\n\n- doesn\u0027t load credit card data if cc autofill is disabled.\n- doesn\u0027t suggest cc values if cc autofill is disabled\n\n(the former implies the latter, but these can be tested separately).",
+      "revId": "f232c7f9d33517a297b3944763e6641edee0e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58507e01_22aaebb3",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4681,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-15T03:35:04Z",
+      "side": 1,
+      "message": "...DisabledDoesNotSave\n\nThis tests that we don\u0027t save credit card information if credit card autofill is disabled.",
+      "range": {
+        "startLine": 4681,
+        "startChar": 28,
+        "endLine": 4681,
+        "endChar": 46
+      },
+      "revId": "f232c7f9d33517a297b3944763e6641edee0e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4157a739_c11b5beb",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-15T03:35:04Z",
+      "side": 1,
+      "message": "TLDR; don\u0027t do this early return\n\nSo, thinking about this some more, I\u0027m not sure this (early exit from LoadCreditCards()) is a good idea.\n\nAborting LoadCreditCards() is likely to interact poorly with chrome sync. which will still want to get and propagate card info and updates to/from other devices. I don\u0027t think the early exit will result in the user not having any cards in their DB. It will instead result in chrome syncing down the data again... possibly getting confused when it sees that it\u0027s already in the DB but not in RAM.\n\nGiven the changes to GetCreditCards() and ImportFormData(), the user won\u0027t get any card suggestions and won\u0027t save additional card information, which would seem to satisfy the intent of disabling the pref.",
+      "revId": "f232c7f9d33517a297b3944763e6641edee0e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b1911b0_91826ab5",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2970,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-15T03:35:04Z",
+      "side": 1,
+      "message": "copy a test that sets up local and server cards, then have it disable the pref and validate that no suggestions are given.",
+      "revId": "f232c7f9d33517a297b3944763e6641edee0e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b12f5bcb_dce8526f",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3022,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-15T03:35:04Z",
+      "side": 1,
+      "message": "size_t is unsigned, so ASSERT_EQ(0U, ...size())",
+      "range": {
+        "startLine": 3022,
+        "startChar": 12,
+        "endLine": 3022,
+        "endChar": 13
+      },
+      "revId": "f232c7f9d33517a297b3944763e6641edee0e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
