@@ -669,10 +669,7 @@ bool IsInternalURL(const GURL& url) {
     DCHECK(resetDecisionsField_);
     yPos = [self setYPositionOfView:resetDecisionsField_
                                  to:yPos + kSecurityParagraphSpacing];
-    [resetDecisionsButton_
-        setFrameOrigin:NSMakePoint(NSMinX([resetDecisionsButton_ frame]) -
-                                       kLinkButtonXAdjustment,
-                                   yPos)];
+    [resetDecisionsButton_ setFrameOrigin:NSMakePoint(helpOrigin.x, yPos)];
     yPos = NSMaxY([resetDecisionsButton_ frame]);
   }
 
