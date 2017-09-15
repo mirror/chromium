@@ -47,6 +47,8 @@ class FrameSelectionTest : public EditingTestBase {
     return Selection().frame_caret_->CaretPosition();
   }
 
+  Page& GetPage() const { return GetDummyPageHolder().GetPage(); }
+
  private:
   Persistent<Text> text_node_;
 };
@@ -1006,6 +1008,117 @@ TEST_F(FrameSelectionTest, InconsistentVisibleSelectionNoCrash) {
 
   // Shouldn't crash inside.
   EXPECT_FALSE(Selection().SelectionHasFocus());
+}
+
+TEST_F(FrameSelectionTest, SelectionBounds) {
+  SetBodyContent(
+      "<style>"
+      "  * { margin: 0; } "
+      "  html, body { height: 2000px; }"
+      "  #node {"
+      "    width: 20px;"
+      "    height: 1000px;"
+      "    font-size: 1000px;"
+      "    overflow: hidden;"
+      "    margin-top: 2px;"
+      "  }"
+      "</style>"
+      "<div id='node'>"
+      "  abc<br>def<br>abc<br>def<br>abc<br>def"
+      "  abc<br>def<br>abc<br>def<br>abc<br>def"
+      "  abc<br>def<br>abc<br>def<br>abc<br>def"
+      "</div>");
+
+  Element& node = *GetDocument().getElementById("node");
+  Selection().SetSelection(
+      SelectionInDOMTree::Builder().SelectAllChildren(node).Build());
+
+  const int node_width = 20;
+  const int node_height = 1000;
+  const int node_margin_top = 2;
+  const int viewport_height = 600;
+  EXPECT_EQ(LayoutRect(0, node_margin_top, node_width, node_height),
+            Selection().UnclippedBounds());
+  // The top of the node should be visible but the bottom should be outside
+  // by the viewport.
+  EXPECT_EQ(LayoutRect(0, node_margin_top, node_width,
+                       viewport_height - node_margin_top),
+            Selection().ClippedBounds());
+
+  // Scroll 500px down so the top of the node is outside the viewport and the
+  // bottom is visible.
+  const int scroll_offset = 500;
+  LocalFrameView* frame_view = GetDocument().View();
+  frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
+      ScrollOffset(0, scroll_offset), kProgrammaticScroll);
+  EXPECT_EQ(LayoutRect(0, node_margin_top, node_width, node_height),
+            Selection().UnclippedBounds());
+  EXPECT_EQ(LayoutRect(0, scroll_offset, node_width,
+                       node_height + node_margin_top - scroll_offset),
+            Selection().ClippedBounds());
+}
+
+TEST_F(FrameSelectionTest, SelectionBoundsWithPageScaleFactor) {
+  SetBodyContent(
+      "<style>"
+      "  * { margin: 0; } "
+      "  html, body { height: 2000px; }"
+      "  #node {"
+      "    width: 20px;"
+      "    height: 1000px;"
+      "    font-size: 1000px;"
+      "    overflow: hidden;"
+      "    margin-top: 2px;"
+      "  }"
+      "</style>"
+      "<div id='node'>"
+      "  abc<br>def<br>abc<br>def<br>abc<br>def"
+      "  abc<br>def<br>abc<br>def<br>abc<br>def"
+      "  abc<br>def<br>abc<br>def<br>abc<br>def"
+      "</div>");
+
+  const int page_scale_factor = 2;
+  GetPage().SetPageScaleFactor(page_scale_factor);
+
+  Element& node = *GetDocument().getElementById("node");
+  Selection().SetSelection(
+      SelectionInDOMTree::Builder().SelectAllChildren(node).Build());
+
+  const int node_width = 20;
+  const int node_height = 1000;
+  const int node_margin_top = 2;
+  const int viewport_height_dip = 600;
+  const int viewport_height_css = viewport_height_dip / page_scale_factor;
+  EXPECT_EQ(LayoutRect(0, node_margin_top, node_width, node_height),
+            Selection().UnclippedBounds());
+  // The top of the node should be visible but the bottom should be outside
+  // by the viewport.
+  EXPECT_EQ(LayoutRect(0, node_margin_top, node_width,
+                       viewport_height_css - node_margin_top),
+            Selection().ClippedBounds());
+
+  // Scroll 500px down so the top of the node is outside the viewport. Because
+  // the viewport is scaled to be only 300 css px tall, the bottom of the node
+  // should also be outside the viewport.
+  int scroll_offset = 500;
+  LocalFrameView* frame_view = GetDocument().View();
+  frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
+      ScrollOffset(0, scroll_offset), kProgrammaticScroll);
+  EXPECT_EQ(LayoutRect(0, node_margin_top, node_width, node_height),
+            Selection().UnclippedBounds());
+  EXPECT_EQ(LayoutRect(0, scroll_offset, node_width, viewport_height_css),
+            Selection().ClippedBounds());
+
+  // Scroll 800px down so the top of the node is outside the viewport and the
+  // bottom is now visible.
+  scroll_offset = 800;
+  frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
+      ScrollOffset(0, scroll_offset), kProgrammaticScroll);
+  EXPECT_EQ(LayoutRect(0, node_margin_top, node_width, node_height),
+            Selection().UnclippedBounds());
+  EXPECT_EQ(LayoutRect(0, scroll_offset, node_width,
+                       node_height + node_margin_top - scroll_offset),
+            Selection().ClippedBounds());
 }
 
 }  // namespace blink

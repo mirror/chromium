@@ -59,6 +59,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
+#include "core/frame/VisualViewport.h"
 #include "core/html/HTMLBodyElement.h"
 #include "core/html/HTMLFrameElementBase.h"
 #include "core/html/HTMLInputElement.h"
@@ -900,15 +901,15 @@ String FrameSelection::SelectedTextForClipboard() const {
                  .Build());
 }
 
-LayoutRect FrameSelection::Bounds() const {
-  LocalFrameView* view = frame_->View();
-  if (!view)
+LayoutRect FrameSelection::ClippedBounds() const {
+  Page* page = frame_->GetPage();
+  if (!page)
     return LayoutRect();
 
-  // TODO(pdr): Should this be the VisualViewport's VisibleRectInDocument
-  // instead of VisibleContentRect to include the viewport pan-zoom offset?
-  return Intersection(UnclippedBounds(),
-                      LayoutRect(view->VisibleContentRect()));
+  // Exclude selection not in the visual viewport.
+  return Intersection(
+      UnclippedBounds(),
+      LayoutRect(page->GetVisualViewport().VisibleRectInDocument()));
 }
 
 LayoutRect FrameSelection::UnclippedBounds() const {
