@@ -9,14 +9,43 @@
 
 #include "core/dom/Attribute.h"
 #include "core/dom/CharacterData.h"
+#include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/ProcessingInstruction.h"
+#include "core/dom/ShadowRootInit.h"
 #include "core/editing/EditingUtilities.h"
+#include "core/html/HTMLCollection.h"
+#include "core/html/HTMLTemplateElement.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
 
 namespace {
+
+void ConvertTemplatesToShadowRoots(HTMLElement& element) {
+  HTMLCollection* templates = element.getElementsByTagName("template");
+  HeapVector<Member<Element>> template_vector;
+  for (Element* template_element : *templates) {
+    template_vector.push_back(template_element);
+  }
+  for (Element* template_element : template_vector) {
+    const AtomicString& data_mode = template_element->getAttribute("data-mode");
+    DCHECK_EQ(data_mode, "open");
+
+    Element* const parent = template_element->parentElement();
+    parent->removeChild(template_element);
+    ShadowRootInit init;
+    init.setMode(data_mode);
+    Document* const document = element.ownerDocument();
+    ShadowRoot* const shadow_root =
+        parent->attachShadow(ToScriptStateForMainWorld(document->GetFrame()),
+                             init, ASSERT_NO_EXCEPTION);
+    Node* const fragment =
+        document->importNode(toHTMLTemplateElement(template_element)->content(),
+                             true, ASSERT_NO_EXCEPTION);
+    shadow_root->AppendChild(fragment);
+  }
+}
 
 // Parse selection text notation into Selection object.
 template <typename Strategy>
@@ -307,6 +336,11 @@ class Serializer final {
 };
 
 }  // namespace
+
+void SelectionSample::ConvertTemplatesToShadowRootsForTesring(
+    HTMLElement& element) {
+  ConvertTemplatesToShadowRoots(element);
+}
 
 SelectionInDOMTree SelectionSample::SetSelectionText(
     HTMLElement* element,
