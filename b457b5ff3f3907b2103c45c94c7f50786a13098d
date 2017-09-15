@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6bb7b64_a69c489a",
+        "filename": "content/browser/devtools/protocol_string.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-15T01:44:30Z",
+      "side": 1,
+      "message": "nit: it feels like this logically belongs to EscapeChar.",
+      "revId": "b457b5ff3f3907b2103c45c94c7f50786a13098d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de198f0c_af24f161",
+        "filename": "content/browser/devtools/protocol_string.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-09-15T01:44:30Z",
+      "side": 1,
+      "message": "This is guaranteed to be ASCII per the condition above, so perhaps just truncate the char?",
+      "revId": "b457b5ff3f3907b2103c45c94c7f50786a13098d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
