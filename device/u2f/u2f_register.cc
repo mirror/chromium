@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "u2f_register.h"
+#include "device/u2f/u2f_register.h"
 
 #include "base/memory/ptr_util.h"
 
@@ -10,8 +10,9 @@ namespace device {
 
 U2fRegister::U2fRegister(const std::vector<uint8_t>& challenge_hash,
                          const std::vector<uint8_t>& app_param,
-                         const ResponseCallback& cb)
-    : U2fRequest(cb),
+                         const ResponseCallback& cb,
+                         device::mojom::HidManager* hid_manager)
+    : U2fRequest(cb, hid_manager),
       challenge_hash_(challenge_hash),
       app_param_(app_param),
       weak_factory_(this) {}
@@ -22,9 +23,10 @@ U2fRegister::~U2fRegister() {}
 std::unique_ptr<U2fRequest> U2fRegister::TryRegistration(
     const std::vector<uint8_t>& challenge_hash,
     const std::vector<uint8_t>& app_param,
-    const ResponseCallback& cb) {
+    const ResponseCallback& cb,
+    device::mojom::HidManager* hid_manager) {
   std::unique_ptr<U2fRequest> request =
-      std::make_unique<U2fRegister>(challenge_hash, app_param, cb);
+      std::make_unique<U2fRegister>(challenge_hash, app_param, cb, hid_manager);
   request->Start();
   return request;
 }

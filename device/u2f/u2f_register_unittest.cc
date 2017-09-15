@@ -7,12 +7,11 @@
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/test/test_io_thread.h"
-#include "device/base/mock_device_client.h"
-#include "device/hid/mock_hid_service.h"
-#include "device/test/test_device_client.h"
-#include "mock_u2f_device.h"
+#include "device/hid/public/interfaces/hid.mojom.h"
+#include "device/u2f/fake_hid_impl_for_testing.h"
+#include "device/u2f/mock_u2f_device.h"
+#include "device/u2f/u2f_register.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "u2f_register.h"
 
 namespace device {
 
@@ -23,15 +22,10 @@ class U2fRegisterTest : public testing::Test {
             base::test::ScopedTaskEnvironment::MainThreadType::UI),
         io_thread_(base::TestIOThread::kAutoStart) {}
 
-  void SetUp() override {
-    MockHidService* hid_service = device_client_.hid_service();
-    hid_service->FirstEnumerationComplete();
-  }
 
  protected:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   base::TestIOThread io_thread_;
-  device::MockDeviceClient device_client_;
 };
 
 class TestRegisterCallback {
@@ -68,9 +62,13 @@ TEST_F(U2fRegisterTest, TestRegisterSuccess) {
       .WillOnce(testing::Invoke(MockU2fDevice::NoErrorRegister));
   EXPECT_CALL(*device.get(), TryWink(testing::_))
       .WillOnce(testing::Invoke(MockU2fDevice::WinkDoNothing));
+
+  device::mojom::HidManagerPtr hid_manager;
+  FakeHidManager fake_hid_manager_impl(mojo::MakeRequest(&hid_manager));
   TestRegisterCallback cb;
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
-      std::vector<uint8_t>(32), std::vector<uint8_t>(32), cb.callback());
+      std::vector<uint8_t>(32), std::vector<uint8_t>(32), cb.callback(),
+      hid_manager.get());
   request->Start();
   request->AddDeviceForTesting(std::move(device));
   std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
@@ -91,9 +89,12 @@ TEST_F(U2fRegisterTest, TestDelayedSuccess) {
       .Times(2)
       .WillRepeatedly(testing::Invoke(MockU2fDevice::WinkDoNothing));
   TestRegisterCallback cb;
+  device::mojom::HidManagerPtr hid_manager;
+  FakeHidManager fake_hid_manager_impl(mojo::MakeRequest(&hid_manager));
 
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
-      std::vector<uint8_t>(32), std::vector<uint8_t>(32), cb.callback());
+      std::vector<uint8_t>(32), std::vector<uint8_t>(32), cb.callback(),
+      hid_manager.get());
   request->Start();
   request->AddDeviceForTesting(std::move(device));
   std::pair<U2fReturnCode, std::vector<uint8_t>>& response =
@@ -119,8 +120,12 @@ TEST_F(U2fRegisterTest, TestMultipleDevices) {
       .WillOnce(testing::Invoke(MockU2fDevice::WinkDoNothing));
 
   TestRegisterCallback cb;
+  device::mojom::HidManagerPtr hid_manager;
+  FakeHidManager fake_hid_manager_impl(mojo::MakeRequest(&hid_manager));
+
   std::unique_ptr<U2fRequest> request = U2fRegister::TryRegistration(
-      std::vector<uint8_t>(32), std::vector<uint8_t>(32), cb.callback());
+      std::vector<uint8_t>(32), std::vector<uint8_t>(32), cb.callback(),
+      hid_manager.get());
   request->Start();
   request->AddDeviceForTesting(std::move(device0));
   request->AddDeviceForTesting(std::move(device1));

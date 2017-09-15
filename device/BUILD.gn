@@ -114,6 +114,8 @@ test("device_unittests") {
       "hid/test_report_descriptors.cc",
       "hid/test_report_descriptors.h",
       "serial/serial_io_handler_posix_unittest.cc",
+      "u2f/fake_hid_impl_for_testing.cc",
+      "u2f/fake_hid_impl_for_testing.h",
       "u2f/u2f_apdu_unittest.cc",
       "u2f/u2f_hid_device_unittest.cc",
       "u2f/u2f_message_unittest.cc",
