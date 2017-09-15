@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2b2b31b_bff6fda1",
+        "filename": "third_party/WebKit/Source/core/loader/NetworkQuietDetector.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T03:05:46Z",
+      "side": 1,
+      "message": "Nit: If this is a class name, please write out the full class name.\n\nAlso, we can delete this class entirely right?",
+      "range": {
+        "startLine": 72,
+        "startChar": 17,
+        "endLine": 72,
+        "endChar": 28
+      },
+      "revId": "c74e5486ae70c7bc6836bd7707a4725f82307756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
