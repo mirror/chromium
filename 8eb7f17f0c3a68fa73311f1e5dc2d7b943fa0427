@@ -22,6 +22,30 @@
       "revId": "8eb7f17f0c3a68fa73311f1e5dc2d7b943fa0427",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f15f8b_5863d466",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 6507,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-15T23:02:03Z",
+      "side": 0,
+      "message": "Yes.  We have a similar experience to desktop now.",
+      "parentUuid": "bab26867_cb941d7f",
+      "range": {
+        "startLine": 6507,
+        "startChar": 43,
+        "endLine": 6507,
+        "endChar": 61
+      },
+      "revId": "8eb7f17f0c3a68fa73311f1e5dc2d7b943fa0427",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
