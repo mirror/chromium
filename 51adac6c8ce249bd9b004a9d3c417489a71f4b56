@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09fb0cbc_3fb25ee3",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-15T00:33:32Z",
+      "side": 1,
+      "message": "what\u0027s the lifetime of ArcPowerBridge? i\u0027d expect PowerPolicyController to exist during all of its Acquire and Release calls. are you seeing otherwise?\n\ni think you\u0027re just matching the existing code, so it\u0027s fine to keep it like this for now, but please add a TODO to remove these checks if they\u0027re unnecessary.",
+      "revId": "51adac6c8ce249bd9b004a9d3c417489a71f4b56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d92c61_7d3fe85d",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-15T00:33:32Z",
+      "side": 1,
+      "message": "nit: Chrome",
+      "range": {
+        "startLine": 88,
+        "startChar": 72,
+        "endLine": 88,
+        "endChar": 78
+      },
+      "revId": "51adac6c8ce249bd9b004a9d3c417489a71f4b56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde6d46f_7e723d8f",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-15T00:33:32Z",
+      "side": 1,
+      "message": "nit: can you move this up just after the FakePowerManagerClient is constructed so it\u0027s more obvious that it isn\u0027t being leaked? if you need to do things in this order, please store it in a local unique_ptr above, e.g.\n\n  auto client \u003d base::MakeUnique\u003cFakePowerManagerClient\u003e();\n  ...\n  fake_power_manager_client_ \u003d client.get();\n  ...-\u003eSetPowerManagerClient(std::move(client));",
+      "revId": "51adac6c8ce249bd9b004a9d3c417489a71f4b56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f429fbd_e4c0356e",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-15T00:33:32Z",
+      "side": 1,
+      "message": "nit: DBusThreadManager\n\nbut instead of adding this comment, please add a comment above the member below:\n\n  // Owned by DBusThreadManager.",
+      "range": {
+        "startLine": 36,
+        "startChar": 55,
+        "endLine": 36,
+        "endChar": 72
+      },
+      "revId": "51adac6c8ce249bd9b004a9d3c417489a71f4b56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
