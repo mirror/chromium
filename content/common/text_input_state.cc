@@ -16,7 +16,8 @@ TextInputState::TextInputState()
       composition_end(-1),
       can_compose_inline(true),
       show_ime_if_needed(false),
-      reply_to_request(false) {}
+      reply_to_request(false),
+      only_show_ime_if_transient_blur(false) {}
 
 TextInputState::TextInputState(const TextInputState& other) = default;
 

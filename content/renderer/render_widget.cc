@@ -1114,7 +1114,7 @@ void RenderWidget::SetInputHandler(RenderWidgetInputHandler* input_handler) {
 }
 
 void RenderWidget::ShowVirtualKeyboard() {
-  UpdateTextInputStateInternal(true, false);
+  UpdateTextInputStateInternal(true, false, false);
 }
 
 void RenderWidget::ClearTextInputState() {
@@ -1127,11 +1127,13 @@ void RenderWidget::ClearTextInputState() {
 }
 
 void RenderWidget::UpdateTextInputState() {
-  UpdateTextInputStateInternal(false, false);
+  UpdateTextInputStateInternal(false, false, false);
 }
 
-void RenderWidget::UpdateTextInputStateInternal(bool show_virtual_keyboard,
-                                                bool reply_to_request) {
+void RenderWidget::UpdateTextInputStateInternal(
+    bool show_virtual_keyboard,
+    bool but_only_for_transient_blur,
+    bool reply_to_request) {
   TRACE_EVENT0("renderer", "RenderWidget::UpdateTextInputState");
 
   if (ime_event_guard_) {
@@ -1191,6 +1193,7 @@ void RenderWidget::UpdateTextInputStateInternal(bool show_virtual_keyboard,
     // show_virtual_keyboard.
     params.show_ime_if_needed = show_virtual_keyboard;
     params.reply_to_request = reply_to_request;
+    params.only_show_ime_if_transient_blur = but_only_for_transient_blur;
     Send(new ViewHostMsg_TextInputStateChanged(routing_id(), params));
 
     text_input_info_ = new_info;
@@ -1894,7 +1897,7 @@ void RenderWidget::ShowVirtualKeyboardOnElementFocus() {
   // On ChromeOS, virtual keyboard is triggered only when users leave the
   // mouse button or the finger and a text input element is focused at that
   // time. Focus event itself shouldn't trigger virtual keyboard.
-  UpdateTextInputState();
+  UpdateTextInputStateInternal(true, true, false);
 #else
   ShowVirtualKeyboard();
 #endif
@@ -1985,7 +1988,7 @@ void RenderWidget::OnRequestTextInputStateUpdate() {
 #if defined(OS_ANDROID)
   DCHECK(!ime_event_guard_);
   UpdateSelectionBounds();
-  UpdateTextInputStateInternal(false, true /* reply_to_request */);
+  UpdateTextInputStateInternal(false, false, true /* reply_to_request */);
 #endif
 }
 
