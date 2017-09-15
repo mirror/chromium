@@ -67,14 +67,21 @@ std::string RemoveChar(const std::string& source, char removee) {
 
 const std::string kBlockTypes[] = {"ASSIGNMENT", "ANNOTATION", "CALL"};
 
-const base::FilePath kSafeListPath(
-    FILE_PATH_LITERAL("tools/traffic_annotation/auditor/safe_list.txt"));
+const base::FilePath kSafeListPath =
+    base::FilePath(FILE_PATH_LITERAL("tools"))
+        .Append(FILE_PATH_LITERAL("traffic_annotation"))
+        .Append(FILE_PATH_LITERAL("auditor"))
+        .Append(FILE_PATH_LITERAL("safe_list.txt"));
 
 // The folder that includes the latest Clang built-in library. Inside this
 // folder, there should be another folder with version number, like
 // '.../lib/clang/6.0.0', which would be passed to the clang tool.
-const base::FilePath kClangLibraryPath(
-    FILE_PATH_LITERAL("third_party/llvm-build/Release+Asserts/lib/clang"));
+const base::FilePath kClangLibraryPath =
+    base::FilePath(FILE_PATH_LITERAL("third_party"))
+        .Append(FILE_PATH_LITERAL("llvm-build"))
+        .Append(FILE_PATH_LITERAL("Release+Asserts"))
+        .Append(FILE_PATH_LITERAL("lib"))
+        .Append(FILE_PATH_LITERAL("clang"));
 
 }  // namespace
 

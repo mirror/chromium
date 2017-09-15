@@ -38889,6 +38889,7 @@ Called by update_traffic_annotation_histograms.py.-->
   <int value="57276415" label="chrome_expect_ct_reporter"/>
   <int value="58963098" label="resource_dispather_host"/>
   <int value="59592717" label="extension_blacklist"/>
+  <int value="60071001" label="net_error_helper"/>
   <int value="60921996" label="ocsp_start_url_request"/>
   <int value="60946824" label="web_history_expire"/>
   <int value="61656965" label="gcm_registration"/>
