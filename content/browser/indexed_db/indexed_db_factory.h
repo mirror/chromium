@@ -94,6 +94,11 @@ class CONTENT_EXPORT IndexedDBFactory
 
   virtual size_t GetConnectionCount(const url::Origin& origin) const = 0;
 
+  virtual void NotifyIndexedDBContentChanged(
+      const url::Origin& origin,
+      const std::string& databaseName,
+      const std::string& objectStoreName) = 0;
+
  protected:
   friend class base::RefCountedThreadSafe<IndexedDBFactory>;
 

@@ -41,6 +41,7 @@
 #include "url/origin.h"
 
 using base::ASCIIToUTF16;
+using base::UTF16ToASCII;
 using base::Int64ToString16;
 using blink::kWebIDBKeyTypeNumber;
 
@@ -1380,6 +1381,10 @@ leveldb::Status IndexedDBDatabase::PutOperation(
                         ? blink::kWebIDBAdd
                         : blink::kWebIDBPut,
                     IndexedDBKeyRange(*key), &params->value);
+  factory_->NotifyIndexedDBContentChanged(
+      origin(), base::UTF16ToASCII(metadata_.name),
+      base::UTF16ToASCII(
+          metadata_.object_stores[params->object_store_id].name));
   return s;
 }
 
@@ -1678,6 +1683,9 @@ leveldb::Status IndexedDBDatabase::DeleteRangeOperation(
   callbacks->OnSuccess();
   FilterObservation(transaction, object_store_id, blink::kWebIDBDelete,
                     *key_range, nullptr);
+  factory_->NotifyIndexedDBContentChanged(
+      origin(), base::UTF16ToASCII(metadata_.name),
+      base::UTF16ToASCII(metadata_.object_stores[object_store_id].name));
   return s;
 }
 
@@ -1708,6 +1716,9 @@ leveldb::Status IndexedDBDatabase::ClearOperation(
 
   FilterObservation(transaction, object_store_id, blink::kWebIDBClear,
                     IndexedDBKeyRange(), nullptr);
+  factory_->NotifyIndexedDBContentChanged(
+      origin(), base::UTF16ToASCII(metadata_.name),
+      base::UTF16ToASCII(metadata_.object_stores[object_store_id].name));
   return s;
 }
 

@@ -80,6 +80,11 @@ class CONTENT_EXPORT IndexedDBFactoryImpl : public IndexedDBFactory {
 
   size_t GetConnectionCount(const url::Origin& origin) const override;
 
+  void NotifyIndexedDBContentChanged(
+      const url::Origin& origin,
+      const std::string& databaseName,
+      const std::string& objectStoreName) override;
+
  protected:
   ~IndexedDBFactoryImpl() override;
 
