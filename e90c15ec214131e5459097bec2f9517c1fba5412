@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc01b698_3df2c6f5",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1854,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-15T19:06:29Z",
+      "side": 1,
+      "message": "Can the code here on down be moved into c/b/client_hints? chrome_content_browser_client.cc is a bit long, and you won\u0027t need a top level reviewer every time you change client_hints logic.",
+      "revId": "e90c15ec214131e5459097bec2f9517c1fba5412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "595d2734_32ace13a",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1856,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-15T19:06:29Z",
+      "side": 1,
+      "message": "Less verbose to just return nullptr?",
+      "revId": "e90c15ec214131e5459097bec2f9517c1fba5412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef8504f_f4f18abc",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1863,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-15T19:06:29Z",
+      "side": 1,
+      "message": "Remove to show |client_hints_host_settings| has a closer relationship to the line below than the code above?",
+      "revId": "e90c15ec214131e5459097bec2f9517c1fba5412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02c5c16_d5da08c6",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1881,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-15T19:06:29Z",
+      "side": 1,
+      "message": "Are there constants for types like these?",
+      "revId": "e90c15ec214131e5459097bec2f9517c1fba5412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
