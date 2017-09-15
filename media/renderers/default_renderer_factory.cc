@@ -13,6 +13,7 @@
 #include "media/base/decoder_factory.h"
 #include "media/base/media_log.h"
 #include "media/filters/gpu_video_decoder.h"
+#include "media/gpu/features.h"
 #include "media/renderers/audio_renderer_impl.h"
 #include "media/renderers/renderer_impl.h"
 #include "media/renderers/video_renderer_impl.h"
@@ -39,8 +40,7 @@ DefaultRendererFactory::DefaultRendererFactory(
       decoder_factory_(decoder_factory),
       get_gpu_factories_cb_(get_gpu_factories_cb) {}
 
-DefaultRendererFactory::~DefaultRendererFactory() {
-}
+DefaultRendererFactory::~DefaultRendererFactory() {}
 
 std::vector<std::unique_ptr<AudioDecoder>>
 DefaultRendererFactory::CreateAudioDecoders(
@@ -80,8 +80,10 @@ DefaultRendererFactory::CreateVideoDecoders(
 
     if (decoder_factory_) {
       decoder_factory_->CreateVideoDecoders(media_task_runner, gpu_factories,
-                                            media_log_, &video_decoders);
+                                            media_log_, request_overlay_info_cb,
+                                            &video_decoders);
     }
+
     video_decoders.push_back(base::MakeUnique<GpuVideoDecoder>(
         gpu_factories, request_overlay_info_cb, target_color_space,
         media_log_));
