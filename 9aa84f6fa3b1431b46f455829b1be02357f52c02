@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3c47cad6_ead64d4a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-15T18:40:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99adb630_e3554563",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 77
+      },
+      "revId": "9aa84f6fa3b1431b46f455829b1be02357f52c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d378811_dfd6a250",
         "filename": "components/payments_strings.grdp",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "ba5a753f_b79c474a",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-15T18:40:42Z",
+      "side": 1,
+      "message": "That\u0027s correct.",
+      "parentUuid": "0d378811_dfd6a250",
+      "revId": "9aa84f6fa3b1431b46f455829b1be02357f52c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3851b05_35359048",
         "filename": "components/payments_strings.grdp",
         "patchSetId": 5
@@ -53,6 +95,24 @@
       "writtenOn": "2017-09-14T16:23:15Z",
       "side": 1,
       "message": "Checkboxes don\u0027t use title-casing\n\nhttps://developer.apple.com/macos/human-interface-guidelines/buttons/checkboxes/",
+      "revId": "9aa84f6fa3b1431b46f455829b1be02357f52c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf59ebe9_1f6fe580",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-15T18:40:42Z",
+      "side": 1,
+      "message": "Ack. This is only used in iOS and it\u0027s a label. It should stay title-case.",
+      "parentUuid": "f3851b05_35359048",
       "revId": "9aa84f6fa3b1431b46f455829b1be02357f52c02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -79,6 +139,30 @@
       "revId": "9aa84f6fa3b1431b46f455829b1be02357f52c02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53223558_e1cd3bba",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-15T18:40:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35c55b56_528a6650",
+      "range": {
+        "startLine": 316,
+        "startChar": 294,
+        "endLine": 316,
+        "endChar": 323
+      },
+      "revId": "9aa84f6fa3b1431b46f455829b1be02357f52c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -126,6 +210,30 @@
       "revId": "9aa84f6fa3b1431b46f455829b1be02357f52c02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35ecef9_76a751b0",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 475,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-15T18:40:42Z",
+      "side": 1,
+      "message": "Done. Checked with Bling designers. They should be sentence-cased but do not need to end in periods because they are only one sentence.",
+      "parentUuid": "538913e8_834c0545",
+      "range": {
+        "startLine": 475,
+        "startChar": 2,
+        "endLine": 475,
+        "endChar": 34
+      },
+      "revId": "9aa84f6fa3b1431b46f455829b1be02357f52c02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
