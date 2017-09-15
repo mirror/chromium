@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f0d535dd_ba400f06",
+        "filename": "content/browser/devtools/protocol_string.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-15T03:54:08Z",
+      "side": 1,
+      "message": "sg",
+      "parentUuid": "c6bb7b64_a69c489a",
+      "revId": "b457b5ff3f3907b2103c45c94c7f50786a13098d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de198f0c_af24f161",
         "filename": "content/browser/devtools/protocol_string.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-15T01:44:30Z",
       "side": 1,
       "message": "This is guaranteed to be ASCII per the condition above, so perhaps just truncate the char?",
+      "revId": "b457b5ff3f3907b2103c45c94c7f50786a13098d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10ed1d7_7a87e5c8",
+        "filename": "content/browser/devtools/protocol_string.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-15T03:54:08Z",
+      "side": 1,
+      "message": "that is a wonderful point!",
+      "parentUuid": "de198f0c_af24f161",
       "revId": "b457b5ff3f3907b2103c45c94c7f50786a13098d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
