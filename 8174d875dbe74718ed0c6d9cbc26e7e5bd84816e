@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9aa3934d_d7e525c9",
+        "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-15T14:08:43Z",
+      "side": 1,
+      "message": "1. The reconcilor is supposed to work on ChromeOS - they plan to use it for Unicorn accounts to avoid kids signing out of the web. Note that is not in production yet, but it is supposed to work.\n\n2. I think it is hard to say if the current code works when the tokens are not loaded as nobody has tested. But in may be that in that case an account exists in the token service but OnRefreshTokensLoaded is not fired.\n\nI think it would make sense to keep the old behavior and scope it only for ChromeOS (basically on Chrome OS check that the accounts are loaded or empty). We can add a TODO to revisit this once https://bugs.chromium.org/p/chromium/issues/detail?id\u003d749535 is fixed.",
+      "parentUuid": "f985198e_2445bb03",
+      "range": {
+        "startLine": 216,
+        "startChar": 18,
+        "endLine": 216,
+        "endChar": 29
+      },
+      "revId": "8174d875dbe74718ed0c6d9cbc26e7e5bd84816e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a53283e_eac5dc8c",
         "filename": "chrome/browser/signin/account_reconcilor_unittest.cc",
         "patchSetId": 7
@@ -184,6 +208,30 @@
     },
     {
       "key": {
+        "uuid": "b8da24e0_784f8484",
+        "filename": "chrome/browser/signin/dice_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-15T14:08:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3a2b3ec1_2d0361ac",
+      "range": {
+        "startLine": 340,
+        "startChar": 7,
+        "endLine": 340,
+        "endChar": 17
+      },
+      "revId": "8174d875dbe74718ed0c6d9cbc26e7e5bd84816e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3ac4464_5ba73662",
         "filename": "components/signin/core/browser/account_reconcilor.cc",
         "patchSetId": 7
@@ -259,6 +307,24 @@
       "side": 1,
       "message": "Yes, and this is why I needed to slightly change a test.\nI think the new behavior is better, because it avoids a unnecessary call to logout.",
       "parentUuid": "08221eff_40ecadab",
+      "revId": "8174d875dbe74718ed0c6d9cbc26e7e5bd84816e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "238b626f_8f67e29d",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-15T14:08:43Z",
+      "side": 1,
+      "message": "I see and you may be right - however the way GAIA works with accounts is very tricky in some case and logout actually removes all the accounts from all domains.\n\n@nickk@: Is this change fine, or is the reconcilor supposed to do an call to a.g.c/Logout even when the number of accounts in the GAIA cookie is 0.",
+      "parentUuid": "496f8948_4c6f2449",
       "revId": "8174d875dbe74718ed0c6d9cbc26e7e5bd84816e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
