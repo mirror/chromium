@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "50e57b30_fe803be7",
+        "filename": "net/http/transport_security_state.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-15T18:39:41Z",
+      "side": 1,
+      "message": "omg that\u0027s embarrassing",
+      "parentUuid": "4bff08dc_ecb2dbb7",
+      "revId": "2cde6b2e576b073fc2bfc754e2ac93f3e09341a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f11ca515_bd457538",
         "filename": "net/http/transport_security_state_ct_policies.inc",
         "patchSetId": 12
@@ -70,6 +88,24 @@
       "writtenOn": "2017-09-15T18:24:50Z",
       "side": 1,
       "message": "AIUI, if you add a second entry to kCTRequiredPolicies, this typedef won\u0027t cause a compiler error - and the iterative loop in usage means that things will go bad.\n\nMore usefully, however, I also don\u0027t believe you need to add it to a function - because we are initializing in place with a constexpr, the compiler doesn\u0027t do default initialization, and doesn\u0027t introduce a static initializer.\n\nThat is, the fact that you\u0027re now referring to kSymantecRoots/kSymantecRootsLength (versus inline) doesn\u0027t change the POD nature of kCTRequiredPolicies, because the only type (base::TimeDelta) is a trivial-layout, constexpr-initialized object :)",
+      "revId": "2cde6b2e576b073fc2bfc754e2ac93f3e09341a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e268842_448d694d",
+        "filename": "net/http/transport_security_state_ct_policies.inc",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-15T18:39:41Z",
+      "side": 1,
+      "message": "I am massively confused. When I simply moved kSymantecRoots, etc. out into symantec_certs.h/.cc, I got an error from //chrome/android:monochrome_static_initializers on the android bot.\n\nCompile output: https://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.android%2Flinux_android_rel_ng%2F385818%2F%2B%2Frecipes%2Fsteps%2Fcompile__with_patch_%2F0%2Fstdout\n\npastebin of the relevant bit in case the log gets cleaned up: https://paste.googleplex.com/5517676982042624\n\n(note the static initializers detected in transport_security_state.cc, i.e. it seems to have detected kCTRequiredPolicies as a static initializer)\n\nPatchset that produced that error: https://chromium-review.googlesource.com/c/chromium/src/+/659318/11/net/http/transport_security_state_ct_policies.inc\n\nThis does indeed fail to compile if I increase the size of kCTRequiredPolicies though, so we\u0027ve got that going for us.",
+      "parentUuid": "f11ca515_bd457538",
       "revId": "2cde6b2e576b073fc2bfc754e2ac93f3e09341a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
