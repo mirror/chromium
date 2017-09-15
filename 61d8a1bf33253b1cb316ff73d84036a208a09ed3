@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a147c1a_e19312ef",
+        "filename": "third_party/WebKit/Source/platform/WebFrameScheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-09-15T23:04:40Z",
+      "side": 1,
+      "message": "Yes this only applies for the duration that the page is in background; when page goes back to foreground, loading should no longer be stopped.\nThis should happen from SetPageVisible signal:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.cc?l\u003d367\n\nI updated the new ThrottlingState to \"kStoppedInBackground\" to be more explicit.",
+      "parentUuid": "b32ad21d_9256c1dd",
+      "revId": "61d8a1bf33253b1cb316ff73d84036a208a09ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1415da71_d0eb5114",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 2
@@ -66,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "cfd5b0ad_562c2768",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-09-15T23:04:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9e2dde1a_dda6dfad",
+      "range": {
+        "startLine": 186,
+        "startChar": 37,
+        "endLine": 186,
+        "endChar": 0
+      },
+      "revId": "61d8a1bf33253b1cb316ff73d84036a208a09ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e30257db_83d202b3",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 2
@@ -86,6 +128,30 @@
       "revId": "61d8a1bf33253b1cb316ff73d84036a208a09ed3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "add95b44_1cd8dc02",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-09-15T23:04:40Z",
+      "side": 1,
+      "message": "Updated.\nThough I\u0027m a bit confused why \"case kNotThrottled\" sets to 0 or kOutstandingUnlimited?",
+      "parentUuid": "e30257db_83d202b3",
+      "range": {
+        "startLine": 210,
+        "startChar": 37,
+        "endLine": 210,
+        "endChar": 38
+      },
+      "revId": "61d8a1bf33253b1cb316ff73d84036a208a09ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +189,24 @@
       "writtenOn": "2017-09-15T05:57:33Z",
       "side": 1,
       "message": "I felt a bit unsure if we want this specific naming (as what\u0027s happening there is that we\u0027re suspending multiple tasks but not only loading), but I see that it\u0027s gated by a specific finch flag... then it might be fine.  Could we still have a bit more descriptive comment on this?",
+      "revId": "61d8a1bf33253b1cb316ff73d84036a208a09ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2ed2ba6_5a82b85c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-09-15T23:04:40Z",
+      "side": 1,
+      "message": "Added comment.\nI agree that in the long term we should generalize this as STOPPED state in the Lifecycle\nhttps://github.com/spanicker/web-lifecycle\nBeing more specific for now may be okay as we are incrementally implementing this starting with STOPPED only in mobile - after 5 minutes, and even then - only timers + loading.\n\nWe should come back and update this to \"OnLifecycleStateStopped\" or something later.",
+      "parentUuid": "60b2bced_a14c16db",
       "revId": "61d8a1bf33253b1cb316ff73d84036a208a09ed3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
