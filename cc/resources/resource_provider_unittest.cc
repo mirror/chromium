@@ -19,6 +19,7 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
+#include "cc/resources/scoped_resource.h"
 #include "cc/test/test_context_provider.h"
 #include "cc/test/test_shared_bitmap_manager.h"
 #include "cc/test/test_texture.h"
@@ -3726,5 +3727,70 @@ TEST_P(ResourceProviderTest, ScopedWriteLockGL_GpuMemoryBuffer_Mailbox) {
   resource_provider->DeleteResource(id);
 }
 
+void GetLocalResourcePixels(ResourceProvider* resource_provider,
+                            ResourceProviderContext* context,
+                            viz::ResourceId id,
+                            const gfx::Size& size,
+                            viz::ResourceFormat format,
+                            uint8_t* pixels) {
+  switch (resource_provider->default_resource_type()) {
+    case ResourceProvider::RESOURCE_TYPE_GPU_MEMORY_BUFFER:
+    case ResourceProvider::RESOURCE_TYPE_GL_TEXTURE: {
+      ResourceProvider::ScopedLocalReadLockGL lock_gl(resource_provider, id);
+      ASSERT_NE(0U, lock_gl.texture_id());
+      context->bindTexture(GL_TEXTURE_2D, lock_gl.texture_id());
+      context->GetPixels(size, format, pixels);
+      break;
+    }
+    case ResourceProvider::RESOURCE_TYPE_BITMAP: {
+      // TODO(xing.xu): Handle bitmap here
+      break;
+    }
+  }
+}
+
+TEST_P(ResourceProviderTest, ScopedLocalReadWriteLockGL) {
+  if (GetParam() != ResourceProvider::RESOURCE_TYPE_GL_TEXTURE)
+    return;
+
+  std::unique_ptr<ResourceProviderContext> context3d(
+      ResourceProviderContext::Create(shared_data_.get()));
+  context3d_ = context3d.get();
+  auto context_provider = TestContextProvider::Create(std::move(context3d));
+  context_provider->BindToCurrentThread();
+
+  std::unique_ptr<ResourceProvider> resource_provider(
+      std::make_unique<ResourceProvider>(
+          context_provider.get(), shared_bitmap_manager_.get(),
+          gpu_memory_buffer_manager_.get(), nullptr,
+          kDelegatedSyncPointsRequired, kEnableColorCorrectRendering,
+          CreateResourceSettings()));
+
+  auto resource = std::make_unique<ScopedResource>(resource_provider.get());
+  gfx::Size size(1, 1);
+  viz::ResourceFormat format = viz::RGBA_8888;
+
+  resource->Allocate(size, ResourceProvider::TEXTURE_HINT_DEFAULT, format,
+                     gfx::ColorSpace(), true);
+  uint8_t data[4] = {1, 2, 3, 4};
+  // TODO(xing.xu): Investigate if possible to remove
+  // DCHECK(!resource->locked_for_write) in ResourceProvider::CopyToResource.
+  // So that we can move below inside
+  // ResourceProvider::ScopedLocalWriteLockGL.
+  resource_provider->CopyToResource(resource->id(), data, size);
+  {
+    auto local_lock =
+        base::MakeUnique<ResourceProvider::ScopedLocalWriteLockGL>(
+            resource_provider.get(), resource->id());
+  }
+  EXPECT_EQ(1u, resource_provider->num_resources());
+  {
+    uint8_t result[4] = {0};
+    GetLocalResourcePixels(resource_provider.get(), context3d_, resource->id(),
+                           size, resource->format(), result);
+    size_t pixel_size = TextureSizeBytes(size, format);
+    EXPECT_EQ(0, memcmp(data, result, pixel_size));
+  }
+}
 }  // namespace
 }  // namespace cc
