@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d3fe800_3f62dd97",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/repaint-on-resize.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T15:19:59Z",
+      "side": 1,
+      "message": "Can we use a -expected.html file instead of a .png here?",
+      "revId": "e48f09a3df5ceafce3994842dfa9973fdf6ec0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebafb2cb_d6e6a3aa",
+        "filename": "third_party/WebKit/Source/modules/media_controls/elements/MediaControlSliderElement.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-15T15:19:59Z",
+      "side": 1,
+      "message": "I think this comment is stalled.",
+      "revId": "e48f09a3df5ceafce3994842dfa9973fdf6ec0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
