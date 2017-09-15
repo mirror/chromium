@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "b4204d22_bc0a0d62",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T04:43:05Z",
+      "side": 1,
+      "message": "Nit: Its",
+      "range": {
+        "startLine": 13,
+        "startChar": 12,
+        "endLine": 13,
+        "endChar": 16
+      },
+      "revId": "a1bb109600232b7e80b0a812784f7313c6348960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd3e2c8_320d70db",
+        "filename": "content/browser/browser_child_process_host_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T04:43:05Z",
+      "side": 1,
+      "message": "Nit: no need to pass this last parameter if you\u0027re passing the mapped size in the wrapper shmem info.",
+      "revId": "a1bb109600232b7e80b0a812784f7313c6348960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f1a9e57_fd2d2673",
         "filename": "content/browser/histogram_controller.h",
         "patchSetId": 9
@@ -46,6 +86,23 @@
       "revId": "a1bb109600232b7e80b0a812784f7313c6348960",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ccc7b19d_3ecda279",
+        "filename": "content/child/child_histogram_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T04:43:05Z",
+      "side": 1,
+      "message": "Because here we can grab the size from the third parameter when calling UnwrapSharedMemoryHandle.",
+      "revId": "a1bb109600232b7e80b0a812784f7313c6348960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

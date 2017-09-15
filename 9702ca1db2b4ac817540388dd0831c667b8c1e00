@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79f25f5e_43e824e0",
+        "filename": "content/browser/histogram_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T04:43:05Z",
+      "side": 1,
+      "message": "Prefer emplace(x, y) over insert(std::make_pair(x, y))",
+      "range": {
+        "startLine": 90,
+        "startChar": 37,
+        "endLine": 90,
+        "endChar": 43
+      },
+      "revId": "9702ca1db2b4ac817540388dd0831c667b8c1e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3cdda48_3af39cbd",
+        "filename": "content/common/child_histogram.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T04:43:05Z",
+      "side": 1,
+      "message": "Will this ever be called more than once for a process?",
+      "revId": "9702ca1db2b4ac817540388dd0831c667b8c1e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
