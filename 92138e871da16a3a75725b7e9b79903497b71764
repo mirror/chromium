@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5753e0d9_2f762ef3",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-15T16:47:45Z",
+      "side": 1,
+      "message": "Right, it has to be done in network stack but that currently lives on IO thread, while the logic to determine the client hints is on UI thread. So, it might be enough to only implement \"removal\" of client hints headers on redirect (which is simpler). Adding client hint headers would be more complicated (may need a PostTaskAndReplyWithResult here: https://cs.chromium.org/chromium/src/content/browser/loader/navigation_url_loader_impl_core.cc?rcl\u003d4f515ad42d57079d163949311a1cf6def706ec84\u0026l\u003d96).",
+      "parentUuid": "c935f442_06539ca8",
+      "revId": "92138e871da16a3a75725b7e9b79903497b71764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68dd5ea5_828c982a",
         "filename": "content/public/browser/content_browser_client.h",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "92138e871da16a3a75725b7e9b79903497b71764",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fdbf82c_bc63efb2",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-09-15T16:47:45Z",
+      "side": 1,
+      "message": "Done\n\n\u003e Also, why not have the function return the headers explicitly, instead of modifying a pointer?\n\nReturning unique ptr to avoid copies.",
+      "parentUuid": "68dd5ea5_828c982a",
+      "revId": "92138e871da16a3a75725b7e9b79903497b71764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
