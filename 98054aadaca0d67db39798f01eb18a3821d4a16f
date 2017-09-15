@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5335dd48_c3be8ec2",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-15T19:14:44Z",
+      "side": 1,
+      "message": "You can avoid the square root by storing the one-dimensional sample rate.",
+      "revId": "98054aadaca0d67db39798f01eb18a3821d4a16f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3829da9_557516cc",
+        "filename": "third_party/WebKit/Source/platform/graphics/HighContrastImageClassifier.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-15T19:14:44Z",
+      "side": 1,
+      "message": "This class needs a unittest.",
+      "revId": "98054aadaca0d67db39798f01eb18a3821d4a16f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c389c829_4efe8908",
+        "filename": "third_party/WebKit/Source/platform/graphics/Image.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-15T19:14:44Z",
+      "side": 1,
+      "message": "Add a comment that this caches the classification result to be consistent and higher \nperformance for future paints. (I\u0027m assuming this is why you are saving it here.)",
+      "revId": "98054aadaca0d67db39798f01eb18a3821d4a16f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
