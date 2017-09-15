@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66900ef8_0d2763a4",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-15T19:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78d3267e_32b05cd4",
+      "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6442ff6d_f6b0ba46",
         "filename": "ash/shelf/login_shelf_view.cc",
         "patchSetId": 19
@@ -33,6 +51,24 @@
       "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "523b4871_7c72b058",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-15T19:52:46Z",
+      "side": 1,
+      "message": "Done. It used to have a use case because the initial state of the cached session state is UNKNOWN, but after removing the cache there\u0027s no need to check.",
+      "parentUuid": "6442ff6d_f6b0ba46",
+      "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cef21296_09201d60",
+        "filename": "ash/shelf/login_shelf_view.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-15T19:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ffbad05_887817f7",
+      "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74024952_dbc38a59",
         "filename": "ash/shelf/login_shelf_view.h",
         "patchSetId": 19
@@ -67,6 +121,24 @@
       "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f53c2c51_29c517e1",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-15T19:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74024952_dbc38a59",
+      "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f586846c_dbf07433",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-15T19:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de56efa0_d337b8c0",
+      "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b64a1832_7acc292a",
         "filename": "ash/shelf/login_shelf_view.h",
         "patchSetId": 19
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-15T15:50:12Z",
       "side": 1,
       "message": "Why do these need to be cached, vs. looking them up from the canonical copies when you need them? I\u0027ve had problems in the past with UI classes keeping independent copies of model/controller state.",
+      "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004e3e69_e4ad9114",
+        "filename": "ash/shelf/login_shelf_view.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-15T19:52:46Z",
+      "side": 1,
+      "message": "Done.\n\nI thought what caching could prevent is an \u0027imaginary\u0027 case that a controller notifies of a \u0027terminating\u0027 state and then destructs itself earlier than the LoginShelfView, so later we couldn\u0027t access the canonical copy anymore, but there shouldn\u0027t be such a case.",
+      "parentUuid": "b64a1832_7acc292a",
       "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +226,24 @@
       "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaa3da9d_e46448cd",
+        "filename": "ash/shelf/login_shelf_view_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-15T19:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e5cdaf3_f1db0321",
+      "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "a81ea6b0_62c81744",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-15T19:52:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ccc76c9_60bb2214",
+      "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "695e3c81_1da62e1b",
         "filename": "ash/shelf/shelf_widget_unittest.cc",
         "patchSetId": 19
@@ -166,6 +310,24 @@
       "writtenOn": "2017-09-15T15:50:12Z",
       "side": 1,
       "message": "Nice test. I like the comment/action/expectation rhythm.",
+      "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb70368_d214bc83",
+        "filename": "ash/shelf/shelf_widget_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-09-15T19:52:46Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "695e3c81_1da62e1b",
       "revId": "5d40e3e07f9d5e1f69a35241ebe76bce5000516e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
