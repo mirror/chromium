@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "f17e080d_4810b6d0",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ClipboardTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-15T22:19:26Z",
+      "side": 1,
+      "message": "I think it is - that\u0027s how the problem of a wrong thread throwing an exception while trying to acquire a system manager was fixed.",
+      "parentUuid": "aee89707_62883f5b",
+      "range": {
+        "startLine": 65,
+        "startChar": 28,
+        "endLine": 65,
+        "endChar": 60
+      },
+      "revId": "fdb91ed2e255bd3c02f5f8e1df59ec81af58258e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98ecdad5_01e5d8aa",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/ClipboardTest.java",
         "patchSetId": 3
