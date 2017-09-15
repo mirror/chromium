@@ -223,7 +223,7 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   void NotifyScreenInfoChanged();
 
   // Forces redraw in the renderer and when the update reaches the browser.
-  // grabs snapshot from the compositor.
+  // Grabs snapshot from the compositor.
   // If |from_surface| is false, it will obtain the snapshot directly from the
   // view (On MacOS, the snapshot is taken from the Cocoa view for end-to-end
   // testing  purposes).
@@ -231,10 +231,12 @@ class CONTENT_EXPORT RenderWidgetHostImpl
   // defined.
   // Returns a gfx::Image that is backed by an NSImage on MacOS or by an
   // SkBitmap otherwise. The gfx::Image may be empty if the snapshot failed.
-  using GetSnapshotFromBrowserCallback =
-      base::Callback<void(const gfx::Image&)>;
   void GetSnapshotFromBrowser(const GetSnapshotFromBrowserCallback& callback,
                               bool from_surface);
+
+  void GetSnapshotFromBrowserForTests(
+      const GetSnapshotFromBrowserCallback& callback,
+      bool from_surface) override;
 
   // Sets the View of this RenderWidgetHost.
   void SetView(RenderWidgetHostViewBase* view);

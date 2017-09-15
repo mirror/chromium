@@ -25,6 +25,10 @@ class WebMouseEvent;
 class WebMouseWheelEvent;
 }
 
+namespace gfx {
+class Image;
+}
+
 namespace ui {
 class LatencyInfo;
 }
@@ -274,6 +278,23 @@ class CONTENT_EXPORT RenderWidgetHost : public IPC::Sender {
 
   // Sets cursor to a specified one when it is over this widget.
   virtual void SetCursor(const CursorInfo& cursor_info) {}
+
+  // Forces redraw in the renderer and when the update reaches the browser.
+  // Grabs snapshot from the compositor.
+  // This entry point is intended only for tests. The functionality is
+  // exposed publicly via DevTools.
+  // If |from_surface| is false, it will obtain the snapshot directly from the
+  // view (On MacOS, the snapshot is taken from the Cocoa view for end-to-end
+  // testing  purposes).
+  // Otherwise, the snapshot is obtained from the view's surface, with no bounds
+  // defined.
+  // Returns a gfx::Image that is backed by an NSImage on MacOS or by an
+  // SkBitmap otherwise. The gfx::Image may be empty if the snapshot failed.
+  using GetSnapshotFromBrowserCallback =
+      base::Callback<void(const gfx::Image&)>;
+  virtual void GetSnapshotFromBrowserForTests(
+      const GetSnapshotFromBrowserCallback& callback,
+      bool from_surface) {}
 };
 
 }  // namespace content
