@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "494e51b0_f82eeb60",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksReader.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-15T18:37:13Z",
+      "side": 1,
+      "message": "if the count !\u003d 0, should we be clearing LAST_EMPTY_READ_PREFS_NAME?\n\nI don\u0027t think it \"really\" matters but if we extended the duration then we could potentially be not reading until the extended time expired.",
+      "range": {
+        "startLine": 170,
+        "startChar": 16,
+        "endLine": 170,
+        "endChar": 21
+      },
+      "revId": "f4827cf18ea109226e25dc2c228442911f97b643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d84337a_1c5795f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksShim.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-15T18:37:13Z",
+      "side": 1,
+      "message": "maybe i instead of w?",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 17
+      },
+      "revId": "f4827cf18ea109226e25dc2c228442911f97b643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ef4fda7_9488d984",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksShim.java",
         "patchSetId": 3
@@ -13,6 +59,30 @@
       "writtenOn": "2017-09-15T03:08:28Z",
       "side": 1,
       "message": "This means the CL wouldn\u0027t benefit much from our staged release, right?",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 83
+      },
+      "revId": "f4827cf18ea109226e25dc2c228442911f97b643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afdc1177_191ce2aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksShim.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-15T18:37:13Z",
+      "side": 1,
+      "message": "That is correct.  We only load partner bookmarks on stable channels.",
+      "parentUuid": "6ef4fda7_9488d984",
       "range": {
         "startLine": 47,
         "startChar": 12,
