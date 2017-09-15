@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25345ad2_4b74a240",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/permissions/PermissionDialogController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-15T09:26:03Z",
+      "side": 1,
+      "message": "I don\u0027t think this needs a SpannableStringBuilder any more. It looks like it reduces to:\n\nString messageText \u003d delegate.getMessageText();\n\nif (endswith fullstop)\n  messageText \u003d messageText.subString()\n\nreturn messageText;",
+      "range": {
+        "startLine": 233,
+        "startChar": 8,
+        "endLine": 233,
+        "endChar": 30
+      },
+      "revId": "9c535c0e7a00f04aeb31357775a088e82a0f8cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d9c9379_cb14e389",
+        "filename": "chrome/browser/permissions/permission_dialog_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-15T09:26:03Z",
+      "side": 1,
+      "message": "This include can be removed now.",
+      "range": {
+        "startLine": 24,
+        "startChar": 18,
+        "endLine": 24,
+        "endChar": 41
+      },
+      "revId": "9c535c0e7a00f04aeb31357775a088e82a0f8cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1148a0aa_2448b0cd",
+        "filename": "chrome/browser/permissions/permission_dialog_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-15T09:26:03Z",
+      "side": 1,
+      "message": "The only reason we kept tab_ as a member was for LinkClicked(). It can be removed as a member by changing CreateJavaDelegate() to take a TabAndroid* argument.",
+      "range": {
+        "startLine": 69,
+        "startChar": 14,
+        "endLine": 69,
+        "endChar": 18
+      },
+      "revId": "9c535c0e7a00f04aeb31357775a088e82a0f8cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
