@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c3b5a762_a93eaec1",
+        "filename": "chrome/browser/media/router/issue_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-15T21:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41acde06_69af73b9",
+      "revId": "cd88019f604e187b9f18e3fd19509e064ea78c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53e400e2_2cb9eaa4",
         "filename": "chrome/browser/media/router/issue_manager.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-14T17:21:44Z",
       "side": 1,
       "message": "ISTM that there could be a design that allows CancelableClosure to be move-able.  It might require sharing the weak pointer factory that is the basis for the implementation.",
+      "revId": "cd88019f604e187b9f18e3fd19509e064ea78c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26ac5635_e572c20f",
+        "filename": "chrome/browser/media/router/issue_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-15T21:29:30Z",
+      "side": 1,
+      "message": "It seems like CancelableCallback is designed to be self contained, so we\u0027d have to support move operations for the underlying WeakPtrFactory. It might be easier to extend CancelableTaskTracker to support delayed tasks? The result would be that this will end up tracking TaskIds instead of CancelableClosures. WDYT? I can add a feature request to track this.",
+      "parentUuid": "53e400e2_2cb9eaa4",
       "revId": "cd88019f604e187b9f18e3fd19509e064ea78c61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "77f94eae_9a9d2793",
+        "filename": "chrome/browser/media/router/issue_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-15T21:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c5eac67_3c8c7925",
+      "revId": "cd88019f604e187b9f18e3fd19509e064ea78c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ccf321b0_25bec85a",
         "filename": "chrome/browser/media/router/issue_manager.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "cd88019f604e187b9f18e3fd19509e064ea78c61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e984f455_dffa247f",
+        "filename": "chrome/browser/media/router/issue_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-15T21:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccf321b0_25bec85a",
+      "revId": "cd88019f604e187b9f18e3fd19509e064ea78c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -101,6 +173,24 @@
       "revId": "cd88019f604e187b9f18e3fd19509e064ea78c61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab033b5e_98e34953",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-15T21:29:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "497cc5ae_e867b59f",
+      "revId": "cd88019f604e187b9f18e3fd19509e064ea78c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
