@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "d6172baf_c85d736c",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bubble_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T01:47:46Z",
+      "side": 1,
+      "message": "Nit: constexpr",
+      "revId": "df038dfd861322951c1855c41a9e224ca48abe40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa92a50_bf968656",
+        "filename": "chrome/browser/ui/views/bookmarks/bookmark_bubble_view_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T01:47:46Z",
+      "side": 1,
+      "message": "Nit: Prefer \u003d to () here (see https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Variable-initialization )",
+      "revId": "df038dfd861322951c1855c41a9e224ca48abe40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e34c45ef_095ac889",
+        "filename": "ui/views/bubble/bubble_dialog_delegate.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T01:47:46Z",
+      "side": 1,
+      "message": "Nit: Maybe \"By default\" is better than \"Until proven otherwise\", since the latter sounds like if we ever found a footnote to the contrary, we\u0027d need to nuke this.",
+      "revId": "df038dfd861322951c1855c41a9e224ca48abe40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6df72013_61c160ac",
         "filename": "ui/views/bubble/bubble_dialog_delegate.cc",
         "patchSetId": 7
