@@ -276,6 +276,10 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // tree.
   static void ConvertPointToLayer(const Layer* source,
                                   const Layer* target,
+                                  gfx::PointF* point);
+
+  static void ConvertPointToLayer(const Layer* source,
+                                  const Layer* target,
                                   gfx::Point* point);
 
   // Converts a transform to be relative to the given |ancestor|. Returns
@@ -444,6 +448,10 @@ class COMPOSITOR_EXPORT Layer : public LayerAnimationDelegate,
   // Stacks |child| above or below |other|.  Helper method for StackAbove() and
   // StackBelow().
   void StackRelativeTo(Layer* child, Layer* other, bool above);
+
+  bool ConvertPointForAncestor(const Layer* ancestor, gfx::PointF* point) const;
+  bool ConvertPointFromAncestor(const Layer* ancestor,
+                                gfx::PointF* point) const;
 
   bool ConvertPointForAncestor(const Layer* ancestor, gfx::Point* point) const;
   bool ConvertPointFromAncestor(const Layer* ancestor, gfx::Point* point) const;

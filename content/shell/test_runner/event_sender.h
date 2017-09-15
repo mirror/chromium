@@ -16,6 +16,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "build/build_config.h"
+#include "third_party/WebKit/public/platform/WebDoublePoint.h"
 #include "third_party/WebKit/public/platform/WebDragData.h"
 #include "third_party/WebKit/public/platform/WebDragOperation.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
@@ -100,7 +101,7 @@ class EventSender {
 
     SavedEventType type;
     blink::WebMouseEvent::Button button_type;  // For MouseUp.
-    blink::WebPoint pos;                       // For MouseMove.
+    blink::WebDoublePoint pos;                 // For MouseMove.
     int milliseconds;                          // For LeapForward.
     int modifiers;
   };
@@ -290,14 +291,14 @@ class EventSender {
     int current_buttons_;
 
     // Location of last mouseMoveTo event of this pointer.
-    blink::WebPoint last_pos_;
+    blink::WebDoublePoint last_pos_;
 
     int modifiers_;
 
     PointerState()
         : pressed_button_(blink::WebMouseEvent::Button::kNoButton),
           current_buttons_(0),
-          last_pos_(blink::WebPoint(0, 0)),
+          last_pos_(blink::WebDoublePoint(0, 0)),
           modifiers_(0) {}
   };
   typedef std::unordered_map<int, PointerState> PointerStateMap;
@@ -311,7 +312,7 @@ class EventSender {
 
   // Time and place of the last mouse up event.
   double last_click_time_sec_;
-  blink::WebPoint last_click_pos_;
+  blink::WebDoublePoint last_click_pos_;
 
   // The last button number passed to mouseDown and mouseUp.
   // Used to determine whether the click count continues to increment or not.

@@ -50,7 +50,7 @@
 using blink::WebContextMenuData;
 using blink::WebDragData;
 using blink::WebDragOperationsMask;
-using blink::WebFloatPoint;
+using blink::WebDoublePoint;
 using blink::WebGestureEvent;
 using blink::WebInputEvent;
 using blink::WebInputEventResult;
@@ -215,7 +215,7 @@ int modifiersWithButtons(int modifiers, int buttons) {
 
 void InitMouseEventGeneric(WebMouseEvent::Button b,
                            int current_buttons,
-                           const WebPoint& pos,
+                           const WebDoublePoint& pos,
                            int click_count,
                            WebPointerProperties::PointerType pointerType,
                            int pointerId,
@@ -236,7 +236,7 @@ void InitMouseEventGeneric(WebMouseEvent::Button b,
 
 void InitMouseEvent(WebMouseEvent::Button b,
                     int current_buttons,
-                    const WebPoint& pos,
+                    const WebDoublePoint& pos,
                     int click_count,
                     WebMouseEvent* e) {
   InitMouseEventGeneric(b, current_buttons, pos, click_count,
@@ -381,7 +381,7 @@ const char kSeparatorIdentifier[] = "---------";
 const char kDisabledIdentifier[] = "#";
 const char kCheckedIdentifier[] = "*";
 
-bool OutsideMultiClickRadius(const WebPoint& a, const WebPoint& b) {
+bool OutsideMultiClickRadius(const WebDoublePoint& a, const WebDoublePoint& b) {
   return ((a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y)) >
          kMultipleClickRadiusPixels * kMultipleClickRadiusPixels;
 }
@@ -1326,7 +1326,7 @@ void EventSender::Reset() {
 #endif
 
   last_click_time_sec_ = 0;
-  last_click_pos_ = WebPoint(0, 0);
+  last_click_pos_ = WebDoublePoint(0, 0);
   last_button_type_ = WebMouseEvent::Button::kNoButton;
   touch_points_.clear();
   last_context_menu_data_.reset();
@@ -2056,7 +2056,7 @@ void EventSender::BeginDragWithFiles(const std::vector<std::string>& files) {
       delegate()->RegisterIsolatedFileSystem(absolute_filenames));
   current_drag_effects_allowed_ = blink::kWebDragOperationCopy;
 
-  const WebPoint& last_pos =
+  const WebDoublePoint& last_pos =
       current_pointer_state_[kRawMousePointerId].last_pos_;
   float scale = delegate()->GetWindowToViewportScale();
   WebPoint scaled_last_pos(last_pos.x * scale, last_pos.y * scale);
@@ -2179,7 +2179,7 @@ void EventSender::MouseMoveTo(gin::Arguments* args) {
     args->ThrowError();
     return;
   }
-  WebPoint mouse_pos(static_cast<int>(x), static_cast<int>(y));
+  WebDoublePoint mouse_pos(x, y);
 
   int modifiers = 0;
   if (!args->PeekNext().IsEmpty()) {
@@ -2545,7 +2545,7 @@ void EventSender::GestureEvent(WebInputEvent::Type type, gin::Arguments* args) {
 
     InitMouseEvent(current_pointer_state_[kRawMousePointerId].pressed_button_,
                    current_pointer_state_[kRawMousePointerId].current_buttons_,
-                   WebPoint(x, y), click_count_, &mouse_event);
+                   WebDoublePoint(x, y), click_count_, &mouse_event);
 
     FinishDragAndDrop(mouse_event, blink::kWebDragOperationNone);
   }
@@ -2775,8 +2775,8 @@ void EventSender::ReplaySavedEvents() {
             current_pointer_state_[kRawMousePointerId].pressed_button_,
             current_pointer_state_[kRawMousePointerId].current_buttons_, e.pos,
             click_count_, &event);
-        current_pointer_state_[kRawMousePointerId].last_pos_ =
-            WebPoint(event.PositionInWidget().x, event.PositionInWidget().y);
+        current_pointer_state_[kRawMousePointerId].last_pos_ = WebDoublePoint(
+            event.PositionInWidget().x, event.PositionInWidget().y);
         HandleInputEventOnViewOrPopup(event);
         DoDragAfterMouseMove(event);
         break;
