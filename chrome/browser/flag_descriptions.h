@@ -688,6 +688,12 @@ extern const char kSaveasMenuLabelExperimentDescription[];
 extern const char kSavePageAsMhtmlName[];
 extern const char kSavePageAsMhtmlDescription[];
 
+extern const char kSavePreviousDocumentResourcesUntilName[];
+extern const char kSavePreviousDocumentResourcesUntilDescription[];
+extern const char kSavePreviousDocumentResourcesUntilNever[];
+extern const char kSavePreviousDocumentResourcesUntilOnDOMContentLoaded[];
+extern const char kSavePreviousDocumentResourcesUntilOnLoad[];
+
 extern const char kScrollPredictionName[];
 extern const char kScrollPredictionDescription[];
 

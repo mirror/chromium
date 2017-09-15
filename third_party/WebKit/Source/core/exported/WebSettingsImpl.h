@@ -111,6 +111,8 @@ class CORE_EXPORT WebSettingsImpl final : public WebSettings {
   void SetLoadWithOverviewMode(bool) override;
   void SetShouldReuseGlobalForUnownedMainFrame(bool) override;
   void SetProgressBarCompletion(ProgressBarCompletion) override;
+  void SetSavePreviousDocumentResourcesUntil(
+      SavePreviousDocumentResourcesUntil) override;
   void SetLocalStorageEnabled(bool) override;
   void SetMainFrameClipsContent(bool) override;
   void SetMainFrameResizesAreOrientationChanges(bool) override;

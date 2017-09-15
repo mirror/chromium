@@ -44,6 +44,14 @@ STATIC_ASSERT_ENUM(
     WebSettings::ProgressBarCompletion::
         kResourcesBeforeDCLAndSameOriginIFrames);
 
+STATIC_ASSERT_ENUM(SavePreviousDocumentResourcesUntil::NEVER,
+                   WebSettings::SavePreviousDocumentResourcesUntil::kNever);
+STATIC_ASSERT_ENUM(
+    SavePreviousDocumentResourcesUntil::ON_DOM_CONTENT_LOADED,
+    WebSettings::SavePreviousDocumentResourcesUntil::kOnDOMContentLoaded);
+STATIC_ASSERT_ENUM(SavePreviousDocumentResourcesUntil::ON_LOAD,
+                   WebSettings::SavePreviousDocumentResourcesUntil::kOnLoad);
+
 STATIC_ASSERT_ENUM(IMAGE_ANIMATION_POLICY_ALLOWED,
                    WebSettings::kImageAnimationPolicyAllowed);
 STATIC_ASSERT_ENUM(IMAGE_ANIMATION_POLICY_ANIMATION_ONCE,
@@ -172,6 +180,8 @@ WebPreferences::WebPreferences()
       navigate_on_drag_drop(true),
       v8_cache_options(V8_CACHE_OPTIONS_DEFAULT),
       record_whole_document(false),
+      save_previous_document_resources_until(
+          SavePreviousDocumentResourcesUntil::NEVER),
       cookie_enabled(true),
       pepper_accelerated_video_decode_enabled(false),
       animation_policy(IMAGE_ANIMATION_POLICY_ALLOWED),

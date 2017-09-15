@@ -66,6 +66,13 @@ enum class ProgressBarCompletion {
   LAST = RESOURCES_BEFORE_DCL_AND_SAME_ORIGIN_IFRAMES
 };
 
+enum class SavePreviousDocumentResourcesUntil {
+  NEVER,
+  ON_DOM_CONTENT_LOADED,
+  ON_LOAD,
+  LAST = ON_LOAD
+};
+
 // Defines the autoplay policy to be used. Should match the class in
 // WebSettings.h.
 enum class AutoplayPolicy {
@@ -193,6 +200,7 @@ struct CONTENT_EXPORT WebPreferences {
   bool navigate_on_drag_drop;
   V8CacheOptions v8_cache_options;
   bool record_whole_document;
+  SavePreviousDocumentResourcesUntil save_previous_document_resources_until;
 
   // This flags corresponds to a Page's Settings' setCookieEnabled state. It
   // only controls whether or not the "document.cookie" field is properly

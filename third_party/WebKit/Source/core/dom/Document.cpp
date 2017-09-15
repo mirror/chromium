@@ -3267,6 +3267,10 @@ void Document::CheckCompleted() {
   // The readystatechanged or load event may have disconnected this frame.
   if (!frame_ || !frame_->IsAttached())
     return;
+  if (frame_->GetSettings()->GetSavePreviousDocumentResourcesUntil() ==
+      SavePreviousDocumentResourcesUntil::kOnLoad) {
+    fetcher_->ClearResourcesFromPreviousFetcher();
+  }
   frame_->GetNavigationScheduler().StartTimer();
   View()->HandleLoadCompleted();
   // The document itself is complete, but if a child frame was restarted due to
@@ -5721,6 +5725,11 @@ void Document::FinishedParsing() {
 
   // Parser should have picked up all preloads by now
   fetcher_->ClearPreloads(ResourceFetcher::kClearSpeculativeMarkupPreloads);
+  if (frame_ &&
+      frame_->GetSettings()->GetSavePreviousDocumentResourcesUntil() ==
+          SavePreviousDocumentResourcesUntil::kOnDOMContentLoaded) {
+    fetcher_->ClearResourcesFromPreviousFetcher();
+  }
 
   if (IsPrefetchOnly())
     WebPrerenderingSupport::Current()->PrefetchFinished();

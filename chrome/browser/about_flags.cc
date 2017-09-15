@@ -612,6 +612,16 @@ const FeatureEntry::Choice kProgressBarCompletionChoices[] = {
 };
 #endif  // OS_ANDROID
 
+const FeatureEntry::Choice kSavePreviousDocumentResourcesUntilChoices[] = {
+    {flags_ui::kGenericExperimentChoiceDefault, "", ""},
+    {flag_descriptions::kSavePreviousDocumentResourcesUntilNever,
+     switches::kSavePreviousDocumentResourcesUntil, "never"},
+    {flag_descriptions::kSavePreviousDocumentResourcesUntilOnDOMContentLoaded,
+     switches::kSavePreviousDocumentResourcesUntil, "onDOMContentLoaded"},
+    {flag_descriptions::kSavePreviousDocumentResourcesUntilOnLoad,
+     switches::kSavePreviousDocumentResourcesUntil, "onload"},
+};
+
 #if defined(OS_CHROMEOS)
 const FeatureEntry::Choice kCrosRegionsModeChoices[] = {
     {flag_descriptions::kCrosRegionsModeDefault, "", ""},
@@ -2264,6 +2274,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kProgressBarCompletionDescription, kOsAndroid,
      MULTI_VALUE_TYPE(kProgressBarCompletionChoices)},
 #endif  // OS_ANDROID
+    {"save-previous-document-resources-until",
+     flag_descriptions::kSavePreviousDocumentResourcesUntilName,
+     flag_descriptions::kSavePreviousDocumentResourcesUntilDescription, kOsAll,
+     MULTI_VALUE_TYPE(kSavePreviousDocumentResourcesUntilChoices)},
 #if defined(OS_ANDROID)
     {"offline-bookmarks", flag_descriptions::kOfflineBookmarksName,
      flag_descriptions::kOfflineBookmarksDescription, kOsAndroid,
