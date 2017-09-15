@@ -54628,6 +54628,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PartnerBookmark.Count">
+  <owner>wychen@chromium.org</owner>
+  <summary>The number of partner bookmark entries.</summary>
+</histogram>
+
+<histogram name="PartnerBookmark.Skipped">
+  <owner>wychen@chromium.org</owner>
+  <summary>Whether reading of partner bookmark is skipped.</summary>
+</histogram>
+
 <histogram name="PasswordBubble.DisplayDisposition"
     enum="PasswordBubbleDisplayDisposition">
   <owner>vasilii@chromium.org</owner>
