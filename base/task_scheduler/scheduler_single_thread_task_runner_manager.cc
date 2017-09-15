@@ -20,6 +20,7 @@
 #include "base/task_scheduler/scheduler_worker.h"
 #include "base/task_scheduler/sequence.h"
 #include "base/task_scheduler/task.h"
+#include "base/task_scheduler/task_scheduler.h"
 #include "base/task_scheduler/task_tracker.h"
 #include "base/task_scheduler/task_traits.h"
 #include "base/threading/platform_thread.h"
@@ -258,6 +259,16 @@ class SchedulerSingleThreadTaskRunnerManager::SchedulerSingleThreadTaskRunner
   bool PostDelayedTask(const Location& from_here,
                        OnceClosure closure,
                        TimeDelta delay) override {
+    // This check serves the purpose of an effective WeakPtr on |outer_|. A
+    // WeakPtr can't be used here because there's no such thing as a thread-safe
+    // WeakPtr. However, if a caller is sequenced with the destruction of the
+    // TaskScheduler instance (e.g. caller on main thread after Shutdown()) it
+    // can unracily determine that posting is not possible via this check (and
+    // TSan should catch the odd case where a PostTask call actually races with
+    // the destruction of the TaskScheduler instance).
+    if (!TaskScheduler::GetInstance())
+      return false;
+
     auto task =
         std::make_unique<Task>(from_here, std::move(closure), traits_, delay);
     task->single_thread_task_runner_ref = this;
