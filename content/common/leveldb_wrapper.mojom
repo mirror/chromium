@@ -37,27 +37,16 @@ interface LevelDBWrapperGetAllCallback {
 interface LevelDBWrapper {
   AddObserver(associated LevelDBObserver observer);
 
-  // Set the database entry for |key| to |value|.
-  // Takes an optional |client_old_value|:
-  // 1. If the values are cached in the wrapper, |client_old_value| is unused
-  //    and can be nullopt.
-  // 2. If the values are not cached, |client_old_value| must be filled in with
-  //    old value of the |key|, or nullopt if |key| was not present in database.
-  //    This value is used to send notifications to LevelDBObserver(s).
-  // Returns OK on success.
+  // Set the database entry for |key| to |value|. Takes an optional
+  // |client_old_value| from clients to send notifications in case the values
+  // are not cached in the service. Returns OK on success.
   Put(array<uint8> key, array<uint8> value, array<uint8>? client_old_value,
       string source) =>
           (bool success);
 
-  // Remove the database entry (if any) for |key|.
-  // Takes an optional |client_old_value|:
-  // 1. If the values are cached in the wrapper, |client_old_value| is unused
-  //    and can be nullopt.
-  // 2. If the values are not cached, |client_old_value| must be filled in with
-  //    old value of the |key|, or nullopt if |key| was not present in database.
-  //    This value is used to send notifications to LevelDBObserver(s).
-  // Returns OK on success, and a non-OK status on error. It is not an error if
-  // |key| did not exist in the database.
+  // Remove the database entry (if any) for |key|. Returns OK on success, and a
+  // non-OK status on error.  It is not an error if |key| did not exist in the
+  // database.
   Delete(array<uint8> key, array<uint8>? client_old_value, string source) =>
       (bool success);
 
