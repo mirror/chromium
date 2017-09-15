@@ -14,6 +14,9 @@ class MojoVideoFrameProvider final : public VideoFrameProvider {
   MojoVideoFrameProvider();
   ~MojoVideoFrameProvider() override;
 
+  std::unique_ptr<VideoFrame::Buffer> CreateBuffer(
+      size_t data_size) const override;
+
   scoped_refptr<VideoFrame> CreateZeroInitializedFrame(
       VideoPixelFormat format,
       const gfx::Size& coded_size,
@@ -23,6 +26,20 @@ class MojoVideoFrameProvider final : public VideoFrameProvider {
 
   scoped_refptr<VideoFrame> WrapVideoFrame(
       const scoped_refptr<VideoFrame>& frame) override;
+
+  scoped_refptr<VideoFrame> WrapExternalYuvBuffer(
+      VideoFrame::Buffer* buffer,
+      VideoPixelFormat format,
+      const gfx::Size& coded_size,
+      const gfx::Rect& visible_rect,
+      const gfx::Size& natural_size,
+      int32_t y_stride,
+      int32_t u_stride,
+      int32_t v_stride,
+      uint8_t* y_data,
+      uint8_t* u_data,
+      uint8_t* v_data,
+      base::TimeDelta timestamp) const override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(MojoVideoFrameProvider);
