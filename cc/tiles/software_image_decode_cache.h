@@ -227,6 +227,13 @@ class CC_EXPORT SoftwareImageDecodeCache
     base::CheckedNumeric<size_t> current_usage_bytes_;
   };
 
+  // An action to perform in case of a cache miss. Generally, public interface
+  // calls will decode on a cache miss ensuring that we always return a valid
+  // result. However, internally we may use kFail to indicate that we don't have
+  // a decode and some other action may be required (like decode to scale
+  // instead of scaling the original result).
+  enum class CacheMissAction { kDecode, kFail };
+
   using ImageMRUCache = base::
       HashingMRUCache<ImageKey, std::unique_ptr<DecodedImage>, ImageKeyHash>;
 
@@ -250,7 +257,8 @@ class CC_EXPORT SoftwareImageDecodeCache
   // Note that when used internally, we still require that
   // DrawWithImageFinished() is called afterwards.
   DecodedDrawImage GetDecodedImageForDrawInternal(const ImageKey& key,
-                                                  const DrawImage& draw_image);
+                                                  const DrawImage& draw_image,
+                                                  CacheMissAction action);
 
   // GetExactSizeImageDecode is called by DecodeImageInternal when the
   // quality does not scale the image. Like DecodeImageInternal, it should be
