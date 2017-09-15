@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "5a877197_ab7ed781",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-15T17:36:07Z",
+      "side": 1,
+      "message": "This isn\u0027t just about supporting testing. This code needs to run on the UI thread. We also need to avoid creating the factory if we aren\u0027t creating a new shared worker instance -- i.e., we are just attaching a new client to an existing worker. I don\u0027t know why this code wants to increment refcounts in that case. It seems like we should just keep the renderer alive if it has a shared worker regardless of the number of clients.\n\nAnyways, I plan to clean all of this up in a subsequent CL when I move shared worker service to the UI thread. This will get rid of all of these annoying thread hops, but also I will simplify the increment / decrement refcount logic.",
+      "parentUuid": "1ae3f875_1fe1de7a",
+      "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9f26168_e506c284",
         "filename": "content/browser/shared_worker/shared_worker_service_impl_unittest.cc",
         "patchSetId": 10
@@ -70,6 +88,24 @@
       "writtenOn": "2017-09-15T09:28:51Z",
       "side": 1,
       "message": "Why don\u0027t we use NOTREACHED()?",
+      "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87cd5b34_66bc95a1",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-15T17:36:07Z",
+      "side": 1,
+      "message": "Because NOTREACHED is compiled out of release builds. This is a unit test, so I wanted the error to be caught in release builds as well.",
+      "parentUuid": "f9f26168_e506c284",
       "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -116,6 +152,24 @@
     },
     {
       "key": {
+        "uuid": "787f4dbb_333cd11f",
+        "filename": "content/common/shared_worker/shared_worker_host.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-15T17:36:07Z",
+      "side": 1,
+      "message": "OK, I worry a bit about comments like this going stale. What if in the future we decide that shared worker hosts should run in a different process (e.g., the network process). Not saying that should happen but it might. No idea if that will be true or not. Clients of this interface shouldn\u0027t need to care what process the host runs in.",
+      "parentUuid": "b256a3f5_0b760ada",
+      "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2100cb0_5457d8c3",
         "filename": "content/common/shared_worker/shared_worker_info.mojom",
         "patchSetId": 10
@@ -127,6 +181,24 @@
       "writtenOn": "2017-09-15T10:54:35Z",
       "side": 1,
       "message": "While we\u0027re here can we add a short comment for this?  Something like... \u0027A set of meta data that is necessary to create a new shared worker context. Populated when a new SharedWorker object is created in the parent context (e.g. Document), and passed onto the destination child process where the shared worker runs.\u0027",
+      "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15e97cd7_eefcbbef",
+        "filename": "content/common/shared_worker/shared_worker_info.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-15T17:36:07Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "b2100cb0_5457d8c3",
       "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -150,6 +222,24 @@
     },
     {
       "key": {
+        "uuid": "25f4be00_7e432604",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-15T17:36:07Z",
+      "side": 1,
+      "message": "Will do. Odd that \"git cl format\" didn\u0027t catch that.",
+      "parentUuid": "2f37cb2f_66880698",
+      "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22254811_1b057b65",
         "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.cc",
         "patchSetId": 10
@@ -167,6 +257,24 @@
     },
     {
       "key": {
+        "uuid": "1d6d3853_d1ee0125",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-15T17:36:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22254811_1b057b65",
+      "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f1435bc_63af39f7",
         "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.cc",
         "patchSetId": 10
@@ -181,6 +289,24 @@
       "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc7aa52_bde5e0a5",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-15T17:36:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f1435bc_63af39f7",
+      "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -207,6 +333,30 @@
     },
     {
       "key": {
+        "uuid": "bf57a2cf_b1ad6f3c",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-15T17:36:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd221868_3da76a5c",
+      "range": {
+        "startLine": 102,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 20
+      },
+      "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26a81310_61288f56",
         "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.h",
         "patchSetId": 10
@@ -227,6 +377,30 @@
       "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7072d7cb_4a9a5c93",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-15T17:36:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26a81310_61288f56",
+      "range": {
+        "startLine": 105,
+        "startChar": 12,
+        "endLine": 105,
+        "endChar": 0
+      },
+      "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
