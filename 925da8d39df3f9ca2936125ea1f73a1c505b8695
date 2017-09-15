@@ -197,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "d59a9731_57786779",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerProperties.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1229332
+      },
+      "writtenOn": "2017-09-15T19:09:47Z",
+      "side": 1,
+      "message": "Ok, I\u0027ve made this change.\n\nIt seems that we\u0027re not actually that concerned with avoiding copying the vector (it\u0027s never going to have more than five elements on Android). Is the CL ok to land as-is?",
+      "parentUuid": "fa7e0c10_250aa92f",
+      "revId": "925da8d39df3f9ca2936125ea1f73a1c505b8695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "906ae0de_526c2b0e",
         "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerProperties.h",
         "patchSetId": 2
