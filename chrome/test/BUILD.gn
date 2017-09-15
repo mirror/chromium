@@ -1445,7 +1445,7 @@ test("browser_tests") {
       "../browser/sessions/tab_restore_browsertest.cc",
       "../browser/site_details_browsertest.cc",
 
-      # If this list is used on Android in the future, these browser/speech/*
+      #If this list is used on Android in the future, these browser / speech/*
       # files will probably not be applicable.
       "../browser/speech/extension_api/tts_extension_apitest.cc",
       "../browser/speech/speech_recognition_browsertest.cc",
@@ -2690,9 +2690,6 @@ test("browser_tests") {
           "../../extensions/browser/api/display_source/display_source_apitestbase.h",
           "../browser/extensions/api/display_source/display_source_wifi_display_apitest.cc",
         ]
-      }
-      if (!is_chromeos) {
-        sources += [ "../browser/ui/views/message_center/web_notification_tray_browsertest.cc" ]
       }
     }
 
