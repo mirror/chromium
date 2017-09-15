@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41f28345_78912817",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-15T21:09:50Z",
+      "side": 1,
+      "message": "Could this .release() be removed?\nThe move constructor of std::unique_ptr will be used in that case, I think.",
+      "range": {
+        "startLine": 179,
+        "startChar": 11,
+        "endLine": 179,
+        "endChar": 18
+      },
+      "revId": "952eb063b94215a8c59508c8ba08a4bf8a3529fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b2b869_fd4fffcc",
+        "filename": "content/browser/loader/navigation_url_loader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-15T21:09:50Z",
+      "side": 1,
+      "message": "\"whether response has already been completed\":\nIs this indicated by whether base::Optional\u003cResourceRequestCompletionStatus\u003e is null_opt?\nThere isn\u0027t a parameter for this.",
+      "revId": "952eb063b94215a8c59508c8ba08a4bf8a3529fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9c426c_7d3741cf",
+        "filename": "content/browser/loader/navigation_url_loader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-15T21:09:50Z",
+      "side": 1,
+      "message": "This callback will be called on a different thread, right? Please add comment.",
+      "range": {
+        "startLine": 75,
+        "startChar": 39,
+        "endLine": 75,
+        "endChar": 63
+      },
+      "revId": "952eb063b94215a8c59508c8ba08a4bf8a3529fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee43730_5aed1de7",
+        "filename": "content/common/throttling_url_loader.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-15T21:09:50Z",
+      "side": 1,
+      "message": "nit: maybe \"all subsequent notifications\"?",
+      "range": {
+        "startLine": 77,
+        "startChar": 51,
+        "endLine": 77,
+        "endChar": 60
+      },
+      "revId": "952eb063b94215a8c59508c8ba08a4bf8a3529fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
