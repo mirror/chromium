@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "b32ad21d_9256c1dd",
+        "filename": "third_party/WebKit/Source/platform/WebFrameScheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-15T09:25:03Z",
+      "side": 1,
+      "message": "QQ: Is this stopped state permanent, or can be back to kThrottled or kNotThrottled when the page goes back to foreground? I just want to confirm that what kind of state transitions can happen.\n\nIt\u0027s worth noting around the ThrottlingState declaration?",
+      "revId": "61d8a1bf33253b1cb316ff73d84036a208a09ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1415da71_d0eb5114",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
         "patchSetId": 2
@@ -18,6 +35,76 @@
         "startChar": 37,
         "endLine": 186,
         "endChar": 0
+      },
+      "revId": "61d8a1bf33253b1cb316ff73d84036a208a09ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e2dde1a_dda6dfad",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-15T09:25:03Z",
+      "side": 1,
+      "message": "I think we are not interested in data in this state. So just skipping looks fine with me.\n\nIt probably does not make any noise for metrics of kThrottled, but I do not have any positive reason to merge this.",
+      "parentUuid": "1415da71_d0eb5114",
+      "range": {
+        "startLine": 186,
+        "startChar": 37,
+        "endLine": 186,
+        "endChar": 0
+      },
+      "revId": "61d8a1bf33253b1cb316ff73d84036a208a09ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30257db_83d202b3",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-15T09:25:03Z",
+      "side": 1,
+      "message": "0 actually means unlimited (See const value definition in the header).\n\nWe could change the value to represent the unlimited.",
+      "range": {
+        "startLine": 210,
+        "startChar": 37,
+        "endLine": 210,
+        "endChar": 38
+      },
+      "revId": "61d8a1bf33253b1cb316ff73d84036a208a09ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0b0103_49f8eca6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoadScheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-15T09:25:03Z",
+      "side": 1,
+      "message": "here, we declare that 0u means unlimited (see my another comment on the kStop state change)",
+      "range": {
+        "startLine": 58,
+        "startChar": 26,
+        "endLine": 58,
+        "endChar": 47
       },
       "revId": "61d8a1bf33253b1cb316ff73d84036a208a09ed3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
