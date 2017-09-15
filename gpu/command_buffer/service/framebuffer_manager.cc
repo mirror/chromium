@@ -722,6 +722,7 @@ GLenum Framebuffer::IsPossiblyComplete(const FeatureInfo* feature_info) const {
       // Since DirectX doesn't allow attachments to be of different sizes,
       // even though ES3 allows it, it is still forbidden to ensure consistent
       // behaviors across platforms.
+      // Note: Framebuffer::GetFramebufferValidSize relies on this behavior.
       return GL_FRAMEBUFFER_INCOMPLETE_DIMENSIONS_EXT;
     }
 
@@ -1050,6 +1051,21 @@ const Framebuffer::Attachment* Framebuffer::GetReadBufferAttachment() const {
   return GetAttachment(read_buffer_);
 }
 
+gfx::Size Framebuffer::GetFramebufferValidSize() const {
+  // IsPossiblyComplete ensures that all of the attachments have the
+  // same dimensions. So it's okay to just pick any arbitrary attachment
+  // and return it as the min size.
+  // This DCHECK also expects this function to be used only on framebuffers
+  // that are already checked for completeness.
+  DCHECK(manager_->IsComplete(this));
+
+  auto it = attachments_.begin();
+  // IsPossiblyComplete also ensures that there is at least one attachment.
+  DCHECK(it != attachments_.end());
+  const auto& attachment = it->second;
+  return gfx::Size(attachment->width(), attachment->height());
+}
+
 bool FramebufferManager::GetClientId(
     GLuint service_id, GLuint* client_id) const {
   // This doesn't need to be fast. It's only used during slow queries.
@@ -1080,8 +1096,7 @@ void FramebufferManager::MarkAsComplete(
   framebuffer->MarkAsComplete(framebuffer_state_change_count_);
 }
 
-bool FramebufferManager::IsComplete(
-    Framebuffer* framebuffer) {
+bool FramebufferManager::IsComplete(const Framebuffer* framebuffer) {
   DCHECK(framebuffer);
   return framebuffer->framebuffer_complete_state_count_id() ==
       framebuffer_state_change_count_;
