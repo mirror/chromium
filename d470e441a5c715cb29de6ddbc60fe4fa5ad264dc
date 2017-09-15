@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73086b5e_5312cfe3",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T23:19:17Z",
+      "side": 1,
+      "message": "nit: prefer just (bubble_ || ...) over comparing with nullptr",
+      "revId": "d470e441a5c715cb29de6ddbc60fe4fa5ad264dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2f45d6f_f2105d5a",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T23:19:17Z",
+      "side": 1,
+      "message": "nit: just EXPECT_TRUE, no need to compare with nullptr",
+      "revId": "d470e441a5c715cb29de6ddbc60fe4fa5ad264dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4c73f63_b9a81644",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T23:19:17Z",
+      "side": 1,
+      "message": "ditto, EXPECT_FALSE()",
+      "revId": "d470e441a5c715cb29de6ddbc60fe4fa5ad264dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1fe17d0_9d72e737",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T23:19:17Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "d470e441a5c715cb29de6ddbc60fe4fa5ad264dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0529501d_b5b8611d",
+        "filename": "ash/system/palette/palette_tray_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T23:19:17Z",
+      "side": 1,
+      "message": "Thanks for adding a regression test.",
+      "revId": "d470e441a5c715cb29de6ddbc60fe4fa5ad264dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
