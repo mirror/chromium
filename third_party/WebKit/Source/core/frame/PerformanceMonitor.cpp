@@ -269,7 +269,8 @@ void PerformanceMonitor::WillSendRequest(ExecutionContext*,
                                          DocumentLoader* loader,
                                          ResourceRequest&,
                                          const ResourceResponse&,
-                                         const FetchInitiatorInfo&) {
+                                         const FetchInitiatorInfo&,
+                                         Resource::Type) {
   if (loader->GetFrame() != local_root_)
     return;
   int request_count = loader->Fetcher()->ActiveRequestCount();
