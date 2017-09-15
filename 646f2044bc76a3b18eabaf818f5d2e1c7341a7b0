@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f254f7c_46c8f002",
+        "filename": "chrome/browser/extensions/unpacked_installer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-15T03:31:49Z",
+      "side": 1,
+      "message": "This is the only change.",
+      "range": {
+        "startLine": 316,
+        "startChar": 28,
+        "endLine": 316,
+        "endChar": 36
+      },
+      "revId": "646f2044bc76a3b18eabaf818f5d2e1c7341a7b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
