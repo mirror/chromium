@@ -118,6 +118,30 @@
       "revId": "730569d69528801f0d060bbd070dba206e0e55fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21edd464_188dfa71",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-09-15T00:05:59Z",
+      "side": 1,
+      "message": "Understood. I didn\u0027t know that. Fixed!",
+      "parentUuid": "a9bd6d81_ce7b96a4",
+      "range": {
+        "startLine": 306,
+        "startChar": 2,
+        "endLine": 306,
+        "endChar": 8
+      },
+      "revId": "730569d69528801f0d060bbd070dba206e0e55fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
