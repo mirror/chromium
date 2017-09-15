@@ -131,7 +131,8 @@ class PLATFORM_EXPORT ResourceLoadScheduler final
     kInitial,
     kThrottled,
     kNotThrottled,
-    kPartiallyThrottled
+    kPartiallyThrottled,
+    kStoppedInBackground,
   };
   ThrottlingHistory throttling_history_ = ThrottlingHistory::kInitial;
 

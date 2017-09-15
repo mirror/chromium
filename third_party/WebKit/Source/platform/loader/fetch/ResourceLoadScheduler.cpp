@@ -183,6 +183,8 @@ void ResourceLoadScheduler::OnNetworkQuiet() {
       else
         sub_frame_partially_throttled.Count(maximum_running_requests_seen_);
       break;
+    case ThrottlingHistory::kStoppedInBackground:
+      break;
   }
 }
 
@@ -201,6 +203,10 @@ void ResourceLoadScheduler::OnThrottlingStateChanged(
         throttling_history_ = ThrottlingHistory::kNotThrottled;
       else if (throttling_history_ == ThrottlingHistory::kThrottled)
         throttling_history_ = ThrottlingHistory::kPartiallyThrottled;
+      SetOutstandingLimitAndMaybeRun(kOutstandingUnlimited);
+      break;
+    case WebFrameScheduler::ThrottlingState::kStoppedInBackground:
+      throttling_history_ = ThrottlingHistory::kStoppedInBackground;
       SetOutstandingLimitAndMaybeRun(kOutstandingUnlimited);
       break;
   }
