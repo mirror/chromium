@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "372e3f95_773af684",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-15T16:31:59Z",
+      "side": 1,
+      "message": "I think you can delete this sentence. Or if you feel like the content is useful, at least delete \"As far as I know,\"",
+      "revId": "07cbba6573b33c8b29ac02de557e64b4feb9c22a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f201182_38c39798",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-15T16:31:59Z",
+      "side": 1,
+      "message": "Can we make this a little more descriptive?\n\n\"A coverage report with test files excluded, as a json object in the format below:\"",
+      "range": {
+        "startLine": 241,
+        "startChar": 7,
+        "endLine": 241,
+        "endChar": 17
+      },
+      "revId": "07cbba6573b33c8b29ac02de557e64b4feb9c22a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
