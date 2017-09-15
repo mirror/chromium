@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f165003_710cbfda",
+        "filename": "content/browser/histogram_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-09-15T05:33:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79f25f5e_43e824e0",
+      "range": {
+        "startLine": 90,
+        "startChar": 37,
+        "endLine": 90,
+        "endChar": 43
+      },
+      "revId": "9702ca1db2b4ac817540388dd0831c667b8c1e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3cdda48_3af39cbd",
         "filename": "content/common/child_histogram.mojom",
         "patchSetId": 10
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-15T04:43:05Z",
       "side": 1,
       "message": "Will this ever be called more than once for a process?",
+      "revId": "9702ca1db2b4ac817540388dd0831c667b8c1e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33560d23_e27e88e1",
+        "filename": "content/common/child_histogram.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-09-15T05:33:17Z",
+      "side": 1,
+      "message": "I didn\u0027t look at that. This comment is copied verbatim from the old child_process_messages.h",
+      "parentUuid": "b3cdda48_3af39cbd",
       "revId": "9702ca1db2b4ac817540388dd0831c667b8c1e00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
