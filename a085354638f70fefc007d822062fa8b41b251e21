@@ -16,6 +16,24 @@
       "revId": "a085354638f70fefc007d822062fa8b41b251e21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e74cb6e_f4bdbe4b",
+        "filename": "third_party/WebKit/Source/modules/fetch/BytesConsumerTestUtil.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-09-15T03:52:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c57e4f79_ab48dd37",
+      "revId": "a085354638f70fefc007d822062fa8b41b251e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
