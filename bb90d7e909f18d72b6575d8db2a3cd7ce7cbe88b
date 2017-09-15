@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26b75847_621fcac7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-15T02:05:28Z",
+      "side": 1,
+      "message": "I think the mock shows 87% white rather than pure white for incognito suggestions, but Hannah\u0027s Clank style guide doesn\u0027t include 87% white :-/ Let\u0027s sync with her tomorrow morning on whether we should define a new text color.",
+      "revId": "bb90d7e909f18d72b6575d8db2a3cd7ce7cbe88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
