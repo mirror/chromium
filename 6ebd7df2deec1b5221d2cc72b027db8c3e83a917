@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ebef4f0_c4606d07",
+        "filename": "chrome/browser/ui/page_info/page_info.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-15T23:14:05Z",
+      "side": 1,
+      "message": "Could you explain why is the DCHECK() not appropriate anymore?",
+      "revId": "6ebd7df2deec1b5221d2cc72b027db8c3e83a917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2024da4f_b84fdbe5",
+        "filename": "chrome/browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-15T23:14:05Z",
+      "side": 1,
+      "message": "Why is service-\u003eUpdateSecurityState() not sufficient anymore?\n\n(My understanding is that it\u0027s better to to test as little as possible except what you\u0027re directly testing. Avoiding showing the modal warning sounds preferable, assuming that UpdateSecurityState() does the right thing.)",
+      "revId": "6ebd7df2deec1b5221d2cc72b027db8c3e83a917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
