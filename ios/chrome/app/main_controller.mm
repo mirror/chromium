@@ -1525,10 +1525,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   NSInteger command = [sender tag];
 
   switch (command) {
-    case IDC_SHOW_MAIL_COMPOSER:
-      [self.currentBVC chromeExecuteCommand:sender];
-      break;
-
     case IDC_CLEAR_BROWSING_DATA_IOS: {
       // Clear both the main browser state and the associated incognito
       // browser state.

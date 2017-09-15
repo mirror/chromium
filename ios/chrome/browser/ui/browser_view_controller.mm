@@ -112,11 +112,9 @@
 #import "ios/chrome/browser/ui/bubble/bubble_view_controller_presenter.h"
 #import "ios/chrome/browser/ui/captive_portal/captive_portal_login_coordinator.h"
 #import "ios/chrome/browser/ui/chrome_web_view_factory.h"
-#import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
 #import "ios/chrome/browser/ui/commands/browser_commands.h"
 #import "ios/chrome/browser/ui/commands/command_dispatcher.h"
-#include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #import "ios/chrome/browser/ui/commands/open_new_tab_command.h"
 #import "ios/chrome/browser/ui/commands/open_url_command.h"
 #import "ios/chrome/browser/ui/commands/reading_list_add_command.h"
@@ -4387,26 +4385,6 @@ bubblePresenterForFeature:(const base::Feature&)feature
 }
 
 #pragma mark - Command Handling
-
-- (IBAction)chromeExecuteCommand:(id)sender {
-  NSInteger command = [sender tag];
-
-  if (!_model || !_browserState)
-    return;
-
-  switch (command) {
-    case IDC_SHOW_MAIL_COMPOSER: {
-      ShowMailComposerCommand* composerCommand =
-          base::mac::ObjCCastStrict<ShowMailComposerCommand>(sender);
-      [self showMailComposer:composerCommand];
-      break;
-    }
-    default:
-      // Unknown commands get sent up the responder chain.
-      [super chromeExecuteCommand:sender];
-      break;
-  }
-}
 
 - (void)closeCurrentTab {
   Tab* currentTab = [_model currentTab];

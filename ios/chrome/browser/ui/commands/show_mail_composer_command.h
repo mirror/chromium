@@ -7,16 +7,14 @@
 
 #import <Foundation/Foundation.h>
 
-#import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
-
 namespace base {
 class FilePath;
 }
 
-@interface ShowMailComposerCommand : GenericChromeCommand
+@interface ShowMailComposerCommand : NSObject
 
 // Mark inherited initializer as unavailable to prevent calling it by mistake.
-- (instancetype)initWithTag:(NSInteger)tag NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
 
 // Initializes a command designed to open the mail composer with pre-filled
 // recipients, subject, body.

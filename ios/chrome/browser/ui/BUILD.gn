@@ -25,8 +25,6 @@ source_set("ui") {
     "prerender_final_status.h",
     "reversed_animation.h",
     "reversed_animation.mm",
-    "show_mail_composer_util.h",
-    "show_mail_composer_util.mm",
     "side_swipe_gesture_recognizer.h",
     "side_swipe_gesture_recognizer.mm",
     "url_loader.h",
