@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "040f77b2_ffc66501",
+        "filename": "net/spdy/chromium/spdy_stream.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-15T17:48:23Z",
+      "side": 1,
+      "message": "Ack. I thought PossiblyResumeIfSendStalled() would be a no-op if we are decreasing |send_window_size_| (when AdjustSendWindowSize() is called with a negative delta). Is that not the case?",
+      "parentUuid": "9dd7e5c7_c9b2cd5f",
+      "revId": "2489e6a46292adc9349cf597d2e75711dde222f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84970438_4c8f69bf",
         "filename": "net/spdy/chromium/spdy_stream.h",
         "patchSetId": 1
@@ -69,6 +87,23 @@
       "revId": "2489e6a46292adc9349cf597d2e75711dde222f7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e01b4f84_74e4d3a0",
+        "filename": "net/spdy/chromium/spdy_stream.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-15T17:48:23Z",
+      "side": 1,
+      "message": "nit: Maybe add a \"WARN_UNUSED_RESULT\" so we always remember to reset the stream if the return value is false?",
+      "revId": "2489e6a46292adc9349cf597d2e75711dde222f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
