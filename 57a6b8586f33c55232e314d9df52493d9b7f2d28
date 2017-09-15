@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "43ed0dcc_17c6c15b",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_browser_proxy.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-15T22:07:49Z",
+      "side": 1,
+      "message": "nit: indent off for the second line.",
+      "revId": "57a6b8586f33c55232e314d9df52493d9b7f2d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4dfacf39_9a45dfce",
         "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
         "patchSetId": 10
@@ -13,6 +30,40 @@
       "writtenOn": "2017-09-15T22:03:33Z",
       "side": 1,
       "message": "I think you don\u0027t need a new variable. Just use \"pageVisibility.setWallpaper\" to bind to hidden property.",
+      "revId": "57a6b8586f33c55232e314d9df52493d9b7f2d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2749f7ed_eb75ccbe",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-15T22:07:49Z",
+      "side": 1,
+      "message": "nit: put \u003c/cr-policy-indicator\u003e in a separate line.",
+      "revId": "57a6b8586f33c55232e314d9df52493d9b7f2d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f7c90b_752df13b",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-15T22:07:49Z",
+      "side": 1,
+      "message": "this line and line 153 should not have space in the beginning of the line.",
       "revId": "57a6b8586f33c55232e314d9df52493d9b7f2d28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
