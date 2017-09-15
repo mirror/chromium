@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d557fa4b_ec18dd36",
+        "filename": "ui/aura/window_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-15T16:43:40Z",
+      "side": 1,
+      "message": "Please document that this can trigger multiple times during animation.",
+      "revId": "9b01a369557068d134c01dda05ab7b65077c00cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f374e00b_4c7aee03",
+        "filename": "ui/aura/window_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1975,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-15T16:43:40Z",
+      "side": 1,
+      "message": "Can you add a test case that changes the opacity using animation, and verify that the callback gets called multiple times?",
+      "revId": "9b01a369557068d134c01dda05ab7b65077c00cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
