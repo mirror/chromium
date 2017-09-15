@@ -107,7 +107,7 @@ FindBadConstructsConsumer::FindBadConstructsConsumer(CompilerInstance& instance,
     ipc_visitor_.reset(new CheckIPCVisitor(instance));
   }
 
-  // Messages for virtual method specifiers.
+  // Messages for virtual methods.
   diag_method_requires_override_ = diagnostic().getCustomDiagID(
       getErrorLevel(),
       "[chromium-style] Overriding method must be marked with 'override' or "
@@ -120,21 +120,47 @@ FindBadConstructsConsumer::FindBadConstructsConsumer(CompilerInstance& instance,
       getErrorLevel(),
       "[chromium-style] The virtual method does not override anything and is "
       "final; consider making it non-virtual.");
+  diag_virtual_with_inline_body_ = diagnostic().getCustomDiagID(
+      getErrorLevel(),
+      "[chromium-style] virtual methods with non-empty bodies shouldn't be "
+      "declared inline.");
+
+  // Messages for constructors.
+  diag_no_explicit_ctor_ = diagnostic().getCustomDiagID(
+      getErrorLevel(),
+      "[chromium-style] Complex class/struct needs an explicit out-of-line "
+      "constructor.");
+  diag_no_explicit_copy_ctor_ = diagnostic().getCustomDiagID(
+      getErrorLevel(),
+      "[chromium-style] Complex class/struct needs an explicit out-of-line "
+      "copy constructor.");
+  diag_inline_complex_ctor_ = diagnostic().getCustomDiagID(
+      getErrorLevel(),
+      "[chromium-style] Complex constructor has an inlined body.");
 
   // Messages for destructors.
   diag_no_explicit_dtor_ = diagnostic().getCustomDiagID(
       getErrorLevel(),
+      "[chromium-style] Complex class/struct needs an explicit out-of-line "
+      "destructor.");
+  diag_inline_complex_dtor_ = diagnostic().getCustomDiagID(
+      getErrorLevel(),
+      "[chromium-style] Complex destructor has an inline body.");
 
+  // Messages for refcounted objects.
+  diag_refcounted_needs_explicit_dtor_ = diagnostic().getCustomDiagID(
+      getErrorLevel(),
       "[chromium-style] Classes that are ref-counted should have explicit "
       "destructors that are declared protected or private.");
-  diag_public_dtor_ = diagnostic().getCustomDiagID(
+  diag_refcounted_with_public_dtor_ = diagnostic().getCustomDiagID(
       getErrorLevel(),
       "[chromium-style] Classes that are ref-counted should have "
       "destructors that are declared protected or private.");
-  diag_protected_non_virtual_dtor_ = diagnostic().getCustomDiagID(
-      getErrorLevel(),
-      "[chromium-style] Classes that are ref-counted and have non-private "
-      "destructors should declare their destructor virtual.");
+  diag_refcounted_with_protected_non_virtual_dtor_ =
+      diagnostic().getCustomDiagID(
+          getErrorLevel(),
+          "[chromium-style] Classes that are ref-counted and have non-private "
+          "destructors should declare their destructor virtual.");
 
   // Miscellaneous messages.
   diag_weak_ptr_factory_order_ = diagnostic().getCustomDiagID(
@@ -207,11 +233,6 @@ bool FindBadConstructsConsumer::VisitVarDecl(clang::VarDecl* var_decl) {
 void FindBadConstructsConsumer::CheckChromeClass(LocationType location_type,
                                                  SourceLocation record_location,
                                                  CXXRecordDecl* record) {
-  // TODO(dcheng): After emitWarning() is removed, move warning filtering into
-  // ReportIfSpellingLocNotIgnored.
-  if (location_type == LocationType::kBlink)
-    return;
-
   bool implementation_file = InImplementationFile(record_location);
 
   if (!implementation_file) {
@@ -348,9 +369,8 @@ void FindBadConstructsConsumer::CheckCtorDtorWeight(
 
   if (ctor_score >= 10) {
     if (!record->hasUserDeclaredConstructor()) {
-      emitWarning(record_location,
-                  "Complex class/struct needs an explicit out-of-line "
-                  "constructor.");
+      ReportIfSpellingLocNotIgnored(record_location, record,
+                                    diag_no_explicit_ctor_);
     } else {
       // Iterate across all the constructors in this file and yell if we
       // find one that tries to be inline.
@@ -374,9 +394,8 @@ void FindBadConstructsConsumer::CheckCtorDtorWeight(
             // be emitted on other platforms too, reevaluate if we want to keep
             // surpressing this then http://crbug.com/467288
             if (!record->hasAttr<DLLExportAttr>())
-              emitWarning(record_location,
-                          "Complex class/struct needs an explicit out-of-line "
-                          "copy constructor.");
+              ReportIfSpellingLocNotIgnored(record_location, record,
+                                            diag_no_explicit_copy_ctor_);
           } else {
             // See the comment in the previous branch about copy constructors.
             // This does the same for implicit move constructors.
@@ -385,8 +404,8 @@ void FindBadConstructsConsumer::CheckCtorDtorWeight(
                 !record->hasUserDeclaredMoveConstructor() &&
                 record->hasAttr<DLLExportAttr>();
             if (!is_likely_compiler_generated_dllexport_move_ctor)
-              emitWarning(it->getInnerLocStart(),
-                          "Complex constructor has an inlined body.");
+              ReportIfSpellingLocNotIgnored(it->getInnerLocStart(), record,
+                                            diag_inline_complex_ctor_);
           }
         } else if (it->isInlined() && !it->isInlineSpecified() &&
                    !it->isDeleted() && (!it->isCopyOrMoveConstructor() ||
@@ -396,8 +415,8 @@ void FindBadConstructsConsumer::CheckCtorDtorWeight(
           // constructors in the previously mentioned situation. To preserve
           // compatibility with existing Chromium code, only warn if it's an
           // explicitly defaulted copy or move constructor.
-          emitWarning(it->getInnerLocStart(),
-                      "Complex constructor has an inlined body.");
+          ReportIfSpellingLocNotIgnored(it->getInnerLocStart(), record,
+                                        diag_inline_complex_ctor_);
         }
       }
     }
@@ -407,14 +426,13 @@ void FindBadConstructsConsumer::CheckCtorDtorWeight(
   // trivial members; 20 ints don't need a destructor.
   if (dtor_score >= 10 && !record->hasTrivialDestructor()) {
     if (!record->hasUserDeclaredDestructor()) {
-      emitWarning(record_location,
-                  "Complex class/struct needs an explicit out-of-line "
-                  "destructor.");
+      ReportIfSpellingLocNotIgnored(record_location, record,
+                                    diag_no_explicit_dtor_);
     } else if (CXXDestructorDecl* dtor = record->getDestructor()) {
       if (dtor->isInlined() && !dtor->isInlineSpecified() &&
           !dtor->isDeleted()) {
-        emitWarning(dtor->getInnerLocStart(),
-                    "Complex destructor has an inline body.");
+        ReportIfSpellingLocNotIgnored(dtor->getInnerLocStart(), record,
+                                      diag_inline_complex_dtor_);
       }
     }
   }
@@ -624,9 +642,8 @@ void FindBadConstructsConsumer::CheckVirtualBodies(
           }
         }
         if (emit)
-          emitWarning(loc,
-                      "virtual methods with non-empty bodies shouldn't be "
-                      "declared inline.");
+          ReportIfSpellingLocNotIgnored(loc, method,
+                                        diag_virtual_with_inline_body_);
       }
     }
   }
@@ -792,9 +809,9 @@ void FindBadConstructsConsumer::PrintInheritanceChain(const CXXBasePath& path) {
 unsigned FindBadConstructsConsumer::DiagnosticForIssue(RefcountIssue issue) {
   switch (issue) {
     case ImplicitDestructor:
-      return diag_no_explicit_dtor_;
+      return diag_refcounted_needs_explicit_dtor_;
     case PublicDestructor:
-      return diag_public_dtor_;
+      return diag_refcounted_with_public_dtor_;
     case None:
       assert(false && "Do not call DiagnosticForIssue with issue None");
       return 0;
@@ -841,7 +858,8 @@ void FindBadConstructsConsumer::CheckRefCountedDtors(
           refcounted_path.begin()->back().Class->getDestructor()) {
     if (dtor->getAccess() == AS_protected && !dtor->isVirtual()) {
       loc = dtor->getInnerLocStart();
-      diagnostic().Report(loc, diag_protected_non_virtual_dtor_);
+      diagnostic().Report(loc,
+                          diag_refcounted_with_protected_non_virtual_dtor_);
       return;
     }
   }
@@ -895,12 +913,13 @@ void FindBadConstructsConsumer::CheckRefCountedDtors(
     issue = CheckRecordForRefcountIssue(problem_record, loc);
 
     if (issue == ImplicitDestructor) {
-      diagnostic().Report(record_location, diag_no_explicit_dtor_);
+      diagnostic().Report(record_location,
+                          diag_refcounted_needs_explicit_dtor_);
       PrintInheritanceChain(refcounted_path.front());
       diagnostic().Report(loc, diag_note_implicit_dtor_) << problem_record;
       PrintInheritanceChain(*it);
     } else if (issue == PublicDestructor) {
-      diagnostic().Report(record_location, diag_public_dtor_);
+      diagnostic().Report(record_location, diag_refcounted_with_public_dtor_);
       PrintInheritanceChain(refcounted_path.front());
       diagnostic().Report(loc, diag_note_public_dtor_);
       PrintInheritanceChain(*it);
