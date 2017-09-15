@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ad8ebccd_f7a5db6e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T12:12:48Z",
+      "side": 1,
+      "message": "Is there a bug for this issue? If yes, can you update Bug:?",
+      "range": {
+        "startLine": 9,
+        "startChar": 11,
+        "endLine": 9,
+        "endChar": 29
+      },
+      "revId": "95525b37cecce23a81f49a05a511f4d04b7de12f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d46cf7a_a507a457",
         "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
         "patchSetId": 5
@@ -16,6 +39,24 @@
       "revId": "95525b37cecce23a81f49a05a511f4d04b7de12f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9653aafb_01f54f54",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T12:12:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9d46cf7a_a507a457",
+      "revId": "95525b37cecce23a81f49a05a511f4d04b7de12f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
