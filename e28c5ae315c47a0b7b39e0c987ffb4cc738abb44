@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb196a57_aad9bcff",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T01:15:18Z",
+      "side": 1,
+      "message": "Nit: Hoist to top of function and use in your call",
+      "revId": "e28c5ae315c47a0b7b39e0c987ffb4cc738abb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f55d6a1_f77333a8",
+        "filename": "components/omnibox/browser/keyword_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T01:15:18Z",
+      "side": 1,
+      "message": "Nit: transformations",
+      "revId": "e28c5ae315c47a0b7b39e0c987ffb4cc738abb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "976cf12e_95c4f9c1",
+        "filename": "components/omnibox/browser/keyword_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T01:15:18Z",
+      "side": 1,
+      "message": "Nit: removing any",
+      "revId": "e28c5ae315c47a0b7b39e0c987ffb4cc738abb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9832c7fa_6d97e248",
+        "filename": "components/omnibox/browser/keyword_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T01:15:18Z",
+      "side": 1,
+      "message": "Nit: |model| is an unusual name choice; |template_url_service| seems clearer",
+      "revId": "e28c5ae315c47a0b7b39e0c987ffb4cc738abb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
