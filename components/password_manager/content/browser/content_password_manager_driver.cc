@@ -330,8 +330,8 @@ bool ContentPasswordManagerDriver::CheckChildProcessSecurityPolicy(
     BadMessageReason reason) {
   content::ChildProcessSecurityPolicy* policy =
       content::ChildProcessSecurityPolicy::GetInstance();
-  if (!policy->CanAccessDataForOrigin(render_frame_host_->GetProcess()->GetID(),
-                                      url)) {
+  if (!policy->ContainsOrigin(render_frame_host_->GetProcess()->GetID(),
+                              url::Origin(url))) {
     bad_message::ReceivedBadMessage(render_frame_host_->GetProcess(), reason);
     return false;
   }

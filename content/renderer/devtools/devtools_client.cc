@@ -24,7 +24,9 @@ namespace content {
 
 DevToolsClient::DevToolsClient(RenderFrame* render_frame,
                                const std::string& api_script)
-    : RenderFrameObserver(render_frame), api_script_(api_script) {
+    : RenderFrameObserver(render_frame),
+      api_script_(api_script),
+      weak_factory_(this) {
   if (render_frame->IsMainFrame()) {
     web_tools_frontend_.reset(
         WebDevToolsFrontend::Create(render_frame->GetWebFrame(), this));
@@ -35,8 +37,18 @@ DevToolsClient::~DevToolsClient() {
 }
 
 void DevToolsClient::DidClearWindowObject() {
-  if (!api_script_.empty())
-    render_frame()->ExecuteJavaScript(base::UTF8ToUTF16(api_script_));
+  if (!api_script_.empty()) {
+    // Postpone ExecuteJavaScript to make sure it executes *after* the browser
+    // has been notified about the commit (i.e. after the browser is aware of
+    // the new origin the scripts should be able to access).
+    base::SequencedTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::Bind(&DevToolsClient::ExecuteApiScript,
+                              weak_factory_.GetWeakPtr()));
+  }
+}
+
+void DevToolsClient::ExecuteApiScript() {
+  render_frame()->ExecuteJavaScript(base::UTF8ToUTF16(api_script_));
 }
 
 void DevToolsClient::OnDestruct() {
