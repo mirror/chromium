@@ -34,6 +34,24 @@
       "revId": "95e5a9f7c667b9310d4b4c7ae9f6c2e19b320f20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a0711a_1edbace7",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-15T00:35:23Z",
+      "side": 1,
+      "message": "RenderThreadImpl::SharedMainThreadContextProvider() (which is what the callback calls) checks the state of the context, and if that reports it is lost, it recreates one (including establishing a new connection to the GPU process, which will spawn a new one if needed).\n\nThe key question is - are videos still playing correctly after you kill the GPU process.",
+      "parentUuid": "bba46968_7154535f",
+      "revId": "95e5a9f7c667b9310d4b4c7ae9f6c2e19b320f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
