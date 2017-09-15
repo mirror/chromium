@@ -33,6 +33,24 @@
       "revId": "f07ab51c47c61671fefc5902e890f417ece1a9aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77b0e6a3_259b74d4",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-15T19:23:31Z",
+      "side": 1,
+      "message": "Would it be valuable for the testers to create a set of data containing both used and disused data?",
+      "parentUuid": "6935759a_2ad2b6aa",
+      "revId": "f07ab51c47c61671fefc5902e890f417ece1a9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
