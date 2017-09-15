@@ -2,6 +2,92 @@
   "comments": [
     {
       "key": {
+        "uuid": "fcb24abd_ab427919",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-15T09:55:10Z",
+      "side": 1,
+      "message": "Can\u0027t you just initialize the status to BUTTON? I guess it wouldn\u0027t actually make a difference, because the node won\u0027t have a parent at construction and therefore wouldn\u0027t propagate the change event, but it\u0027s still more straightforward.",
+      "range": {
+        "startLine": 52,
+        "startChar": 20,
+        "endLine": 52,
+        "endChar": 32
+      },
+      "revId": "66930d909114ca0e95152c77dd362b287333f859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "581c9075_7e5768f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-15T09:55:10Z",
+      "side": 1,
+      "message": "This feels a tiny bit more complicated than necessary -- you first infer the new visibility from the state plus additional checks, then infer the new actual state from the visibility. It might be more straightforward to just override |newState| to HIDDEN if it\u0027s BUTTON and the additional action is NONE, and then set the visibility based on that.",
+      "revId": "66930d909114ca0e95152c77dd362b287333f859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8e69c2_1a9aa1fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-15T09:55:10Z",
+      "side": 1,
+      "message": "Nit: maybe include the state in the assertion message.",
+      "range": {
+        "startLine": 192,
+        "startChar": 85,
+        "endLine": 192,
+        "endChar": 86
+      },
+      "revId": "66930d909114ca0e95152c77dd362b287333f859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9cb9400_006b0127",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-15T09:55:10Z",
+      "side": 1,
+      "message": "Would it be easier to just make this a lambda?",
+      "range": {
+        "startLine": 197,
+        "startChar": 25,
+        "endLine": 197,
+        "endChar": 44
+      },
+      "revId": "66930d909114ca0e95152c77dd362b287333f859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ddd59d39_bc9db3cd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
         "patchSetId": 3
@@ -18,6 +104,29 @@
         "startChar": 52,
         "endLine": 514,
         "endChar": 60
+      },
+      "revId": "66930d909114ca0e95152c77dd362b287333f859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adbe0fc5_d483d448",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSectionTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-15T09:55:10Z",
+      "side": 1,
+      "message": "Nit: Maybe try aligning the @Features.Register annotations?",
+      "range": {
+        "startLine": 78,
+        "startChar": 11,
+        "endLine": 79,
+        "endChar": 8
       },
       "revId": "66930d909114ca0e95152c77dd362b287333f859",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
