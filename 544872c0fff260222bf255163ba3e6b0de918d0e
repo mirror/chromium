@@ -248,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "8b3cafa2_c6184903",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-09-15T11:31:15Z",
+      "side": 1,
+      "message": "Hmm I think the two loops help to make the code easier to understand actually.\nThe problem is that we first need to reassemble the dumps, and only later we can reason on them.\nIf we do one loop, there is always the case where the OS dump for a process is missing because comes only later.",
+      "parentUuid": "ac8033ca_6802d8b5",
+      "range": {
+        "startLine": 519,
+        "startChar": 2,
+        "endLine": 519,
+        "endChar": 45
+      },
+      "revId": "544872c0fff260222bf255163ba3e6b0de918d0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d504bfa_f1ba6f76",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 4
