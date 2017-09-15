@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "06a93983_e0cbd3f8",
+        "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-15T22:25:04Z",
+      "side": 1,
+      "message": "Thinking about this some more, you are correct.  The std::move() doesn\u0027t reset the unique_ptr, the assignment does, so the ordering is well-defined.",
+      "parentUuid": "6556aa8d_d8c93a62",
+      "revId": "dd12f215318cb52805026efa914479461eeb0f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da49d698_fd3306b8",
         "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.h",
         "patchSetId": 3
