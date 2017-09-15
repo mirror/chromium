@@ -160,7 +160,25 @@ public class ContextMenuHelper implements OnCreateContextMenuListener {
         // The Platform Context Menu requires the listener within this helper since this helper and
         // provides context menu for us to show.
         view.setOnCreateContextMenuListener(this);
-        if (view.showContextMenu()) {
+
+        boolean contextMenuShown = false;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            // final float density = Resources.getSystem().getDisplayMetrics().density;
+            Resources system = Resources.getSystem();
+            if (system != null) {
+                DisplayMetrics dm = system.getDisplayMetrics();
+                if (dm != null) {
+                    float density = dm.density;
+                    final float touchPointXPx = params.getTriggeringTouchXDp() * density;
+                    final float touchPointYPx =
+                            (params.getTriggeringTouchYDp() * density) + topContentOffsetPx;
+                    contextMenuShown = view.showContextMenu(touchPointXPx, touchPointYPx);
+                }
+            }
+        } else {
+            contextMenuShown = view.showContextMenu();
+        }
+        if (contextMenuShown) {
             mOnMenuShown.run();
             windowAndroid.addContextMenuCloseListener(new OnCloseContextMenuListener() {
                 @Override
