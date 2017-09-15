@@ -182,7 +182,10 @@ ServiceWorkerStatusCode ServiceWorkerProcessManager::AllocateWorkerProcess(
   DCHECK(!base::ContainsKey(instance_info_, embedded_worker_id))
       << embedded_worker_id << " already has a process allocated";
 
-  if (can_use_existing_process) {
+  // In non-PlzNavigate, we must manually track renderer processes in order to
+  // use an existing process. In PlzNavigate, we can depend on SiteInstance to
+  // return an existing process, so just skip this part.
+  if (content::IsBrowserSideNavigationEnabled() && can_use_existing_process) {
     int process_id = FindAvailableProcess(pattern);
     if (process_id != ChildProcessHost::kInvalidUniqueID) {
       RenderProcessHost::FromID(process_id)->IncrementKeepAliveRefCount();
