@@ -230,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "624e59c1_dd61a47d",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-15T00:30:46Z",
+      "side": 1,
+      "message": "If I use the thread bundle it will crash at initialization with check failed !BrowserThread::IsThreadInitialized(BrowserThread::UI). (Maybe conflict with the setup inside AshTestBase)",
+      "parentUuid": "97a53a0a_293c6d9e",
+      "revId": "48a781dbf8e2e0489474d384ff99de7fb710ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a6808b6_cbda0854",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
         "patchSetId": 1
