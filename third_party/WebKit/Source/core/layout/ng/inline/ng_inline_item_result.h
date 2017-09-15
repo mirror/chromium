@@ -54,6 +54,9 @@ struct CORE_EXPORT NGInlineItemResult {
   LayoutUnit borders_paddings_block_start;
   LayoutUnit borders_paddings_block_end;
 
+  bool has_borders_paddings_inline_start = false;
+  bool has_borders_paddings_inline_end = false;
+
   // The amount of expansion for justification.
   // Not used in NG paint, only to copy to InlineTextBox::SetExpansion().
   // TODO(layout-dev): crbug.com/714962 Remove once fragment painting is enabled

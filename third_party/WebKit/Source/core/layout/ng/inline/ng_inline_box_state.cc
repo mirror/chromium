@@ -40,7 +40,8 @@ void NGInlineBoxState::AccumulateUsedFonts(const ShapeResult* shape_result,
 
 NGInlineBoxState* NGInlineLayoutStateStack::OnBeginPlaceItems(
     const ComputedStyle* line_style,
-    FontBaseline baseline_type) {
+    FontBaseline baseline_type,
+    bool quirks_mode) {
   if (stack_.IsEmpty()) {
     // For the first line, push a box state for the line itself.
     stack_.resize(1);
@@ -50,7 +51,12 @@ NGInlineBoxState* NGInlineLayoutStateStack::OnBeginPlaceItems(
     // For the following lines, clear states that are not shared across lines.
     for (auto& box : stack_) {
       box.fragment_start = 0;
-      box.metrics = box.text_metrics;
+      // The line height quirk resets metrics on every new line
+      if (quirks_mode) {
+        box.text_metrics = NGLineHeightMetrics();
+        box.metrics = NGLineHeightMetrics(LayoutUnit(), LayoutUnit());
+      } else
+        box.metrics = box.text_metrics;
       if (box.needs_box_fragment) {
         box.line_left_position = LayoutUnit();
         // Existing box states are wrapped boxes, and hence no left edges.
@@ -67,7 +73,11 @@ NGInlineBoxState* NGInlineLayoutStateStack::OnBeginPlaceItems(
   // Use a "strut" (a zero-width inline box with the element's font and
   // line height properties) as the initial metrics for the line box.
   // https://drafts.csswg.org/css2/visudet.html#strut
-  line_box.ComputeTextMetrics(*line_style, baseline_type);
+  // The line height quirk instead sets a zero line height.
+  if (!quirks_mode)
+    line_box.ComputeTextMetrics(*line_style, baseline_type);
+  else
+    line_box.metrics = NGLineHeightMetrics(LayoutUnit(), LayoutUnit());
 
   return &stack_.back();
 }
@@ -89,6 +99,10 @@ NGInlineBoxState* NGInlineLayoutStateStack::OnOpenTag(
       position + item_result.margins.LineLeft(item.Style()->Direction());
   box->borders_paddings_block_start = item_result.borders_paddings_block_start;
   box->borders_paddings_block_end = item_result.borders_paddings_block_end;
+  box->has_borders_paddings_inline_start =
+      item_result.has_borders_paddings_inline_start;
+  box->has_borders_paddings_inline_end =
+      item_result.has_borders_paddings_inline_end;
   return box;
 }
 
@@ -278,7 +292,8 @@ NGInlineLayoutStateStack::ApplyBaselineShift(NGInlineBoxState* box,
     for (auto& child : box->pending_descendants) {
       switch (child.vertical_align) {
         case EVerticalAlign::kTextTop:
-          DCHECK(!box->text_metrics.IsEmpty());
+          if (box->text_metrics.IsEmpty())
+            box->ComputeTextMetrics(*box->style, baseline_type);
           baseline_shift = child.metrics.ascent + box->text_top;
           break;
         case EVerticalAlign::kTop:

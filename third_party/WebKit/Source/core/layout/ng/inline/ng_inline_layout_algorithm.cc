@@ -59,6 +59,7 @@ NGInlineLayoutAlgorithm::NGInlineLayoutAlgorithm(
           break_token),
       is_horizontal_writing_mode_(
           blink::IsHorizontalWritingMode(space.WritingMode())) {
+  quirks_mode_ = !inline_node.GetLayoutObject()->GetDocument().InNoQuirksMode();
   unpositioned_floats_ = ConstraintSpace().UnpositionedFloats();
 
   if (!is_horizontal_writing_mode_)
@@ -158,7 +159,7 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
   // Compute heights of all inline items by placing the dominant baseline at 0.
   // The baseline is adjusted after the height of the line box is computed.
   NGInlineBoxState* box =
-      box_states_.OnBeginPlaceItems(&line_style, baseline_type_);
+      box_states_.OnBeginPlaceItems(&line_style, baseline_type_, quirks_mode_);
 
   // Place items from line-left to line-right along with the baseline.
   // Items are already bidi-reordered to the visual order.
@@ -170,12 +171,16 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
     if (item.Type() == NGInlineItem::kText ||
         item.Type() == NGInlineItem::kControl) {
       DCHECK(item.GetLayoutObject()->IsText());
-      DCHECK(!box->text_metrics.IsEmpty());
       DCHECK(item.Style());
       text_builder.SetStyle(item.Style());
-      text_builder.SetSize(
-          {item_result.inline_size, box->text_metrics.LineHeight()});
       if (item_result.shape_result) {
+        if (box->text_metrics.IsEmpty()) {
+          // Metrics may not be in place due to the line height quirk
+          DCHECK(quirks_mode_);
+          box->ComputeTextMetrics(*item.Style(), baseline_type_);
+        }
+        text_builder.SetSize(
+            {item_result.inline_size, box->text_metrics.LineHeight()});
         // Take all used fonts into account if 'line-height: normal'.
         if (box->include_used_fonts && item.Type() == NGInlineItem::kText) {
           box->AccumulateUsedFonts(item_result.shape_result.Get(),
@@ -185,6 +190,13 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
         text_builder.SetShapeResult(std::move(item_result.shape_result));
         text_builder.SetExpansion(item_result.expansion);
       } else {
+        if (!box->metrics.LineHeight()) {
+          // Metrics may not be in place due to the line height quirk
+          DCHECK(quirks_mode_);
+          box->ComputeTextMetrics(*item.Style(), baseline_type_);
+        }
+        text_builder.SetSize(
+            {item_result.inline_size, box->metrics.LineHeight()});
         DCHECK(!item.TextShapeResult());  // kControl or unit tests.
       }
       RefPtr<NGPhysicalTextFragment> text_fragment =
@@ -195,9 +207,13 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
     } else if (item.Type() == NGInlineItem::kOpenTag) {
       box = box_states_.OnOpenTag(item, item_result, &line_box, position);
       // Compute text metrics for all inline boxes since even empty inlines
-      // influence the line height.
+      // influence the line height, line height quirk only does this when
+      // object has border or padding.
       // https://drafts.csswg.org/css2/visudet.html#line-height
-      box->ComputeTextMetrics(*item.Style(), baseline_type_);
+      if (!quirks_mode_ || box->has_borders_paddings_inline_start)
+        box->ComputeTextMetrics(*item.Style(), baseline_type_);
+      else
+        box->metrics = NGLineHeightMetrics(LayoutUnit(), LayoutUnit());
       if (ShouldCreateBoxFragment(item, item_result))
         box->SetNeedsBoxFragment(item_result.needs_box_when_empty);
     } else if (item.Type() == NGInlineItem::kCloseTag) {
@@ -207,6 +223,9 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
           box->SetNeedsBoxFragment(true);
         box->SetLineRightForBoxFragment(item, item_result, position);
       }
+      // Line height quirk: set text metrics if the box has border or padding
+      if (quirks_mode_ && box->has_borders_paddings_inline_end)
+        box->ComputeTextMetrics(*item.Style(), baseline_type_);
       box = box_states_.OnCloseTag(item, &line_box, box, baseline_type_);
       continue;
     } else if (item.Type() == NGInlineItem::kAtomicInline) {
