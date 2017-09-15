@@ -359,10 +359,20 @@ void ManagePasswordsUIController::SavePassword(const base::string16& username,
   if (passwords_data_.form_manager()->pending_credentials().username_value !=
       username) {
     passwords_data_.form_manager()->UpdateUsername(username);
+    if (GetPasswordFormMetricsRecorder()) {
+      GetPasswordFormMetricsRecorder()->RecordDetailedUserAction(
+          password_manager::PasswordFormMetricsRecorder::DetailedUserAction::
+              kEditedUsernameInBubble);
+    }
   }
   if (passwords_data_.form_manager()->pending_credentials().password_value !=
       password) {
     passwords_data_.form_manager()->UpdatePasswordValue(password);
+    if (GetPasswordFormMetricsRecorder()) {
+      GetPasswordFormMetricsRecorder()->RecordDetailedUserAction(
+          password_manager::PasswordFormMetricsRecorder::DetailedUserAction::
+              kSelectedDifferentPasswordInBubble);
+    }
   }
   save_fallback_timer_.Stop();
   SavePasswordInternal();
