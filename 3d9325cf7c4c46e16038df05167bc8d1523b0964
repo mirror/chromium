@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71670501_f75eb06d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-15T17:56:17Z",
+      "side": 1,
+      "message": "I think that dominickn@ likes avoiding multi line comments if you can have a single line comment instead\n\n/** ... */",
+      "range": {
+        "startLine": 105,
+        "startChar": 7,
+        "endLine": 105,
+        "endChar": 0
+      },
+      "revId": "3d9325cf7c4c46e16038df05167bc8d1523b0964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4777bd_4bf6ac34",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-15T17:56:17Z",
+      "side": 1,
+      "message": "Nit: \"WebApkNotificationPermissionStatus#enums.xml\" -\u003e \"WebApkNotificationPermissionStatus in enums.xml\"",
+      "revId": "3d9325cf7c4c46e16038df05167bc8d1523b0964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6ad5562_264bb662",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 87940,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-15T17:56:17Z",
+      "side": 1,
+      "message": "Nit: receive -\u003e receives",
+      "revId": "3d9325cf7c4c46e16038df05167bc8d1523b0964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
