@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7790684b_6f9cda96",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSLazyPropertyParserImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-09-15T08:06:34Z",
+      "side": 1,
+      "message": "So this is where you should probably optimize to avoid the lookup for the content declaration in the common case where you don\u0027t have ::before/:after. I haven\u0027t tried to figure out where it\u0027s room for a flag, for instance.",
+      "revId": "f93761b4da0143fe9e8e86fd60d9515c81159c2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
