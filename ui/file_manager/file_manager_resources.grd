@@ -185,6 +185,9 @@
       <include name="IDR_FILE_MANAGER_IMG_GALLERY_CURSOR_CROP" file="gallery/images/100/cursor_crop.png" type="BINDATA" />
       <include name="IDR_FILE_MANAGER_IMG_GALLERY_2X_CURSOR_CROP" file="gallery/images/200/cursor_crop.png" type="BINDATA" />
 
+      <!-- Zip Archiver -->
+      <include name="IDR_ZIP_ARCHIVER_MANIFEST" file="../../chrome/browser/resources/chromeos/zip_archiver/manifest.json" type="BINDATA" />
+
       <!-- Image loader extension manifest and scripts. -->
       <if expr="chromeos">
         <include name="IDR_IMAGE_LOADER_MANIFEST" file="image_loader/manifest.json" type="BINDATA" />
