@@ -2052,6 +2052,51 @@
             ]
         }
     ],
+    "OmniboxCombinedSpeculativeServiceWorker": [
+        {
+            "platforms": [
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "Prewarming",
+                    "enable_features": [
+                        "OmniboxSpeculativeServiceWorkerStartOnQueryInput"
+                    ],
+                    "disable_features": [
+                        "OmniboxSpareRenderer"
+                    ]
+                },
+                {
+                    "name": "PrewarmingWithServiceWorker",
+                    "enable_features": [
+                        "OmniboxSpeculativeServiceWorkerStartOnQueryInput"
+                    ],
+                    "disable_features": [
+                        "OmniboxSpareRenderer"
+                    ]
+                },
+                {
+                    "name": "SpareRenderer",
+                    "enable_features": [
+                        "OmniboxSpareRenderer"
+                    ],
+                    "disable_features": [
+                        "OmniboxSpeculativeServiceWorkerStartOnQueryInput"
+                    ]
+                },
+                {
+                    "name": "SpareRendererWithSW",
+                    "enable_features": [
+                        "OmniboxSpareRenderer"
+                    ],
+                    "disable_features": [
+                        "OmniboxSpeculativeServiceWorkerStartOnQueryInput"
+                    ]
+                }
+            ]
+        }
+    ],
     "OmniboxPlaceholderExperiment": [
         {
             "platforms": [
@@ -2075,24 +2120,6 @@
                 },
                 {
                     "name": "Default"
-                }
-            ]
-        }
-    ],
-    "OmniboxSpeculativeServiceWorkerStartOnQueryInput": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "OmniboxSpeculativeServiceWorkerStartOnQueryInput"
-                    ]
-                },
-                {
-                    "name": "Control"
                 }
             ]
         }
