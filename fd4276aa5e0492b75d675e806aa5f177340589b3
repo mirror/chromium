@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "8a6cc2f8_4bd417c5",
+        "filename": "chrome/installer/zucchini/targets_affinity.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:21:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "53cb50eb_cc518536",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 65
+      },
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "992d59de_b37cc0cd",
         "filename": "chrome/installer/zucchini/targets_affinity.cc",
         "patchSetId": 8
@@ -518,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "3dd23be5_ed16d7fc",
+        "filename": "chrome/installer/zucchini/targets_affinity.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:21:06Z",
+      "side": 1,
+      "message": "Okay, maybe leave as-is, and add comment:\n  // File offset or marked index.\n?",
+      "parentUuid": "70d14c3d_3e33adfd",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 12
+      },
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1ed07bc_b4566cfa",
         "filename": "chrome/installer/zucchini/targets_affinity.h",
         "patchSetId": 8
@@ -665,6 +713,30 @@
     },
     {
       "key": {
+        "uuid": "82702b9b_50cbc789",
+        "filename": "chrome/installer/zucchini/targets_affinity_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:21:06Z",
+      "side": 1,
+      "message": "Still bugs me that the tests are not independent... Maybe add comment? Carrying on comment to updated patch.",
+      "parentUuid": "93a407a7_e3cf43c3",
+      "range": {
+        "startLine": 19,
+        "startChar": 18,
+        "endLine": 19,
+        "endChar": 34
+      },
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82d5cbe2_b153f763",
         "filename": "chrome/installer/zucchini/targets_affinity_unittest.cc",
         "patchSetId": 8
@@ -756,6 +828,30 @@
       "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1df14074_2bd0555e",
+        "filename": "chrome/installer/zucchini/targets_affinity_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:21:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c268783b_b98385d9",
+      "range": {
+        "startLine": 72,
+        "startChar": 2,
+        "endLine": 72,
+        "endChar": 35
+      },
+      "revId": "fd4276aa5e0492b75d675e806aa5f177340589b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

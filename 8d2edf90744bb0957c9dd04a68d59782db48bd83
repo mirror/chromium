@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06193ce8_df96e5fa",
+        "filename": "chrome/installer/zucchini/targets_affinity.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:21:06Z",
+      "side": 1,
+      "message": "Just double-checking that you intend to use size_t instead of uint32_t?",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 6
+      },
+      "revId": "8d2edf90744bb0957c9dd04a68d59782db48bd83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622ec01a_1b890df8",
+        "filename": "chrome/installer/zucchini/targets_affinity.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:21:06Z",
+      "side": 1,
+      "message": "NIT: ..",
+      "range": {
+        "startLine": 37,
+        "startChar": 70,
+        "endLine": 37,
+        "endChar": 72
+      },
+      "revId": "8d2edf90744bb0957c9dd04a68d59782db48bd83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee0fdb0f_ce93b1cc",
+        "filename": "chrome/installer/zucchini/targets_affinity.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:21:06Z",
+      "side": 1,
+      "message": "NIT: 4 spaces.",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 9
+      },
+      "revId": "8d2edf90744bb0957c9dd04a68d59782db48bd83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476283b1_c6e32c51",
+        "filename": "chrome/installer/zucchini/targets_affinity_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-15T21:21:06Z",
+      "side": 1,
+      "message": "This is shared intentionally, maybe add comment, something like:\n\n// A common TargetsAffinity is used across independent (??????) tests. This is to reflect actual usage, in which common TargetsAffinity is used because {{{ reasons }}}.",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 35
+      },
+      "revId": "8d2edf90744bb0957c9dd04a68d59782db48bd83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
