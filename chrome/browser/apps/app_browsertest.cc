@@ -752,9 +752,10 @@ IN_PROC_BROWSER_TEST_F(PlatformAppBrowserTest, MutationEventsDisabled) {
   ASSERT_TRUE(RunPlatformAppTest("platform_apps/mutation_events")) << message_;
 }
 
+// TODO(crbug/765809): Flakey on chromium.win/Win10 Tests x64.
 // This appears to be unreliable on linux.
 // TODO(stevenjb): Investigate and enable
-#if defined(OS_LINUX) && !defined(USE_ASH)
+#if defined(OS_LINUX) && !defined(USE_ASH) || defined(OS_WIN)
 #define MAYBE_AppWindowRestoreState DISABLED_AppWindowRestoreState
 #else
 #define MAYBE_AppWindowRestoreState AppWindowRestoreState
