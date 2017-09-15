@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c52ae25f_3f396c32",
+        "filename": "chrome/browser/ui/views/ash/tab_scrubber_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-15T18:38:51Z",
+      "side": 0,
+      "message": "There\u0027s only one more use in window_sizer_ash_unittest.cc (trying to use Ash in windows), can we remove that useage and the constant in this CL?",
+      "revId": "1882524e81c57ff9ee4061b0473ee30666b560c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
