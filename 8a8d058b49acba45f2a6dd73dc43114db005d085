@@ -22,6 +22,30 @@
       "revId": "8a8d058b49acba45f2a6dd73dc43114db005d085",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f55b2d0_64654b77",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-15T01:18:09Z",
+      "side": 1,
+      "message": "I tested this locally and you are right! base::WriteFile() does not return -1 if it can\u0027t write the entire file out to disk. Thank you for catching this!",
+      "parentUuid": "20b63aee_581c7a0a",
+      "range": {
+        "startLine": 223,
+        "startChar": 10,
+        "endLine": 223,
+        "endChar": 23
+      },
+      "revId": "8a8d058b49acba45f2a6dd73dc43114db005d085",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
