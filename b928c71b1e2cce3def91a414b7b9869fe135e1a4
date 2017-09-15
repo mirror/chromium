@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e96e645_5fac1ba2",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-15T17:29:58Z",
+      "side": 1,
+      "message": "Since you need to rebaseline it anyways... How does this signal correlate with any of the TT?I ? I wish it did so that LH, PWM, DT, PPTR and others could use it similarly to the lifecycle events... In which case you would emit it as a lifecycle event probe here...",
+      "revId": "b928c71b1e2cce3def91a414b7b9869fe135e1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
