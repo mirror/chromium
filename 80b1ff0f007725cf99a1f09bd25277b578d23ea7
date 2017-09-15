@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbad0b10_733ec908",
+        "filename": "third_party/WebKit/Source/bindings/scripts/interface_dependency_resolver.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-15T03:59:29Z",
+      "side": 1,
+      "message": "nit: \u003c 80 characters per line",
+      "revId": "80b1ff0f007725cf99a1f09bd25277b578d23ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
