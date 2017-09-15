@@ -34,6 +34,24 @@
       "revId": "398990826f949d2904d710652184e51fea121dd9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f87ddf4e_0c6fc8a8",
+        "filename": "components/omnibox/browser/autocomplete_classifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-15T17:15:46Z",
+      "side": 0,
+      "message": "Zero suggest on Android triggers on every (non-incognito) page.\n\n\"Rarely\" is the triggering rate on desktop, where the suggestions are based on the context of the current page.\n\nOn mobile it provides the user\u0027s most visited suggestions.\n\nEnable zero suggest on iOS is a major change.  You may even want to go through launch review.  This is not subtle, and all iOS engineers and leads will notice when you turn it on.  At a minimum, you should check that the UI animation of zero suggest displaying looks good, as users will be seeing it a ton.\n\n(Zero suggest can currently appear on iOS when there\u0027s a \"link you copied\" in the clipboard.  But this happens rarely.  If you\u0027re going to increase the rate at which the zero suggest dropdown is open by a factor of ~100x, you should make sure you\u0027re comfortable with how it looks.)\n\nYou will also need to change these lines to get this feature properly enabled.\nhttps://cs.chromium.org/chromium/src/components/omnibox/browser/omnibox_field_trial.cc?q\u003domnibox_fie\u0026sq\u003dpackage:chromium\u0026l\u003d279\nhttps://cs.chromium.org/chromium/src/components/omnibox/browser/omnibox_field_trial.cc?q\u003domnibox_fie\u0026sq\u003dpackage:chromium\u0026l\u003d299",
+      "parentUuid": "0ac7ae54_1416a6c5",
+      "revId": "398990826f949d2904d710652184e51fea121dd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
