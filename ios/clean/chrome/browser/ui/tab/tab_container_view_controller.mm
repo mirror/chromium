@@ -5,7 +5,12 @@
 #import "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.h"
 #import "ios/clean/chrome/browser/ui/tab/tab_container_view_controller+internal.h"
 
+#include "base/i18n/rtl.h"
 #import "base/logging.h"
+#import "ios/chrome/browser/ui/UIView+SizeClassSupport.h"
+#import "ios/chrome/browser/ui/uikit_ui_util.h"
+#import "ios/clean/chrome/browser/ui/guides/guides.h"
+#import "ios/clean/chrome/browser/ui/toolbar/toolbar_constants.h"
 #import "ios/clean/chrome/browser/ui/transitions/animators/swap_from_above_animator.h"
 #import "ios/clean/chrome/browser/ui/transitions/containment_transition_context.h"
 #import "ios/clean/chrome/browser/ui/transitions/containment_transitioning_delegate.h"
@@ -35,6 +40,21 @@ const CGFloat kToolbarHeight = 56.0f;
 // means that this view will not be displayed on landscape.
 @property(nonatomic, strong) UIView* statusBarBackgroundView;
 
+// Handy references
+@property(nonatomic, weak) UILayoutGuide* omniboxGuide;
+
+// Constraints used to horizontally position the findbar on tablet.  Exactly one
+// of these sets of constraints will be active at any given time.  Callers
+// should deactivate the old set before activating the new set, because a given
+// constraint may be in more than one set.  These properties are nil on phone.
+//
+// Positions the findbar to match the omnibox.
+@property(nonatomic, readwrite, strong) Constraints* findBarOmniboxConstraints;
+// Positions the findbar to be the full width of the toolbar.
+@property(nonatomic, readwrite, strong) Constraints* findBarToolbarConstraints;
+// Positions the findbar to be right-aligned with the omnibox and a set width.
+@property(nonatomic, readwrite, strong) Constraints* findBarSetWidthConstraints;
+
 @end
 
 @implementation TabContainerViewController
@@ -50,11 +70,18 @@ const CGFloat kToolbarHeight = 56.0f;
     _containmentTransitioningDelegate;
 @synthesize usesBottomToolbar = _usesBottomToolbar;
 @synthesize statusBarBackgroundColor = _statusBarBackgroundColor;
+@synthesize omniboxGuide = _omniboxGuide;
+@synthesize findBarOmniboxConstraints = _findBarOmniboxConstraints;
+@synthesize findBarToolbarConstraints = _findBarToolbarConstraints;
+@synthesize findBarSetWidthConstraints = _findBarSetWidthConstraints;
 
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  self.omniboxGuide = AddNamedGuide(kOmniboxGuide, self.view);
+
   [self configureSubviews];
 
   NSMutableArray* constraints = [NSMutableArray array];
@@ -66,6 +93,7 @@ const CGFloat kToolbarHeight = 56.0f;
   [constraints addObjectsFromArray:[self findbarConstraints]];
   [constraints addObjectsFromArray:[self containerConstraints]];
   [NSLayoutConstraint activateConstraints:constraints];
+  [self updateFindBarConstraints];
 }
 
 #pragma mark - Public properties
@@ -85,31 +113,29 @@ const CGFloat kToolbarHeight = 56.0f;
   if (self.findBarViewController == findBarViewController)
     return;
   if ([self isViewLoaded]) {
-    self.findBarView.hidden = NO;
-    findBarViewController.view.translatesAutoresizingMaskIntoConstraints = YES;
-    findBarViewController.view.autoresizingMask =
-        UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    [self detachChildViewController:self.findBarViewController];
+    if (findBarViewController) {
+      [self addChildViewController:findBarViewController];
+      [self.findBarView addSubview:findBarViewController.view];
 
-    ContainmentTransitionContext* context =
-        [[ContainmentTransitionContext alloc]
-            initWithFromViewController:self.findBarViewController
-                      toViewController:findBarViewController
-                  parentViewController:self
-                                inView:self.findBarView
-                            completion:^(BOOL finished) {
-                              self.findBarView.hidden =
-                                  (findBarViewController == nil);
-                            }];
-    id<UIViewControllerAnimatedTransitioning> animator =
-        [self.containmentTransitioningDelegate
-            animationControllerForAddingChildController:findBarViewController
-                                removingChildController:
-                                    self.findBarViewController
-                                           toController:self];
-    [context prepareTransitionWithAnimator:animator];
-    [animator animateTransition:context];
+      findBarViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
+      [NSLayoutConstraint activateConstraints:@[
+        [self.findBarView.leadingAnchor
+            constraintEqualToAnchor:findBarViewController.view.leadingAnchor],
+        [self.findBarView.trailingAnchor
+            constraintEqualToAnchor:findBarViewController.view.trailingAnchor],
+        [self.findBarView.topAnchor
+            constraintEqualToAnchor:findBarViewController.view.topAnchor],
+        [self.findBarView.bottomAnchor
+            constraintEqualToAnchor:findBarViewController.view.bottomAnchor],
+      ]];
+
+      [findBarViewController didMoveToParentViewController:self];
+    }
   }
   _findBarViewController = findBarViewController;
+  self.findBarView.hidden = (_findBarViewController == nil);
+  [self updateFindBarConstraints];
 }
 
 - (void)setToolbarViewController:(UIViewController*)toolbarViewController {
@@ -250,16 +276,58 @@ animationControllerForAddingChildController:(UIViewController*)addedChild
 
 // Constraints for the findbar.
 - (Constraints*)findbarConstraints {
-  return @[
-    [self.findBarView.topAnchor
-        constraintEqualToAnchor:self.toolbarView.topAnchor],
-    [self.findBarView.bottomAnchor
-        constraintEqualToAnchor:self.toolbarView.bottomAnchor],
-    [self.findBarView.leadingAnchor
-        constraintEqualToAnchor:self.toolbarView.leadingAnchor],
-    [self.findBarView.trailingAnchor
-        constraintEqualToAnchor:self.toolbarView.trailingAnchor],
-  ];
+  if (IsIPadIdiom()) {
+    // The amount of transparency on the leading and trailing edges of the find
+    // bar background image.
+    const CGFloat findBarPadding = 6.0;
+    const CGFloat findBarWidth = 345.0;
+
+    // This constraint is shared across multiple sets below.
+    NSLayoutConstraint* omniboxTrailingConstraint =
+        [self.findBarView.trailingAnchor
+            constraintEqualToAnchor:self.omniboxGuide.trailingAnchor
+                           constant:findBarPadding];
+
+    self.findBarOmniboxConstraints = @[
+      [self.findBarView.leadingAnchor
+          constraintEqualToAnchor:self.omniboxGuide.leadingAnchor
+                         constant:-findBarPadding],
+      omniboxTrailingConstraint,
+    ];
+
+    self.findBarSetWidthConstraints = @[
+      [self.findBarView.widthAnchor constraintEqualToConstant:findBarWidth],
+      omniboxTrailingConstraint,
+    ];
+
+    self.findBarToolbarConstraints = @[
+      [self.findBarView.leadingAnchor
+          constraintEqualToAnchor:self.toolbarView.leadingAnchor],
+      [self.findBarView.trailingAnchor
+          constraintEqualToAnchor:self.toolbarView.trailingAnchor],
+    ];
+
+    // On tablet, the findbar is positioned underneath the toolbar, with a
+    // slight overlap.  The height is intrinsic to the findbarview and is not
+    // overridden here.
+    return @[
+      [self.findBarView.topAnchor
+          constraintEqualToAnchor:self.toolbarView.bottomAnchor
+                         constant:-10],
+    ];
+  } else {
+    // On phone, the findbar shares a frame with the toolbar.
+    return @[
+      [self.findBarView.topAnchor
+          constraintEqualToAnchor:self.toolbarView.topAnchor],
+      [self.findBarView.bottomAnchor
+          constraintEqualToAnchor:self.toolbarView.bottomAnchor],
+      [self.findBarView.leadingAnchor
+          constraintEqualToAnchor:self.toolbarView.leadingAnchor],
+      [self.findBarView.trailingAnchor
+          constraintEqualToAnchor:self.toolbarView.trailingAnchor],
+    ];
+  }
 }
 
 // Constraints that are shared between topToolbar and bottomToolbar
@@ -303,6 +371,49 @@ animationControllerForAddingChildController:(UIViewController*)addedChild
     [self.toolbarView.bottomAnchor
         constraintEqualToAnchor:self.containerView.bottomAnchor],
   ];
+}
+
+- (void)updateFindBarConstraints {
+  if (!IsIPadIdiom()) {
+    return;
+  }
+
+  CGFloat prev = CGRectGetWidth(self.omniboxGuide.layoutFrame);
+  [self.view layoutIfNeeded];
+  NSLog(@"%f -> %f", prev, CGRectGetWidth(self.omniboxGuide.layoutFrame));
+
+  // On iPad, there are three possible frames for the Search bar:
+  if (self.view.cr_widthSizeClass == REGULAR) {
+    // 1. In Regular width size class, it is short, right-aligned to the
+    //    omnibox's right edge.
+    [NSLayoutConstraint deactivateConstraints:self.findBarOmniboxConstraints];
+    [NSLayoutConstraint deactivateConstraints:self.findBarToolbarConstraints];
+    [NSLayoutConstraint activateConstraints:self.findBarSetWidthConstraints];
+  } else {
+    const CGFloat minWidth = 345.0;
+    if (CGRectGetWidth(self.omniboxGuide.layoutFrame) >= minWidth) {
+      // 2. In Compact size class, if the short bar width is less than the
+      //    omnibox, stretch and align the search bar to the omnibox.
+      [NSLayoutConstraint
+          deactivateConstraints:self.findBarSetWidthConstraints];
+      [NSLayoutConstraint deactivateConstraints:self.findBarToolbarConstraints];
+      [NSLayoutConstraint activateConstraints:self.findBarOmniboxConstraints];
+    } else {
+      // 3. Finally, if the short bar width is more than the omnibox, fill the
+      //    container view from edge to edge, ignoring the omnibox.
+      [NSLayoutConstraint
+          deactivateConstraints:self.findBarSetWidthConstraints];
+      [NSLayoutConstraint deactivateConstraints:self.findBarOmniboxConstraints];
+      [NSLayoutConstraint activateConstraints:self.findBarToolbarConstraints];
+    }
+  }
+
+  [self.view setNeedsLayout];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection*)previousTraitCollection {
+  [super traitCollectionDidChange:previousTraitCollection];
+  [self updateFindBarConstraints];
 }
 
 @end

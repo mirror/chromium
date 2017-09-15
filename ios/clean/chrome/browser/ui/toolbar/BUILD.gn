@@ -47,6 +47,7 @@ source_set("toolbar_ui") {
     "//ios/chrome/browser/ui/commands",
     "//ios/chrome/browser/ui/history_popup/requirements",
     "//ios/clean/chrome/browser/ui/commands",
+    "//ios/clean/chrome/browser/ui/guides",
     "//ios/clean/chrome/browser/ui/tools",
     "//ios/clean/chrome/browser/ui/transitions/animators",
     "//ios/third_party/material_components_ios",

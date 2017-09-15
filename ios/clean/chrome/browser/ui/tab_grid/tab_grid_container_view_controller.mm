@@ -84,7 +84,7 @@
            (id<UIViewControllerTransitionCoordinator>)coordinator {
   // We need to dismiss the ToolsMenu every time the Toolbar frame changes
   // (e.g. Size changes, rotation changes, etc.)
-  [self.dispatcher closeToolsMenu];
+  //[self.dispatcher closeToolsMenu];
 }
 
 #pragma mark - ZoomTransitionDelegate methods

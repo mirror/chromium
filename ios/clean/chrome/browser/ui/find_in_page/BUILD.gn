@@ -36,6 +36,7 @@ source_set("find_in_page_ui") {
   deps = [
     "//base",
     "//components/strings",
+    "//ios/chrome/browser/ui:ui_util",
     "//ios/chrome/browser/ui/find_bar",
     "//ios/clean/chrome/browser/ui",
     "//ios/clean/chrome/browser/ui/actions",

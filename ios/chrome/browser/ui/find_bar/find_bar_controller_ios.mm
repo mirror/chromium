@@ -64,9 +64,6 @@ const NSTimeInterval kSearchShortDelay = 0.100;
                      intoView:(UIView*)parentView
                     withFrame:(CGRect)targetFrame
                    selectText:(BOOL)selectText;
-// Returns the appropriate variant of the image for |image_name| based on
-// |_isIncognito| and device idiom.
-- (UIImage*)imageWithName:(NSString*)image_name;
 // Responds to touches that make editing changes on the text field, triggering
 // find-in-page searches for the field's current value.
 - (void)editingChanged;
@@ -323,13 +320,6 @@ const NSTimeInterval kSearchShortDelay = 0.100;
 
 - (void)hideKeyboard:(id)sender {
   [self.view endEditing:YES];
-}
-
-- (UIImage*)imageWithName:(NSString*)imageName {
-  NSString* name = !IsIPadIdiom() && self.isIncognito
-                       ? [imageName stringByAppendingString:@"_incognito"]
-                       : imageName;
-  return [UIImage imageNamed:name];
 }
 
 #pragma mark - Internal
