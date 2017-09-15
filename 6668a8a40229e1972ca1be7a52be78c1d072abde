@@ -45,6 +45,29 @@
       "revId": "6668a8a40229e1972ca1be7a52be78c1d072abde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb229ba_721f2a8f",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-15T16:08:17Z",
+      "side": 1,
+      "message": "You should use OneCallback in new code.",
+      "range": {
+        "startLine": 27,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 52
+      },
+      "revId": "6668a8a40229e1972ca1be7a52be78c1d072abde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
