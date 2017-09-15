@@ -712,6 +712,24 @@
     },
     {
       "key": {
+        "uuid": "4f400e60_ada1f96c",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-15T02:44:40Z",
+      "side": 1,
+      "message": "\u003e I\u0027m sorry, you\u0027re misreading the assembly at https://godbolt.org/g/vewsR7.\n\nYes, I was indeed sleepy at the wheel (and thank you for this wonderful analysis, btw).  I missed the \"double duty\" aspect of that loop, it\u0027s a pretty cool optimization.\n\nSuggests to me that we don\u0027t need the while (len \u003c\u003d 4) {} since Clang handles that for us ...\n\n\u003e Once again, we need to have more faith in our compiler.  :)\n\nAmen to that, we hear ya :)  Uploading a patch to drop the extra while loop, PTAL.",
+      "parentUuid": "a6a32d04_8fab0a84",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1eae378_20622253",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16
