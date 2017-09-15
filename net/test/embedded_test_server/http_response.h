@@ -64,12 +64,15 @@ class BasicHttpResponse : public HttpResponse {
     custom_headers_.push_back(std::make_pair(key, value));
   }
 
+  // Generates and returns a http response header string.
+  std::string BuildHeader() const;
   // Generates and returns a http response string.
   std::string ToResponseString() const;
 
   void SendResponse(const SendBytesCallback& send,
                     const SendCompleteCallback& done) override;
 
+ protected:
  private:
   HttpStatusCode code_;
   std::string content_;
