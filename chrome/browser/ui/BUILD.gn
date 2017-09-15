@@ -1815,6 +1815,8 @@ split_static_library("ui") {
         "views/location_bar/star_view.h",
         "views/location_bar/zoom_view.cc",
         "views/location_bar/zoom_view.h",
+        "views/omnibox/omnibox_keyword_search_button.cc",
+        "views/omnibox/omnibox_keyword_search_button.h",
         "views/omnibox/omnibox_popup_contents_view.cc",
         "views/omnibox/omnibox_popup_contents_view.h",
         "views/omnibox/omnibox_result_view.cc",

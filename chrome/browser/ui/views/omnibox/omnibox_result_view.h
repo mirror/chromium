@@ -15,9 +15,9 @@
 #include "ui/gfx/animation/slide_animation.h"
 #include "ui/gfx/font_list.h"
 #include "ui/gfx/geometry/rect.h"
-#include "ui/views/controls/image_view.h"
 #include "ui/views/view.h"
 
+class OmniboxKeywordSearchButton;
 class OmniboxPopupContentsView;
 
 namespace gfx {
@@ -72,6 +72,21 @@ class OmniboxResultView : public views::View,
 
   // Stores the image in a local data member and schedules a repaint.
   void SetAnswerImage(const gfx::ImageSkia& image);
+
+  // Sets the hovered state of this result.
+  void SetHovered(bool hovered);
+
+  // FIXME: comment
+  void AcceptKeyword();
+
+  // FIXME: do we really need this? If yes, can it be private?
+  // FIXME: comment
+  bool AnimationRunning() const;
+
+  // FIXME: comments
+  // FIXME: I don't like this.
+  OmniboxPopupContentsView* model() { return model_; }
+  size_t model_index() { return model_index_; }
 
   // views::View:
   bool OnMousePressed(const ui::MouseEvent& event) override;
@@ -170,9 +185,6 @@ class OmniboxResultView : public views::View,
                               int text_type,
                               bool is_bold) const;
 
-  // Sets the hovered state of this result.
-  void SetHovered(bool hovered);
-
   // views::View:
   void Layout() override;
   const char* GetClassName() const override;
@@ -203,7 +215,7 @@ class OmniboxResultView : public views::View,
   gfx::Rect icon_bounds_;
 
   gfx::Rect keyword_text_bounds_;
-  std::unique_ptr<views::ImageView> keyword_icon_;
+  std::unique_ptr<OmniboxKeywordSearchButton> keyword_button_;
 
   std::unique_ptr<gfx::SlideAnimation> animation_;
 

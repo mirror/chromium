@@ -67,6 +67,9 @@ class OmniboxPopupContentsView : public views::View,
   // gfx::AnimationDelegate:
   void AnimationProgressed(const gfx::Animation* animation) override;
 
+  // FIXME: I don't like this, either.
+  OmniboxView* omnibox_view() { return omnibox_view_; }
+
   // views::View:
   void Layout() override;
   views::View* GetTooltipHandlerForPoint(const gfx::Point& point) override;

@@ -24,6 +24,7 @@
 #include "chrome/browser/ui/layout_constants.h"
 #include "chrome/browser/ui/views/location_bar/background_with_1_px_border.h"
 #include "chrome/browser/ui/views/location_bar/location_bar_view.h"
+#include "chrome/browser/ui/views/omnibox/omnibox_keyword_search_button.h"
 #include "chrome/browser/ui/views/omnibox/omnibox_popup_contents_view.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/omnibox/browser/omnibox_field_trial.h"
@@ -222,14 +223,14 @@ OmniboxResultView::OmniboxResultView(OmniboxPopupContentsView* model,
           font_list.GetHeight(),
           font_list.DeriveWithWeight(gfx::Font::Weight::BOLD).GetHeight())),
       mirroring_context_(new MirroringContext()),
-      keyword_icon_(new views::ImageView()),
+      keyword_button_(new OmniboxKeywordSearchButton(this)),
       animation_(new gfx::SlideAnimation(this)) {
   CHECK_GE(model_index, 0);
-  keyword_icon_->set_owned_by_client();
-  keyword_icon_->EnableCanvasFlippingForRTLUI(true);
-  keyword_icon_->SetImage(gfx::CreateVectorIcon(omnibox::kKeywordSearchIcon, 16,
-                                                GetVectorIconColor()));
-  keyword_icon_->SizeToPreferredSize();
+  keyword_button_->set_owned_by_client();
+  // keyword_button_->EnableCanvasFlippingForRTLUI(true);
+  keyword_button_->SetImage(views::Button::STATE_NORMAL,
+                            gfx::CreateVectorIcon(omnibox::kKeywordSearchIcon,
+                                                  16, GetVectorIconColor()));
 }
 
 OmniboxResultView::~OmniboxResultView() {
@@ -258,10 +259,10 @@ void OmniboxResultView::SetMatch(const AutocompleteMatch& match) {
 
   AutocompleteMatch* associated_keyword_match = match_.associated_keyword.get();
   if (associated_keyword_match) {
-    if (!keyword_icon_->parent())
-      AddChildView(keyword_icon_.get());
-  } else if (keyword_icon_->parent()) {
-    RemoveChildView(keyword_icon_.get());
+    if (!keyword_button_->parent())
+      AddChildView(keyword_button_.get());
+  } else if (keyword_button_->parent()) {
+    RemoveChildView(keyword_button_.get());
   }
 
   Invalidate();
@@ -296,6 +297,7 @@ void OmniboxResultView::Invalidate() {
   keyword_description_rendertext_.reset();
 }
 
+// FIXME: Check this.
 void OmniboxResultView::OnSelected() {
   DCHECK_EQ(SELECTED, GetState());
 
@@ -323,6 +325,20 @@ void OmniboxResultView::SetAnswerImage(const gfx::ImageSkia& image) {
   SchedulePaint();
 }
 
+void OmniboxResultView::SetHovered(bool hovered) {
+  if (is_hovered_ != hovered) {
+    is_hovered_ = hovered;
+    Invalidate();
+    SchedulePaint();
+  }
+}
+
+void OmniboxResultView::AcceptKeyword() {
+  // model_->SetSelectedLine(model_index_);
+  model_->omnibox_view()->model()->AcceptKeyword(
+      KeywordModeEntryMethod::CLICK_ON_VIEW);
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // OmniboxResultView, views::View overrides:
 
@@ -339,6 +355,17 @@ bool OmniboxResultView::OnMouseDragged(const ui::MouseEvent& event) {
     if (event.IsOnlyLeftMouseButton()) {
       if (GetState() != SELECTED)
         model_->SetSelectedLine(model_index_);
+
+      if (keyword_button_->parent()) {
+        // FIXME: pull this out into HitTestPointInChild(event, child).
+        gfx::Point point_in_child_coords(event.location());
+        View::ConvertPointToTarget(this, keyword_button_.get(),
+                                   &point_in_child_coords);
+        if (keyword_button_->HitTestPoint(point_in_child_coords))
+          keyword_button_->SetPressed();
+        else
+          keyword_button_->ClearState();
+      }
     } else {
       SetHovered(true);
     }
@@ -348,12 +375,35 @@ bool OmniboxResultView::OnMouseDragged(const ui::MouseEvent& event) {
   // When the drag leaves the bounds of this view, cancel the hover state and
   // pass control to the popup view.
   SetHovered(false);
+  keyword_button_->ClearState();
   SetMouseHandler(model_);
   return false;
 }
 
 void OmniboxResultView::OnMouseReleased(const ui::MouseEvent& event) {
   if (event.IsOnlyMiddleMouseButton() || event.IsOnlyLeftMouseButton()) {
+    if (keyword_button_->parent()) {
+      // FIXME: Don't do this on middle mouse button?
+      // FIXME: HitTestPointInChild. Also, can probably then remove the return
+      //        and put OpenMatch in an else branch.
+      gfx::Point point_in_child_coords(event.location());
+      View::ConvertPointToTarget(this, keyword_button_.get(),
+                                 &point_in_child_coords);
+      if (keyword_button_->HitTestPoint(point_in_child_coords)) {
+        keyword_button_->ClearState();
+        if (!ShowOnlyKeywordMatch()) {
+          // AcceptKeyword();
+          // FIXME: We need a new KeywordModeEntryMethod.
+          model_->omnibox_view()->model()->AcceptKeyword(
+              KeywordModeEntryMethod::CLICK_ON_VIEW);
+        } else {
+          model_->omnibox_view()->model()->ClearKeyword();
+        }
+        return;
+      }
+    }
+
+    // FIXME: comment
     model_->OpenMatch(model_index_,
                       event.IsOnlyLeftMouseButton()
                           ? WindowOpenDisposition::CURRENT_TAB
@@ -366,6 +416,8 @@ void OmniboxResultView::OnMouseMoved(const ui::MouseEvent& event) {
 }
 
 void OmniboxResultView::OnMouseExited(const ui::MouseEvent& event) {
+  // FIXME: Move the ClearState() call to SetHovered(false)?
+  keyword_button_->ClearState();
   SetHovered(false);
 }
 
@@ -570,7 +622,17 @@ SkColor OmniboxResultView::GetVectorIconColor() const {
 
 bool OmniboxResultView::ShowOnlyKeywordMatch() const {
   return match_.associated_keyword &&
-      (keyword_icon_->x() <= icon_bounds_.right());
+         (keyword_button_->x() <= icon_bounds_.right());
+}
+
+bool OmniboxResultView::AnimationRunning() const {
+  return animation_->is_animating();
+  // return animation_->run_state() == Animation::RUNNING;
+  /*
+  return match_.associated_keyword &&
+      (keyword_button_->x() <= icon_bounds_.right() ||
+       FOO);
+   */
 }
 
 void OmniboxResultView::InitContentsRenderTextIfNecessary() const {
@@ -724,14 +786,6 @@ void OmniboxResultView::AppendAnswerTextHelper(gfx::RenderText* destination,
   destination->ApplyBaselineStyle(text_style.baseline, range);
 }
 
-void OmniboxResultView::SetHovered(bool hovered) {
-  if (is_hovered_ != hovered) {
-    is_hovered_ = hovered;
-    Invalidate();
-    SchedulePaint();
-  }
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 // OmniboxResultView, views::View overrides, private:
 
@@ -759,15 +813,26 @@ void OmniboxResultView::Layout() {
   int text_width = end_x - text_x;
 
   if (match_.associated_keyword.get()) {
-    const int max_kw_x = end_x - keyword_icon_->width();
+    const int kw_button_width =
+        ShowOnlyKeywordMatch() ? icon.Width() + horizontal_padding : height();
+    const int kw_button_height = height();
+    keyword_button_->SetSize(gfx::Size(kw_button_width, kw_button_height));
+
+    const int max_kw_x = end_x - keyword_button_->width() + horizontal_padding;
     const int kw_x = animation_->CurrentValueBetween(max_kw_x, start_x);
-    const int kw_text_x = kw_x + keyword_icon_->width() + horizontal_padding;
+    const int kw_text_x = kw_x + keyword_button_->width() + horizontal_padding;
 
     text_width = kw_x - text_x - horizontal_padding;
     keyword_text_bounds_.SetRect(kw_text_x, 0, std::max(end_x - kw_text_x, 0),
                                  height());
-    keyword_icon_->SetPosition(
-        gfx::Point(kw_x, (height() - keyword_icon_->height()) / 2));
+    keyword_button_->SetPosition(gfx::Point(kw_x, 0));
+
+    if (ShowOnlyKeywordMatch())
+      keyword_button_->SetImageAlignment(views::ImageButton::ALIGN_RIGHT,
+                                         views::ImageButton::ALIGN_MIDDLE);
+    else
+      keyword_button_->SetImageAlignment(views::ImageButton::ALIGN_CENTER,
+                                         views::ImageButton::ALIGN_MIDDLE);
   }
 
   text_bounds_.SetRect(text_x, 0, std::max(text_width, 0), height());
