@@ -72,7 +72,8 @@ class ModelTypeController : public DataTypeController {
 
   // Post the given task that requires the bridge object to run to the model
   // thread, where the bridge lives.
-  void PostBridgeTask(const base::Location& location, const BridgeTask& task);
+  virtual void PostBridgeTask(const base::Location& location,
+                              const BridgeTask& task);
 
   // The sync client, which provides access to this type's ModelTypeSyncBridge.
   SyncClient* const sync_client_;

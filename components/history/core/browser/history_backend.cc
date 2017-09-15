@@ -15,7 +15,6 @@
 
 #include "base/bind.h"
 #include "base/compiler_specific.h"
-#include "base/debug/dump_without_crashing.h"
 #include "base/feature_list.h"
 #include "base/files/file_enumerator.h"
 #include "base/memory/ptr_util.h"
@@ -28,6 +27,7 @@
 #include "base/time/time.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
+#include "chrome/common/channel_info.h"
 #include "components/favicon_base/favicon_util.h"
 #include "components/favicon_base/select_favicon_frames.h"
 #include "components/history/core/browser/download_constants.h"
@@ -43,6 +43,7 @@
 #include "components/history/core/browser/page_usage_data.h"
 #include "components/history/core/browser/typed_url_syncable_service.h"
 #include "components/history/core/browser/url_utils.h"
+#include "components/sync/base/report_unrecoverable_error.h"
 #include "components/sync/driver/sync_driver_switches.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 #include "sql/error_delegate_util.h"
@@ -55,7 +56,6 @@
 #include "base/ios/scoped_critical_action.h"
 #endif
 
-using base::debug::DumpWithoutCrashing;
 using base::Time;
 using base::TimeDelta;
 using base::TimeTicks;
@@ -221,8 +221,8 @@ void HistoryBackend::Init(
         this, db_.get(),
         base::BindRepeating(
             &ModelTypeChangeProcessor::Create,
-            // TODO(gangwu): use ReportUnrecoverableError before launch.
-            base::BindRepeating(base::IgnoreResult(&DumpWithoutCrashing))));
+            base::BindRepeating(&syncer::ReportUnrecoverableError,
+                                chrome::GetChannel())));
     typed_url_sync_bridge_->Init();
   } else {
     typed_url_syncable_service_ =
