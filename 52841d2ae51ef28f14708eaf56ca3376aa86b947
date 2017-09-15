@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e17b6fed_e058f933",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-09-15T21:58:01Z",
+      "side": 1,
+      "message": "Is OK to log the client_id_no_hyphens ?",
+      "range": {
+        "startLine": 86,
+        "startChar": 18,
+        "endLine": 86,
+        "endChar": 38
+      },
+      "revId": "52841d2ae51ef28f14708eaf56ca3376aa86b947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e8a4b7_2ca87483",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-09-15T21:58:01Z",
+      "side": 1,
+      "message": "This way to choose the 10% user is standard or invented by you? My concern is the assumption that the truncated_value is evenly distributed in UINT range is true or not?",
+      "range": {
+        "startLine": 94,
+        "startChar": 9,
+        "endLine": 94,
+        "endChar": 24
+      },
+      "revId": "52841d2ae51ef28f14708eaf56ca3376aa86b947",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
