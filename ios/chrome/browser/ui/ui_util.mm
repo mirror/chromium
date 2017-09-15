@@ -53,10 +53,15 @@ CGFloat CurrentScreenWidth() {
 }
 
 CGFloat StatusBarHeight() {
-  // Checking [UIApplication sharedApplication].statusBarFrame will return the
-  // wrong offset when the application is started while in a phone call, so
-  // simply return 20 here.
-  return 20;
+  CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+  CGRect statusBarWindowRect =
+      [[UIApplication sharedApplication].keyWindow convertRect:statusBarFrame
+                                                    fromWindow:nil];
+
+  // For devices that show an in-call bar, UIKit shrinks the main window by 20
+  // points. The statusbar height calculation needs to take this into account.
+  UIView* mainViewController = [[[[UIApplication sharedApplication] delegate] window] subviews][0];
+  return CGRectGetHeight(statusBarWindowRect) - mainViewController.frame.origin.y;
 }
 
 CGFloat AlignValueToPixel(CGFloat value) {
