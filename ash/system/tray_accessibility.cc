@@ -11,6 +11,7 @@
 #include "ash/accessibility_delegate.h"
 #include "ash/accessibility_types.h"
 #include "ash/ash_view_ids.h"
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
@@ -493,7 +494,7 @@ void TrayAccessibility::OnAccessibilityStatusChanged(
         message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId, title, text,
         gfx::Image(), base::string16(), GURL(),
         message_center::NotifierId(message_center::NotifierId::APPLICATION,
-                                   system_notifier::kNotifierAccessibility),
+                                   mojom::kNotifierAccessibility),
         message_center::RichNotificationData(), nullptr,
         GetNotificationIcon(being_enabled),
         message_center::SystemNotificationWarningLevel::NORMAL);
@@ -504,7 +505,7 @@ void TrayAccessibility::OnAccessibilityStatusChanged(
                                          kMenuIconSize, kMenuIconColor)),
         base::string16(), GURL(),
         message_center::NotifierId(message_center::NotifierId::APPLICATION,
-                                   system_notifier::kNotifierAccessibility),
+                                   mojom::kNotifierAccessibility),
         message_center::RichNotificationData(), nullptr);
   }
   message_center->AddNotification(std::move(notification));

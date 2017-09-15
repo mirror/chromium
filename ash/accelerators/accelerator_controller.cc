@@ -19,6 +19,7 @@
 #include "ash/media_controller.h"
 #include "ash/multi_profile_uma.h"
 #include "ash/new_window_controller.h"
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/root_window_controller.h"
 #include "ash/rotator/window_rotation.h"
@@ -163,7 +164,7 @@ void ShowDeprecatedAcceleratorNotification(const char* const notification_id,
           base::string16(), GURL(),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierDeprecatedAccelerator),
+              mojom::kNotifierDeprecatedAccelerator),
           message_center::RichNotificationData(),
           new DeprecatedAcceleratorNotificationDelegate,
           kNotificationSettingsIcon, SystemNotificationWarningLevel::NORMAL);
@@ -737,7 +738,7 @@ void HandleToggleHighContrast() {
           base::string16() /* display source */, GURL(),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierAccessibility),
+              mojom::kNotifierAccessibility),
           message_center::RichNotificationData(), nullptr,
           kNotificationAccessibilityIcon,
           SystemNotificationWarningLevel::NORMAL);

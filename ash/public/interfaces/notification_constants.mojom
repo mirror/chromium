@@ -1,0 +1,37 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module ash.mojom;
+
+// TODO: Readd hats here.
+
+const string kNotifierAccessibility = "ash.accessibility";
+const string kNotifierBattery = "ash.battery";
+const string kNotifierBluetooth = "ash.bluetooth";
+const string kNotifierCapsLock = "ash.caps-lock";
+const string kNotifierDeprecatedAccelerator = "ash.accelerator-controller";
+const string kNotifierDisk = "ash.disk";
+const string kNotifierDisplay = "ash.display";
+const string kNotifierDisplayError = "ash.display.error";
+const string kNotifierDisplayResolutionChange = "ash.display.resolution-change";
+const string kNotifierDualRole = "ash.dual-role";
+const string kNotifierFingerprintUnlock = "ash.fingerprintunlock";
+const string kNotifierHats = "ash.hats";
+const string kNotifierLocale = "ash.locale";
+const string kNotifierMultiProfileFirstRun = "ash.multi-profile.first-run";
+const string kNotifierNetwork = "ash.network";
+const string kNotifierNetworkError = "ash.network.error";
+const string kNotifierNetworkPortalDetector = "ash.network.portal-detector";
+const string kNotifierPinUnlock = "ash.pinunlock";
+const string kNotifierPower = "ash.power";
+const string kNotifierScreenshot = "ash.screenshot";
+const string kNotifierScreenCapture = "ash.screen-capture";
+const string kNotifierScreenShare = "ash.screen-share";
+const string kNotifierSessionLengthTimeout = "ash.session-length-timeout";
+const string kNotifierSms = "ash.sms";
+const string kNotifierStylusBattery = "ash.stylus-battery";
+const string kNotifierSupervisedUser = "ash.locally-managed-user";
+const string kNotifierTether = "ash.tether";
+const string kNotifierWebUsb = "ash.webusb";
+const string kNotifierWifiToggle = "ash.wifi-toggle";
