@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "16914f7a_62de36f5",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-15T20:38:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc755314_30dfa7ec",
+      "revId": "48e6954cfea3069ee02639059501f9cdcb1ba4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dd98855_a9a3f8ba",
         "filename": "components/offline_pages/core/model/delete_page_task.cc",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-15T17:35:18Z",
       "side": 1,
       "message": "We may have discussed that, but why are we not deleting the DB entry first?\n\nThis is worth capturing in the comment in code, once we have a satisfying answer.",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 25
+      },
+      "revId": "48e6954cfea3069ee02639059501f9cdcb1ba4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94e4dce2_ea8bdd50",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-15T20:38:38Z",
+      "side": 1,
+      "message": "deleting db entry first will have a potential issue when db entry is deleted while file is not. Then according to design doc we\u0027ll import the file, which makes a page that has been deleted by the user come back.\nBut deleting file first will not have similar issues, since the file is deleted, the db entry will be marked as file_missing and gets eliminated eventually.\nI\u0027ll put this into comments if you\u0027re okay with the answer.",
+      "parentUuid": "5dd98855_a9a3f8ba",
       "range": {
         "startLine": 73,
         "startChar": 8,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "8382051b_1ddad677",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-15T20:38:38Z",
+      "side": 1,
+      "message": "do nothing. The current implementation will mark the ItemActionStatus attached with the page with STORE_FAILURE, however seems the ItemActionStatus is never used. And also i don\u0027t think there\u0027s anything to be done in this case.",
+      "parentUuid": "38eab350_a3c8e395",
+      "range": {
+        "startLine": 75,
+        "startChar": 10,
+        "endLine": 75,
+        "endChar": 40
+      },
+      "revId": "48e6954cfea3069ee02639059501f9cdcb1ba4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a856d2b7_00e97afb",
         "filename": "components/offline_pages/core/model/delete_page_task.cc",
         "patchSetId": 6
@@ -76,6 +142,30 @@
       "writtenOn": "2017-09-15T17:35:18Z",
       "side": 1,
       "message": "My initial thought was: Does this call work with 3 arguments?\n\nMy second thought is: Why is everything called a page info?\nThe way I understand it is that we have more than one class with similar name. Let\u0027s fix/discuss that.",
+      "range": {
+        "startLine": 76,
+        "startChar": 27,
+        "endLine": 76,
+        "endChar": 39
+      },
+      "revId": "48e6954cfea3069ee02639059501f9cdcb1ba4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82824e76_630bcf15",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-15T20:38:38Z",
+      "side": 1,
+      "message": "Renamed with DeletedPageInfoWrapper, and added comments.",
+      "parentUuid": "a856d2b7_00e97afb",
       "range": {
         "startLine": 76,
         "startChar": 27,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "348545ce_a29a9678",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-15T20:38:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e08c92da_928e3b4a",
+      "range": {
+        "startLine": 199,
+        "startChar": 17,
+        "endLine": 199,
+        "endChar": 58
+      },
+      "revId": "48e6954cfea3069ee02639059501f9cdcb1ba4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0bd4dc1_449a8926",
         "filename": "components/offline_pages/core/model/delete_page_task.h",
         "patchSetId": 6
@@ -131,6 +245,30 @@
       "revId": "48e6954cfea3069ee02639059501f9cdcb1ba4a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a03465_29fe07f6",
+        "filename": "components/offline_pages/core/model/delete_page_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-09-15T20:38:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0bd4dc1_449a8926",
+      "range": {
+        "startLine": 53,
+        "startChar": 41,
+        "endLine": 53,
+        "endChar": 65
+      },
+      "revId": "48e6954cfea3069ee02639059501f9cdcb1ba4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
