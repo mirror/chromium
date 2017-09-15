@@ -146,6 +146,20 @@ TEST_F(SurfaceReferencesTest, AddReference) {
   EXPECT_THAT(GetReferencesFrom(id1), IsEmpty());
 }
 
+TEST_F(SurfaceReferencesTest, DebugLabelLookup) {
+  SurfaceId id1 = CreateSurface(kFrameSink1, 1);
+  const std::string kLabel = "kFrameSink1";
+  AddSurfaceReference(GetSurfaceManager().GetRootSurfaceId(), id1);
+  GetSurfaceManager().SetFrameSinkDebugLabel(kFrameSink1, kLabel);
+  std::string references = GetSurfaceManager().SurfaceReferencesToString();
+  auto it = references.find(kLabel);
+  DCHECK(it != std::string::npos);
+  GetSurfaceManager().InvalidateFrameSinkId(kFrameSink1);
+  references = GetSurfaceManager().SurfaceReferencesToString();
+  it = references.find(kLabel);
+  DCHECK(it == std::string::npos);
+}
+
 TEST_F(SurfaceReferencesTest, AddRemoveReference) {
   SurfaceId id1 = CreateSurface(kFrameSink1, 1);
   SurfaceId id2 = CreateSurface(kFrameSink2, 1);
