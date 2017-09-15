@@ -4,8 +4,8 @@
 
 #include "chrome/browser/chromeos/net/network_state_notifier.h"
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/resources/grit/ash_resources.h"
-#include "ash/system/system_notifier.h"
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/strings/string16.h"
@@ -80,7 +80,7 @@ void ShowErrorNotification(const std::string& service_path,
   message_center::MessageCenter::Get()->AddNotification(
       message_center::Notification::CreateSystemNotification(
           notification_id, title, message, icon,
-          ash::system_notifier::kNotifierNetworkError, callback));
+          ash::mojom::kNotifierNetworkError, callback));
 }
 
 bool ShouldConnectFailedNotificationBeShown(const std::string& error_name,
@@ -277,7 +277,7 @@ void NetworkStateNotifier::UpdateCellularActivating(
           l10n_util::GetStringUTF16(IDS_NETWORK_CELLULAR_ACTIVATED_TITLE),
           l10n_util::GetStringFUTF16(IDS_NETWORK_CELLULAR_ACTIVATED,
                                      base::UTF8ToUTF16((cellular->name()))),
-          icon, ash::system_notifier::kNotifierNetwork,
+          icon, ash::mojom::kNotifierNetwork,
           base::Bind(&NetworkStateNotifier::ShowNetworkSettings,
                      weak_ptr_factory_.GetWeakPtr(), cellular->guid())));
 }
@@ -317,7 +317,7 @@ void NetworkStateNotifier::ShowMobileActivationError(
                                      base::UTF8ToUTF16(cellular->name())),
           ui::ResourceBundle::GetSharedInstance().GetImageNamed(
               IDR_AURA_UBER_TRAY_NETWORK_FAILED_CELLULAR),
-          ash::system_notifier::kNotifierNetworkError,
+          ash::mojom::kNotifierNetworkError,
           base::Bind(&NetworkStateNotifier::ShowNetworkSettings,
                      weak_ptr_factory_.GetWeakPtr(), cellular->guid())));
 }

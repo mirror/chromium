@@ -9,6 +9,7 @@
 #include <memory>
 #include <vector>
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/shell.h"
 #include "ash/system/system_notifier.h"
 #include "ash/system/tray/system_tray_notifier.h"
@@ -338,7 +339,7 @@ NetworkPortalNotificationController::CreateDefaultCaptivePortalNotification(
   gfx::Image& icon = GetImageForNotification();
   message_center::NotifierId notifier_id(
       message_center::NotifierId::SYSTEM_COMPONENT,
-      ash::system_notifier::kNotifierNetworkPortalDetector);
+      ash::mojom::kNotifierNetworkPortalDetector);
   base::string16 notificationText;
   bool is_wifi = NetworkTypePattern::WiFi().MatchesType(network->type());
   std::unique_ptr<Notification> notification =
@@ -371,7 +372,7 @@ NetworkPortalNotificationController::
   gfx::Image& icon = GetImageForNotification();
   message_center::NotifierId notifier_id(
       message_center::NotifierId::SYSTEM_COMPONENT,
-      ash::system_notifier::kNotifierNetworkPortalDetector);
+      ash::mojom::kNotifierNetworkPortalDetector);
 
   extensions::NetworkingConfigService::AuthenticationResult
       authentication_result =

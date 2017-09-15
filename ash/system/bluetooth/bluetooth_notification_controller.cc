@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -278,7 +279,7 @@ void BluetoothNotificationController::NotifyAdapterDiscoverable() {
           base::string16() /* display source */, GURL(),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierBluetooth),
+              mojom::kNotifierBluetooth),
           optional, nullptr, kNotificationBluetoothIcon,
           message_center::SystemNotificationWarningLevel::NORMAL);
   MessageCenter::Get()->AddNotification(std::move(notification));
@@ -306,7 +307,7 @@ void BluetoothNotificationController::NotifyPairing(
           base::string16() /* display source */, GURL(),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierBluetooth),
+              mojom::kNotifierBluetooth),
           optional,
           new BluetoothPairingNotificationDelegate(adapter_,
                                                    device->GetAddress()),
@@ -337,7 +338,7 @@ void BluetoothNotificationController::NotifyPairedDevice(
           base::string16() /* display source */, GURL(),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierBluetooth),
+              mojom::kNotifierBluetooth),
           optional, nullptr, kNotificationBluetoothIcon,
           message_center::SystemNotificationWarningLevel::NORMAL);
   MessageCenter::Get()->AddNotification(std::move(notification));

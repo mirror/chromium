@@ -9,8 +9,8 @@
 #include <string>
 #include <vector>
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/shell.h"
-#include "ash/system/system_notifier.h"
 #include "base/base64.h"
 #include "base/bind.h"
 #include "base/callback.h"
@@ -427,7 +427,7 @@ void ChromeScreenshotGrabber::OnScreenshotCompleted(
       NotifierStateTrackerFactory::GetForProfile(GetProfile());
   if (notifier_state_tracker->IsNotifierEnabled(message_center::NotifierId(
           message_center::NotifierId::SYSTEM_COMPONENT,
-          ash::system_notifier::kNotifierScreenshot))) {
+          ash::mojom::kNotifierScreenshot))) {
     if (result != ui::ScreenshotGrabberObserver::SCREENSHOT_SUCCESS) {
       content::BrowserThread::PostTask(
           content::BrowserThread::UI, FROM_HERE,
@@ -607,7 +607,7 @@ Notification* ChromeScreenshotGrabber::CreateNotification(
       ui::ResourceBundle::GetSharedInstance().GetImageNamed(
           IDR_SCREENSHOT_NOTIFICATION_ICON),
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
-                                 ash::system_notifier::kNotifierScreenshot),
+                                 ash::mojom::kNotifierScreenshot),
       l10n_util::GetStringUTF16(IDS_SCREENSHOT_NOTIFICATION_NOTIFIER_NAME),
       GURL(kNotificationOriginUrl), notification_id, optional_field,
       new ScreenshotGrabberNotificationDelegate(success, GetProfile(),

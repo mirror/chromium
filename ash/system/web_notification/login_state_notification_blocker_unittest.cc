@@ -6,6 +6,7 @@
 
 #include <memory>
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/system/system_notifier.h"
 #include "ash/test/ash_test_base.h"
 #include "base/command_line.h"
@@ -113,8 +114,7 @@ TEST_F(LoginStateNotificationBlockerTest, BaseTest) {
 TEST_F(LoginStateNotificationBlockerTest, AlwaysAllowedNotifier) {
   // NOTIFIER_DISPLAY is allowed to shown in the login screen.
   message_center::NotifierId notifier_id(
-      message_center::NotifierId::SYSTEM_COMPONENT,
-      system_notifier::kNotifierDisplay);
+      message_center::NotifierId::SYSTEM_COMPONENT, mojom::kNotifierDisplay);
 
   // Default status: OOBE.
   EXPECT_TRUE(ShouldShowNotificationAsPopup(notifier_id));
