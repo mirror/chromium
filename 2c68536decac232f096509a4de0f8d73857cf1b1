@@ -22,6 +22,30 @@
       "revId": "2c68536decac232f096509a4de0f8d73857cf1b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b189e6_e83f259c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBar.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1234349
+      },
+      "writtenOn": "2017-09-15T00:06:59Z",
+      "side": 0,
+      "message": "This code here is supposed to be shared by all compact infobars (currently only translate) and the layout inside a compact infobar is customized (not a static structure). I didn\u0027t find a good representative view in the compact infobar, so I think it\u0027s better to let the customized layout decide what to say to the user.\n\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/infobar/InfoBarCompactLayout.java?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d23",
+      "parentUuid": "69ffd04b_3f8e8ef1",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 96
+      },
+      "revId": "2c68536decac232f096509a4de0f8d73857cf1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
