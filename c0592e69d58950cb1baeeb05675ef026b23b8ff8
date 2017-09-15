@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "90be9eed_bb71a7b8",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-15T12:44:11Z",
+      "side": 1,
+      "message": "Those DCHECKs can just be early returns, too.",
+      "parentUuid": "f04de084_0eff7517",
+      "revId": "c0592e69d58950cb1baeeb05675ef026b23b8ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f00292b6_3b142ae6",
         "filename": "ios/clean/chrome/browser/ui/settings/settings_commands.h",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-15T11:26:31Z",
       "side": 1,
       "message": "What\u0027s the difference between closeSettings and dismissSettings?",
+      "revId": "c0592e69d58950cb1baeeb05675ef026b23b8ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e59aca7a_7bb61eef",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_commands.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-15T12:44:11Z",
+      "side": 1,
+      "message": "Parent calls close, the settings VC itself calls dismiss. (The comment on dismiss should say \"internal\").",
+      "parentUuid": "f00292b6_3b142ae6",
       "revId": "c0592e69d58950cb1baeeb05675ef026b23b8ff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "ede4793b_f4bbafcc",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-15T12:44:11Z",
+      "side": 1,
+      "message": "Mostly to be consistent by using the router.",
+      "parentUuid": "4411f501_bb7ccca4",
+      "range": {
+        "startLine": 85,
+        "startChar": 3,
+        "endLine": 85,
+        "endChar": 49
+      },
+      "revId": "c0592e69d58950cb1baeeb05675ef026b23b8ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aefe4f1f_43b12c39",
         "filename": "ios/clean/chrome/browser/ui/tools/tools_coordinator.mm",
         "patchSetId": 5
@@ -70,6 +130,24 @@
       "writtenOn": "2017-09-15T11:26:31Z",
       "side": 1,
       "message": "Should we bother using a dispatcher if it only ever dispatches to self?  We could just have the coordinator conform to these protocols directly.",
+      "revId": "c0592e69d58950cb1baeeb05675ef026b23b8ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0db6ad_17d87049",
+        "filename": "ios/clean/chrome/browser/ui/tools/tools_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-15T12:44:11Z",
+      "side": 1,
+      "message": "We could, thereby rendering our dispatcher-based metrics mechanism entirely moot. Which might be justified, if unfortunate.",
+      "parentUuid": "aefe4f1f_43b12c39",
       "revId": "c0592e69d58950cb1baeeb05675ef026b23b8ff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -123,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "c2dc291a_6d473ffb",
+        "filename": "ios/clean/chrome/browser/ui/tools/tools_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-15T12:44:11Z",
+      "side": 1,
+      "message": "Yeah, in general optional methods in command protocols are bad, and the dismisses should be pulled into their own protocols.",
+      "parentUuid": "8887d73f_efcbc593",
+      "range": {
+        "startLine": 52,
+        "startChar": 21,
+        "endLine": 52,
+        "endChar": 56
+      },
+      "revId": "c0592e69d58950cb1baeeb05675ef026b23b8ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a6479146_1e0fb989",
         "filename": "ios/clean/chrome/browser/ui/tools/tools_menu_item.h",
         "patchSetId": 5
@@ -134,6 +236,24 @@
       "writtenOn": "2017-09-15T11:26:31Z",
       "side": 1,
       "message": "This is weird, but I don\u0027t know how else to get around it.",
+      "revId": "c0592e69d58950cb1baeeb05675ef026b23b8ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e114ff99_6f96d57d",
+        "filename": "ios/clean/chrome/browser/ui/tools/tools_menu_item.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-15T12:44:11Z",
+      "side": 1,
+      "message": "Yeah, this is the wonkiest part of the whole thing. I think it\u0027s really just specific to the tools menu, since it has to have arbitrarily configurable menu items that are likely to mix global and local commands.",
+      "parentUuid": "a6479146_1e0fb989",
       "revId": "c0592e69d58950cb1baeeb05675ef026b23b8ff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
