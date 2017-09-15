@@ -207,4 +207,25 @@ TEST_F(SelectionSampleTest, SerializeVoidElementBR) {
       << "When BR has child nodes, it is not void element.";
 }
 
+TEST_F(SelectionSampleTest, ConvertTemplatesToShadowRoots) {
+  SetBodyContent(
+      "<div id='d1'>^foo|"
+      "<template data-mode='open'>"
+      "<div>d1-1</div>"
+      "<slot name='d1-s1'></slot>"
+      "<div>d1-2</div>"
+      "</template>"
+      "<div slot='d1-s1'>d2</div>"
+      "</div>");
+  Element* body = GetDocument().body();
+  Element* d1 = body->getElementById("d1");
+  HTMLElement* converted =
+      SelectionSample::ConvertTemplatesToShadowRootsForTesring(
+          ToHTMLElement(d1));
+  ShadowRoot* shadow_root = converted->ShadowRootIfV1();
+  EXPECT_EQ(true, shadow_root->IsShadowRoot());
+  EXPECT_EQ("<div>d1-1</div><slot name=\"d1-s1\"></slot><div>d1-2</div>",
+            shadow_root->innerHTML());
+}
+
 }  // namespace blink
