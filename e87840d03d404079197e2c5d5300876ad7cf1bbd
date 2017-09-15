@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f99b34e5_387771a7",
+        "filename": "components/suggestions/suggestions_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-15T13:43:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "081db731_bc3ea618",
+      "revId": "e87840d03d404079197e2c5d5300876ad7cf1bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82f1350b_36631f05",
         "filename": "ios/chrome/browser/suggestions/suggestions_service_factory.mm",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "e87840d03d404079197e2c5d5300876ad7cf1bbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06288a3_287c7452",
+        "filename": "ios/chrome/browser/suggestions/suggestions_service_factory.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-15T13:43:43Z",
+      "side": 1,
+      "message": "Just forgot to change it here too. Done!",
+      "parentUuid": "82f1350b_36631f05",
+      "revId": "e87840d03d404079197e2c5d5300876ad7cf1bbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
