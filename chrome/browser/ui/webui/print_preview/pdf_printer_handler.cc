@@ -152,7 +152,14 @@ void PdfPrinterHandler::Reset() {
   weak_ptr_factory_.InvalidateWeakPtrs();
 }
 
-void PdfPrinterHandler::StartGetPrinters(const GetPrintersCallback& callback) {
+void PdfPrinterHandler::GetDefaultPrinter(
+    const DefaultPrinterCallback& callback) {
+  NOTREACHED();
+}
+
+void PdfPrinterHandler::StartGetPrinters(
+    const AddedPrintersCallback& added_printers_callback,
+    const GetPrintersDoneCallback& done_callback) {
   NOTREACHED();
 }
 

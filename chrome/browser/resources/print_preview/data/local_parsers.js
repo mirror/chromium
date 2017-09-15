@@ -5,6 +5,37 @@
 cr.define('print_preview', function() {
   'use strict';
 
+  /** Namespace that contains a method to parse print destinations. */
+  function DestinationParser() {}
+
+  /**
+   * @param{!print_preview.PrinterType} type The type of printer to parse.
+   * @param{!print_preview.LocalDestinationInfo |
+   *        !print_preview.PrivetPrinterDescription |
+   *        !print_preview.ProvisionalDestinationInfo} printer Information
+   *     about the printer. Type expected depends on |type|:
+   *       For LOCAL_PRINTER => print_preview.LocalDestinationInfo
+   *       For PRIVET_PRINTER => print_preview.PrivetPrinterDescription
+   *       For EXTENSION_PRINTER => print_preview.ProvisionalDestinationInfo
+   * @return {!Array<!print_preview.Destination>}
+   */
+  DestinationParser.parse = function(type, printer) {
+    if (type === print_preview.PrinterType.LOCAL_PRINTER) {
+      return LocalDestinationParser.parse(
+          /** @type {!print_preview.LocalDestinationInfo} */ (printer));
+    }
+    if (type === print_preview.PrinterType.PRIVET_PRINTER) {
+      return PrivetDestinationParser.parse(
+          /** @type {!print_preview.PrivetPrinterDescription} */ (printer));
+    }
+    if (type === print_preview.PrinterType.EXTENSION_PRINTER) {
+      return ExtensionDestinationParser.parse(
+          /** @type {!print_preview.ProvisionalDestinationInfo} */ (printer));
+    }
+    console.error('Unknown printer type ' + type);
+    return [];
+  };
+
   /** Namespace that contains a method to parse local print destinations. */
   function LocalDestinationParser() {}
 
@@ -12,7 +43,8 @@ cr.define('print_preview', function() {
    * Parses a local print destination.
    * @param {!print_preview.LocalDestinationInfo} destinationInfo Information
    *     describing a local print destination.
-   * @return {!print_preview.Destination} Parsed local print destination.
+   * @return {!Array<!print_preview.Destination>} Parsed local print
+   *     destination. Array will always have length 1.
    */
   LocalDestinationParser.parse = function(destinationInfo) {
     var options = {
@@ -26,12 +58,12 @@ cr.define('print_preview', function() {
             return '__cp__' + key + '=' + this[key];
           }, destinationInfo.printerOptions);
     }
-    return new print_preview.Destination(
+    return [new print_preview.Destination(
         destinationInfo.deviceName, print_preview.DestinationType.LOCAL,
         cr.isChromeOS ? print_preview.DestinationOrigin.CROS :
                         print_preview.DestinationOrigin.LOCAL,
         destinationInfo.printerName, false /*isRecent*/,
-        print_preview.DestinationConnectionStatus.ONLINE, options);
+        print_preview.DestinationConnectionStatus.ONLINE, options)];
   };
 
   function PrivetDestinationParser() {}
@@ -71,14 +103,15 @@ cr.define('print_preview', function() {
    * description.
    * @param {!print_preview.ProvisionalDestinationInfo} destinationInfo Object
    *     describing an extension printer.
-   * @return {!print_preview.Destination} Parsed destination.
+   * @return {!Array<!print_preview.Destination>} Parsed destination. Array
+   *     will always have length 1.
    */
   ExtensionDestinationParser.parse = function(destinationInfo) {
     var provisionalType = destinationInfo.provisional ?
         print_preview.DestinationProvisionalType.NEEDS_USB_PERMISSION :
         print_preview.DestinationProvisionalType.NONE;
 
-    return new print_preview.Destination(
+    return [new print_preview.Destination(
         destinationInfo.id, print_preview.DestinationType.LOCAL,
         print_preview.DestinationOrigin.EXTENSION, destinationInfo.name,
         false /* isRecent */, print_preview.DestinationConnectionStatus.ONLINE,
@@ -87,11 +120,12 @@ cr.define('print_preview', function() {
           extensionId: destinationInfo.extensionId,
           extensionName: destinationInfo.extensionName || '',
           provisionalType: provisionalType
-        });
+        })];
   };
 
   // Export
   return {
+    DestinationParser: DestinationParser,
     LocalDestinationParser: LocalDestinationParser,
     PrivetDestinationParser: PrivetDestinationParser,
     ExtensionDestinationParser: ExtensionDestinationParser

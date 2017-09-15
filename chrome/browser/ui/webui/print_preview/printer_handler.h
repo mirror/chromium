@@ -40,14 +40,17 @@ class Profile;
 // TODO(tbarzic): Use the same interface for other printer types.
 class PrinterHandler {
  public:
-  using GetPrintersCallback =
-      base::Callback<void(const base::ListValue& printers, bool done)>;
+  using GetPrintersDoneCallback = base::Callback<void()>;
+  using AddedPrintersCallback =
+      base::Callback<void(const base::ListValue& printers)>;
   using GetCapabilityCallback =
       base::Callback<void(std::unique_ptr<base::DictionaryValue> capability)>;
   using PrintCallback =
       base::Callback<void(bool success, const base::Value& error)>;
   using GetPrinterInfoCallback =
       base::Callback<void(const base::DictionaryValue& printer_info)>;
+  using DefaultPrinterCallback =
+      base::Callback<void(const std::string& printer_name)>;
 
   // Creates an instance of a PrinterHandler for extension printers.
   static std::unique_ptr<PrinterHandler> CreateForExtensionPrinters(
@@ -58,6 +61,13 @@ class PrinterHandler {
       Profile* profile,
       content::WebContents* preview_web_contents,
       printing::StickySettings* sticky_settings);
+
+#if defined(OS_CHROMEOS)
+  static std::unique_ptr<PrinterHandler> CreateForLocalPrinters(
+      Profile* profile);
+#else
+  static std::unique_ptr<PrinterHandler> CreateForLocalPrinters();
+#endif
 
 #if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
   // Creates an instance of a PrinterHandler for privet printers.
@@ -70,9 +80,17 @@ class PrinterHandler {
   // Cancels all pending requests.
   virtual void Reset() = 0;
 
+  // Returns the name of the default printer through |cb|.  This method expects
+  // to be called on the UI thread.
+  virtual void GetDefaultPrinter(const DefaultPrinterCallback& cb) = 0;
+
   // Starts getting available printers.
-  // |callback| should be called in the response to the request.
-  virtual void StartGetPrinters(const GetPrintersCallback& callback) = 0;
+  // |added_printers_callback| should be called in the response when printers
+  // are found.
+  // |done_callback| should be called when the search is complete.
+  virtual void StartGetPrinters(
+      const AddedPrintersCallback& added_printers_callback,
+      const GetPrintersDoneCallback& done_callback) = 0;
 
   // Starts getting printing capability of the printer with the provided
   // destination ID.
