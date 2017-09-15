@@ -12,6 +12,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/optional.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
 #include "url/gurl.h"
@@ -176,7 +177,7 @@ class PlatformVerificationFlow
   // are in |context|, and |attestation_prepared| specifies whether attestation
   // has been prepared on this device.
   void OnAttestationPrepared(const ChallengeContext& context,
-                             bool attestation_prepared);
+                             base::Optional<bool> attestation_prepared);
 
   // Initiates the flow to get a platform key certificate.  The arguments to
   // ChallengePlatformKey are in |context|.  |account_id| identifies the user

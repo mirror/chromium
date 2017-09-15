@@ -53,19 +53,6 @@ const char kAttestationExpiryHistogram[] =
     "ChromeOS.PlatformVerification.ExpiryStatus";
 const int kOpportunisticRenewalThresholdInDays = 30;
 
-// A callback method to handle DBus errors.
-void DBusCallback(const base::Callback<void(bool)>& on_success,
-                  const base::Closure& on_failure,
-                  chromeos::DBusMethodCallStatus call_status,
-                  bool result) {
-  if (call_status == chromeos::DBUS_METHOD_CALL_SUCCESS) {
-    on_success.Run(result);
-  } else {
-    LOG(ERROR) << "PlatformVerificationFlow: DBus call failed!";
-    on_failure.Run();
-  }
-}
-
 // A helper to call a ChallengeCallback with an error result.
 void ReportError(
     const PlatformVerificationFlow::ChallengeCallback& callback,
@@ -229,21 +216,25 @@ void PlatformVerificationFlow::ChallengePlatformKey(
   }
 
   ChallengeContext context(web_contents, service_id, challenge, callback);
+
   // Check if the device has been prepared to use attestation.
-  BoolDBusMethodCallback dbus_callback =
-      base::Bind(&DBusCallback,
-                 base::Bind(&PlatformVerificationFlow::OnAttestationPrepared,
-                            this, context),
-                 base::Bind(&ReportError, callback, INTERNAL_ERROR));
-  cryptohome_client_->TpmAttestationIsPrepared(dbus_callback);
+  cryptohome_client_->TpmAttestationIsPrepared(base::BindOnce(
+      &PlatformVerificationFlow::OnAttestationPrepared, this, context));
 }
 
 void PlatformVerificationFlow::OnAttestationPrepared(
     const ChallengeContext& context,
-    bool attestation_prepared) {
-  UMA_HISTOGRAM_BOOLEAN(kAttestationAvailableHistogram, attestation_prepared);
+    base::Optional<bool> attestation_prepared) {
+  if (!attestation_prepared.has_value()) {
+    LOG(ERROR) << "PlatformVerificationFlow: DBus call failed!";
+    ReportError(context.callback, INTERNAL_ERROR);
+    return;
+  }
 
-  if (!attestation_prepared) {
+  UMA_HISTOGRAM_BOOLEAN(kAttestationAvailableHistogram,
+                        attestation_prepared.value());
+
+  if (!attestation_prepared.value()) {
     // This device is not currently able to use attestation features.
     ReportError(context.callback, PLATFORM_NOT_VERIFIED);
     return;
