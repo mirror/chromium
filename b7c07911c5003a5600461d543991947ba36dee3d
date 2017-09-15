@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f6885c5c_d893a55b",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-15T12:50:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d86c5bbd_45b1f319",
+      "range": {
+        "startLine": 1182,
+        "startChar": 25,
+        "endLine": 1182,
+        "endChar": 33
+      },
+      "revId": "b7c07911c5003a5600461d543991947ba36dee3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13078fe1_c673bbc1",
         "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "b7c07911c5003a5600461d543991947ba36dee3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fea771c_9431a43e",
+        "filename": "chrome/browser/browsing_data/chrome_browsing_data_remover_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-15T12:50:09Z",
+      "side": 1,
+      "message": "While re-thinking here,\nI think, probably, bool is a special case, because what we really like to have here is\n\"result !\u003d true\" (please note that result can be nullopt), but comparator for bool is also\nwhat we often avoid.\n\nI replaced with has_value() and value() for negation cases as you preferred.",
+      "parentUuid": "13078fe1_c673bbc1",
+      "range": {
+        "startLine": 1183,
+        "startChar": 17,
+        "endLine": 1183,
+        "endChar": 41
+      },
+      "revId": "b7c07911c5003a5600461d543991947ba36dee3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9b15c241_129f7134",
+        "filename": "chrome/browser/chromeos/app_mode/kiosk_profile_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-15T12:50:09Z",
+      "side": 1,
+      "message": "As chatted offline, used explicit has_value() for bool case.",
+      "parentUuid": "b9be4cbb_c1e4d34e",
+      "range": {
+        "startLine": 107,
+        "startChar": 9,
+        "endLine": 107,
+        "endChar": 28
+      },
+      "revId": "b7c07911c5003a5600461d543991947ba36dee3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b35826d0_ee3a7eac",
         "filename": "chrome/browser/component_updater/cros_component_installer.cc",
         "patchSetId": 1
@@ -85,6 +157,24 @@
       "revId": "b7c07911c5003a5600461d543991947ba36dee3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7f2262b_abe5b79b",
+        "filename": "chrome/browser/component_updater/cros_component_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-15T12:50:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b35826d0_ee3a7eac",
+      "revId": "b7c07911c5003a5600461d543991947ba36dee3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
