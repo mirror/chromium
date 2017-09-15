@@ -259,9 +259,8 @@ public class BottomSheetContentController extends BottomNavigationView
      */
     private void updateMenuItemSpacing() {
         Resources res = getContext().getResources();
-        getMenuView().updateMenuItemSpacingForMinWidth(mBottomSheet.getWidth(),
-                mBottomSheet.getHeight(),
-                res.getDimensionPixelSize(R.dimen.bottom_nav_menu_item_size));
+        getMenuView().updateMenuItemSpacingForMinWidth(
+                mBottomSheet.getWidth(), mBottomSheet.getHeight());
     }
 
     /**
