@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "708566cd_819a4e1a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/resources/inspected-page-helpers.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1165714
+      },
+      "writtenOn": "2017-09-15T23:16:50Z",
+      "side": 1,
+      "message": "OK - I\u0027ll inline them in the handful of tests. We can move away from collecting page output later once we\u0027ve migrated all tests.",
+      "parentUuid": "31b31cb8_2aa6bf19",
+      "revId": "25a8c81adaed4999db29a59be95b9565a7f84955",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a70487af_717f7b1a",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/resources/inspected-page.html",
         "patchSetId": 1
