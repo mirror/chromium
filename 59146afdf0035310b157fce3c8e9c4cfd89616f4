@@ -22,6 +22,30 @@
       "revId": "59146afdf0035310b157fce3c8e9c4cfd89616f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba8ddc98_fa9fb65f",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-09-15T18:47:29Z",
+      "side": 1,
+      "message": "Yes, I think Bob is planning to get rid of it, though.",
+      "parentUuid": "7a37fb94_cb17b14d",
+      "range": {
+        "startLine": 511,
+        "startChar": 20,
+        "endLine": 511,
+        "endChar": 45
+      },
+      "revId": "59146afdf0035310b157fce3c8e9c4cfd89616f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
