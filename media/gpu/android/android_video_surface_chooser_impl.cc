@@ -171,7 +171,8 @@ void AndroidVideoSurfaceChooserImpl::SwitchToSurfaceTexture() {
   // Notify the client to switch if it's in the wrong state.
   if (client_overlay_state_ != kUsingSurfaceTexture) {
     client_overlay_state_ = kUsingSurfaceTexture;
-    use_surface_texture_cb_.Run();
+    if (use_surface_texture_cb_)
+      use_surface_texture_cb_.Run();
   }
 }
 

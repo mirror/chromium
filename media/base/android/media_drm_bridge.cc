@@ -918,7 +918,7 @@ MediaDrmBridge::~MediaDrmBridge() {
 
   if (!media_crypto_ready_cb_.is_null()) {
     base::ResetAndReturn(&media_crypto_ready_cb_)
-        .Run(CreateJavaObjectPtr(nullptr), IsSecureCodecRequired());
+        .Run(CreateJavaObjectPtr(nullptr), false);
   }
 
   // Rejects all pending promises.
