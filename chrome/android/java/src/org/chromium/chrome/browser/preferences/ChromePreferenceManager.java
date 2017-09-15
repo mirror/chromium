@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.preferences;
 
 import android.content.SharedPreferences;
+import android.os.StrictMode;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.SuppressFBWarnings;
@@ -13,6 +14,8 @@ import org.chromium.chrome.browser.ChromeVersionInfo;
 import org.chromium.chrome.browser.crash.MinidumpUploadService.ProcessType;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 
 
@@ -60,6 +63,8 @@ public class ChromePreferenceManager {
     private static final String FAILURE_UPLOAD_SUFFIX = "_crash_failure_upload";
 
     private static final String OMNIBOX_PLACEHOLDER_GROUP = "omnibox-placeholder-group";
+
+    private static final String CHROME_HOME_SHARED_PREFERENCES_KEY = "chrome_home_enabled_date";
 
     private static ChromePreferenceManager sPrefs;
 
@@ -479,5 +484,31 @@ public class ChromePreferenceManager {
         SharedPreferences.Editor ed = mSharedPreferences.edit();
         ed.putBoolean(key, value);
         ed.apply();
+    }
+
+    /**
+     * Logs the most recent date that Chrome Home was enabled.
+     * Removes the entry if Chrome Home is disabled.
+     *
+     * @param isChromeHomeEnabled Whether or not Chrome Home is currently enabled.
+     */
+    public static void setChromeHomeEnabledDate(boolean isChromeHomeEnabled) {
+        StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
+        try {
+            SharedPreferences sharedPreferences = ContextUtils.getAppSharedPreferences();
+            String earliestLoggedDate =
+                    sharedPreferences.getString(CHROME_HOME_SHARED_PREFERENCES_KEY, null);
+            if (isChromeHomeEnabled && earliestLoggedDate == null) {
+                String date =
+                        SimpleDateFormat.getDateInstance().format(Calendar.getInstance().getTime());
+                sharedPreferences.edit()
+                        .putString(CHROME_HOME_SHARED_PREFERENCES_KEY, date)
+                        .apply();
+            } else if (!isChromeHomeEnabled && earliestLoggedDate != null) {
+                sharedPreferences.edit().remove(CHROME_HOME_SHARED_PREFERENCES_KEY).apply();
+            }
+        } finally {
+            StrictMode.setThreadPolicy(oldPolicy);
+        }
     }
 }
