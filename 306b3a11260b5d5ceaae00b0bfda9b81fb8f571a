@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c46ccda1_3af0988c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-09-15T16:55:18Z",
+      "side": 1,
+      "message": "nit: remove the trailing white space here.",
+      "revId": "306b3a11260b5d5ceaae00b0bfda9b81fb8f571a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "362d4878_a4c4e04e",
+        "filename": "ui/ozone/platform/wayland/fake_server.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-09-15T16:55:18Z",
+      "side": 1,
+      "message": "nit: typical to add an email address to TODO. Like TODO(rjkroege) or something like that.",
+      "revId": "306b3a11260b5d5ceaae00b0bfda9b81fb8f571a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "721abb02_4380aed8",
+        "filename": "ui/ozone/platform/wayland/xdg_surface_wrapper_v5.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-09-15T16:55:18Z",
+      "side": 1,
+      "message": "nit: add email address.",
+      "revId": "306b3a11260b5d5ceaae00b0bfda9b81fb8f571a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8506f203_a23f7972",
+        "filename": "ui/ozone/platform/wayland/xdg_surface_wrapper_v6.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-09-15T16:55:18Z",
+      "side": 1,
+      "message": "resize doesn\u0027t work? or is handled a different way?",
+      "revId": "306b3a11260b5d5ceaae00b0bfda9b81fb8f571a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
