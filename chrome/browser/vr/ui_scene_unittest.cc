@@ -11,6 +11,7 @@
 #include "base/test/gtest_util.h"
 #include "base/values.h"
 #include "chrome/browser/vr/elements/draw_phase.h"
+#include "chrome/browser/vr/elements/transient_element.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/elements/ui_element_transform_operations.h"
 #include "chrome/browser/vr/elements/viewport_aware_root.h"
@@ -38,9 +39,15 @@ size_t NumElementsInSubtree(UiElement* element) {
   return count;
 }
 
+// Adds elements to scene with the following hierarchy.
+// kRoot
+//  container
+//    kViewportAwareRoot
+//      child
+//        grandchild
 void MakeViewportAwareElements(UiScene* scene,
-                               UiElement** child,
-                               UiElement** grandchild) {
+                               std::unique_ptr<UiElement> child,
+                               std::unique_ptr<UiElement> grandchild) {
   auto element = base::MakeUnique<UiElement>();
   UiElement* container = element.get();
   element->set_draw_phase(0);
@@ -51,17 +58,15 @@ void MakeViewportAwareElements(UiScene* scene,
   root->set_draw_phase(0);
   container->AddChild(std::move(root));
 
-  element = base::MakeUnique<UiElement>();
-  *child = element.get();
-  element->set_viewport_aware(true);
-  element->set_draw_phase(0);
-  viewport_aware_root->AddChild(std::move(element));
+  auto* child_element = child.get();
+  child_element->set_viewport_aware(true);
+  child_element->set_draw_phase(0);
+  viewport_aware_root->AddChild(std::move(child));
 
-  element = base::MakeUnique<UiElement>();
-  *grandchild = element.get();
-  element->set_viewport_aware(false);
-  element->set_draw_phase(0);
-  (*child)->AddChild(std::move(element));
+  auto* grandchild_element = grandchild.get();
+  grandchild_element->set_viewport_aware(false);
+  grandchild_element->set_draw_phase(0);
+  child_element->AddChild(std::move(grandchild));
 }
 
 }  // namespace
@@ -168,24 +173,47 @@ TEST(UiScene, Opacity) {
 
 TEST(UiScene, ViewportAware) {
   UiScene scene;
-  UiElement* child = nullptr;
-  UiElement* grandchild = nullptr;
-  MakeViewportAwareElements(&scene, &child, &grandchild);
+  auto child = base::MakeUnique<UiElement>();
+  auto* child_element = child.get();
+  auto grandchild = base::MakeUnique<UiElement>();
+  auto* grandchild_element = grandchild.get();
+  MakeViewportAwareElements(&scene, std::move(child), std::move(grandchild));
 
   scene.OnBeginFrame(MicrosecondsToTicks(0), gfx::Vector3dF(0.f, 0.f, -1.0f));
-  EXPECT_TRUE(child->computed_viewport_aware());
-  EXPECT_TRUE(grandchild->computed_viewport_aware());
+  EXPECT_TRUE(child_element->computed_viewport_aware());
+  EXPECT_TRUE(grandchild_element->computed_viewport_aware());
 }
 
 TEST(UiScene, NoViewportAwareElementWhenNoVisibleChild) {
   UiScene scene;
-  UiElement* child = nullptr;
-  UiElement* grandchild = nullptr;
-  MakeViewportAwareElements(&scene, &child, &grandchild);
+  auto child = base::MakeUnique<UiElement>();
+  auto* child_element = child.get();
+  auto grandchild = base::MakeUnique<UiElement>();
+  MakeViewportAwareElements(&scene, std::move(child), std::move(grandchild));
 
   EXPECT_FALSE(scene.GetViewportAwareElements().empty());
-  child->SetVisible(false);
+  child_element->SetVisible(false);
   EXPECT_TRUE(scene.GetViewportAwareElements().empty());
+}
+
+// Tests that UiScene::GetViewportAwareElements doesn't return transient
+// elements because they're not visual elements.
+TEST(UiScene, TransientElementNotViewportAware) {
+  UiScene scene;
+  auto child =
+      base::MakeUnique<TransientElement>(base::TimeDelta::FromSeconds(2));
+  child->SetVisible(true);
+  auto grandchild = base::MakeUnique<UiElement>();
+  auto* grandchild_element = grandchild.get();
+
+  MakeViewportAwareElements(&scene, std::move(child), std::move(grandchild));
+  grandchild_element->set_viewport_aware(true);
+
+  // Only the child of the transient element should be returned as the viewport
+  // aware element.
+  auto viewport_aware_elements = scene.GetViewportAwareElements();
+  EXPECT_EQ(1u, viewport_aware_elements.size());
+  EXPECT_EQ(viewport_aware_elements[0], grandchild_element);
 }
 
 typedef struct {
