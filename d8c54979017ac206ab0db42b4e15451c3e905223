@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "58cb9db0_b1542a96",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-15T07:27:34Z",
+      "side": 1,
+      "message": "Right. It comes from CodeGeneraotrV8.generate_interface_code(). Other templates used by this function already use this_include_header_name.",
+      "parentUuid": "05435e2e_6a1ae17f",
+      "revId": "d8c54979017ac206ab0db42b4e15451c3e905223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be5aa292_f9a20dc2",
         "filename": "third_party/WebKit/Source/bindings/templates/legacy_callback_interface.cpp.tmpl",
         "patchSetId": 2
