@@ -1052,11 +1052,6 @@ bool ExtensionsDisabled() {
   return ExtensionsDisabled(*base::CommandLine::ForCurrentProcess());
 }
 
-bool MdFeedbackEnabled() {
-  return base::CommandLine::ForCurrentProcess()->HasSwitch(
-      ::switches::kEnableMaterialDesignFeedback);
-}
-
 #if defined(OS_CHROMEOS)
 bool PowerOverlayEnabled() {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
