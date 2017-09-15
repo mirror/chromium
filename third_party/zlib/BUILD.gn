@@ -75,20 +75,6 @@ static_library("zlib") {
     "zutil.h",
   ]
 
-  if (current_cpu == "arm" || current_cpu == "arm64") {
-    if (arm_use_neon) {
-      sources -= [
-        "inffast.c",
-        "inflate.c",
-      ]
-      sources += [
-        "contrib/arm/chunkcopy.h",
-        "contrib/arm/inffast.c",
-        "contrib/arm/inflate.c",
-      ]
-    }
-  }
-
   if (!is_ios && (current_cpu == "x86" || current_cpu == "x64")) {
     sources += [ "x86.c" ]
   }
