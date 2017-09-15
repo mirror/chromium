@@ -408,6 +408,13 @@ void LayoutText::AbsoluteQuads(Vector<FloatQuad>& quads,
   this->Quads(quads, kNoClipping, kAbsoluteQuads, mode);
 }
 
+static bool OffsetRangeSelectsLinebreak(unsigned start, unsigned end, InlineTextBox* prev, InlineTextBox* next) {
+  // TODO(editing-dev): The implementation is basically wrong. Fix it.
+  if (!prev || !next || prev->NextOnLine())
+    return false;
+  return start == prev->Start() + prev->Len();
+}
+
 void LayoutText::AbsoluteQuadsForRange(Vector<FloatQuad>& quads,
                                        unsigned start,
                                        unsigned end) const {
@@ -423,47 +430,74 @@ void LayoutText::AbsoluteQuadsForRange(Vector<FloatQuad>& quads,
   start = std::min(start, static_cast<unsigned>(INT_MAX));
   end = std::min(end, static_cast<unsigned>(INT_MAX));
 
-  const unsigned caret_min_offset =
-      static_cast<unsigned>(this->CaretMinOffset());
-  const unsigned caret_max_offset =
-      static_cast<unsigned>(this->CaretMaxOffset());
+  // TODO(xiaochengh): Should we also report an extra space-width rects at the
+  // ends of lines if the range selects line breakings?
 
-  // Narrows |start| and |end| into |caretMinOffset| and |careMaxOffset|
-  // to ignore unrendered leading and trailing whitespaces.
-  start = std::min(std::max(caret_min_offset, start), caret_max_offset);
-  end = std::min(std::max(caret_min_offset, end), caret_max_offset);
-
-  // This function is always called in sequence that this check should work.
-  bool has_checked_box_in_range = !quads.IsEmpty();
-
+  bool has_rendered_character_selected = false;
+  InlineTextBox* prev_box = nullptr;
+  InlineTextBox* next_box = nullptr;
   for (InlineTextBox* box : InlineTextBoxesOf(*this)) {
     // Note: box->end() returns the index of the last character, not the index
     // past it
-    if (start <= box->Start() && box->end() < end) {
+    const unsigned box_end = box->Start() + box->Len();
+    if (start <= box->Start() && box_end <= end) {
+      // The text box is completely in the range. Add the entire rect to result.
       LayoutRect r(box->FrameRect());
-      if (!has_checked_box_in_range) {
-        has_checked_box_in_range = true;
-        quads.clear();
-      }
       quads.push_back(LocalToAbsoluteQuad(FloatRect(r)));
-    } else if ((box->Start() <= start && start <= box->end()) ||
-               (box->Start() < end && end <= box->end())) {
+      has_rendered_character_selected = true;
+    } else if (start < box_end && end > box->Start()) {
+      // At least one character is in the range, or the range is a caret in the
+      // middle of the text box. In either case, the rect of the range is
+      // calculated and added to the result.
       FloatRect rect = LocalQuadForTextBox(box, start, end);
-      if (!rect.IsZero()) {
-        if (!has_checked_box_in_range) {
-          has_checked_box_in_range = true;
-          quads.clear();
-        }
-        quads.push_back(LocalToAbsoluteQuad(rect));
+      DCHECK(!rect.IsZero());
+      quads.push_back(LocalToAbsoluteQuad(rect));
+      has_rendered_character_selected = true;
+    } else if (has_rendered_character_selected) {
+      if (start >= box_end) {
+        if (!prev_box || prev_box->Start() < box->Start())
+          prev_box = box;
       }
-    } else if (!has_checked_box_in_range) {
-      // consider when the offset of range is area of leading or trailing
-      // whitespace
-      FloatRect rect = LocalQuadForTextBox(box, start, end);
-      if (!rect.IsZero())
-        quads.push_back(LocalToAbsoluteQuad(rect).EnclosingBoundingBox());
+      if (end <= box->Start()) {
+        if (!next_box || next_box->Start() > box->Start())
+          next_box = box;
+      }
     }
   }
+
+  if (has_rendered_character_selected)
+    return;
+
+  if (!prev_box && !next_box)
+    return;
+
+  // The range selects a whitespace collapsed due to line breaking.
+  if (OffsetRangeSelectsLinebreak(start, end, prev_box, next_box)) {
+    FloatRect upstream = LocalQuadForTextBox(prev_box, prev_box->Start() + prev_box->Len(), end);
+    DCHECK(!upstream.IsZero());
+    quads.push_back(upstream);
+
+    FloatRect downstream = LocalQuadForTextBox(next_box, start, next_box->Start());
+    DCHECK(!downstream.IsZero());
+    quads.push_back(downstream);
+    return;
+  }
+
+  // The range doesn't select any plain text at all. In this case,
+  // - If |next_box| exists, return a caret at its beginning
+  // - Otherwise, return a caret at the end of |prev_box|
+  InlineTextBox* box;
+  unsigned offset;
+  if (next_box) {
+    box = next_box;
+    offset = next_box->Start();
+  } else {
+    box = prev_box;
+    offset = prev_box->Start() + prev_box->Len();
+  }
+  FloatRect rect = LocalQuadForTextBox(box, offset, offset);
+  DCHECK(!rect.IsZero());
+  quads.push_back(LocalToAbsoluteQuad(rect));
 }
 
 FloatRect LayoutText::LocalBoundingBoxRectForAccessibility() const {
