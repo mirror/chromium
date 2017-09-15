@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aa67a815_49ead28d",
+        "filename": "components/viz/host/hit_test/hit_test_query.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-15T16:46:43Z",
+      "side": 1,
+      "message": "Good point. I would say file a bug + TODO here referencing that bug?",
+      "parentUuid": "9210d917_3c207785",
+      "revId": "24eee095a7d6b24b10c35c9c70ecb774a357d120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf226464_ced72dbe",
         "filename": "components/viz/host/hit_test/hit_test_query.cc",
         "patchSetId": 1
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "idea: maintain a map of frame sink id to position in the tree. build this when you target. \n\nI\u0027d argue though that we need metrics: ratio of transform-only vs transform\u0026target ops, their time cost, number of regions in general and a discussion about how to drive down the overhead.",
       "parentUuid": "2ea50923_431c3e53",
+      "revId": "24eee095a7d6b24b10c35c9c70ecb774a357d120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac01147e_61eb664f",
+        "filename": "components/viz/host/hit_test/hit_test_query.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-15T16:46:43Z",
+      "side": 1,
+      "message": "We can find the ServerWindow associated with |target|, right? From there, we walk up the tree upto root, and record the FrameSinkId of all the ancestor ServerWindows. We then use that to find the child-region to explore here. Would that work?",
+      "parentUuid": "2e85f5c2_668dae89",
       "revId": "24eee095a7d6b24b10c35c9c70ecb774a357d120",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
