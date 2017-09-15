@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "00395d66_82e1f7e9",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-15T17:46:39Z",
+      "side": 1,
+      "message": "operator\u003c, right?",
+      "range": {
+        "startLine": 61,
+        "startChar": 17,
+        "endLine": 61,
+        "endChar": 27
+      },
+      "revId": "8e2f1d3650b27cd589963d834f6e20767fbafb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e9cb62c_68f58353",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
         "patchSetId": 10
@@ -47,6 +70,52 @@
       "writtenOn": "2017-09-15T16:13:07Z",
       "side": 1,
       "message": "nit: also test that doing these three things in sequence (as we do in prod) is transactional.  Or just one test that does exactly what we need:\n\ncreate temp table\ndrop previous table\nrename temp table to previous\n\nRollback should work after all 3 steps",
+      "revId": "8e2f1d3650b27cd589963d834f6e20767fbafb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f0595d_165f4b5b",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-15T17:46:39Z",
+      "side": 1,
+      "message": "*_old?",
+      "range": {
+        "startLine": 90,
+        "startChar": 38,
+        "endLine": 90,
+        "endChar": 57
+      },
+      "revId": "8e2f1d3650b27cd589963d834f6e20767fbafb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7140a266_ca95d7d7",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-15T17:46:39Z",
+      "side": 1,
+      "message": "*_old\n\nDo you even need that one?",
+      "range": {
+        "startLine": 91,
+        "startChar": 38,
+        "endLine": 91,
+        "endChar": 68
+      },
       "revId": "8e2f1d3650b27cd589963d834f6e20767fbafb1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
