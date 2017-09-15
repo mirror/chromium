@@ -70,6 +70,24 @@
       "revId": "4702d0dae7870127f521943bcae9f00f95e65c2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba328d5_a115ac0e",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-15T17:51:22Z",
+      "side": 1,
+      "message": "what if 907  fails with SDK_COMPONENT_MISSING, but sets the |d3d11_device_context_| to some non-null value in the process?  then we might get all the way to 929 without a null |d3d11_device_|.",
+      "parentUuid": "74c8275e_c3f8a66b",
+      "revId": "4702d0dae7870127f521943bcae9f00f95e65c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
