@@ -6,7 +6,7 @@
 #define CHROME_BROWSER_VR_ELEMENTS_TEXTURED_ELEMENT_H_
 
 #include "base/macros.h"
-#include "chrome/browser/vr/elements/ui_element.h"
+#include "chrome/browser/vr/elements/renderable_element.h"
 #include "ui/gfx/geometry/size.h"
 #include "ui/gl/gl_bindings.h"
 
@@ -16,7 +16,7 @@ namespace vr {
 
 class UiTexture;
 
-class TexturedElement : public UiElement {
+class TexturedElement : public RenderableElement {
  public:
   // |preferred_width| is the element's desired width in meters. Constraints
   // implied by the texture being rendered may or may not allow it to be
@@ -26,7 +26,6 @@ class TexturedElement : public UiElement {
 
   void Initialize() final;
 
-  // UiElement interface.
   void Render(UiElementRenderer* renderer,
               const gfx::Transform& view_proj_matrix) const final;
 

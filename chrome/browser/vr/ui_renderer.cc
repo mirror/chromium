@@ -5,6 +5,7 @@
 #include "chrome/browser/vr/ui_renderer.h"
 
 #include "base/trace_event/trace_event.h"
+#include "chrome/browser/vr/elements/renderable_element.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/ui_scene.h"
 #include "chrome/browser/vr/vr_controller_model.h"
@@ -43,74 +44,73 @@ UiRenderer::~UiRenderer() = default;
 
 void UiRenderer::Draw(const RenderInfo& render_info,
                       const ControllerInfo& controller_info,
-                      bool web_vr_mode) {
-  DrawWorldElements(render_info, controller_info, web_vr_mode);
-  DrawOverlayElements(render_info, controller_info);
+                      bool in_web_vr_mode) {
+  if (in_web_vr_mode)
+    DrawWebVrOverlayBackground(render_info, controller_info);
+  else
+    Draw2dBrowsing(render_info, controller_info);
 }
 
-void UiRenderer::DrawViewportAware(const RenderInfo& render_info,
-                                   const ControllerInfo& controller_info,
-                                   bool web_vr_mode) {
-  TRACE_EVENT0("gpu", "VrShellGl::DrawViewportAwareElements");
-  std::vector<const UiElement*> elements = scene_->GetViewportAwareElements();
+void UiRenderer::Draw2dBrowsing(const RenderInfo& render_info,
+                                const ControllerInfo& controller_info) {
+  // Non-WebVR mode, enable depth testing and clear the primary buffers. Note
+  // also that we do not clear the color buffer. The scene's background
+  // elements are responsible for drawing a complete background.
+  glEnable(GL_CULL_FACE);
+  glEnable(GL_DEPTH_TEST);
+  glDepthMask(GL_TRUE);
+  glClear(GL_DEPTH_BUFFER_BIT);
+  DrawUiView(render_info, controller_info, scene_->Get2dBrowsingElements(),
+             kReticleModeVisible);
 
-  if (web_vr_mode) {
-    glEnable(GL_CULL_FACE);
-    glEnable(GL_DEPTH_TEST);
-    glDepthMask(GL_TRUE);
-
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  }
-  DrawUiView(render_info, controller_info, elements, false);
-}
-
-void UiRenderer::DrawWorldElements(const RenderInfo& render_info,
-                                   const ControllerInfo& controller_info,
-                                   bool web_vr_mode) {
-  TRACE_EVENT0("gpu", "VrShellGl::DrawWorldElements");
-
-  if (web_vr_mode) {
-    // WebVR is incompatible with 3D world compositing since the
-    // depth buffer was already populated with unknown scaling - the
-    // WebVR app has full control over zNear/zFar. Just leave the
-    // existing content in place in the primary buffer without
-    // clearing. Currently, there aren't any world elements in WebVR
-    // mode, this will need further testing if those get added
-    // later.
-  } else {
-    // Non-WebVR mode, enable depth testing and clear the primary buffers. Note
-    // also that we do not clear the color buffer. The scene's background
-    // elements are responsible for drawing a complete background.
-    glEnable(GL_CULL_FACE);
-    glEnable(GL_DEPTH_TEST);
-    glDepthMask(GL_TRUE);
-
-    glClear(GL_DEPTH_BUFFER_BIT);
-  }
-  std::vector<const UiElement*> elements = scene_->GetWorldElements();
-  DrawUiView(render_info, controller_info, elements,
-             scene_->reticle_rendering_enabled());
-}
-
-void UiRenderer::DrawOverlayElements(const RenderInfo& render_info,
-                                     const ControllerInfo& controller_info) {
-  std::vector<const UiElement*> elements = scene_->GetOverlayElements();
-  if (elements.empty()) {
-    return;
-  }
-
+  // The overlays do not make use of depth testing.
   glDisable(GL_CULL_FACE);
   glDisable(GL_DEPTH_TEST);
   glDepthMask(GL_FALSE);
 
-  DrawUiView(render_info, controller_info, elements, false);
+  DrawUiView(render_info, controller_info,
+             scene_->Get2dBrowsingOverlayElements(), kReticleModeHidden);
 }
 
-void UiRenderer::DrawUiView(const RenderInfo& render_info,
-                            const ControllerInfo& controller_info,
-                            const std::vector<const UiElement*>& elements,
-                            bool draw_reticle) {
+void UiRenderer::DrawWebVrOverlayBackground(
+    const RenderInfo& render_info,
+    const ControllerInfo& controller_info) {
+  // WebVR is incompatible with 3D world compositing since the
+  // depth buffer was already populated with unknown scaling - the
+  // WebVR app has full control over zNear/zFar. Just leave the
+  // existing content in place in the primary buffer without
+  // clearing. Currently, there aren't any world elements in WebVR
+  // mode, this will need further testing if those get added
+  // later.
+  glDisable(GL_CULL_FACE);
+  glDisable(GL_DEPTH_TEST);
+  glDepthMask(GL_FALSE);
+  DrawUiView(render_info, controller_info,
+             scene_->GetWebVrOverlayBackgroundElements(), kReticleModeHidden);
+  // NB: we do not draw the viewport aware objects here. They get put into
+  // another buffer that is size optimized.
+}
+
+void UiRenderer::DrawWebVrOverlayForeground(
+    const RenderInfo& render_info,
+    const ControllerInfo& controller_info) {
+  // The WebVR overlay foreground is drawn as a separate pass, so we need to set
+  // up our gl state before drawing.
+  glEnable(GL_CULL_FACE);
+  glEnable(GL_DEPTH_TEST);
+  glDepthMask(GL_TRUE);
+
+  glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  DrawUiView(render_info, controller_info,
+             scene_->GetWebVrOverlayForegroundElements(), kReticleModeHidden);
+}
+
+void UiRenderer::DrawUiView(
+    const RenderInfo& render_info,
+    const ControllerInfo& controller_info,
+    const std::vector<const RenderableElement*>& elements,
+    UiRenderer::ReticleMode reticle_mode) {
   TRACE_EVENT0("gpu", "VrShellGl::DrawUiView");
 
   auto sorted_elements =
@@ -122,19 +122,20 @@ void UiRenderer::DrawUiView(const RenderInfo& render_info,
                eye_info.viewport.width(), eye_info.viewport.height());
 
     DrawElements(eye_info.view_proj_matrix, sorted_elements, render_info,
-                 controller_info, draw_reticle);
-    if (draw_reticle) {
+                 controller_info, reticle_mode);
+    if (reticle_mode == kReticleModeVisible) {
       DrawController(eye_info.view_proj_matrix, render_info, controller_info);
       DrawLaser(eye_info.view_proj_matrix, render_info, controller_info);
     }
   }
 }
 
-void UiRenderer::DrawElements(const gfx::Transform& view_proj_matrix,
-                              const std::vector<const UiElement*>& elements,
-                              const RenderInfo& render_info,
-                              const ControllerInfo& controller_info,
-                              bool draw_reticle) {
+void UiRenderer::DrawElements(
+    const gfx::Transform& view_proj_matrix,
+    const std::vector<const RenderableElement*>& elements,
+    const RenderInfo& render_info,
+    const ControllerInfo& controller_info,
+    UiRenderer::ReticleMode reticle_mode) {
   if (elements.empty()) {
     return;
   }
@@ -144,8 +145,8 @@ void UiRenderer::DrawElements(const gfx::Transform& view_proj_matrix,
   for (const auto* element : elements) {
     // If we have no element to draw the reticle on, draw it after the
     // background (the initial draw phase).
-    if (!controller_info.reticle_render_target && draw_reticle &&
-        !drawn_reticle &&
+    if (!controller_info.reticle_render_target &&
+        reticle_mode == kReticleModeVisible && !drawn_reticle &&
         element->draw_phase() >= scene_->first_foreground_draw_phase()) {
       DrawReticle(view_proj_matrix, render_info, controller_info);
       drawn_reticle = true;
@@ -153,7 +154,8 @@ void UiRenderer::DrawElements(const gfx::Transform& view_proj_matrix,
 
     DrawElement(view_proj_matrix, *element);
 
-    if (draw_reticle && (controller_info.reticle_render_target == element)) {
+    if (reticle_mode == kReticleModeVisible &&
+        (controller_info.reticle_render_target == element)) {
       DrawReticle(view_proj_matrix, render_info, controller_info);
     }
   }
@@ -161,16 +163,16 @@ void UiRenderer::DrawElements(const gfx::Transform& view_proj_matrix,
 }
 
 void UiRenderer::DrawElement(const gfx::Transform& view_proj_matrix,
-                             const UiElement& element) {
+                             const RenderableElement& element) {
   DCHECK_GE(element.draw_phase(), 0);
   element.Render(vr_shell_renderer_,
                  view_proj_matrix * element.world_space_transform());
 }
 
-std::vector<const UiElement*> UiRenderer::GetElementsInDrawOrder(
+std::vector<const RenderableElement*> UiRenderer::GetElementsInDrawOrder(
     const gfx::Transform& view_matrix,
-    const std::vector<const UiElement*>& elements) {
-  std::vector<const UiElement*> sorted_elements = elements;
+    const std::vector<const RenderableElement*>& elements) {
+  std::vector<const RenderableElement*> sorted_elements = elements;
 
   // Sort elements primarily based on their draw phase (lower draw phase first)
   // and secondarily based on their z-axis distance (more distant first).
@@ -179,7 +181,8 @@ std::vector<const UiElement*> UiRenderer::GetElementsInDrawOrder(
   // release, and provides a consistent ordering that we can easily design
   // around.
   std::sort(sorted_elements.begin(), sorted_elements.end(),
-            [](const UiElement* first, const UiElement* second) {
+            [](const RenderableElement* first,
+               const RenderableElement* second) {
               if (first->draw_phase() != second->draw_phase()) {
                 return first->draw_phase() < second->draw_phase();
               } else {
