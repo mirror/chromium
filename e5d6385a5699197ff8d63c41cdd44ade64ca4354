@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "726dab53_6c639878",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T01:32:10Z",
+      "side": 1,
+      "message": "Nit: If you put the { after \"case IDC_NEW_TAB:\", then it can be on the same line, and you need not indent the case contents any more than they currently are.  That\u0027s the common way to do a case-with-block.",
+      "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50ee8310_b2c2b78b",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T01:32:10Z",
+      "side": 1,
+      "message": "Nit: auto*?",
+      "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4ed509_c916edeb",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T01:32:10Z",
+      "side": 1,
+      "message": "Nit: Same comments",
+      "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3a1573_ecea328d",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T01:32:10Z",
+      "side": 1,
+      "message": "Nit: {} unnecessary",
+      "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012a3221_99761b61",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T01:32:10Z",
+      "side": 1,
+      "message": "Nit: Same comments",
+      "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e600d55b_30fcfa29",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T01:32:10Z",
+      "side": 1,
+      "message": "This won\u0027t work now, since you just nulled it above, so the function is guaranteed to return false.  (Make sure you have some unittest that would catch this.)\n\nAlso, if the bubble closes on its own (rather than via this function), I think we still won\u0027t null things.\n\nI think what you want is to null this in OnWidgetDestroying()?  You\u0027d also want to be careful about sync-vs.-async close if you try to rely on |new_tab_promo_| in the return value here.",
+      "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
