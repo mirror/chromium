@@ -4046,6 +4046,27 @@
                     { "name": "lineNumber", "type": "integer" },
                     { "name": "columnNumber", "type": "integer" }
                 ]
+            },
+            {
+                "id": "ServiceWorkerSyncRegistration",
+                "type": "object",
+                "description": "ServiceWorker sync registration",
+                "properties": [
+                    { "name": "delayUntil", "type": "number", "description": "UTC time in seconds, counted from January 1, 1970 when the sync is scheduled to execute" },
+                    { "name": "numAttempts", "type": "number" },
+                    { "name": "syncNetworkState", "type": "string", "enum": [ "any", "avoidCellular", "online" ] },
+                    { "name": "backgroundSyncState", "type": "string", "enum": [ "pending", "firing", "reregisteredWhileFiring" ] },
+                    { "name": "tag", "type": "string" }
+                ]
+            },
+            {
+                "id": "ServiceWorkerSyncStatus",
+                "type": "object",
+                "description": "ServiceWorker sync status",
+                "properties": [
+                    { "name": "status", "type": "string", "enum": [ "ok", "storageError", "notFound", "noServiceWorker", "notAllowed", "permissionDenied" ] },
+                    { "name": "registrations", "type": "array", "items": { "$ref": "ServiceWorkerSyncRegistration" } }
+                 ]
             }
         ],
         "commands": [
@@ -4115,6 +4136,15 @@
                     { "name": "registrationId", "type": "string" },
                     { "name": "tag", "type": "string" },
                     { "name": "lastChance", "type": "boolean" }
+                ]
+            },
+            {
+                "name": "getSyncStatus",
+                "parameters": [
+                    { "name": "registrationId", "type": "string" }
+                ],
+                "returns": [
+                    { "name": "status", "$ref": "ServiceWorkerSyncStatus", "description": "ServiceWorker sync status." }
                 ]
             }
         ],

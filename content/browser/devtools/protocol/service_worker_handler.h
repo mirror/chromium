@@ -53,6 +53,8 @@ class ServiceWorkerHandler : public DevToolsDomainHandler,
                              const std::string& registration_id,
                              const std::string& tag,
                              bool last_chance) override;
+  void GetSyncStatus(const String& registration_id,
+                     std::unique_ptr<GetSyncStatusCallback> callback) override;
 
  private:
   void OnWorkerRegistrationUpdated(

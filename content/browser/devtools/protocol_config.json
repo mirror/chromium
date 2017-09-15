@@ -69,7 +69,7 @@
             },
             {
                 "domain": "ServiceWorker",
-                "async": ["stopAllWorkers"]
+                "async": ["getSyncStatus", "stopAllWorkers"]
             },
             {
                 "domain": "Storage",
