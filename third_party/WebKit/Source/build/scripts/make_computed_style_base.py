@@ -4,16 +4,18 @@
 # found in the LICENSE file.
 
 import math
+import types
 
 import json5_generator
 import template_expander
-import make_style_builder
 import keyword_utils
 import bisect
+import css_properties_utils
+from core.css import css_properties
 
 from name_utilities import (
     enum_for_css_keyword, enum_type_name, enum_value_name, class_member_name, method_name,
-    class_name, join_names
+    class_name, join_names, lower_first, upper_camel_case
 )
 from itertools import chain
 
@@ -218,7 +220,7 @@ def _get_include_paths(properties):
     return list(sorted(include_paths))
 
 
-def _create_groups(properties, alias_dictionary):
+def _create_groups(fields, alias_dictionary):
     """Create a tree of groups from a list of properties.
 
     Returns:
@@ -245,13 +247,13 @@ def _create_groups(properties, alias_dictionary):
         return Group(name, subgroups, _reorder_fields(fields_in_current_group))
 
     root_group_dict = {None: []}
-    for property_ in properties:
+    for field_ in fields:
         current_group_dict = root_group_dict
-        if property_['field_group']:
-            for group_name in property_['field_group'].split('->'):
+        if field_['field_group']:
+            for group_name in field_['field_group'].split('->'):
                 current_group_dict[group_name] = current_group_dict.get(group_name, {None: []})
                 current_group_dict = current_group_dict[group_name]
-        current_group_dict[None].extend(_create_fields(property_, alias_dictionary))
+        current_group_dict[None].extend(_create_fields(field_, alias_dictionary))
 
     return _dict_to_group(None, root_group_dict)
 
@@ -326,87 +328,87 @@ def _create_enums(properties):
     return list(sorted(enums.values(), key=lambda e: e.type_name))
 
 
-def _create_property_field(property_, alias_dictionary):
+def _create_property_field(field_, alias_dictionary):
     """
     Create a property field.
     """
-    name_for_methods = property_['name_for_methods']
+    name_for_methods = field_['name_for_methods']
 
-    assert property_['default_value'] is not None, \
+    assert field_['default_value'] is not None, \
         ('MakeComputedStyleBase requires an default value for all fields, none specified '
-         'for property ' + property_['name'])
+         'for property ' + field_['name'])
 
-    if property_['field_template'] in alias_dictionary:
-        alias_template = property_['field_template']
+    if field_['field_template'] in alias_dictionary:
+        alias_template = field_['field_template']
         for field in alias_dictionary[alias_template]:
             if field != 'name':
-                property_[field] = alias_dictionary[alias_template][field]
+                field_[field] = alias_dictionary[alias_template][field]
 
-    if property_['field_template'] == 'keyword':
-        type_name = property_['type_name']
-        default_value = type_name + '::' + enum_value_name(property_['default_value'])
-        assert property_['field_size'] is None, \
-            ("'" + property_['name'] + "' is a keyword field, "
+    if field_['field_template'] == 'keyword':
+        type_name = field_['type_name']
+        default_value = type_name + '::' + enum_value_name(field_['default_value'])
+        assert field_['field_size'] is None, \
+            ("'" + field_['name'] + "' is a keyword field, "
              "so it should not specify a field_size")
-        size = int(math.ceil(math.log(len(property_['keywords']), 2)))
-    elif property_['field_template'] == 'multi_keyword':
-        type_name = property_['type_name']
-        default_value = type_name + '::' + enum_value_name(property_['default_value'])
-        size = len(property_['keywords']) - 1  # Subtract 1 for 'none' keyword
-    elif property_['field_template'] == 'external':
-        type_name = property_['type_name']
-        default_value = property_['default_value']
+        size = int(math.ceil(math.log(len(field_['keywords']), 2)))
+    elif field_['field_template'] == 'multi_keyword':
+        type_name = field_['type_name']
+        default_value = type_name + '::' + enum_value_name(field_['default_value'])
+        size = len(field_['keywords']) - 1  # Subtract 1 for 'none' keyword
+    elif field_['field_template'] == 'external':
+        type_name = field_['type_name']
+        default_value = field_['default_value']
         size = None
-    elif property_['field_template'] == 'primitive':
-        type_name = property_['type_name']
-        default_value = property_['default_value']
-        size = 1 if type_name == 'bool' else property_["field_size"]  # pack bools with 1 bit.
-    elif property_['field_template'] == 'pointer':
-        type_name = property_['type_name']
-        default_value = property_['default_value']
+    elif field_['field_template'] == 'primitive':
+        type_name = field_['type_name']
+        default_value = field_['default_value']
+        size = 1 if type_name == 'bool' else field_["field_size"]  # pack bools with 1 bit.
+    elif field_['field_template'] == 'pointer':
+        type_name = field_['type_name']
+        default_value = field_['default_value']
         size = None
     else:
-        assert property_['field_template'] == 'monotonic_flag', "Please put a valid value for field_template"
+        assert field_['field_template'] == 'monotonic_flag', "Please put a valid value for field_template"
         type_name = 'bool'
         default_value = 'false'
         size = 1
 
-    if property_['wrapper_pointer_name']:
-        assert property_['field_template'] in ['pointer', 'external']
-        if property_['field_template'] == 'external':
-            type_name = '{}<{}>'.format(property_['wrapper_pointer_name'], type_name)
+    if field_['wrapper_pointer_name']:
+        assert field_['field_template'] in ['pointer', 'external']
+        if field_['field_template'] == 'external':
+            type_name = '{}<{}>'.format(field_['wrapper_pointer_name'], type_name)
 
     return Field(
         'property',
         name_for_methods,
-        property_name=property_['name'],
-        inherited=property_['inherited'],
-        independent=property_['independent'],
+        property_name=field_['name'],
+        inherited=field_['inherited'],
+        independent=field_['independent'],
         type_name=type_name,
-        wrapper_pointer_name=property_['wrapper_pointer_name'],
-        field_template=property_['field_template'],
+        wrapper_pointer_name=field_['wrapper_pointer_name'],
+        field_template=field_['field_template'],
         size=size,
         default_value=default_value,
-        custom_copy=property_['custom_copy'],
-        custom_compare=property_['custom_compare'],
-        mutable=property_['mutable'],
-        getter_method_name=property_['getter'],
-        setter_method_name=property_['setter'],
-        initial_method_name=property_['initial'],
-        computed_style_custom_functions=property_['computed_style_custom_functions'],
+        custom_copy=field_['custom_copy'],
+        custom_compare=field_['custom_compare'],
+        mutable=field_['mutable'],
+        getter_method_name=field_['getter'],
+        setter_method_name=field_['setter'],
+        initial_method_name=field_['initial'],
+        computed_style_custom_functions=field_['computed_style_custom_functions'],
     )
 
 
-def _create_inherited_flag_field(property_):
+def _create_inherited_flag_field(field_):
     """
     Create the field used for an inheritance fast path from an independent CSS property,
     and return the Field object.
     """
-    name_for_methods = join_names(property_['name_for_methods'], 'is', 'inherited')
+    name_for_methods = join_names(field_['name_for_methods'], 'is', 'inherited')
     return Field(
         'inherited_flag',
         name_for_methods,
-        property_name=property_['name'],
+        property_name=field_['name'],
         type_name='bool',
         wrapper_pointer_name=None,
         field_template='primitive',
@@ -418,23 +420,23 @@ def _create_inherited_flag_field(property_):
         getter_method_name=method_name(name_for_methods),
         setter_method_name=method_name(['set', name_for_methods]),
         initial_method_name=method_name(['initial', name_for_methods]),
-        computed_style_custom_functions=property_["computed_style_custom_functions"],
+        computed_style_custom_functions=field_["computed_style_custom_functions"],
     )
 
 
-def _create_fields(property_, alias_dictionary):
+def _create_fields(field_, alias_dictionary):
     """
     Create ComputedStyle fields from a property and return a list of Field objects.
     """
     fields = []
     # Only generate properties that have a field template
-    if property_['field_template'] is not None:
+    if field_['field_template'] is not None:
         # If the property is independent, add the single-bit sized isInherited flag
         # to the list of Fields as well.
-        if property_['independent']:
-            fields.append(_create_inherited_flag_field(property_))
+        if field_['independent']:
+            fields.append(_create_inherited_flag_field(field_))
 
-        fields.append(_create_property_field(property_, alias_dictionary))
+        fields.append(_create_property_field(field_, alias_dictionary))
 
     return fields
 
@@ -509,13 +511,13 @@ def _get_properties_ranking(properties_ranking_file, partition_rule):
                      for i in range(len(properties_ranking))]))
 
 
-def _evaluate_rare_non_inherited_group(all_properties, properties_ranking_file,
+def _evaluate_rare_non_inherited_group(all_fields, properties_ranking_file,
                                        number_of_layer, partition_rule=None):
     """Re-evaluate the grouping of RareNonInherited groups based on each property's
     popularity.
 
     Args:
-        all_properties: list of all css properties
+        all_fields: list of all css properties
         properties_ranking_file: file path to the ranking file
         number_of_layer: the number of group to split
         partition_rule: cumulative distribution over properties_ranking
@@ -530,28 +532,28 @@ def _evaluate_rare_non_inherited_group(all_properties, properties_ranking_file,
                    for i in range(number_of_layer)]
     properties_ranking = _get_properties_ranking(properties_ranking_file, partition_rule)
 
-    for property_ in all_properties:
-        if property_["field_group"] is not None and "*" in property_["field_group"] \
-           and not property_["inherited"] and property_["name"] in properties_ranking:
+    for field_ in all_fields:
+        if field_["field_group"] is not None and "*" in field_["field_group"] \
+           and not field_["inherited"] and field_["name"] in properties_ranking:
 
-            assert property_["field_group"] == "*", "The property " + property_["name"] \
+            assert field_["field_group"] == "*", "The property " + field_["name"] \
                 + " will be automatically assigned a group, please put '*' as the field_group"
 
-            property_["field_group"] = "->".join(layers_name[0:properties_ranking[property_["name"]]])
-        elif property_["field_group"] is not None and "*" in property_["field_group"] \
-                and not property_["inherited"] and property_["name"] not in properties_ranking:
-            group_tree = property_["field_group"].split("->")[1:]
+            field_["field_group"] = "->".join(layers_name[0:properties_ranking[field_["name"]]])
+        elif field_["field_group"] is not None and "*" in field_["field_group"] \
+                and not field_["inherited"] and field_["name"] not in properties_ranking:
+            group_tree = field_["field_group"].split("->")[1:]
             group_tree = [layers_name[0], layers_name[0] + "-sub"] + group_tree
-            property_["field_group"] = "->".join(group_tree)
+            field_["field_group"] = "->".join(group_tree)
 
 
-def _evaluate_rare_inherit_group(all_properties, properties_ranking_file,
+def _evaluate_rare_inherit_group(all_fields, properties_ranking_file,
                                  number_of_layer, partition_rule=None):
     """Re-evaluate the grouping of RareInherited groups based on each property's
     popularity.
 
     Args:
-        all_properties: list of all css properties
+        all_fields: list of all css properties
         properties_ranking_file: file path to the ranking file
         number_of_layer: the number of group to split
         partition_rule: cumulative distribution over properties_ranking
@@ -567,25 +569,84 @@ def _evaluate_rare_inherit_group(all_properties, properties_ranking_file,
 
     properties_ranking = _get_properties_ranking(properties_ranking_file, partition_rule)
 
-    for property_ in all_properties:
-        if property_["field_group"] is not None and "*" in property_["field_group"] \
-           and property_["inherited"] and property_["name"] in properties_ranking:
-            property_["field_group"] = "->".join(layers_name[0:properties_ranking[property_["name"]]])
-        elif property_["field_group"] is not None and "*" in property_["field_group"] \
-                and property_["inherited"] and property_["name"] not in properties_ranking:
-            group_tree = property_["field_group"].split("->")[1:]
+    for field_ in all_fields:
+        if field_["field_group"] is not None and "*" in field_["field_group"] \
+           and field_["inherited"] and field_["name"] in properties_ranking:
+            field_["field_group"] = "->".join(layers_name[0:properties_ranking[field_["name"]]])
+        elif field_["field_group"] is not None and "*" in field_["field_group"] \
+                and field_["inherited"] and field_["name"] not in properties_ranking:
+            group_tree = field_["field_group"].split("->")[1:]
             group_tree = [layers_name[0], layers_name[0] + "-sub"] + group_tree
-            property_["field_group"] = "->".join(group_tree)
+            field_["field_group"] = "->".join(group_tree)
 
 
-class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
+def set_if_none(dict_, key, value):
+    if dict_[key] is None:
+        dict_[key] = value
+
+
+def apply_field_naming_defaults(field):
+    upper_camel = upper_camel_case(field['name'])
+    set_if_none(field, 'name_for_methods', upper_camel.replace('Webkit', ''))
+    name = field['name_for_methods']
+    simple_type_name = str(field['type_name']).split('::')[-1]
+    set_if_none(field, 'type_name', 'E' + name)
+    set_if_none(field, 'getter', name if simple_type_name != name else 'Get' + name)
+    set_if_none(field, 'setter', 'Set' + name)
+    set_if_none(field, 'inherited', False)
+    set_if_none(field, 'initial', 'Initial' + name)
+    if 'css_property' in field:
+        field['should_declare_functions'] = field['css_property']['should_declare_functions']
+
+
+def apply_property_naming_defaults(property_):
+    # TODO(meade): Delete this once all methods are moved to CSSPropertyAPIs.
+    # TODO(shend): Use name_utilities for manipulating names.
+    # TODO(shend): Rearrange the code below to separate assignment and set_if_none
+    upper_camel = upper_camel_case(property_['name'])
+    set_if_none(
+        property_, 'name_for_methods', upper_camel.replace('Webkit', ''))
+    name = property_['name_for_methods']
+    simple_type_name = str(property_['type_name']).split('::')[-1]
+    set_if_none(property_, 'type_name', 'E' + name)
+    set_if_none(
+        property_, 'getter', name if simple_type_name != name else 'Get' + name)
+    set_if_none(property_, 'setter', 'Set' + name)
+    set_if_none(property_, 'inherited', False)
+    set_if_none(property_, 'initial', 'Initial' + name)
+
+    if property_['custom_all']:
+        property_['custom_initial'] = True
+        property_['custom_inherit'] = True
+        property_['custom_value'] = True
+    if property_['inherited']:
+        property_['is_inherited_setter'] = 'Set' + name + 'IsInherited'
+    property_['should_declare_functions'] = \
+        not property_['use_handlers_for'] \
+        and not property_['longhands'] \
+        and not property_['direction_aware'] \
+        and not property_['builder_skip'] \
+        and property_['is_property']
+    # Functions should only be used in StyleBuilder if the CSSPropertyAPI
+    # class is shared or not implemented yet (shared classes are denoted by
+    # api_class = "some string").
+    property_['use_api_in_stylebuilder'] = \
+        property_['should_declare_functions'] \
+        and not (property_['custom_initial'] or
+                 property_['custom_inherit'] or
+                 property_['custom_value']) \
+        and property_['api_class'] \
+        and isinstance(property_['api_class'], types.BooleanType)
+
+
+class ComputedStyleBaseWriter(css_properties.CSSProperties):
     def __init__(self, json5_file_paths):
         # Read CSSProperties.json5
         super(ComputedStyleBaseWriter, self).__init__([json5_file_paths[0]])
 
         # Ignore shorthand properties
         for property_ in self._properties.values():
-            if property_['field_template'] is not None:
+            if len(property_["fields"]) > 0:
                 assert not property_['longhands'], \
                     "Shorthand '{}' cannot have a field_template.".format(property_['name'])
 
@@ -596,51 +657,49 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
         # the generated enum will have the same order and continuity as
         # CSSProperties.json5 and we can get the longest continuous segment.
         # Thereby reduce the switch case statement to the minimum.
-        css_properties = keyword_utils.sort_keyword_properties_by_canonical_order(css_properties,
-                                                                                  json5_file_paths[3],
-                                                                                  self.json5_file.parameters)
-
-        for property_ in css_properties:
-            # Set default values for extra parameters in ComputedStyleExtraFields.json5.
-            property_['custom_copy'] = False
-            property_['custom_compare'] = False
-            property_['mutable'] = False
-
+        self._fields = css_properties_utils.get_fields_from_css_properties(css_properties,
+                                                                           json5_file_paths[1],
+                                                                           self.json5_file.parameters)
+        keyword_utils.sort_keyword_properties_by_canonical_order(self._fields.values(),
+                                                                 json5_file_paths[3],
+                                                                 self.json5_file.parameters)
+        for property_ in self._properties.values():
+            apply_property_naming_defaults(property_)
         # Read ComputedStyleExtraFields.json5 using the parameter specification from the CSS properties file.
         extra_fields = json5_generator.Json5File.load_from_files(
             [json5_file_paths[1]],
             default_parameters=self.json5_file.parameters
         ).name_dictionaries
 
-        for property_ in extra_fields:
+        all_fields = self._fields.values() + extra_fields
+
+        for property_ in all_fields:
             if property_['mutable']:
                 assert property_['field_template'] == 'monotonic_flag', \
                     'mutable keyword only implemented for monotonic_flag'
-            make_style_builder.apply_property_naming_defaults(property_)
+            apply_field_naming_defaults(property_)
 
-        all_properties = css_properties + extra_fields
-
-        self._generated_enums = _create_enums(all_properties)
+        self._generated_enums = _create_enums(all_fields)
 
         # Organise fields into a tree structure where the root group
         # is ComputedStyleBase.
         group_parameters = dict([(conf["name"], conf["cumulative_distribution"]) for conf in
                                  json5_generator.Json5File.load_from_files([json5_file_paths[5]]).name_dictionaries])
 
-        _evaluate_rare_non_inherited_group(all_properties, json5_file_paths[4],
+        _evaluate_rare_non_inherited_group(all_fields, json5_file_paths[4],
                                            len(group_parameters["rare_non_inherited_properties_rule"]),
                                            group_parameters["rare_non_inherited_properties_rule"])
-        _evaluate_rare_inherit_group(all_properties, json5_file_paths[4],
+        _evaluate_rare_inherit_group(all_fields, json5_file_paths[4],
                                      len(group_parameters["rare_inherited_properties_rule"]),
                                      group_parameters["rare_inherited_properties_rule"])
         alias_dictionary = dict([(alias["name"], alias) for alias in
                                  json5_generator.Json5File.load_from_files([json5_file_paths[6]]).name_dictionaries])
-        self._root_group = _create_groups(all_properties, alias_dictionary)
+        self._root_group = _create_groups(all_fields, alias_dictionary)
         self._diff_functions_map = _create_diff_groups_map(json5_generator.Json5File.load_from_files(
             [json5_file_paths[2]]
         ).name_dictionaries, self._root_group)
 
-        self._include_paths = _get_include_paths(all_properties)
+        self._include_paths = _get_include_paths(all_fields)
         self._outputs = {
             'ComputedStyleBase.h': self.generate_base_computed_style_h,
             'ComputedStyleBase.cpp': self.generate_base_computed_style_cpp,
@@ -651,7 +710,7 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
     def generate_base_computed_style_h(self):
         return {
             'input_files': self._input_files,
-            'properties': self._properties,
+            'properties': self._fields,
             'enums': self._generated_enums,
             'include_paths': self._include_paths,
             'computed_style': self._root_group,
@@ -662,7 +721,7 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
     def generate_base_computed_style_cpp(self):
         return {
             'input_files': self._input_files,
-            'properties': self._properties,
+            'properties': self._fields,
             'enums': self._generated_enums,
             'include_paths': self._include_paths,
             'computed_style': self._root_group,
@@ -673,7 +732,7 @@ class ComputedStyleBaseWriter(make_style_builder.StyleBuilderWriter):
     def generate_base_computed_style_constants(self):
         return {
             'input_files': self._input_files,
-            'properties': self._properties,
+            'properties': self._fields,
             'enums': self._generated_enums,
         }
 
