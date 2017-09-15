@@ -324,9 +324,11 @@ void ComponentLoader::AddZipArchiverExtension() {
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           chromeos::switches::kEnableZipArchiverOnFileManager) &&
       PathService::Get(chrome::DIR_RESOURCES, &resources_path)) {
-    AddComponentFromDir(
+    AddWithNameAndDescription(
+        IDR_ZIP_ARCHIVER_MANIFEST,
         resources_path.Append(extension_misc::kZipArchiverExtensionPath),
-        extension_misc::kZipArchiverExtensionId, base::Closure());
+        l10n_util::GetStringUTF8(IDS_ZIP_ARCHIVER_NAME),
+        l10n_util::GetStringUTF8(IDS_ZIP_ARCHIVER_DESCRIPTION));
   }
 #endif  // defined(OS_CHROMEOS)
 }
