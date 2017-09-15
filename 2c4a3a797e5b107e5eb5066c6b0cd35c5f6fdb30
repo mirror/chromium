@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ac845fb0_d70cf85d",
+        "filename": "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-09-15T15:24:08Z",
+      "side": 0,
+      "message": "A unique_ptr\u003cT\u003e needs to be able to find T\u0027s destructor. So users of a class with a unique_ptr\u003cT\u003e that do not include T\u0027s header file will get a compile error. I ran into this and decided to fix the issues I saw.",
+      "parentUuid": "50ff8c48_f582ba9b",
+      "range": {
+        "startLine": 16,
+        "startChar": 32,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "2c4a3a797e5b107e5eb5066c6b0cd35c5f6fdb30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1251e9f1_a1d11ba6",
         "filename": "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_model.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "2c4a3a797e5b107e5eb5066c6b0cd35c5f6fdb30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b9ba3e_8760e3e1",
+        "filename": "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-09-15T15:24:08Z",
+      "side": 0,
+      "message": "Ditto.",
+      "parentUuid": "1251e9f1_a1d11ba6",
+      "range": {
+        "startLine": 26,
+        "startChar": 22,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "2c4a3a797e5b107e5eb5066c6b0cd35c5f6fdb30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
