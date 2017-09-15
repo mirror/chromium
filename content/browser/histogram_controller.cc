@@ -8,17 +8,21 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/process/process_handle.h"
 #include "content/browser/histogram_subscriber.h"
+#include "content/common/child_histogram.mojom.h"
 #include "content/common/child_process_messages.h"
 #include "content/public/browser/browser_child_process_host_iterator.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/child_process_data.h"
 #include "content/public/browser/render_process_host.h"
+#include "content/public/common/bind_interface_helpers.h"
+#include "content/public/common/child_process_host.h"
 #include "content/public/common/process_type.h"
 
 namespace content {
 
 HistogramController* HistogramController::GetInstance() {
-  return base::Singleton<HistogramController>::get();
+  return base::Singleton<HistogramController, base::LeakySingletonTraits<
+                                                  HistogramController>>::get();
 }
 
 HistogramController::HistogramController() : subscriber_(NULL) {
@@ -46,7 +50,6 @@ void HistogramController::OnHistogramDataCollected(
                        pickled_histograms));
     return;
   }
-
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (subscriber_) {
     subscriber_->OnHistogramDataCollected(sequence_number,
@@ -66,11 +69,40 @@ void HistogramController::Unregister(
   subscriber_ = NULL;
 }
 
+// static
+template <class T>
+content::mojom::ChildHistogram& HistogramController::GetChildHistogramInterface(
+    ChildHistogramMap<T>* child_histogram_map,
+    T* host) {
+  // First check the map.
+  auto it = child_histogram_map->find(host);
+  if (it != child_histogram_map->end()) {
+    return *it->second;
+  }
+  // Not found, so bind a new interface.
+  content::mojom::ChildHistogramPtr child_histogram;
+  content::BindInterface(host, &child_histogram);
+  // Broken pipe means remove this from the map. The map size is a proxy for
+  // the number of known processes
+  child_histogram.set_connection_error_handler(
+      base::Bind(&HistogramController::RemoveChildHistogramInterface<T>,
+                 base::Unretained(child_histogram_map), host));
+  auto result = child_histogram_map->emplace(host, std::move(child_histogram));
+  return *(result.first->second);
+}
+
+// static
+template <class T>
+void HistogramController::RemoveChildHistogramInterface(
+    ChildHistogramMap<T>* child_histogram_map,
+    T* host) {
+  child_histogram_map->erase(host);
+}
+
 void HistogramController::GetHistogramDataFromChildProcesses(
     int sequence_number) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
-  int pending_processes = 0;
   for (BrowserChildProcessHostIterator iter; !iter.Done(); ++iter) {
     const ChildProcessData& data = iter.GetData();
 
@@ -86,34 +118,32 @@ void HistogramController::GetHistogramDataFromChildProcesses(
     if (data.handle == base::kNullProcessHandle)
       continue;
 
-    ++pending_processes;
-    if (!iter.Send(new ChildProcessMsg_GetChildNonPersistentHistogramData(
-            sequence_number))) {
-      --pending_processes;
-    }
+    GetChildHistogramInterface(&child_histogram_interfaces_, iter.GetHost())
+        .GetChildNonPersistentHistogramData(
+            base::Bind(&HistogramController::OnHistogramDataCollected,
+                       base::Unretained(this), sequence_number));
   }
 
   BrowserThread::PostTask(
       BrowserThread::UI, FROM_HERE,
       base::BindOnce(&HistogramController::OnPendingProcesses,
-                     base::Unretained(this), sequence_number, pending_processes,
-                     true));
+                     base::Unretained(this), sequence_number,
+                     child_histogram_interfaces_.size(), true));
 }
 
 void HistogramController::GetHistogramData(int sequence_number) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  int pending_processes = 0;
   for (RenderProcessHost::iterator it(RenderProcessHost::AllHostsIterator());
        !it.IsAtEnd(); it.Advance()) {
-    ++pending_processes;
-    if (!it.GetCurrentValue()->Send(
-            new ChildProcessMsg_GetChildNonPersistentHistogramData(
-                sequence_number))) {
-      --pending_processes;
-    }
+    GetChildHistogramInterface(&renderer_histogram_interfaces_,
+                               it.GetCurrentValue())
+        .GetChildNonPersistentHistogramData(
+            base::Bind(&HistogramController::OnHistogramDataCollected,
+                       base::Unretained(this), sequence_number));
   }
-  OnPendingProcesses(sequence_number, pending_processes, false);
+  OnPendingProcesses(sequence_number, renderer_histogram_interfaces_.size(),
+                     false);
 
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
