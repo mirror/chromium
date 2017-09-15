@@ -52,6 +52,24 @@
       "revId": "c2f852ed8fba6f992661b51d5638172a682c32a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60c036d_aa8b30fd",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/Toolbar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-09-15T01:20:32Z",
+      "side": 1,
+      "message": "After checking all TextPrompts and ToolbarInputs, none of them need multiline editing.  All current TextPrompts consume/preventDefault on Enter or rely on a parent element to do so.\n\nI can remove the other consume/preventDefault\u0027s in a separate CL, and prefer to keep this one\u0027s specific scope.",
+      "parentUuid": "6ac8a1a4_cf108728",
+      "revId": "c2f852ed8fba6f992661b51d5638172a682c32a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
