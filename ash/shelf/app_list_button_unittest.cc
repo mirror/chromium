@@ -11,6 +11,7 @@
 #include "ash/shelf/shelf_view_test_api.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/wm/overview/window_selector_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
 #include "base/i18n/rtl.h"
@@ -226,6 +227,12 @@ class BackButtonAppListButtonTest : public AppListButtonTest,
     }
     AppListButtonTest::SetUp();
     ASSERT_EQ(is_rtl_, base::i18n::IsRTL());
+
+    // Finish all setup tasks. In particular we want to finish the
+    // GetSwitchStates post task in (Fake)PowerManagerClient which is triggered
+    // by TabletModeController otherwise this will cause tablet mode to exit
+    // while we wait for animations in the test.
+    RunAllPendingInMessageLoop();
   }
 
   void TearDown() override {
@@ -248,15 +255,47 @@ INSTANTIATE_TEST_CASE_P(
 
 }  // namespace
 
+TEST_P(BackButtonAppListButtonTest, BackButtonExitsOverviewMode) {
+  ShelfViewTestAPI test_api(GetPrimaryShelf()->GetShelfViewForTesting());
+
+  // Overivew mode needs at least one window to enter.
+  std::unique_ptr<aura::Window> window(
+      CreateTestWindowInShellWithBounds(gfx::Rect(0, 0, 100, 100)));
+  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
+  test_api.RunMessageLoopUntilAnimationsDone();
+  Shell::Get()->window_selector_controller()->ToggleOverview();
+  ASSERT_TRUE(Shell::Get()->window_selector_controller()->IsSelecting());
+
+  // Tap the app list launcher button portion of the app list button. Verify
+  // that we remain in overview mode.
+  const gfx::Point app_list_button_center =
+      app_list_button()->GetAppListButtonCenterPoint();
+  ui::GestureEvent tap_down(
+      app_list_button_center.x(), app_list_button_center.y(), ui::EF_NONE,
+      base::TimeTicks(), ui::GestureEventDetails(ui::ET_GESTURE_TAP_DOWN));
+  ui::GestureEvent tap(app_list_button_center.x(), app_list_button_center.y(),
+                       ui::EF_NONE, base::TimeTicks(),
+                       ui::GestureEventDetails(ui::ET_GESTURE_TAP));
+  SendGestureEvent(&tap_down);
+  SendGestureEvent(&tap);
+  ASSERT_TRUE(Shell::Get()->window_selector_controller()->IsSelecting());
+
+  // Tap down on the back button portion of the app list button. Verify that we
+  // remain in overview mode.
+  tap_down.set_location(app_list_button()->GetBackButtonCenterPoint());
+  tap.set_location(app_list_button()->GetBackButtonCenterPoint());
+  SendGestureEvent(&tap_down);
+  EXPECT_TRUE(Shell::Get()->window_selector_controller()->IsSelecting());
+
+  // Tap release on the back button portion of the app list button. Verify that
+  // we have exited overview mode.
+  SendGestureEvent(&tap);
+  EXPECT_FALSE(Shell::Get()->window_selector_controller()->IsSelecting());
+}
+
 // Verify the locations of the back button and app list button.
 TEST_P(BackButtonAppListButtonTest, BackButtonAppListButtonLocation) {
   ShelfViewTestAPI test_api(GetPrimaryShelf()->GetShelfViewForTesting());
-
-  // Finish all setup tasks. In particular we want to finish the GetSwitchStates
-  // post task in (Fake)PowerManagerClient which is triggered by
-  // TabletModeController otherwise this will cause tablet mode to exit while we
-  // wait for animations in the test.
-  RunAllPendingInMessageLoop();
 
   Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
   test_api.RunMessageLoopUntilAnimationsDone();

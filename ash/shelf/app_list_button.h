@@ -92,8 +92,11 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
   // not in tablet mode (there is no back button).
   bool IsBackEvent(const gfx::Point& location);
 
-  // Generate and send a VKEY_BROWSER_BACK key event when the back button
-  // portion is clicked or tapped.
+  // Called when a back button portion of this element is clicked or tapped.
+  void OnBackButtonEventReceived(const ui::LocatedEvent& original_event);
+
+  // Generate and send a VKEY_BROWSER_BACK key event to the root window of this
+  // element.
   void GenerateAndSendBackEvent(const ui::LocatedEvent& original_event);
 
   // Whether the voice interaction style should be used.

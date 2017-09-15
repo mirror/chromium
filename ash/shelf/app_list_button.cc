@@ -18,6 +18,7 @@
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/tray/tray_popup_utils.h"
+#include "ash/wm/overview/window_selector_controller.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
@@ -54,6 +55,22 @@ namespace {
 
 constexpr int kVoiceInteractionAnimationDelayMs = 200;
 constexpr int kVoiceInteractionAnimationHideDelayMs = 500;
+
+// Returns true if in overview mode, so that an additional back event is not
+// injected. Exits overview mode the event is a release event.
+bool InOverviewMode(bool is_release_event) {
+  DCHECK(Shell::Get()
+             ->tablet_mode_controller()
+             ->IsTabletModeWindowManagerEnabled());
+
+  if (Shell::Get()->window_selector_controller()->IsSelecting()) {
+    if (is_release_event)
+      Shell::Get()->window_selector_controller()->ToggleOverview();
+    return true;
+  }
+
+  return false;
+}
 
 }  // namespace
 
@@ -130,14 +147,14 @@ void AppListButton::OnGestureEvent(ui::GestureEvent* event) {
     switch (event->type()) {
       case ui::ET_GESTURE_TAP:
         AnimateInkDrop(views::InkDropState::ACTION_TRIGGERED, event);
-        GenerateAndSendBackEvent(*event);
+        OnBackButtonEventReceived(*event);
         return;
       case ui::ET_GESTURE_TAP_CANCEL:
         AnimateInkDrop(views::InkDropState::HIDDEN, event);
         return;
       case ui::ET_GESTURE_TAP_DOWN:
         AnimateInkDrop(views::InkDropState::ACTION_PENDING, event);
-        GenerateAndSendBackEvent(*event);
+        OnBackButtonEventReceived(*event);
         return;
       default:
         return;
@@ -213,7 +230,7 @@ bool AppListButton::OnMousePressed(const ui::MouseEvent& event) {
   last_event_is_back_event_ = IsBackEvent(event.location());
   if (last_event_is_back_event_) {
     AnimateInkDrop(views::InkDropState::ACTION_PENDING, &event);
-    GenerateAndSendBackEvent(*event.AsLocatedEvent());
+    OnBackButtonEventReceived(*event.AsLocatedEvent());
   } else {
     ImageButton::OnMousePressed(event);
     shelf_view_->PointerPressedOnButton(this, ShelfView::MOUSE, event);
@@ -225,7 +242,7 @@ void AppListButton::OnMouseReleased(const ui::MouseEvent& event) {
   last_event_is_back_event_ = IsBackEvent(event.location());
   if (last_event_is_back_event_) {
     AnimateInkDrop(views::InkDropState::ACTION_TRIGGERED, &event);
-    GenerateAndSendBackEvent(*event.AsLocatedEvent());
+    OnBackButtonEventReceived(*event.AsLocatedEvent());
   } else {
     ImageButton::OnMouseReleased(event);
     shelf_view_->PointerReleasedOnButton(this, ShelfView::MOUSE, false);
@@ -572,19 +589,29 @@ bool AppListButton::IsBackEvent(const gfx::Point& location) {
          (location - GetAppListButtonCenterPoint()).LengthSquared();
 }
 
+void AppListButton::OnBackButtonEventReceived(
+    const ui::LocatedEvent& original_event) {
+  // Generate and send a back event only if not in overview mode.
+  if (!InOverviewMode(original_event.type() == ui::ET_GESTURE_TAP ||
+                      original_event.type() == ui::ET_MOUSE_RELEASED)) {
+    GenerateAndSendBackEvent(original_event);
+  }
+}
+
 void AppListButton::GenerateAndSendBackEvent(
     const ui::LocatedEvent& original_event) {
   ui::EventType event_type;
   switch (original_event.type()) {
-    case ui::ET_MOUSE_PRESSED:
     case ui::ET_GESTURE_TAP_DOWN:
+    case ui::ET_MOUSE_PRESSED:
       event_type = ui::ET_KEY_PRESSED;
       break;
-    case ui::ET_MOUSE_RELEASED:
     case ui::ET_GESTURE_TAP:
+    case ui::ET_MOUSE_RELEASED:
       event_type = ui::ET_KEY_RELEASED;
       break;
     default:
+      NOTREACHED();
       return;
   }
 
