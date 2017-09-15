@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shell.h"
@@ -72,7 +73,7 @@ void ScreenShareTrayItem::CreateOrUpdateNotification() {
           base::string16() /* display_source */, GURL(),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierScreenShare),
+              mojom::kNotifierScreenShare),
           data, new tray::ScreenNotificationDelegate(this),
           kNotificationScreenshareIcon,
           message_center::SystemNotificationWarningLevel::NORMAL);

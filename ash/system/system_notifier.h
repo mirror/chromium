@@ -15,36 +15,6 @@
 namespace ash {
 namespace system_notifier {
 
-// The list of ash system notifier IDs. Alphabetical order.
-ASH_EXPORT extern const char kNotifierAccessibility[];
-ASH_EXPORT extern const char kNotifierBattery[];
-ASH_EXPORT extern const char kNotifierBluetooth[];
-ASH_EXPORT extern const char kNotifierCapsLock[];
-ASH_EXPORT extern const char kNotifierDeprecatedAccelerator[];
-ASH_EXPORT extern const char kNotifierDisk[];
-ASH_EXPORT extern const char kNotifierDisplay[];
-ASH_EXPORT extern const char kNotifierDisplayResolutionChange[];
-ASH_EXPORT extern const char kNotifierDisplayError[];
-ASH_EXPORT extern const char kNotifierDualRole[];
-ASH_EXPORT extern const char kNotifierFingerprintUnlock[];
-ASH_EXPORT extern const char kNotifierLocale[];
-ASH_EXPORT extern const char kNotifierMultiProfileFirstRun[];
-ASH_EXPORT extern const char kNotifierNetwork[];
-ASH_EXPORT extern const char kNotifierNetworkError[];
-ASH_EXPORT extern const char kNotifierNetworkPortalDetector[];
-ASH_EXPORT extern const char kNotifierPinUnlock[];
-ASH_EXPORT extern const char kNotifierPower[];
-ASH_EXPORT extern const char kNotifierScreenshot[];
-ASH_EXPORT extern const char kNotifierScreenCapture[];
-ASH_EXPORT extern const char kNotifierScreenShare[];
-ASH_EXPORT extern const char kNotifierSessionLengthTimeout[];
-ASH_EXPORT extern const char kNotifierSms[];
-ASH_EXPORT extern const char kNotifierStylusBattery[];
-ASH_EXPORT extern const char kNotifierSupervisedUser[];
-ASH_EXPORT extern const char kNotifierTether[];
-ASH_EXPORT extern const char kNotifierWebUsb[];
-ASH_EXPORT extern const char kNotifierWifiToggle[];
-
 // Returns true if notifications from |notifier_id| should always appear as
 // popups. "Always appear" means the popups should appear even in login screen,
 // lock screen, or fullscreen state.

@@ -8,6 +8,7 @@
 #include "ash/ime/ime_controller.h"
 #include "ash/metrics/user_metrics_recorder.h"
 #include "ash/public/cpp/config.h"
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
@@ -81,7 +82,7 @@ std::unique_ptr<Notification> CreateNotification() {
         l10n_util::GetStringUTF16(string_id), gfx::Image(),
         base::string16() /* display_source */, GURL(),
         message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
-                                   system_notifier::kNotifierCapsLock),
+                                   mojom::kNotifierCapsLock),
         message_center::RichNotificationData(), nullptr,
         kNotificationCapslockIcon,
         message_center::SystemNotificationWarningLevel::NORMAL);
@@ -96,7 +97,7 @@ std::unique_ptr<Notification> CreateNotification() {
                                       TrayPopupItemStyle::ColorStyle::ACTIVE))),
         base::string16() /* display_source */, GURL(),
         message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
-                                   system_notifier::kNotifierCapsLock),
+                                   mojom::kNotifierCapsLock),
         message_center::RichNotificationData(), nullptr);
   }
   return notification;

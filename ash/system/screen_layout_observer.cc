@@ -11,6 +11,7 @@
 #include "ash/display/screen_orientation_controller_chromeos.h"
 #include "ash/metrics/user_metrics_action.h"
 #include "ash/metrics/user_metrics_recorder.h"
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/session/session_controller.h"
@@ -346,7 +347,7 @@ void ScreenLayoutObserver::CreateOrUpdateNotification(
           GURL(),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierDisplay),
+              mojom::kNotifierDisplay),
           message_center::RichNotificationData(),
           new message_center::HandleNotificationClickedDelegate(
               base::Bind(&OpenSettingsFromNotification)),

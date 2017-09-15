@@ -6,6 +6,7 @@
 
 #include <vector>
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shell.h"
@@ -153,7 +154,7 @@ NotificationParams GetStylusNotificationParams() {
       l10n_util::GetStringUTF16(IDS_ASH_LOW_STYLUS_BATTERY_NOTIFICATION_TITLE),
       l10n_util::GetStringUTF16(IDS_ASH_LOW_STYLUS_BATTERY_NOTIFICATION_BODY),
       IDR_AURA_NOTIFICATION_STYLUS_BATTERY_LOW,
-      system_notifier::kNotifierStylusBattery,
+      mojom::kNotifierStylusBattery,
       GURL(),
       &kNotificationBatteryCriticalIcon};
 }

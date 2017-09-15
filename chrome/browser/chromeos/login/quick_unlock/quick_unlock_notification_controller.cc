@@ -4,7 +4,7 @@
 
 #include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_notification_controller.h"
 
-#include "ash/system/system_notifier.h"
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/login/quick_unlock/quick_unlock_factory.h"
@@ -60,7 +60,7 @@ QuickUnlockNotificationController::CreateForPin(Profile* profile) {
   controller->params_.title_message_id = IDS_QUICK_UNLOCK_NOTIFICATION_TITLE;
   controller->params_.body_message_id = IDS_QUICK_UNLOCK_NOTIFICATION_BODY;
   controller->params_.icon_id = IDR_SCREENSHOT_NOTIFICATION_ICON;
-  controller->params_.notifier = ash::system_notifier::kNotifierPinUnlock;
+  controller->params_.notifier = ash::mojom::kNotifierPinUnlock;
   controller->params_.feature_name_id = IDS_PIN_UNLOCK_FEATURE_NOTIFIER_NAME;
   controller->params_.notification_id = kPinNotificationId;
   controller->params_.url = GURL(kPinSetupUrl);
@@ -114,8 +114,7 @@ QuickUnlockNotificationController::CreateForFingerprint(Profile* profile) {
   controller->params_.title_message_id = IDS_FINGERPRINT_NOTIFICATION_TITLE;
   controller->params_.body_message_id = IDS_FINGERPRINT_NOTIFICATION_BODY;
   controller->params_.icon_id = IDR_NOTIFICATION_FINGERPRINT;
-  controller->params_.notifier =
-      ash::system_notifier::kNotifierFingerprintUnlock;
+  controller->params_.notifier = ash::mojom::kNotifierFingerprintUnlock;
   controller->params_.feature_name_id =
       IDS_FINGERPRINT_UNLOCK_FEATURE_NOTIFIER_NAME;
   controller->params_.notification_id = kFingerprintNotificationId;

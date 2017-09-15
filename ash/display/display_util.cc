@@ -12,6 +12,7 @@
 #include "ash/display/unified_mouse_warp_controller.h"
 #include "ash/host/ash_window_tree_host.h"
 #include "ash/new_window_controller.h"
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -186,12 +187,14 @@ void ShowDisplayErrorNotification(const base::string16& message,
       new message_center::Notification(
           message_center::NOTIFICATION_TYPE_SIMPLE, kDisplayErrorNotificationId,
           base::string16(),  // title
-          message, gfx::Image(CreateVectorIcon(kNotificationDisplayErrorIcon,
-                                               kDisplayIconColor)),
+          message,
+          gfx::Image(CreateVectorIcon(kNotificationDisplayErrorIcon,
+                                      kDisplayIconColor)),
           base::string16(),  // display_source
-          GURL(), message_center::NotifierId(
-                      message_center::NotifierId::SYSTEM_COMPONENT,
-                      system_notifier::kNotifierDisplayError),
+          GURL(),
+          message_center::NotifierId(
+              message_center::NotifierId::SYSTEM_COMPONENT,
+              mojom::kNotifierDisplayError),
           data, new DisplayErrorNotificationDelegate));
   message_center::MessageCenter::Get()->AddNotification(
       std::move(notification));

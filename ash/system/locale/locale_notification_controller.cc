@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -121,7 +122,7 @@ void LocaleNotificationController::OnLocaleChanged(
           base::string16() /* display_source */, GURL(),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierLocale),
+              mojom::kNotifierLocale),
           optional, new LocaleNotificationDelegate(std::move(callback)),
           kNotificationSettingsIcon,
           message_center::SystemNotificationWarningLevel::NORMAL);

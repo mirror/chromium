@@ -4,7 +4,7 @@
 
 #include "chrome/browser/chromeos/net/tether_notification_presenter.h"
 
-#include "ash/system/system_notifier.h"
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
@@ -83,7 +83,7 @@ std::unique_ptr<message_center::Notification> CreateNotificationWithBadge(
       GURL() /* origin_url */,
       message_center::NotifierId(
           message_center::NotifierId::NotifierType::SYSTEM_COMPONENT,
-          ash::system_notifier::kNotifierTether),
+          ash::mojom::kNotifierTether),
       rich_notification_data, nullptr);
   notification->SetSystemPriority();
   return notification;

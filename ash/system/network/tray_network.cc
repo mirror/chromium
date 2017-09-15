@@ -5,6 +5,7 @@
 #include "ash/system/network/tray_network.h"
 
 #include "ash/metrics/user_metrics_recorder.h"
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/network/network_icon.h"
@@ -12,7 +13,6 @@
 #include "ash/system/network/network_icon_animation_observer.h"
 #include "ash/system/network/network_list.h"
 #include "ash/system/network/tray_network_state_observer.h"
-#include "ash/system/system_notifier.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/system/tray/system_tray_notifier.h"
 #include "ash/system/tray/tray_constants.h"
@@ -64,7 +64,7 @@ std::unique_ptr<Notification> CreateNotification(bool wifi_enabled) {
       gfx::Image(network_icon::GetImageForWiFiEnabledState(wifi_enabled)),
       base::string16() /* display_source */, GURL(),
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
-                                 system_notifier::kNotifierWifiToggle),
+                                 mojom::kNotifierWifiToggle),
       message_center::RichNotificationData(), nullptr));
   return notification;
 }
