@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "fb92c4e6_4095c611",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-15T02:48:47Z",
+      "side": 1,
+      "message": "nit: DCHECK_EQ",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f10e2c99_e720a7af",
         "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
         "patchSetId": 35
@@ -47,6 +64,24 @@
       "writtenOn": "2017-09-15T01:34:31Z",
       "side": 1,
       "message": "is this TODO actionable? Why would we tweak it, when would we know the TODO can be fixed?",
+      "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "487bbae7_3990df8b",
+        "filename": "content/browser/service_worker/service_worker_script_url_loader.cc",
+        "patchSetId": 35
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-15T02:48:47Z",
+      "side": 1,
+      "message": "Yep, +1 to just remove TODO, but leave the comment why the value is chosen, and move this const definition to the top of this file where we can find it more easily.  The variable name could be renamed to a bit more descriptive onw too.",
+      "parentUuid": "d6422649_fd622657",
       "revId": "e934ec1f6128cbc9ab7de8030def014dd02694bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
