@@ -234,6 +234,7 @@ template("create_signed_bundle") {
                              "bundle_deps_filter",
                              "data_deps",
                              "deps",
+                             "partial_info_plist",
                              "product_type",
                              "public_configs",
                              "public_deps",
@@ -727,6 +728,8 @@ template("ios_app_bundle") {
       bundle_binary_output = _output_name
       bundle_extension = _bundle_extension
       product_type = _product_type
+
+      partial_info_plist = "$target_gen_dir/${_target_name}_partial_info.plist"
 
       if (!defined(bundle_deps)) {
         bundle_deps = []
