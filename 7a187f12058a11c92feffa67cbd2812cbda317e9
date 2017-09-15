@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d4a22f6_2eca2845",
+        "filename": "ios/chrome/browser/ntp_tiles/most_visited_sites_observer_bridge.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T12:55:10Z",
+      "side": 1,
+      "message": "Yes, this is \"non-static data member with initializer (C++11)\". This was introduced in C++11, and allow to give an initialiser when declaring a non-static data member (previously this was limited to const static data member).\n\nThe initialiser is inlined in the constructor if no initialiser is present in the constructor initialiser list (i.e. the part between the \":\" and the \"{\").\n\nTL;DR: yes, this gives a default value (since in C++ data member are by default in uninitialised state) and it is much safer IMO to put in the class declaration (no risk of forgetting to put it in the class constructor definition).\n\nhttp://en.cppreference.com/w/cpp/language/class",
+      "parentUuid": "ab55ae1c_0d2087e0",
+      "range": {
+        "startLine": 42,
+        "startChar": 51,
+        "endLine": 42,
+        "endChar": 54
+      },
+      "revId": "7a187f12058a11c92feffa67cbd2812cbda317e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e30149e_13a6a1d7",
         "filename": "ios/chrome/browser/ui/tab_switcher/tab_model_snapshot.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "eb0abead_21e190d2",
+        "filename": "ios/chrome/browser/ui/tab_switcher/tab_model_snapshot.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T12:55:10Z",
+      "side": 1,
+      "message": "Yes as I mentioned in the CL description, this __weak is part of the type here.",
+      "parentUuid": "6e30149e_13a6a1d7",
+      "range": {
+        "startLine": 32,
+        "startChar": 20,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "7a187f12058a11c92feffa67cbd2812cbda317e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0e086e1_2bd55c1f",
         "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.mm",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "7a187f12058a11c92feffa67cbd2812cbda317e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88cda8b8_acac5f52",
+        "filename": "ios/chrome/browser/ui/tools_menu/tools_menu_configuration.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T12:55:10Z",
+      "side": 1,
+      "message": "Ack.\n\nHowever, base::WeakNSObject\u003c\u003e was also constructed with nil, and _engagementTracker assignment is also unnecessary. Will not fix the CL to reduce the amount of manual change introduced in this CL.",
+      "parentUuid": "e0e086e1_2bd55c1f",
+      "range": {
+        "startLine": 29,
+        "startChar": 31,
+        "endLine": 29,
+        "endChar": 34
+      },
+      "revId": "7a187f12058a11c92feffa67cbd2812cbda317e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
