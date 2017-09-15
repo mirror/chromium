@@ -93,9 +93,9 @@ public class UiUtils {
                 List<String> mimeTypes);
 
         /**
-         * Called when the photo picker dialog should be dismissed.
+         * Called when the photo picker dialog has been dismissed.
          */
-        void dismissPhotoPicker();
+        void photoPickerDismissed();
     }
 
     // PhotoPickerDelegate:
@@ -131,11 +131,11 @@ public class UiUtils {
     }
 
     /**
-     * Called when the photo picker dialog should be dismissed.
+     * Called when the photo picker dialog has been dismissed.
      */
-    public static void dismissPhotoPicker() {
+    public static void photoPickerDismissed() {
         if (sPhotoPickerDelegate == null) return;
-        sPhotoPickerDelegate.dismissPhotoPicker();
+        sPhotoPickerDelegate.photoPickerDismissed();
     }
 
     // KeyboardShowingDelegate:
