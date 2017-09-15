@@ -44,6 +44,7 @@ void TreeViewExample::CreateExampleView(View* container) {
   tree_view_->SetRootShown(false);
   tree_view_->SetModel(&model_);
   tree_view_->SetController(this);
+  tree_view_->set_drawing_provider(this);
   add_ = new LabelButton(this, ASCIIToUTF16("Add"));
   add_->SetFocusForPlatform();
   add_->set_request_focus_on_press(true);
@@ -107,6 +108,28 @@ void TreeViewExample::ButtonPressed(Button* sender, const ui::Event& event) {
     model_.SetTitle(selected_node,
                     selected_node->GetTitle() + ASCIIToUTF16("new"));
   }
+}
+
+SkColor TreeViewExample::GetBackgroundColorForNode(TreeView* tree_view,
+                                                   ui::TreeModelNode* node) {
+  if (tree_view->GetSelectedNode() == node)
+    return SK_ColorBLACK;
+  return DrawingProvider::GetBackgroundColorForNode(tree_view, node);
+}
+
+SkColor TreeViewExample::GetTextColorForNode(TreeView* tree_view,
+                                             ui::TreeModelNode* node) {
+  if (tree_view->GetSelectedNode() == node)
+    return SK_ColorWHITE;
+  return DrawingProvider::GetTextColorForNode(tree_view, node);
+}
+
+base::string16 TreeViewExample::GetAuxiliaryTextForNode(
+    TreeView* tree_view,
+    ui::TreeModelNode* node) {
+  if (tree_view->GetSelectedNode() == node)
+    return base::UTF8ToUTF16("Selected");
+  return DrawingProvider::GetAuxiliaryTextForNode(tree_view, node);
 }
 
 void TreeViewExample::OnTreeViewSelectionChanged(TreeView* tree_view) {
