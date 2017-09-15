@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "914d8543_ceaefd25",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-15T21:33:04Z",
+      "side": 1,
+      "message": "Well it will start the overlay, but the UI is still set presented via |-childCoordinatorDidStart:|.  Should s/Show/Add for these APIs?  That\u0027d make it clear that the overlays are added to the scheduler, while the UI is still shown by the normal methods.",
+      "parentUuid": "905db4b6_009791f1",
+      "range": {
+        "startLine": 262,
+        "startChar": 8,
+        "endLine": 262,
+        "endChar": 29
+      },
+      "revId": "293f4556cc4ef8ad3de7cb24e89302366ad33d4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "189884bf_dbfc4c08",
         "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-08T15:32:03Z",
       "side": 1,
       "message": "Overlay coordinators remove themselves from their parent when stopped, others don\u0027t. Is there a clear reason for this difference?",
+      "range": {
+        "startLine": 268,
+        "startChar": 5,
+        "endLine": 268,
+        "endChar": 6
+      },
+      "revId": "293f4556cc4ef8ad3de7cb24e89302366ad33d4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f86dd75_e579591f",
+        "filename": "ios/clean/chrome/browser/ui/tab_grid/tab_grid_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-15T21:33:04Z",
+      "side": 1,
+      "message": "OverlayCoordinators are intended for modal transient UI; some of that behavior is built into the coordinator to discourage misuse of the service.  Additionally, after view controller presentation is moved to the BrowserCoordinator superclass, a coordinator might not even be aware that an overlay is being presented upon it.",
+      "parentUuid": "189884bf_dbfc4c08",
       "range": {
         "startLine": 268,
         "startChar": 5,
