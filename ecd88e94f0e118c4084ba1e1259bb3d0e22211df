@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "250e859a_e19127e4",
+        "filename": "base/command_line.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-09-15T03:17:46Z",
+      "side": 1,
+      "message": "Sorry, I forgot add this change back.",
+      "parentUuid": "3fe9cdc1_1f9e271a",
+      "range": {
+        "startLine": 187,
+        "startChar": 64,
+        "endLine": 187,
+        "endChar": 0
+      },
+      "revId": "ecd88e94f0e118c4084ba1e1259bb3d0e22211df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf1fdedd_5ae0a724",
         "filename": "base/test/test_suite.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "ecd88e94f0e118c4084ba1e1259bb3d0e22211df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94071e42_5d373e60",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-09-15T03:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf1fdedd_5ae0a724",
+      "revId": "ecd88e94f0e118c4084ba1e1259bb3d0e22211df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "ecd88e94f0e118c4084ba1e1259bb3d0e22211df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c19b5bcf_1f5285aa",
+        "filename": "base/test/test_suite.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-09-15T03:17:46Z",
+      "side": 1,
+      "message": "Yes, we can handle this comma correctly.",
+      "parentUuid": "65aa8d1c_e0befc8e",
+      "range": {
+        "startLine": 353,
+        "startChar": 14,
+        "endLine": 353,
+        "endChar": 15
+      },
+      "revId": "ecd88e94f0e118c4084ba1e1259bb3d0e22211df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
