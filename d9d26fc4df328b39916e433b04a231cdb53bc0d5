@@ -94,6 +94,30 @@
       "revId": "d9d26fc4df328b39916e433b04a231cdb53bc0d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81d74d31_b3f21855",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 29522,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-09-15T09:20:21Z",
+      "side": 1,
+      "message": "Thanks for the clarification.\n\nI still don\u0027t think another histogram is necessary, unless you think it could show correctness problems or otherwise lead to a launch/no-launch decision.",
+      "parentUuid": "b2eee9ef_974a178e",
+      "range": {
+        "startLine": 29522,
+        "startChar": 27,
+        "endLine": 29522,
+        "endChar": 36
+      },
+      "revId": "d9d26fc4df328b39916e433b04a231cdb53bc0d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
