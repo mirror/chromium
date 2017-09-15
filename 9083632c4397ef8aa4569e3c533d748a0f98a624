@@ -292,6 +292,24 @@
     },
     {
       "key": {
+        "uuid": "5ebfc25d_cf8ef080",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-15T20:48:31Z",
+      "side": 1,
+      "message": "Yep, cool.  I hadn\u0027t seen Ian\u0027s solution until now, and Ian explained off-line.  Sounds good.",
+      "parentUuid": "5b121eb5_3b11843c",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71fa092e_2f0c088f",
         "filename": "chrome/browser/vr/ui_scene.cc",
         "patchSetId": 2
