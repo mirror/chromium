@@ -138,6 +138,10 @@ void ShadowRoot::setInnerHTML(const String& markup,
     ReplaceChildrenWithFragment(this, fragment, exception_state);
 }
 
+void ShadowRoot::setInnerHTML(const String& markup) {
+  setInnerHTML(markup, ASSERT_NO_EXCEPTION);
+}
+
 void ShadowRoot::RecalcStyle(StyleRecalcChange change) {
   // ShadowRoot doesn't support custom callbacks.
   DCHECK(!HasCustomStyleCallbacks());

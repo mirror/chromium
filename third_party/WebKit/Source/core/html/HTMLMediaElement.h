@@ -63,6 +63,7 @@ class KURL;
 class MediaError;
 class MediaStreamDescriptor;
 class HTMLMediaSource;
+class ScriptPromiseResolver;
 class ScriptState;
 class TextTrack;
 class TextTrackContainer;
@@ -206,7 +207,8 @@ class CORE_EXPORT HTMLMediaElement
   DOMTokenList* controlsList() const;
   HTMLMediaElementControlsList* ControlsListInternal() const;
   double volume() const;
-  void setVolume(double, ExceptionState& = ASSERT_NO_EXCEPTION);
+  void setVolume(double, ExceptionState&);
+  void setVolume(double);
   bool muted() const;
   void setMuted(bool);
 

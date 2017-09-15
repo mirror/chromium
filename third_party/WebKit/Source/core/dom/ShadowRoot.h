@@ -144,7 +144,8 @@ class CORE_EXPORT ShadowRoot final : public DocumentFragment, public TreeScope {
   Element* ActiveElement() const;
 
   String innerHTML() const;
-  void setInnerHTML(const String&, ExceptionState& = ASSERT_NO_EXCEPTION);
+  void setInnerHTML(const String&, ExceptionState&);
+  void setInnerHTML(const String&);
 
   Node* cloneNode(bool, ExceptionState&) override;
 

@@ -2476,6 +2476,10 @@ void HTMLMediaElement::setVolume(double vol, ExceptionState& exception_state) {
   ScheduleEvent(EventTypeNames::volumechange);
 }
 
+void HTMLMediaElement::setVolume(double vol) {
+  setVolume(vol, ASSERT_NO_EXCEPTION);
+}
+
 bool HTMLMediaElement::muted() const {
   return muted_;
 }
