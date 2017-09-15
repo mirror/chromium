@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "342715b2_7a50ba51",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 26
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-15T16:32:39Z",
+      "side": 1,
+      "message": "Zlib will still build fine and work correctly using the K\u0026R C implementation.\n\nI wonder if instead of \u0027error\u0027 you should use a \u0027#pragma messsage\u0027 to let people know that they are missing an optimized implementation?\n\nPlus, the buildsystem should not include this file for the wrong build target anyway.",
+      "revId": "dd4d156d3a2dc62a0ab96691a7302b4717c4158b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56578679_2f664576",
         "filename": "third_party/zlib/inflate.c",
         "patchSetId": 26
