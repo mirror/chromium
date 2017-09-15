@@ -34,6 +34,24 @@
       "revId": "b5853ee8983407bcbfb44446f998a673f95b5432",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ff66e74_31705640",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-09-15T05:51:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b1a0989_8f698261",
+      "revId": "b5853ee8983407bcbfb44446f998a673f95b5432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
