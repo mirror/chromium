@@ -16,6 +16,24 @@
       "revId": "176dbdc599d99081ac83839626e50db7002c3e3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddd027ea_2c4cc877",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/LogcatExtractionRunnable.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-15T18:09:31Z",
+      "side": 1,
+      "message": "I prefer not to because different versions of android prepend different crud.\ntestElideUrl9 is one example but there are others.",
+      "parentUuid": "3f6f09d3_4fc6727e",
+      "revId": "176dbdc599d99081ac83839626e50db7002c3e3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
