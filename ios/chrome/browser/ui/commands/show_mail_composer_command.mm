@@ -6,7 +6,6 @@
 
 #include "base/files/file_path.h"
 #include "base/logging.h"
-#include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -23,21 +22,19 @@
 @synthesize subject = _subject;
 @synthesize body = _body;
 
-- (instancetype)initWithTag:(NSInteger)tag {
-  NOTREACHED();
-  return nil;
-}
-
-- (instancetype)initWithToRecipient:(NSString*)toRecipient
+- (instancetype)initWithToRecipients:(NSArray<NSString*>*)toRecipients
                              subject:(NSString*)subject
                                 body:(NSString*)body
       emailNotConfiguredAlertTitleId:(int)alertTitleId
     emailNotConfiguredAlertMessageId:(int)alertMessageId {
   DCHECK(alertTitleId);
   DCHECK(alertMessageId);
-  self = [super initWithTag:IDC_SHOW_MAIL_COMPOSER];
+  self = [super init];
   if (self) {
-    _toRecipients = @[ toRecipient ];
+    if ([toRecipients count]) {
+      _toRecipients =
+          [[NSArray alloc] initWithArray:toRecipients copyItems:YES];
+    }
     _subject = [subject copy];
     _body = [body copy];
     _emailNotConfiguredAlertTitleId = alertTitleId;
