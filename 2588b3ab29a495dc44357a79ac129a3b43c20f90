@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6c2b3c6_e9651760",
+        "filename": "chrome/test/data/extensions/api_test/service_worker/filtered_events/sw.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-15T16:05:27Z",
+      "side": 1,
+      "message": "nit: maybe just e.data here and don\u0027t have the data var?",
+      "revId": "2588b3ab29a495dc44357a79ac129a3b43c20f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b33094d_b408e489",
+        "filename": "chrome/test/data/extensions/api_test/service_worker/filtered_events/sw.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-15T16:05:27Z",
+      "side": 1,
+      "message": "nit: no quotes around keys in js",
+      "revId": "2588b3ab29a495dc44357a79ac129a3b43c20f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cf7fe89_1411b205",
+        "filename": "chrome/test/data/extensions/api_test/service_worker/filtered_events/sw.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-15T16:05:27Z",
+      "side": 1,
+      "message": "nit: prefer assertEq",
+      "revId": "2588b3ab29a495dc44357a79ac129a3b43c20f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8666f196_aa7425a3",
+        "filename": "chrome/test/data/extensions/api_test/service_worker/filtered_events/sw.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-15T16:05:27Z",
+      "side": 1,
+      "message": "nit: remove spaces after/before brackets",
+      "range": {
+        "startLine": 31,
+        "startChar": 31,
+        "endLine": 31,
+        "endChar": 32
+      },
+      "revId": "2588b3ab29a495dc44357a79ac129a3b43c20f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02200006_502aae53",
+        "filename": "extensions/browser/event_listener_map.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-15T16:05:27Z",
+      "side": 1,
+      "message": "I worry a bit about the complexity of events... It\u0027s a shame that we have three different axes of events (filtered or not, lazy or not, worker or not), but I wonder if there\u0027s a way we can simplify this through having different classes or something.  Not needed for this CL, but worth thinking about.",
+      "revId": "2588b3ab29a495dc44357a79ac129a3b43c20f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f72491e_fc1b35b9",
+        "filename": "extensions/browser/event_listener_map.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-15T16:05:27Z",
+      "side": 1,
+      "message": "It\u0027s worth commenting why we do this, since it\u0027s not immediately obvious to me.",
+      "revId": "2588b3ab29a495dc44357a79ac129a3b43c20f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a29b3b3_40eadfef",
+        "filename": "extensions/browser/event_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-15T16:05:27Z",
+      "side": 1,
+      "message": "nit: prefer filter.CreateDeepCopy()",
+      "revId": "2588b3ab29a495dc44357a79ac129a3b43c20f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1755ff63_04d962d2",
+        "filename": "extensions/browser/event_router_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-15T16:05:27Z",
+      "side": 1,
+      "message": "base::nullopt",
+      "revId": "2588b3ab29a495dc44357a79ac129a3b43c20f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "badc1e59_13d95ae4",
+        "filename": "extensions/common/constants.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-15T16:05:27Z",
+      "side": 1,
+      "message": "is zero not a valid routing id?  I think it\u0027d be better to use MSG_ROUTING_NONE.",
+      "revId": "2588b3ab29a495dc44357a79ac129a3b43c20f90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

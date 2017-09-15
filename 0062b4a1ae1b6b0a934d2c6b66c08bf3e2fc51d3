@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e76b3c8_0f85dda0",
+        "filename": "chrome/browser/extensions/api/mdns/mdns_api_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-15T16:05:27Z",
+      "side": 1,
+      "message": "maybe just base::nullopt?",
+      "revId": "0062b4a1ae1b6b0a934d2c6b66c08bf3e2fc51d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
