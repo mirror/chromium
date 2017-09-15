@@ -10,7 +10,10 @@
 #include <vector>
 
 #include "base/callback_forward.h"
-#include "url/origin.h"
+
+namespace content {
+class RenderFrameHost;
+}
 
 // This handles computing the Storage Id for platform verification.
 namespace cdm_storage_id {
@@ -18,12 +21,11 @@ namespace cdm_storage_id {
 using CdmStorageIdCallback =
     base::OnceCallback<void(const std::vector<uint8_t>& storage_id)>;
 
-// Compute the Storage Id based on |salt| and |origin|. This may be
+// Compute the Storage Id based on values obtained from |rfh|. This may be
 // asynchronous, so call |callback| with the result. If Storage Id is not
 // supported on the current platform, an empty string will be passed to
 // |callback|.
-void ComputeStorageId(const std::vector<uint8_t>& salt,
-                      const url::Origin& origin,
+void ComputeStorageId(content::RenderFrameHost* rfh,
                       CdmStorageIdCallback callback);
 
 }  // namespace cdm_storage_id
