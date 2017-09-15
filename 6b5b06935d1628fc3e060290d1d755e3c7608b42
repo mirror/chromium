@@ -22,6 +22,30 @@
       "revId": "6b5b06935d1628fc3e060290d1d755e3c7608b42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c546aa_4c8bf0fb",
+        "filename": "chromeos/dbus/cryptohome_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1145669
+      },
+      "writtenOn": "2017-09-15T10:34:47Z",
+      "side": 1,
+      "message": "Yes, good catch. I was planning on changing it as soon as it lands and I roll the deps. Should\u0027ve left a comment on it, sorry.",
+      "parentUuid": "8093778f_3ba0af56",
+      "range": {
+        "startLine": 763,
+        "startChar": 45,
+        "endLine": 763,
+        "endChar": 69
+      },
+      "revId": "6b5b06935d1628fc3e060290d1d755e3c7608b42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
