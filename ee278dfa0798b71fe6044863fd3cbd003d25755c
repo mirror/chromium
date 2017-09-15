@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49a8e1f5_261c2ce1",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T03:54:12Z",
+      "side": 1,
+      "message": "This null check actually isn\u0027t needed, given how things are invoked at the moment: if a Document  has a LocalFrame, it\u0027s attached, and you can assume Frame::Client(), WebLocalFrameImpl::Client(), etc are all non null. So please change to a DCHECK.",
+      "revId": "ee278dfa0798b71fe6044863fd3cbd003d25755c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd21e842_ee117a37",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T03:54:12Z",
+      "side": 1,
+      "message": "However, if there\u0027s some reason we can\u0027t get rid of the null check above, I\u0027m curious why it doesn\u0027t default to true if the frame isn\u0027t attached?",
+      "revId": "ee278dfa0798b71fe6044863fd3cbd003d25755c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f50d36b4_acb3cb9b",
+        "filename": "third_party/WebKit/Source/core/exported/LocalFrameClientImpl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T03:54:12Z",
+      "side": 1,
+      "message": "Ditto here.",
+      "revId": "ee278dfa0798b71fe6044863fd3cbd003d25755c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e028c25b_ccea2fa4",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T03:54:12Z",
+      "side": 1,
+      "message": "Nit: please call this ShouldBlockWebGL (it reads somewhat imperatively at the moment, giving the potential impression that calling it will block web gl)",
+      "revId": "ee278dfa0798b71fe6044863fd3cbd003d25755c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
