@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e5917c4f_67795d7b",
+        "filename": "third_party/WebKit/LayoutTests/editing/inserting/insert-data-disconnect-nodes-on-webkitBeforeTextInserted.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-15T17:03:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "740dbc72_c6a7a095",
+      "range": {
+        "startLine": 34,
+        "startChar": 104,
+        "endLine": 34,
+        "endChar": 108
+      },
+      "revId": "7be63c73b9bbee4bafb735dd09471fe0682c9689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cfc73f6_15cca8fc",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 1
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "c8c04e29_a8d63ae0",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-15T17:03:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4cfc73f6_15cca8fc",
+      "revId": "7be63c73b9bbee4bafb735dd09471fe0682c9689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b6e251a_447d8325",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 1
@@ -53,6 +95,24 @@
       "writtenOn": "2017-09-14T18:22:32Z",
       "side": 1,
       "message": "I think we should also check document availability since event handler can detach frame:\n\ndocument.GetFrame() \u0026\u0026 document.GetFrame()-\u003eGetDocument() \u003d\u003d document\n\nI wish we have a less hacky way doing that...\n\nHow about making CompositeEditCommand a DocumentShutdownObserver? The overhead doesn\u0027t seem to be big, since the observer is notified only once during the lifetime of a document.",
+      "revId": "7be63c73b9bbee4bafb735dd09471fe0682c9689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d41ddae3_a3aa5c5c",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1210620
+      },
+      "writtenOn": "2017-09-15T17:03:27Z",
+      "side": 1,
+      "message": "Done.\nAdded layout test for the frame detach scenario.\n\nI will try to do the experimental changes by adding DocumentShutDownObserver for CompositeEditCommand in a separate patch.",
+      "parentUuid": "4b6e251a_447d8325",
       "revId": "7be63c73b9bbee4bafb735dd09471fe0682c9689",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
