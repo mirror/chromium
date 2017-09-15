@@ -7,6 +7,7 @@
 
 #import "base/logging.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
+#import "ios/clean/chrome/browser/ui/guides/guides.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_constants.h"
 #import "ios/clean/chrome/browser/ui/transitions/animators/swap_from_above_animator.h"
 #import "ios/clean/chrome/browser/ui/transitions/containment_transition_context.h"
@@ -37,6 +38,9 @@ const CGFloat kToolbarHeight = 56.0f;
 // means that this view will not be displayed on landscape.
 @property(nonatomic, strong) UIView* statusBarBackgroundView;
 
+// Handy references
+@property(nonatomic, weak) UILayoutGuide* omniboxGuide;
+
 @end
 
 @implementation TabContainerViewController
@@ -51,11 +55,15 @@ const CGFloat kToolbarHeight = 56.0f;
 @synthesize containmentTransitioningDelegate =
     _containmentTransitioningDelegate;
 @synthesize usesBottomToolbar = _usesBottomToolbar;
+@synthesize omniboxGuide = _omniboxGuide;
 
 #pragma mark - UIViewController
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+
+  self.omniboxGuide = AddNamedGuide(kOmniboxGuide, self.view);
+
   [self configureSubviews];
 
   NSMutableArray* constraints = [NSMutableArray array];
@@ -205,6 +213,22 @@ const CGFloat kToolbarHeight = 56.0f;
                         toSubview:self.toolbarView];
   [self attachChildViewController:self.contentViewController
                         toSubview:self.contentView];
+
+  // Testing
+  UIView* popup = [[UIView alloc] initWithFrame:CGRectZero];
+  popup.translatesAutoresizingMaskIntoConstraints = NO;
+  popup.backgroundColor = UIColor.redColor;
+  popup.alpha = 0.65;
+  popup.accessibilityIdentifier = @"** popup **";
+  [self.view addSubview:popup];
+  [popup.topAnchor constraintEqualToAnchor:self.omniboxGuide.bottomAnchor]
+      .active = YES;
+  [popup.leadingAnchor constraintEqualToAnchor:self.omniboxGuide.leadingAnchor]
+      .active = YES;
+  [popup.trailingAnchor
+      constraintEqualToAnchor:self.omniboxGuide.trailingAnchor]
+      .active = YES;
+  [popup.heightAnchor constraintEqualToConstant:241.0].active = YES;
 }
 
 - (Constraints*)containerConstraints {

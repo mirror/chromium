@@ -12,6 +12,7 @@
 #import "ios/clean/chrome/browser/ui/commands/tab_grid_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/tab_strip_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h"
+#import "ios/clean/chrome/browser/ui/guides/guides.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_button+factory.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_component_options.h"
 #import "ios/clean/chrome/browser/ui/toolbar/toolbar_constants.h"
@@ -33,6 +34,7 @@
 @property(nonatomic, strong) ToolbarButton* reloadButton;
 @property(nonatomic, strong) ToolbarButton* stopButton;
 @property(nonatomic, strong) MDCProgressView* progressBar;
+@property(nonatomic, weak) UILayoutGuide* obguide;
 @end
 
 @implementation ToolbarViewController
@@ -50,6 +52,7 @@
 @synthesize stopButton = _stopButton;
 @synthesize progressBar = _progressBar;
 @synthesize usesTabStrip = _usesTabStrip;
+@synthesize obguide = _obguide;
 
 - (instancetype)init {
   self = [super init];
@@ -80,6 +83,21 @@
   [self.view addSubview:self.stackView];
   [self.view addSubview:self.progressBar];
   [self setConstraints];
+}
+
+- (void)didMoveToParentViewController:(UIViewController*)parent {
+  if (!parent)
+    return;
+
+  self.obguide = FindNamedGuide(kOmniboxGuide, self.view);
+  [NSLayoutConstraint activateConstraints:@[
+    [self.obguide.leadingAnchor
+        constraintEqualToAnchor:self.locationBarContainer.leadingAnchor],
+    [self.obguide.trailingAnchor
+        constraintEqualToAnchor:self.locationBarContainer.trailingAnchor],
+    [self.obguide.bottomAnchor
+        constraintEqualToAnchor:self.locationBarContainer.bottomAnchor],
+  ]];
 }
 
 #pragma mark - View Setup
