@@ -180,6 +180,8 @@
 #include "ios/chrome/browser/web/web_state_printer.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
 #import "ios/chrome/browser/web_state_list/web_state_opener.h"
+#import "ios/chrome/browser/webui/mail_composer_presenter.h"
+#import "ios/chrome/browser/webui/net_export_tab_helper.h"
 #include "ios/chrome/grit/ios_chromium_strings.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/net/request_tracker.h"
@@ -362,6 +364,7 @@ bool IsURLAllowedInIncognito(const GURL& url) {
                                     IncognitoViewControllerDelegate,
                                     IOSCaptivePortalBlockingPageDelegate,
                                     KeyCommandsPlumbing,
+                                    MailComposerPresenter,
                                     MFMailComposeViewControllerDelegate,
                                     NewTabPageControllerObserver,
                                     OverscrollActionsControllerDelegate,
@@ -2385,6 +2388,7 @@ bubblePresenterForFeature:(const base::Feature&)feature
     SadTabTabHelper::CreateForWebState(tab.webState, _sadTabCoordinator);
   PrintTabHelper::CreateForWebState(tab.webState, self);
   RepostFormTabHelper::CreateForWebState(tab.webState, self);
+  NetExportTabHelper::CreateForWebState(tab.webState, self);
 }
 
 - (void)uninstallDelegatesForTab:(Tab*)tab {
@@ -4391,9 +4395,12 @@ bubblePresenterForFeature:(const base::Feature&)feature
     return;
 
   switch (command) {
-    case IDC_SHOW_MAIL_COMPOSER:
-      [self showMailComposer:sender];
+    case IDC_SHOW_MAIL_COMPOSER: {
+      ShowMailComposerCommand* composerCommand =
+          base::mac::ObjCCastStrict<ShowMailComposerCommand>(sender);
+      [self showMailComposer:composerCommand];
       break;
+    }
     default:
       // Unknown commands get sent up the responder chain.
       [super chromeExecuteCommand:sender];
@@ -4937,24 +4944,23 @@ bubblePresenterForFeature:(const base::Feature&)feature
 
 #pragma mark - Show Mail Composer methods
 
-- (void)showMailComposer:(id)sender {
-  ShowMailComposerCommand* command = (ShowMailComposerCommand*)sender;
+- (void)showMailComposer:(ShowMailComposerCommand*)context {
   if (![MFMailComposeViewController canSendMail]) {
     NSString* alertTitle =
-        l10n_util::GetNSString([command emailNotConfiguredAlertTitleId]);
+        l10n_util::GetNSString([context emailNotConfiguredAlertTitleId]);
     NSString* alertMessage =
-        l10n_util::GetNSString([command emailNotConfiguredAlertMessageId]);
+        l10n_util::GetNSString([context emailNotConfiguredAlertMessageId]);
     [self showErrorAlertWithStringTitle:alertTitle message:alertMessage];
     return;
   }
   MFMailComposeViewController* mailViewController =
       [[MFMailComposeViewController alloc] init];
   [mailViewController setModalPresentationStyle:UIModalPresentationFormSheet];
-  [mailViewController setToRecipients:[command toRecipients]];
-  [mailViewController setSubject:[command subject]];
-  [mailViewController setMessageBody:[command body] isHTML:NO];
+  [mailViewController setToRecipients:[context toRecipients]];
+  [mailViewController setSubject:[context subject]];
+  [mailViewController setMessageBody:[context body] isHTML:NO];
 
-  const base::FilePath& textFile = [command textFileToAttach];
+  const base::FilePath& textFile = [context textFileToAttach];
   if (!textFile.empty()) {
     NSString* filename = base::SysUTF8ToNSString(textFile.value());
     NSData* data = [NSData dataWithContentsOfFile:filename];
