@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2573d415_50b20d64",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-15T19:58:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c8f9bb3_966e2280",
+      "range": {
+        "startLine": 91,
+        "startChar": 18,
+        "endLine": 91,
+        "endChar": 37
+      },
+      "revId": "6668a8a40229e1972ca1be7a52be78c1d072abde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7832a931_b592e1ff",
         "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
         "patchSetId": 25
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-15T14:30:32Z",
       "side": 1,
       "message": "is theming really on the roadmap? seems like you could just remove this todo",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 73
+      },
+      "revId": "6668a8a40229e1972ca1be7a52be78c1d072abde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de34aa15_b0fa5455",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-15T19:58:13Z",
+      "side": 1,
+      "message": "I don\u0027t know about original plan... robliao@ could you give us some context?",
+      "parentUuid": "7832a931_b592e1ff",
       "range": {
         "startLine": 45,
         "startChar": 4,
@@ -68,6 +116,30 @@
       "revId": "6668a8a40229e1972ca1be7a52be78c1d072abde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0f6cf5_8c627c95",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-15T19:58:13Z",
+      "side": 1,
+      "message": "I think RepeatingClosure makes more sense. Technically speaking the closure can be called every time the button is pressed, although the callback will likely remove the view from rendering hierarchy...",
+      "parentUuid": "4eb229ba_721f2a8f",
+      "range": {
+        "startLine": 27,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 52
+      },
+      "revId": "6668a8a40229e1972ca1be7a52be78c1d072abde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
