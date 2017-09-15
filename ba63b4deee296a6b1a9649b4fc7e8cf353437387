@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cbe36491_d25c5151",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-15T15:48:55Z",
+      "side": 1,
+      "message": "Good point, I just arbitrarily chose 10 min without looking at recent imports.\n\n30 minutes sounds reasonable, let\u0027s go with that :-)",
+      "parentUuid": "0f12b85e_ce8485eb",
+      "range": {
+        "startLine": 90,
+        "startChar": 60,
+        "endLine": 90,
+        "endChar": 83
+      },
+      "revId": "ba63b4deee296a6b1a9649b4fc7e8cf353437387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "48d985ee_a2dbe307",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl_unittest.py",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-14T22:29:54Z",
       "side": 1,
       "message": "Not really relevant to this CL, but could you also add some assertions for the return values of wait_for_try_jobs()? (None here and in ..._no_results_not_considered_finished, and the provided fake result in ..._done.) Thanks!",
+      "revId": "ba63b4deee296a6b1a9649b4fc7e8cf353437387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e160e554_fc27a57f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/common/net/git_cl_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-15T15:48:55Z",
+      "side": 1,
+      "message": "Definitely, that would make it more consistent.",
+      "parentUuid": "48d985ee_a2dbe307",
       "revId": "ba63b4deee296a6b1a9649b4fc7e8cf353437387",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
