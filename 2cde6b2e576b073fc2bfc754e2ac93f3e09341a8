@@ -109,6 +109,24 @@
       "revId": "2cde6b2e576b073fc2bfc754e2ac93f3e09341a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bbaca31_b5958aa8",
+        "filename": "net/http/transport_security_state_ct_policies.inc",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-15T19:06:15Z",
+      "side": 1,
+      "message": "Ah! The reason it failed is because the size_t went from being a constexpr initialization to a different translation unit, which meant that the initializer for CTRequiredPolicies had to perform a copy (from kSymantecRootsLength), which then meant it also had to perform a copy (for base::TimeDelta), and the copy ctor for TimeDelta is, naturally, not constexpr. This meant that we could not longer use the constexpr ctor of kCTRequiredPolicies...\n\n\"A\" solution (and I\u0027m mulling over whether it\u0027s better or worse) is that if kSymantecRootsLength were a size_t* (rather than size_t), this would go back to being constexpr initialized (I believe).\n\nThat said, I\u0027m gravy with this. At least that explains why the change :)",
+      "parentUuid": "0e268842_448d694d",
+      "revId": "2cde6b2e576b073fc2bfc754e2ac93f3e09341a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
