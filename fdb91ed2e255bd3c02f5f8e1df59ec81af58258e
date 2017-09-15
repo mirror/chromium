@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aee89707_62883f5b",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ClipboardTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-15T14:55:27Z",
+      "side": 1,
+      "message": "This is not necessary.",
+      "range": {
+        "startLine": 65,
+        "startChar": 28,
+        "endLine": 65,
+        "endChar": 60
+      },
+      "revId": "fdb91ed2e255bd3c02f5f8e1df59ec81af58258e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
