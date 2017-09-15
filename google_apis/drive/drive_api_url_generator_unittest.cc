@@ -8,6 +8,7 @@
 #include <stdint.h>
 
 #include "base/macros.h"
+#include "extensions/common/constants.h"
 #include "google_apis/drive/test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
@@ -75,17 +76,24 @@ TEST_F(DriveApiUrlGeneratorTest, GetFilesGetUrl) {
             url_generator_.GetFilesGetUrl("0ADK06pfg", true, GURL()).spec());
 
   // If |embed_origin| is not empty, it should be added as a query parameter.
-  url::AddStandardScheme("chrome-extension", url::SCHEME_WITHOUT_PORT);
+  url::AddStandardScheme(extensions::kExtensionScheme,
+                         url::SCHEME_WITHOUT_PORT);
   EXPECT_EQ(
       "https://www.example.com/drive/v2/files/0ADK06pfg"
       "?embedOrigin=chrome-extension%3A%2F%2Ftest",
-      url_generator_.GetFilesGetUrl("0ADK06pfg", false,
-                                    GURL("chrome-extension://test")).spec());
+      url_generator_
+          .GetFilesGetUrl(
+              "0ADK06pfg", false,
+              GURL(std::string(extensions::kExtensionScheme) + "://test"))
+          .spec());
   EXPECT_EQ(
       "https://www.example.com/drive/v2internal/files/0ADK06pfg"
       "?embedOrigin=chrome-extension%3A%2F%2Ftest",
-      url_generator_.GetFilesGetUrl("0ADK06pfg", true,
-                                    GURL("chrome-extension://test")).spec());
+      url_generator_
+          .GetFilesGetUrl(
+              "0ADK06pfg", true,
+              GURL(std::string(extensions::kExtensionScheme) + "://test"))
+          .spec());
 
   EXPECT_EQ(
       "https://www.example.com/drive/v2/files/0ADK06pfg?"

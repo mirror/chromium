@@ -7,6 +7,7 @@
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/strings/stringprintf.h"
+#include "extensions/common/constants.h"
 #include "google_apis/gaia/gaia_switches.h"
 #include "google_apis/google_api_keys.h"
 
@@ -295,6 +296,6 @@ GURL GaiaUrls::GetCheckConnectionInfoURLWithSource(const std::string& source) {
 }
 
 GURL GaiaUrls::signin_completed_continue_url() const {
-  return
-      GURL("chrome-extension://mfffpogegjflfpflabcdkioaeobkgjik/success.html");
+  return GURL(std::string(extensions::kExtensionScheme) +
+              "://mfffpogegjflfpflabcdkioaeobkgjik/success.html");
 }

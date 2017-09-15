@@ -138,6 +138,7 @@ template("google_apis_tmpl") {
       "//base",
       "//base/third_party/dynamic_annotations",
       "//crypto",
+      "//extensions/common:common_constants",
       "//mojo/public/cpp/bindings:struct_traits",
     ]
 

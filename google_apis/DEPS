@@ -2,6 +2,7 @@ include_rules = [
   "-chrome",
   "-content",
   "+crypto",
+  "+extensions/common",
   "+net",
   "+third_party/ocmock",
 ]
