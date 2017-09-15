@@ -23,6 +23,18 @@ std::string OfflineStoreUtils::GetUTF8StringFromPath(
 }
 
 // static
+base::FilePath OfflineStoreUtils::GetPathFromUTF8String(
+    const std::string& path_string) {
+#if defined(OS_POSIX)
+  return base::FilePath(path_string);
+#elif defined(OS_WIN)
+  return base::FilePath(base::UTF8ToWide(path_string));
+#else
+#error Unknown OS
+#endif
+}
+
+// static
 AddPageResult OfflineStoreUtils::ItemActionStatusToAddPageResult(
     ItemActionStatus status) {
   switch (status) {
