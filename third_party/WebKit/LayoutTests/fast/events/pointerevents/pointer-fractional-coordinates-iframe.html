@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<style>
+#spacer {
+  height: 1000px;
+  width: 1000px;
+}
+iframe {
+  width: 100px;
+  height: 100px;
+  border: 0;
+}
+#rotatedFrame {
+  transform: rotate(180deg);
+}
+#scaledFrame {
+  transform: scale(2);
+  width: 50px;
+  height: 50px;
+  margin-left: 50px;
+  margin-bottom: 20px;
+}
+#container {
+  /* Want this at a stable place across platforms so the output co-ords are stable */
+  position: absolute;
+  top: 100px;
+  left: 10px;
+}
+#console {
+  margin-top: 200px;
+}
+</style>
+<body>
+<p>Tests non-integer pointerevent co-ordinates</p>
+<div id='container'>
+  <iframe id=simpleFrame src='resources/frame-pointerevent-forwarder.html'></iframe>
+  <iframe id=rotatedFrame src='resources/frame-pointerevent-forwarder.html'></iframe>
+  <iframe id=scaledFrame src='resources/frame-pointerevent-forwarder.html'></iframe>
+</div>
+<div id='console'></div>
+<div id='spacer'></div>
+<script>
+
+    var scrollX = 3;
+    var scrollY = 10;
+    scrollTo(scrollX, scrollY);
+
+    function sendMouseDownAt(x, y, callback) {
+      eventCount = 0;
+      if (window.chrome && chrome.gpuBenchmarking) {
+          var pointerActions =
+              [{source: "mouse",
+                actions: [
+                  { name: "pointerDown", x: x, y: y },
+                  { name: "pointerUp" },
+                  { name: 'pause', duration: 1 }
+              ]}];
+          chrome.gpuBenchmarking.pointerActionSequence(pointerActions, callback);
+      }
+    }
+
+    function callbackValidPointerCount(test, screenX, screenY, clientX, clientY, pageX, pageY) {
+        test.step(function () {
+          assert_equals(eventCount, 1);
+          assert_approx_equals(lastEvent.screenX, screenX, floatPrecision);
+          assert_approx_equals(lastEvent.screenY, screenY, floatPrecision);
+          assert_approx_equals(lastEvent.clientX, clientX, floatPrecision);
+          assert_approx_equals(lastEvent.clientY, clientY, floatPrecision);
+          assert_approx_equals(lastEvent.pageX, pageX, floatPrecision);
+          assert_approx_equals(lastEvent.pageY, pageY, floatPrecision);
+        });
+    }
+
+    function onPointerDown(event) {
+        eventCount++;
+        lastEvent = event;
+    }
+
+    document.addEventListener('pointerdown', onPointerDown);
+    var floatPrecision = 0.00001;
+
+    var t1 = async_test('Testing simple fractional pointer event');
+    var t2 = async_test('Testing simpleFrame fractional pointer event');
+    var t3 = async_test('Testing rotatedFrame fractional pointer event');
+    var t4 = async_test('Testing scaledFrame fractional pointer event');
+    t1.step(() => {
+        sendMouseDownAt(30.33, 4.5, t1.step_func_done(() => {
+            callbackValidPointerCount(t1, 30.33, 4.5, 30.33, 4.5, 30.33 + scrollX, 4.5 + scrollY);
+
+            frameRect = document.getElementById('simpleFrame').getBoundingClientRect();
+            sendMouseDownAt(frameRect.left + 4.5, frameRect.top + 2.2, t2.step_func_done(() => {
+                callbackValidPointerCount(t2, frameRect.left + 4.5, frameRect.top + 2.2, 4.5, 2.2, 4.5, 2.2);
+
+                frameRect = document.getElementById('rotatedFrame').getBoundingClientRect();
+                sendMouseDownAt(frameRect.left + 4.5, frameRect.top + 2.2, t3.step_func_done(() => {
+                    callbackValidPointerCount(t3, frameRect.left + 4.5, frameRect.top + 2.2, 100 - 4.5, 100 - 2.2, 100 - 4.5, 100 - 2.2);
+
+                    frameRect = document.getElementById('scaledFrame').getBoundingClientRect();
+                    sendMouseDownAt(frameRect.left + 4.5, frameRect.top + 2.2, t4.step_func_done(() => {
+                        callbackValidPointerCount(t4, frameRect.left + 4.5, frameRect.top + 2.2, 4.5 / 2, 2.2 / 2, 4.5 / 2, 2.2 / 2);
+                    }));
+                }));
+            }));
+        }));
+    });
+</script>
+</body>

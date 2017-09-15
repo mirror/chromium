@@ -1,0 +1,117 @@
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<style>
+    #pusher {
+        width: 1000px;
+        height: 1000px;
+        outline: 1px solid black;
+    }
+</style>
+<div id="console"></div>
+<div id="testArea">
+    <div id="pusher">This box is here to create scrollbars.</div>
+</div>
+<script>
+    var floatPrecision = 0.00001;
+
+    function sendMouseDownAt(x, y) {
+        if (window.chrome && chrome.gpuBenchmarking) {
+          var pointerActions =
+              [{source: "mouse",
+                actions: [
+                  { name: "pointerDown", x: x, y: y },
+                  { name: "pointerUp" },
+                  { name: 'pause', duration: 1 }
+              ]}];
+          chrome.gpuBenchmarking.pointerActionSequence(pointerActions, callBack());
+        }
+    }
+    function callBack() {
+        console.log("hello");
+    }
+
+    // Default.
+    var t1 = async_test('Default');
+    var t2 = async_test('Zoomed');
+    var t3 = async_test('Scrolled');
+    var t4 = async_test('Zoomed and scrolled');
+
+    t1.step(function () {
+        window.addEventListener("pointerdown", base, false);
+        sendMouseDownAt(100, 100);
+    });
+
+    function base(event) {
+        t1.step(function() {
+            assert_equals(event.clientX, 100);
+            assert_equals(event.clientY, 100);
+            assert_equals(event.pageX, 100);
+            assert_equals(event.pageY, 100);
+            window.removeEventListener("pointerdown", base, false);
+        });
+        t1.done();
+
+        t2.step(function () {
+            window.addEventListener("pointerdown", justZoomed, false);
+            eventSender.zoomPageIn();
+            sendMouseDownAt(100, 100);
+        });
+    }
+    
+
+    // Just zoomed.
+    function justZoomed(event) {
+        t2.step(function() {
+            assert_approx_equals(event.clientX, 83.33333, floatPrecision);
+            assert_approx_equals(event.clientY, 83.33333, floatPrecision);
+            assert_approx_equals(event.pageX, 83.33333, floatPrecision);
+            assert_approx_equals(event.pageY, 83.33333, floatPrecision);
+            eventSender.zoomPageOut();
+            window.removeEventListener("pointerdown", justZoomed, false);
+        });
+        t2.done();
+
+
+        t3.step(function () {
+            window.addEventListener("pointerdown", justScrolled, false);
+            window.scrollTo(50, 50);
+            sendMouseDownAt(100, 100, t3);
+        });
+    }
+    
+    // Just scrolled.
+    function justScrolled(event) {
+        t3.step(function() {
+            assert_equals(event.clientX, 100);
+            assert_equals(event.clientY, 100);
+            assert_equals(event.pageX, 150);
+            assert_equals(event.pageY, 150);
+            window.removeEventListener("pointerdown", justScrolled, false);
+            window.scrollTo(0, 0);
+        });
+        t3.done();
+
+
+        t4.step(function () {
+            window.addEventListener("pointerdown", zoomedAndScrolled, false);
+            eventSender.zoomPageIn();
+            window.scrollTo(50, 50);
+            sendMouseDownAt(100, 100, t4);
+        });
+    }
+
+    // Zoomed and scrolled.
+    function zoomedAndScrolled(event) {
+        t4.step(function() {
+            assert_approx_equals(event.clientX, 83.33333, floatPrecision);
+            assert_approx_equals(event.clientY, 83.33333, floatPrecision);
+            assert_approx_equals(event.pageX, 133.33333, floatPrecision);
+            assert_approx_equals(event.pageY, 133.33333, floatPrecision);
+            eventSender.zoomPageOut();
+            window.scrollTo(0, 0);
+            window.removeEventListener("pointerdown", zoomedAndScrolled, false);
+        });
+        t4.done();
+    }
+
+</script>
