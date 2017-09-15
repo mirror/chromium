@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4f40477_f5ee5690",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-15T05:43:22Z",
+      "side": 1,
+      "message": "Clarification: I cannot find code to delete Observer instance internally allocated by SessionRestore::observer() via SessionRestore::AddObserver(), nor leaking annotation for ASAN.\nJust in case, could you run Chrome OS ASAN bot, before sending to CQ?",
+      "revId": "e9a5cc16b8ad654cb8586c533e36092a7ff64078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0565349_7156d6c8",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-15T05:43:22Z",
+      "side": 1,
+      "message": "(Optional) Maybe time to introduce Delegate class?",
+      "revId": "e9a5cc16b8ad654cb8586c533e36092a7ff64078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f23af9_635e000c",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-15T05:43:22Z",
+      "side": 1,
+      "message": "Maybe CpuRestrictionAdjuster() to keep the naming consistency? Or name the field in ArcBotPhaseMonitorBridge to disable_cpu_restriction_?",
+      "revId": "e9a5cc16b8ad654cb8586c533e36092a7ff64078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
