@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eef4dfb5_110ee702",
+        "filename": "chrome/common/printing/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-15T23:56:48Z",
+      "side": 1,
+      "message": "2017",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "3cd842ce1293badc81519653409ea10b1dcca7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da3f419_1f63324b",
+        "filename": "chrome/common/printing/pdf_to_pwg_raster_converter_struct_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-15T23:56:48Z",
+      "side": 1,
+      "message": "Can we static_assert(printing::PdfRenderSettings::Mode::NORMAL \u003d\u003d printing::mojom::PDFRenderSettings::Mode::NORMAL, \"Error message\");\n\nand then just static_cast to the other type? Not sure what the best practices are here.",
+      "revId": "3cd842ce1293badc81519653409ea10b1dcca7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77d11255_4b1d8855",
+        "filename": "chrome/utility/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-15T23:56:48Z",
+      "side": 1,
+      "message": "Shall we merge the cloud_print/ code into printing/ later then? (I can do it)",
+      "revId": "3cd842ce1293badc81519653409ea10b1dcca7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac94f1b6_9df96925",
+        "filename": "chrome/utility/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-15T23:56:48Z",
+      "side": 1,
+      "message": "Actually, can we source +\u003d [these_files] in the if-block immediately above? Then we don\u0027t have to list them twice.",
+      "revId": "3cd842ce1293badc81519653409ea10b1dcca7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e144f55f_d5187747",
+        "filename": "chrome/utility/printing/pdf_to_pwg_raster_converter_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-15T23:56:48Z",
+      "side": 1,
+      "message": "Move down to the line 12 block?",
+      "revId": "3cd842ce1293badc81519653409ea10b1dcca7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "761c691d_d96625d8",
+        "filename": "chrome/utility/printing/pdf_to_pwg_raster_converter_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-15T23:56:48Z",
+      "side": 1,
+      "message": "IWYU: #include \"base/macros.h\"",
+      "revId": "3cd842ce1293badc81519653409ea10b1dcca7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
