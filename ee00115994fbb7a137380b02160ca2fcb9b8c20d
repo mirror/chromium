@@ -16,6 +16,24 @@
       "revId": "ee00115994fbb7a137380b02160ca2fcb9b8c20d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0af670a_d9ba3212",
+        "filename": "chrome/browser/chromeos/printing/cups_printers_manager.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-15T22:05:37Z",
+      "side": 1,
+      "message": "Looks to me like it\u0027s exactly where specified:\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/chromeos/printing/doc/cups_printer_management.md\n\nPerhaps you\u0027re looking in the global docs instead of relative to this directory?",
+      "parentUuid": "f755ca7f_0a9abe0e",
+      "revId": "ee00115994fbb7a137380b02160ca2fcb9b8c20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
