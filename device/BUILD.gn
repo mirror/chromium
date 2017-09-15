@@ -106,10 +106,8 @@ test("device_unittests") {
   # Linux, requires udev.
   if (!is_linux_without_udev && !is_android) {
     sources += [
-      "hid/hid_connection_unittest.cc",
       "hid/hid_device_filter_unittest.cc",
       "hid/hid_report_descriptor_unittest.cc",
-      "hid/hid_service_unittest.cc",
       "hid/input_service_linux_unittest.cc",
       "hid/test_report_descriptors.cc",
       "hid/test_report_descriptors.h",

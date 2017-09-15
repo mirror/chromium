@@ -22,6 +22,11 @@
 #include "device/hid/hid_service_win.h"
 #endif
 
+namespace {
+
+static std::unique_ptr<device::HidService> g_hid_service_for_testing = nullptr;
+}
+
 namespace device {
 
 void HidService::Observer::OnDeviceAdded(
@@ -33,7 +38,11 @@ void HidService::Observer::OnDeviceRemoved(
 // static
 constexpr base::TaskTraits HidService::kBlockingTaskTraits;
 
+// static
 std::unique_ptr<HidService> HidService::Create() {
+  if (g_hid_service_for_testing)
+    return std::move(g_hid_service_for_testing);
+
 #if defined(OS_LINUX) && defined(USE_UDEV)
   return base::WrapUnique(new HidServiceLinux());
 #elif defined(OS_MACOSX)
@@ -43,6 +52,12 @@ std::unique_ptr<HidService> HidService::Create() {
 #else
   return nullptr;
 #endif
+}
+
+// static
+void HidService::SetHidServiceForTesting(
+    std::unique_ptr<device::HidService> hid_service) {
+  g_hid_service_for_testing = std::move(hid_service);
 }
 
 void HidService::GetDevices(const GetDevicesCallback& callback) {
