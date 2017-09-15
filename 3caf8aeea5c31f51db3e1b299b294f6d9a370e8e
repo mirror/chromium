@@ -33,6 +33,24 @@
       "revId": "3caf8aeea5c31f51db3e1b299b294f6d9a370e8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c321a80_3410b222",
+        "filename": "testing/android/proguard_for_test.flags",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-15T20:28:42Z",
+      "side": 1,
+      "message": "We want to test the proguarding of code in ChromePublic.apk classes, but I don\u0027t think there\u0027s a benefit (only harm actually) of proguarding code within ChromePublicTest.apk. This -keep is meant to match as much code as possible within ChromePublicTest.apk.",
+      "parentUuid": "2fee4ab6_80a35243",
+      "revId": "3caf8aeea5c31f51db3e1b299b294f6d9a370e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
