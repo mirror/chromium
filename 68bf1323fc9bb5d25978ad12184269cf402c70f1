@@ -22,6 +22,30 @@
       "revId": "68bf1323fc9bb5d25978ad12184269cf402c70f1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "727afec4_ca6c5182",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-15T19:21:20Z",
+      "side": 1,
+      "message": "The other fix exposes the need for this fix. So it\u0027s as part of the sync change that I need to make this change.",
+      "parentUuid": "1690553a_0616d0ba",
+      "range": {
+        "startLine": 534,
+        "startChar": 31,
+        "endLine": 534,
+        "endChar": 49
+      },
+      "revId": "68bf1323fc9bb5d25978ad12184269cf402c70f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
