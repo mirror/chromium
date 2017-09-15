@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "937497bf_e143f3ad",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-15T14:07:48Z",
+      "side": 1,
+      "message": "In the public file you say that this can only be called after the response has been processed, yet this is not enforced here with a DCHECK.",
+      "revId": "26ae6fb2097c253d67fc67cc4b61cdc0ea68688f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fba8ff5_3ce1dbab",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 47
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-15T14:07:48Z",
+      "side": 1,
+      "message": "Reaching DidFinishNavigation does not mean that the response was processed.",
+      "revId": "26ae6fb2097c253d67fc67cc4b61cdc0ea68688f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
