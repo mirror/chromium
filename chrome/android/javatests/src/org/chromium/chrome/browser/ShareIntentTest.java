@@ -12,19 +12,35 @@ import android.os.AsyncTask;
 import android.os.ParcelFileDescriptor;
 import android.support.test.filters.LargeTest;
 
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
 import org.chromium.base.ThreadUtils;
+import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.browser.share.ShareHelper;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.util.ChromeFileProvider;
-import org.chromium.chrome.test.ChromeTabbedActivityTestBase;
+import org.chromium.chrome.test.ChromeActivityTestRule;
+import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
+import org.chromium.chrome.test.ChromeTabbedActivityTestRule;
 
 import java.io.IOException;
 
 /**
  * Instrumentation tests for Share intents.
  */
-public class ShareIntentTest extends ChromeTabbedActivityTestBase {
+@RunWith(ChromeJUnit4ClassRunner.class)
+@CommandLineFlags.Add({
+        ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
+        ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG,
+})
+public class ShareIntentTest {
+    @Rule
+    public ChromeTabbedActivityTestRule mActivityTestRule = new ChromeTabbedActivityTestRule();
+
     private static final String TAG = "ShareIntentTest";
 
     /**
@@ -103,10 +119,12 @@ public class ShareIntentTest extends ChromeTabbedActivityTestBase {
         }
     }
 
+    @Test
     @LargeTest
     @RetryOnFailure
     public void testShareIntent() {
-        final MockChromeActivity mockActivity = new MockChromeActivity(getActivity());
+        final MockChromeActivity mockActivity =
+                new MockChromeActivity(mActivityTestRule.getActivity());
         // Sets a test component as last shared and "shareDirectly" option is set so that the share
         // selector menu is not opened. The start activity is overriden, so the package and class
         // names do not matter.
@@ -126,8 +144,8 @@ public class ShareIntentTest extends ChromeTabbedActivityTestBase {
         ShareHelper.setLastShareComponentName(new ComponentName("", ""), null);
     }
 
-    @Override
-    public void startMainActivity() throws InterruptedException {
-        startMainActivityOnBlankPage();
+    @Before
+    public void setUp() throws InterruptedException {
+        mActivityTestRule.startMainActivityOnBlankPage();
     }
 }
