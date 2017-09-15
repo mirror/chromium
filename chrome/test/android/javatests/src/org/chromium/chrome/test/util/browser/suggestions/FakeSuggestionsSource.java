@@ -32,6 +32,7 @@ public class FakeSuggestionsSource implements SuggestionsSource {
     private ObserverList<Observer> mObserverList = new ObserverList<>();
     private final List<Integer> mCategories = new ArrayList<>();
     private final Map<Integer, List<SnippetArticle>> mSuggestions = new HashMap<>();
+    private final List<SnippetArticle> mContextualSuggestions = new ArrayList<>();
     private final Map<Integer, Integer> mCategoryStatus = new LinkedHashMap<>();
     private final Map<Integer, SuggestionsCategoryInfo> mCategoryInfo = new HashMap<>();
 
@@ -40,6 +41,7 @@ public class FakeSuggestionsSource implements SuggestionsSource {
     private final Map<String, Bitmap> mFavicons = new HashMap<>();
 
     private Bitmap mDefaultFavicon;
+    private Bitmap mContextualSuggestionsImage;
 
     private final List<Integer> mDismissedCategories = new ArrayList<>();
     private final Map<Integer, List<SnippetArticle>> mDismissedCategorySuggestions =
@@ -48,6 +50,14 @@ public class FakeSuggestionsSource implements SuggestionsSource {
     private final Map<Integer, SuggestionsCategoryInfo> mDismissedCategoryInfo = new HashMap<>();
 
     private boolean mRemoteSuggestionsEnabled = true;
+
+    /**
+     * Sets contextual suggestions to be shown in the suggestions carousel.
+     */
+    public void setContextualSuggestions(List<SnippetArticle> suggestions) {
+        mContextualSuggestions.clear();
+        mContextualSuggestions.addAll(suggestions);
+    }
 
     /**
      * Sets the status to be returned for a given category.
@@ -110,6 +120,14 @@ public class FakeSuggestionsSource implements SuggestionsSource {
      */
     public void setThumbnailForId(String id, Bitmap bitmap) {
         mThumbnails.put(id, bitmap);
+    }
+
+    /**
+     * Sets a bitmap to be returned when a thumbnail is requested for a contextual suggestion.
+     * @param imageForContextualSuggestions
+     */
+    public void setThumbnailForContextualSuggestions(Bitmap imageForContextualSuggestions) {
+        mContextualSuggestionsImage = imageForContextualSuggestions;
     }
 
     /**
@@ -247,13 +265,13 @@ public class FakeSuggestionsSource implements SuggestionsSource {
 
     @Override
     public void fetchContextualSuggestions(String url, Callback<List<SnippetArticle>> callback) {
-        throw new UnsupportedOperationException();
+        callback.onResult(mContextualSuggestions);
     }
 
     @Override
     public void fetchContextualSuggestionImage(
             SnippetArticle suggestion, Callback<Bitmap> callback) {
-        throw new UnsupportedOperationException();
+        callback.onResult(mContextualSuggestionsImage);
     }
 
     @Override
