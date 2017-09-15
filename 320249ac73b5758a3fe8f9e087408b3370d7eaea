@@ -16,6 +16,24 @@
       "revId": "320249ac73b5758a3fe8f9e087408b3370d7eaea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "010846eb_dd90588c",
+        "filename": "net/socket/socket_posix.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-15T18:02:44Z",
+      "side": 1,
+      "message": "SocketPosix::Open() always calls SetNonBlocking(), so we can assume that socket_fd_ is in non-blocking mode.",
+      "parentUuid": "892b56de_2925ca9a",
+      "revId": "320249ac73b5758a3fe8f9e087408b3370d7eaea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
