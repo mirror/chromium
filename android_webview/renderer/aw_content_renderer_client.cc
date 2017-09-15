@@ -116,12 +116,12 @@ bool AwContentRendererClient::HandleNavigation(
   // navigations but since android_webview does not swap out renderers, this
   // works fine. This will stop working if android_webview starts swapping out
   // renderers on navigation.
-  bool application_initiated =
-      !is_content_initiated || type == blink::kWebNavigationTypeBackForward;
+  // bool application_initiated =
+  //    !is_content_initiated || type == blink::kWebNavigationTypeBackForward;
 
-  // Don't offer application-initiated navigations unless it's a redirect.
-  if (application_initiated && !is_redirect)
-    return false;
+  //// Don't offer application-initiated navigations unless it's a redirect.
+  // if (application_initiated && !is_redirect)
+  //  return false;
 
   bool is_main_frame = !frame->Parent();
   const GURL& gurl = request.Url();

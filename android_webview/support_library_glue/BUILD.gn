@@ -1,0 +1,58 @@
+# Copyright 2015 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//build/config/android/config.gni")
+import("//build/config/android/rules.gni")
+
+webview_public_framework_ijar = "frameworks.public.interface.jar"
+
+generate_interface_jar("public_framework_ijar") {
+  input_jar = webview_public_framework_jar
+  output_jar = "$target_out_dir/$webview_public_framework_ijar"
+}
+
+support_lib_jar = "//android_webview/support_lib_jar/classes.jar"
+
+# Jar built from support library itself - includes support library versions of
+# e.g. WebView and WebViewProvider.
+java_prebuilt("support_lib_prototype_interface_java") {
+  jar_path = support_lib_jar
+  supports_android = true
+}
+
+android_library("support_lib_glue_java") {
+  java_files = [
+    "java/src/org/chromium/android_webview_glue/GlueDrawGLFunctor.java",
+    "java/src/org/chromium/android_webview_glue/GlueWebViewClient.java",
+    "java/src/org/chromium/android_webview_glue/GlueWebViewContentsClientAdapter.java",
+
+    #"java/src/org/chromium/android_webview_glue/GlueWebViewFactoryProvider.java",
+    "java/src/org/chromium/android_webview_glue/GlueFactoryProviderFetcher.java",
+    "java/src/org/chromium/android_webview_glue/GlueWebViewChromiumProviderFactory.java",
+    "java/src/org/chromium/android_webview_glue/GlueWebViewProvider.java",
+    "java/src/org/chromium/android_webview_glue/GlueWebViewProviderImplementer.java",
+
+    #"java/src/org/chromium/android_webview_glue/GlueWebViewChromium.java",
+    #"java/src/org/chromium/android_webview_glue/GlueWebViewProviderFactory.java",
+    "java/src/org/chromium/android_webview_glue/WebResourceError.java",
+    "java/src/org/chromium/android_webview_glue/WebResourceRequest.java",
+  ]
+
+  alternative_android_sdk_ijar_dep = ":public_framework_ijar"
+  _ijar = webview_public_framework_ijar
+  _ijar_dir = get_label_info(alternative_android_sdk_ijar_dep, "target_out_dir")
+  alternative_android_sdk_ijar = "$_ijar_dir/$_ijar"
+  alternative_android_sdk_jar = webview_public_framework_jar
+
+  deps = [
+    ":support_lib_prototype_interface_java",
+    "//android_webview:android_webview_commandline_java",
+    "//android_webview:android_webview_java",
+    "//base:base_java",
+    "//components/autofill/android:provider_java",
+    "//content/public/android:content_java",
+    "//net/android:net_java",
+    "//ui/android:ui_java",
+  ]
+}
