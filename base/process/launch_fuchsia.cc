@@ -7,6 +7,7 @@
 #include <launchpad/launchpad.h>
 #include <magenta/process.h>
 #include <magenta/processargs.h>
+#include <stdint.h>
 #include <unistd.h>
 
 #include "base/command_line.h"
@@ -82,8 +83,7 @@ Process LaunchProcess(const std::vector<std::string>& argv,
   launchpad_load_from_file(lp, argv_cstr[0]);
   launchpad_set_args(lp, argv.size(), argv_cstr.data());
 
-  uint32_t to_clone = LP_CLONE_MXIO_NAMESPACE | LP_CLONE_DEFAULT_JOB;
-
+  uint32_t to_clone = options.clone_flags;
   std::unique_ptr<char* []> new_environ;
   char* const empty_environ = nullptr;
   char* const* old_environ = environ;
@@ -93,8 +93,9 @@ Process LaunchProcess(const std::vector<std::string>& argv,
   EnvironmentMap environ_modifications = options.environ;
   if (!options.current_directory.empty()) {
     environ_modifications["PWD"] = options.current_directory.value();
-  } else {
-    to_clone |= LP_CLONE_MXIO_CWD;
+
+    // Don't clone the parent's CWD if we are overriding the child's PWD.
+    to_clone = to_clone & ~LP_CLONE_MXIO_CWD;
   }
 
   if (to_clone & LP_CLONE_DEFAULT_JOB) {
@@ -122,19 +123,21 @@ Process LaunchProcess(const std::vector<std::string>& argv,
     to_clone |= LP_CLONE_ENVIRON;
   launchpad_clone(lp, to_clone);
 
-  // Clone the mapped file-descriptors, plus any of the stdio descriptors
-  // which were not explicitly specified.
-  bool stdio_already_mapped[3] = {false};
-  for (const auto& src_target : options.fds_to_remap) {
-    if (static_cast<size_t>(src_target.second) <
-        arraysize(stdio_already_mapped))
-      stdio_already_mapped[src_target.second] = true;
-    launchpad_clone_fd(lp, src_target.first, src_target.second);
-  }
-  for (size_t stdio_fd = 0; stdio_fd < arraysize(stdio_already_mapped);
-       ++stdio_fd) {
-    if (!stdio_already_mapped[stdio_fd])
-      launchpad_clone_fd(lp, stdio_fd, stdio_fd);
+  if (to_clone & LP_CLONE_MXIO_STDIO) {
+    // Clone the mapped file-descriptors, plus any of the stdio descriptors
+    // which were not explicitly specified.
+    bool stdio_already_mapped[3] = {false};
+    for (const auto& src_target : options.fds_to_remap) {
+      if (static_cast<size_t>(src_target.second) <
+          arraysize(stdio_already_mapped))
+        stdio_already_mapped[src_target.second] = true;
+      launchpad_clone_fd(lp, src_target.first, src_target.second);
+    }
+    for (size_t stdio_fd = 0; stdio_fd < arraysize(stdio_already_mapped);
+         ++stdio_fd) {
+      if (!stdio_already_mapped[stdio_fd])
+        launchpad_clone_fd(lp, stdio_fd, stdio_fd);
+    }
   }
 
   for (const auto& id_and_handle : options.handles_to_transfer) {
