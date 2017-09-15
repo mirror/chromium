@@ -190,6 +190,8 @@ void OriginTrialContext::InitializePendingFeatures() {
   LocalFrame* frame = ToDocument(GetSupplementable())->GetFrame();
   if (!frame)
     return;
+  if (!frame->GetScriptController().IsMainWorldWindowProxyInitialized())
+    return;
   ScriptState* script_state = ToScriptStateForMainWorld(frame);
   if (!script_state)
     return;

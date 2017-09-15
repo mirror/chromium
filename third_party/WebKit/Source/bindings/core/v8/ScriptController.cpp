@@ -198,6 +198,11 @@ void ScriptController::RegisterExtensionIfNeeded(v8::Extension* extension) {
   RegisteredExtensions().push_back(extension);
 }
 
+bool ScriptController::IsMainWorldWindowProxyInitialized() {
+  return window_proxy_manager_->MainWorldProxyMaybeUninitialized()
+      ->IsInitialized();
+}
+
 void ScriptController::ClearWindowProxy() {
   // V8 binding expects ScriptController::clearWindowProxy only be called when a
   // frame is loading a new page. This creates a new context for the new page.

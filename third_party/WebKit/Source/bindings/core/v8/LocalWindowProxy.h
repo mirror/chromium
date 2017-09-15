@@ -59,6 +59,8 @@ class LocalWindowProxy final : public WindowProxy {
                          : v8::Local<v8::Context>();
   }
 
+  bool IsInitialized() const { return !!script_state_; }
+
   // Update document object of the frame.
   void UpdateDocument();
 

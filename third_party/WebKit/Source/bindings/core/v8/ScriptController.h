@@ -124,6 +124,7 @@ class CORE_EXPORT ScriptController final
 
   TextPosition EventHandlerPosition() const;
 
+  bool IsMainWorldWindowProxyInitialized();
   void ClearWindowProxy();
   void UpdateDocument();
 
