@@ -70,6 +70,30 @@
       "revId": "a5864266cb296e8689d2409163257c5f7bac2067",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12ed5f04_7b887cac",
+        "filename": "ios/web_view/features.gni",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1193409
+      },
+      "writtenOn": "2017-09-15T04:31:32Z",
+      "side": 1,
+      "message": "it was true, but now autofill can be stored locally, so this flag will just control whether or not sign and sync api is exposed.",
+      "parentUuid": "dc98330a_e824b008",
+      "range": {
+        "startLine": 9,
+        "startChar": 38,
+        "endLine": 9,
+        "endChar": 42
+      },
+      "revId": "a5864266cb296e8689d2409163257c5f7bac2067",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
