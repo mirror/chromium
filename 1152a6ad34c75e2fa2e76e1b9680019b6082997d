@@ -264,6 +264,24 @@
       "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "237aa526_4c1016af",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-15T01:00:08Z",
+      "side": 1,
+      "message": "I see (I had to go stare at crrev.com/c/667944 as well).\n\nMaybe I\u0027m not understanding things, though; why wouldn\u0027t we want to do LTO the same way on Windows as we do on Linux, i.e., everywhere?",
+      "parentUuid": "85c817ce_79a6beb2",
+      "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
