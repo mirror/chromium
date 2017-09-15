@@ -587,3 +587,19 @@ TEST(RefCountedDeathTest, TestAdoptRef) {
       base::MakeRefCounted<InitialRefCountIsOne>();
   EXPECT_DCHECK_DEATH(base::AdoptRef(obj.get()));
 }
+
+TEST(RefCountedUnitTest, TestLeakRef) {
+  scoped_refptr<SelfAssign> obj = base::MakeRefCounted<SelfAssign>();
+  EXPECT_TRUE(obj->HasOneRef());
+
+  auto* ptr = obj.LeakRef();
+  EXPECT_FALSE(obj);
+  EXPECT_TRUE(ptr);
+  EXPECT_TRUE(ptr->HasOneRef());
+  ptr->Release();
+  ptr = nullptr;
+
+  ptr = obj.LeakRef();
+  EXPECT_FALSE(obj);
+  EXPECT_FALSE(ptr);
+}
