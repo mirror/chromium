@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "a4989e36_ab414c2e",
+        "filename": "components/favicon/content/content_favicon_driver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-09-15T15:38:13Z",
+      "side": 1,
+      "message": "I hope there aren\u0027t many cases where a partial list of favicons are reported. If that doesn\u0027t hold true, deletion of mappings shouldn\u0027t be our only concern (e.g. the wrong icon could be chosen, etc.).\n\nWrt to potential future regressions: I think all we can do is instrument the known cases with browser tests.\n\nDo you have a specific proposal in mind (e.g. explore alternatives around DocumentOnLoadCompletedInMainFrame()), do you think we should loop some blink folks, or are you in general reluctant to address this particular problem given the risk for regressions?",
+      "parentUuid": "2beed612_e0baacdf",
+      "revId": "7523cc6ce00be6fa9854297e2997276d22539d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a48a8c2_7228e6b0",
         "filename": "components/favicon/core/favicon_handler.cc",
         "patchSetId": 5
