@@ -165,6 +165,30 @@
       "revId": "b8e96f1b54bf571728b5f90e48f9785e23c4283e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2da0f15_eb98469e",
+        "filename": "extensions/common/features/simple_feature.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-09-15T02:17:55Z",
+      "side": 1,
+      "message": "Actually, there shouldn\u0027t be that many feature instances anyway, so yeah this should be good.",
+      "parentUuid": "4701a4f7_56d3a277",
+      "range": {
+        "startLine": 565,
+        "startChar": 10,
+        "endLine": 565,
+        "endChar": 22
+      },
+      "revId": "b8e96f1b54bf571728b5f90e48f9785e23c4283e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
