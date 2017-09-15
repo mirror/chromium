@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0aae3939_a677348a",
+        "filename": "base/android/java/templates/BuildConfig.template",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-09-15T10:45:29Z",
+      "side": 1,
+      "message": "Does this mean we extend the set of devices we use the legacy linker on? There have been issues with the legacy linker (particularly with breakpad symbolization) on newer devices so I wouldn\u0027t be keen to do this.",
+      "range": {
+        "startLine": 34,
+        "startChar": 7,
+        "endLine": 34,
+        "endChar": 72
+      },
+      "revId": "b121b6a21eeefff7a64c53218c6f98b1c73429b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
