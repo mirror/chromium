@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc97cf1f_94b913a0",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-15T21:54:13Z",
+      "side": 1,
+      "message": "If AXRelationCache is not garbage-collected too, I recommend either:\n\n1. No pointer, just a member:\n\n   AXRelationCache relation_cache_;\n\n2. Or, a std::unique_ptr:\n\n   std::unique_ptr\u003cAXRelationCache\u003e relation_cache_;\n\nBoth of those guarantee it\u0027s freed when the AXObjectCache is\nfreed, so that\u0027s one less thing to worry about.",
+      "revId": "bce798a283b4279438c237e904684ec989ea6590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
