@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55776607_e51c8cd3",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_interaction_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-15T07:08:51Z",
+      "side": 1,
+      "message": "IS this parameter not used? If not, drop it?",
+      "range": {
+        "startLine": 295,
+        "startChar": 45,
+        "endLine": 295,
+        "endChar": 74
+      },
+      "revId": "cf61898fd6b78f3fc1dc4fbaa410e885214bfd7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
