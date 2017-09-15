@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50ff8c48_f582ba9b",
+        "filename": "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-09-15T13:29:57Z",
+      "side": 0,
+      "message": "Why not keep this as forward declaration (Chrome prefers forward declarations to includes). Same question for SettingsResetPromptModel",
+      "range": {
+        "startLine": 16,
+        "startChar": 32,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "2c4a3a797e5b107e5eb5066c6b0cd35c5f6fdb30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1251e9f1_a1d11ba6",
+        "filename": "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_model.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-09-15T13:29:57Z",
+      "side": 0,
+      "message": "Same question about replace forward declarations with includes",
+      "range": {
+        "startLine": 26,
+        "startChar": 22,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "2c4a3a797e5b107e5eb5066c6b0cd35c5f6fdb30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
