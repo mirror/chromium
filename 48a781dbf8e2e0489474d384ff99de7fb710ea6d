@@ -248,6 +248,24 @@
     },
     {
       "key": {
+        "uuid": "463e72db_bfd33337",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-15T00:35:14Z",
+      "side": 1,
+      "message": "Ok, I wouldn\u0027t block you on this any longer. In case hidehiko@ has comments, we can address them later in a separate CL.",
+      "parentUuid": "624e59c1_dd61a47d",
+      "revId": "48a781dbf8e2e0489474d384ff99de7fb710ea6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a6808b6_cbda0854",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
         "patchSetId": 1
