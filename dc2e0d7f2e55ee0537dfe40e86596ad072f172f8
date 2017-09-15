@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36d2b697_c954b900",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2783,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-15T04:08:59Z",
+      "side": 1,
+      "message": "nit: kMaxPendingRequests / kMaxBatchedRequests?",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a32e736c_aea32058",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2786,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-15T04:08:59Z",
+      "side": 1,
+      "message": "nit: kMaxRequestPendingTime / kMaxBatchWindowSize?",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60078514_de9a6a50",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2789,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-15T04:08:59Z",
+      "side": 1,
+      "message": "nit: kInitialRequestPendingTime / kInitialBatchWindowSize?",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "395b94e9_f28eda19",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2805,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-15T04:08:59Z",
+      "side": 1,
+      "message": "\"our\" is confusing here, because this class has too many responsibilities.\n\nI think that if you refer to this time as the earliest journal cleanup request time, or the start of the journal cleanup request batch window, you can come to a clearer comment. In fact, if you choose the latter, the code seems obvious enough that you don\u0027t need a comment.",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7604ff1_27200843",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2811,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-15T04:08:59Z",
+      "side": 1,
+      "message": "nit: Can we please do \"until\"? Till is much rarer in the codebase (591 [1] vs 13,168 hits), and it\u0027s fairly rare in written English, so it\u0027ll draw the reader\u0027s attention, causing unnecessary mental energy spend. Because of this, I think the attention cost of \"till\" is bigger than the obvious benefit of saving a letter. (I might be missing something more subtle.)\n\n[1] https://cs.chromium.org/search/?q\u003d%5B%5Ea-zA-z%5D(t%7CT)ill\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533a0eb5_df597023",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2987,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-15T04:08:59Z",
+      "side": 1,
+      "message": "nit: WillCommitTransaction / TransactionStartedCommitting?",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d74d086_95a9e783",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2991,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-15T04:08:59Z",
+      "side": 1,
+      "message": "nit: DidCommitTransaction / TransactionDoneCommitting?\n\nThis name is slightly misleading.",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cedb2f2a_6b4b4f8b",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-15T04:08:59Z",
+      "side": 1,
+      "message": "Nit: You could wrap this (and the callsite) in #if DCHECK_IS_ON(). I don\u0027t know if we have LTO everywhere (e.g., Android) and, if we don\u0027t, I suspect this eats binary size.",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b5e3b38_90beb1c3",
+        "filename": "content/browser/indexed_db/indexed_db_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-15T04:08:59Z",
+      "side": 1,
+      "message": "Hm, does the browser test run under file://?\n\nWhen I was doing manual tests, the quota reporting doesn\u0027t work for file:// -- I got 0/0. That\u0027s why I had an HTTP server in the bug repro steps. Can you check that the quota output is non-zero? (if not, we could just delete the quota logging from the test)",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53c36c7b_9ccfd462",
+        "filename": "content/browser/indexed_db/indexed_db_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-15T04:08:59Z",
+      "side": 1,
+      "message": "Nice! This doesn\u0027t look too bad... I think it\u0027ll encourage me to write browser tests when I need them.",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73df24f3_76b91c96",
+        "filename": "content/browser/indexed_db/indexed_db_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-15T04:08:59Z",
+      "side": 1,
+      "message": "This seems to fail. Does the database somehow get closed before the GetDeletedBlobFiles task gets to run? I thought we have a 30-second timer before we shut down the DB... is that at a lower level?",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2197aaa_d1bff623",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-09-15T04:08:59Z",
+      "side": 1,
+      "message": "nit: If scoped_refptr\u003cIndexedDBBackingStore\u003e\u0026 doesn\u0027t cause line wrapping, can we have that instead of the auto\u0026?",
+      "revId": "dc2e0d7f2e55ee0537dfe40e86596ad072f172f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
