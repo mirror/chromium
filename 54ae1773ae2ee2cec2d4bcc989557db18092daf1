@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "8b13bc23_1a261cf1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-15T14:08:04Z",
+      "side": 1,
+      "message": "the logic is:\n\nUI asks for suggestions, but the components is currently fetching some. It makes sense that it says \"I don\u0027t have anything yet, wait for the fetch to complete\". Then when it is not loading anymore, it has things to offer.\n\nOtherwise both Android and iOS will have to implement their own variant of \"maybe ask for suggestions depending on the status\". Regardless of that, it ensures the backend is in control of the flow of data.",
+      "parentUuid": "32e08d84_57b700ad",
+      "range": {
+        "startLine": 13,
+        "startChar": 64,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "54ae1773ae2ee2cec2d4bcc989557db18092daf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f38be156_3dd3345a",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
