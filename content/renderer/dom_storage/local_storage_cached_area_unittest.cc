@@ -439,4 +439,33 @@ TEST_F(LocalStorageCachedAreaTest, BrowserDisconnect) {
   EXPECT_EQ(kValue, cached_area->GetItem(kKey).string());
 }
 
+TEST_F(LocalStorageCachedAreaTest, CacheLimit) {
+  const url::Origin kOrigin2(GURL("http://dom_storage1/"));
+  const url::Origin kOrigin3(GURL("http://dom_storage3/"));
+  cached_areas_.set_cache_limit_for_testing(100);
+
+  scoped_refptr<LocalStorageCachedArea> cached_area1 =
+      cached_areas_.GetCachedArea(kOrigin);
+  cached_area1->SetItem(kKey, kValue, kPageUrl, kStorageAreaId);
+  const LocalStorageCachedArea* area1_ptr = cached_area1.get();
+  size_t expected_total = (kKey.size() + kValue.size()) * sizeof(base::char16);
+  EXPECT_EQ(expected_total, cached_area1->area_memory_used());
+  EXPECT_EQ(expected_total, cached_areas_.TotalCacheSize());
+  cached_area1 = nullptr;
+
+  scoped_refptr<LocalStorageCachedArea> cached_area2 =
+      cached_areas_.GetCachedArea(kOrigin2);
+  cached_area2->SetItem(kKey, kValue, kPageUrl, kStorageAreaId);
+  // Area for kOrigin should still be alive.
+  EXPECT_EQ(2 * cached_area2->area_memory_used(),
+            cached_areas_.TotalCacheSize());
+  EXPECT_EQ(area1_ptr, cached_areas_.GetCachedArea(kOrigin));
+
+  base::string16 long_value(100, 'a');
+  cached_area2->SetItem(kKey, long_value, kPageUrl, kStorageAreaId);
+  scoped_refptr<LocalStorageCachedArea> cached_area3 =
+      cached_areas_.GetCachedArea(kOrigin3);
+  EXPECT_EQ(cached_area2->area_memory_used(), cached_areas_.TotalCacheSize());
+}
+
 }  // namespace content

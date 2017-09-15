@@ -29644,6 +29644,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="LocalStorage.RendererAreaCacheHit" enum="BooleanUsage">
+  <owner>ssid@chromium.org</owner>
+  <summary>
+    Indication whether the HTML5 LocalStorage DB opened was loaded in cache.
+  </summary>
+</histogram>
+
 <histogram name="LocalStorage.RendererLocalStorageSizeInKB" units="KB">
   <owner>michaeln@chromium.org</owner>
   <summary>
