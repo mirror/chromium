@@ -8,6 +8,7 @@
 #include "core/layout/ng/inline/ng_inline_break_token.h"
 #include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/inline/ng_physical_line_box_fragment.h"
+#include "core/layout/ng/ng_layout_result.h"
 
 namespace blink {
 
@@ -29,8 +30,16 @@ NGLineBoxFragmentBuilder& NGLineBoxFragmentBuilder::AddChild(
     const NGLogicalOffset& child_offset) {
   children_.push_back(std::move(child));
   offsets_.push_back(child_offset);
-
   return *this;
+}
+NGLineBoxFragmentBuilder& NGLineBoxFragmentBuilder::AddChild(
+    RefPtr<NGLayoutResult> layout_result,
+    const NGLogicalOffset& child_offset) {
+  // TODO(kojii): Keep a copy of oof_positioned_candidates_ and propagate as we
+  // do with NGFragmentBuilder.
+  DCHECK(layout_result->UnpositionedFloats().IsEmpty());
+  return AddChild(std::move(layout_result->MutablePhysicalFragment()),
+                  child_offset);
 }
 
 void NGLineBoxFragmentBuilder::MoveChildrenInBlockDirection(LayoutUnit delta) {
