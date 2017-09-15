@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "db25bb4a_385e2baf",
+        "filename": "components/offline_pages/core/model/get_pages_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-15T21:27:23Z",
+      "side": 1,
+      "message": "Updated the comment per our discussion.\nMove the comments above the function as implementation notes.",
+      "parentUuid": "93d28d27_cb6384a6",
+      "revId": "183cded39d991cc3ec69ac4dc595082328f43161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d7a0e37a_7ea47396",
         "filename": "components/offline_pages/core/model/get_pages_task.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "183cded39d991cc3ec69ac4dc595082328f43161",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bb39b6_41a22fef",
+        "filename": "components/offline_pages/core/model/get_pages_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-15T21:27:23Z",
+      "side": 1,
+      "message": "Done.\nThanks for finding that. For some reason I was put on some page claiming that the like function is the way to go and there is no LIKE expression.",
+      "parentUuid": "d7a0e37a_7ea47396",
+      "revId": "183cded39d991cc3ec69ac4dc595082328f43161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9ec44d0e_76382b02",
+        "filename": "components/offline_pages/core/model/get_pages_task.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-15T21:27:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b468ba4_450e6ae8",
+      "revId": "183cded39d991cc3ec69ac4dc595082328f43161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32bfdfbd_c43a93e6",
         "filename": "components/offline_pages/core/model/offline_store_utils.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "183cded39d991cc3ec69ac4dc595082328f43161",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a785524_f71a797f",
+        "filename": "components/offline_pages/core/model/offline_store_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-15T21:27:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32bfdfbd_c43a93e6",
+      "revId": "183cded39d991cc3ec69ac4dc595082328f43161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a217a403_8f1fd1bb",
+        "filename": "components/offline_pages/core/model/offline_store_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-15T21:27:23Z",
+      "side": 1,
+      "message": "I\u0027ll let Yafei know, so he can remove it.",
+      "parentUuid": "2609acc9_8a3eed33",
+      "revId": "183cded39d991cc3ec69ac4dc595082328f43161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f8b1968_b18cb4b4",
         "filename": "components/offline_pages/core/offline_page_metadata_store_sql.h",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "183cded39d991cc3ec69ac4dc595082328f43161",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e795408_3d52849d",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-15T21:27:23Z",
+      "side": 1,
+      "message": "Let\u0027s have a separate patch for that.\nIt will need fixing in PrefetchStore as well.\nAdding TODO",
+      "parentUuid": "5f8b1968_b18cb4b4",
+      "revId": "183cded39d991cc3ec69ac4dc595082328f43161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
