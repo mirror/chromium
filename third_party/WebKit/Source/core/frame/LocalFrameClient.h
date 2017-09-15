@@ -330,6 +330,8 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
     return false;
   }
 
+  virtual void DispatchFrameVisible() {}
+
   // Overwrites the given URL to use an HTML5 embed if possible. An empty URL is
   // returned if the URL is not overriden.
   virtual KURL OverrideFlashEmbedWithHTML(const KURL&) { return KURL(); }

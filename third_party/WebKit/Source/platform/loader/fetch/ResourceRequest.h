@@ -336,6 +336,12 @@ class PLATFORM_EXPORT ResourceRequest final {
   }
   bool IsSameDocumentNavigation() const { return is_same_document_navigation_; }
 
+  void setDelayedSubframeRequest(bool delayedSubframeRequest) {
+    m_isDelayedSubframeRequest = delayedSubframeRequest;
+  }
+
+  bool isDelayedSubframeRequest() const { return m_isDelayedSubframeRequest; }
+
  private:
   const CacheControlHeader& GetCacheControlHeader() const;
 
@@ -388,6 +394,7 @@ class PLATFORM_EXPORT ResourceRequest final {
   static double default_timeout_interval_;
 
   double navigation_start_ = 0;
+  bool m_isDelayedSubframeRequest = false;
 };
 
 // This class is needed to copy a ResourceRequest across threads, because it
@@ -443,6 +450,7 @@ struct CrossThreadResourceRequestData {
   WebURLRequest::LoadingIPCType loading_ipc_type_;
   InputToLoadPerfMetricReportPolicy input_perf_metric_report_policy_;
   ResourceRequest::RedirectStatus redirect_status_;
+  bool m_isDelayedSubframeRequest;
 };
 
 }  // namespace blink

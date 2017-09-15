@@ -37,8 +37,8 @@
 #include "core/page/Page.h"
 #include "core/plugins/PluginView.h"
 #include "platform/heap/HeapAllocator.h"
+#include "platform/runtime_enabled_features.h"
 #include "platform/weborigin/SecurityOrigin.h"
-#include "public/platform/WebCachePolicy.h"
 
 namespace blink {
 
@@ -233,12 +233,6 @@ void HTMLFrameOwnerElement::SetEmbeddedContentView(
     return;
 
   if (embedded_content_view_) {
-    // TODO(crbug.com/729196): Trace why LocalFrameView::DetachFromLayout
-    // crashes.  Perhaps view is getting reattached while document is shutting
-    // down.
-    if (doc) {
-      CHECK_NE(doc->Lifecycle().GetState(), DocumentLifecycle::kStopping);
-    }
     layout_embedded_content_item.UpdateOnEmbeddedContentViewChange();
 
     DCHECK_EQ(GetDocument().View(),
@@ -263,6 +257,17 @@ EmbeddedContentView* HTMLFrameOwnerElement::ReleaseEmbeddedContentView() {
       cache->ChildrenChanged(layout_embedded_content);
   }
   return embedded_content_view_.Release();
+}
+
+void HTMLFrameOwnerElement::FrameVisible(LocalFrame* local_frame,
+                                         bool visible) {
+  if (!visible)
+    return;
+  visibility_observer_->Stop();
+  visibility_observer_.Clear();
+
+  if (local_frame)
+    local_frame->Loader().FrameVisible();
 }
 
 bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
@@ -305,14 +310,29 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
     request.SetCachePolicy(WebCachePolicy::kBypassingCache);
   }
 
-  child_frame->Loader().Load(FrameLoadRequest(&GetDocument(), request),
-                             child_load_type);
+  FrameLoadRequest frame_load_request =
+      FrameLoadRequest(&GetDocument(), request);
+  if (RuntimeEnabledFeatures::LazyFrameLoadingEnabled() &&
+      !(url.IsAboutBlankURL() || url.IsAboutSrcdocURL() || url.IsEmpty() ||
+        url.IsLocalFile() || url.IsNull()) &&
+      url.IsValid()) {
+    frame_load_request.setShouldDelayRequest(true);
+  }
+
+  visibility_observer_ = new ElementVisibilityObserver(
+      this,
+      WTF::Bind(&HTMLFrameOwnerElement::FrameVisible, WrapWeakPersistent(this),
+                WrapWeakPersistent(child_frame)));
+  visibility_observer_->Start();
+
+  child_frame->Loader().Load(frame_load_request, child_load_type);
   return true;
 }
 
 DEFINE_TRACE(HTMLFrameOwnerElement) {
   visitor->Trace(content_frame_);
   visitor->Trace(embedded_content_view_);
+  visitor->Trace(visibility_observer_);
   HTMLElement::Trace(visitor);
   FrameOwner::Trace(visitor);
 }

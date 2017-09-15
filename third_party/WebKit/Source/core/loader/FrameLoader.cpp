@@ -1442,6 +1442,13 @@ NavigationPolicy FrameLoader::CheckLoadCanStart(
       triggering_event_info, frame_load_request.Form());
 }
 
+void FrameLoader::FrameVisible() {
+  if (frame_ && frame_->Client()) {
+    frame_->Client()->DispatchFrameVisible();
+    TakeObjectSnapshot();
+  }
+}
+
 void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
                             FrameLoadType type,
                             NavigationPolicy navigation_policy,

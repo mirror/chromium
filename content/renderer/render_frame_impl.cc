@@ -527,11 +527,12 @@ CommonNavigationParams MakeCommonNavigationParams(
   const RequestExtraData* extra_data =
       static_cast<RequestExtraData*>(info.url_request.GetExtraData());
   DCHECK(extra_data);
+
   return CommonNavigationParams(
       info.url_request.Url(), referrer, extra_data->transition_type(),
-      navigation_type, true, info.replaces_current_history_item, ui_timestamp,
-      report_type, GURL(), GURL(),
-      static_cast<PreviewsState>(info.url_request.GetPreviewsState()),
+      navigation_type, true, info.replaces_current_history_item,
+      info.is_delayed_subframe_request, ui_timestamp, report_type, GURL(),
+      GURL(), static_cast<PreviewsState>(info.url_request.GetPreviewsState()),
       base::TimeTicks::Now(), info.url_request.HttpMethod().Latin1(),
       GetRequestBodyForWebURLRequest(info.url_request), source_location,
       should_check_main_world_csp);
@@ -3559,9 +3560,10 @@ void RenderFrameImpl::DidStartProvisionalLoad(
     info.is_cache_disabled = pending_navigation_info_->cache_disabled;
     info.form = pending_navigation_info_->form;
     info.source_location = pending_navigation_info_->source_location;
+    info.is_delayed_subframe_request =
+        pending_navigation_info_->is_delayed_subframe_request;
 
     pending_navigation_info_.reset(nullptr);
-
     BeginNavigation(info);
   }
 
@@ -4149,6 +4151,10 @@ bool RenderFrameImpl::ShouldUseClientLoFiForRequest(
   if (previews_state_ & SERVER_LOFI_ON)
     return request.Url().ProtocolIs("https");
   return true;
+}
+
+void RenderFrameImpl::DispatchFrameVisible() {
+  Send(new FrameHostMsg_FrameVisible(routing_id_));
 }
 
 bool RenderFrameImpl::IsClientLoFiActiveForFrame() {
@@ -7158,6 +7164,7 @@ RenderFrameImpl::PendingNavigationInfo::PendingNavigationInfo(
       client_redirect(info.is_client_redirect),
       triggering_event_info(info.triggering_event_info),
       cache_disabled(info.is_cache_disabled),
+      is_delayed_subframe_request(info.is_delayed_subframe_request),
       form(info.form),
       source_location(info.source_location) {}
 
