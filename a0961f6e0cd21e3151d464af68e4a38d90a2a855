@@ -50,6 +50,24 @@
       "revId": "a0961f6e0cd21e3151d464af68e4a38d90a2a855",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0568d2ec_c0b2104e",
+        "filename": "chrome/browser/ui/webui/settings/appearance_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-09-15T00:14:10Z",
+      "side": 1,
+      "message": "Yeap, I think the rules between whether we can open the wallpaper manager and whether we should show the policy indicator are not consistent. (They don\u0027t use the same logic here.)\nBut can we only check the policy here (use the logic in IsWallpaperPolicyControlled) to decide whether we can open the wallpaper manager? Since I found there are some logic like check the logic state and whitelist in wallpaper_delegate()-\u003eCanOpenSetWallpaperPage().",
+      "parentUuid": "d1e47b24_1606e2b3",
+      "revId": "a0961f6e0cd21e3151d464af68e4a38d90a2a855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
