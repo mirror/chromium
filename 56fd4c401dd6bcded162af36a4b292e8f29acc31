@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7b7889f_aade1c61",
+        "filename": "extensions/browser/api/web_request/web_request_api_helpers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-15T23:12:12Z",
+      "side": 1,
+      "message": "nit: prefer\nreturn std::make_unique\u003cbase::Value\u003e(BlobStorage(der_holder.data(), der_holder.size()));",
+      "revId": "56fd4c401dd6bcded162af36a4b292e8f29acc31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b5cae28_6baa4aa3",
+        "filename": "extensions/browser/api/web_request/web_request_api_helpers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-15T23:12:12Z",
+      "side": 1,
+      "message": "const \u0026",
+      "revId": "56fd4c401dd6bcded162af36a4b292e8f29acc31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66161e4f_198ee802",
+        "filename": "extensions/browser/api/web_request/web_request_api_helpers.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1245,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-15T23:12:12Z",
+      "side": 1,
+      "message": "nit: use a range-based for-loop",
+      "revId": "56fd4c401dd6bcded162af36a4b292e8f29acc31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "322db571_4c9b8984",
+        "filename": "extensions/browser/api/web_request/web_request_event_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-15T23:12:12Z",
+      "side": 1,
+      "message": "nit: initialize these to nullptr",
+      "revId": "56fd4c401dd6bcded162af36a4b292e8f29acc31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac515a8_5572ca87",
+        "filename": "extensions/common/api/web_request.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-15T23:12:12Z",
+      "side": 1,
+      "message": "if these are ArrayBuffers, why not type: binary?",
+      "revId": "56fd4c401dd6bcded162af36a4b292e8f29acc31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
