@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87acf658_b12170a9",
+        "filename": "chrome/installer/zucchini/algorithm.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:03:05Z",
+      "side": 1,
+      "message": "Optionally, this could mimic clamp from glsl.\nhttps://www.khronos.org/registry/OpenGL-Refpages/gl4/html/clamp.xhtml",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 15
+      },
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45b2c0c8_1dfb0c7c",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:03:05Z",
+      "side": 1,
+      "message": "Are there any case when this can\u0027t be replace with\nbuffer \u003d BufferView(first, size);",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 12
+      },
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a23895c3_01669c40",
+        "filename": "chrome/installer/zucchini/buffer_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:03:05Z",
+      "side": 1,
+      "message": "These were introduce in trunk to minimum changes in Disassemblers, \nbut I don\u0027t think we need really them. \nBufferView::read() / BufferView::write() is preferred because it also performs bound check.",
+      "range": {
+        "startLine": 162,
+        "startChar": 9,
+        "endLine": 162,
+        "endChar": 22
+      },
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c22ba751_bc3523e9",
+        "filename": "chrome/installer/zucchini/reloc_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:03:05Z",
+      "side": 1,
+      "message": "NIT: in comment?",
+      "range": {
+        "startLine": 31,
+        "startChar": 46,
+        "endLine": 31,
+        "endChar": 66
+      },
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ef04fb4_50854647",
+        "filename": "chrome/installer/zucchini/reloc_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:03:05Z",
+      "side": 1,
+      "message": "Why is this unique_ptr? Can it be passed as R-value reference?\nAlso, a unique_ptr passed by value seems wrong.",
+      "range": {
+        "startLine": 97,
+        "startChar": 24,
+        "endLine": 97,
+        "endChar": 34
+      },
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab45afb8_927a83d5",
+        "filename": "chrome/installer/zucchini/reloc_utils_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-09-15T20:03:05Z",
+      "side": 1,
+      "message": "If this is initialized inline, then we don\u0027t need braces.",
+      "range": {
+        "startLine": 94,
+        "startChar": 27,
+        "endLine": 94,
+        "endChar": 36
+      },
+      "revId": "69688303a911e88872264b4d4c68472f00968efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
