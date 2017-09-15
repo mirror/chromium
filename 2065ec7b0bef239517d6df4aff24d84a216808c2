@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "cfe65533_e7ce48ce",
+        "filename": "components/offline_pages/core/model/get_pages_task.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-15T18:31:34Z",
+      "side": 1,
+      "message": "Why would you do that? This is designed to help catch the case of fragments, hence it is at the end. Do you expect fragments at the beginning of the URL?",
+      "parentUuid": "fc49ee2e_d2247f32",
+      "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79970e32_dc659d10",
         "filename": "components/offline_pages/core/model/get_pages_task.cc",
         "patchSetId": 2
@@ -231,6 +249,24 @@
     },
     {
       "key": {
+        "uuid": "dd7efded_17ad332e",
+        "filename": "components/offline_pages/core/model/get_pages_task.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-15T18:31:34Z",
+      "side": 1,
+      "message": "Updated all to CreateTaskMatching* pattern.",
+      "parentUuid": "87161d90_bb272def",
+      "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34fbe303_c9ff00e2",
         "filename": "components/offline_pages/core/test_task_runner.h",
         "patchSetId": 2
@@ -263,6 +299,24 @@
       "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7195d95d_645297e8",
+        "filename": "components/offline_pages/core/test_task_runner.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-15T18:31:34Z",
+      "side": 1,
+      "message": "Added more comments explaining the confusing situation.",
+      "parentUuid": "0057d754_55ed3e9b",
+      "revId": "2065ec7b0bef239517d6df4aff24d84a216808c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
