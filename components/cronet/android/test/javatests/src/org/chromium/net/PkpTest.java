@@ -4,10 +4,25 @@
 
 package org.chromium.net;
 
+import static android.support.test.InstrumentationRegistry.getContext;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import static org.chromium.net.CronetTestRule.getTestStorage;
+
 import android.support.test.filters.SmallTest;
 
 import org.json.JSONObject;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
 import org.chromium.net.CronetTestRule.OnlyRunNativeCronet;
 import org.chromium.net.test.util.CertTestUtil;
@@ -24,7 +39,8 @@ import java.util.Set;
 /**
  * Public-Key-Pinning tests of Cronet Java API.
  */
-public class PkpTest extends CronetTestBase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class PkpTest {
     private static final String CERT_USED = "quic_test.example.com.crt";
     private static final String[] CERTS_USED = {CERT_USED};
     private static final int DISTANT_FUTURE = Integer.MAX_VALUE;
@@ -35,6 +51,9 @@ public class PkpTest extends CronetTestBase {
     private static final boolean ENABLE_PINNING_BYPASS_FOR_LOCAL_ANCHORS = true;
     private static final boolean DISABLE_PINNING_BYPASS_FOR_LOCAL_ANCHORS = false;
 
+    @Rule
+    public final CronetTestRule mTestRule = new CronetTestRule();
+
     private CronetEngine mCronetEngine;
     private ExperimentalCronetEngine.Builder mBuilder;
     private TestUrlRequestCallback mListener;
@@ -42,9 +61,8 @@ public class PkpTest extends CronetTestBase {
     private String mServerHost; // test.example.com
     private String mDomain; // example.com
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         // Start QUIC Test Server
         System.loadLibrary("cronet_tests");
         QuicTestServer.startQuicTestServer(getContext());
@@ -53,11 +71,10 @@ public class PkpTest extends CronetTestBase {
         mDomain = mServerHost.substring(mServerHost.indexOf('.') + 1, mServerHost.length());
     }
 
-    @Override
-    protected void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         QuicTestServer.shutdownQuicTestServer();
         shutdownCronetEngine();
-        super.tearDown();
     }
 
     /**
@@ -66,6 +83,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -85,6 +103,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -108,6 +127,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -128,6 +148,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -148,6 +169,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -167,6 +189,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -187,6 +210,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -207,6 +231,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testLocalTrustAnchorPinningEnforced() throws Exception {
@@ -226,6 +251,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testLocalTrustAnchorPinningNotEnforced() throws Exception {
@@ -244,6 +270,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     @OnlyRunNativeCronet
@@ -270,6 +297,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testHostNameArgumentValidation() throws Exception {
@@ -327,6 +355,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testNullArguments() throws Exception {
@@ -342,6 +371,7 @@ public class PkpTest extends CronetTestBase {
      *
      * @throws Exception
      */
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testIllegalArgumentExceptionWhenPinValueIsSHA1() throws Exception {
