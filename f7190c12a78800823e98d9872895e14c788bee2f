@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20e5a12b_41aaca9d",
+        "filename": "chrome/android/java/res/drawable/selectable_item_icon_modern_bg.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-15T17:04:18Z",
+      "side": 1,
+      "message": "nit: should we rename this to something like list_item_icon_modern_bg since it\u0027s used for a non-selectable thing now?",
+      "revId": "f7190c12a78800823e98d9872895e14c788bee2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446ec1d9_7617ea7d",
+        "filename": "chrome/android/java/res/layout/accessibility_tab_switcher.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-15T17:04:18Z",
+      "side": 1,
+      "message": "Remind me what setting this to 0 does?",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 32
+      },
+      "revId": "f7190c12a78800823e98d9872895e14c788bee2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "390a06be_11aedb06",
+        "filename": "chrome/android/java/res/layout/accessibility_tab_switcher.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-15T17:04:18Z",
+      "side": 1,
+      "message": "nit: Include the closing / in \u003candroid.support.design.widget.TabLayout so there are no child views, e.g.s\n\n\u003candroid.support.design.widget.TabLayout\n  ....\n  app:tabMode\u003d\"fixed\" /\u003e",
+      "range": {
+        "startLine": 34,
+        "startChar": 11,
+        "endLine": 35,
+        "endChar": 50
+      },
+      "revId": "f7190c12a78800823e98d9872895e14c788bee2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49634cc8_1fdcf80b",
+        "filename": "chrome/android/java/res/layout/accessibility_tab_switcher_list_item.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-15T17:04:18Z",
+      "side": 1,
+      "message": "nit: add a space before the closing \u003e here and on the LinearLayout above",
+      "range": {
+        "startLine": 61,
+        "startChar": 33,
+        "endLine": 61,
+        "endChar": 34
+      },
+      "revId": "f7190c12a78800823e98d9872895e14c788bee2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56bf0973_e85e46c4",
+        "filename": "chrome/android/java/res/values/values.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-15T17:04:18Z",
+      "side": 1,
+      "message": "Same with naming on these levels",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 78,
+        "endChar": 62
+      },
+      "revId": "f7190c12a78800823e98d9872895e14c788bee2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb602627_211e6fe8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/BottomToolbarPhone.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1139,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-15T17:04:18Z",
+      "side": 1,
+      "message": "The code here before could have been a bit simpler since modern_primary_color is white.\n\nI think this can be something like:\n\nif (mUseModernDesign) {\n  if (visualState \u003d\u003d VisualState.TAB_SWITCHER_INCOGNITO\n        \u0026\u0026 DeviceClassManager.enableAccessibilityLayout()) {\n     return incognito_primary_color;\n  } else if (visualState \u003d\u003d VisualState.TAB_SWITCHER_NORMAL\n        || visualState \u003d\u003d VisualState.NORMAL) {\n     return modern_primary_color;\n  }\n}",
+      "range": {
+        "startLine": 1139,
+        "startChar": 26,
+        "endLine": 1139,
+        "endChar": 37
+      },
+      "revId": "f7190c12a78800823e98d9872895e14c788bee2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b88f38f8_1d7e08b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/accessibility/AccessibilityTabModelListItem.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-15T17:04:18Z",
+      "side": 1,
+      "message": "nit: how about something like updateTabText() since it\u0027s now the title and description?",
+      "range": {
+        "startLine": 294,
+        "startChar": 17,
+        "endLine": 294,
+        "endChar": 26
+      },
+      "revId": "f7190c12a78800823e98d9872895e14c788bee2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "700fbcd4_4093aac2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/accessibility/AccessibilityTabModelWrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-15T17:04:18Z",
+      "side": 1,
+      "message": "The tab layout is for the incognito and normal tabs at the top of the switcher?\n\nI\u0027m finding the naming a bit confusing since tab could also refere to tabs in the TabModel.\n\nMaybe we could riff on the existing variable names e.g.\nmModernStackButtonWrapper\nmModernStandardButton\nmModernIncognitoButton",
+      "range": {
+        "startLine": 130,
+        "startChar": 12,
+        "endLine": 130,
+        "endChar": 55
+      },
+      "revId": "f7190c12a78800823e98d9872895e14c788bee2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fda776c_1b3f2100",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/accessibility/AccessibilityTabModelWrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-15T17:04:18Z",
+      "side": 1,
+      "message": "Can we re-use the mStandardButton.setOnClickListener() pattern and updated ButtonOnClickListener() to do the right thing depending on whether modern is enabled?",
+      "range": {
+        "startLine": 142,
+        "startChar": 12,
+        "endLine": 163,
+        "endChar": 15
+      },
+      "revId": "f7190c12a78800823e98d9872895e14c788bee2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4203f7d1_56105d49",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/newtab/NewTabButton.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-15T17:04:18Z",
+      "side": 1,
+      "message": "I downloaded the patch to test out locally and it the + button isn\u0027t updating tint when the tab model is switched\n\ne.g.\n1. Open incognito tab\n2. Go to tab switcher\n3. Switch to normal tab -- + button still white (disappears)\n\nIs it possibly due to this early return?",
+      "range": {
+        "startLine": 146,
+        "startChar": 12,
+        "endLine": 146,
+        "endChar": 18
+      },
+      "revId": "f7190c12a78800823e98d9872895e14c788bee2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
