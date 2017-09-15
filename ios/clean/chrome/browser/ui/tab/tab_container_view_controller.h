@@ -44,6 +44,10 @@
 // loaded.
 @property(nonatomic, assign) BOOL usesBottomToolbar;
 
+// Notifies the view controller of a change in the omnibox's frame.  This is
+// used to update the position of various associated views.
+- (void)updateConstraintsForOmniboxFrame:(CGRect)frame;
+
 @end
 
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_TAB_TAB_CONTAINER_VIEW_CONTROLLER_H_
