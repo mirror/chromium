@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.support.annotation.VisibleForTesting;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +72,7 @@ public class AwAutofillProvider extends AutofillProvider {
                 ViewStructure child = structure.newChild(index++);
                 int virtualId = toVirtualId(sessionId, fieldIndex++);
                 child.setAutofillId(structure.getAutofillId(), virtualId);
-                if (field.mAutocompleteAttr != null) {
+                if (field.mAutocompleteAttr != null && !field.mAutocompleteAttr.isEmpty()) {
                     child.setAutofillHints(field.mAutocompleteAttr.split(" +"));
                 }
                 child.setHint(field.mPlaceholder);
@@ -194,6 +195,12 @@ public class AwAutofillProvider extends AutofillProvider {
         mContainerView = containerView;
     }
 
+    @VisibleForTesting
+    public AwAutofillProvider(ViewGroup containerView, AwAutofillManager manager) {
+        mAutofillManager = manager;
+        mContainerView = containerView;
+    }
+
     @Override
     public void onContainerViewChanged(ViewGroup containerView) {
         mContainerView = containerView;
@@ -269,6 +276,7 @@ public class AwAutofillProvider extends AutofillProvider {
 
     private void notifyVirtualValueChanged(int index) {
         AutofillValue autofillValue = mRequest.getFieldNewValue(index);
+        if (autofillValue == null) return;
         mAutofillManager.notifyVirtualValueChanged(
                 mContainerView, mRequest.getVirtualId((short) index), autofillValue);
     }
