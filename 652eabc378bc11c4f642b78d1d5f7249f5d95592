@@ -1,0 +1,361 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4dc0bab_52e6e6e2",
+        "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "Having both a loop iterator and a loop index (a bunch of places in this file) is kinda unfortunate.\n\nI wonder if we could make use of std::equal() instead, potentially using local lambdas or some file-scope helpers or something.  That seems to better capture the semantics of \"compare these two containers for equality\".",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dbd8e48_0052aae5",
+        "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "This conditional isn\u0027t needed, because of the condition above that checks that num_results \u003d\u003d matches.size().",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3ff4da_9da0bc99",
+        "filename": "components/omnibox/browser/autocomplete_classifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "I don\u0027t think you should add this CHECK, at least in this CL.  It seems unrelated to the aim of the CL.",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a5477ae_08ad819f",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "Likewise, I wouldn\u0027t add any of the CHECKs in this file.",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a0fb3d7_8015ef03",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "This conversion does not preserve old behavior.  In particular, the \"continue\" skips the increment of |index|.\n\nOne way to be safe against this is to remove |index| and use std::distance() to compute it on the fly.",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9c2b01b_bac8d46a",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "Nit: While here: convert to use SizeTToString()",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e7cc67_af558fca",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "Nit: While here: just append strings together instead of using StringPrintF().",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb3944c_d908055b",
+        "filename": "components/omnibox/browser/autocomplete_match.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "Nit: Prefer using to typedef (old code predates C++11)",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "290b3e25_2b236027",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "Don\u0027t check in any of this",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035793da_4263f669",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "Why this transformation?  Looks like you were starting to work on ripping out |default_match_|, and this all got tangled with it?",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eeeaae0_9958da70",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "This feels a bit unfortunate -- O(n) instead of O(1), and match_at() is called a lot.  Of course the size of the list is small so the potential cost is small.  Does it make any difference anywhere?\n\nMaybe we should change the API.  Stop providing random-access functions, just provide something that gets the whole match set, let you iterate through it yourself if need be.",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32a91cf3_24638123",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "Nit: I\u0027d just use \"bool default_was_end\" and the like instead of declaring a list just to point at its end() and check back if you did that.",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c00bb5a5_68655e5c",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "Condition not necessary, you ASSERTed things were the right size above",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6162a119_b3c59df2",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": ":(\n\nThese sorts of constructs seem unfortunate... wonder if we could pass PopulateAutocompleteMatches() a set of destination URLs or something, since that seems to be a thing many places in this file are doing.",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b219424f_a4c054e0",
+        "filename": "components/omnibox/browser/bookmark_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "Don\u0027t check this stuff in either",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4780cc33_6999ee11",
+        "filename": "components/omnibox/browser/bookmark_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "Losing partial_sort() is sad.  What if we have a lot of bookmarks?",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "153b6dcb_6e110fe5",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "Nit: Maybe another case for std::equal()",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0661af6a_7d7faf7e",
+        "filename": "components/omnibox/browser/keyword_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "Nit: std::equal()?",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "736e2ce2_cd92fa9c",
+        "filename": "components/omnibox/browser/omnibox_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "Nit: Don\u0027t add",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "410ec348_e10ccd21",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "Nit: Don\u0027t add (2 places)",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f1e400_c568fbdd",
+        "filename": "components/omnibox/browser/search_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-15T00:25:42Z",
+      "side": 1,
+      "message": "Nit: Don\u0027t commit",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
