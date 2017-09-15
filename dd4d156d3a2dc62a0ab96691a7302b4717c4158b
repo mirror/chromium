@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "b65cd438_89429c93",
+        "filename": "third_party/zlib/adler32.c",
+        "patchSetId": 26
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-15T17:44:16Z",
+      "side": 1,
+      "message": "\u003e I like that you tested for a NULL buffer before calling into the optimized code (as that free us from having to test for it in there).\n\nRight. And as you correctly noted alder32 should return 1L for a NULL buffer ...\n\n\u003e In this scenario (unless I\u0027m misreading), this specific test case that is part of the unit tests I wrote to validate the NEON code would fail in the SSE implementation.\n\nSo if buf is NULL, the SSE code is not entered, I think that\u0027s clear, so we fall into the existing code\n\n  /* in case user likes doing a byte at a time ...\n  if (len \u003d\u003d 1) {\n    adler +\u003d buf[0];\n    ...\n  }\n\n  /* initial Adler-32 value (deferred check for len \u003d\u003d 1 speed) */\n  if (buf \u003d\u003d Z_NULL)\n     return 1L;\n\nIf your test is for the buf \u003d\u003d NULL case, looks to me like it should work.\n\n\u003e While at it, maybe you could move the call to the first line entering the function? (i.e. before the local variables were declared).\n\nPossible, but the odd way this buf \u003d\u003d Z_NULL code is written (the comment says something about speed, a possible slight hint) suggests that we should maybe leave it alone. The odd way the code is written is enough to make we wary: I have no evidence, but I suspect someone wrote this code this way on purpose.",
+      "parentUuid": "211e2054_6e6a9f6c",
+      "revId": "dd4d156d3a2dc62a0ab96691a7302b4717c4158b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "342715b2_7a50ba51",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 26
@@ -51,6 +69,24 @@
       "revId": "dd4d156d3a2dc62a0ab96691a7302b4717c4158b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8109177b_5d267901",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 26
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-15T17:44:16Z",
+      "side": 1,
+      "message": "Developer will add their port to some build file, and likely then try a basic compile.\n\nNot sure about #pragma, but #error breaks the compile and prints the \"No adler32 simd is defined for your port.\" message, this to guide the developer on what to do next (add you port code here).\n\nFormally, I had nothing here.  Compile error would about no return statement, or something equally cryptic.  #error gives developer a better hint re: the actual problem.",
+      "parentUuid": "342715b2_7a50ba51",
+      "revId": "dd4d156d3a2dc62a0ab96691a7302b4717c4158b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "a82a0394_61564c52",
+        "filename": "third_party/zlib/inflate.c",
+        "patchSetId": 26
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-15T17:44:16Z",
+      "side": 1,
+      "message": "Yes, x86_check_features() provide by Intel has a stub implementation that does nothing on other ports (aka platforms, eg., MIPS, ARM NEON, etc) in my understanding of it.\n\nSince that stub works everywhere (and only does real something real on the INTEL port), it doesn\u0027t need a #ifdef guard.\n\nc.f. the same line of code in deflate.c, which has been in use for some time.  It has no #ifdef guards either.",
+      "parentUuid": "56578679_2f664576",
+      "revId": "dd4d156d3a2dc62a0ab96691a7302b4717c4158b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cfdd6b5_7ae85f5d",
         "filename": "third_party/zlib/names.h",
         "patchSetId": 26
@@ -85,6 +139,24 @@
       "revId": "dd4d156d3a2dc62a0ab96691a7302b4717c4158b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9c5b458_ba8c3e50",
+        "filename": "third_party/zlib/names.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-15T17:44:16Z",
+      "side": 1,
+      "message": "Yes, for the image decoders libpng libjpeg etc, we do this name mangling also for the same reasons: to support folks who build chromium with the USE_SYSTEM_LIBJPEG build flag (linux distros typically).",
+      "parentUuid": "1cfdd6b5_7ae85f5d",
+      "revId": "dd4d156d3a2dc62a0ab96691a7302b4717c4158b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
