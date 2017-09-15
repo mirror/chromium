@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bc40bee_ccfb6423",
+        "filename": "base/process/process.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-15T15:33:44Z",
+      "side": 1,
+      "message": "Deliberately adding a flaky API seems unfortunate.. What would it look like to use base::Process to start processes for Chromoting (with CreateProcessAsUser)? There\u0027s already an OS_WIN specific LaunchProcess https://cs.chromium.org/chromium/src/base/process/launch.h?rcl\u003de53f544bd56fe0a7c66b3fe705e104280a431127\u0026l\u003d253 do we need another?",
+      "revId": "d90edb47be236a1a45f3cbbcc661c1e852b8e3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
