@@ -10,6 +10,7 @@
 
 namespace blink {
 
+class FloatPoint3D;
 class TransformationMatrix;
 
 template <typename T>
@@ -19,6 +20,9 @@ std::unique_ptr<JSONArray> PointAsJSONArray(const T& point) {
   array->PushDouble(point.Y());
   return array;
 }
+
+PLATFORM_EXPORT std::unique_ptr<JSONArray> Point3DAsJSONArray(
+    const FloatPoint3D&);
 
 template <typename T>
 std::unique_ptr<JSONArray> SizeAsJSONArray(const T& size) {
