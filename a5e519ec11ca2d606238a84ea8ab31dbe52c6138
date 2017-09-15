@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16e2e462_3e2f3bcd",
+        "filename": "ash/shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-15T22:53:37Z",
+      "side": 1,
+      "message": "this is in kind of a random spot because window_selector_controller_ is initialized in the initialize list. any ideas where this should go?",
+      "revId": "a5e519ec11ca2d606238a84ea8ab31dbe52c6138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
