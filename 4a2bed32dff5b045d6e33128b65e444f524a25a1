@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a3ca2d21_9090912f",
+        "filename": "gpu/config/gpu_util.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-09-15T02:02:48Z",
+      "side": 1,
+      "message": "You were right. The GetWebGLFeatureStatus needs to do the same.",
+      "parentUuid": "276064a1_9c09541a",
+      "range": {
+        "startLine": 93,
+        "startChar": 11,
+        "endLine": 93,
+        "endChar": 39
+      },
+      "revId": "4a2bed32dff5b045d6e33128b65e444f524a25a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf2a5771_68f3f1c9",
         "filename": "third_party/WebKit/Source/core/html/canvas/CanvasRenderingContextHost.h",
         "patchSetId": 15
@@ -39,6 +63,24 @@
       "revId": "4a2bed32dff5b045d6e33128b65e444f524a25a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346a3b6a_20ca3306",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasRenderingContextHost.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-09-15T02:02:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf2a5771_68f3f1c9",
+      "revId": "4a2bed32dff5b045d6e33128b65e444f524a25a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "4a2bed32dff5b045d6e33128b65e444f524a25a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae596614_9952d9c5",
+        "filename": "third_party/WebKit/Source/modules/webgl/WebGLRenderingContextBase.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-09-15T02:02:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "131f5501_95d31d65",
+      "range": {
+        "startLine": 695,
+        "startChar": 18,
+        "endLine": 695,
+        "endChar": 24
+      },
+      "revId": "4a2bed32dff5b045d6e33128b65e444f524a25a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
