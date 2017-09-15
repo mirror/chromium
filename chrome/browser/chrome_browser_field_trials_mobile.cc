@@ -12,6 +12,7 @@
 #include "build/build_config.h"
 
 #if defined(OS_ANDROID)
+#include "base/trace_event/freed_object_tracker.h"
 #include "chrome/browser/prerender/prerender_field_trial.h"
 #endif
 
@@ -22,7 +23,9 @@ void SetupMobileFieldTrials() {
   prerender::ConfigurePrerender();
 
   // Force-enable profiler timing depending on the field trial.
-  if (base::FieldTrialList::FindFullName("ProfilerTiming") == "Enable")
+  if (base::FieldTrialList::FindFullName("FreedObjectTracker") == "Enable")
+    base::trace_event::FreedObjectTracker::GetInstance()->Enable();
+  else if (base::FieldTrialList::FindFullName("ProfilerTiming") == "Enable")
     tracked_objects::ThreadData::EnableProfilerTiming();
 #endif
 }
