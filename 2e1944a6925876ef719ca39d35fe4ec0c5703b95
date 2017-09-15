@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "af20388e_8af33ed0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T08:36:56Z",
+      "side": 1,
+      "message": "nit: remove trailing space",
+      "revId": "2e1944a6925876ef719ca39d35fe4ec0c5703b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9490af60_86bf259a",
+        "filename": "ios/chrome/browser/browsing_data/browsing_data_removal_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T08:36:56Z",
+      "side": 1,
+      "message": "If browserState is off-the-record, this will return null, so I think we should have this code path either 1. put an early return if browserState is off-the-record or 2. DCHECK that it is not.\n\nIt looks like other methods can be called with off-the-record browserState (see line 181), so I think option 1 is better.",
+      "range": {
+        "startLine": 436,
+        "startChar": 2,
+        "endLine": 436,
+        "endChar": 62
+      },
+      "revId": "2e1944a6925876ef719ca39d35fe4ec0c5703b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "349e0185_44848801",
+        "filename": "ios/chrome/browser/browsing_data/browsing_data_removal_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T08:36:56Z",
+      "side": 1,
+      "message": "Yuck 🤢\n\nI think using a local variable make this cleaner:\n\n  base::OnceCallback callback;\n  if (completionHandler)\n    callback \u003d base::BindBlockArc(completionHandler);\n\n  ExternalFileRemoverFactory::GetForBrowserState(browserState)\n      -\u003eRemoveAfterDelay(\n          base::TimeDelta::FromSeconds(0),\n          base::Passed(\u0026callback));",
+      "range": {
+        "startLine": 439,
+        "startChar": 10,
+        "endLine": 441,
+        "endChar": 50
+      },
+      "revId": "2e1944a6925876ef719ca39d35fe4ec0c5703b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13616ada_6b730d9b",
         "filename": "ios/chrome/browser/ui/BUILD.gn",
         "patchSetId": 5
@@ -19,6 +82,213 @@
         "endLine": 227,
         "endChar": 34
       },
+      "revId": "2e1944a6925876ef719ca39d35fe4ec0c5703b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e05fd385_6891e525",
+        "filename": "ios/chrome/browser/ui/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T08:36:56Z",
+      "side": 1,
+      "message": "I don\u0027t mind the move happening in a followup CL.",
+      "parentUuid": "13616ada_6b730d9b",
+      "range": {
+        "startLine": 227,
+        "startChar": 5,
+        "endLine": 227,
+        "endChar": 34
+      },
+      "revId": "2e1944a6925876ef719ca39d35fe4ec0c5703b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17400723_7b1f8c3e",
+        "filename": "ios/chrome/browser/ui/external_file_remover_factory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T08:36:56Z",
+      "side": 1,
+      "message": "Unused, remove.",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 46
+      },
+      "revId": "2e1944a6925876ef719ca39d35fe4ec0c5703b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a86f6c1d_0a20874d",
+        "filename": "ios/chrome/browser/ui/external_file_remover_factory.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T08:36:56Z",
+      "side": 1,
+      "message": "Not necessary, ExternalFileRemoverImpl inherits from ExternalFileRemover so it has to include this header already.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 55
+      },
+      "revId": "2e1944a6925876ef719ca39d35fe4ec0c5703b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2703d51b_a08cf64a",
+        "filename": "ios/chrome/browser/ui/external_file_remover_factory.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T08:36:56Z",
+      "side": 1,
+      "message": "Unused, remove.",
+      "revId": "2e1944a6925876ef719ca39d35fe4ec0c5703b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06658291_308c44de",
+        "filename": "ios/chrome/browser/ui/external_file_remover_factory.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T08:36:56Z",
+      "side": 1,
+      "message": "ExternalFileRemoverImpl constructor is public so you can use std::make_unique here:\n\n  return std::make_unique\u003cExternalFileRemoverImpl\u003e(\n      browser_state,\n      IOSChromeTabRestoreServiceFactory::GetForBrowserState(browser_state)));",
+      "range": {
+        "startLine": 54,
+        "startChar": 47,
+        "endLine": 54,
+        "endChar": 74
+      },
+      "revId": "2e1944a6925876ef719ca39d35fe4ec0c5703b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64eed8bd_66c07442",
+        "filename": "ios/chrome/browser/ui/external_file_remover_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T08:36:56Z",
+      "side": 1,
+      "message": "This should be commenting the public class not the private implementation. So please move this to external_file_remover.h. Here you can just say this is the concrete implementation of the abstract interface.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 21
+      },
+      "revId": "2e1944a6925876ef719ca39d35fe4ec0c5703b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "087d32bd_5e0bde35",
+        "filename": "ios/chrome/browser/ui/external_file_remover_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T08:36:56Z",
+      "side": 1,
+      "message": "Please put method declaration (in .h) and method definition (in .mm) in the same order. So either move them in the header or in the implementation.",
+      "revId": "2e1944a6925876ef719ca39d35fe4ec0c5703b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "602f4ee0_a330d037",
+        "filename": "ios/chrome/browser/ui/external_file_remover_impl.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T08:36:56Z",
+      "side": 1,
+      "message": "Please comment, something along the lines of:\n\n  // Empty callback. The closure owned by |closure_runner| will be invoked as\n  // part of the destructor of base::ScopedClosureRunner (which takes care of\n  // checking for null closure).",
+      "revId": "2e1944a6925876ef719ca39d35fe4ec0c5703b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfccabc5_bd580081",
+        "filename": "ios/chrome/browser/ui/external_file_remover_impl.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T08:36:56Z",
+      "side": 1,
+      "message": "I think we should remove this DCHECK and instead check that all the method of this class are called on the correct sequence (instead of thread). This can be done by adding the following to the header\n\n  class ExternalFileRemoverImpl {\n    ...\n\n\n    // Used to ensure that this class\u0027 methods are called on the correct sequence.\n    SEQUENCE_CHECKER(sequence_checker_);\n\n    base::WeakPtrFactory\u003cExternalFileRemoverImpl\u003e weak_ptr_factory_;\n\n    ...\n  }\n\nthen in each method, add the following at the beginning:\n\n  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 42
+      },
+      "revId": "2e1944a6925876ef719ca39d35fe4ec0c5703b95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9059981_813b2ff4",
+        "filename": "ios/chrome/browser/ui/external_file_remover_impl.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T08:36:56Z",
+      "side": 1,
+      "message": "nit: maybe add a comment here to explain that the deletion is delayed until the tab restore loading completes",
       "revId": "2e1944a6925876ef719ca39d35fe4ec0c5703b95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
