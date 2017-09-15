@@ -204,6 +204,9 @@ class CastGeolocationDelegate : public device::GeolocationDelegate {
   explicit CastGeolocationDelegate(CastBrowserContext* context)
       : context_(context) {}
 
+  // Enable network geolocation.
+  bool UseNetworkLocationProviders() override { return true; }
+
   scoped_refptr<device::AccessTokenStore> CreateAccessTokenStore() override {
     return new CastAccessTokenStore(context_);
   }

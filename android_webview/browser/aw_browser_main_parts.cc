@@ -53,10 +53,6 @@ class AwGeolocationDelegate : public device::GeolocationDelegate {
  public:
   AwGeolocationDelegate() = default;
 
-  // Android doesn't use NetworkLocationProvider (the capability is folded into
-  // the system location provider).
-  bool UseNetworkLocationProviders() override { return false; }
-
   scoped_refptr<device::AccessTokenStore> CreateAccessTokenStore() final {
     NOTREACHED() << "No network geolocation for Android webview";
     return nullptr;

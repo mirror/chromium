@@ -10,7 +10,7 @@
 namespace device {
 
 bool GeolocationDelegate::UseNetworkLocationProviders() {
-  return true;
+  return false;
 }
 
 scoped_refptr<AccessTokenStore> GeolocationDelegate::CreateAccessTokenStore() {

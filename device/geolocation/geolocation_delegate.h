@@ -22,6 +22,7 @@ class DEVICE_GEOLOCATION_EXPORT GeolocationDelegate {
 
   // Returns true if the location API should use network-based location
   // approximation in addition to the system provider, if any.
+  // Default implementation returns false.
   virtual bool UseNetworkLocationProviders();
 
   // Creates a new AccessTokenStore for geolocation. May return nullptr.

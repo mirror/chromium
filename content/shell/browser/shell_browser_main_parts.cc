@@ -68,10 +68,6 @@ class ShellGeolocationDelegate : public device::GeolocationDelegate {
  public:
   ShellGeolocationDelegate() = default;
 
-  // Since content shell is a test executable, rather than an end-user program,
-  // don't make calls to the network geolocation API.
-  bool UseNetworkLocationProviders() override { return false; }
-
   scoped_refptr<device::AccessTokenStore> CreateAccessTokenStore() final {
     NOTREACHED() << "No network geolocation for content shell";
     return nullptr;

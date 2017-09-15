@@ -73,6 +73,8 @@ void SetReferencePosition(FakeLocationProvider* provider) {
 
 }  // namespace
 
+// Configurable GeolocationDelegate which can optionally enable network location
+// providers and optionally override the system location provider.
 class FakeGeolocationDelegate : public GeolocationDelegate {
  public:
   FakeGeolocationDelegate() = default;
@@ -80,10 +82,20 @@ class FakeGeolocationDelegate : public GeolocationDelegate {
   bool UseNetworkLocationProviders() override { return use_network_; }
   void set_use_network(bool use_network) { use_network_ = use_network; }
 
+  void set_override_system_provider(bool override_system_provider) {
+    override_system_provider_ = override_system_provider;
+  }
+
   std::unique_ptr<LocationProvider> OverrideSystemLocationProvider() override {
-    DCHECK(!mock_location_provider_);
-    mock_location_provider_ = new FakeLocationProvider;
-    return base::WrapUnique(mock_location_provider_);
+    if (override_system_provider_) {
+      // Return a fake as the overriden system location provider, and keep a
+      // pointer to it for testing purposes.
+      DCHECK(!mock_location_provider_);
+      mock_location_provider_ = new FakeLocationProvider;
+      return base::WrapUnique(mock_location_provider_);
+    } else {
+      return std::unique_ptr<LocationProvider>();
+    }
   }
 
   FakeLocationProvider* mock_location_provider() const {
@@ -91,7 +103,8 @@ class FakeGeolocationDelegate : public GeolocationDelegate {
   }
 
  private:
-  bool use_network_ = true;
+  bool use_network_ = false;
+  bool override_system_provider_ = false;
   FakeLocationProvider* mock_location_provider_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(FakeGeolocationDelegate);
@@ -145,19 +158,16 @@ class GeolocationLocationArbitratorTest : public testing::Test {
  protected:
   GeolocationLocationArbitratorTest()
       : access_token_store_(new NiceMock<FakeAccessTokenStore>),
-        observer_(new MockLocationObserver),
-        delegate_(new GeolocationDelegate) {}
+        observer_(new MockLocationObserver) {}
 
-  // Initializes |arbitrator_|, with the possibility of injecting a specific
-  // |delegate|, otherwise a default, no-op GeolocationDelegate is used.
+  // Initializes |arbitrator_| with the specified GeolocationDelegate.
   void InitializeArbitrator(std::unique_ptr<GeolocationDelegate> delegate) {
-    if (delegate)
-      delegate_ = std::move(delegate);
+    ASSERT_TRUE(delegate);
     const LocationProvider::LocationProviderUpdateCallback callback =
         base::Bind(&MockLocationObserver::OnLocationUpdate,
                    base::Unretained(observer_.get()));
     arbitrator_.reset(new TestingLocationArbitrator(
-        callback, access_token_store_, std::move(delegate_)));
+        callback, access_token_store_, std::move(delegate)));
   }
 
   // testing::Test
@@ -186,20 +196,21 @@ class GeolocationLocationArbitratorTest : public testing::Test {
   const scoped_refptr<FakeAccessTokenStore> access_token_store_;
   const std::unique_ptr<MockLocationObserver> observer_;
   std::unique_ptr<TestingLocationArbitrator> arbitrator_;
-  std::unique_ptr<GeolocationDelegate> delegate_;
   const base::MessageLoop loop_;
 };
 
 TEST_F(GeolocationLocationArbitratorTest, CreateDestroy) {
   EXPECT_TRUE(access_token_store_.get());
-  InitializeArbitrator(nullptr);
+  InitializeArbitrator(std::make_unique<FakeGeolocationDelegate>());
   EXPECT_TRUE(arbitrator_);
   arbitrator_.reset();
   SUCCEED();
 }
 
 TEST_F(GeolocationLocationArbitratorTest, OnPermissionGranted) {
-  InitializeArbitrator(nullptr);
+  auto delegate = std::make_unique<FakeGeolocationDelegate>();
+  delegate->set_use_network(true);
+  InitializeArbitrator(std::move(delegate));
   EXPECT_FALSE(arbitrator_->HasPermissionBeenGrantedForTest());
   arbitrator_->OnPermissionGranted();
   EXPECT_TRUE(arbitrator_->HasPermissionBeenGrantedForTest());
@@ -210,7 +221,9 @@ TEST_F(GeolocationLocationArbitratorTest, OnPermissionGranted) {
 }
 
 TEST_F(GeolocationLocationArbitratorTest, NormalUsage) {
-  InitializeArbitrator(nullptr);
+  auto delegate = std::make_unique<FakeGeolocationDelegate>();
+  delegate->set_use_network(true);
+  InitializeArbitrator(std::move(delegate));
   ASSERT_TRUE(access_token_store_.get());
   ASSERT_TRUE(arbitrator_);
 
@@ -245,10 +258,11 @@ TEST_F(GeolocationLocationArbitratorTest, NormalUsage) {
 }
 
 TEST_F(GeolocationLocationArbitratorTest, CustomSystemProviderOnly) {
-  FakeGeolocationDelegate* fake_delegate = new FakeGeolocationDelegate;
-  fake_delegate->set_use_network(false);
-
-  std::unique_ptr<GeolocationDelegate> delegate(fake_delegate);
+  auto delegate = std::make_unique<FakeGeolocationDelegate>();
+  delegate->set_use_network(false);
+  delegate->set_override_system_provider(true);
+  // Keep a pointer for testing purposes:
+  FakeGeolocationDelegate* const fake_delegate = delegate.get();
   InitializeArbitrator(std::move(delegate));
   ASSERT_TRUE(arbitrator_);
 
@@ -283,10 +297,11 @@ TEST_F(GeolocationLocationArbitratorTest, CustomSystemProviderOnly) {
 
 TEST_F(GeolocationLocationArbitratorTest,
        CustomSystemAndDefaultNetworkProviders) {
-  FakeGeolocationDelegate* fake_delegate = new FakeGeolocationDelegate;
-  fake_delegate->set_use_network(true);
-
-  std::unique_ptr<GeolocationDelegate> delegate(fake_delegate);
+  auto delegate = std::make_unique<FakeGeolocationDelegate>();
+  delegate->set_use_network(true);
+  delegate->set_override_system_provider(true);
+  // Keep a pointer for testing purposes:
+  FakeGeolocationDelegate* const fake_delegate = delegate.get();
   InitializeArbitrator(std::move(delegate));
   ASSERT_TRUE(arbitrator_);
 
@@ -324,7 +339,9 @@ TEST_F(GeolocationLocationArbitratorTest,
 }
 
 TEST_F(GeolocationLocationArbitratorTest, SetObserverOptions) {
-  InitializeArbitrator(nullptr);
+  auto delegate = std::make_unique<FakeGeolocationDelegate>();
+  delegate->set_use_network(true);
+  InitializeArbitrator(std::move(delegate));
   arbitrator_->StartProvider(false);
   access_token_store_->NotifyDelegateTokensLoaded();
   ASSERT_TRUE(cell());
@@ -340,7 +357,9 @@ TEST_F(GeolocationLocationArbitratorTest, SetObserverOptions) {
 }
 
 TEST_F(GeolocationLocationArbitratorTest, Arbitration) {
-  InitializeArbitrator(nullptr);
+  auto delegate = std::make_unique<FakeGeolocationDelegate>();
+  delegate->set_use_network(true);
+  InitializeArbitrator(std::move(delegate));
   arbitrator_->StartProvider(false);
   access_token_store_->NotifyDelegateTokensLoaded();
   ASSERT_TRUE(cell());
@@ -417,7 +436,9 @@ TEST_F(GeolocationLocationArbitratorTest, Arbitration) {
 }
 
 TEST_F(GeolocationLocationArbitratorTest, TwoOneShotsIsNewPositionBetter) {
-  InitializeArbitrator(nullptr);
+  auto delegate = std::make_unique<FakeGeolocationDelegate>();
+  delegate->set_use_network(true);
+  InitializeArbitrator(std::move(delegate));
   arbitrator_->StartProvider(false);
   access_token_store_->NotifyDelegateTokensLoaded();
   ASSERT_TRUE(cell());

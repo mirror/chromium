@@ -299,6 +299,9 @@ class ChromeGeolocationDelegate : public device::GeolocationDelegate {
  public:
   ChromeGeolocationDelegate() = default;
 
+  // Enable network geolocation.
+  bool UseNetworkLocationProviders() override { return true; }
+
   scoped_refptr<device::AccessTokenStore> CreateAccessTokenStore() final {
     return new ChromeAccessTokenStore();
   }
