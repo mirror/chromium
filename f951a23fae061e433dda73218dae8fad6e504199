@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "e1826464_d0763c49",
+        "filename": "ios/chrome/browser/ui/commands/show_mail_composer_command.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-15T23:04:51Z",
+      "side": 1,
+      "message": "SGTM. Feel free to make the change in a separate CL.",
+      "parentUuid": "62831353_34faee2d",
+      "revId": "f951a23fae061e433dda73218dae8fad6e504199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02471538_84dbeefd",
         "filename": "ios/chrome/browser/ui/commands/show_mail_composer_command.mm",
         "patchSetId": 4
@@ -210,6 +228,30 @@
       "side": 1,
       "message": "I assume delegate is an exception?",
       "parentUuid": "eb619752_02a8696f",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 31
+      },
+      "revId": "f951a23fae061e433dda73218dae8fad6e504199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c5e3313_80f66b3a",
+        "filename": "ios/chrome/browser/webui/mail_composer_presenter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-15T23:04:51Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "a258a5ce_18c9c376",
       "range": {
         "startLine": 13,
         "startChar": 10,
