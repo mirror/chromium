@@ -130,9 +130,40 @@ void LayoutNGBlockFlow::ResetNGInlineNodeData() {
   ng_inline_node_data_ = WTF::MakeUnique<NGInlineNodeData>();
 }
 
+void LayoutNGBlockFlow::AddOverflowFromChildren() {
+  // |ComputeOverflow()| calls this, which is called from
+  // |CopyFragmentDataToLayoutBox()| and |RecalcOverflowAfterStyleChange()|.
+  if (ChildrenInline()) {
+    // |LayoutBlockFlow| computes visual overflow from |RootInlineBox|, which is
+    // missing in NGPaint.
+    // To compute visual overflow, we need the fragment produced by the last
+    // layout cycle, which is IIUC different from the purpose of fragment cache.
+    // The other idea is to use |physical_root_fragment_|, which is closer to
+    // "the last layout" but it's not the "root" fragment.
+    DCHECK(cached_result_ && cached_result_->PhysicalFragment());
+    const NGPhysicalFragment& physical_fragment =
+        *cached_result_->PhysicalFragment();
+    // If |RecalcOverflowAfterStyleChange()|, we need to re-compute glyph
+    // bounding box. How to detect it and how to re-compute is TBD.
+    LayoutRect visual_rect = physical_fragment.VisualRect();
+    AddContentsVisualOverflow(visual_rect);
+    return;
+  }
+  LayoutBlockFlow::AddOverflowFromChildren();
+}
+
 LayoutUnit LayoutNGBlockFlow::FirstLineBoxBaseline() const {
   // TODO(kojii): Implement. This will stop working once we stop creating line
   // boxes.
+  if (ChildrenInline()) {
+    // Table (and Grid?) calls this before layout?
+    if (NeedsLayout())
+      return LayoutBlockFlow::FirstLineBoxBaseline();
+#if 0
+    // Still hit this, needs investigation.
+    DCHECK(cached_result_ && cached_result_->PhysicalFragment());
+#endif
+  }
   return LayoutBlockFlow::FirstLineBoxBaseline();
 }
 
@@ -140,12 +171,18 @@ LayoutUnit LayoutNGBlockFlow::InlineBlockBaseline(
     LineDirectionMode line_direction) const {
   // TODO(kojii): Implement. This will stop working once we stop creating line
   // boxes.
+  DCHECK(!NeedsLayout());
+  if (ChildrenInline()) {
+    DCHECK(cached_result_ && cached_result_->PhysicalFragment());
+  }
   return LayoutBlockFlow::InlineBlockBaseline(line_direction);
 }
 
 RefPtr<NGLayoutResult> LayoutNGBlockFlow::CachedLayoutResult(
     const NGConstraintSpace& constraint_space,
     NGBreakToken* break_token) const {
+  if (!RuntimeEnabledFeatures::LayoutNGFragmentCachingEnabled())
+    return nullptr;
   if (!cached_result_ || break_token || NeedsLayout())
     return nullptr;
   if (constraint_space != *cached_constraint_space_)
@@ -157,8 +194,6 @@ void LayoutNGBlockFlow::SetCachedLayoutResult(
     const NGConstraintSpace& constraint_space,
     NGBreakToken* break_token,
     RefPtr<NGLayoutResult> layout_result) {
-  if (!RuntimeEnabledFeatures::LayoutNGFragmentCachingEnabled())
-    return;
   if (break_token || constraint_space.UnpositionedFloats().size() ||
       layout_result->UnpositionedFloats().size() ||
       layout_result->Status() != NGLayoutResult::kSuccess) {
