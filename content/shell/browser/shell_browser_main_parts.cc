@@ -25,7 +25,6 @@
 #include "content/shell/browser/shell_net_log.h"
 #include "content/shell/common/shell_switches.h"
 #include "device/bluetooth/bluetooth_adapter_factory.h"
-#include "device/geolocation/access_token_store.h"
 #include "device/geolocation/geolocation_delegate.h"
 #include "device/geolocation/geolocation_provider.h"
 #include "net/base/filename_util.h"
@@ -71,11 +70,6 @@ class ShellGeolocationDelegate : public device::GeolocationDelegate {
   // Since content shell is a test executable, rather than an end-user program,
   // don't make calls to the network geolocation API.
   bool UseNetworkLocationProviders() override { return false; }
-
-  scoped_refptr<device::AccessTokenStore> CreateAccessTokenStore() final {
-    NOTREACHED() << "No network geolocation for content shell";
-    return nullptr;
-  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ShellGeolocationDelegate);

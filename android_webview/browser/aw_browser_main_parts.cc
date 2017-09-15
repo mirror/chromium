@@ -33,7 +33,6 @@
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/result_codes.h"
-#include "device/geolocation/access_token_store.h"
 #include "device/geolocation/geolocation_delegate.h"
 #include "device/geolocation/geolocation_provider.h"
 #include "net/android/network_change_notifier_factory_android.h"
@@ -48,7 +47,7 @@
 namespace android_webview {
 namespace {
 
-// A provider of Geolocation services to override AccessTokenStore.
+// A provider of Geolocation services.
 class AwGeolocationDelegate : public device::GeolocationDelegate {
  public:
   AwGeolocationDelegate() = default;
@@ -56,11 +55,6 @@ class AwGeolocationDelegate : public device::GeolocationDelegate {
   // Android doesn't use NetworkLocationProvider (the capability is folded into
   // the system location provider).
   bool UseNetworkLocationProviders() override { return false; }
-
-  scoped_refptr<device::AccessTokenStore> CreateAccessTokenStore() final {
-    NOTREACHED() << "No network geolocation for Android webview";
-    return nullptr;
-  }
 
  private:
   DISALLOW_COPY_AND_ASSIGN(AwGeolocationDelegate);

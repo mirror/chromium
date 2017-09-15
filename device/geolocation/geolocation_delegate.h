@@ -11,7 +11,6 @@
 #include "device/geolocation/geolocation_export.h"
 
 namespace device {
-class AccessTokenStore;
 class LocationProvider;
 
 // An embedder of Geolocation may override these class' methods to provide
@@ -23,10 +22,6 @@ class DEVICE_GEOLOCATION_EXPORT GeolocationDelegate {
   // Returns true if the location API should use network-based location
   // approximation in addition to the system provider, if any.
   virtual bool UseNetworkLocationProviders();
-
-  // Creates a new AccessTokenStore for geolocation. May return nullptr.
-  // Won't be called unless UseNetworkLocationProviders() is true.
-  virtual scoped_refptr<AccessTokenStore> CreateAccessTokenStore();
 
   // Allows an embedder to return its own LocationProvider implementation.
   // Return nullptr to use the default one for the platform to be created.
