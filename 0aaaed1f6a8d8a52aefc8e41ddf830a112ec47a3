@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "811d272c_3a57627a",
+        "filename": "tools/perf/page_sets/system_health/browsing_stories.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-15T10:15:14Z",
+      "side": 1,
+      "message": "s/previous_restaurant_name/prev_restaurant_hash/g",
+      "revId": "0aaaed1f6a8d8a52aefc8e41ddf830a112ec47a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
