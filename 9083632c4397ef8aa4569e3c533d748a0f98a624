@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0bd2f7cb_26ddee6c",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-15T20:10:08Z",
+      "side": 1,
+      "message": "I\u0027m wrestling with this a bit.  It\u0027s weird to me that this element should have to concern itself at all with animation.  I thought it would worry about desired opacity (is visible), and time.  Can\u0027t we just override SetVisible(), track the set value as a boolean in this class, and rely on the base class to handle animation?",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15c1aa8e_f05b6394",
         "filename": "chrome/browser/vr/elements/transient_element.cc",
         "patchSetId": 2
@@ -13,6 +30,148 @@
       "writtenOn": "2017-09-15T20:05:30Z",
       "side": 1,
       "message": "Rather than using will_be_visible_ and maintaining it, please add and use vr::AnimationPlayer::GetTargetFloatValue. Also, if you add the other \"Target\" methods for the other animated types while you\u0027re in there, you can close crbug.com/754822",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d75ef677_dcc1e143",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-15T20:10:08Z",
+      "side": 1,
+      "message": "SetVisible() is already just a wrapper around opacity.  Since we\u0027re changing what it does here, why not just go at base\u0027s opacity, so you don\u0027t need to use the dangerous super:: approach?",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32798ffc_7acff6cc",
+        "filename": "chrome/browser/vr/elements/transient_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-15T20:10:08Z",
+      "side": 1,
+      "message": "- Need docs on both of these (the override and refresh).\n- LOL @ Kick -\u003e Refresh.  I\u0027ll bury my affinity to \"timer kicking\". :)",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "336b786a_1618a1fc",
+        "filename": "chrome/browser/vr/elements/transient_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-15T20:10:08Z",
+      "side": 1,
+      "message": "Is this just saving characters?  What\u0027s the point?",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e323c8_fb768b71",
+        "filename": "chrome/browser/vr/elements/transient_element_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-15T20:10:08Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed anymore (here and below).",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b52068_c5146834",
+        "filename": "chrome/browser/vr/elements/transient_element_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-15T20:10:08Z",
+      "side": 1,
+      "message": "typo: refershing",
+      "range": {
+        "startLine": 36,
+        "startChar": 13,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6cd4f01_9e1e8640",
+        "filename": "chrome/browser/vr/elements/transient_element_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-15T20:10:08Z",
+      "side": 1,
+      "message": "Suggestion: \"... that the element still transiently disappears, but at a later time.\"",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11dc5f91_7c329af8",
+        "filename": "chrome/browser/vr/elements/ui_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-15T20:10:08Z",
+      "side": 1,
+      "message": "You\u0027re right, this is a hack.  I think we want CanBeVisible() instead.  False by default in UiElement, overridden by TexturedElement and others.  Biao has a similar hack when polling the scene for viewport aware elements, and we could solve both issues.\n\nWhat we want is \"does the element implement Draw()\".  So maybe CanDraw()?",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71fa092e_2f0c088f",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-15T20:10:08Z",
+      "side": 1,
+      "message": "See other comments.  I don\u0027t think we want to do this.\n\nThis probably runs deeper too.  Like, only a viewport aware root element should need the viewport_aware flag, and it\u0027s subtree should inherit the property.  So this search should be looking for \"are there any drawable elements that are children of a viewport aware element\".",
       "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
