@@ -77,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "7428463a_19dd691e",
+        "filename": "components/password_manager/content/browser/content_password_manager_driver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-15T20:05:42Z",
+      "side": 1,
+      "message": "I changed this to just always kill the renderer if we see about: or data: here.  The kills used to happen just below, via CanAccessDataForOrigin, but only in --site-per-process mode.  After the modifications in this CL, I agree we can just always do it here.",
+      "parentUuid": "d29f1558_556ac7e5",
+      "revId": "79d06de0d18c83022ac9359fa40a625211cf20ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2663693_6805f9f1",
         "filename": "components/password_manager/core/browser/password_store.cc",
         "patchSetId": 4
@@ -106,6 +124,24 @@
       "side": 1,
       "message": "I find it\u0027s confusing to filter those credentials in one method of PasswordStore but return via another. In general PasswordStore seems to be too low level for such details.\nRegarding the CM API. It\u0027s only available in the main frame and it\u0027s enforced in ChromePasswordManagerClient::BindCredentialManager. It doesn\u0027t harm to check the URL though. Then it can be done in PasswordManagerClient::IsFillingEnabledForCurrentPage() (note that we have a separate instance for iOS).\n\nNow the password autofill. When a frame (with a from) is created PasswordManager learns about it via either PasswordManager::OnPasswordFormsParsed or PasswordManager::OnPasswordFormsRendered. In both cases PasswordManager::CreatePendingLoginManagers is called and a PasswordFormManager is created or reused. PasswordFormManager represents a form. The same form maybe in different frames. It seems that we should prevent both PasswordManager and PasswordFormManager from working with a driver representing about:.. at that point. Then the request to the password store never happens and we don\u0027t need to filter it.",
       "parentUuid": "d2663693_6805f9f1",
+      "revId": "79d06de0d18c83022ac9359fa40a625211cf20ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9789c80_4dd2aed4",
+        "filename": "components/password_manager/core/browser/password_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-15T20:05:42Z",
+      "side": 1,
+      "message": "\u003e I find it\u0027s confusing to filter those credentials in one method of PasswordStore but return via another. In general PasswordStore seems to be too low level for such details.\n\u003e Regarding the CM API. It\u0027s only available in the main frame and it\u0027s enforced in ChromePasswordManagerClient::BindCredentialManager. It doesn\u0027t harm to check the URL though. Then it can be done in PasswordManagerClient::IsFillingEnabledForCurrentPage() (note that we have a separate instance for iOS).\n\nAh, I didn\u0027t know that CM API is only available for main frames.  The security issue with about:blank passwords affects main frames as well as subframes though, since a page can window.open an about:blank popup and script it, as one of my tests shows.  So it seems we still want to protect the CM API in those cases.\n\nI saw IsFillingEnabledForCurrentPage and was initially concerned that there\u0027s no knowledge about the frame that\u0027s requesting passwords there, but if CM API is only available in the main frame, then it seems ok to check it here.   I added  it in IsPasswordManagementEnabledForCurrentPage, which is called by IsFillingEnabledForCurrentPage and seemed like a better fit.\n\nThis won\u0027t stop autofill for about: subframes (I see that CreatePendingLoginManagers also calls IsFillingEnabledForCurrentPage), but those should be taken care of by the OnPasswordFormsParsed/Rendered checks below.\n\nAlso, I didn\u0027t add anything to iOS yet, because I don\u0027t know whether any of this (autofill or CM API) affects iOS.  If it does, I can certainly add something.\n\n\u003e Now the password autofill. When a frame (with a from) is created PasswordManager learns about it via either PasswordManager::OnPasswordFormsParsed or PasswordManager::OnPasswordFormsRendered. In both cases PasswordManager::CreatePendingLoginManagers is called and a PasswordFormManager is created or reused. PasswordFormManager represents a form. The same form maybe in different frames. It seems that we should prevent both PasswordManager and PasswordFormManager from working with a driver representing about:.. at that point. Then the request to the password store never happens and we don\u0027t need to filter it.\n\nThis is already the case, because both OnPasswordFormsParsed and OnPasswordFormsRendered are now gated on FrameCanAccessPasswordManager, so they will never happen for about:.  I only thought about filtering in the password store as defense in depth and for CM API.  Given that I\u0027ve added a check for CM API above, we can remove it as you seem to imply that checking OnPasswordFormsParsed and OnPasswordFormsRendered (and killing the renderer in the browser process, as is now done in CheckChildProcessSecurityPolicy) is sufficient.  I\u0027ve removed it in the latest PS.",
+      "parentUuid": "a09c4bd0_8d273762",
       "revId": "79d06de0d18c83022ac9359fa40a625211cf20ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
