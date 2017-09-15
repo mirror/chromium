@@ -6,6 +6,7 @@
 
 #include "base/macros.h"
 #include "base/run_loop.h"
+#include "content/browser/frame_host/controllable_http_response.h"
 #include "content/browser/frame_host/navigation_handle_impl.h"
 #include "content/browser/web_contents/web_contents_impl.h"
 #include "content/common/frame_messages.h"
@@ -642,29 +643,49 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostImplBrowserTest,
 // XMLHttpRequests.
 // See https://crbug.com/762945.
 IN_PROC_BROWSER_TEST_F(
-    RenderFrameHostImplBrowserTest,
+    ContentBrowserTest,
     AbortedRendererInitiatedNavigationDoNotCancelPendingXHR) {
+  ControllableHttpResponse::Controller XHR_response;
+  embedded_test_server()->RegisterRequestHandler(
+      XHR_response.HandleRequest("/XHR_request"));
+  EXPECT_TRUE(embedded_test_server()->Start());
+
   GURL main_url(embedded_test_server()->GetURL("/title1.html"));
   EXPECT_TRUE(NavigateToURL(shell(), main_url));
   EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
 
-  // 1) Send an XHR that is slow to complete.
+  // 1) Send an XHR request, but do not send its response for the moment.
   const char* send_slow_XHR =
       "var request = new XMLHttpRequest();"
       "request.addEventListener('abort', () => document.title = 'XHR aborted');"
       "request.addEventListener('load', () => document.title = 'XHR loaded');"
       "request.open('GET', '%s');"
       "request.send();";
-  const GURL slow_url = embedded_test_server()->GetURL("/slow?1");
+  const GURL slow_url = embedded_test_server()->GetURL("/XHR_request");
   EXPECT_TRUE(content::ExecuteScript(
       shell(), base::StringPrintf(send_slow_XHR, slow_url.spec().c_str())));
+  XHR_response.WaitConnection();
 
   // 2) In the meantime, create a renderer-initiated navigation. It will be
   // aborted.
+  TestNavigationManager observer(shell()->web_contents(),
+                                 GURL("customprotocol:aborted"));
   EXPECT_TRUE(content::ExecuteScript(
       shell(), "window.location = 'customprotocol:aborted'"));
+  EXPECT_FALSE(observer.WaitForResponse());
+  observer.WaitForNavigationFinished();
 
-  // 3) Wait for the XHR request to complete.
+  // 3) Send the response for the XHR requests.
+  XHR_response.Send(
+      "HTTP/1.1 200 OK\r\n"
+      "Connection: close\r\n"
+      "Content-Length: 2\r\n"
+      "Content-Type: text/html; charset=utf-8\r\n"
+      "\r\n"
+      "OK");
+  XHR_response.Done();
+
+  // 4) Wait for the XHR request to complete.
   const base::string16 XHR_aborted = base::ASCIIToUTF16("XHR aborted");
   const base::string16 XHR_loaded = base::ASCIIToUTF16("XHR loaded");
   TitleWatcher watcher(shell()->web_contents(), XHR_loaded);
