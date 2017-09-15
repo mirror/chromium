@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "73d83cc8_edcd043b",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-09-15T14:59:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d0f64b0_87739c14",
+      "range": {
+        "startLine": 384,
+        "startChar": 6,
+        "endLine": 384,
+        "endChar": 60
+      },
+      "revId": "6190532f7897d42f75ad591656920fe4ae4a101e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b2e35be_2a5f16b4",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "929ecfef_7352747a",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-09-15T14:59:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b2e35be_2a5f16b4",
+      "range": {
+        "startLine": 435,
+        "startChar": 18,
+        "endLine": 435,
+        "endChar": 25
+      },
+      "revId": "6190532f7897d42f75ad591656920fe4ae4a101e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33dd593b_171c5399",
         "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "6190532f7897d42f75ad591656920fe4ae4a101e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9fd6c7c_66d98240",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_ui_controller_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-09-15T14:59:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33dd593b_171c5399",
+      "range": {
+        "startLine": 441,
+        "startChar": 25,
+        "endLine": 441,
+        "endChar": 59
+      },
+      "revId": "6190532f7897d42f75ad591656920fe4ae4a101e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
