@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fe1bb18d_04e2db7d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1710,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-09-15T18:39:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "988b7617_234b8925",
+      "range": {
+        "startLine": 1710,
+        "startChar": 63,
+        "endLine": 1710,
+        "endChar": 88
+      },
+      "revId": "bb90d7e909f18d72b6575d8db2a3cd7ce7cbe88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26b75847_621fcac7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
         "patchSetId": 6
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "36f653a8_564b72d4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-09-15T18:39:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cb75e7f7_c9fe24bb",
+      "revId": "bb90d7e909f18d72b6575d8db2a3cd7ce7cbe88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "989207d1_4ee20262",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
         "patchSetId": 6
@@ -71,6 +113,24 @@
       "writtenOn": "2017-09-15T17:30:38Z",
       "side": 1,
       "message": "Do we need to check the bottom sheet null here too?  i.e. should this affect the search activity or not?  We might need to keep mUseModernDesign at the class level.",
+      "revId": "bb90d7e909f18d72b6575d8db2a3cd7ce7cbe88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "792702b9_0f500a64",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-09-15T18:39:18Z",
+      "side": 1,
+      "message": "talked offline; this check isn\u0027t necessary since we\u0027re checking if the feature isn\u0027t enabled.",
+      "parentUuid": "989207d1_4ee20262",
       "revId": "bb90d7e909f18d72b6575d8db2a3cd7ce7cbe88b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
