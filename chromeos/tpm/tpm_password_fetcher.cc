@@ -33,36 +33,34 @@ void TpmPasswordFetcher::Fetch() {
   // Since this method is also called directly.
   weak_factory_.InvalidateWeakPtrs();
 
-  DBusThreadManager::Get()->GetCryptohomeClient()->TpmIsReady(base::Bind(
+  DBusThreadManager::Get()->GetCryptohomeClient()->TpmIsReady(base::BindOnce(
       &TpmPasswordFetcher::OnTpmIsReady, weak_factory_.GetWeakPtr()));
 }
 
-void TpmPasswordFetcher::OnTpmIsReady(DBusMethodCallStatus call_status,
-                                      bool tpm_is_ready) {
-  if (call_status == DBUS_METHOD_CALL_SUCCESS && tpm_is_ready) {
-    DBusThreadManager::Get()->GetCryptohomeClient()->TpmGetPassword(
-        base::BindOnce(&TpmPasswordFetcher::OnTpmGetPassword,
-                       weak_factory_.GetWeakPtr()));
-  } else {
+void TpmPasswordFetcher::OnTpmIsReady(base::Optional<bool> response) {
+  if (response.value_or(false)) {
     // Password hasn't been acquired, reschedule fetch.
     RescheduleFetch();
+    return;
   }
+
+  DBusThreadManager::Get()->GetCryptohomeClient()->TpmGetPassword(
+      base::BindOnce(&TpmPasswordFetcher::OnTpmGetPassword,
+                     weak_factory_.GetWeakPtr()));
 }
 
 void TpmPasswordFetcher::OnTpmGetPassword(
     base::Optional<std::string> password) {
-  if (password) {
-    if (password->empty()) {
-      // For a fresh OOBE flow TPM is uninitialized,
-      // ownership process is started at the EULA screen,
-      // password is cleared after EULA is accepted.
-      LOG(ERROR) << "TPM returned an empty password.";
-    }
-    delegate_->OnPasswordFetched(*password);
-  } else {
+  if (!password) {
     // Password hasn't been acquired, reschedule fetch.
     RescheduleFetch();
+    return;
   }
+
+  // For a fresh OOBE flow TPM is uninitialized, ownership process is started
+  // at the EULA screen, password is cleared after EULA is accepted.
+  LOG_IF(ERROR, password->empty()) << "TPM returned an empty password.";
+  delegate_->OnPasswordFetched(*password);
 }
 
 void TpmPasswordFetcher::RescheduleFetch() {

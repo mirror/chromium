@@ -1025,7 +1025,7 @@ void ChromeBrowsingDataRemoverDelegate::RemoveEmbedderData(
               chromeos::attestation::KEY_USER,
               cryptohome::Identification(user->GetAccountId()),
               chromeos::attestation::kContentProtectionKeyPrefix,
-              base::Bind(
+              base::BindOnce(
                   &ChromeBrowsingDataRemoverDelegate::OnClearPlatformKeys,
                   weak_ptr_factory_.GetWeakPtr()));
     }
@@ -1179,10 +1179,8 @@ void ChromeBrowsingDataRemoverDelegate::OnClearedCookies() {
 
 #if defined(OS_CHROMEOS)
 void ChromeBrowsingDataRemoverDelegate::OnClearPlatformKeys(
-    chromeos::DBusMethodCallStatus call_status,
-    bool result) {
-  LOG_IF(ERROR, call_status != chromeos::DBUS_METHOD_CALL_SUCCESS || !result)
-      << "Failed to clear platform keys.";
+    base::Optional<bool> response) {
+  LOG_IF(ERROR, !response.value_or(false)) << "Failed to clear platform keys.";
   clear_platform_keys_.GetCompletionCallback().Run();
 }
 #endif

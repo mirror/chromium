@@ -12,6 +12,7 @@
 #include "base/location.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
+#include "base/optional.h"
 #include "base/run_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "base/task_runner.h"
@@ -91,8 +92,7 @@ class TestCryptohomeClient : public chromeos::FakeCryptohomeClient {
   explicit TestCryptohomeClient(const AccountId& account_id)
       : account_id_(account_id),
         tpm_is_enabled_(true),
-        tpm_is_enabled_failure_count_(0),
-        tpm_is_enabled_succeeded_(false),
+        tpm_is_enabled_remaining_count_(1),
         get_tpm_token_info_failure_count_(0),
         get_tpm_token_info_not_set_count_(0),
         get_tpm_token_info_succeeded_(false) {}
@@ -103,9 +103,9 @@ class TestCryptohomeClient : public chromeos::FakeCryptohomeClient {
     tpm_is_enabled_ = value;
   }
 
-  void set_tpm_is_enabled_failure_count(int value) {
-    ASSERT_GT(value, 0);
-    tpm_is_enabled_failure_count_ = value;
+  void set_tpm_is_enabled_remaining_count(int value) {
+    ASSERT_GT(value, 1);
+    tpm_is_enabled_remaining_count_ = value;
   }
 
   void set_get_tpm_token_info_failure_count(int value) {
@@ -135,20 +135,16 @@ class TestCryptohomeClient : public chromeos::FakeCryptohomeClient {
 
  private:
   // FakeCryptohomeClient override.
-  void TpmIsEnabled(const chromeos::BoolDBusMethodCallback& callback) override {
-    ASSERT_FALSE(tpm_is_enabled_succeeded_);
-    if (tpm_is_enabled_failure_count_ > 0) {
-      --tpm_is_enabled_failure_count_;
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE,
-          base::Bind(callback, chromeos::DBUS_METHOD_CALL_FAILURE, false));
-    } else {
-      tpm_is_enabled_succeeded_ = true;
-      base::ThreadTaskRunnerHandle::Get()->PostTask(
-          FROM_HERE,
-          base::Bind(callback,
-                     chromeos::DBUS_METHOD_CALL_SUCCESS, tpm_is_enabled_));
-    }
+  void TpmIsEnabled(chromeos::DBusMethodCallback<bool> callback) override {
+    // In this fake, returns "method call fail" if there is remaining calls
+    // expected, and in the last call, returns |tpm_is_enabled_|.
+    ASSERT_GT(tpm_is_enabled_remaining_count_, 0);
+    --tpm_is_enabled_remaining_count_;
+    auto result = tpm_is_enabled_remaining_count_ > 0
+                      ? base::nullopt
+                      : base::make_optional(tpm_is_enabled_);
+    base::ThreadTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::BindOnce(std::move(callback), result));
   }
 
   void Pkcs11GetTpmTokenInfo(
@@ -171,7 +167,7 @@ class TestCryptohomeClient : public chromeos::FakeCryptohomeClient {
   // CryptohomeClient method overrides should make sure that |account_id_| is
   // properly set before calling this.
   void HandleGetTpmTokenInfo(const Pkcs11GetTpmTokenInfoCallback& callback) {
-    ASSERT_TRUE(tpm_is_enabled_succeeded_);
+    ASSERT_EQ(0, tpm_is_enabled_remaining_count_);
     ASSERT_FALSE(get_tpm_token_info_succeeded_);
     ASSERT_TRUE(pending_get_tpm_token_info_callback_.is_null());
 
@@ -221,8 +217,7 @@ class TestCryptohomeClient : public chromeos::FakeCryptohomeClient {
 
   AccountId account_id_;
   bool tpm_is_enabled_;
-  int tpm_is_enabled_failure_count_;
-  bool tpm_is_enabled_succeeded_;
+  int tpm_is_enabled_remaining_count_;
   int get_tpm_token_info_failure_count_;
   int get_tpm_token_info_not_set_count_;
   bool get_tpm_token_info_succeeded_;
@@ -336,7 +331,7 @@ TEST_F(SystemTPMTokenInfoGetterTest, TPMNotEnabled) {
 }
 
 TEST_F(SystemTPMTokenInfoGetterTest, TpmEnabledCallFails) {
-  cryptohome_client_->set_tpm_is_enabled_failure_count(1);
+  cryptohome_client_->set_tpm_is_enabled_remaining_count(2);
 
   TestTPMTokenInfo reported_info;
   tpm_token_info_getter_->Start(
@@ -405,7 +400,7 @@ TEST_F(SystemTPMTokenInfoGetterTest, GetTpmTokenInfoInitiallyFails) {
 }
 
 TEST_F(SystemTPMTokenInfoGetterTest, RetryDelaysIncreaseExponentially) {
-  cryptohome_client_->set_tpm_is_enabled_failure_count(2);
+  cryptohome_client_->set_tpm_is_enabled_remaining_count(3);
   cryptohome_client_->set_get_tpm_token_info_failure_count(1);
   cryptohome_client_->set_get_tpm_token_info_not_set_count(3);
 
@@ -430,7 +425,7 @@ TEST_F(SystemTPMTokenInfoGetterTest, RetryDelaysIncreaseExponentially) {
 }
 
 TEST_F(SystemTPMTokenInfoGetterTest, RetryDelayBounded) {
-  cryptohome_client_->set_tpm_is_enabled_failure_count(4);
+  cryptohome_client_->set_tpm_is_enabled_remaining_count(5);
   cryptohome_client_->set_get_tpm_token_info_failure_count(5);
   cryptohome_client_->set_get_tpm_token_info_not_set_count(6);
 

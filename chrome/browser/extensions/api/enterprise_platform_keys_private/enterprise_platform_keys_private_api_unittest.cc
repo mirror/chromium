@@ -59,23 +59,6 @@ const int kResetRequired = 4;
 
 const char kUserEmail[] = "test@google.com";
 
-// A simple functor to invoke a callback with predefined arguments.
-class FakeBoolDBusMethod {
- public:
-  FakeBoolDBusMethod(chromeos::DBusMethodCallStatus status, bool value)
-      : status_(status),
-        value_(value) {}
-
-  void operator() (const chromeos::BoolDBusMethodCallback& callback) {
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::BindOnce(callback, status_, value_));
-  }
-
- private:
-  chromeos::DBusMethodCallStatus status_;
-  bool value_;
-};
-
 void RegisterKeyCallbackTrue(
     chromeos::attestation::AttestationKeyType key_type,
     const cryptohome::Identification& user_id,

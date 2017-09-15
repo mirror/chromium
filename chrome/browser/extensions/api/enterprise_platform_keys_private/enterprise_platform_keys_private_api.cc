@@ -202,19 +202,18 @@ void EPKPChallengeKeyBase::PrepareKey(
                                                       require_user_consent,
                                                       callback);
   cryptohome_client_->TpmAttestationIsPrepared(
-      base::Bind(&EPKPChallengeKeyBase::IsAttestationPreparedCallback,
-                 base::Unretained(this), context));
+      base::BindOnce(&EPKPChallengeKeyBase::IsAttestationPreparedCallback,
+                     base::Unretained(this), context));
 }
 
 void EPKPChallengeKeyBase::IsAttestationPreparedCallback(
     const PrepareKeyContext& context,
-    chromeos::DBusMethodCallStatus status,
-    bool result) {
-  if (status == chromeos::DBUS_METHOD_CALL_FAILURE) {
+    base::Optional<bool> response) {
+  if (!response) {
     context.callback.Run(PREPARE_KEY_DBUS_ERROR);
     return;
   }
-  if (!result) {
+  if (!response.value()) {
     context.callback.Run(PREPARE_KEY_RESET_REQUIRED);
     return;
   }
@@ -222,34 +221,34 @@ void EPKPChallengeKeyBase::IsAttestationPreparedCallback(
   cryptohome_client_->TpmAttestationDoesKeyExist(
       context.key_type, cryptohome::Identification(context.account_id),
       context.key_name,
-      base::Bind(&EPKPChallengeKeyBase::DoesKeyExistCallback,
-                 base::Unretained(this), context));
+      base::BindOnce(&EPKPChallengeKeyBase::DoesKeyExistCallback,
+                     base::Unretained(this), context));
 }
 
 void EPKPChallengeKeyBase::DoesKeyExistCallback(
     const PrepareKeyContext& context,
-    chromeos::DBusMethodCallStatus status,
-    bool result) {
-  if (status == chromeos::DBUS_METHOD_CALL_FAILURE) {
+    base::Optional<bool> response) {
+  if (!response) {
     context.callback.Run(PREPARE_KEY_DBUS_ERROR);
     return;
   }
 
-  if (result) {
+  if (response.value()) {
     // The key exists. Do nothing more.
     context.callback.Run(PREPARE_KEY_OK);
+    return;
+  }
+
+  // The key does not exist. Create a new key and have it signed by PCA.
+  if (context.require_user_consent) {
+    // We should ask the user explicitly before sending any private
+    // information to PCA.
+    AskForUserConsent(
+        base::Bind(&EPKPChallengeKeyBase::AskForUserConsentCallback,
+                   base::Unretained(this), context));
   } else {
-    // The key does not exist. Create a new key and have it signed by PCA.
-    if (context.require_user_consent) {
-      // We should ask the user explicitly before sending any private
-      // information to PCA.
-      AskForUserConsent(
-          base::Bind(&EPKPChallengeKeyBase::AskForUserConsentCallback,
-                     base::Unretained(this), context));
-    } else {
-      // User consent is not required. Skip to the next step.
-      AskForUserConsentCallback(context, true);
-    }
+    // User consent is not required. Skip to the next step.
+    AskForUserConsentCallback(context, true);
   }
 }
 

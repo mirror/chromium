@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/location.h"
+#include "base/optional.h"
 #include "base/time/time.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/chromeos/attestation/attestation_ca_client.h"
@@ -47,21 +48,19 @@ const int kRetryLimit = 100;
 //   on_true - Called when status=success and value=true.
 //   on_false - Called when status=success and value=false.
 //   status - The dbus operation status.
-//   value - The value returned by the dbus operation.
+//   response - The value returned by the dbus operation.
 void DBusBoolRedirectCallback(const base::Closure& on_true,
                               const base::Closure& on_false,
                               const base::Closure& on_failure,
                               const base::Location& from_here,
-                              chromeos::DBusMethodCallStatus status,
-                              bool value) {
-  if (status != chromeos::DBUS_METHOD_CALL_SUCCESS) {
-    LOG(ERROR) << "Cryptohome DBus method failed: " << from_here.ToString()
-               << " - " << status;
+                              base::Optional<bool> response) {
+  if (!response) {
+    LOG(ERROR) << "Cryptohome DBus method failed: " << from_here.ToString();
     if (!on_failure.is_null())
       on_failure.Run();
     return;
   }
-  const base::Closure& task = value ? on_true : on_false;
+  const base::Closure& task = response.value() ? on_true : on_false;
   if (!task.is_null())
     task.Run();
 }
@@ -303,8 +302,8 @@ void AttestationPolicyObserver::MarkAsUploaded(const std::string& key_payload) {
       KEY_DEVICE,
       cryptohome::Identification(),  // Not used.
       kEnterpriseMachineKey, new_payload,
-      base::Bind(DBusBoolRedirectCallback, base::Closure(), base::Closure(),
-                 base::Closure(), FROM_HERE));
+      base::BindOnce(DBusBoolRedirectCallback, base::Closure(), base::Closure(),
+                     base::Closure(), FROM_HERE));
 }
 
 void AttestationPolicyObserver::Reschedule() {
