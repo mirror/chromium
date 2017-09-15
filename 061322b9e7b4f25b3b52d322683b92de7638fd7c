@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "836cc14f_50f4b25e",
+        "filename": "chromecast/media/cdm/cast_cdm_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2017-09-15T03:16:05Z",
+      "side": 1,
+      "message": "This will probably fail gn check. You need a new dependency for this header.",
+      "range": {
+        "startLine": 10,
+        "startChar": 34,
+        "endLine": 10,
+        "endChar": 53
+      },
+      "revId": "061322b9e7b4f25b3b52d322683b92de7638fd7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
