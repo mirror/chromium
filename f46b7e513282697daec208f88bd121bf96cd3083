@@ -69,6 +69,30 @@
       "revId": "f46b7e513282697daec208f88bd121bf96cd3083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccb1984f_e830c9fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-15T00:56:12Z",
+      "side": 1,
+      "message": "I think we should come up with some naming that makes it clearer the intent.  Something like transient or unbound or \"something\" that would say that you\u0027d use this type for things that don\u0027t pertain to a bottom section (TYPE_NO_SECTION_FOR_ME_K_THX seems a bit verbose).",
+      "parentUuid": "a0fcb89c_43a90f0e",
+      "range": {
+        "startLine": 70,
+        "startChar": 28,
+        "endLine": 70,
+        "endChar": 38
+      },
+      "revId": "f46b7e513282697daec208f88bd121bf96cd3083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
