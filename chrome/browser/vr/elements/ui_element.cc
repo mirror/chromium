@@ -50,9 +50,6 @@ UiElement::~UiElement() {
   animation_player_.set_target(nullptr);
 }
 
-void UiElement::Render(UiElementRenderer* renderer,
-                       const gfx::Transform& view_proj_matrix) const {}
-
 void UiElement::Initialize() {}
 
 void UiElement::OnHoverEnter(const gfx::PointF& position) {}
@@ -166,6 +163,10 @@ void UiElement::SetMode(ColorScheme::Mode mode) {
     return;
   mode_ = mode;
   OnSetMode();
+}
+
+RenderableElement* UiElement::AsRenderableElement() {
+  return nullptr;
 }
 
 void UiElement::OnSetMode() {}
@@ -307,7 +308,6 @@ void UiElement::UpdateInheritedProperties() {
   gfx::Transform transform;
   transform.Scale(size_.width(), size_.height());
   set_computed_opacity(opacity_);
-  set_computed_viewport_aware(viewport_aware_);
 
   // Compute an inheritable transformation that can be applied to this element,
   // and it's children, if applicable.
@@ -316,8 +316,6 @@ void UiElement::UpdateInheritedProperties() {
   if (parent_) {
     inheritable.ConcatTransform(parent_->inheritable_transform());
     set_computed_opacity(computed_opacity() * parent_->opacity());
-    if (parent_->viewport_aware())
-      set_computed_viewport_aware(true);
   }
 
   transform.ConcatTransform(inheritable);

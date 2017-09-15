@@ -14,7 +14,7 @@ class Transform;
 }  // namespace gfx
 
 namespace vr {
-class UiElement;
+class RenderableElement;
 }  // namespace vr
 
 // Functions in this file are currently GVR specific functions. If other
@@ -34,7 +34,7 @@ namespace vr_shell {
 // Using a smaller FOV could improve the performance a lot while we are showing
 // UIs on top of WebVR content.
 void GetMinimalFov(const gfx::Transform& view_matrix,
-                   const std::vector<const vr::UiElement*>& elements,
+                   const std::vector<const vr::RenderableElement*>& elements,
                    const gvr::Rectf& fov_recommended,
                    float z_near,
                    gvr::Rectf* out_fov);

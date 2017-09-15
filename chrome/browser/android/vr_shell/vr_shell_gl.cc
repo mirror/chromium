@@ -21,7 +21,7 @@
 #include "chrome/browser/android/vr_shell/vr_metrics_util.h"
 #include "chrome/browser/android/vr_shell/vr_shell.h"
 #include "chrome/browser/android/vr_shell/vr_usage_monitor.h"
-#include "chrome/browser/vr/elements/ui_element.h"
+#include "chrome/browser/vr/elements/renderable_element.h"
 #include "chrome/browser/vr/fps_meter.h"
 #include "chrome/browser/vr/ui_interface.h"
 #include "chrome/browser/vr/ui_scene.h"
@@ -862,14 +862,16 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
   // Measure projected content size and bubble up if delta exceeds threshold.
   browser_->OnProjMatrixChanged(render_info_primary_.left_eye_info.proj_matrix);
 
+  // At this point, we draw non-WebVR content that could, potentially, fill the
+  // viewport.  NB: this is not just 2d browsing stuff, we may have a splash
+  // screen showing in WebVR mode that must also fill the screen.
   ui_renderer_->Draw(render_info_primary_, controller_info_, ShouldDrawWebVr());
-  if (!scene_->GetViewportAwareElements().empty() && !ShouldDrawWebVr()) {
-    ui_renderer_->DrawViewportAware(render_info_primary_, controller_info_,
-                                    false);
-  }
   frame.Unbind();
 
-  if (!scene_->GetViewportAwareElements().empty() && ShouldDrawWebVr()) {
+  std::vector<const vr::RenderableElement*> overlay_elements =
+      scene_->GetWebVrOverlayBackgroundElements();
+
+  if (!overlay_elements.empty() && ShouldDrawWebVr()) {
     // WebVR content may use an arbitray size buffer. We need to draw browser UI
     // on a different buffer to make sure that our UI has enough resolution.
     frame.BindBuffer(kFrameWebVrBrowserUiBuffer);
@@ -890,13 +892,12 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
                    &render_info_webvr_browser_ui_);
     gvr::Rectf minimal_fov;
     GetMinimalFov(render_info_webvr_browser_ui_.left_eye_info.view_matrix,
-                  scene_->GetViewportAwareElements(), fov_recommended_left,
-                  kZNear, &minimal_fov);
+                  overlay_elements, fov_recommended_left, kZNear, &minimal_fov);
     webvr_browser_ui_left_viewport_->SetSourceFov(minimal_fov);
 
     GetMinimalFov(render_info_webvr_browser_ui_.right_eye_info.view_matrix,
-                  scene_->GetViewportAwareElements(), fov_recommended_right,
-                  kZNear, &minimal_fov);
+                  overlay_elements, fov_recommended_right, kZNear,
+                  &minimal_fov);
     webvr_browser_ui_right_viewport_->SetSourceFov(minimal_fov);
 
     buffer_viewport_list_->SetBufferViewport(
@@ -909,8 +910,8 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
                    kViewportListWebVrBrowserUiOffset, render_size_webvr_ui_,
                    &render_info_webvr_browser_ui_);
 
-    ui_renderer_->DrawViewportAware(render_info_webvr_browser_ui_,
-                                    controller_info_, true);
+    ui_renderer_->DrawWebVrOverlayForeground(render_info_webvr_browser_ui_,
+                                             controller_info_);
 
     frame.Unbind();
   }

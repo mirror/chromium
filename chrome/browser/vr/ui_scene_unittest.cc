@@ -11,6 +11,7 @@
 #include "base/test/gtest_util.h"
 #include "base/values.h"
 #include "chrome/browser/vr/elements/draw_phase.h"
+#include "chrome/browser/vr/elements/renderable_element.h"
 #include "chrome/browser/vr/elements/ui_element.h"
 #include "chrome/browser/vr/elements/ui_element_transform_operations.h"
 #include "chrome/browser/vr/elements/viewport_aware_root.h"
@@ -43,6 +44,7 @@ void MakeViewportAwareElements(UiScene* scene,
                                UiElement** grandchild) {
   auto element = base::MakeUnique<UiElement>();
   UiElement* container = element.get();
+  element->set_name(kWebVrRoot);
   element->set_draw_phase(0);
   scene->AddUiElement(kRoot, std::move(element));
 
@@ -51,17 +53,15 @@ void MakeViewportAwareElements(UiScene* scene,
   root->set_draw_phase(0);
   container->AddChild(std::move(root));
 
-  element = base::MakeUnique<UiElement>();
-  *child = element.get();
-  element->set_viewport_aware(true);
-  element->set_draw_phase(0);
-  viewport_aware_root->AddChild(std::move(element));
+  auto renderable = base::MakeUnique<RenderableElement>();
+  *child = renderable.get();
+  renderable->set_draw_phase(kPhaseOverlayForeground);
+  viewport_aware_root->AddChild(std::move(renderable));
 
-  element = base::MakeUnique<UiElement>();
-  *grandchild = element.get();
-  element->set_viewport_aware(false);
-  element->set_draw_phase(0);
-  (*child)->AddChild(std::move(element));
+  renderable = base::MakeUnique<RenderableElement>();
+  *grandchild = renderable.get();
+  renderable->set_draw_phase(kPhaseOverlayForeground);
+  (*child)->AddChild(std::move(renderable));
 }
 
 }  // namespace
@@ -166,26 +166,16 @@ TEST(UiScene, Opacity) {
   EXPECT_EQ(0.25f, child->computed_opacity());
 }
 
-TEST(UiScene, ViewportAware) {
-  UiScene scene;
-  UiElement* child = nullptr;
-  UiElement* grandchild = nullptr;
-  MakeViewportAwareElements(&scene, &child, &grandchild);
-
-  scene.OnBeginFrame(MicrosecondsToTicks(0), gfx::Vector3dF(0.f, 0.f, -1.0f));
-  EXPECT_TRUE(child->computed_viewport_aware());
-  EXPECT_TRUE(grandchild->computed_viewport_aware());
-}
-
 TEST(UiScene, NoViewportAwareElementWhenNoVisibleChild) {
   UiScene scene;
   UiElement* child = nullptr;
   UiElement* grandchild = nullptr;
   MakeViewportAwareElements(&scene, &child, &grandchild);
 
-  EXPECT_FALSE(scene.GetViewportAwareElements().empty());
+  EXPECT_FALSE(scene.GetWebVrOverlayForegroundElements().empty());
   child->SetVisible(false);
-  EXPECT_TRUE(scene.GetViewportAwareElements().empty());
+  scene.root_element().UpdateInheritedProperties();
+  EXPECT_TRUE(scene.GetWebVrOverlayForegroundElements().empty());
 }
 
 typedef struct {

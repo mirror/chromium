@@ -6,7 +6,7 @@
 
 #include <cmath>
 
-#include "chrome/browser/vr/elements/ui_element.h"
+#include "chrome/browser/vr/elements/renderable_element.h"
 #include "ui/gfx/geometry/point_f.h"
 #include "ui/gfx/transform.h"
 
@@ -23,7 +23,7 @@ constexpr float kMargin = 1.f * M_PI / 180;
 }  // namespace
 
 void GetMinimalFov(const gfx::Transform& view_matrix,
-                   const std::vector<const vr::UiElement*>& elements,
+                   const std::vector<const vr::RenderableElement*>& elements,
                    const gvr::Rectf& fov_recommended,
                    float z_near,
                    gvr::Rectf* out_fov) {
