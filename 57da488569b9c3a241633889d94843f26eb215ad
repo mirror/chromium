@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74af3dcd_4e10a2a9",
+        "filename": "gpu/config/gpu_info_collector_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-09-15T21:10:41Z",
+      "side": 1,
+      "message": "Just to be consistent, can you switch all the above LOG(FATAL) to LOG(ERROR) and return gpu::KCollectInfoFatalFailure?",
+      "range": {
+        "startLine": 197,
+        "startChar": 11,
+        "endLine": 197,
+        "endChar": 14
+      },
+      "revId": "57da488569b9c3a241633889d94843f26eb215ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
