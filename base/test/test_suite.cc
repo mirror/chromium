@@ -343,8 +343,23 @@ void TestSuite::Initialize() {
 #endif
   // Set up a FeatureList instance, so that code using that API will not hit a
   // an error that it's not set. It will be cleared automatically.
-  // TODO(chaopeng) Should load the actually features in command line here.
-  scoped_feature_list_.InitFromCommandLine(std::string(), std::string());
+  // TestFeatureForBrowserTest1 and TestFeatureForBrowserTest2 used in
+  // BrowserTestScopedFeatureListTest and
+  // ContentBrowserTestScopedFeatureListTest to ensure ScopedFeatureList works.
+  std::string enabled =
+      CommandLine::ForCurrentProcess()->GetSwitchValueASCII("enable-features");
+  std::string disabled =
+      CommandLine::ForCurrentProcess()->GetSwitchValueASCII("disable-features");
+  enabled += ",TestFeatureForBrowserTest1";
+  disabled += ",TestFeatureForBrowserTest2";
+  scoped_feature_list_.InitFromCommandLine(enabled, disabled);
+
+  // The enable-features and disable-features flags were just slurped into a
+  // FeatureList, so remove them from the command line. Tests should enable and
+  // disable features via the ScopedFeatureList API rather than command-line
+  // flags.
+  CommandLine::ForCurrentProcess()->RemoveSwitchForTesting("enable-features");
+  CommandLine::ForCurrentProcess()->RemoveSwitchForTesting("disable-features");
 
 #if defined(OS_IOS)
   InitIOSTestMessageLoop();
