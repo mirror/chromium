@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c8bb19d_a76954ba",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-15T00:56:00Z",
+      "side": 1,
+      "message": "How about something like this?\n\n  // Opening the palette via an accelerator will close any open widget and\n  // then open a new one. This method is called when the widget is closed,\n  // but due to async close the new bubble may have already been created. If\n  // this happens, |bubble_| will not be null.",
+      "revId": "ff62e6d9382849fde8aa80b2b02c5d61e33552df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc94abe2_8943c5d6",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-09-15T00:56:00Z",
+      "side": 1,
+      "message": "nit: null",
+      "revId": "ff62e6d9382849fde8aa80b2b02c5d61e33552df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
