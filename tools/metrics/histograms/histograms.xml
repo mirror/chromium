@@ -50469,6 +50469,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="OfflinePages.Consistency.DeleteTemporaryPagesInWrongDirResult"
+    enum="BooleanSuccess">
+  <owner>romax@chromium.org</owner>
+  <summary>
+    Whether an attempt to delete temporary pages which are saved in persistent
+    directory was successful.
+  </summary>
+</histogram>
+
 <histogram name="OfflinePages.Consistency.ExpirePagesMissingArchiveFileResult"
     enum="BooleanSuccess">
   <obsolete>
@@ -50492,6 +50501,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <owner>romax@chromium.org</owner>
   <summary>
     Number of offline pages without archive file when checking consistency.
+  </summary>
+</histogram>
+
+<histogram name="OfflinePages.Consistency.TemporaryPagesInWrongDir">
+  <owner>romax@chromium.org</owner>
+  <summary>
+    Number of temporary offline pages that are saved in persistent directory
+    when checking consistency.
   </summary>
 </histogram>
 
