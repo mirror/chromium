@@ -52,6 +52,24 @@
       "revId": "5f16d31f2f81570d3e9c03fa3a520538bb14e01e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd9b0f1_ad1e01ba",
+        "filename": "third_party/WebKit/Source/core/css/html.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T01:05:31Z",
+      "side": 1,
+      "message": "1. On Firefox and Edge, I could not selection contents in INPUT for \u003cinput value\u003d\"foo\" style\u003d\"user-select: none\"\u003e\n\n2. Can we set |kNone| in LayoutTextControl::AdjustInnerEditorStyle() when INPUT/TEXT is disabled?\n\nThe spec[1] says \"user-select\" of INPUT/TEXTAREA affects inner-editor.\nSorry I didn\u0027t aware of it.\n\n\nCould you try to change  |UsedValueOfUserSelect(const Node\u0026)| to check\ndisabled text control?\n\nCurrent implementation always return user-select::text for text control:\n\nEUserSelect UsedValueOfUserSelect(const Node\u0026 node) {\n  if (node.IsHTMLElement() \u0026\u0026 ToHTMLElement(node).IsTextControl())\n    return EUserSelect::kText;\n...\n\n\n[1] https://www.w3.org/TR/css-ui-4/\nFor the purpose of this specification, an editable element is either an editing host or a mutable form control with textual content, such as textarea.",
+      "parentUuid": "dc42bed5_08587344",
+      "revId": "5f16d31f2f81570d3e9c03fa3a520538bb14e01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
