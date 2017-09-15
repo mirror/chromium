@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05435e2e_6a1ae17f",
+        "filename": "third_party/WebKit/Source/bindings/templates/callback_interface.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-15T07:19:52Z",
+      "side": 1,
+      "message": "I believe this parameter doesn\u0027t come from generate_v8_context_snapshot_external_references.py",
+      "revId": "d8c54979017ac206ab0db42b4e15451c3e905223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be5aa292_f9a20dc2",
+        "filename": "third_party/WebKit/Source/bindings/templates/legacy_callback_interface.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-15T07:19:52Z",
+      "side": 1,
+      "message": "I believe this parameter doesn\u0027t come from generate_v8_context_snapshot_external_references.py",
+      "revId": "d8c54979017ac206ab0db42b4e15451c3e905223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
