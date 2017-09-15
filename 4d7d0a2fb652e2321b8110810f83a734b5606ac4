@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa1d970a_d274f96c",
+        "filename": "third_party/WebKit/Source/core/xml/XSLTTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115967
+      },
+      "writtenOn": "2017-09-15T07:26:26Z",
+      "side": 1,
+      "message": "1.  Do you ever set a policy? I don\u0027t see where the source document would have a policy to push down to the transformed document?\n\n2.  Can you check sandbox flags as well, please?",
+      "revId": "4d7d0a2fb652e2321b8110810f83a734b5606ac4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
