@@ -374,16 +374,18 @@ void FloatRoundedRect::AdjustRadii() {
 }
 
 String FloatRoundedRect::Radii::ToString() const {
-  return String::Format("tl:%s; tr:%s; bl:%s; br:%s",
-                        TopLeft().ToString().Ascii().data(),
-                        TopRight().ToString().Ascii().data(),
-                        BottomLeft().ToString().Ascii().data(),
-                        BottomRight().ToString().Ascii().data());
+  return "radii:(tl:" + TopLeft().ToString() + "; tr:" + TopRight().ToString() +
+         "; bl:" + BottomLeft().ToString() +
+         "; br:" + BottomRight().ToString() + ")";
 }
 
 String FloatRoundedRect::ToString() const {
-  return String::Format("%s radii:(%s)", Rect().ToString().Ascii().data(),
-                        GetRadii().ToString().Ascii().data());
+  if (Rect().X() < -10000000 && Rect().MaxX() > 10000000 &&
+      Rect().Y() < -10000000 && Rect().MaxY() > 10000000)
+    return "infinite";
+  if (GetRadii().IsZero())
+    return Rect().ToString();
+  return Rect().ToString() + " " + GetRadii().ToString();
 }
 
 }  // namespace blink
