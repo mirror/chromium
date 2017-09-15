@@ -55,15 +55,16 @@ class MEDIA_EXPORT MediaDrmBridge : public ContentDecryptionModule,
     SECURITY_LEVEL_3 = 3,
   };
 
-  using JavaObjectPtr =
-      std::unique_ptr<base::android::ScopedJavaGlobalRef<jobject>>;
-
   using ResetCredentialsCB = base::Callback<void(bool)>;
 
   // Notification called when MediaCrypto object is ready.
   // Parameters:
-  // |media_crypto| - global reference to MediaCrypto object
-  // |requires_secure_video_codec| - true if secure video decoder is required
+  // |media_crypto| - global reference to MediaCrypto object. |media_crypto| is
+  //                  always a valid std::unique_ptr, but the JavaRef it
+  //                  contains can point to a null object.
+  // |requires_secure_video_codec| - true if secure video decoder is required.
+  //                                 It's invalid if |media_crypto| contains
+  //                                 null MediaCrypto object.
   using MediaCryptoReadyCB =
       base::Callback<void(JavaObjectPtr media_crypto,
                           bool requires_secure_video_codec)>;

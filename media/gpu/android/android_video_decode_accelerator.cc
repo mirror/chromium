@@ -1504,15 +1504,15 @@ void AndroidVideoDecodeAccelerator::OnMediaCryptoReady(
     bool requires_secure_video_codec) {
   DVLOG(1) << __func__;
 
-  if (!media_crypto) {
+  DCHECK(media_crypto);
+
+  if (media_crypto->is_null()) {
     LOG(ERROR) << "MediaCrypto is not available, can't play encrypted stream.";
     cdm_for_reference_holding_only_ = nullptr;
     media_drm_bridge_cdm_context_ = nullptr;
     NOTIFY_ERROR(PLATFORM_FAILURE, "MediaCrypto is not available");
     return;
   }
-
-  DCHECK(!media_crypto->is_null());
 
   // We assume this is a part of the initialization process, thus MediaCodec
   // is not created yet.
