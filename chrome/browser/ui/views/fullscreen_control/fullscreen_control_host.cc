@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/views/fullscreen_control/fullscreen_control_host.h"
 
+#include "base/bind.h"
 #include "base/i18n/rtl.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.h"
@@ -42,8 +43,10 @@ FullscreenControlHost::FullscreenControlHost(BrowserView* browser_view,
                                              views::View* host_view)
     : DropdownBarHost(browser_view),
       browser_view_(browser_view),
-      fullscreen_control_view_(new FullscreenControlView(browser_view)) {
-  Init(host_view, fullscreen_control_view_, fullscreen_control_view_);
+      fullscreen_control_view_(new FullscreenControlView(
+          base::Bind(&BrowserView::ExitFullscreen,
+                     base::Unretained(browser_view)))) {
+  Init(host_view, fullscreen_control_view_, this);
 }
 
 FullscreenControlHost::~FullscreenControlHost() = default;
@@ -70,6 +73,8 @@ gfx::Rect FullscreenControlHost::GetDialogPosition(
   bounds.set_y(original_y);
   return bounds;
 }
+
+void FullscreenControlHost::SetFocusAndSelection(bool select_all) {}
 
 void FullscreenControlHost::OnMouseEvent(ui::MouseEvent* event) {
   if (event->type() == ui::ET_MOUSE_MOVED)
