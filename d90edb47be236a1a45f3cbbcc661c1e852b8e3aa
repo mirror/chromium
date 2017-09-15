@@ -34,6 +34,24 @@
       "revId": "d90edb47be236a1a45f3cbbcc661c1e852b8e3aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "079399d8_a6cfac08",
+        "filename": "base/process/process.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-09-15T18:52:56Z",
+      "side": 1,
+      "message": "This seems not sufficient, Chromoting uses more scenarios than base::Process, see,\nhttps://cs.chromium.org/chromium/src/remoting/host/win/unprivileged_process_delegate.cc?rcl\u003d91bce156c305f9e9ec669944a165ea85fd7ce003\u0026l\u003d235\nand\nhttps://cs.chromium.org/chromium/src/remoting/host/win/wts_session_process_delegate.cc?rcl\u003d91bce156c305f9e9ec669944a165ea85fd7ce003\u0026l\u003d367\n\nIsRunning() is guaranteed to be safe on Windows (https://blogs.msdn.microsoft.com/oldnewthing/20110107-00/?p\u003d11803), I will wrap it with defined(OS_WIN).\n\nI believe Linux won\u0027t reuse the process id frequently. But if someone does this\n\nbase::Process process(pid);\nkill(pid);\nsleep(1d);\nassert(!process.IsRunning());\n\nIt may fail.\n\nSince I will only use this API on Windows, leaving it within defined(OS_WIN) is totally fine for me.",
+      "parentUuid": "3bc40bee_ccfb6423",
+      "revId": "d90edb47be236a1a45f3cbbcc661c1e852b8e3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
