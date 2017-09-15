@@ -366,6 +366,13 @@ void BrowserTabStripController::CreateNewTab() {
   feature_engagement::NewTabTrackerFactory::GetInstance()
       ->GetForProfile(browser_view_->browser()->profile())
       ->OnNewTabOpened();
+  if (feature_engagement::NewTabTrackerFactory::GetInstance()
+          ->GetForProfile(browser_view_->browser()->profile())
+          ->CloseBubble()) {
+    feature_engagement::NewTabTrackerFactory::GetInstance()
+        ->GetForProfile(browser_view_->browser()->profile())
+        ->OnPromoClosed();
+  }
 #endif
   model_->delegate()->AddTabAt(GURL(), -1, true);
 }
