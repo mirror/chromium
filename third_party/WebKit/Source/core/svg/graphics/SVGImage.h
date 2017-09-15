@@ -75,6 +75,11 @@ class CORE_EXPORT SVGImage final : public Image {
   void StartAnimation(CatchUpAnimation = kCatchUp) override;
   void ResetAnimation() override;
 
+  PaintImage::CompletionState completion_state() const override {
+    return all_data_received_ ? PaintImage::CompletionState::DONE
+                              : PaintImage::CompletionState::PARTIALLY_DONE;
+  }
+
   // Does the SVG image/document contain any animations?
   bool MaybeAnimated() override;
 
@@ -220,6 +225,7 @@ class CORE_EXPORT SVGImage final : public Image {
 
   LoadState load_state_ = kDataChangedNotStarted;
 
+  bool all_data_received_ = false;
   Persistent<SVGImageLocalFrameClient> frame_client_;
   FRIEND_TEST_ALL_PREFIXES(SVGImageTest, SupportsSubsequenceCaching);
 };
