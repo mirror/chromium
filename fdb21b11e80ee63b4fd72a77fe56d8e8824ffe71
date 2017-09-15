@@ -22,6 +22,30 @@
       "revId": "fdb21b11e80ee63b4fd72a77fe56d8e8824ffe71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d662ea2_8f0879cf",
+        "filename": "testing/libfuzzer/libprotobuf-mutator.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-09-15T07:09:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42a31870_c447a43c",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 4
+      },
+      "revId": "fdb21b11e80ee63b4fd72a77fe56d8e8824ffe71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

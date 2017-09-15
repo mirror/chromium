@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4de9c2a2_46df94ff",
+        "filename": "testing/libfuzzer/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1243002
+      },
+      "writtenOn": "2017-09-15T07:09:20Z",
+      "side": 1,
+      "message": "Sorry. I reworded it (not exactly how you did, I didn\u0027t want people to think it\u0027s only for protobuf targets).",
+      "parentUuid": "2ef6d121_14f3b9f8",
+      "range": {
+        "startLine": 33,
+        "startChar": 22,
+        "endLine": 33,
+        "endChar": 48
+      },
+      "revId": "b479261acd062fb6c8714f7eef727c7d40e540c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bfe7edb_2e16b7b3",
         "filename": "testing/libfuzzer/libprotobuf-mutator.md",
         "patchSetId": 6
