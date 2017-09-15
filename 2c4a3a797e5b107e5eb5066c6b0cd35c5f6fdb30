@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a1dd36a2_a46b8d8e",
+        "filename": "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115445
+      },
+      "writtenOn": "2017-09-15T15:26:37Z",
+      "side": 0,
+      "message": "Interesting, thanks for the info.",
+      "parentUuid": "ac845fb0_d70cf85d",
+      "range": {
+        "startLine": 16,
+        "startChar": 32,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "2c4a3a797e5b107e5eb5066c6b0cd35c5f6fdb30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1251e9f1_a1d11ba6",
         "filename": "chrome/browser/safe_browsing/settings_reset_prompt/settings_reset_prompt_model.h",
         "patchSetId": 2
