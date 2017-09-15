@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e872c89b_098537f3",
+        "filename": "third_party/WebKit/Source/platform/geometry/FloatRoundedRect.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-15T22:28:44Z",
+      "side": 1,
+      "message": "I think this is likely to confuse someone in the future who is looking into overflows or other large values. WDYT about doing something like:\nif (Rect() \u003d\u003d InfiniteIntRect())\n  return \"InfiniteIntRect\";\nif (GetRadii().IsZero())\n  return Rect().ToString();\nreturn Rect().ToString() + \" radii(\" + GetRadii().ToString() + \")\";\n\nThis way, NANs and Infs still get printed correctly, and we\u0027ll get nice behavior if the value is a special infinite int rect. This also reduces cases where two FloatRoundedRects have the same ToString output but are not equal.",
+      "revId": "b5b82a070c3ae621abfcb3d408b088c1de5c3200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a8dd4e2_a2a614c0",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintPropertyNode.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-15T22:28:44Z",
+      "side": 1,
+      "message": "This will print escaped. Is it possible to use the Utf8 trick to unescape the output?\n\nE.g.,\nLOG(INFO) \u003c\u003c \"overflow clip: \" \u003c\u003c properties.OverflowClip()-\u003eToString();\noverflow clip: \"{\\\"parent\\\":\\\"0x38f725656890\\\",\\\"localTransformSpace\\\":\\\"0x38f725740a30\\\",\\\"rect\\\":\\\"227.5,214 172x172\\\"}\"",
+      "revId": "b5b82a070c3ae621abfcb3d408b088c1de5c3200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59dde6be_1f66678a",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/ScrollPaintPropertyNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-09-15T22:28:44Z",
+      "side": 1,
+      "message": "Did bounds_ get dropped? Somewhat confusingly, there are two bounds values on scroll nodes: one for the total scrolling area, and one for the clipped area.",
+      "revId": "b5b82a070c3ae621abfcb3d408b088c1de5c3200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
