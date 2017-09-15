@@ -134,7 +134,7 @@ void ChromeBrowserMainExtraPartsAsh::PostProfileInit() {
   media_client_ = base::MakeUnique<MediaClient>();
   lock_screen_client_ = base::MakeUnique<LockScreenClient>();
 
-  if (!ash::Shell::HasInstance())
+  if (ash_util::IsRunningInMash())
     return;
 
   // Initialize TabScrubber after the Ash Shell has been initialized.
