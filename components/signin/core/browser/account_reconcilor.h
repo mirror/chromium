@@ -17,6 +17,7 @@
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "base/strings/string_piece.h"
 #include "base/threading/thread_checker.h"
 #include "base/time/time.h"
 #include "components/content_settings/core/browser/content_settings_observer.h"
@@ -107,9 +108,13 @@ class AccountReconcilor : public KeyedService,
  private:
   friend class Lock;
   friend class AccountReconcilorTest;
+  friend class DiceBrowserTestBase;
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, SigninManagerRegistration);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, Reauth);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, ProfileAlreadyConnected);
+  FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, EnabledWithDice);
+  FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, DiceReconcileWhithoutSignin);
+  FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest, DiceReconcileNoop);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest,
                            StartReconcileCookiesDisabled);
   FRIEND_TEST_ALL_PREFIXES(AccountReconcilorTest,
@@ -156,7 +161,8 @@ class AccountReconcilor : public KeyedService,
   void RegisterWithContentSettings();
   void UnregisterWithContentSettings();
 
-  bool IsProfileConnected();
+  // The reconcilor is enabled if Sync or Dice is enabled.
+  bool IsEnabled();
   // Returns true if account consistency is enabled (Mirror or Dice).
   bool IsAccountConsistencyEnabled();
 
@@ -175,6 +181,12 @@ class AccountReconcilor : public KeyedService,
   void ValidateAccountsFromTokenService();
   // Note internally that this |account_id| is added to the cookie jar.
   bool MarkAccountAsAddedToCookie(const std::string& account_id);
+
+  // The reconcilor only starts when the token service is ready.
+  bool IsTokenServiceReady();
+
+  // Returns the first account to add in the Gaia cookie.
+  base::StringPiece GetFirstGaiaAccountForReconcile();
 
   // Overriden from content_settings::Observer.
   void OnContentSettingChanged(
