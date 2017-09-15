@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ef4fda7_9488d984",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/partnerbookmarks/PartnerBookmarksShim.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-09-15T03:08:28Z",
+      "side": 1,
+      "message": "This means the CL wouldn\u0027t benefit much from our staged release, right?",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 83
+      },
+      "revId": "f4827cf18ea109226e25dc2c228442911f97b643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
