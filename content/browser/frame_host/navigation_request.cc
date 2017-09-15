@@ -153,6 +153,17 @@ void AddAdditionalRequestHeaders(net::HttpRequestHeaders* headers,
   if (GetContentClient()->browser()->IsDataSaverEnabled(browser_context))
     headers->SetHeaderIfMissing("Save-Data", "on");
 
+  // Attach request headers based on client hints.
+  // TODO(crbug.com/735518): If the request is redirected, the client hint
+  // headers stay attached to the redirected request. Consider removing/adding
+  // the client hints headers if the request is redirected with a change in
+  // scheme or a change in the origin.
+  std::unique_ptr<net::HttpRequestHeaders> client_hints_additional_headers =
+      GetContentClient()->browser()->GetAdditionalNavigationRequestHeaders(
+          browser_context, url);
+  if (client_hints_additional_headers)
+    headers->MergeFrom(*(client_hints_additional_headers.get()));
+
   headers->SetHeaderIfMissing(net::HttpRequestHeaders::kUserAgent,
                               user_agent_override.empty()
                                   ? GetContentClient()->GetUserAgent()
