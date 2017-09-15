@@ -30,6 +30,8 @@ class CORE_EXPORT NGLineBoxFragmentBuilder final
 
   NGLineBoxFragmentBuilder& AddChild(RefPtr<NGPhysicalFragment>,
                                      const NGLogicalOffset&);
+  NGLineBoxFragmentBuilder& AddChild(RefPtr<NGLayoutResult>,
+                                     const NGLogicalOffset&);
   void MoveChildrenInBlockDirection(LayoutUnit);
   void MoveChildrenInBlockDirection(LayoutUnit, unsigned start, unsigned end);
 
