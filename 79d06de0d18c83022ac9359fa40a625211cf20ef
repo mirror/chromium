@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "d29f1558_556ac7e5",
+        "filename": "components/password_manager/content/browser/content_password_manager_driver.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-15T16:44:52Z",
+      "side": 1,
+      "message": "I didn\u0027t get the comment. If a renderer is expolited what makes sure that it\u0027s killed when it uses url::kAboutScheme?",
+      "parentUuid": "d0ff95cb_4874f25d",
+      "revId": "79d06de0d18c83022ac9359fa40a625211cf20ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2663693_6805f9f1",
         "filename": "components/password_manager/core/browser/password_store.cc",
         "patchSetId": 4
@@ -70,6 +88,24 @@
       "writtenOn": "2017-09-14T22:57:28Z",
       "side": 1,
       "message": "I *think* doing this here would filter out existing about:blank passwords for both autofill and credential manager, but still keep it working for chrome://settings/passwords (I\u0027ve verified the latter).  Password autofill seems to invoke this via PasswordManager::CreatePendingLoginManagers -\u003e PasswordFormManager::Init -\u003e FormFetcherImpl::Fetch; and credentials API via CredentialManagerImpl::Get; while chrome://settings/passwords gets passwords via PasswordStore::InjectAffiliationAndBrandingInformation.  I\u0027ve verified that existing about:blank passwords are still visible in chrome://settings/passwords with this CL.  I\u0027d definitely like someone who knows this code better to confirm though.",
+      "revId": "79d06de0d18c83022ac9359fa40a625211cf20ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a09c4bd0_8d273762",
+        "filename": "components/password_manager/core/browser/password_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-15T16:44:52Z",
+      "side": 1,
+      "message": "I find it\u0027s confusing to filter those credentials in one method of PasswordStore but return via another. In general PasswordStore seems to be too low level for such details.\nRegarding the CM API. It\u0027s only available in the main frame and it\u0027s enforced in ChromePasswordManagerClient::BindCredentialManager. It doesn\u0027t harm to check the URL though. Then it can be done in PasswordManagerClient::IsFillingEnabledForCurrentPage() (note that we have a separate instance for iOS).\n\nNow the password autofill. When a frame (with a from) is created PasswordManager learns about it via either PasswordManager::OnPasswordFormsParsed or PasswordManager::OnPasswordFormsRendered. In both cases PasswordManager::CreatePendingLoginManagers is called and a PasswordFormManager is created or reused. PasswordFormManager represents a form. The same form maybe in different frames. It seems that we should prevent both PasswordManager and PasswordFormManager from working with a driver representing about:.. at that point. Then the request to the password store never happens and we don\u0027t need to filter it.",
+      "parentUuid": "d2663693_6805f9f1",
       "revId": "79d06de0d18c83022ac9359fa40a625211cf20ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
