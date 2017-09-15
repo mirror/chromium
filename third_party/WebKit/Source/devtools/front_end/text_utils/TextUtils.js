@@ -231,6 +231,83 @@ TextUtils.FilterParser = class {
   }
 };
 
+TextUtils.FilterSuggestionBuilder = class {
+  /**
+   * @param {!Array<string>} keys
+   * @param {function(string, !Array<string>):!Array<string>=} customSortedValues
+   */
+  constructor(keys, customSortedValues) {
+    this._keys = keys;
+    this._valueSets = /** @type {!Object<string, !Set<string>>} */ ({});
+    if (customSortedValues)
+      this._customSortedValues = customSortedValues;
+  }
+
+  /**
+   * @param {string} prefix
+   * @param {boolean=} force
+   * @return {!Array<string>}
+   */
+  completions(prefix, force) {
+    var suggestions = /** @type {!Array<string>} */ ([]);
+    if (!prefix && !force)
+      return suggestions;
+
+    var negative = prefix.startsWith('-');
+    if (negative)
+      prefix = prefix.substring(1);
+    var modifier = negative ? '-' : '';
+    var valueDelimiterIndex = prefix.indexOf(':');
+
+    if (valueDelimiterIndex === -1) {
+      var matcher = new RegExp('^' + prefix.escapeForRegExp(), 'i');
+      for (var key of this._keys) {
+        if (key.match(matcher))
+          suggestions.push(modifier + key + ':');
+      }
+    } else {
+      var key = prefix.substring(0, valueDelimiterIndex).toLowerCase();
+      var value = prefix.substring(valueDelimiterIndex + 1);
+      var matcher = new RegExp('^' + value.escapeForRegExp(), 'i');
+      for (var item of this._values(key)) {
+        if (item.match(matcher) && (item !== value))
+          suggestions.push(modifier + key + ':' + item);
+      }
+    }
+    return suggestions;
+  }
+
+  /**
+   * @param {string} key
+   * @return {!Array<string>}
+   */
+  _values(key) {
+    var result = Array.from(this._valueSets[key] || new Set());
+    if (this._customSortedValues)
+      return this._customSortedValues(key, result);
+    result.sort();
+    return result;
+  }
+
+  /**
+   * @param {string} key
+   * @param {?string=} value
+   */
+  addItem(key, value) {
+    if (!value)
+      return;
+
+    if (!this._valueSets[key])
+      this._valueSets[key] = /** @type {!Set<string>} */ (new Set());
+    this._valueSets[key].add(value);
+  }
+
+  reset() {
+    this._keys = /** @type {!Array<string>} */ ([]);
+    this._valueSets = /** @type {!Object<string, !Set<string>>} */ ({});
+  }
+};
+
 /** @typedef {{key:(string|undefined), text:(string|undefined), regex:(!RegExp|undefined), negative:boolean}} */
 TextUtils.FilterParser.ParsedFilter;
 

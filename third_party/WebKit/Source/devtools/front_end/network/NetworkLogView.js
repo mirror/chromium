@@ -133,7 +133,8 @@ Network.NetworkLogView = class extends UI.VBox {
     filterBar.addFilter(this._resourceCategoryFilterUI);
 
     this._filterParser = new TextUtils.FilterParser(Network.NetworkLogView._searchKeys);
-    this._suggestionBuilder = new Network.FilterSuggestionBuilder(Network.NetworkLogView._searchKeys);
+    this._suggestionBuilder = new TextUtils.FilterSuggestionBuilder(
+        Network.NetworkLogView._searchKeys, Network.NetworkLogView._sortedSearchValues);
     this._resetSuggestionBuilder();
 
     this._dataGrid = this._columns.dataGrid();
@@ -155,6 +156,34 @@ Network.NetworkLogView = class extends UI.VBox {
 
     this._updateGroupByFrame();
     Common.moduleSetting('network.group-by-frame').addChangeListener(() => this._updateGroupByFrame());
+  }
+
+  /**
+   * @param {string} key
+   * @param {!Array<string>} values
+   * @return {!Array<string>}
+   */
+  static _sortedSearchValues(key, values) {
+    if (key === Network.NetworkLogView.FilterType.Priority) {
+      var valuesSet = new Set(values);
+      values = [];
+      /** @type {!Map<number, !Protocol.Network.ResourcePriority>} */
+      var numericToPriorityMap = new Map();
+      NetworkPriorities.prioritySymbolToNumericMap().forEach((value, key) => numericToPriorityMap.set(value, key));
+      var sortedNumericPriorities = numericToPriorityMap.keysArray();
+      sortedNumericPriorities.sortNumbers();
+      var sortedPriorities = sortedNumericPriorities.map(value => numericToPriorityMap.get(value));
+      var sortedPriorityLabels = sortedPriorities.map(value => NetworkPriorities.uiLabelForPriority(value));
+
+      for (var value of sortedPriorityLabels) {
+        if (!valuesSet.has(value))
+          continue;
+        values.push(value);
+      }
+    } else {
+      values.sort();
+    }
+    return values;
   }
 
   _updateGroupByFrame() {
@@ -559,7 +588,11 @@ Network.NetworkLogView = class extends UI.VBox {
     this._suggestionBuilder.addItem(Network.NetworkLogView.FilterType.LargerThan, '100');
     this._suggestionBuilder.addItem(Network.NetworkLogView.FilterType.LargerThan, '10k');
     this._suggestionBuilder.addItem(Network.NetworkLogView.FilterType.LargerThan, '1M');
-    this._textFilterUI.setSuggestionProvider(this._suggestionBuilder.completions.bind(this._suggestionBuilder));
+    this._textFilterUI.setSuggestionProvider((expression, prefix, force) => {
+      var valueCompletions = this._suggestionBuilder.completions(prefix, force);
+      var suggestions = valueCompletions.map(text => /** @type {!UI.SuggestBox.Suggestions} */ ({text: text}));
+      return Promise.resolve(suggestions);
+    });
   }
 
   /**
