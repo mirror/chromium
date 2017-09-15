@@ -989,4 +989,64 @@ TEST_F(LayoutBoxModelObjectTest, InvalidatePaintLayerOnStackedChange) {
             target->Layer()->CompositingContainer());
 }
 
+TEST_F(LayoutBoxModelObjectTest, Foo) {
+  SetBodyInnerHTML(
+      "<style>"
+      "body { height: 5000px; }"
+      "#scroller { height: 100px; }"
+      "#sticky { position: sticky; top: 0; height: 50px; width: 50px; }"
+      "</style>"
+      "<div id='scroller'>"
+      "  <div id='sticky'></div>"
+      "  </div>");
+
+  LayoutBoxModelObject* sticky =
+      ToLayoutBoxModelObject(GetLayoutObjectByElementId("sticky"));
+  LayoutBoxModelObject* scroller =
+      ToLayoutBoxModelObject(GetLayoutObjectByElementId("scroller"));
+
+  // The 'scroller' starts as non-overflow, so the sticky element's ancestor
+  // overflow layer should be the outer scroller.
+  EXPECT_TRUE(sticky->Layer()->AncestorOverflowLayer()->IsRootLayer());
+
+  // We need the sticky element to not be a PaintLayer child of the scroller, as
+  // the bug was caused when reparenting the sticky into the scroller.
+  EXPECT_FALSE(scroller->Layer());
+
+  // Now make the scroller into an actual scroller. This will reparent the
+  // sticky element to be a child of the scroller, and will set its previous
+  // overflow layer to nullptr.
+  ToElement(scroller->GetNode())
+      ->SetInlineStyleProperty(CSSPropertyOverflow, "scroll");
+  GetDocument().View()->UpdateAllLifecyclePhases();
+
+  // This is the underlying bug - we don't remove the sticky as a viewport
+  // constrained object.
+  EXPECT_FALSE(GetDocument().View()->HasViewportConstrainedObjects());
+
+  // And below this is the symptom - the crash seen in http://crbug.com/755307
+  //
+  // At this point the sticky element is incorrectly counted as
+  // viewport-constrained. However the sticky element's AncestorOverflowLayer()
+  // is still scrollable, so calls to
+  // LocalFrameView::UpdateLayersAndCompositingAfterScrollIfNeeded work ok.
+  //
+  // To now trigger the crash, we make the scroller have visible overflow but
+  // still have a PaintLayer (in this case by making it position: relative).
+  ToElement(scroller->GetNode())
+      ->SetInlineStyleProperty(CSSPropertyPosition, "relative");
+  ToElement(scroller->GetNode())
+      ->SetInlineStyleProperty(CSSPropertyOverflow, "visible");
+
+  // LocalDOMWindow::scrollTo only updates style and layout. That is enough to
+  // remove the ScrollableArea on the scroller PaintLayer, but not enough to
+  // update the sticky element's AncestorOverflowLayer - that happens in
+  // compositing inputs update.
+  //
+  // LocalDOMWindow::scrollTo should run compositing inputs as well, but that
+  // would only hide the underlying problem that we don't remove the sticky as a
+  // viewport constrained object.
+  GetDocument().GetFrame()->DomWindow()->scrollTo(0, 500);
+}
+
 }  // namespace blink
