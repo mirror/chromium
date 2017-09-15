@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9f1fc07_0d488834",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T13:04:38Z",
+      "side": 1,
+      "message": "Please word wrap at ~80 columns.\n\nisnt → isn\u0027t\nwhen tries → when trying\ndoesnt → doesn\u0027t",
+      "revId": "619f99b56e5aabb157c0ebe982203f3151dbb1f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
