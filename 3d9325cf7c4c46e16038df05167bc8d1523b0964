@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f81a6de8_2393403d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-15T19:23:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71670501_f75eb06d",
+      "range": {
+        "startLine": 105,
+        "startChar": 7,
+        "endLine": 105,
+        "endChar": 0
+      },
+      "revId": "3d9325cf7c4c46e16038df05167bc8d1523b0964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab4777bd_4bf6ac34",
         "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "c1febaa2_697efe32",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-15T19:23:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab4777bd_4bf6ac34",
+      "revId": "3d9325cf7c4c46e16038df05167bc8d1523b0964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6ad5562_264bb662",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 5
@@ -56,6 +98,24 @@
       "revId": "3d9325cf7c4c46e16038df05167bc8d1523b0964",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad4e705d_5d218afb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 87940,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-15T19:23:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6ad5562_264bb662",
+      "revId": "3d9325cf7c4c46e16038df05167bc8d1523b0964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
