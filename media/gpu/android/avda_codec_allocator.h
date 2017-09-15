@@ -160,11 +160,22 @@ class MEDIA_GPU_EXPORT AVDACodecAllocator {
 
   // Forward |media_codec|, which is configured to output to |surface_bundle|,
   // to |client| if |client| is still around.  Otherwise, release the codec and
-  // then drop our ref to |surface_bundle|.
-  void ForwardOrDropCodec(base::WeakPtr<AVDACodecAllocatorClient> client,
-                          TaskType task_type,
-                          scoped_refptr<AVDASurfaceBundle> surface_bundle,
-                          std::unique_ptr<MediaCodecBridge> media_codec);
+  // then drop our ref to |surface_bundle|.  This is called on |task_runner_|.
+  // It may only reference |client| form |client_task_runner|.
+  void ForwardOrDropCodec(
+      scoped_refptr<base::SingleThreadTaskRunner> client_task_runner,
+      base::WeakPtr<AVDACodecAllocatorClient> client,
+      TaskType task_type,
+      scoped_refptr<AVDASurfaceBundle> surface_bundle,
+      std::unique_ptr<MediaCodecBridge> media_codec);
+
+  // Forward |surface_bundle| and |media_codec| to |client| on the right thread
+  // to access |client|.
+  void ForwardOrDropCodecOnClientThread(
+      base::WeakPtr<AVDACodecAllocatorClient> client,
+      TaskType task_type,
+      scoped_refptr<AVDASurfaceBundle> surface_bundle,
+      std::unique_ptr<MediaCodecBridge> media_codec);
 
  private:
   friend class AVDACodecAllocatorTest;
@@ -200,6 +211,13 @@ class MEDIA_GPU_EXPORT AVDACodecAllocator {
     HangDetector hang_detector;
   };
 
+  // Helper function for CreateMediaCodecAsync which takes the task runner on
+  // which it should post the reply to |client|.
+  void CreateMediaCodecAsyncInternal(
+      scoped_refptr<base::SingleThreadTaskRunner> client_task_runner,
+      base::WeakPtr<AVDACodecAllocatorClient> client,
+      scoped_refptr<CodecConfig> codec_config);
+
   // Return the task type to use for a new codec allocation, or nullopt if
   // both threads are hung.
   base::Optional<TaskType> TaskTypeForAllocation(bool software_codec_forbidden);
@@ -216,6 +234,11 @@ class MEDIA_GPU_EXPORT AVDACodecAllocator {
   // Stop the thread indicated by |index|. This signals stop_event_for_testing_
   // after both threads are stopped.
   void StopThreadTask(size_t index);
+
+  // Task runner on which we do all our work.  All members should be accessed
+  // only from this task runner.  |task_runner_| itself may be referenced from
+  // any thread (hence const).
+  const scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
   // All registered AVDAs.
   std::set<AVDACodecAllocatorClient*> clients_;
