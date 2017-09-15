@@ -2,6 +2,114 @@
   "comments": [
     {
       "key": {
+        "uuid": "0f31632a_067feaea",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-15T18:51:57Z",
+      "side": 1,
+      "message": "Since DiscoveryNetworkMonitor is already conceptually a singleton, can we make the metric observer a member of DiscoveryNetworkMonitor instead of defining another global?",
+      "range": {
+        "startLine": 45,
+        "startChar": 55,
+        "endLine": 45,
+        "endChar": 72
+      },
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60ff666_9a4debbb",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor_metric_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-15T18:51:57Z",
+      "side": 1,
+      "message": "Please document what this constant means?",
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "440bd8b4_1ab64ef9",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor_metric_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-15T18:51:57Z",
+      "side": 1,
+      "message": "nit: network_id",
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0f3e32_5b0de3d6",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor_metric_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-15T18:51:57Z",
+      "side": 1,
+      "message": "Can you see if you can use a TestMockTimeTaskRunner to create a MockTickClock and pass it into the ctor for tests? That way I think we can get rid of this method and the need to have timer_override_.",
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dc23e22_6ee2d0a0",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor_metric_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-15T18:51:57Z",
+      "side": 1,
+      "message": "Please add documentation about what this method is supposed to do.",
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "535f06ae_733e60ff",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor_metric_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-15T18:51:57Z",
+      "side": 1,
+      "message": "Is this supposed to track the latest network id? Maybe name this latest_network_id_. Actually, it isn\u0027t used in the .cc file, so maybe just remove it.",
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63e74393_f4cb4870",
         "filename": "chrome/browser/media/router/discovery/discovery_network_monitor_metrics.cc",
         "patchSetId": 1
@@ -42,6 +150,46 @@
         "endLine": 16,
         "endChar": 0
       },
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01889997_6abf8d00",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-15T18:51:57Z",
+      "side": 1,
+      "message": "nit: Rather than passing around a bool, define an enum SinkSource and use it here. That way the meaning of the parameter is more clear when read by itself. The enum can have values NETWORK_CACHE, MDNS, DIAL. Maybe we will need a special case for retries since it\u0027s a bit more tricky to pass in the original value in OnError. This can also be useful in UMA, say if we want to record the source from which a Cast MediaSink is obtained.",
+      "range": {
+        "startLine": 160,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 8
+      },
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8543ab4_550e6ac5",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-15T18:51:57Z",
+      "side": 1,
+      "message": "Slightly related to above and Ilya\u0027s comment, perhaps we can generalize the metric to record the method of device discovery that led to creation of this sink?",
       "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
