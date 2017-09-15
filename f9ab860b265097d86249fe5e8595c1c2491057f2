@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a832db44_4bc9ce4e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-15T22:40:31Z",
+      "side": 1,
+      "message": "Hmm, this is somewhat confusing. Where are the other enum entries defined? If possible, please define them here. If not, at least provide some reference to where the definition lives.",
+      "range": {
+        "startLine": 43,
+        "startChar": 67,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "f9ab860b265097d86249fe5e8595c1c2491057f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
