@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6097df69_3849f067",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-15T19:33:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "362055a9_e0df6429",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fe1d6df_65f417ec",
         "filename": "remoting/ios/audio/audio_player_ios.h",
         "patchSetId": 8
@@ -186,6 +210,30 @@
       "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1241703c_28443c70",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-15T19:33:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2fe1d6df_65f417ec",
+      "range": {
+        "startLine": 46,
+        "startChar": 42,
+        "endLine": 46,
+        "endChar": 63
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -775,6 +823,30 @@
       "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3391df06_dae14038",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-15T19:33:15Z",
+      "side": 1,
+      "message": "Now a weak ptr.",
+      "parentUuid": "9dbd25b5_f75cd1d7",
+      "range": {
+        "startLine": 136,
+        "startChar": 23,
+        "endLine": 136,
+        "endChar": 33
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
