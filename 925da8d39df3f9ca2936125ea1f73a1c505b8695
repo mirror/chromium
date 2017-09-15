@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "3bf4f2d5_b4a24d3c",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarkerController.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T01:57:14Z",
+      "side": 1,
+      "message": "I see. I missed |Vector\u003cString\u003e suggestions_| in SMProps.\nIt is better to use |SuggetionMarkerProperites\u0026\u0026| to expression\nSMProps isn\u0027t light weight class?",
+      "parentUuid": "801e1843_f8cc91d7",
+      "range": {
+        "startLine": 74,
+        "startChar": 27,
+        "endLine": 74,
+        "endChar": 60
+      },
+      "revId": "925da8d39df3f9ca2936125ea1f73a1c505b8695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e3de84f_7eaa287d",
         "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarker.h",
         "patchSetId": 2
@@ -125,6 +149,41 @@
       "side": 1,
       "message": "+tzik@ as C++ expert.",
       "parentUuid": "c137340c_9b79a973",
+      "revId": "925da8d39df3f9ca2936125ea1f73a1c505b8695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa7e0c10_250aa92f",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerProperties.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T01:57:14Z",
+      "side": 1,
+      "message": "s/const Vector\u003cString\u003e\u0026/Vector\u003cString\u003e/\n\nWe should not ask caller to manage life time of suggestion marker.\nReturning |const Vect\u003cT\u003e\u0026| equivalents to returning pointer and\nthis function returns pointer of member variable. Thus, callers\nshould not use it when marker can be removed.\n\nIn general exposing pointer to member is not good idea since callers\nneed pay attention to lifetime. Other than extreme cases, optimization\nfor hot loop, we should avoid to return member pointer.",
+      "parentUuid": "62532633_222cd9a8",
+      "revId": "925da8d39df3f9ca2936125ea1f73a1c505b8695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "906ae0de_526c2b0e",
+        "filename": "third_party/WebKit/Source/core/editing/markers/SuggestionMarkerProperties.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T01:57:14Z",
+      "side": 1,
+      "message": "Could you add a comment about we should use this class as value instead of\nref to utilize copy elision for |suggestions_| member.",
       "revId": "925da8d39df3f9ca2936125ea1f73a1c505b8695",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
