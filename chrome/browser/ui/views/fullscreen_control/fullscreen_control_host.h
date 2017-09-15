@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "chrome/browser/ui/views/dropdown_bar_host.h"
+#include "chrome/browser/ui/views/dropdown_bar_host_delegate.h"
 #include "ui/events/event_handler.h"
 
 class BrowserView;
@@ -23,7 +24,9 @@ namespace views {
 class View;
 }  // namespace views
 
-class FullscreenControlHost : public DropdownBarHost, public ui::EventHandler {
+class FullscreenControlHost : public DropdownBarHost,
+                              public DropdownBarHostDelegate,
+                              public ui::EventHandler {
  public:
   // |host_view| allows the host to control the z-order of the underlying view.
   explicit FullscreenControlHost(BrowserView* browser_view,
@@ -34,6 +37,9 @@ class FullscreenControlHost : public DropdownBarHost, public ui::EventHandler {
   bool AcceleratorPressed(const ui::Accelerator& accelerator) override;
   bool CanHandleAccelerators() const override;
   gfx::Rect GetDialogPosition(gfx::Rect avoid_overlapping_rect) override;
+
+  // DropdownBarHostDelegate:
+  void SetFocusAndSelection(bool select_all) override;
 
   // ui::EventHandler:
   void OnMouseEvent(ui::MouseEvent* event) override;
