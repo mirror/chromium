@@ -7,11 +7,24 @@
 #include <limits>
 
 #include "base/files/file_path.h"
+#include "base/files/file_util.h"
 #include "base/rand_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
 
 namespace offline_pages {
+
+// static
+base::FilePath OfflineStoreUtils::GetPathFromUTF8String(
+    const std::string& path_string) {
+#if defined(OS_POSIX)
+  return base::FilePath(path_string);
+#elif defined(OS_WIN)
+  return base::FilePath(base::UTF8ToWide(path_string));
+#else
+#error Unknown OS
+#endif
+}
 
 // static
 std::string OfflineStoreUtils::GetUTF8StringFromPath(

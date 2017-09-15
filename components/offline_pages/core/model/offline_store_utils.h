@@ -19,6 +19,9 @@ namespace offline_pages {
 
 class OfflineStoreUtils {
  public:
+  // Converts a UTF8 string to a file path.
+  static base::FilePath GetPathFromUTF8String(const std::string& path_string);
+
   // Converts a file path to a UTF8 string.
   static std::string GetUTF8StringFromPath(const base::FilePath& path);
 
