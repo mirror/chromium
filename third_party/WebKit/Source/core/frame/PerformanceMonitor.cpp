@@ -17,6 +17,7 @@
 #include "core/loader/DocumentLoader.h"
 #include "core/probe/CoreProbes.h"
 #include "platform/Histogram.h"
+#include "platform/instrumentation/resource_coordinator/FrameResourceCoordinator.h"
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/Time.h"
 #include "public/platform/Platform.h"
@@ -338,6 +339,11 @@ void PerformanceMonitor::DomContentLoadedEventFired(LocalFrame* frame) {
   // Reset idle timers upon DOMContentLoaded, look at current active
   // connections.
   network_2_quiet_ = 0;
+  if (auto* frame_resource_coordinator =
+          local_root_->GetFrameResourceCoordinator()) {
+    frame_resource_coordinator->SetProperty(
+        resource_coordinator::mojom::PropertyType::kNetworkAlmostIdle, false);
+  }
   network_0_quiet_ = 0;
   DidLoadResource();
 }
@@ -356,6 +362,11 @@ void PerformanceMonitor::WillProcessTask(double start_time) {
       start_time - network_2_quiet_ > kNetworkQuietWindowSeconds) {
     probe::lifecycleEvent(local_root_->GetDocument(), "networkAlmostIdle",
                           network_2_quiet_);
+    if (auto* frame_resource_coordinator =
+            local_root_->GetFrameResourceCoordinator()) {
+      frame_resource_coordinator->SetProperty(
+          resource_coordinator::mojom::PropertyType::kNetworkAlmostIdle, true);
+    }
     network_2_quiet_ = -1;
   }
 
