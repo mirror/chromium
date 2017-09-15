@@ -535,52 +535,8 @@ LayerImplList::reverse_iterator LayerTreeImpl::rend() {
   return layer_list_.rend();
 }
 
-LayerImpl* LayerTreeImpl::LayerByElementId(ElementId element_id) const {
-  auto iter = element_layers_map_.find(element_id);
-  return (iter == element_layers_map_.end()) ? nullptr
-                                             : LayerById(iter->second);
-}
-
 ElementListType LayerTreeImpl::GetElementTypeForAnimation() const {
   return IsActiveTree() ? ElementListType::ACTIVE : ElementListType::PENDING;
-}
-
-void LayerTreeImpl::AddToElementMap(LayerImpl* layer) {
-  ElementId element_id = layer->element_id();
-  if (!element_id)
-    return;
-
-  TRACE_EVENT2(TRACE_DISABLED_BY_DEFAULT("compositor-worker"),
-               "LayerTreeImpl::AddToElementMap", "element",
-               element_id.AsValue().release(), "layer_id", layer->id());
-
-#if DCHECK_IS_ON()
-  LayerImpl* existing_layer = LayerByElementId(element_id);
-  bool element_id_collision_detected =
-      existing_layer && existing_layer != layer;
-
-  DCHECK(!element_id_collision_detected);
-#endif
-
-  element_layers_map_[element_id] = layer->id();
-
-  host_impl_->mutator_host()->RegisterElement(element_id,
-                                              GetElementTypeForAnimation());
-}
-
-void LayerTreeImpl::RemoveFromElementMap(LayerImpl* layer) {
-  if (!layer->element_id())
-    return;
-
-  TRACE_EVENT2(TRACE_DISABLED_BY_DEFAULT("compositor-worker"),
-               "LayerTreeImpl::RemoveFromElementMap", "element",
-               layer->element_id().AsValue().release(), "layer_id",
-               layer->id());
-
-  host_impl_->mutator_host()->UnregisterElement(layer->element_id(),
-                                                GetElementTypeForAnimation());
-
-  element_layers_map_.erase(layer->element_id());
 }
 
 void LayerTreeImpl::SetTransformMutated(ElementId element_id,
