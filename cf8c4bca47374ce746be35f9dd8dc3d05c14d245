@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "70c6b74d_e710996d",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-15T20:33:28Z",
+      "side": 1,
+      "message": "ACK. \nThanks for being thorough!\nThis part of code is still being actively developed. In fact, both Origin and navigation ID will be used in post-warning reporting and EventLogger, which is not implemented yet (ETA next week).  \nAnd I don\u0027t expect this map to go super large. I have added UMA to track how large this map can go. If I found the size of this map goes larger than we expected in Can/Dev, I\u0027ll add a cap to limit its memory impact.",
+      "parentUuid": "8f71dfd7_b566f8a0",
+      "revId": "cf8c4bca47374ce746be35f9dd8dc3d05c14d245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d874304f_ab153a55",
         "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
         "patchSetId": 16
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "You are correct, though there\u0027s a preferred way to deal with that :)\n\nI should have pointed out ScopedObserver better in the example I linked to. A ScopedObserver is a helper class to help unobserve all the things its owner is observing.\n\nSince this is only observing one thing, I\u0027m not sure a ScopedObserver is useful, but I wanted to mention it. You may choose whether you\u0027d like to use ScopedObserver here since it\u0027s just one thing. If this starts observing more things, then I\u0027d ask that this use ScopedObserver.\n\nSee:\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/webui/settings/on_startup_handler.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d64\n\nhttps://cs.chromium.org/chromium/src/base/scoped_observer.h?l\u003d21\u0026gsn\u003dScopedObserver",
       "parentUuid": "6310d8d9_f42c68c9",
+      "revId": "cf8c4bca47374ce746be35f9dd8dc3d05c14d245",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7df7fedb_b2651ca0",
+        "filename": "chrome/browser/ui/webui/settings/change_password_handler.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-15T20:33:28Z",
+      "side": 1,
+      "message": "Oh I see. Thanks for the pointer. Changed to ScopedObserver.",
+      "parentUuid": "1415976a_eb31c9a0",
       "revId": "cf8c4bca47374ce746be35f9dd8dc3d05c14d245",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
