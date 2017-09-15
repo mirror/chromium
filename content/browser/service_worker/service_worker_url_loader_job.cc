@@ -159,6 +159,8 @@ void ServiceWorkerURLLoaderJob::StartRequest() {
 void ServiceWorkerURLLoaderJob::CommitResponseHeaders() {
   DCHECK_EQ(Status::kStarted, status_);
   status_ = Status::kSentHeader;
+  LOG(ERROR) << "ServiceWorkerURLLoaderJob::CommitResponseHeaders "
+             << !!url_loader_client_;
   url_loader_client_->OnReceiveResponse(response_head_, ssl_info_,
                                         nullptr /* downloaded_file */);
 }
@@ -262,12 +264,56 @@ void ServiceWorkerURLLoaderJob::StartResponse(
 
   response_head_.did_service_worker_navigation_preload =
       did_navigation_preload_;
+  LOG(ERROR)
+      << "ServiceWorkerURLLoaderJob::StartResponse----------------------";
+  LOG(ERROR) << "  response.status_code: " << response.status_code;
+  LOG(ERROR) << "  body_as_stream.is_null() " << body_as_stream.is_null();
+  LOG(ERROR) << "  response.blob_uuid() " << response.blob_uuid;
+  std::string new_location;
+  if (response_head_.headers->IsRedirect(&new_location)) {
+    // See: URLRequestJob::ComputeRedirectInfo
+    int status = response.status_code;
+    const std::string& method = resource_request_.method;
+    const GURL& url = resource_request_.url;
+    GURL location = url.Resolve(new_location);
+    net::RedirectInfo redirect_info;
+    redirect_info.status_code = response.status_code;
+    redirect_info.new_method =
+        ((status == 303 && method != "HEAD") ||
+         ((status == 301 || status == 302) && method == "POST"))
+            ? "GET"
+            : method;
+
+    if (url.is_valid() && url.has_ref() && !location.has_ref()) {
+      GURL::Replacements replacements;
+      replacements.SetRef(url.spec().data(),
+                          url.parsed_for_possibly_invalid_spec().ref);
+      redirect_info.new_url = location.ReplaceComponents(replacements);
+    } else {
+      redirect_info.new_url = location;
+    }
+    redirect_info.new_site_for_cookies = redirect_info.new_url;
+    response_head_.encoded_data_length = 0;
+
+    // TODO: Set correctly
+    response_head_.load_timing.request_start = base::TimeTicks::Now();
+    response_head_.load_timing.request_start_time = base::Time::Now();
+    response_head_.load_timing.send_start = base::TimeTicks::Now();
+    response_head_.load_timing.send_end = base::TimeTicks::Now();
+    response_head_.load_timing.receive_headers_end = base::TimeTicks::Now();
+    LOG(ERROR) << "response_head_.load_timing.receive_headers_end "
+               << response_head_.load_timing.receive_headers_end;
+    url_loader_client_->OnReceiveRedirect(redirect_info, response_head_);
+    return;
+  }
 
   // Handle a stream response body.
   if (!body_as_stream.is_null() && body_as_stream->stream.is_valid()) {
+    LOG(ERROR) << "stream_waiter_=====";
     stream_waiter_ = std::make_unique<StreamWaiter>(
         this, std::move(version), std::move(body_as_stream->callback_request));
     CommitResponseHeaders();
+    LOG(ERROR) << "OnStartLoadingResponseBody";
     url_loader_client_->OnStartLoadingResponseBody(
         std::move(body_as_stream->stream));
     // StreamWaiter will call CommitCompleted() when done.
