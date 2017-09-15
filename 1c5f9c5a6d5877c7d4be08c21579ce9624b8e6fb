@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a677d9c_03d458e0",
+        "filename": "chrome/browser/task_manager/providers/task_provider_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-15T00:21:42Z",
+      "side": 1,
+      "message": "Can you also state here as in TaskRemoved() that old_task will no longer exist after this call?",
+      "range": {
+        "startLine": 29,
+        "startChar": 34,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "1c5f9c5a6d5877c7d4be08c21579ce9624b8e6fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15841750_821ff726",
+        "filename": "chrome/browser/task_manager/providers/web_contents/web_contents_task_provider.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-15T00:21:42Z",
+      "side": 1,
+      "message": "remove `.`?",
+      "range": {
+        "startLine": 74,
+        "startChar": 56,
+        "endLine": 74,
+        "endChar": 57
+      },
+      "revId": "1c5f9c5a6d5877c7d4be08c21579ce9624b8e6fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
