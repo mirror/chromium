@@ -66,9 +66,12 @@ cr.define('print_preview', function() {
     }
 
     /** @override */
-    getPrinters() {
-      this.methodCalled('getPrinters');
-      return Promise.resolve(this.localDestinationInfos_);
+    getPrinters(type) {
+      this.methodCalled('getPrinters', type);
+      cr.webUIListenerCallback(
+          'printers-added', print_preview.PrinterType.LOCAL_PRINTER,
+          this.localDestinationInfos_);
+      return Promise.resolve();
     }
 
     /** @override */

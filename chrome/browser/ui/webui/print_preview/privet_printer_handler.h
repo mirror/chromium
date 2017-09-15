@@ -38,8 +38,11 @@ class PrivetPrinterHandler
 
   // PrinterHandler implementation:
   void Reset() override;
-  void StartGetPrinters(
-      const PrinterHandler::GetPrintersCallback& callback) override;
+  // Required by PrinterHandler interface but should never be called.
+  void GetDefaultPrinter(
+      const PrinterHandler::DefaultPrinterCallback& callback) override;
+  void StartGetPrinters(const AddedPrintersCallback& added_printers_callback,
+                        const GetPrintersDoneCallback& done_callback) override;
   void StartGetCapability(
       const std::string& destination_id,
       const PrinterHandler::GetCapabilityCallback& calback) override;
@@ -51,6 +54,7 @@ class PrivetPrinterHandler
                   const gfx::Size& page_size,
                   const scoped_refptr<base::RefCountedBytes>& print_data,
                   const PrinterHandler::PrintCallback& callback) override;
+  // Required by PrinterHandler interface but should never be called.
   void StartGrantPrinterAccess(
       const std::string& printer_id,
       const PrinterHandler::GetPrinterInfoCallback& callback) override;
@@ -112,7 +116,8 @@ class PrivetPrinterHandler
       privet_capabilities_operation_;
   std::unique_ptr<cloud_print::PrivetLocalPrintOperation>
       privet_local_print_operation_;
-  PrinterHandler::GetPrintersCallback get_printers_callback_;
+  PrinterHandler::AddedPrintersCallback added_printers_callback_;
+  PrinterHandler::GetPrintersDoneCallback done_callback_;
   PrinterHandler::PrintCallback print_callback_;
   base::WeakPtrFactory<PrivetPrinterHandler> weak_ptr_factory_;
 

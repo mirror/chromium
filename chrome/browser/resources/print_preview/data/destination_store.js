@@ -109,50 +109,25 @@ cr.define('print_preview', function() {
     this.autoSelectTimeout_ = null;
 
     /**
-     * Whether a search for local destinations is in progress.
-     * @private {boolean}
+     * Whether a search for destinations of a certain type is in progress.
+     * @private {!Map<!print_preview.PrinterType, boolean>}
      */
-    this.isLocalDestinationSearchInProgress_ = false;
+    this.isDestinationSearchInProgress_ = new Map([
+      [print_preview.PrinterType.EXTENSION_PRINTER, false],
+      [print_preview.PrinterType.PRIVET_PRINTER, false],
+      [print_preview.PrinterType.LOCAL_PRINTER, false]
+    ]);
 
     /**
-     * Whether the destination store has already loaded or is loading all local
-     * destinations.
-     * @private {boolean}
+     * Whether the destination store has already loaded or is loading all
+     * destinations of a given type.
+     * @private {!Map<!print_preview.PrinterType, boolean>}
      */
-    this.hasLoadedAllLocalDestinations_ = false;
-
-    /**
-     * Whether a search for privet destinations is in progress.
-     * @private {boolean}
-     */
-    this.isPrivetDestinationSearchInProgress_ = false;
-
-    /**
-     * Whether the destination store has already loaded or is loading all privet
-     * destinations.
-     * @private {boolean}
-     */
-    this.hasLoadedAllPrivetDestinations_ = false;
-
-    /**
-     * Whether a search for extension destinations is in progress.
-     * @private {boolean}
-     */
-    this.isExtensionDestinationSearchInProgress_ = false;
-
-    /**
-     * Whether the destination store has already loaded all extension
-     * destinations.
-     * @private {boolean}
-     */
-    this.hasLoadedAllExtensionDestinations_ = false;
-
-    /**
-     * ID of a timeout set at the start of an extension destination search. The
-     * timeout ends the search.
-     * @private {?number}
-     */
-    this.extensionSearchTimeout_ = null;
+    this.hasLoadedAllDestinations_ = new Map([
+      [print_preview.PrinterType.EXTENSION_PRINTER, false],
+      [print_preview.PrinterType.PRIVET_PRINTER, false],
+      [print_preview.PrinterType.LOCAL_PRINTER, false]
+    ]);
 
     /**
      * MDNS service name of destination that we are waiting to register.
@@ -533,9 +508,8 @@ cr.define('print_preview', function() {
      * @return {boolean} Whether a search for local destinations is in progress.
      */
     get isLocalDestinationSearchInProgress() {
-      return this.isLocalDestinationSearchInProgress_ ||
-          this.isPrivetDestinationSearchInProgress_ ||
-          this.isExtensionDestinationSearchInProgress_;
+      return Array.from(this.isDestinationSearchInProgress_.values())
+          .some(el => el === true);
     },
 
     /**
@@ -554,11 +528,7 @@ cr.define('print_preview', function() {
      * @private
      */
     addWebUIEventListeners_: function(listenerTracker) {
-      listenerTracker.add(
-          'privet-printer-added', this.onPrivetPrinterAdded_.bind(this));
-      listenerTracker.add(
-          'extension-printers-added',
-          this.onExtensionPrintersAdded_.bind(this));
+      listenerTracker.add('printers-added', this.onPrintersAdded_.bind(this));
       listenerTracker.add(
           'reload-printer-list', this.onDestinationsReload.bind(this));
     },
@@ -702,9 +672,10 @@ cr.define('print_preview', function() {
 
       if (origin == print_preview.DestinationOrigin.PRIVET) {
         // TODO(noamsml): Resolve a specific printer instead of listing all
-        // privet printers in this case.
-        this.nativeLayer_.getPrivetPrinters().then(
-            this.endPrivetPrinterSearch_.bind(this));
+        // privet printers in this case
+        var privetType = print_preview.PrinterType.PRIVET_PRINTER;
+        this.nativeLayer_.getPrinters(privetType)
+            .then(this.onDestinationSearchDone_.bind(this, privetType));
 
         // Create a fake selectedDestination_ that is not actually in the
         // destination store. When the real destination is created, this
@@ -728,7 +699,7 @@ cr.define('print_preview', function() {
       if (origin == print_preview.DestinationOrigin.EXTENSION) {
         // TODO(tbarzic): Add support for requesting a single extension's
         // printer list.
-        this.startLoadExtensionDestinations();
+        this.startLoadDestinations(print_preview.PrinterType.EXTENSION_PRINTER);
 
         this.selectedDestination_ =
             print_preview.ExtensionDestinationParser.parse({
@@ -736,7 +707,7 @@ cr.define('print_preview', function() {
               extensionName: extensionName,
               id: id,
               name: name
-            });
+            })[0];
 
         if (capabilities) {
           this.selectedDestination_.capabilities = capabilities;
@@ -762,15 +733,15 @@ cr.define('print_preview', function() {
 
       if (destinationMatch.matchOrigin(print_preview.DestinationOrigin.LOCAL) ||
           destinationMatch.matchOrigin(print_preview.DestinationOrigin.CROS)) {
-        this.startLoadLocalDestinations();
+        this.startLoadDestinations(print_preview.PrinterType.LOCAL_PRINTER);
       }
       if (destinationMatch.matchOrigin(
               print_preview.DestinationOrigin.PRIVET)) {
-        this.startLoadPrivetDestinations();
+        this.startLoadDestinations(print_preview.PrinterType.PRIVET_PRINTER);
       }
       if (destinationMatch.matchOrigin(
               print_preview.DestinationOrigin.EXTENSION)) {
-        this.startLoadExtensionDestinations();
+        this.startLoadDestinations(print_preview.PrinterType.EXTENSION_PRINTER);
       }
       if (destinationMatch.matchOrigin(
               print_preview.DestinationOrigin.COOKIES) ||
@@ -1017,7 +988,7 @@ cr.define('print_preview', function() {
                 this.removeProvisionalDestination_(destination.id);
                 var parsedDestination =
                     print_preview.ExtensionDestinationParser.parse(
-                        destinationInfo);
+                        destinationInfo)[0];
                 this.insertIntoStore_(parsedDestination);
                 this.dispatchProvisionalDestinationResolvedEvent_(
                     destination.id, parsedDestination);
@@ -1067,49 +1038,23 @@ cr.define('print_preview', function() {
       this.selectPdfDestination_();
     },
 
-    /** Initiates loading of local print destinations. */
-    startLoadLocalDestinations: function() {
-      if (!this.hasLoadedAllLocalDestinations_) {
-        this.hasLoadedAllLocalDestinations_ = true;
-        this.nativeLayer_.getPrinters().then(
-            this.onLocalDestinationsSet_.bind(this));
-        this.isLocalDestinationSearchInProgress_ = true;
-        cr.dispatchSimpleEvent(
-            this, DestinationStore.EventType.DESTINATION_SEARCH_STARTED);
-      }
-    },
-
-    /** Initiates loading of privet print destinations. */
-    startLoadPrivetDestinations: function() {
-      if (this.hasLoadedAllPrivetDestinations_)
+    /**
+     * Initiates loading of destinations.
+     * @param{print_preview.PrinterType} type The type of destinations to load.
+     */
+    startLoadDestinations: function(type) {
+      if (this.hasLoadedAllDestinations_.get(type))
         return;
-      this.isPrivetDestinationSearchInProgress_ = true;
-      this.nativeLayer_.getPrivetPrinters().then(
-          this.endPrivetPrinterSearch_.bind(this), () => {
-            // Rejected by C++, indicating privet printing is disabled.
-            this.hasLoadedAllPrivetDestinations_ = true;
-            this.isPrivetDestinationSearchInProgress_ = false;
+      this.isDestinationSearchInProgress_.set(type, true);
+      this.hasLoadedAllDestinations_.set(type, false);
+      this.nativeLayer_.getPrinters(type).then(
+          this.onDestinationSearchDone_.bind(this, type), () => {
+            assert(type == print_preview.PrinterType.PRIVET_PRINTER);
+            this.hasLoadedAllDestinations_.set(type, true);
+            this.isDestinationSearchInProgress_.set(type, false);
           });
       cr.dispatchSimpleEvent(
           this, DestinationStore.EventType.DESTINATION_SEARCH_STARTED);
-    },
-
-    /** Initializes loading of extension managed print destinations. */
-    startLoadExtensionDestinations: function() {
-      if (this.hasLoadedAllExtensionDestinations_)
-        return;
-
-      if (this.isExtensionDestinationSearchInProgress_)
-        clearTimeout(this.extensionSearchTimeout_);
-
-      this.isExtensionDestinationSearchInProgress_ = true;
-      this.nativeLayer_.getExtensionPrinters().then(
-          this.onExtensionPrintersDone_.bind(this));
-      cr.dispatchSimpleEvent(
-          this, DestinationStore.EventType.DESTINATION_SEARCH_STARTED);
-      this.extensionSearchTimeout_ = setTimeout(
-          this.endExtensionPrinterSearch_.bind(this),
-          DestinationStore.EXTENSION_SEARCH_DURATION_);
     },
 
     /**
@@ -1145,17 +1090,19 @@ cr.define('print_preview', function() {
     /** Initiates loading of all known destination types. */
     startLoadAllDestinations: function() {
       this.startLoadCloudDestinations();
-      this.startLoadLocalDestinations();
-      this.startLoadPrivetDestinations();
-      this.startLoadExtensionDestinations();
+      Object.values(print_preview.PrinterType).forEach(function(printer_type) {
+        if (printer_type !== print_preview.PrinterType.PDF_PRINTER)
+          this.startLoadDestinations(printer_type);
+      }, this);
     },
 
     /**
      * Wait for a privet device to be registered.
      */
     waitForRegister: function(id) {
-      this.nativeLayer_.getPrivetPrinters().then(
-          this.endPrivetPrinterSearch_.bind(this));
+      var privetType = print_preview.PrinterType.PRIVET_PRINTER;
+      this.nativeLayer_.getPrinters(privetType)
+          .then(this.onDestinationSearchDone_.bind(this, privetType));
       this.waitForRegisterDestination_ = id;
     },
 
@@ -1277,25 +1224,10 @@ cr.define('print_preview', function() {
     },
 
     /**
-     * Called when the search for Privet printers is done.
-     * @private
-     */
-    endPrivetPrinterSearch_: function() {
-      this.isPrivetDestinationSearchInProgress_ = false;
-      this.hasLoadedAllPrivetDestinations_ = true;
-      cr.dispatchSimpleEvent(
-          this, DestinationStore.EventType.DESTINATION_SEARCH_DONE);
-    },
-
-    /**
      * Called when loading of extension managed printers is done.
      * @private
      */
     endExtensionPrinterSearch_: function() {
-      this.isExtensionDestinationSearchInProgress_ = false;
-      this.hasLoadedAllExtensionDestinations_ = true;
-      cr.dispatchSimpleEvent(
-          this, DestinationStore.EventType.DESTINATION_SEARCH_DONE);
       // Clear initially selected (cached) extension destination if it hasn't
       // been found among reported extension destinations.
       if (this.autoSelectMatchingDestination_ &&
@@ -1372,20 +1304,17 @@ cr.define('print_preview', function() {
           DestinationStore.AUTO_SELECT_TIMEOUT_);
     },
 
+
     /**
-     * Called when the local destinations have been got from the native layer.
-     * @param {!Array<!print_preview.LocalDestinationInfo>} destinationInfos A
-     *     list of the local destinations retrieved.
-     * @private
+     * Called when destinations have been retrieved by the native layer.
      */
-    onLocalDestinationsSet_: function(destinationInfos) {
-      var localDestinations = destinationInfos.map(function(destInfo) {
-        return print_preview.LocalDestinationParser.parse(destInfo);
-      });
-      this.insertDestinations_(localDestinations);
-      this.isLocalDestinationSearchInProgress_ = false;
+    onDestinationSearchDone_: function(type) {
+      this.isDestinationSearchInProgress_.set(type, false);
+      this.hasLoadedAllDestinations_.set(type, true);
       cr.dispatchSimpleEvent(
           this, DestinationStore.EventType.DESTINATION_SEARCH_DONE);
+      if (type == print_preview.PrinterType.EXTENSION_PRINTER)
+        this.endExtensionPrinterSearch_();
     },
 
     /**
@@ -1433,7 +1362,7 @@ cr.define('print_preview', function() {
             printerName: printerName,
             cupsEnterprisePrinter: isEnterprisePrinter,
             printerDescription: printerDescription
-          });
+          })[0];
           destination.capabilities = capabilities;
           this.insertDestination_(destination);
         }
@@ -1529,23 +1458,35 @@ cr.define('print_preview', function() {
     },
 
     /**
-     * Called when a Privet printer is added to the local network.
-     * @param {!{serviceName: string,
-     *           name: string,
-     *           hasLocalPrinting: boolean,
-     *           isUnregistered: boolean,
-     *           cloudID: string}} printer Information about the added printer.
-     * @private
+     * Called when a printer or printers are retrieved
+     * @param {print_preview.PrinterType} type The type of printer(s) added.
+     * @param {!Array<!print_preview.LocalDestinationInfo |
+     *                !print_preview.PrivetPrinterDescription |
+     *                !print_preview.ProvisionalDestinationInfo>} printers
+     *     Information about the printers that have been retrieved.
      */
-    onPrivetPrinterAdded_: function(printer) {
-      if (printer.serviceName == this.waitForRegisterDestination_ &&
-          !printer.isUnregistered) {
-        this.waitForRegisterDestination_ = null;
-        this.onDestinationsReload();
-      } else {
-        this.insertDestinations_(
-            print_preview.PrivetDestinationParser.parse(printer));
+    onPrintersAdded_: function(type, printers) {
+      if (type == print_preview.PrinterType.PRIVET_PRINTER) {
+        var printer =
+            /** !print_preview.PrivetPrinterDescription */ (printers[0]);
+        if (printer.serviceName == this.waitForRegisterDestination_ &&
+            !printer.isUnregistered) {
+          this.waitForRegisteredDestination_ = null;
+          this.onDestinationsReload();
+          return;
+        }
       }
+      var printersMapped = printers.map(function(printer) {
+        return print_preview.DestinationParser.parse(type, printer);
+      });
+      this.insertDestinations_(
+          printers
+              .map(function(printer) {
+                return print_preview.DestinationParser.parse(type, printer);
+              })
+              .reduce(function(dests1, dests2) {
+                return dests1.concat(dests2);
+              }, []));
     },
 
     /**
@@ -1561,34 +1502,6 @@ cr.define('print_preview', function() {
         dest.capabilities = printerInfo.capabilities;
         this.updateDestination_(dest);
       }, this);
-    },
-
-    /**
-     * Called when an extension responds to a getExtensionDestinations
-     * request.
-     * @param {!Array<!{extensionId: string,
-     *                  extensionName: string,
-     *                  id: string,
-     *                  name: string,
-     *                  description: (string|undefined),
-     *                  provisional: (boolean|undefined)}>} printers The list
-     *     containing information about printers added by an extension.
-     * @private
-     */
-    onExtensionPrintersAdded_: function(printers) {
-      this.insertDestinations_(
-          printers.map(print_preview.ExtensionDestinationParser.parse));
-    },
-
-    /**
-     * Called when all extensions are done adding printers.
-     * @private
-     */
-    onExtensionPrintersDone_: function() {
-      if (this.isExtensionDestinationSearchInProgress_) {
-        clearTimeout(this.extensionSearchTimeout_);
-        this.endExtensionPrinterSearch_();
-      }
     },
 
     /**

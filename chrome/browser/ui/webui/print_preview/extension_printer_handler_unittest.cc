@@ -197,12 +197,15 @@ constexpr size_t kPrintDataLength = sizeof(kPrintData);
 // Increases |*call_count| and records values returned by StartGetPrinters.
 void RecordPrinterList(size_t* call_count,
                        std::unique_ptr<base::ListValue>* printers_out,
-                       bool* is_done_out,
-                       const base::ListValue& printers,
-                       bool is_done) {
+                       const base::ListValue& printers) {
   ++(*call_count);
   printers_out->reset(printers.DeepCopy());
-  *is_done_out = is_done;
+}
+
+// Used as a callback to StartGetPrinters in tests.
+// Records that the test is done.
+void RecordPrintersDone(bool* is_done_out) {
+  *is_done_out = true;
 }
 
 // Used as a callback to StartGetCapability in tests.
@@ -501,7 +504,8 @@ TEST_F(ExtensionPrinterHandlerTest, GetPrinters) {
   bool is_done = false;
 
   extension_printer_handler_->StartGetPrinters(
-      base::Bind(&RecordPrinterList, &call_count, &printers, &is_done));
+      base::Bind(&RecordPrinterList, &call_count, &printers),
+      base::Bind(&RecordPrintersDone, &is_done));
 
   EXPECT_FALSE(printers.get());
   FakePrinterProviderAPI* fake_api = GetPrinterProviderAPI();
@@ -528,7 +532,8 @@ TEST_F(ExtensionPrinterHandlerTest, GetPrinters_Reset) {
   bool is_done = false;
 
   extension_printer_handler_->StartGetPrinters(
-      base::Bind(&RecordPrinterList, &call_count, &printers, &is_done));
+      base::Bind(&RecordPrinterList, &call_count, &printers),
+      base::Bind(&RecordPrintersDone, &is_done));
 
   EXPECT_FALSE(printers.get());
   FakePrinterProviderAPI* fake_api = GetPrinterProviderAPI();
@@ -568,7 +573,8 @@ TEST_F(ExtensionPrinterHandlerTest, GetUsbPrinters) {
   std::unique_ptr<base::ListValue> printers;
   bool is_done = false;
   extension_printer_handler_->StartGetPrinters(
-      base::Bind(&RecordPrinterList, &call_count, &printers, &is_done));
+      base::Bind(&RecordPrinterList, &call_count, &printers),
+      base::Bind(&RecordPrintersDone, &is_done));
 
   base::RunLoop().RunUntilIdle();
 
