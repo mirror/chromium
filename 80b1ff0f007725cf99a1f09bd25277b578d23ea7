@@ -16,6 +16,24 @@
       "revId": "80b1ff0f007725cf99a1f09bd25277b578d23ea7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac83188e_ab8954a8",
+        "filename": "third_party/WebKit/Source/bindings/scripts/interface_dependency_resolver.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-15T04:10:20Z",
+      "side": 1,
+      "message": "line width limit for python in Blink is 132 chars.\nhttps://www.chromium.org/blink/coding-style#TOC-Python",
+      "parentUuid": "dbad0b10_733ec908",
+      "revId": "80b1ff0f007725cf99a1f09bd25277b578d23ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
