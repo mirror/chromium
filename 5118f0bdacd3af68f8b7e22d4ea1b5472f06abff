@@ -210,6 +210,30 @@
       "revId": "5118f0bdacd3af68f8b7e22d4ea1b5472f06abff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "113272e5_16ff4405",
+        "filename": "components/download/internal/stats.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-15T02:42:03Z",
+      "side": 1,
+      "message": "Changed to log pause reason instead as discussed.",
+      "parentUuid": "7ef27b25_a2bc02e9",
+      "range": {
+        "startLine": 259,
+        "startChar": 13,
+        "endLine": 259,
+        "endChar": 22
+      },
+      "revId": "5118f0bdacd3af68f8b7e22d4ea1b5472f06abff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
