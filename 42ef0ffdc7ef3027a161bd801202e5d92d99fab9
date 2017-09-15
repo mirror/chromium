@@ -181,6 +181,24 @@
     },
     {
       "key": {
+        "uuid": "63c92fa7_7224e334",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-15T02:49:54Z",
+      "side": 1,
+      "message": "patch-set #19 for the record.",
+      "parentUuid": "e035015d_1d7daa14",
+      "revId": "42ef0ffdc7ef3027a161bd801202e5d92d99fab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25169d7d_33dc329a",
         "filename": "third_party/zlib/adler32_simd.h",
         "patchSetId": 18
@@ -195,6 +213,24 @@
       "revId": "42ef0ffdc7ef3027a161bd801202e5d92d99fab9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f698d8e0_de0890f6",
+        "filename": "third_party/zlib/adler32_simd.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-15T02:49:54Z",
+      "side": 1,
+      "message": "Nah, I copy/pasted the signature from the .c file.  But we can certainly make it adler if that reads easier/better for you ...",
+      "parentUuid": "25169d7d_33dc329a",
+      "revId": "42ef0ffdc7ef3027a161bd801202e5d92d99fab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
