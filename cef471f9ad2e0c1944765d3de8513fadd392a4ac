@@ -16,6 +16,24 @@
       "revId": "cef471f9ad2e0c1944765d3de8513fadd392a4ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "860c774f_ca43029a",
+        "filename": "media/audio/audio_output_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-09-15T14:30:46Z",
+      "side": 1,
+      "message": "The Controller is being closed here. I guess I could log CallbackError separately for every stream, if that\u0027s what you\u0027re suggesting?",
+      "parentUuid": "d4d9f8a1_14a53844",
+      "revId": "cef471f9ad2e0c1944765d3de8513fadd392a4ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
