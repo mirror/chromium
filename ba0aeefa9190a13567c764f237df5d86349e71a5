@@ -22,6 +22,30 @@
       "revId": "ba0aeefa9190a13567c764f237df5d86349e71a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf59d49_3af698b4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/MinidumpUploadService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-15T02:32:54Z",
+      "side": 0,
+      "message": "tryUploadCrashDump() uploads minidump file immediately, which is the behavior we want.\nCurrent upload logic uses JobScheduler for version \u003e Android M, but JobScheduler does not work in our case by local testing.\n\nThe reason is mentioned in the comment\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d756165#c6\n\nRemove the version check and use this function seems to be the easiest way.",
+      "parentUuid": "5fa45af5_2119b88e",
+      "range": {
+        "startLine": 299,
+        "startChar": 16,
+        "endLine": 299,
+        "endChar": 47
+      },
+      "revId": "ba0aeefa9190a13567c764f237df5d86349e71a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
