@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c57e4f79_ab48dd37",
+        "filename": "third_party/WebKit/Source/modules/fetch/BytesConsumerTestUtil.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-09-15T02:12:18Z",
+      "side": 1,
+      "message": "This comment should be removed.\n\n// TODO(yhirano): Remove DidFetchDataLoadedBlobHandleMock.",
+      "revId": "a085354638f70fefc007d822062fa8b41b251e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
