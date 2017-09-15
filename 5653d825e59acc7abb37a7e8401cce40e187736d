@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fb59cd4_006fa493",
+        "filename": "third_party/WebKit/Source/core/dom/Node.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T05:29:24Z",
+      "side": 1,
+      "message": "I think it is better to implement in WebFrameContentDumper instead of\nchanging core/ and isolate testing code and real code.",
+      "revId": "5653d825e59acc7abb37a7e8401cce40e187736d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
