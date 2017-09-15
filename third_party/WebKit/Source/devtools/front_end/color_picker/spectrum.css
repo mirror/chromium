@@ -16,6 +16,14 @@
     height: 124px;
     border-radius: 2px 2px 0 0;
     overflow: hidden;
+    flex: none;
+}
+
+.spectrum-tools {
+    position: relative;
+    height: 111px;
+    width: 100%;
+    flex: none;
 }
 
 .spectrum-display-value {
@@ -25,11 +33,11 @@
 }
 
 .spectrum-hue {
-    top: 140px;
+    top: 16px;
 }
 
 .spectrum-alpha {
-    top: 159px;
+    top: 35px;
     background-image: url(Images/checker.png);
     background-size: 12px 11px;
 }
@@ -137,43 +145,81 @@
 }
 
 .spectrum-contrast-details {
-    position: absolute;
+    position: relative;
     background-color: white;
     width: 100%;
     height: 111px;
-    top: 124px;
-    z-index: 13;
+    top: 0;
+    /* z-index: 13; */
     font-size: 13px;
     color: #333;
-    display: none;
+    border-top: 1px solid #dadada;
     line-height: initial;
+    overflow: hidden;
+    /* border-bottom: 1px solid blue; */
+    flex: none;
 }
 
-.spectrum-contrast-details div.toolbar {
+.spectrum-contrast-details {
+    height: 84px;
+    flex: none;
+}
+
+.spectrum-contrast-details.collapsed {
+    height: 42px;
+    flex: none;
+}
+
+.spectrum-contrast-details div.toolbar.expand {
     position: absolute;
     right: 6px;
     top: 6px;
     margin: 0;
 }
 
-.spectrum-contrast-details div.toolbar [is=ui-icon] {
-    position: absolute;
-    right: 6px;
-    top: 6px;
-    margin: 0;
-    background: transparent;
+.spectrum-contrast-details .toolbar-state-on [is=ui-icon] {
+    background-color: rgb(110, 110, 110);
 }
 
 .spectrum-contrast-details.visible {
     display: initial;
 }
 
-.spectrum-contrast-details div {
-    margin: 12px;
+.spectrum-contrast-details div.container {
+    margin: 13px 16px;
+}
+
+.spectrum-contrast-details.collapsed .expanded-details {
+    display: none;
+}
+
+.spectrum-contrast-details .expanded-details {
+    display: flex;
 }
 
 .contrast-pass-fail {
     margin-left: 0.5em;
+}
+
+.spectrum-contrast-details .contrast-choose-bg-color,
+.spectrum-contrast-details .contrast-thresholds {
+    width: 145px;
+}
+
+.spectrum-contrast-details .background-color {
+    /* width: 80px; */
+    position: absolute;
+    flex: none;
+    right: 12px;
+    /* width: 100px; */
+    /* height: 20px; */
+}
+
+.spectrum-contrast-details .spectrum-eye-dropper {
+    top: 2px;
+    right: 34px;
+    position: absolute;
+    left: auto;
 }
 
 .contrast-threshold .smallicon-checkmark-square,
@@ -194,9 +240,6 @@
 .contrast-threshold-value {
     font-weight: bold;
 }
-.spectrum-contrast-details .contrast-thresholds div {
-    margin: 0;
-}
 
 .contrast-link {
     margin-left: 0.5em;
@@ -213,12 +256,18 @@
     margin-left: 0.5em;
     padding: 1px 3px;
     align-items:  baseline;
-    position: absolute;
-    margin-top: -2px;
     border: 1px solid transparent;
 }
 
-.contrast-details-value.contrast-unknown {
+.spectrum-contrast-details.collapsed .contrast-details-value {
+    background-color: #00b06f;
+}
+
+.spectrum-contrast-details.collapsed .contrast-details-value.contrast-fail {
+    background-color: #b40202;
+}
+
+.spectrum-contrast-details .contrast-details-value.contrast-unknown {
     background-color: white;
     color: #333;
     border: 1px solid #ddd;
@@ -226,11 +275,11 @@
     text-align: center;
 }
 
-.contrast-details-value.contrast-color-white {
+.spectrum-contrast-details:not(.collapsed) .contrast-details-value.contrast-color-white {
     border-color: #ddd;
 }
 
-.contrast-details-value.contrast-fail.hover {
+.spectrum-contrast-details:not(.collapsed) .contrast-details-value.contrast-fail.hover {
     color: #333 !important;
     background-color: white !important;
 }
@@ -242,6 +291,7 @@
 .contrast-details-value [is=ui-icon] {
     display: none;
     margin-left: 0.5em;
+    background-color: white;
 }
 
 .contrast-details-value .smallicon-checkmark-behind {
@@ -269,7 +319,7 @@
     height: 32px;
     margin: 0;
     position: absolute;
-    top: 139px;
+    top: 15px;
     left: 44px;
     background-image: url(Images/checker.png);
     border-radius: 16px;
@@ -309,7 +359,7 @@
 
 .spectrum-text {
     position: absolute;
-    top: 184px;
+    top: 60px;
     left: 16px;
 }
 
@@ -368,7 +418,7 @@
 }
 
 .spectrum-display-switcher {
-    top: 196px;
+    top: 72px;
     position: absolute;
     right: 10px;
 }
@@ -380,20 +430,24 @@
 .spectrum-eye-dropper {
     width: 32px;
     height: 24px;
-    position: absolute;
+    position: relative;
     left: 8px;
-    top: 141px;
+    top: 17px;
     cursor: pointer;
 }
 
 .spectrum-palette {
     border-top: 1px solid #dadada;
-    position: absolute;
-    top: 235px;
+    position: relative;
     width: 100%;
     padding: 6px 24px 6px 6px;
     display: flex;
     flex-wrap: wrap;
+}
+
+.spectrum-palette.half-size {
+    padding: 9px 24px 9px 12px;
+    height: 42px;
 }
 
 .spectrum-palette-color {
@@ -471,7 +525,7 @@
 
 .spectrum-palette-switcher {
     right: 10px;
-    top: 235px;
+    bottom: 9px;
     margin-top: 9px;
     position: absolute;
 }
@@ -595,15 +649,16 @@ div.palette-preview {
 }
 
 .swatch.contrast {
-    width: 20px;
-    height: 20px;
-    margin: -10px;
-    position: relative;
-    top: -5px;
-    left: 17px;
+    width: 30px;
+    height: 30px;
+    /* margin: -10px; */
+    position: absolute;
+    top: 0px;
+    right: 0;
+    left: auto;
     background-image: url(Images/checker.png);
-    border-radius: 10px;
-    display: inline-block;
+    border-radius: 15px;
+    /* display: inline-block; */
 }
 
 .swatch.contrast .swatch-overlay {
@@ -619,9 +674,10 @@ button.background-color-picker {
     padding:  0;
     background: none;
     position: relative;
-    margin-top: -12px;
-    left: 26px;
-    top: 7px;
+    /* margin-top: -12px; */
+    /* left: 39px; */
+    /* top: 2px; */
+    margin: 0;
 }
 
 button.background-color-picker.active [is=ui-icon].largeicon-eyedropper.icon-mask {
