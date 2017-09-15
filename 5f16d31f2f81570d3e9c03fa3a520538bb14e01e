@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "0647ec05_39700ab8",
+        "filename": "third_party/WebKit/Source/core/css/html.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-09-15T08:57:39Z",
+      "side": 1,
+      "message": "To fix the LayoutTests, we could match \"all text controls\", i.e. \u003ctextarea\u003e + all text \u003cinput\u003e types. https://stackoverflow.com/questions/4113965/css-selector-for-text-input-fields shows how to do that with a series of :not ... Not so pretty, but might be OK?",
+      "range": {
+        "startLine": 429,
+        "startChar": 5,
+        "endLine": 429,
+        "endChar": 15
+      },
+      "revId": "5f16d31f2f81570d3e9c03fa3a520538bb14e01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d56cb198_e6af2a00",
         "filename": "third_party/WebKit/Source/core/css/html.css",
         "patchSetId": 4
@@ -67,6 +90,24 @@
       "side": 1,
       "message": "1. On Firefox and Edge, I could not selection contents in INPUT for \u003cinput value\u003d\"foo\" style\u003d\"user-select: none\"\u003e\n\n2. Can we set |kNone| in LayoutTextControl::AdjustInnerEditorStyle() when INPUT/TEXT is disabled?\n\nThe spec[1] says \"user-select\" of INPUT/TEXTAREA affects inner-editor.\nSorry I didn\u0027t aware of it.\n\n\nCould you try to change  |UsedValueOfUserSelect(const Node\u0026)| to check\ndisabled text control?\n\nCurrent implementation always return user-select::text for text control:\n\nEUserSelect UsedValueOfUserSelect(const Node\u0026 node) {\n  if (node.IsHTMLElement() \u0026\u0026 ToHTMLElement(node).IsTextControl())\n    return EUserSelect::kText;\n...\n\n\n[1] https://www.w3.org/TR/css-ui-4/\nFor the purpose of this specification, an editable element is either an editing host or a mutable form control with textual content, such as textarea.",
       "parentUuid": "dc42bed5_08587344",
+      "revId": "5f16d31f2f81570d3e9c03fa3a520538bb14e01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fa1e79d_44a96dd7",
+        "filename": "third_party/WebKit/Source/core/css/html.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-09-15T08:57:39Z",
+      "side": 1,
+      "message": "1. I\u0027m thinking that forcing selectability in all text controls might be a too big change for being able to backport this CL to M62? I think it is safer that M62 keeps M61\u0027s behavior.\n\n2. DisabledInputDoesNotInheritUserSelect tests M61\u0027s behavior (the behavior we also want in M62?): disabled fields _can_ be selected.",
+      "parentUuid": "0dd9b0f1_ad1e01ba",
       "revId": "5f16d31f2f81570d3e9c03fa3a520538bb14e01e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
