@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "8131a21f_32d3bc63",
+        "filename": "third_party/WebKit/Source/core/dom/FrameRequestCallbackCollection.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-15T15:16:43Z",
+      "side": 1,
+      "message": "Better to define the default constructor explicitly (it\u0027s now defined implicitly/automatically by a compiler).\nShouldn\u0027t be needed to be public.",
+      "revId": "77bcd6e5e4daaeb9d3a44dc22dec6772a4851b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "95653221_8340d4a5",
         "filename": "third_party/WebKit/Source/core/dom/FrameRequestCallbackCollection.h",
         "patchSetId": 12
@@ -83,6 +100,80 @@
       "writtenOn": "2017-09-15T13:37:00Z",
       "side": 1,
       "message": "If you use CamelCase for this, SetUseLegacyTimeBase(...)",
+      "revId": "77bcd6e5e4daaeb9d3a44dc22dec6772a4851b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ca249cb_387a07f6",
+        "filename": "third_party/WebKit/Source/core/dom/FrameRequestCallbackCollection.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-15T15:16:43Z",
+      "side": 1,
+      "message": "Better to add \"override\".",
+      "revId": "77bcd6e5e4daaeb9d3a44dc22dec6772a4851b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0224806c_1940d92b",
+        "filename": "third_party/WebKit/Source/core/dom/FrameRequestCallbackCollection.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-15T15:16:43Z",
+      "side": 1,
+      "message": "Better to be consistent about what the order of declarations/definitions is.\n\nIn case of FrameCallback,\n  TRACE\n  TRACE_WRAPPERS\n  destructor\n  invoke\n\nIn case of V8FrameCallback,\n  Create\n  destructor\n  invoke\n  TRACE\n  TRACE_WRAPPERS",
+      "revId": "77bcd6e5e4daaeb9d3a44dc22dec6772a4851b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecec33b5_65fce15b",
+        "filename": "third_party/WebKit/Source/core/frame/LocalDOMWindow.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-15T15:16:43Z",
+      "side": 1,
+      "message": "Sort these forward declarations alphabetically.",
+      "revId": "77bcd6e5e4daaeb9d3a44dc22dec6772a4851b0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6f9293a_9081ee8b",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-15T15:16:43Z",
+      "side": 1,
+      "message": "Is this okay?",
+      "range": {
+        "startLine": 201,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 8
+      },
       "revId": "77bcd6e5e4daaeb9d3a44dc22dec6772a4851b0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
