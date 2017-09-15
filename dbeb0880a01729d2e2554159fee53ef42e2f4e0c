@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9b1bacd_c20d83e8",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-15T09:36:22Z",
+      "side": 1,
+      "message": "To double check: So the desired new behavior is that now *all* clients will use the experimental lists?",
+      "revId": "dbeb0880a01729d2e2554159fee53ef42e2f4e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

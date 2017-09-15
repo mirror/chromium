@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2714994_03ff231b",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-15T09:36:22Z",
+      "side": 0,
+      "message": "I\u0027d keep this test to make sure experimental lists are now used/ignored (depending on the answer to my other comment) for all clients.",
+      "revId": "81fe9724b9aa939bea960363c3db0863cb11a822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e68c5152_a7afb892",
+        "filename": "components/subresource_filter/core/browser/subresource_filter_features.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-09-15T09:36:22Z",
+      "side": 0,
+      "message": "I\u0027m surprised we didn\u0027t have any tests for this in the subresource_filter_features_unittests.cc. Is that really so?",
+      "revId": "81fe9724b9aa939bea960363c3db0863cb11a822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
