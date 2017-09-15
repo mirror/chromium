@@ -408,7 +408,7 @@ class WallpaperManager::PendingWallpaper :
 WallpaperManager::~WallpaperManager() {
   show_user_name_on_signin_subscription_.reset();
   device_wallpaper_image_subscription_.reset();
-  user_manager::UserManager::Get()->RemoveSessionStateObserver(this);
+  user_manager::UserManager::Get()->RemoveObserver(this);
   weak_factory_.InvalidateWeakPtrs();
 }
 
@@ -967,7 +967,7 @@ WallpaperManager::WallpaperManager()
       {base::MayBlock(), base::TaskPriority::USER_BLOCKING,
        base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN});
 
-  user_manager::UserManager::Get()->AddSessionStateObserver(this);
+  user_manager::UserManager::Get()->AddObserver(this);
 
   content::ServiceManagerConnection* connection =
       content::ServiceManagerConnection::GetForProcess();
@@ -1386,8 +1386,8 @@ bool WallpaperManager::SetDeviceWallpaperIfApplicable(
   return false;
 }
 
-void WallpaperManager::UserChangedChildStatus(user_manager::User* user) {
-  SetUserWallpaperNow(user->GetAccountId());
+void WallpaperManager::OnChildStatusChanged(const user_manager::User& user) {
+  SetUserWallpaperNow(user.GetAccountId());
 }
 
 void WallpaperManager::SetDefaultWallpaperPathsFromCommandLine(
