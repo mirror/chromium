@@ -163,8 +163,7 @@ void CryptAuthEnrollmentManager::OnEnrollmentFinished(bool success) {
   sync_request_->OnDidComplete(success);
   cryptauth_enroller_.reset();
   sync_request_.reset();
-  for (auto& observer : observers_)
-    observer.OnEnrollmentFinished(success);
+  NotifyEnrollmentFinished(success);
 }
 
 std::string CryptAuthEnrollmentManager::GetUserPublicKey() const {
@@ -192,6 +191,11 @@ std::string CryptAuthEnrollmentManager::GetUserPrivateKey() const {
 void CryptAuthEnrollmentManager::SetSyncSchedulerForTest(
     std::unique_ptr<SyncScheduler> sync_scheduler) {
   scheduler_ = std::move(sync_scheduler);
+}
+
+void CryptAuthEnrollmentManager::NotifyEnrollmentFinished(bool success) {
+  for (auto& observer : observers_)
+    observer.OnEnrollmentFinished(success);
 }
 
 void CryptAuthEnrollmentManager::OnGCMRegistrationResult(bool success) {
