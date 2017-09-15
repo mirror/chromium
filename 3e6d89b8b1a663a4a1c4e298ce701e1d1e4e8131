@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c0113eb0_1dcb53a0",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-15T01:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c034060_ff6901a8",
+      "revId": "3e6d89b8b1a663a4a1c4e298ce701e1d1e4e8131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35635e04_74d4faf4",
         "filename": "chrome/browser/ui/tabs/tab_strip_model.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "3e6d89b8b1a663a4a1c4e298ce701e1d1e4e8131",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51b56ce8_e7168ddc",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-15T01:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35635e04_74d4faf4",
+      "revId": "3e6d89b8b1a663a4a1c4e298ce701e1d1e4e8131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "61fc2c0c_44497c5e",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-15T01:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7314131d_944df20e",
+      "revId": "3e6d89b8b1a663a4a1c4e298ce701e1d1e4e8131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c51b6636_b72360d1",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3069309d_fbfe37be",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-15T01:25:39Z",
+      "side": 1,
+      "message": "Done. \n\nI have tested this where it shows up promo after promo (I close it and make it show another promo afterwrds) and it seems to work fine for me since the closeBubble is only called when users open a new tab or when users hover or click on the promo directly. But I changed this to set it to nullptr instead.",
+      "parentUuid": "c51b6636_b72360d1",
+      "revId": "3e6d89b8b1a663a4a1c4e298ce701e1d1e4e8131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c361818_76cd4f63",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
         "patchSetId": 6
@@ -84,6 +156,24 @@
       "revId": "3e6d89b8b1a663a4a1c4e298ce701e1d1e4e8131",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040deb05_557e6b56",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-15T01:25:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c361818_76cd4f63",
+      "revId": "3e6d89b8b1a663a4a1c4e298ce701e1d1e4e8131",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
