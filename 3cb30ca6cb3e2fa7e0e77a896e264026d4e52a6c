@@ -758,6 +758,24 @@
     },
     {
       "key": {
+        "uuid": "f5fe0bcc_0fb2399e",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-15T22:34:09Z",
+      "side": 1,
+      "message": "\u003e Not sure what \"frame being painted was fully received means\", could you explain?\n\nIf the animation is running in blink, the completion state is being set based on whether the encoded data added to the PaintImage has enough to completely decode the current frame index, which is the frame_index set on this image. While it should be set based on whether the data for the entire image is present in the PaintImage.\n\n\u003e \n\u003e Also, the \"all_data_received !\u003d all_data_received_\" conditional is a different bugfix than\n\u003e the core purpose of this CL, correct? If so can it be a separate CL?\n\nSure, I moved all bug fixed in this change to a separate CL (https://chromium-review.googlesource.com/c/chromium/src/+/669771).",
+      "parentUuid": "c344b6bf_8c2d71b2",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d61398d6_01acff3e",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 18
@@ -805,6 +823,24 @@
       "side": 1,
       "message": "Ok..same comment here about breaking out into a different CL. Also, is this change/corner\ncase difference unittested?",
       "parentUuid": "a5c1a97d_29c39186",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "46f63551_a2290611",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-15T22:34:09Z",
+      "side": 1,
+      "message": "Moved it to https://chromium-review.googlesource.com/c/chromium/src/+/669771. BitmapImageTestWithMockDecoder is testing this (also moved to that patch).",
+      "parentUuid": "f9a54403_1d2be483",
       "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -907,6 +943,24 @@
       "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c787075d_3150587a",
+        "filename": "third_party/WebKit/Source/platform/graphics/DeferredImageDecoder.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-15T22:34:09Z",
+      "side": 1,
+      "message": "No, on line 282, where frame_data_ is populated, the value stored should have the workaround applied to it already.\n\nBut I moved this change to https://chromium-review.googlesource.com/c/chromium/src/+/669771 as well. And retained most of the original code. I just wanted to make sure that the overridden value is what was being used in PaintImage as well, made the minimal change required for it.",
+      "parentUuid": "d810fc97_01226a8c",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
