@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e9cb62c_68f58353",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-15T16:13:07Z",
+      "side": 1,
+      "message": "nit: add to comment that the DB will never work until Chrome is re-upgraded.",
+      "revId": "8e2f1d3650b27cd589963d834f6e20767fbafb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d5b03c_faf397fe",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-15T16:13:07Z",
+      "side": 1,
+      "message": "why not static?",
+      "revId": "8e2f1d3650b27cd589963d834f6e20767fbafb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20227ef0_13d64574",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-15T16:13:07Z",
+      "side": 1,
+      "message": "nit: also test that doing these three things in sequence (as we do in prod) is transactional.  Or just one test that does exactly what we need:\n\ncreate temp table\ndrop previous table\nrename temp table to previous\n\nRollback should work after all 3 steps",
+      "revId": "8e2f1d3650b27cd589963d834f6e20767fbafb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d1f422_b0c3a0cc",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-15T16:13:07Z",
+      "side": 1,
+      "message": "still no test with the schema that has archive_body_length default \u003d\u003d 0",
+      "revId": "8e2f1d3650b27cd589963d834f6e20767fbafb1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

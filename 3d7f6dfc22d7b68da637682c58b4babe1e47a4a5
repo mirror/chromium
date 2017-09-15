@@ -46,6 +46,40 @@
       "revId": "3d7f6dfc22d7b68da637682c58b4babe1e47a4a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe3f7f64_481f25d9",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-15T16:13:07Z",
+      "side": 1,
+      "message": "isn\u0027t version \u003d\u003d 0 an error? So seems like current_version \u003d\u003d 1 would be better?",
+      "revId": "3d7f6dfc22d7b68da637682c58b4babe1e47a4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "231491d8_6a28e52e",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-15T16:13:07Z",
+      "side": 1,
+      "message": "Still no test with default \u003d 0",
+      "revId": "3d7f6dfc22d7b68da637682c58b4babe1e47a4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
