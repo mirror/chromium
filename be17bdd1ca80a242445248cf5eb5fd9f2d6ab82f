@@ -16,6 +16,24 @@
       "revId": "be17bdd1ca80a242445248cf5eb5fd9f2d6ab82f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cbe53f7_f06b5640",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-15T17:35:46Z",
+      "side": 1,
+      "message": "entry-\u003ewriter and entry-\u003ereaders are mutually exclusive so the second and third transactions will never be working together.",
+      "parentUuid": "8a4c2b15_c841763f",
+      "revId": "be17bdd1ca80a242445248cf5eb5fd9f2d6ab82f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
