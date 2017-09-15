@@ -63,6 +63,24 @@
       "revId": "8052b2c66fa1407bfd90dd5fefbaccb4ee4edeb9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5037e2dc_575952a3",
+        "filename": "extensions/browser/api/hid/hid_api.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-15T00:42:52Z",
+      "side": 1,
+      "message": "oh, I forgot to remove this. Will do in next CL.",
+      "parentUuid": "32afd708_d8b6c2c7",
+      "revId": "8052b2c66fa1407bfd90dd5fefbaccb4ee4edeb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
