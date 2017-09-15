@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51c5ff49_2ab7a0d7",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_types.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-15T01:54:12Z",
+      "side": 1,
+      "message": "Just to clarify: This change doesn\u0027t seem to change the generated code. Can we remove this or we don\u0027t have enough coverage in run-bindings-tests?",
+      "revId": "3d6ee478b385b9e0d9a4e3b47f329e2ce832fa38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
