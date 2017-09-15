@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eeaaf5b5_d016128b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 718,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-15T09:15:54Z",
+      "side": 1,
+      "message": "You are listing a few states here, but those are not all. I would suggest explicitly listing all of them, and asserting if the state has an unknown or invalid (i.e. MAX_DOWNLOAD_STATE) value.",
+      "range": {
+        "startLine": 718,
+        "startChar": 17,
+        "endLine": 718,
+        "endChar": 41
+      },
+      "revId": "f89f8257005de5087315b6a0980c6fd303f64b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d56f3554_15a938cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadUtils.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-15T09:15:54Z",
+      "side": 1,
+      "message": "Nit: else isn\u0027t necessary if the previous branch returns.",
+      "range": {
+        "startLine": 726,
+        "startChar": 9,
+        "endLine": 726,
+        "endChar": 16
+      },
+      "revId": "f89f8257005de5087315b6a0980c6fd303f64b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75fc5b78_2f32b3a9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapter.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-15T09:15:54Z",
+      "side": 1,
+      "message": "You are handling a condition that is supposed to never happen, which isn\u0027t allowed per the style guide (https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#check_dcheck_and-notreached). In this particular case, even if you were to continue, accessing the list with INVALID_INDEX would throw an exception, so you could just make this into an `assert index !\u003d BackendItems.INVALID_INDEX` or leave it out completely (depending on whether you think the error message is more useful than the generic exception. Maybe you could add the ID to the assertion message?).",
+      "range": {
+        "startLine": 803,
+        "startChar": 12,
+        "endLine": 803,
+        "endChar": 77
+      },
+      "revId": "f89f8257005de5087315b6a0980c6fd303f64b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "336c7e9a_ccb348bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryItemWrapper.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-15T09:15:54Z",
+      "side": 1,
+      "message": "This isn\u0027t necessary anymore to make FindBugs happy, as we suppress the unchecked cast warning.",
+      "range": {
+        "startLine": 451,
+        "startChar": 12,
+        "endLine": 451,
+        "endChar": 47
+      },
+      "revId": "f89f8257005de5087315b6a0980c6fd303f64b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8de11b_8c31afc0",
+        "filename": "components/offline_pages/core/downloads/download_ui_adapter.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-15T09:15:54Z",
+      "side": 1,
+      "message": "You could just replace this with an empty lambda too.",
+      "range": {
+        "startLine": 306,
+        "startChar": 49,
+        "endLine": 306,
+        "endChar": 72
+      },
+      "revId": "f89f8257005de5087315b6a0980c6fd303f64b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46cc7ba9_de28378e",
+        "filename": "components/offline_pages/core/downloads/offline_item_conversions.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-15T09:15:54Z",
+      "side": 1,
+      "message": "Add DISALLOW_IMPLICIT_CONSTRUCTORS so the class can\u0027t be instantiated.",
+      "revId": "f89f8257005de5087315b6a0980c6fd303f64b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "227295c9_85b6ff3e",
+        "filename": "components/offline_pages/core/downloads/offline_item_conversions_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-15T09:15:54Z",
+      "side": 1,
+      "message": "I don\u0027t think you need a test fixture here at all -- just a plain TEST() will do.",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 6
+      },
+      "revId": "f89f8257005de5087315b6a0980c6fd303f64b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
