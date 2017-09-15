@@ -121,6 +121,11 @@
   // a load event, but then the webCoordinator stomps on the
   // contentViewController when it starts afterwards.
   if (self.webState->GetLastCommittedURL() == GURL(kChromeUINewTabURL)) {
+    if (!self.ntpCoordinator) {
+      // If the navigation to NTP is already done (e.g. when opening a tab from
+      // tab grid), the NTP coordinator will never be created.
+      [self addNTPCoordinator];
+    }
     self.viewController.contentViewController =
         self.ntpCoordinator.viewController;
   }
