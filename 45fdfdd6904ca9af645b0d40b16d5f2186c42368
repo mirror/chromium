@@ -22,6 +22,30 @@
       "revId": "45fdfdd6904ca9af645b0d40b16d5f2186c42368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60844c9f_339ff55f",
+        "filename": "services/ui/ws/ids.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-09-15T00:27:46Z",
+      "side": 1,
+      "message": "Hmm yea it\u0027s a bit confusing. This function is being used when we have the same value for ClientWindowId as the WindowId but are expecting ClientWindowId type. How about maybe renaming it to ConvertToClientWindowId?",
+      "parentUuid": "9518bcbb_797dd5c4",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 43
+      },
+      "revId": "45fdfdd6904ca9af645b0d40b16d5f2186c42368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
