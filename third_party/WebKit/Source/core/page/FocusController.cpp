@@ -75,6 +75,18 @@ inline bool IsShadowInsertionPointFocusScopeOwner(Element& element) {
          toHTMLShadowElement(element).OlderShadowRoot();
 }
 
+class Navigation : public GarbageCollected<Navigation> {
+ public:
+  virtual Element* Next(Element*) = 0;
+  virtual Element* Previous(Element*) = 0;
+  virtual Element* First() = 0;
+  virtual Element* Last() = 0;
+
+  virtual Element* Owner() const = 0;
+
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
+};
+
 class ScopedFocusNavigation {
   STACK_ALLOCATED();
 
@@ -112,11 +124,10 @@ class ScopedFocusNavigation {
   static bool IsSlotFallbackScoped(const Element&);
   static bool IsSlotFallbackScopedForThisSlot(const HTMLSlotElement&,
                                               const Element&);
-
- private:
   ScopedFocusNavigation(TreeScope&, const Element*);
   ScopedFocusNavigation(HTMLSlotElement&, const Element*);
 
+ private:
   Element* FindElementWithExactTabIndex(int tab_index, WebFocusType);
   Element* NextElementWithGreaterTabIndex(int tab_index);
   Element* PreviousElementWithLowerTabIndex(int tab_index);
@@ -129,123 +140,235 @@ class ScopedFocusNavigation {
   void MoveToFirst();
   void MoveToLast();
 
-  Member<ContainerNode> root_node_;
-  Member<HTMLSlotElement> root_slot_;
   Member<Element> current_;
-  bool slot_fallback_traversal_;
+  Member<Navigation> navigation_;
+};
+
+class SlotNavigation final : public Navigation {
+ public:
+  Element* Next(Element* current) override {
+    DCHECK(current);
+    return SlotScopedTraversal::Next(*current);
+  }
+
+  Element* Previous(Element* current) override {
+    DCHECK(current);
+    return SlotScopedTraversal::Previous(*current);
+  }
+
+  Element* First() override {
+    return SlotScopedTraversal::FirstAssignedToSlot(*root_);
+  }
+
+  Element* Last() override {
+    return SlotScopedTraversal::LastAssignedToSlot(*root_);
+  }
+
+  Element* Owner() const override { return root_; }
+
+  SlotNavigation(HTMLSlotElement& slot) : root_(&slot) {}
+
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    visitor->Trace(root_);
+    Navigation::Trace(visitor);
+  }
+
+ private:
+  Member<HTMLSlotElement> root_;
+};
+
+class FallbackNavigation final : public Navigation {
+ public:
+  Element* Next(Element* current) override {
+    DCHECK(current);
+    Node* node = ElementTraversal::Next(*current, root_);
+    while (node && (!node->IsElementNode() ||
+                    (isHTMLSlotElement(node->parentElement()) &&
+                     node->parentElement() != root_))) {
+      node = NodeTraversal::NextSkippingChildren(*node, root_);
+    }
+    return ToElement(node);
+  }
+
+  Element* Previous(Element* current) override {
+    DCHECK(current);
+    if (current == root_)
+      return nullptr;
+    Node* node = current->previousSibling();
+    while (node) {
+      // If the sibling node is a shadow root, then it should be in
+      // RootNavigation class. Here the sibling is not a shadow root.
+      Node* child = node->lastChild();
+      while (child) {
+        if (isHTMLSlotElement(child))
+          return ToElement(child);
+        if (child->IsElementNode())
+          node = child;
+        child = child->lastChild();
+      }
+      if (node->IsElementNode())
+        return ToElement(node);
+      node = node->previousSibling();
+    }
+    // Each of all ancestor nodes under root_ node is not a shadow root nor a
+    // slot node because root_ is the the root node for this current node.
+    Node* parent = current->parentNode();
+    if (parent == root_)
+      return nullptr;
+    while (parent && !parent->IsElementNode()) {
+      parent = parent->parentNode();
+      if (parent == root_)
+        return nullptr;
+    }
+    return ToElement(parent);
+  }
+
+  Element* First() override {
+    Node* node = root_->firstChild();
+    while (node && (!node->IsElementNode() ||
+                    (isHTMLSlotElement(node->parentElement()) &&
+                     node->parentElement() != root_))) {
+      node = NodeTraversal::NextSkippingChildren(*node, root_);
+    }
+    return ToElement(node);
+  }
+
+  Element* Last() override {
+    Node* node = root_;
+    while (node->lastChild())
+      node = node->lastChild();
+    if (node == root_)
+      return nullptr;
+    while (node) {
+      // If the sibling node is a shadow root, then it should be in
+      // RootNavigation class. Here the sibling is not a shadow root.
+      Node* child = node->lastChild();
+      while (child) {
+        if (isHTMLSlotElement(child))
+          return ToElement(child);
+        if (child->IsElementNode())
+          node = child;
+        child = child->lastChild();
+      }
+      if (node->IsElementNode())
+        return ToElement(node);
+      node = node->previousSibling();
+    }
+    return nullptr;
+  }
+
+  Element* Owner() const override { return root_; }
+
+  FallbackNavigation(HTMLSlotElement& slot) : root_(&slot) {}
+
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    visitor->Trace(root_);
+    Navigation::Trace(visitor);
+  }
+
+ private:
+  Member<HTMLSlotElement> root_;
+};
+
+class RootNavigation final : public Navigation {
+ public:
+  Element* Next(Element* current) override {
+    DCHECK(current);
+    Element* temp = ElementTraversal::Next(*current);
+    while (temp && (SlotScopedTraversal::IsSlotScoped(*temp) ||
+                    ScopedFocusNavigation::IsSlotFallbackScoped(*temp)))
+      temp = ElementTraversal::Next(*temp);
+    return temp;
+  }
+
+  Element* Previous(Element* current) override {
+    DCHECK(current);
+    Element* temp = ElementTraversal::Previous(*current);
+    while (temp && (SlotScopedTraversal::IsSlotScoped(*temp) ||
+                    ScopedFocusNavigation::IsSlotFallbackScoped(*temp)))
+      temp = ElementTraversal::Previous(*temp);
+    return temp;
+  }
+
+  Element* First() override {
+    Element* first = root_->IsElementNode() ? &ToElement(*root_)
+                                            : ElementTraversal::Next(*root_);
+    while (first && (SlotScopedTraversal::IsSlotScoped(*first) ||
+                     ScopedFocusNavigation::IsSlotFallbackScoped(*first)))
+      first = ElementTraversal::Next(*first, root_);
+    return first;
+  }
+
+  Element* Last() override {
+    Element* last = ElementTraversal::LastWithin(*root_);
+    while (last && (SlotScopedTraversal::IsSlotScoped(*last) ||
+                    ScopedFocusNavigation::IsSlotFallbackScoped(*last)))
+      last = ElementTraversal::Previous(*last, root_);
+    return last;
+  }
+
+  Element* Owner() const override {
+    DCHECK(root_);
+    if (root_->IsShadowRoot()) {
+      ShadowRoot& shadow_root = ToShadowRoot(*root_);
+      return shadow_root.IsYoungest()
+                 ? &shadow_root.host()
+                 : shadow_root.ShadowInsertionPointOfYoungerShadowRoot();
+    }
+    // FIXME: Figure out the right thing for OOPI here.
+    if (Frame* frame = root_->GetDocument().GetFrame())
+      return frame->DeprecatedLocalOwner();
+    return nullptr;
+  }
+
+  RootNavigation(TreeScope& tree_scope) : root_(tree_scope.RootNode()) {}
+
+  DEFINE_INLINE_VIRTUAL_TRACE() {
+    visitor->Trace(root_);
+    Navigation::Trace(visitor);
+  }
+
+ private:
+  Member<ContainerNode> root_;
 };
 
 ScopedFocusNavigation::ScopedFocusNavigation(TreeScope& tree_scope,
                                              const Element* current)
-    : root_node_(tree_scope.RootNode()),
-      root_slot_(nullptr),
-      current_(const_cast<Element*>(current)) {}
+    : current_(const_cast<Element*>(current)),
+      navigation_(new RootNavigation(tree_scope)) {}
 
 ScopedFocusNavigation::ScopedFocusNavigation(HTMLSlotElement& slot,
                                              const Element* current)
-    : root_node_(nullptr),
-      root_slot_(&slot),
-      current_(const_cast<Element*>(current)),
-      slot_fallback_traversal_(slot.AssignedNodes().IsEmpty()) {}
+    : current_(const_cast<Element*>(current)) {
+  if (slot.AssignedNodes().IsEmpty())
+    navigation_ = new FallbackNavigation(slot);
+  else
+    navigation_ = new SlotNavigation(slot);
+}
 
 void ScopedFocusNavigation::MoveToNext() {
-  DCHECK(current_);
-  if (root_slot_) {
-    if (slot_fallback_traversal_) {
-      current_ = ElementTraversal::Next(*current_, root_slot_);
-      while (current_ &&
-             !ScopedFocusNavigation::IsSlotFallbackScopedForThisSlot(
-                 *root_slot_, *current_))
-        current_ = ElementTraversal::Next(*current_, root_slot_);
-    } else {
-      current_ = SlotScopedTraversal::Next(*current_);
-    }
-  } else {
-    current_ = ElementTraversal::Next(*current_);
-    while (current_ && (SlotScopedTraversal::IsSlotScoped(*current_) ||
-                        ScopedFocusNavigation::IsSlotFallbackScoped(*current_)))
-      current_ = ElementTraversal::Next(*current_);
-  }
+  DCHECK(navigation_);
+  SetCurrentElement(navigation_->Next(CurrentElement()));
 }
 
 void ScopedFocusNavigation::MoveToPrevious() {
-  DCHECK(current_);
-  if (root_slot_) {
-    if (slot_fallback_traversal_) {
-      current_ = ElementTraversal::Previous(*current_, root_slot_);
-      if (current_ == root_slot_)
-        current_ = nullptr;
-      while (current_ &&
-             !ScopedFocusNavigation::IsSlotFallbackScopedForThisSlot(
-                 *root_slot_, *current_))
-        current_ = ElementTraversal::Previous(*current_);
-    } else {
-      current_ = SlotScopedTraversal::Previous(*current_);
-    }
-  } else {
-    current_ = ElementTraversal::Previous(*current_);
-    while (current_ && (SlotScopedTraversal::IsSlotScoped(*current_) ||
-                        ScopedFocusNavigation::IsSlotFallbackScoped(*current_)))
-      current_ = ElementTraversal::Previous(*current_);
-  }
+  DCHECK(navigation_);
+  SetCurrentElement(navigation_->Previous(CurrentElement()));
 }
 
 void ScopedFocusNavigation::MoveToFirst() {
-  if (root_slot_) {
-    if (!slot_fallback_traversal_) {
-      current_ = SlotScopedTraversal::FirstAssignedToSlot(*root_slot_);
-    } else {
-      Element* first = ElementTraversal::FirstChild(*root_slot_);
-      while (first && !ScopedFocusNavigation::IsSlotFallbackScopedForThisSlot(
-                          *root_slot_, *first))
-        first = ElementTraversal::Next(*first, root_slot_);
-      current_ = first;
-    }
-  } else {
-    Element* first = root_node_->IsElementNode()
-                         ? &ToElement(*root_node_)
-                         : ElementTraversal::Next(*root_node_);
-    while (first && (SlotScopedTraversal::IsSlotScoped(*first) ||
-                     ScopedFocusNavigation::IsSlotFallbackScoped(*first)))
-      first = ElementTraversal::Next(*first, root_node_);
-    current_ = first;
-  }
+  DCHECK(navigation_);
+  SetCurrentElement(navigation_->First());
 }
 
 void ScopedFocusNavigation::MoveToLast() {
-  if (root_slot_) {
-    if (!slot_fallback_traversal_) {
-      current_ = SlotScopedTraversal::LastAssignedToSlot(*root_slot_);
-    } else {
-      Element* last = ElementTraversal::LastWithin(*root_slot_);
-      while (last && !ScopedFocusNavigation::IsSlotFallbackScopedForThisSlot(
-                         *root_slot_, *last))
-        last = ElementTraversal::Previous(*last, root_slot_);
-      current_ = last;
-    }
-  } else {
-    Element* last = ElementTraversal::LastWithin(*root_node_);
-    while (last && (SlotScopedTraversal::IsSlotScoped(*last) ||
-                    ScopedFocusNavigation::IsSlotFallbackScoped(*last)))
-      last = ElementTraversal::Previous(*last, root_node_);
-    current_ = last;
-  }
+  DCHECK(navigation_);
+  SetCurrentElement(navigation_->Last());
 }
 
 Element* ScopedFocusNavigation::Owner() const {
-  if (root_slot_)
-    return root_slot_;
-  DCHECK(root_node_);
-  if (root_node_->IsShadowRoot()) {
-    ShadowRoot& shadow_root = ToShadowRoot(*root_node_);
-    return shadow_root.IsYoungest()
-               ? &shadow_root.host()
-               : shadow_root.ShadowInsertionPointOfYoungerShadowRoot();
-  }
-  // FIXME: Figure out the right thing for OOPI here.
-  if (Frame* frame = root_node_->GetDocument().GetFrame())
-    return frame->DeprecatedLocalOwner();
-  return nullptr;
+  DCHECK(navigation_);
+  return navigation_->Owner();
 }
 
 ScopedFocusNavigation ScopedFocusNavigation::CreateFor(const Element& current) {
@@ -515,9 +638,8 @@ Element* ScopedFocusNavigation::NextFocusableElement() {
   // 2) comes first in the scope, if there's a tie.
   MoveToFirst();
   if (Element* winner = NextElementWithGreaterTabIndex(
-          current ? AdjustedTabIndex(*current) : 0)) {
+          current ? AdjustedTabIndex(*current) : 0))
     return winner;
-  }
 
   // There are no elements with a tabindex greater than start's tabindex,
   // so find the first element with a tabindex of 0.
