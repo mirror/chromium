@@ -1,0 +1,11 @@
+{
+  metadata: {
+    namespace: "Flags",
+  },
+
+  data: [
+    // https://gist.github.com/inexorabletash/a53c6add9fbc8b9b1191
+    "shared",
+    "exclusive",
+  ],
+}

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<title>Origin Flags API: requestFlag method</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script>
+'use strict';
+
+promise_test(async t => {
+  await promise_rejects(t, new TypeError(), requestFlag());
+  await promise_rejects(t, new TypeError(), requestFlag('s'));
+}, 'requestFlag requires a scope and a mode');
+
+promise_test(async t => {
+  await promise_rejects(t, new TypeError(), requestFlag('s', ''));
+  await promise_rejects(t, new TypeError(), requestFlag('s', 'foo'));
+}, 'mode must be "shared" or "exclusive"');
+
+</script>
