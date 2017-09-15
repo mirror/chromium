@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae1033db_e70b537b",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1059,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-15T18:28:40Z",
+      "side": 1,
+      "message": "Assume we have WRITE, READ, WRITE concurrent transactions. The final writer will wind up in the readers queue, even though it\u0027s of type WRITE. Right?",
+      "range": {
+        "startLine": 1059,
+        "startChar": 47,
+        "endLine": 1059,
+        "endChar": 73
+      },
+      "revId": "98daa2471cdc2a3b872e2dd1be41cf380c549287",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
