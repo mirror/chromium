@@ -19,6 +19,7 @@ source_set("browser") {
     ":for_content_tests",  # See top of //content/BUILD.gn for why.
     "//content/app:*",
     "//content/public/browser:browser_sources",
+    "//content/public/browser:browser_sources",
   ]
 
   configs += [
@@ -71,7 +72,7 @@ source_set("browser") {
     "//content/common",
     "//content/common:features",
     "//content/common:mojo_bindings",
-    "//content/network:network_sources",
+    "//content/network:network_browser_sources",
     "//content/public/common:common_sources",
     "//crypto",
     "//device/bluetooth",
