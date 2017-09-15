@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "6556aa8d_d8c93a62",
+        "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1119607
+      },
+      "writtenOn": "2017-09-15T22:17:57Z",
+      "side": 1,
+      "message": "Doesn\u0027t matter, because std::move by itself doesn\u0027t have side-effects. It\u0027s operator\u003d we should worry about and it\u0027s sequenced after printer-\u003eid(). The only undefined behavior you could get out of this line is if \u0026printer \u003d\u003d all_data_[printer-\u003eid()] which is (a) impossible given the rest of this method and (b) isn\u0027t fixed by applied change.\nIt just looked kind of confusing to me, as if someone caught a SIGSEGV and fooled the compiler without actually changing the allowed set of behaviors.",
+      "parentUuid": "3859d41a_19549cfd",
+      "revId": "dd12f215318cb52805026efa914479461eeb0f4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da49d698_fd3306b8",
         "filename": "chrome/browser/chromeos/printing/printers_sync_bridge.h",
         "patchSetId": 3
