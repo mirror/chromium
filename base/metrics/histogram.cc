@@ -85,6 +85,8 @@ bool ReadHistogramArguments(PickleIterator* iter,
 
 bool ValidateRangeChecksum(const HistogramBase& histogram,
                            uint32_t range_checksum) {
+  if (histogram.GetHistogramType() != HISTOGRAM)
+    return true;
   const Histogram& casted_histogram =
       static_cast<const Histogram&>(histogram);
 
@@ -162,6 +164,10 @@ class Histogram::Factory {
 HistogramBase* Histogram::Factory::Build() {
   HistogramBase* histogram = StatisticsRecorder::FindHistogram(name_);
   if (!histogram) {
+    bool should_record =
+        StatisticsRecorder::ShouldRecordHistogram(HashMetricName(name_));
+    if (!should_record)
+      LOG(WARNING) << "!=!Found unrecorded histogram!=!";
     // To avoid racy destruction at shutdown, the following will be leaked.
     const BucketRanges* created_ranges = CreateRanges();
     const BucketRanges* registered_ranges =
@@ -874,6 +880,8 @@ class LinearHistogram::Factory : public Histogram::Factory {
   }
 
   void FillHistogram(HistogramBase* base_histogram) override {
+    if (base_histogram->GetHistogramType() != LINEAR_HISTOGRAM)
+      return;
     Histogram::Factory::FillHistogram(base_histogram);
     LinearHistogram* histogram = static_cast<LinearHistogram*>(base_histogram);
     // Set range descriptions.
