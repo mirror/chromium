@@ -46,6 +46,30 @@
       "revId": "98621f106796ac169268d239c103439c87f70f56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75b82107_e371e23b",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-15T08:31:33Z",
+      "side": 1,
+      "message": "Sounds better, thanks!\n\nMikel, it is technically a property of the bitmap and not of the favicon (historical reasons). But I agree that it is better to drop the prefix.",
+      "parentUuid": "0f6a6387_dccf0e23",
+      "range": {
+        "startLine": 79,
+        "startChar": 32,
+        "endLine": 79,
+        "endChar": 0
+      },
+      "revId": "98621f106796ac169268d239c103439c87f70f56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
