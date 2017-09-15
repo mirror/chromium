@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d859ef1_2649d76e",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-15T02:44:38Z",
+      "side": 1,
+      "message": "It looks like this function is no longer being called - can we remove it? We can probably also remove OnFailed() and move its contents to OnProcessCrashed() since it is only called there.",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 49
+      },
+      "revId": "2b4b47f1d9b4ecae45c2625030ac8cc29cff2fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb1891b_fd00d999",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-15T02:44:38Z",
+      "side": 1,
+      "message": "Should we add DCHECK_CURRENTLY_ON(BrowserThread::IO) here (since we no longer use OnSucceeded/OnFailed), or is it no longer needed?",
+      "range": {
+        "startLine": 245,
+        "startChar": 5,
+        "endLine": 245,
+        "endChar": 32
+      },
+      "revId": "2b4b47f1d9b4ecae45c2625030ac8cc29cff2fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf5a534_f0403f88",
+        "filename": "chrome/common/chrome_utility_printing_messages.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-15T02:44:38Z",
+      "side": 1,
+      "message": "Do we still need this now that PwgRasterSettings isn\u0027t being used for IPC or can it be removed? Same for the two lines above.",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 52
+      },
+      "revId": "2b4b47f1d9b4ecae45c2625030ac8cc29cff2fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d19c8cd_a4d9592a",
+        "filename": "chrome/utility/chrome_content_utility_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-15T02:44:38Z",
+      "side": 1,
+      "message": "Minor/optional: Should the indentation match the cases above?",
+      "range": {
+        "startLine": 311,
+        "startChar": 14,
+        "endLine": 311,
+        "endChar": 36
+      },
+      "revId": "2b4b47f1d9b4ecae45c2625030ac8cc29cff2fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
