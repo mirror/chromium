@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ebb340c_be8af2b7",
+        "filename": "ios/chrome/browser/ui/history_popup/tab_history_popup_controller_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-15T14:01:01Z",
+      "side": 1,
+      "message": "Is this header still needed?",
+      "revId": "89c9fbc4c0f5375c6372724d26e260e7c333b01f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
