@@ -57,6 +57,8 @@ struct NGInlineBoxState {
   LayoutUnit line_right_position;
   LayoutUnit borders_paddings_block_start;
   LayoutUnit borders_paddings_block_end;
+  bool has_borders_paddings_inline_start = false;
+  bool has_borders_paddings_inline_end = false;
   NGBorderEdges border_edges;
 
   Vector<NGPendingPositions> pending_descendants;
@@ -86,7 +88,7 @@ class NGInlineLayoutStateStack {
 
   // Initialize the box state stack for a new line.
   // @return The initial box state for the line.
-  NGInlineBoxState* OnBeginPlaceItems(const ComputedStyle*, FontBaseline);
+  NGInlineBoxState* OnBeginPlaceItems(const ComputedStyle*, FontBaseline, bool);
 
   // Push a box state stack.
   NGInlineBoxState* OnOpenTag(const NGInlineItem&,

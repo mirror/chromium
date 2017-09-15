@@ -597,6 +597,10 @@ void NGLineBreaker::HandleOpenTag(const NGInlineItem& item,
         borders.block_start + paddings.block_start;
     item_result->borders_paddings_block_end =
         borders.block_end + paddings.block_end;
+    item_result->has_borders_paddings_inline_start =
+        borders.inline_start || paddings.inline_start;
+    item_result->has_borders_paddings_inline_end =
+        borders.inline_end || paddings.inline_end;
     if (item.HasStartEdge()) {
       item_result->margins = ComputeMargins(constraint_space_, style,
                                             constraint_space_.WritingMode(),
