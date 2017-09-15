@@ -88,8 +88,11 @@ std::unique_ptr<ThrottlingURLLoader> ThrottlingURLLoader::CreateLoaderAndStart(
 ThrottlingURLLoader::~ThrottlingURLLoader() {}
 
 void ThrottlingURLLoader::FollowRedirect() {
-  if (url_loader_)
+  LOG(ERROR) << "ThrottlingURLLoader::FollowRedirect " << this;
+  if (url_loader_) {
+    LOG(ERROR) << " url_loader_->FollowRedirect";
     url_loader_->FollowRedirect();
+  }
 }
 
 void ThrottlingURLLoader::SetPriority(net::RequestPriority priority,
@@ -107,6 +110,7 @@ void ThrottlingURLLoader::SetPriority(net::RequestPriority priority,
 }
 
 void ThrottlingURLLoader::DisconnectClient() {
+  LOG(ERROR) << "ThrottlingURLLoader::DisconnectClient " << this;
   client_binding_.Close();
   url_loader_ = nullptr;
   loader_cancelled_ = true;
@@ -171,6 +175,7 @@ void ThrottlingURLLoader::StartNow(
     StartLoaderCallback start_loader_callback,
     const ResourceRequest& url_request,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+  LOG(ERROR) << "ThrottlingURLLoader::StartNow " << this;
   mojom::URLLoaderClientPtr client;
   client_binding_.Bind(mojo::MakeRequest(&client), std::move(task_runner));
   client_binding_.set_connection_error_handler(base::Bind(

@@ -542,6 +542,7 @@ void NavigationRequest::TransferNavigationHandleOwnership(
 void NavigationRequest::OnRequestRedirected(
     const net::RedirectInfo& redirect_info,
     const scoped_refptr<ResourceResponse>& response) {
+  LOG(ERROR) << "NavigationRequest::OnRequestRedirected";
   if (!ChildProcessSecurityPolicyImpl::GetInstance()->CanRedirectToURL(
           redirect_info.new_url)) {
     DVLOG(1) << "Denied redirect for "
@@ -639,6 +640,7 @@ void NavigationRequest::OnRequestRedirected(
   // NavigationHandle where the callback will be stored.
   bool is_external_protocol =
       !GetContentClient()->browser()->IsHandledURL(common_params_.url);
+  LOG(ERROR) << "navigation_handle_->WillRedirectRequest";
   navigation_handle_->WillRedirectRequest(
       common_params_.url, common_params_.method, common_params_.referrer.url,
       is_external_protocol, response->head.headers,
