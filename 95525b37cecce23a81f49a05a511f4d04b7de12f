@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d46cf7a_a507a457",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-15T00:51:37Z",
+      "side": 1,
+      "message": "I needed to add this back in because this can affect object lifetime for overlays in tests.",
+      "revId": "95525b37cecce23a81f49a05a511f4d04b7de12f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
