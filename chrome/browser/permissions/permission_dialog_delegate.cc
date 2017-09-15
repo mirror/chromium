@@ -66,7 +66,6 @@ void PermissionDialogDelegate::CreateJavaDelegate(JNIEnv* env) {
       base::android::ToJavaIntArray(env, content_settings_types),
       ResourceMapper::MapFromChromiumId(permission_prompt_->GetIconId()),
       ConvertUTF16ToJavaString(env, permission_prompt_->GetMessageText()),
-      ConvertUTF16ToJavaString(env, permission_prompt_->GetLinkText()),
       primaryButtonText, secondaryButtonText,
       permission_prompt_->ShouldShowPersistenceToggle()));
 }
@@ -90,16 +89,6 @@ void PermissionDialogDelegate::Cancel(JNIEnv* env,
 void PermissionDialogDelegate::Dismissed(JNIEnv* env,
                                          const JavaParamRef<jobject>& obj) {
   permission_prompt_->Closing();
-}
-
-void PermissionDialogDelegate::LinkClicked(JNIEnv* env,
-                                           const JavaParamRef<jobject>& obj) {
-  if (tab_->web_contents()) {
-    GURL linkURL = permission_prompt_->GetLinkURL();
-    tab_->web_contents()->OpenURL(content::OpenURLParams(
-        linkURL, content::Referrer(), WindowOpenDisposition::NEW_FOREGROUND_TAB,
-        ui::PAGE_TRANSITION_LINK, false));
-  }
 }
 
 void PermissionDialogDelegate::Destroy(JNIEnv* env,
