@@ -59,6 +59,11 @@ local uLong adler32_combine_ OF((uLong adler1, uLong adler2, z_off64_t len2));
 #  define MOD63(a) a %= BASE
 #endif
 
+#if defined(ADLER32_SIMD_SSSE3)
+#include "adler32_simd.h"
+#include "x86.h"
+#endif
+
 /* ========================================================================= */
 uLong ZEXPORT adler32_z(adler, buf, len)
     uLong adler;
@@ -67,6 +72,11 @@ uLong ZEXPORT adler32_z(adler, buf, len)
 {
     unsigned long sum2;
     unsigned n;
+
+#if defined(ADLER32_SIMD_SSSE3)
+    if (x86_cpu_enable_ssse3 && len >= 64)
+        return adler32_simd_(adler, buf, len);
+#endif
 
     /* split Adler-32 into component sums */
     sum2 = (adler >> 16) & 0xffff;
