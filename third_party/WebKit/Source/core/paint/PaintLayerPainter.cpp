@@ -254,6 +254,27 @@ static bool ShouldRepaintSubsequence(
   return needs_repaint;
 }
 
+void PaintLayerPainter::AdjustForPaintOffsetTranslation(
+    PaintLayerPaintingInfo& painting_info) {
+  if (!RuntimeEnabledFeatures::SlimmingPaintV175Enabled())
+    return;
+  // Paint offset translation for transforms is already taken care of.
+  if (paint_layer_.PaintsWithTransform(painting_info.GetGlobalPaintFlags()))
+    return;
+  if (const auto* properties =
+          paint_layer_.GetLayoutObject().FirstFragment()->PaintProperties()) {
+    if (properties->PaintOffsetTranslation()) {
+      painting_info.root_layer = &paint_layer_;
+      painting_info.paint_dirty_rect =
+          properties->PaintOffsetTranslation()->Matrix().MapRect(
+              painting_info.paint_dirty_rect);
+
+      painting_info.sub_pixel_accumulation =
+          ToLayoutSize(paint_layer_.GetLayoutObject().PaintOffset());
+    }
+  }
+}
+
 PaintResult PaintLayerPainter::PaintLayerContents(
     GraphicsContext& context,
     const PaintLayerPaintingInfo& painting_info_arg,
@@ -345,6 +366,7 @@ PaintResult PaintLayerPainter::PaintLayerContents(
   }
 
   PaintLayerPaintingInfo painting_info = painting_info_arg;
+  AdjustForPaintOffsetTranslation(painting_info);
 
   LayoutPoint offset_from_root;
   paint_layer_.ConvertToLayerCoords(painting_info.root_layer, offset_from_root);
