@@ -48,6 +48,8 @@ class OmniboxPopupContentsView : public views::View,
   // window specified by |disposition|.
   void OpenMatch(size_t index, WindowOpenDisposition disposition);
 
+  OmniboxView* omnibox_view() { return omnibox_view_; }
+
   // OmniboxPopupView:
   bool IsOpen() const override;
   void InvalidateLine(size_t line) override;

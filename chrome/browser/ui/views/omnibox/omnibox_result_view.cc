@@ -45,6 +45,7 @@
 #include "ui/gfx/render_text.h"
 #include "ui/gfx/text_utils.h"
 #include "ui/native_theme/native_theme.h"
+#include "ui/views/controls/button/image_button.h"
 
 using ui::NativeTheme;
 
@@ -172,6 +173,173 @@ TextStyle GetTextStyle(int type) {
 
 }  // namespace
 
+
+
+
+
+
+
+
+
+
+
+// FIXME: really questioning whether this should be an ImageButton
+class OmniboxKeywordButton : public views::ImageButton, views::ButtonListener {
+ public:
+  OmniboxKeywordButton(OmniboxResultView* result_view)
+      : ImageButton(this), result_view_(result_view) {
+    // TODO: SetTooltipText(text);
+    SetImageAlignment(ALIGN_CENTER, ALIGN_MIDDLE);
+  }
+
+  // FIXME: comments
+  // FIXME: is there button machinery I should be using here instead?
+  void SetPressed();
+  void ClearState();
+
+  // views::View
+  void ButtonPressed(views::Button* sender, const ui::Event& event) override;
+
+  // FIXME: double-check that these are in the correct order
+  //bool OnMouseDragged(const ui::MouseEvent& event) override;
+  bool OnMousePressed(const ui::MouseEvent& event) override;
+  void OnMouseMoved(const ui::MouseEvent& event) override;
+  void OnMouseExited(const ui::MouseEvent& event) override;
+
+ private:
+  OmniboxResultView* result_view_;
+
+  DISALLOW_COPY_AND_ASSIGN(OmniboxKeywordButton);
+};
+
+// FIXME: put this in the result view instead?
+void OmniboxKeywordButton::ButtonPressed(views::Button* sender,
+                                         const ui::Event& event) {
+  LOG(ERROR) << "OmniboxKeywordButton::ButtonPressed";
+/*
+  // Ignore mouse events that aren't left or middle clicks.
+  if (event.IsMouseEvent()) {
+      const ui::MouseEvent* mouse = event.AsMouseEvent();
+      if (!(mouse->IsOnlyLeftMouseButton() || mouse->IsOnlyMiddleMouseButton()))
+        return;
+  }
+
+  // FIXME: Exit early if we're in keyword state (on the left)
+
+  ClearState();
+
+  LOG(ERROR) << "HERE WE GO!";
+  // FIXME: pass touch vs. click parameter here. Also, should there be new
+  // touch/click params for this being a different event source?
+  result_view_->AcceptKeyword();
+*/
+}
+
+/*
+bool OmniboxKeywordButton::OnMouseDragged(const ui::MouseEvent& event) {
+  LOG(ERROR) << "OmniboxKeywordButton::OnMouseDragged";
+  if (HitTestPoint(event.location())) {
+    return true;
+  } else {
+    SetBackground(nullptr);
+    SchedulePaint();
+    //SetMouseHandler(result_view_->model());
+    return true;
+  }
+}
+*/
+
+// FIXME: how to make this work for touch UI?
+bool OmniboxKeywordButton::OnMousePressed(const ui::MouseEvent& event) {
+  LOG(ERROR) << "OmniboxKeywordButton::OnMousePressed";
+/*
+  result_view_->model()->SetSelectedLine(result_view_->model_index());
+*/
+
+  SetPressed();
+
+/*
+  return ImageButton::OnMousePressed(event);
+*/
+  return false;
+}
+
+void OmniboxKeywordButton::SetPressed() {
+  const SkColor bg_color = color_utils::AlphaBlend(
+        SK_ColorBLACK, SK_ColorTRANSPARENT, 0.4 * 255);
+  SetBackground(base::MakeUnique<BackgroundWith1PxBorder>(bg_color, bg_color));
+  SchedulePaint();
+}
+
+void OmniboxKeywordButton::ClearState() {
+  SetBackground(nullptr);
+  SchedulePaint();
+}
+
+// FIXME: Introduce a SetHovered method
+void OmniboxKeywordButton::OnMouseMoved(const ui::MouseEvent& event) {
+  LOG(ERROR) << "OnMouseMoved";
+
+  if(!result_view_->AnimationRunning()) {
+    const SkColor bg_color = color_utils::AlphaBlend(
+          SK_ColorBLACK, SK_ColorTRANSPARENT, 0.2 * 255);
+    // FIXME: Introduce 1px background w/ half rounded corners (based on which
+    //        side it's on).
+    SetBackground(base::MakeUnique<BackgroundWith1PxBorder>(bg_color, bg_color));
+    SchedulePaint();
+  } else {
+    ClearState();
+  }
+
+  result_view_->SetHovered(true);
+}
+
+void OmniboxKeywordButton::OnMouseExited(const ui::MouseEvent& event) {
+  LOG(ERROR) << "OnMouseExited";
+  result_view_->SetHovered(false);
+  ClearState();
+}
+
+
+
+
+// Do this instead of setting a custom background class?
+/*
+// views::View:
+void OnPaint(gfx::Canvas* canvas) override {
+  views::View::OnPaint(canvas);
+  SkScalar radius = SkIntToScalar(corner_radius_);
+  const SkScalar kRadius[8] = {radius, radius, radius, radius, 0, 0, 0, 0};
+  SkPath path;
+  gfx::Rect bounds(size());
+  path.addRoundRect(gfx::RectToSkRect(bounds), kRadius);
+
+  cc::PaintFlags flags;
+  flags.setAntiAlias(true);
+  canvas->ClipPath(path, true);
+
+  SkColor target_color = initial_color_;
+  if (target_color_ != target_color) {
+    target_color = color_utils::AlphaBlend(target_color_, initial_color_,
+                                           current_value_);
+  }
+  canvas->DrawColor(target_color);
+}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ////////////////////////////////////////////////////////////////////////////////
 // OmniboxResultView, public:
 
@@ -222,13 +390,13 @@ OmniboxResultView::OmniboxResultView(OmniboxPopupContentsView* model,
           font_list.GetHeight(),
           font_list.DeriveWithWeight(gfx::Font::Weight::BOLD).GetHeight())),
       mirroring_context_(new MirroringContext()),
-      keyword_icon_(new views::ImageView()),
+      keyword_button_(new OmniboxKeywordButton(this)),
       animation_(new gfx::SlideAnimation(this)) {
   CHECK_GE(model_index, 0);
-  keyword_icon_->set_owned_by_client();
-  keyword_icon_->EnableCanvasFlippingForRTLUI(true);
-  keyword_icon_->SetImage(GetVectorIcon(omnibox::kKeywordSearchIcon));
-  keyword_icon_->SizeToPreferredSize();
+  keyword_button_->set_owned_by_client();
+  // FIXME: this should be in the button class, no?
+  keyword_button_->SetImage(views::Button::STATE_NORMAL,
+                            GetVectorIcon(omnibox::kKeywordSearchIcon));
 }
 
 OmniboxResultView::~OmniboxResultView() {
@@ -257,10 +425,10 @@ void OmniboxResultView::SetMatch(const AutocompleteMatch& match) {
 
   AutocompleteMatch* associated_keyword_match = match_.associated_keyword.get();
   if (associated_keyword_match) {
-    if (!keyword_icon_->parent())
-      AddChildView(keyword_icon_.get());
-  } else if (keyword_icon_->parent()) {
-    RemoveChildView(keyword_icon_.get());
+    if (!keyword_button_->parent())
+      AddChildView(keyword_button_.get());
+  } else if (keyword_button_->parent()) {
+    RemoveChildView(keyword_button_.get());
   }
 
   Invalidate();
@@ -295,6 +463,7 @@ void OmniboxResultView::Invalidate() {
   keyword_description_rendertext_.reset();
 }
 
+// FIXME: Check this.
 void OmniboxResultView::OnSelected() {
   DCHECK_EQ(SELECTED, GetState());
 
@@ -509,6 +678,14 @@ void OmniboxResultView::SetAnswerImage(const gfx::ImageSkia& image) {
   SchedulePaint();
 }
 
+// FIXME: probably need a click vs. tap parameter here.
+/*
+void OmniboxResultView::AcceptKeyword() {
+  model_->omnibox_view()->model()->AcceptKeyword(
+      KeywordModeEntryMethod::CLICK_ON_VIEW);
+}
+*/
+
 const char* OmniboxResultView::GetClassName() const {
   return "OmniboxResultView";
 }
@@ -539,7 +716,17 @@ gfx::ImageSkia OmniboxResultView::GetVectorIcon(
 
 bool OmniboxResultView::ShowOnlyKeywordMatch() const {
   return match_.associated_keyword &&
-      (keyword_icon_->x() <= icon_bounds_.right());
+      (keyword_button_->x() <= icon_bounds_.right());
+}
+
+bool OmniboxResultView::AnimationRunning() const {
+  return animation_->is_animating();
+  //return animation_->run_state() == Animation::RUNNING;
+  /*
+  return match_.associated_keyword &&
+      (keyword_button_->x() <= icon_bounds_.right() ||
+       FOO);
+   */
 }
 
 void OmniboxResultView::InitContentsRenderTextIfNecessary() const {
@@ -585,15 +772,24 @@ void OmniboxResultView::Layout() {
   int text_width = end_x - text_x;
 
   if (match_.associated_keyword.get()) {
-    const int max_kw_x = end_x - keyword_icon_->width();
-    const int kw_x = animation_->CurrentValueBetween(max_kw_x, start_x);
-    const int kw_text_x = kw_x + keyword_icon_->width() + horizontal_padding;
+    // FIXME: comment
+    const int kw_button_width = ShowOnlyKeywordMatch() ? icon.width() + horizontal_padding
+                                                       : height();
+    const int kw_button_height = height();
+    keyword_button_->SetSize(gfx::Size(kw_button_width, kw_button_height));
+
+    const int max_kw_x = end_x - keyword_button_->width() + horizontal_padding;
+    const int kw_x = animation_->CurrentValueBetween(max_kw_x, 0);
+    const int kw_text_x = kw_x + keyword_button_->width() + horizontal_padding;
 
     text_width = kw_x - text_x - horizontal_padding;
     keyword_text_bounds_.SetRect(
         kw_text_x, 0, std::max(end_x - kw_text_x, 0), height());
-    keyword_icon_->SetPosition(
-        gfx::Point(kw_x, (height() - keyword_icon_->height()) / 2));
+    keyword_button_->SetPosition(gfx::Point(kw_x, 0));
+    if (ShowOnlyKeywordMatch())
+      keyword_button_->SetImageAlignment(views::ImageButton::ALIGN_RIGHT, views::ImageButton::ALIGN_MIDDLE);
+    else
+      keyword_button_->SetImageAlignment(views::ImageButton::ALIGN_CENTER, views::ImageButton::ALIGN_MIDDLE);
   }
 
   text_bounds_.SetRect(text_x, 0, std::max(text_width, 0), height());
@@ -710,7 +906,17 @@ bool OmniboxResultView::OnMouseDragged(const ui::MouseEvent& event) {
     if (event.IsOnlyLeftMouseButton()) {
       if (GetState() != SELECTED)
         model_->SetSelectedLine(model_index_);
-    } else {
+      if (keyword_button_->parent()) {
+        // FIXME: pull this out into HitTestPointInChild(event, child).
+        gfx::Point point_in_child_coords(event.location());
+        View::ConvertPointToTarget(
+            this, keyword_button_.get(), &point_in_child_coords);
+        if (keyword_button_->HitTestPoint(point_in_child_coords))
+          keyword_button_->SetPressed();
+        else
+          keyword_button_->ClearState();
+      }
+    //} else {
       SetHovered(true);
     }
     return true;
@@ -718,6 +924,7 @@ bool OmniboxResultView::OnMouseDragged(const ui::MouseEvent& event) {
     // When the drag leaves the bounds of this view, cancel the hover state and
     // pass control to the popup view.
     SetHovered(false);
+    keyword_button_->ClearState();
     SetMouseHandler(model_);
     return false;
   }
@@ -725,6 +932,27 @@ bool OmniboxResultView::OnMouseDragged(const ui::MouseEvent& event) {
 
 void OmniboxResultView::OnMouseReleased(const ui::MouseEvent& event) {
   if (event.IsOnlyMiddleMouseButton() || event.IsOnlyLeftMouseButton()) {
+    if (keyword_button_->parent()) {
+      // FIXME: Don't do this on middle mouse button?
+      // FIXME: HitTestPointInChild. Also, can probably then remove the return
+      //        and put OpenMatch in an else branch.
+      gfx::Point point_in_child_coords(event.location());
+      View::ConvertPointToTarget(
+          this, keyword_button_.get(), &point_in_child_coords);
+      if (keyword_button_->HitTestPoint(point_in_child_coords)) {
+        keyword_button_->ClearState();
+        if (!ShowOnlyKeywordMatch()) { 
+          //AcceptKeyword();
+          // FIXME: We need a new KeywordModeEntryMethod.
+          model_->omnibox_view()->model()->AcceptKeyword(
+              KeywordModeEntryMethod::CLICK_ON_VIEW);
+        }
+        else {
+          model_->omnibox_view()->model()->ClearKeyword();
+        }
+        return;
+      }
+    }
     model_->OpenMatch(model_index_,
                       event.IsOnlyLeftMouseButton()
                           ? WindowOpenDisposition::CURRENT_TAB
@@ -737,6 +965,7 @@ void OmniboxResultView::OnMouseMoved(const ui::MouseEvent& event) {
 }
 
 void OmniboxResultView::OnMouseExited(const ui::MouseEvent& event) {
+  keyword_button_->ClearState();
   SetHovered(false);
 }
 
