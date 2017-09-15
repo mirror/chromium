@@ -16,6 +16,24 @@
       "revId": "819445691dffa4d5ef7e63c4ecbb45ff90180e0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089ee297_04cdc71f",
+        "filename": "ui/compositor/layer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2223,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-15T15:03:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95e0c147_5fdebd72",
+      "revId": "819445691dffa4d5ef7e63c4ecbb45ff90180e0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
