@@ -356,7 +356,8 @@ def get_waterfall_config():
           ],
        'perf_tests': [
          ('load_library_perf_tests', 'build145-m1'),
-         ('performance_browser_tests', 'build145-m1'),
+         # crbug.com/735679
+         # ('performance_browser_tests', 'build145-m1'),
          ('media_perftests', 'build146-m1')]
       }
     ])
@@ -429,8 +430,9 @@ def get_waterfall_config():
           ],
        'perf_tests': [
          ('angle_perftests', 'build166-m1'),
-         ('load_library_perf_tests', 'build166-m1'),
-         ('performance_browser_tests', 'build166-m1')]
+         ('load_library_perf_tests', 'build166-m1')]
+         # crbug.com/735679
+         # ('performance_browser_tests', 'build166-m1')]
       }
     ])
   waterfall = add_tester(
