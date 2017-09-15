@@ -54,7 +54,11 @@ self.addEventListener('fetch', function(event) {
       if (params['sw'] == 'gen') {
         return Response.redirect(params['url']);
       } else if (params['sw'] == 'fetch') {
-        return fetch(event.request);
+        return fetch(event.request).then((res) => {
+          console.log('response type===============================');
+          console.log(res.type);
+          return res;
+        });
       } else if (params['sw'] == 'opaque') {
         return fetch(new Request(event.request.url, {redirect: 'manual'}));
       } else if (params['sw'] == 'opaqueThroughCache') {

@@ -8,17 +8,29 @@ var SCRIPT = 'navigation-redirect-worker.js';
 
 var registration;
 var worker;
+
+function get_effective_worker(registration) {
+  if (registration.active)
+    return registration.active;
+  if (registration.waiting)
+    return registration.waiting;
+  if (registration.installing)
+    return registration.installing;
+}
+
 var wait_for_worker_promise = navigator.serviceWorker.getRegistration(SCOPE)
   .then(function(reg) {
-      if (reg)
-        return reg.unregister();
+      //if (reg)
+      //  return reg.unregister();
     })
   .then(function() {
       return navigator.serviceWorker.register(SCRIPT, {scope: SCOPE});
     })
   .then(function(reg) {
       registration = reg;
-      worker = reg.installing;
+      worker = get_effective_worker(reg);
+      if (reg.active)
+        return Promise.resolve();
       return new Promise(function(resolve) {
           worker.addEventListener('statechange', function() {
               if (worker.state == 'activated')
