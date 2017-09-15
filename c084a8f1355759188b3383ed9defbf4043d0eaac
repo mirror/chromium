@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "781d0fff_340f3d51",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-blink-features\u003dLayoutNG",
+        "patchSetId": 3
+      },
+      "lineNbr": 4095,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-09-15T16:55:05Z",
+      "side": 1,
+      "message": "Yes the failure is still about paste, where it won\u0027t get executed correctly in some cases.",
+      "parentUuid": "dadbe5d2_3ec42297",
+      "range": {
+        "startLine": 4095,
+        "startChar": 6,
+        "endLine": 4095,
+        "endChar": 9
+      },
+      "revId": "c084a8f1355759188b3383ed9defbf4043d0eaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8208f293_ab76696e",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/input-events/input-events-cut-paste-manual.html",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "905d8db1_d0c1aee9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/input-events/input-events-cut-paste-manual.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-09-15T16:55:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8208f293_ab76696e",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 28
+      },
+      "revId": "c084a8f1355759188b3383ed9defbf4043d0eaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57aa015c_0ddbe7d7",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/input-events/input-events-cut-paste-manual.html",
         "patchSetId": 3
@@ -62,6 +110,24 @@
       "revId": "c084a8f1355759188b3383ed9defbf4043d0eaac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10d9f4c8_ac3b373c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/input-events/input-events-cut-paste-manual.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-09-15T16:55:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57aa015c_0ddbe7d7",
+      "revId": "c084a8f1355759188b3383ed9defbf4043d0eaac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
