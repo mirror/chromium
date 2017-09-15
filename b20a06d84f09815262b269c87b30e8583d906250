@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ce11f0b_ef06fc44",
+        "filename": "chrome/browser/resources/print_preview/print_preview.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-15T17:36:30Z",
+      "side": 1,
+      "message": "Nit (optional)\n\n[\n  this.printTicketStore_.copies,\n  this.printTicketStore_.pageRange,\n  this.printTicketStore_.scaling,\n].forEach(function(item) {\n  this.tracker.add(\n      item, print_preview.ticket_items.TicketItem.EventType.CHANGE,\n      this.onTicketChange_.bind(this));\n}.bind(this));",
+      "revId": "b20a06d84f09815262b269c87b30e8583d906250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e0afdd_2243cba9",
+        "filename": "chrome/browser/resources/print_preview/print_preview.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-15T17:36:30Z",
+      "side": 1,
+      "message": "Instead of adding the \u0027disabled\u0027 CSS class and relying on [1] to make the link unclickable, can we use the \u0027disabled\u0027 CSS attribute instead and rely on [2] instead, and delete [1] completely if not used elsewhere?\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/print_preview.css?l\u003d140-144\n[2] https://cs.chromium.org/chromium/src/ui/webui/resources/css/action_link.css?l\u003d20-24",
+      "revId": "b20a06d84f09815262b269c87b30e8583d906250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
