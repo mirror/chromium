@@ -14,6 +14,7 @@
 #include "build/build_config.h"
 #include "components/autofill/core/browser/credit_card.h"
 #include "ui/gfx/image/image_skia.h"
+#include "url/gurl.h"
 
 namespace payments {
 
