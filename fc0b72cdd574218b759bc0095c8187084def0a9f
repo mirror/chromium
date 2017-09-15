@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fe17607_3d264f7c",
+        "filename": "components/exo/wayland/clients/client_base.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-15T23:16:36Z",
+      "side": 1,
+      "message": "Why this?",
+      "revId": "fc0b72cdd574218b759bc0095c8187084def0a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cda6955_e674dd77",
+        "filename": "components/viz/service/display/ca_layer_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-15T23:16:36Z",
+      "side": 1,
+      "message": "Can this be part of another CL? It\u0027s not really related to moving overlay stuff to viz/services/display.",
+      "revId": "fc0b72cdd574218b759bc0095c8187084def0a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9322065_150a03fc",
+        "filename": "components/viz/service/display/dc_layer_overlay.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-15T23:16:36Z",
+      "side": 1,
+      "message": "Should this CL be only about moving overlay code to viz?",
+      "revId": "fc0b72cdd574218b759bc0095c8187084def0a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0addee29_42b3065a",
+        "filename": "components/viz/service/display/gl_renderer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 3440,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-15T23:16:36Z",
+      "side": 1,
+      "message": "Style change.",
+      "revId": "fc0b72cdd574218b759bc0095c8187084def0a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "603213f7_b7c3e2ba",
+        "filename": "components/viz/service/display/gl_renderer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2089,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-15T23:16:36Z",
+      "side": 1,
+      "message": "Same.",
+      "revId": "fc0b72cdd574218b759bc0095c8187084def0a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65673656_8a750749",
+        "filename": "components/viz/service/display/overlay_processor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-15T23:16:36Z",
+      "side": 1,
+      "message": "Is this needed for the ifdef android?",
+      "revId": "fc0b72cdd574218b759bc0095c8187084def0a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7009dae_a2cee90a",
+        "filename": "components/viz/service/display_embedder/compositor_overlay_candidate_validator_ozone.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-15T23:16:36Z",
+      "side": 1,
+      "message": "If you want to change MakeUnique to make_unique in this CL, why not this?",
+      "revId": "fc0b72cdd574218b759bc0095c8187084def0a9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
