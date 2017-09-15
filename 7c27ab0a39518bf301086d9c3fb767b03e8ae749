@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eeeb33fc_e4af5726",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-09-15T07:20:45Z",
+      "side": 1,
+      "message": "Please mention running vda_unittest will no longer display the frames on the screen.",
+      "revId": "7c27ab0a39518bf301086d9c3fb767b03e8ae749",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
