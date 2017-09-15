@@ -831,6 +831,7 @@ component("platform") {
     "geometry/FloatQuad.h",
     "geometry/FloatRect.cpp",
     "geometry/FloatRect.h",
+    "geometry/FloatRectOutsets.cpp",
     "geometry/FloatRectOutsets.h",
     "geometry/FloatRoundedRect.cpp",
     "geometry/FloatRoundedRect.h",
