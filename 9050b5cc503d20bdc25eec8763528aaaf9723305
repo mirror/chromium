@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2af9fbf3_7c29d8f4",
+        "filename": "third_party/WebKit/Source/modules/eventsource/EventSourceParserTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-09-15T10:29:01Z",
+      "side": 1,
+      "message": "is C of Can\u0027t intentionally capitalized?",
+      "revId": "9050b5cc503d20bdc25eec8763528aaaf9723305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
