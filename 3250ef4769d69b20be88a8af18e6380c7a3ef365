@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f37e6515_7f48f482",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:44:43Z",
+      "side": 1,
+      "message": "However, V4L2VDA also checks for initial format change in DecodeBufferInitial(), regardless of whether it has received an event. This may lead to allocating output buffers twice, once after the check in DecodeBufferInitial(), and once when servicing the event for that change.",
+      "revId": "3250ef4769d69b20be88a8af18e6380c7a3ef365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcfcf558_9e1eb881",
+        "filename": "media/gpu/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:44:43Z",
+      "side": 1,
+      "message": "Perhaps move this to the previous if and remove this one?\n\nif (coded_size_.IsEmpty() || output_buffer_map.empty())\n  return true;",
+      "revId": "3250ef4769d69b20be88a8af18e6380c7a3ef365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b6196a_a7790bf6",
+        "filename": "media/gpu/v4l2_video_decode_accelerator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1178,
+      "author": {
+        "id": 1001027
+      },
+      "writtenOn": "2017-09-15T09:44:43Z",
+      "side": 1,
+      "message": "Some platforms do not send an initial resolution change event.\nTo work around this, we need to keep checking if the initial resolution is known already by explicitly querying the format after each decode, regardless of whether we received an event.\nThis needs to be done only on initial resolution change, i.e. when coded_size_.IsEmpty().",
+      "revId": "3250ef4769d69b20be88a8af18e6380c7a3ef365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
