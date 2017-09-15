@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "dc179f4d_f3c03ab7",
+        "filename": "third_party/WebKit/Source/core/dom/FrameRequestCallback.idl",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-15T10:04:04Z",
+      "side": 1,
+      "message": "Also line 31 seems no longer necessary, too.\n\nInstead, please put a link to the latest spec.",
+      "parentUuid": "19026e27_d780bc79",
+      "revId": "c3d81421210c2d5d5b9da96eafffd20821cf4ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6bdcde5_b33f31f1",
         "filename": "third_party/WebKit/Source/core/dom/FrameRequestCallbackCollection.h",
         "patchSetId": 10
@@ -47,6 +65,24 @@
       "writtenOn": "2017-09-15T08:46:07Z",
       "side": 1,
       "message": "struct?",
+      "revId": "c3d81421210c2d5d5b9da96eafffd20821cf4ce8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c17c820_3bbbc11c",
+        "filename": "third_party/WebKit/Source/core/dom/FrameRequestCallbackCollection.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-15T10:04:04Z",
+      "side": 1,
+      "message": "No, we\u0027d better make this into a real class.\n\nPlease make data members private:.",
+      "parentUuid": "e6bdcde5_b33f31f1",
       "revId": "c3d81421210c2d5d5b9da96eafffd20821cf4ce8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
