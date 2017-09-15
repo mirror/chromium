@@ -39,7 +39,7 @@ class VoiceInteractionSelectionObserver
   }
 
   ~VoiceInteractionSelectionObserver() override {
-    if (ash::Shell::Get()->highlighter_controller())
+    if (ash::Shell::Get() && ash::Shell::Get()->highlighter_controller())
       ash::Shell::Get()->highlighter_controller()->SetObserver(nullptr);
   };
 
