@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "484dcafe_b9c5724e",
+        "filename": "chrome/installer/linux/debian/merge_package_versions.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-15T19:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b3e8c29_d824b7ec",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 8
+      },
+      "revId": "48a20ca50cb27ea3909f39a75aaec1157c3b4c6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa7a1b3c_952d8311",
         "filename": "chrome/installer/linux/debian/package_version_interval.py",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "48a20ca50cb27ea3909f39a75aaec1157c3b4c6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecab6cdc_54479ffe",
+        "filename": "chrome/installer/linux/debian/package_version_interval.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-15T19:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa7a1b3c_952d8311",
+      "range": {
+        "startLine": 95,
+        "startChar": 9,
+        "endLine": 95,
+        "endChar": 10
+      },
+      "revId": "48a20ca50cb27ea3909f39a75aaec1157c3b4c6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
