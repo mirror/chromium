@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46a14d78_0cbc534e",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-15T21:37:21Z",
+      "side": 1,
+      "message": "silly question, is it at all possible to call AddUiElement after the \"if (!overlay_elements.empty() \u0026\u0026 ShouldDrawWebVr())\" block?\n\nIf so, we can just call ui_renderer-\u003eDraw call DrawWebVrOverlayForeground and all our Draw calls will go through one place.",
+      "range": {
+        "startLine": 868,
+        "startChar": 16,
+        "endLine": 868,
+        "endChar": 20
+      },
+      "revId": "741d4866a8da734ae3f2906fb499865e4d01c961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "762ce73e_48b5f06a",
+        "filename": "chrome/browser/vr/ui_renderer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-15T21:37:21Z",
+      "side": 1,
+      "message": "nit: just kReticleVisible, kReticleHidden?",
+      "range": {
+        "startLine": 65,
+        "startChar": 21,
+        "endLine": 65,
+        "endChar": 40
+      },
+      "revId": "741d4866a8da734ae3f2906fb499865e4d01c961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a522f75_b0825dc6",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-15T21:37:21Z",
+      "side": 1,
+      "message": "this should be the background?",
+      "range": {
+        "startLine": 388,
+        "startChar": 2,
+        "endLine": 388,
+        "endChar": 16
+      },
+      "revId": "741d4866a8da734ae3f2906fb499865e4d01c961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac16bea_1e22b983",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-15T21:37:21Z",
+      "side": 1,
+      "message": "Looks like you\u0027re adding the background as the child of text. Was this a mistake?",
+      "range": {
+        "startLine": 398,
+        "startChar": 23,
+        "endLine": 398,
+        "endChar": 40
+      },
+      "revId": "741d4866a8da734ae3f2906fb499865e4d01c961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c767c305_439a973b",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-15T21:37:21Z",
+      "side": 1,
+      "message": "Should this be kPhaseOverlayForeground?",
+      "range": {
+        "startLine": 529,
+        "startChar": 26,
+        "endLine": 529,
+        "endChar": 42
+      },
+      "revId": "741d4866a8da734ae3f2906fb499865e4d01c961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
