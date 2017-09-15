@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11e0ce2f_65cc58b5",
+        "filename": "components/suggestions/suggestions_service_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-09-15T10:38:01Z",
+      "side": 1,
+      "message": "Nit: final \u0027\u003d\u0027 missing in comment.",
+      "range": {
+        "startLine": 64,
+        "startChar": 31,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "b6f6a2f2c0c978579eb8a5ac9be9f8d7ba0ebeca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
