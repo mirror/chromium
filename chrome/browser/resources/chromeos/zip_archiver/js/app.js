@@ -55,6 +55,12 @@ unpacker.app = {
   compressors: {},
 
   /**
+   * String assets.
+   * @type {Object<string>}
+   */
+  stringData: {},
+
+  /**
    * A map with promises of loading a volume's metadata from NaCl.
    * Any call from fileSystemProvider API should work only on valid metadata.
    * These promises ensure that the fileSystemProvider API calls wait for the
@@ -742,7 +748,9 @@ unpacker.app = {
                           type: 'basic',
                           iconUrl: chrome.runtime.getManifest().icons[128],
                           title: entry.name,
-                          message: chrome.i18n.getMessage('mountingMessage'),
+                          message:
+                              unpacker.app
+                                  .stringData['ZIP_ARCHIVER_MOUNTING_MESSAGE'],
                         },
                         function() {});
                   }, unpacker.app.MOUNTING_NOTIFICATION_DELAY);
@@ -763,7 +771,8 @@ unpacker.app = {
                           type: 'basic',
                           iconUrl: chrome.runtime.getManifest().icons[128],
                           title: entry.name,
-                          message: chrome.i18n.getMessage('otherErrorMessage')
+                          message: unpacker.app.stringData
+                                       ['ZIP_ARCHIVER_OTHER_ERROR_MESSAGE'],
                         },
                         function() {});
                     if (opt_onError)

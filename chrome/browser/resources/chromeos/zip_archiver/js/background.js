@@ -27,3 +27,8 @@ chrome.fileSystemProvider.onReadFileRequested.addListener(
 
 // Load the PNaCl module.
 unpacker.app.loadNaclModule('module.nmf', 'application/x-pnacl');
+
+// Load translations
+chrome.fileManagerPrivate.getStrings(function(strings) {
+  unpacker.app.stringData = strings;
+});
