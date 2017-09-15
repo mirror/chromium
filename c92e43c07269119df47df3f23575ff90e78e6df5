@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dda28cad_a9dc147c",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-15T05:55:59Z",
+      "side": 1,
+      "message": "framework_instance_.reset() looks missing?",
+      "revId": "c92e43c07269119df47df3f23575ff90e78e6df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b0d7d2_6c39f992",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-15T05:55:59Z",
+      "side": 1,
+      "message": "Could you reset() in the reverse order of the creation in SetUp() ?",
+      "revId": "c92e43c07269119df47df3f23575ff90e78e6df5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
