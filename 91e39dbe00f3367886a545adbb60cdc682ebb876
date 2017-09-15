@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c624df40_56de10bf",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-15T13:23:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "762a78fb_7fc96541",
+      "range": {
+        "startLine": 308,
+        "startChar": 80,
+        "endLine": 308,
+        "endChar": 0
+      },
+      "revId": "91e39dbe00f3367886a545adbb60cdc682ebb876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e90c881_05db4ce8",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "91e39dbe00f3367886a545adbb60cdc682ebb876",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d911355a_337b0ac9",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-15T13:23:06Z",
+      "side": 1,
+      "message": "Done.\n\nI have a theory, but no practical confirmation.\n\nBasically, the user can stop listening by disabling content suggestions.\nIt seems possible that the server could send a message right before this moment, such that it arrives when the handler is not listening anymore.\n\nI went for \n\nDLOG(WARNING) \u003c\u003c \"Received a pushed messaged while not listening.\";",
+      "parentUuid": "1e90c881_05db4ce8",
+      "revId": "91e39dbe00f3367886a545adbb60cdc682ebb876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "91e39dbe00f3367886a545adbb60cdc682ebb876",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01896f1c_1644cd0c",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-15T13:23:06Z",
+      "side": 1,
+      "message": "ACK\n\nI have a theory, but no practical confirmation.\n\nBasically, the user can stop listening by disabling content suggestions.\nI feel like this can happen right before the json is parsed (i.e. this method is called), but after OnMessage. I also vaguely remember that json is parsed in a separate thread.",
+      "parentUuid": "74259607_e0975e95",
+      "range": {
+        "startLine": 372,
+        "startChar": 23,
+        "endLine": 372,
+        "endChar": 0
+      },
+      "revId": "91e39dbe00f3367886a545adbb60cdc682ebb876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
