@@ -66,9 +66,6 @@ class PulseAudioOutputStream : public AudioOutputStream {
   // if the request could not be fulfilled.
   void FulfillWriteRequest(size_t requested_bytes);
 
-  // Close() helper function to free internal structs.
-  void Reset();
-
   // AudioParameters from the constructor.
   const AudioParameters params_;
 
@@ -78,10 +75,9 @@ class PulseAudioOutputStream : public AudioOutputStream {
   // Audio manager that created us.  Used to report that we've closed.
   AudioManagerBase* manager_;
 
-  // PulseAudio API structs.
-  pa_context* pa_context_;
-  pa_threaded_mainloop* pa_mainloop_;
-  pa_stream* pa_stream_;
+  // PulseAudio helpers.
+  std::unique_ptr<pulse::Glue> glue_;
+  std::unique_ptr<pulse::Stream> stream_;
 
   // Float representation of volume from 0.0 to 1.0.
   float volume_;
