@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9aef1ce_57232595",
+        "filename": "content/common/indexed_db/indexed_db.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T04:51:21Z",
+      "side": 1,
+      "message": "Would we eventually remove BlobInfo itself? Looking at the definition of Blob, I guess not, since BlobInfo is more about properties of a blob while Blob is more about the actual transfer.\n\nWhat about things like UUID? Would Blink eventually have its own BlobInfo mojom struct, or we would move the one in indexedb out perhaps?",
+      "revId": "e4a9b2b3152db605f14af98009050de050eeb4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ce2b36_c67ea18f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/V8ScriptValueDeserializer.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T04:51:21Z",
+      "side": 1,
+      "message": "I guess this is because mojo blobs aren\u0027t always enabled?",
+      "revId": "e4a9b2b3152db605f14af98009050de050eeb4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a41d00_62497295",
+        "filename": "third_party/WebKit/Source/platform/exported/WebBlobInfo.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-15T04:51:21Z",
+      "side": 1,
+      "message": "Can this just be \u003d default? Or does that break because of WebPrivatePtr?",
+      "revId": "e4a9b2b3152db605f14af98009050de050eeb4e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
