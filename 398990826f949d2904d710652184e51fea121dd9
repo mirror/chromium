@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98e7e076_b3c41aa8",
+        "filename": "components/omnibox/browser/autocomplete_classifier.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-15T10:50:58Z",
+      "side": 0,
+      "message": "Enabling the shortcuts provider lgtm, but I don\u0027t understand the implications of enabling the zerosuggest provider.  \n\nHow aggressively does the zerosuggest provider trigger?  Will it cause the popup to open whenever the omnibox is focused?  That would be a huge change in UI that I\u0027d need to run through Mardini and other folks.",
+      "revId": "398990826f949d2904d710652184e51fea121dd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
