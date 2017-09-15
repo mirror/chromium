@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "93669fde_cf7996a5",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-15T04:40:01Z",
+      "side": 1,
+      "message": "Resolved. Bots seem fine.",
+      "parentUuid": "08aa2946_627c7265",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "227fecb3_e4520c4d",
         "filename": "third_party/zlib/BUILD.gn",
         "patchSetId": 16
@@ -69,6 +87,24 @@
       "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "434e4b1a_53dd4e21",
+        "filename": "third_party/zlib/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-15T04:40:01Z",
+      "side": 1,
+      "message": "Yeap GN-encapsulation done, patch 22.",
+      "parentUuid": "dcd9b7db_934722d7",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -286,6 +322,24 @@
     },
     {
       "key": {
+        "uuid": "192757bf_e42ea8d0",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-15T04:40:01Z",
+      "side": 1,
+      "message": "\u003e Are you familiar with what ZLIB_INTERNAL does?",
+      "parentUuid": "45c80ba9_604c13a0",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "087691cf_9a284e07",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16
@@ -336,6 +390,24 @@
       "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0020196b_13febbf2",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-15T04:40:01Z",
+      "side": 1,
+      "message": "Resolved: Went with the two phase algorithm, as we all agreed to.",
+      "parentUuid": "e2249f6e_f5cd686b",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -424,6 +496,24 @@
       "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eeaa3579_befa5a11",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-15T04:40:01Z",
+      "side": 1,
+      "message": "\u003e Adenilson@ I also later asked that you undo my suggestion when you mentioned that good compilers spot this and do generate good code to handle this case well.\n\nGlancing at the NEON patch, maybe you missed this?  As Mike would say, let\u0027s trust the compiler :)",
+      "parentUuid": "2022afd0_41d92664",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
