@@ -22,6 +22,15 @@ using media_audio_pulse::InitializeStubs;
 using media_audio_pulse::StubPathMap;
 #endif  // defined(DLOPEN_PULSEAUDIO)
 
+// Helper macro to avoid code spam and string bloat.
+#define RETURN_ON_FAILURE(expression, message) \
+  do {                                         \
+    if (!(expression)) {                       \
+      DLOG(ERROR) << message;                  \
+      return false;                            \
+    }                                          \
+  } while (0)
+
 namespace media {
 
 namespace pulse {
@@ -38,17 +47,6 @@ static const char kBrowserDisplayName[] = "chromium-browser";
 static const base::FilePath::CharType kPulseLib[] =
     FILE_PATH_LITERAL("libpulse.so.0");
 #endif
-
-void DestroyMainloop(pa_threaded_mainloop* mainloop) {
-  pa_threaded_mainloop_stop(mainloop);
-  pa_threaded_mainloop_free(mainloop);
-}
-
-void DestroyContext(pa_context* context) {
-  pa_context_set_state_callback(context, NULL, NULL);
-  pa_context_disconnect(context);
-  pa_context_unref(context);
-}
 
 pa_channel_position ChromiumToPAChannelPosition(Channels channel) {
   switch (channel) {
@@ -96,99 +94,250 @@ class ScopedPropertyList {
 
 }  // namespace
 
-bool InitPulse(pa_threaded_mainloop** mainloop, pa_context** context) {
+Glue::Glue() {
 #if defined(DLOPEN_PULSEAUDIO)
-  StubPathMap paths;
+  static const bool kLibraryLoaded = []() {
+    StubPathMap paths;
+    paths[kModulePulse].push_back(kPulseLib);
 
-  // Check if the pulse library is avialbale.
-  paths[kModulePulse].push_back(kPulseLib);
-  if (!InitializeStubs(paths)) {
-    VLOG(1) << "Failed on loading the Pulse library and symbols";
-    return false;
-  }
+    const bool success = InitializeStubs(paths);
+    if (!success)
+      VLOG(1) << "Failed on loading the Pulse library and symbols";
+    return success;
+  };
+
+  if (!kLibraryLoaded)
+    return;
 #endif  // defined(DLOPEN_PULSEAUDIO)
+
+  const std::string& app_name = AudioManager::GetGlobalAppName();
+  if (!Initialize(app_name.empty() ? "Chromium" : app_name.c_str()))
+    Destroy();
+}
+
+void Glue::WaitForOperationCompletion(pa_operation* operation) {
+  DCHECK(pa_mainloop_);
+  RETURN_ON_FAILURE(operation, "Operation is NULL");
+
+  while (pa_operation_get_state(operation) == PA_OPERATION_RUNNING)
+    pa_threaded_mainloop_wait(pa_mainloop_);
+
+  pa_operation_unref(operation);
+}
+
+bool Glue::Initialize(const char* context_name) {
+  // The setup order below follows the pattern used by pa_simple_new():
+  // https://github.com/pulseaudio/pulseaudio/blob/master/src/pulse/simple.c
 
   // Create a mainloop API and connect to the default server.
   // The mainloop is the internal asynchronous API event loop.
-  pa_threaded_mainloop* pa_mainloop = pa_threaded_mainloop_new();
-  if (!pa_mainloop)
-    return false;
+  pa_mainloop_ = pa_threaded_mainloop_new();
+  RETURN_ON_FAILURE(pa_mainloop_, "Failed to create PulseAudio main loop.");
 
-  // Start the threaded mainloop.
-  if (pa_threaded_mainloop_start(pa_mainloop)) {
-    pa_threaded_mainloop_free(pa_mainloop);
-    return false;
-  }
+  pa_context_ =
+      pa_context_new(pa_threaded_mainloop_get_api(pa_mainloop_), context_name);
+  RETURN_ON_FAILURE(pa_context_, "Failed to create PulseAudio context.");
+
+  pa_context_set_state_callback(pa_context_, &OnContextUpdate, pa_mainloop_);
+  RETURN_ON_FAILURE(pa_context_connect(pa_context_, nullptr,
+                                       PA_CONTEXT_NOAUTOSPAWN, nullptr) == 0,
+                    "Failed to connect PulseAudio context.");
 
   // Lock the event loop object, effectively blocking the event loop thread
   // from processing events. This is necessary.
-  auto mainloop_lock = base::MakeUnique<AutoPulseLock>(pa_mainloop);
+  AutoPulseLock auto_lock(pa_mainloop_);
 
-  pa_mainloop_api* pa_mainloop_api = pa_threaded_mainloop_get_api(pa_mainloop);
-  pa_context* pa_context = pa_context_new(pa_mainloop_api, "Chrome input");
-  if (!pa_context) {
-    mainloop_lock.reset();
-    DestroyMainloop(pa_mainloop);
-    return false;
-  }
-
-  pa_context_set_state_callback(pa_context, &pulse::ContextStateCallback,
-                                pa_mainloop);
-  if (pa_context_connect(pa_context, NULL, PA_CONTEXT_NOAUTOSPAWN, NULL)) {
-    VLOG(1) << "Failed to connect to the context.  Error: "
-            << pa_strerror(pa_context_errno(pa_context));
-    pa_context_set_state_callback(pa_context, NULL, NULL);
-    pa_context_unref(pa_context);
-    mainloop_lock.reset();
-    DestroyMainloop(pa_mainloop);
-    return false;
-  }
+  // Start the threaded mainloop after everything has been configured.
+  RETURN_ON_FAILURE(pa_threaded_mainloop_start(pa_mainloop_) == 0,
+                    "Failed to start PulseAudio main loop.");
 
   // Wait until |pa_context| is ready.  pa_threaded_mainloop_wait() must be
   // called after pa_context_get_state() in case the context is already ready,
   // otherwise pa_threaded_mainloop_wait() will hang indefinitely.
   while (true) {
     pa_context_state_t context_state = pa_context_get_state(pa_context);
-    if (!PA_CONTEXT_IS_GOOD(context_state)) {
-      DestroyContext(pa_context);
-      mainloop_lock.reset();
-      DestroyMainloop(pa_mainloop);
-      return false;
-    }
+    RETURN_ON_FAILURE(PA_CONTEXT_IS_GOOD(context_state),
+                      "Invalid PulseAudio context state.");
     if (context_state == PA_CONTEXT_READY)
       break;
     pa_threaded_mainloop_wait(pa_mainloop);
   }
 
-  *mainloop = pa_mainloop;
-  *context = pa_context;
   return true;
 }
 
-void DestroyPulse(pa_threaded_mainloop* mainloop, pa_context* context) {
-  DCHECK(mainloop);
-  DCHECK(context);
-
-  {
-    AutoPulseLock auto_lock(mainloop);
-    DestroyContext(context);
+void Glue::Destroy() {
+  if (pa_context_) {
+    AutoPulseLock auto_lock(pa_mainloop_);
+    pa_context_set_state_callback(pa_context_, nullptr, nullptr);
+    pa_context_disconnect(pa_context_);
+    pa_context_unref(pa_context_);
+    pa_context_ = nullptr;
   }
 
-  DestroyMainloop(mainloop);
+  if (pa_mainloop_) {
+    pa_threaded_mainloop_stop(pa_mainloop_);
+    pa_threaded_mainloop_free(pa_mainloop_);
+    pa_mainloop_ = nullptr;
+  }
 }
 
-// static, pa_stream_success_cb_t
-void StreamSuccessCallback(pa_stream* s, int error, void* mainloop) {
+void Glue::DestroyStream(pa_stream* pa_stream) {}
+
+void Glue::OnContextUpdate(pa_context* context, void* mainloop) {
   pa_threaded_mainloop* pa_mainloop =
       static_cast<pa_threaded_mainloop*>(mainloop);
   pa_threaded_mainloop_signal(pa_mainloop, 0);
 }
 
-// |pa_context| and |pa_stream| state changed cb.
-void ContextStateCallback(pa_context* context, void* mainloop) {
-  pa_threaded_mainloop* pa_mainloop =
-      static_cast<pa_threaded_mainloop*>(mainloop);
-  pa_threaded_mainloop_signal(pa_mainloop, 0);
+void Glue::StreamSuccessCallback(pa_stream* s, int success, void* mainloop) {
+  stream_success_ = !!success;
+  pa_threaded_mainloop_signal(static_cast<pa_threaded_mainloop*>(mainloop), 0);
+}
+
+Stream::Stream(StreamType type,
+               Glue* glue,
+               const AudioParameters& params,
+               const std::string& device_id,
+               pa_stream_notify_cb_t stream_callback,
+               pa_stream_request_cb_t request_callback,
+               pa_stream_flags_t flags,
+               const pa_sample_spec* sample_spec,
+               const pa_buffer_attr* buffer_attr,
+               void* user_data)
+    : glue_(glue) {
+  if (!Initialize(type, params, device_id, stream_callback, request_callback,
+                  flags, sample_spec, buffer_attr, user_data)) {
+    Destroy();
+  }
+}
+
+Stream::~Stream() {
+  Destroy();
+}
+
+bool Stream::Initialize(StreamType type,
+                        const AudioParameters& params,
+                        const std::string& device_id,
+                        pa_stream_notify_cb_t stream_callback,
+                        pa_stream_request_cb_t request_callback,
+                        pa_stream_flags_t flags,
+                        const pa_sample_spec* sample_spec,
+                        const pa_buffer_attr* buffer_attr,
+                        void* user_data) {
+  DCHECK(glue_->pa_mainloop());
+  DCHECK(glue_->pa_context());
+
+  // Lock the main loop while setting up the stream.  Failure to do so may lead
+  // to crashes as the PulseAudio thread tries to run before things are ready.
+  AutoPulseLock auto_lock(glue_->pa_mainloop());
+
+  // Get channel mapping; attempt to use preferred layout if supported.
+  pa_channel_map source_channel_map =
+      ChannelLayoutToPAChannelMap(params.channel_layout());
+  pa_channel_map* map =
+      source_channel_map.channels ? &source_channel_map : nullptr;
+
+  // Open stream and tell PulseAudio what the stream icon should be.
+  ScopedPropertyList property_list;
+  pa_proplist_sets(property_list.get(), PA_PROP_APPLICATION_ICON_NAME,
+                   kBrowserDisplayName);
+  pa_stream_ = pa_stream_new_with_proplist(
+      glue_->pa_context(),
+      type == StreamType::OUTPUT ? "Playback" : "RecordStream", sample_spec,
+      map, property_list.get());
+  RETURN_ON_FAILURE(*pa_stream, "pa_stream_new_with_proplist failed.");
+
+  pa_stream_set_state_callback(pa_stream_, stream_callback, user_data);
+
+  const char* pa_device_id =
+      device_id == AudioDeviceDescription::kDefaultDeviceId ? nullptr
+                                                            : device_id.c_str();
+
+  if (type == StreamType::OUTPUT) {
+    // Even though we start the stream corked below, PulseAudio will issue one
+    // stream request after setup.  write_callback() must fulfill the write.
+    pa_stream_set_write_callback(pa_stream_, request_callback, user_data);
+
+    // Connect playback stream.  Like pa_buffer_attr, the pa_stream_flags have a
+    // huge impact on the performance of the stream and were chosen through
+    // trial and error.
+    RETURN_ON_FAILURE(
+        pa_stream_connect_playback(pa_stream_ pa_device_id, buffer_attr, flags,
+                                   nullptr, nullptr) == 0,
+        "pa_stream_connect_playback failed.");
+  } else {
+    pa_stream_set_read_callback(pa_stream_, request_callback, user_data);
+    pa_stream_readable_size(pa_stream_);
+
+    RETURN_ON_FAILURE(pa_stream_connect_record(pa_stream_, pa_device_id,
+                                               buffer_attr, flags) == 0,
+                      "pa_stream_connect_record failed.");
+  }
+
+  // Wait for the stream to be ready.
+  while (true) {
+    pa_stream_state_t stream_state = pa_stream_get_state(pa_stream_);
+    RETURN_ON_FAILURE(PA_STREAM_IS_GOOD(stream_state),
+                      "Invalid PulseAudio stream state");
+    if (stream_state == PA_STREAM_READY)
+      break;
+    pa_threaded_mainloop_wait(glue_->pa_mainloop());
+  }
+
+  return true;
+}
+
+void Stream::Destroy() {
+  if (!pa_stream)
+    return;
+
+  AutoPulseLock auto_lock(glue_->pa_mainloop());
+
+  // Disable all the callbacks before disconnecting.
+  pa_stream_set_state_callback(pa_stream_, nullptr, nullptr);
+
+  glue_->WaitForOperationCompletion(pa_stream_flush(
+      pa_stream_, &StreamSuccessCallback, glue_->pa_mainloop()));
+
+  if (pa_stream_get_state(pa_stream_) != PA_STREAM_UNCONNECTED)
+    pa_stream_disconnect(pa_stream_);
+
+  pa_stream_set_write_callback(pa_stream_, nullptr, nullptr);
+  pa_stream_set_state_callback(pa_stream_, nullptr, nullptr);
+  pa_stream_unref(pa_stream);
+  pa_stream_ = nullptr;
+}
+
+bool Stream::Start() {
+  AutoPulseLock auto_lock(glue_->pa_mainloop());
+
+  // Ensure the context and stream are ready.
+  if (pa_context_get_state(glue_->pa_context()) != PA_CONTEXT_READY &&
+      pa_stream_get_state(pa_stream_) != PA_STREAM_READY) {
+    has_error_ = true;
+    return false;
+  }
+
+  WaitForOperationCompletion(pa_stream_cork(
+      pa_stream_, 0, &StreamSuccessCallback, glue_->pa_mainloop()));
+  return !has_error_;
+}
+
+bool Stream::Stop() {
+  AutoPulseLock auto_lock(glue_->pa_mainloop());
+
+  if (!has_error_) {
+    // Flush the stream prior to cork, doing so after will cause hangs.  Request
+    // callbacks are suspended while inside pa_threaded_mainloop_lock() so this
+    // is all thread safe.
+    glue_->WaitForOperationCompletion(pa_stream_flush(
+        pa_stream_, &StreamSuccessCallback, glue_->pa_mainloop()));
+  }
+
+  glue_->WaitForOperationCompletion(pa_stream_cork(
+      pa_stream_, 1, &StreamSuccessCallback, glue_->pa_mainloop()));
+  return !has_error_;
 }
 
 pa_sample_format_t BitsToPASampleFormat(int bits_per_sample) {
@@ -230,19 +379,6 @@ pa_channel_map ChannelLayoutToPAChannelMap(ChannelLayout channel_layout) {
   return channel_map;
 }
 
-void WaitForOperationCompletion(pa_threaded_mainloop* pa_mainloop,
-                                pa_operation* operation) {
-  if (!operation) {
-    DLOG(WARNING) << "Operation is NULL";
-    return;
-  }
-
-  while (pa_operation_get_state(operation) == PA_OPERATION_RUNNING)
-    pa_threaded_mainloop_wait(pa_mainloop);
-
-  pa_operation_unref(operation);
-}
-
 base::TimeDelta GetHardwareLatency(pa_stream* stream) {
   DCHECK(stream);
   int negative = 0;
@@ -255,210 +391,6 @@ base::TimeDelta GetHardwareLatency(pa_stream* stream) {
 
   return base::TimeDelta::FromMicroseconds(latency_micros);
 }
-
-// Helper macro for CreateInput/OutputStream() to avoid code spam and
-// string bloat.
-#define RETURN_ON_FAILURE(expression, message) do { \
-  if (!(expression)) { \
-    DLOG(ERROR) << message; \
-    return false; \
-  } \
-} while (0)
-
-bool CreateInputStream(pa_threaded_mainloop* mainloop,
-                       pa_context* context,
-                       pa_stream** stream,
-                       const AudioParameters& params,
-                       const std::string& device_id,
-                       pa_stream_notify_cb_t stream_callback,
-                       void* user_data) {
-  DCHECK(mainloop);
-  DCHECK(context);
-
-  // Set sample specifications.
-  pa_sample_spec sample_specifications;
-  sample_specifications.format = BitsToPASampleFormat(
-      params.bits_per_sample());
-  sample_specifications.rate = params.sample_rate();
-  sample_specifications.channels = params.channels();
-
-  // Get channel mapping and open recording stream.
-  pa_channel_map source_channel_map = ChannelLayoutToPAChannelMap(
-      params.channel_layout());
-  pa_channel_map* map = (source_channel_map.channels != 0) ?
-      &source_channel_map : NULL;
-
-  // Create a new recording stream and
-  // tells PulseAudio what the stream icon should be.
-  ScopedPropertyList property_list;
-  pa_proplist_sets(property_list.get(), PA_PROP_APPLICATION_ICON_NAME,
-                   kBrowserDisplayName);
-  *stream = pa_stream_new_with_proplist(context, "RecordStream",
-                                        &sample_specifications, map,
-                                        property_list.get());
-  RETURN_ON_FAILURE(*stream, "failed to create PA recording stream");
-
-  pa_stream_set_state_callback(*stream, stream_callback, user_data);
-
-  // Set server-side capture buffer metrics. Detailed documentation on what
-  // values should be chosen can be found at
-  // freedesktop.org/software/pulseaudio/doxygen/structpa__buffer__attr.html.
-  pa_buffer_attr buffer_attributes;
-  const unsigned int buffer_size = params.GetBytesPerBuffer();
-  buffer_attributes.maxlength = static_cast<uint32_t>(-1);
-  buffer_attributes.tlength = buffer_size;
-  buffer_attributes.minreq = buffer_size;
-  buffer_attributes.prebuf = static_cast<uint32_t>(-1);
-  buffer_attributes.fragsize = buffer_size;
-  int flags = PA_STREAM_AUTO_TIMING_UPDATE |
-              PA_STREAM_INTERPOLATE_TIMING |
-              PA_STREAM_ADJUST_LATENCY |
-              PA_STREAM_START_CORKED;
-  RETURN_ON_FAILURE(
-      pa_stream_connect_record(
-          *stream, device_id == AudioDeviceDescription::kDefaultDeviceId
-                       ? NULL
-                       : device_id.c_str(),
-          &buffer_attributes, static_cast<pa_stream_flags_t>(flags)) == 0,
-      "pa_stream_connect_record FAILED ");
-
-  // Wait for the stream to be ready.
-  while (true) {
-    pa_stream_state_t stream_state = pa_stream_get_state(*stream);
-    RETURN_ON_FAILURE(
-        PA_STREAM_IS_GOOD(stream_state), "Invalid PulseAudio stream state");
-    if (stream_state == PA_STREAM_READY)
-        break;
-    pa_threaded_mainloop_wait(mainloop);
-  }
-
-  return true;
-}
-
-bool CreateOutputStream(pa_threaded_mainloop** mainloop,
-                        pa_context** context,
-                        pa_stream** stream,
-                        const AudioParameters& params,
-                        const std::string& device_id,
-                        const std::string& app_name,
-                        pa_stream_notify_cb_t stream_callback,
-                        pa_stream_request_cb_t write_callback,
-                        void* user_data) {
-  DCHECK(!*mainloop);
-  DCHECK(!*context);
-
-  *mainloop = pa_threaded_mainloop_new();
-  RETURN_ON_FAILURE(*mainloop, "Failed to create PulseAudio main loop.");
-
-  pa_mainloop_api* pa_mainloop_api = pa_threaded_mainloop_get_api(*mainloop);
-  *context = pa_context_new(pa_mainloop_api,
-                            app_name.empty() ? "Chromium" : app_name.c_str());
-  RETURN_ON_FAILURE(*context, "Failed to create PulseAudio context.");
-
-  // A state callback must be set before calling pa_threaded_mainloop_lock() or
-  // pa_threaded_mainloop_wait() calls may lead to dead lock.
-  pa_context_set_state_callback(*context, &ContextStateCallback, *mainloop);
-
-  // Lock the main loop while setting up the context.  Failure to do so may lead
-  // to crashes as the PulseAudio thread tries to run before things are ready.
-  AutoPulseLock auto_lock(*mainloop);
-
-  RETURN_ON_FAILURE(pa_threaded_mainloop_start(*mainloop) == 0,
-                    "Failed to start PulseAudio main loop.");
-  RETURN_ON_FAILURE(
-      pa_context_connect(*context, NULL, PA_CONTEXT_NOAUTOSPAWN, NULL) == 0,
-      "Failed to connect PulseAudio context.");
-
-  // Wait until |pa_context_| is ready.  pa_threaded_mainloop_wait() must be
-  // called after pa_context_get_state() in case the context is already ready,
-  // otherwise pa_threaded_mainloop_wait() will hang indefinitely.
-  while (true) {
-    pa_context_state_t context_state = pa_context_get_state(*context);
-    RETURN_ON_FAILURE(PA_CONTEXT_IS_GOOD(context_state),
-                      "Invalid PulseAudio context state.");
-    if (context_state == PA_CONTEXT_READY)
-      break;
-    pa_threaded_mainloop_wait(*mainloop);
-  }
-
-  // Set sample specifications.
-  pa_sample_spec sample_specifications;
-  sample_specifications.format = PA_SAMPLE_FLOAT32;
-  sample_specifications.rate = params.sample_rate();
-  sample_specifications.channels = params.channels();
-
-  // Get channel mapping.
-  pa_channel_map* map = NULL;
-  pa_channel_map source_channel_map = ChannelLayoutToPAChannelMap(
-      params.channel_layout());
-  if (source_channel_map.channels != 0) {
-    // The source data uses a supported channel map so we will use it rather
-    // than the default channel map (NULL).
-    map = &source_channel_map;
-  }
-
-  // Open playback stream and
-  // tell PulseAudio what the stream icon should be.
-  ScopedPropertyList property_list;
-  pa_proplist_sets(property_list.get(), PA_PROP_APPLICATION_ICON_NAME,
-                   kBrowserDisplayName);
-  *stream = pa_stream_new_with_proplist(
-      *context, "Playback", &sample_specifications, map, property_list.get());
-  RETURN_ON_FAILURE(*stream, "failed to create PA playback stream");
-
-  pa_stream_set_state_callback(*stream, stream_callback, user_data);
-
-  // Even though we start the stream corked above, PulseAudio will issue one
-  // stream request after setup.  write_callback() must fulfill the write.
-  pa_stream_set_write_callback(*stream, write_callback, user_data);
-
-  // Pulse is very finicky with the small buffer sizes used by Chrome.  The
-  // settings below are mostly found through trial and error.  Essentially we
-  // want Pulse to auto size its internal buffers, but call us back nearly every
-  // |minreq| bytes.  |tlength| should be a multiple of |minreq|; too low and
-  // Pulse will issue callbacks way too fast, too high and we don't get
-  // callbacks frequently enough.
-  //
-  // Setting |minreq| to the exact buffer size leads to more callbacks than
-  // necessary, so we've clipped it to half the buffer size.  Regardless of the
-  // requested amount, we'll always fill |params.GetBytesPerBuffer()| though.
-  pa_buffer_attr pa_buffer_attributes;
-  pa_buffer_attributes.maxlength = static_cast<uint32_t>(-1);
-  pa_buffer_attributes.minreq = params.GetBytesPerBuffer() / 2;
-  pa_buffer_attributes.prebuf = static_cast<uint32_t>(-1);
-  pa_buffer_attributes.tlength = params.GetBytesPerBuffer() * 3;
-  pa_buffer_attributes.fragsize = static_cast<uint32_t>(-1);
-
-  // Connect playback stream.  Like pa_buffer_attr, the pa_stream_flags have a
-  // huge impact on the performance of the stream and were chosen through trial
-  // and error.
-  RETURN_ON_FAILURE(
-      pa_stream_connect_playback(
-          *stream, device_id == AudioDeviceDescription::kDefaultDeviceId
-                       ? NULL
-                       : device_id.c_str(),
-          &pa_buffer_attributes,
-          static_cast<pa_stream_flags_t>(
-              PA_STREAM_INTERPOLATE_TIMING | PA_STREAM_ADJUST_LATENCY |
-              PA_STREAM_AUTO_TIMING_UPDATE | PA_STREAM_NOT_MONOTONIC |
-              PA_STREAM_START_CORKED),
-          NULL, NULL) == 0,
-      "pa_stream_connect_playback FAILED ");
-
-  // Wait for the stream to be ready.
-  while (true) {
-    pa_stream_state_t stream_state = pa_stream_get_state(*stream);
-    RETURN_ON_FAILURE(
-        PA_STREAM_IS_GOOD(stream_state), "Invalid PulseAudio stream state");
-    if (stream_state == PA_STREAM_READY)
-      break;
-    pa_threaded_mainloop_wait(*mainloop);
-  }
-
-  return true;
-}
-
-#undef RETURN_ON_FAILURE
 
 }  // namespace pulse
 

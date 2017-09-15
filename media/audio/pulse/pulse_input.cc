@@ -15,18 +15,16 @@
 namespace media {
 
 using pulse::AutoPulseLock;
-using pulse::WaitForOperationCompletion;
 
 // Number of blocks of buffers used in the |fifo_|.
 const int kNumberOfBlocksBufferInFifo = 2;
 
 PulseAudioInputStream::PulseAudioInputStream(AudioManagerPulse* audio_manager,
+                                             pulse::Glue* glue,
                                              const std::string& device_name,
-                                             const AudioParameters& params,
-                                             pa_threaded_mainloop* mainloop,
-                                             pa_context* context)
+                                             const AudioParameters& params)
     : audio_manager_(audio_manager),
-      callback_(NULL),
+      callback_(nullptr),
       device_name_(device_name),
       params_(params),
       channels_(0),
@@ -36,104 +34,91 @@ PulseAudioInputStream::PulseAudioInputStream(AudioManagerPulse* audio_manager,
       fifo_(params.channels(),
             params.frames_per_buffer(),
             kNumberOfBlocksBufferInFifo),
-      pa_mainloop_(mainloop),
-      pa_context_(context),
-      handle_(NULL) {
-  DCHECK(mainloop);
-  DCHECK(context);
-  CHECK(params_.IsValid());
+      glue_(glue) {
+  DCHECK(glue->pa_mainloop());
+  DCHECK(glue->pa_context());
+  DCHECK(params_.IsValid());
 }
 
 PulseAudioInputStream::~PulseAudioInputStream() {
   // All internal structures should already have been freed in Close(),
   // which calls AudioManagerPulse::Release which deletes this object.
-  DCHECK(!handle_);
+  DCHECK(!stream_);
 }
 
 bool PulseAudioInputStream::Open() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  AutoPulseLock auto_lock(pa_mainloop_);
-  if (!pulse::CreateInputStream(pa_mainloop_, pa_context_, &handle_, params_,
-                                device_name_, &StreamNotifyCallback, this)) {
+
+  // Set sample specifications.
+  pa_sample_spec sample_specifications;
+  sample_specifications.format = BitsToPASampleFormat(params.bits_per_sample());
+  sample_specifications.rate = params.sample_rate();
+  sample_specifications.channels = params.channels();
+
+  // Set server-side capture buffer metrics. Detailed documentation on what
+  // values should be chosen can be found at
+  // freedesktop.org/software/pulseaudio/doxygen/structpa__buffer__attr.html.
+  pa_buffer_attr buffer_attributes;
+  const int buffer_size = params.GetBytesPerBuffer();
+  buffer_attributes.maxlength = static_cast<uint32_t>(-1);
+  buffer_attributes.tlength = buffer_size;
+  buffer_attributes.minreq = buffer_size;
+  buffer_attributes.prebuf = static_cast<uint32_t>(-1);
+  buffer_attributes.fragsize = buffer_size;
+
+  const pa_stream_flags_t flags =
+      PA_STREAM_AUTO_TIMING_UPDATE | PA_STREAM_INTERPOLATE_TIMING |
+      PA_STREAM_ADJUST_LATENCY | PA_STREAM_START_CORKED;
+
+  auto stream = std::make_unique<pulse::Stream>(
+      StreamType::INPUT, glue_, params_, device_id_, &StreamNotifyCallback,
+      &ReadCallback, flags, &sample_specifications, &buffer_attributes, this);
+  if (stream->has_error())
     return false;
-  }
 
-  DCHECK(handle_);
-
+  stream_ = std::move(stream);
   return true;
 }
 
 void PulseAudioInputStream::Start(AudioInputCallback* callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(callback);
-  DCHECK(handle_);
-
-  // AGC needs to be started out of the lock.
-  StartAgc();
-
-  AutoPulseLock auto_lock(pa_mainloop_);
-
+  DCHECK(pa_stream_);
   if (stream_started_)
     return;
 
   // Start the streaming.
+  StartAgc();
   callback_ = callback;
-  pa_stream_set_read_callback(handle_, &ReadCallback, this);
-  pa_stream_readable_size(handle_);
   stream_started_ = true;
+  if (stream_->Start())
+    return;
 
-  pa_operation* operation =
-      pa_stream_cork(handle_, 0, &pulse::StreamSuccessCallback, pa_mainloop_);
-  WaitForOperationCompletion(pa_mainloop_, operation);
+  DCHECK(stream_->has_error());
+  stream_->Stop();
+  callback_ = nullptr;
+  callback->OnError();
 }
 
 void PulseAudioInputStream::Stop() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  AutoPulseLock auto_lock(pa_mainloop_);
   if (!stream_started_)
     return;
 
   StopAgc();
 
-  // Set the flag to false to stop filling new data to soundcard.
+  if (!stream_->Stop())
+    callback_->OnError();
+
+  pa_stream_drop(stream_->pa_stream());
   stream_started_ = false;
-
-  // Clean up the old buffer.
-  pa_stream_drop(handle_);
   fifo_.Clear();
-
-  pa_operation* operation = pa_stream_flush(handle_,
-                                            &pulse::StreamSuccessCallback,
-                                            pa_mainloop_);
-  WaitForOperationCompletion(pa_mainloop_, operation);
-
-  // Stop the stream.
-  pa_stream_set_read_callback(handle_, NULL, NULL);
-  operation = pa_stream_cork(handle_, 1, &pulse::StreamSuccessCallback,
-                             pa_mainloop_);
-  WaitForOperationCompletion(pa_mainloop_, operation);
-  callback_ = NULL;
+  callback_ = nullptr;
 }
 
 void PulseAudioInputStream::Close() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  {
-    AutoPulseLock auto_lock(pa_mainloop_);
-    if (handle_) {
-      // Disable all the callbacks before disconnecting.
-      pa_stream_set_state_callback(handle_, NULL, NULL);
-      pa_operation* operation = pa_stream_flush(
-          handle_, &pulse::StreamSuccessCallback, pa_mainloop_);
-      WaitForOperationCompletion(pa_mainloop_, operation);
-
-      if (pa_stream_get_state(handle_) != PA_STREAM_UNCONNECTED)
-        pa_stream_disconnect(handle_);
-
-      // Release PulseAudio structures.
-      pa_stream_unref(handle_);
-      handle_ = NULL;
-    }
-  }
+  stream_.reset();
 
   // Signal to the manager that we're closed and can be removed.
   // This should be the last call in the function as it deletes "this".
@@ -146,17 +131,15 @@ double PulseAudioInputStream::GetMaxVolume() {
 
 void PulseAudioInputStream::SetVolume(double volume) {
   AutoPulseLock auto_lock(pa_mainloop_);
-  if (!handle_)
+  if (!stream_ || !stream_->pa_stream())
     return;
 
-  size_t index = pa_stream_get_device_index(handle_);
-  pa_operation* operation = NULL;
+  size_t index = pa_stream_get_device_index(stream_->pa_stream());
   if (!channels_) {
     // Get the number of channels for the source only when the |channels_| is 0.
     // We are assuming the stream source is not changed on the fly here.
-    operation = pa_context_get_source_info_by_index(
-        pa_context_, index, &VolumeCallback, this);
-    WaitForOperationCompletion(pa_mainloop_, operation);
+    glue_->WaitForOperationCompletion(pa_context_get_source_info_by_index(
+        glue_->pa_context(), index, &VolumeCallback, this));
     if (!channels_) {
       DLOG(WARNING) << "Failed to get the number of channels for the source";
       return;
@@ -165,32 +148,30 @@ void PulseAudioInputStream::SetVolume(double volume) {
 
   pa_cvolume pa_volume;
   pa_cvolume_set(&pa_volume, channels_, volume);
-  operation = pa_context_set_source_volume_by_index(
-      pa_context_, index, &pa_volume, NULL, NULL);
 
   // Don't need to wait for this task to complete.
-  pa_operation_unref(operation);
+  pa_operation_unref(pa_context_set_source_volume_by_index(
+      glue_->pa_context(), index, &pa_volume, nullptr, nullptr));
 }
 
 double PulseAudioInputStream::GetVolume() {
-  if (pa_threaded_mainloop_in_thread(pa_mainloop_)) {
+  if (pa_threaded_mainloop_in_thread(glue_->pa_mainloop())) {
     // When being called by the pulse thread, GetVolume() is asynchronous and
     // called under AutoPulseLock.
-    if (!handle_)
+    if (!stream_ || !stream_->pa_stream())
       return 0.0;
 
-    size_t index = pa_stream_get_device_index(handle_);
-    pa_operation* operation = pa_context_get_source_info_by_index(
-        pa_context_, index, &VolumeCallback, this);
     // Do not wait for the operation since we can't block the pulse thread.
-    pa_operation_unref(operation);
+    pa_operation_unref(pa_context_get_source_info_by_index(
+        glue_->pa_context(), pa_stream_get_device_index(stream_->pa_stream()),
+        &VolumeCallback, this));
 
     // Return zero and the callback will asynchronously update the |volume_|.
     return 0.0;
-  } else {
-    GetSourceInformation(&VolumeCallback);
-    return volume_;
   }
+
+  GetSourceInformation(&VolumeCallback);
+  return volume_;
 }
 
 bool PulseAudioInputStream::IsMuted() {
@@ -212,12 +193,13 @@ void PulseAudioInputStream::ReadCallback(pa_stream* handle,
 // static, used by pa_context_get_source_info_by_index.
 void PulseAudioInputStream::VolumeCallback(pa_context* context,
                                            const pa_source_info* info,
-                                           int error, void* user_data) {
+                                           int error,
+                                           void* user_data) {
   PulseAudioInputStream* stream =
       reinterpret_cast<PulseAudioInputStream*>(user_data);
 
   if (error) {
-    pa_threaded_mainloop_signal(stream->pa_mainloop_, 0);
+    pa_threaded_mainloop_signal(stream->glue_->pa_mainloop(), 0);
     return;
   }
 
@@ -249,7 +231,7 @@ void PulseAudioInputStream::MuteCallback(pa_context* context,
 
   // Avoid infinite wait loop in case of error.
   if (error) {
-    pa_threaded_mainloop_signal(stream->pa_mainloop_, 0);
+    pa_threaded_mainloop_signal(stream->glue_->pa_mainloop(), 0);
     return;
   }
 
@@ -262,12 +244,11 @@ void PulseAudioInputStream::StreamNotifyCallback(pa_stream* s,
   PulseAudioInputStream* stream =
       reinterpret_cast<PulseAudioInputStream*>(user_data);
 
-  if (s && stream->callback_ &&
-      pa_stream_get_state(s) == PA_STREAM_FAILED) {
+  if (s && stream->callback_ && pa_stream_get_state(s) == PA_STREAM_FAILED) {
     stream->callback_->OnError(stream);
   }
 
-  pa_threaded_mainloop_signal(stream->pa_mainloop_, 0);
+  pa_threaded_mainloop_signal(stream->glue_->pa_mainloop(), 0);
 }
 
 void PulseAudioInputStream::ReadData() {
@@ -285,13 +266,13 @@ void PulseAudioInputStream::ReadData() {
   // get the capture time directly.
   base::TimeTicks capture_time =
       base::TimeTicks::Now() -
-      (pulse::GetHardwareLatency(handle_) +
+      (pulse::GetHardwareLatency(stream_->pa_stream()) +
        AudioTimestampHelper::FramesToTime(fifo_.GetAvailableFrames(),
                                           params_.sample_rate()));
   do {
     size_t length = 0;
     const void* data = NULL;
-    pa_stream_peek(handle_, &data, &length);
+    pa_stream_peek(stream_->pa_stream(), &data, &length);
     if (!data || length == 0)
       break;
 
@@ -299,17 +280,18 @@ void PulseAudioInputStream::ReadData() {
     if (number_of_frames > fifo_.GetUnfilledFrames()) {
       // Dynamically increase capacity to the FIFO to handle larger buffer got
       // from Pulse.
-      const int increase_blocks_of_buffer = static_cast<int>(
-          (number_of_frames - fifo_.GetUnfilledFrames()) /
-              params_.frames_per_buffer()) + 1;
+      const int increase_blocks_of_buffer =
+          static_cast<int>((number_of_frames - fifo_.GetUnfilledFrames()) /
+                           params_.frames_per_buffer()) +
+          1;
       fifo_.IncreaseCapacity(increase_blocks_of_buffer);
     }
 
     fifo_.Push(data, number_of_frames, params_.bits_per_sample() / 8);
 
     // Checks if we still have data.
-    pa_stream_drop(handle_);
-  } while (pa_stream_readable_size(handle_) > 0);
+    pa_stream_drop(stream_->pa_stream());
+  } while (pa_stream_readable_size(stream_->pa_stream()) > 0);
 
   while (fifo_.available_blocks()) {
     const AudioBus* audio_bus = fifo_.Consume();
@@ -328,18 +310,17 @@ void PulseAudioInputStream::ReadData() {
       base::PlatformThread::Sleep(base::TimeDelta::FromMilliseconds(5));
   }
 
-  pa_threaded_mainloop_signal(pa_mainloop_, 0);
+  pa_threaded_mainloop_signal(glue_->pa_mainloop(), 0);
 }
 
 bool PulseAudioInputStream::GetSourceInformation(pa_source_info_cb_t callback) {
-  AutoPulseLock auto_lock(pa_mainloop_);
-  if (!handle_)
+  if (!stream_ || !stream_->pa_stream())
     return false;
 
-  size_t index = pa_stream_get_device_index(handle_);
-  pa_operation* operation =
-      pa_context_get_source_info_by_index(pa_context_, index, callback, this);
-  WaitForOperationCompletion(pa_mainloop_, operation);
+  AutoPulseLock auto_lock(glue_->pa_mainloop());
+  glue_->WaitForOperationCompletion(pa_context_get_source_info_by_index(
+      glue_->pa_context(), pa_stream_get_device_index(stream_->pa_stream()),
+      callback, this));
   return true;
 }
 

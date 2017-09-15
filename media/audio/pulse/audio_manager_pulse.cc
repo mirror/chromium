@@ -32,17 +32,15 @@ static const int kMaximumOutputBufferSize = 8192;
 static const int kDefaultInputBufferSize = 1024;
 
 AudioManagerPulse::AudioManagerPulse(std::unique_ptr<AudioThread> audio_thread,
-                                     AudioLogFactory* audio_log_factory,
-                                     pa_threaded_mainloop* pa_mainloop,
-                                     pa_context* pa_context)
+                                     std::unique_ptr<pulse::MainLoop> mainloop,
+                                     AudioLogFactory* audio_log_factory)
     : AudioManagerBase(std::move(audio_thread), audio_log_factory),
-      input_mainloop_(pa_mainloop),
-      input_context_(pa_context),
+      mainloop_(std::move(mainloop)),
       devices_(NULL),
       native_input_sample_rate_(0),
       native_channel_count_(0) {
-  DCHECK(input_mainloop_);
-  DCHECK(input_context_);
+  DCHECK(mainloop_->pa_mainloop());
+  DCHECK(mainloop_->pa_context());
   SetMaxOutputStreamsAllowed(kMaxOutputStreams);
 }
 
@@ -50,9 +48,6 @@ AudioManagerPulse::~AudioManagerPulse() = default;
 
 void AudioManagerPulse::ShutdownOnAudioThread() {
   AudioManagerBase::ShutdownOnAudioThread();
-  // The Pulse objects are the last things to be destroyed since
-  // AudioManagerBase::ShutdownOnAudioThread() needs them.
-  pulse::DestroyPulse(input_mainloop_, input_context_);
 }
 
 bool AudioManagerPulse::HasAudioOutputDevices() {

@@ -24,10 +24,9 @@ class AudioManagerPulse;
 class PulseAudioInputStream : public AgcAudioStream<AudioInputStream> {
  public:
   PulseAudioInputStream(AudioManagerPulse* audio_manager,
+                        pulse::Glue* glue,
                         const std::string& device_name,
-                        const AudioParameters& params,
-                        pa_threaded_mainloop* mainloop,
-                        pa_context* context);
+                        const AudioParameters& params);
 
   ~PulseAudioInputStream() override;
 
@@ -74,9 +73,8 @@ class PulseAudioInputStream : public AgcAudioStream<AudioInputStream> {
   AudioBlockFifo fifo_;
 
   // PulseAudio API structs.
-  pa_threaded_mainloop* pa_mainloop_; // Weak.
-  pa_context* pa_context_;  // Weak.
-  pa_stream* handle_;
+  pulse::Glue* glue_;  // Owned by AudioManager.
+  std::unique_ptr<pulse::Stream> stream_;
 
   base::ThreadChecker thread_checker_;
 
