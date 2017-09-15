@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd140bde_c52b5b6d",
+        "filename": "ios/chrome/browser/ui/external_file_remover_impl.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T16:03:08Z",
+      "side": 1,
+      "message": "nit:\n\n  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);\n  NOTREACHED() \u003c\u003c ...",
+      "revId": "67a5f484037dcb48f4aa9c7efaeffa803b78d26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27387cc2_af3b29e3",
+        "filename": "ios/chrome/browser/ui/external_file_remover_impl.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-15T16:03:08Z",
+      "side": 1,
+      "message": "nit: no need to call LoadTabsFromLastSession multiple time\n\n  if (delayed_file_remove_requests_.size() \u003d\u003d 1)\n    tab_restore_service_-\u003eLoadTabsFromLastSession();",
+      "revId": "67a5f484037dcb48f4aa9c7efaeffa803b78d26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
