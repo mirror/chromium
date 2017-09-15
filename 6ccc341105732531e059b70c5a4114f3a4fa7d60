@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "68031aa6_72365596",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 997,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-15T04:01:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cab86b1_eaf516c8",
+      "range": {
+        "startLine": 991,
+        "startChar": 0,
+        "endLine": 997,
+        "endChar": 3
+      },
+      "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "631d8ce6_74b9920b",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 11
@@ -39,6 +63,24 @@
       "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d711b9db_b1df341e",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-15T04:01:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "631d8ce6_74b9920b",
+      "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "c79b8827_4eefc89c",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-15T04:01:39Z",
+      "side": 1,
+      "message": "GetBookmarkNodeByID finds the node recursively, and this method finds it by using a Tree iterator. I am not sure why they introduced this in the first place, but at this point let\u0027s use what was already being used, instead of changing it now? WDYT?",
+      "parentUuid": "30194b92_bcf6dc68",
+      "range": {
+        "startLine": 38,
+        "startChar": 31,
+        "endLine": 38,
+        "endChar": 45
+      },
+      "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a7bb223_b72110c2",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h",
         "patchSetId": 11
@@ -79,6 +145,24 @@
       "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebd0d361_99180637",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-15T04:01:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a7bb223_b72110c2",
+      "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "1d576c00_c10d9073",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-15T04:01:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be8be883_02f84b92",
+      "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2260dff9_5c5ac6fe",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.mm",
         "patchSetId": 11
@@ -113,6 +215,24 @@
       "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d3dd743_36d96091",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_utils_ios.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-15T04:01:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2260dff9_5c5ac6fe",
+      "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "e196468c_197c5550",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 1779,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-15T04:01:39Z",
+      "side": 1,
+      "message": "I think these 3 cases cover most of the cases. Folder 2 being removed is just another case of UI hierarchy being changed",
+      "parentUuid": "e5a01ad7_8ee6631c",
+      "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76f6d4de_901c8017",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
         "patchSetId": 11
@@ -147,6 +285,24 @@
       "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b32d296_e9968fac",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 2130,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-15T04:01:39Z",
+      "side": 1,
+      "message": "Added a TODO, as its not very important at this point.",
+      "parentUuid": "76f6d4de_901c8017",
+      "revId": "6ccc341105732531e059b70c5a4114f3a4fa7d60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
