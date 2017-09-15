@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba149612_7680e037",
+        "filename": "content/common/leveldb_wrapper.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-15T17:13:32Z",
+      "side": 1,
+      "message": "could you clarify in this doc when client_old_value can/should be nullopt? I guess it\u0027s some combination of: \"the client doesn\u0027t care about old values that are sent to observers\" and \"there is no old value since this is inserting a new key rather than updating an old key\".\nOr are we even somehow going to tell clients (via a new method on the observer maybe?) that they don\u0027t have to bother including old values because the service has them all cached anyway?\nEither way from the docs here it\u0027s not entirely clear to me what the meaning of the optional-ness is for old_value.\n\nMaybe also mention if it is an error if client_old_value doesn\u0027t match what the service thinks the old value is (from reading the comment as it is now this could be interpreted as some kind of compare-and-set atomic, while I don\u0027t believe that is the intention)",
+      "revId": "81bece0b91a5c59fa96f628ddcfc5c804802b74a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b57faaa_7fe75663",
+        "filename": "content/common/leveldb_wrapper.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-09-15T17:13:32Z",
+      "side": 1,
+      "message": "here too add some comments around client_old_value, its optionalness and error behavior.",
+      "revId": "81bece0b91a5c59fa96f628ddcfc5c804802b74a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
