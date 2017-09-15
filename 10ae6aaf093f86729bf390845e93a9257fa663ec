@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3a93c75_10e39392",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-15T17:15:49Z",
+      "side": 1,
+      "message": "You need to deal with the possibility of the auxiliary text overlapping the node text. Also, would be nice if you used GetTextBoundsForNode() for at least the y position.",
+      "range": {
+        "startLine": 917,
+        "startChar": 33,
+        "endLine": 917,
+        "endChar": 67
+      },
+      "revId": "10ae6aaf093f86729bf390845e93a9257fa663ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad8ba12_f1cff235",
+        "filename": "ui/views/controls/tree/tree_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-15T17:15:49Z",
+      "side": 1,
+      "message": "Move this into its own header please (see chromium specific style guide).",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 23
+      },
+      "revId": "10ae6aaf093f86729bf390845e93a9257fa663ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d150970e_26ea5034",
+        "filename": "ui/views/controls/tree/tree_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-15T17:15:49Z",
+      "side": 1,
+      "message": "Make protected if tree isn\u0027t going to own the DrawingProvider. That said, it seems less error prone to make tree own the DrawingProvider. Is there a reason you don\u0027t want that?",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 31
+      },
+      "revId": "10ae6aaf093f86729bf390845e93a9257fa663ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51faaabe_80898bb9",
+        "filename": "ui/views/controls/tree/tree_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-15T17:15:49Z",
+      "side": 1,
+      "message": "Please add a description as to what the \u0027auxiliary\u0027 text is.",
+      "range": {
+        "startLine": 55,
+        "startChar": 27,
+        "endLine": 55,
+        "endChar": 50
+      },
+      "revId": "10ae6aaf093f86729bf390845e93a9257fa663ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc783395_2da8bd80",
+        "filename": "ui/views/controls/tree/tree_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-15T17:15:49Z",
+      "side": 1,
+      "message": "Having two DrawingProvider members is confusing. Please just one. If you go with tree owning the DrawingProvider then it\u0027s easy to create the default drawing_provider_ in the constructor and assign to the member.",
+      "range": {
+        "startLine": 437,
+        "startChar": 18,
+        "endLine": 437,
+        "endChar": 43
+      },
+      "revId": "10ae6aaf093f86729bf390845e93a9257fa663ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
