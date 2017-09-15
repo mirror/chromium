@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b4258815_17793fbc",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/WebViewFindApisTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-09-15T21:37:17Z",
+      "side": 1,
+      "message": "The reason why the test creator did not use FutureTask is that the runnable/callable that gets passed into the future doesn\u0027t return the actual result, it simply sets the listener and start another async call to FindNext or FindAll on WebView.\n\nIf future task\u0027s set is public, I can do\n```\nfinal FutureTask\u003c?\u003e future \u003d new FutureTask(new Runnable() {\n  @Override\n  public void run() {\n    mListener \u003d (active, matches, isDone) -\u003e if (isDone) set(matches);\n    mCOntents.findNext(word);\n  }\n}\n//run FutureTask On Main Thread\nreturn future.get(timeout);\n```\n\nHowever, set is not public",
+      "parentUuid": "525d66ee_7a6dffa2",
+      "range": {
+        "startLine": 124,
+        "startChar": 34,
+        "endLine": 124,
+        "endChar": 47
+      },
+      "revId": "c196fa0084f46020aa737d64a63aa0da6f5bfde4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53b5efb2_fcc37f8b",
         "filename": "android_webview/test/BUILD.gn",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "c196fa0084f46020aa737d64a63aa0da6f5bfde4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e51badf_7ade439e",
+        "filename": "android_webview/test/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-09-15T21:37:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53b5efb2_fcc37f8b",
+      "range": {
+        "startLine": 217,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 86
+      },
+      "revId": "c196fa0084f46020aa737d64a63aa0da6f5bfde4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
