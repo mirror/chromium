@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc3fdb40_2039f066",
+        "filename": "ios/chrome/browser/ui/payments/payment_items_display_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-09-15T16:30:50Z",
+      "side": 1,
+      "message": "you don\u0027t need to specify the width in the initWithFrame anymore because it\u0027s specified with constraints (via the leading and trailing anchors).\n\nIf I were you I\u0027d go full constraints:\n\nUIView* buttonView \u003d [[UIView alloc] initWithFrame:CGRectZero()];\n[buttonView setTranslatesAutoresizingMaskIntoConstraints:NO];\n   [buttonView addSubview:_payButton];\n\n    [NSLayoutConstraint activateConstraints:@[\n      [_payButton.leadingAnchor\n          constraintEqualToAnchor:buttonView.leadingAnchor],\n      [_payButton.trailingAnchor\n          constraintEqualToAnchor:buttonView.trailingAnchor\n                         constant:-kButtonEdgeInset],\n      [_payButton.topAnchor\n          constraintEqualToAnchor:buttonView.topAnchor],\n      [_payButton.bottomAnchor\n          constraintEqualToAnchor:buttonView.bottomAnchor],\n    ]];",
+      "range": {
+        "startLine": 96,
+        "startChar": 7,
+        "endLine": 96,
+        "endChar": 38
+      },
+      "revId": "e9e7752377a3cbf394fdbf13ec4f6c29c36b86cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "488e8be4_ba305319",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-09-15T16:30:50Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 128,
+        "startChar": 8,
+        "endLine": 128,
+        "endChar": 38
+      },
+      "revId": "e9e7752377a3cbf394fdbf13ec4f6c29c36b86cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
