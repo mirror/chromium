@@ -26,10 +26,6 @@ namespace views {
 class Widget;
 }
 
-namespace viz {
-struct ReturnedResource;
-}
-
 namespace ash {
 class FastInkLayerTreeFrameSinkHolder;
 struct FastInkResource;
@@ -58,8 +54,8 @@ class FastInkView : public views::View {
   // Call this to indicate that the previous frame has been processed.
   void DidReceiveCompositorFrameAck();
 
-  // Call this to return resources so they can be reused or freed.
-  void ReclaimResources(const std::vector<viz::ReturnedResource>& resources);
+  // Call this to return resource so it can be reused or freed.
+  void ReclaimResource(std::unique_ptr<FastInkResource> resource);
 
   void UpdateBuffer();
   void UpdateSurface();
@@ -75,7 +71,6 @@ class FastInkView : public views::View {
   bool pending_draw_surface_ = false;
   std::unique_ptr<FastInkLayerTreeFrameSinkHolder> frame_sink_holder_;
   int next_resource_id_ = 1;
-  base::flat_map<viz::ResourceId, std::unique_ptr<FastInkResource>> resources_;
   std::vector<std::unique_ptr<FastInkResource>> returned_resources_;
   base::WeakPtrFactory<FastInkView> weak_ptr_factory_;
 
