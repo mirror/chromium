@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f0938b2_88b76416",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-15T13:31:51Z",
+      "side": 1,
+      "message": "nit: |matrix| or |buffer_matrix| to make the variable names when using SkMatrix vs gfx::Transform consistent with code in AppendContentsToFrame",
+      "range": {
+        "startLine": 724,
+        "startChar": 11,
+        "endLine": 724,
+        "endChar": 20
+      },
+      "revId": "1230330940fd5a867085cf77401e79b1fc3557c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d5ab67_70afaada",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-15T13:31:51Z",
+      "side": 1,
+      "message": "nit: I think this is bit too subtle. Please add a \"gfx::Transform quad_to_target_transform\" variable after viewport_to_target_matrix code where you use Transform::ConcatTransform to make it more explicit how this transform is created.",
+      "range": {
+        "startLine": 776,
+        "startChar": 6,
+        "endLine": 777,
+        "endChar": 39
+      },
+      "revId": "1230330940fd5a867085cf77401e79b1fc3557c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "104c2ee4_af47ecee",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-15T13:31:51Z",
+      "side": 1,
+      "message": "\"we need to convert it to normalized buffer coordinates and pass it through..\" ?",
+      "range": {
+        "startLine": 787,
+        "startChar": 22,
+        "endLine": 787,
+        "endChar": 48
+      },
+      "revId": "1230330940fd5a867085cf77401e79b1fc3557c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
