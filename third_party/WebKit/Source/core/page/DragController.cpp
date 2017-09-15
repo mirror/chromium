@@ -983,7 +983,8 @@ static IntPoint DragLocationForDHTMLDrag(const IntPoint& mouse_dragged_point,
 }
 
 static IntPoint DragLocationForSelectionDrag(LocalFrame* source_frame) {
-  IntRect dragging_rect = EnclosingIntRect(source_frame->Selection().Bounds());
+  IntRect dragging_rect =
+      EnclosingIntRect(source_frame->Selection().ClippedBounds());
   int xpos = dragging_rect.MaxX();
   xpos = dragging_rect.X() < xpos ? dragging_rect.X() : xpos;
   int ypos = dragging_rect.MaxY();
@@ -1098,7 +1099,7 @@ std::unique_ptr<DragImage> DragController::DragImageForSelection(
   frame.View()->UpdateAllLifecyclePhasesExceptPaint();
   DCHECK(frame.GetDocument()->IsActive());
 
-  FloatRect painting_rect = FloatRect(frame.Selection().Bounds());
+  FloatRect painting_rect = FloatRect(frame.Selection().ClippedBounds());
   GlobalPaintFlags paint_flags =
       kGlobalPaintSelectionOnly | kGlobalPaintFlattenCompositingLayers;
 
