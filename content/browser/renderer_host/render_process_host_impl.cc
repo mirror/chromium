@@ -107,7 +107,7 @@
 #include "content/browser/quota_dispatcher_host.h"
 #include "content/browser/renderer_host/clipboard_message_filter.h"
 #include "content/browser/renderer_host/database_message_filter.h"
-#include "content/browser/renderer_host/file_utilities_message_filter.h"
+#include "content/browser/renderer_host/file_utilities_host_impl.h"
 #include "content/browser/renderer_host/media/audio_input_renderer_host.h"
 #include "content/browser/renderer_host/media/audio_renderer_host.h"
 #include "content/browser/renderer_host/media/media_stream_dispatcher_host.h"
@@ -1723,7 +1723,6 @@ void RenderProcessHostImpl::CreateMessageFilters() {
   AddFilter(new BlobDispatcherHost(
       GetID(), blob_storage_context,
       make_scoped_refptr(storage_partition_impl_->GetFileSystemContext())));
-  AddFilter(new FileUtilitiesMessageFilter(GetID()));
   AddFilter(new DatabaseMessageFilter(
       GetID(), storage_partition_impl_->GetDatabaseTracker()));
 #if defined(OS_MACOSX)
@@ -1889,6 +1888,11 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
 
   registry->AddInterface(
       base::Bind(&VideoCaptureHost::Create, GetID(), media_stream_manager));
+
+  registry->AddInterface(
+      base::Bind(&FileUtilitiesHostImpl::Create, GetID()),
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::USER_VISIBLE}));
 
 #if BUILDFLAG(ENABLE_WEBRTC)
   registry->AddInterface(base::Bind(
