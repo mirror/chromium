@@ -72,7 +72,8 @@ static StyleSheetContents* ParseUASheet(const String& str) {
   return sheet;
 }
 
-CSSDefaultStyleSheets::CSSDefaultStyleSheets() {
+CSSDefaultStyleSheets::CSSDefaultStyleSheets()
+    : media_controls_style_sheet_loader_(nullptr) {
   default_style_ = RuleSet::Create();
   default_print_style_ = RuleSet::Create();
   default_quirks_style_ = RuleSet::Create();
@@ -158,13 +159,12 @@ bool CSSDefaultStyleSheets::EnsureDefaultStyleSheetsForElement(
     changed_default_style = true;
   }
 
-  // FIXME: We should assert that this sheet only contains rules for <video> and
-  // <audio>.
-  if (!media_controls_style_sheet_ &&
+  if (!media_controls_style_sheet_ && HasMediaControlsStyleSheetLoader() &&
       (isHTMLVideoElement(element) || isHTMLAudioElement(element))) {
-    String media_rules = GetDataResourceAsASCIIString("mediaControls.css") +
-                         LayoutTheme::GetTheme().ExtraMediaControlsStyleSheet();
-    media_controls_style_sheet_ = ParseUASheet(media_rules);
+    // FIXME: We should assert that this sheet only contains rules for <video>
+    // and <audio>.
+    media_controls_style_sheet_ =
+        ParseUASheet(media_controls_style_sheet_loader_->GetUAStyleSheet());
     default_style_->AddRulesFromSheet(MediaControlsStyleSheet(), ScreenEval());
     default_print_style_->AddRulesFromSheet(MediaControlsStyleSheet(),
                                             PrintEval());
@@ -173,6 +173,11 @@ bool CSSDefaultStyleSheets::EnsureDefaultStyleSheetsForElement(
 
   DCHECK(!default_style_->Features().HasIdsInSelectors());
   return changed_default_style;
+}
+
+void CSSDefaultStyleSheets::SetMediaControlsStyleSheetLoader(
+    Member<UAStyleSheetLoader> loader) {
+  media_controls_style_sheet_loader_.Swap(loader);
 }
 
 void CSSDefaultStyleSheets::EnsureDefaultStyleSheetForFullscreen() {
@@ -201,6 +206,7 @@ DEFINE_TRACE(CSSDefaultStyleSheets) {
   visitor->Trace(mathml_style_sheet_);
   visitor->Trace(media_controls_style_sheet_);
   visitor->Trace(fullscreen_style_sheet_);
+  visitor->Trace(media_controls_style_sheet_loader_);
 }
 
 }  // namespace blink
