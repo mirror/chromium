@@ -45,6 +45,7 @@ namespace blink {
 
 class DocumentMarkerList;
 class Node;
+class SuggestionMarkerProperties;
 
 class CORE_EXPORT DocumentMarkerController final
     : public GarbageCollected<DocumentMarkerController>,
@@ -70,11 +71,7 @@ class CORE_EXPORT DocumentMarkerController final
                                  StyleableMarker::Thickness,
                                  Color background_color);
   void AddSuggestionMarker(const EphemeralRange&,
-                           const Vector<String>& suggestions,
-                           Color suggestion_highlight_color,
-                           Color underline_color,
-                           StyleableMarker::Thickness,
-                           Color background_color);
+                           const SuggestionMarkerProperties&);
 
   void MoveMarkers(Node* src_node, int length, Node* dst_node);
 
@@ -85,7 +82,6 @@ class CORE_EXPORT DocumentMarkerController final
       Node*,
       DocumentMarker::MarkerTypes = DocumentMarker::AllMarkers());
   void RemoveSpellingMarkersUnderWords(const Vector<String>& words);
-  void RemoveSuggestionMarkerByTag(const Node*, int32_t marker_tag);
   void RepaintMarkers(
       DocumentMarker::MarkerTypes = DocumentMarker::AllMarkers());
   // Returns true if markers within a range are found.
