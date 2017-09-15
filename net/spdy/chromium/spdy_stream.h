@@ -166,9 +166,10 @@ class NET_EXPORT_PRIVATE SpdyStream {
   // send window size to go negative, it must not cause it to wrap
   // around in either direction. Does nothing if the stream is already
   // closed.
-  //
-  // If stream flow control is turned off, this must not be called.
-  void AdjustSendWindowSize(int32_t delta_window_size);
+  // Returns true if successful.  Returns false if |send_window_size_|
+  // would exceed 2^31-1 after the update, see RFC7540 Section 6.9.2.
+  // Note that |send_window_size_| should not possibly underflow.
+  bool AdjustSendWindowSize(int32_t delta_window_size);
 
   // Called when bytes are consumed from a SpdyBuffer for a DATA frame
   // that is to be written or is being written. Increases the send
