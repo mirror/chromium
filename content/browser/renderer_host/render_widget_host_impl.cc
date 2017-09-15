@@ -1577,6 +1577,12 @@ void RenderWidgetHostImpl::NotifyScreenInfoChanged() {
   }
 }
 
+void RenderWidgetHostImpl::GetSnapshotFromBrowserForTests(
+    const GetSnapshotFromBrowserCallback& callback,
+    bool from_surface) {
+  GetSnapshotFromBrowser(callback, from_surface);
+}
+
 void RenderWidgetHostImpl::GetSnapshotFromBrowser(
     const GetSnapshotFromBrowserCallback& callback,
     bool from_surface) {
