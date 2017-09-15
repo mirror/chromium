@@ -155,6 +155,11 @@ class GFX_EXPORT Canvas {
   // native scale.
   float UndoDeviceScaleFactor();
 
+  // Forces the canvas image scale factor to a particular value.  This lets a
+  // caller working at native scale to influence methods that depend on image
+  // scale.
+  void OverrideDeviceScaleFactor(float scale_factor);
+
   // Saves a copy of the drawing state onto a stack, operating on this copy
   // until a balanced call to Restore() is made.
   void Save();

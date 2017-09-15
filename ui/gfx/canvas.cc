@@ -138,6 +138,12 @@ float Canvas::UndoDeviceScaleFactor() {
   return image_scale_;
 }
 
+void Canvas::OverrideDeviceScaleFactor(float scale_factor) {
+  SkScalar scale_change = scale_factor / image_scale_;
+  canvas_->scale(scale_change, scale_change);
+  image_scale_ = scale_factor;
+}
+
 void Canvas::Save() {
   canvas_->save();
 }

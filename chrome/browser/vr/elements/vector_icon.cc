@@ -14,10 +14,20 @@ void DrawVectorIcon(gfx::Canvas* canvas,
                     float size_px,
                     const gfx::PointF& corner,
                     SkColor color) {
-  // TODO(cjgrant): Use CreateVectorIcon() when threading issues are resolved.
   canvas->Save();
   canvas->Translate({corner.x(), corner.y()});
-  PaintVectorIcon(canvas, icon, size_px, color);
+
+  // The vector icon system selects 1X icons (icons optimized for 16x16 pixels)
+  // or non-1X icons based on device scale factor. VR texture rendering does not
+  // concern itself with device scale factor, it just draws at native
+  // resolution. So, to ensure that we don't use a 1X icon unless, by luck, we
+  // want to draw an icon that is exactly 16x16, we scale our icon here by using
+  // device scale factor rather than canvas scale.
+  float scale = size_px / GetDefaultSizeOfVectorIcon(icon);
+  canvas->OverrideDeviceScaleFactor(scale);
+  PaintVectorIcon(canvas, icon, color);
+  canvas->OverrideDeviceScaleFactor(1.0);
+
   canvas->Restore();
 }
 

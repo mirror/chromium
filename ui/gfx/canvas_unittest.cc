@@ -85,4 +85,18 @@ TEST_F(CanvasTest, MAYBE_StringSizeWithLineHeight) {
   EXPECT_EQ(3 * 1000 + one_line_size.height(), four_line_size.height());
 }
 
+TEST_F(CanvasTest, OverrideDeviceScaleFactor) {
+  Canvas canvas(gfx::Size(100, 100), 3.0, true);
+  canvas.OverrideDeviceScaleFactor(6.0);
+  EXPECT_FLOAT_EQ(6.0, canvas.image_scale());
+  EXPECT_FLOAT_EQ(6.0, canvas.sk_canvas()->getTotalMatrix().getScaleX());
+  EXPECT_FLOAT_EQ(6.0, canvas.sk_canvas()->getTotalMatrix().getScaleY());
+  canvas.Scale(2.0, 2.0);
+  EXPECT_FLOAT_EQ(6.0, canvas.image_scale());
+  EXPECT_FLOAT_EQ(12.0, canvas.sk_canvas()->getTotalMatrix().getScaleX());
+  canvas.OverrideDeviceScaleFactor(3.0);
+  EXPECT_FLOAT_EQ(3.0, canvas.image_scale());
+  EXPECT_FLOAT_EQ(6.0, canvas.sk_canvas()->getTotalMatrix().getScaleX());
+}
+
 }  // namespace gfx
