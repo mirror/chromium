@@ -68,6 +68,24 @@
       "revId": "a0961f6e0cd21e3151d464af68e4a38d90a2a855",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbdbdc66_f7857c93",
+        "filename": "chrome/browser/ui/webui/settings/appearance_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-15T00:24:36Z",
+      "side": 1,
+      "message": "You\u0027ll want to check with someone more familiar with the feature.",
+      "parentUuid": "0568d2ec_c0b2104e",
+      "revId": "a0961f6e0cd21e3151d464af68e4a38d90a2a855",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
