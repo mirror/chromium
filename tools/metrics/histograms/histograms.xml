@@ -47875,16 +47875,32 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="NewTabPage.LogoClick" enum="NewTabPageLogoClick">
-  <owner>ianwen@chromium.org</owner>
+  <owner>treib@chromium.org</owner>
   <summary>
-    Histogram tracking how many users click on the static logo or animated logo
-    on NTP. Android and iOS only.
+    The number of clicks on the static logo, call-to-action logo, or animated
+    logo on the NTP. Android and iOS only.
+  </summary>
+</histogram>
+
+<histogram name="NewTabPage.LogoClickCTAID">
+  <owner>treib@chromium.org</owner>
+  <summary>
+    The IDs of call-to-action logos on the NTP that were clicked on by the user,
+    to reveal the animated logo. Android only.
+  </summary>
+</histogram>
+
+<histogram name="NewTabPage.LogoClickID">
+  <owner>treib@chromium.org</owner>
+  <summary>
+    The IDs of static or animated logos on the NTP that were clicked on by the
+    user, to navigate to the clickthrough URL. Android only.
   </summary>
 </histogram>
 
 <histogram name="NewTabPage.LogoDownloadOutcome"
     enum="NewTabPageLogoDownloadOutcome">
-  <owner>ianwen@chromium.org</owner>
+  <owner>treib@chromium.org</owner>
   <summary>
     Outcome of downloading search provider's logos. It measures whether
     download/parsing is successful, revalidation and parsing work properly, etc.
@@ -47893,7 +47909,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="NewTabPage.LogoDownloadTime" units="ms">
-  <owner>ianwen@chromium.org</owner>
+  <owner>treib@chromium.org</owner>
   <summary>
     The amount of time it took to download the static logo. This includes
     requests where there was no logo, or where an existing logo was revalidated
@@ -47916,6 +47932,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     The number of static logos and animated logos shown to users. Note that this
     is recorded both for logos from the cache and for fresh (or revalidated)
     logos, so it can be recorded twice per NTP impression. Android and iOS only.
+  </summary>
+</histogram>
+
+<histogram name="NewTabPage.LogoShownID">
+  <owner>treib@chromium.org</owner>
+  <summary>
+    The IDs of static logos and animated logos shown to users. Note that this is
+    recorded both for logos from the cache and for fresh (or revalidated) logos,
+    so it can be recorded twice per NTP impression. Android only.
   </summary>
 </histogram>
 
@@ -98402,6 +98427,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <suffix name="FromCache" label="Logo from cache."/>
   <suffix name="Fresh" label="Fresh logo from network."/>
   <affected-histogram name="NewTabPage.LogoShown"/>
+  <affected-histogram name="NewTabPage.LogoShownID"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="NewTabPageProviders" separator=".">
