@@ -140,9 +140,7 @@ Response* Response::Create(ScriptState* script_state,
 
   BodyStreamBuffer* body_buffer = nullptr;
   String content_type;
-  if (body_value.IsUndefined() || body_value.IsNull()) {
-    // Note: The IDL processor cannot handle this situation. See
-    // https://crbug.com/335871.
+  if (body_value.IsNull()) {
   } else if (V8Blob::hasInstance(body, isolate)) {
     Blob* blob = V8Blob::ToImpl(body.As<v8::Object>());
     body_buffer = new BodyStreamBuffer(
