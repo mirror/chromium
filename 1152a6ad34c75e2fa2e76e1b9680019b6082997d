@@ -246,6 +246,24 @@
       "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85c817ce_79a6beb2",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1222289
+      },
+      "writtenOn": "2017-09-15T00:52:19Z",
+      "side": 1,
+      "message": "My bad, that was unclear. What I mean is that this change applies ThinLTO on Windows in the same places as the MSVC PGO configuration we have applies its optimizations. As opposed to applying it in the same places where we apply LTO or ThinLTO for Linux builds.\n\nAt some point, we will have to decide whether we should apply ThinLTO on Windows in the same places that the MSVC PGO configuration optimizes (using PGO and LTO), in the same places that we do ThinLTO for Linux, or even something else entirely.\n\nWhat I am proposing is holding off on the decision for how to simplify the code until after we\u0027ve decided what parts of the code ThinLTO on Windows should apply to, and making the decision about where to apply it after we\u0027ve gathered some data from ThinLTO builds on Windows. In other words, small change to get the bot running, gather some data, then make more changes once we know more.",
+      "parentUuid": "4661ef8f_04d0bb27",
+      "revId": "1152a6ad34c75e2fa2e76e1b9680019b6082997d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
