@@ -304,7 +304,15 @@ void BreakingNewsGCMAppHandler::OnMessage(const std::string& app_id,
   DCHECK_EQ(app_id, kBreakingNewsGCMAppID);
 
   gcm::MessageData::const_iterator it = message.data.find(kPushedNewsKey);
-  if (it != message.data.end()) {
+  bool contains_pushed_news = (it != message.data.end());
+  metrics::OnMessageReceived(IsListening(), contains_pushed_news);
+
+  if (!IsListening()) {
+    DLOG(WARNING) << "Received a pushed messaged while not listening.";
+    return;
+  }
+
+  if (contains_pushed_news) {
     const std::string& news = it->second;
     parse_json_callback_.Run(
         news,
@@ -316,8 +324,6 @@ void BreakingNewsGCMAppHandler::OnMessage(const std::string& app_id,
     LOG(WARNING)
         << "Receiving pushed content failure: Breaking News ID missing.";
   }
-
-  metrics::OnMessageReceived(/*contains_pushed_news=*/it != message.data.end());
 }
 
 void BreakingNewsGCMAppHandler::OnMessagesDeleted(const std::string& app_id) {
@@ -363,6 +369,11 @@ void BreakingNewsGCMAppHandler::ClearProfilePrefs(PrefService* pref_service) {
 void BreakingNewsGCMAppHandler::OnJsonSuccess(
     std::unique_ptr<base::Value> content) {
   DCHECK(content);
+
+  if (!IsListening()) {
+    return;
+  }
+
   std::vector<FetchedCategory> fetched_categories;
   if (!JsonToCategories(*content, &fetched_categories,
                         /*fetch_time=*/base::Time::Now())) {
