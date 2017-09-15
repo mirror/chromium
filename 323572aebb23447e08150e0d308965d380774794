@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2db09579_b5dae4f6",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-15T21:34:05Z",
+      "side": 1,
+      "message": "I imagine that an actual back key keyboard event should also cancel overview. Keep the overview logic in the window selector controller (or wherever), not spread out into a special case for the shelf back button.",
+      "parentUuid": "b778cb2a_16dc3bb9",
+      "revId": "323572aebb23447e08150e0d308965d380774794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec628e90_13c975d1",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 1
