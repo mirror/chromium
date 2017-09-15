@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b3b9e22_0ef1471e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-15T19:57:02Z",
+      "side": 1,
+      "message": "Please start the commit message with one short line (\u003c72 characters) followed by two line breaks. The first line is used as the subject in git log formats and the title in Gerrit.",
+      "revId": "2529c7ce1d21858675008b7e7a5af0e8ca45a0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21cf4b43_a4739ae5",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1113,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-15T19:57:02Z",
+      "side": 1,
+      "message": "The hyphen here is sketchy. Who will be approving the final strings?",
+      "range": {
+        "startLine": 1113,
+        "startChar": 0,
+        "endLine": 1113,
+        "endChar": 64
+      },
+      "revId": "2529c7ce1d21858675008b7e7a5af0e8ca45a0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02434d25_bcc40985",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-15T19:57:02Z",
+      "side": 1,
+      "message": "make this an enum corresponding to PrinterSetupResult. example: https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/people_page/fingerprint_browser_proxy.js?type\u003dcs\u0026q\u003d@enum%5Cs%7Bnumber+file:settings\u0026sq\u003dpackage:chromium\u0026l\u003d8",
+      "range": {
+        "startLine": 98,
+        "startChar": 21,
+        "endLine": 98,
+        "endChar": 32
+      },
+      "revId": "2529c7ce1d21858675008b7e7a5af0e8ca45a0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53eb5f7_b87c7c12",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-15T19:57:02Z",
+      "side": 1,
+      "message": "prefer \u003d\u003d over \u003d\u003d\u003d. (if the type might not be {number}, indicate that in the @param and include code to check it.)",
+      "range": {
+        "startLine": 103,
+        "startChar": 20,
+        "endLine": 103,
+        "endChar": 23
+      },
+      "revId": "2529c7ce1d21858675008b7e7a5af0e8ca45a0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec5d1f00_e0b7ba64",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-15T19:57:02Z",
+      "side": 1,
+      "message": "Using the @enum will make these cases self-documenting :-)",
+      "range": {
+        "startLine": 114,
+        "startChar": 10,
+        "endLine": 114,
+        "endChar": 44
+      },
+      "revId": "2529c7ce1d21858675008b7e7a5af0e8ca45a0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae6b6dd_b0ac4309",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-15T19:57:02Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 147,
+        "endChar": 16
+      },
+      "revId": "2529c7ce1d21858675008b7e7a5af0e8ca45a0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68197179_b0348f7f",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-15T19:57:02Z",
+      "side": 1,
+      "message": "Looks like dropping the call to OnAddedPrinterCommon() skips recording the two UMA histograms that were being made before. Is that desired?",
+      "range": {
+        "startLine": 507,
+        "startChar": 0,
+        "endLine": 507,
+        "endChar": 52
+      },
+      "revId": "2529c7ce1d21858675008b7e7a5af0e8ca45a0cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
