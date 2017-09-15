@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "c72cccab_315caaf5",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-15T18:57:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "862cee7e_5f985830",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99316649_4e4e3284",
         "filename": "cc/paint/discardable_image_map_unittest.cc",
         "patchSetId": 18
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "The metadata should be tested by the current expectations. I added some more to ensure that the frame index matches. FWIW, the frame_index being copied here will never be used, we always override it at playback time.",
       "parentUuid": "99316649_4e4e3284",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd157032_66b12bb1",
+        "filename": "cc/paint/discardable_image_map_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-15T18:57:20Z",
+      "side": 1,
+      "message": "If it is always overwritten, what is the point of passing it?",
+      "parentUuid": "32d29a55_43bc04f1",
       "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -209,6 +245,24 @@
       "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ac7065c_8eed6289",
+        "filename": "cc/paint/paint_image_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-15T18:57:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a08d0f0a_9821113c",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -387,6 +441,24 @@
     },
     {
       "key": {
+        "uuid": "14a12313_9c1302cb",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-15T18:57:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "89b16424_73b15616",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b51d2a23_f34f940f",
         "filename": "cc/trees/image_animation_controller.h",
         "patchSetId": 18
@@ -486,6 +558,24 @@
       "side": 1,
       "message": "Done. I think it should be animations\u0027 (http://www.grammarbook.com/punctuation/apostro.asp, rule 2a. :P)",
       "parentUuid": "40babdc0_a1abbe28",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6000ca1_c43198e8",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-15T18:57:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6440d897_e4cb5e3f",
       "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -597,6 +687,24 @@
     },
     {
       "key": {
+        "uuid": "acd3026a_06484ca2",
+        "filename": "third_party/WebKit/Source/platform/exported/WebRuntimeFeatures.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-15T18:57:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9be01c83_f0092204",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a7263e9_b53e2d98",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 18
@@ -632,6 +740,24 @@
     },
     {
       "key": {
+        "uuid": "c344b6bf_8c2d71b2",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-15T18:57:20Z",
+      "side": 1,
+      "message": "Not sure what \"frame being painted was fully received means\", could you explain?\n\nAlso, the \"all_data_received !\u003d all_data_received_\" conditional is a different bugfix than\nthe core purpose of this CL, correct? If so can it be a separate CL?",
+      "parentUuid": "01bdad14_187b8fd0",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d61398d6_01acff3e",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 18
@@ -661,6 +787,24 @@
       "side": 1,
       "message": "That change is throughout this class, but I think that\u0027s the intended behaviour. The code in here assumes that the repetition count will be known once it has reached the last frame, when it is actually known once the complete image has been loaded. The DeferredImageDecoder in fact locks the value once we have all the data (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/graphics/DeferredImageDecoder.cpp?sq\u003dpackage:chromium\u0026l\u003d312). I don\u0027t think we mean to use an incorrect value here if the correct value is known.",
       "parentUuid": "d61398d6_01acff3e",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9a54403_1d2be483",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-15T18:57:20Z",
+      "side": 1,
+      "message": "Ok..same comment here about breaking out into a different CL. Also, is this change/corner\ncase difference unittested?",
+      "parentUuid": "a5c1a97d_29c39186",
       "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -749,6 +893,23 @@
     },
     {
       "key": {
+        "uuid": "d810fc97_01226a8c",
+        "filename": "third_party/WebKit/Source/platform/graphics/DeferredImageDecoder.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-15T18:57:20Z",
+      "side": 1,
+      "message": "What if there is no meatadata_decoder_? Will the \"annoying ads\" workaround stop working?",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dd3b3a0_51f9247d",
         "filename": "third_party/WebKit/Source/platform/graphics/Image.cpp",
         "patchSetId": 18
@@ -778,6 +939,24 @@
       "side": 1,
       "message": "I kept the behaviour as-is for other image subclasses when fixing the completion state bug(None of them mark their frames complete in CurrentFrameIsComplete, except StaticBitmapImage). I\u0027ll take up fixing rest of the cases in a follow-up.",
       "parentUuid": "9dd3b3a0_51f9247d",
+      "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5948e1c2_029f29d8",
+        "filename": "third_party/WebKit/Source/platform/graphics/Image.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-15T18:57:20Z",
+      "side": 1,
+      "message": "Sounds like this is part of the BitmapImage bugfix for completion state?",
+      "parentUuid": "ed699450_faa3e446",
       "revId": "3cb30ca6cb3e2fa7e0e77a896e264026d4e52a6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
