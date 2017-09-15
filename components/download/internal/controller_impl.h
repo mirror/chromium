@@ -16,6 +16,7 @@
 #include "components/download/internal/controller.h"
 #include "components/download/internal/download_driver.h"
 #include "components/download/internal/entry.h"
+#include "components/download/internal/log_source.h"
 #include "components/download/internal/model.h"
 #include "components/download/internal/scheduler/device_status_listener.h"
 #include "components/download/internal/startup_status.h"
@@ -29,6 +30,7 @@ namespace download {
 class ClientSet;
 class DownloadDriver;
 class FileMonitor;
+class LogSink;
 class Model;
 class NavigationMonitor;
 class Scheduler;
@@ -41,11 +43,14 @@ struct SchedulingParams;
 // lifting for the DownloadService.
 class ControllerImpl : public Controller,
                        public DownloadDriver::Client,
-                       public Model::Client,
-                       public DeviceStatusListener::Observer {
+                       public DeviceStatusListener::Observer,
+                       public LogSource,
+                       public Model::Client {
  public:
-  // |config| is externally owned and must be guaranteed to outlive this class.
+  // |config| and |log_sink| are externally owned and must be guaranteed to
+  // outlive this class.
   ControllerImpl(Configuration* config,
+                 LogSink* log_sink,
                  std::unique_ptr<ClientSet> clients,
                  std::unique_ptr<DownloadDriver> driver,
                  std::unique_ptr<Model> model,
@@ -93,6 +98,10 @@ class ControllerImpl : public Controller,
   void OnItemRemoved(bool success,
                      DownloadClient client,
                      const std::string& guid) override;
+
+  // LogSource implementation.
+  Controller::State GetControllerState() override;
+  const StartupStatus& GetStartupStatus() override;
 
   // Called when the file monitor and download file directory are initialized.
   void OnFileMonitorReady(bool success);
@@ -203,6 +212,7 @@ class ControllerImpl : public Controller,
   void KillTimedOutDownloads();
 
   Configuration* config_;
+  LogSink* log_sink_;
 
   // The directory in which the downloaded files are stored.
   const base::FilePath download_file_dir_;
