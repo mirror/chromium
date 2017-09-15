@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "7c867509_67dd23a7",
+        "filename": "third_party/zlib/adler32.c",
+        "patchSetId": 26
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-15T17:53:00Z",
+      "side": 1,
+      "message": "The main issue I see is that the unit tests would be calling into the SIMD implementation directly.\n\nIn this scenario, if we have:\nadler \u003d adler32_z(0, NULL, 0);\nsimd \u003d adler32_simd(0, NULL, 0);\n\nIt would produce conflicting checksums. \n\nIn any case, it is always a good practice to test for the parameters received inside of your implementation.",
+      "parentUuid": "b65cd438_89429c93",
+      "revId": "dd4d156d3a2dc62a0ab96691a7302b4717c4158b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "342715b2_7a50ba51",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 26
@@ -119,6 +137,24 @@
       "side": 1,
       "message": "Yes, x86_check_features() provide by Intel has a stub implementation that does nothing on other ports (aka platforms, eg., MIPS, ARM NEON, etc) in my understanding of it.\n\nSince that stub works everywhere (and only does real something real on the INTEL port), it doesn\u0027t need a #ifdef guard.\n\nc.f. the same line of code in deflate.c, which has been in use for some time.  It has no #ifdef guards either.",
       "parentUuid": "56578679_2f664576",
+      "revId": "dd4d156d3a2dc62a0ab96691a7302b4717c4158b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0bfb04a6_6c1551ed",
+        "filename": "third_party/zlib/inflate.c",
+        "patchSetId": 26
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-15T17:53:00Z",
+      "side": 1,
+      "message": "The stub implies in a function call?",
+      "parentUuid": "a82a0394_61564c52",
       "revId": "dd4d156d3a2dc62a0ab96691a7302b4717c4158b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
