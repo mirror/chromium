@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79627f0c_91c26d95",
+        "filename": "ios/chrome/browser/ui/main/main_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-09-15T03:31:21Z",
+      "side": 0,
+      "message": "If you start chrome in a phone call, self.window.bounds stomps on the 20 pixel inset UIKit\napplies.  I\u0027m not sure why this is needed at all.",
+      "revId": "35daf1daab84886dbfb7154287d1835a32ed4a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
