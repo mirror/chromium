@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44b87ba6_256759ae",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2233,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-15T08:58:48Z",
+      "side": 1,
+      "message": "I think we can address the TODO now, as I don\u0027t think it\u0027ll be  too complex.",
+      "revId": "1420b304e6b8d258f6bf2930352370ca819f6562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebba5214_7200c341",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-15T08:58:48Z",
+      "side": 1,
+      "message": "I think we can define a more general API here, returning the StyleContentAlignmentData structure, which holds all the Content Alignment information (distribution, position and overflow). We can later call the different getters depending on demand. This is the pattern we are using for Self and Default Alignment properties.\n\nThis change would require to implement new functions in ComputedStyle, but it\u0027d not be complex at all.\n\nAdditionally, I\u0027d move the declaration of this function closer to the ones we have for Self and Default Alignment properties.",
+      "revId": "1420b304e6b8d258f6bf2930352370ca819f6562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
