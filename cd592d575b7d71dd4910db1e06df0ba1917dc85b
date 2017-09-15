@@ -1,0 +1,180 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf373853_0356e908",
+        "filename": "testing/buildbot/chromium.perf.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-15T17:30:28Z",
+      "side": 1,
+      "message": "isn\u0027t this supposed to be the last step to go in?  ie the json is what is actually going to trigger the tests correct?  \n\nI guess all this will do is turn this one bot on the FYI waterfall red, correct?  No one else is currently using this bot right?  (I am just trying to make sure there is no harm in checking in this json before the rest of the one buildbot step work is done which I don\u0027t believe there is)",
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687831d7_a21d5231",
+        "filename": "testing/buildbot/chromium.perf.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-15T17:30:28Z",
+      "side": 1,
+      "message": "so this is the device currently on our fyi waterfall that we are targeting for our migrated one buildbot step?  \n\nWho currently owns this bot? Are they aware that we are re-purposing it for our new recipe?",
+      "range": {
+        "startLine": 61,
+        "startChar": 19,
+        "endLine": 61,
+        "endChar": 21
+      },
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b77268_c239dd62",
+        "filename": "testing/buildbot/chromium.perf.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-15T17:30:28Z",
+      "side": 1,
+      "message": "doesn\u0027t this need to match telemetry_perf_tests_new?",
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81d213aa_efa8cac7",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 945,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-15T17:30:28Z",
+      "side": 1,
+      "message": "telemetry_perf_tests_new?",
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e112d0fa_aecdad4b",
+        "filename": "testing/scripts/run_telemetry_benchmark_as_googletest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-15T17:30:28Z",
+      "side": 1,
+      "message": "I like this reuse, good call.",
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e01c552_8e49d3f6",
+        "filename": "testing/scripts/run_telemetry_benchmarks_as_googletest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-15T17:30:28Z",
+      "side": 1,
+      "message": "please rename this file to something else.  It is too easy to miss the extra \u0027s\u0027.",
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33e769e6_c23f964c",
+        "filename": "testing/scripts/run_telemetry_benchmarks_as_googletest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-15T17:30:28Z",
+      "side": 1,
+      "message": "This comment is copy paste from its sister file.  Can you re-work this to reference the parent instead and tell how this script is actually different?",
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a7bfe0_a9f80f8d",
+        "filename": "testing/scripts/run_telemetry_benchmarks_as_googletest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-15T17:30:28Z",
+      "side": 1,
+      "message": "above here these are copy/paste, do you think we should try and combine the scripts?  or do oyu think they should be separate files and just deprecate the other?  If we go the two separate files route, please add a note to the other to say deprecated in one buildbot step efforts and reference bug.",
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8628deb3_157e2ba6",
+        "filename": "testing/scripts/run_telemetry_benchmarks_as_googletest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-15T17:30:28Z",
+      "side": 1,
+      "message": "how are you distinguishing here if it is chartjson, histogram or c++?",
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b03da932_55486ff5",
+        "filename": "tools/perf/chromium.perf.fyi.extras.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-15T17:30:28Z",
+      "side": 1,
+      "message": "why does this entry need to be in both chromium.perf.fyi,extras.json and chromium.perf.fyi.json?  They are the exact same json.",
+      "revId": "cd592d575b7d71dd4910db1e06df0ba1917dc85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
