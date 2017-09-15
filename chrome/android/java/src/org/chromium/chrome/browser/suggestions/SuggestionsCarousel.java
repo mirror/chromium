@@ -11,10 +11,12 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.ViewGroup;
 import android.webkit.URLUtil;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.Callback;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.cards.ImpressionTracker;
@@ -29,6 +31,7 @@ import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 import org.chromium.ui.widget.Toast;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -61,6 +64,14 @@ public class SuggestionsCarousel extends OptionalLeaf implements ImpressionTrack
         // The impression tracker will record metrics only once per bottom sheet opened.
         mImpressionTracker = new ImpressionTracker(null, this);
 
+        // TODO(dgn): Handle this case properly. Also enable test in ContextualSuggestionsTest.
+        // We need to keep the carousel always internally visible because it is the first item in
+        // the SuggestionsRecyclerView. Otherwise, if we setVisibilityInternal() as we receive
+        // suggestions in the ContextualFetchCallback, there is a problem. When the suggestions
+        // arrive late, the SuggestionsRecyclerView has already laid out its children and will not
+        // automatically scroll up to show the carousel. (See crbug.com/758179).
+        // This way the carousel is always a child in the NewTabPageAdapter data structure but is
+        // only shown when there are suggestions.
         setVisibilityInternal(true);
     }
 
@@ -81,20 +92,21 @@ public class SuggestionsCarousel extends OptionalLeaf implements ImpressionTrack
         mWasScrolledSinceShown = false;
 
         // Do nothing if there are already suggestions in the carousel for the new context.
-        if (UrlUtilities.urlsMatchIgnoringFragments(newUrl, mCurrentContextUrl)) return;
+        if (isContextTheSame(newUrl)) return;
 
         String text = "Fetching contextual suggestions...";
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
 
-        mUiDelegate.getSuggestionsSource().fetchContextualSuggestions(
-                newUrl, (contextualSuggestions) -> {
-                    mCurrentContextUrl = newUrl;
-                    mAdapter.setSuggestions(contextualSuggestions);
+        // Context has changed, so we want to remove any old suggestions from the carousel.
+        clearSuggestions();
+        mCurrentContextUrl = newUrl;
 
-                    String toastText = String.format(Locale.US,
-                            "Fetched %d contextual suggestions.", contextualSuggestions.size());
-                    Toast.makeText(context, toastText, Toast.LENGTH_SHORT).show();
-                });
+        mUiDelegate.getSuggestionsSource().fetchContextualSuggestions(
+                newUrl, new ContextualFetchCallback(mCurrentContextUrl, context));
+    }
+
+    public boolean isContextTheSame(String newUrl) {
+        return UrlUtilities.urlsMatchIgnoringFragments(newUrl, mCurrentContextUrl);
     }
 
     @Override
@@ -188,6 +200,28 @@ public class SuggestionsCarousel extends OptionalLeaf implements ImpressionTrack
             mRecyclerView.setAdapter(null);
             mRecyclerView.clearOnScrollListeners();
             super.recycle();
+        }
+    }
+
+    private class ContextualFetchCallback implements Callback<List<SnippetArticle>> {
+        /** The url for which this callback will receive suggestions. */
+        private final String mUrl;
+        private final Context mContext;
+
+        ContextualFetchCallback(String url, Context context) {
+            mUrl = url;
+            mContext = context;
+        }
+        @Override
+        public void onResult(List<SnippetArticle> contextualSuggestions) {
+            // Avoiding double fetches causing suggestions for incorrect context.
+            if (!TextUtils.equals(mUrl, mCurrentContextUrl)) return;
+
+            mAdapter.setSuggestions(contextualSuggestions);
+
+            String toastText = String.format(
+                    Locale.US, "Fetched %d contextual suggestions.", contextualSuggestions.size());
+            Toast.makeText(mContext, toastText, Toast.LENGTH_SHORT).show();
         }
     }
 }
