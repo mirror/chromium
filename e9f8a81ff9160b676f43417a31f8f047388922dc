@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1829a50e_c8ff0557",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/lazy-loaded-style.html",
+        "patchSetId": 18
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-15T14:41:01Z",
+      "side": 1,
+      "message": "Are you sure? We want to make sure the CSS rules are present and correct and we can\u0027t do that with a -expected.html?",
+      "parentUuid": "de261c84_ecb5e793",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c4e3d59_b81c2055",
         "filename": "third_party/WebKit/Source/core/css/CSSDefaultStyleSheets.cpp",
         "patchSetId": 18
@@ -33,6 +51,24 @@
       "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d9b5b3_b1f5651e",
+        "filename": "third_party/WebKit/Source/core/css/CSSDefaultStyleSheets.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-15T14:41:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c4e3d59_b81c2055",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "77a805a0_f9740e75",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-15T14:41:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bce7659_58d15bbf",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ae0bc58_465a02bc",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
         "patchSetId": 18
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-15T13:54:24Z",
       "side": 1,
       "message": "I think you need to rebase :)",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaab6f2f_3c862f26",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-15T14:41:01Z",
+      "side": 1,
+      "message": "What do you mean? This is rebased on master.",
+      "parentUuid": "5ae0bc58_465a02bc",
       "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "59aa31dc_da16bd17",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-15T14:41:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbf54d0c_48a20f93",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "230fb4f2_74aba668",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.h",
         "patchSetId": 18
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "f68b04ca_3e7b6bc2",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsResourceLoader.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-15T14:41:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "230fb4f2_74aba668",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e276abcb_826de3fc",
         "filename": "third_party/WebKit/Source/platform/ResourceLoader.cpp",
         "patchSetId": 18
@@ -115,6 +223,24 @@
       "writtenOn": "2017-09-15T13:54:24Z",
       "side": 1,
       "message": "Double-include :)",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c53800c3_429bc3f3",
+        "filename": "third_party/WebKit/Source/platform/ResourceLoader.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-15T14:41:01Z",
+      "side": 1,
+      "message": "Are you sure? One is bundle and the other is handle.",
+      "parentUuid": "e276abcb_826de3fc",
       "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "862f89bd_bc6fa977",
+        "filename": "third_party/WebKit/Source/platform/ResourceLoader.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-15T14:41:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5267dca8_d9ad9fb0",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10384583_5f694504",
         "filename": "third_party/WebKit/Source/platform/ResourceLoader.h",
         "patchSetId": 18
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "7811ea62_9c93ae72",
+        "filename": "third_party/WebKit/Source/platform/ResourceLoader.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-15T14:41:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10384583_5f694504",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1092387d_599d9eca",
         "filename": "third_party/WebKit/Source/platform/heap/BUILD.gn",
         "patchSetId": 18
@@ -166,6 +328,24 @@
       "writtenOn": "2017-09-15T13:54:24Z",
       "side": 1,
       "message": "You don\u0027t touch platform/heap/. Why did you have to change this BUILD file?",
+      "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed95abed_f84c66a6",
+        "filename": "third_party/WebKit/Source/platform/heap/BUILD.gn",
+        "patchSetId": 18
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-09-15T14:41:01Z",
+      "side": 1,
+      "message": "This test target breaks due to a JNI issue where it can\u0027t load ui::ResourceBundle. This fixes that breakage.",
+      "parentUuid": "1092387d_599d9eca",
       "revId": "e9f8a81ff9160b676f43417a31f8f047388922dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
