@@ -49,6 +49,121 @@
     },
     {
       "key": {
+        "uuid": "72720549_6adefd88",
+        "filename": "base/win/core_winrt_util.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T13:18:03Z",
+      "side": 1,
+      "message": "I don\u0027t understand the question. __HrLoadAllImportsForDll does a few things that I think are desirable:\n- allows us to use the loader\u0027s delayload mechanisms rather than writing our own.\n- allows us to force loading at a predicable point so we can be sure it happens on a thread that can do blocking I/O.\n\nThe exception handling is one way to handle the case where the DLLs may or may not be present. If you know that you\u0027ll never call ResolveCoreWinRTDelayload on Win7, then you could remove the exception handling. If someone ever botches and calls functions when they shouldn\u0027t we\u0027ll see crashes and can fix them appropriately.",
+      "parentUuid": "3677f9fa_f55c111f",
+      "range": {
+        "startLine": 31,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 5
+      },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b550d7c2_9b6da75b",
+        "filename": "base/win/core_winrt_util.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T13:18:03Z",
+      "side": 1,
+      "message": "can this be moved to the .cc file?",
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ca24499_f4240acb",
+        "filename": "base/win/core_winrt_util_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T13:18:03Z",
+      "side": 1,
+      "message": "use \"testing/gtest/include/gtest/gtest.h\" instead of this",
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ec6882_88fff7c8",
+        "filename": "base/win/core_winrt_util_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T13:18:03Z",
+      "side": 1,
+      "message": "omit base::win::",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 17
+      },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd50ee5b_0863b761",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T13:18:03Z",
+      "side": 1,
+      "message": "nit:\n// static",
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf107b6_d77698f7",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T13:18:03Z",
+      "side": 1,
+      "message": "DCHECK(load_succeeded);\nin the body of the ctor",
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15b571b4_a7d26598",
         "filename": "base/win/scoped_hstring.cc",
         "patchSetId": 15
@@ -66,6 +181,63 @@
         "endLine": 67,
         "endChar": 19
       },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "260f63d8_c054619e",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T13:18:03Z",
+      "side": 1,
+      "message": "please avoid extra string copies with:\n  std::string result;\n  const StringPiece16 wide_string \u003d Get();\n  WideToUTF8(wide_string.c_str(), wide_string.length(), \u0026result);\n  return result;",
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "308a1442_41f93749",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T13:18:03Z",
+      "side": 1,
+      "message": "omit base:: here, too",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 12
+      },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c163f3_e8f9f232",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T13:18:03Z",
+      "side": 1,
+      "message": "please avoid the extra strlen with:\n  UINT32 length \u003d 0;\n  const wchar_t* buffer \u003d ::WindowsGetStringRawBuffer(get(), \u0026length);\n  return StringPiece16(buffer, length);",
       "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -128,6 +300,30 @@
         "startChar": 0,
         "endLine": 19,
         "endChar": 12
+      },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8428d39_b7752136",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T13:18:03Z",
+      "side": 1,
+      "message": "yes, please use struct and get rid of \"public\" on next line.",
+      "parentUuid": "3152f615_e75f89a5",
+      "range": {
+        "startLine": 19,
+        "startChar": 12,
+        "endLine": 19,
+        "endChar": 17
       },
       "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -227,6 +423,98 @@
     },
     {
       "key": {
+        "uuid": "35b1b9d6_ae2f21a8",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T13:18:03Z",
+      "side": 1,
+      "message": "StringPiece should be passed by value as per comment in base/strings/string_piece.h\n(and omit base::)",
+      "range": {
+        "startLine": 56,
+        "startChar": 42,
+        "endLine": 56,
+        "endChar": 68
+      },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2170645_65671257",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T13:18:03Z",
+      "side": 1,
+      "message": "omit base::",
+      "range": {
+        "startLine": 62,
+        "startChar": 20,
+        "endLine": 62,
+        "endChar": 26
+      },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af80c8ae_bd4b4a6e",
+        "filename": "base/win/scoped_hstring_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T13:18:03Z",
+      "side": 1,
+      "message": "omit base::win::",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 17
+      },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb9c314c_81a0b553",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T13:18:03Z",
+      "side": 1,
+      "message": "omit base::win::\n(i\u0027ll stop commenting on these, please fix \u0027em all up)",
+      "range": {
+        "startLine": 110,
+        "startChar": 6,
+        "endLine": 110,
+        "endChar": 17
+      },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92846364_416581c9",
         "filename": "base/win/win_util.cc",
         "patchSetId": 15
@@ -250,6 +538,23 @@
     },
     {
       "key": {
+        "uuid": "c44c5b71_d694c2b7",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T13:18:03Z",
+      "side": 1,
+      "message": "nit: inline these\n  return ScopedHString(result).GetAsUTF8();",
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60f089d7_8c2189b8",
         "filename": "media/midi/midi_manager_winrt.cc",
         "patchSetId": 15
@@ -261,6 +566,30 @@
       "writtenOn": "2017-09-15T11:04:39Z",
       "side": 1,
       "message": "can we have a change to add one more constructor that takes const std::string\u0026 for this use case?",
+      "range": {
+        "startLine": 487,
+        "startChar": 36,
+        "endLine": 487,
+        "endChar": 46
+      },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da474b8_68d4f16f",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-15T13:18:03Z",
+      "side": 1,
+      "message": "sure, but make it base::StringPiece rather than std::string.",
+      "parentUuid": "60f089d7_8c2189b8",
       "range": {
         "startLine": 487,
         "startChar": 36,
