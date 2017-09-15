@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "762a78fb_7fc96541",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-15T12:22:34Z",
+      "side": 1,
+      "message": "optional: Make a \"bool contains_pushed_news\" since it\u0027s checked again below?",
+      "range": {
+        "startLine": 308,
+        "startChar": 80,
+        "endLine": 308,
+        "endChar": 0
+      },
+      "revId": "91e39dbe00f3367886a545adbb60cdc682ebb876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e90c881_05db4ce8",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-15T12:22:34Z",
+      "side": 1,
+      "message": "Do we understand under what circumstances this can happen? Depending on the answer, pick one of the following:\nDCHECK(IsListening()) (if it shouldn\u0027t ever happen)\nDLOG(WARNING) (if it can happen in rare/weird circumstances)\n// This sometimes happens, but we don\u0027t know why.",
+      "revId": "91e39dbe00f3367886a545adbb60cdc682ebb876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74259607_e0975e95",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-15T12:22:34Z",
+      "side": 1,
+      "message": "Can this ever happen? Looks like that\u0027d be a bug in this class, in which case this should be a DCHECK.",
+      "range": {
+        "startLine": 372,
+        "startChar": 23,
+        "endLine": 372,
+        "endChar": 0
+      },
+      "revId": "91e39dbe00f3367886a545adbb60cdc682ebb876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
