@@ -46,6 +46,30 @@
       "revId": "45fdfdd6904ca9af645b0d40b16d5f2186c42368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d27328_b25fa74f",
+        "filename": "services/ui/ws/ids.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-15T15:44:34Z",
+      "side": 1,
+      "message": "There are only a handful of call sites that need this function. As the function is error prone I prefer nuking the function and instead having the callers inline this code.",
+      "parentUuid": "60844c9f_339ff55f",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 43
+      },
+      "revId": "45fdfdd6904ca9af645b0d40b16d5f2186c42368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
