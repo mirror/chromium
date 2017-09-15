@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c935f442_06539ca8",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-15T14:15:53Z",
+      "side": 1,
+      "message": "I am not sure we have support for modifying specific headers during redirects in the NavigationRequest. In fact, I\u0027m not sure how the net stack supports it. Yous should check with mmenke@.",
+      "revId": "92138e871da16a3a75725b7e9b79903497b71764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68dd5ea5_828c982a",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-09-15T14:15:53Z",
+      "side": 1,
+      "message": "I would prefer if this was a more general function, like GetAdditionalNavigationRequestHeaders. We would provide there the opportunity for the content/ embedder to add additional request headers, without specifying which kind of request headers it\u0027s adding. In particular, I don\u0027t think it makes sense for content/ to know about ClientHint headers.\n\nAlso, why not have the function return the headers explicitly, instead of modifying a pointer?",
+      "revId": "92138e871da16a3a75725b7e9b79903497b71764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
