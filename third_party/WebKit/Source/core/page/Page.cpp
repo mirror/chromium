@@ -708,6 +708,23 @@ void Page::RegisterPluginsChangedObserver(PluginsChangedObserver* observer) {
   plugins_changed_observers_.insert(observer);
 }
 
+ScrollbarTheme& Page::GetScrollbarTheme() const {
+  // Got ScrollbarTheme from main frame.
+  if (MainFrame() && MainFrame()->IsLocalFrame() &&
+      DeprecatedLocalMainFrame()->GetDocument() &&
+      DeprecatedLocalMainFrame()->GetDocument()->GetPage()) {
+    if (DeprecatedLocalMainFrame()->GetDocument()->GetPage() != this) {
+      return DeprecatedLocalMainFrame()
+          ->GetDocument()
+          ->GetPage()
+          ->GetScrollbarTheme();
+    }
+  }
+
+  // main frame or cannot reach main frame.
+  return ScrollbarTheme::DeprecatedStaticGetTheme();
+}
+
 Page::PageClients::PageClients()
     : chrome_client(nullptr),
       context_menu_client(nullptr),

@@ -381,6 +381,8 @@ class PLATFORM_EXPORT ScrollableArea : public GarbageCollectedMixin {
 
   virtual void ScrollbarFrameRectChanged() {}
 
+  virtual ScrollbarTheme& GetPageScrollbarTheme() const = 0;
+
  protected:
   ScrollableArea();
 
