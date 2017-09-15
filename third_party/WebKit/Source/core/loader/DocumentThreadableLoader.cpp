@@ -882,6 +882,7 @@ void DocumentThreadableLoader::HandlePreflightResponse(
 
   if (!preflight_result ||
       !preflight_result->AllowsCrossOriginMethod(
+          actual_request_.GetFetchCredentialsMode(),
           actual_request_.HttpMethod(), access_control_error_description) ||
       !preflight_result->AllowsCrossOriginHeaders(
           actual_request_.HttpHeaderFields(),
