@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "14bb0510_16ff07cb",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-15T17:05:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d859ef1_2649d76e",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 49
+      },
+      "revId": "2b4b47f1d9b4ecae45c2625030ac8cc29cff2fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fb1891b_fd00d999",
         "filename": "chrome/browser/printing/pwg_raster_converter.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-15T02:44:38Z",
       "side": 1,
       "message": "Should we add DCHECK_CURRENTLY_ON(BrowserThread::IO) here (since we no longer use OnSucceeded/OnFailed), or is it no longer needed?",
+      "range": {
+        "startLine": 245,
+        "startChar": 5,
+        "endLine": 245,
+        "endChar": 32
+      },
+      "revId": "2b4b47f1d9b4ecae45c2625030ac8cc29cff2fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0bef0e6_651e4fbd",
+        "filename": "chrome/browser/printing/pwg_raster_converter.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-15T17:05:49Z",
+      "side": 1,
+      "message": "Good idea to keep it there.",
+      "parentUuid": "7fb1891b_fd00d999",
       "range": {
         "startLine": 245,
         "startChar": 5,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c63ccb45_a04ffe3e",
+        "filename": "chrome/common/chrome_utility_printing_messages.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-15T17:05:49Z",
+      "side": 1,
+      "message": "We don\u0027t, good catch! Removed.",
+      "parentUuid": "dcf5a534_f0403f88",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 52
+      },
+      "revId": "2b4b47f1d9b4ecae45c2625030ac8cc29cff2fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d19c8cd_a4d9592a",
         "filename": "chrome/utility/chrome_content_utility_client.cc",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-15T02:44:38Z",
       "side": 1,
       "message": "Minor/optional: Should the indentation match the cases above?",
+      "range": {
+        "startLine": 311,
+        "startChar": 14,
+        "endLine": 311,
+        "endChar": 36
+      },
+      "revId": "2b4b47f1d9b4ecae45c2625030ac8cc29cff2fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e5f9c6_d71fde0b",
+        "filename": "chrome/utility/chrome_content_utility_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-15T17:05:49Z",
+      "side": 1,
+      "message": "git cl format did it for me (the base::Bind() line is too long to fit on one line).",
+      "parentUuid": "1d19c8cd_a4d9592a",
       "range": {
         "startLine": 311,
         "startChar": 14,
