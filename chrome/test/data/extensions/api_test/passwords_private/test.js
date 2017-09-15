@@ -21,7 +21,8 @@ var availableTests = [
             shown: savedPasswordsList[0].loginPair.urls.shown,
             link: savedPasswordsList[0].loginPair.urls.link,
           },
-          username: savedPasswordsList[0].loginPair.username
+          username: savedPasswordsList[0].loginPair.username,
+          index: savedPasswordsList[0].loginPair.index
         });
       } else if (numCalls == 2) {
         chrome.test.assertEq(
@@ -73,7 +74,8 @@ var availableTests = [
         shown: 'www.test.com',
         link: 'http://www.test.com',
       },
-      username: 'test@test.com'
+      username: 'test@test.com',
+      index: 0
     });
   },
 
