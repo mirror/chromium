@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "00a2794d_cfe4ab40",
+        "filename": "device/sensors/data_fetcher_shared_memory_mac.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-09-15T12:00:37Z",
+      "side": 1,
+      "message": "It probably doesn\u0027t but not entirely sure straight away. Maybe add a cast for now and a TODO to check later, it might be safer to treat as separate issue not sure if we have actual tests that can be impacted..",
+      "parentUuid": "3fdb88b4_9eb8192b",
+      "revId": "a48685381c8210f275a4dbf5437866cb154e171c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1eb5e57_06560c09",
         "filename": "device/sensors/sensor_manager_chromeos.cc",
         "patchSetId": 5
