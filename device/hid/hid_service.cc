@@ -6,6 +6,7 @@
 
 #include "base/at_exit.h"
 #include "base/bind.h"
+#include "base/lazy_instance.h"
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
@@ -24,6 +25,9 @@
 
 namespace device {
 
+base::LazyInstance<std::unique_ptr<device::HidService>>::Leaky
+    g_hid_service_for_testing = LAZY_INSTANCE_INITIALIZER;
+
 void HidService::Observer::OnDeviceAdded(
     device::mojom::HidDeviceInfoPtr device_info) {}
 
@@ -33,7 +37,13 @@ void HidService::Observer::OnDeviceRemoved(
 // static
 constexpr base::TaskTraits HidService::kBlockingTaskTraits;
 
+// static
 std::unique_ptr<HidService> HidService::Create() {
+  std::unique_ptr<device::HidService>& hid_service =
+      g_hid_service_for_testing.Get();
+  if (hid_service)
+    return std::move(hid_service);
+
 #if defined(OS_LINUX) && defined(USE_UDEV)
   return base::WrapUnique(new HidServiceLinux());
 #elif defined(OS_MACOSX)
@@ -43,6 +53,12 @@ std::unique_ptr<HidService> HidService::Create() {
 #else
   return nullptr;
 #endif
+}
+
+// static
+void HidService::SetHidServiceForTesting(
+    std::unique_ptr<device::HidService> hid_service) {
+  g_hid_service_for_testing.Get() = std::move(hid_service);
 }
 
 void HidService::GetDevices(const GetDevicesCallback& callback) {
