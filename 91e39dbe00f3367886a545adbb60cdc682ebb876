@@ -128,6 +128,30 @@
       "revId": "91e39dbe00f3367886a545adbb60cdc682ebb876",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3efc1661_8974d047",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-15T13:36:53Z",
+      "side": 1,
+      "message": "Took a closer look: StopListening is part of the public interface, so at least from the POV of this class, it can clearly happen. Since there doesn\u0027t seem to be a way to cancel the pending JSON parse, this is fine (but maybe worth a comment?)",
+      "parentUuid": "01896f1c_1644cd0c",
+      "range": {
+        "startLine": 372,
+        "startChar": 23,
+        "endLine": 372,
+        "endChar": 0
+      },
+      "revId": "91e39dbe00f3367886a545adbb60cdc682ebb876",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
