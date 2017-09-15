@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a37fb94_cb17b14d",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-15T16:45:14Z",
+      "side": 1,
+      "message": "allow_posix_link_time_opt becomes a bit of a misnomer with this now, I suppose..",
+      "range": {
+        "startLine": 511,
+        "startChar": 20,
+        "endLine": 511,
+        "endChar": 45
+      },
+      "revId": "59146afdf0035310b157fce3c8e9c4cfd89616f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
