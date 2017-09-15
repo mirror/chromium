@@ -73,6 +73,11 @@ class ExclusiveAccessContext {
 
   // Hides download shelf associated with currently active window.
   virtual void HideDownloadShelf() = 0;
+
+  virtual void StartTrackingPressAndHoldEsc(
+      const base::Closure& done_callback) = 0;
+
+  virtual void CancelTrackingPressAndHoldEsc() = 0;
 };
 
 #endif  // CHROME_BROWSER_UI_EXCLUSIVE_ACCESS_EXCLUSIVE_ACCESS_CONTEXT_H_
