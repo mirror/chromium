@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e31f517_6a4178d5",
+        "filename": "headless/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-09-15T12:47:38Z",
+      "side": 1,
+      "message": "sorry, only dependencies on content/public/*",
+      "revId": "38cdeb4f38635a7d8d91da28312049e2872539a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a43c3065_580e4492",
+        "filename": "headless/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-09-15T12:47:38Z",
+      "side": 1,
+      "message": "drive-by: I\u0027d recommend moving deps on /browser and /renderer into different subdirectories, so we don\u0027t accidentally mix them in one build target",
+      "revId": "38cdeb4f38635a7d8d91da28312049e2872539a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
