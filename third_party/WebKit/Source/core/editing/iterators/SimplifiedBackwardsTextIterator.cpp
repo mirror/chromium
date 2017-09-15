@@ -301,8 +301,12 @@ LayoutText* SimplifiedBackwardsTextIteratorAlgorithm<
   LayoutText* first_letter_layout_object =
       ToLayoutText(pseudo_element_layout_object->SlowFirstChild());
 
-  offset_ = first_letter_layout_object->CaretMaxOffset();
-  offset_ += CollapsedSpaceLength(first_letter_layout_object, offset_);
+  const int end_offset =
+      end_node_ == node_ && end_offset_ < offset_after_first_letter
+          ? end_offset_
+          : first_letter_layout_object->CaretMaxOffset();
+  offset_ =
+      end_offset + CollapsedSpaceLength(first_letter_layout_object, end_offset);
 
   return first_letter_layout_object;
 }
