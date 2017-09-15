@@ -120,6 +120,8 @@ class MoveBlinkSource(object):
                                          [self._update_basename])
         self._update_single_file_content('third_party/WebKit/Source/core/inspector/inspector_protocol_config.json',
                                          [self._update_basename])
+        self._update_single_file_content('third_party/WebKit/Source/core/probe/CoreProbes.json5',
+                                         [self._update_basename])
         self._update_single_file_content('third_party/WebKit/public/BUILD.gn',
                                          [('$root_gen_dir/third_party/WebKit',
                                            '$root_gen_dir/third_party/blink/renderer')])
@@ -310,7 +312,8 @@ class MoveBlinkSource(object):
                 _log.info('Updated %s', self._shorten_path(file_path))
 
     def _replace_include_path(self, match):
-        path = match.group(1)
+        include_or_import = match.group(1)
+        path = match.group(2)
 
         # If |path| starts with 'third_party/WebKit', we should adjust the
         # directory name for third_party/blink, and replace its basename by
@@ -328,7 +331,7 @@ class MoveBlinkSource(object):
             path = path.replace('third_party/WebKit/common', 'third_party/blink/common')
             path = path.replace('third_party/WebKit/public', 'third_party/blink/renderer/public')
             path = self._update_basename(path)
-            return '#include "%s"' % path
+            return '#%s "%s"' % (include_or_import, path)
 
         match = self._checked_in_header_re.search(path)
         if match:
@@ -340,10 +343,14 @@ class MoveBlinkSource(object):
                 path = path[:basename_start] + self._basename_map[basename]
             elif basename.startswith('V8'):
                 path = path[:basename_start] + NameStyleConverter(basename[:len(basename) - 2]).to_snake_case() + '.h'
-        return '#include "%s"' % path
+            elif path.startswith('core/layout/ng/'):
+                # Files in core/layout/ng/ are already snake_case.
+                # _checked_in_header_re doesn't match to |path|.
+                path = 'third_party/blink/renderer/' + path
+        return '#%s "%s"' % (include_or_import, path)
 
     def _update_cpp_includes(self, content):
-        pattern = re.compile(r'#include\s+"((bindings|core|modules|platform|public|' +
+        pattern = re.compile(r'#(include|import)\s+"((bindings|core|modules|platform|public|' +
                              r'third_party/WebKit/(Source|common|public))/[-_\w/.]+)"')
         return pattern.sub(self._replace_include_path, content)
 
