@@ -1,10 +1,18 @@
 {
     "dependencies": [
         "bindings",
+        "sdk",
         "workspace",
         "components"
     ],
     "extensions": [
+        {
+            "type": "setting",
+            "category": "Persistence",
+            "settingName": "persistence.enabled-file-system-paths-for-interception",
+            "settingType": "object",
+            "defaultValue": {}
+        },
         {
             "type": "view",
             "location": "settings-view",

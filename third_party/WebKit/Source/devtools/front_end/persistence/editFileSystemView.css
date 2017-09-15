@@ -12,8 +12,20 @@
     margin: 10px 0;
 }
 
+:not(.enable-serving-filesystem-files) .file-system-list {
+    display: none;
+}
+
+:not(.enable-serving-filesystem-files) .file-system-header .add-button {
+    visibility: hidden;
+}
+
 .file-system-header-text {
     flex: auto;
+}
+
+.filesystem-setting-wrapper {
+    flex: 8;
 }
 
 .add-button {
