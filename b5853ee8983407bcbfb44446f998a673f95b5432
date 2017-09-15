@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8cc8202_0d6d73bb",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-15T04:45:45Z",
+      "side": 1,
+      "message": "base::BindOnce(\u0026StopAllWorkersCallback::sendSuccess, base::RetainedRef(callback));",
+      "revId": "b5853ee8983407bcbfb44446f998a673f95b5432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
