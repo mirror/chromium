@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "7386d420_e51b1fa8",
+        "filename": "components/payments/content/BUILD.gn",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-15T17:53:57Z",
+      "side": 1,
+      "message": "MOJO is used for communication between the renderer and and the browser processes. iOS architecture, however, is single-process. Therefore, they don\u0027t use MOJO.\n\nThere\u0027s been talk about using MOJO to generate iOS JavaScript bindings, but that\u0027s far off.\n\nRe PaymentRequestEventData: You can create your own struct components/payments/core/payment_request_event_data.h similar to components/payments/core/payment_address.h and add a MOJO converter function in components/payment/content/payment_request_event_data_converter.h.",
+      "parentUuid": "0fe25511_674fbdb9",
+      "range": {
+        "startLine": 48,
+        "startChar": 5,
+        "endLine": 48,
+        "endChar": 38
+      },
+      "revId": "3b2fb63def5480540794e803be7061391255154a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8145281_fd43048f",
         "filename": "components/payments/content/manifest_verifier.cc",
         "patchSetId": 16
