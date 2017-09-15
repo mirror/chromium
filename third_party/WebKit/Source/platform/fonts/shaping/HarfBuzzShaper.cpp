@@ -204,6 +204,91 @@ inline bool ShapeRange(hb_buffer_t* buffer,
 
 }  // namespace
 
+struct HarfBuzzShaper::BufferSlice {
+  unsigned start_character_index;
+  unsigned num_characters;
+  unsigned start_glyph_index;
+  unsigned num_glyphs;
+};
+
+HarfBuzzShaper::BufferSlice HarfBuzzShaper::ComputeSlice(
+    RangeData* range_data,
+    const HolesQueueItem& current_queue_item,
+    const hb_glyph_info_t* glyph_info,
+    unsigned num_glyphs,
+    unsigned old_glyph_index,
+    unsigned new_glyph_index) const {
+  // Compute the range indices of consecutive shaped or .notdef glyphs.
+  // Cluster information for RTL runs becomes reversed, e.g. glyph 0
+  // has cluster index 5 in a run of 6 characters.
+  BufferSlice result;
+  result.start_glyph_index = old_glyph_index;
+  result.num_glyphs = new_glyph_index - old_glyph_index;
+
+  if (HB_DIRECTION_IS_FORWARD(hb_buffer_get_direction(range_data->buffer))) {
+    result.start_character_index = glyph_info[old_glyph_index].cluster;
+    if (new_glyph_index == num_glyphs) {
+      // Clamp the end offsets of the queue item to the offsets representing
+      // the shaping window.
+      unsigned shape_end =
+          std::min(range_data->end, current_queue_item.start_index_ +
+                                        current_queue_item.num_characters_);
+      result.num_characters = shape_end - result.start_character_index;
+    } else {
+      result.num_characters =
+          glyph_info[new_glyph_index].cluster - result.start_character_index;
+    }
+  } else {
+    // Direction Backwards
+    result.start_character_index = glyph_info[new_glyph_index - 1].cluster;
+    if (old_glyph_index == 0) {
+      // Clamp the end offsets of the queue item to the offsets representing
+      // the shaping window.
+      unsigned shape_end =
+          std::min(range_data->end, current_queue_item.start_index_ +
+                                        current_queue_item.num_characters_);
+      result.num_characters = shape_end - result.start_character_index;
+    } else {
+      result.num_characters = glyph_info[old_glyph_index - 1].cluster -
+                              glyph_info[new_glyph_index - 1].cluster;
+    }
+  }
+
+  return result;
+}
+
+void HarfBuzzShaper::QueueCharacters(RangeData* range_data,
+                                     const SimpleFontData* current_font,
+                                     bool& font_cycle_queued,
+                                     const BufferSlice& slice) const {
+  if (!font_cycle_queued) {
+    range_data->holes_queue.push_back(
+        HolesQueueItem(kHolesQueueNextFont, 0, 0));
+    font_cycle_queued = true;
+  }
+
+  DCHECK(slice.num_characters);
+  range_data->holes_queue.push_back(HolesQueueItem(
+      kHolesQueueRange, slice.start_character_index, slice.num_characters));
+}
+
+void HarfBuzzShaper::CommitGlyphs(RangeData* range_data,
+                                  const SimpleFontData* current_font,
+                                  UScriptCode current_run_script,
+                                  bool is_last_resort,
+                                  ShapeResult* shape_result,
+                                  const BufferSlice& slice) const {
+  hb_direction_t direction = range_data->HarfBuzzDirection(current_font);
+  // Here we need to specify glyph positions.
+  ShapeResult::RunInfo* run = new ShapeResult::RunInfo(
+      current_font, direction, ICUScriptToHBScript(current_run_script),
+      slice.start_character_index, slice.num_glyphs, slice.num_characters);
+  shape_result->InsertRun(WTF::WrapUnique(run), slice.start_glyph_index,
+                          slice.num_glyphs, range_data->buffer);
+  if (is_last_resort)
+    range_data->font->ReportNotDefGlyph();
+}
+
 void HarfBuzzShaper::ExtractShapeResults(
     RangeData* range_data,
     bool& font_cycle_queued,
@@ -223,124 +308,100 @@ void HarfBuzzShaper::ExtractShapeResults(
   hb_glyph_info_t* glyph_info =
       hb_buffer_get_glyph_infos(range_data->buffer, 0);
 
-  unsigned last_change_position = 0;
+  unsigned last_change_glyph_index = 0;
+  unsigned previous_cluster_start_glyph_index = 0;
 
   if (!num_glyphs)
     return;
 
   for (unsigned glyph_index = 0; glyph_index <= num_glyphs; ++glyph_index) {
-    // Iterating by clusters, check for when the state switches from shaped
-    // to non-shaped and vice versa. Taking into account the edge cases of
-    // beginning of the run and end of the run.
-    previous_cluster = current_cluster;
-    current_cluster = glyph_info[glyph_index].cluster;
-
+    // We proceed by full clusters and determine a shaping result - either
+    // kShaped or kNotDef for each cluster.
     if (glyph_index < num_glyphs) {
-      // Still the same cluster, merge shaping status.
-      if (previous_cluster == current_cluster && glyph_index != 0) {
-        if (glyph_info[glyph_index].codepoint == 0) {
-          current_cluster_result = kNotDef;
-        } else {
-          // We can only call the current cluster fully shapped, if
-          // all characters that are part of it are shaped, so update
-          // currentClusterResult to kShaped only if the previous
-          // characters have been shaped, too.
-          current_cluster_result =
-              current_cluster_result == kShaped ? kShaped : kNotDef;
-        }
-        continue;
-      }
-      // We've moved to a new cluster.
-      previous_cluster_result = current_cluster_result;
-      current_cluster_result =
+      ClusterResult glyph_result =
           glyph_info[glyph_index].codepoint == 0 ? kNotDef : kShaped;
-    } else {
-      // The code below operates on the "flanks"/changes between kNotDef
-      // and kShaped. In order to keep the code below from explictly
-      // dealing with character indices and run end, we explicitly
-      // terminate the cluster/run here by setting the result value to the
-      // opposite of what it was, leading to atChange turning true.
-      previous_cluster_result = current_cluster_result;
-      current_cluster_result =
-          current_cluster_result == kNotDef ? kShaped : kNotDef;
-    }
+      previous_cluster = current_cluster;
+      current_cluster = glyph_info[glyph_index].cluster;
 
-    bool at_change = (previous_cluster_result != current_cluster_result) &&
-                     previous_cluster_result != kUnknown;
-    if (!at_change)
-      continue;
+      if (current_cluster != previous_cluster) {
+        // We've arrived at a new cluster (whose shaping state we have not
+        // looked at yet). This means the cluster we just looked at is complete
+        // and we can determine whether it was fully shaped and whether that
+        // means a state change to the cluster before.
+        if ((previous_cluster_result != current_cluster_result) &&
+            previous_cluster_result != kUnknown) {
+          BufferSlice slice = ComputeSlice(
+              range_data, current_queue_item, glyph_info, num_glyphs,
+              last_change_glyph_index, previous_cluster_start_glyph_index);
+          // If the most recent cluster is shaped and there is a state change,
+          // it means the previous ones were unshaped, so we queue them, unless
+          // we're using the last resort font.
+          if (current_cluster_result == kShaped && !is_last_resort) {
+            QueueCharacters(range_data, current_font, font_cycle_queued, slice);
+          } else {
+            // If the most recent cluster is unshaped and there is a state
+            // change, it means the previous one were shaped, so we commit the
+            // glyphs. We also commit when we've reached the last resort font.
+            CommitGlyphs(range_data, current_font, current_run_script,
+                         is_last_resort, shape_result, slice);
+          }
+          last_change_glyph_index = previous_cluster_start_glyph_index;
+        }
 
-    // Compute the range indices of consecutive shaped or .notdef glyphs.
-    // Cluster information for RTL runs becomes reversed, e.g. character 0
-    // has cluster index 5 in a run of 6 characters.
-    unsigned num_characters = 0;
-    unsigned num_glyphs_to_insert = 0;
-    unsigned start_index = 0;
-    if (HB_DIRECTION_IS_FORWARD(hb_buffer_get_direction(range_data->buffer))) {
-      start_index = glyph_info[last_change_position].cluster;
-      if (glyph_index == num_glyphs) {
-        // Clamp the end offsets of the queue item to the offsets representing
-        // the shaping window.
-        unsigned shape_end =
-            std::min(range_data->end, current_queue_item.start_index_ +
-                                          current_queue_item.num_characters_);
-        num_characters = shape_end - glyph_info[last_change_position].cluster;
-        num_glyphs_to_insert = num_glyphs - last_change_position;
+        // No state change happened, continue.
+        previous_cluster_result = current_cluster_result;
+        previous_cluster_start_glyph_index = glyph_index;
+        // Reset current cluster.
+        current_cluster_result = glyph_result;
       } else {
-        num_characters = glyph_info[glyph_index].cluster -
-                         glyph_info[last_change_position].cluster;
-        num_glyphs_to_insert = glyph_index - last_change_position;
+        // Update & merge current cluster result.
+        current_cluster_result =
+            glyph_result == kShaped && (current_cluster_result == kShaped ||
+                                        current_cluster_result == kUnknown)
+                ? kShaped
+                : kNotDef;
       }
+
     } else {
-      // Direction Backwards
-      start_index = glyph_info[glyph_index - 1].cluster;
-      if (last_change_position == 0) {
-        // Clamp the end offsets of the queue item to the offsets representing
-        // the shaping window.
-        unsigned shape_end =
-            std::min(range_data->end, current_queue_item.start_index_ +
-                                          current_queue_item.num_characters_);
-        num_characters = shape_end - glyph_info[glyph_index - 1].cluster;
+      // Last cluster in the run was still different from the segment before it,
+      // we need to submit one shaped and one unshaped segment.
+      if (current_cluster_result != previous_cluster_result &&
+          previous_cluster_result != kUnknown && !is_last_resort) {
+        if (current_cluster_result == kShaped) {
+          BufferSlice slice = ComputeSlice(
+              range_data, current_queue_item, glyph_info, num_glyphs,
+              last_change_glyph_index, previous_cluster_start_glyph_index);
+          QueueCharacters(range_data, current_font, font_cycle_queued, slice);
+          slice = ComputeSlice(range_data, current_queue_item, glyph_info,
+                               num_glyphs, previous_cluster_start_glyph_index,
+                               glyph_index);
+          CommitGlyphs(range_data, current_font, current_run_script,
+                       is_last_resort, shape_result, slice);
+        } else {
+          BufferSlice slice = ComputeSlice(
+              range_data, current_queue_item, glyph_info, num_glyphs,
+              last_change_glyph_index, previous_cluster_start_glyph_index);
+          CommitGlyphs(range_data, current_font, current_run_script,
+                       is_last_resort, shape_result, slice);
+          slice = ComputeSlice(range_data, current_queue_item, glyph_info,
+                               num_glyphs, previous_cluster_start_glyph_index,
+                               glyph_index);
+          QueueCharacters(range_data, current_font, font_cycle_queued, slice);
+        }
       } else {
-        num_characters = glyph_info[last_change_position - 1].cluster -
-                         glyph_info[glyph_index - 1].cluster;
+        // There hasn't be a state change, so we can just either commit or queue
+        // what we have up until here.
+        BufferSlice slice =
+            ComputeSlice(range_data, current_queue_item, glyph_info, num_glyphs,
+                         last_change_glyph_index, glyph_index);
+        if (current_cluster_result == kNotDef && !is_last_resort) {
+          QueueCharacters(range_data, current_font, font_cycle_queued, slice);
+        } else {
+          CommitGlyphs(range_data, current_font, current_run_script,
+                       is_last_resort, shape_result, slice);
+        }
       }
-      num_glyphs_to_insert = glyph_index - last_change_position;
     }
-
-    if (current_cluster_result == kShaped && !is_last_resort) {
-      // Now it's clear that we need to continue processing.
-      if (!font_cycle_queued) {
-        range_data->holes_queue.push_back(
-            HolesQueueItem(kHolesQueueNextFont, 0, 0));
-        font_cycle_queued = true;
-      }
-
-      // Here we need to put character positions.
-      DCHECK(num_characters);
-      range_data->holes_queue.push_back(
-          HolesQueueItem(kHolesQueueRange, start_index, num_characters));
-    }
-
-    // If numCharacters is 0, that means we hit a NotDef before shaping the
-    // whole grapheme. We do not append it here. For the next glyph we
-    // encounter, atChange will be true, and the characters corresponding to
-    // the grapheme will be added to the TODO queue again, attempting to
-    // shape the whole grapheme with the next font.
-    // When we're getting here with the last resort font, we have no other
-    // choice than adding boxes to the ShapeResult.
-    if ((current_cluster_result == kNotDef && num_characters) ||
-        is_last_resort) {
-      hb_direction_t direction = range_data->HarfBuzzDirection(current_font);
-      // Here we need to specify glyph positions.
-      ShapeResult::RunInfo* run = new ShapeResult::RunInfo(
-          current_font, direction, ICUScriptToHBScript(current_run_script),
-          start_index, num_glyphs_to_insert, num_characters);
-      shape_result->InsertRun(WTF::WrapUnique(run), last_change_position,
-                              num_glyphs_to_insert, range_data->buffer);
-      range_data->font->ReportNotDefGlyph();
-    }
-    last_change_position = glyph_index;
   }
 }
 
