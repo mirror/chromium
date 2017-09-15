@@ -100,7 +100,7 @@ class VIZ_SERVICE_EXPORT SkiaRenderer : public cc::DirectRenderer {
   SkCanvas* root_canvas_ = nullptr;
   SkCanvas* current_canvas_ = nullptr;
   SkPaint current_paint_;
-  std::unique_ptr<cc::ResourceProvider::ScopedWriteLockGL>
+  std::unique_ptr<cc::ResourceProvider::ScopedLocalWriteLockGL>
       current_framebuffer_lock_;
   std::unique_ptr<cc::ResourceProvider::ScopedSkSurface>
       current_framebuffer_surface_lock_;

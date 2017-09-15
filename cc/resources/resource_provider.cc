@@ -895,6 +895,55 @@ ResourceProvider::Resource* ResourceProvider::GetResource(viz::ResourceId id) {
   return &it->second;
 }
 
+const ResourceProvider::Resource* ResourceProvider::LockForLocalRead(
+    viz::ResourceId id) {
+  Resource* resource = GetResource(id);
+  DCHECK(!resource->locked_for_write)
+      << "locked for write: " << resource->locked_for_write;
+  // Uninitialized! Call SetPixels or LockForWrite first.
+  DCHECK(resource->allocated);
+
+  resource->lock_for_read_count++;
+  return resource;
+}
+
+void ResourceProvider::UnlockForLocalRead(viz::ResourceId id) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  ResourceMap::iterator it = resources_.find(id);
+  CHECK(it != resources_.end());
+
+  Resource* resource = &it->second;
+  DCHECK_GT(resource->lock_for_read_count, 0);
+  resource->lock_for_read_count--;
+  if (resource->marked_for_deletion && !resource->lock_for_read_count) {
+    // The resource belongs to this ResourceProvider, so it can be destroyed.
+    DeleteResourceInternal(it, NORMAL);
+  }
+}
+
+ResourceProvider::ScopedLocalReadLockGL::ScopedLocalReadLockGL(
+    ResourceProvider* resource_provider,
+    viz::ResourceId resource_id)
+    : resource_provider_(resource_provider), resource_id_(resource_id) {
+  const Resource* resource = resource_provider->LockForLocalRead(resource_id);
+  texture_id_ = resource->gl_id;
+  target_ = resource->target;
+  size_ = resource->size;
+  color_space_ = resource->color_space;
+}
+
+ResourceProvider::ScopedLocalReadLockGL::~ScopedLocalReadLockGL() {
+  resource_provider_->UnlockForLocalRead(resource_id_);
+}
+
+ResourceProvider::Resource* ResourceProvider::LockForLocalWrite(
+    viz::ResourceId id) {
+  DCHECK(CanLockForLocalWrite(id));
+  Resource* resource = GetResource(id);
+  resource->locked_for_write = true;
+  return resource;
+}
+
 ResourceProvider::Resource* ResourceProvider::LockForWrite(viz::ResourceId id) {
   DCHECK(CanLockForWrite(id));
   Resource* resource = GetResource(id);
@@ -903,6 +952,12 @@ ResourceProvider::Resource* ResourceProvider::LockForWrite(viz::ResourceId id) {
   resource->locked_for_write = true;
   resource->mipmap_state = Resource::INVALID;
   return resource;
+}
+
+bool ResourceProvider::CanLockForLocalWrite(viz::ResourceId id) {
+  Resource* resource = GetResource(id);
+  return !resource->locked_for_write && !resource->lock_for_read_count &&
+         resource->origin == Resource::INTERNAL && !resource->lost;
 }
 
 bool ResourceProvider::CanLockForWrite(viz::ResourceId id) {
@@ -937,6 +992,12 @@ size_t ResourceProvider::CountPromotionHintRequestsForTesting() {
 }
 #endif
 
+void ResourceProvider::UnlockForLocalWrite(Resource* resource) {
+  DCHECK(resource->locked_for_write);
+  DCHECK(resource->origin == Resource::INTERNAL);
+  resource->locked_for_write = false;
+}
+
 void ResourceProvider::UnlockForWrite(Resource* resource) {
   DCHECK(resource->locked_for_write);
   DCHECK_EQ(resource->exported_count, 0);
@@ -948,6 +1009,111 @@ void ResourceProvider::EnableReadLockFencesForTesting(viz::ResourceId id) {
   Resource* resource = GetResource(id);
   DCHECK(resource);
   resource->read_lock_fences_enabled = true;
+}
+
+ResourceProvider::ScopedLocalWriteLockGL::ScopedLocalWriteLockGL(
+    ResourceProvider* resource_provider,
+    viz::ResourceId resource_id)
+    : resource_provider_(resource_provider), resource_id_(resource_id) {
+  Resource* resource = resource_provider->LockForLocalWrite(resource_id);
+  DCHECK(IsGpuResourceType(resource->type));
+  resource_provider->CreateTexture(resource);
+  type_ = resource->type;
+  size_ = resource->size;
+  format_ = resource->format;
+  usage_ = resource->usage;
+  color_space_ = resource_provider_->GetResourceColorSpaceForRaster(resource);
+  texture_id_ = resource->gl_id;
+  target_ = resource->target;
+  hint_ = resource->hint;
+  gpu_memory_buffer_ = std::move(resource->gpu_memory_buffer);
+  image_id_ = resource->image_id;
+  allocated_ = resource->allocated;
+}
+
+ResourceProvider::ScopedLocalWriteLockGL::~ScopedLocalWriteLockGL() {
+  Resource* resource = resource_provider_->GetResource(resource_id_);
+  DCHECK(resource->locked_for_write);
+  resource->allocated = allocated_;
+  if (gpu_memory_buffer_) {
+    resource->gpu_memory_buffer = std::move(gpu_memory_buffer_);
+    resource->allocated = true;
+    resource->is_overlay_candidate = true;
+    resource->buffer_format = resource->gpu_memory_buffer->GetFormat();
+    resource->image_id = image_id_;
+  }
+  resource_provider_->UnlockForLocalWrite(resource);
+}
+
+GLuint ResourceProvider::ScopedLocalWriteLockGL::GetTexture() {
+  LazyAllocate(resource_provider_->ContextGL(), texture_id_);
+  return texture_id_;
+}
+
+void ResourceProvider::ScopedLocalWriteLockGL::LazyAllocate(
+    gpu::gles2::GLES2Interface* gl,
+    GLuint texture_id) {
+  if (allocated_)
+    return;
+  allocated_ = true;
+  if (type_ == RESOURCE_TYPE_GPU_MEMORY_BUFFER) {
+    AllocateGpuMemoryBuffer(gl, texture_id);
+  } else {
+    AllocateTexture(gl, texture_id);
+  }
+}
+
+void ResourceProvider::ScopedLocalWriteLockGL::AllocateGpuMemoryBuffer(
+    gpu::gles2::GLES2Interface* gl,
+    GLuint texture_id) {
+  DCHECK(!gpu_memory_buffer_);
+  DCHECK(!image_id_);
+
+  gpu_memory_buffer_ =
+      resource_provider_->gpu_memory_buffer_manager()->CreateGpuMemoryBuffer(
+          size_, BufferFormat(format_), usage_, gpu::kNullSurfaceHandle);
+  // Avoid crashing in release builds if GpuMemoryBuffer allocation fails.
+  // http://crbug.com/554541
+  if (!gpu_memory_buffer_)
+    return;
+
+  if (color_space_.IsValid())
+    gpu_memory_buffer_->SetColorSpaceForScanout(color_space_);
+
+#if defined(OS_CHROMEOS) && defined(ARCH_CPU_ARM_FAMILY)
+  // TODO(reveman): This avoids a performance problem on ARM ChromeOS
+  // devices. This only works with shared memory backed buffers.
+  // crbug.com/580166
+  DCHECK_EQ(gpu_memory_buffer_->GetHandle().type, gfx::SHARED_MEMORY_BUFFER);
+#endif
+
+  image_id_ = gl->CreateImageCHROMIUM(gpu_memory_buffer_->AsClientBuffer(),
+                                      size_.width(), size_.height(),
+                                      GLInternalFormat(format_));
+  DCHECK(image_id_ || gl->GetGraphicsResetStatusKHR() != GL_NO_ERROR);
+  gl->BindTexture(target_, texture_id);
+  gl->BindTexImage2DCHROMIUM(target_, image_id_);
+}
+
+void ResourceProvider::ScopedLocalWriteLockGL::AllocateTexture(
+    gpu::gles2::GLES2Interface* gl,
+    GLuint texture_id) {
+  DCHECK(gl);
+  if (format_ == viz::ETC1)  // ETC1 does not support preallocation.
+    return;
+  gl->BindTexture(target_, texture_id);
+  const ResourceProvider::Settings& settings = resource_provider_->settings_;
+  if (settings.use_texture_storage_ext &&
+      IsFormatSupportedForStorage(format_, settings.use_texture_format_bgra) &&
+      (hint_ & ResourceProvider::TEXTURE_HINT_IMMUTABLE)) {
+    GLenum storage_format = TextureToStorageFormat(format_);
+    gl->TexStorage2DEXT(target_, 1, storage_format, size_.width(),
+                        size_.height());
+  } else {
+    gl->TexImage2D(target_, 0, GLInternalFormat(format_), size_.width(),
+                   size_.height(), 0, GLDataFormat(format_),
+                   GLDataType(format_), nullptr);
+  }
 }
 
 ResourceProvider::ScopedWriteLockGL::ScopedWriteLockGL(
