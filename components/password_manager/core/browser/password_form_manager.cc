@@ -776,9 +776,11 @@ bool PasswordFormManager::FindUsernameInOtherPossibleUsernames(
   DCHECK(!username_correction_vote_);
 
   for (const PossibleUsernamePair& pair : match.other_possible_usernames) {
+    LOG(ERROR) << "possible username " << pair.first;
     if (pair.first == username) {
       username_correction_vote_.reset(new autofill::PasswordForm(match));
       username_correction_vote_->username_element = pair.second;
+      LOG(ERROR) << "FOUND!!!";
       return true;
     }
   }
@@ -788,13 +790,18 @@ bool PasswordFormManager::FindUsernameInOtherPossibleUsernames(
 void PasswordFormManager::FindCorrectedUsernameElement(
     const base::string16& username,
     const base::string16& password) {
+  LOG(ERROR) << "FindCorrectedUsernameElement " << username << " " << password;
   for (const auto& key_value : best_matches_) {
     const PasswordForm* match = key_value.second;
+    LOG(ERROR) << "possible match " << match->username_value << " "
+               << match->password_value;
     if ((match->password_value == password) &&
         FindUsernameInOtherPossibleUsernames(*match, username))
       return;
   }
   for (const autofill::PasswordForm* match : not_best_matches_) {
+    LOG(ERROR) << "possible match (not best)" << match->username_value << " "
+               << match->password_value;
     if ((match->password_value == password) &&
         FindUsernameInOtherPossibleUsernames(*match, username))
       return;
@@ -1466,8 +1473,11 @@ metrics_util::CredentialSourceType PasswordFormManager::GetCredentialSource() {
 }
 
 void PasswordFormManager::SendVotesOnSave() {
-  if (observed_form_.IsPossibleChangePasswordFormWithoutUsername())
+  LOG(ERROR) << "SendVotesOnSave ";
+  if (observed_form_.IsPossibleChangePasswordFormWithoutUsername()) {
+    LOG(ERROR) << "return IsPossibleChangePasswordFormWithoutUsername";
     return;
+  }
 
   // Send votes for sign-in form.
   autofill::FormData& form_data = pending_credentials_.form_data;
@@ -1479,7 +1489,8 @@ void PasswordFormManager::SendVotesOnSave() {
     // to detect username autofill type.
     form_data.fields[0].value = pending_credentials_.username_value;
     SendSignInVote(form_data);
-    return;
+    LOG(ERROR) << "return SendSignInVote";
+    //    return;
   }
 
   // Upload credentials the first time they are saved. This data is used
@@ -1491,6 +1502,8 @@ void PasswordFormManager::SendVotesOnSave() {
     if (submitted_form_->does_look_like_signup_form)
       password_type = autofill::PROBABLY_ACCOUNT_CREATION_PASSWORD;
     UploadPasswordVote(pending_credentials_, password_type, std::string());
+    LOG(ERROR) << "username_correction_vote_? "
+               << (!!username_correction_vote_);
     if (username_correction_vote_) {
       UploadPasswordVote(
           *username_correction_vote_, autofill::USERNAME,

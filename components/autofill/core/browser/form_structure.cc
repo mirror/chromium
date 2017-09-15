@@ -1231,6 +1231,8 @@ void FormStructure::EncodeFormForUpload(AutofillUploadContents* upload) const {
         continue;
 
       AutofillUploadContents::Field* added_field = upload->add_field();
+      LOG(ERROR) << "autofill type of " << base::UTF16ToUTF8(field->name) << " "
+                 << field_type;
       added_field->set_autofill_type(field_type);
       if (field->generation_type()) {
         added_field->set_generation_type(field->generation_type());
