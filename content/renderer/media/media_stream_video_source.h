@@ -66,6 +66,13 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
                 const ConstraintsCallback& callback);
   void RemoveTrack(MediaStreamVideoTrack* track);
 
+  // Reconfigures |track| to use new |adapter_settings|. |track| must be
+  // connected to this MediaStreamVideoSource or to no source at all.
+  // If |track| is connected to a different source, the internal state of
+  // |track| might become inconsistent.
+  void ReconfigureTrack(MediaStreamVideoTrack* track,
+                        const VideoTrackAdapterSettings& adapter_settings);
+
   // Called by |track| to notify the source whether it has any paths to a
   // consuming endpoint.
   void UpdateHasConsumers(MediaStreamVideoTrack* track, bool has_consumers);
@@ -144,6 +151,8 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
   // to this object being deleted.
   void FinalizeAddTrack();
   void StartFrameMonitoring();
+  void UpdateTrackSettings(MediaStreamVideoTrack* track,
+                           const VideoTrackAdapterSettings& adapter_settings);
 
   State state_;
 
