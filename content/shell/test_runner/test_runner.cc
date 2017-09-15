@@ -2856,7 +2856,7 @@ void TestRunner::CheckResponseMimeType() {
 
 void TestRunner::NotifyDone() {
   if (layout_test_runtime_flags_.wait_until_done() && !topLoadingFrame() &&
-      !will_navigate_ && work_queue_.is_empty())
+      work_queue_.is_empty())
     delegate_->TestFinished();
   layout_test_runtime_flags_.set_wait_until_done(false);
   OnLayoutTestRuntimeFlagsChanged();
