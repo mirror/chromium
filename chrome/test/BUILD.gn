@@ -2998,6 +2998,16 @@ group("telemetry_perf_webview_tests") {
   ]
 }
 
+# New target for new script we're using to execute perf tests. Will replace the
+# current version, once testing has been done. See
+# //testing/buildbot/gn_isolate_map.pyl for differences.
+group("telemetry_perf_tests_new") {
+  testonly = true
+  deps = [
+    "//chrome/test:telemetry_perf_tests",
+  ]
+}
+
 group("angle_perftests") {
   testonly = true
   if (is_win || is_linux) {
