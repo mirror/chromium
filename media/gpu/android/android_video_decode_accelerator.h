@@ -54,7 +54,6 @@ class MEDIA_GPU_EXPORT AndroidVideoDecodeAccelerator
       std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser,
       const MakeGLContextCurrentCallback& make_context_current_cb,
       const GetGLES2DecoderCallback& get_gles2_decoder_cb,
-      const AndroidOverlayMojoFactoryCB& overlay_factory_cb,
       DeviceInfo* device_info);
 
   ~AndroidVideoDecodeAccelerator() override;
@@ -401,9 +400,6 @@ class MEDIA_GPU_EXPORT AndroidVideoDecodeAccelerator
   // Since overlay positioning isn't synchronous, it's good to make sure that
   // blink isn't moving the quad around too.
   int hints_until_clear_relayout_flag_ = 0;
-
-  // Optional factory to produce mojo AndroidOverlay instances.
-  AndroidOverlayMojoFactoryCB overlay_factory_cb_;
 
   std::unique_ptr<PromotionHintAggregator> promotion_hint_aggregator_;
 

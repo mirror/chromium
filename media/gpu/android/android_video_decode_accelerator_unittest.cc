@@ -121,7 +121,7 @@ class AndroidVideoDecodeAcceleratorTest : public testing::Test {
         codec_allocator_.get(), std::move(chooser_that_is_usually_null_),
         base::Bind(&MakeContextCurrent),
         base::Bind(&GetGLES2Decoder, gl_decoder_.AsWeakPtr()),
-        AndroidOverlayMojoFactoryCB(), device_info_.get());
+        device_info_.get());
     vda_.reset(avda);
     avda->force_defer_surface_creation_for_testing_ =
         force_defer_surface_creation;
@@ -137,7 +137,7 @@ class AndroidVideoDecodeAcceleratorTest : public testing::Test {
     config_.overlay_info.surface_id = 123;
     ASSERT_TRUE(InitializeAVDA());
     base::RunLoop().RunUntilIdle();
-    ASSERT_TRUE(chooser_->factory_);
+    ASSERT_TRUE(chooser_->overlay_info_.HasValidOverlay());
 
     // Have the factory provide an overlay, and verify that codec creation is
     // provided with that overlay.
@@ -160,7 +160,7 @@ class AndroidVideoDecodeAcceleratorTest : public testing::Test {
     ASSERT_TRUE(InitializeAVDA());
     base::RunLoop().RunUntilIdle();
     // We do not expect a factory, since we are using SurfaceTexture.
-    ASSERT_FALSE(chooser_->factory_);
+    ASSERT_FALSE(chooser_->overlay_info_.HasValidOverlay());
 
     // Set the expectations first, since ProvideOverlay might cause callbacks.
     EXPECT_CALL(*codec_allocator_,
@@ -500,7 +500,6 @@ TEST_F(AndroidVideoDecodeAcceleratorTest,
   InitializeAVDAWithOverlay();
 
   EXPECT_CALL(*chooser_, MockUpdateState()).Times(1);
-  EXPECT_CALL(*chooser_, MockReplaceOverlayFactory(_)).Times(0);
   OverlayInfo overlay_info = config_.overlay_info;
   avda()->SetOverlayInfo(overlay_info);
 }
@@ -526,7 +525,7 @@ TEST_F(AndroidVideoDecodeAcceleratorTest, FullscreenSignalIsSentToChooser) {
   OverlayInfo overlay_info = config_.overlay_info;
   overlay_info.is_fullscreen = !config_.overlay_info.is_fullscreen;
   avda()->SetOverlayInfo(overlay_info);
-  ASSERT_EQ(chooser_->current_state_.is_fullscreen, overlay_info.is_fullscreen);
+  ASSERT_EQ(chooser_->overlay_info_.is_fullscreen, overlay_info.is_fullscreen);
 }
 
 }  // namespace media

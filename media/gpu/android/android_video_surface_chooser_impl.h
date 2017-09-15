@@ -11,30 +11,42 @@
 #include "base/time/tick_clock.h"
 #include "base/time/time.h"
 #include "media/base/android/android_overlay.h"
+#include "media/base/android_overlay_mojo_factory.h"
+#include "media/base/overlay_info.h"
 #include "media/gpu/android/android_video_surface_chooser.h"
+#include "media/gpu/android/content_video_view_overlay.h"
 #include "media/gpu/media_gpu_export.h"
 
 namespace media {
+
+using CreateOverlayCB =
+    base::Callback<std::unique_ptr<AndroidOverlay>(const OverlayInfo&,
+                                                   AndroidOverlayConfig)>;
 
 // Implementation of AndroidVideoSurfaceChooser.
 class MEDIA_GPU_EXPORT AndroidVideoSurfaceChooserImpl
     : public AndroidVideoSurfaceChooser {
  public:
+  // Creates either an AndroidOverlayMojo or ContentVideoViewOverlay. For
+  // binding into a callback to pass to the constructor.
+  static std::unique_ptr<AndroidOverlay> CreateOverlay(
+      AndroidOverlayMojoFactoryCB android_overlay_mojo_factory_cb,
+      const OverlayInfo& overlay_info,
+      AndroidOverlayConfig config);
+
   // |allow_dynamic| should be true if and only if we are allowed to change the
   // surface selection after the initial callback.  |tick_clock|, if provided,
   // will be used as our time source.  Otherwise, we'll use wall clock.  If
   // provided, then it must outlast |this|.
   AndroidVideoSurfaceChooserImpl(bool allow_dynamic,
+                                 CreateOverlayCB create_overlay_cb,
                                  base::TickClock* tick_clock = nullptr);
   ~AndroidVideoSurfaceChooserImpl() override;
 
   // AndroidVideoSurfaceChooser
   void Initialize(UseOverlayCB use_overlay_cb,
-                  UseSurfaceTextureCB use_surface_texture_cb,
-                  AndroidOverlayFactoryCB initial_factory,
-                  const State& initial_state) override;
-  void UpdateState(base::Optional<AndroidOverlayFactoryCB> new_factory,
-                   const State& new_state) override;
+                  UseSurfaceTextureCB use_surface_texture_cb) override;
+  void UpdateState(const State& state, OverlayInfo overlay_info) override;
 
  private:
   // Choose whether we should be using a SurfaceTexture or overlay, and issue
@@ -58,12 +70,12 @@ class MEDIA_GPU_EXPORT AndroidVideoSurfaceChooserImpl
   UseOverlayCB use_overlay_cb_;
   UseSurfaceTextureCB use_surface_texture_cb_;
 
+  CreateOverlayCB create_overlay_cb_;
+
   // Current overlay that we've constructed but haven't received ready / failed
   // callbacks yet.  Will be nullptr if we haven't constructed one, or if we
   // sent it to the client already once it became ready to use.
   std::unique_ptr<AndroidOverlay> overlay_;
-
-  AndroidOverlayFactoryCB overlay_factory_;
 
   // Do we allow dynamic surface switches.  Usually this means "Are we running
   // on M or later?".
@@ -78,7 +90,11 @@ class MEDIA_GPU_EXPORT AndroidVideoSurfaceChooserImpl
   // What was the last signal that the client received?
   OverlayState client_overlay_state_ = kUnknown;
 
+  // Whether UpdateState() has been called.
+  bool first_update_received_ = false;
+
   State current_state_;
+  OverlayInfo overlay_info_;
 
   // Not owned by us.
   base::TickClock* tick_clock_;

@@ -236,7 +236,6 @@ AndroidVideoDecodeAccelerator::AndroidVideoDecodeAccelerator(
     std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser,
     const MakeGLContextCurrentCallback& make_context_current_cb,
     const GetGLES2DecoderCallback& get_gles2_decoder_cb,
-    const AndroidOverlayMojoFactoryCB& overlay_factory_cb,
     DeviceInfo* device_info)
     : client_(nullptr),
       codec_allocator_(codec_allocator),
@@ -255,7 +254,6 @@ AndroidVideoDecodeAccelerator::AndroidVideoDecodeAccelerator(
       surface_chooser_(std::move(surface_chooser)),
       device_info_(device_info),
       force_defer_surface_creation_for_testing_(false),
-      overlay_factory_cb_(overlay_factory_cb),
       promotion_hint_aggregator_(
           base::MakeUnique<PromotionHintAggregatorImpl>()),
       weak_this_factory_(this) {}
@@ -397,8 +395,6 @@ void AndroidVideoDecodeAccelerator::StartSurfaceChooser() {
     return;
   }
 
-  surface_chooser_state_.is_fullscreen = config_.overlay_info.is_fullscreen;
-
   // Handle the sync path, which must use SurfaceTexture anyway.  Note that we
   // check both |during_initialize_| and |deferred_initialization_pending_|,
   // since we might get here during deferred surface creation.  In that case,
@@ -414,23 +410,9 @@ void AndroidVideoDecodeAccelerator::StartSurfaceChooser() {
   // surface creation for other reasons, in which case the sync path with just
   // signal success optimistically.
   if (during_initialize_ && !deferred_initialization_pending_) {
-    DCHECK(!config_.overlay_info.HasValidSurfaceId());
-    DCHECK(!config_.overlay_info.HasValidRoutingToken());
+    DCHECK(!config_.overlay_info.HasValidOverlay());
     OnSurfaceTransition(nullptr);
     return;
-  }
-
-  // If we have a surface, then notify |surface_chooser_| about it.  If we were
-  // told not to use an overlay (kNoSurfaceID or a null routing token), then we
-  // leave the factory blank.
-  AndroidOverlayFactoryCB factory;
-  if (config_.overlay_info.HasValidSurfaceId()) {
-    factory = base::Bind(&ContentVideoViewOverlay::Create,
-                         config_.overlay_info.surface_id);
-  } else if (config_.overlay_info.HasValidRoutingToken() &&
-             overlay_factory_cb_) {
-    factory =
-        base::Bind(overlay_factory_cb_, *config_.overlay_info.routing_token);
   }
 
   // Notify |surface_chooser_| that we've started.  This guarantees that we'll
@@ -442,8 +424,8 @@ void AndroidVideoDecodeAccelerator::StartSurfaceChooser() {
       base::Bind(&AndroidVideoDecodeAccelerator::OnSurfaceTransition,
                  weak_this_factory_.GetWeakPtr()),
       base::Bind(&AndroidVideoDecodeAccelerator::OnSurfaceTransition,
-                 weak_this_factory_.GetWeakPtr(), nullptr),
-      std::move(factory), surface_chooser_state_);
+                 weak_this_factory_.GetWeakPtr(), nullptr));
+  surface_chooser_->UpdateState(surface_chooser_state_, config_.overlay_info);
 }
 
 void AndroidVideoDecodeAccelerator::OnSurfaceTransition(
@@ -1280,9 +1262,8 @@ void AndroidVideoDecodeAccelerator::SetOverlayInfo(
   DVLOG(1) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  // Update |config_| to contain the most recent info.  Also save a copy, so
-  // that we can check for duplicate info later.
-  OverlayInfo previous_info = config_.overlay_info;
+  bool entered_fullscreen =
+      overlay_info.is_fullscreen && !config_.overlay_info.is_fullscreen;
   config_.overlay_info = overlay_info;
 
   // It's possible that we'll receive SetSurface before initializing the surface
@@ -1298,9 +1279,7 @@ void AndroidVideoDecodeAccelerator::SetOverlayInfo(
   if (overlay_info.is_frame_hidden)
     picture_buffer_manager_.ImmediatelyForgetOverlay(output_picture_buffers_);
 
-  surface_chooser_state_.is_frame_hidden = overlay_info.is_frame_hidden;
-
-  if (overlay_info.is_fullscreen && !surface_chooser_state_.is_fullscreen) {
+  if (entered_fullscreen) {
     // It would be nice if we could just delay until we get a hint from an
     // overlay that's "in fullscreen" in the sense that the CompositorFrame it
     // came from had some flag set to indicate that the renderer was in
@@ -1312,27 +1291,7 @@ void AndroidVideoDecodeAccelerator::SetOverlayInfo(
     hints_until_clear_relayout_flag_ = kFrameDelayForFullscreenLayout;
   }
 
-  // Notify the chooser about the fullscreen state.
-  surface_chooser_state_.is_fullscreen = overlay_info.is_fullscreen;
-
-  // Note that these might be kNoSurfaceID / empty.  In that case, we will
-  // revoke the factory.
-  int32_t surface_id = overlay_info.surface_id;
-  OverlayInfo::RoutingToken routing_token = overlay_info.routing_token;
-
-  // We don't want to change the factory unless this info has actually changed.
-  // We'll get the same info many times if some other part of the config is now
-  // different, such as fullscreen state.
-  base::Optional<AndroidOverlayFactoryCB> new_factory;
-  if (surface_id != previous_info.surface_id ||
-      routing_token != previous_info.routing_token) {
-    if (routing_token && overlay_factory_cb_)
-      new_factory = base::Bind(overlay_factory_cb_, *routing_token);
-    else if (surface_id != SurfaceManager::kNoSurfaceID)
-      new_factory = base::Bind(&ContentVideoViewOverlay::Create, surface_id);
-  }
-
-  surface_chooser_->UpdateState(new_factory, surface_chooser_state_);
+  surface_chooser_->UpdateState(surface_chooser_state_, overlay_info);
 }
 
 void AndroidVideoDecodeAccelerator::Destroy() {
@@ -1624,8 +1583,7 @@ void AndroidVideoDecodeAccelerator::NotifyPromotionHint(
   }
 
   if (update_state) {
-    surface_chooser_->UpdateState(base::Optional<AndroidOverlayFactoryCB>(),
-                                  surface_chooser_state_);
+    surface_chooser_->UpdateState(surface_chooser_state_, config_.overlay_info);
   }
 }
 
@@ -1819,7 +1777,7 @@ void AndroidVideoDecodeAccelerator::CacheFrameInformation() {
   }
 
   cached_frame_information_ =
-      surface_chooser_state_.is_fullscreen
+      config_.overlay_info.is_fullscreen
           ? FrameInformation::OVERLAY_INSECURE_PLAYER_ELEMENT_FULLSCREEN
           : FrameInformation::OVERLAY_INSECURE_NON_PLAYER_ELEMENT_FULLSCREEN;
 }

@@ -12,14 +12,6 @@
 
 namespace media {
 
-// static
-std::unique_ptr<AndroidOverlay> ContentVideoViewOverlay::Create(
-    int surface_id,
-    AndroidOverlayConfig config) {
-  return base::MakeUnique<ContentVideoViewOverlay>(surface_id,
-                                                   std::move(config));
-}
-
 ContentVideoViewOverlay::ContentVideoViewOverlay(int surface_id,
                                                  AndroidOverlayConfig config)
     : surface_id_(surface_id), config_(std::move(config)), weak_factory_(this) {

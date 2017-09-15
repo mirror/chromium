@@ -10,7 +10,6 @@
 #include "base/threading/thread_checker.h"
 #include "base/timer/elapsed_timer.h"
 #include "gpu/ipc/service/gpu_command_buffer_stub.h"
-#include "media/base/android_overlay_mojo_factory.h"
 #include "media/base/overlay_info.h"
 #include "media/base/video_decoder.h"
 #include "media/gpu/android/android_video_surface_chooser.h"
@@ -162,9 +161,6 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
   // Releases |codec_| if it's not null.
   void ReleaseCodec();
 
-  // Creates an overlay factory cb based on the value of overlay_info_.
-  AndroidOverlayFactoryCB CreateOverlayFactoryCb();
-
   State state_;
 
   // Whether initialization still needs to be done on the first decode call.
@@ -217,9 +213,6 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
   // have to synchronously switch surfaces we always have one available.
   scoped_refptr<AVDASurfaceBundle> surface_texture_bundle_;
 
-  // The current overlay info, which possibly specifies an overlay to render to.
-  OverlayInfo overlay_info_;
-
   // The surface chooser we use to decide which kind of surface to configure the
   // codec with.
   std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser_;
@@ -229,9 +222,6 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder
 
   // The factory for creating VideoFrames from CodecOutputBuffers.
   std::unique_ptr<VideoFrameFactory> video_frame_factory_;
-
-  // An optional factory callback for creating mojo AndroidOverlays.
-  AndroidOverlayMojoFactoryCB overlay_factory_cb_;
 
   DeviceInfo* device_info_;
 

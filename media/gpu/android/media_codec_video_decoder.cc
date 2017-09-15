@@ -17,7 +17,6 @@
 #include "media/base/video_decoder_config.h"
 #include "media/gpu/android/android_video_surface_chooser.h"
 #include "media/gpu/android/avda_codec_allocator.h"
-#include "media/gpu/android/content_video_view_overlay.h"
 
 #if BUILDFLAG(USE_PROPRIETARY_CODECS)
 #include "media/base/android/extract_sps_and_pps.h"
@@ -118,6 +117,11 @@ MediaCodecVideoDecoder::MediaCodecVideoDecoder(
       weak_factory_(this),
       codec_allocator_weak_factory_(this) {
   DVLOG(2) << __func__;
+  surface_chooser_->Initialize(
+      base::Bind(&MediaCodecVideoDecoder::OnSurfaceChosen,
+                 weak_factory_.GetWeakPtr()),
+      base::Bind(&MediaCodecVideoDecoder::OnSurfaceChosen,
+                 weak_factory_.GetWeakPtr(), nullptr));
 }
 
 MediaCodecVideoDecoder::~MediaCodecVideoDecoder() {
@@ -204,29 +208,11 @@ void MediaCodecVideoDecoder::OnVideoFrameFactoryInitialized(
     return;
   }
   surface_texture_bundle_ = new AVDASurfaceBundle(std::move(surface_texture));
-  InitializeSurfaceChooser();
 }
 
 void MediaCodecVideoDecoder::SetOverlayInfo(const OverlayInfo& overlay_info) {
   DVLOG(2) << __func__;
-  bool overlay_changed = !overlay_info_.RefersToSameOverlayAs(overlay_info);
-  overlay_info_ = overlay_info;
-  // Only update surface chooser if it's initialized and the overlay changed.
-  if (state_ != State::kInitializing && overlay_changed)
-    surface_chooser_->UpdateState(CreateOverlayFactoryCb(), chooser_state_);
-}
-
-void MediaCodecVideoDecoder::InitializeSurfaceChooser() {
-  DVLOG(2) << __func__;
-  DCHECK_EQ(state_, State::kInitializing);
-  // Initialize |surface_chooser_| and wait for its decision. Note: the
-  // callback may be reentrant.
-  surface_chooser_->Initialize(
-      base::Bind(&MediaCodecVideoDecoder::OnSurfaceChosen,
-                 weak_factory_.GetWeakPtr()),
-      base::Bind(&MediaCodecVideoDecoder::OnSurfaceChosen,
-                 weak_factory_.GetWeakPtr(), nullptr),
-      CreateOverlayFactoryCb(), chooser_state_);
+  surface_chooser_->UpdateState(chooser_state_, overlay_info);
 }
 
 void MediaCodecVideoDecoder::OnSurfaceChosen(
@@ -618,16 +604,6 @@ void MediaCodecVideoDecoder::ReleaseCodec() {
   codec_ = nullptr;
   codec_allocator_->ReleaseMediaCodec(std::move(pair.first),
                                       std::move(pair.second));
-}
-
-AndroidOverlayFactoryCB MediaCodecVideoDecoder::CreateOverlayFactoryCb() {
-  if (overlay_info_.HasValidSurfaceId()) {
-    return base::Bind(&ContentVideoViewOverlay::Create,
-                      overlay_info_.surface_id);
-  } else if (overlay_info_.HasValidRoutingToken() && overlay_factory_cb_) {
-    return base::Bind(overlay_factory_cb_, *overlay_info_.routing_token);
-  }
-  return AndroidOverlayFactoryCB();
 }
 
 std::string MediaCodecVideoDecoder::GetDisplayName() const {

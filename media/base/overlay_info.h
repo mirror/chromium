@@ -6,7 +6,6 @@
 #define MEDIA_BASE_OVERLAY_INFO_H_
 
 #include "base/callback.h"
-#include "base/macros.h"
 #include "base/optional.h"
 #include "base/unguessable_token.h"
 #include "media/base/media_export.h"
@@ -15,16 +14,15 @@
 namespace media {
 
 struct MEDIA_EXPORT OverlayInfo {
-  // An unset routing token indicates "do not use any routing token".  A null
-  // routing token isn't serializable, else we'd probably use that instead.
+  // An unset routing token represents an invalid routing token (because empty
+  // UnguessableTokens aren't serializable).
   using RoutingToken = base::Optional<base::UnguessableToken>;
 
   OverlayInfo();
   OverlayInfo(const OverlayInfo&);
 
-  // Convenience functions to return true if and only if this specifies a
-  // surface ID / routing token that is not kNoSurfaceID / empty.  I.e., if we
-  // provide enough info to create an overlay.
+  // Whether this contains either a valid surface id or routing token.
+  bool HasValidOverlay() const;
   bool HasValidSurfaceId() const;
   bool HasValidRoutingToken() const;
 

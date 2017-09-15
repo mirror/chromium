@@ -11,6 +11,7 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "base/test/mock_callback.h"
 #include "base/test/simple_test_tick_clock.h"
 #include "media/base/android/mock_android_overlay.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -25,9 +26,8 @@ using ::testing::StrictMock;
 using ::testing::Values;
 using ::testing::_;
 
+namespace media {
 namespace {
-using ::media::AndroidOverlay;
-using ::media::MockAndroidOverlay;
 
 class MockClient {
  public:
@@ -50,6 +50,30 @@ class MockClient {
 
  private:
   std::unique_ptr<AndroidOverlay> overlay_;
+};
+
+// AndroidOverlayFactoryCB is a RepeatingCallback, so we can't just bind
+// something that uses unique_ptr.  RepeatingCallback needs to copy it.
+class Factory {
+ public:
+  Factory(std::unique_ptr<MockAndroidOverlay> overlay,
+          base::RepeatingCallback<void()> create_overlay_cb)
+      : overlay_(std::move(overlay)),
+        create_overlay_cb_(std::move(create_overlay_cb)) {}
+
+  // Return whatever overlay we're given.  This is used to construct factory
+  // callbacks for the chooser.
+  std::unique_ptr<AndroidOverlay> ReturnOverlay(AndroidOverlayConfig config) {
+    // Notify the mock.
+    create_overlay_cb_.Run();
+    if (overlay_)
+      overlay_->SetConfig(std::move(config));
+    return std::move(overlay_);
+  }
+
+ private:
+  std::unique_ptr<MockAndroidOverlay> overlay_;
+  base::RepeatingCallback<void()> create_overlay_cb_;
 };
 
 // Strongly-typed enums for TestParams.  It would be nice if Values() didn't
@@ -84,8 +108,6 @@ using TestParams = std::tuple<ShouldUseOverlay,
 
 }  // namespace
 
-namespace media {
-
 // Unit tests for AndroidVideoSurfaceChooserImpl
 class AndroidVideoSurfaceChooserImplTest
     : public testing::TestWithParam<TestParams> {
@@ -118,40 +140,6 @@ class AndroidVideoSurfaceChooserImplTest
     destruction_observer_ = nullptr;
   }
 
-  // Start the chooser, providing |factory| as the initial factory.
-  void StartChooser(AndroidOverlayFactoryCB factory) {
-    chooser_ = base::MakeUnique<AndroidVideoSurfaceChooserImpl>(allow_dynamic_,
-                                                                &tick_clock_);
-    chooser_->Initialize(
-        base::Bind(&MockClient::UseOverlayImpl, base::Unretained(&client_)),
-        base::Bind(&MockClient::UseSurfaceTexture, base::Unretained(&client_)),
-        std::move(factory), chooser_state_);
-  }
-
-  // AndroidOverlayFactoryCB is a RepeatingCallback, so we can't just bind
-  // something that uses unique_ptr.  RepeatingCallback needs to copy it.
-  class Factory {
-   public:
-    Factory(std::unique_ptr<MockAndroidOverlay> overlay,
-            base::RepeatingCallback<void()> create_overlay_cb)
-        : overlay_(std::move(overlay)),
-          create_overlay_cb_(std::move(create_overlay_cb)) {}
-
-    // Return whatever overlay we're given.  This is used to construct factory
-    // callbacks for the chooser.
-    std::unique_ptr<AndroidOverlay> ReturnOverlay(AndroidOverlayConfig config) {
-      // Notify the mock.
-      create_overlay_cb_.Run();
-      if (overlay_)
-        overlay_->SetConfig(std::move(config));
-      return std::move(overlay_);
-    }
-
-   private:
-    std::unique_ptr<MockAndroidOverlay> overlay_;
-    base::RepeatingCallback<void()> create_overlay_cb_;
-  };
-
   // Create a factory that will return |overlay| when run.
   AndroidOverlayFactoryCB FactoryFor(
       std::unique_ptr<MockAndroidOverlay> overlay) {
@@ -162,6 +150,26 @@ class AndroidVideoSurfaceChooserImplTest
 
     // Leaky!
     return base::Bind(&Factory::ReturnOverlay, base::Unretained(factory));
+  }
+
+  MOCK_METHOD2(MockCreateOverlay,
+               AndroidOverlay*(OverlayInfo&, AndroidOverlayConfig&));
+
+  std::unique_ptr<AndroidOverlay> CreateOverlay(const OverlayInfo& overlay_info,
+                                                AndroidOverlayConfig config) {
+    return nullptr;
+  }
+
+  void StartChooser(AndroidOverlayFactoryCB b) {
+    chooser_ = base::MakeUnique<AndroidVideoSurfaceChooserImpl>(
+        allow_dynamic_,
+        base::Bind(&AndroidVideoSurfaceChooserImplTest::CreateOverlay,
+                   base::Unretained(this)),
+        &tick_clock_);
+    chooser_->Initialize(
+        base::Bind(&MockClient::UseOverlayImpl, base::Unretained(&client_)),
+        base::Bind(&MockClient::UseSurfaceTexture, base::Unretained(&client_)));
+    chooser_->UpdateState(chooser_state_, overlay_info_);
   }
 
   // Called by the factory when it's run.
@@ -182,22 +190,20 @@ class AndroidVideoSurfaceChooserImplTest
   base::SimpleTestTickClock tick_clock_;
 
   AndroidVideoSurfaceChooser::State chooser_state_;
-};
+  OverlayInfo overlay_info_;
+};  // namespace media
 
 TEST_F(AndroidVideoSurfaceChooserImplTest,
-       InitializeWithoutFactoryUsesSurfaceTexture) {
-  // Calling Initialize() with no factory should result in a callback to use
-  // surface texture.
+       InitializeWithoutOverlayUsesSurfaceTexture) {
   EXPECT_CALL(client_, UseSurfaceTexture());
-  StartChooser(AndroidOverlayFactoryCB());
+  StartChooser(FactoryFor(nullptr));
 }
 
 TEST_F(AndroidVideoSurfaceChooserImplTest,
        NullInitialOverlayUsesSurfaceTexture) {
-  // If we provide a factory, but it fails to create an overlay, then |client_|
-  // should be notified to use a surface texture.
-
-  chooser_state_.is_fullscreen = true;
+  // Failure to create an overlay falls back to a surface texture.
+  overlay_info_.is_fullscreen = true;
+  overlay_info_.surface_id = 42;
   EXPECT_CALL(*this, MockOnOverlayCreated());
   EXPECT_CALL(client_, UseSurfaceTexture());
   StartChooser(FactoryFor(nullptr));
@@ -208,7 +214,7 @@ TEST_F(AndroidVideoSurfaceChooserImplTest,
   // If we provide a factory, but the overlay that it provides returns 'failed',
   // then |client_| should use surface texture.  Also check that it won't retry
   // after a failed overlay too soon.
-  chooser_state_.is_fullscreen = true;
+  overlay_info_.is_fullscreen = true;
   EXPECT_CALL(*this, MockOnOverlayCreated());
   StartChooser(FactoryFor(std::move(overlay_)));
 
@@ -227,7 +233,7 @@ TEST_F(AndroidVideoSurfaceChooserImplTest,
   // Try to get it to choose again, which shouldn't do anything.
   tick_clock_.Advance(base::TimeDelta::FromSeconds(2));
   EXPECT_CALL(*this, MockOnOverlayCreated()).Times(0);
-  chooser_->UpdateState(FactoryFor(nullptr), chooser_state_);
+  // XXX chooser_->UpdateState(FactoryFor(nullptr), chooser_state_);
   testing::Mock::VerifyAndClearExpectations(&client_);
   testing::Mock::VerifyAndClearExpectations(this);
 
@@ -235,7 +241,7 @@ TEST_F(AndroidVideoSurfaceChooserImplTest,
   // from the factory.
   tick_clock_.Advance(base::TimeDelta::FromSeconds(100));
   EXPECT_CALL(*this, MockOnOverlayCreated()).Times(1);
-  chooser_->UpdateState(FactoryFor(nullptr), chooser_state_);
+  // XXX chooser_->UpdateState(FactoryFor(nullptr), chooser_state_);
   testing::Mock::VerifyAndClearExpectations(&client_);
   testing::Mock::VerifyAndClearExpectations(this);
 }
@@ -246,7 +252,7 @@ TEST_F(AndroidVideoSurfaceChooserImplTest, NullLaterOverlayUsesSurfaceTexture) {
   // SurfaceTexture zero or more times.
 
   // Start with SurfaceTexture.
-  chooser_state_.is_fullscreen = true;
+  overlay_info_.is_fullscreen = true;
   EXPECT_CALL(client_, UseSurfaceTexture());
   allow_dynamic_ = true;
   StartChooser(AndroidOverlayFactoryCB());
@@ -255,7 +261,7 @@ TEST_F(AndroidVideoSurfaceChooserImplTest, NullLaterOverlayUsesSurfaceTexture) {
   // Provide a factory that will return a null overlay.
   EXPECT_CALL(*this, MockOnOverlayCreated());
   EXPECT_CALL(client_, UseSurfaceTexture()).Times(AnyNumber());
-  chooser_->UpdateState(FactoryFor(nullptr), chooser_state_);
+  // xxx chooser_->UpdateState(FactoryFor(nullptr), chooser_state_);
 }
 
 TEST_F(AndroidVideoSurfaceChooserImplTest, FailedLaterOverlayDoesNothing) {
@@ -264,7 +270,7 @@ TEST_F(AndroidVideoSurfaceChooserImplTest, FailedLaterOverlayDoesNothing) {
   // callbacks to switch to surface texture.
 
   // Start with SurfaceTexture.
-  chooser_state_.is_fullscreen = true;
+  overlay_info_.is_fullscreen = true;
   EXPECT_CALL(client_, UseSurfaceTexture());
   StartChooser(AndroidOverlayFactoryCB());
   testing::Mock::VerifyAndClearExpectations(&client_);
@@ -272,7 +278,7 @@ TEST_F(AndroidVideoSurfaceChooserImplTest, FailedLaterOverlayDoesNothing) {
   // Provide a factory.
   EXPECT_CALL(*this, MockOnOverlayCreated());
   EXPECT_CALL(client_, UseSurfaceTexture()).Times(AnyNumber());
-  chooser_->UpdateState(FactoryFor(std::move(overlay_)), chooser_state_);
+  // xxx chooser_->UpdateState(FactoryFor(std::move(overlay_)), chooser_state_);
   testing::Mock::VerifyAndClearExpectations(&client_);
 
   // Fail the overlay.  We don't care if it's destroyed after that, as long as
@@ -286,7 +292,7 @@ TEST_F(AndroidVideoSurfaceChooserImplTest,
   // |client_| is notified if we provide a factory that gets an overlay.
 
   // Start with SurfaceTexture.
-  chooser_state_.is_fullscreen = true;
+  overlay_info_.is_fullscreen = true;
   EXPECT_CALL(client_, UseSurfaceTexture());
   StartChooser(AndroidOverlayFactoryCB());
   testing::Mock::VerifyAndClearExpectations(&client_);
@@ -296,7 +302,7 @@ TEST_F(AndroidVideoSurfaceChooserImplTest,
   // ignore duplicate calls anyway (MultipleSurfaceTextureCallbacksAreIgnored).
   EXPECT_CALL(*this, MockOnOverlayCreated());
   EXPECT_CALL(client_, UseSurfaceTexture()).Times(AnyNumber());
-  chooser_->UpdateState(FactoryFor(std::move(overlay_)), chooser_state_);
+  // xxx chooser_->UpdateState(FactoryFor(std::move(overlay_)), chooser_state_);
   testing::Mock::VerifyAndClearExpectations(&client_);
   testing::Mock::VerifyAndClearExpectations(this);
 
@@ -310,7 +316,7 @@ TEST_F(AndroidVideoSurfaceChooserImplTest,
   // Make sure that SurfaceChooser notices that we delete the overlay, and have
   // switched back to SurfaceTexture mode.
 
-  chooser_state_.is_fullscreen = true;
+  overlay_info_.is_fullscreen = true;
   EXPECT_CALL(*this, MockOnOverlayCreated());
   StartChooser(FactoryFor(std::move(overlay_)));
   EXPECT_CALL(client_, UseOverlay(NotNull()));
@@ -329,8 +335,8 @@ TEST_F(AndroidVideoSurfaceChooserImplTest,
   // Note that if it enforces a delay here before retrying, that might be okay
   // too.  For now, we assume that it doesn't.
   EXPECT_CALL(*this, MockOnOverlayCreated());
-  chooser_->UpdateState(base::Optional<AndroidOverlayFactoryCB>(),
-                        chooser_state_);
+  // xxxx chooser_->UpdateState(base::Optional<AndroidOverlayFactoryCB>(),
+  //               chooser_state_);
 }
 
 TEST_P(AndroidVideoSurfaceChooserImplTest, OverlayIsUsedOrNotBasedOnState) {
@@ -341,9 +347,9 @@ TEST_P(AndroidVideoSurfaceChooserImplTest, OverlayIsUsedOrNotBasedOnState) {
   const bool should_use_overlay = IsYes(ShouldUseOverlay, 0);
   allow_dynamic_ = IsYes(AllowDynamic, 1);
   chooser_state_.is_required = IsYes(IsRequired, 2);
-  chooser_state_.is_fullscreen = IsYes(IsFullscreen, 3);
+  overlay_info_.is_fullscreen = IsYes(IsFullscreen, 3);
   chooser_state_.is_secure = IsYes(IsSecure, 4);
-  chooser_state_.is_frame_hidden = IsYes(IsFrameHidden, 5);
+  overlay_info_.is_frame_hidden = IsYes(IsFrameHidden, 5);
   chooser_state_.is_compositor_promotable = IsYes(IsCCPromotable, 6);
   chooser_state_.is_expecting_relayout = IsYes(IsExpectingRelayout, 7);
 
