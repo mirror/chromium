@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "15f4a514_255373c7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-15T19:01:23Z",
+      "side": 1,
+      "message": "Sure, I\u0027ll file one and put here.",
+      "parentUuid": "4854b065_15ee462a",
+      "revId": "e0fa76d1225cfe5f0e7b71223be3178315ce817a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d55bd04d_480d2d9a",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-15T07:54:20Z",
       "side": 1,
       "message": "Why do you need to set the property each time the window is activated? Can this be set when the window is created instead?",
+      "revId": "e0fa76d1225cfe5f0e7b71223be3178315ce817a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a38298e_6da4a442",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-09-15T19:01:23Z",
+      "side": 1,
+      "message": "Unfortunately, we can\u0027t do this when windows are created. The task id data comes after window creation. Since task id and tree sources are created based off of the ARc++ container sending accessibility data, it will be significantly after window creation before we know whether the touch exploration pass through value should be true or false.",
+      "parentUuid": "d55bd04d_480d2d9a",
       "revId": "e0fa76d1225cfe5f0e7b71223be3178315ce817a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
