@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7745b99e_c837d0ad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-15T19:21:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa2c3337_b5affaf2",
+      "range": {
+        "startLine": 12,
+        "startChar": 34,
+        "endLine": 12,
+        "endChar": 43
+      },
+      "revId": "e230fbb0312a576fff9f565d684851c3114a6807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed4d6704_c828084a",
         "filename": "chrome/installer/linux/common/installer.include",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "e230fbb0312a576fff9f565d684851c3114a6807",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "012ca43b_32beb9a3",
+        "filename": "chrome/installer/linux/common/installer.include",
+        "patchSetId": 1
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-09-15T19:21:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed4d6704_c828084a",
+      "revId": "e230fbb0312a576fff9f565d684851c3114a6807",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
