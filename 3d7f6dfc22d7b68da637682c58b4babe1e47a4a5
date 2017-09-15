@@ -22,6 +22,30 @@
       "revId": "3d7f6dfc22d7b68da637682c58b4babe1e47a4a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6609cd53_e7733f35",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-15T00:14:20Z",
+      "side": 1,
+      "message": "Moved this into the migration code.",
+      "parentUuid": "7412c5f5_3842b786",
+      "range": {
+        "startLine": 143,
+        "startChar": 2,
+        "endLine": 143,
+        "endChar": 76
+      },
+      "revId": "3d7f6dfc22d7b68da637682c58b4babe1e47a4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

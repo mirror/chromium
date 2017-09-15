@@ -267,6 +267,30 @@
     },
     {
       "key": {
+        "uuid": "c5549840_16b9a10b",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-15T00:14:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e684ccf0_88fd8241",
+      "range": {
+        "startLine": 154,
+        "startChar": 26,
+        "endLine": 154,
+        "endChar": 49
+      },
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a70e726_9b1871dd",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
         "patchSetId": 7
@@ -382,6 +406,30 @@
       "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68eadabd_0cd253c2",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_schema.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-09-15T00:14:20Z",
+      "side": 1,
+      "message": "Removed constants for table names and stringprintf.h.\nThe define for table columns still isn\u0027t useful as they are only used once.",
+      "parentUuid": "4780d9c4_3d2f2557",
+      "range": {
+        "startLine": 188,
+        "startChar": 15,
+        "endLine": 188,
+        "endChar": 31
+      },
+      "revId": "f8fa347818b6e43bb0bae9c9842d1a7215f73334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
