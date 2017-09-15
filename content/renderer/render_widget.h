@@ -841,6 +841,7 @@ class CONTENT_EXPORT RenderWidget
   bool ShouldHandleImeEvents() const;
 
   void UpdateTextInputStateInternal(bool show_virtual_keyboard,
+                                    bool but_only_for_transient_blur,
                                     bool reply_to_request);
 
   gfx::ColorSpace GetRasterColorSpace() const;
