@@ -22,6 +22,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
@@ -41,7 +42,6 @@
 #include "content/child/web_url_loader_impl.h"
 #include "content/child/webfileutilities_impl.h"
 #include "content/child/webmessageportchannel_impl.h"
-#include "content/common/file_utilities_messages.h"
 #include "content/common/frame_messages.h"
 #include "content/common/gpu_stream_constants.h"
 #include "content/common/render_process_messages.h"
@@ -212,13 +212,17 @@ mojom::URLLoaderFactoryPtr GetBlobURLLoaderFactoryGetter() {
 
 class RendererBlinkPlatformImpl::FileUtilities : public WebFileUtilitiesImpl {
  public:
-  explicit FileUtilities(ThreadSafeSender* sender)
-      : thread_safe_sender_(sender) {}
+  explicit FileUtilities(
+      scoped_refptr<blink::mojom::ThreadSafeFileUtilitiesHostPtr> host)
+      : file_utilities_host_(host) {}
   bool GetFileInfo(const WebString& path, WebFileInfo& result) override;
 
  private:
-  bool SendSyncMessageFromAnyThread(IPC::SyncMessage* msg) const;
-  scoped_refptr<ThreadSafeSender> thread_safe_sender_;
+  blink::mojom::FileUtilitiesHost& GetFileUtilitiesHost() {
+    return **file_utilities_host_;
+  }
+  scoped_refptr<blink::mojom::ThreadSafeFileUtilitiesHostPtr>
+      file_utilities_host_;
 };
 
 #if !defined(OS_ANDROID) && !defined(OS_WIN) && !defined(OS_FUCHSIA)
@@ -300,6 +304,9 @@ RendererBlinkPlatformImpl::RendererBlinkPlatformImpl(
       new BlinkInterfaceProviderImpl(connector_.get()));
   top_level_blame_context_.Initialize();
   renderer_scheduler_->SetTopLevelBlameContext(&top_level_blame_context_);
+
+  GetInterfaceProvider()->GetInterface(
+      mojo::MakeRequest(&file_utilities_host_info_));
 }
 
 RendererBlinkPlatformImpl::~RendererBlinkPlatformImpl() {
@@ -394,7 +401,11 @@ blink::WebClipboard* RendererBlinkPlatformImpl::Clipboard() {
 
 blink::WebFileUtilities* RendererBlinkPlatformImpl::GetFileUtilities() {
   if (!file_utilities_) {
-    file_utilities_.reset(new FileUtilities(thread_safe_sender_.get()));
+    file_utilities_.reset(
+        new FileUtilities(blink::mojom::ThreadSafeFileUtilitiesHostPtr::Create(
+            std::move(file_utilities_host_info_),
+            base::CreateSequencedTaskRunnerWithTraits(
+                {base::WithBaseSyncPrimitives()}))));
     file_utilities_->set_sandbox_enabled(sandboxEnabled());
   }
   return file_utilities_.get();
@@ -557,25 +568,15 @@ WebString RendererBlinkPlatformImpl::FileSystemCreateOriginIdentifier(
 bool RendererBlinkPlatformImpl::FileUtilities::GetFileInfo(
     const WebString& path,
     WebFileInfo& web_file_info) {
-  base::File::Info file_info;
-  base::File::Error status = base::File::FILE_ERROR_MAX;
-  if (!SendSyncMessageFromAnyThread(new FileUtilitiesMsg_GetFileInfo(
-           blink::WebStringToFilePath(path), &file_info, &status)) ||
-      status != base::File::FILE_OK) {
+  base::Optional<base::File::Info> file_info;
+  if (!GetFileUtilitiesHost().GetFileInfo(blink::WebStringToFilePath(path),
+                                          &file_info) ||
+      !file_info) {
     return false;
   }
-  FileInfoToWebFileInfo(file_info, &web_file_info);
+  FileInfoToWebFileInfo(file_info.value(), &web_file_info);
   web_file_info.platform_path = path;
   return true;
-}
-
-bool RendererBlinkPlatformImpl::FileUtilities::SendSyncMessageFromAnyThread(
-    IPC::SyncMessage* msg) const {
-  base::TimeTicks begin = base::TimeTicks::Now();
-  const bool success = thread_safe_sender_->Send(msg);
-  base::TimeDelta delta = base::TimeTicks::Now() - begin;
-  UMA_HISTOGRAM_TIMES("RendererSyncIPC.ElapsedTime", delta);
-  return success;
 }
 
 //------------------------------------------------------------------------------
