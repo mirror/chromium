@@ -16,6 +16,24 @@
       "revId": "bb90d7e909f18d72b6575d8db2a3cd7ce7cbe88b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb75e7f7_c9fe24bb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/SuggestionView.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-15T16:45:26Z",
+      "side": 1,
+      "message": "Hannah says to use 100% white.",
+      "parentUuid": "26b75847_621fcac7",
+      "revId": "bb90d7e909f18d72b6575d8db2a3cd7ce7cbe88b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
