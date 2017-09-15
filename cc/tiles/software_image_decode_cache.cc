@@ -458,12 +458,28 @@ SoftwareImageDecodeCache::DecodeImageInternal(const ImageKey& key,
   bool need_subset = (gfx::RectToSkIRect(key.src_rect()) != full_size_rect);
   SkISize exact_size =
       SkISize::Make(key.target_size().width(), key.target_size().height());
-  // TODO(vmpstr): If an image of a bigger size is already decoded and is
-  // lock-able then it might be faster to just scale that instead of redecoding
-  // to exact scale. We need to profile this.
-  if ((!need_subset &&
-       exact_size == paint_image.GetSupportedDecodeSize(exact_size)) ||
-      SkIRect::MakeSize(exact_size) == full_size_rect) {
+  bool is_full_size_decode = SkIRect::MakeSize(exact_size) == full_size_rect;
+  if (is_full_size_decode) {
+    return GetExactSizeImageDecode(key, paint_image);
+  } else if (!need_subset &&
+             exact_size == paint_image.GetSupportedDecodeSize(exact_size)) {
+    // At this point we know we're going to do a decode-to-scale. However, we
+    // first should check if we're able to get a full size decode and scale
+    // that instead. Generally scaling is cheaper that decoding even to scale,
+    // and it's important do that in case the full size decode was decoded
+    // using an img.decode() API.
+    DrawImage full_size_draw_image(paint_image, full_size_rect,
+                                   kNone_SkFilterQuality, SkMatrix::I(),
+                                   key.target_color_space());
+    ImageKey full_size_key =
+        ImageKey::FromDrawImage(full_size_draw_image, color_type_);
+    auto decoded_draw_image = GetDecodedImageForDrawInternal(
+        full_size_key, full_size_draw_image, CacheMissAction::kFail);
+    AutoDrawWithImageFinished auto_finish_draw(this, full_size_draw_image,
+                                               decoded_draw_image);
+
+    if (decoded_draw_image.image())
+      return GetScaledImageDecode(key, paint_image);
     return GetExactSizeImageDecode(key, paint_image);
   }
   return GetScaledImageDecode(key, paint_image);
@@ -479,12 +495,14 @@ DecodedDrawImage SoftwareImageDecodeCache::GetDecodedImageForDraw(
   if (key.target_size().IsEmpty())
     return DecodedDrawImage(nullptr, kNone_SkFilterQuality);
 
-  return GetDecodedImageForDrawInternal(key, draw_image);
+  return GetDecodedImageForDrawInternal(key, draw_image,
+                                        CacheMissAction::kDecode);
 }
 
 DecodedDrawImage SoftwareImageDecodeCache::GetDecodedImageForDrawInternal(
     const ImageKey& key,
-    const DrawImage& draw_image) {
+    const DrawImage& draw_image,
+    CacheMissAction action) {
   TRACE_EVENT1(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
                "SoftwareImageDecodeCache::GetDecodedImageForDrawInternal",
                "key", key.ToString());
@@ -531,6 +549,12 @@ DecodedDrawImage SoftwareImageDecodeCache::GetDecodedImageForDrawInternal(
   // assuming we can't lock the one we found in the cache.
   bool check_at_raster_cache = false;
   if (!decoded_image || !decoded_image->Lock()) {
+    // Here we have a cache miss, so we should respect whatever the
+    // CacheMissAction wants to do.
+    if (action == CacheMissAction::kFail)
+      return DecodedDrawImage(nullptr, kNone_SkFilterQuality);
+    DCHECK_EQ(action, CacheMissAction::kDecode);
+
     // Note that we have to release the lock, since this lock is also accessed
     // on the compositor thread. This means holding on to the lock might stall
     // the compositor thread for the duration of the decode!
@@ -638,8 +662,8 @@ SoftwareImageDecodeCache::GetSubrectImageDecode(const ImageKey& key,
   DCHECK(!exact_size_key.should_use_subrect());
 #endif
 
-  auto decoded_draw_image =
-      GetDecodedImageForDrawInternal(exact_size_key, exact_size_draw_image);
+  auto decoded_draw_image = GetDecodedImageForDrawInternal(
+      exact_size_key, exact_size_draw_image, CacheMissAction::kDecode);
   AutoDrawWithImageFinished auto_finish_draw(this, exact_size_draw_image,
                                              decoded_draw_image);
   if (!decoded_draw_image.image())
@@ -687,36 +711,29 @@ SoftwareImageDecodeCache::GetScaledImageDecode(const ImageKey& key,
                                                const PaintImage& image) {
   // Construct a key to use in GetDecodedImageForDrawInternal().
   // This allows us to reuse an image in any cache if available.
-  // TODO(vmpstr): If we're using a subrect, then we need to decode the original
-  // image and subset it since the subset might be strict. If we plumb whether
-  // the subrect is strict or not, we can loosen this condition.
+  // Since we only use mip levels as target sizes, we need to get the original
+  // sized decode here. We can't get the SupportedDecodeSize because
+  // DecodeImageInternal may decide that we need to scale original existing
+  // decode instead of decode to scale one, and it would be bad if we asked it
+  // to again decode to scale.
   SkIRect full_size_rect = SkIRect::MakeWH(image.width(), image.height());
-  bool need_subset = (gfx::RectToSkIRect(key.src_rect()) != full_size_rect);
-  SkIRect exact_size_rect =
-      need_subset
-          ? full_size_rect
-          : SkIRect::MakeSize(image.GetSupportedDecodeSize(SkISize::Make(
-                key.target_size().width(), key.target_size().height())));
-
-  DrawImage exact_size_draw_image(image, exact_size_rect, kNone_SkFilterQuality,
-                                  SkMatrix::I(), key.target_color_space());
-  ImageKey exact_size_key =
-      ImageKey::FromDrawImage(exact_size_draw_image, color_type_);
+  DrawImage full_size_draw_image(image, full_size_rect, kNone_SkFilterQuality,
+                                 SkMatrix::I(), key.target_color_space());
+  ImageKey full_size_key =
+      ImageKey::FromDrawImage(full_size_draw_image, color_type_);
 
   // Sanity checks.
 #if DCHECK_IS_ON()
-  SkISize exact_target_size =
-      SkISize::Make(exact_size_key.target_size().width(),
-                    exact_size_key.target_size().height());
-  DCHECK(image.GetSupportedDecodeSize(exact_target_size) == exact_target_size);
-  DCHECK(!need_subset || exact_size_key.target_size() ==
-                             gfx::Size(image.width(), image.height()));
-  DCHECK(!exact_size_key.should_use_subrect());
+  SkISize full_target_size =
+      SkISize::Make(full_size_key.target_size().width(),
+                    full_size_key.target_size().height());
+  DCHECK(image.GetSupportedDecodeSize(full_target_size) == full_target_size);
+  DCHECK(!full_size_key.should_use_subrect());
 #endif
 
-  auto decoded_draw_image =
-      GetDecodedImageForDrawInternal(exact_size_key, exact_size_draw_image);
-  AutoDrawWithImageFinished auto_finish_draw(this, exact_size_draw_image,
+  auto decoded_draw_image = GetDecodedImageForDrawInternal(
+      full_size_key, full_size_draw_image, CacheMissAction::kDecode);
+  AutoDrawWithImageFinished auto_finish_draw(this, full_size_draw_image,
                                              decoded_draw_image);
   if (!decoded_draw_image.image())
     return nullptr;
@@ -724,7 +741,7 @@ SoftwareImageDecodeCache::GetScaledImageDecode(const ImageKey& key,
   SkPixmap decoded_pixmap;
   bool result = decoded_draw_image.image()->peekPixels(&decoded_pixmap);
   DCHECK(result) << key.ToString();
-  if (need_subset) {
+  if (gfx::RectToSkIRect(key.src_rect()) != full_size_rect) {
     result = decoded_pixmap.extractSubset(&decoded_pixmap,
                                           gfx::RectToSkIRect(key.src_rect()));
     DCHECK(result) << key.ToString();
