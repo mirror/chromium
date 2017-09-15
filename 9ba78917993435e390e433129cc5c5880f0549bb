@@ -46,6 +46,30 @@
       "revId": "9ba78917993435e390e433129cc5c5880f0549bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c66b1b1e_f2c3c2c9",
+        "filename": "android_webview/browser/aw_settings.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-15T00:09:27Z",
+      "side": 1,
+      "message": "\u003e For booleans, \u0026\u003d is \u0026\u0026\u003d (the latter doesn\u0027t exist)\n\nI\u0027m aware \u0026\u0026\u003d isn\u0027t a thing. But doing bitwise operation on bools just looks weird even if it works. You\u0027d have to stop and check if these are actually bools, and etc etc. The whole \"code is read more frequently than written\" and all that.",
+      "parentUuid": "f9c0f185_a22f4877",
+      "range": {
+        "startLine": 437,
+        "startChar": 28,
+        "endLine": 437,
+        "endChar": 30
+      },
+      "revId": "9ba78917993435e390e433129cc5c5880f0549bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
