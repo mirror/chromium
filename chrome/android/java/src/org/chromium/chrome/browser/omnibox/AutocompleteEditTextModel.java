@@ -432,6 +432,7 @@ public class AutocompleteEditTextModel implements AutocompleteEditTextModelBase 
         if (DEBUG) Log.i(TAG, "onCreateInputConnection");
         mLastUpdateSelStart = mDelegate.getSelectionStart();
         mLastUpdateSelEnd = mDelegate.getSelectionEnd();
+        mBatchEditNestCount = 0;
         mInputConnection.setTarget(superInputConnection);
         return mInputConnection;
     }

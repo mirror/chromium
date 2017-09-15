@@ -86,6 +86,7 @@ public class SpannableAutocompleteEditTextModel implements AutocompleteEditTextM
     public InputConnection onCreateInputConnection(InputConnection inputConnection) {
         mLastUpdateSelStart = mDelegate.getSelectionStart();
         mLastUpdateSelEnd = mDelegate.getSelectionEnd();
+        mBatchEditNestCount = 0;
         if (inputConnection == null) {
             if (DEBUG) Log.i(TAG, "onCreateInputConnection: null");
             mInputConnection = null;
