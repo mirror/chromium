@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87cd8b63_54decf98",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-15T21:20:09Z",
+      "side": 1,
+      "message": "This is different from the other observer. I think we should make them work similarly, WDYT?",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c03d6a_a685e787",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-15T21:20:09Z",
+      "side": 1,
+      "message": "We usually don\u0027t have public fields.",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "318357ed_c114c2d5",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-15T21:20:09Z",
+      "side": 1,
+      "message": "Are you sure we need to do this? Can someone from storage confirm? It is guaranteed that old and new host are from the same browser context. Can they have different storage contexts? Michael?",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4bd0645_ec7cd2d6",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-15T21:20:09Z",
+      "side": 1,
+      "message": "This could be racy, if the other thread is currently accessing origins (e.g. from OnCacheContentChanged method).",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096a4f4a_2ab256ba",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-15T21:20:09Z",
+      "side": 1,
+      "message": "You should also DeleteSoon old observer.",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbc5d8fd_2caff15c",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-15T21:20:09Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b022c4_1839733a",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-15T21:20:09Z",
+      "side": 1,
+      "message": "I think this observer should be deleted on it\u0027s own thread as well.",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b415c68c_5a76737a",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-15T21:20:09Z",
+      "side": 1,
+      "message": "Perhaps, we should save a task runner ref instead of accessing it through context? I am not sure about cross-thread lifetime guarantees of the context, but can be sure that ref-counted task runner is always accessible.",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3950c320_9c958e8e",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-15T21:20:09Z",
+      "side": 1,
+      "message": "There is no need to \"use\" this method, if you call it as base::UTF16ToASCII below.",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b221eaa_9a044e50",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-15T21:20:09Z",
+      "side": 1,
+      "message": "Why this change?",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
