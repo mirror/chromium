@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26ae0f7f_47938bf0",
+        "filename": "content/browser/histogram_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-15T00:50:56Z",
+      "side": 1,
+      "message": "static",
+      "revId": "d9c943d2aa83d8e0133793fd0452d69579a0d6ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "170b31b0_98798662",
+        "filename": "content/browser/histogram_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-15T00:50:56Z",
+      "side": 1,
+      "message": "static",
+      "revId": "d9c943d2aa83d8e0133793fd0452d69579a0d6ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "165d0657_2cf7ebc7",
+        "filename": "content/child/child_histogram_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-15T00:50:56Z",
+      "side": 1,
+      "message": "These appear to be optional.",
+      "range": {
+        "startLine": 39,
+        "startChar": 48,
+        "endLine": 39,
+        "endChar": 77
+      },
+      "revId": "d9c943d2aa83d8e0133793fd0452d69579a0d6ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a2aee5_e0007b33",
+        "filename": "content/common/child_histogram.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-15T00:50:56Z",
+      "side": 1,
+      "message": "Is this used anywhere on the child side? If not, remove it.",
+      "range": {
+        "startLine": 15,
+        "startChar": 43,
+        "endLine": 15,
+        "endChar": 58
+      },
+      "revId": "d9c943d2aa83d8e0133793fd0452d69579a0d6ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
