@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57528236_6e392c0e",
+        "filename": "tools/perf/page_sets/android_screen_restoration_shared_state.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-09-15T16:24:53Z",
+      "side": 1,
+      "message": "Hmhh, I missed this part before. You shouldn\u0027t need this. For benchmark that use pages of this SharedState, you can just follow this example https://cs.chromium.org/chromium/src/tools/perf/benchmarks/power.py?rcl\u003d4f515ad42d57079d163949311a1cf6def706ec84\u0026l\u003d20",
+      "revId": "736d3f4b6b566033812c984c2391ec8a55f45824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
