@@ -140,7 +140,14 @@ enum class GoogleFaviconServerRequestStatus {
   // Request sent out and favicon fetched but writing to database failed.
   FAILURE_ON_WRITE = 4,
   // Request not sent out (the request or the fetcher was invalid).
-  FAILURE_INVALID = 5,
+  DEPRECATED_FAILURE_INVALID = 5,
+  // Request not sent out (the target URL was an IP address or its scheme was
+  // not http(s)).
+  FAILURE_TARGET_BLOCKED = 6,
+  // Request not sent out (the target URL was not valid).
+  FAILURE_TARGET_INVALID = 7,
+  // Request not sent out (the server URL was not valid).
+  FAILURE_SERVER_URL_INVALID = 8,
   // Insert new values here.
   COUNT
 };
