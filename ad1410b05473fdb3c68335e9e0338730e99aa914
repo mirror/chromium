@@ -22,6 +22,30 @@
       "revId": "ad1410b05473fdb3c68335e9e0338730e99aa914",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "717b2d93_29f84561",
+        "filename": "ios/clean/chrome/browser/ui/overlays/overlay_scheduler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-09-15T21:45:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a4d998f_a9406313",
+      "range": {
+        "startLine": 83,
+        "startChar": 8,
+        "endLine": 83,
+        "endChar": 34
+      },
+      "revId": "ad1410b05473fdb3c68335e9e0338730e99aa914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
