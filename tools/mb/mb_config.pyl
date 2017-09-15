@@ -159,6 +159,7 @@
       'ClangToTLinuxASan': 'clang_tot_asan_lsan_static_release',
       'ClangToTLinuxASanLibfuzzer': 'release_libfuzzer_asan_clang_tot',
       'ClangToTLinuxLLD': 'clang_tot_lld_release_shared',
+      'ClangToTLinuxThinLTO': 'clang_tot_release_full_symbols_thin_lto_static_use_lld',
       'ClangToTLinuxUBSanVptr': 'clang_tot_edge_ubsan_no_recover_hack_static_release',
       'ClangToTMac': 'clang_tot_minimal_symbols_shared_release',
       'ClangToTMac (dbg)': 'clang_tot_shared_debug',
@@ -223,7 +224,6 @@
       'Site Isolation Android': 'android_release_bot_minimal_symbols_arm64',
       'Site Isolation Linux': 'release_trybot',
       'Site Isolation Win': 'release_trybot_x86',
-      'ThinLTO Linux ToT': 'thin_lto_clang_tot_full_symbols_release_static_use_lld',
       'UBSanVptr Linux': 'ubsan_vptr_release_bot',
       'WebKit Linux - RandomOrder': 'release_trybot',
       'WebKit Mac - RandomOrder': 'release_trybot',
@@ -1187,6 +1187,10 @@
       'clang_tot', 'official', 'minimal_symbols', 'static', 'release', 'x86',
     ],
 
+    'clang_tot_release_full_symbols_thin_lto_static_use_lld': [
+      'clang_tot', 'release', 'full_symbols', 'thin_lto', 'static', 'use_lld',
+    ],
+
     'clang_tot_lld_release_shared': [
       # TODO(crbug.com/605819): Enable debug info in release builds.
       'clang_tot', 'release', 'shared', 'use_lld',
@@ -1557,10 +1561,6 @@
 
     'syzyasan_no_pch_release_x86': [
       'syzyasan', 'no_pch', 'release', 'x86',
-    ],
-
-    'thin_lto_clang_tot_full_symbols_release_static_use_lld': [
-      'thin_lto', 'clang_tot', 'full_symbols', 'release', 'static', 'use_lld',
     ],
 
     'tsan_disable_nacl_debug_bot': [
