@@ -262,12 +262,24 @@ class CORE_EXPORT StyleEngine final
   void ElementWillBeRemoved(Element& element) {
     style_invalidator_.RescheduleSiblingInvalidationsAsDescendants(element);
   }
+  const RuleFeatureSet& GetRuleFeatureSet() const {
+    DCHECK(IsMaster());
+    DCHECK(global_rule_set_);
+    return global_rule_set_->GetRuleFeatureSet();
+  }
 
   unsigned StyleForElementCount() const { return style_for_element_count_; }
   void IncStyleForElementCount() { style_for_element_count_++; }
 
+  void MarkGlobalRuleSetDirty() { global_rule_set_->MarkDirty(); }
+
   StyleResolverStats* Stats() { return style_resolver_stats_.get(); }
   void SetStatsEnabled(bool);
+  void UpdateGlobalRuleSet() {
+    DCHECK(!NeedsActiveStyleSheetUpdate());
+    if (global_rule_set_)
+      global_rule_set_->Update(GetDocument());
+  }
 
   void ApplyRuleSetChanges(TreeScope&,
                            const ActiveStyleSheetVector& old_style_sheets,
@@ -304,11 +316,6 @@ class CORE_EXPORT StyleEngine final
   typedef HeapHashSet<Member<TreeScope>> UnorderedTreeScopeSet;
 
   void MediaQueryAffectingValueChanged(UnorderedTreeScopeSet&);
-  const RuleFeatureSet& GetRuleFeatureSet() const {
-    DCHECK(IsMaster());
-    DCHECK(global_rule_set_);
-    return global_rule_set_->GetRuleFeatureSet();
-  }
 
   void CreateResolver();
   void ClearResolvers();
@@ -341,11 +348,6 @@ class CORE_EXPORT StyleEngine final
 
   void UpdateViewport();
   void UpdateActiveStyleSheets();
-  void UpdateGlobalRuleSet() {
-    DCHECK(!NeedsActiveStyleSheetUpdate());
-    if (global_rule_set_)
-      global_rule_set_->Update(GetDocument());
-  }
   const MediaQueryEvaluator& EnsureMediaQueryEvaluator();
   void UpdateStyleSheetList(TreeScope&);
 

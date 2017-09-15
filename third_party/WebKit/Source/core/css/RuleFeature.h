@@ -26,6 +26,7 @@
 #include "core/CoreExport.h"
 #include "core/css/CSSSelector.h"
 #include "core/css/MediaQueryEvaluator.h"
+#include "core/css/StylePropertySet.h"
 #include "core/css/invalidation/InvalidationSet.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
@@ -127,6 +128,8 @@ class CORE_EXPORT RuleFeatureSet {
       unsigned min_direct_adjacent) const;
   void CollectNthInvalidationSet(InvalidationLists&) const;
   void CollectTypeRuleInvalidationSet(InvalidationLists&, ContainerNode&) const;
+  void UpdateInvalidationSetsForContentAttributeInternal(
+      const StylePropertySet*);
 
   bool HasIdsInSelectors() const { return id_invalidation_sets_.size() > 0; }
 

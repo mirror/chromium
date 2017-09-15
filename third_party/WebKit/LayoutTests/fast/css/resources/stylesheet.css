@@ -1,0 +1,3 @@
+  .match::before {
+    content: attr(pass);
+  }

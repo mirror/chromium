@@ -35,11 +35,13 @@ class CSSLazyParsingState
   CSSLazyPropertyParserImpl* CreateLazyParser(const CSSParserTokenRange& block);
 
   const CSSParserContext* Context();
+  StyleEngine& GetStyleEngine();
+
+  RuleSet& GetRuleSet() { return owning_contents_->GetRuleSet(); }
 
   void CountRuleParsed();
 
-  bool ShouldLazilyParseProperties(const CSSSelectorList&,
-                                   const CSSParserTokenRange& block) const;
+  bool IsEmptyBlock(const CSSParserTokenRange& block) const;
 
   DECLARE_TRACE();
 

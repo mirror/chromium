@@ -179,6 +179,7 @@ class CORE_EXPORT StyleSheetContents
     DCHECK(rule_set_);
     return *rule_set_.Get();
   }
+
   RuleSet& EnsureRuleSet(const MediaQueryEvaluator&, AddRuleFlags);
   void ClearRuleSet();
 
