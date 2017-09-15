@@ -52,6 +52,24 @@
       "revId": "4702d0dae7870127f521943bcae9f00f95e65c2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c8275e_c3f8a66b",
+        "filename": "media/gpu/dxva_video_decode_accelerator_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-15T17:30:04Z",
+      "side": 1,
+      "message": "You\u0027re right.\nMy theory was that it was actually crashing on line 888, but I missed line 884.\nThe only other theory I have is that D3D11CreateDevice is returning success but failing to initialize d3d11_device_",
+      "parentUuid": "7e0b53d5_6517a719",
+      "revId": "4702d0dae7870127f521943bcae9f00f95e65c2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
