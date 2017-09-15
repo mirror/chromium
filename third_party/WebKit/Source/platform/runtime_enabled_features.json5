@@ -119,10 +119,6 @@
       status: "stable",
     },
     {
-      name: "BroadcastChannel",
-      status: "stable",
-    },
-    {
       name: "Budget",
       status: "stable",
     },
