@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0e9f1ef2_c2ed8a83",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-15T08:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f964ec03_23b90dd6",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6b9ead3_8d941767",
         "filename": "media/audio/alive_checker.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec736eb1_23583b27",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-15T08:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6b9ead3_8d941767",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3e4775cd_4b966b2d",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-15T08:45:59Z",
+      "side": 1,
+      "message": "My initial implementation of PowerObserverHelper posted a task, but I later changed it. So it\u0027s not needed. Removed.",
+      "parentUuid": "f8110357_9c671e55",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89030c6e_cdc5439a",
         "filename": "media/audio/alive_checker.cc",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-13T14:34:05Z",
       "side": 1,
       "message": "A combination of IsSuspending() and OnResume() is a bit confusing, since it\u0027s not symmetrical, and also redundant.\n\nHow about:\n\nOnPowerNofication(bool suspended) {\nDCHECK(task_runner_-\u003eRunsTasksInCurrentSequence());\nDCHECK_NE(suspended_, suspended);\nsuspended_ \u003d suspended;\nif (!suspended_)\n  last_alive_notification_time_ \u003d base::TimeTicks::Now();\n}\n\nand here:\nif (suspended_) return;",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5fbbbe9_cae0aae4",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-15T08:45:59Z",
+      "side": 1,
+      "message": "I\u0027m not following what you mean with combination, and how it\u0027s confusing. One function is in this class and one is in another. One is \"Is\", and one is \"On\". Maybe the lack of OnSuspend() in this class confuses? The comment below is valid, and removing OnResume() would remove the asymmetry. Would that improve?\n\nI think it\u0027s better to let the PowerObserverHelper store the suspending state to separate concerns.\n\nThat said, you\u0027re suggestion is fine with me too, I don\u0027t want to bikeshed. :) Wdyt?",
+      "parentUuid": "89030c6e_cdc5439a",
       "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ad98f7f8_ebb1309b",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-15T08:45:59Z",
+      "side": 1,
+      "message": "Every time the check is run. I did consider just once, but leaned towards letting the client control this by stopping if they don\u0027t want further callbacks. But actually, it\u0027s probably more logical to just call it once and let the client start it again if they wish. Changed it to do so and updated class description. Wdyt?",
+      "parentUuid": "f8f58192_6debccff",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73a33973_e0b9dd61",
         "filename": "media/audio/alive_checker.cc",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838a3544_b69c1e4e",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-15T08:45:59Z",
+      "side": 1,
+      "message": "Both variants exist throughout the codebase. My impression is that we lately have preferred this way. (Maybe that\u0027s not correct?) I\u0027m fine with changing it though, done.",
+      "parentUuid": "73a33973_e0b9dd61",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "6506f5a3_00b902e2",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-15T08:45:59Z",
+      "side": 1,
+      "message": "Now this function is bound instead OnResume, so now it\u0027s definitely needed.",
+      "parentUuid": "f56ec408_4263ab0d",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a75187fe_e77bc4ec",
         "filename": "media/audio/alive_checker.cc",
         "patchSetId": 8
@@ -135,6 +261,24 @@
       "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7df1d038_8c07df63",
+        "filename": "media/audio/alive_checker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-15T08:45:59Z",
+      "side": 1,
+      "message": "Yep, agree. Removed. (There was more code here when I started out.)",
+      "parentUuid": "a75187fe_e77bc4ec",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "d966c826_83133527",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-15T08:45:59Z",
+      "side": 1,
+      "message": "Yes, that\u0027s right. Updated the comment. Agree with the naming; changed to NotifyAlive().",
+      "parentUuid": "634d6584_d67f26cf",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63f59962_ab65dfa1",
         "filename": "media/audio/alive_checker.h",
         "patchSetId": 8
@@ -169,6 +331,24 @@
       "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c61df03_74288519",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-15T08:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63f59962_ab65dfa1",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "e1ea97ed_6f5dc7fe",
+        "filename": "media/audio/alive_checker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-15T08:45:59Z",
+      "side": 1,
+      "message": "Sounds good, but for that it needs to have a copy constructor, which it can\u0027t because WeakPtrFactory\u0027s is deleted.",
+      "parentUuid": "6b6be851_dbeb0c48",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76a7da20_021a8b8c",
         "filename": "media/audio/audio_input_device.cc",
         "patchSetId": 8
@@ -203,6 +401,24 @@
       "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee2659a_fec2c540",
+        "filename": "media/audio/audio_input_device.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-15T08:45:59Z",
+      "side": 1,
+      "message": "Agree with those sides in the tradeoff. I decided to keep the function to minimize cluttering this class. For example it would have to be reset to false at two places due to the asynchronicity.",
+      "parentUuid": "76a7da20_021a8b8c",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "1779abd8_9718dea7",
+        "filename": "media/audio/power_observer_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-15T08:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9811381_4ef024e8",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "537463ae_f554798f",
         "filename": "media/audio/power_observer_helper.cc",
         "patchSetId": 8
@@ -237,6 +471,24 @@
       "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58a51578_fb074c6f",
+        "filename": "media/audio/power_observer_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-15T08:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "537463ae_f554798f",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "e02cf2bc_cf4de0c1",
+        "filename": "media/audio/power_observer_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-15T08:45:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fd88ae3_c9336e0c",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1003e1a8_e6f6e1e3",
         "filename": "media/audio/power_observer_helper.cc",
         "patchSetId": 8
@@ -268,6 +538,24 @@
       "writtenOn": "2017-09-13T14:34:05Z",
       "side": 1,
       "message": "Maybe have one boolean callback instead for these two?",
+      "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c47205f4_55d3324c",
+        "filename": "media/audio/power_observer_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-09-15T08:45:59Z",
+      "side": 1,
+      "message": "That\u0027s an option. I prefer separate, for example it\u0027s in line with base::PowerObserver.",
+      "parentUuid": "1003e1a8_e6f6e1e3",
       "revId": "0df6fae8e3bb2c9f9f3b7f00dbd833964dd4ad0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
