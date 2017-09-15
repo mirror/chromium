@@ -46,12 +46,15 @@ class GpuBenchmarking : public gin::Wrappable<GpuBenchmarking> {
   void PrintPagesToXPS(v8::Isolate* isolate,
                          const std::string& filename);
   bool GestureSourceTypeSupported(int gesture_source_type);
+
+  // All arguments in these methods are in visual viewport coordinates.
   bool SmoothScrollBy(gin::Arguments* args);
   bool SmoothDrag(gin::Arguments* args);
   bool Swipe(gin::Arguments* args);
   bool ScrollBounce(gin::Arguments* args);
   bool PinchBy(gin::Arguments* args);
   bool Tap(gin::Arguments* args);
+
   bool PointerActionSequence(gin::Arguments* args);
   float VisualViewportX();
   float VisualViewportY();
