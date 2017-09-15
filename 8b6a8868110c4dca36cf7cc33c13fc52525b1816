@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4efc3ffe_ca8ccc6b",
+        "filename": "gpu/command_buffer/service/gpu_tracer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-15T17:03:51Z",
+      "side": 1,
+      "message": "nit: please place above decoder_ since decoder_ uses it.\n(technically since we explicitly instantiate/destroy decoder_ it doesn\u0027t strictly matter, but it\u0027s good for health/future refactoring/clarity)",
+      "revId": "8b6a8868110c4dca36cf7cc33c13fc52525b1816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
