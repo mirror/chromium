@@ -9,7 +9,6 @@
 #include "base/ios/ios_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
-#include "components/strings/grit/components_strings.h"
 #include "components/version_info/version_info.h"
 #import "ios/chrome/app/main_controller.h"
 #import "ios/chrome/browser/ui/browser_view_controller.h"
@@ -96,11 +95,6 @@ id<GREYMatcher> QrScannerTorchOnButton() {
 id<GREYMatcher> QrScannerViewportCaption() {
   return StaticTextWithAccessibilityLabelId(
       IDS_IOS_QR_SCANNER_VIEWPORT_CAPTION);
-}
-
-// Returns the GREYMatcher for the back button in the web toolbar.
-id<GREYMatcher> WebToolbarBackButton() {
-  return ButtonWithAccessibilityLabelId(IDS_ACCNAME_BACK);
 }
 
 // Returns the GREYMatcher for the Cancel button to dismiss a UIAlertController.
@@ -772,7 +766,8 @@ void TapKeyboardReturnKeyInOmniboxWithText(std::string text) {
   [ChromeEarlGrey waitForWebViewContainingText:response];
 
   // Press the back button to get back to the NTP.
-  TapButton(WebToolbarBackButton());
+  [[EarlGrey selectElementWithMatcher:chrome_test_util::BackButton()]
+      performAction:grey_tap()];
   [self assertModalOfClass:[QRScannerViewController class]
           isNotPresentedBy:[self currentBVC]];
 }
