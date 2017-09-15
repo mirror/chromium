@@ -1,0 +1,12 @@
+module simple.mojom;
+
+interface Math {
+  // Add two integers and return their sum as a result.
+  [Sync]
+  Add(int32 x, int32 y) => (int32 sum);
+};
+
+interface Echo {
+  // Send a string and expect it back.
+  [Sync] Ping(string str) => (string result);
+};
