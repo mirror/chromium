@@ -256,7 +256,7 @@ void AutoConnectHandler::DisconnectFromUnmanagedSharedWiFiNetworks() {
     if (!(network->IsConnectingState() || network->IsConnectedState()))
       break;  // Connected and connecting networks are listed first.
 
-    if (network->IsPrivate())
+    if (network->profile_path().empty() || network->IsPrivate())
       continue;
 
     const bool network_is_policy_managed =
