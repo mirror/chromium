@@ -128,6 +128,12 @@ class PropertyTreeStatePrinter {
   HashMap<const PropertyTreeNode*, String> node_to_debug_string_;
 };
 
+template <typename PropertyTreeNode>
+inline String PaintPropertyNode<PropertyTreeNode>::ToTreeString() const {
+  return PropertyTreeStatePrinter<PropertyTreeNode>().PathAsString(
+      static_cast<const PropertyTreeNode*>(this));
+}
+
 #endif
 
 }  // namespace blink
