@@ -327,5 +327,29 @@ TEST(HttpConnectionTest, QueuedWriteIOBuffer_TotalSizeLimit) {
   EXPECT_EQ(kDataLength * 4 - kConsumedLength, buffer->total_size());
 }
 
+TEST(HttpConnectionTest, QueuedWriteIOBuffer_QueueMoveData) {
+  // This is a regression test that makes sure that QueuedWriteIOBuffer deals
+  // with base::queue's semantics differences vs. std::queue right.
+  scoped_refptr<HttpConnection::QueuedWriteIOBuffer> buffer(
+      new HttpConnection::QueuedWriteIOBuffer());
+
+  // We append a short string to make it fit within any short string
+  // optimization, so that if the underlying queue moves the std::string,
+  // the data should change.
+  buffer->Append("abcdefgh");
+
+  // Read part of it.
+  buffer->DidConsume(3);
+  EXPECT_EQ("defgh", base::StringPiece(buffer->data(), 5));
+
+  // Now appaend a whole bunch of other things to make the underlying queue
+  // grow, and likely need to move stuff around in memory.
+  for (int i = 0; i < 256; ++i)
+    buffer->Append("some other string data");
+
+  // data() should still be right (but possibly different).
+  EXPECT_EQ("defgh", base::StringPiece(buffer->data(), 5));
+}
+
 }  // namespace
 }  // namespace net
