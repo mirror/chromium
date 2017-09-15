@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e294ba00_9e1dcb91",
+        "filename": "net/cert/nss_cert_database_chromeos_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-15T19:40:29Z",
+      "side": 1,
+      "message": "Non-blocking comment:\n\nFrom reading https://cs.chromium.org/chromium/src/base/test/scoped_task_environment.h?rcl\u003d92697485d0cd644772303e43091ee6c90f173874\u0026l\u003d26 it seems like the new pattern is:\n\n1) \"Real\" code uses base::RunLoop()\n2) \"Testing\" code uses base::test::ScopedTaskEnvironment (except for //net and //content?)\n\nIs that a correct summary?\n\nIf so, should https://cs.chromium.org/chromium/src/base/run_loop.h?rcl\u003d92697485d0cd644772303e43091ee6c90f173874\u0026l\u003d32 / will it be updated to clarify that?\n\n(And is there high-level documentation to help new developers get up to speed / existing developers to know what the current best practice is on all of our threading primitives and the \u0027right idioms to use\u0027 for different problems?)",
+      "revId": "4b3ce213b474276103de244d90bf5ba50fa4267c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
