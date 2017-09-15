@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "59fdd969_5995c7c2",
+        "filename": "third_party/WebKit/Source/core/timing/Performance.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-15T13:07:17Z",
+      "side": 1,
+      "message": "Not only not needed, it\u0027s against the style guide! :)",
+      "parentUuid": "57c915cd_6e956942",
+      "range": {
+        "startLine": 159,
+        "startChar": 28,
+        "endLine": 159,
+        "endChar": 29
+      },
+      "revId": "17d695a36b9768fc4e72a7b72ebda544b2e1dffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e9012e0_c15baf6b",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
         "patchSetId": 2
