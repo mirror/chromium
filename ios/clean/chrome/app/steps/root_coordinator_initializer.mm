@@ -52,7 +52,8 @@
       BrowserListSessionServiceFactory::GetForBrowserState(
           context.browserState);
 
-  if (!service || !service->RestoreSession()) {
+  if (!service || !service->RestoreSession() ||
+      _rootCoordinator.browser->web_state_list().count() == 0) {
     WebStateList& webStateList = _rootCoordinator.browser->web_state_list();
     web::WebState::CreateParams webStateCreateParams(
         _rootCoordinator.browser->browser_state());
@@ -71,6 +72,8 @@
   // Size the main view controller to fit the whole screen.
   [_rootCoordinator.viewController.view setFrame:context.window.bounds];
   context.window.hidden = NO;
+
+  [_rootCoordinator startBrowserUI];
 }
 
 @end

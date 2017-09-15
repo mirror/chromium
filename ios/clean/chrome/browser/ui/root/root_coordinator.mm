@@ -30,13 +30,6 @@
 
 - (void)start {
   self.viewController = [[RootContainerViewController alloc] init];
-
-  TabGridContainerCoordinator* tabGridCoordinator =
-      [[TabGridContainerCoordinator alloc] init];
-  [self addChildCoordinator:tabGridCoordinator];
-  [tabGridCoordinator start];
-  self.tabGridCoordinator = tabGridCoordinator;
-
   [super start];
 }
 
@@ -47,6 +40,13 @@
   for (BrowserCoordinator* child in self.children) {
     [self removeChildCoordinator:child];
   }
+}
+
+- (void)startBrowserUI {
+  TabGridCoordinator* tabGridCoordinator = [[TabGridCoordinator alloc] init];
+  [self addChildCoordinator:tabGridCoordinator];
+  [tabGridCoordinator start];
+  self.tabGridCoordinator = tabGridCoordinator;
 }
 
 - (void)childCoordinatorDidStart:(BrowserCoordinator*)childCoordinator {

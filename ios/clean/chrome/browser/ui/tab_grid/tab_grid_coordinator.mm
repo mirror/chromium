@@ -100,6 +100,7 @@
       ->AddObserver(_overlayObserverBridge.get());
 
   [super start];
+  [self showTabGridTabAtIndex:self.webStateList.active_index()];
 }
 
 - (void)stop {
@@ -121,8 +122,9 @@
 - (void)childCoordinatorDidStart:(BrowserCoordinator*)childCoordinator {
   DCHECK([childCoordinator isKindOfClass:[TabCoordinator class]]);
   [self.viewController presentViewController:childCoordinator.viewController
-                                    animated:YES
+                                    animated:self.firstTabDisplayed
                                   completion:nil];
+  self.firstTabDisplayed = YES;
 }
 
 - (void)childCoordinatorWillStop:(BrowserCoordinator*)childCoordinator {

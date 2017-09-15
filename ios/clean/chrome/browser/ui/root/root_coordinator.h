@@ -10,6 +10,11 @@
 
 // Coordinator that runs the root container.
 @interface RootCoordinator : BrowserCoordinator<URLOpening>
+
+// Starts the Browser UI in the Root coordinator.
+// This cannot be done in the |start| method because some UI elements need to
+// be done in the rootWindow view hierarchy.
+- (void)startBrowserUI;
 @end
 
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_ROOT_ROOT_COORDINATOR_H_
