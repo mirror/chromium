@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2af1259d_0b7f5b05",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-15T00:17:57Z",
+      "side": 1,
+      "message": "Just realized that it was already linked in the bug :)",
+      "parentUuid": "a0285814_ec765a7e",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 109
+      },
+      "revId": "3815059ea86dc2db966ff4733ed4057b0fac9f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b946ae8_0beab1ea",
         "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "29a57b43_3e20b848",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-15T00:17:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b946ae8_0beab1ea",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 5
+      },
+      "revId": "3815059ea86dc2db966ff4733ed4057b0fac9f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6b82ef8_719e7efb",
         "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "3815059ea86dc2db966ff4733ed4057b0fac9f75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a06ca275_4daf2bdd",
+        "filename": "chrome/browser/feature_engagement/incognito_window/incognito_window_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-15T00:17:57Z",
+      "side": 1,
+      "message": "hm this shouldn\u0027t be in here actually, I\u0027ve also taken it out of the new_tab_tracker. I don\u0027t see it used anywhere. I must have accidentally put in a stray change.",
+      "parentUuid": "b6b82ef8_719e7efb",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 35
+      },
+      "revId": "3815059ea86dc2db966ff4733ed4057b0fac9f75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
