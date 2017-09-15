@@ -5,8 +5,12 @@
 package org.chromium.chrome.browser.partnerbookmarks;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.util.Log;
+
+import org.chromium.base.ContextUtils;
+import org.chromium.base.Log;
+import org.chromium.base.metrics.RecordHistogram;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,7 +21,10 @@ import java.util.LinkedHashMap;
  * Reads bookmarks from the partner content provider (if any).
 */
 public class PartnerBookmarksReader {
-    private static final String TAG = "PartnerBookmarksReader";
+    private static final String TAG = "PartnerBMReader";
+
+    public static final String LAST_EMPTY_READ_PREFS_NAME =
+            "PartnerBookmarksReader.last_empty_read";
 
     private static boolean sInitialized;
     private static boolean sForceDisableEditing;
@@ -157,6 +164,18 @@ public class PartnerBookmarksReader {
                 urlSet.add(bookmark.mUrl);
             }
             bookmarkIterator.close();
+            int count = urlSet.size();
+            RecordHistogram.recordCount100Histogram("PartnerBookmark.Count", count);
+
+            if (count == 0) {
+                SharedPreferences.Editor editor = ContextUtils.getAppSharedPreferences().edit();
+                editor.putLong(LAST_EMPTY_READ_PREFS_NAME, System.currentTimeMillis());
+                editor.apply();
+
+                Log.w(TAG,
+                        "Obtained zero partner bookmarks. "
+                                + "Will skip reading partner bookmarks for a while.");
+            }
 
             // Recreate the folder hierarchy and read it.
             recreateFolderHierarchy(idMap);
