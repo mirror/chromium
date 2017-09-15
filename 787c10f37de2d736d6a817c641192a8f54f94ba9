@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93ad2b51_03baaab3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-15T12:18:50Z",
+      "side": 1,
+      "message": "I\u0027m not sure it is necessary to change this particular chunk in this particular CL, because improvement from extracting a method here is arguable and we\u0027re not owners of this codebase. I\u0027ll leave it at Nicolas discretion.",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 53
+      },
+      "revId": "787c10f37de2d736d6a817c641192a8f54f94ba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ec46ccc_a2aa65e2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-15T12:18:50Z",
+      "side": 1,
+      "message": "Do we need this as a separate function? I feel that current code structure is a bit hard to read because there are many very small methods.",
+      "range": {
+        "startLine": 251,
+        "startChar": 17,
+        "endLine": 251,
+        "endChar": 40
+      },
+      "revId": "787c10f37de2d736d6a817c641192a8f54f94ba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7d8988b_29a31776",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-15T12:18:50Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 257,
+        "startChar": 17,
+        "endLine": 257,
+        "endChar": 41
+      },
+      "revId": "787c10f37de2d736d6a817c641192a8f54f94ba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7982480c_142330bc",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-15T12:18:50Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 271,
+        "startChar": 17,
+        "endLine": 271,
+        "endChar": 46
+      },
+      "revId": "787c10f37de2d736d6a817c641192a8f54f94ba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ae341b7_c5f07340",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-15T12:18:50Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 278,
+        "startChar": 17,
+        "endLine": 278,
+        "endChar": 45
+      },
+      "revId": "787c10f37de2d736d6a817c641192a8f54f94ba9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
