@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "f04de084_0eff7517",
+        "filename": "ios/chrome/browser/ui/coordinators/browser_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-15T11:26:31Z",
+      "side": 1,
+      "message": "This doesn\u0027t feel great in practice.  In the future I may experiment with having subclasses return YES or NO to indicate whether they handled the child.  If they return NO, then the superclass will present by default.",
+      "revId": "c0592e69d58950cb1baeeb05675ef026b23b8ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f00292b6_3b142ae6",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_commands.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-15T11:26:31Z",
+      "side": 1,
+      "message": "What\u0027s the difference between closeSettings and dismissSettings?",
+      "revId": "c0592e69d58950cb1baeeb05675ef026b23b8ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4411f501_bb7ccca4",
         "filename": "ios/clean/chrome/browser/ui/settings/settings_coordinator.mm",
         "patchSetId": 5
@@ -25,6 +59,23 @@
     },
     {
       "key": {
+        "uuid": "aefe4f1f_43b12c39",
+        "filename": "ios/clean/chrome/browser/ui/tools/tools_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-15T11:26:31Z",
+      "side": 1,
+      "message": "Should we bother using a dispatcher if it only ever dispatches to self?  We could just have the coordinator conform to these protocols directly.",
+      "revId": "c0592e69d58950cb1baeeb05675ef026b23b8ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6877ab8a_63b862f2",
         "filename": "ios/clean/chrome/browser/ui/tools/tools_coordinator.mm",
         "patchSetId": 5
@@ -42,6 +93,47 @@
         "endLine": 52,
         "endChar": 56
       },
+      "revId": "c0592e69d58950cb1baeeb05675ef026b23b8ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8887d73f_efcbc593",
+        "filename": "ios/clean/chrome/browser/ui/tools/tools_coordinator.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-15T11:26:31Z",
+      "side": 1,
+      "message": "We could move the command headers back to ui/headers and add new ToolsMenuLocalCommands and SettingsLocalCommands protocols for the local (optional) methods.  That would give us a different protocol where every method is guaranteed to be implemented, and it would have the added benefit that we could refrain from exposing those methods publicly to other components.",
+      "parentUuid": "6877ab8a_63b862f2",
+      "range": {
+        "startLine": 52,
+        "startChar": 21,
+        "endLine": 52,
+        "endChar": 56
+      },
+      "revId": "c0592e69d58950cb1baeeb05675ef026b23b8ff8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6479146_1e0fb989",
+        "filename": "ios/clean/chrome/browser/ui/tools/tools_menu_item.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-15T11:26:31Z",
+      "side": 1,
+      "message": "This is weird, but I don\u0027t know how else to get around it.",
       "revId": "c0592e69d58950cb1baeeb05675ef026b23b8ff8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
