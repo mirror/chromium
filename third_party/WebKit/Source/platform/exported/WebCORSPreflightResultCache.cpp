@@ -186,8 +186,14 @@ bool WebCORSPreflightResultCacheItem::AllowsCrossOriginMethod(
 }
 
 bool WebCORSPreflightResultCacheItem::AllowsCrossOriginHeaders(
+    WebURLRequest::FetchCredentialsMode credentials_mode,
     const WebHTTPHeaderMap& request_headers,
     WebString& error_description) const {
+  if (!FetchUtils::ShouldTreatCredentialsModeAsInclude(credentials_mode) &&
+      headers_.find("*") != headers_.end()) {
+    return true;
+  }
+
   for (const auto& header : request_headers.GetHTTPHeaderMap()) {
     if (headers_.find(header.key.Ascii().data()) == headers_.end() &&
         !FetchUtils::IsCORSSafelistedHeader(header.key, header.value) &&
@@ -215,8 +221,10 @@ bool WebCORSPreflightResultCacheItem::AllowsRequest(
     return false;
   if (!AllowsCrossOriginMethod(credentials_mode, method, ignored_explanation))
     return false;
-  if (!AllowsCrossOriginHeaders(request_headers, ignored_explanation))
+  if (!AllowsCrossOriginHeaders(credentials_mode, request_headers,
+                                ignored_explanation)) {
     return false;
+  }
   return true;
 }
 
