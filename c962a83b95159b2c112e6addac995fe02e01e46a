@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74a07b6e_04a12bf9",
+        "filename": "content/renderer/media/media_stream_video_source.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-15T12:12:45Z",
+      "side": 1,
+      "message": "Could you either add a comment why this is OK even though ReconfigureTrack could fail or make it return a bool and only UpdateTrackSettings on success?",
+      "revId": "c962a83b95159b2c112e6addac995fe02e01e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87eeb98d_970f5577",
+        "filename": "content/renderer/media/video_track_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-15T12:12:45Z",
+      "side": 1,
+      "message": "nit: RemoveAndReleaseCallback()",
+      "revId": "c962a83b95159b2c112e6addac995fe02e01e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "859dea91_03117a5b",
+        "filename": "content/renderer/media/video_track_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-15T12:12:45Z",
+      "side": 1,
+      "message": "Is it possible to enter this \"if\" without track_frame_callback being set? If so we shouldn\u0027t unconditionally ++it. Otherwise DCHECK this isn\u0027t the case or break.",
+      "revId": "c962a83b95159b2c112e6addac995fe02e01e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "727a32d0_b6383b93",
+        "filename": "content/renderer/media/video_track_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1126249
+      },
+      "writtenOn": "2017-09-15T12:12:45Z",
+      "side": 1,
+      "message": "How about std::move(*track_frame_callback.release())?",
+      "revId": "c962a83b95159b2c112e6addac995fe02e01e46a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
