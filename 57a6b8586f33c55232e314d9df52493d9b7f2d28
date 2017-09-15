@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dfacf39_9a45dfce",
+        "filename": "chrome/browser/resources/settings/appearance_page/appearance_page.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-15T22:03:33Z",
+      "side": 1,
+      "message": "I think you don\u0027t need a new variable. Just use \"pageVisibility.setWallpaper\" to bind to hidden property.",
+      "revId": "57a6b8586f33c55232e314d9df52493d9b7f2d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bcd2667_6e1d8025",
+        "filename": "chrome/browser/ui/webui/settings/appearance_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-15T22:03:33Z",
+      "side": 1,
+      "message": "put this header file inside #if defined(OS_CHROMEOS)",
+      "revId": "57a6b8586f33c55232e314d9df52493d9b7f2d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e78419f_0d4cd484",
+        "filename": "chrome/browser/ui/webui/settings/appearance_handler.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-15T22:03:33Z",
+      "side": 1,
+      "message": "nit: {... }",
+      "revId": "57a6b8586f33c55232e314d9df52493d9b7f2d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de0c19a_77efc8fa",
+        "filename": "chrome/test/data/webui/settings/appearance_page_test.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-15T22:03:33Z",
+      "side": 1,
+      "message": "The format of the comment is incorrect. It should be\n/**\n * @param {boolean} isVisible Whether...\n */",
+      "revId": "57a6b8586f33c55232e314d9df52493d9b7f2d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fccc0d9c_22aebd15",
+        "filename": "chrome/test/data/webui/settings/appearance_page_test.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1118421
+      },
+      "writtenOn": "2017-09-15T22:03:33Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "57a6b8586f33c55232e314d9df52493d9b7f2d28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
