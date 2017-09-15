@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "9210d917_3c207785",
+        "filename": "components/viz/host/hit_test/hit_test_query.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-09-15T15:52:51Z",
+      "side": 1,
+      "message": "In the future, we should cache the matrix product such that the transform can be done immediately. In fact, there needs to be a general caching scheme. But later. This comment is not actionable at this time unless you want to file a bug.",
+      "revId": "24eee095a7d6b24b10c35c9c70ecb774a357d120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf226464_ced72dbe",
         "filename": "components/viz/host/hit_test/hit_test_query.cc",
         "patchSetId": 1
@@ -66,6 +83,41 @@
       "side": 1,
       "message": "How can we start from |target|? In order to find where |target| is in the list, we have to (potentially) walk the entire tree? Did I miss something?\nBut I realize that we don\u0027t have to do transform every step to avoid unnecessary ones. How about walking the entire tree to find the target, while recording which path we take each time, and at the end transform point with all those transformations?",
       "parentUuid": "0620fef7_5af7b27f",
+      "revId": "24eee095a7d6b24b10c35c9c70ecb774a357d120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e85f5c2_668dae89",
+        "filename": "components/viz/host/hit_test/hit_test_query.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-09-15T15:52:51Z",
+      "side": 1,
+      "message": "idea: maintain a map of frame sink id to position in the tree. build this when you target. \n\nI\u0027d argue though that we need metrics: ratio of transform-only vs transform\u0026target ops, their time cost, number of regions in general and a discussion about how to drive down the overhead.",
+      "parentUuid": "2ea50923_431c3e53",
+      "revId": "24eee095a7d6b24b10c35c9c70ecb774a357d120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5dfc2cd_6a8620c7",
+        "filename": "components/viz/host/hit_test/hit_test_query.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-09-15T15:52:51Z",
+      "side": 1,
+      "message": "when you say capture window, do you mean \"latching\"?",
       "revId": "24eee095a7d6b24b10c35c9c70ecb774a357d120",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
