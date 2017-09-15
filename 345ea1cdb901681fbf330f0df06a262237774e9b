@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "707278ab_4cfa9a9d",
+        "filename": "chrome/browser/android/payments/service_worker_payment_app_bridge.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-15T19:34:21Z",
+      "side": 1,
+      "message": "nit: I think I saw std::make_unique being used now",
+      "range": {
+        "startLine": 57,
+        "startChar": 18,
+        "endLine": 57,
+        "endChar": 34
+      },
+      "revId": "345ea1cdb901681fbf330f0df06a262237774e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ccddf1f_023471bb",
+        "filename": "chrome/browser/payments/manifest_verifier_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-15T19:34:21Z",
+      "side": 1,
+      "message": "I think \"new\" is discouraged. Could we done \n\nhttps_server_ \u003d std::make_unique...",
+      "revId": "345ea1cdb901681fbf330f0df06a262237774e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e2cec3a_6092fb83",
+        "filename": "chrome/browser/payments/manifest_verifier_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-15T19:34:21Z",
+      "side": 1,
+      "message": "Capital Resources",
+      "range": {
+        "startLine": 135,
+        "startChar": 22,
+        "endLine": 135,
+        "endChar": 23
+      },
+      "revId": "345ea1cdb901681fbf330f0df06a262237774e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e645dad4_c30d4eea",
+        "filename": "chrome/browser/ui/search_engines/keyword_editor_controller_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-15T19:34:21Z",
+      "side": 1,
+      "message": "revert this file? Or you need the change?",
+      "revId": "345ea1cdb901681fbf330f0df06a262237774e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a328a6e6_e83c39d8",
+        "filename": "components/payments/content/payment_method_manifest_table_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-15T19:34:21Z",
+      "side": 1,
+      "message": "std::make_unique?",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "345ea1cdb901681fbf330f0df06a262237774e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
