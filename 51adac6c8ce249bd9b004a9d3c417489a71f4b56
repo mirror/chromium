@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "89c071e3_18f816b3",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-15T01:00:50Z",
+      "side": 1,
+      "message": "I am just matching the existing code. I dont understand the code well enough to remove this check. For now will add a TODO",
+      "parentUuid": "09fb0cbc_3fb25ee3",
+      "revId": "51adac6c8ce249bd9b004a9d3c417489a71f4b56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9d92c61_7d3fe85d",
         "filename": "components/arc/power/arc_power_bridge.h",
         "patchSetId": 15
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "b43746c1_a4a6aa17",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-15T01:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9d92c61_7d3fe85d",
+      "range": {
+        "startLine": 88,
+        "startChar": 72,
+        "endLine": 88,
+        "endChar": 78
+      },
+      "revId": "51adac6c8ce249bd9b004a9d3c417489a71f4b56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bde6d46f_7e723d8f",
         "filename": "components/arc/power/arc_power_bridge_unittest.cc",
         "patchSetId": 15
@@ -56,6 +98,24 @@
       "revId": "51adac6c8ce249bd9b004a9d3c417489a71f4b56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46345144_bb8b6308",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-15T01:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bde6d46f_7e723d8f",
+      "revId": "51adac6c8ce249bd9b004a9d3c417489a71f4b56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "51adac6c8ce249bd9b004a9d3c417489a71f4b56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a37dc248_91cce807",
+        "filename": "components/arc/power/arc_power_bridge_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1146415
+      },
+      "writtenOn": "2017-09-15T01:00:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f429fbd_e4c0356e",
+      "range": {
+        "startLine": 36,
+        "startChar": 55,
+        "endLine": 36,
+        "endChar": 72
+      },
+      "revId": "51adac6c8ce249bd9b004a9d3c417489a71f4b56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
