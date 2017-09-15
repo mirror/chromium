@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39682f96_8e316685",
+        "filename": "chrome/browser/resources/chromeos/zip_archiver/js/passphrase-manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-15T02:19:44Z",
+      "side": 1,
+      "message": "If rememberedPassphrase is incorrect, zip archiver will keep trying to use the incorrect passphrase. We will need to clear remembered passphrase if it\u0027s incorrect. Also it would be better to check whether passphrase is correct or not before remembering it.",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 5
+      },
+      "revId": "3308abab5119b955ce709070cae868e895018b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
