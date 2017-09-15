@@ -1,0 +1,344 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaf02e82_e1fb5392",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "- Please use present tense instead of future tense.\n- Please mention this patch is a preparation of making shadow tree support\nin SampleSeletion::SetSelectionText()",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b4ade5_1671d312",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "nit: Please remove a trialing whitespace.",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbaec6d2_48f2d5e7",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "Please add a comment |element| and descendant elements can have TEMPLATE\nelement with |data-mode\u003d\"open\"|, which is required.\n\nWe may mention each element can have only one TEMPLATE element.",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db3eb76_bcfd0a19",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "Please use |templateTagName| instead of \"template\"",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b037549_4001d6ea",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "nit: Please use range-for\n\nfor (Element* template_element : templates)",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3212fe21_9c4573b9",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "nit: s/Element*/Element* const/",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ee6a3a_c5a7d45f",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "nit: s/parent-\u003eRemoveChild(template_element)/template_element-\u003eremove()/",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52f1b44f_58591757",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "nit: s/Document*/Document* const/",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6f3da38_94961d54",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "nit: s/ShadowRoot*/ShadowRoot* const/",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c89681_0f7cbc14",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "Note: I talked with hayato@, he says we should use attachShadow() since it\nchecks tag names which we can attach shadow root.",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ce76866_3ab83173",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "nit: s/Node*/Node* const/\nnit: s/child_node/fragment/\n\nSince HTMLTemplatelement::content() -\u003e DocumentFragment*",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "425f43ad_0e21eb16",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "nit: s/appendChild(child_node,ASSERT_NO_EXCEPTION)/AppendChild(child_node)/",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2cdf388_2d2043dd",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "nit: s/HTMLElement*/void/\n\nPlease place this function at end of other members.",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd306f4f_7a0b4c46",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "Please add following test cases:\n - No TEMPLATE element\n - Multiple TEMPLATE elements in one template element.",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffd69097_50339597",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "nit: We don\u0027t need to have \"^\" and \"|\", since |ConvertTemplatesToShadowRoots()| doesn\u0027t selection markers.",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1531b13d_2b2cace4",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "Please add indentation for ease of understanding structure.",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce62aa5_1be9a79f",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "nit: not need to have single quote.\n\nBTW, we don\u0027t need to have SLOT in shadow tree since this test case doesn\u0027t\ncare about distribution.",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6933c20_dddad4df",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "We should use |host| or |shadow_host| instead of |d1|. I guess you copied\nthis HTML from \"LayoutTest/shadows/\" which checks distribution.\n\nOne word and simpler names are easier to read.",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ff16c8_edb2ab55",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "nit: s/converted/d1/",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99dfc4fe_1abbe503",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSampleTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:13:20Z",
+      "side": 1,
+      "message": "nit: s/EXPECT_EQ/EXPECT_TRUE/",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
