@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b55acf8b_0f3b1549",
+        "filename": "ash/public/interfaces/tray_action.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T14:10:37Z",
+      "side": 1,
+      "message": "Thanks for the nice docs on all the enum values.",
+      "revId": "6829549efd13aadb600f4cf281636ab9908817f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
