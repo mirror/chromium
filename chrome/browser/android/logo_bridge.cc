@@ -38,7 +38,8 @@ ScopedJavaLocalRef<jobject> MakeJavaLogo(JNIEnv* env,
                                          const SkBitmap* bitmap,
                                          const GURL& on_click_url,
                                          const std::string& alt_text,
-                                         const GURL& animated_url) {
+                                         const GURL& animated_url,
+                                         int id) {
   ScopedJavaLocalRef<jobject> j_bitmap = gfx::ConvertToJavaBitmap(bitmap);
 
   ScopedJavaLocalRef<jstring> j_on_click_url;
@@ -54,7 +55,7 @@ ScopedJavaLocalRef<jobject> MakeJavaLogo(JNIEnv* env,
     j_animated_url = ConvertUTF8ToJavaString(env, animated_url.spec());
 
   return Java_LogoBridge_createLogo(env, j_bitmap, j_on_click_url, j_alt_text,
-                                    j_animated_url);
+                                    j_animated_url, id);
 }
 
 // Converts a C++ Logo to a Java Logo.
@@ -66,7 +67,7 @@ ScopedJavaLocalRef<jobject> ConvertLogoToJavaObject(
 
   return MakeJavaLogo(env, &logo->image, GURL(logo->metadata.on_click_url),
                       logo->metadata.alt_text,
-                      GURL(logo->metadata.animated_url));
+                      GURL(logo->metadata.animated_url), logo->metadata.id);
 }
 
 class LogoObserverAndroid : public search_provider_logos::LogoObserver {

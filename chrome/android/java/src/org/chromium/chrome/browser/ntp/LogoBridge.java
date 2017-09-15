@@ -40,11 +40,17 @@ public class LogoBridge {
          */
         public final String animatedLogoUrl;
 
-        Logo(Bitmap image, String onClickUrl, String altText, String animatedLogoUrl) {
+        /**
+         * An ID that identifies the logo, for metrics.
+         */
+        public final int id;
+
+        Logo(Bitmap image, String onClickUrl, String altText, String animatedLogoUrl, int id) {
             this.image = image;
             this.onClickUrl = onClickUrl;
             this.altText = altText;
             this.animatedLogoUrl = animatedLogoUrl;
+            this.id = id;
         }
     }
 
@@ -121,8 +127,9 @@ public class LogoBridge {
     }
 
     @CalledByNative
-    private static Logo createLogo(Bitmap image, String onClickUrl, String altText, String gifUrl) {
-        return new Logo(image, onClickUrl, altText, gifUrl);
+    private static Logo createLogo(
+            Bitmap image, String onClickUrl, String altText, String gifUrl, int id) {
+        return new Logo(image, onClickUrl, altText, gifUrl, id);
     }
 
     @CalledByNative

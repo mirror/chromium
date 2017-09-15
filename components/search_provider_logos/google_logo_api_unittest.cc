@@ -97,6 +97,43 @@ TEST(GoogleNewLogoApiTest, DoesNotResolveAbsoluteUrl) {
   EXPECT_EQ(GURL("https://www.doodle.com/target"), logo->metadata.on_click_url);
 }
 
+TEST(GoogleNewLogoApiTest, ParsesId) {
+  const GURL base_url("https://base.doo/");
+  const std::string json = R"json()]}'
+{
+  "ddljson": {
+    "id": 123,
+    "target_url": "/target"
+  }
+})json";
+
+  bool failed = false;
+  std::unique_ptr<EncodedLogo> logo = GoogleNewParseLogoResponse(
+      base_url, base::MakeUnique<std::string>(json), base::Time(), &failed);
+
+  ASSERT_FALSE(failed);
+  ASSERT_TRUE(logo);
+  EXPECT_EQ(123, logo->metadata.id);
+}
+
+TEST(GoogleNewLogoApiTest, KeepsDefaultIdIfNotSpecified) {
+  const GURL base_url("https://base.doo/");
+  const std::string json = R"json()]}'
+{
+  "ddljson": {
+    "target_url": "/target"
+  }
+})json";
+
+  bool failed = false;
+  std::unique_ptr<EncodedLogo> logo = GoogleNewParseLogoResponse(
+      base_url, base::MakeUnique<std::string>(json), base::Time(), &failed);
+
+  ASSERT_FALSE(failed);
+  ASSERT_TRUE(logo);
+  EXPECT_EQ(-1, logo->metadata.id);
+}
+
 TEST(GoogleNewLogoApiTest, ParsesStaticImage) {
   const GURL base_url("https://base.doo/");
   // Note: The base64 encoding of "abc" is "YWJj".

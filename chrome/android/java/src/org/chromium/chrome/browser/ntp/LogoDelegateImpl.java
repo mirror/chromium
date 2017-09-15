@@ -28,6 +28,10 @@ public class LogoDelegateImpl implements LogoView.Delegate {
     private static final int STATIC_LOGO_SHOWN = 0;
     private static final int CTA_IMAGE_SHOWN = 1;
     private static final int LOGO_SHOWN_COUNT = 2;
+    private static final String LOGO_SHOWN_ID_UMA_NAME = "NewTabPage.LogoShownID";
+    private static final String LOGO_SHOWN_ID_FROM_CACHE_UMA_NAME =
+            "NewTabPage.LogoShownID.FromCache";
+    private static final String LOGO_SHOWN_ID_FRESH_UMA_NAME = "NewTabPage.LogoShownID.Fresh";
 
     private static final String LOGO_SHOWN_TIME_UMA_NAME = "NewTabPage.LogoShownTime2";
 
@@ -35,6 +39,8 @@ public class LogoDelegateImpl implements LogoView.Delegate {
     private static final int STATIC_LOGO_CLICKED = 0;
     private static final int CTA_IMAGE_CLICKED = 1;
     private static final int ANIMATED_LOGO_CLICKED = 2;
+    private static final String LOGO_CLICK_ID_UMA_NAME = "NewTabPage.LogoClickID";
+    private static final String LOGO_CLICK_CTA_ID_UMA_NAME = "NewTabPage.LogoClickCTAID";
 
     private final SuggestionsNavigationDelegate mNavigationDelegate;
     private LogoView mLogoView;
@@ -42,6 +48,7 @@ public class LogoDelegateImpl implements LogoView.Delegate {
     private LogoBridge mLogoBridge;
     private String mOnLogoClickUrl;
     private String mAnimatedLogoUrl;
+    private int mLogoId;
 
     private boolean mShouldRecordLoadTime = true;
 
@@ -70,6 +77,7 @@ public class LogoDelegateImpl implements LogoView.Delegate {
 
         if (!isAnimatedLogoShowing && mAnimatedLogoUrl != null) {
             RecordHistogram.recordSparseSlowlyHistogram(LOGO_CLICK_UMA_NAME, CTA_IMAGE_CLICKED);
+            RecordHistogram.recordSparseSlowlyHistogram(LOGO_CLICK_CTA_ID_UMA_NAME, mLogoId);
             mLogoView.showLoadingView();
             mLogoBridge.getAnimatedLogo(new LogoBridge.AnimatedLogoCallback() {
                 @Override
@@ -81,6 +89,7 @@ public class LogoDelegateImpl implements LogoView.Delegate {
         } else if (mOnLogoClickUrl != null) {
             RecordHistogram.recordSparseSlowlyHistogram(LOGO_CLICK_UMA_NAME,
                     isAnimatedLogoShowing ? ANIMATED_LOGO_CLICKED : STATIC_LOGO_CLICKED);
+            RecordHistogram.recordSparseSlowlyHistogram(LOGO_CLICK_ID_UMA_NAME, mLogoId);
             mNavigationDelegate.openUrl(WindowOpenDisposition.CURRENT_TAB,
                     new LoadUrlParams(mOnLogoClickUrl, PageTransition.LINK));
         }
@@ -101,12 +110,17 @@ public class LogoDelegateImpl implements LogoView.Delegate {
                             logo.animatedLogoUrl == null ? STATIC_LOGO_SHOWN : CTA_IMAGE_SHOWN;
                     RecordHistogram.recordEnumeratedHistogram(
                             LOGO_SHOWN_UMA_NAME, logoType, LOGO_SHOWN_COUNT);
+                    RecordHistogram.recordSparseSlowlyHistogram(LOGO_SHOWN_ID_UMA_NAME, logo.id);
                     if (fromCache) {
                         RecordHistogram.recordEnumeratedHistogram(
                                 LOGO_SHOWN_FROM_CACHE_UMA_NAME, logoType, LOGO_SHOWN_COUNT);
+                        RecordHistogram.recordSparseSlowlyHistogram(
+                                LOGO_SHOWN_ID_FROM_CACHE_UMA_NAME, logo.id);
                     } else {
                         RecordHistogram.recordEnumeratedHistogram(
                                 LOGO_SHOWN_FRESH_UMA_NAME, logoType, LOGO_SHOWN_COUNT);
+                        RecordHistogram.recordSparseSlowlyHistogram(
+                                LOGO_SHOWN_ID_FRESH_UMA_NAME, logo.id);
                     }
                     if (mShouldRecordLoadTime) {
                         long loadTime = System.currentTimeMillis() - loadTimeStart;
@@ -124,6 +138,7 @@ public class LogoDelegateImpl implements LogoView.Delegate {
 
                 mOnLogoClickUrl = logo != null ? logo.onClickUrl : null;
                 mAnimatedLogoUrl = logo != null ? logo.animatedLogoUrl : null;
+                mLogoId = logo != null ? logo.id : 0;
 
                 logoObserver.onLogoAvailable(logo, fromCache);
             }
