@@ -9,6 +9,7 @@
 #include "core/editing/EditingTestBase.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/Position.h"
+#include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisibleSelection.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"

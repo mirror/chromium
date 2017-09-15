@@ -7,6 +7,7 @@
 #include "core/dom/Range.h"
 #include "core/editing/EditingTestBase.h"
 #include "core/editing/SelectionAdjuster.h"
+#include "core/editing/SelectionTemplate.h"
 
 #define LOREM_IPSUM                                                            \
   "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod "  \

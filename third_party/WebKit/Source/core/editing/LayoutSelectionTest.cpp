@@ -8,6 +8,7 @@
 #include "core/dom/ShadowRootInit.h"
 #include "core/editing/EditingTestBase.h"
 #include "core/editing/FrameSelection.h"
+#include "core/editing/SelectionTemplate.h"
 #include "core/layout/LayoutObject.h"
 #include "core/layout/LayoutText.h"
 #include "platform/wtf/Assertions.h"
