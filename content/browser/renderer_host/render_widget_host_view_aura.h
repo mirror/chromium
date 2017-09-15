@@ -614,6 +614,13 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
 
   std::unique_ptr<CursorManager> cursor_manager_;
 
+  // Timestamp of the last time that the IME was removed from a text field due
+  // to a loss of focus. This is used to tell if focus is lost for a brief,
+  // transient amount of time, and so any attempt to re-focused a text field
+  // programmatically, should probably be considered part of the same IME
+  // session.
+  double text_field_blur_timestamp_;
+
   base::WeakPtrFactory<RenderWidgetHostViewAura> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostViewAura);

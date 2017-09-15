@@ -56,6 +56,9 @@ struct CONTENT_EXPORT TextInputState {
 
   // Whether or not this is a reply to a request from IME.
   bool reply_to_request;
+
+  // show the IME but only if focus from the text field was lost briefly.
+  bool only_show_ime_if_transient_blur;
 };
 
 }  // namespace content
