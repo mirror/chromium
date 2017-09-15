@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86332ed8_09228d9f",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-15T00:44:37Z",
+      "side": 1,
+      "message": "To fix the warning, feel free to put a \"# pylint: disable\u003dno-member\" right at the top of the file (with a comment)",
+      "revId": "f7c0d519b09362632eaaf3ccd0dee86633c943c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd2fe53_2a767acf",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-15T00:44:37Z",
+      "side": 1,
+      "message": "nit: either modify the outer my_pids directly here, or return (primary_pid, my_pids) so as to not modify outer state at all.\n\nOn that note - could you rename this \"my_pids\" to not collide with the outer my_pids?",
+      "revId": "f7c0d519b09362632eaaf3ccd0dee86633c943c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64e67f4f_81ddabdd",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-15T00:44:37Z",
+      "side": 1,
+      "message": "nit: use 2 lines",
+      "revId": "f7c0d519b09362632eaaf3ccd0dee86633c943c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b5cd6e3_bd237fc6",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-15T00:44:37Z",
+      "side": 1,
+      "message": "when does this come up? maybe add an example in a comment",
+      "revId": "f7c0d519b09362632eaaf3ccd0dee86633c943c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8f38a1_43fdd613",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-15T00:44:37Z",
+      "side": 1,
+      "message": "nit: probably don\u0027t need to qualify the priority on this one.",
+      "revId": "f7c0d519b09362632eaaf3ccd0dee86633c943c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d4880f_d62a95d7",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-15T00:44:37Z",
+      "side": 1,
+      "message": "nit: just go straight for:\nif verbose or not dim:",
+      "revId": "f7c0d519b09362632eaaf3ccd0dee86633c943c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c0b5cef_ae915408",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-15T00:44:37Z",
+      "side": 1,
+      "message": "nit: pull pid_style, tag, priority out of loop",
+      "revId": "f7c0d519b09362632eaaf3ccd0dee86633c943c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bcd3dfb_bf646c6c",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-15T00:44:37Z",
+      "side": 1,
+      "message": "I think this will alter the alignment for short tags and short pids.\n\nOne option would be to use more sophisticated parsing to capture the padding, but I think I\u0027d instead recommend just specifying field widths here. E.g.:\nsys.stdout.write(\u0027{} {} {:5} {:5} {} {:8}: {}\\n\u0027.format(...)",
+      "revId": "f7c0d519b09362632eaaf3ccd0dee86633c943c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
