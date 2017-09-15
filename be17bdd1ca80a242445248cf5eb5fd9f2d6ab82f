@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a4c2b15_c841763f",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-15T17:25:17Z",
+      "side": 1,
+      "message": "So now it\u0027s possible for a non-partial writer to be pushed into the done_headers_queue when there is a current entry-\u003ewriter. Eventually, when that second WRITE transaction starts to read, it will be an entry-\u003ewriter.\n\nSo if we have 3 concurrent transactions: WRITE, READ, WRITE, then we have a problem. The first WRITE will complete, allowing the READ to start reading from the cache, and the WRITE will also start, and it will overwrite the cache that READ is reading from.\n\nIs that right?",
+      "revId": "be17bdd1ca80a242445248cf5eb5fd9f2d6ab82f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
