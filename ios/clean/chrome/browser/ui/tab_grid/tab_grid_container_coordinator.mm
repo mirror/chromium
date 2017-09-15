@@ -62,10 +62,10 @@
   self.viewController.dispatcher = self;
   self.normalTabGrid = [[TabGridCoordinator alloc] init];
   [self addChildCoordinator:self.normalTabGrid];
-  [self.normalTabGrid start];
   self.incognito = NO;
 
   [super start];
+  [self.normalTabGrid start];
 }
 
 - (void)stop {

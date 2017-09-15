@@ -48,6 +48,7 @@
 @property(nonatomic, readonly) WebStateList& webStateList;
 @property(nonatomic, strong) TabGridMediator* mediator;
 @property(nonatomic, readonly) SnapshotCache* snapshotCache;
+@property(nonatomic) BOOL firstTabDisplayed;
 
 @property(nonatomic, readonly) id<TabGridCommands> callableDispatcher;
 
@@ -57,6 +58,7 @@
 @synthesize viewController = _viewController;
 @synthesize activeTabCoordinator = _activeTabCoordinator;
 @synthesize mediator = _mediator;
+@synthesize firstTabDisplayed = _firstTabDisplayed;
 @dynamic callableDispatcher;
 
 - (instancetype)init {
@@ -100,6 +102,7 @@
       ->AddObserver(_overlayObserverBridge.get());
 
   [super start];
+  [self showTabGridTabAtIndex:self.webStateList.active_index()];
 }
 
 - (void)stop {
@@ -121,8 +124,9 @@
 - (void)childCoordinatorDidStart:(BrowserCoordinator*)childCoordinator {
   DCHECK([childCoordinator isKindOfClass:[TabCoordinator class]]);
   [self.viewController presentViewController:childCoordinator.viewController
-                                    animated:YES
+                                    animated:self.firstTabDisplayed
                                   completion:nil];
+  self.firstTabDisplayed = YES;
 }
 
 - (void)childCoordinatorWillStop:(BrowserCoordinator*)childCoordinator {
