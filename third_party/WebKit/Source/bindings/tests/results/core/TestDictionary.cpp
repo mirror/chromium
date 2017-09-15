@@ -21,6 +21,7 @@
 namespace blink {
 
 TestDictionary::TestDictionary() {
+  setClampStringSequenceMember(Vector<String>());
   setDoubleOrStringMember(DoubleOrString::fromDouble(3.14));
   setEnumMember("foo");
   setLongMember(1);
@@ -46,6 +47,11 @@ void TestDictionary::setAnyInRecordMember(const Vector<std::pair<String, ScriptV
 
 void TestDictionary::setAnyMember(ScriptValue value) {
   any_member_ = value;
+}
+
+void TestDictionary::setClampStringSequenceMember(const Vector<String>& value) {
+  clamp_string_sequence_member_ = value;
+  has_clamp_string_sequence_member_ = true;
 }
 
 void TestDictionary::setDictionaryMember(Dictionary value) {
