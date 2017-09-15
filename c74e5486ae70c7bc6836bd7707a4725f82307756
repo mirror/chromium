@@ -22,6 +22,30 @@
       "revId": "c74e5486ae70c7bc6836bd7707a4725f82307756",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9433fc_c6cd4d0e",
+        "filename": "third_party/WebKit/Source/core/loader/NetworkQuietDetector.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-09-15T19:26:49Z",
+      "side": 1,
+      "message": "Done\n\nYes, if the current plan doesn\u0027t change, we can delete this class entirely.",
+      "parentUuid": "d2b2b31b_bff6fda1",
+      "range": {
+        "startLine": 72,
+        "startChar": 17,
+        "endLine": 72,
+        "endChar": 28
+      },
+      "revId": "c74e5486ae70c7bc6836bd7707a4725f82307756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
