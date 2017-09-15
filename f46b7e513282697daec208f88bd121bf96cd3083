@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c666c5e_70a17175",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2314,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-15T00:37:46Z",
+      "side": 1,
+      "message": "should this return whether we are in incognito mode?",
+      "range": {
+        "startLine": 2314,
+        "startChar": 31,
+        "endLine": 2314,
+        "endChar": 55
+      },
+      "revId": "f46b7e513282697daec208f88bd121bf96cd3083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fa0f2d6_1d747d96",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-15T00:37:46Z",
+      "side": 1,
+      "message": "I think we should just call this OMNIBOX_SUGGESTIONS.  It will make it easier to grok in my opinion.",
+      "range": {
+        "startLine": 70,
+        "startChar": 28,
+        "endLine": 70,
+        "endChar": 38
+      },
+      "revId": "f46b7e513282697daec208f88bd121bf96cd3083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
