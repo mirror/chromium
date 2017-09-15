@@ -22,6 +22,30 @@
       "revId": "747e434dce2feee70516d0398be1985b20165818",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd315bf4_02aa929c",
+        "filename": "chrome/android/java/OWNERS",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-15T17:06:14Z",
+      "side": 1,
+      "message": "I think it affects child directories as well based on the per-file rules in chrome/android/OWNERS",
+      "parentUuid": "8d7ff727_1811de66",
+      "range": {
+        "startLine": 2,
+        "startChar": 3,
+        "endLine": 2,
+        "endChar": 4
+      },
+      "revId": "747e434dce2feee70516d0398be1985b20165818",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
