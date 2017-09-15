@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "78f170e8_7e3ce906",
+        "filename": "components/arc/power/arc_power_bridge.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-15T00:17:29Z",
+      "side": 1,
+      "message": "oh, good catch. the \u0027k\u0027 needs to be lowercase.",
+      "parentUuid": "19e71aa0_e353b579",
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "136b1080_084259fb",
         "filename": "components/arc/power/arc_power_bridge.cc",
         "patchSetId": 12
@@ -294,6 +312,24 @@
       "writtenOn": "2017-09-14T22:34:13Z",
       "side": 1,
       "message": "I am a big fan of storing unique_ptrs in maps. However, since your struct is small and since we will have only one of each type this should probably fine. @Dan can advise if the norm is to always use unique_ptrs for values in maps.",
+      "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87504dd8_5b2b5ba4",
+        "filename": "components/arc/power/arc_power_bridge.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-15T00:17:29Z",
+      "side": 1,
+      "message": "it\u0027s fine to store a tiny struct like this directly inside of a container. i think the only real advantage to using unique_ptr here is that you\u0027d be able to forward-declare the struct in this header and move the definition to the .cc file, but that doesn\u0027t feel like a big deal to me.",
+      "parentUuid": "60454f11_fe5e27ea",
       "revId": "68fbfc8d0062d97dcdd3feab562dc6772d31ff14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
