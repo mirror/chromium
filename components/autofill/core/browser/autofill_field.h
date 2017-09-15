@@ -37,6 +37,10 @@ class AutofillField : public FormFieldData {
   const std::string& section() const { return section_; }
   ServerFieldType heuristic_type() const { return heuristic_type_; }
   ServerFieldType server_type() const { return server_type_; }
+  std::vector<AutofillQueryResponseContents::Field::FieldPrediction>
+  server_predictions() const {
+    return server_predictions_;
+  }
   HtmlFieldType html_type() const { return html_type_; }
   HtmlFieldMode html_mode() const { return html_mode_; }
   const ServerFieldTypeSet& possible_types() const { return possible_types_; }
@@ -48,6 +52,11 @@ class AutofillField : public FormFieldData {
   void set_section(const std::string& section) { section_ = section; }
   void set_heuristic_type(ServerFieldType type);
   void set_server_type(ServerFieldType type);
+  void set_server_predictions(
+      const std::vector<AutofillQueryResponseContents::Field::FieldPrediction>&
+          predictions) {
+    server_predictions_ = predictions;
+  }
   void set_possible_types(const ServerFieldTypeSet& possible_types) {
     possible_types_ = possible_types;
   }
@@ -158,8 +167,13 @@ class AutofillField : public FormFieldData {
   // that this field belongs to.
   std::string section_;
 
-  // The type of the field, as determined by the Autofill server.
+  // The type of the field, as determined by the Autofill server. To be
+  // deprecated. Use |server_types_| instead.
   ServerFieldType server_type_;
+
+  // The possible types of the field, as determined by the Autofill server.
+  std::vector<AutofillQueryResponseContents::Field::FieldPrediction>
+      server_predictions_;
 
   // The type of the field, as determined by the local heuristics.
   ServerFieldType heuristic_type_;
