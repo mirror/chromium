@@ -63,8 +63,13 @@ class ASH_EXPORT PowerButtonController
   // Overrides the tick clock used by |this| for testing.
   void SetTickClockForTesting(std::unique_ptr<base::TickClock> tick_clock);
 
-  TabletPowerButtonController* tablet_power_button_controller_for_test() {
+  TabletPowerButtonController* tablet_power_button_controller_for_test() const {
     return tablet_controller_.get();
+  }
+
+  PowerButtonDisplayController* power_button_display_controller_for_test()
+      const {
+    return display_controller_.get();
   }
 
  private:

@@ -13,6 +13,7 @@
 #include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/shell_test_api.h"
+#include "ash/system/power/power_button_display_controller.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/test_media_client.h"
 #include "ash/touch/touch_devices_controller.h"
@@ -85,8 +86,14 @@ class TabletPowerButtonControllerTest : public AshTestBase {
     lock_state_controller_ = Shell::Get()->lock_state_controller();
     lock_state_test_api_ =
         std::make_unique<LockStateControllerTestApi>(lock_state_controller_);
+    display_controller_ =
+        power_button_controller_->power_button_display_controller_for_test();
+    display_controller_test_api_ =
+        std::make_unique<PowerButtonDisplayController::TestApi>(
+            display_controller_);
     generator_ = &AshTestBase::GetEventGenerator();
-    power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, false);
+
+    SetBrightnessStateAndFlushDisplay(true);
     EXPECT_FALSE(GetBacklightsForcedOff());
 
     // Advance a long duration from initialized last resume time in
@@ -106,6 +113,7 @@ class TabletPowerButtonControllerTest : public AshTestBase {
  protected:
   // Resets the PowerButtonController and associated members.
   void ResetPowerButtonController() {
+    display_controller_test_api_ = nullptr;
     test_api_ = nullptr;
     tablet_controller_ = nullptr;
     power_button_controller_ = nullptr;
@@ -146,6 +154,19 @@ class TabletPowerButtonControllerTest : public AshTestBase {
   void ReleasePowerButton() {
     power_button_controller_->OnPowerButtonEvent(false,
                                                  tick_clock_->NowTicks());
+  }
+
+  // Simulate brightness change signal sent from powerd which is not automated
+  // change. We will just switch between two values, non-zero brightness and
+  // zero brightness to test power button display behavior. When |on|, trigger
+  // the screen on timeout to simulate that display turned on.
+  void SetBrightnessStateAndFlushDisplay(bool on) {
+    if (on) {
+      power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, true);
+      display_controller_test_api_->TriggerScreenOnTimeout();
+    } else {
+      power_manager_client_->SendBrightnessChanged(0, true);
+    }
   }
 
   void UnlockScreen() {
@@ -198,11 +219,14 @@ class TabletPowerButtonControllerTest : public AshTestBase {
   // Ownership is passed on to chromeos::DBusThreadManager.
   chromeos::FakePowerManagerClient* power_manager_client_ = nullptr;
 
-  PowerButtonController* power_button_controller_ = nullptr;  // Not owned.
-  LockStateController* lock_state_controller_ = nullptr;      // Not owned.
-  TabletPowerButtonController* tablet_controller_ = nullptr;  // Not owned.
+  PowerButtonController* power_button_controller_ = nullptr;    // Not owned.
+  TabletPowerButtonController* tablet_controller_ = nullptr;    // Not owned.
+  LockStateController* lock_state_controller_ = nullptr;        // Not owned.
+  PowerButtonDisplayController* display_controller_ = nullptr;  // Not owned.
   std::unique_ptr<TabletPowerButtonController::TestApi> test_api_;
   std::unique_ptr<LockStateControllerTestApi> lock_state_test_api_;
+  std::unique_ptr<PowerButtonDisplayController::TestApi>
+      display_controller_test_api_;
   base::SimpleTestTickClock* tick_clock_ = nullptr;  // Not owned.
   ui::test::EventGenerator* generator_ = nullptr;
 
@@ -245,12 +269,12 @@ TEST_F(TabletPowerButtonControllerTest,
   EXPECT_TRUE(test_api_->ShutdownTimerIsRunning());
   EXPECT_FALSE(GetBacklightsForcedOff());
   ReleasePowerButton();
-  power_manager_client_->SendBrightnessChanged(0, false);
+  SetBrightnessStateAndFlushDisplay(false);
   EXPECT_FALSE(test_api_->ShutdownTimerIsRunning());
   EXPECT_TRUE(GetBacklightsForcedOff());
 
   PressPowerButton();
-  power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, false);
+  SetBrightnessStateAndFlushDisplay(true);
   EXPECT_TRUE(test_api_->ShutdownTimerIsRunning());
   EXPECT_FALSE(GetBacklightsForcedOff());
   ReleasePowerButton();
@@ -273,11 +297,11 @@ TEST_F(TabletPowerButtonControllerTest,
   AdvanceClockToAvoidIgnoring();
   PressPowerButton();
   ReleasePowerButton();
-  power_manager_client_->SendBrightnessChanged(0, false);
+  SetBrightnessStateAndFlushDisplay(false);
   EXPECT_TRUE(GetBacklightsForcedOff());
 
   PressPowerButton();
-  power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, false);
+  SetBrightnessStateAndFlushDisplay(true);
   EXPECT_FALSE(GetBacklightsForcedOff());
   test_api_->TriggerShutdownTimeout();
   EXPECT_TRUE(lock_state_test_api_->shutdown_timer_is_running());
@@ -288,10 +312,10 @@ TEST_F(TabletPowerButtonControllerTest,
 
 // Tests tapping power button when screen is idle off.
 TEST_F(TabletPowerButtonControllerTest, TappingPowerButtonWhenScreenIsIdleOff) {
-  power_manager_client_->SendBrightnessChanged(0, false);
+  SetBrightnessStateAndFlushDisplay(false);
   PressPowerButton();
   EXPECT_FALSE(GetBacklightsForcedOff());
-  power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, false);
+  SetBrightnessStateAndFlushDisplay(true);
   ReleasePowerButton();
   EXPECT_FALSE(GetBacklightsForcedOff());
 }
@@ -301,10 +325,10 @@ TEST_F(TabletPowerButtonControllerTest, TappingPowerButtonWhenScreenIsIdleOff) {
 TEST_F(TabletPowerButtonControllerTest,
        TappingPowerButtonWhenSuspendedWithoutBacklightsForcedOff) {
   power_manager_client_->SendSuspendImminent();
-  power_manager_client_->SendBrightnessChanged(0, false);
+  SetBrightnessStateAndFlushDisplay(false);
   // There is a power button pressed here, but PowerButtonEvent is sent later.
   power_manager_client_->SendSuspendDone();
-  power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, false);
+  SetBrightnessStateAndFlushDisplay(true);
 
   // Send the power button event after a short delay and check that backlights
   // are not forced off.
@@ -321,7 +345,7 @@ TEST_F(TabletPowerButtonControllerTest,
   PressPowerButton();
   EXPECT_TRUE(test_api_->ShutdownTimerIsRunning());
   ReleasePowerButton();
-  power_manager_client_->SendBrightnessChanged(0, false);
+  SetBrightnessStateAndFlushDisplay(false);
   EXPECT_FALSE(test_api_->ShutdownTimerIsRunning());
   EXPECT_TRUE(GetBacklightsForcedOff());
 }
@@ -332,7 +356,7 @@ TEST_F(TabletPowerButtonControllerTest,
        TappingPowerButtonWhenSuspendedWithBacklightsForcedOff) {
   PressPowerButton();
   ReleasePowerButton();
-  power_manager_client_->SendBrightnessChanged(0, false);
+  SetBrightnessStateAndFlushDisplay(false);
   ASSERT_TRUE(GetBacklightsForcedOff());
   power_manager_client_->SendSuspendImminent();
   // There is a power button pressed here, but PowerButtonEvent is sent later.
@@ -344,7 +368,7 @@ TEST_F(TabletPowerButtonControllerTest,
   // are not forced off.
   tick_clock_->Advance(base::TimeDelta::FromMilliseconds(500));
   PressPowerButton();
-  power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, false);
+  SetBrightnessStateAndFlushDisplay(true);
   EXPECT_TRUE(test_api_->ShutdownTimerIsRunning());
   ReleasePowerButton();
   EXPECT_FALSE(test_api_->ShutdownTimerIsRunning());
@@ -356,7 +380,7 @@ TEST_F(TabletPowerButtonControllerTest,
   PressPowerButton();
   EXPECT_TRUE(test_api_->ShutdownTimerIsRunning());
   ReleasePowerButton();
-  power_manager_client_->SendBrightnessChanged(0, false);
+  SetBrightnessStateAndFlushDisplay(false);
   EXPECT_FALSE(test_api_->ShutdownTimerIsRunning());
   EXPECT_TRUE(GetBacklightsForcedOff());
 }
@@ -369,27 +393,27 @@ TEST_F(TabletPowerButtonControllerTest, ConvertibleOnLaptopMode) {
   // KeyEvent should SetBacklightsForcedOff(false).
   PressPowerButton();
   ReleasePowerButton();
-  power_manager_client_->SendBrightnessChanged(0, false);
+  SetBrightnessStateAndFlushDisplay(false);
   ASSERT_TRUE(GetBacklightsForcedOff());
   generator_->PressKey(ui::VKEY_L, ui::EF_NONE);
-  power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, false);
+  SetBrightnessStateAndFlushDisplay(true);
   EXPECT_FALSE(GetBacklightsForcedOff());
 
   // Regular mouse event should SetBacklightsForcedOff(false).
   AdvanceClockToAvoidIgnoring();
   PressPowerButton();
   ReleasePowerButton();
-  power_manager_client_->SendBrightnessChanged(0, false);
+  SetBrightnessStateAndFlushDisplay(false);
   ASSERT_TRUE(GetBacklightsForcedOff());
   generator_->MoveMouseBy(1, 1);
-  power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, false);
+  SetBrightnessStateAndFlushDisplay(true);
   EXPECT_FALSE(GetBacklightsForcedOff());
 
   // Synthesized mouse event should not SetBacklightsForcedOff(false).
   AdvanceClockToAvoidIgnoring();
   PressPowerButton();
   ReleasePowerButton();
-  power_manager_client_->SendBrightnessChanged(0, false);
+  SetBrightnessStateAndFlushDisplay(false);
   ASSERT_TRUE(GetBacklightsForcedOff());
   generator_->set_flags(ui::EF_IS_SYNTHESIZED);
   generator_->MoveMouseBy(1, 1);
@@ -404,7 +428,7 @@ TEST_F(TabletPowerButtonControllerTest, ConvertibleOnTabletMode) {
 
   PressPowerButton();
   ReleasePowerButton();
-  power_manager_client_->SendBrightnessChanged(0, false);
+  SetBrightnessStateAndFlushDisplay(false);
   ASSERT_TRUE(GetBacklightsForcedOff());
   generator_->PressKey(ui::VKEY_L, ui::EF_NONE);
   EXPECT_TRUE(GetBacklightsForcedOff());
@@ -445,11 +469,11 @@ TEST_F(TabletPowerButtonControllerTest, DisableTouchscreenWhileForcedOff) {
   ASSERT_TRUE(GetGlobalTouchscreenEnabled());
   PressPowerButton();
   ReleasePowerButton();
-  power_manager_client_->SendBrightnessChanged(0, false);
+  SetBrightnessStateAndFlushDisplay(false);
   EXPECT_FALSE(GetGlobalTouchscreenEnabled());
 
   PressPowerButton();
-  power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, false);
+  SetBrightnessStateAndFlushDisplay(true);
   ReleasePowerButton();
   EXPECT_TRUE(GetGlobalTouchscreenEnabled());
 
@@ -458,22 +482,22 @@ TEST_F(TabletPowerButtonControllerTest, DisableTouchscreenWhileForcedOff) {
   AdvanceClockToAvoidIgnoring();
   PressPowerButton();
   ReleasePowerButton();
-  power_manager_client_->SendBrightnessChanged(0, false);
+  SetBrightnessStateAndFlushDisplay(false);
   ASSERT_TRUE(GetBacklightsForcedOff());
   ASSERT_FALSE(GetGlobalTouchscreenEnabled());
   generator_->PressKey(ui::VKEY_L, ui::EF_NONE);
-  power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, false);
+  SetBrightnessStateAndFlushDisplay(true);
   EXPECT_TRUE(GetGlobalTouchscreenEnabled());
 
   // MouseEvent on laptop mode when screen is off.
   AdvanceClockToAvoidIgnoring();
   PressPowerButton();
   ReleasePowerButton();
-  power_manager_client_->SendBrightnessChanged(0, false);
+  SetBrightnessStateAndFlushDisplay(false);
   ASSERT_TRUE(GetBacklightsForcedOff());
   ASSERT_FALSE(GetGlobalTouchscreenEnabled());
   generator_->MoveMouseBy(1, 1);
-  power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, false);
+  SetBrightnessStateAndFlushDisplay(true);
   EXPECT_TRUE(GetGlobalTouchscreenEnabled());
 }
 
@@ -484,13 +508,19 @@ TEST_F(TabletPowerButtonControllerTest, DisableTouchscreenForInactivity) {
 
   // Turn screen off for automated change (e.g. user is inactive).
   power_manager_client_->SendBrightnessChanged(0, false);
+  EXPECT_EQ(PowerButtonDisplayController::ScreenState::OFF_AUTO,
+            display_controller_->screen_state());
   EXPECT_FALSE(GetGlobalTouchscreenEnabled());
-  power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, true);
+  SetBrightnessStateAndFlushDisplay(true);
+  EXPECT_EQ(PowerButtonDisplayController::ScreenState::ON,
+            display_controller_->screen_state());
   EXPECT_TRUE(GetGlobalTouchscreenEnabled());
 
   // After decreasing the brightness to zero for a user request, the touchscreen
   // should remain enabled.
   power_manager_client_->SendBrightnessChanged(0, true);
+  EXPECT_EQ(PowerButtonDisplayController::ScreenState::OFF,
+            display_controller_->screen_state());
   EXPECT_TRUE(GetGlobalTouchscreenEnabled());
 }
 
@@ -546,14 +576,14 @@ TEST_F(TabletPowerButtonControllerTest, IgnoreRepeatedPowerButtonReleases) {
   // Set backlights forced off for starting point.
   PressPowerButton();
   ReleasePowerButton();
-  power_manager_client_->SendBrightnessChanged(0, false);
+  SetBrightnessStateAndFlushDisplay(false);
   ASSERT_TRUE(GetBacklightsForcedOff());
 
   // Test that a pressing-releasing operation after a short duration, backlights
   // forced off is stopped since we don't drop request for power button pressed.
   tick_clock_->Advance(base::TimeDelta::FromMilliseconds(200));
   PressPowerButton();
-  power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, false);
+  SetBrightnessStateAndFlushDisplay(true);
   ReleasePowerButton();
   EXPECT_FALSE(GetBacklightsForcedOff());
 
@@ -568,7 +598,7 @@ TEST_F(TabletPowerButtonControllerTest, IgnoreRepeatedPowerButtonReleases) {
   tick_clock_->Advance(base::TimeDelta::FromMilliseconds(800));
   PressPowerButton();
   ReleasePowerButton();
-  power_manager_client_->SendBrightnessChanged(0, false);
+  SetBrightnessStateAndFlushDisplay(false);
   EXPECT_TRUE(GetBacklightsForcedOff());
 }
 
@@ -734,7 +764,7 @@ TEST_F(TabletPowerButtonControllerTest, SuspendMediaSessions) {
 TEST_F(TabletPowerButtonControllerTest, SuspendDoneStopsForcingOff) {
   PressPowerButton();
   ReleasePowerButton();
-  power_manager_client_->SendBrightnessChanged(0, false);
+  SetBrightnessStateAndFlushDisplay(false);
   ASSERT_TRUE(GetBacklightsForcedOff());
 
   // Simulate an edge case that system resumes because of tablet power button
@@ -807,6 +837,45 @@ TEST_F(TabletPowerButtonControllerTest, TouchscreenEnabledClamshell) {
   base::RunLoop().RunUntilIdle();
   SendAccelerometerUpdate(kSidewaysVector, kSidewaysVector);
   EXPECT_TRUE(GetGlobalTouchscreenEnabled());
+}
+
+// Tests that Chrome may receive brighness on signal before screen is actually
+// on. In this case, the power button press-and-release before screen is
+// actually on should be ignored (crbug.com/735225).
+TEST_F(TabletPowerButtonControllerTest, BrightnessOnWhileScreenNotReady) {
+  PressPowerButton();
+  ReleasePowerButton();
+  SetBrightnessStateAndFlushDisplay(false);
+  ASSERT_TRUE(GetBacklightsForcedOff());
+  ASSERT_EQ(PowerButtonDisplayController::ScreenState::OFF,
+            display_controller_->screen_state());
+
+  // Trigger a key event to stop backlights forcing off. Chrome will receive
+  // brightness changed signal. But we may still have display off state.
+  generator_->PressKey(ui::VKEY_L, ui::EF_NONE);
+  power_manager_client_->SendBrightnessChanged(kNonZeroBrightness, true);
+  EXPECT_TRUE(display_controller_test_api_->ScreenOnTimerIsRunning());
+  EXPECT_EQ(PowerButtonDisplayController::ScreenState::OFF,
+            display_controller_->screen_state());
+  EXPECT_FALSE(GetBacklightsForcedOff());
+
+  // The power button event while the display may be still off should not set
+  // display off.
+  PressPowerButton();
+  ReleasePowerButton();
+  EXPECT_FALSE(GetBacklightsForcedOff());
+
+  // Trigger screen on timer timeout to simulate display turned on.
+  display_controller_test_api_->TriggerScreenOnTimeout();
+  EXPECT_EQ(PowerButtonDisplayController::ScreenState::ON,
+            display_controller_->screen_state());
+
+  // The next power button event should be able to set display off.
+  AdvanceClockToAvoidIgnoring();
+  PressPowerButton();
+  ReleasePowerButton();
+  power_manager_client_->SendBrightnessChanged(0, true);
+  EXPECT_TRUE(GetBacklightsForcedOff());
 }
 
 }  // namespace ash
