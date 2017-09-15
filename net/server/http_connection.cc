@@ -115,12 +115,19 @@ bool HttpConnection::QueuedWriteIOBuffer::Append(const std::string& data) {
     return false;
   }
 
+  // Appending to pending_data may move string underlying data_; but
+  // further data_ maybe pointing inside it, not its beginning, so
+  // figure out the offset to update it.
+  ptrdiff_t offset = 0;
+  if (data_)
+    offset = data_ - pending_data_.front().data();
+
   pending_data_.push(data);
   total_size_ += data.size();
 
-  // If new data is the first pending data, updates data_.
-  if (pending_data_.size() == 1)
-    data_ = const_cast<char*>(pending_data_.front().data());
+  // Recompute data for either new stuff or base::queue shuffling
+  // stuff around.
+  data_ = const_cast<char*>(pending_data_.front().data()) + offset;
   return true;
 }
 
