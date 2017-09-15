@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b84fb012_f7711ca6",
+        "filename": "components/autofill/core/browser/proto/server.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-15T13:10:56Z",
+      "side": 1,
+      "message": "let\u0027s not use required fields for new fields and instead use \"optional\".\n\nFor one, if the server is not updated before this goes in, the code would fail to parse the whole proto.",
+      "revId": "c3c3b221a1adbcdca9dc9ec9dd85d416f43afd1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
