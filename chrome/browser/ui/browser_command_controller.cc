@@ -329,14 +329,20 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
       CloseWindow(browser_);
       break;
     case IDC_NEW_TAB:
+      NewTab(browser_);
+      {
 #if defined(OS_WIN) || (defined(OS_LINUX) && !defined(OS_CHROMEOS))
       // This is not in NewTab() to avoid tracking programmatic creation of new
       // tabs by extensions.
-      feature_engagement::NewTabTrackerFactory::GetInstance()
-          ->GetForProfile(profile())
-          ->OnNewTabOpened();
+      feature_engagement::NewTabTracker* new_tab_tracker =
+          feature_engagement::NewTabTrackerFactory::GetInstance()
+              ->GetForProfile(profile());
+
+      new_tab_tracker->OnNewTabOpened();
+      if (new_tab_tracker->CloseBubble())
+        new_tab_tracker->OnPromoClosed();
 #endif
-      NewTab(browser_);
+      }
       break;
     case IDC_CLOSE_TAB:
       base::RecordAction(base::UserMetricsAction("CloseTabByKey"));
