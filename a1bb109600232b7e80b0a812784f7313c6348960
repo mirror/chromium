@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f1a9e57_fd2d2673",
+        "filename": "content/browser/histogram_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-09-15T04:25:20Z",
+      "side": 1,
+      "message": "Since we aren\u0027t sending it over mojo, can we keep this as an int?",
+      "range": {
+        "startLine": 47,
+        "startChar": 24,
+        "endLine": 47,
+        "endChar": 31
+      },
+      "revId": "a1bb109600232b7e80b0a812784f7313c6348960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
