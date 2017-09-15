@@ -4,7 +4,7 @@
 
 #include "chrome/browser/notifications/system_component_notifier_source_chromeos.h"
 
-#include "ash/system/system_notifier.h"
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "chrome/browser/notifications/notifier_state_tracker.h"
 #include "chrome/browser/notifications/notifier_state_tracker_factory.h"
 #include "chrome/grit/theme_resources.h"
@@ -29,7 +29,7 @@ SystemComponentNotifierSourceChromeOS::GetNotifierList(Profile* profile) {
       l10n_util::GetStringUTF16(IDS_MESSAGE_CENTER_NOTIFIER_SCREENSHOT_NAME);
   message_center::NotifierId screenshot_notifier_id(
       message_center::NotifierId::SYSTEM_COMPONENT,
-      ash::system_notifier::kNotifierScreenshot);
+      ash::mojom::kNotifierScreenshot);
   message_center::Notifier* const screenshot_notifier =
       new message_center::Notifier(
           screenshot_notifier_id, screenshot_name,

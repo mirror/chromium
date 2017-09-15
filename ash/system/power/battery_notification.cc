@@ -4,6 +4,7 @@
 
 #include "ash/system/power/battery_notification.h"
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -113,7 +114,7 @@ std::unique_ptr<Notification> CreateNotification(
           base::string16(), GURL(),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierBattery),
+              mojom::kNotifierBattery),
           message_center::RichNotificationData(), nullptr,
           GetBatteryImageMD(notification_state),
           GetWarningLevelMD(notification_state));

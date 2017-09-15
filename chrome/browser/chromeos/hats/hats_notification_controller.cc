@@ -4,6 +4,7 @@
 
 #include "chrome/browser/chromeos/hats/hats_notification_controller.h"
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "base/command_line.h"
 #include "base/feature_list.h"
 #include "base/memory/ptr_util.h"
@@ -35,8 +36,6 @@
 namespace {
 
 const char kNotificationOriginUrl[] = "chrome://hats";
-
-const char kNotifierHats[] = "ash.hats";
 
 // Minimum amount of time before the notification is displayed again after a
 // user has interacted with it.
@@ -214,7 +213,7 @@ Notification* HatsNotificationController::CreateNotification() {
       gfx::Image(
           gfx::CreateVectorIcon(kGoogleGLogoIcon, gfx::kPlaceholderColor)),
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
-                                 kNotifierHats),
+                                 ash::mojom::kNotifierHats),
       l10n_util::GetStringUTF16(IDS_MESSAGE_CENTER_NOTIFIER_HATS_NAME),
       GURL(kNotificationOriginUrl), kNotificationId, optional, this);
   if (message_center::IsNewStyleNotificationEnabled()) {

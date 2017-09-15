@@ -4,6 +4,7 @@
 
 #include "ash/system/web_notification/inactive_user_notification_blocker.h"
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/system/system_notifier.h"
@@ -117,8 +118,7 @@ TEST_F(InactiveUserNotificationBlockerTest, Basic) {
       message_center::NotifierId::APPLICATION, "test-app");
   // Only allowed the system notifier.
   message_center::NotifierId ash_system_notifier(
-      message_center::NotifierId::SYSTEM_COMPONENT,
-      system_notifier::kNotifierDisplay);
+      message_center::NotifierId::SYSTEM_COMPONENT, mojom::kNotifierDisplay);
   // Other system notifiers should be treated as same as a normal notifier.
   message_center::NotifierId random_system_notifier(
       message_center::NotifierId::SYSTEM_COMPONENT, "random_system_component");

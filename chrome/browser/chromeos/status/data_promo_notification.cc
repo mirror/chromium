@@ -4,8 +4,8 @@
 
 #include "chrome/browser/chromeos/status/data_promo_notification.h"
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/resources/grit/ash_resources.h"
-#include "ash/system/system_notifier.h"
 #include "base/command_line.h"
 #include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
@@ -270,7 +270,7 @@ void DataPromoNotification::ShowOptionalMobileDataPromoNotification() {
   message_center::MessageCenter::Get()->AddNotification(
       message_center::Notification::CreateSystemNotification(
           kDataPromoNotificationId, base::string16() /* title */, message, icon,
-          ash::system_notifier::kNotifierNetwork,
+          ash::mojom::kNotifierNetwork,
           base::Bind(&NotificationClicked, default_network->guid(), info_url)));
 
   SetShow3gPromoNotification(false);
@@ -307,7 +307,7 @@ bool DataPromoNotification::ShowDataSaverNotification() {
   message_center::MessageCenter::Get()->AddNotification(
       message_center::Notification::CreateSystemNotification(
           kDataSaverNotificationId, title, message, icon,
-          ash::system_notifier::kNotifierNetwork,
+          ash::mojom::kNotifierNetwork,
           base::Bind(&NotificationClicked, "", kDataSaverExtensionUrl)));
   base::RecordAction(base::UserMetricsAction("DataSaverPrompt_Shown"));
 

@@ -4,7 +4,7 @@
 
 #include <memory>
 
-#include "ash/system/system_notifier.h"
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/run_loop.h"
@@ -162,8 +162,7 @@ IN_PROC_BROWSER_TEST_F(LoginStateNotificationBlockerChromeOSBrowserTest,
                        AlwaysAllowedNotifier) {
   // NOTIFIER_DISPLAY is allowed to shown in the login screen.
   message_center::NotifierId notifier_id(
-      message_center::NotifierId::SYSTEM_COMPONENT,
-      ash::system_notifier::kNotifierDisplay);
+      message_center::NotifierId::SYSTEM_COMPONENT, mojom::kNotifierDisplay);
   notifier_id.profile_id = kTestUsers[0];
 
   // Logged in as a normal user.

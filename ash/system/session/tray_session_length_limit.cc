@@ -8,6 +8,7 @@
 #include <memory>
 #include <utility>
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
@@ -159,7 +160,7 @@ void TraySessionLengthLimit::UpdateNotification() {
           base::string16() /* display_source */, GURL(),
           message_center::NotifierId(
               message_center::NotifierId::SYSTEM_COMPONENT,
-              system_notifier::kNotifierSessionLengthTimeout),
+              mojom::kNotifierSessionLengthTimeout),
           data, nullptr /* delegate */, kNotificationTimerIcon,
           message_center::SystemNotificationWarningLevel::NORMAL);
   notification->SetSystemPriority();

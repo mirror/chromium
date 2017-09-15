@@ -4,6 +4,7 @@
 
 #include "ash/system/system_notifier.h"
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "ui/message_center/public/cpp/message_center_switches.h"
@@ -20,9 +21,10 @@ namespace {
 // which can appear regardless of the situation, such like login screen or lock
 // screen.
 const char* kAlwaysShownSystemNotifierIds[] = {
-    kNotifierAccessibility, kNotifierDeprecatedAccelerator, kNotifierBattery,
-    kNotifierDisplay, kNotifierDisplayError, kNotifierNetworkError,
-    kNotifierPower, kNotifierStylusBattery,
+    mojom::kNotifierAccessibility, mojom::kNotifierDeprecatedAccelerator,
+    mojom::kNotifierBattery, mojom::kNotifierDisplay,
+    mojom::kNotifierDisplayError, mojom::kNotifierNetworkError,
+    mojom::kNotifierPower, mojom::kNotifierStylusBattery,
     // Note: Order doesn't matter here, so keep this in alphabetic order, don't
     // just add your stuff at the end!
     NULL};
@@ -30,12 +32,14 @@ const char* kAlwaysShownSystemNotifierIds[] = {
 // |kAshSystemNotifiers| is the list of normal system notification sources for
 // ash events. These notifications can be hidden in some context.
 const char* kAshSystemNotifiers[] = {
-    kNotifierBluetooth, kNotifierCapsLock, kNotifierDisplayResolutionChange,
-    kNotifierDisk, kNotifierLocale, kNotifierMultiProfileFirstRun,
-    kNotifierNetwork, kNotifierNetworkPortalDetector, kNotifierScreenshot,
-    kNotifierScreenCapture, kNotifierScreenShare, kNotifierSessionLengthTimeout,
-    kNotifierSms, kNotifierSupervisedUser, kNotifierTether, kNotifierWebUsb,
-    kNotifierWifiToggle,
+    mojom::kNotifierBluetooth, mojom::kNotifierCapsLock,
+    mojom::kNotifierDisplayResolutionChange, mojom::kNotifierDisk,
+    mojom::kNotifierLocale, mojom::kNotifierMultiProfileFirstRun,
+    mojom::kNotifierNetwork, mojom::kNotifierNetworkPortalDetector,
+    mojom::kNotifierScreenshot, mojom::kNotifierScreenCapture,
+    mojom::kNotifierScreenShare, mojom::kNotifierSessionLengthTimeout,
+    mojom::kNotifierSms, mojom::kNotifierSupervisedUser, mojom::kNotifierTether,
+    mojom::kNotifierWebUsb, mojom::kNotifierWifiToggle,
     // Note: Order doesn't matter here, so keep this in alphabetic order, don't
     // just add your stuff at the end!
     NULL};
@@ -53,35 +57,6 @@ bool MatchSystemNotifierId(const message_center::NotifierId& notifier_id,
 }
 
 }  // namespace
-
-const char kNotifierAccessibility[] = "ash.accessibility";
-const char kNotifierBattery[] = "ash.battery";
-const char kNotifierBluetooth[] = "ash.bluetooth";
-const char kNotifierCapsLock[] = "ash.caps-lock";
-const char kNotifierDeprecatedAccelerator[] = "ash.accelerator-controller";
-const char kNotifierDisk[] = "ash.disk";
-const char kNotifierDisplay[] = "ash.display";
-const char kNotifierDisplayError[] = "ash.display.error";
-const char kNotifierDisplayResolutionChange[] = "ash.display.resolution-change";
-const char kNotifierDualRole[] = "ash.dual-role";
-const char kNotifierFingerprintUnlock[] = "ash.fingerprintunlock";
-const char kNotifierLocale[] = "ash.locale";
-const char kNotifierMultiProfileFirstRun[] = "ash.multi-profile.first-run";
-const char kNotifierNetwork[] = "ash.network";
-const char kNotifierNetworkError[] = "ash.network.error";
-const char kNotifierNetworkPortalDetector[] = "ash.network.portal-detector";
-const char kNotifierPinUnlock[] = "ash.pinunlock";
-const char kNotifierPower[] = "ash.power";
-const char kNotifierScreenshot[] = "ash.screenshot";
-const char kNotifierScreenCapture[] = "ash.screen-capture";
-const char kNotifierScreenShare[] = "ash.screen-share";
-const char kNotifierSessionLengthTimeout[] = "ash.session-length-timeout";
-const char kNotifierSms[] = "ash.sms";
-const char kNotifierStylusBattery[] = "ash.stylus-battery";
-const char kNotifierSupervisedUser[] = "ash.locally-managed-user";
-const char kNotifierTether[] = "ash.tether";
-const char kNotifierWebUsb[] = "ash.webusb";
-const char kNotifierWifiToggle[] = "ash.wifi-toggle";
 
 bool ShouldAlwaysShowPopups(const message_center::NotifierId& notifier_id) {
   return MatchSystemNotifierId(notifier_id, kAlwaysShownSystemNotifierIds);

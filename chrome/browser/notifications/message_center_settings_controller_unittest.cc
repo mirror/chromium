@@ -5,6 +5,7 @@
 #include <string>
 #include <utility>
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/strings/utf_string_conversions.h"
@@ -287,8 +288,7 @@ TEST_F(MessageCenterSettingsControllerTest, NotifierSortOrder) {
 #else
   // ChromeOS always adds a system notifier to end of the list.
   EXPECT_EQ(3u, notifiers.size());
-  EXPECT_EQ(ash::system_notifier::kNotifierScreenshot,
-            notifiers[2]->notifier_id.id);
+  EXPECT_EQ(ash::mojom::kNotifierScreenshot, notifiers[2]->notifier_id.id);
 #endif
 
   EXPECT_EQ(kBarId, notifiers[0]->notifier_id.id);
