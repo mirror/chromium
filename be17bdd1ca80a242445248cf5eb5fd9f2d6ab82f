@@ -52,6 +52,24 @@
       "revId": "be17bdd1ca80a242445248cf5eb5fd9f2d6ab82f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87fabf6d_813518d1",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-15T18:09:13Z",
+      "side": 1,
+      "message": "The code was also assuming that if a transaction with WRITE mode is in done_headers_queue then its ok for it to become a writer since there would not be any reader. That\u0027s because if it skipped validation it would have been converted to READ, if it got a 304 it just changes the headers and gets converted to READ, if it got a 200 then https://cs.chromium.org/chromium/src/net/http/http_cache.cc?sq\u003dpackage:chromium\u0026l\u003d1101 will make sure that it only goes ahead with this entry if there is no reader. But this is too complex to understand given that those 3 different code paths are in different parts of the code. Also, I think we should not assume that given the crashes, even though the crash is a slightly different assert than this assumption. Adding the check for entry-\u003ereaders.empty() to be true before making a transaction a writer. I feel making HC code robust to receiving any mode from HC::T is the way to go.",
+      "parentUuid": "8ba16236_50d56306",
+      "revId": "be17bdd1ca80a242445248cf5eb5fd9f2d6ab82f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
