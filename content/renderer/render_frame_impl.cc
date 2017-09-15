@@ -2004,8 +2004,10 @@ void RenderFrameImpl::OnSelectRange(const gfx::Point& base,
                       render_view_->ConvertWindowPointToViewport(extent));
 }
 
-void RenderFrameImpl::OnAdjustSelectionByCharacterOffset(int start_adjust,
-                                                         int end_adjust) {
+void RenderFrameImpl::OnAdjustSelectionByCharacterOffset(
+    int start_adjust,
+    int end_adjust,
+    bool show_selection_menu) {
   WebRange range = frame_->GetInputMethodController()->GetSelectionOffsets();
   if (range.IsNull())
     return;
@@ -2023,7 +2025,8 @@ void RenderFrameImpl::OnAdjustSelectionByCharacterOffset(int start_adjust,
   // the document.
   frame_->SelectRange(WebRange(range.StartOffset() + start_adjust,
                                range.length() + end_adjust - start_adjust),
-                      WebLocalFrame::kPreserveHandleVisibility);
+                      WebLocalFrame::kPreserveHandleVisibility,
+                      show_selection_menu);
 }
 
 void RenderFrameImpl::OnCollapseSelection() {

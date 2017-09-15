@@ -68,4 +68,10 @@ SetSelectionOptions::Builder& SetSelectionOptions::Builder::SetSetSelectionBy(
   return *this;
 }
 
+SetSelectionOptions::Builder&
+SetSelectionOptions::Builder::SetShouldShowSelectionMenu(bool new_value) {
+  data_.should_show_selection_menu_ = new_value;
+  return *this;
+}
+
 }  // namespace blink

@@ -239,7 +239,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
                     && mSelectionClient.requestSelectionPopupUpdates(shouldSuggest)) {
                 // Rely on |mSelectionClient| sending a classification request and the request
                 // always calling onClassified() callback.
-                mPendingShowActionMode = true;
+                mPendingShowActionMode = false;
             } else {
                 showActionModeOrClearOnFailure();
             }
@@ -968,11 +968,7 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
 
             case SelectionEventType.SELECTION_HANDLES_MOVED:
                 mSelectionRect.set(left, top, right, bottom);
-                if (mPendingShowActionMode) {
-                    showActionModeOrClearOnFailure();
-                } else {
-                    invalidateContentRect();
-                }
+                invalidateContentRect();
                 break;
 
             case SelectionEventType.SELECTION_HANDLES_CLEARED:
@@ -1187,20 +1183,14 @@ public class SelectionPopupController extends ActionModeCallbackHelper {
             // mode has been dismissed.
             mClassificationResult = result;
 
-            // Do not recreate the action mode if it has been cancelled (by ActionMode.finish())
-            // and not recreated after that.
-            if (!mPendingShowActionMode && !isActionModeValid()) {
-                assert !mHidden;
-                return;
-            }
-
             // Update the selection range if needed.
             if (!(result.startAdjust == 0 && result.endAdjust == 0)) {
-                // This call causes SELECTION_HANDLES_MOVED event.
-                mWebContents.adjustSelectionByCharacterOffset(result.startAdjust, result.endAdjust);
+                // This call will cause showSelectionMenu again.
+                mWebContents.adjustSelectionByCharacterOffset(
+                        result.startAdjust, result.endAdjust, true);
 
-                // Remain pending until SELECTION_HANDLES_MOVED arrives.
-                if (mPendingShowActionMode) return;
+                mPendingShowActionMode = true;
+                return;
             }
 
             // Rely on this method to clear |mHidden| and unhide the action mode.

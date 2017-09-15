@@ -131,7 +131,12 @@ bool SelectionPopupController::ShowSelectionMenu(
                           params.source_type == ui::MENU_SOURCE_LONG_PRESS ||
                           params.source_type == ui::MENU_SOURCE_TOUCH_HANDLE ||
                           params.source_type == ui::MENU_SOURCE_STYLUS;
-  if (!from_touch || (!params.is_editable && params.selection_text.empty()))
+
+  const bool after_adjust =
+      params.source_type == ui::MENU_SOURCE_ADJUST_SELECTION;
+
+  if (!(from_touch || after_adjust) ||
+      (!params.is_editable && params.selection_text.empty()))
     return false;
 
   const bool can_select_all =
