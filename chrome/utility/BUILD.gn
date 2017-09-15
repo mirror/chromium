@@ -6,6 +6,7 @@ import("//build/config/crypto.gni")
 import("//build/config/features.gni")
 import("//build/config/sysroot.gni")
 import("//extensions/features/features.gni")
+import("//net/features.gni")
 import("//printing/features/features.gni")
 import("//services/service_manager/public/service_manifest.gni")
 
@@ -143,6 +144,10 @@ static_library("utility") {
     } else {
       sources += [ "image_writer/image_writer_stub.cc" ]
     }
+  }
+
+  if (enable_net_mojo) {
+    deps += [ "//content/public/network" ]
   }
 
   if (use_nss_certs) {

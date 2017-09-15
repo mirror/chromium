@@ -11,12 +11,12 @@
           "chrome::mojom::SafeArchiveAnalyzer",
           "chrome::mojom::ShellHandler",
           "chrome::mojom::ZipFileCreator",
+          "content::mojom::ProxyResolverFactory",
           "extensions::mojom::ExtensionUnpacker",
           "extensions::mojom::ManifestParser",
           "extensions::mojom::MediaParser",
           "extensions::mojom::RemovableStorageWriter",
           "extensions::mojom::WiFiCredentialsGetter",
-          "net::interfaces::ProxyResolverFactory",
           "payments::mojom::PaymentManifestParser",
           "profiling::mojom::MemlogClient",
           "safe_json::mojom::SafeJsonParser"
