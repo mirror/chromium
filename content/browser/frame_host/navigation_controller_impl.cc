@@ -1406,6 +1406,11 @@ void NavigationControllerImpl::RendererDidNavigateToExistingPage(
   if (entry->update_virtual_url_with_url())
     UpdateVirtualURLToURL(entry, params.url);
 
+  // Reset the title. Despite being the same navigation entry, the title might
+  // not exist in the new incarnation of the page (https://crbug.com/96041).
+  if (!is_same_document)
+    entry->SetTitle(base::string16());
+
   // The site instance will normally be the same except
   // 1) session restore, when no site instance will be assigned or
   // 2) redirect, when the site instance is reset.
@@ -1466,6 +1471,10 @@ void NavigationControllerImpl::RendererDidNavigateToSamePage(
   if (existing_entry->update_virtual_url_with_url())
     UpdateVirtualURLToURL(existing_entry, params.url);
   existing_entry->SetURL(params.url);
+
+  // Reset the title. Despite being the same navigation entry, the title might
+  // not exist in the new incarnation of the page (https://crbug.com/96041).
+  existing_entry->SetTitle(base::string16());
 
   // If a user presses enter in the omnibox and the server redirects, the URL
   // might change (but it's still considered a SAME_PAGE navigation). So we must
