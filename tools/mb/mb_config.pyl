@@ -171,6 +171,7 @@
       'ClangToTWin64(dll)': 'clang_tot_shared_release_dcheck',
       'ClangToTWinCFI': 'clang_tot_cfi_full_cfi_diag_thin_lto_release_static_dcheck_always_on_x86',
       'ClangToTWinCFI64': 'clang_tot_cfi_full_cfi_diag_thin_lto_release_static_dcheck_always_on',
+      'ClangToTWinThinLTO64': 'clang_tot_official_full_symbols_thin_lto_win_static_use_lld',
       'ClangToTiOS': 'ios',
       'Closure Compilation Linux': 'closure_compilation',
       'CrWinAsan': 'asan_clang_fuzzer_static_v8_heap_x86_full_symbols_release',
@@ -1558,6 +1559,10 @@
       'thin_lto', 'clang_tot', 'full_symbols', 'release', 'static', 'use_lld',
     ],
 
+    'clang_tot_official_full_symbols_thin_lto_win_static_use_lld': [
+      'clang_tot', 'official', 'full_symbols', 'thin_lto_win', 'static', 'use_lld',
+    ],
+
     'tsan_disable_nacl_debug_bot': [
       'tsan', 'disable_nacl', 'debug_bot',
     ],
@@ -1983,6 +1988,10 @@
     'thin_lto': {
       'gn_args': 'use_thin_lto=true',
       'mixins': ['lto'],
+    },
+
+    'thin_lto_win': {
+      'gn_args': 'use_thin_lto=true',
     },
 
     'tsan': {
