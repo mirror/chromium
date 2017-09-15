@@ -478,6 +478,10 @@ bool GetPasswordForm(
 
     // Various input types such as text, url, email can be a username field.
     if (input_element->IsTextField() && !input_element->IsPasswordField()) {
+      if (!input_element->Value().IsEmpty()) {
+        other_possible_usernames.push_back(
+            MakePossibleUsernamePair(*input_element));
+      }
       if (HasAutocompleteAttributeValue(*input_element,
                                         kAutocompleteUsername)) {
         if (password_form->username_marked_by_site) {
@@ -489,9 +493,7 @@ bool GetPasswordForm(
           // unlike username_element, other_possible_usernames is used only for
           // autofill, not for form identification, and blank autofill entries
           // are not useful, so we do not collect empty strings.
-          if (!input_element->Value().IsEmpty())
-            other_possible_usernames.push_back(
-                MakePossibleUsernamePair(*input_element));
+
         } else {
           // The first element marked with autocomplete='username'. Take the
           // hint and treat it as the username (overruling the tentative choice
@@ -500,7 +502,6 @@ bool GetPasswordForm(
           // with the autocomplete attribute, making them unlikely alternatives.
           username_element = *input_element;
           password_form->username_marked_by_site = true;
-          other_possible_usernames.clear();
         }
       } else {
         if (password_form->username_marked_by_site) {
@@ -514,9 +515,6 @@ bool GetPasswordForm(
           // alternative, at least for now.
           if (username_element.IsNull())
             latest_input_element = *input_element;
-          if (!input_element->Value().IsEmpty())
-            other_possible_usernames.push_back(
-                MakePossibleUsernamePair(*input_element));
         }
       }
     }
@@ -556,10 +554,6 @@ bool GetPasswordForm(
       username_element = last_text_input_before_password[password];
     if (username_element.IsNull() && !new_password.IsNull())
       username_element = last_text_input_before_password[new_password];
-    if (!username_element.IsNull())
-      ExcludeUsernameFromOtherUsernamesList(
-          MakePossibleUsernamePair(username_element),
-          &other_possible_usernames);
   }
   password_form->layout = SequenceToLayout(layout_sequence);
 
@@ -573,13 +567,6 @@ bool GetPasswordForm(
   if (map_has_username_prediction &&
       (username_element_iterator == predicted_elements.end() ||
        username_element_iterator->second != PREDICTION_USERNAME)) {
-    ExcludeUsernameFromOtherUsernamesList(
-        MakePossibleUsernamePair(predicted_username_element),
-        &other_possible_usernames);
-    if (!username_element.IsNull()) {
-      other_possible_usernames.push_back(
-          MakePossibleUsernamePair(username_element));
-    }
     username_element = predicted_username_element;
     password_form->was_parsed_using_autofill_predictions = true;
   }
@@ -607,6 +594,11 @@ bool GetPasswordForm(
   password_form->origin =
       form_util::GetCanonicalOriginForDocument(form.document);
   password_form->signon_realm = GetSignOnRealm(password_form->origin);
+
+  if (!username_element.IsNull()) {
+    ExcludeUsernameFromOtherUsernamesList(
+        MakePossibleUsernamePair(username_element), &other_possible_usernames);
+  }
   password_form->other_possible_usernames.swap(other_possible_usernames);
 
   if (!password.IsNull()) {
