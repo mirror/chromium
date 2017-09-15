@@ -49,6 +49,184 @@
     },
     {
       "key": {
+        "uuid": "15b571b4_a7d26598",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-15T11:04:39Z",
+      "side": 1,
+      "message": "OK, now internal conversion errors are ignored behind WideToUTF8 implementation.\nThat\u0027s fine with me, and we won\u0027t need a specific test for this.",
+      "range": {
+        "startLine": 67,
+        "startChar": 9,
+        "endLine": 67,
+        "endChar": 19
+      },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1260713_feb47298",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-15T11:04:39Z",
+      "side": 1,
+      "message": "Traits can be inside internal namespace?",
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3152f615_e75f89a5",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-15T11:04:39Z",
+      "side": 1,
+      "message": "struct is enough?",
+      "range": {
+        "startLine": 19,
+        "startChar": 12,
+        "endLine": 19,
+        "endChar": 17
+      },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "699975b6_47f62e94",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-15T11:04:39Z",
+      "side": 1,
+      "message": "BASE_EXPORT should be after \"class\" or \"struct\".\nThis is the reason why you need to write BASE_EXPORT on each method unexpectedly.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 12
+      },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea3946a5_0df61655",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-15T11:04:39Z",
+      "side": 1,
+      "message": "should be able to be removed by the fix I suggested.",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af31d4c3_d75e9dd0",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-15T11:04:39Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 14
+      },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5970db2a_d9b32a20",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-15T11:04:39Z",
+      "side": 1,
+      "message": "same. should be after the \"class\".\nAll BASE_EXPORT for methods can be removed.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 12
+      },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "999cae62_2e3c5e13",
+        "filename": "base/win/scoped_hstring.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-15T11:04:39Z",
+      "side": 1,
+      "message": "base:: is not needed here?",
+      "range": {
+        "startLine": 52,
+        "startChar": 13,
+        "endLine": 52,
+        "endChar": 19
+      },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92846364_416581c9",
         "filename": "base/win/win_util.cc",
         "patchSetId": 15
@@ -65,6 +243,29 @@
         "startChar": 9,
         "endLine": 121,
         "endChar": 28
+      },
+      "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f089d7_8c2189b8",
+        "filename": "media/midi/midi_manager_winrt.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-15T11:04:39Z",
+      "side": 1,
+      "message": "can we have a change to add one more constructor that takes const std::string\u0026 for this use case?",
+      "range": {
+        "startLine": 487,
+        "startChar": 36,
+        "endLine": 487,
+        "endChar": 46
       },
       "revId": "2e4751990cdf508feb23d8b9507cf219c46986c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",

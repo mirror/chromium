@@ -202,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "1bdbc897_d49ab59c",
+        "filename": "base/win/com_base_util.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-15T11:04:39Z",
+      "side": 1,
+      "message": "Ah, I think I understand, but let me check.\n\nWhen component build is enabled, base and midi are built as separate DLLs. Since delayload linker flag is specified only for base, the stubs for the runtime API can be visible only inside base even after preload was done, and media need to call base\u0027s exported function, this base::win::RoGetActivationFactory.\n\nThat makes sense. Thanks!",
+      "parentUuid": "e88b452b_93ed4203",
+      "range": {
+        "startLine": 25,
+        "startChar": 20,
+        "endLine": 25,
+        "endChar": 42
+      },
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92be5d77_3dd8669a",
         "filename": "base/win/com_base_util_unittest.cc",
         "patchSetId": 13
@@ -539,6 +563,24 @@
       "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83c4db8c_ea0d0cfe",
+        "filename": "base/win/scoped_hstring.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-15T11:04:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c8b940fa_bce0273c",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -902,6 +944,24 @@
       "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e06540d6_9ea65255",
+        "filename": "base/win/scoped_hstring_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-15T11:04:39Z",
+      "side": 1,
+      "message": "since implementation was changed, I will take another look at the latest change, and ask in the latest patch set if it is still needed.",
+      "parentUuid": "11c579b3_b2a38a14",
+      "revId": "a73f26f06af4fbaabb26f8610a16ac0c0dafb7ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
