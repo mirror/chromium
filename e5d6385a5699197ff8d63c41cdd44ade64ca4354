@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bf20f5aa_0e2bb594",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-15T20:18:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "726dab53_6c639878",
+      "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50ee8310_b2c2b78b",
         "filename": "chrome/browser/ui/browser_command_controller.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5717e779_84e3fc99",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-15T20:18:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50ee8310_b2c2b78b",
+      "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7c04a1af_5b4628da",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-15T20:18:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc4ed509_c916edeb",
+      "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed3a1573_ecea328d",
         "filename": "chrome/browser/ui/tabs/tab_strip_model.cc",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20150cb9_84bf3bf1",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-15T20:18:32Z",
+      "side": 1,
+      "message": "I think this needs to be still necessary because it\u0027s in a switch case statement",
+      "parentUuid": "ed3a1573_ecea328d",
+      "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4afc5f51_466ee762",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-15T20:18:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "012a3221_99761b61",
+      "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e600d55b_30fcfa29",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 10
@@ -98,6 +188,24 @@
       "writtenOn": "2017-09-15T01:32:10Z",
       "side": 1,
       "message": "This won\u0027t work now, since you just nulled it above, so the function is guaranteed to return false.  (Make sure you have some unittest that would catch this.)\n\nAlso, if the bubble closes on its own (rather than via this function), I think we still won\u0027t null things.\n\nI think what you want is to null this in OnWidgetDestroying()?  You\u0027d also want to be careful about sync-vs.-async close if you try to rely on |new_tab_promo_| in the return value here.",
+      "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7f2c3a_0b6161ea",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-15T20:18:32Z",
+      "side": 1,
+      "message": "I changed it to set the new_tab_promo_ to nullptr in onWidgetDestroying instead. Can you explain what you mean by sync-vs.-async close?\n\nThere should only be one new tab promo ever showing for a user, unless the user has multiple browsers with different profiles open at the same time. But even then, due to CloseBubbleForLastActiveBrowser which gets the current active browser, it should only close the respective promo open for that particular one. Am I misunderstanding something?",
+      "parentUuid": "e600d55b_30fcfa29",
       "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
