@@ -79,6 +79,13 @@ class VIZ_HOST_EXPORT HitTestQuery {
   Target FindTargetForLocation(EventSource event_source,
                                const gfx::Point& location_in_root) const;
 
+  // When a target window is already known, e.g. capture window, convert
+  // |location_in_root| to be in the coordinate space of |target|.
+  gfx::Point TransformLocationForTarget(
+      EventSource event_source,
+      const FrameSinkId& target,
+      const gfx::Point& location_in_root) const;
+
  private:
   // Helper function to find |target| for |location_in_parent| in the |region|,
   // returns true if a target is found and false otherwise. |location_in_parent|
@@ -87,6 +94,16 @@ class VIZ_HOST_EXPORT HitTestQuery {
                                      const gfx::Point& location_in_parent,
                                      AggregatedHitTestRegion* region,
                                      Target* target) const;
+
+  // Returns true if we find a region with the |target| frame-sink-id. Transform
+  // |location_in_parent| to be in |region|'s coordinate space.
+  // |location_in_parent| is in the coordinate space of |region|'s parent.
+  bool TransformLocationForTargetRecursively(
+      EventSource event_source,
+      const FrameSinkId& target,
+      const gfx::Point& location_in_parent,
+      AggregatedHitTestRegion* region,
+      gfx::Point* location_in_target) const;
 
   uint32_t handle_buffer_sizes_[2];
   mojo::ScopedSharedBufferMapping handle_buffers_[2];

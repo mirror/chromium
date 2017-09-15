@@ -61,6 +61,22 @@ Target HitTestQuery::FindTargetForLocation(
   return target;
 }
 
+gfx::Point HitTestQuery::TransformLocationForTarget(
+    EventSource event_source,
+    const FrameSinkId& target,
+    const gfx::Point& location_in_root) const {
+  if (!active_hit_test_list_size_)
+    return location_in_root;
+
+  gfx::Point location_in_target;
+  TransformLocationForTargetRecursively(event_source, target, location_in_root,
+                                        active_hit_test_list_,
+                                        &location_in_target);
+  // Must provide a valid target.
+  DCHECK(!location_in_target.IsOrigin());
+  return location_in_target;
+}
+
 bool HitTestQuery::FindTargetInRegionForLocation(
     EventSource event_source,
     const gfx::Point& location_in_parent,
@@ -104,6 +120,50 @@ bool HitTestQuery::FindTargetInRegionForLocation(
     target->flags = region->flags;
     return true;
   }
+  return false;
+}
+
+bool HitTestQuery::TransformLocationForTargetRecursively(
+    EventSource event_source,
+    const FrameSinkId& target,
+    const gfx::Point& location_in_parent,
+    AggregatedHitTestRegion* region,
+    gfx::Point* location_in_target) const {
+  bool match_touch_or_mouse_region =
+      ShouldUseTouchBounds(event_source)
+          ? (region->flags & mojom::kHitTestTouch) != 0u
+          : (region->flags & mojom::kHitTestMouse) != 0u;
+
+  gfx::Point location_transformed(location_in_parent);
+  region->transform.TransformPoint(&location_transformed);
+  location_transformed.Offset(-region->rect.x(), -region->rect.y());
+  if (region->frame_sink_id == target && match_touch_or_mouse_region) {
+    *location_in_target = location_transformed;
+    return true;
+  }
+
+  if (region->child_count < 0 ||
+      region->child_count >
+          (active_hit_test_list_ + active_hit_test_list_size_ - region - 1)) {
+    return false;
+  }
+  AggregatedHitTestRegion* child_region = region + 1;
+  AggregatedHitTestRegion* child_region_end =
+      child_region + region->child_count;
+  while (child_region < child_region_end) {
+    if (TransformLocationForTargetRecursively(
+            event_source, target, location_transformed, child_region,
+            location_in_target)) {
+      return true;
+    }
+
+    if (child_region->child_count < 0 ||
+        child_region->child_count >= region->child_count) {
+      return false;
+    }
+    child_region = child_region + child_region->child_count + 1;
+  }
+
   return false;
 }
 
