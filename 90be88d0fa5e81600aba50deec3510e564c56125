@@ -16,6 +16,24 @@
       "revId": "90be88d0fa5e81600aba50deec3510e564c56125",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc5679e_ce046e83",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-09-15T00:21:09Z",
+      "side": 1,
+      "message": "This seems as good as any.",
+      "parentUuid": "9a500b5f_4bb5bef5",
+      "revId": "90be88d0fa5e81600aba50deec3510e564c56125",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
