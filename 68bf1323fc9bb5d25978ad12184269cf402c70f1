@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1690553a_0616d0ba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-15T19:06:52Z",
+      "side": 1,
+      "message": "Presumably this is the main fix for the bug? Seems a bit unrelated to the sync entry. Is that true or we need both the fixes?",
+      "range": {
+        "startLine": 534,
+        "startChar": 31,
+        "endLine": 534,
+        "endChar": 49
+      },
+      "revId": "68bf1323fc9bb5d25978ad12184269cf402c70f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
