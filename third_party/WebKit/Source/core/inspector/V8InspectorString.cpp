@@ -55,6 +55,14 @@ std::unique_ptr<protocol::Value> StringUtil::parseJSON(const String& string) {
       string.length());
 }
 
+// static
+void StringUtil::builderAppendQuotedString(StringBuilder& builder,
+                                           const String& str) {
+  builder.Append('"');
+  escapeStringForJSON(str, &builder);
+  builder.Append('"');
+}
+
 }  // namespace protocol
 
 }  // namespace blink

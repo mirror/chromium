@@ -18,5 +18,13 @@ std::unique_ptr<Value> StringUtil::parseJSON(const String& string) {
                              string.length());
 };
 
+// static
+void StringUtil::builderAppendQuotedString(StringBuilder& builder,
+                                           const String& str) {
+  builder.append('"');
+  escapeStringForJSON(str, &builder);
+  builder.append('"');
+}
+
 }  // namespace protocol
 }  // namespace ui_devtools

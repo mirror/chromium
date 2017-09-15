@@ -6,11 +6,48 @@
 
 #include "base/json/json_reader.h"
 #include "base/memory/ptr_util.h"
+#include "base/strings/string16.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
 #include "content/browser/devtools/protocol/protocol.h"
 
 namespace content {
 namespace protocol {
+
+namespace {
+
+inline bool EscapeChar(uint16_t c, StringBuilder& dst) {
+  switch (c) {
+    case '\b':
+      StringUtil::builderAppend(dst, "\\b");
+      break;
+    case '\f':
+      StringUtil::builderAppend(dst, "\\f");
+      break;
+    case '\n':
+      StringUtil::builderAppend(dst, "\\n");
+      break;
+    case '\r':
+      StringUtil::builderAppend(dst, "\\r");
+      break;
+    case '\t':
+      StringUtil::builderAppend(dst, "\\t");
+      break;
+    case '\\':
+      StringUtil::builderAppend(dst, "\\\\");
+      break;
+    case '"':
+      StringUtil::builderAppend(dst, "\\\"");
+      break;
+    default:
+      return false;
+  }
+  return true;
+}
+
+const char hex_digits[17] = "0123456789ABCDEF";
+
+}  // anonymous namespace
 
 std::unique_ptr<protocol::Value> toProtocolValue(
     const base::Value* value, int depth) {
@@ -142,6 +179,37 @@ void StringBuilder::append(char c) {
 
 void StringBuilder::append(const char* characters, size_t length) {
   string_.append(characters, length);
+}
+
+// static
+void StringUtil::builderAppendQuotedString(StringBuilder& builder,
+                                           const String& str) {
+  std::string utf8char;
+  utf8char.reserve(4);
+
+  builder.append('"');
+  base::string16 str16 = base::UTF8ToUTF16(str);
+  for (unsigned i = 0; i < str16.length(); ++i) {
+    base::char16 c = str16[i];
+    if (!EscapeChar(c, builder)) {
+      if (c < 32 || c > 126 || c == '<' || c == '>') {
+        // 1. Escaping <, > to prevent script execution.
+        // 2. Technically, we could also pass through c > 126 as UTF8, but this
+        //    is also optional. It would also be a pain to implement here.
+        StringUtil::builderAppend(builder, "\\u");
+        uint16_t number = c;
+        for (size_t j = 0; j < 4; ++j) {
+          char digit = hex_digits[(number & 0xF000) >> 12];
+          StringUtil::builderAppend(builder, digit);
+          number <<= 4;
+        }
+      } else {
+        base::UTF16ToUTF8(&c, 1, &utf8char);
+        builder.append(utf8char);
+      }
+    }
+  }
+  builder.append('"');
 }
 
 std::string StringBuilder::toString() {
