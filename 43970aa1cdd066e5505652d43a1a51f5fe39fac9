@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a304a5c_119a8eb7",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/RestrictionSkipCheck.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-15T21:17:36Z",
+      "side": 1,
+      "message": "Why should we do this rather than fixing ordering issues elsewhere? Why would we want to check restrictions that depend on the command line if we haven\u0027t initialized the command line?",
+      "revId": "43970aa1cdd066e5505652d43a1a51f5fe39fac9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
