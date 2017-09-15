@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36b55d75_c0e2dbe8",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-15T21:59:41Z",
+      "side": 1,
+      "message": "I absolutely want to get to this point, but currently we have a bit of subsequent code that figures out an optimized viewport for the WebVR overlay FG.",
+      "parentUuid": "46a14d78_0cbc534e",
+      "range": {
+        "startLine": 868,
+        "startChar": 16,
+        "endLine": 868,
+        "endChar": 20
+      },
+      "revId": "741d4866a8da734ae3f2906fb499865e4d01c961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "762ce73e_48b5f06a",
         "filename": "chrome/browser/vr/ui_renderer.h",
         "patchSetId": 8
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "57b5571b_fe3b2fad",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-15T21:59:41Z",
+      "side": 1,
+      "message": "No, actually - the text is the parent.",
+      "parentUuid": "6a522f75_b0825dc6",
+      "range": {
+        "startLine": 388,
+        "startChar": 2,
+        "endLine": 388,
+        "endChar": 16
+      },
+      "revId": "741d4866a8da734ae3f2906fb499865e4d01c961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ac16bea_1e22b983",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 8
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "b1b3c3f8_50b856a6",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-15T21:59:41Z",
+      "side": 1,
+      "message": "This was intentional, though somewhat arbitrary. The draw phase changes I\u0027ve made will guarantee that things stack correctly.",
+      "parentUuid": "3ac16bea_1e22b983",
+      "range": {
+        "startLine": 398,
+        "startChar": 23,
+        "endLine": 398,
+        "endChar": 40
+      },
+      "revId": "741d4866a8da734ae3f2906fb499865e4d01c961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c767c305_439a973b",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 8
@@ -105,6 +177,30 @@
       "writtenOn": "2017-09-15T21:37:21Z",
       "side": 1,
       "message": "Should this be kPhaseOverlayForeground?",
+      "range": {
+        "startLine": 529,
+        "startChar": 26,
+        "endLine": 529,
+        "endChar": 42
+      },
+      "revId": "741d4866a8da734ae3f2906fb499865e4d01c961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "048da179_6e966c18",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-15T21:59:41Z",
+      "side": 1,
+      "message": "Yep, fixed. Sadly, I don\u0027t think this class of error can be caught yet because it depends on logic in VrShellGl (which grabs elements out of UiScene to render based on draw phase). We\u0027re moving toward pixel tests, though, which should address this.",
+      "parentUuid": "c767c305_439a973b",
       "range": {
         "startLine": 529,
         "startChar": 26,
