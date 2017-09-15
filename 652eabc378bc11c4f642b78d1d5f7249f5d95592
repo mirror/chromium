@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d50f624_781370ed",
+        "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "Here\u0027s the std::equal version. Not bad, I think, but there are a few calls to SCOPED_TRACE which seemed out of place as a result. Also, there were a few places where I couldn\u0027t preserve the error message when a test failed.",
+      "parentUuid": "f4dc0bab_52e6e6e2",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3dbd8e48_0052aae5",
         "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6e3c5a9_d39ee28e",
+        "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "Gone.",
+      "parentUuid": "3dbd8e48_0052aae5",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fd22b2fb_d9c0f0ea",
+        "filename": "components/omnibox/browser/autocomplete_classifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "Yes, they\u0027re unrelated and removed.",
+      "parentUuid": "6e3ff4da_9da0bc99",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a5477ae_08ad819f",
         "filename": "components/omnibox/browser/autocomplete_controller.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366ca2ce_76bbe7ec",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a5477ae_08ad819f",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7e42d37f_944a5951",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "Since it\u0027s production code, I\u0027d prefer avoiding std::distance. I moved |index| up; let me know if you don\u0027t like it.",
+      "parentUuid": "3a0fb3d7_8015ef03",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9c2b01b_bac8d46a",
         "filename": "components/omnibox/browser/autocomplete_controller.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1b92aef_5d9adbb9",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9c2b01b_bac8d46a",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1037a6d5_4310991f",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "Done. Let me know if you don\u0027t like #441 either.",
+      "parentUuid": "59e7cc67_af558fca",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdb3944c_d908055b",
         "filename": "components/omnibox/browser/autocomplete_match.h",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a90cd6b2_2d510ea7",
+        "filename": "components/omnibox/browser/autocomplete_match.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "Done. Bottom of file too.",
+      "parentUuid": "bdb3944c_d908055b",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "984a9355_2c1393ec",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "I won\u0027t. It was to measure benefit of list.",
+      "parentUuid": "290b3e25_2b236027",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "035793da_4263f669",
         "filename": "components/omnibox/browser/autocomplete_result.cc",
         "patchSetId": 4
@@ -169,6 +331,24 @@
       "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "631f836c_b1d1d54a",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "035793da_4263f669",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "11006218_26e4891b",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "I measured the |match_at()| calls and, in the debug build, they were only taking .37us times about 5 times per user key hit. The release build would be even faster.\n\nPreviously I did remove a few calls - some |match_at(0)| -\u003e front() and some loops -\u003e begin/end. Still worth worrying about?",
+      "parentUuid": "6eeeaae0_9958da70",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32a91cf3_24638123",
         "filename": "components/omnibox/browser/autocomplete_result.cc",
         "patchSetId": 4
@@ -203,6 +401,24 @@
       "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b27e800a_16dd617c",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "hmm, I think the old previous version is easier to glance at and convince myself that it\u0027s correct. Let know if you still like this version.",
+      "parentUuid": "32a91cf3_24638123",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "5ac3554d_12eab020",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "Gone.",
+      "parentUuid": "c00bb5a5_68655e5c",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6162a119_b3c59df2",
         "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
         "patchSetId": 4
@@ -237,6 +471,24 @@
       "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a6317c4_99337bbd",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "What do you think of this helper?",
+      "parentUuid": "6162a119_b3c59df2",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "39366a68_eb1a4c8c",
+        "filename": "components/omnibox/browser/bookmark_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b219424f_a4c054e0",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4780cc33_6999ee11",
         "filename": "components/omnibox/browser/bookmark_provider.cc",
         "patchSetId": 4
@@ -271,6 +541,24 @@
       "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72a59a6d_8c892cf1",
+        "filename": "components/omnibox/browser/bookmark_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "I added a couple dozen bookmarks from the same site, then tried suggesting them. Here are times:\n\nOld debug build: 464us\nNew debug build: 158us\nOld release build: 39us\nNew release build: 7us\n\nA crude estimate would then put the curves crossing at about 7x more bookmarks. If we\u0027re still worried, a partial sort isn\u0027t that hard:\n\ntemplate \u003cint N, typename Container\u003e\nvoid partial_sort(Container* container) {\n  typename Container::const_iterator heap[N];\n  // push_heap all of them (with help of a lambda)\n  // pop_heap N, splice each to the front\n}",
+      "parentUuid": "4780cc33_6999ee11",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "cd3b8c3b_712904d5",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "Done. Line 1187 too.",
+      "parentUuid": "153b6dcb_6e110fe5",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0661af6a_7d7faf7e",
         "filename": "components/omnibox/browser/keyword_provider_unittest.cc",
         "patchSetId": 4
@@ -305,6 +611,24 @@
       "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185057bc_a763b039",
+        "filename": "components/omnibox/browser/keyword_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0661af6a_7d7faf7e",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -325,6 +649,24 @@
     },
     {
       "key": {
+        "uuid": "c3f9b7d2_62ab8070",
+        "filename": "components/omnibox/browser/omnibox_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "736e2ce2_cd92fa9c",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "410ec348_e10ccd21",
         "filename": "components/omnibox/browser/omnibox_popup_model.cc",
         "patchSetId": 4
@@ -342,6 +684,24 @@
     },
     {
       "key": {
+        "uuid": "0092fdfe_c6b509a0",
+        "filename": "components/omnibox/browser/omnibox_popup_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "Done twice",
+      "parentUuid": "410ec348_e10ccd21",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84f1e400_c568fbdd",
         "filename": "components/omnibox/browser/search_provider.cc",
         "patchSetId": 4
@@ -356,6 +716,24 @@
       "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d129b330_d3354bb0",
+        "filename": "components/omnibox/browser/search_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 956,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-15T19:32:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84f1e400_c568fbdd",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
