@@ -13,6 +13,7 @@
 #include "content/public/common/resource_response.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_url_loader_client.h"
+#include "mojo/common/data_pipe_drainer.h"
 #include "mojo/common/data_pipe_utils.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/http/http_util.h"
@@ -21,13 +22,32 @@
 #include "net/test/test_data_directory.h"
 #include "services/network/public/interfaces/fetch_api.mojom.h"
 #include "storage/browser/blob/blob_data_builder.h"
+#include "storage/browser/blob/blob_data_handle.h"
+#include "storage/browser/blob/blob_impl.h"
 #include "storage/browser/blob/blob_storage_context.h"
+#include "storage/public/interfaces/blobs.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace content {
 
 namespace {
+
+class DataPipeReader : public mojo::common::DataPipeDrainer::Client {
+ public:
+  DataPipeReader(std::string* data_out, base::OnceClosure done_callback)
+      : data_out_(data_out), done_callback_(std::move(done_callback)) {}
+
+  void OnDataAvailable(const void* data, size_t num_bytes) override {
+    data_out_->append(static_cast<const char*>(data), num_bytes);
+  }
+
+  void OnDataComplete() override { std::move(done_callback_).Run(); }
+
+ private:
+  std::string* data_out_;
+  base::OnceClosure done_callback_;
+};
 
 void ReceiveStartLoaderCallback(StartLoaderCallback* out_callback,
                                 StartLoaderCallback callback) {
@@ -135,6 +155,29 @@ class NavigationPreloadLoaderClient final : public mojom::URLLoaderClient {
   EmbeddedWorkerTestHelper::FetchCallback finish_callback_;
 
   DISALLOW_COPY_AND_ASSIGN(NavigationPreloadLoaderClient);
+};
+
+class MockBlobReaderClient : public storage::mojom::BlobReaderClient {
+ public:
+  void OnCalculatedSize(uint64_t total_size,
+                        uint64_t expected_content_size) override {
+    total_size_ = total_size;
+    expected_content_size_ = expected_content_size;
+    calculated_size_ = true;
+  }
+
+  void OnComplete(int32_t status, uint64_t data_length) override {
+    status_ = static_cast<net::Error>(status);
+    data_length_ = data_length;
+    completed_ = true;
+  }
+
+  bool calculated_size_ = false;
+  uint64_t total_size_ = 0;
+  uint64_t expected_content_size_ = 0;
+  bool completed_ = false;
+  net::Error status_ = net::OK;
+  uint64_t data_length_ = 0;
 };
 
 // A URLLoaderFactory that returns 200 OK with a simple body to any request.
@@ -535,6 +578,36 @@ TEST_F(ServiceWorkerURLLoaderJobTest, Basic) {
   const ResourceResponseHead& info = client_.response_head();
   EXPECT_EQ(200, info.headers->response_code());
   ExpectResponseInfo(info, *CreateResponseInfoFromServiceWorker());
+}
+
+TEST_F(ServiceWorkerURLLoaderJobTest, BlobRequest) {
+  storage::BlobDataBuilder builder("id");
+  builder.set_content_type("text/plain");
+  builder.AppendData("it's a mee");
+  std::unique_ptr<storage::BlobDataHandle> handle =
+      blob_context_.AddFinishedBlob(builder);
+
+  storage::mojom::BlobPtr ptr;
+  storage::BlobImpl::Create(std::move(handle), MakeRequest(&ptr));
+
+  MockBlobReaderClient client;
+  storage::mojom::BlobReaderClientPtr client_ptr;
+  mojo::Binding<storage::mojom::BlobReaderClient> client_binding(
+      &client, MakeRequest(&client_ptr));
+
+  mojo::DataPipe pipe;
+  ptr->ReadAll(std::move(pipe.producer_handle), std::move(client_ptr));
+
+  std::string received;
+  {
+    base::RunLoop loop;
+    DataPipeReader reader(&received, loop.QuitClosure());
+    mojo::common::DataPipeDrainer drainer(&reader,
+                                          std::move(pipe.consumer_handle));
+    loop.Run();
+  }
+
+  LOG(ERROR) << received;
 }
 
 TEST_F(ServiceWorkerURLLoaderJobTest, BlobResponse) {
