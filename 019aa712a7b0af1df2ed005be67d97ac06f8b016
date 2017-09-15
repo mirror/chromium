@@ -70,6 +70,24 @@
       "revId": "019aa712a7b0af1df2ed005be67d97ac06f8b016",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff02546a_0b36454f",
+        "filename": "ash/system/palette/palette_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-15T00:50:05Z",
+      "side": 1,
+      "message": "I changed the comment hopefully its more clear now.\n\nWithout this line when we alt shift p when the bubble is already open, the ink drop is not active, even thought the bubble is opened.",
+      "parentUuid": "976bc682_b9d8887e",
+      "revId": "019aa712a7b0af1df2ed005be67d97ac06f8b016",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
