@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f65a872a_88b50d16",
+        "filename": "ios/clean/chrome/browser/ui/find_in_page/find_in_page_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-15T08:49:54Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "78ff437c_43a38260",
+      "revId": "97483f64749a50494329dcedba1087bfdae269d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3da64507_09f6d837",
         "filename": "ios/clean/chrome/browser/ui/find_in_page/find_in_page_view_controller.mm",
         "patchSetId": 1
@@ -47,6 +65,24 @@
       "writtenOn": "2017-09-14T20:32:28Z",
       "side": 1,
       "message": "This becomes public API on the VC because the broadcasts are caught by the coordinator.",
+      "revId": "97483f64749a50494329dcedba1087bfdae269d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364e0acf_cabbdd37",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-15T08:49:54Z",
+      "side": 1,
+      "message": "The intent was always that VCs could be broadcast observers.",
+      "parentUuid": "d051d96e_0d090147",
       "revId": "97483f64749a50494329dcedba1087bfdae269d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +157,24 @@
     },
     {
       "key": {
+        "uuid": "316acf62_e396a86b",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-15T08:49:54Z",
+      "side": 1,
+      "message": "This is what LayoutRect is for -- see c/b/ui/rtl_geometry.h",
+      "parentUuid": "7aa9cfcd_d1503982",
+      "revId": "97483f64749a50494329dcedba1087bfdae269d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4eb55009_dd14f509",
         "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
         "patchSetId": 1
@@ -132,6 +186,24 @@
       "writtenOn": "2017-09-14T20:32:28Z",
       "side": 1,
       "message": "This all seems to work during orientation changes because a broadcast is sent when the omnibox\u0027s frame changes.\n\nIn practice, we\u0027ll probably lay everything out multiple times per rotation, once when this Tab VC rotates, and then once more each time a broadcast is sent.\n\nI\u0027m not sure how to make this less wasteful.",
+      "revId": "97483f64749a50494329dcedba1087bfdae269d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3322cc0_017278e0",
+        "filename": "ios/clean/chrome/browser/ui/tab/tab_container_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-15T08:49:54Z",
+      "side": 1,
+      "message": "I think animating the rotation transition in -viewWillTransitionToSize:withTransitionCoordinator: is what the cool kids do.",
+      "parentUuid": "4eb55009_dd14f509",
       "revId": "97483f64749a50494329dcedba1087bfdae269d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
