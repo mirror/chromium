@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a3be44c_78a92048",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-15T14:49:00Z",
+      "side": 1,
+      "message": "Why would a local resource be deleted while it is being read? This looks like code to deal with exported resources, and not something a local resource needs?",
+      "revId": "d6172909d0aaf842dda557d3e2bf5fddb0e2bf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99c86edc_c54196fa",
+        "filename": "cc/resources/resource_provider.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-15T14:49:00Z",
+      "side": 1,
+      "message": "Why not just hold a pointer to the resource? Also unique_ptr can\u0027t be copied so this isn\u0027t quite right..",
+      "revId": "d6172909d0aaf842dda557d3e2bf5fddb0e2bf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
