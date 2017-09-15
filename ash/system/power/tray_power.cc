@@ -8,6 +8,7 @@
 
 #include "ash/accessibility_delegate.h"
 #include "ash/ash_switches.h"
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -232,7 +233,7 @@ bool TrayPower::MaybeShowUsbChargerNotification() {
             base::string16(), GURL(),
             message_center::NotifierId(
                 message_center::NotifierId::SYSTEM_COMPONENT,
-                system_notifier::kNotifierPower),
+                mojom::kNotifierPower),
             message_center::RichNotificationData(),
             new UsbNotificationDelegate(this), kNotificationLowPowerBatteryIcon,
             message_center::SystemNotificationWarningLevel::WARNING);

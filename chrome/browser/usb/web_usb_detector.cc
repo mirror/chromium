@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "base/feature_list.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
@@ -38,17 +39,13 @@
 #include "ui/message_center/notification_delegate.h"
 #include "url/gurl.h"
 
-#if defined(OS_CHROMEOS)
-#include "ash/system/system_notifier.h"  // nogncheck
-#endif
-
 namespace {
 
 // The WebUSB notification should be displayed for all profiles. On ChromeOS
 // that requires its notifier ID to be known by Ash so that it is not blocked in
 // multi-profile mode.
 #if defined(OS_CHROMEOS)
-#define kNotifierWebUsb ash::system_notifier::kNotifierWebUsb
+#define kNotifierWebUsb ash::mojom::kNotifierWebUsb
 #else
 const char kNotifierWebUsb[] = "webusb.connected";
 #endif

@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/resources/grit/ash_resources.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
@@ -262,11 +263,11 @@ void ResolutionNotificationController::CreateOrUpdateNotification(
       message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId, message,
       timeout_message, bundle.GetImageNamed(IDR_AURA_NOTIFICATION_DISPLAY),
       base::string16() /* display_source */, GURL(),
-      message_center::NotifierId(
-          message_center::NotifierId::SYSTEM_COMPONENT,
-          system_notifier::kNotifierDisplayResolutionChange),
-      data, new ResolutionChangeNotificationDelegate(
-                this, change_info_->timeout_count > 0)));
+      message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
+                                 mojom::kNotifierDisplayResolutionChange),
+      data,
+      new ResolutionChangeNotificationDelegate(
+          this, change_info_->timeout_count > 0)));
   notification->SetSystemPriority();
   message_center->AddNotification(std::move(notification));
 }

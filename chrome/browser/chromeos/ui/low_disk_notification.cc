@@ -6,6 +6,7 @@
 
 #include <stdint.h>
 
+#include "ash/public/interfaces/notification_constants.mojom.h"
 #include "ash/system/system_notifier.h"
 #include "base/bind.h"
 #include "base/macros.h"
@@ -128,8 +129,7 @@ LowDiskNotification::CreateNotification(Severity severity) {
   optional_fields.buttons.push_back(storage_settings);
 
   message_center::NotifierId notifier_id(
-      message_center::NotifierId::SYSTEM_COMPONENT,
-      ash::system_notifier::kNotifierDisk);
+      message_center::NotifierId::SYSTEM_COMPONENT, ash::mojom::kNotifierDisk);
 
   std::unique_ptr<message_center::Notification> notification =
       ash::system_notifier::CreateSystemNotification(
