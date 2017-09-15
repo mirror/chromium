@@ -304,6 +304,7 @@ def CreateArchiveFile(options, staging_dir, current_version, prev_version):
 
 def PrepareSetupExec(options, current_version, prev_version):
   """Prepares setup.exe for bundling in mini_installer based on options."""
+  return SETUP_EXEC
   if options.setup_exe_format == "FULL":
     setup_file = SETUP_EXEC
   elif options.setup_exe_format == "DIFF":
