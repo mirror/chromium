@@ -91,6 +91,29 @@
       "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0430c57_377bf846",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-15T21:30:25Z",
+      "side": 1,
+      "message": "The reason for a FilePath instead of a bool is that URLFetcher also has a method to save to a \"temp file\", where URLFetcher chooses the location itself.  I figure this will let us use a single callback for both methods.  Could implement that behavior in this CL - wouldn\u0027t be much code, but figure this CL is already big enough.",
+      "range": {
+        "startLine": 64,
+        "startChar": 36,
+        "endLine": 64,
+        "endChar": 40
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
