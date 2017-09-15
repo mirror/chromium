@@ -340,6 +340,24 @@
     },
     {
       "key": {
+        "uuid": "3345eb05_974ada6d",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 16
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-15T15:40:48Z",
+      "side": 1,
+      "message": "Looked it up, link below, ZLIB_INTERNAL makes the api available in several files inside the library, but not available outside the library.\n\nSounds good, don\u0027t want this adler32_simd_ api exposed outside. I added the symbol to the name mangler too, for good measure, for compilers that don\u0027t support\n\n __attribute__((visibility(\"hidden\"))).\n\nhttps://developer.apple.com/library/content/documentation/DeveloperTools/Conceptual/CppRuntimeEnv/Articles/SymbolVisibility.html",
+      "parentUuid": "192757bf_e42ea8d0",
+      "revId": "9cac6091dab162a9f469d18ea71f23333a61404e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "087691cf_9a284e07",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 16
