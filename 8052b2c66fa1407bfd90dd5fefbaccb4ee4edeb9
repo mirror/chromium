@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a5ba96b9_1c980247",
+        "filename": "device/hid/hid_connection_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-15T00:33:41Z",
+      "side": 1,
+      "message": "nop, not size-1, should be size.",
+      "parentUuid": "fb5980cf_cab07bee",
+      "range": {
+        "startLine": 41,
+        "startChar": 65,
+        "endLine": 41,
+        "endChar": 69
+      },
+      "revId": "8052b2c66fa1407bfd90dd5fefbaccb4ee4edeb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32afd708_d8b6c2c7",
         "filename": "extensions/browser/api/hid/hid_api.cc",
         "patchSetId": 17
