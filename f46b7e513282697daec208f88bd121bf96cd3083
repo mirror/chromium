@@ -45,6 +45,30 @@
       "revId": "f46b7e513282697daec208f88bd121bf96cd3083",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0fcb89c_43a90f0e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-15T00:52:51Z",
+      "side": 1,
+      "message": "This class could probably use a better name :-/\n\nMatt original had OMNIBOX_SUGGESTIONS and I asked for it to be replaced to avoid feature specific code creeping into this class. In the future, we may have even more use cases for showing content not directly controlled by the bottom navigation. I would like to avoid adding a ContentType for each one since from BottomSheetContentController only really keeps track of content for home (/incognito home), downloads, bookmarks, and history. It may need to know that something \"other\" than the content it directly controls is showing, but it shouldn\u0027t need to know explicitly what that content is.",
+      "parentUuid": "0fa0f2d6_1d747d96",
+      "range": {
+        "startLine": 70,
+        "startChar": 28,
+        "endLine": 70,
+        "endChar": 38
+      },
+      "revId": "f46b7e513282697daec208f88bd121bf96cd3083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
