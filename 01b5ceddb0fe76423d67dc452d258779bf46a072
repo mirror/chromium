@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1cd5163e_69e5b715",
+        "filename": "chrome/renderer/autofill/password_autofill_agent_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2103,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e There must be still some tests for base heuristic (we don\u0027t remove the base heuristic, then should test it). Don\u0027t re-use them. Change them so that HTML classifier doesn\u0027t trigger any result (i.e. base heuristic is used). Update comments accordingly.\n\u003e \n\u003e And do add tests for HTML classifier.\n\nYou\u0027re right. I changed back the description and will also add my tests.",
+      "parentUuid": "3c51e44c_513e050c",
+      "range": {
+        "startLine": 2102,
+        "startChar": 0,
+        "endLine": 2103,
+        "endChar": 67
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c808a945_8c735ac7",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-13T08:17:19Z",
       "side": 1,
       "message": "seems like the important part is \"user\". \"create\" tell us that it is a registration form. Is that correct?",
+      "range": {
+        "startLine": 34,
+        "startChar": 5,
+        "endLine": 34,
+        "endChar": 15
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af6527d_a6031962",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e seems like the important part is \"user\". \"create\" tell us that it is a registration form. Is that correct?\n\nThat\u0027s right. I can totally remove them. In the new algorithm, we search for \"user\" substring anyways.",
+      "parentUuid": "c808a945_8c735ac7",
       "range": {
         "startLine": 34,
         "startChar": 5,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "77c5f42a_fa9fe458",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e did you call \"git cl format\"? why it is single-column list?\n\nYes, it was git cl format. I used the script that you sent me and formatted them on more columns, where possible. For foreign words, it was not possible to get them on more than one column.",
+      "parentUuid": "c2d3a88f_7575f063",
+      "range": {
+        "startLine": 50,
+        "startChar": 44,
+        "endLine": 55,
+        "endChar": 61
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e78dd02c_172fdf76",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 9
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-12T15:59:18Z",
       "side": 1,
       "message": "we need to double check whether translation of \"ID\" and \"login\" are useful. they both are technical terms with ambiguous meaning.",
+      "range": {
+        "startLine": 184,
+        "startChar": 18,
+        "endLine": 184,
+        "endChar": 35
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc1df33_7f986f67",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e we need to double check whether translation of \"ID\" and \"login\" are useful. they both are technical terms with ambiguous meaning.\n\nWe don\u0027t use them anymore.",
+      "parentUuid": "e78dd02c_172fdf76",
       "range": {
         "startLine": 184,
         "startChar": 18,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "75b30531_08a571ac",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e can we always use partial match?\n\nYes, I changed the algorithm accordingly.",
+      "parentUuid": "ae5be705_1deffa13",
+      "range": {
+        "startLine": 364,
+        "startChar": 5,
+        "endLine": 364,
+        "endChar": 23
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94653f60_635cf045",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 9
@@ -128,6 +248,30 @@
       "writtenOn": "2017-09-12T15:59:18Z",
       "side": 1,
       "message": "you can remove negation operators here and in the line before.",
+      "range": {
+        "startLine": 389,
+        "startChar": 14,
+        "endLine": 389,
+        "endChar": 15
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81444862_22d7fb8e",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e you can remove negation operators here and in the line before.\n\nRemoved it here. In the line before, I need it, because i want to check if an element is invisible with a is_visible function.",
+      "parentUuid": "94653f60_635cf045",
       "range": {
         "startLine": 389,
         "startChar": 14,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f7dc8da7_3c515777",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e I would use ternary (conditional) operator here.\n\nDone.",
+      "parentUuid": "5edae1b2_11070dbd",
+      "range": {
+        "startLine": 391,
+        "startChar": 11,
+        "endLine": 395,
+        "endChar": 59
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6d0577d_f4d20194",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 9
@@ -174,6 +342,30 @@
       "writtenOn": "2017-09-12T15:59:18Z",
       "side": 1,
       "message": "is it what arraysize macros do?",
+      "range": {
+        "startLine": 398,
+        "startChar": 28,
+        "endLine": 398,
+        "endChar": 62
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666add50_016a6e16",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e is it what arraysize macros do?\n\nYes, but here I cannot use arraysize, when passing dictionary as a parameter.",
+      "parentUuid": "b6d0577d_f4d20194",
       "range": {
         "startLine": 398,
         "startChar": 28,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "943c8701_815ae49b",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e Can we call only once, but not every call of |SearchForPartialMatch|?\n\nDone.",
+      "parentUuid": "e796450d_f5cfa765",
+      "range": {
+        "startLine": 460,
+        "startChar": 18,
+        "endLine": 460,
+        "endChar": 42
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abfc7f24_74c971ec",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 9
@@ -220,6 +436,30 @@
       "writtenOn": "2017-09-12T15:59:18Z",
       "side": 1,
       "message": "you can do the following: \nbool username_found \u003d !username_element.IsNull();\n\nBut I would prefer to ignore whether username_element.IsNull() within the method. Caller says \"get username field\" and gives a pointer for output. \n\nTo me, the method should not care about the content of |username_element|.\n\nFor the code reader who didn\u0027t go into this method, this logic would be a suprise. The logic should be on the caller side. \n\nI would add DCHECK(username_element), to check whether username_element is not null and to show expectations of this method.",
+      "range": {
+        "startLine": 484,
+        "startChar": 2,
+        "endLine": 486,
+        "endChar": 27
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccc23faf_a6d640b1",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e you can do the following: \n\u003e bool username_found \u003d !username_element.IsNull();\n\u003e \n\u003e But I would prefer to ignore whether username_element.IsNull() within the method. Caller says \"get username field\" and gives a pointer for output. \n\u003e \n\u003e To me, the method should not care about the content of |username_element|.\n\u003e \n\u003e For the code reader who didn\u0027t go into this method, this logic would be a suprise. The logic should be on the caller side. \n\u003e \n\u003e I would add DCHECK(username_element), to check whether username_element is not null and to show expectations of this method.\n\nI now only call the method if username_element.IsNull(). Do I still need DCHECK(username_element)? I think that it\u0027s pretty obvious from the calling part that we only call this function when I haven\u0027t found |username_element| yet.",
+      "parentUuid": "abfc7f24_74c971ec",
       "range": {
         "startLine": 484,
         "startChar": 2,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "8ebd4a46_9a127e05",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e we can make an array of pairs of array of special words and HTMLAttribute of special words. And make all these calls in one loop.\n\u003e \n\u003e for (pair\u003cvector\u003cconst char* const[]\u003e, HTMLAttribute\u003e heuristic : all_heuristics) {\n\u003e        if (SearchForPartialMatch(control_elements, form_data, heuristic.first, heuristic.second, username_element)) break;\n\u003e }\n\u003e \n\u003e The comments you listed here (e.g. like \"1.1. Search for...\") would be useful. You can add them to the method description or as comment to |all_heuristics|.\n\u003e \n\u003e Update: realized that the method to be called depends on HTMLAttribute.\n\nDone.",
+      "parentUuid": "0cfc5e6c_078a7853",
+      "range": {
+        "startLine": 490,
+        "startChar": 2,
+        "endLine": 494,
+        "endChar": 3
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b7de63e_7887711b",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 9
@@ -266,6 +530,30 @@
       "writtenOn": "2017-09-12T15:59:18Z",
       "side": 1,
       "message": "what words?",
+      "range": {
+        "startLine": 496,
+        "startChar": 21,
+        "endLine": 496,
+        "endChar": 31
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbd91392_9aeb664c",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e what words?\n\nRemoved this step.",
+      "parentUuid": "1b7de63e_7887711b",
       "range": {
         "startLine": 496,
         "startChar": 21,
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "ec41871b_03958d18",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e It is strange that |userTranslations| contains only values in latin alphabet. The values are used for search inside labels that are visible to users. \n\u003e \n\u003e It would be strange if, say, Arabic site will use romanized values instead of native alphabet.\n\u003e \n\u003e We should think about it.\n\nDone. I included country-specific values too.",
+      "parentUuid": "caa51c6f_2fe0f82b",
+      "range": {
+        "startLine": 499,
+        "startChar": 37,
+        "endLine": 499,
+        "endChar": 53
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b47613a_0a9e3f70",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
         "patchSetId": 9
@@ -312,6 +624,30 @@
       "writtenOn": "2017-09-12T13:47:00Z",
       "side": 1,
       "message": "Do end comments with a period. Style guide said that.\n\nand below.",
+      "range": {
+        "startLine": 529,
+        "startChar": 37,
+        "endLine": 529,
+        "endChar": 38
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e3016c2_a32461b9",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e Do end comments with a period. Style guide said that.\n\u003e \n\u003e and below.\n\nDone.",
+      "parentUuid": "6b47613a_0a9e3f70",
       "range": {
         "startLine": 529,
         "startChar": 37,
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "49a90852_21bc3045",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e what if site marked username field or server sent a prediction? We should not override that. \n\u003e \n\u003e Check whether username_element is null. If yes, then call HTML detector.\n\nDone.",
+      "parentUuid": "55cc13b2_68611264",
+      "range": {
+        "startLine": 530,
+        "startChar": 2,
+        "endLine": 531,
+        "endChar": 74
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b35197ca_f82ff856",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
         "patchSetId": 9
@@ -358,6 +718,30 @@
       "writtenOn": "2017-09-12T13:47:00Z",
       "side": 1,
       "message": "if a IF body is more than one line, curly brackets should be added. Check all code.",
+      "range": {
+        "startLine": 532,
+        "startChar": 32,
+        "endLine": 532,
+        "endChar": 33
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1d55df_360d3994",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 532,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e if a IF body is more than one line, curly brackets should be added. Check all code.\n\nDone.",
+      "parentUuid": "b35197ca_f82ff856",
       "range": {
         "startLine": 532,
         "startChar": 32,
@@ -416,6 +800,30 @@
     },
     {
       "key": {
+        "uuid": "0f44d69d_7d5d85ce",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1079,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e HTML detector wouldn\u0027t affect on this test. I would revert changes of this test.\n\nDone.",
+      "parentUuid": "eb1e02bb_2ca6598c",
+      "range": {
+        "startLine": 1079,
+        "startChar": 23,
+        "endLine": 1079,
+        "endChar": 32
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15e3837f_d46294e9",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
         "patchSetId": 9
@@ -439,6 +847,30 @@
     },
     {
       "key": {
+        "uuid": "f7ed371b_71145dee",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1106,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e here we don\u0027t care about how username field was detected. Either base heuristic and HTML detector would point to the only text field. I believe we can revert this change as well.\n\u003e \n\u003e and below...",
+      "parentUuid": "15e3837f_d46294e9",
+      "range": {
+        "startLine": 1106,
+        "startChar": 26,
+        "endLine": 1106,
+        "endChar": 34
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "655a42b2_5dda1144",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
         "patchSetId": 9
@@ -450,6 +882,30 @@
       "writtenOn": "2017-09-12T13:47:00Z",
       "side": 1,
       "message": "You changed only one occurrence of \"username\". Do we actually need to change any of them?",
+      "range": {
+        "startLine": 1221,
+        "startChar": 2,
+        "endLine": 1224,
+        "endChar": 48
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4373219e_2aa2adc4",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e You changed only one occurrence of \"username\". Do we actually need to change any of them?\n\nNo, it wasn\u0027t necessarily. I reverted it.",
+      "parentUuid": "655a42b2_5dda1144",
       "range": {
         "startLine": 1221,
         "startChar": 2,

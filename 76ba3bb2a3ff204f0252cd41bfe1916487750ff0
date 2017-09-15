@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "af83832d_bf347bf7",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-15T09:11:25Z",
+      "side": 1,
+      "message": "\u003e \u003e Done\n\u003e \n\u003e What does \"Done\" mean here? \n\u003e \n\u003e do we also consider placeholder and aria-label or not?\n\u003e \n\u003e Please explain your decisions.\n\nWe do consider placeholder, but not aria-label (yet). I will make analysis to see if aria-label is also useful, even though I doubt that it brings extra-information (i.e. which is not included in normal label).",
+      "parentUuid": "ae6b333a_27c5e136",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 69
+      },
+      "revId": "76ba3bb2a3ff204f0252cd41bfe1916487750ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c2a4c4c_24f7e786",
         "filename": "components/autofill/content/renderer/html_username_detection_classifier.h",
         "patchSetId": 5
