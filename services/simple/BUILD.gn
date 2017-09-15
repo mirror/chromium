@@ -1,0 +1,348 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+group("simple") {
+  deps = [
+    ":simple_benchmark",
+    ":simple_mojo_exe",
+  ]
+}
+
+# A simple executable that statically links the Mojo EDK and C++ bindings
+# for the simple.mojom.Math interface and uses it to add two integers.
+# This is only used to measure the code size of the final binary
+# (around 545 KiB on 32-bit Android, and 1.1 MiB on x86_64 Linux)
+# to assess the cost of the Mojo dependency.
+#
+executable("simple_mojo_exe") {
+  sources = [
+    "simple_mojo_main.cc",
+  ]
+  deps = [
+    "public/interfaces",
+    "//base",
+    "//mojo/common",
+    "//mojo/edk/system",
+    "//mojo/public/cpp/system",
+  ]
+}
+
+# A very small program that loads various shared libraries that all implement
+# the same C++ based API (see simple_api.h) in different ways and benchmark
+# their performance. All libraries have a named like simple_api_<something>.
+executable("simple_benchmark") {
+  sources = [
+    "simple_api.h",
+    "simple_benchmark.cc",
+  ]
+  deps = [
+    ":simple_api_bind_once",
+    ":simple_api_bind_repeating",
+    ":simple_api_callback",
+    ":simple_api_direct",
+    ":simple_api_lambda",
+    ":simple_api_mojo_async_lazy",
+    ":simple_api_mojo_async_serial",
+    ":simple_api_mojo_ipc_async_lazy",
+    ":simple_api_mojo_ipc_sync_lazy",
+    ":simple_api_mojo_sync_lazy",
+    ":simple_api_mojo_sync_serial",
+    ":simple_api_post_cb_msgloop",
+    ":simple_api_post_cb_sequence",
+    ":simple_api_post_cb_single_thread",
+    ":simple_api_post_msgloop",
+    ":simple_api_post_sequence",
+    ":simple_api_post_single_thread",
+    ":simple_api_std_function",
+    ":simple_api_thread_condvar",
+    ":simple_api_thread_event",
+    "//base",
+  ]
+}
+
+# A config shared by all shared libraries loaded by the benchmark.
+config("simple_api_dll_config") {
+  defines = [ "SIMPLE_API_IMPLEMENTATION" ]
+  if (is_debug) {
+    defines += [ "DEBUG=1" ]
+  }
+}
+
+# A config used on Android to export the createXXX() symbols from the
+# benchmarked shared libraries (see simple_api.h).
+config("export_createXXX_symbols_only") {
+  if (!is_debug) {
+    ldflags = [ "-Wl,--version-script=" +
+                rebase_path("android_only_createXXX_symbols.lst") ]
+  }
+}
+
+# A template for benchmarked shared libraries that implement the simple_api.h
+# interface. The following parameters are supported:
+#
+#   sources: At least one source file.
+#   deps, public_deps: Additionnal dependencies.
+#   defines: Additionnal defines.
+#
+template("simple_api_library") {
+  shared_library(target_name) {
+    forward_variables_from(invoker, [ "*" ])
+    assert(defined(invoker.sources), "Need at least one source file")
+    sources = invoker.sources
+    sources += [ "simple_api.h" ]
+    if (defined(invoker.configs)) {
+      configs += invoker.configs
+    }
+    configs += [ ":simple_api_dll_config" ]
+
+    if (is_android) {
+      # On Android, the default build rules will remove all exported symbols
+      # from shared libraries except the JNI-related ones. Remvoe the
+      # corresponding configuration, and add a custom linker script to only
+      # expose thecreateXXX() symbols. This gets rid of a ton of libc++
+      # exported symbols that don't need to be visible, and reduces the
+      # overall size of all libraries.
+      configs -= [ "//build/config/android:hide_all_but_jni_onload" ]
+      configs += [ ":export_createXXX_symbols_only" ]
+    }
+
+    if (is_linux) {
+      if (!defined(invoker.public_deps)) {
+        public_deps = []
+      } else {
+        public_deps = invoker.public_deps
+      }
+      public_deps += [ "//buildtools/third_party/libc++" ]
+    }
+    if (defined(invoker.deps)) {
+      deps = invoker.deps
+    }
+    if (defined(invoker.defines)) {
+      defines = invoker.defines
+    }
+  }
+}
+
+# A simple_api library that implements each interface through direct
+# sub-classing.
+simple_api_library("simple_api_direct") {
+  sources = [
+    "simple_api_direct.cc",
+  ]
+}
+
+# A simple_api library that implements each call by creating a lambda then
+# calling it.
+simple_api_library("simple_api_lambda") {
+  sources = [
+    "simple_api_lambda.cc",
+  ]
+}
+
+# A simple_api library that implements each interface through a dedicated
+# std::function<> callback. It invokes its operator() method at runtime.
+# Only depends on the C++ library (statically linked into it).
+simple_api_library("simple_api_std_function") {
+  sources = [
+    "simple_api_std_function.cc",
+  ]
+}
+
+# A simple_api library that implements each interface through a dedicated
+# base::Callback<> instance, invoking its Run() method at runtime.
+#
+# Note that this shared library as its own copy of //base statically linked
+# into it. Which is independent from the one linked into simple_benchmark
+# itself.
+simple_api_library("simple_api_callback") {
+  sources = [
+    "simple_api_callback.cc",
+  ]
+  deps = [
+    "//base",
+  ]
+}
+
+# Same as simple_api_callback, but creates a new base::OnceCallback
+# on each interface call, instead of reusing a base::RepeatingCallback.
+simple_api_library("simple_api_bind_once") {
+  sources = [
+    "simple_api_base_bind.cc",
+  ]
+  defines = [ "USE_BIND_ONCE" ]
+  deps = [
+    "//base",
+  ]
+}
+
+simple_api_library("simple_api_bind_repeating") {
+  sources = [
+    "simple_api_base_bind.cc",
+  ]
+  defines = [ "USE_BIND_REPEATING" ]
+  deps = [
+    "//base",
+  ]
+}
+
+template("simple_api_post_library") {
+  assert(defined(invoker.sources), "sources is required")
+  assert(defined(invoker.task_runner_type), "task_runner_type is required")
+  simple_api_library(target_name) {
+    sources = invoker.sources
+    if (invoker.task_runner_type == "loop") {
+      defines = [ "USE_MESSAGE_LOOP" ]
+    } else if (invoker.task_runner_type == "sequence") {
+      defines = [ "USE_SEQUENCED_TASK_RUNNER" ]
+    } else if (invoker.task_runner_type == "thread") {
+      defines = [ "USE_SINGLE_THREAD_TASK_RUNNER" ]
+    } else {
+      print("Unknown task_runner_type [${invoker.task_runner_type}], use 'loop', 'sequence' or 'thread'")
+      assert(false, "Unknown task_runner_type!")
+    }
+    deps = [ "//base" ]
+  }
+}
+
+# A simple_api library that implements each interface through a dedicated
+# base::PostTask() call using the main thread's MessageLoop TaskRunner.
+#
+# Note that this shared library as its own copy of //base statically linked
+# into it. Which is independent from the one linked into simple_benchmark
+# itself.
+simple_api_post_library("simple_api_post_msgloop") {
+  sources = [ "simple_api_post_task.cc" ]
+  task_runner_type = "loop"
+}
+
+simple_api_post_library("simple_api_post_sequence") {
+  sources = [ "simple_api_post_task.cc" ]
+  task_runner_type = "sequence"
+}
+
+simple_api_post_library("simple_api_post_single_thread") {
+  sources = [ "simple_api_post_task.cc" ]
+  task_runner_type = "thread"
+}
+
+simple_api_post_library("simple_api_post_cb_msgloop") {
+  sources = [ "simple_api_post_task_cb.cc" ]
+  task_runner_type = "loop"
+}
+
+simple_api_post_library("simple_api_post_cb_sequence") {
+  sources = [ "simple_api_post_task_cb.cc" ]
+  task_runner_type = "sequence"
+}
+
+simple_api_post_library("simple_api_post_cb_single_thread") {
+  sources = [ "simple_api_post_task_cb.cc" ]
+  task_runner_type = "thread"
+}
+
+# This implementation uses a background PlatformThread and custom
+# synchronization based on base::ConditionVariable instances.
+simple_api_library("simple_api_thread_condvar") {
+  sources = [
+    "simple_api_platform_thread.cc",
+  ]
+  defines = [ "USE_CONDITION_VARIABLES" ]
+  deps = [
+    "//base",
+  ]
+}
+
+# Same as simple_api_thread_convar, but uses base::WaitableEvent instances
+# instead to synchronize the threads. This is noticeably slower on Linux
+# and Android :-(
+simple_api_library("simple_api_thread_event") {
+  sources = [
+    "simple_api_platform_thread.cc",
+  ]
+  defines = [ "USE_WAITABLE_EVENTS" ]
+  deps = [
+    "//base",
+  ]
+}
+
+# Template for Mojo simple_api backends.
+#   use_sync_method: must be true or false.
+#     Indicates whether to use the synchronous call wrapper on the client side,
+#     or the default async one + explicit waiting instead.
+#
+#   use_lazy_serializiation: must be true or false.
+#     Indicates whether to enable lazy serialization or not.
+#
+#   use_ipc_thread: optional.
+#     True to initialize the Mojo EDK with an explicit IPC thread.
+#     The default should only use one thread to perform all Mojo calls.
+#
+template("mojo_simple_api_library") {
+  simple_api_library(target_name) {
+    sources = [
+      "simple_api_mojo.cc",
+    ]
+    deps = [
+      "//base",
+      "//mojo/common",
+      "//mojo/edk/system",
+      "//mojo/public/cpp/system",
+    ]
+    defines = []
+    if (invoker.use_sync_method) {
+      defines += [ "USE_MOJO_SYNC_METHOD" ]
+    }
+    if (invoker.use_lazy_serialization) {
+      deps += [ "public/interfaces" ]
+      defines += [ "USE_LAZY_SERIALIZATION" ]
+    } else {
+      deps += [ "public/interfaces_serial" ]
+    }
+    if (defined(invoker.use_ipc_thread) && invoker.use_ipc_thread) {
+      defines += [ "USE_MOJO_IPC_THREAD" ]
+    }
+  }
+}
+
+# A set of simple_api libraries that implements each interface through an
+# Mojo C++ binding.
+#
+# Note that each shared library as its own copy of //base statically linked
+# into it. Which is independent from the one linked into simple_benchmark
+# itself. It also links its own copy of Mojo support code.
+#
+# There are four variants to explore the use of [Sync] methods and
+# lazy/explicit serialization.
+#
+mojo_simple_api_library("simple_api_mojo_async_lazy") {
+  use_sync_method = false
+  use_lazy_serialization = true
+}
+
+mojo_simple_api_library("simple_api_mojo_sync_lazy") {
+  use_sync_method = true
+  use_lazy_serialization = true
+}
+
+mojo_simple_api_library("simple_api_mojo_async_serial") {
+  use_sync_method = false
+  use_lazy_serialization = false
+}
+
+mojo_simple_api_library("simple_api_mojo_sync_serial") {
+  use_sync_method = true
+  use_lazy_serialization = false
+}
+
+mojo_simple_api_library("simple_api_mojo_ipc_async_lazy") {
+  use_sync_method = false
+  use_lazy_serialization = true
+  use_ipc_thread = true
+}
+
+mojo_simple_api_library("simple_api_mojo_ipc_sync_lazy") {
+  use_sync_method = false
+  use_lazy_serialization = true
+  use_ipc_thread = true
+}
