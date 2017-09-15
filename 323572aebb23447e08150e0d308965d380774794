@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "b778cb2a_16dc3bb9",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-09-15T21:25:56Z",
+      "side": 1,
+      "message": "Yeah im hoping this is the first and last of it\u0027s kind.\n\nq: With the pre target handler approach the a keyboard back event or some other synthesized back event would also cause the overview mode to exit right? i cant see any scenarios now that this would cause problems, but this is why i liked to keep it in the app list button file so we know for sure it\u0027s the back button causing this, but i don\u0027t feel too strongly either way. wdyt?",
+      "parentUuid": "6184d6d5_8817d0a0",
+      "revId": "323572aebb23447e08150e0d308965d380774794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec628e90_13c975d1",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 1
