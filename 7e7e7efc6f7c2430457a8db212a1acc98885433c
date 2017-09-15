@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1407964e_012625a1",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1742,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-15T15:57:57Z",
+      "side": 1,
+      "message": "nit: Add a comment,\ne.g. // |manager| is nullptr in unit tests.",
+      "revId": "7e7e7efc6f7c2430457a8db212a1acc98885433c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f689976_71382b62",
+        "filename": "chrome/browser/chromeos/ownership/owner_settings_service_chromeos.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-15T15:57:57Z",
+      "side": 1,
+      "message": "nit: Be more specific of why check UserManager.\ne.g.\n  // UserManager is needed for UserSessionManager and could be nullptr\n  // in tests.",
+      "revId": "7e7e7efc6f7c2430457a8db212a1acc98885433c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
