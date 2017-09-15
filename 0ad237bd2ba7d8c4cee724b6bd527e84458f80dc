@@ -46,6 +46,30 @@
       "revId": "0ad237bd2ba7d8c4cee724b6bd527e84458f80dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12541e3a_ca88b837",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1417,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-15T12:36:31Z",
+      "side": 0,
+      "message": "\u003e The solution you are proposing does not work...\n\nFair enough, another |find| call is fine.",
+      "parentUuid": "3dac851e_c0cb690b",
+      "range": {
+        "startLine": 1417,
+        "startChar": 2,
+        "endLine": 1417,
+        "endChar": 52
+      },
+      "revId": "0ad237bd2ba7d8c4cee724b6bd527e84458f80dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
