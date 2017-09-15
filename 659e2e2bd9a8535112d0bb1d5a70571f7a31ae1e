@@ -52,6 +52,24 @@
       "revId": "659e2e2bd9a8535112d0bb1d5a70571f7a31ae1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "484cd8b7_9da740b4",
+        "filename": "ash/system/web_notification/web_notification_tray.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-09-15T05:13:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "580efe9e_474a42e6",
+      "revId": "659e2e2bd9a8535112d0bb1d5a70571f7a31ae1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
