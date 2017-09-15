@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88f6e9aa_2324dd97",
+        "filename": "net/http/transport_security_state_ct_policies.inc",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-15T18:24:50Z",
+      "side": 0,
+      "message": "I think we still want to keep this documentation pointer, which details why \u0026 policy :)",
+      "revId": "c8da6d0987f39deb5e8d99a3d7bb60c6c9c0874b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

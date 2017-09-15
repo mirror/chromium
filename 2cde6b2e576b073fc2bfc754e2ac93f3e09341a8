@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6e04b4ae_c2a46879",
+        "filename": "net/cert/symantec_certs.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-15T18:24:50Z",
+      "side": 1,
+      "message": "Note that you still need NET_EXPORT annotations for these if used outside of //net.",
+      "revId": "2cde6b2e576b073fc2bfc754e2ac93f3e09341a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8cd6fb9b_36753146",
         "filename": "net/cert/x509_certificate_known_roots_win.h",
         "patchSetId": 12
@@ -19,6 +36,40 @@
         "endLine": 23,
         "endChar": 28
       },
+      "revId": "2cde6b2e576b073fc2bfc754e2ac93f3e09341a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bff08dc_ecb2dbb7",
+        "filename": "net/http/transport_security_state.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-15T18:24:50Z",
+      "side": 1,
+      "message": "ct_required_policies :)",
+      "revId": "2cde6b2e576b073fc2bfc754e2ac93f3e09341a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f11ca515_bd457538",
+        "filename": "net/http/transport_security_state_ct_policies.inc",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-15T18:24:50Z",
+      "side": 1,
+      "message": "AIUI, if you add a second entry to kCTRequiredPolicies, this typedef won\u0027t cause a compiler error - and the iterative loop in usage means that things will go bad.\n\nMore usefully, however, I also don\u0027t believe you need to add it to a function - because we are initializing in place with a constexpr, the compiler doesn\u0027t do default initialization, and doesn\u0027t introduce a static initializer.\n\nThat is, the fact that you\u0027re now referring to kSymantecRoots/kSymantecRootsLength (versus inline) doesn\u0027t change the POD nature of kCTRequiredPolicies, because the only type (base::TimeDelta) is a trivial-layout, constexpr-initialized object :)",
       "revId": "2cde6b2e576b073fc2bfc754e2ac93f3e09341a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
