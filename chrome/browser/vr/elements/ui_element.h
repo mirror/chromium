@@ -35,7 +35,7 @@ class WebGestureEvent;
 namespace vr {
 
 class Animation;
-class UiElementRenderer;
+class RenderableElement;
 class UiElementTransformOperations;
 
 enum XAnchoring {
@@ -67,9 +67,6 @@ class UiElement : public cc::AnimationTarget {
 
   // Indicates whether the element should be tested for cursor input.
   bool IsHitTestable() const;
-
-  virtual void Render(UiElementRenderer* renderer,
-                      const gfx::Transform& view_proj_matrix) const;
 
   virtual void Initialize();
 
@@ -119,18 +116,6 @@ class UiElement : public cc::AnimationTarget {
 
   bool hit_testable() const { return hit_testable_; }
   void set_hit_testable(bool hit_testable) { hit_testable_ = hit_testable; }
-
-  bool viewport_aware() const { return viewport_aware_; }
-  void set_viewport_aware(bool viewport_aware) {
-    viewport_aware_ = viewport_aware;
-  }
-  bool computed_viewport_aware() const { return computed_viewport_aware_; }
-  void set_computed_viewport_aware(bool computed_lock) {
-    computed_viewport_aware_ = computed_lock;
-  }
-
-  bool is_overlay() const { return is_overlay_; }
-  void set_is_overlay(bool is_overlay) { is_overlay_ = is_overlay; }
 
   bool scrollable() const { return scrollable_; }
   void set_scrollable(bool scrollable) { scrollable_ = scrollable; }
@@ -258,6 +243,8 @@ class UiElement : public cc::AnimationTarget {
     return children_;
   }
 
+  virtual RenderableElement* AsRenderableElement();
+
  protected:
   virtual void OnSetMode();
   virtual void OnUpdatedInheritedProperties();
@@ -270,17 +257,6 @@ class UiElement : public cc::AnimationTarget {
 
   // If false, the reticle will not hit the element, even if visible.
   bool hit_testable_ = true;
-
-  // If true, the element will reposition itself to viewport if neccessary.
-  // TODO(bshe): We might be able to remove this state.
-  bool viewport_aware_ = false;
-
-  // The computed viewport aware, incorporating from parent objects.
-  bool computed_viewport_aware_ = false;
-
-  // If true, then this element will be drawn in the world viewport, but above
-  // all other elements.
-  bool is_overlay_ = false;
 
   // A signal to the input routing machinery that this element accepts scrolls.
   bool scrollable_ = false;
