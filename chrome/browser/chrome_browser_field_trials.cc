@@ -19,6 +19,7 @@
 #include "base/strings/string_util.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/time/time.h"
+#include "base/trace_event/freed_object_tracker.h"
 #include "build/build_config.h"
 #include "chrome/browser/metrics/chrome_metrics_service_client.h"
 #include "chrome/browser/metrics/chrome_metrics_services_manager_client.h"
@@ -237,5 +238,10 @@ void ChromeBrowserFieldTrials::SetupFeatureControllingFieldTrials(
 void ChromeBrowserFieldTrials::InstantiateDynamicTrials() {
   // Persistent histograms must be enabled as soon as possible.
   InstantiatePersistentHistograms();
+
+  // Enable use-after-free information gathering.
+  if (base::FieldTrialList::FindFullName("FreedObjectTracker") == "Enable")
+    base::trace_event::FreedObjectTracker::GetInstance()->Enable();
+
   tracing::SetupBackgroundTracingFieldTrial();
 }
