@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4616c16b_34f2f9f9",
+        "filename": "chrome/browser/ui/views/ash/chrome_browser_main_extra_parts_ash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T19:39:49Z",
+      "side": 1,
+      "message": "Yes, we need to port the code. Added comment.",
+      "parentUuid": "995aeeed_2319de48",
+      "revId": "f97232ce681f6442daaf417e380731d8e558fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0982b612_98ceb0ee",
         "filename": "chrome/browser/ui/views/ash/tab_scrubber.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "f97232ce681f6442daaf417e380731d8e558fc19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a897df4b_68760eb0",
+        "filename": "chrome/browser/ui/views/ash/tab_scrubber.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T19:39:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0982b612_98ceb0ee",
+      "revId": "f97232ce681f6442daaf417e380731d8e558fc19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

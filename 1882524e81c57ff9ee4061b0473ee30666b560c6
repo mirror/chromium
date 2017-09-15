@@ -16,6 +16,24 @@
       "revId": "1882524e81c57ff9ee4061b0473ee30666b560c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e665ed4_d126ba06",
+        "filename": "chrome/browser/ui/views/ash/tab_scrubber_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-15T19:39:49Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c52ae25f_3f396c32",
+      "revId": "1882524e81c57ff9ee4061b0473ee30666b560c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
