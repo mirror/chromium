@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f97e7c05_2667bff2",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1182889
+      },
+      "writtenOn": "2017-09-15T06:28:51Z",
+      "side": 1,
+      "message": "Note to self. This is trouble \u0026 needs a change.\n\nThere are some \"lite\" embedders (such as extensions/shell a.k.a. \"app_shell\") who are relying on the current default behavior when no embedder-provided info is supplied, which is as follows:\n\n* GeolocationDelegate\u0027s UseNetworkLocationProviders \u003d true by default \u003d\u003e Try to CreateAccessTokenStore\n* Default CreateAccessTokenStore \u003d null by default \u003d\u003e LocationArbitrator will not try to create a NetworkLocationProvider\n\nWhereas as implemented here, LocationArbitrator *will* try to create a NetworkLocationProvider (and will sit around forever waiting for it).\n\nSolution 1:\nI think the best solution is to change the default UseNetworkLocationProviders to be false.\nThis is safe because UseNetworkLocationProviders is only used in one place (LocationArbitrator), and there it is effectively \u0026\u0026\u0027d with \"CreateAccessTokenStore() !\u003d null\". So we can simply explicitly set UseNetworkLocationProviders \u003d true for those embedders for whom CreateAccessStore is/was non-null (i.e. Chrome and Cast only).\n\nSolution 2:\nTrack down All The Embedders who are relying on the default and make them explicitly set UseNetworkLocationProviders \u003d false.\n\nSolution 3:\nMake the default implementation of GetGeolocationRequestContext return a (null) request context instead of doing nothing. Upon receiving this null request context, LocationArbitrator can give up creating the NetworkLocationProvider.",
+      "range": {
+        "startLine": 442,
+        "startChar": 7,
+        "endLine": 443,
+        "endChar": 22
+      },
+      "revId": "bedeb3783e324a5bf9ed68c2028bb72195acf920",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
