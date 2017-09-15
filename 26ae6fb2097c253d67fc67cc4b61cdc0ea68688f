@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc74673b_20efcf57",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 47
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-09-15T14:48:09Z",
+      "side": 1,
+      "message": "Thanks! I\u0027m happy to add a DCHECK and would prefer it, but as a consumer of this API in DidFinishNavigation, I couldn\u0027t figure out how to tell if it the given NavigationHandle had reached the expected state. Is there an API on NavigationHandle that would tell me that the navigation has progressed enough to know if it\u0027s a download, so I can be certain I won\u0027t trigger the DCHECK when I call it? Would checking to see if HTTP response headers are non-null be the right way to tell that we\u0027d started processing the response, or is there a different way to do it?",
+      "parentUuid": "937497bf_e143f3ad",
+      "revId": "26ae6fb2097c253d67fc67cc4b61cdc0ea68688f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fba8ff5_3ce1dbab",
         "filename": "content/public/browser/navigation_handle.h",
         "patchSetId": 47
