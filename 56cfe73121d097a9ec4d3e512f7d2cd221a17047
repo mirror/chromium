@@ -22,6 +22,47 @@
       "revId": "56cfe73121d097a9ec4d3e512f7d2cd221a17047",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "394bc44f_9779b74d",
+        "filename": "net/filter/filter_source_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-15T17:05:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e24c0c0_1ea0441d",
+      "range": {
+        "startLine": 88,
+        "startChar": 11,
+        "endLine": 88,
+        "endChar": 31
+      },
+      "revId": "56cfe73121d097a9ec4d3e512f7d2cd221a17047",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e4292f4a_b7647783",
+        "filename": "net/url_request/url_request_http_job_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-09-15T17:05:10Z",
+      "side": 1,
+      "message": "Randy, because we changed  FilterSourceStream::ParseEncodingType() which is used in HttpNetworkTransaction to detect whether AE and CE are compatible, this test no longer returns ERR_CONTENT_DECODING_FAILED. We return net::OK for unknown CEs. \n\nI removed this test.",
+      "revId": "56cfe73121d097a9ec4d3e512f7d2cd221a17047",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
