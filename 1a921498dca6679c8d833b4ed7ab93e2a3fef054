@@ -155,6 +155,24 @@
     },
     {
       "key": {
+        "uuid": "25f85aa9_99ccf1b6",
+        "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-15T08:44:33Z",
+      "side": 1,
+      "message": "Since we use |parent| to attach shadow root, we need to have |parent|.\nSo, |parent-\u003eRemoveChild(template_element)| is better than |template_element-\u003eRemove()|",
+      "parentUuid": "23ee6a3a_c5a7d45f",
+      "revId": "1a921498dca6679c8d833b4ed7ab93e2a3fef054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "817f9b3e_d8542336",
         "filename": "third_party/WebKit/Source/core/editing/testing/SelectionSample.cpp",
         "patchSetId": 4
