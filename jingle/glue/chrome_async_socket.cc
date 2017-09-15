@@ -22,6 +22,7 @@
 #include "net/socket/ssl_client_socket.h"
 #include "net/socket/tcp_client_socket.h"
 #include "net/ssl/ssl_config_service.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "third_party/webrtc/rtc_base/socketaddress.h"
 
 namespace jingle_glue {
@@ -247,7 +248,10 @@ bool ChromeAsyncSocket::Read(char* data, size_t len, size_t* len_read) {
 // (maybe) write_state_ == IDLE -> write_state_ == POSTED (via
 // PostDoWrite())
 
-bool ChromeAsyncSocket::Write(const char* data, size_t len) {
+bool ChromeAsyncSocket::Write(
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    const char* data,
+    size_t len) {
   if (!IsOpen() && (state_ != STATE_TLS_CONNECTING)) {
     LOG(DFATAL) << "Write() called on non-open non-tls-connecting socket";
     DoNonNetError(ERROR_WRONGSTATE);
@@ -264,6 +268,8 @@ bool ChromeAsyncSocket::Write(const char* data, size_t len) {
   }
   std::memcpy(write_buf_->data() + write_end_, data, len);
   write_end_ += len;
+  traffic_annotation_ =
+      net::MutableNetworkTrafficAnnotationTag(traffic_annotation);
   // If we're TLS-connecting, the write buffer will get flushed once
   // the TLS-connect finishes.  Otherwise, start writing if we're not
   // already writing and we have something to write.
@@ -298,11 +304,11 @@ void ChromeAsyncSocket::DoWrite() {
   // finishes.  This is okay, as StartTls() is called only after we
   // have received a reply to a message we sent to the server and
   // before we send the next message.
-  int status =
-      transport_socket_->Write(
-          write_buf_.get(), write_end_,
-          base::Bind(&ChromeAsyncSocket::ProcessWriteDone,
-                     weak_ptr_factory_.GetWeakPtr()));
+  int status = transport_socket_->Write(
+      net::NetworkTrafficAnnotationTag(traffic_annotation_), write_buf_.get(),
+      write_end_,
+      base::Bind(&ChromeAsyncSocket::ProcessWriteDone,
+                 weak_ptr_factory_.GetWeakPtr()));
   write_state_ = PENDING;
   if (status != net::ERR_IO_PENDING) {
     ProcessWriteDone(status);

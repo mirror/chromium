@@ -32,6 +32,7 @@
 #include "net/http/partial_data.h"
 #include "net/log/net_log_with_source.h"
 #include "net/socket/connection_attempts.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/websockets/websocket_handshake_stream_base.h"
 
 namespace net {
@@ -139,6 +140,7 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
 
   // HttpTransaction methods:
   int Start(const HttpRequestInfo* request_info,
+            const net::NetworkTrafficAnnotationTag& traffic_annotation,
             const CompletionCallback& callback,
             const NetLogWithSource& net_log) override;
   int RestartIgnoringLastError(const CompletionCallback& callback) override;
@@ -575,6 +577,7 @@ class NET_EXPORT_PRIVATE HttpCache::Transaction : public HttpTransaction {
   // True if the Transaction is currently processing the DoLoop.
   bool in_do_loop_;
 
+  net::MutableNetworkTrafficAnnotationTag traffic_annotation_;
   base::WeakPtrFactory<Transaction> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(Transaction);

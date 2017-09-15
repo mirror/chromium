@@ -27,6 +27,7 @@
 #include "net/spdy/core/spdy_frame_builder.h"
 #include "net/spdy/core/spdy_framer.h"
 #include "net/ssl/ssl_info.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -176,9 +177,11 @@ int QuicHttpStream::DoHandlePromiseComplete(int rv) {
   return OK;
 }
 
-int QuicHttpStream::SendRequest(const HttpRequestHeaders& request_headers,
-                                HttpResponseInfo* response,
-                                const CompletionCallback& callback) {
+int QuicHttpStream::SendRequest(
+    const HttpRequestHeaders& request_headers,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    HttpResponseInfo* response,
+    const CompletionCallback& callback) {
   CHECK(!request_body_stream_);
   CHECK(!response_info_);
   CHECK(callback_.is_null());

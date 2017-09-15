@@ -19,6 +19,7 @@
 #include "base/memory/weak_ptr.h"
 #include "net/base/completion_callback.h"
 #include "net/base/net_errors.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "third_party/libjingle_xmpp/xmpp/asyncsocket.h"
 
 namespace net {
@@ -102,7 +103,9 @@ class ChromeAsyncSocket : public buzz::AsyncSocket {
   // Note that there's no guarantee that the data will actually be
   // sent; however, it is guaranteed that the any data sent will be
   // sent in FIFO order.
-  bool Write(const char* data, size_t len) override;
+  bool Write(const net::NetworkTrafficAnnotationTag& traffic_annotation,
+             const char* data,
+             size_t len) override;
 
   // If the socket is not already closed, closes the socket and raises
   // SignalClosed.  Always returns true.
@@ -201,6 +204,7 @@ class ChromeAsyncSocket : public buzz::AsyncSocket {
   // |write_end_| > 0.
   AsyncIOState write_state_;
   scoped_refptr<net::IOBufferWithSize> write_buf_;
+  net::MutableNetworkTrafficAnnotationTag traffic_annotation_;
   size_t write_end_;
 
   base::WeakPtrFactory<ChromeAsyncSocket> weak_ptr_factory_;

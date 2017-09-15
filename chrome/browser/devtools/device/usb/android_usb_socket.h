@@ -17,6 +17,7 @@
 #include "net/base/ip_endpoint.h"
 #include "net/log/net_log_with_source.h"
 #include "net/socket/stream_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 class AndroidUsbSocket : public net::StreamSocket {
  public:
@@ -34,7 +35,8 @@ class AndroidUsbSocket : public net::StreamSocket {
   int Read(net::IOBuffer* buf,
            int buf_len,
            const net::CompletionCallback& callback) override;
-  int Write(net::IOBuffer* buf,
+  int Write(const net::NetworkTrafficAnnotationTag& traffic_annotation,
+            net::IOBuffer* buf,
             int buf_len,
             const net::CompletionCallback& callback) override;
   int SetReceiveBufferSize(int32_t size) override;

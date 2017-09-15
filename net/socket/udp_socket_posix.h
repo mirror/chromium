@@ -25,6 +25,7 @@
 #include "net/socket/datagram_socket.h"
 #include "net/socket/diff_serv_code_point.h"
 #include "net/socket/socket_descriptor.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace net {
 
@@ -126,7 +127,10 @@ class NET_EXPORT UDPSocketPosix {
   // Writes to the socket.
   // Only usable from the client-side of a UDP socket, after the socket
   // has been connected.
-  int Write(IOBuffer* buf, int buf_len, const CompletionCallback& callback);
+  int Write(const net::NetworkTrafficAnnotationTag& traffic_annotation,
+            IOBuffer* buf,
+            int buf_len,
+            const CompletionCallback& callback);
 
   // Reads from a socket and receive sender address information.
   // |buf| is the buffer to read data into.

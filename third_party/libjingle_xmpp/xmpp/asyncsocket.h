@@ -13,6 +13,7 @@
 
 #include <string>
 
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "third_party/webrtc/rtc_base/sigslot.h"
 
 namespace rtc {
@@ -47,7 +48,9 @@ public:
 
   virtual bool Connect(const rtc::SocketAddress& addr) = 0;
   virtual bool Read(char * data, size_t len, size_t* len_read) = 0;
-  virtual bool Write(const char * data, size_t len) = 0;
+  virtual bool Write(const net::NetworkTrafficAnnotationTag& traffic_annotation,
+                     const char* data,
+                     size_t len) = 0;
   virtual bool Close() = 0;
   // We allow matching any passed domain.  This allows us to avoid
   // handling the valuable certificates for logins into proxies.  If

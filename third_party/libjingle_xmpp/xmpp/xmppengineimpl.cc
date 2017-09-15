@@ -14,6 +14,7 @@
 #include <sstream>
 #include <vector>
 
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "third_party/libjingle_xmpp/xmllite/xmlelement.h"
 #include "third_party/libjingle_xmpp/xmllite/xmlprinter.h"
 #include "third_party/libjingle_xmpp/xmpp/constants.h"
@@ -417,7 +418,8 @@ XmppEngineImpl::EnterExit::~EnterExit()  {
  if (engine->output_handler_ && flushing) {
    std::string output = engine->output_->str();
    if (output.length() > 0)
-     engine->output_handler_->WriteOutput(output.c_str(), output.length());
+     engine->output_handler_->WriteOutput(NO_TRAFFIC_ANNOTATION_YET,
+                                          output.c_str(), output.length());
    engine->output_->str("");
 
    if (closing) {

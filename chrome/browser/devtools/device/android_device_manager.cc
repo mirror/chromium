@@ -20,6 +20,7 @@
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
 #include "net/socket/stream_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 using content::BrowserThread;
 
@@ -137,8 +138,7 @@ class HttpRequest {
       }
 
       result = socket_->Write(
-          request_.get(),
-          request_->BytesRemaining(),
+          NO_TRAFFIC_ANNOTATION_YET, request_.get(), request_->BytesRemaining(),
           base::Bind(&HttpRequest::DoSendRequest, base::Unretained(this)));
     }
   }

@@ -118,9 +118,13 @@ HttpNetworkTransaction::~HttpNetworkTransaction() {
     request_->upload_data_stream->Reset();  // Invalidate pending callbacks.
 }
 
-int HttpNetworkTransaction::Start(const HttpRequestInfo* request_info,
-                                  const CompletionCallback& callback,
-                                  const NetLogWithSource& net_log) {
+int HttpNetworkTransaction::Start(
+    const HttpRequestInfo* request_info,
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    const CompletionCallback& callback,
+    const NetLogWithSource& net_log) {
+  traffic_annotation_ =
+      net::MutableNetworkTrafficAnnotationTag(traffic_annotation);
   net_log_ = net_log;
   request_ = request_info;
   url_ = request_->url;
@@ -1184,7 +1188,9 @@ int HttpNetworkTransaction::DoSendRequest() {
   send_start_time_ = base::TimeTicks::Now();
   next_state_ = STATE_SEND_REQUEST_COMPLETE;
 
-  return stream_->SendRequest(request_headers_, &response_, io_callback_);
+  return stream_->SendRequest(
+      request_headers_, net::NetworkTrafficAnnotationTag(traffic_annotation_),
+      &response_, io_callback_);
 }
 
 int HttpNetworkTransaction::DoSendRequestComplete(int result) {

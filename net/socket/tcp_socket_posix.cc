@@ -327,9 +327,11 @@ int TCPSocketPosix::ReadIfReady(IOBuffer* buf,
   return rv;
 }
 
-int TCPSocketPosix::Write(IOBuffer* buf,
-                          int buf_len,
-                          const CompletionCallback& callback) {
+int TCPSocketPosix::Write(
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    IOBuffer* buf,
+    int buf_len,
+    const CompletionCallback& callback) {
   DCHECK(socket_);
   DCHECK(!callback.is_null());
 
@@ -344,7 +346,7 @@ int TCPSocketPosix::Write(IOBuffer* buf,
   if (use_tcp_fastopen_ && !tcp_fastopen_write_attempted_) {
     rv = TcpFastOpenWrite(buf, buf_len, write_callback);
   } else {
-    rv = socket_->Write(buf, buf_len, write_callback);
+    rv = socket_->Write(traffic_annotation, buf, buf_len, write_callback);
   }
 
   if (rv != ERR_IO_PENDING)

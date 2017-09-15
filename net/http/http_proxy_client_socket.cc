@@ -22,6 +22,7 @@
 #include "net/log/net_log.h"
 #include "net/log/net_log_event_type.h"
 #include "net/socket/client_socket_handle.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 #include "url/gurl.h"
 
 namespace net {
@@ -228,12 +229,16 @@ int HttpProxyClientSocket::Read(IOBuffer* buf, int buf_len,
   return transport_->socket()->Read(buf, buf_len, callback);
 }
 
-int HttpProxyClientSocket::Write(IOBuffer* buf, int buf_len,
-                                 const CompletionCallback& callback) {
+int HttpProxyClientSocket::Write(
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    IOBuffer* buf,
+    int buf_len,
+    const CompletionCallback& callback) {
   DCHECK_EQ(STATE_DONE, next_state_);
   DCHECK(user_callback_.is_null());
 
-  return transport_->socket()->Write(buf, buf_len, callback);
+  return transport_->socket()->Write(traffic_annotation, buf, buf_len,
+                                     callback);
 }
 
 int HttpProxyClientSocket::SetReceiveBufferSize(int32_t size) {
@@ -418,8 +423,12 @@ int HttpProxyClientSocket::DoSendRequest() {
   parser_buf_ = new GrowableIOBuffer();
   http_stream_parser_.reset(new HttpStreamParser(
       transport_.get(), &request_, parser_buf_.get(), net_log_));
-  return http_stream_parser_->SendRequest(
-      request_line_, request_headers_, &response_, io_callback_);
+  // TODO(rhalavati): Should this be a general annotation stating smt like it's
+  // opening the socket for ..., or it can be passed to this class and stored
+  // e.g. through connect?
+  return http_stream_parser_->SendRequest(request_line_, request_headers_,
+                                          NO_TRAFFIC_ANNOTATION_YET, &response_,
+                                          io_callback_);
 }
 
 int HttpProxyClientSocket::DoSendRequestComplete(int result) {

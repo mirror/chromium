@@ -502,10 +502,11 @@ void URLRequestHttpJob::StartTransactionInternal() {
 
       if (!throttling_entry_.get() ||
           !throttling_entry_->ShouldRejectRequest(*request_)) {
-        rv = transaction_->Start(
-            &request_info_, base::Bind(&URLRequestHttpJob::OnStartCompleted,
-                                       base::Unretained(this)),
-            request_->net_log());
+        rv =
+            transaction_->Start(&request_info_, request_->traffic_annotation(),
+                                base::Bind(&URLRequestHttpJob::OnStartCompleted,
+                                           base::Unretained(this)),
+                                request_->net_log());
         start_time_ = base::TimeTicks::Now();
       } else {
         // Special error code for the exponential back-off module.

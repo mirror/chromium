@@ -378,9 +378,12 @@ int UDPSocketPosix::RecvFrom(IOBuffer* buf,
   return ERR_IO_PENDING;
 }
 
-int UDPSocketPosix::Write(IOBuffer* buf,
-                          int buf_len,
-                          const CompletionCallback& callback) {
+int UDPSocketPosix::Write(
+    const net::NetworkTrafficAnnotationTag& traffic_annotation,
+    IOBuffer* buf,
+    int buf_len,
+    const CompletionCallback& callback) {
+  // TODO(rhalavati): Unused annotation.
   return SendToOrWrite(buf, buf_len, NULL, callback);
 }
 

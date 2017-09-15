@@ -10,6 +10,7 @@
 #include "base/callback.h"
 #include "net/base/io_buffer.h"
 #include "net/socket/stream_socket.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace gcm {
 
@@ -264,11 +265,9 @@ net::Error SocketOutputStream::Flush(const base::Closure& callback) {
 
   DVLOG(1) << "Flushing " << next_pos_ << " bytes into socket.";
   int result =
-      socket_->Write(write_buffer_.get(),
-                     next_pos_,
+      socket_->Write(NO_TRAFFIC_ANNOTATION_YET, write_buffer_.get(), next_pos_,
                      base::Bind(&SocketOutputStream::FlushCompletionCallback,
-                                weak_ptr_factory_.GetWeakPtr(),
-                                callback));
+                                weak_ptr_factory_.GetWeakPtr(), callback));
   DVLOG(1) << "Write returned " << result;
   if (result == net::ERR_IO_PENDING) {
     last_error_ = net::ERR_IO_PENDING;
