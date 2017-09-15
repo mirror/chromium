@@ -54,7 +54,6 @@ class MODULES_EXPORT DynamicsCompressorHandler final : public AudioHandler {
   void Process(size_t frames_to_process) override;
   void ProcessOnlyAudioParams(size_t frames_to_process) override;
   void Initialize() override;
-  void ClearInternalStateWhenDisabled() override;
 
   float ReductionValue() const { return reduction_; }
 
@@ -69,6 +68,7 @@ class MODULES_EXPORT DynamicsCompressorHandler final : public AudioHandler {
                             AudioParamHandler& ratio,
                             AudioParamHandler& attack,
                             AudioParamHandler& release);
+  bool RequiresTailProcessing() const final;
   double TailTime() const override;
   double LatencyTime() const override;
 
