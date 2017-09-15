@@ -470,6 +470,30 @@ void IndexedDBContextImpl::DatabaseDeleted(const Origin& origin) {
   QueryDiskAndUpdateQuotaUsage(origin);
 }
 
+void IndexedDBContextImpl::AddObserver(
+    IndexedDBContextImpl::Observer* observer) {
+  DCHECK(!observers_.HasObserver(observer));
+  observers_.AddObserver(observer);
+}
+
+void IndexedDBContextImpl::RemoveObserver(
+    IndexedDBContextImpl::Observer* observer) {
+  observers_.RemoveObserver(observer);
+}
+
+void IndexedDBContextImpl::NotifyIndexedDBListChanged(const Origin& origin) {
+  for (auto& observer : observers_)
+    observer.OnIndexedDBListChanged(origin);
+}
+
+void IndexedDBContextImpl::NotifyIndexedDBContentChanged(
+    const Origin& origin,
+    const std::string& databaseName,
+    const std::string& objectStoreName) {
+  for (auto& observer : observers_)
+    observer.OnIndexedDBContentChanged(origin, databaseName, objectStoreName);
+}
+
 IndexedDBContextImpl::~IndexedDBContextImpl() {
   if (factory_.get()) {
     TaskRunner()->PostTask(FROM_HERE,
@@ -551,6 +575,7 @@ void IndexedDBContextImpl::QueryDiskAndUpdateQuotaUsage(const Origin& origin) {
     quota_manager_proxy()->NotifyStorageModified(
         storage::QuotaClient::kIndexedDatabase, origin.GetURL(),
         storage::kStorageTypeTemporary, difference);
+    NotifyIndexedDBListChanged(origin);
   }
 }
 
