@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "ash/public/interfaces/constants.mojom.h"
-#include "base/command_line.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "build/build_config.h"
@@ -19,8 +18,6 @@
 #include "chrome/browser/ui/app_list/app_list_controller_delegate.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service.h"
 #include "chrome/browser/ui/app_list/app_list_syncable_service_factory.h"
-#include "chrome/browser/ui/app_list/custom_launcher_page_contents.h"
-#include "chrome/browser/ui/app_list/launcher_page_event_dispatcher.h"
 #include "chrome/browser/ui/app_list/search/search_controller_factory.h"
 #include "chrome/browser/ui/app_list/search/search_resource_manager.h"
 #include "chrome/browser/ui/app_list/start_page_service.h"
@@ -105,9 +102,6 @@ AppListViewDelegate::AppListViewDelegate(AppListControllerDelegate* controller)
   speech_ui_->set_logo(*image);
 #endif
 
-  registrar_.Add(this, chrome::NOTIFICATION_APP_TERMINATING,
-                 content::NotificationService::AllSources());
-
   content::ServiceManagerConnection::GetForProcess()
       ->GetConnector()
       ->BindInterface(ash::mojom::kServiceName, &wallpaper_controller_ptr_);
@@ -132,8 +126,6 @@ void AppListViewDelegate::SetProfile(Profile* new_profile) {
     // be destroyed first.
     search_resource_manager_.reset();
     search_controller_.reset();
-    launcher_page_event_dispatcher_.reset();
-    custom_page_contents_.clear();
     app_list::StartPageService* start_page_service =
         app_list::StartPageService::Get(profile_);
     if (start_page_service)
@@ -347,44 +339,6 @@ views::View* AppListViewDelegate::CreateStartPageWebView(
   web_view->SetResizeBackgroundColor(SK_ColorTRANSPARENT);
   web_view->SetWebContents(web_contents);
   return web_view;
-}
-
-std::vector<views::View*> AppListViewDelegate::CreateCustomPageWebViews(
-    const gfx::Size& size) {
-  std::vector<views::View*> web_views;
-
-  for (const auto& contents : custom_page_contents_) {
-    content::WebContents* web_contents = contents->web_contents();
-
-    // The web contents should belong to the current profile.
-    DCHECK_EQ(profile_, web_contents->GetBrowserContext());
-
-    // Make the webview transparent.
-    content::RenderWidgetHostView* render_view_host_view =
-        web_contents->GetRenderViewHost()->GetWidget()->GetView();
-    // The RenderWidgetHostView may be null if the renderer has crashed.
-    if (render_view_host_view)
-      render_view_host_view->SetBackgroundColor(SK_ColorTRANSPARENT);
-
-    views::WebView* web_view =
-        new views::WebView(web_contents->GetBrowserContext());
-    web_view->SetPreferredSize(size);
-    web_view->SetResizeBackgroundColor(SK_ColorTRANSPARENT);
-    web_view->SetWebContents(web_contents);
-    web_views.push_back(web_view);
-  }
-
-  return web_views;
-}
-
-void AppListViewDelegate::CustomLauncherPageAnimationChanged(double progress) {
-  if (launcher_page_event_dispatcher_)
-    launcher_page_event_dispatcher_->ProgressChanged(progress);
-}
-
-void AppListViewDelegate::CustomLauncherPagePopSubpage() {
-  if (launcher_page_event_dispatcher_)
-    launcher_page_event_dispatcher_->PopSubpage();
 }
 
 bool AppListViewDelegate::IsSpeechRecognitionEnabled() {
