@@ -16,6 +16,29 @@
       "revId": "bce798a283b4279438c237e904684ec989ea6590",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53a5715d_41902ff8",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRelationCache.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-15T21:57:40Z",
+      "side": 1,
+      "message": "I think you want WeakPersistent here. That way it\ndoesn\u0027t keep AXObjectCacheImpl alive.",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 12
+      },
+      "revId": "bce798a283b4279438c237e904684ec989ea6590",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
