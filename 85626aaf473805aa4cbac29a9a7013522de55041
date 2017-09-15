@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af811403_f35a9aba",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-15T22:27:36Z",
+      "side": 1,
+      "message": "SendBrightnessChanged(kNonZeroBrightness, true): the second parameter is changed from false to true. I think the old is wrong. Only automated change should use false.",
+      "revId": "85626aaf473805aa4cbac29a9a7013522de55041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
