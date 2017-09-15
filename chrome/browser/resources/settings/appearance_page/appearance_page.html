@@ -44,15 +44,20 @@
 <if expr="chromeos">
         <div class="settings-box first two-line" id="wallpaperButton"
             on-tap="openWallpaperManager_" actionable
-            hidden="[[!pageVisibility.setWallpaper]]">
+            hidden="[[!isWallpaperSettingVisible_]]">
           <div class="start">
             $i18n{setWallpaper}
             <div class="secondary" id="wallpaperSecondary">
               $i18n{openWallpaperApp}
             </div>
           </div>
-          <button class="icon-external" is="paper-icon-button-light"
-              aria-label="$i18n{setWallpaper}"
+          <template is="dom-if" if="[[isWallpaperPolicyControlled_]]">
+            <cr-policy-indicator id="wallpaperPolicyIndicator"
+                indicator-type="devicePolicy"></cr-policy-indicator>
+          </template>
+          <button class="icon-external" id="showWallpaperManager"
+              is="paper-icon-button-light" aria-label="$i18n{setWallpaper}"
+              disabled="[[isWallpaperPolicyControlled_]]"
               aria-describedby="wallpaperSecondary"></button>
         </div>
         <div class="settings-box two-line"
