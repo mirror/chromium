@@ -142,6 +142,8 @@ class NET_EXPORT HostResolverImpl
                        AddressList* addresses,
                        const NetLogWithSource& source_net_log) override;
   void SetDnsClientEnabled(bool enabled) override;
+  void SetDnsRefresherEnabled(bool enabled) override;
+
   HostCache* GetHostCache() override;
   std::unique_ptr<base::Value> GetDnsConfigAsValue() const override;
 
@@ -365,6 +367,9 @@ class NET_EXPORT HostResolverImpl
 
   // Allow fallback to ProcTask if DnsTask fails.
   bool fallback_to_proctask_;
+
+  // Enable the asynchronous DNS refresher.
+  bool async_dns_refresher_enabled_;
 
   // Task runner used for DNS lookups using the platform resolver, and other
   // blocking operations. Usually just the WorkerPool's task runner for slow
