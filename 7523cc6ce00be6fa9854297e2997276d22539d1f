@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "2beed612_e0baacdf",
+        "filename": "components/favicon/content/content_favicon_driver.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-09-15T14:35:16Z",
+      "side": 1,
+      "message": "This solution seems really brittle. We have to keep in mind that the blink folks know nothing about favicons. Our goal is to prevent the blink folks from accidentally breaking favicons.\n\nI am also unsure whether \"stopping a load\" is the only case where ContentFaviconDriver::DidUpdateFaviconURL() is called early",
+      "parentUuid": "7cef25ce_a75ada47",
+      "revId": "7523cc6ce00be6fa9854297e2997276d22539d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a48a8c2_7228e6b0",
         "filename": "components/favicon/core/favicon_handler.cc",
         "patchSetId": 5
