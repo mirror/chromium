@@ -29,12 +29,8 @@
 #include "core/HTMLNames.h"
 #include "core/css/CSSPrimitiveValue.h"
 #include "core/css/CSSSelector.h"
-#include "core/dom/AXObjectCache.h"
-#include "core/dom/Attribute.h"
 #include "core/dom/ContainerNode.h"
-#include "core/dom/Document.h"
 #include "core/dom/ElementData.h"
-#include "core/dom/SpaceSplitString.h"
 #include "core/dom/WhitespaceAttacher.h"
 #include "core/resize_observer/ResizeObserver.h"
 #include "platform/bindings/TraceWrapperMember.h"
@@ -44,7 +40,6 @@
 
 namespace blink {
 
-class ElementAnimations;
 class AccessibleNode;
 class Attr;
 class Attribute;
@@ -55,6 +50,8 @@ class DOMRect;
 class DOMRectList;
 class DOMStringMap;
 class DOMTokenList;
+class Document;
+class ElementAnimations;
 class ElementRareData;
 class ElementShadow;
 class ExceptionState;
@@ -74,6 +71,7 @@ class ScrollStateCallback;
 class ScrollToOptions;
 class ShadowRoot;
 class ShadowRootInit;
+class SpaceSplitString;
 class StylePropertySet;
 class StylePropertyMap;
 class V0CustomElementDefinition;
@@ -195,7 +193,8 @@ class CORE_EXPORT Element : public ContainerNode {
 
   void setAttribute(const AtomicString& name,
                     const AtomicString& value,
-                    ExceptionState& = ASSERT_NO_EXCEPTION);
+                    ExceptionState&);
+  void setAttribute(const AtomicString& name, const AtomicString& value);
   static bool ParseAttributeName(QualifiedName&,
                                  const AtomicString& namespace_uri,
                                  const AtomicString& qualified_name,
@@ -472,8 +471,8 @@ class CORE_EXPORT Element : public ContainerNode {
   // TODO(esprehn): These take a ScriptState only for calling
   // HostsUsingFeatures::countMainWorldOnly, which should be handled in the
   // bindings instead so adding a ShadowRoot from C++ doesn't need one.
-  ShadowRoot* createShadowRoot(const ScriptState* = nullptr,
-                               ExceptionState& = ASSERT_NO_EXCEPTION);
+  ShadowRoot* createShadowRoot(const ScriptState*, ExceptionState&);
+  ShadowRoot* createShadowRoot(const ScriptState* = nullptr);
   ShadowRoot* attachShadow(const ScriptState*,
                            const ShadowRootInit&,
                            ExceptionState&);
@@ -607,7 +606,8 @@ class CORE_EXPORT Element : public ContainerNode {
   String outerText();
   String innerHTML() const;
   String outerHTML() const;
-  void setInnerHTML(const String&, ExceptionState& = ASSERT_NO_EXCEPTION);
+  void setInnerHTML(const String&, ExceptionState&);
+  void setInnerHTML(const String&);
   void setOuterHTML(const String&, ExceptionState&);
 
   Element* insertAdjacentElement(const String& where,
@@ -674,12 +674,12 @@ class CORE_EXPORT Element : public ContainerNode {
   virtual bool MatchesValidityPseudoClasses() const { return false; }
 
   // https://dom.spec.whatwg.org/#dom-element-matches
-  bool matches(const AtomicString& selectors,
-               ExceptionState& = ASSERT_NO_EXCEPTION);
+  bool matches(const AtomicString& selectors, ExceptionState&);
+  bool matches(const AtomicString& selectors);
 
   // https://dom.spec.whatwg.org/#dom-element-closest
-  Element* closest(const AtomicString& selectors,
-                   ExceptionState& = ASSERT_NO_EXCEPTION);
+  Element* closest(const AtomicString& selectors, ExceptionState&);
+  Element* closest(const AtomicString& selectors);
 
   virtual bool ShouldAppearIndeterminate() const { return false; }
 
@@ -1159,37 +1159,6 @@ inline UniqueElementData& Element::EnsureUniqueElementData() {
   return ToUniqueElementData(*element_data_);
 }
 
-inline Node::InsertionNotificationRequest Node::InsertedInto(
-    ContainerNode* insertion_point) {
-  DCHECK(!ChildNeedsStyleInvalidation());
-  DCHECK(!NeedsStyleInvalidation());
-  DCHECK(insertion_point->isConnected() || insertion_point->IsInShadowTree() ||
-         IsContainerNode());
-  if (insertion_point->isConnected()) {
-    SetFlag(kIsConnectedFlag);
-    insertion_point->GetDocument().IncrementNodeCount();
-  }
-  if (ParentOrShadowHostNode()->IsInShadowTree())
-    SetFlag(kIsInShadowTreeFlag);
-  if (ChildNeedsDistributionRecalc() &&
-      !insertion_point->ChildNeedsDistributionRecalc())
-    insertion_point->MarkAncestorsWithChildNeedsDistributionRecalc();
-  return kInsertionDone;
-}
-
-inline void Node::RemovedFrom(ContainerNode* insertion_point) {
-  DCHECK(insertion_point->isConnected() || IsContainerNode() ||
-         IsInShadowTree());
-  if (insertion_point->isConnected()) {
-    ClearFlag(kIsConnectedFlag);
-    insertion_point->GetDocument().DecrementNodeCount();
-  }
-  if (IsInShadowTree() && !ContainingTreeScope().RootNode().IsShadowRoot())
-    ClearFlag(kIsInShadowTreeFlag);
-  if (AXObjectCache* cache = GetDocument().ExistingAXObjectCache())
-    cache->Remove(this);
-}
-
 inline void Element::InvalidateStyleAttribute() {
   DCHECK(GetElementData());
   GetElementData()->style_attribute_is_dirty_ = true;
@@ -1211,12 +1180,6 @@ inline void Element::SetTagNameForCreateElementNS(
   DCHECK_EQ(tag_name.LocalName(), tag_name_.LocalName());
   DCHECK_EQ(tag_name.NamespaceURI(), tag_name_.NamespaceURI());
   tag_name_ = tag_name;
-}
-
-inline AtomicString Element::LocalNameForSelectorMatching() const {
-  if (IsHTMLElement() || !GetDocument().IsHTMLDocument())
-    return localName();
-  return localName().DeprecatedLower();
 }
 
 inline bool IsShadowHost(const Node* node) {
