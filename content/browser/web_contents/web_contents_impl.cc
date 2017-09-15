@@ -2885,14 +2885,16 @@ void WebContentsImpl::MoveCaret(const gfx::Point& extent) {
   focused_frame->GetFrameInputHandler()->MoveCaret(extent);
 }
 
-void WebContentsImpl::AdjustSelectionByCharacterOffset(int start_adjust,
-                                                       int end_adjust) {
+void WebContentsImpl::AdjustSelectionByCharacterOffset(
+    int start_adjust,
+    int end_adjust,
+    bool show_selection_menu) {
   RenderFrameHostImpl* focused_frame = GetFocusedFrame();
   if (!focused_frame)
     return;
 
   focused_frame->GetFrameInputHandler()->AdjustSelectionByCharacterOffset(
-      start_adjust, end_adjust);
+      start_adjust, end_adjust, show_selection_menu);
 }
 
 void WebContentsImpl::UpdatePreferredSize(const gfx::Size& pref_size) {
