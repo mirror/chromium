@@ -285,6 +285,12 @@ void FrameSelection::DidSetSelectionDeprecated(
     RevealSelection(alignment, kRevealExtent);
   }
 
+  if (options.ShouldShowSelectionMenu()) {
+    ContextMenuAllowedScope scope;
+    frame_->GetEventHandler().ShowNonLocatedContextMenu(
+        nullptr, kMenuSourceAdjustSelection);
+  }
+
   NotifyAccessibilityForSelectionChange();
   NotifyCompositorForSelectionChange();
   NotifyEventHandlerForSelectionChange();

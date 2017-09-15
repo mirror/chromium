@@ -1199,7 +1199,8 @@ void WebLocalFrameImpl::SelectRange(const WebPoint& base_in_viewport,
 
 void WebLocalFrameImpl::SelectRange(
     const WebRange& web_range,
-    HandleVisibilityBehavior handle_visibility_behavior) {
+    HandleVisibilityBehavior handle_visibility_behavior,
+    bool show_selection_menu) {
   TRACE_EVENT0("blink", "WebLocalFrameImpl::selectRange");
 
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
@@ -1215,13 +1216,15 @@ void WebLocalFrameImpl::SelectRange(
       handle_visibility_behavior == kShowSelectionHandle ||
       (handle_visibility_behavior == kPreserveHandleVisibility &&
        selection.IsHandleVisible());
-  selection.SetSelection(
-      SelectionInDOMTree::Builder()
-          .SetBaseAndExtent(range)
-          .SetAffinity(VP_DEFAULT_AFFINITY)
-          .SetIsDirectional(false)
-          .Build(),
-      SetSelectionOptions::Builder().SetShouldShowHandle(show_handles).Build());
+  selection.SetSelection(SelectionInDOMTree::Builder()
+                             .SetBaseAndExtent(range)
+                             .SetAffinity(VP_DEFAULT_AFFINITY)
+                             .SetIsDirectional(false)
+                             .Build(),
+                         SetSelectionOptions::Builder()
+                             .SetShouldShowHandle(show_handles)
+                             .SetShouldShowSelectionMenu(show_selection_menu)
+                             .Build());
 }
 
 WebString WebLocalFrameImpl::RangeAsText(const WebRange& web_range) {

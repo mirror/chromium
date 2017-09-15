@@ -34,6 +34,7 @@ class CORE_EXPORT SetSelectionOptions final {
   bool ShouldCloseTyping() const { return should_close_typing_; }
   bool ShouldClearTypingStyle() const { return should_clear_typing_style_; }
   bool ShouldShowHandle() const { return should_show_handle_; }
+  bool ShouldShowSelectionMenu() const { return should_show_selection_menu_; }
 
  private:
   CursorAlignOnScroll cursor_align_on_scroll_ = CursorAlignOnScroll::kIfNeeded;
@@ -44,6 +45,7 @@ class CORE_EXPORT SetSelectionOptions final {
   bool should_close_typing_ = false;
   bool should_clear_typing_style_ = false;
   bool should_show_handle_ = false;
+  bool should_show_selection_menu_ = false;
 };
 
 // This class is used for building |SelectionData| object.
@@ -64,6 +66,7 @@ class CORE_EXPORT SetSelectionOptions::Builder final {
   Builder& SetShouldCloseTyping(bool);
   Builder& SetShouldClearTypingStyle(bool);
   Builder& SetShouldShowHandle(bool);
+  Builder& SetShouldShowSelectionMenu(bool);
 
  private:
   SetSelectionOptions data_;
