@@ -437,6 +437,9 @@ WebPreferences RenderViewHostImpl::ComputeWebkitPrefs() {
   prefs.use_solid_color_scrollbars = true;
 #endif  // defined(OS_ANDROID)
 
+  prefs.save_previous_document_resources_until =
+      GetSavePreviousDocumentResourcesUntil();
+
   std::string autoplay_policy = media::GetEffectiveAutoplayPolicy(command_line);
   if (autoplay_policy == switches::autoplay::kNoUserGestureRequiredPolicy) {
     prefs.autoplay_policy = AutoplayPolicy::kNoUserGestureRequired;
