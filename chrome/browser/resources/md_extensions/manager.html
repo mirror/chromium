@@ -25,6 +25,9 @@
 <link rel="import" href="chrome://extensions/view_manager.html">
 <link rel="stylesheet" href="chrome://resources/css/md_colors.css">
 
+<!-- TODO(scottchen): hide this behind "enable-consumer-kiosk" flag -->
+<link rel="import" href="chrome://extensions/kiosk_dialog.html">
+
 <dom-module id="extensions-manager">
   <template>
     <style include="cr-hidden-style">
@@ -60,7 +63,8 @@
       <extensions-toolbar class="paper-header" in-dev-mode="[[inDevMode]]"
           on-pack-tap="onPackTap_" delegate="[[delegate]]"
           on-cr-toolbar-menu-tap="onMenuButtonTap_"
-          on-search-changed="onFilterChanged_">
+          on-search-changed="onFilterChanged_"
+          on-kiosk-tap="onKioskTap_">
       </extensions-toolbar>
       <dialog id="drawer" is="cr-drawer" heading="$i18n{toolbarTitle}">
         <div class="drawer-content">
@@ -90,6 +94,9 @@
       </extensions-pack-dialog>
       <extensions-load-error id="load-error" delegate="[[delegate]]">
       </extensions-load-error>
+      <!-- TODO(scottchen): hide this behind "enable-consumer-kiosk" flag -->
+      <extensions-kiosk-dialog id="kiosk-dialog">
+      </extensions-kiosk-dialog>
     </paper-header-panel>
   </template>
   <script src="chrome://extensions/manager.js"></script>

@@ -52,6 +52,12 @@ cr.define('extensions', function() {
       this.fire('pack-tap');
     },
 
+    // TODO(scottchen): hide this behind "enable-consumer-kiosk" flag
+    /** @private */
+    onKioskTap_: function() {
+      this.fire('kiosk-tap');
+    },
+
     /** @private */
     onUpdateNowTap_: function() {
       this.delegate.updateAllExtensions();

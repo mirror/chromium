@@ -336,6 +336,11 @@ cr.define('extensions', function() {
       this.$['pack-dialog'].show();
     },
 
+    /** @private */
+    onKioskTap_: function() {
+      this.$['kiosk-dialog'].show();
+    },
+
     /**
      * @param {!extensions.ShowingType} listType
      * @private

@@ -1,0 +1,122 @@
+<link rel="import" href="chrome://resources/html/polymer.html">
+
+<link rel="import" href="chrome://resources/cr_elements/cr_dialog/cr_dialog.html">
+<link rel="import" href="chrome://resources/cr_elements/cr_icons_css.html">
+<link rel="import" href="chrome://resources/cr_elements/paper_button_style_css.html">
+<link rel="import" href="chrome://resources/cr_elements/shared_style_css.html">
+<link rel="import" href="chrome://resources/html/assert.html">
+<link rel="import" href="chrome://resources/html/cr.html">
+<link rel="import" href="chrome://resources/html/util.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/paper-button/paper-button.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/paper-icon-button/paper-icon-button-light.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/paper-input/paper-input.html">
+
+<dom-module id="extensions-kiosk-dialog">
+  <template>
+    <style include="cr-shared-style paper-button-style cr-icons">
+      #add-kiosk-app {
+        --paper-input-container-input: {
+          font-size: inherit;
+        };
+        align-items: center;
+        display: flex;
+        margin-bottom: 10px;
+        margin-top: 20px;
+        width: 350px;
+      }
+
+      #add-kiosk-app paper-input {
+        flex: 1;
+      }
+
+      #add-kiosk-app paper-button {
+        -webkit-margin-start: 10px;
+      }
+
+      paper-button {
+        color: var(--google-blue-500);
+      }
+
+      #kiosk-apps-list {
+        border: 1px solid var(--paper-grey-300);
+        padding: 10px;
+      }
+
+      .list-item {
+        align-items: center;
+        border-bottom: 1px solid var(--paper-grey-300);
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .list-item:last {
+        border-bottom: none;
+      }
+
+      .list-item:hover {
+        background-color: var(--paper-grey-300);
+      }
+
+      .item-icon {
+        vertical-align: middle;
+        width: 25px;
+      }
+
+      /* Uncomment if we think having so many buttons on page looks weird
+      .item-controls {
+        visibility: hidden;
+      }
+
+      .list-item:hover .item-controls {
+        visibility: visible;
+      }
+      */
+    </style>
+    <dialog is="cr-dialog" id="dialog" close-text="$i18n{close}">
+      <div slot="title">--manager kiosk apps--</div>
+      <div slot="body">
+        
+        <div id="kiosk-apps-list">
+          <template is="dom-repeat" items="[[apps]]">
+            <div class="list-item">
+              <div class="item-name">
+                <img class="item-icon" src="[[item.iconURL]]">
+                [[item.name]]
+                <!-- TODO(scottchen): check if autoLaunchEnabled = false, should this still show? -->
+                <span hidden="[[!item.autoLaunch]]">--(auto-launch)--</span>
+              </div>
+              <div class="item-controls">
+                <paper-button hidden="[[!canEditAutoLaunch_]]"
+                    on-tap="onAutoLaunchButtonTap_">
+                  [[getAutoLaunchButtonLabel_(item.autoLaunch)]]
+                </paper-button>
+                <button is="paper-icon-button-light" class="icon-delete-gray"></button>
+              </div>
+            </div>
+          </template>
+        </div>
+        
+        <div id="add-kiosk-app">
+          <paper-input id="add-input" label="--add kiosk application:" placeholder="--enter app id or url--" value="{{addAppId_}}" always-float-label>
+          </paper-input>
+          <paper-button id="add-button" on-tap="onAddAppTap_">
+            --add--
+          </paper-button>
+        </div>
+
+        <paper-checkbox disabled="[[!canEditBailout_]]" checked="{{bailoutEnabled_}}"
+            on-change="onBailoutChange_">
+          -- Permanently blah blah --
+        </paper-checkbox>
+
+      </div>
+      <div slot="button-container">
+        <paper-button class="cancel-button" on-tap="onCancelTap_">
+          --done--
+        </paper-button>
+      </div>
+    </dialog>
+  </template>
+  <script src="chrome://extensions/kiosk_dialog.js"></script>
+</dom-module>

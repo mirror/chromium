@@ -280,6 +280,9 @@ content::WebUIDataSource* CreateMdExtensionsSource() {
                           IDR_MD_EXTENSIONS_KEYBOARD_SHORTCUTS_HTML);
   source->AddResourcePath("keyboard_shortcuts.js",
                           IDR_MD_EXTENSIONS_KEYBOARD_SHORTCUTS_JS);
+  source->AddResourcePath("kiosk_dialog.html",
+                          IDR_MD_EXTENSIONS_KIOSK_DIALOG_HTML);
+  source->AddResourcePath("kiosk_dialog.js", IDR_MD_EXTENSIONS_KIOSK_DIALOG_JS);
   source->AddResourcePath("manager.html", IDR_MD_EXTENSIONS_MANAGER_HTML);
   source->AddResourcePath("manager.js", IDR_MD_EXTENSIONS_MANAGER_JS);
   source->AddResourcePath("icons.html", IDR_MD_EXTENSIONS_ICONS_HTML);
