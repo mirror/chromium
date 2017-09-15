@@ -39,6 +39,24 @@
       "revId": "2b118294846fdc0f0336f6685da1bf7b66c4ac63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3093a217_5c514235",
+        "filename": "ui/views/window/dialog_client_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-15T01:30:43Z",
+      "side": 1,
+      "message": "hehe - our review streams overlapped :). Note I\u0027m fine with the current approach too, but if we expect more special cases we should look for a better solution. Note also we may someday merge LabelButton and MdTextButton and be able to say _only_ MdTextButton (and its subclasses...) should participate, which might allow a simpler solution.\n\n(we should update the test tho)",
+      "parentUuid": "ceef1f5b_2fc63475",
+      "revId": "2b118294846fdc0f0336f6685da1bf7b66c4ac63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
