@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a655a4b0_8a1dfcac",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-15T20:58:29Z",
+      "side": 1,
+      "message": "I think this TODO and all the text can be deleted. None of these statements really apply anymore. We could handle all these rates and more, but there\u0027s still some value in preserving some bounds, and these bounds are as good as any barring any complaints.",
+      "revId": "6ff7bb1dcebb911fe58986104dbd1197df633068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0c8cd47_0ba3179a",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 2167,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-09-15T20:58:29Z",
+      "side": 1,
+      "message": "provided playback rate?",
+      "revId": "6ff7bb1dcebb911fe58986104dbd1197df633068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
