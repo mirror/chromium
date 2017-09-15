@@ -1754,8 +1754,14 @@ class WindowObserverTest : public WindowTest,
     float new_opacity = 0.0f;
   };
 
-  WindowObserverTest() = default;
-  ~WindowObserverTest() override = default;
+  WindowObserverTest()
+      : added_count_(0),
+        removed_count_(0),
+        destroyed_count_(0),
+        old_property_value_(-3) {
+  }
+
+  ~WindowObserverTest() override {}
 
   const VisibilityInfo* GetVisibilityInfo() const {
     return visibility_info_.get();
@@ -1828,13 +1834,12 @@ class WindowObserverTest : public WindowTest,
     window_opacity_info_.new_opacity = new_opacity;
   }
 
-  int added_count_ = 0;
-  int removed_count_ = 0;
-  int destroyed_count_ = 0;
+  int added_count_;
+  int removed_count_;
+  int destroyed_count_;
   std::unique_ptr<VisibilityInfo> visibility_info_;
-  const void* property_key_ = nullptr;
-  intptr_t old_property_value_ = -3;
-  std::vector<std::pair<int, int> > transform_notifications_;
+  const void* property_key_;
+  intptr_t old_property_value_;
   WindowOpacityInfo window_opacity_info_;
 
   DISALLOW_COPY_AND_ASSIGN(WindowObserverTest);
