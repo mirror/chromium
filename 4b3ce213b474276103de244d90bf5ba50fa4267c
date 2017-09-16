@@ -16,6 +16,24 @@
       "revId": "4b3ce213b474276103de244d90bf5ba50fa4267c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee282854_99b42be6",
+        "filename": "net/cert/nss_cert_database_chromeos_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-16T15:54:25Z",
+      "side": 1,
+      "message": "Agreed that documentation in run_loop.h should be clarified.\n\nHigh-level documentation available at https://chromium.googlesource.com/chromium/src/+/lkcr/docs/threading_and_tasks.md#Testing",
+      "parentUuid": "e294ba00_9e1dcb91",
+      "revId": "4b3ce213b474276103de244d90bf5ba50fa4267c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
