@@ -1051,6 +1051,9 @@ COMMON_GTESTS = {
         ],
       },
     ],
+    'swarming': {
+      'shards': 4,
+    },
     'args': [
       '--test-launcher-batch-limit=400'
     ]
@@ -1299,9 +1302,7 @@ COMMON_GTESTS = {
       },
     ],
     'swarming': {
-      # TODO(geofflang): Increase the number of shards as more tests start to
-      # pass and runtime increases.
-      'shards': 4,
+      'shards': 6,
     },
     'test': 'angle_deqp_gles31_tests',
     'args': [
@@ -1334,9 +1335,7 @@ COMMON_GTESTS = {
       },
     ],
     'swarming': {
-      # TODO(geofflang): Increase the number of shards as more tests start to
-      # pass and runtime increases.
-      'shards': 4,
+      'shards': 6,
     },
     'test': 'angle_deqp_gles31_tests',
     'args': [
