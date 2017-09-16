@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3f5da8d_a82d71fe",
+        "filename": "chrome/browser/DEPS",
+        "patchSetId": 14
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-16T00:16:47Z",
+      "side": 1,
+      "message": "Can this be in c/b/client_hints/DEPS now? Or do you think the rest of chrome/browser will need it eventually? If you do move it to c/b/client_hints/DEPS, please include the line 112-113 comment as a reminder.",
+      "revId": "fd2e97cef273b552c4277257cf1e795972897eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1d371d2_22749dd6",
+        "filename": "chrome/browser/client_hints/client_hints.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-16T00:16:47Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "fd2e97cef273b552c4277257cf1e795972897eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b65d44f_153eb32c",
+        "filename": "chrome/browser/client_hints/client_hints_browsertest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-16T00:16:47Z",
+      "side": 1,
+      "message": "BTW, you can use base::ContainsKey() if that makes this more readable.",
+      "revId": "fd2e97cef273b552c4277257cf1e795972897eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
