@@ -269,7 +269,7 @@ void CompositedLayerMapping::UpdateTransform(const ComputedStyle& style) {
   if (owning_layer_.HasTransformRelatedProperty()) {
     style.ApplyTransform(
         t, LayoutSize(ToLayoutBox(GetLayoutObject()).PixelSnappedSize()),
-        ComputedStyle::kExcludeTransformOrigin,
+        &GetLayoutObject(), ComputedStyle::kExcludeTransformOrigin,
         ComputedStyle::kIncludeMotionPath,
         ComputedStyle::kIncludeIndependentTransformProperties);
     MakeMatrixRenderable(t, Compositor()->HasAcceleratedCompositing());

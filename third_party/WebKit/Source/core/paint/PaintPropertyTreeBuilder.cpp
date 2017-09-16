@@ -288,7 +288,7 @@ Optional<IntPoint> PaintPropertyTreeBuilder::UpdateForPaintOffsetTranslation(
       // paint offset which can't be transformed by the transform.
       TransformationMatrix matrix;
       object.StyleRef().ApplyTransform(
-          matrix, LayoutSize(), ComputedStyle::kExcludeTransformOrigin,
+          matrix, LayoutSize(), &object, ComputedStyle::kExcludeTransformOrigin,
           ComputedStyle::kIncludeMotionPath,
           ComputedStyle::kIncludeIndependentTransformProperties);
       if (!matrix.IsIdentityOrTranslation())
@@ -441,7 +441,7 @@ void PaintPropertyTreeBuilder::UpdateTransform(
 
       TransformationMatrix matrix;
       style.ApplyTransform(
-          matrix, box.Size(), ComputedStyle::kExcludeTransformOrigin,
+          matrix, box.Size(), &object, ComputedStyle::kExcludeTransformOrigin,
           ComputedStyle::kIncludeMotionPath,
           ComputedStyle::kIncludeIndependentTransformProperties);
 

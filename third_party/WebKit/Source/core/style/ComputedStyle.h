@@ -2067,11 +2067,13 @@ class ComputedStyle : public ComputedStyleBase,
   };
   void ApplyTransform(TransformationMatrix&,
                       const LayoutSize& border_box_data_size,
+                      const LayoutObject*,
                       ApplyTransformOrigin,
                       ApplyMotionPath,
                       ApplyIndependentTransformProperties) const;
   void ApplyTransform(TransformationMatrix&,
                       const FloatRect& bounding_box,
+                      const LayoutObject*,
                       ApplyTransformOrigin,
                       ApplyMotionPath,
                       ApplyIndependentTransformProperties) const;
@@ -2507,6 +2509,7 @@ class ComputedStyle : public ComputedStyleBase,
   void ApplyMotionPathTransform(float origin_x,
                                 float origin_y,
                                 const FloatRect& bounding_box,
+                                const LayoutObject*,
                                 TransformationMatrix&) const;
 
   bool ScrollAnchorDisablingPropertyChanged(const ComputedStyle& other,
