@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04fde4ca_6a6d9faf",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 1285,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-16T12:01:06Z",
+      "side": 1,
+      "message": "Maybe this should be extracted into a ui_utils function, since the code seems likely to be repeated elsewhere in this process.",
+      "range": {
+        "startLine": 1285,
+        "startChar": 6,
+        "endLine": 1285,
+        "endChar": 79
+      },
+      "revId": "1237a694b310403ff35a07081f7cc17794adb1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
