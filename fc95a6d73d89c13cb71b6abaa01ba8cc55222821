@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da8f1252_2567b7ff",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-16T01:13:18Z",
+      "side": 1,
+      "message": "DCHECK(event_name \u003d\u003d onMessage || onDisconnect)\n\nnvm, this is a private method.",
+      "range": {
+        "startLine": 185,
+        "startChar": 58,
+        "endLine": 185,
+        "endChar": 68
+      },
+      "revId": "fc95a6d73d89c13cb71b6abaa01ba8cc55222821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e27e65_15b91322",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-16T01:13:18Z",
+      "side": 1,
+      "message": "DispatchEvent? Any particular reason to use To?",
+      "range": {
+        "startLine": 212,
+        "startChar": 14,
+        "endLine": 212,
+        "endChar": 29
+      },
+      "revId": "fc95a6d73d89c13cb71b6abaa01ba8cc55222821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62843c00_fc958a1d",
+        "filename": "extensions/renderer/gin_port.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-16T01:13:18Z",
+      "side": 1,
+      "message": "Should a TODO to use this class? Better for archaeology...",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 13
+      },
+      "revId": "fc95a6d73d89c13cb71b6abaa01ba8cc55222821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372d6d54_c6cab44a",
+        "filename": "extensions/renderer/gin_port.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-16T01:13:18Z",
+      "side": 1,
+      "message": "Delegate* const delegate_;",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 22
+      },
+      "revId": "fc95a6d73d89c13cb71b6abaa01ba8cc55222821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
