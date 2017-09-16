@@ -26,19 +26,11 @@ public class FirstRunPage extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            mProperties = savedInstanceState;
-        } else if (getArguments() != null) {
+        if (getArguments() != null) {
             mProperties = getArguments();
         } else {
             mProperties = new Bundle();
         }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putAll(mProperties);
     }
 
     /**
