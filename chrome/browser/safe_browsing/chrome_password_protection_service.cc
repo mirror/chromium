@@ -438,6 +438,7 @@ void ChromePasswordProtectionService::UpdateSecurityState(
                      &verdict);
     verdict.set_verdict_type(LoginReputationClientResponse::SAFE);
     verdict.set_cache_duration_sec(kOverrideVerdictCacheDurationSec);
+    verdict.set_cache_expression("/");
     CacheVerdict(url, LoginReputationClientRequest::PASSWORD_REUSE_EVENT,
                  &verdict, base::Time::Now());
     return;
