@@ -33,12 +33,18 @@ class FakeDeviceSync : public device_sync::mojom::DeviceSync {
     should_enroll_successfully_ = should_enroll_successfully;
   }
 
+  void set_device_change_result(bool device_change_result) {
+    device_change_result_ = device_change_result;
+  }
+
   // mojom::DeviceSync:
   void ForceEnrollmentNow() override;
   void ForceSyncNow() override;
   void AddObserver(device_sync::mojom::DeviceSyncObserverPtr observer) override;
+  void GetSyncedDevices(GetSyncedDevicesCallback callback) override;
 
  private:
+  bool device_change_result_ = true;
   bool should_sync_successfully_ = true;
   bool should_enroll_successfully_ = true;
   mojo::InterfacePtrSet<device_sync::mojom::DeviceSyncObserver> observers_;
