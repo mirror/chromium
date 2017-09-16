@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "ad99e650_56bff76d",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-16T15:55:55Z",
+      "side": 1,
+      "message": "\u003e \u003d\u003e all_possible_usernames\n\nDone.",
+      "parentUuid": "26a4211b_89719ee8",
+      "range": {
+        "startLine": 397,
+        "startChar": 36,
+        "endLine": 397,
+        "endChar": 60
+      },
+      "revId": "9902db976396eda128bb4e7bdb0b5791ff2f216e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff38a035_2a4f256c",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-16T15:55:55Z",
+      "side": 1,
+      "message": "\u003e \u003d\u003e vector\u003cWebInputElement\u003e \n\u003e Convert to PossibleUsernamesVector when you assign it to password_form-\u003eother_possible_usernames\n\nDone.",
+      "parentUuid": "5ef3936b_c684af7f",
+      "range": {
+        "startLine": 397,
+        "startChar": 2,
+        "endLine": 397,
+        "endChar": 35
+      },
+      "revId": "9902db976396eda128bb4e7bdb0b5791ff2f216e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c819ba9_b6c763f5",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
         "patchSetId": 1
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5fb75c05_7da5d36a",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-16T15:55:55Z",
+      "side": 1,
+      "message": "\u003e remove.\n\nDone.",
+      "parentUuid": "7c819ba9_b6c763f5",
+      "range": {
+        "startLine": 491,
+        "startChar": 21,
+        "endLine": 495,
+        "endChar": 64
+      },
+      "revId": "9902db976396eda128bb4e7bdb0b5791ff2f216e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f09a96e4_2af42a55",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-15T11:28:40Z",
       "side": 1,
       "message": "now it is the only call of ExcludeUsernameFromOtherUsernamesList. Inline it.",
+      "range": {
+        "startLine": 599,
+        "startChar": 4,
+        "endLine": 599,
+        "endChar": 41
+      },
+      "revId": "9902db976396eda128bb4e7bdb0b5791ff2f216e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a318e6a_0a04d3f4",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-16T15:55:55Z",
+      "side": 1,
+      "message": "\u003e now it is the only call of ExcludeUsernameFromOtherUsernamesList. Inline it.\n\nDone.",
+      "parentUuid": "f09a96e4_2af42a55",
       "range": {
         "startLine": 599,
         "startChar": 4,
