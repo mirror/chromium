@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a3f1c73_0f312f7c",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-16T03:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1aab2a7_bfc9a581",
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "023c63e5_1d1d8516",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c39b9562_c7801e18",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-16T03:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "023c63e5_1d1d8516",
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "02d325e9_28afb67f",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-16T03:05:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3aab9802_2c22e2b8",
+      "range": {
+        "startLine": 83,
+        "startChar": 37,
+        "endLine": 83,
+        "endChar": 54
+      },
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56351581_33d65347",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e125c9e_cde9a45b",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-16T03:05:24Z",
+      "side": 1,
+      "message": "It\u0027s a programming error to run this method with a non-IPP or non-IPPS printer uri.  It\u0027s documented and checked now.",
+      "parentUuid": "56351581_33d65347",
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "b0a8027e_8db77bea",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-16T03:05:24Z",
+      "side": 1,
+      "message": "More indentation versus copied code .... I\u0027ve taken your suggestion.",
+      "parentUuid": "c29abb49_1d778b22",
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b560402_b3631d1a",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 1
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "d0921e10_c50f0899",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-16T03:05:24Z",
+      "side": 1,
+      "message": "Comment expanded.  Comment for manufacturer and model fields left specifically.",
+      "parentUuid": "7b560402_b3631d1a",
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0db4f37f_438d64d4",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 1
@@ -121,6 +235,30 @@
       "writtenOn": "2017-09-13T18:43:50Z",
       "side": 1,
       "message": "The naming mismatch between \"CheckAutoconf\" and the continuation\"OnPrinterInfoDiscovered\" is weird.",
+      "range": {
+        "startLine": 762,
+        "startChar": 2,
+        "endLine": 763,
+        "endChar": 73
+      },
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0923e5d0_8ae2859b",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 763,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-16T03:05:24Z",
+      "side": 1,
+      "message": "Renamed to AutoconfQuery and OnAutoconfQueried.",
+      "parentUuid": "0db4f37f_438d64d4",
       "range": {
         "startLine": 762,
         "startChar": 2,
@@ -153,6 +291,30 @@
       "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1525b024_c59d8a3e",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-16T03:05:24Z",
+      "side": 1,
+      "message": "But it\u0027s not actually the effective_make_and_model.  This is the make_and_model as reported by the printer via IPP.",
+      "parentUuid": "91ca1205_3c321a5a",
+      "range": {
+        "startLine": 77,
+        "startChar": 50,
+        "endLine": 77,
+        "endChar": 64
+      },
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
