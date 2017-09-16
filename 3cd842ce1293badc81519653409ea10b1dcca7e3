@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b8749b71_fe357366",
+        "filename": "chrome/common/printing/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-16T00:52:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eef4dfb5_110ee702",
+      "range": {
+        "startLine": 1,
+        "startChar": 12,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "3cd842ce1293badc81519653409ea10b1dcca7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3da3f419_1f63324b",
         "filename": "chrome/common/printing/pdf_to_pwg_raster_converter_struct_traits.h",
         "patchSetId": 7
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-15T23:56:48Z",
       "side": 1,
       "message": "Can we static_assert(printing::PdfRenderSettings::Mode::NORMAL \u003d\u003d printing::mojom::PDFRenderSettings::Mode::NORMAL, \"Error message\");\n\nand then just static_cast to the other type? Not sure what the best practices are here.",
+      "revId": "3cd842ce1293badc81519653409ea10b1dcca7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b0abe60_7bd3fb03",
+        "filename": "chrome/common/printing/pdf_to_pwg_raster_converter_struct_traits.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-16T00:52:25Z",
+      "side": 1,
+      "message": "I looked at a bunch of other files and it seems they all follow this model, so I am going to stick with it. I guess one worry with the static cast is that we assume the values are listed in the same order in the .h file and .mojom file (or if that order was later modified it would cause tricky bugs).",
+      "parentUuid": "3da3f419_1f63324b",
       "revId": "3cd842ce1293badc81519653409ea10b1dcca7e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "ac2054ef_f03a40e8",
+        "filename": "chrome/utility/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-16T00:52:25Z",
+      "side": 1,
+      "message": "Looks like PwgEncoder is used only from printing, so I guess this would make sense. I\u0027ll let you take a look at it if you don\u0027t mind.",
+      "parentUuid": "77d11255_4b1d8855",
+      "revId": "3cd842ce1293badc81519653409ea10b1dcca7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac94f1b6_9df96925",
         "filename": "chrome/utility/BUILD.gn",
         "patchSetId": 7
@@ -70,6 +130,24 @@
       "writtenOn": "2017-09-15T23:56:48Z",
       "side": 1,
       "message": "Actually, can we source +\u003d [these_files] in the if-block immediately above? Then we don\u0027t have to list them twice.",
+      "revId": "3cd842ce1293badc81519653409ea10b1dcca7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2216a81_0db97719",
+        "filename": "chrome/utility/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-16T00:52:25Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "ac94f1b6_9df96925",
       "revId": "3cd842ce1293badc81519653409ea10b1dcca7e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "931fa823_c8410155",
+        "filename": "chrome/utility/printing/pdf_to_pwg_raster_converter_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-16T00:52:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e144f55f_d5187747",
+      "revId": "3cd842ce1293badc81519653409ea10b1dcca7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "761c691d_d96625d8",
         "filename": "chrome/utility/printing/pdf_to_pwg_raster_converter_impl.h",
         "patchSetId": 7
@@ -107,6 +203,24 @@
       "revId": "3cd842ce1293badc81519653409ea10b1dcca7e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc43a0e_682ab634",
+        "filename": "chrome/utility/printing/pdf_to_pwg_raster_converter_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-09-16T00:52:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "761c691d_d96625d8",
+      "revId": "3cd842ce1293badc81519653409ea10b1dcca7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
