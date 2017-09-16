@@ -28,28 +28,70 @@
 #include "ui/views/widget/widget.h"
 
 namespace ash {
+namespace {
 
-// This struct contains the resources associated with a fast ink frame.
-struct FastInkResource {
-  FastInkResource() {}
-  ~FastInkResource() {
-    if (context_provider) {
-      gpu::gles2::GLES2Interface* gles2 = context_provider->ContextGL();
-      // Delete texture if not currently exported.
-      if (texture && !exported)
-        gles2->DeleteTextures(1, &texture);
-      if (image)
-        gles2->DestroyImageCHROMIUM(image);
-    }
+// Helper class that can be used to delete exported textures while still
+// making sure the compositor had a chance to consume them.
+class ExportedTextureDeleter : public ui::CompositorObserver {
+ public:
+  static void DeleteTexture(ui::Compositor* compositor,
+                            viz::ContextProvider* context_provider,
+                            uint32_t texture) {
+    // Deletes itself after texture has been deleted or when compositor is
+    // shutting down.
+    new ExportedTextureDeleter(compositor, context_provider, texture);
   }
-  scoped_refptr<viz::ContextProvider> context_provider;
-  uint32_t texture = 0;
-  uint32_t image = 0;
-  gpu::Mailbox mailbox;
-  bool exported = false;
+
+  // Overridden from ui::CompositorObserver:
+  void OnCompositingDidCommit(ui::Compositor* compositor) override {}
+  void OnCompositingStarted(ui::Compositor* compositor,
+                            base::TimeTicks start_time) override {
+    started_ = true;
+  }
+  void OnCompositingEnded(ui::Compositor* compositor) override {
+    if (started_)
+      delete this;
+  }
+  void OnCompositingLockStateChanged(ui::Compositor* compositor) override {}
+  void OnCompositingShuttingDown(ui::Compositor* compositor) override {
+    delete this;
+  }
+
+ private:
+  ExportedTextureDeleter(ui::Compositor* compositor,
+                         viz::ContextProvider* context_provider,
+                         uint32_t texture)
+      : compositor_(compositor),
+        context_provider_(context_provider),
+        texture_(texture) {
+    compositor_->AddObserver(this);
+  }
+  ~ExportedTextureDeleter() override {
+    context_provider_->ContextGL()->DeleteTextures(1, &texture_);
+    compositor_->RemoveObserver(this);
+  }
+
+  ui::Compositor* const compositor_;
+  scoped_refptr<viz::ContextProvider> context_provider_;
+  const uint32_t texture_;
+  bool started_ = false;
 };
 
-// FastInkView
+}  // namespace
+
+FastInkView::Resource::Resource() {}
+
+FastInkView::Resource::~Resource() {
+  gpu::gles2::GLES2Interface* gles2 = context_provider->ContextGL();
+  if (texture) {
+    // We shouldn't delete exported textures.
+    DCHECK(!exported);
+    gles2->DeleteTextures(1, &texture);
+  }
+  if (image)
+    gles2->DestroyImageCHROMIUM(image);
+}
+
 FastInkView::FastInkView(aura::Window* root_window) : weak_ptr_factory_(this) {
   widget_.reset(new views::Widget);
   views::Widget::InitParams params;
@@ -84,6 +126,20 @@ FastInkView::FastInkView(aura::Window* root_window) : weak_ptr_factory_(this) {
 
 FastInkView::~FastInkView() {
   frame_sink_->DetachFromClient();
+
+  // Use ExportedTextureDeleter to delete currently exported textures. This
+  // is needed to ensure that in-flight textures are consumed before they are
+  // deleted.
+  ui::Compositor* compositor =
+      widget_->GetNativeWindow()->layer()->GetCompositor();
+  if (compositor) {
+    for (auto& it : exported_resources_) {
+      Resource* resource = it.second.get();
+      ExportedTextureDeleter::DeleteTexture(
+          compositor, resource->context_provider.get(), resource->texture);
+      resource->texture = 0;
+    }
+  }
 }
 
 void FastInkView::DidReceiveCompositorFrameAck() {
@@ -97,7 +153,7 @@ void FastInkView::ReclaimResources(
   for (auto& entry : resources) {
     auto it = exported_resources_.find(entry.id);
     DCHECK(it != exported_resources_.end());
-    std::unique_ptr<FastInkResource> resource = std::move(it->second);
+    std::unique_ptr<Resource> resource = std::move(it->second);
     exported_resources_.erase(it);
 
     DCHECK(resource->exported);
@@ -231,7 +287,7 @@ void FastInkView::UpdateSurface() {
   DCHECK(needs_update_surface_);
   needs_update_surface_ = false;
 
-  std::unique_ptr<FastInkResource> resource;
+  std::unique_ptr<Resource> resource;
   // Reuse returned resource if available.
   if (!returned_resources_.empty()) {
     resource = std::move(returned_resources_.back());
@@ -240,7 +296,7 @@ void FastInkView::UpdateSurface() {
 
   // Create new resource if needed.
   if (!resource)
-    resource = base::MakeUnique<FastInkResource>();
+    resource = base::MakeUnique<Resource>();
 
   // Acquire context provider for resource if needed.
   // Note: We make no attempts to recover if the context provider is later
