@@ -631,7 +631,8 @@ static inline void SetLogicalWidthForTextRun(
 
   glyph_overflow.SetFromBounds(glyph_bounds, font, measured_width);
 
-  run->box_->SetLogicalWidth(LayoutUnit(measured_width) + hyphen_width);
+  run->box_->SetLogicalWidth(LayoutUnit::FromFloatCeil(measured_width) +
+                             hyphen_width);
   if (!fallback_fonts.IsEmpty()) {
     DCHECK(run->box_->IsText());
     GlyphOverflowAndFallbackFontsMap::ValueType* it =
