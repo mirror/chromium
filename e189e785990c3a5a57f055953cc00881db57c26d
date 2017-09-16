@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "89cb4115_1827aad9",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-16T05:34:06Z",
+      "side": 1,
+      "message": "This is to keep the original behavior that is tested in the original PaintLayerClipperTest.Filter. It tests that a layer having a filter gets clip rects in its own space. The test says:\n  // The background rect is used to clip stacking context (layer) output.\n  // In this case, nothing is above us, thus the infinite rect. However we do\n  // clip to the layer\u0027s after-filter visual rect as an optimization.\n\nWithout the above \"context.root_layer \u003d\u003d \u0026layer_\" the test would be broken because background_rect would be infinity. I\u0027m not sure if we should keep the tested behavior.",
+      "parentUuid": "c4ebc8f2_56637c77",
+      "revId": "e189e785990c3a5a57f055953cc00881db57c26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b06cd83_575b9c3d",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipperTest.cpp",
         "patchSetId": 4
@@ -82,6 +100,24 @@
       "writtenOn": "2017-09-16T04:43:09Z",
       "side": 1,
       "message": "What is special about SVG filters in this case?",
+      "revId": "e189e785990c3a5a57f055953cc00881db57c26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3430cc3_04fc88fe",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipperTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-16T05:34:06Z",
+      "side": 1,
+      "message": "It\u0027s special because it contains an feOffset filter which moves the source rect instead of expanding it like the normal CSS filters. Actually I doubt the correctness of foreground_rect. It looks to me that the correct value should be (0,0 300x300) which is the original overflow clip of the svg root.\n\nSee another example:\n  \u003csvg id\u003d\u0027target\u0027 width\u003d\u0027100\u0027 height\u003d\u0027100\u0027 filter\u003d\u0027url(#filter)\u0027\u003e\n    \u003cfilter height\u003d\"300%\" id\u003d\u0027filter\u0027\u003e\n      \u003cfeOffset dy\u003d\u0027100\u0027/\u003e\n    \u003c/filter\u003e\n    \u003crect width\u003d\u0027100\u0027 height\u003d\u0027100\u0027 fill\u003d\u0027green\u0027/\u003e\n  \u003c/svg\u003e\n\nThe current code will give an empty foreground_rect which means no contents should be visible, but the whole contents is visible. I think we should get (0,0 100x100). Will look into this to see if it is an existing bug.",
+      "parentUuid": "6b06cd83_575b9c3d",
       "revId": "e189e785990c3a5a57f055953cc00881db57c26d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -102,6 +138,24 @@
       "revId": "e189e785990c3a5a57f055953cc00881db57c26d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d05ffa_053376b7",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-16T05:34:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1c46c287_84a6b5ac",
+      "revId": "e189e785990c3a5a57f055953cc00881db57c26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

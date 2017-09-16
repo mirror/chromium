@@ -16,6 +16,24 @@
       "revId": "ca4432753d977cc39295132e0ea73e409c73a128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b02257f_c02d2e0c",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-16T05:34:06Z",
+      "side": 0,
+      "message": "What\u0027s the intention of the DCHECK? It seems inconsistent with CompositingReasonFinder::RequiresCompositingForOpacityAnimation(). During my test of this CL, it failed when\n  style.SubtreeWillChangeContents() \u0026\u0026\n  !style.IsRunningOpacityAnimationOnCompositor() \u0026\u0026\n  style.HasCurrentOpacityAnimation()\n\nI could make this DCHECK consistent with RequiresCompositingForOpacityAnimation(), but the DCHECK would just repeat the function and I wonder why we need to check the correctness of the internal logic of the function here.\n\nAm I missing anything?",
+      "parentUuid": "4512e9d7_6b3efac1",
+      "revId": "ca4432753d977cc39295132e0ea73e409c73a128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
