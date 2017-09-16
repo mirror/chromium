@@ -335,6 +335,7 @@ class MEDIA_GPU_EXPORT V4L2VideoDecodeAccelerator
   bool GetFormatInfo(struct v4l2_format* format,
                      gfx::Size* visible_size,
                      bool* again);
+
   // Create output buffers for the given |format| and |visible_size|.
   bool CreateBuffersForFormat(const struct v4l2_format& format,
                               const gfx::Size& visible_size);
