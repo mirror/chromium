@@ -16,6 +16,24 @@
       "revId": "c88c165fc4f824daa10e34111c789093d613a554",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7aca96d_06d2130c",
+        "filename": "third_party/WebKit/Source/platform/graphics/DeferredImageDecoderTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-16T00:45:57Z",
+      "side": 1,
+      "message": "It was breaking this existing test because the value hits the annoying ads threshold in DeferredImageDecoder and was overriding it. I had already added the test for the override case bumping it to 100 in ImageMetadataTracking.",
+      "parentUuid": "462f2ee2_b132a85e",
+      "revId": "c88c165fc4f824daa10e34111c789093d613a554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
