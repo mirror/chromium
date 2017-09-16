@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "47f90bb0_b46ab78c",
+        "filename": "third_party/WebKit/Source/core/svg/graphics/SVGImage.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-16T18:59:22Z",
+      "side": 1,
+      "message": "This condition is practically (and semantically) the same as either \"page_\" or \"load_state_ !\u003d kDataChangedNotStarted\", so it seems unnecessary to addition redundant state. (It\u0027s also non-obvious what \"completion state\" is supposed to convey in this case - unbounded/infinite, non-discrete timeline - which differs greatly from the bounded, discrete timeline of corresponding raster case.)",
+      "parentUuid": "8a898ea9_640f7edd",
+      "range": {
+        "startLine": 723,
+        "startChar": 2,
+        "endLine": 723,
+        "endChar": 28
+      },
+      "revId": "9f02bf6dda3085b6d5d9e8a8f8cc8b2012695584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b85ab3a5_6b68f183",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 3
