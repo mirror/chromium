@@ -5,6 +5,8 @@
 #include "chrome/browser/ui/ash/multi_user/multi_user_context_menu.h"
 
 #include "ash/multi_profile_uma.h"
+#include "ash/public/interfaces/constants.mojom.h"
+#include "ash/public/interfaces/session_controller.mojom.h"
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/macros.h"
@@ -15,12 +17,15 @@
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_warning_dialog.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_window_manager.h"
+#include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/prefs/pref_service.h"
 #include "components/signin/core/account_id/account_id.h"
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
+#include "content/public/common/service_manager_connection.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "ui/aura/window.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/models/simple_menu_model.h"
@@ -91,7 +96,11 @@ std::unique_ptr<ui::MenuModel> CreateMultiUserContextMenu(
 
 void OnAcceptTeleportWarning(const AccountId& account_id,
                              aura::Window* window_,
+                             bool accepted,
                              bool no_show_again) {
+  if (!accepted)
+    return;
+
   PrefService* pref = ProfileManager::GetActiveUserProfile()->GetPrefs();
   pref->SetBoolean(prefs::kMultiProfileWarningShowDismissed, no_show_again);
 
@@ -113,7 +122,7 @@ void ExecuteVisitDesktopCommand(int command_id, aura::Window* window) {
       const AccountId account_id =
           logged_in_users[IDC_VISIT_DESKTOP_OF_LRU_USER_2 == command_id ? 1 : 2]
               ->GetAccountId();
-      base::Callback<void(bool)> on_accept =
+      base::OnceCallback<void(bool, bool)> on_accept =
           base::Bind(&OnAcceptTeleportWarning, account_id, window);
 
       // Don't show warning dialog if any logged in user in multi-profiles
@@ -127,11 +136,17 @@ void ExecuteVisitDesktopCommand(int command_id, aura::Window* window) {
           bool active_user_show_option =
               ProfileManager::GetActiveUserProfile()->
               GetPrefs()->GetBoolean(prefs::kMultiProfileWarningShowDismissed);
-          on_accept.Run(active_user_show_option);
+          std::move(on_accept).Run(true, active_user_show_option);
           return;
         }
       }
-      chromeos::ShowMultiprofilesWarningDialog(on_accept);
+
+      chrome::RecordDialogCreation(chrome::DialogIdentifier::TELEPORT_WARNING);
+      ash::mojom::SessionControllerPtr session_controller;
+      content::ServiceManagerConnection::GetForProcess()
+          ->GetConnector()
+          ->BindInterface(ash::mojom::kServiceName, &session_controller);
+      session_controller->ShowTeleportWarningDialog(std::move(on_accept));
       return;
     }
     default:
