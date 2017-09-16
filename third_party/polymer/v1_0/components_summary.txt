@@ -100,12 +100,6 @@ Tree: v1.4.6
 Revision: c1c7301e66705f7d080187e7afe2caf148d203d4
 Tree link: https://github.com/PolymerElements/iron-list/tree/v1.4.6
 
-Name: iron-location
-Repository: https://github.com/PolymerElements/iron-location.git
-Tree: v0.8.8
-Revision: ab65525d349f13c467653a200711202eeae17ff0
-Tree link: https://github.com/PolymerElements/iron-location/tree/v0.8.8
-
 Name: iron-media-query
 Repository: https://github.com/PolymerElements/iron-media-query.git
 Tree: v1.0.8
