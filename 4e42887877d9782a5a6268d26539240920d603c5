@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97be2b29_42453a39",
+        "filename": "chrome/browser/ui/webui/print_preview/local_printer_handler_chromeos.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-16T00:34:07Z",
+      "side": 1,
+      "message": "Note: eventually, would like to add a \"Start Print\" for local printers as well, but currently it would not make much sense with this interface. If we can get local printing to also use the PDF in print preview data store, can implement this function then.",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 17
+      },
+      "revId": "4e42887877d9782a5a6268d26539240920d603c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
