@@ -50,6 +50,75 @@
       "revId": "e189e785990c3a5a57f055953cc00881db57c26d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ebc8f2_56637c77",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-16T04:43:09Z",
+      "side": 1,
+      "message": "Why should it apply to the root layer? Is it an issue of specifying an ancestor property\ntree state that is not outside the effect?",
+      "parentUuid": "fcf7da1a_6d18e330",
+      "revId": "e189e785990c3a5a57f055953cc00881db57c26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b06cd83_575b9c3d",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipperTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-16T04:43:09Z",
+      "side": 1,
+      "message": "What is special about SVG filters in this case?",
+      "revId": "e189e785990c3a5a57f055953cc00881db57c26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c46c287_84a6b5ac",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 727,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-16T04:43:09Z",
+      "side": 1,
+      "message": "Add a unittest example in PaintPropertyTreeBuilderTest that depends\non paint offset being correct.",
+      "revId": "e189e785990c3a5a57f055953cc00881db57c26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0df177cd_658ca2d9",
+        "filename": "third_party/WebKit/Source/platform/graphics/filters/FEComposite.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-16T04:43:09Z",
+      "side": 1,
+      "message": "spurious",
+      "revId": "e189e785990c3a5a57f055953cc00881db57c26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
