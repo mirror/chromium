@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85c0fc27_e10f61ea",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_box_fragment_builder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-09-16T06:51:54Z",
+      "side": 1,
+      "message": "What is this for?",
+      "revId": "858c0f8c7514578b36fd868eaea11c93f93fc9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
