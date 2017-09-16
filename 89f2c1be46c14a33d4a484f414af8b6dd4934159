@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7fa3b90_60e2451a",
+        "filename": "chrome/common/chrome_switches.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-16T00:01:15Z",
+      "side": 0,
+      "message": "Also please delete this flag.",
+      "range": {
+        "startLine": 1057,
+        "startChar": 18,
+        "endLine": 1057,
+        "endChar": 47
+      },
+      "revId": "89f2c1be46c14a33d4a484f414af8b6dd4934159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
