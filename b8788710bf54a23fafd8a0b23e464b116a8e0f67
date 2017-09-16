@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "db92648b_3d8a60e6",
+        "filename": "content/browser/android/selection_popup_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-09-16T02:11:48Z",
+      "side": 1,
+      "message": "I think you would also want to add a should_classify boolean. If the menu is after adjust we don\u0027t need to reclassify.",
+      "revId": "b8788710bf54a23fafd8a0b23e464b116a8e0f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33493f7e_603e6af3",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
         "patchSetId": 3
@@ -19,6 +36,64 @@
         "endLine": 242,
         "endChar": 38
       },
+      "revId": "b8788710bf54a23fafd8a0b23e464b116a8e0f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca8a7e9_d5d16b30",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-09-16T02:11:48Z",
+      "side": 1,
+      "message": "I guess that is possible but it seems unlikely that a new context menu could be fired in a fraction of a second - context menus can\u0027t be fired by javascript so it would have to be a user input.\n\nAlso how would a boolean help in that situation? How would you know the |showSelectionMenu()| call was triggered by the adjustment? Some sort of ID?",
+      "parentUuid": "33493f7e_603e6af3",
+      "range": {
+        "startLine": 242,
+        "startChar": 16,
+        "endLine": 242,
+        "endChar": 38
+      },
+      "revId": "b8788710bf54a23fafd8a0b23e464b116a8e0f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "218cf8a6_bd9b20d6",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-09-16T02:11:48Z",
+      "side": 1,
+      "message": "You want to do the else statement if the call for |showSelectionMenu()| came from an adjusted selection. You probably want to add a new param to |showSelectionMenu()| for that.",
+      "revId": "b8788710bf54a23fafd8a0b23e464b116a8e0f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8eec32_4d41a87e",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1213235
+      },
+      "writtenOn": "2017-09-16T02:11:48Z",
+      "side": 1,
+      "message": "Couldn\u0027t you call ShowNonLocatedContextMenu() here directly?",
       "revId": "b8788710bf54a23fafd8a0b23e464b116a8e0f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
