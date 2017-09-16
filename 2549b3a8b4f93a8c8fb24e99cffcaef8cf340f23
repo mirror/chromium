@@ -46,6 +46,30 @@
       "revId": "2549b3a8b4f93a8c8fb24e99cffcaef8cf340f23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aed2957_dc3ba209",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1717,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-16T02:31:54Z",
+      "side": 1,
+      "message": "Talking with Bo, most vanilla Android widgets might actually handle this ok.  The problem is all of our custom logic that caches DP -\u003e pixel values and assume that doesn\u0027t change would likely break very badly.\n\nI think the case I was worried about isn\u0027t actually likely.  Since we would avoid recreating if we are in VR mode, but when we exit vr mode, the above check would say we\u0027re not in VR and it would recreate.\n\nThe \"hypothetical\" problem would be you enter VR and the density changes, but exiting VR wouldn\u0027t revert to the previous density.  In that case, the java components would be using the original density and be broken.  But in reality, it will change density when entering and exiting so we are ok.",
+      "parentUuid": "0c389ba8_5c95863d",
+      "range": {
+        "startLine": 1717,
+        "startChar": 45,
+        "endLine": 1717,
+        "endChar": 46
+      },
+      "revId": "2549b3a8b4f93a8c8fb24e99cffcaef8cf340f23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
