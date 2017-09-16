@@ -198,6 +198,7 @@ void OcclusionTracker::FinishedRenderTarget(
   // If the occlusion within the surface can not be applied to things outside of
   // the surface's subtree, then clear the occlusion here so it won't be used.
   if (finished_target_surface->HasMask() ||
+      stack_.back().has_masking_child_surface ||
       finished_target_surface->draw_opacity() < 1 ||
       !finished_target_surface->UsesDefaultBlendMode() ||
       target_is_only_for_copy_request_or_force_render_surface ||
@@ -318,7 +319,11 @@ void OcclusionTracker::LeaveToRenderTarget(
     } else {
       stack_.back().occlusion_from_outside_target.Clear();
     }
+    stack_.back().has_masking_child_surface = false;
   }
+
+  if (old_surface->BlendMode() == SkBlendMode::kDstIn)
+    stack_.back().has_masking_child_surface = true;
 
   if (!old_surface->BackgroundFilters().HasFilterThatMovesPixels())
     return;
