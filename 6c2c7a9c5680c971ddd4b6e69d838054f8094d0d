@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d659a162_76c361a2",
+        "filename": "chrome/browser/feedback/show_feedback_page.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-16T00:04:55Z",
+      "side": 0,
+      "message": "I thought you are removing this in the other CL.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 3
+      },
+      "revId": "6c2c7a9c5680c971ddd4b6e69d838054f8094d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c2aa785_ffb1df87",
+        "filename": "chrome/browser/ui/webui/chrome_web_ui_controller_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-09-16T00:04:55Z",
+      "side": 0,
+      "message": "And this too.",
+      "range": {
+        "startLine": 410,
+        "startChar": 0,
+        "endLine": 415,
+        "endChar": 3
+      },
+      "revId": "6c2c7a9c5680c971ddd4b6e69d838054f8094d0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
