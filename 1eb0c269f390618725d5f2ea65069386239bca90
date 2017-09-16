@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a9ed4fab_8e672d4c",
+        "filename": "chrome/browser/browser_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-09-16T00:48:12Z",
+      "side": 1,
+      "message": "\u003e I did not ask for blocking this CLs for SVGs,\n\ni know, i was volunteering :)\n\n\u003e because showing nicer icons sooner than later seems worth it.\n\nagreed.\n\n\u003e If you are up to going after UX to get SVGs and update this CL, don\u0027t let me stop you :\u003e\n\ni\u0027ll bring it up bettes@ and see if he\u0027s the right person",
+      "parentUuid": "de6b1281_5994fb90",
+      "revId": "1eb0c269f390618725d5f2ea65069386239bca90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "606e578f_2fc5b215",
         "filename": "chrome/browser/resources/print_preview/data/destination.js",
         "patchSetId": 3
