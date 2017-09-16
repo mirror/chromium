@@ -498,7 +498,7 @@ ImageBitmap::ImageBitmap(HTMLVideoElement* video,
 
   std::unique_ptr<ImageBuffer> buffer =
       ImageBuffer::Create(IntSize(video->videoWidth(), video->videoHeight()),
-                          kNonOpaque, kDoNotInitializeImagePixels);
+                          kDoNotInitializeImagePixels);
   if (!buffer)
     return;
 

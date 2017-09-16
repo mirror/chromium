@@ -12,8 +12,11 @@ namespace blink {
 CanvasColorParams::CanvasColorParams() = default;
 
 CanvasColorParams::CanvasColorParams(CanvasColorSpace color_space,
-                                     CanvasPixelFormat pixel_format)
-    : color_space_(color_space), pixel_format_(pixel_format) {}
+                                     CanvasPixelFormat pixel_format,
+                                     OpacityMode opacity_mode)
+    : color_space_(color_space),
+      pixel_format_(pixel_format),
+      opacity_mode_(opacity_mode) {}
 
 CanvasColorParams::CanvasColorParams(const SkImageInfo& info) {
   color_space_ = kLegacyCanvasColorSpace;
@@ -73,6 +76,9 @@ bool CanvasColorParams::ColorCorrectNoColorSpaceToSRGB() const {
 }
 
 sk_sp<SkColorSpace> CanvasColorParams::GetSkColorSpaceForSkSurfaces() const {
+  if (!ColorCorrectRenderingInAnyColorSpace())
+    return nullptr;
+
   switch (color_space_) {
     case kLegacyCanvasColorSpace:
       return nullptr;
@@ -88,6 +94,10 @@ sk_sp<SkColorSpace> CanvasColorParams::GetSkColorSpaceForSkSurfaces() const {
                                    SkColorSpace::kDCIP3_D65_Gamut);
   }
   return nullptr;
+}
+
+SkAlphaType CanvasColorParams::GetSkAlphaType() const {
+  return opacity_mode_ == kOpaque ? kOpaque_SkAlphaType : kPremul_SkAlphaType;
 }
 
 SkColorType CanvasColorParams::GetSkColorType() const {
@@ -124,6 +134,10 @@ sk_sp<SkColorSpace> CanvasColorParams::GetSkColorSpace() const {
 
 bool CanvasColorParams::LinearPixelMath() const {
   return pixel_format_ == kF16CanvasPixelFormat;
+}
+
+SkColor CanvasColorParams::ClearColor() const {
+  return opacity_mode_ == kOpaque ? SK_ColorBLACK : SK_ColorTRANSPARENT;
 }
 
 }  // namespace blink

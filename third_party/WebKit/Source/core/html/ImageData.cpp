@@ -706,7 +706,7 @@ CanvasColorParams ImageData::GetCanvasColorParams() {
   CanvasPixelFormat pixel_format = kRGBA8CanvasPixelFormat;
   if (color_settings_.storageFormat() != kUint8ClampedArrayStorageFormatName)
     pixel_format = kF16CanvasPixelFormat;
-  return CanvasColorParams(color_space, pixel_format);
+  return CanvasColorParams(color_space, pixel_format, kNonOpaque);
 }
 
 bool ImageData::ImageDataInCanvasColorSettings(
@@ -767,17 +767,17 @@ bool ImageData::ImageDataInCanvasColorSettings(
 
   sk_sp<SkColorSpace> src_color_space = nullptr;
   if (data_) {
-    src_color_space =
-        CanvasColorParams(image_data_color_space, kRGBA8CanvasPixelFormat)
-            .GetSkColorSpaceForSkSurfaces();
+    src_color_space = CanvasColorParams(image_data_color_space,
+                                        kRGBA8CanvasPixelFormat, kNonOpaque)
+                          .GetSkColorSpaceForSkSurfaces();
   } else {
-    src_color_space =
-        CanvasColorParams(image_data_color_space, kF16CanvasPixelFormat)
-            .GetSkColorSpaceForSkSurfaces();
+    src_color_space = CanvasColorParams(image_data_color_space,
+                                        kF16CanvasPixelFormat, kNonOpaque)
+                          .GetSkColorSpaceForSkSurfaces();
   }
 
   sk_sp<SkColorSpace> dst_color_space =
-      CanvasColorParams(canvas_color_space, canvas_pixel_format)
+      CanvasColorParams(canvas_color_space, canvas_pixel_format, kNonOpaque)
           .GetSkColorSpaceForSkSurfaces();
   SkColorSpaceXform::ColorFormat dst_color_format =
       SkColorSpaceXform::ColorFormat::kRGBA_8888_ColorFormat;
@@ -800,8 +800,8 @@ bool ImageData::ImageDataInCanvasColorSettings(
 bool ImageData::ImageDataInCanvasColorSettings(
     const CanvasColorParams& canvas_color_params,
     std::unique_ptr<uint8_t[]>& converted_pixels) {
-  return ImageDataInCanvasColorSettings(canvas_color_params.color_space(),
-                                        canvas_color_params.pixel_format(),
+  return ImageDataInCanvasColorSettings(canvas_color_params.ColorSpace(),
+                                        canvas_color_params.PixelFormat(),
                                         converted_pixels);
 }
 

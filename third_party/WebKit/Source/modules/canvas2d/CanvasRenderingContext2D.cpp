@@ -276,7 +276,7 @@ void CanvasRenderingContext2D::WillDrawImage(CanvasImageSource* source) const {
 }
 
 CanvasColorSpace CanvasRenderingContext2D::ColorSpace() const {
-  return color_params().color_space();
+  return ColorParams().ColorSpace();
 }
 
 String CanvasRenderingContext2D::ColorSpaceAsString() const {
@@ -284,7 +284,7 @@ String CanvasRenderingContext2D::ColorSpaceAsString() const {
 }
 
 CanvasPixelFormat CanvasRenderingContext2D::PixelFormat() const {
-  return color_params().pixel_format();
+  return color_params().PixelFormat();
 }
 
 void CanvasRenderingContext2D::Reset() {
