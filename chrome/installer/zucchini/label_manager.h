@@ -39,42 +39,15 @@ class BaseLabelManager {
   BaseLabelManager(const BaseLabelManager&);
   virtual ~BaseLabelManager();
 
-  // Returns whether |offset_or_marked_index| is a valid offset.
-  static constexpr bool IsOffset(offset_t offset_or_marked_index) {
-    return !IsMarked(offset_or_marked_index);
-  }
-
-  // Returns whether |offset_or_marked_index| is a valid marked index.
-  static constexpr bool IsMarkedIndex(offset_t offset_or_marked_index) {
-    return IsMarked(offset_or_marked_index) &&
-           offset_or_marked_index != kUnusedIndex;
-  }
-
-  // Returns whether a given (unmarked) |index| is used by a stored Label.
-  bool IsIndexStored(offset_t index) const {
-    DCHECK(!IsMarked(index));
-    return index < labels_.size() && labels_[index] != kUnusedIndex;
-  }
-
   // Returns the offset of a given (unmarked) |index| if it is associated with a
   // stored Label, or |kUnusedIndex| otherwise.
   offset_t OffsetOfIndex(offset_t index) const {
     return index < labels_.size() ? labels_[index] : kUnusedIndex;
   }
 
-  // Returns the offset corresponding to |offset_or_marked_index|, which is a
-  // target that is stored either as a marked index, or as an (unmarked) offset.
-  offset_t OffsetFromMarkedIndex(offset_t offset_or_marked_index) const;
-
   // If |offset| has an associated stored Label, returns its index. Otherwise
   // returns |kUnusedIndex|.
   virtual offset_t IndexOfOffset(offset_t offset) const = 0;
-
-  // Returns the marked index corresponding to |offset_or_marked_index|, which
-  // is a target that is stored either as a marked index, or as an (unmarked)
-  // offset.
-  virtual offset_t MarkedIndexFromOffset(
-      offset_t offset_or_marked_index) const = 0;
 
   size_t size() const { return labels_.size(); }
 
@@ -97,8 +70,6 @@ class OrderedLabelManager : public BaseLabelManager {
 
   // BaseLabelManager:
   offset_t IndexOfOffset(offset_t offset) const override;
-  offset_t MarkedIndexFromOffset(
-      offset_t offset_or_marked_index) const override;
 
   // Creates and stores a new Label for each unique offset in |offsets|. This
   // invalidates all previous Label lookups.
@@ -125,8 +96,6 @@ class UnorderedLabelManager : public BaseLabelManager {
 
   // BaseLabelManager:
   offset_t IndexOfOffset(offset_t offset) const override;
-  offset_t MarkedIndexFromOffset(
-      offset_t offset_or_marked_index) const override;
 
   // Clears and reinitializes all stored data. Requires that |labels| consists
   // of unique offsets, but it may have "gaps" in the form of |kUnusedIndex|.
@@ -137,6 +106,10 @@ class UnorderedLabelManager : public BaseLabelManager {
   // to reused indices to create new Labels, otherwise it allocates new indices.
   // Previous lookup results involving stored offsets / indexes remain valid.
   void InsertNewOffset(offset_t offset);
+
+  bool Contains(offset_t offset) const {
+    return labels_map_.find(offset) != labels_map_.end();
+  }
 
  private:
   // Inverse map of |labels_| (excludes |kUnusedIndex|).
