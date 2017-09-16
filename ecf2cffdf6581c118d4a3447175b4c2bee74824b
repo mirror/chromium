@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02940da8_85c743ab",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleFilter.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-16T00:35:09Z",
+      "side": 1,
+      "message": "Default should move to this file.",
+      "range": {
+        "startLine": 14,
+        "startChar": 36,
+        "endLine": 14,
+        "endChar": 86
+      },
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f6026d_46971a31",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleFilter.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-16T00:35:09Z",
+      "side": 1,
+      "message": "Let\u0027s pass ConsoleModel.ConsoleMessage instead.",
+      "range": {
+        "startLine": 24,
+        "startChar": 14,
+        "endLine": 24,
+        "endChar": 25
+      },
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "073b05a2_2cb2631a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-16T00:35:09Z",
+      "side": 1,
+      "message": "_filters",
+      "range": {
+        "startLine": 15,
+        "startChar": 9,
+        "endLine": 15,
+        "endChar": 15
+      },
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d389ec2_21837761",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-16T00:35:09Z",
+      "side": 1,
+      "message": "_contextFilters",
+      "range": {
+        "startLine": 27,
+        "startChar": 9,
+        "endLine": 27,
+        "endChar": 23
+      },
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c9dbf46_44a07e7a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-16T00:35:09Z",
+      "side": 1,
+      "message": "_pendingFiltersToAdd",
+      "range": {
+        "startLine": 29,
+        "startChar": 9,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81d81658_4d2ae5c2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-16T00:35:09Z",
+      "side": 1,
+      "message": "FilterSelected",
+      "range": {
+        "startLine": 175,
+        "startChar": 2,
+        "endLine": 175,
+        "endChar": 15
+      },
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "990d9ea0_29cbe874",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-16T00:35:09Z",
+      "side": 1,
+      "message": "_currentFilter",
+      "range": {
+        "startLine": 1028,
+        "startChar": 9,
+        "endLine": 1028,
+        "endChar": 27
+      },
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5117254a_3a55d3bf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 1073,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-16T00:35:09Z",
+      "side": 1,
+      "message": "Common.Event",
+      "range": {
+        "startLine": 1073,
+        "startChar": 14,
+        "endLine": 1073,
+        "endChar": 20
+      },
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f23d50e1_8bc4c7e0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 1173,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-16T00:35:09Z",
+      "side": 1,
+      "message": "I think this should be done after all other checks. Otherwise, you\u0027ll have counters but clicking on a filter will show nothing due to e.g. network source check.",
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "031df0da_5fce1dbf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 1214,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-16T00:35:09Z",
+      "side": 1,
+      "message": "Not related to this patch, but I think sidebar should switch to All instead and trigger an event. Let\u0027s fix in a follow up.",
+      "revId": "ecf2cffdf6581c118d4a3447175b4c2bee74824b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
