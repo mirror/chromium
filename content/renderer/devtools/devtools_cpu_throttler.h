@@ -14,12 +14,14 @@ namespace content {
 
 class CPUThrottlingThread;
 
+// Singleton that manages creation of the throttler thread.
 class CONTENT_EXPORT DevToolsCPUThrottler final {
  public:
   DevToolsCPUThrottler();
   ~DevToolsCPUThrottler();
 
   void SetThrottlingRate(double rate);
+  static DevToolsCPUThrottler* GetInstance();
 
  private:
   std::unique_ptr<CPUThrottlingThread> throttling_thread_;
