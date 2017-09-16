@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bc9ab444_81566708",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/css_properties.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-16T07:06:56Z",
+      "side": 1,
+      "message": "2 lines between each function?",
+      "parentUuid": "303b9c5e_5d720186",
+      "revId": "19696688b989aaa917cbbff77d3c591970c3b898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4d051d2b_6a0ca4eb",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 8
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1d162ec5_9b0ff3bd",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-16T07:06:56Z",
+      "side": 1,
+      "message": "lol yes, should change the name.",
+      "parentUuid": "4d051d2b_6a0ca4eb",
+      "revId": "19696688b989aaa917cbbff77d3c591970c3b898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55041ecd_a82f16aa",
         "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
         "patchSetId": 8
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-14T06:05:41Z",
       "side": 1,
       "message": "What\u0027s this divider for? Maybe add a comment to explain, or even better, put the code into separate functions instead having a divider comment if that makes sense.",
+      "revId": "19696688b989aaa917cbbff77d3c591970c3b898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2d3b377_7015ea99",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1228084
+      },
+      "writtenOn": "2017-09-16T07:06:56Z",
+      "side": 1,
+      "message": "it is actually nothing I will remove this, because I was thinking about moving the code above to another class in another patch.",
+      "parentUuid": "55041ecd_a82f16aa",
       "revId": "19696688b989aaa917cbbff77d3c591970c3b898",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
