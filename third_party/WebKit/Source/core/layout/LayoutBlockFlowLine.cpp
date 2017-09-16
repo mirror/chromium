@@ -543,9 +543,9 @@ static inline void SetLogicalWidthForTextRun(
 
   const Font& font = layout_text.Style(line_info.IsFirstLine())->GetFont();
 
-  LayoutUnit hyphen_width;
+  float hyphen_width = 0;
   if (ToInlineTextBox(run->box_)->HasHyphen())
-    hyphen_width = LayoutUnit(layout_text.HyphenWidth(font, run->Direction()));
+    hyphen_width = layout_text.HyphenWidth(font, run->Direction());
 
   float measured_width = 0;
   FloatRect glyph_bounds;
@@ -631,7 +631,8 @@ static inline void SetLogicalWidthForTextRun(
 
   glyph_overflow.SetFromBounds(glyph_bounds, font, measured_width);
 
-  run->box_->SetLogicalWidth(LayoutUnit(measured_width) + hyphen_width);
+  run->box_->SetLogicalWidth(
+      LayoutUnit::FromFloatCeil(measured_width + hyphen_width));
   if (!fallback_fonts.IsEmpty()) {
     DCHECK(run->box_->IsText());
     GlyphOverflowAndFallbackFontsMap::ValueType* it =
