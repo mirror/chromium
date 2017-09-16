@@ -5,7 +5,7 @@
 #ifndef CHROME_BROWSER_VR_ELEMENTS_RECT_H_
 #define CHROME_BROWSER_VR_ELEMENTS_RECT_H_
 
-#include "chrome/browser/vr/elements/ui_element.h"
+#include "chrome/browser/vr/elements/renderable_element.h"
 #include "third_party/skia/include/core/SkColor.h"
 
 namespace vr {
@@ -16,7 +16,7 @@ namespace vr {
 // two colors. This radial gradient is not aspect correct; it will be elliptical
 // if the rect is stretched. This is intended to serve as a background to be put
 // behind other elements.
-class Rect : public UiElement {
+class Rect : public RenderableElement {
  public:
   Rect();
   ~Rect() override;
