@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7c953cb_b43e150a",
+        "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-16T00:38:47Z",
+      "side": 1,
+      "message": "Nit: If you pass the \"end iterator\" for cases in the equal() call below, you can remove this and the conditional, since std::equal() will return false if the sizes are unequal.",
+      "revId": "9f1d08f6f80141534146fb9e515b0c62398130cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc885da_37a1d830",
+        "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-16T00:38:47Z",
+      "side": 1,
+      "message": "Nit: const auto\u0026 for both?  (also in other places)",
+      "revId": "9f1d08f6f80141534146fb9e515b0c62398130cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b0c1047_1cf7d49c",
+        "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-16T00:38:47Z",
+      "side": 1,
+      "message": "Nit: Just to save the indenting (which might save on line wrapping), we might want to declare this lambda outside the call?",
+      "revId": "9f1d08f6f80141534146fb9e515b0c62398130cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c886bf52_ce0b26f8",
+        "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3223,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-16T00:38:47Z",
+      "side": 1,
+      "message": "Nit: Declaring a temp to hold the size_t might result in fewer lines overall due to wrapping.",
+      "revId": "9f1d08f6f80141534146fb9e515b0c62398130cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aad0f83_3696c684",
+        "filename": "components/omnibox/browser/autocomplete_result_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-16T00:38:47Z",
+      "side": 1,
+      "message": "Nit: Maybe pull out into a temp",
+      "revId": "9f1d08f6f80141534146fb9e515b0c62398130cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "5ee47dae_2c6a4ba7",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-16T00:38:47Z",
+      "side": 1,
+      "message": "I\u0027m confused why distance() is unacceptable in production?  Maybe I\u0027m misunderstanding.",
+      "parentUuid": "7e42d37f_944a5951",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9c2b01b_bac8d46a",
         "filename": "components/omnibox/browser/autocomplete_controller.cc",
         "patchSetId": 4
@@ -241,6 +259,24 @@
       "side": 1,
       "message": "Done. Let me know if you don\u0027t like #441 either.",
       "parentUuid": "59e7cc67_af558fca",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c685f0ef_a2cf42bf",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 679,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-16T00:38:47Z",
+      "side": 1,
+      "message": "That one\u0027s more borderline... I could go either way",
+      "parentUuid": "1037a6d5_4310991f",
       "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -387,6 +423,24 @@
     },
     {
       "key": {
+        "uuid": "b92aeb3c_63c9410b",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-16T00:38:47Z",
+      "side": 1,
+      "message": "It\u0027d be nice not to provide an API that lets people shoot themselves in the foot later, if it\u0027s easy.\n\nIf it\u0027s not easy, we can leave it.",
+      "parentUuid": "11006218_26e4891b",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32a91cf3_24638123",
         "filename": "components/omnibox/browser/autocomplete_result.cc",
         "patchSetId": 4
@@ -416,6 +470,24 @@
       "side": 1,
       "message": "hmm, I think the old previous version is easier to glance at and convince myself that it\u0027s correct. Let know if you still like this version.",
       "parentUuid": "32a91cf3_24638123",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "668d7073_d21bd18c",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-16T00:38:47Z",
+      "side": 1,
+      "message": "Your implementation is more complex than I was thinking:\n\n  swap(default_match_, other-\u003edefault_match_);\n  if (this_was_end)\n    other-\u003edefault_match_ \u003d other-\u003eend();\n  if (other_was_end)\n    default_match_ \u003d end();\n\nYou can swap invalid iterators, you just can\u0027t dereference them.",
+      "parentUuid": "b27e800a_16dd617c",
       "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
