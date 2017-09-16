@@ -23,6 +23,7 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/web/WebHeap.h"
 
+#include "content/public/test/test_utils.h"
 using ::testing::_;
 using ::testing::DoAll;
 using ::testing::SaveArg;
@@ -437,6 +438,79 @@ TEST_F(MediaStreamVideoSourceTest, MutedSource) {
             blink::WebMediaStreamSource::kReadyStateLive);
 
   sink.DisconnectFromTrack();
+}
+
+TEST_F(MediaStreamVideoSourceTest, ReconfigureTrack) {
+  blink::WebMediaStreamTrack track = CreateTrackAndStartSource(
+      640, 480, media::limits::kMaxFramesPerSecond - 2);
+  MockMediaStreamVideoSink sink;
+  sink.ConnectToTrack(track);
+  EXPECT_EQ(track.Source().GetReadyState(),
+            blink::WebMediaStreamSource::kReadyStateLive);
+
+  base::RunLoop().RunUntilIdle();
+  RunAllBlockingPoolTasksUntilIdle();
+  MediaStreamVideoTrack* native_track =
+      MediaStreamVideoTrack::GetVideoTrack(track);
+  blink::WebMediaStreamTrack::Settings settings;
+  native_track->GetSettings(settings);
+  EXPECT_EQ(settings.width, 640);
+  EXPECT_EQ(settings.height, 480);
+  EXPECT_EQ(settings.frame_rate, media::limits::kMaxFramesPerSecond - 2);
+  EXPECT_EQ(settings.aspect_ratio, 640.0 / 480.0);
+
+  source()->ReconfigureTrack(
+      native_track, VideoTrackAdapterSettings(630, 470, 0, HUGE_VAL, 30.0));
+  base::RunLoop().RunUntilIdle();
+  RunAllBlockingPoolTasksUntilIdle();
+  native_track->GetSettings(settings);
+  EXPECT_EQ(settings.width, 630);
+  EXPECT_EQ(settings.height, 470);
+  EXPECT_EQ(settings.frame_rate, 30.0);
+  EXPECT_EQ(settings.aspect_ratio, 630.0 / 470.0);
+
+  // Produce a frame in the source native format and expect the delivered frame
+  // to have the new track format.
+  DeliverVideoFrameAndWaitForRenderer(640, 480, &sink);
+  EXPECT_EQ(1, sink.number_of_frames());
+  EXPECT_EQ(630, sink.frame_size().width());
+  EXPECT_EQ(470, sink.frame_size().height());
+}
+
+TEST_F(MediaStreamVideoSourceTest, ReconfigureStoppedTrack) {
+  blink::WebMediaStreamTrack track = CreateTrackAndStartSource(
+      640, 480, media::limits::kMaxFramesPerSecond - 2);
+  EXPECT_EQ(track.Source().GetReadyState(),
+            blink::WebMediaStreamSource::kReadyStateLive);
+
+  base::RunLoop().RunUntilIdle();
+  RunAllBlockingPoolTasksUntilIdle();
+  MediaStreamVideoTrack* native_track =
+      MediaStreamVideoTrack::GetVideoTrack(track);
+  blink::WebMediaStreamTrack::Settings settings;
+
+  native_track->GetSettings(settings);
+  EXPECT_EQ(settings.width, 640);
+  EXPECT_EQ(settings.height, 480);
+  EXPECT_EQ(settings.frame_rate, media::limits::kMaxFramesPerSecond - 2);
+  EXPECT_EQ(settings.aspect_ratio, 640.0 / 480.0);
+
+  // Reconfiguring a stopped track should have no effect since it is no longer
+  // associated with the source.
+  native_track->Stop();
+  EXPECT_EQ(track.Source().GetReadyState(),
+            blink::WebMediaStreamSource::kReadyStateEnded);
+
+  base::RunLoop().RunUntilIdle();
+  RunAllBlockingPoolTasksUntilIdle();
+  source()->ReconfigureTrack(
+      native_track, VideoTrackAdapterSettings(630, 470, 0, HUGE_VAL, 30.0));
+  blink::WebMediaStreamTrack::Settings stopped_settings;
+  native_track->GetSettings(stopped_settings);
+  EXPECT_EQ(stopped_settings.width, -1);
+  EXPECT_EQ(stopped_settings.height, -1);
+  EXPECT_EQ(stopped_settings.frame_rate, -1);
+  EXPECT_EQ(stopped_settings.aspect_ratio, -1);
 }
 
 }  // namespace content
