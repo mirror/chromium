@@ -34,6 +34,24 @@
       "revId": "c88c165fc4f824daa10e34111c789093d613a554",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c602e13_6749a5f8",
+        "filename": "third_party/WebKit/Source/platform/graphics/DeferredImageDecoderTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-16T01:00:11Z",
+      "side": 1,
+      "message": "Ok. Please add a second test here that does the same thing but for 10ms, to exercise\nthe ads logic.",
+      "parentUuid": "e7aca96d_06d2130c",
+      "revId": "c88c165fc4f824daa10e34111c789093d613a554",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
