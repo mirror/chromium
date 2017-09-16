@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "651cce62_da63f611",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-16T03:33:59Z",
+      "side": 1,
+      "message": "Should probably take a task_runner arg and DCHECK that allocator-\u003etask_runner is equivalent to the task_runner.\n\nBecause we need the allocator to always be bound to the GPU thread for now (for CVV).",
+      "range": {
+        "startLine": 107,
+        "startChar": 40,
+        "endLine": 107,
+        "endChar": 51
+      },
+      "revId": "16cf7d43af22605552df6dc09ce6c0a4015b3221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c2ede2_391fdee7",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-16T03:33:59Z",
+      "side": 1,
+      "message": "I wonder if we can just remove the return value.\n\nCreateCodec can always check if either thread is not started, return a null codec. That way we only have one async error to handle in the callers.",
+      "range": {
+        "startLine": 112,
+        "startChar": 25,
+        "endLine": 112,
+        "endChar": 36
+      },
+      "revId": "16cf7d43af22605552df6dc09ce6c0a4015b3221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "192172d7_bdf25f7b",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-16T03:33:59Z",
+      "side": 1,
+      "message": "I know this is subject to change, but just in case:\n\nif (!task_runner_-\u003eRunsTasksInCurrentSequence())",
+      "range": {
+        "startLine": 214,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 47
+      },
+      "revId": "16cf7d43af22605552df6dc09ce6c0a4015b3221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eac17b29_49d50c67",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 2
@@ -13,6 +82,30 @@
       "writtenOn": "2017-09-15T21:38:01Z",
       "side": 1,
       "message": "else it got mad about an unused variable with debug off.",
+      "range": {
+        "startLine": 430,
+        "startChar": 2,
+        "endLine": 430,
+        "endChar": 7
+      },
+      "revId": "16cf7d43af22605552df6dc09ce6c0a4015b3221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a4f3aa_19a8808d",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-16T03:33:59Z",
+      "side": 1,
+      "message": "oops thanks",
+      "parentUuid": "eac17b29_49d50c67",
       "range": {
         "startLine": 430,
         "startChar": 2,
