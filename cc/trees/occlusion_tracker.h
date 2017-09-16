@@ -62,6 +62,9 @@ class CC_EXPORT OcclusionTracker {
     const RenderSurfaceImpl* target;
     SimpleEnclosedRegion occlusion_from_outside_target;
     SimpleEnclosedRegion occlusion_from_inside_target;
+    // If |target| is masked out by a child surface with SkBlendMode::kDstIn,
+    // pixel may become transparent thus won't occlude |target|'s target.
+    bool has_masking_child_surface = false;
   };
 
   // The stack holds occluded regions for subtrees in the
