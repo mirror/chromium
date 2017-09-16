@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "de6b1281_5994fb90",
+        "filename": "chrome/browser/browser_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-16T00:44:33Z",
+      "side": 1,
+      "message": "I did not ask for blocking this CLs for SVGs, because showing nicer icons sooner than later seems worth it. If you are up to going after UX to get SVGs and update this CL, don\u0027t let me stop you :\u003e",
+      "parentUuid": "9d605a86_5dc5bf9c",
+      "revId": "1eb0c269f390618725d5f2ea65069386239bca90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "606e578f_2fc5b215",
         "filename": "chrome/browser/resources/print_preview/data/destination.js",
         "patchSetId": 3
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "OK, makes sense. I\u0027ve removed them for now. I agree that `` are useful and that one of us should start a thread.\n\nFWIW: the support on iOS9 is there (yay!)\nhttps://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#Browser_compatibility",
       "parentUuid": "606e578f_2fc5b215",
+      "revId": "1eb0c269f390618725d5f2ea65069386239bca90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ead606a1_0861568d",
+        "filename": "chrome/browser/resources/print_preview/data/destination.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-16T00:44:33Z",
+      "side": 1,
+      "message": "I volunteer to start a thread, probably this Monday.",
+      "parentUuid": "1bdb7be5_470d13ae",
       "revId": "1eb0c269f390618725d5f2ea65069386239bca90",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
