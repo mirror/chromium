@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd63afb9_2db2fd48",
+        "filename": "third_party/WebKit/LayoutTests/css3/motion-path/place-center-top.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-09-16T06:42:48Z",
+      "side": 1,
+      "message": "Done.\n\nFor existing motion path web platform tests, see\nhttps://github.com/w3c/web-platform-tests/tree/master/css/motion-1",
+      "parentUuid": "03aa01f5_f23a47d7",
+      "revId": "cf3617ba193c3936ecc02955cba210f613e04a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd4d2a06_cb173421",
         "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9b5ec9f3_163853a4",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1519,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-09-16T06:42:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd4d2a06_cb173421",
+      "revId": "cf3617ba193c3936ecc02955cba210f613e04a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38c55cb3_3bcb7fa0",
         "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-15T20:13:28Z",
       "side": 1,
       "message": "Will this calculation be correct for SVG? Can you add a test with SVG where it\u0027s nonzero?",
+      "revId": "cf3617ba193c3936ecc02955cba210f613e04a6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49855d20_f0ee959c",
+        "filename": "third_party/WebKit/Source/core/style/ComputedStyle.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 961,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-09-16T06:42:48Z",
+      "side": 1,
+      "message": "I have uploaded an SVG example. The offset_from_container is 0,0 with or without a transformed \u003cg\u003e enclosing a rect. I suspect the only way to get nonzero might be using viewBox.",
+      "parentUuid": "38c55cb3_3bcb7fa0",
       "revId": "cf3617ba193c3936ecc02955cba210f613e04a6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
