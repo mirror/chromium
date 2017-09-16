@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecd184f1_991fd311",
+        "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-16T05:01:05Z",
+      "side": 1,
+      "message": "Will the ImageLoader actually go through all the effort to \"decode\"\nthis kind of image, including asking the chrome client to decode?\nWhich will be a no-op, right?\n\nI guess that\u0027s ok but is a little odd.",
+      "revId": "af87508cebb79767f412ca3d09bd2057f7a76fdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
