@@ -16,6 +16,24 @@
       "revId": "858c0f8c7514578b36fd868eaea11c93f93fc9f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d466a6f3_7a18214c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_line_box_fragment_builder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-09-16T10:19:26Z",
+      "side": 1,
+      "message": "This is a temporary placeholder for a box fragment to be created later in NGInlineLayoutStateStack::AddBoxFragmentPlaceholder(), see comments at:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/ng/inline/ng_inline_box_state.cc?dr\u003dCSs\u0026l\u003d203\n\nThe nullptr is then replaced with real fragments later in NGInlineLayoutStateStack::CreateBoxFragments().\n\nThe box fragment will be created later, but vertical-align needs to move up/down such box along with already-created fragments. By adding a placeholder, we can move up/down both placeholders and already-created-fragments together.",
+      "parentUuid": "85c0fc27_e10f61ea",
+      "revId": "858c0f8c7514578b36fd868eaea11c93f93fc9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
