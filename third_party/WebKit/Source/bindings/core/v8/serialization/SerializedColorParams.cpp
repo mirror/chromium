@@ -12,7 +12,7 @@ SerializedColorParams::SerializedColorParams()
       storage_format_(SerializedImageDataStorageFormat::kUint8Clamped) {}
 
 SerializedColorParams::SerializedColorParams(CanvasColorParams color_params) {
-  switch (color_params.color_space()) {
+  switch (color_params.ColorSpace()) {
     case kLegacyCanvasColorSpace:
       color_space_ = SerializedColorSpace::kLegacy;
       break;
@@ -27,7 +27,7 @@ SerializedColorParams::SerializedColorParams(CanvasColorParams color_params) {
       break;
   }
 
-  switch (color_params.pixel_format()) {
+  switch (color_params.PixelFormat()) {
     case kRGBA8CanvasPixelFormat:
     case kRGB10A2CanvasPixelFormat:
     case kRGBA12CanvasPixelFormat:
@@ -86,7 +86,9 @@ CanvasColorParams SerializedColorParams::GetCanvasColorParams() const {
   CanvasPixelFormat pixel_format = kRGBA8CanvasPixelFormat;
   if (pixel_format_ == SerializedPixelFormat::kF16)
     pixel_format = kF16CanvasPixelFormat;
-  return CanvasColorParams(color_space, pixel_format);
+  // TODO(junov): Is there a use case that could benefit from serializing
+  // the opacity mode, instead of conservatively assuming kNonOpaque?
+  return CanvasColorParams(color_space, pixel_format, kNonOpaque);
 }
 
 CanvasColorSpace SerializedColorParams::GetColorSpace() const {

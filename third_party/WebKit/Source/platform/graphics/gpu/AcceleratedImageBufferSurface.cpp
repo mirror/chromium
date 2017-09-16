@@ -44,7 +44,7 @@ AcceleratedImageBufferSurface::AcceleratedImageBufferSurface(
     const IntSize& size,
     OpacityMode opacity_mode,
     const CanvasColorParams& color_params)
-    : ImageBufferSurface(size, opacity_mode, color_params) {
+    : ImageBufferSurface(size, color_params) {
   context_provider_wrapper_ = SharedGpuContext::ContextProviderWrapper();
   if (!context_provider_wrapper_)
     return;
@@ -53,10 +53,9 @@ AcceleratedImageBufferSurface::AcceleratedImageBufferSurface(
 
   CHECK(gr_context);
 
-  SkAlphaType alpha_type =
-      (kOpaque == opacity_mode) ? kOpaque_SkAlphaType : kPremul_SkAlphaType;
-  SkImageInfo info = SkImageInfo::Make(
-      size.Width(), size.Height(), color_params.GetSkColorType(), alpha_type);
+  SkImageInfo info = SkImageInfo::Make(size.Width(), size.Height(),
+                                       color_params.GetSkColorType(),
+                                       color_params.GetSkAlphaType());
   // In legacy mode the backing SkSurface should not have any color space.
   // If color correct rendering is enabled only for SRGB, still the backing
   // surface should not have any color space and the treatment of legacy data
