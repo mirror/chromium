@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46f7aa27_5a9bb043",
+        "filename": "media/base/android/media_drm_bridge_cdm_context.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-09-16T00:12:59Z",
+      "side": 0,
+      "message": "Remove this one and use the one in android_util.h and remove MediaDrmBridgeCdmContext scope for all the call site.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 67
+      },
+      "revId": "ed4edf011bd04a489d805d30a1742c28d1e1cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
