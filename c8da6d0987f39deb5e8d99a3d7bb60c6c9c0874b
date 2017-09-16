@@ -16,6 +16,24 @@
       "revId": "c8da6d0987f39deb5e8d99a3d7bb60c6c9c0874b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e61cd6de_d5627e75",
+        "filename": "net/http/transport_security_state_ct_policies.inc",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-16T00:12:19Z",
+      "side": 0,
+      "message": "Done, moved down to where we used kSymantecRoots.",
+      "parentUuid": "88f6e9aa_2324dd97",
+      "revId": "c8da6d0987f39deb5e8d99a3d7bb60c6c9c0874b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
