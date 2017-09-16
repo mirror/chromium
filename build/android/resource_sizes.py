@@ -250,24 +250,13 @@ def _NormalizeLanguagePaks(translations, normalized_apk_size, factor):
   return normalized_apk_size
 
 
-def _NormalizeResourcesArsc(apk_path, num_arsc_files, num_translations,
-                            out_dir):
+def _NormalizeResourcesArsc(apk_path, num_translations):
   """Estimates the expected overhead of untranslated strings in resources.arsc.
 
   See http://crbug.com/677966 for why this is necessary.
   """
-  # If there are multiple .arsc files, use the resource packaged APK instead.
-  if num_arsc_files > 1:
-    if not out_dir:
-      print 'Skipping resources.arsc normalization (output directory required)'
-      return 0
-    ap_name = os.path.basename(apk_path).replace('.apk', '.intermediate.ap_')
-    ap_path = os.path.join(out_dir, 'gen/arsc/apks', ap_name)
-    if not os.path.exists(ap_path):
-      raise Exception('Missing expected file: %s, try rebuilding.' % ap_path)
-    apk_path = ap_path
-
   aapt_output = _RunAaptDumpResources(apk_path)
+
   # en-rUS is in the default config and may be cluttered with non-translatable
   # strings, so en-rGB is a better baseline for finding missing translations.
   en_strings = _CreateResourceIdValueMap(aapt_output, 'en-rGB')
@@ -349,7 +338,7 @@ class _FileGroup(object):
     return self.ComputeExtractedSize() + self.ComputeZippedSize()
 
 
-def PrintApkAnalysis(apk_filename, tool_prefix, out_dir, chartjson=None):
+def PrintApkAnalysis(apk_filename, tool_prefix, chartjson=None):
   """Analyse APK to determine size contributions of different file classes."""
   file_groups = []
 
@@ -516,8 +505,8 @@ def PrintApkAnalysis(apk_filename, tool_prefix, out_dir, chartjson=None):
       # WebView (which supports more locales), but these should mostly be empty
       # so ignore them here.
       num_arsc_translations = num_translations
-    normalized_apk_size += int(_NormalizeResourcesArsc(
-        apk_filename, arsc.GetNumEntries(), num_arsc_translations, out_dir))
+    normalized_apk_size += int(
+        _NormalizeResourcesArsc(apk_filename, num_arsc_translations))
 
   perf_tests_results_helper.ReportPerfResult(chartjson,
                    apk_basename + '_Specifics',
@@ -846,7 +835,7 @@ def main():
     argparser.error(
         '--dump-static-initializers requires --chromium-output-directory')
 
-  PrintApkAnalysis(args.apk, tool_prefix, out_dir, chartjson=chartjson)
+  PrintApkAnalysis(args.apk, tool_prefix, chartjson=chartjson)
   _PrintDexAnalysis(args.apk, chartjson=chartjson)
 
   si_count = AnalyzeStaticInitializers(

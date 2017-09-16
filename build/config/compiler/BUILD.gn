@@ -440,17 +440,6 @@ config("compiler") {
     cflags += [ "-fcolor-diagnostics" ]
   }
 
-  # TODO(hans): Remove this once Clang generates better optimized debug info by
-  # default. https://crbug.com/765793
-  if (is_clang && !is_nacl && current_toolchain == host_toolchain) {
-    cflags += [
-      "-Xclang",
-      "-mllvm",
-      "-Xclang",
-      "-instcombine-lower-dbg-declare=1",
-    ]
-  }
-
   # Print absolute paths in diagnostics. There is no precedent for doing this
   # on Linux/Mac (GCC doesn't support it), but MSVC does this with /FC and
   # Windows developers rely on it (crbug.com/636109) so only do this on Windows.
@@ -525,34 +514,24 @@ config("compiler") {
 
     if (use_thin_lto) {
       cflags += [ "-flto=thin" ]
-      if (is_win) {
-        # This is a straight translation of the non-Windows flags below.
+      ldflags += [ "-flto=thin" ]
+
+      # Limit the parallelism to avoid too aggressive competition between
+      # linker jobs. This is still suboptimal to a potential dynamic
+      # resource allocation scheme, but should be good enough.
+      if (use_lld) {
         ldflags += [
-          "/opt:lldltojobs=8",
-          "/lldltocache:" +
+          "-Wl,--thinlto-jobs=8",
+          "-Wl,--thinlto-cache-dir=" +
               rebase_path("$root_out_dir/thinlto-cache", root_build_dir),
-          "/lldltocachepolicy:cache_size=10%",
+
+          # Limit the size of the ThinLTO cache to 10% of available disk space.
+          # TODO(pcc): Change the limit from a percentage to an absolute size
+          # (10-20GB) once that feature lands in LLVM.
+          "-Wl,--thinlto-cache-policy,cache_size=10%",
         ]
       } else {
-        ldflags += [ "-flto=thin" ]
-
-        # Limit the parallelism to avoid too aggressive competition between
-        # linker jobs. This is still suboptimal to a potential dynamic
-        # resource allocation scheme, but should be good enough.
-        if (use_lld) {
-          ldflags += [
-            "-Wl,--thinlto-jobs=8",
-            "-Wl,--thinlto-cache-dir=" +
-                rebase_path("$root_out_dir/thinlto-cache", root_build_dir),
-
-            # Limit the size of the ThinLTO cache to 10% of available disk space
-            # TODO(pcc): Change the limit from a percentage to an absolute size
-            # (10-20GB) once that feature lands in LLVM.
-            "-Wl,--thinlto-cache-policy,cache_size=10%",
-          ]
-        } else {
-          ldflags += [ "-Wl,-plugin-opt,jobs=8" ]
-        }
+        ldflags += [ "-Wl,-plugin-opt,jobs=8" ]
       }
 
       # Disable optimization for now because they increase binary size by too
@@ -562,9 +541,7 @@ config("compiler") {
       }
     } else {
       cflags += [ "-flto" ]
-      if (!is_win) {
-        ldflags += [ "-flto" ]
-      }
+      ldflags += [ "-flto" ]
 
       # Apply a lower LTO optimization level as the default is too slow.
       if (is_linux) {
@@ -579,9 +556,7 @@ config("compiler") {
     }
 
     cflags += [ "-fwhole-program-vtables" ]
-    if (!is_win) {
-      ldflags += [ "-fwhole-program-vtables" ]
-    }
+    ldflags += [ "-fwhole-program-vtables" ]
 
     # Work-around for http://openradar.appspot.com/20356002
     if (is_mac) {

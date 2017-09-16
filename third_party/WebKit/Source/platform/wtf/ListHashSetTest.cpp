@@ -25,13 +25,14 @@
 
 #include "platform/wtf/ListHashSet.h"
 
-#include <memory>
-#include <type_traits>
 #include "platform/wtf/LinkedHashSet.h"
+#include "platform/wtf/PassRefPtr.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/RefCounted.h"
 #include "platform/wtf/RefPtr.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include <memory>
+#include <type_traits>
 
 namespace WTF {
 

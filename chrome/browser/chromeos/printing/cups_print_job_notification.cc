@@ -22,7 +22,6 @@
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/chromeos/resources/grit/ui_chromeos_resources.h"
 #include "ui/message_center/message_center.h"
-#include "ui/message_center/notification_delegate.h"
 #include "ui/message_center/notification_types.h"
 #include "ui/message_center/public/cpp/message_center_constants.h"
 
@@ -33,8 +32,7 @@ namespace {
 const char kCupsPrintJobNotificationId[] =
     "chrome://settings/printing/cups-print-job-notification";
 
-class CupsPrintJobNotificationDelegate
-    : public message_center::NotificationDelegate {
+class CupsPrintJobNotificationDelegate : public NotificationDelegate {
  public:
   explicit CupsPrintJobNotificationDelegate(CupsPrintJobNotification* item)
       : item_(item) {}
@@ -50,6 +48,8 @@ class CupsPrintJobNotificationDelegate
   void ButtonClick(int button_index) override {
     item_->ClickOnNotificationButton(button_index);
   }
+
+  std::string id() const override { return item_->GetNotificationId(); }
 
  private:
   ~CupsPrintJobNotificationDelegate() override {}
@@ -68,11 +68,12 @@ CupsPrintJobNotification::CupsPrintJobNotification(
     : notification_manager_(manager),
       notification_id_(print_job->GetUniqueId()),
       print_job_(print_job),
+      delegate_(new CupsPrintJobNotificationDelegate(this)),
       profile_(profile) {
   // Create a notification for the print job. The title, body, icon and buttons
   // of the notification will be updated in UpdateNotification().
   notification_ = base::MakeUnique<Notification>(
-      message_center::NOTIFICATION_TYPE_SIMPLE, notification_id_,
+      message_center::NOTIFICATION_TYPE_SIMPLE,
       base::string16(),  // title
       base::string16(),  // body
       gfx::Image(),      // icon
@@ -81,8 +82,7 @@ CupsPrintJobNotification::CupsPrintJobNotification(
       l10n_util::GetStringUTF16(IDS_PRINT_JOB_NOTIFICATION_DISPLAY_SOURCE),
       GURL(kCupsPrintJobNotificationId),
       notification_id_,  // tag
-      message_center::RichNotificationData(),
-      new CupsPrintJobNotificationDelegate(this));
+      message_center::RichNotificationData(), delegate_.get());
   notification_->set_accent_color(
       message_center::kSystemNotificationColorNormal);
   UpdateNotification();
@@ -100,7 +100,7 @@ void CupsPrintJobNotification::OnPrintJobStatusUpdated() {
 
 void CupsPrintJobNotification::CloseNotificationByUser() {
   closed_in_middle_ = true;
-  g_browser_process->message_center()->RemoveNotification(notification_id_,
+  g_browser_process->message_center()->RemoveNotification(GetNotificationId(),
                                                           true /* by_user */);
   if (!print_job_ ||
       print_job_->state() == CupsPrintJob::State::STATE_SUSPENDED) {
@@ -125,8 +125,8 @@ void CupsPrintJobNotification::ClickOnNotificationButton(int button_index) {
       print_job_ = nullptr;
 
       // Clean up the notification.
-      g_browser_process->notification_ui_manager()->CancelById(notification_id_,
-                                                               profile_id);
+      g_browser_process->notification_ui_manager()->CancelById(
+          GetNotificationId(), profile_id);
       cancelled_by_user_ = true;
       notification_manager_->OnPrintJobNotificationRemoved(this);
       break;
@@ -139,6 +139,10 @@ void CupsPrintJobNotification::ClickOnNotificationButton(int button_index) {
     case ButtonCommand::GET_HELP:
       break;
   }
+}
+
+const std::string& CupsPrintJobNotification::GetNotificationId() {
+  return notification_id_;
 }
 
 void CupsPrintJobNotification::UpdateNotification() {
@@ -168,8 +172,8 @@ void CupsPrintJobNotification::UpdateNotification() {
     closed_in_middle_ = false;
     // In order to make sure it pop up, we should delete it before readding it.
     const ProfileID profile_id = NotificationUIManager::GetProfileID(profile_);
-    g_browser_process->notification_ui_manager()->CancelById(notification_id_,
-                                                             profile_id);
+    g_browser_process->notification_ui_manager()->CancelById(
+        GetNotificationId(), profile_id);
     g_browser_process->notification_ui_manager()->Add(*notification_, profile_);
   }
 

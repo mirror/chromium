@@ -20,8 +20,7 @@ CastDisplayConfigurator::CastDisplayConfigurator(CastScreen* screen)
           ui::OzonePlatform::GetInstance()->CreateNativeDisplayDelegate()),
       cast_screen_(screen),
       weak_factory_(this) {
-  if (!delegate_)
-    return;
+  DCHECK(delegate_);
   DCHECK(cast_screen_);
   delegate_->AddObserver(this);
   delegate_->Initialize();
@@ -29,13 +28,11 @@ CastDisplayConfigurator::CastDisplayConfigurator(CastScreen* screen)
 }
 
 CastDisplayConfigurator::~CastDisplayConfigurator() {
-  if (delegate_)
-    delegate_->RemoveObserver(this);
+  delegate_->RemoveObserver(this);
 }
 
 // display::NativeDisplayObserver interface
 void CastDisplayConfigurator::OnConfigurationChanged() {
-  DCHECK(delegate_);
   delegate_->GetDisplays(
       base::Bind(&CastDisplayConfigurator::OnDisplaysAcquired,
                  weak_factory_.GetWeakPtr()));
@@ -43,7 +40,6 @@ void CastDisplayConfigurator::OnConfigurationChanged() {
 
 void CastDisplayConfigurator::OnDisplaysAcquired(
     const std::vector<display::DisplaySnapshot*>& displays) {
-  DCHECK(delegate_);
   if (displays.empty()) {
     LOG(WARNING) << "No displays detected, skipping display init.";
     return;

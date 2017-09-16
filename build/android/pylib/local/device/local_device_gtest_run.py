@@ -421,16 +421,9 @@ class LocalDeviceGtestRun(local_device_test_run.LocalDeviceTestRun):
             timeout=timeout, retries=0)
 
       if self._test_instance.enable_xml_result_parsing:
-        try:
-          gtest_xml = device.ReadFile(
-              device_tmp_results_file.name,
-              as_root=True)
-        except device_errors.CommandFailedError as e:
-          logging.warning(
-              'Failed to pull gtest results XML file %s: %s',
-              device_tmp_results_file.name,
-              str(e))
-          gtest_xml = None
+        gtest_xml = device.ReadFile(
+            device_tmp_results_file.name,
+            as_root=True)
 
     for s in self._servers[str(device)]:
       s.Reset()

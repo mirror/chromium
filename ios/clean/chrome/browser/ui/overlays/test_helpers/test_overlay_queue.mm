@@ -31,14 +31,6 @@ void TestOverlayQueue::StartNextOverlay() {
   WaitForBrowserCoordinatorActivation(overlay);
 }
 
-void TestOverlayQueue::ReplaceVisibleOverlay(
-    OverlayCoordinator* overlay_coordinator) {
-  OverlayCoordinator* overlay = GetFirstOverlay();
-  EXPECT_TRUE(overlay);
-  OverlayQueue::ReplaceVisibleOverlay(overlay_coordinator);
-  WaitForBrowserCoordinatorDeactivation(overlay);
-}
-
 void TestOverlayQueue::SetBrowser(Browser* browser) {
   browser_ = browser;
   parent_.browser = browser;

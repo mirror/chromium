@@ -23,7 +23,6 @@
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/gtest_mac.h"
-#include "ui/message_center/notification_delegate.h"
 #include "ui/message_center/notification_types.h"
 #include "url/gurl.h"
 
@@ -108,11 +107,10 @@ class NotificationPlatformBridgeMacTest : public testing::Test {
     GURL url = GURL(origin);
 
     std::unique_ptr<Notification> notification(new Notification(
-        message_center::NOTIFICATION_TYPE_SIMPLE, "id1",
-        base::UTF8ToUTF16(title), base::UTF8ToUTF16(subtitle), gfx::Image(),
+        message_center::NOTIFICATION_TYPE_SIMPLE, base::UTF8ToUTF16(title),
+        base::UTF8ToUTF16(subtitle), gfx::Image(),
         message_center::NotifierId(url), base::UTF8ToUTF16("Notifier's Name"),
-        url, "id1", optional_fields,
-        new message_center::NotificationDelegate()));
+        url, "id1", optional_fields, new MockNotificationDelegate("id1")));
     if (require_interaction)
       notification->set_never_timeout(true);
 

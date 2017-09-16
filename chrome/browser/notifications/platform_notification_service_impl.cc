@@ -325,11 +325,12 @@ void PlatformNotificationServiceImpl::DisplayNotification(
   DCHECK_EQ(0u, notification_data.actions.size());
   DCHECK_EQ(0u, notification_resources.action_icons.size());
 
+  NotificationDelegate* notification_delegate = new WebNotificationDelegate(
+      NotificationCommon::NON_PERSISTENT, profile, notification_id, origin);
+
   Notification notification = CreateNotificationFromData(
-      profile, GURL() /* service_worker_scope */, origin, notification_id,
-      notification_data, notification_resources,
-      new WebNotificationDelegate(NotificationCommon::NON_PERSISTENT, profile,
-                                  notification_id, origin));
+      profile, GURL() /* service_worker_scope */, origin, notification_data,
+      notification_resources, notification_delegate);
 
   NotificationDisplayServiceFactory::GetForProfile(profile)->Display(
       NotificationCommon::NON_PERSISTENT, notification_id, notification);
@@ -363,11 +364,12 @@ void PlatformNotificationServiceImpl::DisplayPersistentNotification(
   Profile* profile = Profile::FromBrowserContext(browser_context);
   DCHECK(profile);
 
+  NotificationDelegate* delegate = new WebNotificationDelegate(
+      NotificationCommon::PERSISTENT, profile, notification_id, origin);
+
   Notification notification = CreateNotificationFromData(
-      profile, service_worker_scope, origin, notification_id, notification_data,
-      notification_resources,
-      new WebNotificationDelegate(NotificationCommon::PERSISTENT, profile,
-                                  notification_id, origin));
+      profile, service_worker_scope, origin, notification_data,
+      notification_resources, delegate);
 
   NotificationDisplayServiceFactory::GetForProfile(profile)->Display(
       NotificationCommon::PERSISTENT, notification_id, notification);
@@ -431,18 +433,17 @@ Notification PlatformNotificationServiceImpl::CreateNotificationFromData(
     Profile* profile,
     const GURL& service_worker_scope,
     const GURL& origin,
-    const std::string& notification_id,
     const content::PlatformNotificationData& notification_data,
     const content::NotificationResources& notification_resources,
-    scoped_refptr<message_center::NotificationDelegate> delegate) const {
+    NotificationDelegate* delegate) const {
   DCHECK_EQ(notification_data.actions.size(),
             notification_resources.action_icons.size());
 
   // TODO(peter): Handle different screen densities instead of always using the
   // 1x bitmap - crbug.com/585815.
   Notification notification(
-      message_center::NOTIFICATION_TYPE_SIMPLE, notification_id,
-      notification_data.title, notification_data.body,
+      message_center::NOTIFICATION_TYPE_SIMPLE, notification_data.title,
+      notification_data.body,
       gfx::Image::CreateFrom1xBitmap(notification_resources.notification_icon),
       NotifierId(origin), base::UTF8ToUTF16(origin.host()), origin,
       notification_data.tag, message_center::RichNotificationData(), delegate);

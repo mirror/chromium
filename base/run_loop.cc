@@ -10,6 +10,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_local.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/tracked_objects.h"
 #include "build/build_config.h"
 
 namespace base {
@@ -115,7 +116,12 @@ void RunLoop::Run() {
   // multiple sequences is still disallowed).
   DETACH_FROM_SEQUENCE(sequence_checker_);
 
+  // Use task stopwatch to exclude the loop run time from the current task, if
+  // any.
+  tracked_objects::TaskStopwatch stopwatch;
+  stopwatch.Start();
   delegate_->Run();
+  stopwatch.Stop();
 
   // Rebind this RunLoop to the current thread after Run().
   DETACH_FROM_SEQUENCE(sequence_checker_);

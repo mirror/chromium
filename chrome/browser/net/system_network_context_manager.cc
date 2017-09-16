@@ -5,7 +5,6 @@
 #include "chrome/browser/net/system_network_context_manager.h"
 
 #include "base/feature_list.h"
-#include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/values.h"
 #include "build/build_config.h"

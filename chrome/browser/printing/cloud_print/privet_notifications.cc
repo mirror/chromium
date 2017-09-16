@@ -258,8 +258,7 @@ void PrivetNotificationService::PrivetNotify(int devices_active,
 
   Profile* profile = Profile::FromBrowserContext(profile_);
   Notification notification(
-      message_center::NOTIFICATION_TYPE_SIMPLE, kPrivetNotificationID, title,
-      body,
+      message_center::NOTIFICATION_TYPE_SIMPLE, title, body,
       ui::ResourceBundle::GetSharedInstance().GetImageNamed(
           IDR_LOCAL_DISCOVERY_CLOUDPRINT_ICON),
       message_center::NotifierId(message_center::NotifierId::SYSTEM_COMPONENT,
@@ -362,6 +361,10 @@ PrivetNotificationDelegate::PrivetNotificationDelegate(Profile* profile)
 PrivetNotificationDelegate::~PrivetNotificationDelegate() {
 }
 
+std::string PrivetNotificationDelegate::id() const {
+  return kPrivetNotificationID;
+}
+
 void PrivetNotificationDelegate::ButtonClick(int button_index) {
   if (button_index == 0) {
     ReportPrivetUmaEvent(PRIVET_NOTIFICATION_CLICKED);
@@ -388,7 +391,7 @@ void PrivetNotificationDelegate::DisableNotifications() {
 
 void PrivetNotificationDelegate::CloseNotification() {
   g_browser_process->notification_ui_manager()->CancelById(
-      kPrivetNotificationID, NotificationUIManager::GetProfileID(profile_));
+      id(), NotificationUIManager::GetProfileID(profile_));
 }
 
 }  // namespace cloud_print

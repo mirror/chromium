@@ -71,8 +71,7 @@ public class CookieManagerAdapter extends CookieManager {
         }
 
         try {
-            mChromeCookieManager.setCookie(
-                    fixupUrl(url), value, CallbackConverter.fromValueCallback(callback));
+            mChromeCookieManager.setCookie(fixupUrl(url), value, callback);
         } catch (ParseException e) {
             Log.e(TAG, "Not setting cookie due to error parsing URL: %s", url, e);
         }
@@ -110,8 +109,8 @@ public class CookieManagerAdapter extends CookieManager {
     }
 
     @Override
-    public void removeSessionCookies(final ValueCallback<Boolean> callback) {
-        mChromeCookieManager.removeSessionCookies(CallbackConverter.fromValueCallback(callback));
+    public void removeSessionCookies(ValueCallback<Boolean> callback) {
+        mChromeCookieManager.removeSessionCookies(callback);
     }
 
     @Override
@@ -120,8 +119,8 @@ public class CookieManagerAdapter extends CookieManager {
     }
 
     @Override
-    public void removeAllCookies(final ValueCallback<Boolean> callback) {
-        mChromeCookieManager.removeAllCookies(CallbackConverter.fromValueCallback(callback));
+    public void removeAllCookies(ValueCallback<Boolean> callback) {
+        mChromeCookieManager.removeAllCookies(callback);
     }
 
     @Override

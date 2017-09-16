@@ -7,14 +7,11 @@
 
 #include <string>
 
-#include "core/editing/Forward.h"
+#include "core/editing/SelectionTemplate.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Forward.h"
 
 namespace blink {
-
-class ContainerNode;
-class HTMLElement;
 
 // |SelectionSample| provides parsing HTML text with selection markers and
 // serializes DOM tree with selection markers.

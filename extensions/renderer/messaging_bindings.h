@@ -9,6 +9,7 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/unguessable_token.h"
 #include "extensions/renderer/object_backed_native_handler.h"
 
 namespace extensions {
@@ -31,6 +32,8 @@ class MessagingBindings : public ObjectBackedNativeHandler {
   // Creates a new port with the given |id|. MessagingBindings owns the
   // returned port.
   ExtensionPort* CreateNewPortWithId(const PortId& id);
+
+  const base::UnguessableToken& context_id() const { return context_id_; }
 
  private:
   using PortMap = std::map<int, std::unique_ptr<ExtensionPort>>;
@@ -71,6 +74,9 @@ class MessagingBindings : public ObjectBackedNativeHandler {
 
   // The number of extension ports created.
   size_t num_extension_ports_ = 0;
+
+  // A unique identifier for this JS context.
+  const base::UnguessableToken context_id_;
 
   base::WeakPtrFactory<MessagingBindings> weak_ptr_factory_;
 

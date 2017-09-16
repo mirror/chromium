@@ -33,7 +33,8 @@ namespace blink {
 
 PaintPropertyTreeBuilderFragmentContext::
     PaintPropertyTreeBuilderFragmentContext()
-    : current_effect(EffectPaintPropertyNode::Root()) {
+    : current_effect(EffectPaintPropertyNode::Root()),
+      input_clip_of_current_effect(ClipPaintPropertyNode::Root()) {
   current.clip = absolute_position.clip = fixed_position.clip =
       ClipPaintPropertyNode::Root();
   current.transform = absolute_position.transform = fixed_position.transform =
@@ -584,7 +585,8 @@ void PaintPropertyTreeBuilder::UpdateEffect(
 
   // TODO(trchen): Can't omit effect node if we have 3D children.
   if (object.NeedsPaintPropertyUpdate() || force_subtree_update) {
-    const ClipPaintPropertyNode* output_clip = nullptr;
+    const ClipPaintPropertyNode* output_clip =
+        context.input_clip_of_current_effect;
     bool local_clip_added_or_removed = false;
     bool local_clip_changed = false;
     if (NeedsEffect(object)) {
@@ -654,8 +656,9 @@ void PaintPropertyTreeBuilder::UpdateEffect(
   if (properties.Effect()) {
     context.current_effect = properties.Effect();
     if (properties.MaskClip()) {
-      context.current.clip = context.absolute_position.clip =
-          context.fixed_position.clip = properties.MaskClip();
+      context.input_clip_of_current_effect = context.current.clip =
+          context.absolute_position.clip = context.fixed_position.clip =
+              properties.MaskClip();
     }
   }
 }
@@ -730,8 +733,9 @@ void PaintPropertyTreeBuilder::UpdateFilter(
     context.current_effect = properties.Filter();
     // TODO(trchen): Change input clip to expansion hint once implemented.
     const ClipPaintPropertyNode* input_clip = properties.Filter()->OutputClip();
-    context.current.clip = context.absolute_position.clip =
-        context.fixed_position.clip = input_clip;
+    context.input_clip_of_current_effect = context.current.clip =
+        context.absolute_position.clip = context.fixed_position.clip =
+            input_clip;
   }
 }
 

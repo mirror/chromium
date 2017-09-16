@@ -31,7 +31,6 @@
 #include "core/dom/Range.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/SelectionAdjuster.h"
-#include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/iterators/CharacterIterator.h"
 #include "platform/geometry/LayoutPoint.h"

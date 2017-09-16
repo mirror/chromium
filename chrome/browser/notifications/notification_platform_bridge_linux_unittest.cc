@@ -24,7 +24,6 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/re2/src/re2/re2.h"
 #include "ui/gfx/image/image_skia.h"
-#include "ui/message_center/notification_delegate.h"
 
 using testing::_;
 using testing::ByMove;
@@ -40,7 +39,6 @@ class NotificationBuilder {
  public:
   explicit NotificationBuilder(const std::string& id)
       : notification_(message_center::NOTIFICATION_TYPE_SIMPLE,
-                      id,
                       base::string16(),
                       base::string16(),
                       gfx::Image(),
@@ -49,7 +47,7 @@ class NotificationBuilder {
                       GURL(),
                       id,
                       message_center::RichNotificationData(),
-                      new message_center::NotificationDelegate()) {}
+                      new MockNotificationDelegate(id)) {}
 
   Notification GetResult() { return notification_; }
 

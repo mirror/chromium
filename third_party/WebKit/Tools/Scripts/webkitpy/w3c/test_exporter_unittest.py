@@ -5,6 +5,7 @@
 import json
 
 from webkitpy.common.host_mock import MockHost
+from webkitpy.common.system.executive_mock import mock_git_commands
 from webkitpy.common.system.log_testing import LoggingTestCase
 from webkitpy.w3c.chromium_commit_mock import MockChromiumCommit
 from webkitpy.w3c.gerrit_mock import MockGerritAPI, MockGerritCL
@@ -29,6 +30,9 @@ class TestExporterTest(LoggingTestCase):
         self.host = host
 
     def test_dry_run_stops_before_creating_pr(self):
+        self.host.executive = mock_git_commands({
+            'crrev-parse': 'c2087acb00eee7960339a0be34ea27d6b20e1131',
+        })
         test_exporter = TestExporter(self.host)
         test_exporter.wpt_github = MockWPTGitHub(pull_requests=[
             PullRequest(title='title1', number=1234, body='', state='open', labels=[]),
@@ -75,8 +79,8 @@ class TestExporterTest(LoggingTestCase):
             'add_label "chromium-export"',
         ])
         self.assertEqual(test_exporter.wpt_github.pull_requests_created, [
-            ('chromium-export-96862edfc1', 'subject 1', 'body 1\n\nChange-Id: I001\n'),
-            ('chromium-export-ce0e78bf18', 'subject 3', 'body 3\n\nChange-Id: I003\n'),
+            ('chromium-export-96862edfc1', 'subject 1', 'body 1\n\nChange-Id: I001'),
+            ('chromium-export-ce0e78bf18', 'subject 3', 'body 3\n\nChange-Id: I003'),
         ])
 
     def test_creates_and_merges_pull_requests(self):
@@ -86,6 +90,10 @@ class TestExporterTest(LoggingTestCase):
         # 3. #458477 has a closed PR associated with it and should be skipped.
         # 4. #458478 has an in-flight PR associated with it and should be merged successfully.
         # 5. #458479 has an in-flight PR associated with it but can not be merged.
+        self.host.executive = mock_git_commands({
+            'show': 'git show text\nCr-Commit-Position: refs/heads/master@{#458476}\nChange-Id: I0476',
+            'crrev-parse': 'c2087acb00eee7960339a0be34ea27d6b20e1131',
+        })
         test_exporter = TestExporter(self.host)
         test_exporter.wpt_github = MockWPTGitHub(pull_requests=[
             PullRequest(
@@ -154,7 +162,7 @@ class TestExporterTest(LoggingTestCase):
             'merge_pr',
         ])
         self.assertEqual(test_exporter.wpt_github.pull_requests_created, [
-            ('chromium-export-52c3178508', 'Fake subject', 'Fake body\n\nChange-Id: I0476\n'),
+            ('chromium-export-52c3178508', 'Fake subject', 'Fake body\n\nChange-Id: I0476'),
         ])
         self.assertEqual(test_exporter.wpt_github.pull_requests_merged, [3456])
 
@@ -167,7 +175,7 @@ class TestExporterTest(LoggingTestCase):
             data={
                 'change_id': 'I001',
                 'subject': 'subject',
-                '_number': '1234',
+                '_number': '1',
                 'current_revision': '1',
                 'has_review_started': True,
                 'revisions': {
@@ -189,7 +197,7 @@ class TestExporterTest(LoggingTestCase):
         self.assertEqual(test_exporter.wpt_github.pull_requests_created, [
             ('chromium-export-cl-I001',
              'subject',
-             'fake body\n\nChange-Id: I001\nReviewed-on: https://chromium-review.googlesource.com/1234\nWPT-Export-Revision: 1'),
+             'fake body\n\nChange-Id: I001\nWPT-Export-Revision: 1'),
         ])
         self.assertEqual(test_exporter.wpt_github.pull_requests_merged, [])
 

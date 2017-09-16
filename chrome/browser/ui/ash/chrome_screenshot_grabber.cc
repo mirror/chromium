@@ -117,8 +117,7 @@ void ReadFileAndCopyToClipboardDrive(
 // Delegate for a notification. This class has two roles: to implement callback
 // methods for notification, and to provide an identity of the associated
 // notification.
-class ScreenshotGrabberNotificationDelegate
-    : public message_center::NotificationDelegate {
+class ScreenshotGrabberNotificationDelegate : public NotificationDelegate {
  public:
   ScreenshotGrabberNotificationDelegate(bool success,
                                         Profile* profile,
@@ -127,7 +126,7 @@ class ScreenshotGrabberNotificationDelegate
         profile_(profile),
         screenshot_path_(screenshot_path) {}
 
-  // message_center::NotificationDelegate:
+  // Overridden from NotificationDelegate:
   void Click() override {
     if (!success_)
       return;
@@ -165,6 +164,7 @@ class ScreenshotGrabberNotificationDelegate
     }
   }
   bool HasClickedListener() override { return success_; }
+  std::string id() const override { return std::string(kNotificationId); }
 
  private:
   ~ScreenshotGrabberNotificationDelegate() override {}
@@ -599,7 +599,6 @@ Notification* ChromeScreenshotGrabber::CreateNotification(
   Notification* notification = new Notification(
       image.IsEmpty() ? message_center::NOTIFICATION_TYPE_SIMPLE
                       : message_center::NOTIFICATION_TYPE_IMAGE,
-      kNotificationId,
       l10n_util::GetStringUTF16(
           GetScreenshotNotificationTitle(screenshot_result)),
       l10n_util::GetStringUTF16(

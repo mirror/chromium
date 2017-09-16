@@ -34,6 +34,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/timer/elapsed_timer.h"
 #include "base/trace_event/memory_dump_manager.h"
+#include "base/tracked_objects.h"
 #include "build/build_config.h"
 #include "components/tracing/child/child_trace_message_filter.h"
 #include "content/child/child_histogram_message_filter.h"
@@ -88,6 +89,8 @@
 #if defined(OS_WIN)
 #include "content/child/dwrite_font_proxy/dwrite_font_proxy_init_win.h"
 #endif
+
+using tracked_objects::ThreadData;
 
 namespace content {
 namespace {

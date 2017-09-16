@@ -12,6 +12,7 @@
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/resource_dispatcher_host.h"
+#include "content/public/browser/resource_request_info.h"
 #include "content/public/browser/web_contents.h"
 #include "net/base/auth.h"
 #include "net/url_request/url_request.h"
@@ -39,24 +40,26 @@ namespace android_webview {
 
 AwLoginDelegate::AwLoginDelegate(net::AuthChallengeInfo* auth_info,
                                  net::URLRequest* request)
-    : auth_info_(auth_info), request_(request) {
-  UrlRequestAuthAttemptsData* count = static_cast<UrlRequestAuthAttemptsData*>(
-      request->GetUserData(kAuthAttemptsKey));
+    : auth_info_(auth_info),
+      request_(request),
+      render_process_id_(0),
+      render_frame_id_(0) {
+    ResourceRequestInfo::GetRenderFrameForRequest(
+        request, &render_process_id_, &render_frame_id_);
 
-  if (count == NULL) {
-    count = new UrlRequestAuthAttemptsData();
-    request->SetUserData(kAuthAttemptsKey, base::WrapUnique(count));
-  }
+    UrlRequestAuthAttemptsData* count =
+        static_cast<UrlRequestAuthAttemptsData*>(
+            request->GetUserData(kAuthAttemptsKey));
 
-  const content::ResourceRequestInfo* request_info =
-      content::ResourceRequestInfo::ForRequest(request);
+    if (count == NULL) {
+      count = new UrlRequestAuthAttemptsData();
+      request->SetUserData(kAuthAttemptsKey, base::WrapUnique(count));
+    }
 
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::Bind(&AwLoginDelegate::HandleHttpAuthRequestOnUIThread, this,
-                 (count->auth_attempts_ == 0),
-                 request_info->GetWebContentsGetterForRequest()));
-  count->auth_attempts_++;
+    BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+        base::Bind(&AwLoginDelegate::HandleHttpAuthRequestOnUIThread,
+                   this, (count->auth_attempts_ == 0)));
+    count->auth_attempts_++;
 }
 
 AwLoginDelegate::~AwLoginDelegate() {
@@ -80,14 +83,16 @@ void AwLoginDelegate::Cancel() {
 }
 
 void AwLoginDelegate::HandleHttpAuthRequestOnUIThread(
-    bool first_auth_attempt,
-    const content::ResourceRequestInfo::WebContentsGetter&
-        web_contents_getter) {
+    bool first_auth_attempt) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  WebContents* web_contents = web_contents_getter.Run();
   aw_http_auth_handler_.reset(
       new AwHttpAuthHandler(this, auth_info_.get(), first_auth_attempt));
+
+  RenderFrameHost* render_frame_host = RenderFrameHost::FromID(
+      render_process_id_, render_frame_id_);
+  WebContents* web_contents = WebContents::FromRenderFrameHost(
+      render_frame_host);
   if (!aw_http_auth_handler_->HandleOnUIThread(web_contents)) {
     Cancel();
     return;

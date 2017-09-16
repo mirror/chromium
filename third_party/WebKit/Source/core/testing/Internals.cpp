@@ -60,7 +60,6 @@
 #include "core/dom/ViewportDescription.h"
 #include "core/editing/Editor.h"
 #include "core/editing/PlainTextRange.h"
-#include "core/editing/SelectionTemplate.h"
 #include "core/editing/SurroundingText.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/iterators/TextIterator.h"
@@ -2883,8 +2882,7 @@ DOMRect* Internals::selectionBounds(ExceptionState& exception_state) {
     return nullptr;
   }
 
-  return DOMRect::FromFloatRect(
-      FloatRect(GetFrame()->Selection().UnclippedBounds()));
+  return DOMRect::FromFloatRect(FloatRect(GetFrame()->Selection().Bounds()));
 }
 
 String Internals::markerTextForListItem(Element* element) {

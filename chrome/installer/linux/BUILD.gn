@@ -80,9 +80,6 @@ action_foreach("calculate_deb_dependencies") {
     target_cpu,
     "deb_{{source_name_part}}.deps",
   ]
-  if (is_desktop_linux) {
-    args += [ "--distro-check" ]
-  }
 }
 
 action("merge_deb_dependencies") {
@@ -124,9 +121,6 @@ action_foreach("calculate_rpm_dependencies") {
     "rpm_{{source_name_part}}.deps",
   ]
   args += rebase_path(packaging_files_shlibs, root_build_dir)
-  if (is_desktop_linux) {
-    args += [ "--distro-check" ]
-  }
 }
 
 action("merge_rpm_dependencies") {
@@ -378,13 +372,8 @@ template("linux_package") {
     }
 
     inputs = packaging_files
-    if (is_chrome_branded) {
-      package = "google-chrome"
-    } else {
-      package = "chromium-browser"
-    }
     outputs = [
-      "$root_out_dir/${package}-${channel}_${chrome_version_full}-1_${deb_arch}.deb",
+      "$root_out_dir/google-chrome-${channel}_${chrome_version_full}-1_${deb_arch}.deb",
     ]
 
     args = [
@@ -428,13 +417,8 @@ template("linux_package") {
       }
 
       inputs = packaging_files
-      if (is_chrome_branded) {
-        package = "google-chrome"
-      } else {
-        package = "chromium-browser"
-      }
       outputs = [
-        "$root_out_dir/${package}-${channel}-${chrome_version_full}-1.${rpm_arch}.rpm",
+        "$root_out_dir/google-chrome-${channel}-${chrome_version_full}-1.${rpm_arch}.rpm",
       ]
 
       args = [

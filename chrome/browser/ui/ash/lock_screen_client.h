@@ -53,7 +53,6 @@ class LockScreenClient : public ash::mojom::LockScreenClient {
   void OnNoPodFocused() override;
   void LoadWallpaper(const AccountId& account_id) override;
   void SignOutUser() override;
-  void CancelAddUser() override;
   void OnMaxIncorrectPasswordAttempted(const AccountId& account_id) override;
 
   // Wrappers around the mojom::LockScreen interface.

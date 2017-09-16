@@ -4,7 +4,8 @@
 
 package org.chromium.android_webview;
 
-import org.chromium.base.Callback;
+import android.webkit.ValueCallback;
+
 import org.chromium.base.Log;
 import org.chromium.base.ThreadUtils;
 
@@ -67,9 +68,9 @@ public class PlatformServiceBridge {
     // Overriding implementations may call "callback" asynchronously. For simplicity (and not
     // because of any technical limitation) we require that "queryMetricsSetting" and "callback"
     // both get called on WebView's UI thread.
-    public void queryMetricsSetting(Callback<Boolean> callback) {
+    public void queryMetricsSetting(ValueCallback<Boolean> callback) {
         ThreadUtils.assertOnUiThread();
-        callback.onResult(false);
+        callback.onReceiveValue(false);
     }
 
     // Takes an uncompressed, serialized UMA proto and logs it via a platform-specific mechanism.

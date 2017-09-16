@@ -293,6 +293,8 @@ BrowserProcessImpl::~BrowserProcessImpl() {
   KeepAliveRegistry::GetInstance()->RemoveObserver(this);
 #endif  // !defined(OS_ANDROID)
 
+  tracked_objects::ThreadData::EnsureCleanupWasCalled(4);
+
   g_browser_process = NULL;
 }
 

@@ -117,7 +117,6 @@
 #include "core/editing/ImeTextSpanVectorBuilder.h"
 #include "core/editing/InputMethodController.h"
 #include "core/editing/PlainTextRange.h"
-#include "core/editing/SelectionTemplate.h"
 #include "core/editing/SetSelectionOptions.h"
 #include "core/editing/TextAffinity.h"
 #include "core/editing/TextFinder.h"
@@ -1486,9 +1485,8 @@ void WebLocalFrameImpl::PrintPagesForTesting(
 }
 
 WebRect WebLocalFrameImpl::GetSelectionBoundsRectForTesting() const {
-  return HasSelection()
-             ? WebRect(IntRect(GetFrame()->Selection().UnclippedBounds()))
-             : WebRect();
+  return HasSelection() ? WebRect(IntRect(GetFrame()->Selection().Bounds()))
+                        : WebRect();
 }
 
 WebString WebLocalFrameImpl::GetLayerTreeAsTextForTesting(

@@ -245,7 +245,9 @@ WebInputEventResult MouseEventManager::DispatchMouseClickIfNeeded(
     Element& mouse_release_target) {
   // We only prevent click event when the click may cause contextmenu to popup.
   // However, we always send auxclick.
-  bool context_menu_event = false;
+  bool context_menu_event =
+      !RuntimeEnabledFeatures::AuxclickEnabled() &&
+      mev.Event().button == WebPointerProperties::Button::kRight;
 #if defined(OS_MACOSX)
   // FIXME: The Mac port achieves the same behavior by checking whether the
   // context menu is currently open in WebPage::mouseEvent(). Consider merging
@@ -299,7 +301,8 @@ WebInputEventResult MouseEventManager::DispatchMouseClickIfNeeded(
       RuntimeEnabledFeatures::ClickRetargettingEnabled()) {
     return DispatchMouseEvent(
         click_target_node,
-        (mev.Event().button == WebPointerProperties::Button::kLeft)
+        !RuntimeEnabledFeatures::AuxclickEnabled() ||
+                (mev.Event().button == WebPointerProperties::Button::kLeft)
             ? EventTypeNames::click
             : EventTypeNames::auxclick,
         mev.Event(), mev.CanvasRegionId(), nullptr);

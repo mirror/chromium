@@ -25,6 +25,10 @@ WebNotificationDelegate::WebNotificationDelegate(
 
 WebNotificationDelegate::~WebNotificationDelegate() {}
 
+std::string WebNotificationDelegate::id() const {
+  return notification_id_;
+}
+
 bool WebNotificationDelegate::SettingsClick() {
 #if !defined(OS_CHROMEOS)
   NotificationCommon::OpenNotificationSettings(profile_);

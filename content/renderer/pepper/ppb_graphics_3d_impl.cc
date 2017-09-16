@@ -138,7 +138,6 @@ void PPB_Graphics3D_Impl::ReturnFrontBuffer(const gpu::Mailbox& mailbox,
                                             const gpu::SyncToken& sync_token,
                                             bool is_lost) {
   command_buffer_->ReturnFrontBuffer(mailbox, sync_token, is_lost);
-  mailboxes_to_reuse_.push_back(mailbox);
 }
 
 bool PPB_Graphics3D_Impl::BindToInstance(bool bind) {

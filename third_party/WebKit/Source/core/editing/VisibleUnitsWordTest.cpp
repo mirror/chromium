@@ -4,7 +4,6 @@
 
 #include "core/editing/VisibleUnits.h"
 
-#include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/testing/EditingTestBase.h"
 

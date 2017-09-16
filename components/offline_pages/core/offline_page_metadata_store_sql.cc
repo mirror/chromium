@@ -350,25 +350,17 @@ bool PrepareDirectory(const base::FilePath& path) {
   return true;
 }
 
-bool InitDatabase(sql::Connection* db,
-                  const base::FilePath& path,
-                  bool in_memory) {
+bool InitDatabase(sql::Connection* db, const base::FilePath& path) {
   db->set_page_size(4096);
   db->set_cache_size(500);
   db->set_histogram_tag("OfflinePageMetadata");
   db->set_exclusive_locking();
 
-  if (!in_memory && !PrepareDirectory(path))
+  if (!PrepareDirectory(path))
     return false;
 
-  bool open_db_result = false;
-  if (in_memory)
-    open_db_result = db->OpenInMemory();
-  else
-    open_db_result = db->Open(path);
-
-  if (!open_db_result) {
-    LOG(ERROR) << "Failed to open database, in memory: " << in_memory;
+  if (!db->Open(path)) {
+    LOG(ERROR) << "Failed to open database";
     return false;
   }
   db->Preload();
@@ -545,20 +537,13 @@ std::unique_ptr<OfflinePagesUpdateResult> RemoveOfflinePagesSync(
 }  // anonymous namespace
 
 OfflinePageMetadataStoreSQL::OfflinePageMetadataStoreSQL(
-    scoped_refptr<base::SequencedTaskRunner> background_task_runner)
-    : background_task_runner_(std::move(background_task_runner)),
-      in_memory_(true),
-      state_(StoreState::NOT_LOADED),
-      weak_ptr_factory_(this) {}
-
-OfflinePageMetadataStoreSQL::OfflinePageMetadataStoreSQL(
     scoped_refptr<base::SequencedTaskRunner> background_task_runner,
     const base::FilePath& path)
     : background_task_runner_(std::move(background_task_runner)),
-      in_memory_(false),
       db_file_path_(path.AppendASCII("OfflinePages.db")),
       state_(StoreState::NOT_LOADED),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+}
 
 OfflinePageMetadataStoreSQL::~OfflinePageMetadataStoreSQL() {
   if (db_.get() &&
@@ -632,7 +617,7 @@ void OfflinePageMetadataStoreSQL::InitializeInternal(
   db_.reset(new sql::Connection());
   base::PostTaskAndReplyWithResult(
       background_task_runner_.get(), FROM_HERE,
-      base::BindOnce(&InitDatabase, db_.get(), db_file_path_, in_memory_),
+      base::BindOnce(&InitDatabase, db_.get(), db_file_path_),
       base::BindOnce(&OfflinePageMetadataStoreSQL::OnInitializeInternalDone,
                      weak_ptr_factory_.GetWeakPtr(),
                      std::move(pending_command)));

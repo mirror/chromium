@@ -131,9 +131,7 @@
   menuConfiguration.inIncognito = self.incognito;
   toolsCoordinator.toolsMenuConfiguration = menuConfiguration;
   self.toolsMenuCoordinator = toolsCoordinator;
-  OverlayServiceFactory::GetInstance()
-      ->GetForBrowserState(self.browser->browser_state())
-      ->ShowOverlayForBrowser(toolsCoordinator, self, self.browser);
+  [toolsCoordinator start];
 }
 
 - (void)closeToolsMenu {

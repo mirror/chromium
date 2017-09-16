@@ -457,27 +457,6 @@ void TopSitesDatabase::GetPageThumbnails(MostVisitedURLList* urls,
   }
 }
 
-bool TopSitesDatabase::GetPageThumbnail(const GURL& url, Images* thumbnail) {
-  sql::Statement statement(db_->GetCachedStatement(
-      SQL_FROM_HERE,
-      "SELECT thumbnail, boring_score, good_clipping, at_top, last_updated "
-      "FROM thumbnails WHERE url=?"));
-  statement.BindString(0, url.spec());
-  if (!statement.Step())
-    return false;
-
-  std::vector<unsigned char> data;
-  statement.ColumnBlobAsVector(0, &data);
-  thumbnail->thumbnail = base::RefCountedBytes::TakeVector(&data);
-  thumbnail->thumbnail_score.boring_score = statement.ColumnDouble(1);
-  thumbnail->thumbnail_score.good_clipping = statement.ColumnBool(2);
-  thumbnail->thumbnail_score.at_top = statement.ColumnBool(3);
-  thumbnail->thumbnail_score.time_at_snapshot =
-      base::Time() +
-      base::TimeDelta::FromMicroseconds(statement.ColumnInt64(4));
-  return true;
-}
-
 void TopSitesDatabase::SetPageThumbnail(const MostVisitedURL& url,
                                         int new_rank,
                                         const Images& thumbnail) {
@@ -497,6 +476,33 @@ void TopSitesDatabase::SetPageThumbnailNoTransaction(const MostVisitedURL& url,
     UpdatePageRankNoTransaction(url, new_rank);
     UpdatePageThumbnail(url, thumbnail);
   }
+}
+
+bool TopSitesDatabase::UpdatePageThumbnail(const MostVisitedURL& url,
+                                           const Images& thumbnail) {
+  sql::Statement statement(db_->GetCachedStatement(
+      SQL_FROM_HERE,
+      "UPDATE thumbnails SET "
+      "title = ?, thumbnail = ?, redirects = ?, "
+      "boring_score = ?, good_clipping = ?, at_top = ?, last_updated = ?, "
+      "load_completed = ?, last_forced = ?"
+      "WHERE url = ? "));
+  statement.BindString16(0, url.title);
+  if (thumbnail.thumbnail.get() && thumbnail.thumbnail->front()) {
+    statement.BindBlob(1, thumbnail.thumbnail->front(),
+                       static_cast<int>(thumbnail.thumbnail->size()));
+  }
+  statement.BindString(2, GetRedirects(url));
+  const ThumbnailScore& score = thumbnail.thumbnail_score;
+  statement.BindDouble(3, score.boring_score);
+  statement.BindBool(4, score.good_clipping);
+  statement.BindBool(5, score.at_top);
+  statement.BindInt64(6, score.time_at_snapshot.ToInternalValue());
+  statement.BindBool(7, score.load_completed);
+  statement.BindInt64(8, url.last_forced_time.ToInternalValue());
+  statement.BindString(9, url.url.spec());
+
+  return statement.Run();
 }
 
 void TopSitesDatabase::AddPageThumbnail(const MostVisitedURL& url,
@@ -520,10 +526,9 @@ void TopSitesDatabase::AddPageThumbnail(const MostVisitedURL& url,
   statement.BindDouble(5, score.boring_score);
   statement.BindBool(6, score.good_clipping);
   statement.BindBool(7, score.at_top);
-  statement.BindInt64(8,
-                      score.time_at_snapshot.since_origin().InMicroseconds());
+  statement.BindInt64(8, score.time_at_snapshot.ToInternalValue());
   statement.BindBool(9, score.load_completed);
-  int64_t last_forced = url.last_forced_time.since_origin().InMicroseconds();
+  int64_t last_forced = url.last_forced_time.ToInternalValue();
   DCHECK((last_forced == 0) == (new_rank != kRankOfForcedURL))
       << "Thumbnail without a forced time stamp has a forced rank, or the "
       << "opposite.";
@@ -536,46 +541,7 @@ void TopSitesDatabase::AddPageThumbnail(const MostVisitedURL& url,
     UpdatePageRankNoTransaction(url, new_rank);
 }
 
-bool TopSitesDatabase::UpdatePageThumbnail(const MostVisitedURL& url,
-                                           const Images& thumbnail) {
-  sql::Statement statement(db_->GetCachedStatement(
-      SQL_FROM_HERE,
-      "UPDATE thumbnails SET "
-      "title = ?, thumbnail = ?, redirects = ?, "
-      "boring_score = ?, good_clipping = ?, at_top = ?, last_updated = ?, "
-      "load_completed = ?, last_forced = ?"
-      "WHERE url = ? "));
-  statement.BindString16(0, url.title);
-  if (thumbnail.thumbnail.get() && thumbnail.thumbnail->front()) {
-    statement.BindBlob(1, thumbnail.thumbnail->front(),
-                       static_cast<int>(thumbnail.thumbnail->size()));
-  }
-  statement.BindString(2, GetRedirects(url));
-  const ThumbnailScore& score = thumbnail.thumbnail_score;
-  statement.BindDouble(3, score.boring_score);
-  statement.BindBool(4, score.good_clipping);
-  statement.BindBool(5, score.at_top);
-  statement.BindInt64(6,
-                      score.time_at_snapshot.since_origin().InMicroseconds());
-  statement.BindBool(7, score.load_completed);
-  statement.BindInt64(8, url.last_forced_time.since_origin().InMicroseconds());
-  statement.BindString(9, url.url.spec());
-
-  return statement.Run();
-}
-
-int TopSitesDatabase::GetURLRank(const MostVisitedURL& url) {
-  sql::Statement select_statement(
-      db_->GetCachedStatement(SQL_FROM_HERE,
-                              "SELECT url_rank "
-                              "FROM thumbnails WHERE url=?"));
-  select_statement.BindString(0, url.url.spec());
-  if (select_statement.Step())
-    return select_statement.ColumnInt(0);
-
-  return kRankOfNonExistingURL;
-}
-
+// Caller should have a transaction open.
 void TopSitesDatabase::UpdatePageRankNoTransaction(const MostVisitedURL& url,
                                                    int new_rank) {
   DCHECK_GT(db_->transaction_nesting(), 0);
@@ -595,22 +561,22 @@ void TopSitesDatabase::UpdatePageRankNoTransaction(const MostVisitedURL& url,
       // From non-forced to forced, shift down.
       // Example: 2 -> -1
       // -1, -1, -1, 0, 1, [2 -> -1], [3 -> 2], [4 -> 3]
-      sql::Statement shift_statement(
-          db_->GetCachedStatement(SQL_FROM_HERE,
-                                  "UPDATE thumbnails "
-                                  "SET url_rank = url_rank - 1 "
-                                  "WHERE url_rank > ?"));
+      sql::Statement shift_statement(db_->GetCachedStatement(
+          SQL_FROM_HERE,
+          "UPDATE thumbnails "
+          "SET url_rank = url_rank - 1 "
+          "WHERE url_rank > ?"));
       shift_statement.BindInt(0, prev_rank);
       shift_statement.Run();
     } else {
       // From non-forced to non-forced, shift up.
       // Example: 3 -> 1
       // -1, -1, -1, 0, [1 -> 2], [2 -> 3], [3 -> 1], 4
-      sql::Statement shift_statement(
-          db_->GetCachedStatement(SQL_FROM_HERE,
-                                  "UPDATE thumbnails "
-                                  "SET url_rank = url_rank + 1 "
-                                  "WHERE url_rank >= ? AND url_rank < ?"));
+      sql::Statement shift_statement(db_->GetCachedStatement(
+          SQL_FROM_HERE,
+          "UPDATE thumbnails "
+          "SET url_rank = url_rank + 1 "
+          "WHERE url_rank >= ? AND url_rank < ?"));
       shift_statement.BindInt(0, new_rank);
       shift_statement.BindInt(1, prev_rank);
       shift_statement.Run();
@@ -620,22 +586,22 @@ void TopSitesDatabase::UpdatePageRankNoTransaction(const MostVisitedURL& url,
       // From non-forced to forced, shift up.
       // Example: -1 -> 2
       // -1, [-1 -> 2], -1, 0, 1, [2 -> 3], [3 -> 4], [4 -> 5]
-      sql::Statement shift_statement(
-          db_->GetCachedStatement(SQL_FROM_HERE,
-                                  "UPDATE thumbnails "
-                                  "SET url_rank = url_rank + 1 "
-                                  "WHERE url_rank >= ?"));
+      sql::Statement shift_statement(db_->GetCachedStatement(
+          SQL_FROM_HERE,
+          "UPDATE thumbnails "
+          "SET url_rank = url_rank + 1 "
+          "WHERE url_rank >= ?"));
       shift_statement.BindInt(0, new_rank);
       shift_statement.Run();
     } else {
       // From non-forced to non-forced, shift down.
       // Example: 1 -> 3.
       // -1, -1, -1, 0, [1 -> 3], [2 -> 1], [3 -> 2], 4
-      sql::Statement shift_statement(
-          db_->GetCachedStatement(SQL_FROM_HERE,
-                                  "UPDATE thumbnails "
-                                  "SET url_rank = url_rank - 1 "
-                                  "WHERE url_rank > ? AND url_rank <= ?"));
+      sql::Statement shift_statement(db_->GetCachedStatement(
+          SQL_FROM_HERE,
+          "UPDATE thumbnails "
+          "SET url_rank = url_rank - 1 "
+          "WHERE url_rank > ? AND url_rank <= ?"));
       shift_statement.BindInt(0, prev_rank);
       shift_statement.BindInt(1, new_rank);
       shift_statement.Run();
@@ -644,16 +610,48 @@ void TopSitesDatabase::UpdatePageRankNoTransaction(const MostVisitedURL& url,
 
   // Set the url's rank and last_forced, since the latter changes when a URL
   // goes from forced to non-forced and vice-versa.
-  sql::Statement set_statement(
-      db_->GetCachedStatement(SQL_FROM_HERE,
-                              "UPDATE thumbnails "
-                              "SET url_rank = ?, last_forced = ? "
-                              "WHERE url == ?"));
+  sql::Statement set_statement(db_->GetCachedStatement(
+      SQL_FROM_HERE,
+      "UPDATE thumbnails "
+      "SET url_rank = ?, last_forced = ? "
+      "WHERE url == ?"));
   set_statement.BindInt(0, new_rank);
-  set_statement.BindInt64(1,
-                          url.last_forced_time.since_origin().InMicroseconds());
+  set_statement.BindInt64(1, url.last_forced_time.ToInternalValue());
   set_statement.BindString(2, url.url.spec());
   set_statement.Run();
+}
+
+bool TopSitesDatabase::GetPageThumbnail(const GURL& url, Images* thumbnail) {
+  sql::Statement statement(db_->GetCachedStatement(
+      SQL_FROM_HERE,
+      "SELECT thumbnail, boring_score, good_clipping, at_top, last_updated "
+      "FROM thumbnails WHERE url=?"));
+  statement.BindString(0, url.spec());
+  if (!statement.Step())
+    return false;
+
+  std::vector<unsigned char> data;
+  statement.ColumnBlobAsVector(0, &data);
+  thumbnail->thumbnail = base::RefCountedBytes::TakeVector(&data);
+  thumbnail->thumbnail_score.boring_score = statement.ColumnDouble(1);
+  thumbnail->thumbnail_score.good_clipping = statement.ColumnBool(2);
+  thumbnail->thumbnail_score.at_top = statement.ColumnBool(3);
+  thumbnail->thumbnail_score.time_at_snapshot =
+      base::Time() +
+      base::TimeDelta::FromMicroseconds(statement.ColumnInt64(4));
+  return true;
+}
+
+int TopSitesDatabase::GetURLRank(const MostVisitedURL& url) {
+  sql::Statement select_statement(db_->GetCachedStatement(
+      SQL_FROM_HERE,
+      "SELECT url_rank "
+      "FROM thumbnails WHERE url=?"));
+  select_statement.BindString(0, url.url.spec());
+  if (select_statement.Step())
+    return select_statement.ColumnInt(0);
+
+  return kRankOfNonExistingURL;
 }
 
 bool TopSitesDatabase::RemoveURLNoTransaction(const MostVisitedURL& url) {

@@ -29,6 +29,8 @@ namespace WTF {
 template <typename T>
 class RefPtr;
 template <typename T>
+using PassRefPtr = RefPtr<T>;
+template <typename T>
 class StringBuffer;
 template <typename T, size_t inlineCapacity, typename Allocator>
 class Vector;
@@ -55,6 +57,7 @@ class Uint32Array;
 
 }  // namespace WTF
 
+using WTF::PassRefPtr;
 using WTF::RefPtr;
 using WTF::Vector;
 

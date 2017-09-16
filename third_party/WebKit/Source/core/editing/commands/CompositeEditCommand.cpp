@@ -39,7 +39,6 @@
 #include "core/editing/Editor.h"
 #include "core/editing/PlainTextRange.h"
 #include "core/editing/RelocatablePosition.h"
-#include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/VisibleSelection.h"
 #include "core/editing/VisibleUnits.h"

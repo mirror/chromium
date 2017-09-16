@@ -32,14 +32,15 @@ namespace {
 const char kProfileSyncNotificationId[] = "chrome://settings/sync/";
 
 // A simple notification delegate for the sync setup button.
-// TODO(estade): should this use a generic notification delegate?
-class SyncNotificationDelegate : public message_center::NotificationDelegate {
+class SyncNotificationDelegate : public NotificationDelegate {
  public:
-  explicit SyncNotificationDelegate(Profile* profile);
+  SyncNotificationDelegate(const std::string& id,
+                           Profile* profile);
 
   // NotificationDelegate:
   void Click() override;
   void ButtonClick(int button_index) override;
+  std::string id() const override;
 
  protected:
   ~SyncNotificationDelegate() override;
@@ -47,13 +48,20 @@ class SyncNotificationDelegate : public message_center::NotificationDelegate {
  private:
   void ShowSyncSetup();
 
+  // Unique id of the notification.
+  const std::string id_;
+
   Profile* profile_;
 
   DISALLOW_COPY_AND_ASSIGN(SyncNotificationDelegate);
 };
 
-SyncNotificationDelegate::SyncNotificationDelegate(Profile* profile)
-    : profile_(profile) {}
+SyncNotificationDelegate::SyncNotificationDelegate(
+    const std::string& id,
+    Profile* profile)
+    : id_(id),
+      profile_(profile) {
+}
 
 SyncNotificationDelegate::~SyncNotificationDelegate() {
 }
@@ -64,6 +72,10 @@ void SyncNotificationDelegate::Click() {
 
 void SyncNotificationDelegate::ButtonClick(int button_index) {
   ShowSyncSetup();
+}
+
+std::string SyncNotificationDelegate::id() const {
+  return id_;
 }
 
 void SyncNotificationDelegate::ShowSyncSetup() {
@@ -144,8 +156,13 @@ void SyncErrorNotifier::OnErrorChanged() {
   data.buttons.push_back(message_center::ButtonInfo(
       l10n_util::GetStringUTF16(IDS_SYNC_NOTIFICATION_ACCEPT)));
 
+  // Set the delegate for the notification's sync setup button.
+  SyncNotificationDelegate* delegate =
+      new SyncNotificationDelegate(notification_id_, profile_);
+
   message_center::NotifierId notifier_id(
-      message_center::NotifierId::SYSTEM_COMPONENT, kProfileSyncNotificationId);
+      message_center::NotifierId::SYSTEM_COMPONENT,
+      kProfileSyncNotificationId);
 
   // Set |profile_id| for multi-user notification blocker.
   notifier_id.profile_id =
@@ -153,16 +170,14 @@ void SyncErrorNotifier::OnErrorChanged() {
 
   // Add a new notification.
   Notification notification(
-      message_center::NOTIFICATION_TYPE_SIMPLE, notification_id_,
+      message_center::NOTIFICATION_TYPE_SIMPLE,
       l10n_util::GetStringUTF16(IDS_SYNC_ERROR_BUBBLE_VIEW_TITLE),
       l10n_util::GetStringUTF16(IDS_SYNC_PASSPHRASE_ERROR_BUBBLE_VIEW_MESSAGE),
       ui::ResourceBundle::GetSharedInstance().GetImageNamed(
           IDR_NOTIFICATION_ALERT),
       notifier_id,
       base::string16(),  // display_source
-      GURL(notification_id_), notification_id_, data,
-      new SyncNotificationDelegate(profile_));
-
+      GURL(notification_id_), notification_id_, data, delegate);
   notification_ui_manager->Add(notification, profile_);
   notification_displayed_ = true;
 }

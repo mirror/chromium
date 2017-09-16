@@ -44,16 +44,18 @@ int AutocompleteClassifier::DefaultOmniboxProviders() {
       AutocompleteProvider::TYPE_KEYWORD |
 #endif
 #if !defined(OS_IOS)
-      // TODO(rohitrao): crbug.com/725120 ZeroSuggest is not yet enabled on iOS.
+      // "Shortcuts" and "Zero Suggest" are not supported on iOS.
+      AutocompleteProvider::TYPE_SHORTCUTS |
       AutocompleteProvider::TYPE_ZERO_SUGGEST |
 #endif
       (base::FeatureList::IsEnabled(omnibox::kEnableClipboardProvider)
            ? AutocompleteProvider::TYPE_CLIPBOARD_URL
            : 0) |
-      AutocompleteProvider::TYPE_BOOKMARK | AutocompleteProvider::TYPE_BUILTIN |
+      AutocompleteProvider::TYPE_BOOKMARK |
+      AutocompleteProvider::TYPE_BUILTIN |
       AutocompleteProvider::TYPE_HISTORY_QUICK |
       AutocompleteProvider::TYPE_HISTORY_URL |
-      AutocompleteProvider::TYPE_SEARCH | AutocompleteProvider::TYPE_SHORTCUTS;
+      AutocompleteProvider::TYPE_SEARCH;
 }
 
 void AutocompleteClassifier::Classify(

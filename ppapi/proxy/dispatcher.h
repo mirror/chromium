@@ -13,6 +13,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/tracked_objects.h"
 #include "ipc/message_filter.h"
 #include "ppapi/c/pp_instance.h"
 #include "ppapi/c/pp_module.h"

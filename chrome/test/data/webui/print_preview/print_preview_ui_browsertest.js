@@ -125,23 +125,13 @@ TEST_F('PrintPreviewUIBrowserTest', 'SystemDefaultPrinterPolicy', function() {
 GEN('#endif');
 
 GEN('#if defined(OS_MACOSX)');
-[
-  'MacOpenPDFInPreview',
-  'MacOpenPDFInPreviewBadPrintTicket',
-].forEach(function(testName) {
-  TEST_F('PrintPreviewUIBrowserTest', testName, function() {
-    mocha.grep(new RegExp(testName + '\\b')).run();
-  });
+TEST_F('PrintPreviewUIBrowserTest', 'MacOpenPDFInPreview', function() {
+  mocha.grep(new RegExp('MacOpenPDFInPreview' + '\\b')).run();
 });
 GEN('#endif');
 
 GEN('#if defined(OS_WIN)');
-[
-  'WinSystemDialogLink',
-  'WinSystemDialogLinkBadPrintTicket',
-].forEach(function(testName) {
-  TEST_F('PrintPreviewUIBrowserTest', testName, function() {
-    mocha.grep(new RegExp(testName + '\\b')).run();
-  });
+TEST_F('PrintPreviewUIBrowserTest', 'WinSystemDialogLink', function() {
+  mocha.grep(new RegExp('WinSystemDialogLink' + '\\b')).run();
 });
 GEN('#endif');

@@ -37,8 +37,6 @@ class TestOverlaySchedulerObserver : public OverlaySchedulerObserver {
   void OverlaySchedulerWillShowOverlay(OverlayScheduler* scheduler,
                                        web::WebState* web_state) override {
     active_index_ = web_state_list_->GetIndexOfWebState(web_state);
-    if (web_state)
-      web_state->WasShown();
   }
 
   int active_index() { return active_index_; }
@@ -96,7 +94,6 @@ TEST_F(OverlaySchedulerTest, AddBrowserOverlay) {
   WaitForBrowserCoordinatorActivation(overlay);
   EXPECT_TRUE(scheduler()->IsShowingOverlay());
   [overlay stop];
-  WaitForBrowserCoordinatorDeactivation(overlay);
   EXPECT_EQ(parent.presentedOverlay, nil);
   EXPECT_FALSE(scheduler()->IsShowingOverlay());
 }
@@ -107,7 +104,6 @@ TEST_F(OverlaySchedulerTest, AddWebStateOverlay) {
   web_state_list()->InsertWebState(0, base::MakeUnique<web::TestWebState>(),
                                    WebStateList::INSERT_FORCE_INDEX,
                                    WebStateOpener());
-  web_state_list()->ActivateWebStateAt(0);
   ASSERT_EQ(web_state_list()->count(), 1);
   web::WebState* web_state = web_state_list()->GetWebStateAt(0);
   WebStateOverlayQueue* queue = WebStateOverlayQueue::FromWebState(web_state);
@@ -121,7 +117,6 @@ TEST_F(OverlaySchedulerTest, AddWebStateOverlay) {
   WaitForBrowserCoordinatorActivation(overlay);
   EXPECT_TRUE(scheduler()->IsShowingOverlay());
   [overlay stop];
-  WaitForBrowserCoordinatorDeactivation(overlay);
   EXPECT_EQ(parent.presentedOverlay, nil);
   EXPECT_FALSE(scheduler()->IsShowingOverlay());
 }
@@ -154,7 +149,6 @@ TEST_F(OverlaySchedulerTest, SwitchWebStateForOverlay) {
   EXPECT_TRUE(scheduler()->IsShowingOverlay());
   EXPECT_EQ(observer()->active_index(), 0);
   [overlay stop];
-  WaitForBrowserCoordinatorDeactivation(overlay);
   EXPECT_EQ(parent.presentedOverlay, nil);
   EXPECT_FALSE(scheduler()->IsShowingOverlay());
 }
@@ -196,14 +190,12 @@ TEST_F(OverlaySchedulerTest, SwitchWebStateForQueuedOverlays) {
   // Stop the first overlay and verify that the second overlay has been
   // presented and the active index updated.
   [overlay_0 stop];
-  WaitForBrowserCoordinatorDeactivation(overlay_0);
   EXPECT_EQ(parent_1.presentedOverlay, overlay_1);
   WaitForBrowserCoordinatorActivation(overlay_1);
   EXPECT_TRUE(scheduler()->IsShowingOverlay());
   EXPECT_EQ(observer()->active_index(), 1);
   EXPECT_EQ(parent_0.presentedOverlay, nil);
   [overlay_1 stop];
-  WaitForBrowserCoordinatorDeactivation(overlay_1);
   EXPECT_EQ(parent_1.presentedOverlay, nil);
   EXPECT_FALSE(scheduler()->IsShowingOverlay());
 }

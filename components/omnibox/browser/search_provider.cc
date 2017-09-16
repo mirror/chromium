@@ -889,11 +889,13 @@ std::unique_ptr<net::URLFetcher> SearchProvider::CreateSuggestFetcher(
   if (!suggest_url.is_valid())
     return NULL;
 
-  // Send the current page URL if user setting and URL requirements are met.
+  // Send the current page URL if user setting and URL requirements are met and
+  // the user is in the field trial.
   TemplateURLService* template_url_service = client()->GetTemplateURLService();
   if (CanSendURL(input.current_url(), suggest_url, template_url,
                  input.current_page_classification(),
-                 template_url_service->search_terms_data(), client())) {
+                 template_url_service->search_terms_data(), client()) &&
+      OmniboxFieldTrial::InZeroSuggestAfterTypingFieldTrial()) {
     search_term_args.current_page_url = input.current_url().spec();
     // Create the suggest URL again with the current page URL.
     suggest_url = GURL(template_url->suggestions_url_ref().ReplaceSearchTerms(

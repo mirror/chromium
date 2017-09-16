@@ -11,7 +11,6 @@
 #include "core/dom/ParserContentPolicy.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/Position.h"
-#include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisibleSelection.h"
 #include "core/editing/testing/EditingTestBase.h"
 #include "core/frame/LocalFrame.h"

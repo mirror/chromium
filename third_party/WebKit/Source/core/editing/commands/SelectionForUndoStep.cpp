@@ -5,7 +5,6 @@
 #include "core/editing/commands/SelectionForUndoStep.h"
 
 #include "core/editing/EditingUtilities.h"
-#include "core/editing/SelectionTemplate.h"
 #include "core/editing/TextAffinity.h"
 #include "core/editing/VisibleSelection.h"
 

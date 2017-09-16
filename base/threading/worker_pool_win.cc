@@ -12,6 +12,7 @@
 #include "base/pending_task.h"
 #include "base/threading/thread_local.h"
 #include "base/trace_event/trace_event.h"
+#include "base/tracked_objects.h"
 
 namespace base {
 
@@ -28,7 +29,10 @@ DWORD CALLBACK WorkItemCallback(void* param) {
 
   GetWorkerPoolRunningOnThisThread()->Set(true);
 
+  tracked_objects::TaskStopwatch stopwatch;
+  stopwatch.Start();
   std::move(pending_task->task).Run();
+  stopwatch.Stop();
 
   GetWorkerPoolRunningOnThisThread()->Set(false);
 

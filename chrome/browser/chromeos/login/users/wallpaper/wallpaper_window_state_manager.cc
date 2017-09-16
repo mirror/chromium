@@ -2,33 +2,42 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ash/wallpaper/wallpaper_window_state_manager.h"
+#include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_window_state_manager.h"
 
 #include "ash/shell.h"
 #include "ash/wm/mru_window_tracker.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
+#include "chrome/browser/ui/ash/ash_util.h"
 #include "ui/aura/window.h"
 
-namespace ash {
-namespace {
+namespace chromeos {
 
+// static
 WallpaperWindowStateManager* g_window_state_manager = nullptr;
-
-}  // namespace
 
 // static
 void WallpaperWindowStateManager::MinimizeInactiveWindows(
     const std::string& user_id_hash) {
+  if (ash_util::IsRunningInMash()) {
+    NOTIMPLEMENTED();
+    return;
+  }
+
   if (!g_window_state_manager)
     g_window_state_manager = new WallpaperWindowStateManager();
   g_window_state_manager->BuildWindowListAndMinimizeInactiveForUser(
-      user_id_hash, wm::GetActiveWindow());
+      user_id_hash, ash::wm::GetActiveWindow());
 }
 
 // static
 void WallpaperWindowStateManager::RestoreWindows(
     const std::string& user_id_hash) {
+  if (ash_util::IsRunningInMash()) {
+    NOTIMPLEMENTED();
+    return;
+  }
+
   if (!g_window_state_manager) {
     DCHECK(false) << "This should only be called after calling "
                   << "MinimizeInactiveWindows.";
@@ -42,9 +51,9 @@ void WallpaperWindowStateManager::RestoreWindows(
   }
 }
 
-WallpaperWindowStateManager::WallpaperWindowStateManager() = default;
+WallpaperWindowStateManager::WallpaperWindowStateManager() {}
 
-WallpaperWindowStateManager::~WallpaperWindowStateManager() = default;
+WallpaperWindowStateManager::~WallpaperWindowStateManager() {}
 
 void WallpaperWindowStateManager::BuildWindowListAndMinimizeInactiveForUser(
     const std::string& user_id_hash,
@@ -57,19 +66,19 @@ void WallpaperWindowStateManager::BuildWindowListAndMinimizeInactiveForUser(
       &user_id_hash_window_list_map_[user_id_hash];
 
   aura::Window::Windows windows =
-      Shell::Get()->mru_window_tracker()->BuildWindowListIgnoreModal();
+      ash::Shell::Get()->mru_window_tracker()->BuildWindowListIgnoreModal();
 
   for (aura::Window::Windows::iterator iter = windows.begin();
        iter != windows.end(); ++iter) {
     // Ignore active window and minimized windows.
-    if (*iter == active_window || wm::GetWindowState(*iter)->IsMinimized())
+    if (*iter == active_window || ash::wm::GetWindowState(*iter)->IsMinimized())
       continue;
 
     if (!(*iter)->HasObserver(this))
       (*iter)->AddObserver(this);
 
     results->insert(*iter);
-    wm::GetWindowState(*iter)->Minimize();
+    ash::wm::GetWindowState(*iter)->Minimize();
   }
 }
 
@@ -89,7 +98,7 @@ void WallpaperWindowStateManager::RestoreMinimizedWindows(
 
   for (std::set<aura::Window*>::iterator iter = removed_windows.begin();
        iter != removed_windows.end(); ++iter) {
-    wm::GetWindowState(*iter)->Unminimize();
+    ash::wm::GetWindowState(*iter)->Unminimize();
     RemoveObserverIfUnreferenced(*iter);
   }
 }
@@ -125,4 +134,4 @@ void WallpaperWindowStateManager::OnWindowStackingChanged(
   window->RemoveObserver(this);
 }
 
-}  // namespace ash
+}  // namespace chromeos

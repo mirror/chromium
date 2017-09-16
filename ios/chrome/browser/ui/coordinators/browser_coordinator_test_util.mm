@@ -12,23 +12,13 @@
 #error "This file requires ARC support."
 #endif
 
-void WaitForBrowserCoordinatorActivation(BrowserCoordinator* coordinator) {
-  ASSERT_TRUE(coordinator);
-  UIViewController* view_controller = coordinator.viewController;
+void WaitForBrowserCoordinatorActivation(BrowserCoordinator* overlay) {
+  ASSERT_TRUE(overlay);
+  UIViewController* view_controller = overlay.viewController;
   ASSERT_TRUE(view_controller);
   EXPECT_TRUE(testing::WaitUntilConditionOrTimeout(
       testing::kWaitForUIElementTimeout, ^bool {
         return view_controller.presentingViewController &&
                !view_controller.beingPresented;
-      }));
-}
-
-void WaitForBrowserCoordinatorDeactivation(BrowserCoordinator* coordinator) {
-  ASSERT_TRUE(coordinator);
-  UIViewController* view_controller = coordinator.viewController;
-  EXPECT_TRUE(testing::WaitUntilConditionOrTimeout(
-      testing::kWaitForUIElementTimeout, ^bool {
-        return !view_controller.presentingViewController &&
-               !view_controller.beingDismissed;
       }));
 }

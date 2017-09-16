@@ -41,11 +41,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': '9752c3c3079140d7dbcf1fb2feb513f1e139a03a',
+  'skia_revision': '3bf6366c6fc5d619358458e50909b60deb4cfe4a',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': '2cd7ac43c8576b146dab51630f79325c5820e2f7',
+  'v8_revision': '491d777ea4f081125e424e5c489879c114803320',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -61,11 +61,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling SwiftShader
   # and whatever else without interference from each other.
-  'swiftshader_revision': '3cbeac56e8291c9eb584aecfdf4c9e4e3883473a',
+  'swiftshader_revision': '0def1021890d0340a10ca0d4bbfb5b650ed747df',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling PDFium
   # and whatever else without interference from each other.
-  'pdfium_revision': '7b1e53c0ef09da360304c6f4397082d09a945a7e',
+  'pdfium_revision': '12abfd04a42a1166f7d1496beb63515bc47ec360',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling openmax_dl
   # and whatever else without interference from each other.
@@ -73,7 +73,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling BoringSSL
   # and whatever else without interference from each other.
-  'boringssl_revision': 'f51f273ee8eb67e1b2b36bb9ef576bd8ff8632bc',
+  'boringssl_revision': '683ffbbe57de2163b24993e0d03650cf393bc640',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling google-toolbox-for-mac
   # and whatever else without interference from each other.
@@ -97,7 +97,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': '5c13bd84fb39172dae6e4e9f7ca4e66622f888e6',
+  'catapult_revision': '562255cfa200f0e6d7e64bcd4066f9211b23c667',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.

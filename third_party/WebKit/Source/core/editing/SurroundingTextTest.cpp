@@ -9,7 +9,6 @@
 #include "core/dom/Range.h"
 #include "core/dom/Text.h"
 #include "core/editing/Position.h"
-#include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisibleSelection.h"
 #include "core/html/HTMLElement.h"
 #include "core/html/TextControlElement.h"

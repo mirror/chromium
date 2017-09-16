@@ -100,6 +100,10 @@
       settable_from_internals: true,
     },
     {
+      name: "Auxclick",
+      status: "stable",
+    },
+    {
       name: "BackgroundFetch",
       status: "experimental",
     },
@@ -112,6 +116,10 @@
     },
     {
       name: "BlockCredentialedSubresources",
+      status: "stable",
+    },
+    {
+      name: "BroadcastChannel",
       status: "stable",
     },
     {
@@ -557,6 +565,10 @@
     {
       name: "MediaCaptureDepthVideoKind",
       status: "experimental",
+    },
+    {
+      name: "MediaCaptureFromCanvas",
+      status: "stable",
     },
     {
       name: "MediaCaptureFromVideo",

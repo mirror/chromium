@@ -37,7 +37,6 @@
 #include "core/editing/Editor.h"
 #include "core/editing/FindInPageCoordinates.h"
 #include "core/editing/FindOptions.h"
-#include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisibleSelection.h"
 #include "core/editing/iterators/SearchBuffer.h"
 #include "core/editing/markers/DocumentMarker.h"

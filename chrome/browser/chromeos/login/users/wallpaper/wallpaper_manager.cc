@@ -13,7 +13,6 @@
 #include "ash/public/interfaces/constants.mojom.h"
 #include "ash/shell.h"
 #include "ash/wallpaper/wallpaper_controller.h"
-#include "ash/wallpaper/wallpaper_window_state_manager.h"
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/command_line.h"
@@ -37,6 +36,7 @@
 #include "chrome/browser/chromeos/extensions/wallpaper_manager_util.h"
 #include "chrome/browser/chromeos/login/startup_utils.h"
 #include "chrome/browser/chromeos/login/users/avatar/user_image_loader.h"
+#include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_window_state_manager.h"
 #include "chrome/browser/chromeos/login/wizard_controller.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/policy/device_local_account.h"
@@ -193,6 +193,11 @@ wallpaper::WallpaperFilesId HashWallpaperFilesIdStr(
   std::string result = base::HexEncode(binmd, sizeof(binmd));
   std::transform(result.begin(), result.end(), result.begin(), ::tolower);
   return wallpaper::WallpaperFilesId::FromString(result);
+}
+
+// Returns true if HashWallpaperFilesIdStr will not assert().
+bool CanGetFilesId() {
+  return SystemSaltGetter::Get()->GetRawSalt();
 }
 
 // Call |closure| when HashWallpaperFilesIdStr will not assert().
@@ -587,7 +592,7 @@ void WallpaperManager::RemoveUserWallpaperInfo(const AccountId& account_id) {
   DictionaryPrefUpdate wallpaper_colors_update(prefs,
                                                ash::prefs::kWallpaperColors);
   wallpaper_colors_update->RemoveWithoutPathExpansion(info.location, nullptr);
-  DeleteUserWallpapers(account_id);
+  DeleteUserWallpapers(account_id, info.location);
 }
 
 void WallpaperManager::OnPolicyFetched(const std::string& policy,
@@ -924,7 +929,7 @@ void WallpaperManager::OnWindowActivated(ActivationReason reason,
   ash::ShelfID shelf_id =
       ash::ShelfID::Deserialize(gained_active->GetProperty(ash::kShelfIDKey));
   if (shelf_id.app_id == arc_wallpapers_app_id) {
-    ash::WallpaperWindowStateManager::MinimizeInactiveWindows(
+    chromeos::WallpaperWindowStateManager::MinimizeInactiveWindows(
         user_manager::UserManager::Get()->GetActiveUser()->username_hash());
     DCHECK(!ash_util::IsRunningInMash() && ash::Shell::Get());
     activation_client_observer_.Remove(ash::Shell::Get()->activation_client());
@@ -934,7 +939,7 @@ void WallpaperManager::OnWindowActivated(ActivationReason reason,
 
 void WallpaperManager::OnWindowDestroying(aura::Window* window) {
   window_observer_.Remove(window);
-  ash::WallpaperWindowStateManager::RestoreWindows(
+  chromeos::WallpaperWindowStateManager::RestoreWindows(
       user_manager::UserManager::Get()->GetActiveUser()->username_hash());
 }
 
@@ -1012,7 +1017,7 @@ void WallpaperManager::RemovePendingWallpaperFromList(
 void WallpaperManager::SetPolicyControlledWallpaper(
     const AccountId& account_id,
     std::unique_ptr<user_manager::UserImage> user_image) {
-  if (!CanGetWallpaperFilesId()) {
+  if (!CanGetFilesId()) {
     CallWhenCanGetFilesId(
         base::Bind(&WallpaperManager::SetPolicyControlledWallpaper,
                    weak_factory_.GetWeakPtr(), account_id,
@@ -1488,11 +1493,6 @@ void WallpaperManager::RecordWallpaperAppType() {
           ? WALLPAPERS_APP_ANDROID
           : WALLPAPERS_PICKER_APP_CHROMEOS,
       WALLPAPERS_APPS_NUM);
-}
-
-bool WallpaperManager::CanGetWallpaperFilesId() const {
-  return SystemSaltGetter::IsInitialized() &&
-         SystemSaltGetter::Get()->GetRawSalt();
 }
 
 }  // namespace chromeos

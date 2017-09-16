@@ -219,6 +219,11 @@ TEST_F(OmniboxFieldTrialTest, ZeroSuggestFieldTrial) {
 #else
     EXPECT_FALSE(OmniboxFieldTrial::InZeroSuggestMostVisitedFieldTrial());
 #endif
+#if defined(OS_IOS) || defined(OS_ANDROID)
+    EXPECT_FALSE(OmniboxFieldTrial::InZeroSuggestAfterTypingFieldTrial());
+#else
+    EXPECT_TRUE(OmniboxFieldTrial::InZeroSuggestAfterTypingFieldTrial());
+#endif
 
     ResetFieldTrialList();
     params[std::string(OmniboxFieldTrial::kZeroSuggestVariantRule)] =
@@ -229,9 +234,16 @@ TEST_F(OmniboxFieldTrialTest, ZeroSuggestFieldTrial) {
         OmniboxFieldTrial::kBundledExperimentFieldTrialName, "A");
     EXPECT_TRUE(OmniboxFieldTrial::InZeroSuggestFieldTrial());
     EXPECT_TRUE(OmniboxFieldTrial::InZeroSuggestMostVisitedFieldTrial());
+#if defined(OS_IOS) || defined(OS_ANDROID)
+    EXPECT_FALSE(OmniboxFieldTrial::InZeroSuggestAfterTypingFieldTrial());
+#else
+    EXPECT_TRUE(OmniboxFieldTrial::InZeroSuggestAfterTypingFieldTrial());
+#endif
 
     ResetFieldTrialList();
     params.erase(std::string(OmniboxFieldTrial::kZeroSuggestVariantRule));
+    params[std::string(OmniboxFieldTrial::kSuggestVariantRule)] =
+        "AfterTyping";
     base::FieldTrialList::CreateFieldTrial(
         OmniboxFieldTrial::kBundledExperimentFieldTrialName, "A");
     ASSERT_TRUE(variations::AssociateVariationParams(
@@ -242,6 +254,7 @@ TEST_F(OmniboxFieldTrialTest, ZeroSuggestFieldTrial) {
 #else
     EXPECT_FALSE(OmniboxFieldTrial::InZeroSuggestMostVisitedFieldTrial());
 #endif
+    EXPECT_TRUE(OmniboxFieldTrial::InZeroSuggestAfterTypingFieldTrial());
   }
 }
 

@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "core/editing/Forward.h"
 #include "core/editing/Position.h"
+#include "core/editing/SelectionTemplate.h"
 #include "core/editing/TextAffinity.h"
 #include "platform/heap/Handle.h"
 

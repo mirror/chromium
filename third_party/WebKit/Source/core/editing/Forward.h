@@ -18,11 +18,7 @@ using EditingInFlatTreeStrategy = EditingAlgorithm<FlatTreeTraversal>;
 // - PositionTemplate
 // - PositionWithAffinityTemplate
 // - EphemeralRangeTemplate
-
-template <typename Strategy>
-class SelectionTemplate;
-using SelectionInDOMTree = SelectionTemplate<EditingStrategy>;
-using SelectionInFlatTree = SelectionTemplate<EditingInFlatTreeStrategy>;
+// - SelectionTemplate
 
 template <typename Strategy>
 class VisiblePositionTemplate;

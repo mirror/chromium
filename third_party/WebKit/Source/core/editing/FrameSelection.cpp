@@ -48,7 +48,6 @@
 #include "core/editing/SelectionController.h"
 #include "core/editing/SelectionEditor.h"
 #include "core/editing/SelectionModifier.h"
-#include "core/editing/SelectionTemplate.h"
 #include "core/editing/TextAffinity.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/VisibleSelection.h"
@@ -901,6 +900,17 @@ String FrameSelection::SelectedTextForClipboard() const {
                  .Build());
 }
 
+LayoutRect FrameSelection::Bounds() const {
+  LocalFrameView* view = frame_->View();
+  if (!view)
+    return LayoutRect();
+
+  // TODO(pdr): Should this be the VisualViewport's VisibleRectInDocument
+  // instead of VisibleContentRect to include the viewport pan-zoom offset?
+  return Intersection(UnclippedBounds(),
+                      LayoutRect(view->VisibleContentRect()));
+}
+
 LayoutRect FrameSelection::UnclippedBounds() const {
   LocalFrameView* view = frame_->View();
   LayoutViewItem layout_view = frame_->ContentLayoutItem();
@@ -1157,10 +1167,6 @@ base::Optional<int> FrameSelection::LayoutSelectionEnd() const {
 
 void FrameSelection::ClearLayoutSelection() {
   layout_selection_->ClearSelection();
-}
-
-bool FrameSelection::IsDirectional() const {
-  return GetSelectionInDOMTree().IsDirectional();
 }
 
 }  // namespace blink

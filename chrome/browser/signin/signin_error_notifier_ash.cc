@@ -15,6 +15,7 @@
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/notifications/notification.h"
+#include "chrome/browser/notifications/notification_delegate.h"
 #include "chrome/browser/notifications/notification_ui_manager.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
@@ -39,14 +40,14 @@ namespace {
 const char kProfileSigninNotificationId[] = "chrome://settings/signin/";
 
 // A notification delegate for the sign-out button.
-// TODO(estade): should this use a generic notification delegate?
-class SigninNotificationDelegate : public message_center::NotificationDelegate {
+class SigninNotificationDelegate : public NotificationDelegate {
  public:
-  SigninNotificationDelegate();
+  explicit SigninNotificationDelegate(const std::string& id);
 
   // NotificationDelegate:
   void Click() override;
   void ButtonClick(int button_index) override;
+  std::string id() const override;
 
  protected:
   ~SigninNotificationDelegate() override;
@@ -58,8 +59,10 @@ class SigninNotificationDelegate : public message_center::NotificationDelegate {
   DISALLOW_COPY_AND_ASSIGN(SigninNotificationDelegate);
 };
 
-SigninNotificationDelegate::SigninNotificationDelegate() = default;
-SigninNotificationDelegate::~SigninNotificationDelegate() = default;
+SigninNotificationDelegate::SigninNotificationDelegate(const std::string& id)
+    : id_(id) {}
+
+SigninNotificationDelegate::~SigninNotificationDelegate() {}
 
 void SigninNotificationDelegate::Click() {
   chrome::AttemptUserExit();
@@ -67,6 +70,10 @@ void SigninNotificationDelegate::Click() {
 
 void SigninNotificationDelegate::ButtonClick(int button_index) {
   chrome::AttemptUserExit();
+}
+
+std::string SigninNotificationDelegate::id() const {
+  return id_;
 }
 
 }  // namespace
@@ -123,6 +130,9 @@ void SigninErrorNotifier::OnErrorChanged() {
   data.buttons.push_back(message_center::ButtonInfo(
       l10n_util::GetStringUTF16(IDS_SYNC_RELOGIN_LINK_LABEL)));
 
+  // Set the delegate for the notification's sign-out button.
+  SigninNotificationDelegate* delegate =
+      new SigninNotificationDelegate(notification_id_);
 
   message_center::NotifierId notifier_id(
       message_center::NotifierId::SYSTEM_COMPONENT,
@@ -133,7 +143,7 @@ void SigninErrorNotifier::OnErrorChanged() {
       multi_user_util::GetAccountIdFromProfile(profile_).GetUserEmail();
 
   Notification notification(
-      message_center::NOTIFICATION_TYPE_SIMPLE, notification_id_,
+      message_center::NOTIFICATION_TYPE_SIMPLE,
       l10n_util::GetStringUTF16(IDS_SIGNIN_ERROR_BUBBLE_VIEW_TITLE),
       GetMessageBody(),
       message_center::IsNewStyleNotificationEnabled()
@@ -141,8 +151,7 @@ void SigninErrorNotifier::OnErrorChanged() {
           : ui::ResourceBundle::GetSharedInstance().GetImageNamed(
                 IDR_NOTIFICATION_ALERT),
       notifier_id, l10n_util::GetStringUTF16(IDS_SIGNIN_ERROR_DISPLAY_SOURCE),
-      GURL(notification_id_), notification_id_, data,
-      new SigninNotificationDelegate());
+      GURL(notification_id_), notification_id_, data, delegate);
   if (message_center::IsNewStyleNotificationEnabled()) {
     notification.set_accent_color(
         message_center::kSystemNotificationColorWarning);

@@ -318,7 +318,7 @@ TEST(FunctionalTest, MemberFunctionBindByPassedUniquePtr) {
 
 class Number : public RefCounted<Number> {
  public:
-  static RefPtr<Number> Create(int value) {
+  static PassRefPtr<Number> Create(int value) {
     return AdoptRef(new Number(value));
   }
 

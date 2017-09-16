@@ -42,9 +42,6 @@ class CORE_EXPORT SuggestionMarkerListImpl final : public DocumentMarkerList {
 
   DECLARE_VIRTUAL_TRACE();
 
-  // SuggestionMarkerListImpl-specific
-  bool RemoveMarkerByTag(int32_t tag);
-
  private:
   bool ShiftMarkersForSuggestionReplacement(unsigned offset,
                                             unsigned old_length,

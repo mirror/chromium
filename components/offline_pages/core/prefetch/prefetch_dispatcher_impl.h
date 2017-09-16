@@ -59,11 +59,12 @@ class PrefetchDispatcherImpl : public PrefetchDispatcher,
   void DisposeTask();
 
   // Callbacks for network requests.
-  void DidGenerateBundleOrGetOperationRequest(
-      const std::string& request_name_for_logging,
-      PrefetchRequestStatus status,
-      const std::string& operation_name,
-      const std::vector<RenderPageInfo>& pages);
+  void DidGenerateBundleRequest(PrefetchRequestStatus status,
+                                const std::string& operation_name,
+                                const std::vector<RenderPageInfo>& pages);
+  void DidGetOperationRequest(PrefetchRequestStatus status,
+                              const std::string& operation_name,
+                              const std::vector<RenderPageInfo>& pages);
   void LogRequestResult(const std::string& request_name_for_logging,
                         PrefetchRequestStatus status,
                         const std::string& operation_name,

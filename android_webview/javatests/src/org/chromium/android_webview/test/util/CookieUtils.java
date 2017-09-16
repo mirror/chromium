@@ -5,11 +5,11 @@
 package org.chromium.android_webview.test.util;
 
 import android.app.Instrumentation;
+import android.webkit.ValueCallback;
 
 import org.junit.Assert;
 
 import org.chromium.android_webview.AwCookieManager;
-import org.chromium.base.Callback;
 import org.chromium.base.test.util.CallbackHelper;
 
 /**
@@ -19,18 +19,15 @@ public class CookieUtils {
     private CookieUtils() {
     }
 
+
     /**
      * A CallbackHelper for use with setCookie/removeXXXCookie.
-     *
-     * @param <T> the callback's parameter type.
      */
-    public static class TestCallback<T> implements Callback<T> {
+    public static class TestValueCallback<T> implements ValueCallback<T> {
         /**
-         * We only have one intresting method on Callback: onResult.
-         *
-         * @param <T> the callback's parameter type.
+         * We only have one intresting method on ValueCallback: onReceiveValue.
          */
-        public static class OnResultHelper<T> extends CallbackHelper {
+        public static class OnReceiveValueHelper<T> extends CallbackHelper {
             private T mValue;
 
             public T getValue() {
@@ -44,23 +41,23 @@ public class CookieUtils {
             }
         }
 
-        private OnResultHelper<T> mOnResultHelper;
+        private OnReceiveValueHelper<T> mOnReceiveValueHelper;
 
-        public TestCallback() {
-            mOnResultHelper = new OnResultHelper<T>();
+        public TestValueCallback() {
+            mOnReceiveValueHelper = new OnReceiveValueHelper<T>();
         }
 
-        public OnResultHelper getOnResultHelper() {
-            return mOnResultHelper;
+        public OnReceiveValueHelper getOnReceiveValueHelper() {
+            return mOnReceiveValueHelper;
         }
 
         @Override
-        public void onResult(T value) {
-            mOnResultHelper.notifyCalled(value);
+        public void onReceiveValue(T value) {
+            mOnReceiveValueHelper.notifyCalled(value);
         }
 
         public T getValue() {
-            return mOnResultHelper.getValue();
+            return mOnReceiveValueHelper.getValue();
         }
     }
 
@@ -70,12 +67,12 @@ public class CookieUtils {
      */
     public static void clearCookies(Instrumentation instr, final AwCookieManager cookieManager)
             throws Throwable {
-        final TestCallback<Boolean> callback = new TestCallback<Boolean>();
-        int callCount = callback.getOnResultHelper().getCallCount();
+        final TestValueCallback<Boolean> callback = new TestValueCallback<Boolean>();
+        int callCount = callback.getOnReceiveValueHelper().getCallCount();
 
         instr.runOnMainSync(
                 () -> cookieManager.removeAllCookies(callback));
-        callback.getOnResultHelper().waitForCallback(callCount);
+        callback.getOnReceiveValueHelper().waitForCallback(callCount);
         Assert.assertFalse(cookieManager.hasCookies());
     }
 }

@@ -26,6 +26,7 @@ class JSRendererMessagingService : public RendererMessagingService {
 
  private:
   // RendererMessagingService:
+  const base::UnguessableToken& GetContextId(ScriptContext* context) override;
   bool ContextHasMessagePort(ScriptContext* script_context,
                              const PortId& port_id) override;
   void DispatchOnConnectToListeners(

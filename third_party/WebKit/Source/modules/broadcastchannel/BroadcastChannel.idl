@@ -8,6 +8,7 @@
     Constructor(DOMString name),
     ConstructorCallWith=ExecutionContext,
     RaisesException=Constructor,
+    RuntimeEnabled=BroadcastChannel,
     Exposed=(Window,Worker),
     ActiveScriptWrappable,
     DependentLifetime,

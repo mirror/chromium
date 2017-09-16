@@ -407,9 +407,6 @@ class BlinkPerfCanvas(_BlinkPerfBenchmark):
                               'crbug.com/593973')
         self.DisableStory('putImageData.html',
             [story.expectations.ANDROID_NEXUS6], 'crbug.com/738453')
-        # pylint: disable=line-too-long
-        self.DisableStory('draw-static-canvas-2d-to-hw-accelerated-canvas-2d.html',
-            [story.expectations.ANDROID_NEXUS6], 'crbug.com/765799')
     return StoryExpectations()
 
   def SetExtraBrowserOptions(self, options):
@@ -554,3 +551,4 @@ class BlinkPerfShadowDOM(_BlinkPerfBenchmark):
         self.DisableBenchmark([story.expectations.ANDROID_NEXUS5X],
                               'crbug.com/702319')
     return StoryExpectations()
+

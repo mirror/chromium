@@ -10,7 +10,6 @@ import android.webkit.TokenBindingService.TokenBindingKey;
 import android.webkit.ValueCallback;
 
 import org.chromium.android_webview.AwTokenBindingManager;
-import org.chromium.base.Callback;
 
 import java.security.KeyPair;
 
@@ -64,9 +63,9 @@ public class TokenBindingManagerAdapter extends TokenBindingService {
         // Only return the KeyPair for now. We retrieve the key from Channel Id
         // store which does not provide a way to set/retrieve the Token
         // Binding algorithms yet.
-        Callback<KeyPair> newCallback = new Callback<KeyPair>() {
+        ValueCallback<KeyPair> newCallback = new ValueCallback<KeyPair>() {
             @Override
-            public void onResult(final KeyPair value) {
+            public void onReceiveValue(final KeyPair value) {
                 TokenBindingKey key = new TokenBindingKey() {
                     @Override
                     public KeyPair getKeyPair() {
@@ -84,15 +83,16 @@ public class TokenBindingManagerAdapter extends TokenBindingService {
     }
 
     @Override
-    public void deleteKey(Uri origin, final ValueCallback<Boolean> callback) {
+    public void deleteKey(Uri origin,
+                          ValueCallback<Boolean> callback) {
         startChromiumEngine();
-        mTokenBindingManager.deleteKey(origin, CallbackConverter.fromValueCallback(callback));
+        mTokenBindingManager.deleteKey(origin, callback);
     }
 
     @Override
-    public void deleteAllKeys(final ValueCallback<Boolean> callback) {
+    public void deleteAllKeys(ValueCallback<Boolean> callback) {
         startChromiumEngine();
-        mTokenBindingManager.deleteAllKeys(CallbackConverter.fromValueCallback(callback));
+        mTokenBindingManager.deleteAllKeys(callback);
     }
 
     private void startChromiumEngine() {

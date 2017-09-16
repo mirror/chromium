@@ -375,6 +375,13 @@ const char kEnablePowerOverlay[]            = "enable-power-overlay";
 const char kEnablePrintPreviewRegisterPromos[] =
     "enable-print-preview-register-promos";
 
+// Enables tracking of tasks in profiler for viewing via about:profiler.
+// To predominantly disable tracking (profiling), use the command line switch:
+// --enable-profiling=0
+// Some tracking will still take place at startup, but it will be turned off
+// during chrome_browser_main.
+const char kEnableProfiling[]               = "enable-profiling";
+
 // Enable background mode for the Push API.
 const char kEnablePushApiBackgroundMode[] = "enable-push-api-background-mode";
 
@@ -832,6 +839,10 @@ const char kDisableLoggingRedirect[] = "disable-logging-redirect";
 // installed through policy.
 const char kDisableLoginScreenApps[] = "disable-login-screen-apps";
 #endif  // defined(OS_CHROMEOS)
+
+#if defined(USE_ASH)
+const char kOpenAsh[]                       = "open-ash";
+#endif
 
 #if defined(OS_POSIX) && !defined(OS_MACOSX) && !defined(OS_CHROMEOS)
 // These flags show the man page on Linux. They are equivalent to each

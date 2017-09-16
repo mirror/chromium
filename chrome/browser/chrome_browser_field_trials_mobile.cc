@@ -8,6 +8,7 @@
 
 #include "base/command_line.h"
 #include "base/metrics/field_trial.h"
+#include "base/tracked_objects.h"
 #include "build/build_config.h"
 
 #if defined(OS_ANDROID)
@@ -19,6 +20,10 @@ namespace chrome {
 void SetupMobileFieldTrials() {
 #if defined(OS_ANDROID)
   prerender::ConfigurePrerender();
+
+  // Force-enable profiler timing depending on the field trial.
+  if (base::FieldTrialList::FindFullName("ProfilerTiming") == "Enable")
+    tracked_objects::ThreadData::EnableProfilerTiming();
 #endif
 }
 

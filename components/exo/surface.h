@@ -23,7 +23,6 @@
 #include "ui/aura/window.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/native_widget_types.h"
-#include "ui/gfx/transform.h"
 
 namespace base {
 namespace trace_event {
@@ -261,9 +260,6 @@ class Surface final : public ui::PropertyHandler {
   // will be called.
   void UpdateResource(LayerTreeFrameSinkHolder* frame_sink_holder);
 
-  // Updates buffer_transform_ to match the current buffer parameters.
-  void UpdateBufferTransform();
-
   // Puts the current surface into a draw quad, and appends the draw quads into
   // the |frame|.
   void AppendContentsToFrame(const gfx::Point& origin,
@@ -344,10 +340,6 @@ class Surface final : public ui::PropertyHandler {
 
   // This is true if UpdateResources() should be called.
   bool needs_update_resource_ = true;
-
-  // The current buffer transform matrix. It specifies the transformation from
-  // normalized buffer coordinates to post-tranform buffer coordinates.
-  gfx::Transform buffer_transform_;
 
   // This is set when the compositing starts and passed to active frame
   // callbacks when compositing successfully ends.

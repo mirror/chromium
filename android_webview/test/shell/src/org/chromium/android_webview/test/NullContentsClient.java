@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.ConsoleMessage;
 import android.webkit.GeolocationPermissions;
+import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 
 import org.chromium.android_webview.AwContentsClient;
@@ -26,7 +27,6 @@ import org.chromium.android_webview.JsPromptResultReceiver;
 import org.chromium.android_webview.JsResultReceiver;
 import org.chromium.android_webview.SafeBrowsingAction;
 import org.chromium.android_webview.permission.AwPermissionRequest;
-import org.chromium.base.Callback;
 import org.chromium.base.ThreadUtils;
 
 import java.security.Principal;
@@ -62,7 +62,8 @@ public class NullContentsClient extends AwContentsClient {
     }
 
     @Override
-    public void getVisitedHistory(Callback<String[]> callback) {}
+    public void getVisitedHistory(ValueCallback<String[]> callback) {
+    }
 
     @Override
     public void doUpdateVisitedHistory(String url, boolean isReload) {
@@ -98,8 +99,8 @@ public class NullContentsClient extends AwContentsClient {
     }
 
     @Override
-    public void onReceivedSslError(Callback<Boolean> callback, SslError error) {
-        callback.onResult(false);
+    public void onReceivedSslError(ValueCallback<Boolean> callback, SslError error) {
+        callback.onReceiveValue(false);
     }
 
     @Override
@@ -115,8 +116,9 @@ public class NullContentsClient extends AwContentsClient {
     }
 
     @Override
-    public void showFileChooser(
-            Callback<String[]> uploadFilePathsCallback, FileChooserParamsImpl fileChooserParams) {}
+    public void showFileChooser(ValueCallback<String[]> uploadFilePathsCallback,
+            FileChooserParamsImpl fileChooserParams) {
+    }
 
     @Override
     public void onGeolocationPermissionsShowPrompt(String origin,
@@ -183,8 +185,8 @@ public class NullContentsClient extends AwContentsClient {
 
     @Override
     public void onSafeBrowsingHit(AwWebResourceRequest request, int threatType,
-            Callback<AwSafeBrowsingResponse> callback) {
-        callback.onResult(new AwSafeBrowsingResponse(SafeBrowsingAction.SHOW_INTERSTITIAL,
+            ValueCallback<AwSafeBrowsingResponse> callback) {
+        callback.onReceiveValue(new AwSafeBrowsingResponse(SafeBrowsingAction.SHOW_INTERSTITIAL,
                 /* reporting */ true));
     }
 

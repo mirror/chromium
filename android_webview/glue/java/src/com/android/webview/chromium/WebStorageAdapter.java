@@ -8,7 +8,6 @@ import android.webkit.ValueCallback;
 import android.webkit.WebStorage;
 
 import org.chromium.android_webview.AwQuotaManagerBridge;
-import org.chromium.base.Callback;
 import org.chromium.base.ThreadUtils;
 
 import java.util.HashMap;
@@ -31,10 +30,10 @@ final class WebStorageAdapter extends WebStorage {
 
     @Override
     public void getOrigins(final ValueCallback<Map> callback) {
-        final Callback<AwQuotaManagerBridge.Origins> awOriginsCallback =
-                new Callback<AwQuotaManagerBridge.Origins>() {
+        final ValueCallback<AwQuotaManagerBridge.Origins> awOriginsCallback =
+                new ValueCallback<AwQuotaManagerBridge.Origins>() {
                     @Override
-                    public void onResult(AwQuotaManagerBridge.Origins origins) {
+                    public void onReceiveValue(AwQuotaManagerBridge.Origins origins) {
                         Map<String, Origin> originsMap = new HashMap<String, Origin>();
                         for (int i = 0; i < origins.mOrigins.length; ++i) {
                             Origin origin = new Origin(
@@ -67,15 +66,13 @@ final class WebStorageAdapter extends WebStorage {
             mFactory.addTask(new Runnable() {
                 @Override
                 public void run() {
-                    mQuotaManagerBridge.getUsageForOrigin(
-                            origin, CallbackConverter.fromValueCallback(callback));
+                    mQuotaManagerBridge.getUsageForOrigin(origin, callback);
                 }
 
             });
             return;
         }
-        mQuotaManagerBridge.getUsageForOrigin(
-                origin, CallbackConverter.fromValueCallback(callback));
+        mQuotaManagerBridge.getUsageForOrigin(origin, callback);
     }
 
     @Override
@@ -84,15 +81,13 @@ final class WebStorageAdapter extends WebStorage {
             mFactory.addTask(new Runnable() {
                 @Override
                 public void run() {
-                    mQuotaManagerBridge.getQuotaForOrigin(
-                            origin, CallbackConverter.fromValueCallback(callback));
+                    mQuotaManagerBridge.getQuotaForOrigin(origin, callback);
                 }
 
             });
             return;
         }
-        mQuotaManagerBridge.getQuotaForOrigin(
-                origin, CallbackConverter.fromValueCallback(callback));
+        mQuotaManagerBridge.getQuotaForOrigin(origin, callback);
     }
 
     @Override

@@ -77,15 +77,13 @@ final class GeolocationPermissionsAdapter extends GeolocationPermissions {
             mFactory.addTask(new Runnable() {
                 @Override
                 public void run() {
-                    mChromeGeolocationPermissions.getAllowed(
-                            origin, CallbackConverter.fromValueCallback(callback));
+                    mChromeGeolocationPermissions.getAllowed(origin, callback);
                 }
 
             });
             return;
         }
-        mChromeGeolocationPermissions.getAllowed(
-                origin, CallbackConverter.fromValueCallback(callback));
+        mChromeGeolocationPermissions.getAllowed(origin, callback);
     }
 
     @Override
@@ -94,14 +92,13 @@ final class GeolocationPermissionsAdapter extends GeolocationPermissions {
             mFactory.addTask(new Runnable() {
                 @Override
                 public void run() {
-                    mChromeGeolocationPermissions.getOrigins(
-                            CallbackConverter.fromValueCallback(callback));
+                    mChromeGeolocationPermissions.getOrigins(callback);
                 }
 
             });
             return;
         }
-        mChromeGeolocationPermissions.getOrigins(CallbackConverter.fromValueCallback(callback));
+        mChromeGeolocationPermissions.getOrigins(callback);
     }
 
     private static boolean checkNeedsPost() {

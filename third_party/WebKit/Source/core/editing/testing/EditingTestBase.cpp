@@ -7,7 +7,6 @@
 #include "core/dom/Document.h"
 #include "core/dom/Range.h"
 #include "core/dom/Text.h"
-#include "core/editing/SelectionTemplate.h"
 #include "core/editing/testing/SelectionSample.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/html/HTMLCollection.h"

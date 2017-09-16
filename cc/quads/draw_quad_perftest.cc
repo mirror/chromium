@@ -12,16 +12,15 @@
 #include "components/viz/common/quads/texture_draw_quad.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/perf/perf_test.h"
-#include "third_party/skia/include/core/SkBlendMode.h"
 
-namespace viz {
+namespace cc {
 namespace {
 
 static const int kTimeLimitMillis = 2000;
 static const int kWarmupRuns = 5;
 static const int kTimeCheckInterval = 10;
 
-SharedQuadState* CreateSharedQuadState(RenderPass* render_pass) {
+viz::SharedQuadState* CreateSharedQuadState(viz::RenderPass* render_pass) {
   gfx::Transform quad_transform = gfx::Transform(1.0, 0.0, 0.5, 1.0, 0.5, 0.0);
   gfx::Rect content_rect(26, 28);
   gfx::Rect visible_layer_rect(10, 12, 14, 16);
@@ -32,7 +31,7 @@ SharedQuadState* CreateSharedQuadState(RenderPass* render_pass) {
   int sorting_context_id = 65536;
   SkBlendMode blend_mode = SkBlendMode::kSrcOver;
 
-  SharedQuadState* state = render_pass->CreateAndAppendSharedQuadState();
+  viz::SharedQuadState* state = render_pass->CreateAndAppendSharedQuadState();
   state->SetAll(quad_transform, content_rect, visible_layer_rect, clip_rect,
                 is_clipped, are_contents_opaque, opacity, blend_mode,
                 sorting_context_id);
@@ -47,8 +46,8 @@ class DrawQuadPerfTest : public testing::Test {
                kTimeCheckInterval) {}
 
   void CreateRenderPass() {
-    render_pass_ = RenderPass::Create();
-    SharedQuadState* new_shared_state(
+    render_pass_ = viz::RenderPass::Create();
+    viz::SharedQuadState* new_shared_state(
         CreateSharedQuadState(render_pass_.get()));
     shared_state_ = render_pass_->CreateAndAppendSharedQuadState();
     *shared_state_ = *new_shared_state;
@@ -59,12 +58,13 @@ class DrawQuadPerfTest : public testing::Test {
     shared_state_ = nullptr;
   }
 
-  void GenerateTextureDrawQuads(int count, std::vector<DrawQuad*>* quads) {
+  void GenerateTextureDrawQuads(int count, std::vector<viz::DrawQuad*>* quads) {
     for (int i = 0; i < count; ++i) {
-      auto* quad = render_pass_->CreateAndAppendDrawQuad<TextureDrawQuad>();
+      auto* quad =
+          render_pass_->CreateAndAppendDrawQuad<viz::TextureDrawQuad>();
       gfx::Rect rect(0, 0, 100, 100);
       bool needs_blending = false;
-      ResourceId resource_id = 1;
+      viz::ResourceId resource_id = 1;
       bool premultiplied_alpha = true;
       gfx::PointF uv_top_left(0, 0);
       gfx::PointF uv_bottom_right(1, 1);
@@ -83,13 +83,13 @@ class DrawQuadPerfTest : public testing::Test {
 
   void RunIterateResourceTest(const std::string& test_name, int quad_count) {
     CreateRenderPass();
-    std::vector<DrawQuad*> quads;
+    std::vector<viz::DrawQuad*> quads;
     GenerateTextureDrawQuads(quad_count, &quads);
 
     timer_.Reset();
     do {
       for (auto* quad : quads) {
-        for (ResourceId& resource_id : quad->resources)
+        for (viz::ResourceId& resource_id : quad->resources)
           ++resource_id;
       }
       timer_.NextLap();
@@ -101,9 +101,9 @@ class DrawQuadPerfTest : public testing::Test {
   }
 
  private:
-  std::unique_ptr<RenderPass> render_pass_;
-  SharedQuadState* shared_state_;
-  cc::LapTimer timer_;
+  std::unique_ptr<viz::RenderPass> render_pass_;
+  viz::SharedQuadState* shared_state_;
+  LapTimer timer_;
 };
 
 TEST_F(DrawQuadPerfTest, IterateResources) {
@@ -113,4 +113,4 @@ TEST_F(DrawQuadPerfTest, IterateResources) {
 }
 
 }  // namespace
-}  // namespace viz
+}  // namespace cc

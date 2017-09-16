@@ -27,7 +27,6 @@
 #include "core/SVGNames.h"
 #include "core/XMLNames.h"
 #include "core/editing/FrameSelection.h"
-#include "core/editing/SelectionTemplate.h"
 #include "core/editing/VisiblePosition.h"
 #include "core/editing/VisibleUnits.h"
 #include "core/frame/LocalFrame.h"

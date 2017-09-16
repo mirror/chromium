@@ -20,7 +20,6 @@ source_set("tools") {
     "//ios/chrome/browser/ui/coordinators",
     "//ios/chrome/browser/ui/tools_menu:configuration",
     "//ios/clean/chrome/browser/ui/commands",
-    "//ios/clean/chrome/browser/ui/overlays",
     "//ios/clean/chrome/browser/ui/transitions",
     "//ios/web",
     "//ui/base",
