@@ -240,8 +240,13 @@ public class DownloadActivityTest {
                 0, mStubbedProvider.getDownloadDelegate().removeDownloadCallback.getCallCount());
         Assert.assertEquals(
                 0, mStubbedProvider.getOfflinePageBridge().deleteItemCallback.getCallCount());
-        ThreadUtils.runOnUiThread(() -> Assert.assertTrue(mUi.getDownloadManagerToolbarForTests()
-                    .getMenu().performIdentifierAction(R.id.selection_mode_delete_menu_id, 0)));
+        ThreadUtils.runOnUiThread(
+                ()
+                        -> Assert.assertTrue(
+                                mUi.getDownloadManagerToolbarForTests()
+                                        .getMenu()
+                                        .performIdentifierAction(
+                                                R.id.selection_mode_delete_menu_id, 0)));
 
         mStubbedProvider.getDownloadDelegate().removeDownloadCallback.waitForCallback(0);
         Assert.assertEquals(
@@ -294,8 +299,13 @@ public class DownloadActivityTest {
 
         // Click the delete button.
         callCount = mAdapterObserver.onSpaceDisplayUpdatedCallback.getCallCount();
-        ThreadUtils.runOnUiThread(() -> Assert.assertTrue(mUi.getDownloadManagerToolbarForTests()
-                    .getMenu().performIdentifierAction(R.id.selection_mode_delete_menu_id, 0)));
+        ThreadUtils.runOnUiThread(
+                ()
+                        -> Assert.assertTrue(
+                                mUi.getDownloadManagerToolbarForTests()
+                                        .getMenu()
+                                        .performIdentifierAction(
+                                                R.id.selection_mode_delete_menu_id, 0)));
         mAdapterObserver.onSpaceDisplayUpdatedCallback.waitForCallback(callCount);
 
         // Assert that items are temporarily removed from the adapter. The two selected items,
@@ -362,8 +372,13 @@ public class DownloadActivityTest {
 
         // Click the delete button.
         callCount = mAdapterObserver.onSpaceDisplayUpdatedCallback.getCallCount();
-        ThreadUtils.runOnUiThread(() -> Assert.assertTrue(mUi.getDownloadManagerToolbarForTests()
-                    .getMenu().performIdentifierAction(R.id.selection_mode_delete_menu_id, 0)));
+        ThreadUtils.runOnUiThread(
+                ()
+                        -> Assert.assertTrue(
+                                mUi.getDownloadManagerToolbarForTests()
+                                        .getMenu()
+                                        .performIdentifierAction(
+                                                R.id.selection_mode_delete_menu_id, 0)));
         mAdapterObserver.onSpaceDisplayUpdatedCallback.waitForCallback(callCount);
 
         // Assert that the two items and their date bucket are temporarily removed from the adapter.

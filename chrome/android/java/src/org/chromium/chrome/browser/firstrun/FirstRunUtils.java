@@ -30,8 +30,7 @@ public class FirstRunUtils {
         //   - checkAnyUserHasSeenToS() may be true which needs to sync its state to the prefs.
         boolean javaPrefValue = javaPrefs.getBoolean(CACHED_TOS_ACCEPTED_PREF, false);
         boolean nativePrefValue = prefsBridge.isFirstRunEulaAccepted();
-        boolean userHasSeenTos =
-                ToSAckedReceiver.checkAnyUserHasSeenToS();
+        boolean userHasSeenTos = ToSAckedReceiver.checkAnyUserHasSeenToS();
         boolean isFirstRunComplete = FirstRunStatus.getFirstRunFlowComplete();
         if (javaPrefValue || nativePrefValue || userHasSeenTos || isFirstRunComplete) {
             if (!javaPrefValue) {

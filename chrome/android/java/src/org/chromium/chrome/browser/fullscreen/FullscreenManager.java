@@ -21,7 +21,8 @@ public abstract class FullscreenManager {
 
     private final FullscreenHtmlApiHandler mHtmlApiHandler;
     private boolean mOverlayVideoMode;
-    @Nullable private Tab mTab;
+    @Nullable
+    private Tab mTab;
 
     /**
      * Constructs the basic ChromeTab oriented FullscreenManager.
@@ -122,7 +123,8 @@ public abstract class FullscreenManager {
     /**
      * @return The currently selected tab for fullscreen.
      */
-    @Nullable public Tab getTab() {
+    @Nullable
+    public Tab getTab() {
         return mTab;
     }
 
