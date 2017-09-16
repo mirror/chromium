@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f5e7e8b_fd1879aa",
+        "filename": "chrome/browser/autocomplete/keyword_extensions_delegate_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-16T01:02:39Z",
+      "side": 1,
+      "message": "Nit: I still like using \u0026\u0026 in place of ? (and dropping \" : false\"), but whichever",
+      "revId": "090cf248bbd6836dc648dbdc4ffa5754fd8bfd2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "484e2142_187c4c62",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-16T01:02:39Z",
+      "side": 1,
+      "message": "Nit: Shorter:\n\n  const auto pred \u003d [\u0026match](const AutocompleteMatch\u0026 i) {\n    return i.contents \u003d\u003d match.contents \u0026\u0026 i.type \u003d\u003d match.type;\n  };\n  base::EraseIf(matches_, pred);\n\nThis isn\u0027t quite the same (it will try to erase all matches and not just the first), but that shouldn\u0027t be a problem.",
+      "revId": "090cf248bbd6836dc648dbdc4ffa5754fd8bfd2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd90642_d8d7537f",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-16T01:02:39Z",
+      "side": 1,
+      "message": "Is this the right predicate?  I\u0027m not sure checking the contents and type are correct.  I think we want to check that the |keyword| and |fill_into_edit| fields match, since those together should uniquely identify one of these matches.\n\nMy worry with |contents| + |type| is that checking the type is probably not necessary, and checking the |contents| is probably not sufficient.  In the case of the search provider it probably works, but I\u0027m not sure it does here.",
+      "revId": "090cf248bbd6836dc648dbdc4ffa5754fd8bfd2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d78b7a6e_969494ad",
+        "filename": "components/omnibox/browser/keyword_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-16T01:02:39Z",
+      "side": 1,
+      "message": "Nit: Since this is very short and only called once, I\u0027d probably inline it into the caller.",
+      "revId": "090cf248bbd6836dc648dbdc4ffa5754fd8bfd2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
