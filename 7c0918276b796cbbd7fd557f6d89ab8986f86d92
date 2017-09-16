@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "cda41aa6_3a089053",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/framework.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-09-16T00:15:01Z",
+      "side": 1,
+      "message": "This CL doesn\u0027t alter the initiator, we\u0027re just exposing it to extensions. I was surprised by this behavior when first testing. For the primary use case of this field, not being populated when navigation is initiated by an extension isn\u0027t a deal breaker.\n\nIt\u0027d be nice if navigation events initiated by extensions had a populated initiator with PlzNavigate. This is something that nasko@ (CCd) is probably more familiar with and may be able to comment on.",
+      "parentUuid": "02d384bc_35b17901",
+      "range": {
+        "startLine": 107,
+        "startChar": 3,
+        "endLine": 107,
+        "endChar": 25
+      },
+      "revId": "7c0918276b796cbbd7fd557f6d89ab8986f86d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd82c0e1_0027aa31",
+        "filename": "chrome/test/data/extensions/api_test/webrequest/framework.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-09-16T00:15:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58a9bf45_cec35331",
+      "range": {
+        "startLine": 107,
+        "startChar": 48,
+        "endLine": 107,
+        "endChar": 58
+      },
+      "revId": "7c0918276b796cbbd7fd557f6d89ab8986f86d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c60f708d_e1193fbf",
         "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/manifest.json",
         "patchSetId": 12
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-14T11:13:59Z",
       "side": 1,
       "message": "is this needed?",
+      "range": {
+        "startLine": 7,
+        "startChar": 7,
+        "endLine": 7,
+        "endChar": 11
+      },
+      "revId": "7c0918276b796cbbd7fd557f6d89ab8986f86d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50047133_7a20ca85",
+        "filename": "chrome/test/data/extensions/api_test/webrequest_permissions/initiator/manifest.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-09-16T00:15:01Z",
+      "side": 1,
+      "message": "Thanks, this was left over from the initial testing format.",
+      "parentUuid": "c60f708d_e1193fbf",
       "range": {
         "startLine": 7,
         "startChar": 7,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "447c5edf_fe6863e1",
+        "filename": "extensions/browser/api/web_request/web_request_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 653,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-09-16T00:15:01Z",
+      "side": 1,
+      "message": "IIUC, when an extension attempts to add a listener, the browser checks whether the particular extensions has defined the proper permission (e.g. webRequestBlocking). If it hasn\u0027t, an error is returned to the extensions. If the extension does have the necessary permissions, a listener is created with the extra_info_spec provided from the extension which doesn\u0027t change from then on. There are no further permission checks for extra_info_spec toggled fields after this point. For example if an extension requests the \"requestBody\" the only permissions check that will be done is on the URL which determines whether to dispatch the event or not.\n\nThe initiator field is a bit different since we\u0027re doing a permissions check on the value of the initiator which changes from call to call. Without this, we\u0027d be leaking the scheme \u0026 host of web requests regardless of whether the user has a matching host permission.",
+      "parentUuid": "b8026524_49b77d1b",
+      "range": {
+        "startLine": 653,
+        "startChar": 39,
+        "endLine": 653,
+        "endChar": 57
+      },
+      "revId": "7c0918276b796cbbd7fd557f6d89ab8986f86d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2dd6e4bb_8880b475",
         "filename": "extensions/browser/api/web_request/web_request_event_details.cc",
         "patchSetId": 12
@@ -105,6 +201,24 @@
       "writtenOn": "2017-09-14T11:13:59Z",
       "side": 1,
       "message": "Can we move this code to web_request_permissions.h/cc?",
+      "revId": "7c0918276b796cbbd7fd557f6d89ab8986f86d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fba0d091_7d78e76f",
+        "filename": "extensions/browser/api/web_request/web_request_event_details.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-09-16T00:15:01Z",
+      "side": 1,
+      "message": "This is mostly validating private variables before calling an existing WebRequestPermissions function, then updating a local variable. I made a WebRequestPermission::CanExtensionAccessInitiator which cleans this up a bit, is that what you were looking for?",
+      "parentUuid": "2dd6e4bb_8880b475",
       "revId": "7c0918276b796cbbd7fd557f6d89ab8986f86d92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -154,6 +268,54 @@
       "revId": "7c0918276b796cbbd7fd557f6d89ab8986f86d92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b8baecb_13924443",
+        "filename": "extensions/common/api/web_request.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-09-16T00:15:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a92c3c4a_d5fba40a",
+      "range": {
+        "startLine": 207,
+        "startChar": 57,
+        "endLine": 207,
+        "endChar": 61
+      },
+      "revId": "7c0918276b796cbbd7fd557f6d89ab8986f86d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c78d9697_ee3fd458",
+        "filename": "extensions/common/api/web_request.json",
+        "patchSetId": 12
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1146654
+      },
+      "writtenOn": "2017-09-16T00:15:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4833bf60_e88579a4",
+      "range": {
+        "startLine": 207,
+        "startChar": 107,
+        "endLine": 207,
+        "endChar": 108
+      },
+      "revId": "7c0918276b796cbbd7fd557f6d89ab8986f86d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
