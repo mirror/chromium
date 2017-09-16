@@ -210,6 +210,30 @@
       "revId": "741d4866a8da734ae3f2906fb499865e4d01c961",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3e57e12_4f1ac1c0",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-16T00:09:57Z",
+      "side": 1,
+      "message": "Actually, I did think of a way to meaningfully test this in the short term: I now check that every element in the webvr subtree belongs to one of the correct draw phases.",
+      "parentUuid": "048da179_6e966c18",
+      "range": {
+        "startLine": 529,
+        "startChar": 26,
+        "endLine": 529,
+        "endChar": 42
+      },
+      "revId": "741d4866a8da734ae3f2906fb499865e4d01c961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
