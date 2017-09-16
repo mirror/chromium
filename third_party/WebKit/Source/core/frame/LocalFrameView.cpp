@@ -2173,7 +2173,7 @@ void LocalFrameView::ScrollbarExistenceMaybeChanged() {
   Element* custom_scrollbar_element = nullptr;
 
   bool uses_overlay_scrollbars =
-      ScrollbarTheme::GetTheme().UsesOverlayScrollbars() &&
+      GetPageScrollbarTheme().UsesOverlayScrollbars() &&
       !ShouldUseCustomScrollbars(custom_scrollbar_element);
 
   if (!uses_overlay_scrollbars && NeedsLayout())
@@ -4265,7 +4265,7 @@ void LocalFrameView::ComputeScrollbarExistence(
 
 void LocalFrameView::UpdateScrollbarEnabledState() {
   bool force_disabled =
-      ScrollbarTheme::GetTheme().ShouldDisableInvisibleScrollbars() &&
+      GetPageScrollbarTheme().ShouldDisableInvisibleScrollbars() &&
       ScrollbarsHidden();
 
   if (HorizontalScrollbar()) {
@@ -4348,7 +4348,7 @@ bool LocalFrameView::AdjustScrollbarExistence(
 
   Element* custom_scrollbar_element = nullptr;
   bool uses_overlay_scrollbars =
-      ScrollbarTheme::GetTheme().UsesOverlayScrollbars() &&
+      GetPageScrollbarTheme().UsesOverlayScrollbars() &&
       !ShouldUseCustomScrollbars(custom_scrollbar_element);
 
   if (!uses_overlay_scrollbars)
@@ -5534,6 +5534,13 @@ void LocalFrameView::SetAnimationHost(
 
 LayoutUnit LocalFrameView::CaretWidth() const {
   return LayoutUnit(GetChromeClient()->WindowToViewportScalar(1));
+}
+
+ScrollbarTheme& LocalFrameView::GetPageScrollbarTheme() const {
+  Page* page = frame_->GetPage();
+  DCHECK(page);
+
+  return page->GetScrollbarTheme();
 }
 
 }  // namespace blink
