@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d12ed9fc_f7e704c5",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipper.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-16T05:59:13Z",
+      "side": 1,
+      "message": "Why infinity? I would expect it to be somefinite value, since it is always initialized\nto something above.\n\nAlso, the comment is correct that it really is an optimization, so it can get bigger without\ncorrectness problems.",
+      "parentUuid": "89cb4115_1827aad9",
+      "revId": "e189e785990c3a5a57f055953cc00881db57c26d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b06cd83_575b9c3d",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerClipperTest.cpp",
         "patchSetId": 4
