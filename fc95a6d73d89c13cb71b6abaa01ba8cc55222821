@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7c791b25_8dbca92c",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-16T02:30:59Z",
+      "side": 1,
+      "message": "Even as a private method, doesn\u0027t hurt. :)  Done.",
+      "parentUuid": "da8f1252_2567b7ff",
+      "range": {
+        "startLine": 185,
+        "startChar": 58,
+        "endLine": 185,
+        "endChar": 68
+      },
+      "revId": "fc95a6d73d89c13cb71b6abaa01ba8cc55222821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9e27e65_15b91322",
         "filename": "extensions/renderer/gin_port.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "fc95a6d73d89c13cb71b6abaa01ba8cc55222821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074564e1_decf5417",
+        "filename": "extensions/renderer/gin_port.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-16T02:30:59Z",
+      "side": 1,
+      "message": "Good point; renamed.",
+      "parentUuid": "c9e27e65_15b91322",
+      "range": {
+        "startLine": 212,
+        "startChar": 14,
+        "endLine": 212,
+        "endChar": 29
+      },
+      "revId": "fc95a6d73d89c13cb71b6abaa01ba8cc55222821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "59bb4bb8_9ea9b8d9",
+        "filename": "extensions/renderer/gin_port.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-16T02:30:59Z",
+      "side": 1,
+      "message": "Good call!  Done.",
+      "parentUuid": "62843c00_fc958a1d",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 13
+      },
+      "revId": "fc95a6d73d89c13cb71b6abaa01ba8cc55222821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "372d6d54_c6cab44a",
         "filename": "extensions/renderer/gin_port.h",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "fc95a6d73d89c13cb71b6abaa01ba8cc55222821",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3336799_8138a6ef",
+        "filename": "extensions/renderer/gin_port.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-16T02:30:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "372d6d54_c6cab44a",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 22
+      },
+      "revId": "fc95a6d73d89c13cb71b6abaa01ba8cc55222821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
