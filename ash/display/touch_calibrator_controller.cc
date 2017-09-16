@@ -10,6 +10,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "ui/display/screen.h"
+#include "ui/events/devices/device_data_manager.h"
 #include "ui/events/event.h"
 #include "ui/events/event_constants.h"
 
@@ -37,6 +38,8 @@ void TouchCalibratorController::StartCalibration(
     const display::Display& target_display,
     const TouchCalibratorController::TouchCalibrationCallback& callback) {
   is_calibrating_ = true;
+  is_custom_touch_calibration_ = false;
+
   callback_ = callback;
 
   Shell::Get()->window_tree_host_manager()->AddObserver(this);
@@ -44,6 +47,9 @@ void TouchCalibratorController::StartCalibration(
 
   // Clear all touch calibrator views used in any previous calibration.
   touch_calibrator_views_.clear();
+
+  // Set the touchdevice id as invalid so it can be set during calibration.
+  touchdevice_id_ = ui::InputDevice::kInvalidId;
 
   // Reset the calibration data.
   touch_point_quad_.fill(std::make_pair(gfx::Point(0, 0), gfx::Point(0, 0)));
@@ -64,7 +70,7 @@ void TouchCalibratorController::StartCalibration(
 }
 
 void TouchCalibratorController::StopCalibration() {
-  if (!is_calibrating_)
+  if (!is_calibrating_ && !is_custom_touch_calibration_)
     return;
   is_calibrating_ = false;
 
@@ -76,15 +82,60 @@ void TouchCalibratorController::StopCalibration() {
   Shell::Get()->RemovePreTargetHandler(this);
 
   // Transition all touch calibrator views to their final state for a graceful
-  // exit.
-  for (const auto& it : touch_calibrator_views_)
-    it.second->SkipToFinalState();
+  // exit if this is touch calibration with native UX.
+  if (!is_custom_touch_calibration_) {
+    for (const auto& it : touch_calibrator_views_)
+      it.second->SkipToFinalState();
+  }
+
+  is_custom_touch_calibration_ = false;
 
   if (callback_) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
                                                   base::Bind(callback_, false));
     callback_.Reset();
   }
+}
+
+void TouchCalibratorController::SetupCustomCalibration(
+    const display::Display& target_display) {
+  if (is_calibrating_ || is_custom_touch_calibration_)
+    return;
+  is_custom_touch_calibration_ = true;
+
+  target_display_ = target_display;
+
+  // Set the touchdevice id as invalid so it can be set during calibration.
+  touchdevice_id_ = ui::InputDevice::kInvalidId;
+
+  Shell::Get()->touch_transformer_controller()->SetForCalibration(true);
+
+  // Add self as an event handler target.
+  Shell::Get()->AddPreTargetHandler(this);
+}
+
+void TouchCalibratorController::CompleteCalibration(
+    const CalibrationPointPairQuad& pairs,
+    const gfx::Size& display_size) {
+  StopCalibration();
+
+  const std::vector<ui::TouchscreenDevice>& device_list =
+      ui::DeviceDataManager::GetInstance()->GetTouchscreenDevices();
+  for (const auto& device : device_list) {
+    if (device.id == touchdevice_id_) {
+      uint32_t touch_device_identifier =
+          display::TouchCalibrationData::GenerateTouchDeviceIdentifier(
+              device.name, device.vendor_id, device.product_id);
+
+      Shell::Get()->display_manager()->SetTouchCalibrationData(
+          target_display_.id(), pairs, display_size, touch_device_identifier);
+      return;
+    }
+  }
+
+  NOTREACHED() << "No touchdevice with id: " << touchdevice_id_ << " found to "
+               << "complete touch calibration for display with id: "
+               << target_display_.id();
 }
 
 // ui::EventHandler:
@@ -99,13 +150,21 @@ void TouchCalibratorController::OnKeyEvent(ui::KeyEvent* key) {
 }
 
 void TouchCalibratorController::OnTouchEvent(ui::TouchEvent* touch) {
-  if (!is_calibrating_)
+  if (!is_calibrating_ && !is_custom_touch_calibration_)
     return;
   if (touch->type() != ui::ET_TOUCH_RELEASED)
     return;
   if (base::Time::Now() - last_touch_timestamp_ < kTouchIntervalThreshold)
     return;
   last_touch_timestamp_ = base::Time::Now();
+
+  if (touchdevice_id_ == ui::InputDevice::kInvalidId)
+    touchdevice_id_ = touch->source_device_id();
+
+  // If this is a custom touch calibration, then everything else is managed
+  // by the application responsible for the custom calibration UX.
+  if (is_custom_touch_calibration_)
+    return;
 
   TouchCalibratorView* target_screen_calibration_view =
       touch_calibrator_views_[target_display_.id()].get();
@@ -119,10 +178,9 @@ void TouchCalibratorController::OnTouchEvent(ui::TouchEvent* touch) {
           FROM_HERE, base::Bind(callback_, true));
       callback_.Reset();
     }
-    StopCalibration();
-    Shell::Get()->display_manager()->SetTouchCalibrationData(
-        target_display_.id(), touch_point_quad_,
-        target_screen_calibration_view->size());
+
+    CompleteCalibration(touch_point_quad_,
+                        target_screen_calibration_view->size());
     return;
   }
 
