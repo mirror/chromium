@@ -37,7 +37,9 @@ CanvasRenderingContext::CanvasRenderingContext(
     CanvasRenderingContextHost* host,
     const CanvasContextCreationAttributes& attrs)
     : host_(host),
-      color_params_(kLegacyCanvasColorSpace, kRGBA8CanvasPixelFormat),
+      color_params_(kLegacyCanvasColorSpace,
+                    kRGBA8CanvasPixelFormat,
+                    kNonOpaque),
       creation_attributes_(attrs) {
   if (CanvasColorParams::ColorCorrectRenderingEnabled()) {
     color_params_.SetCanvasColorSpace(kSRGBCanvasColorSpace);
@@ -65,7 +67,7 @@ CanvasRenderingContext::CanvasRenderingContext(
 }
 
 WTF::String CanvasRenderingContext::ColorSpaceAsString() const {
-  switch (color_params_.color_space()) {
+  switch (color_params_.ColorSpace()) {
     case kLegacyCanvasColorSpace:
       return kLegacyCanvasColorSpaceName;
     case kSRGBCanvasColorSpace:
@@ -80,7 +82,7 @@ WTF::String CanvasRenderingContext::ColorSpaceAsString() const {
 }
 
 WTF::String CanvasRenderingContext::PixelFormatAsString() const {
-  switch (color_params_.pixel_format()) {
+  switch (color_params_.PixelFormat()) {
     case kRGBA8CanvasPixelFormat:
       return kRGBA8CanvasPixelFormatName;
     case kRGB10A2CanvasPixelFormat:

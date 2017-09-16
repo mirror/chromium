@@ -66,53 +66,6 @@ enum {
                                   // two animation frames behind.
 };
 
-static void ReleaseMailboxImageResource(
-    RefPtr<blink::StaticBitmapImage>&& image,
-    bool lost_resource) {
-  if (lost_resource)
-    image->Abandon();
-  // Image going out of scope takes care of resource clean-up in
-  // AccelStaticBitmapImage and MailboxTextureHolder destructors.
-}
-
-// Resets Skia's texture bindings. This method should be called after
-// changing texture bindings.
-static void ResetSkiaTextureBinding(
-    WeakPtr<blink::WebGraphicsContext3DProviderWrapper>
-        context_provider_wrapper) {
-  if (!context_provider_wrapper)
-    return;
-  GrContext* gr_context =
-      context_provider_wrapper->ContextProvider()->GetGrContext();
-  if (gr_context)
-    gr_context->resetContext(kTextureBinding_GrGLBackendState);
-}
-
-// Releases all resources associated with a CHROMIUM image.
-static void DeleteCHROMIUMImage(
-    WeakPtr<blink::WebGraphicsContext3DProviderWrapper>
-        context_provider_wrapper,
-    std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer,
-    const GLuint& image_id,
-    const GLuint& texture_id) {
-  if (!context_provider_wrapper)
-    return;
-  gpu::gles2::GLES2Interface* gl =
-      context_provider_wrapper->ContextProvider()->ContextGL();
-
-  if (gl) {
-    GLenum target = GC3D_TEXTURE_RECTANGLE_ARB;
-    gl->BindTexture(target, texture_id);
-    gl->ReleaseTexImage2DCHROMIUM(target, image_id);
-    gl->DestroyImageCHROMIUM(image_id);
-    gl->DeleteTextures(1, &texture_id);
-    gl->BindTexture(target, 0);
-    gpu_memory_buffer.reset();
-
-    ResetSkiaTextureBinding(context_provider_wrapper);
-  }
-}
-
 }  // namespace
 
 namespace blink {
@@ -182,15 +135,13 @@ static sk_sp<SkSurface> CreateSkSurface(GrContext* gr,
 
 Canvas2DLayerBridge::Canvas2DLayerBridge(const IntSize& size,
                                          int msaa_sample_count,
-                                         OpacityMode opacity_mode,
                                          AccelerationMode acceleration_mode,
                                          const CanvasColorParams& color_params,
                                          bool is_unit_test)
-    : ImageBufferSurface(size, opacity_mode, color_params),
+    : ImageBufferSurface(size, color_params),
       logger_(WTF::WrapUnique(new Logger)),
       weak_ptr_factory_(this),
       image_buffer_(0),
-      msaa_sample_count_(msaa_sample_count),
       bytes_allocated_(0),
       have_recorded_draw_commands_(false),
       destruction_in_progress_(false),
@@ -198,11 +149,7 @@ Canvas2DLayerBridge::Canvas2DLayerBridge(const IntSize& size,
       is_hidden_(false),
       is_deferral_enabled_(true),
       software_rendering_while_hidden_(false),
-      last_image_id_(0),
-      last_filter_(GL_LINEAR),
       acceleration_mode_(acceleration_mode),
-      opacity_mode_(opacity_mode),
-      size_(size),
       color_params_(color_params) {
   if (acceleration_mode != kDisableAcceleration) {
     context_provider_wrapper_ = SharedGpuContext::ContextProviderWrapper();
@@ -228,6 +175,8 @@ Canvas2DLayerBridge::~Canvas2DLayerBridge() {
 }
 
 void Canvas2DLayerBridge::Init() {
+  // TODO(junov): Get rid of this. Resource providers are supposed to clear on
+  // init.
   Clear();
   if (CheckSurfaceValid())
     FlushInternal();
@@ -237,7 +186,7 @@ void Canvas2DLayerBridge::StartRecording() {
   DCHECK(is_deferral_enabled_);
   recorder_ = WTF::WrapUnique(new PaintRecorder);
   PaintCanvas* canvas =
-      recorder_->beginRecording(size_.Width(), size_.Height());
+      recorder_->beginRecording(Size().Width(), Size().Height());
   // Always save an initial frame, to support resetting the top level matrix
   // and clip.
   canvas->save();
@@ -253,8 +202,7 @@ void Canvas2DLayerBridge::SetLoggerForTesting(std::unique_ptr<Logger> logger) {
 }
 
 void Canvas2DLayerBridge::ResetSurface() {
-  surface_paint_canvas_.reset();
-  surface_.reset();
+  resource_provider_.reset();
 }
 
 bool Canvas2DLayerBridge::ShouldAccelerate(AccelerationHint hint) const {
@@ -289,7 +237,7 @@ bool Canvas2DLayerBridge::IsAccelerated() const {
     // (|m_surface| is null) with restoration pending.
     return true;
   }
-  if (surface_)  // && !m_layer is implied
+  if (resource_provider_)  // && !m_layer is implied
     return false;
 
   // Whether or not to accelerate is not yet resolved. Determine whether
@@ -297,10 +245,6 @@ bool Canvas2DLayerBridge::IsAccelerated() const {
   // accelerated. Presentation is assumed to be a 'PreferAcceleration'
   // operation.
   return ShouldAccelerate(kPreferAcceleration);
-}
-
-GLenum Canvas2DLayerBridge::GetGLFilter() {
-  return filter_quality_ == kNone_SkFilterQuality ? GL_NEAREST : GL_LINEAR;
 }
 
 bool Canvas2DLayerBridge::PrepareGpuMemoryBufferMailboxFromImage(

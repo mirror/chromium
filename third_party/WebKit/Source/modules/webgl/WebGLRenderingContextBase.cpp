@@ -7553,7 +7553,7 @@ ImageBuffer* WebGLRenderingContextBase::LRUImageBufferCache::GetImageBuffer(
     ImageBuffer* buf = buffers_[i].get();
     if (!buf)
       break;
-    if (buf->size() != size)
+    if (buf->Size() != size)
       continue;
     BubbleToFront(i);
     return buf;
