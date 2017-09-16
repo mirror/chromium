@@ -34,7 +34,8 @@ class NotificationPlatformBridge {
                        const std::string& notification_id,
                        const std::string& profile_id,
                        bool is_incognito,
-                       const Notification& notification) = 0;
+                       const Notification& notification,
+                       const NotificationCommon::Metadata* metadata) = 0;
 
   // Closes a nofication with |notification_id| and |profile_id| if being
   // displayed.
