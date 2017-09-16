@@ -78,11 +78,9 @@ class PLATFORM_EXPORT ClipPaintPropertyNode
            clip_rect_ == o.clip_rect_ &&
            direct_compositing_reasons_ == o.direct_compositing_reasons_;
   }
-
-  String ToTreeString() const;
 #endif
 
-  String ToString() const;
+  std::unique_ptr<JSONObject> ToJSON() const;
 
   bool HasDirectCompositingReasons() const {
     return direct_compositing_reasons_ != kCompositingReasonNone;

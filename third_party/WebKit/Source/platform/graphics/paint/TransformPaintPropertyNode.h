@@ -149,11 +149,9 @@ class PLATFORM_EXPORT TransformPaintPropertyNode
            compositor_element_id_ == o.compositor_element_id_ &&
            scroll_ == o.scroll_;
   }
-
-  String ToTreeString() const;
 #endif
 
-  String ToString() const;
+  std::unique_ptr<JSONObject> ToJSON() const;
 
  private:
   TransformPaintPropertyNode(
