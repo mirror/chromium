@@ -36,6 +36,22 @@ namespace internal {
 
 namespace {
 
+// Whether there's a SchedulerSingleThreadTaskRunnerManager instance alive in
+// this process. This variable should only be set when the
+// SchedulerSingleThreadTaskRunnerManager instance is brought up (on the main
+// thread; before any tasks are posted) and decremented when the instance is
+// brought down (never in production and when the task environment is teared
+// down in unit tests). This makes the variable const while worker threads are
+// up and as such it doesn't need to be atomic. It is used to tell when a task
+// is posted from the main thread after the task environment was brought down in
+// unit tests so that SchedulerSingleThreadTaskRunnerManager bound TaskRunners
+// can return false on PostTask, letting such callers know they should complete
+// necessary work synchronously. Note: |!g_manager_is_alive| is generally
+// equivalent to |!TaskScheduler::GetInstance()| but has the advantage of being
+// valid in task_scheduler unit tests that don't instantiate a full
+// TaskScheduler.
+bool g_manager_is_alive = false;
+
 // Allows for checking the PlatformThread::CurrentRef() against a set
 // PlatformThreadRef atomically without using locks.
 class AtomicThreadRefChecker {
@@ -258,6 +274,9 @@ class SchedulerSingleThreadTaskRunnerManager::SchedulerSingleThreadTaskRunner
   bool PostDelayedTask(const Location& from_here,
                        OnceClosure closure,
                        TimeDelta delay) override {
+    if (!g_manager_is_alive)
+      return false;
+
     auto task =
         std::make_unique<Task>(from_here, std::move(closure), traits_, delay);
     task->single_thread_task_runner_ref = this;
@@ -339,10 +358,15 @@ SchedulerSingleThreadTaskRunnerManager::SchedulerSingleThreadTaskRunnerManager(
                 "The size of |shared_com_scheduler_workers_| must match "
                 "|shared_scheduler_workers_|");
 #endif  // defined(OS_WIN)
+  DCHECK(!g_manager_is_alive);
+  g_manager_is_alive = true;
 }
 
 SchedulerSingleThreadTaskRunnerManager::
     ~SchedulerSingleThreadTaskRunnerManager() {
+  DCHECK(g_manager_is_alive);
+  g_manager_is_alive = false;
+
 #if DCHECK_IS_ON()
   size_t workers_unregistered_during_join =
       subtle::NoBarrier_Load(&workers_unregistered_during_join_);
