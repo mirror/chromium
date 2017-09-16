@@ -13,11 +13,30 @@
 #include "chrome/browser/ui/webui/print_preview/privet_printer_handler.h"
 #endif
 
+#if defined(OS_CHROMEOS)
+#include "chrome/browser/ui/webui/print_preview/local_printer_handler_chromeos.h"
+#else
+#include "chrome/browser/ui/webui/print_preview/local_printer_handler_default.h"
+#endif
+
 // static
 std::unique_ptr<PrinterHandler> PrinterHandler::CreateForExtensionPrinters(
     Profile* profile) {
   return base::MakeUnique<ExtensionPrinterHandler>(profile);
 }
+
+#if defined(OS_CHROMEOS)
+// static
+std::unique_ptr<PrinterHandler> PrinterHandler::CreateForLocalPrinters(
+    Profile* profile) {
+  return base::MakeUnique<LocalPrinterHandlerChromeos>(profile);
+}
+#else
+// static
+std::unique_ptr<PrinterHandler> PrinterHandler::CreateForLocalPrinters() {
+  return base::MakeUnique<LocalPrinterHandlerDefault>();
+}
+#endif
 
 // static
 std::unique_ptr<PrinterHandler> PrinterHandler::CreateForPdfPrinter(
