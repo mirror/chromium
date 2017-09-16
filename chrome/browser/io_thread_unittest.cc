@@ -173,13 +173,7 @@ class IOThreadTestWithIOThreadObject : public testing::Test {
 
  private:
   base::ShadowingAtExitManager at_exit_manager_;
-  TestingPrefServiceSimple pref_service_;
-#if BUILDFLAG(ENABLE_EXTENSIONS)
-  scoped_refptr<extensions::EventRouterForwarder> event_router_forwarder_;
-#endif
-  policy::PolicyMap policy_map_;
-  policy::MockPolicyService policy_service_;
-  SystemNetworkContextManager system_network_context_manager_;
+
   // The ordering of the declarations of |io_thread_object_| and
   // |thread_bundle_| matters. An IOThread cannot be deleted until all of
   // the globals have been reset to their initial state via CleanUp. As
@@ -187,7 +181,16 @@ class IOThreadTestWithIOThreadObject : public testing::Test {
   // CleanUp(), the IOThread must be declared before the bundle, so that
   // the bundle is deleted first.
   std::unique_ptr<IOThread> io_thread_;
+  // |thread_bundle_| must outlive the services below.
   content::TestBrowserThreadBundle thread_bundle_;
+
+  TestingPrefServiceSimple pref_service_;
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  scoped_refptr<extensions::EventRouterForwarder> event_router_forwarder_;
+#endif
+  policy::PolicyMap policy_map_;
+  policy::MockPolicyService policy_service_;
+  SystemNetworkContextManager system_network_context_manager_;
 };
 
 TEST_F(IOThreadTestWithIOThreadObject, UpdateNegotiateDisableCnameLookup) {
