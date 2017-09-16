@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b5918434_9fccbb10",
+        "filename": "third_party/WebKit/Source/platform/geometry/FloatRoundedRect.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-16T01:10:30Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e872c89b_098537f3",
+      "revId": "b5b82a070c3ae621abfcb3d408b088c1de5c3200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a8dd4e2_a2a614c0",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintPropertyNode.h",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "098ba28e_a1a1df06",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintPropertyNode.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-16T01:10:30Z",
+      "side": 1,
+      "message": "The string itself is not escaped. The \"\u003c\u003c\" operator escapes WTF::String. If we want non-escaped dump we need:\n  LOG(INFO) \u003c\u003c \"overflow clip: \" \u003c\u003c properties.OverflowClip()-\u003eToString().Utf8().data();\n\nThe situation is the same in gdb. Our blink gdb helper also prints WTF::String escaped. I need to use \u0027printf \"%s\", something.ToString().Utf8(0).data()\u0027 in gdb to print the original string.",
+      "parentUuid": "2a8dd4e2_a2a614c0",
+      "revId": "b5b82a070c3ae621abfcb3d408b088c1de5c3200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59dde6be_1f66678a",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/ScrollPaintPropertyNode.cpp",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-15T22:28:44Z",
       "side": 1,
       "message": "Did bounds_ get dropped? Somewhat confusingly, there are two bounds values on scroll nodes: one for the total scrolling area, and one for the clipped area.",
+      "revId": "b5b82a070c3ae621abfcb3d408b088c1de5c3200",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cdb16e6_0246174f",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/ScrollPaintPropertyNode.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-09-16T01:10:30Z",
+      "side": 1,
+      "message": "Sorry, I missed bounds_. Added.",
+      "parentUuid": "59dde6be_1f66678a",
       "revId": "b5b82a070c3ae621abfcb3d408b088c1de5c3200",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
