@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2da4b64a_8dfd68a1",
+        "filename": "device/hid/hid_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-09-16T00:19:09Z",
+      "side": 1,
+      "message": "static initializer is banned, so use the lazyInstance here. See https://chromium.googlesource.com/chromium/src/+/master/docs/static_initializers.md.",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 18
+      },
+      "revId": "5ad313242cb460d7332be10fb04d3abe1619ed35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
