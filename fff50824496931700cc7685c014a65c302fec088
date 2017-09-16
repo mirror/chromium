@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e182628_aeec0dc0",
+        "filename": "ui/webui/resources/js/cr/ui/focus_outline_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-16T01:43:45Z",
+      "side": 1,
+      "message": "Would this work the same?\n\nvar manager \u003d docsToManager.get(doc);\nif (manager \u003d\u003d\u003d undefined) {\n\nIt reads cleaner to me because I don\u0027t have to deduce that the \"|| null\" is just settings up sentinel value.\nAnd it\u0027s one less conditional check, though that\u0027s not really a big deal. I\u0027m suggesting it on readability, it just happens to save a few cpu cycles as well.",
+      "revId": "fff50824496931700cc7685c014a65c302fec088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
