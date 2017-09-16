@@ -16,6 +16,8 @@
 
 namespace vr {
 
+namespace {
+
 template <typename F>
 void ForAllElements(UiElement* e, F f) {
   f(e);
@@ -36,6 +38,21 @@ UiElement* FindElement(UiElement* e, P predicate) {
   }
   return nullptr;
 }
+
+template <typename P>
+std::vector<const RenderableElement*> GetRenderableElements(UiElement* e,
+                                                            P predicate) {
+  std::vector<const RenderableElement*> elements;
+  ForAllElements(e, [&elements, predicate](UiElement* element) {
+    if (element->AsRenderableElement() && element->IsVisible() &&
+        predicate(element)) {
+      elements.push_back(element->AsRenderableElement());
+    }
+  });
+  return elements;
+}
+
+}  // namespace
 
 void UiScene::AddUiElement(UiElementName parent,
                            std::unique_ptr<UiElement> element) {
@@ -102,45 +119,36 @@ UiElement* UiScene::GetUiElementByName(UiElementName name) const {
   });
 }
 
-std::vector<const UiElement*> UiScene::GetWorldElements() const {
-  std::vector<const UiElement*> elements;
-  ForAllElements(root_element_.get(), [&elements](UiElement* element) {
-    if (element->IsVisible() && !element->viewport_aware() &&
-        !element->is_overlay()) {
-      elements.push_back(element);
-    }
-  });
-  return elements;
+std::vector<const RenderableElement*> UiScene::Get2dBrowsingElements() const {
+  return GetRenderableElements(
+      GetUiElementByName(k2dBrowsingRoot), [](UiElement* element) {
+        return element->draw_phase() <= kPhaseForeground;
+      });
 }
 
-std::vector<const UiElement*> UiScene::GetOverlayElements() const {
-  std::vector<const UiElement*> elements;
-  ForAllElements(root_element_.get(), [&elements](UiElement* element) {
-    if (element->IsVisible() && element->is_overlay()) {
-      elements.push_back(element);
-    }
-  });
-  return elements;
+std::vector<const RenderableElement*> UiScene::Get2dBrowsingOverlayElements()
+    const {
+  return GetRenderableElements(
+      GetUiElementByName(k2dBrowsingRoot), [](UiElement* element) {
+        return element->draw_phase() == kPhaseOverlayBackground ||
+               element->draw_phase() == kPhaseOverlayForeground;
+      });
 }
 
-std::vector<const UiElement*> UiScene::GetViewportAwareElements() const {
-  std::vector<const UiElement*> elements;
-  ForAllElements(root_element_.get(), [&elements](UiElement* element) {
-    if (!element->viewport_aware())
-      return;
+std::vector<const RenderableElement*>
+UiScene::GetWebVrOverlayBackgroundElements() const {
+  return GetRenderableElements(
+      GetUiElementByName(kWebVrRoot), [](UiElement* element) {
+        return element->draw_phase() == kPhaseOverlayBackground;
+      });
+}
 
-    // Note that we need to exclude ViewportAwareRoot element. It is not a
-    // visual element. Currently all of ViewportAwareRoot's children sets
-    // viewport aware to true. So we check if the element's parent is a viewport
-    // aware element to detect ViewportAwareRoot.
-    if (element->parent() && !element->parent()->viewport_aware())
-      return;
-
-    if (element->IsVisible()) {
-      elements.push_back(element);
-    }
-  });
-  return elements;
+std::vector<const RenderableElement*>
+UiScene::GetWebVrOverlayForegroundElements() const {
+  return GetRenderableElements(
+      GetUiElementByName(kWebVrRoot), [](UiElement* element) {
+        return element->draw_phase() == kPhaseOverlayForeground;
+      });
 }
 
 UiScene::UiScene() {
