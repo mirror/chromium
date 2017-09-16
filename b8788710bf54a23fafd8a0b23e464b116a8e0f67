@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33493f7e_603e6af3",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-16T00:44:00Z",
+      "side": 1,
+      "message": "Now mPendingShowActionMode is useless actually\n\nBut I am wondering if I should rename it to mWaitingAdjustmentCall or similar, so I can use it to ignore any showSelectionMenu() call in between of the original showSelectionMenu() call and the adjustment triggered showSelectionMenu() call.",
+      "range": {
+        "startLine": 242,
+        "startChar": 16,
+        "endLine": 242,
+        "endChar": 38
+      },
+      "revId": "b8788710bf54a23fafd8a0b23e464b116a8e0f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
