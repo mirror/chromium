@@ -1140,7 +1140,6 @@ split_static_library("ui") {
     if (enable_extensions) {
       deps += [
         "//apps",
-        "//apps/ui/views",
         "//extensions/common:mojo",
       ]
     }
@@ -1577,6 +1576,7 @@ split_static_library("ui") {
       "views/update_recommended_message_box.h",
     ]
     deps += [
+      "//apps/ui/views",
       "//chrome/browser/ui/views",
       "//components/constrained_window",
       "//components/payments/content",
