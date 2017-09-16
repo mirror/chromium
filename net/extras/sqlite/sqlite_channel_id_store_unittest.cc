@@ -12,6 +12,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "crypto/ec_private_key.h"
 #include "net/cert/asn1_util.h"
@@ -50,23 +51,14 @@ class SQLiteChannelIDStoreTest : public testing::Test {
   }
 
  protected:
-  static void ReadTestKeyAndCert(std::string* key_data,
-                                 std::string* cert_data,
-                                 std::unique_ptr<crypto::ECPrivateKey>* key) {
+  static void ReadTestKey(std::string* key_data,
+                          std::unique_ptr<crypto::ECPrivateKey>* key) {
     base::FilePath key_path =
-        GetTestCertsDirectory().AppendASCII("unittest.originbound.key.der");
-    base::FilePath cert_path =
-        GetTestCertsDirectory().AppendASCII("unittest.originbound.der");
+        GetTestCertsDirectory().AppendASCII("unittest.channelid_key.der");
     ASSERT_TRUE(base::ReadFileToString(key_path, key_data));
-    ASSERT_TRUE(base::ReadFileToString(cert_path, cert_data));
     std::vector<uint8_t> private_key(key_data->size());
     memcpy(private_key.data(), key_data->data(), key_data->size());
-    base::StringPiece spki;
-    ASSERT_TRUE(asn1::ExtractSPKIFromDERCert(*cert_data, &spki));
-    std::vector<uint8_t> public_key(spki.size());
-    memcpy(public_key.data(), spki.data(), spki.size());
-    *key = crypto::ECPrivateKey::CreateFromEncryptedPrivateKeyInfo(private_key,
-                                                                   public_key);
+    *key = crypto::ECPrivateKey::CreateFromPrivateKeyInfo(private_key);
   }
 
   static base::Time GetTestCertExpirationTime() {
@@ -235,7 +227,7 @@ TEST_F(SQLiteChannelIDStoreTest, TestUpgradeV1) {
   std::string key_data;
   std::string cert_data;
   std::unique_ptr<crypto::ECPrivateKey> key;
-  ASSERT_NO_FATAL_FAILURE(ReadTestKeyAndCert(&key_data, &cert_data, &key));
+  ASSERT_NO_FATAL_FAILURE(ReadTestKey(&key_data, &key));
 
   // Create a version 1 database.
   {
@@ -303,7 +295,7 @@ TEST_F(SQLiteChannelIDStoreTest, TestUpgradeV2) {
   std::string key_data;
   std::string cert_data;
   std::unique_ptr<crypto::ECPrivateKey> key;
-  ASSERT_NO_FATAL_FAILURE(ReadTestKeyAndCert(&key_data, &cert_data, &key));
+  ASSERT_NO_FATAL_FAILURE(ReadTestKey(&key_data, &key));
 
   // Create a version 2 database.
   {
@@ -347,11 +339,7 @@ TEST_F(SQLiteChannelIDStoreTest, TestUpgradeV2) {
 
     // Load the database and ensure the certs can be read.
     Load(&channel_ids);
-    ASSERT_EQ(1U, channel_ids.size());
-
-    ASSERT_EQ("google.com", channel_ids[0]->server_identifier());
-    ASSERT_EQ(GetTestCertCreationTime(), channel_ids[0]->creation_time());
-    EXPECT_TRUE(KeysEqual(key.get(), channel_ids[0]->key()));
+    ASSERT_EQ(0U, channel_ids.size());
 
     store_ = NULL;
     // Make sure we wait until the destructor has run.
@@ -379,7 +367,7 @@ TEST_F(SQLiteChannelIDStoreTest, TestUpgradeV3) {
   std::string key_data;
   std::string cert_data;
   std::unique_ptr<crypto::ECPrivateKey> key;
-  ASSERT_NO_FATAL_FAILURE(ReadTestKeyAndCert(&key_data, &cert_data, &key));
+  ASSERT_NO_FATAL_FAILURE(ReadTestKey(&key_data, &key));
 
   // Create a version 3 database.
   {
@@ -425,11 +413,7 @@ TEST_F(SQLiteChannelIDStoreTest, TestUpgradeV3) {
 
     // Load the database and ensure the certs can be read.
     Load(&channel_ids);
-    ASSERT_EQ(1U, channel_ids.size());
-
-    ASSERT_EQ("google.com", channel_ids[0]->server_identifier());
-    ASSERT_EQ(GetTestCertCreationTime(), channel_ids[0]->creation_time());
-    EXPECT_TRUE(KeysEqual(key.get(), channel_ids[0]->key()));
+    ASSERT_EQ(0U, channel_ids.size());
 
     store_ = NULL;
     // Make sure we wait until the destructor has run.
@@ -457,7 +441,7 @@ TEST_F(SQLiteChannelIDStoreTest, TestUpgradeV4) {
   std::string key_data;
   std::string cert_data;
   std::unique_ptr<crypto::ECPrivateKey> key;
-  ASSERT_NO_FATAL_FAILURE(ReadTestKeyAndCert(&key_data, &cert_data, &key));
+  ASSERT_NO_FATAL_FAILURE(ReadTestKey(&key_data, &key));
 
   // Create a version 4 database.
   {
@@ -519,11 +503,7 @@ TEST_F(SQLiteChannelIDStoreTest, TestUpgradeV4) {
 
     // Load the database and ensure the certs can be read.
     Load(&channel_ids);
-    ASSERT_EQ(1U, channel_ids.size());
-
-    ASSERT_EQ("google.com", channel_ids[0]->server_identifier());
-    ASSERT_EQ(GetTestCertCreationTime(), channel_ids[0]->creation_time());
-    EXPECT_TRUE(KeysEqual(key.get(), channel_ids[0]->key()));
+    ASSERT_EQ(0U, channel_ids.size());
 
     store_ = NULL;
     // Make sure we wait until the destructor has run.
@@ -551,7 +531,7 @@ TEST_F(SQLiteChannelIDStoreTest, TestUpgradeV5) {
   std::string key_data;
   std::string cert_data;
   std::unique_ptr<crypto::ECPrivateKey> key;
-  ASSERT_NO_FATAL_FAILURE(ReadTestKeyAndCert(&key_data, &cert_data, &key));
+  ASSERT_NO_FATAL_FAILURE(ReadTestKey(&key_data, &key));
 
   // Create a version 5 database.
   {
