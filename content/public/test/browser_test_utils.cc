@@ -2247,4 +2247,11 @@ MockOverscrollController* MockOverscrollController::Create(
 
 #endif  // defined(USE_AURA)
 
+void GetSnapshotFromBrowser(RenderWidgetHost* render_widget_host,
+                            const GetSnapshotFromBrowserCallback& callback,
+                            bool from_surface) {
+  static_cast<RenderWidgetHostImpl*>(render_widget_host)
+      ->GetSnapshotFromBrowser(callback, from_surface);
+}
+
 }  // namespace content

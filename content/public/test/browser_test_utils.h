@@ -44,6 +44,7 @@
 #endif
 
 namespace gfx {
+class Image;
 class Point;
 }
 
@@ -944,6 +945,20 @@ class MockOverscrollController {
   virtual void WaitForConsumedScroll() = 0;
 };
 #endif  // defined(USE_AURA)
+
+// Forces redraw in the renderer and when the update reaches the browser.
+// Grabs snapshot from the compositor.
+// If |from_surface| is false, it will obtain the snapshot directly from the
+// view (On MacOS, the snapshot is taken from the Cocoa view for end-to-end
+// testing purposes).
+// Otherwise, the snapshot is obtained from the view's surface, with no bounds
+// defined.
+// Returns a gfx::Image that is backed by an NSImage on MacOS or by an
+// SkBitmap otherwise. The gfx::Image may be empty if the snapshot failed.
+using GetSnapshotFromBrowserCallback = base::Callback<void(const gfx::Image&)>;
+void GetSnapshotFromBrowser(RenderWidgetHost* render_widget_host,
+                            const GetSnapshotFromBrowserCallback& callback,
+                            bool from_surface);
 
 }  // namespace content
 

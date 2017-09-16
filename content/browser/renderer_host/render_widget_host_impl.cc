@@ -2489,6 +2489,11 @@ void RenderWidgetHostImpl::OnSnapshotFromSurfaceReceived(
     int retry_count,
     const SkBitmap& bitmap,
     ReadbackResponse response) {
+  // If we're being called during destruction, skip doing any work
+  // because otherwise attempting to call the callbacks may crash.
+  if (destroyed_)
+    return;
+
   static const int kMaxRetries = 5;
   if (response != READBACK_SUCCESS && retry_count < kMaxRetries) {
     GetView()->CopyFromSurface(
