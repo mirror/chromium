@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "121f7226_70e6e4cf",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-16T00:25:04Z",
+      "side": 1,
+      "message": "Nit: {} unnecessary",
+      "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ca7a27a_36c05215",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-16T00:25:04Z",
+      "side": 1,
+      "message": "Nit: {} unnecessary",
+      "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

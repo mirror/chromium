@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "c939ece0_2734093e",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-16T00:25:04Z",
+      "side": 1,
+      "message": "The reason you need {} in switches sometimes is to scope variable definitions.  This conditional body does not declare a variable.",
+      "parentUuid": "20150cb9_84bf3bf1",
+      "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "012a3221_99761b61",
         "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
         "patchSetId": 10
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "I changed it to set the new_tab_promo_ to nullptr in onWidgetDestroying instead. Can you explain what you mean by sync-vs.-async close?\n\nThere should only be one new tab promo ever showing for a user, unless the user has multiple browsers with different profiles open at the same time. But even then, due to CloseBubbleForLastActiveBrowser which gets the current active browser, it should only close the respective promo open for that particular one. Am I misunderstanding something?",
       "parentUuid": "e600d55b_30fcfa29",
+      "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c90171e_2350d4c6",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-16T00:25:04Z",
+      "side": 1,
+      "message": "Sync vs. async close is the issue of when the widget is destroyed versus when you ask it to close: synchronously in the same call stack, asynchronously via posting a task or similar, or sometimes one/sometimes the other.  If the widget is ever synchronously destroyed, then moving the nulling where you have won\u0027t cause this function to return the right thing, whereas if it\u0027s always asynchronously destroyed you\u0027re fine.  You should be sure which case you\u0027re in.\n\nFor multiple promos showing, I mean sequentially rather than simultaneously: let\u0027s say we decide we should show a promo after it has previously been shown and closed.  (For example, if we decide to make the promo policy \"show up to n times\" in the future).",
+      "parentUuid": "ad7f2c3a_0b6161ea",
       "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
