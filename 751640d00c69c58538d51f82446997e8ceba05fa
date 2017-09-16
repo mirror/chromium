@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d15e910_a4ce82e7",
+        "filename": "chrome/browser/ui/views/outdated_upgrade_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-16T01:09:43Z",
+      "side": 1,
+      "message": "I don\u0027t like this route because it breaks if 320 is legitimately too small (say, for a user with really big fonts + a locale with longer words/larger glyphs).\n\nWe really should be trying to compute the minimum label width in terms of some number of average character widths, then allowing the actual label width to be \"the dialog width minus the margins\"; then we should set the number of character widths to something that produces reasonable line-breaking.  (It may need to be a localizable value.)",
+      "revId": "751640d00c69c58538d51f82446997e8ceba05fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de38d7a9_579a0dd5",
+        "filename": "chrome/browser/ui/views/outdated_upgrade_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-16T01:09:43Z",
+      "side": 1,
+      "message": "You checked with the relevant feature owners that this histogram change makes sense to them?",
+      "revId": "751640d00c69c58538d51f82446997e8ceba05fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
