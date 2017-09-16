@@ -6,8 +6,10 @@
 #define PaintPropertyNode_h
 
 #include "platform/PlatformExport.h"
+#include "platform/json/JSONValues.h"
 #include "platform/wtf/RefCounted.h"
 #include "platform/wtf/RefPtr.h"
+#include "platform/wtf/text/WTFString.h"
 
 namespace blink {
 
@@ -73,6 +75,15 @@ class PaintPropertyNode : public RefCounted<NodeType> {
     for (auto* n = this; n; n = n->Parent())
       n->changed_ = false;
   }
+
+  String ToString() const {
+    return static_cast<const NodeType*>(this)->ToJSON()->ToJSONString();
+  }
+
+#if DCHECK_IS_ON()
+  // Defined in PropertyTreeState.h.
+  String ToTreeString() const;
+#endif
 
  protected:
   PaintPropertyNode(RefPtr<const NodeType> parent)
