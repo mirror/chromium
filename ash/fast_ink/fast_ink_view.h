@@ -28,7 +28,6 @@ class Widget;
 }
 
 namespace ash {
-struct FastInkResource;
 
 // FastInkView is a view supporting low-latency rendering.
 class FastInkView : public views::View, public cc::LayerTreeFrameSinkClient {
@@ -64,6 +63,17 @@ class FastInkView : public views::View, public cc::LayerTreeFrameSinkClient {
   virtual void OnRedraw(gfx::Canvas& canvas) = 0;
 
  private:
+  struct Resource {
+    Resource();
+    ~Resource();
+
+    scoped_refptr<viz::ContextProvider> context_provider;
+    uint32_t texture = 0;
+    uint32_t image = 0;
+    gpu::Mailbox mailbox;
+    bool exported = false;
+  };
+
   void UpdateBuffer();
   void UpdateSurface();
   void OnDidDrawSurface();
@@ -77,9 +87,9 @@ class FastInkView : public views::View, public cc::LayerTreeFrameSinkClient {
   bool needs_update_surface_ = false;
   bool pending_draw_surface_ = false;
   int next_resource_id_ = 1;
-  base::flat_map<viz::ResourceId, std::unique_ptr<FastInkResource>>
+  base::flat_map<viz::ResourceId, std::unique_ptr<Resource>>
       exported_resources_;
-  std::vector<std::unique_ptr<FastInkResource>> returned_resources_;
+  std::vector<std::unique_ptr<Resource>> returned_resources_;
   std::unique_ptr<cc::LayerTreeFrameSink> frame_sink_;
   base::WeakPtrFactory<FastInkView> weak_ptr_factory_;
 
