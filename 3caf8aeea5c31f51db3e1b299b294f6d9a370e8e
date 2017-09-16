@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5ee86430_9d00f602",
+        "filename": "testing/android/proguard_for_test.flags",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-16T01:17:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3581f3b_44a975e7",
+      "revId": "3caf8aeea5c31f51db3e1b299b294f6d9a370e8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fee4ab6_80a35243",
         "filename": "testing/android/proguard_for_test.flags",
         "patchSetId": 1
