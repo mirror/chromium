@@ -28,3 +28,7 @@ Local Modifications:
    https://github.com/jtkukunas/zlib/
  - 0002-uninitializedcheck.patch: default-initialize state->check, see
    crbug.com/697481
+ - contrib/inffast64 contains optimizations to inf*.{c,h} for 64 bit archs.
+   There is no explicit .patch file for these new files. They did not
+   previously exist, so all that such a .patch file would contain is yet
+   another copy of those same files' contents.
