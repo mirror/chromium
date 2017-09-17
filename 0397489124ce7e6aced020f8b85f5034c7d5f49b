@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3779fc23_7a9cb562",
+        "filename": "third_party/zlib/contrib/arm/chunkcopy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-09-17T23:06:37Z",
+      "side": 1,
+      "message": "I don\u0027t know if it\u0027s the cause of the Cronet bug, but I\u0027m working on a similar optimization, just not ARM specific. I found a bug in my code recently, and there might be a similar one in yours.\n\nThis code gets called from the inflate_fast function. Starting from the zlib-the-library\u0027s public API, there are two paths to get to inflate_fast. One is via the inflate function, in inflate.c. Two is via the inflateBack function, in infback.c. The former is used for \u0027wrapped\u0027 wire formats like gzip and zlib-the-format (RFCs 1950 and 1952). The latter is used for \u0027raw\u0027 flate (RFC 1951). Zlib-the-library users like libpng and HTTP stacks usually go through the former. Zip libraries usually go through the latter. Chromium might only care about (and unit test for) PNG, HTTP, etc. but if you want to push your patch upstream, you will need to care about ZIP too.\n\nFor inflate.c, the library malloc\u0027s the history buffer, so it is clearly separate from the (user supplied) output buffer. However, infback.c takes a buffer (a pointer and a length) as API arguments, and the history buffer *is* the output buffer (a ring buffer). There are two implications.\n\nFirst, I\u0027m not sure if you can use Z_RESTRICT here.\n\nSecond, sometimes you are copying e.g. 16 bytes even when the length-distance pair gives a shorter length. This overwrite is generally fine if the output and history buffers are separate, but if they are the same, the overwrite can affect history and hence lead to incorrect output if the distance is sufficiently large.\n\nTo repeat, I haven\u0027t studied this chunkcopy.h that closely, so I\u0027m not confident that I\u0027ve diagnosed a problem here, but I did find that problem in my similar code, so perhaps this comment helps give at least something to think about while we\u0027re waiting for a solid repro.",
+      "revId": "0397489124ce7e6aced020f8b85f5034c7d5f49b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
