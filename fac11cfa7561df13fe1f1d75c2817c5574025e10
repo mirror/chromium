@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c54d2909_b8a55dc1",
+        "filename": "chromecast/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-09-17T04:05:00Z",
+      "side": 1,
+      "message": "TABLES ?",
+      "range": {
+        "startLine": 491,
+        "startChar": 19,
+        "endLine": 491,
+        "endChar": 24
+      },
+      "revId": "fac11cfa7561df13fe1f1d75c2817c5574025e10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93b059d9_2a6332d5",
+        "filename": "chromecast/media/cma/backend/android/volume_control_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-09-17T04:05:00Z",
+      "side": 1,
+      "message": "It might be nicer to only map to the target volume domain just before passing into Java code (and map back immediately in OnVolumeChange()); so all of the volumes in C++ code are in the normal (media) volume domain.",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 79
+      },
+      "revId": "fac11cfa7561df13fe1f1d75c2817c5574025e10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ae191b4_5fb96472",
+        "filename": "chromecast/media/cma/backend/android/volume_control_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-09-17T04:05:00Z",
+      "side": 1,
+      "message": "Don\u0027t you need to set volumes_[type] here, so GetVolume() works correctly?",
+      "revId": "fac11cfa7561df13fe1f1d75c2817c5574025e10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9458a1b5_22a92840",
+        "filename": "chromecast/media/cma/backend/android/volume_control_android.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-09-17T04:05:00Z",
+      "side": 1,
+      "message": "set muted_[type] here?",
+      "revId": "fac11cfa7561df13fe1f1d75c2817c5574025e10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
