@@ -240,9 +240,6 @@ ImageData* ImageData::Create(const IntSize& size,
                              ImageDataStorageFormat storage_format) {
   ImageDataColorSettings color_settings;
   switch (color_space) {
-    case kLegacyCanvasColorSpace:
-      color_settings.setColorSpace(kLegacyCanvasColorSpaceName);
-      break;
     case kSRGBCanvasColorSpace:
       color_settings.setColorSpace(kSRGBCanvasColorSpaceName);
       break;
@@ -318,12 +315,7 @@ ImageData* ImageData::Create(NotShared<DOMUint8ClampedArray> data,
 }
 
 bool ColorManagementEnabled(const ImageDataColorSettings& color_settings) {
-  if (CanvasColorParams::ColorCorrectRenderingInAnyColorSpace())
-    return true;
-  if (CanvasColorParams::ColorCorrectRenderingInSRGBOnly() &&
-      color_settings.colorSpace() == kSRGBCanvasColorSpaceName)
-    return true;
-  return false;
+  return RuntimeEnabledFeatures::ExperimentalCanvasFeaturesEnabled();
 }
 
 ImageData* ImageData::CreateImageData(
@@ -507,8 +499,6 @@ DOMUint8ClampedArray* ImageData::data() {
 
 CanvasColorSpace ImageData::GetCanvasColorSpace(
     const String& color_space_name) {
-  if (color_space_name == kLegacyCanvasColorSpaceName)
-    return kLegacyCanvasColorSpace;
   if (color_space_name == kSRGBCanvasColorSpaceName)
     return kSRGBCanvasColorSpace;
   if (color_space_name == kRec2020CanvasColorSpaceName)
@@ -720,14 +710,11 @@ bool ImageData::ImageDataInCanvasColorSettings(
   CanvasColorSpace image_data_color_space =
       ImageData::GetCanvasColorSpace(color_settings_.colorSpace());
   if (canvas_pixel_format == kRGBA8CanvasPixelFormat &&
-      color_settings_.storageFormat() == kUint8ClampedArrayStorageFormatName) {
-    if ((canvas_color_space == kLegacyCanvasColorSpace ||
-         canvas_color_space == kSRGBCanvasColorSpace) &&
-        (image_data_color_space == kLegacyCanvasColorSpace ||
-         image_data_color_space == kSRGBCanvasColorSpace)) {
-      memcpy(converted_pixels.get(), data_->Data(), data_->length());
-      return true;
-    }
+      color_settings_.storageFormat() == kUint8ClampedArrayStorageFormatName &&
+      canvas_color_space == kSRGBCanvasColorSpace &&
+      image_data_color_space == kSRGBCanvasColorSpace) {
+    memcpy(converted_pixels.get(), data_->Data(), data_->length());
+    return true;
   }
 
   // Otherwise, color convert the pixels.

@@ -144,16 +144,9 @@ static sk_sp<SkSurface> CreateSkSurface(GrContext* gr,
 
   SkAlphaType alpha_type =
       (kOpaque == opacity_mode) ? kOpaque_SkAlphaType : kPremul_SkAlphaType;
-  // If we need color correction for all color spaces, we set the proper color
-  // space when creating the surface. If color correct rendering is only toward
-  // SRGB, we leave the surface with no color space. The painting canvas will
-  // get wrapped with a proper SkColorSpaceXformCanvas in GetOrCreateSurface().
-  sk_sp<SkColorSpace> color_space = nullptr;
-  if (CanvasColorParams::ColorCorrectRenderingInAnyColorSpace())
-    color_space = color_params.GetSkColorSpaceForSkSurfaces();
-  SkImageInfo info =
-      SkImageInfo::Make(size.Width(), size.Height(),
-                        color_params.GetSkColorType(), alpha_type, color_space);
+  SkImageInfo info = SkImageInfo::Make(
+      size.Width(), size.Height(), color_params.GetSkColorType(), alpha_type,
+      color_params.GetSkColorSpaceForSkSurfaces());
   SkSurfaceProps disable_lcd_props(0, kUnknown_SkPixelGeometry);
   sk_sp<SkSurface> surface;
 
@@ -210,7 +203,6 @@ Canvas2DLayerBridge::Canvas2DLayerBridge(const IntSize& size,
     DCHECK(
         !context_provider_wrapper_->ContextProvider()->IsSoftwareRendering());
   }
-  DCHECK(color_params_.GetGfxColorSpace().IsValid());
   // Used by browser tests to detect the use of a Canvas2DLayerBridge.
   TRACE_EVENT_INSTANT0("test_gpu", "Canvas2DLayerBridgeCreation",
                        TRACE_EVENT_SCOPE_GLOBAL);
@@ -346,9 +338,9 @@ bool Canvas2DLayerBridge::PrepareGpuMemoryBufferMailboxFromImage(
   *out_mailbox =
       viz::TextureMailbox(mailbox, sync_token, texture_target, gfx::Size(size_),
                           is_overlay_candidate, secure_output_only);
-  gfx::ColorSpace color_space = color_params_.GetGfxColorSpace();
-  out_mailbox->set_color_space(color_space);
-  image_info->gpu_memory_buffer_->SetColorSpaceForScanout(color_space);
+  out_mailbox->set_color_space(color_params_.GetSamplerGfxColorSpace());
+  image_info->gpu_memory_buffer_->SetColorSpaceForScanout(
+      color_params_.GetStorageGfxColorSpace());
 
   gl->BindTexture(GC3D_TEXTURE_RECTANGLE_ARB, 0);
 
@@ -603,7 +595,7 @@ SkSurface* Canvas2DLayerBridge::GetOrCreateSurface(AccelerationHint hint) {
   bool surface_is_accelerated;
   surface_ = CreateSkSurface(gr, size_, msaa_sample_count_, opacity_mode_,
                              color_params_, &surface_is_accelerated);
-  if (color_params_.ColorCorrectNoColorSpaceToSRGB()) {
+  if (!color_params_.linear_pixel_math()) {
     surface_paint_canvas_ = WTF::WrapUnique(new SkiaPaintCanvas(
         surface_->getCanvas(), color_params_.GetSkColorSpace()));
   } else {
@@ -829,7 +821,7 @@ void Canvas2DLayerBridge::FlushRecordingOnly() {
     // be done using target space pixel values.
     SkCanvas* canvas = GetOrCreateSurface()->getCanvas();
     std::unique_ptr<SkCanvas> color_transform_canvas;
-    if (color_params_.ColorCorrectNoColorSpaceToSRGB()) {
+    if (!color_params_.linear_pixel_math()) {
       color_transform_canvas = SkCreateColorSpaceXformCanvas(
           canvas, color_params_.GetSkColorSpace());
       canvas = color_transform_canvas.get();
@@ -1003,7 +995,7 @@ bool Canvas2DLayerBridge::PrepareTextureMailbox(
   if (!PrepareMailboxFromImage(std::move(image), info.get(), out_mailbox))
     return false;
   out_mailbox->set_nearest_neighbor(GetGLFilter() == GL_NEAREST);
-  out_mailbox->set_color_space(color_params_.GetGfxColorSpace());
+  out_mailbox->set_color_space(color_params_.GetSamplerGfxColorSpace());
 
   auto func =
       WTF::Bind(&ReleaseFrameResources, weak_ptr_factory_.CreateWeakPtr(),

@@ -248,11 +248,7 @@ ImageBuffer* OffscreenCanvas::GetOrCreateImageBuffer() {
     OpacityMode opacity_mode =
         context_->CreationAttributes().hasAlpha() ? kNonOpaque : kOpaque;
     std::unique_ptr<ImageBufferSurface> surface;
-    // TODO(zakerinasab): crbug.com/761424
-    // Remove the check for canvas color extensions to allow OffscreenCanvas
-    // use accelerated code path with color management.
-    if (!CanvasColorParams::ColorCorrectRenderingInAnyColorSpace() &&
-        RuntimeEnabledFeatures::Accelerated2dCanvasEnabled()) {
+    if (RuntimeEnabledFeatures::Accelerated2dCanvasEnabled()) {
       surface.reset(
           new AcceleratedImageBufferSurface(surface_size, opacity_mode));
     }

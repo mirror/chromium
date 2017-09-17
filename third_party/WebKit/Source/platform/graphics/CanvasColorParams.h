@@ -16,7 +16,6 @@ class ColorSpace;
 namespace blink {
 
 enum CanvasColorSpace {
-  kLegacyCanvasColorSpace,
   kSRGBCanvasColorSpace,
   kRec2020CanvasColorSpace,
   kP3CanvasColorSpace,
@@ -37,48 +36,35 @@ class PLATFORM_EXPORT CanvasColorParams {
   explicit CanvasColorParams(const SkImageInfo&);
   CanvasColorSpace color_space() const { return color_space_; }
   CanvasPixelFormat pixel_format() const { return pixel_format_; }
+  bool linear_pixel_math() const { return linear_pixel_math_; }
 
   void SetCanvasColorSpace(CanvasColorSpace);
   void SetCanvasPixelFormat(CanvasPixelFormat);
-
-  // Returns true if the canvas blends output color space values (that is,
-  // not linear space colors).
-  bool UsesOutputSpaceBlending() const;
-
-  // Returns true if color correct rendering flag is set but canvas color
-  // extensions flag is not.
-  static bool ColorCorrectRenderingInSRGBOnly();
-  // Returns true if both color correct rendering and canvas color extensions
-  // flags are set. This activates the color management pipeline for all color
-  // spaces.
-  static bool ColorCorrectRenderingInAnyColorSpace();
-  // Returns true if color correct rendering flag is set but color canvas
-  // extensions flag is not set and the color space stored in CanvasColorParams
-  // object is null.
-  bool ColorCorrectNoColorSpaceToSRGB() const;
+  void SetLinearPixelMath(bool);
 
   // The SkColorSpace to use in the SkImageInfo for allocated SkSurfaces. This
-  // is nullptr in legacy rendering mode.
+  // is nullptr if linear pixel math is disabled.
   sk_sp<SkColorSpace> GetSkColorSpaceForSkSurfaces() const;
+
+  // The SkColorSpace to use for an SkImageInfo representing this canvas'
+  // pixels. This is always valid.
+  sk_sp<SkColorSpace> GetSkColorSpace() const;
 
   // The pixel format to use for allocating SkSurfaces.
   SkColorType GetSkColorType() const;
   uint8_t BytesPerPixel() const;
 
-  // The color space to use for compositing. This will always return a valid
-  // gfx or skia color space.
-  gfx::ColorSpace GetGfxColorSpace() const;
-  sk_sp<SkColorSpace> GetSkColorSpace() const;
+  // The color space in which pixels are stored.
+  gfx::ColorSpace GetStorageGfxColorSpace() const;
 
-  // This matches CanvasRenderingContext::LinearPixelMath, and is true only when
-  // the pixel format is half-float linear.
-  // TODO(ccameron): This is not the same as !UsesOutputSpaceBlending, but
-  // perhaps should be.
-  bool LinearPixelMath() const;
+  // The color space in which values read from this canvas via a sampler (in
+  // a GL sahder) will be.
+  gfx::ColorSpace GetSamplerGfxColorSpace() const;
 
  private:
-  CanvasColorSpace color_space_ = kLegacyCanvasColorSpace;
+  CanvasColorSpace color_space_ = kSRGBCanvasColorSpace;
   CanvasPixelFormat pixel_format_ = kRGBA8CanvasPixelFormat;
+  bool linear_pixel_math_ = false;
 };
 
 }  // namespace blink
