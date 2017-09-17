@@ -92,13 +92,9 @@ class BASE_EXPORT TaskTracker {
   virtual bool IsPostingBlockShutdownTaskAfterShutdownAllowed();
 #endif
 
-  // Called at the very end of RunNextTask() after the completion of all task
-  // metrics accounting.
-  virtual void OnRunNextTaskCompleted() {}
-
   // Returns the number of undelayed tasks that haven't completed their
-  // execution.
-  int GetNumPendingUndelayedTasksForTesting() const;
+  // execution (still queued or in progress).
+  int GetNumIncompleteUndelayedTasksForTesting() const;
 
  private:
   class State;
@@ -124,9 +120,9 @@ class BASE_EXPORT TaskTracker {
   // shutdown has started.
   void OnBlockingShutdownTasksComplete();
 
-  // Decrements the number of pending undelayed tasks and signals |flush_cv_| if
-  // it reaches zero.
-  void DecrementNumPendingUndelayedTasks();
+  // Decrements the number of incomplete undelayed tasks and signals |flush_cv_|
+  // if it reaches zero.
+  void DecrementNumIncompleteUndelayedTasks();
 
   // Records the TaskScheduler.TaskLatency.[task priority].[may block] histogram
   // for |task|.
@@ -140,15 +136,15 @@ class BASE_EXPORT TaskTracker {
   // decremented with a memory barrier after a task runs. Is accessed with an
   // acquire memory barrier in Flush(). The memory barriers ensure that the
   // memory written by flushed tasks is visible when Flush() returns.
-  subtle::Atomic32 num_pending_undelayed_tasks_ = 0;
+  subtle::Atomic32 num_incomplete_undelayed_tasks_ = 0;
 
   // Lock associated with |flush_cv_|. Partially synchronizes access to
-  // |num_pending_undelayed_tasks_|. Full synchronization isn't needed because
-  // it's atomic, but synchronization is needed to coordinate waking and
+  // |num_incomplete_undelayed_tasks_|. Full synchronization isn't needed
+  // because it's atomic, but synchronization is needed to coordinate waking and
   // sleeping at the right time.
   mutable SchedulerLock flush_lock_;
 
-  // Signaled when |num_pending_undelayed_tasks_| is zero or when shutdown
+  // Signaled when |num_incomplete_undelayed_tasks_| is zero or when shutdown
   // completes.
   const std::unique_ptr<ConditionVariable> flush_cv_;
 
