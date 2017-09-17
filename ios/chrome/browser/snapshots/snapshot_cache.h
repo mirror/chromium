@@ -9,6 +9,8 @@
 
 #include "base/time/time.h"
 
+class SnapshotCacheObserver;
+
 // A singleton providing an in-memory and on-disk cache of tab snapshots.
 // A snapshot is a full-screen image of the contents of the page at the current
 // scroll offset and zoom level, used to stand in for the WKWebView if it has
@@ -61,9 +63,16 @@
 // a color version of the snapshot already exists in memory or on disk.
 - (void)saveGreyInBackgroundForSessionID:(NSString*)sessionID;
 
+// Adds an observer to this snapshot cache.
+- (void)addObserver:(SnapshotCacheObserver*)observer;
+
+// Removes an observer from this snapshot cache.
+- (void)removeObserver:(SnapshotCacheObserver*)observer;
+
 // Invoked before the instance is deallocated. Needs to release all reference
 // to C++ objects. Object will soon be deallocated.
 - (void)shutdown;
+
 @end
 
 // Additionnal methods that should only be used for tests.
