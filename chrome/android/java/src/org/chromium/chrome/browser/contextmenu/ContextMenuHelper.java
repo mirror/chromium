@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.contextmenu;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.util.Pair;
 import android.view.ContextMenu;
@@ -160,7 +161,18 @@ public class ContextMenuHelper implements OnCreateContextMenuListener {
         // The Platform Context Menu requires the listener within this helper since this helper and
         // provides context menu for us to show.
         view.setOnCreateContextMenuListener(this);
-        if (view.showContextMenu()) {
+
+        boolean wasContextMenuShown = false;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            final float density = Resources.getSystem().getDisplayMetrics().density;
+            final float touchPointXPx = params.getTriggeringTouchXDp() * density;
+            final float touchPointYPx =
+                    (params.getTriggeringTouchYDp() * density) + topContentOffsetPx;
+            wasContextMenuShown = view.showContextMenu(touchPointXPx, touchPointYPx);
+        } else {
+            wasContextMenuShown = view.showContextMenu();
+        }
+        if (wasContextMenuShown) {
             mOnMenuShown.run();
             windowAndroid.addContextMenuCloseListener(new OnCloseContextMenuListener() {
                 @Override
