@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3e4a79b7_a94cb8b4",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-17T21:51:07Z",
+      "side": 1,
+      "message": "I think I would like that, actually, if you\u0027re willing.",
+      "parentUuid": "c8fd972b_e6ac65fa",
+      "range": {
+        "startLine": 43,
+        "startChar": 18,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68bd2ea7_ee7eb178",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3bc82374_04e748ca",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-17T21:51:07Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "68bd2ea7_ee7eb178",
+      "range": {
+        "startLine": 231,
+        "startChar": 6,
+        "endLine": 231,
+        "endChar": 28
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5dcb672d_e858257f",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-15T21:18:21Z",
       "side": 1,
       "message": "Priority is unclear here.  This could be anything from a background download no one cares about to a foreground one.  We could pick a priority based on the ResourceRequest priority or something (Medium and higher -\u003e USER_BLOCKING, LOW -\u003e USER_VISIBLE, LOWEST+IDLE -\u003eBACKGROUND?)",
+      "range": {
+        "startLine": 303,
+        "startChar": 21,
+        "endLine": 303,
+        "endChar": 29
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a31f5af_76da1fa8",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-17T21:51:07Z",
+      "side": 1,
+      "message": "Oy vais.  Can we get the priority for the task runner from the current task runner, or is that a bad idea?  If not, then yeah, I think your mapping is about the best we\u0027re going to do.",
+      "parentUuid": "5dcb672d_e858257f",
       "range": {
         "startLine": 303,
         "startChar": 21,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "64f8649c_47cf056a",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-17T21:51:07Z",
+      "side": 1,
+      "message": "Yeah, this is annoying.  I went looking for some way to mock a base::File, but it doesn\u0027t seem to exist.  It wouldn\u0027t have to be a global; you could have a test-only setter on SimpleURLFileLoader which plumbs down through to SaveTofileBodyHandler to FileWriter that interposes on file creation.  Having written that out,though, a global would be cleaner :-} :-|.  \n\nI\u0027d vote in favor of the global (static test only method method on SimpleURLLoader, I think) interposing on file_ creation and creating a mock that would then be used here, but if you don\u0027t think it\u0027s worth it I\u0027m ok with that.",
+      "parentUuid": "f4afb87d_0b936189",
+      "range": {
+        "startLine": 397,
+        "startChar": 22,
+        "endLine": 397,
+        "endChar": 36
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0430c57_377bf846",
         "filename": "content/public/common/simple_url_loader.h",
         "patchSetId": 4
@@ -110,6 +206,53 @@
         "startChar": 36,
         "endLine": 64,
         "endChar": 40
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d38a6c7c_a2c6d0d9",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-17T21:51:07Z",
+      "side": 1,
+      "message": "I have minor mixed feelings about the API/implementation/layering choice implied by this.  On the one hand, putting the \"pick a file\" logic in URLFetcher for the temporary file case and leaving SimpleURLLoader to simply take a file path and download to it feels like the best separation of responsibilities to me.  On the other hand, that either disallows use of unix \"create, error if file exists\" semantics to handle collisions, or it requires SimpleURLLoader to not error if the file already exists (if the URLFetcher creates an empty file using error-if-file-exists to handle the collision case).  On the third hand, I have a feeling that error-if-file-exists is not a very common or reliable way to handle file name collisions.  Thus the mixed feelings.  \n\nI\u0027ll boil that down to: If you don\u0027t intend to handle collisions at file creation in satisfying the URLFetcher temp file functionality, I\u0027d gently pull towards a boolean here and shoving all the temp file logic into URLFetcher.  But I don\u0027t feel at all strongly about it.",
+      "parentUuid": "f0430c57_377bf846",
+      "range": {
+        "startLine": 64,
+        "startChar": 36,
+        "endLine": 64,
+        "endChar": 40
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec30a664_9c2a3861",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-17T21:51:07Z",
+      "side": 1,
+      "message": "nit: \"on any thread\"",
+      "range": {
+        "startLine": 99,
+        "startChar": 10,
+        "endLine": 99,
+        "endChar": 13
       },
       "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
