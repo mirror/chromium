@@ -811,6 +811,21 @@ bool GetFlingDataFromXEvent(const XEvent& xev,
   return true;
 }
 
+bool IsAltPressed() {
+  XDisplay* display = gfx::GetXDisplay();
+  if (display) {
+    char keys[32];  // a bit array of each key currently pressed
+    XQueryKeymap(display, keys);
+    const KeyCode alt_l = XKeysymToKeycode(display, XK_Alt_L);
+    const KeyCode alt_r = XKeysymToKeycode(display, XK_Alt_R);
+
+    return ((keys[alt_l / 8] >> (alt_l % 8)) & 1) ||
+           ((keys[alt_r / 8] >> (alt_r % 8)) & 1);
+  }
+
+  return false;
+}
+
 void ResetTimestampRolloverCountersForTesting(
     std::unique_ptr<base::TickClock> tick_clock) {
   g_last_seen_timestamp_ms = 0;
