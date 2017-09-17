@@ -3334,12 +3334,12 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, ResourcePriority) {
     *out_priority = request->priority();
   };
   RequestCounter before_swap_counter;
-  net::RequestPriority before_swap_priority = net::THROTTLED;
+  net::RequestPriority before_swap_priority = net::IDLE;
   InterceptRequestAndCount(
       before_swap_url, &before_swap_counter,
       base::Bind(get_priority_lambda, base::Unretained(&before_swap_priority)));
   RequestCounter after_swap_counter;
-  net::RequestPriority after_swap_priority = net::THROTTLED;
+  net::RequestPriority after_swap_priority = net::IDLE;
   InterceptRequestAndCount(
       after_swap_url, &after_swap_counter,
       base::Bind(get_priority_lambda, base::Unretained(&after_swap_priority)));
@@ -3376,7 +3376,9 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, ResourcePriorityOverlappingSwap) {
 
   // Setup request interceptors for subresources.
   net::URLRequest* url_request = nullptr;
-  net::RequestPriority priority = net::THROTTLED;
+  const net::RequestPriority invalid_priority =
+      static_cast<net::RequestPriority>(net::MAXIMUM_PRIORITY + 1);
+  net::RequestPriority priority = invalid_priority;
   base::RunLoop wait_loop;
   auto io_lambda = [](net::URLRequest** out_request,
                       net::RequestPriority* out_priority, base::Closure closure,
@@ -3406,13 +3408,12 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, ResourcePriorityOverlappingSwap) {
   PrerenderTestURL(main_page_url, FINAL_STATUS_USED, 0);
 
 // Check priority before swap.
-#if defined(OS_ANDROID)
-  if (priority <= net::IDLE)
+  if (priority == invalid_priority)
     wait_loop.Run();
+  EXPECT_NE(priority, invalid_priority);
+#if defined(OS_ANDROID)
   EXPECT_GT(priority, net::IDLE);
 #else
-  if (priority != net::IDLE)
-    wait_loop.Run();
   EXPECT_EQ(net::IDLE, priority);
 #endif
 
@@ -3423,7 +3424,7 @@ IN_PROC_BROWSER_TEST_F(PrerenderBrowserTest, ResourcePriorityOverlappingSwap) {
       ui::PAGE_TRANSITION_TYPED, false));
 
   // Check priority after swap. The test may timeout in case of failure.
-  priority = net::THROTTLED;
+  priority = net::IDLE;
   do {
     base::RunLoop loop;
     content::BrowserThread::PostTask(
