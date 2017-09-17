@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a294e082_82aef4f4",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-17T17:03:15Z",
+      "side": 1,
+      "message": "Good catch. That is residual from when the map of filters could be modified on another thread. I can use raw pointers here.",
+      "parentUuid": "2b33ee68_b8426072",
+      "range": {
+        "startLine": 334,
+        "startChar": 6,
+        "endLine": 334,
+        "endChar": 46
+      },
+      "revId": "30f08275fb889b435f94e38bd437cf67001a7312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1669feaa_ed586a7d",
         "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-17T08:42:59Z",
       "side": 1,
       "message": "One thing I\u0027m a little concerned about: Mojofication means a lot more implicit UTF16\u003c-\u003eUTF8 conversions, since WTF::String transparently maps to UTF8 strings in Mojo, and jbroman@ pointed out that this transformation isn\u0027t always reversible (e.g. if there are unpaired surrogates).\n\nI wonder if we should remain with string16 to be safe? It\u0027d obviously be nice to improve the long-term situation here though...",
+      "range": {
+        "startLine": 512,
+        "startChar": 32,
+        "endLine": 512,
+        "endChar": 55
+      },
+      "revId": "30f08275fb889b435f94e38bd437cf67001a7312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f160539_146494d3",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-17T17:03:15Z",
+      "side": 1,
+      "message": "The design of Mojo strings is based on the assumption that UTF16 \u003c-\u003e UTF8 is non-lossy such that we only need one encoding for strings and don\u0027t need mojom to be able to express different encodings. If that is not true / if that is a problem we want to worry about, then we have many more places in the code where this could manifest itself as an issue :-(",
+      "parentUuid": "1669feaa_ed586a7d",
       "range": {
         "startLine": 512,
         "startChar": 32,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "e8957fca_ecfcbf81",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-17T17:03:15Z",
+      "side": 1,
+      "message": "Yes, when we move away from routing IDs, we\u0027ll just have the notion of an ID for a worker.\n\nI suppose it could be more efficient here to have the iterator on hand from the map lookup. That way we wouldn\u0027t need to do two map lookups. I\u0027ll consider that...",
+      "parentUuid": "ebbf1627_62e0a2c6",
+      "revId": "30f08275fb889b435f94e38bd437cf67001a7312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f02a2bbc_ac19acb4",
         "filename": "content/common/shared_worker/shared_worker_info.mojom",
         "patchSetId": 12
@@ -76,6 +142,24 @@
       "writtenOn": "2017-09-17T08:42:59Z",
       "side": 1,
       "message": "I wonder if I\u0027m missing, but this parameter doesn\u0027t seem to be used on the renderer side. Do we need to pass it as part of this struct? Perhaps it should be its own parameter on SharedWorkerConnector::Connect?",
+      "revId": "30f08275fb889b435f94e38bd437cf67001a7312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a6aa436_be95ee8e",
+        "filename": "content/common/shared_worker/shared_worker_info.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-17T17:03:15Z",
+      "side": 1,
+      "message": "Right, it is not needed on the side that instantiates the shared worker. I\u0027ll move it out as you suggest.",
+      "parentUuid": "f02a2bbc_ac19acb4",
       "revId": "30f08275fb889b435f94e38bd437cf67001a7312",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "37b601f7_cafdd5c0",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-17T17:03:15Z",
+      "side": 1,
+      "message": "Oh, interesting. I will look into that. I don\u0027t know why the code doesn\u0027t do that to begin with.",
+      "parentUuid": "ee19d245_6d03a9e0",
+      "revId": "30f08275fb889b435f94e38bd437cf67001a7312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b271031a_d164e2ce",
         "filename": "content/renderer/shared_worker/shared_worker_factory_impl.cc",
         "patchSetId": 12
@@ -110,6 +212,24 @@
       "writtenOn": "2017-09-17T08:42:59Z",
       "side": 1,
       "message": "If \"delete this\" worked with MakeStrongBinding, would it make sense to use that instead? Perhaps we should reconsider how MakeStrongBinding works.",
+      "revId": "30f08275fb889b435f94e38bd437cf67001a7312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d46d20f_abed5425",
+        "filename": "content/renderer/shared_worker/shared_worker_factory_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-17T17:03:15Z",
+      "side": 1,
+      "message": "The reason for not using StrongBinding here is so that the implementation can itself monitor the lifetime of the pipe. The constructor calls set_connection_error_handler. Using MakeStrongBinding hides the mojo connection from the interface implementation.\n\nAnother choice would have been to split EmbeddedSharedWorkerStub into an inner object and an outer object. Then use MakeStrongBinding to construct the outer object, which would internally construct the inner object. The inner object\u0027s lifetime would be bound to the blink::WebSharedWorker. The outer object would hold a non-owning pointer to the inner object. The outer object\u0027s destructor would be the signal that the mojo connection was dropped. The outer object in response to that would signal to the inner object that it should terminate.\n\nI may make such a change in a follow-up, but for now I thought I would minimize changes to the code.",
+      "parentUuid": "b271031a_d164e2ce",
       "revId": "30f08275fb889b435f94e38bd437cf67001a7312",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
