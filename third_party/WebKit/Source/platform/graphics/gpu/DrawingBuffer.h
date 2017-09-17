@@ -518,9 +518,9 @@ class PLATFORM_EXPORT DrawingBuffer : public cc::TextureLayerClient,
   const bool want_depth_;
   const bool want_stencil_;
 
-  // The color space of this buffer. All buffers are assumed to be sRGB until
-  // a mechanism for creating otherwise is exposed to the web.
-  const gfx::ColorSpace color_space_;
+  // The color space of this buffer when used as a texture and as an overlay.
+  const gfx::ColorSpace storage_color_space_;
+  const gfx::ColorSpace sampler_color_space_;
 
   enum AntialiasingMode {
     kNone,

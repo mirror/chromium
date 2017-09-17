@@ -1083,7 +1083,6 @@ static ImageBitmapOptions PrepareBitmapOptionsAndSetRuntimeFlags(
 
   // Set the runtime flags
   RuntimeEnabledFeatures::SetExperimentalCanvasFeaturesEnabled(true);
-  RuntimeEnabledFeatures::SetColorCanvasExtensionsEnabled(true);
 
   return options;
 }

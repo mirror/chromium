@@ -13,9 +13,6 @@ SerializedColorParams::SerializedColorParams()
 
 SerializedColorParams::SerializedColorParams(CanvasColorParams color_params) {
   switch (color_params.color_space()) {
-    case kLegacyCanvasColorSpace:
-      color_space_ = SerializedColorSpace::kLegacy;
-      break;
     case kSRGBCanvasColorSpace:
       color_space_ = SerializedColorSpace::kSRGB;
       break;
@@ -67,10 +64,10 @@ SerializedColorParams::SerializedColorParams(
 }
 
 CanvasColorParams SerializedColorParams::GetCanvasColorParams() const {
-  CanvasColorSpace color_space = kLegacyCanvasColorSpace;
+  CanvasColorSpace color_space = kSRGBCanvasColorSpace;
   switch (color_space_) {
     case SerializedColorSpace::kLegacy:
-      color_space = kLegacyCanvasColorSpace;
+      color_space = kSRGBCanvasColorSpace;
       break;
     case SerializedColorSpace::kSRGB:
       color_space = kSRGBCanvasColorSpace;
