@@ -25,6 +25,7 @@
 #include "content/renderer/origin_trials/web_trial_token_validator_impl.h"
 #include "content/renderer/top_level_blame_context.h"
 #include "content/renderer/webpublicsuffixlist_impl.h"
+#include "third_party/WebKit/public/platform/file_utilities.mojom.h"
 #include "third_party/WebKit/public/platform/modules/indexeddb/WebIDBFactory.h"
 #include "third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationType.h"
 
@@ -331,6 +332,8 @@ class CONTENT_EXPORT RendererBlinkPlatformImpl : public BlinkPlatformImpl {
   content::mojom::WebDatabaseHostPtrInfo web_database_host_info_;
   scoped_refptr<content::mojom::ThreadSafeWebDatabaseHostPtr>
       web_database_host_;
+
+  blink::mojom::FileUtilitiesHostPtrInfo file_utilities_host_info_;
 
   DISALLOW_COPY_AND_ASSIGN(RendererBlinkPlatformImpl);
 };
