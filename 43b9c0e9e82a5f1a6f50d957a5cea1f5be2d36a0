@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "eacf76f4_36e8b02e",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 919,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-09-17T02:52:06Z",
+      "side": 1,
+      "message": "I played around with this a bit, and wound up moving the logic into SystemTrayClient::ShowNetworkSettingsHelper().  So now the Observer changes are no longer needed and it\u0027s a pretty simple code change.  PTAL",
+      "parentUuid": "f2285c93_fefbf60a",
+      "revId": "43b9c0e9e82a5f1a6f50d957a5cea1f5be2d36a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16d2ca81_8e6b73fc",
         "filename": "components/arc/net/arc_net_host_impl.h",
         "patchSetId": 5
