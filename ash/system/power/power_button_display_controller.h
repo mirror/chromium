@@ -9,6 +9,7 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "chromeos/dbus/power_manager_client.h"
+#include "ui/display/manager/chromeos/display_configurator.h"
 #include "ui/events/devices/input_device_event_observer.h"
 #include "ui/events/event_handler.h"
 
@@ -19,6 +20,7 @@ namespace ash {
 // PowerButtonController and TabletPowerButtonController.
 class ASH_EXPORT PowerButtonDisplayController
     : public chromeos::PowerManagerClient::Observer,
+      public display::DisplayConfigurator::Observer,
       public ui::EventHandler,
       public ui::InputDeviceEventObserver {
  public:
@@ -50,6 +52,8 @@ class ASH_EXPORT PowerButtonDisplayController
   void SuspendDone(const base::TimeDelta& sleep_duration) override;
   void LidEventReceived(chromeos::PowerManagerClient::LidState state,
                         const base::TimeTicks& timestamp) override;
+
+  void OnPowerStateChanged(chromeos::DisplayPowerState power_state) override;
 
   // Overridden from ui::EventHandler:
   void OnKeyEvent(ui::KeyEvent* event) override;

@@ -40,6 +40,7 @@ PowerButtonDisplayController::PowerButtonDisplayController()
     : weak_ptr_factory_(this) {
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->AddObserver(
       this);
+  Shell::Get()->display_configurator()->AddObserver(this);
   // TODO(mash): Provide a way for this class to observe stylus events:
   // http://crbug.com/682460
   if (ui::InputDeviceManager::HasInstance())
@@ -53,6 +54,7 @@ PowerButtonDisplayController::~PowerButtonDisplayController() {
   Shell::Get()->RemovePreTargetHandler(this);
   if (ui::InputDeviceManager::HasInstance())
     ui::InputDeviceManager::GetInstance()->RemoveObserver(this);
+  Shell::Get()->display_configurator()->RemoveObserver(this);
   chromeos::DBusThreadManager::Get()->GetPowerManagerClient()->RemoveObserver(
       this);
 }
@@ -84,6 +86,7 @@ void PowerButtonDisplayController::PowerManagerRestarted() {
 
 void PowerButtonDisplayController::BrightnessChanged(int level,
                                                      bool user_initiated) {
+  return;
   const ScreenState old_state = screen_state_;
   if (level != 0)
     screen_state_ = ScreenState::ON;
@@ -108,6 +111,14 @@ void PowerButtonDisplayController::LidEventReceived(
     chromeos::PowerManagerClient::LidState state,
     const base::TimeTicks& timestamp) {
   SetDisplayForcedOff(false);
+}
+
+void PowerButtonDisplayController::OnPowerStateChanged(
+    chromeos::DisplayPowerState power_state) {
+  if (power_state != chromeos::DISPLAY_POWER_ALL_OFF)
+    screen_state_ = ScreenState::ON;
+  else
+    screen_state_ = ScreenState::OFF;
 }
 
 void PowerButtonDisplayController::OnKeyEvent(ui::KeyEvent* event) {
