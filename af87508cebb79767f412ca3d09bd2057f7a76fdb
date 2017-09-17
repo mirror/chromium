@@ -16,6 +16,24 @@
       "revId": "af87508cebb79767f412ca3d09bd2057f7a76fdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c13d810c_d56e5ae0",
+        "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-09-17T15:48:53Z",
+      "side": 1,
+      "message": "SVGImageElement is the moral equivalent of HTMLImageElement, and should not be confused with SVGImage (inheriting from Image, like BitmapImage.) As such it can reference both raster images and vector (SVG) images - just like HTMLImageElement and other Image clients.",
+      "parentUuid": "ecd184f1_991fd311",
+      "revId": "af87508cebb79767f412ca3d09bd2057f7a76fdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
