@@ -117,6 +117,24 @@
       "revId": "9702ca1db2b4ac817540388dd0831c667b8c1e00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01496e8c_54f24880",
+        "filename": "content/common/child_histogram.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-17T07:29:13Z",
+      "side": 1,
+      "message": "Right now, the request side consists of two calls:\n\n- get the interface\n- initialize the interface (with another mojo call)\n\nThis is relatively safe when going from browser to a less trusted process. However, when going from a less trusted to a more trusted process, this is more problematic: you can\u0027t assume the less trusted process actually did the initialization, and you end up having to check in every method that the initialization was done (and terminate otherwise).\n\nAs a result, for consistency, we (security reviewers) prefer to write code in a way that makes it impossible to return an interface that needs additional initialization. Usually this means using a factory helper:\n\ninterface ChildHistogramFactory {\n  CreateChildHistogram(handle\u003cshared_buffer\u003e shm_handle) \u003d\u003e (ChildHistogram);\n}",
+      "parentUuid": "a2968917_c4f11481",
+      "revId": "9702ca1db2b4ac817540388dd0831c667b8c1e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
