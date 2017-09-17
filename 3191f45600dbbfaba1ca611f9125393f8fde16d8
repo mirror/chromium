@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e994d7a_ab3e3174",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ssl/CaptivePortalTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-17T01:10:40Z",
+      "side": 1,
+      "message": "The ordering of stuff in this file looks weird (I\u0027d expect this to be at the bottom) but I\u0027ll leave that to a reviewer who actually knows Java",
+      "range": {
+        "startLine": 54,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 39
+      },
+      "revId": "3191f45600dbbfaba1ca611f9125393f8fde16d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "019dfbd9_1085c607",
+        "filename": "chrome/browser/ssl/captive_portal_blocking_page.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-17T01:10:40Z",
+      "side": 1,
+      "message": "nit: missing \"If \"",
+      "range": {
+        "startLine": 235,
+        "startChar": 35,
+        "endLine": 235,
+        "endChar": 45
+      },
+      "revId": "3191f45600dbbfaba1ca611f9125393f8fde16d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1e4b441_6f89999d",
+        "filename": "chrome/browser/ssl/captive_portal_helper_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-09-17T01:10:40Z",
+      "side": 1,
+      "message": "nit: these aren\u0027t really static methods, they\u0027re just functions, so I think you can remove these // static comments?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 9
+      },
+      "revId": "3191f45600dbbfaba1ca611f9125393f8fde16d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
