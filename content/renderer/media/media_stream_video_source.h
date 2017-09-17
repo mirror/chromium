@@ -49,6 +49,10 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
     kUnknownFrameRate = 0,
   };
 
+  enum class RestartResult { SUCCESS, FAILED, INVALID_STATE };
+  // RestartCallback is used for both the StopForRestart and Restart operations.
+  using RestartCallback = base::OnceCallback<void(RestartResult)>;
+
   static constexpr double kDefaultAspectRatio =
       static_cast<double>(kDefaultWidth) / static_cast<double>(kDefaultHeight);
 
@@ -73,6 +77,10 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
   // source.
   void ReconfigureTrack(MediaStreamVideoTrack* track,
                         const VideoTrackAdapterSettings& adapter_settings);
+
+  void StopForRestart(RestartCallback callback);
+  void Restart(const media::VideoCaptureFormat& new_format,
+               RestartCallback callback);
 
   // Called by |track| to notify the source whether it has any paths to a
   // consuming endpoint.
@@ -117,6 +125,11 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
       const VideoCaptureDeliverFrameCB& frame_callback) = 0;
   void OnStartDone(MediaStreamRequestResult result);
 
+  virtual void StopSourceForRestartImpl();
+  void OnStopForRestartDone(bool did_stop_for_restart);
+  virtual void RestartSourceImpl(const media::VideoCaptureFormat& new_format);
+  void OnRestartDone(bool did_restart);
+
   // An implementation must immediately stop capture video frames and must not
   // call OnSupportedFormats after this method has been called. After this
   // method has been called, MediaStreamVideoSource may be deleted.
@@ -135,6 +148,9 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
   enum State {
     NEW,
     STARTING,
+    STOPPING_FOR_RESTART,
+    STOPPED_FOR_RESTART,
+    RESTARTING,
     STARTED,
     ENDED
   };
@@ -143,6 +159,7 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
   SEQUENCE_CHECKER(sequence_checker_);
 
  private:
+  // XXXX CHECK THIS COMMENT
   // Trigger all cached callbacks from AddTrack. AddTrack is successful
   // if the capture delegate has started and the constraints provided in
   // AddTrack match the format that was used to start the device.
@@ -150,21 +167,27 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
   // in the context of the callback. If gUM fails, the implementation will
   // simply drop the references to the blink source and track which will lead
   // to this object being deleted.
-  void FinalizeAddTrack();
+  void FinalizeAddPendingTracks();
+
+  // Actually adds |track| to this source, provided the source has started.
+  void FinalizeAddTrack(MediaStreamVideoTrack* track,
+                        const VideoCaptureDeliverFrameCB& frame_callback,
+                        const VideoTrackAdapterSettings& adapter_settings);
   void StartFrameMonitoring();
   void UpdateTrackSettings(MediaStreamVideoTrack* track,
                            const VideoTrackAdapterSettings& adapter_settings);
 
   State state_;
 
-  struct TrackDescriptor {
-    TrackDescriptor(MediaStreamVideoTrack* track,
-                    const VideoCaptureDeliverFrameCB& frame_callback,
-                    std::unique_ptr<VideoTrackAdapterSettings> adapter_settings,
-                    const ConstraintsCallback& callback);
-    TrackDescriptor(TrackDescriptor&& other);
-    TrackDescriptor& operator=(TrackDescriptor&& other);
-    ~TrackDescriptor();
+  struct PendingTrackInfo {
+    PendingTrackInfo(
+        MediaStreamVideoTrack* track,
+        const VideoCaptureDeliverFrameCB& frame_callback,
+        std::unique_ptr<VideoTrackAdapterSettings> adapter_settings,
+        const ConstraintsCallback& callback);
+    PendingTrackInfo(PendingTrackInfo&& other);
+    PendingTrackInfo& operator=(PendingTrackInfo&& other);
+    ~PendingTrackInfo();
 
     MediaStreamVideoTrack* track;
     VideoCaptureDeliverFrameCB frame_callback;
@@ -173,7 +196,12 @@ class CONTENT_EXPORT MediaStreamVideoSource : public MediaStreamSource {
     std::unique_ptr<VideoTrackAdapterSettings> adapter_settings;
     ConstraintsCallback callback;
   };
-  std::vector<TrackDescriptor> track_descriptors_;
+  std::vector<PendingTrackInfo> pending_tracks_;
+
+  // |restart_callback_| is used for notifying both StopForRestart and Restart,
+  // since it is impossible to have a situation where there can be callbacks
+  // for both at the same time.
+  RestartCallback restart_callback_;
 
   // |track_adapter_| delivers video frames to the tracks on the IO-thread.
   const scoped_refptr<VideoTrackAdapter> track_adapter_;

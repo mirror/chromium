@@ -21,6 +21,7 @@
 #include "content/renderer/media/media_stream_video_track.h"
 #include "content/renderer/media/video_track_adapter.h"
 
+#include "base/debug/stack_trace.h"
 namespace content {
 
 // static
@@ -53,7 +54,7 @@ void MediaStreamVideoSource::AddTrack(
   tracks_.push_back(track);
   secure_tracker_.Add(track, true);
 
-  track_descriptors_.push_back(TrackDescriptor(
+  pending_tracks_.push_back(PendingTrackInfo(
       track, frame_callback,
       base::MakeUnique<VideoTrackAdapterSettings>(track_adapter_settings),
       callback));
@@ -65,13 +66,18 @@ void MediaStreamVideoSource::AddTrack(
           base::Bind(&VideoTrackAdapter::DeliverFrameOnIO, track_adapter_));
       break;
     }
-    case STARTING: {
+    case STARTING:
+    case STOPPING_FOR_RESTART:
+    case STOPPED_FOR_RESTART:
+    case RESTARTING: {
+      // These cases are handled by OnStartDone(), OnStoppedForRestartDone()
+      // and OnRestartDone().
       break;
     }
     case ENDED:
     case STARTED: {
-      // Currently, reconfiguring the source is not supported.
-      FinalizeAddTrack();
+      FinalizeAddPendingTracks();
+      break;
     }
   }
 }
@@ -84,10 +90,9 @@ void MediaStreamVideoSource::RemoveTrack(MediaStreamVideoTrack* video_track) {
   tracks_.erase(it);
   secure_tracker_.Remove(video_track);
 
-  for (std::vector<TrackDescriptor>::iterator it = track_descriptors_.begin();
-       it != track_descriptors_.end(); ++it) {
+  for (auto it = pending_tracks_.begin(); it != pending_tracks_.end(); ++it) {
     if (it->track == video_track) {
-      track_descriptors_.erase(it);
+      pending_tracks_.erase(it);
       break;
     }
   }
@@ -108,6 +113,87 @@ void MediaStreamVideoSource::ReconfigureTrack(
   // |track| is not connected to a different source, which is a precondition
   // for calling this method.
   UpdateTrackSettings(track, adapter_settings);
+}
+
+void MediaStreamVideoSource::StopForRestart(RestartCallback callback) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  if (state_ != STARTED) {
+    std::move(callback).Run(RestartResult::INVALID_STATE);
+    return;
+  }
+
+  DCHECK(!restart_callback_);
+  track_adapter_->StopFrameMonitoring();
+  state_ = STOPPING_FOR_RESTART;
+  restart_callback_ = std::move(callback);
+  StopSourceForRestartImpl();
+}
+
+void MediaStreamVideoSource::StopSourceForRestartImpl() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK_EQ(state_, STOPPING_FOR_RESTART);
+  OnStopForRestartDone(false);
+}
+
+void MediaStreamVideoSource::OnStopForRestartDone(bool did_stop_for_restart) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  if (state_ != STOPPING_FOR_RESTART) {
+    if (restart_callback_)
+      std::move(restart_callback_).Run(RestartResult::INVALID_STATE);
+
+    return;
+  }
+
+  if (did_stop_for_restart) {
+    state_ = STOPPED_FOR_RESTART;
+  } else {
+    state_ = STARTED;
+    StartFrameMonitoring();
+    FinalizeAddPendingTracks();
+  }
+  DCHECK(restart_callback_);
+  std::move(restart_callback_)
+      .Run(did_stop_for_restart ? RestartResult::SUCCESS
+                                : RestartResult::FAILED);
+}
+
+void MediaStreamVideoSource::Restart(
+    const media::VideoCaptureFormat& new_format,
+    RestartCallback callback) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  if (state_ != STOPPED_FOR_RESTART) {
+    std::move(callback).Run(RestartResult::INVALID_STATE);
+    return;
+  }
+  DCHECK(!restart_callback_);
+  state_ = RESTARTING;
+  restart_callback_ = std::move(callback);
+  RestartSourceImpl(new_format);
+}
+
+void MediaStreamVideoSource::RestartSourceImpl(
+    const media::VideoCaptureFormat& new_format) {
+  NOTREACHED();
+}
+
+void MediaStreamVideoSource::OnRestartDone(bool did_restart) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  if (state_ != RESTARTING) {
+    if (restart_callback_)
+      std::move(restart_callback_).Run(RestartResult::INVALID_STATE);
+    return;
+  }
+
+  if (did_restart) {
+    state_ = STARTED;
+    StartFrameMonitoring();
+    FinalizeAddPendingTracks();
+  } else {
+    StopSource();
+    return;
+  }
+  std::move(restart_callback_)
+      .Run(did_restart ? RestartResult::SUCCESS : RestartResult::FAILED);
 }
 
 void MediaStreamVideoSource::UpdateHasConsumers(MediaStreamVideoTrack* track,
@@ -177,28 +263,31 @@ void MediaStreamVideoSource::OnStartDone(MediaStreamRequestResult result) {
     StopSource();
   }
 
-  // This object can be deleted after calling FinalizeAddTrack. See comment in
-  // the header file.
-  FinalizeAddTrack();
+  // This object can be deleted after calling FinalizeAddPendingTracks. See
+  // comment in the header file.
+  FinalizeAddPendingTracks();
 }
 
-void MediaStreamVideoSource::FinalizeAddTrack() {
+void MediaStreamVideoSource::FinalizeAddPendingTracks() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  std::vector<TrackDescriptor> track_descriptors;
-  track_descriptors.swap(track_descriptors_);
-  for (const auto& track : track_descriptors) {
+  std::vector<PendingTrackInfo> pending_track_descriptors;
+  pending_track_descriptors.swap(pending_tracks_);
+  for (const auto& track_info : pending_track_descriptors) {
     MediaStreamRequestResult result = MEDIA_DEVICE_OK;
     if (state_ != STARTED)
       result = MEDIA_DEVICE_TRACK_START_FAILURE;
 
     if (result == MEDIA_DEVICE_OK) {
-      track_adapter_->AddTrack(track.track, track.frame_callback,
-                               *track.adapter_settings);
-      UpdateTrackSettings(track.track, *track.adapter_settings);
+      // TODO(guidou): XXX Check if the source can satisfy the track's mandatory
+      // constraints. If not, fail. After that, set the state as NEW if no track
+      // was added.
+      track_adapter_->AddTrack(track_info.track, track_info.frame_callback,
+                               *track_info.adapter_settings);
+      UpdateTrackSettings(track_info.track, *track_info.adapter_settings);
     }
 
-    if (!track.callback.is_null())
-      track.callback.Run(this, result, blink::WebString());
+    if (!track_info.callback.is_null())
+      track_info.callback.Run(this, result, blink::WebString());
   }
 }
 
@@ -250,7 +339,7 @@ void MediaStreamVideoSource::UpdateTrackSettings(
                                    adapter_settings.max_frame_rate);
 }
 
-MediaStreamVideoSource::TrackDescriptor::TrackDescriptor(
+MediaStreamVideoSource::PendingTrackInfo::PendingTrackInfo(
     MediaStreamVideoTrack* track,
     const VideoCaptureDeliverFrameCB& frame_callback,
     std::unique_ptr<VideoTrackAdapterSettings> adapter_settings,
@@ -260,13 +349,12 @@ MediaStreamVideoSource::TrackDescriptor::TrackDescriptor(
       adapter_settings(std::move(adapter_settings)),
       callback(callback) {}
 
-MediaStreamVideoSource::TrackDescriptor::TrackDescriptor(
-    TrackDescriptor&& other) = default;
-MediaStreamVideoSource::TrackDescriptor&
-MediaStreamVideoSource::TrackDescriptor::operator=(
-    MediaStreamVideoSource::TrackDescriptor&& other) = default;
+MediaStreamVideoSource::PendingTrackInfo::PendingTrackInfo(
+    PendingTrackInfo&& other) = default;
+MediaStreamVideoSource::PendingTrackInfo&
+MediaStreamVideoSource::PendingTrackInfo::operator=(
+    MediaStreamVideoSource::PendingTrackInfo&& other) = default;
 
-MediaStreamVideoSource::TrackDescriptor::~TrackDescriptor() {
-}
+MediaStreamVideoSource::PendingTrackInfo::~PendingTrackInfo() {}
 
 }  // namespace content
