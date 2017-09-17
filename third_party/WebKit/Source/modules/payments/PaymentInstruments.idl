@@ -5,8 +5,7 @@
 // https://w3c.github.io/webpayments-payment-apps-api/#payment-instruments
 
 [
-    RuntimeEnabled=PaymentApp,
-    Exposed=ServiceWorker
+    RuntimeEnabled=PaymentApp
 ] interface PaymentInstruments {
     [CallWith=ScriptState, ImplementedAs=deleteInstrument] Promise<boolean> delete(DOMString instrumentKey);
     [CallWith=ScriptState] Promise<PaymentInstrument> get(DOMString instrumentKey);
