@@ -9,7 +9,6 @@
 #include <string>
 #include <vector>
 
-#include "base/atomicops.h"
 #include "base/base_export.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -109,10 +108,6 @@ class BASE_EXPORT SchedulerSingleThreadTaskRunnerManager final {
 
   TaskTracker* const task_tracker_;
   DelayedTaskManager* const delayed_task_manager_;
-
-#if DCHECK_IS_ON()
-  subtle::Atomic32 workers_unregistered_during_join_ = 0;
-#endif
 
   // Synchronizes access to all members below.
   SchedulerLock lock_;
