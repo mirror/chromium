@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a15c100_daa844e7",
+        "filename": "third_party/zlib/contrib/inffast64/inffast.c",
+        "patchSetId": 12
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1237531
+      },
+      "writtenOn": "2017-09-17T23:16:41Z",
+      "side": 1,
+      "message": "The \"if (dist \u003e\u003d 8)\" guard later below is sufficient, but here it is not. Below, we\u0027re always copying direct from the output. Here, we\u0027re sometimes copying from the output and sometimes from the window (the window is also known as the history). We need an additional check that we are at least INFLATE_FAST_MIN_LEFT (264) bytes from the end of the window.\n\nI\u0027ve found an additional problem with this code, detailed at https://github.com/madler/zlib/pull/292#discussion_r139303073\n\nFixing that will require more thought (and additional testing), but for the record, I\u0027ll upload a new patch set which I expect to pass the existing tsan tests.\n\nThat patch set will mean having to re-do the benchmarks, as it\u0027s probably slower. As I said, though, there already needs to be further changes, but let\u0027s not let those changes hold up passing the tsan tests.",
+      "revId": "1ef1a7863c75759c1e8f2f583b228b2ae8d3ab7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
