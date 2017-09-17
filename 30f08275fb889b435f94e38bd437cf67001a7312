@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b33ee68_b8426072",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-17T08:42:59Z",
+      "side": 1,
+      "message": "I wonder if GetFilter() needs to return a temporary scoped_refptr and bump the refcount: it seems like all the callers don\u0027t actually take ownership of the reference anyway. Maybe a raw pointer would be appropriate given that?",
+      "range": {
+        "startLine": 334,
+        "startChar": 6,
+        "endLine": 334,
+        "endChar": 46
+      },
+      "revId": "30f08275fb889b435f94e38bd437cf67001a7312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1669feaa_ed586a7d",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-17T08:42:59Z",
+      "side": 1,
+      "message": "One thing I\u0027m a little concerned about: Mojofication means a lot more implicit UTF16\u003c-\u003eUTF8 conversions, since WTF::String transparently maps to UTF8 strings in Mojo, and jbroman@ pointed out that this transformation isn\u0027t always reversible (e.g. if there are unpaired surrogates).\n\nI wonder if we should remain with string16 to be safe? It\u0027d obviously be nice to improve the long-term situation here though...",
+      "range": {
+        "startLine": 512,
+        "startChar": 32,
+        "endLine": 512,
+        "endChar": 55
+      },
+      "revId": "30f08275fb889b435f94e38bd437cf67001a7312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebbf1627_62e0a2c6",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-17T08:42:59Z",
+      "side": 1,
+      "message": "It feels like it might be more straightforward to just erase() directly here (since we just construct another WorkerID in DestroyHost anyway). On the other hand, inlining erase() here probably means we\u0027ll end up emitting more instructions, since std::map\u003cK, V\u003e::erase() is probably fairly substantial in size... so maybe this is better?\n\n(I guess in an ideal world, we\u0027d be passing around WorkerIDs to begin with rather than constructing them only when interacting with the map)",
+      "revId": "30f08275fb889b435f94e38bd437cf67001a7312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f02a2bbc_ac19acb4",
+        "filename": "content/common/shared_worker/shared_worker_info.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-17T08:42:59Z",
+      "side": 1,
+      "message": "I wonder if I\u0027m missing, but this parameter doesn\u0027t seem to be used on the renderer side. Do we need to pass it as part of this struct? Perhaps it should be its own parameter on SharedWorkerConnector::Connect?",
+      "revId": "30f08275fb889b435f94e38bd437cf67001a7312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee19d245_6d03a9e0",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 777,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-17T08:42:59Z",
+      "side": 1,
+      "message": "Is there an advantage to making this a distinct BinderRegistry from web database registration above? Naively, I would imagine minimizing the number of connection filters is ideal, since the binder registry lookup is a map lookup, while I imagine the filter search is linear.",
+      "revId": "30f08275fb889b435f94e38bd437cf67001a7312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b271031a_d164e2ce",
+        "filename": "content/renderer/shared_worker/shared_worker_factory_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-17T08:42:59Z",
+      "side": 1,
+      "message": "If \"delete this\" worked with MakeStrongBinding, would it make sense to use that instead? Perhaps we should reconsider how MakeStrongBinding works.",
+      "revId": "30f08275fb889b435f94e38bd437cf67001a7312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
