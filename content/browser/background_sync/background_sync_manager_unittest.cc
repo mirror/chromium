@@ -478,7 +478,7 @@ TEST_F(BackgroundSyncManagerTest, RegisterWithoutLiveSWRegistration) {
   ServiceWorkerRegistrationHandle* handle =
       dispatcher_host->FindRegistrationHandle(provider_id,
                                               sw_registration_1_->id());
-  dispatcher_host->OnDecrementRegistrationRefCount(handle->handle_id());
+  dispatcher_host->RemoveServiceWorkerRegistrationHandle(handle->handle_id());
 
   // Ensure |sw_registration_1_| is the last reference to the registration.
   ASSERT_TRUE(sw_registration_1_->HasOneRef());
