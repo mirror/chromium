@@ -44,7 +44,8 @@ const KEYCODE = {
   ENTER: 'Enter',
   ESC: 'Escape',
   NUMPAD_ENTER: 'NumpadEnter',
-  PERIOD: 'Period'
+  PERIOD: 'Period',
+  SPACE: 'Space'
 };
 
 
@@ -284,8 +285,9 @@ speech.init = function(
     speech.start();
   };
   fakeboxMicrophoneElem.onkeydown = function(event) {
-    if (!event.repeat &&
-        (event.code == KEYCODE.ENTER || event.code == KEYCODE.NUMPAD_ENTER)) {
+    if (!event.repeat && speech.isSpaceOrEnter_(event.code) &&
+        speech.currentState_ == speech.State_.READY) {
+      event.stopPropagation();
       speech.start();
     }
   };
@@ -574,6 +576,24 @@ speech.isUserAgentMac_ = function() {
 
 
 /**
+ * Determines, if the given KeyboardEvent |code| is a space or enter key.
+ * @param {!string} A KeyboardEvent's |code| property.
+ * @return True, iff the code represents a space or enter key.
+ * @private
+ */
+speech.isSpaceOrEnter_ = function(code) {
+  switch (code) {
+    case KEYCODE.ENTER:
+    case KEYCODE.NUMPAD_ENTER:
+    case KEYCODE.SPACE:
+      return true;
+    default:
+      return false;
+  }
+};
+
+
+/**
  * Handles the following keyboard actions.
  * - <CTRL> + <SHIFT> + <.> starts voice input(<CMD> + <SHIFT> + <.> on mac).
  * - <ESC> aborts voice input when the recognition interface is active.
@@ -581,7 +601,7 @@ speech.isUserAgentMac_ = function() {
  * @param {KeyboardEvent} event The keydown event.
  */
 speech.onKeyDown = function(event) {
-  if (!speech.isRecognizing()) {
+  if (speech.isUiDefinitelyHidden_()) {
     const ctrlKeyPressed =
         event.ctrlKey || (speech.isUserAgentMac_() && event.metaKey);
     if (speech.currentState_ == speech.State_.READY &&
@@ -591,12 +611,11 @@ speech.onKeyDown = function(event) {
   } else {
     // Ensures that keyboard events are not propagated during voice input.
     event.stopPropagation();
-    if (event.code == KEYCODE.ESC) {
-      speech.stop();
-    } else if (
-        (event.code == KEYCODE.ENTER || event.code == KEYCODE.NUMPAD_ENTER) &&
-        speech.finalResult_) {
+    if (speech.isSpaceOrEnter_(event.code) && speech.finalResult_) {
       speech.submitFinalResult_();
+    } else if (
+        speech.isSpaceOrEnter_(event.code) || event.code == KEYCODE.ESC) {
+      speech.stop();
     }
   }
 };
