@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2988925b_5a0bf623",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDataStorage.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-18T23:27:39Z",
+      "side": 1,
+      "message": "Optional: Could we use .path() instead of .toString()?\nOr of course getCanonicalPath(), but that might require disk access, which we probably don\u0027t want.",
+      "range": {
+        "startLine": 527,
+        "startChar": 25,
+        "endLine": 527,
+        "endChar": 35
+      },
+      "revId": "58d6f3152e119eb9d9e63b7858979d843ef6bc3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "943d4b56_8b0e791b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDataStorage.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-18T23:27:39Z",
+      "side": 1,
+      "message": "Optional: @Nullable for the return value?",
+      "revId": "58d6f3152e119eb9d9e63b7858979d843ef6bc3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af5f4206_d0eed209",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappDataStorage.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-18T23:27:39Z",
+      "side": 1,
+      "message": "Optional: If the delete fails, do we want to log it?",
+      "revId": "58d6f3152e119eb9d9e63b7858979d843ef6bc3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a4ade1e_facdd939",
+        "filename": "chrome/browser/android/webapk/webapk_installer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-18T23:27:39Z",
+      "side": 1,
+      "message": "What\u0027s the reasoning behind using base::Pickle instead of a proto, containing a proto, here? It seems unnecessary to use two different storage formats.\n\nIf you do not want the types to depend directly, you could still write the other proto as a string. But then again, the WebApk proto is already in our control, so it should be possible to just add a new message type that comprises of the new data plus the proto.\n\nI was first assuming that it was because base::Pickle allowed you to iterate without reading out the proto, but we seem to be always (on success) reading it out anyway.",
+      "revId": "58d6f3152e119eb9d9e63b7858979d843ef6bc3e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
