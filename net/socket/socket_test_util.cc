@@ -22,6 +22,7 @@
 #include "net/base/address_family.h"
 #include "net/base/address_list.h"
 #include "net/base/auth.h"
+#include "net/base/hex_utils.h"
 #include "net/base/ip_address.h"
 #include "net/base/load_timing_info.h"
 #include "net/http/http_network_session.h"
@@ -446,6 +447,7 @@ MockRead SequencedSocketData::OnRead() {
 
 MockWriteResult SequencedSocketData::OnWrite(const std::string& data) {
   CHECK_EQ(IDLE, write_state_);
+  DLOG(INFO) << HexDump(data);
   CHECK(!helper_.AllWriteDataConsumed());
 
   NET_TRACE(1, " *** ") << "sequence_number: " << sequence_number_;
