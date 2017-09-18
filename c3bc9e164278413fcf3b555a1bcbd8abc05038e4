@@ -22,6 +22,30 @@
       "revId": "c3bc9e164278413fcf3b555a1bcbd8abc05038e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa021032_4d36a693",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-18T19:06:01Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "4faa2818_5fe645c2",
+      "range": {
+        "startLine": 212,
+        "startChar": 0,
+        "endLine": 215,
+        "endChar": 63
+      },
+      "revId": "c3bc9e164278413fcf3b555a1bcbd8abc05038e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
