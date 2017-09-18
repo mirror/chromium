@@ -4,8 +4,11 @@
 
 #include "components/exo/layer_tree_frame_sink_holder.h"
 
+#include "base/threading/thread_task_runner_handle.h"
+#include "cc/output/compositor_frame.h"
 #include "cc/output/layer_tree_frame_sink.h"
 #include "components/exo/surface_tree_host.h"
+#include "components/viz/common/quads/render_pass.h"
 #include "components/viz/common/resources/returned_resource.h"
 
 namespace exo {
@@ -24,29 +27,45 @@ LayerTreeFrameSinkHolder::LayerTreeFrameSinkHolder(
 
 LayerTreeFrameSinkHolder::~LayerTreeFrameSinkHolder() {
   frame_sink_->DetachFromClient();
+  DCHECK(release_callbacks_.empty());
+}
 
-  // Release all resources which aren't returned from LayerTreeFrameSink.
-  for (auto& callback : release_callbacks_)
-    callback.second.Run(gpu::SyncToken(), false);
+void LayerTreeFrameSinkHolder::Delete() {
+  DCHECK(!is_deleted_);
+  is_deleted_ = true;
+  weak_factory_.InvalidateWeakPtrs();
+  if (!release_callbacks_.empty()) {
+    cc::CompositorFrame frame;
+    frame.metadata.begin_frame_ack =
+        viz::BeginFrameAck::CreateManualAckWithDamage();
+    frame.render_pass_list.push_back(viz::RenderPass::Create());
+    frame_sink_->SubmitCompositorFrame(std::move(frame));
+  } else {
+    delete this;
+  }
 }
 
 bool LayerTreeFrameSinkHolder::HasReleaseCallbackForResource(
     viz::ResourceId id) {
+  DCHECK(!is_deleted_);
   return release_callbacks_.find(id) != release_callbacks_.end();
 }
 
 void LayerTreeFrameSinkHolder::SetResourceReleaseCallback(
     viz::ResourceId id,
     const viz::ReleaseCallback& callback) {
+  DCHECK(!is_deleted_);
   DCHECK(!callback.is_null());
   release_callbacks_[id] = callback;
 }
 
 int LayerTreeFrameSinkHolder::AllocateResourceId() {
+  DCHECK(!is_deleted_);
   return next_resource_id_++;
 }
 
 base::WeakPtr<LayerTreeFrameSinkHolder> LayerTreeFrameSinkHolder::GetWeakPtr() {
+  DCHECK(!is_deleted_);
   return weak_factory_.GetWeakPtr();
 }
 
@@ -69,6 +88,8 @@ void LayerTreeFrameSinkHolder::ReclaimResources(
       release_callbacks_.erase(it);
     }
   }
+  if (is_deleted_ && release_callbacks_.empty())
+    base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
 }
 
 void LayerTreeFrameSinkHolder::DidReceiveCompositorFrameAck() {

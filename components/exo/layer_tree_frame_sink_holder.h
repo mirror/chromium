@@ -11,6 +11,11 @@
 #include "cc/output/layer_tree_frame_sink_client.h"
 #include "components/viz/common/quads/release_callback.h"
 
+namespace base {
+template <class T>
+class DeleteHelper;
+}
+
 namespace cc {
 class LayerTreeFrameSink;
 }
@@ -24,7 +29,10 @@ class LayerTreeFrameSinkHolder : public cc::LayerTreeFrameSinkClient {
  public:
   LayerTreeFrameSinkHolder(SurfaceTreeHost* surface_tree_host,
                            std::unique_ptr<cc::LayerTreeFrameSink> frame_sink);
-  ~LayerTreeFrameSinkHolder() override;
+
+  // Delete the |LayerTreeFrameSinkHolder|, and it should not be used when this
+  // function is called.
+  void Delete();
 
   bool HasReleaseCallbackForResource(viz::ResourceId id);
   void SetResourceReleaseCallback(viz::ResourceId id,
@@ -50,6 +58,10 @@ class LayerTreeFrameSinkHolder : public cc::LayerTreeFrameSinkClient {
       const gfx::Transform& transform) override {}
 
  private:
+  friend base::DeleteHelper<LayerTreeFrameSinkHolder>;
+
+  ~LayerTreeFrameSinkHolder() override;
+
   // A collection of callbacks used to release resources.
   using ResourceReleaseCallbackMap =
       base::flat_map<viz::ResourceId, viz::ReleaseCallback>;
@@ -61,11 +73,21 @@ class LayerTreeFrameSinkHolder : public cc::LayerTreeFrameSinkClient {
   // The next resource id the buffer is attached to.
   int next_resource_id_ = 1;
 
+  bool is_deleted_ = false;
+
   base::WeakPtrFactory<LayerTreeFrameSinkHolder> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(LayerTreeFrameSinkHolder);
 };
 
 }  // namespace exo
+
+namespace std {
+// Provide the delector for std::unique_ptr<exo::LayerTreeFrameSinkHolder>.
+template <>
+struct default_delete<exo::LayerTreeFrameSinkHolder> {
+  void operator()(exo::LayerTreeFrameSinkHolder* holder) { holder->Delete(); }
+};
+}  // namespace std
 
 #endif  // COMPONENTS_EXO_LAYER_TREE_FRAME_SINK_HOLDER_H_
