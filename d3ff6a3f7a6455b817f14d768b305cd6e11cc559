@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f471ae97_1bdd28d7",
+        "filename": "base/trace_event/memory_infra_background_whitelist.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-18T21:54:02Z",
+      "side": 1,
+      "message": "Nit: could also use base::IsHexDigit() - I\u0027m not sure if isxdigit is supported on all platforms.",
+      "revId": "d3ff6a3f7a6455b817f14d768b305cd6e11cc559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aef85eb_3c9aa515",
+        "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-18T21:54:02Z",
+      "side": 1,
+      "message": "Nit: Can you simplify line 309 now that you have this?",
+      "revId": "d3ff6a3f7a6455b817f14d768b305cd6e11cc559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e70f91ff_d545be25",
+        "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-18T21:54:02Z",
+      "side": 1,
+      "message": "Nit: if you replaced \"status\" with \"s\" then it would fit on a single line.",
+      "range": {
+        "startLine": 265,
+        "startChar": 9,
+        "endLine": 265,
+        "endChar": 15
+      },
+      "revId": "d3ff6a3f7a6455b817f14d768b305cd6e11cc559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e41ca306_424c6096",
+        "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-18T21:54:02Z",
+      "side": 1,
+      "message": "No need to alloc from heap, and simpler to do:\n\nProcessMemoryDump pmd(nullptr, detailed_args);\nGetOrCreateAllocatorDump(\u0026pmd, tracked_db);",
+      "revId": "d3ff6a3f7a6455b817f14d768b305cd6e11cc559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a7994ec_4798ccf5",
+        "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-18T21:54:02Z",
+      "side": 1,
+      "message": "Suggest adding ASSERT_TRUE(mad !\u003d nullptr);",
+      "revId": "d3ff6a3f7a6455b817f14d768b305cd6e11cc559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cdef08a_1d556a07",
+        "filename": "third_party/leveldatabase/env_chromium_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-18T21:54:02Z",
+      "side": 1,
+      "message": "Last three should be EXPECT_* instead of ASSERT_*.\n\nhttps://testing.googleblog.com/2008/07/tott-expect-vs-assert.html",
+      "revId": "d3ff6a3f7a6455b817f14d768b305cd6e11cc559",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
