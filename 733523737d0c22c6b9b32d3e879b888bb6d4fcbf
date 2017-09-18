@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89bfe756_49595433",
+        "filename": "net/extras/sqlite/sqlite_channel_id_store.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-18T20:01:44Z",
+      "side": 0,
+      "message": "Losing the v5 case will cause us to be stuck with entries with bad private keys and constantly hit LOADED_WITH_ERRORS, right? Maybe we clear the table or something?",
+      "revId": "733523737d0c22c6b9b32d3e879b888bb6d4fcbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

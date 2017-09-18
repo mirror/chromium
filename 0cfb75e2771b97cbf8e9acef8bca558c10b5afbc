@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c064b42_14f905de",
+        "filename": "net/extras/sqlite/sqlite_channel_id_store_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-18T20:01:44Z",
+      "side": 1,
+      "message": "(This does have the side effect of changing how all the tests work. See note below about V5.)",
+      "revId": "0cfb75e2771b97cbf8e9acef8bca558c10b5afbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65fe6b21_590a2a07",
+        "filename": "net/extras/sqlite/sqlite_channel_id_store_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-18T20:01:44Z",
+      "side": 1,
+      "message": "Nit: comment is off now.",
+      "revId": "0cfb75e2771b97cbf8e9acef8bca558c10b5afbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bebc32e4_33e82fcf",
+        "filename": "net/extras/sqlite/sqlite_channel_id_store_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 414,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-18T20:01:44Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "0cfb75e2771b97cbf8e9acef8bca558c10b5afbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d6bb6e3_ba82781a",
+        "filename": "net/extras/sqlite/sqlite_channel_id_store_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-18T20:01:44Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "0cfb75e2771b97cbf8e9acef8bca558c10b5afbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512d4ddc_b5891caf",
+        "filename": "net/extras/sqlite/sqlite_channel_id_store_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-18T20:01:44Z",
+      "side": 1,
+      "message": "I think this test isn\u0027t quite testing the right thing, since you aren\u0027t converting the keys anymore but ReadTestKey switched to reporting the other format, so the test doesn\u0027t notice that you\u0027re not converting them.",
+      "revId": "0cfb75e2771b97cbf8e9acef8bca558c10b5afbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
