@@ -99,6 +99,9 @@ class CC_EXPORT ResourceProvider
   static bool IsGpuResourceType(ResourceProvider::ResourceType type) {
     return type != ResourceProvider::RESOURCE_TYPE_BITMAP;
   }
+  static GLenum TextureToStorageFormat(viz::ResourceFormat format);
+  static bool IsFormatSupportedForStorage(viz::ResourceFormat format,
+                                          bool use_bgra);
 
   void Initialize();
 
@@ -555,6 +558,7 @@ class CC_EXPORT ResourceProvider
   };
   void DeleteResourceInternal(ResourceMap::iterator it, DeleteStyle style);
 
+  void CreateTexture(Resource* resource);
   void CreateMailbox(Resource* resource);
 
   bool ReadLockFenceHasPassed(const Resource* resource) {
@@ -620,8 +624,6 @@ class CC_EXPORT ResourceProvider
                                     const gfx::ColorSpace& color_space);
   viz::ResourceId CreateBitmapResource(const gfx::Size& size,
                                        const gfx::ColorSpace& color_space);
-
-  void CreateTexture(Resource* resource);
 
   bool IsGLContextLost() const;
 
