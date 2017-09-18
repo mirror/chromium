@@ -127,8 +127,10 @@ void AddAndroidWidevine(
   if (response.non_secure_codecs != media::EME_CODEC_NONE) {
     DVLOG(3) << __func__ << " Widevine supported.";
     concrete_key_systems->emplace_back(new WidevineKeySystemProperties(
-        response.non_secure_codecs,            // Regular codecs.
-        response.secure_codecs,                // Hardware-secure codecs.
+        response.non_secure_codecs,  // Regular codecs.
+#if BUILDFLAG(CAN_USE_SECURE_CODEC)
+        response.secure_codecs,  // Hardware-secure codecs.
+#endif
         Robustness::HW_SECURE_CRYPTO,          // Max audio robustness.
         Robustness::HW_SECURE_ALL,             // Max video robustness.
         persistent_license_support,            // persistent-license.

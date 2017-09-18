@@ -12,6 +12,9 @@ declare_args() {
 
   # Set this true for an audio-only Chromecast build.
   is_cast_audio_only = false
+
+  # Set true for builds targeting Android Things.
+  is_android_things = false
 }
 
 # Note(slan): This arg depends on the value of is_chromecast, and thus must be

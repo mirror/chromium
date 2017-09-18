@@ -45,9 +45,6 @@ declare_args() {
   # Set to true for builds targeting ARC.
   is_android_arc = false
 
-  # Set true for builds targeting Android Things.
-  is_android_things = false
-
   # Set to true to start music apps in headless mode.
   enable_headless_music_mode = false
 }
