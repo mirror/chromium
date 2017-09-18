@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc48c6a0_df80be46",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-18T17:09:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57f662fa_1e45f6fe",
+      "revId": "8b6e17bcde36e7a4b90be1abb1c0d5b393bdcf3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60da65ff_d4e311cf",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-18T16:39:58Z",
       "side": 1,
       "message": "This code is tricky and needs a unittest. We need to show that readers and writers run sequentially.",
+      "range": {
+        "startLine": 1060,
+        "startChar": 0,
+        "endLine": 1061,
+        "endChar": 13
+      },
+      "revId": "8b6e17bcde36e7a4b90be1abb1c0d5b393bdcf3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37c29b2_6f233217",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-18T17:09:54Z",
+      "side": 1,
+      "message": "Agree it would be good to have a test here. But since HttpCache layer is tested together with HC::T , its not clear how to simulate a scenario where a reader is present and a write mode transaction gets added to done_headers_queue.",
+      "parentUuid": "60da65ff_d4e311cf",
       "range": {
         "startLine": 1060,
         "startChar": 0,
