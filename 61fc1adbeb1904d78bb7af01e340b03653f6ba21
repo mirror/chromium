@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "39fe7e5b_436ccb54",
+        "filename": "chrome/app/vector_icons/options_menu.icon",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-18T23:55:25Z",
+      "side": 1,
+      "message": "Replies:\n\n\u003e Can you name it something more specific than options_menu?\n\nbettes@ suggested \"horizontal_menu\". Changed.\n\n\u003e Is it going to be used outside of downloads?\n\n\"It will be used on all platforms, but outside of downloads - I can\u0027t think of an instance right now.\"",
+      "parentUuid": "6ebb1486_7b859e05",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "61fc1adbeb1904d78bb7af01e340b03653f6ba21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19e9ee48_4b34733c",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
         "patchSetId": 1
