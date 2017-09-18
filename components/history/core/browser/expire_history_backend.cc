@@ -119,6 +119,9 @@ const int kExpirationEmptyDelayMin = 5;
 // should be cleared.
 const int kClearOnDemandFaviconsIntervalHours = 24;
 
+// The minimum number of days since last use for an icon to be considered old.
+const int kOnDemandFaviconOldAfterNotUsedForDays = 30;
+
 bool IsAnyURLBookmarked(HistoryBackendClient* backend_client,
                         const std::vector<GURL>& urls) {
   for (const GURL& url : urls) {
@@ -499,16 +502,19 @@ void ExpireHistoryBackend::DoExpireIteration() {
     work_queue_.push(reader);
   } else {
     // Otherwise do a final clean-up - remove old favicons not bound to visits.
-    ClearOldOnDemandFavicons(GetCurrentExpirationTime());
+    ClearOldOnDemandFavicons();
   }
 
   ScheduleExpire();
 }
 
-void ExpireHistoryBackend::ClearOldOnDemandFavicons(
-    base::Time expiration_threshold) {
+void ExpireHistoryBackend::ClearOldOnDemandFavicons() {
   if (!base::FeatureList::IsEnabled(internal::kClearOldOnDemandFavicons))
     return;
+
+  base::Time expiration_threshold =
+      base::Time::Now() -
+      base::TimeDelta::FromDays(kOnDemandFaviconOldAfterNotUsedForDays);
 
   // Extra precaution to avoid repeated calls to GetOldOnDemandFavicons() close
   // in time, since it can be fairly expensive.
