@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "bdf55c74_bc48b333",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-18T15:05:05Z",
+      "side": 1,
+      "message": "I strongly disagree. Tests should be included with code being added.",
+      "parentUuid": "361fe967_b43f99a2",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 38
+      },
+      "revId": "53bacf42efc120088de98ca503e84f63eeb4811d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b674ae7_68140ccc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/crash/PureJavaExceptionReporter.java",
         "patchSetId": 2
