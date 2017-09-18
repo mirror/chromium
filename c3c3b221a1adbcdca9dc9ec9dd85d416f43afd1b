@@ -16,6 +16,24 @@
       "revId": "c3c3b221a1adbcdca9dc9ec9dd85d416f43afd1b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f51a1dc_2822eee3",
+        "filename": "components/autofill/core/browser/proto/server.proto",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-09-18T19:51:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b84fb012_f7711ca6",
+      "revId": "c3c3b221a1adbcdca9dc9ec9dd85d416f43afd1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
