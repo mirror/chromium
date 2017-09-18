@@ -409,39 +409,6 @@ TEST_F(ThumbnailDatabaseTest, GetOldOnDemandFaviconsReturnsOld) {
                                          ElementsAre(page_url1, page_url2))))));
 }
 
-// Test that ThumbnailDatabase::GetOldOnDemandFavicons() returns on-visit icons
-// if the on-visit icons have expired. We need this behavior in order to delete
-// icons stored via HistoryService::SetOnDemandFavicons() prior to on-demand
-// icons setting the "last_requested" time.
-TEST_F(ThumbnailDatabaseTest, GetOldOnDemandFaviconsReturnsExpired) {
-  ThumbnailDatabase db(nullptr);
-  ASSERT_EQ(sql::INIT_OK, db.Init(file_name_));
-  db.BeginTransaction();
-
-  base::Time start;
-  ASSERT_TRUE(base::Time::FromUTCExploded({2017, 5, 0, 1, 0, 0, 0, 0}, &start));
-  std::vector<unsigned char> data(kBlob1, kBlob1 + sizeof(kBlob1));
-  scoped_refptr<base::RefCountedBytes> favicon(new base::RefCountedBytes(data));
-
-  GURL url("http://google.com/favicon.ico");
-  favicon_base::FaviconID icon =
-      db.AddFavicon(url, favicon_base::FAVICON, favicon,
-                    FaviconBitmapType::ON_VISIT, start, gfx::Size());
-  ASSERT_NE(0, icon);
-  GURL page_url("http://google.com/");
-  ASSERT_NE(0, db.AddIconMapping(page_url, icon));
-  ASSERT_TRUE(db.SetFaviconOutOfDate(icon));
-
-  // The threshold is ignored for expired icons.
-  auto map = db.GetOldOnDemandFavicons(/*threshold=*/base::Time::Now());
-
-  // The icon is returned.
-  EXPECT_THAT(map, ElementsAre(Pair(
-                       icon, AllOf(Field(&IconMappingsForExpiry::icon_url, url),
-                                   Field(&IconMappingsForExpiry::page_urls,
-                                         ElementsAre(page_url))))));
-}
-
 // Test that ThumbnailDatabase::GetOldOnDemandFavicons() does not return
 // on-demand icons which were requested after the passed in timestamp.
 TEST_F(ThumbnailDatabaseTest, GetOldOnDemandFaviconsDoesNotReturnFresh) {
