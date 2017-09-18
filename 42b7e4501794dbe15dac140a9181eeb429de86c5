@@ -139,6 +139,24 @@
       "revId": "42b7e4501794dbe15dac140a9181eeb429de86c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "762b8069_48dec5ee",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-18T20:37:03Z",
+      "side": 1,
+      "message": "Ack, provided we are checking the flag if/when we associate a FieldTrial with a Feature. :)",
+      "parentUuid": "7b856a11_d31bba1d",
+      "revId": "42b7e4501794dbe15dac140a9181eeb429de86c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
