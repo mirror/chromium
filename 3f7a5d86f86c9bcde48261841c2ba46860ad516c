@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "514d5343_454d70ca",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-09-18T18:48:15Z",
+      "side": 1,
+      "message": "Looking for advice on this test - how do I make it wait for the two delayed tasks (calling into TriggerManager::FinishCollectingThreatDetails) that get posted by AdSamplerTrigger to finish? I\u0027ve artificially fixed this by forcing the delay to be 0, but I\u0027d like to also confirm that the call does happen after a non-zero delay. Thanks.",
+      "range": {
+        "startLine": 170,
+        "startChar": 29,
+        "endLine": 170,
+        "endChar": 48
+      },
+      "revId": "3f7a5d86f86c9bcde48261841c2ba46860ad516c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
