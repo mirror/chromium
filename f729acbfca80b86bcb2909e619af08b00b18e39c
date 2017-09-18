@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1184c673_3ff2a97e",
+        "filename": "chrome/browser/vr/animation_player.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-18T23:01:16Z",
+      "side": 1,
+      "message": "That should be fixed too... Doesn\u0027t need to be in this CL though.",
+      "parentUuid": "705d0be5_01460827",
+      "revId": "f729acbfca80b86bcb2909e619af08b00b18e39c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1a3b052_4c18fffa",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 3
