@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.download;
 
+import static org.chromium.chrome.browser.download.DownloadForegroundServiceObservers.getStringFromObserver;
 import static org.chromium.chrome.browser.download.DownloadSnackbarController.INVALID_NOTIFICATION_ID;
 
 import android.app.Notification;
@@ -175,6 +176,8 @@ public class DownloadForegroundServiceManager {
                 return;
             }
             mBoundService = ((DownloadForegroundService.LocalBinder) service).getService();
+            DownloadForegroundServiceObservers.addObserver(
+                    getStringFromObserver(DownloadNotificationService2.getInstance()));
             processDownloadUpdateQueue(true /* isProcessingPending */);
         }
 
@@ -219,6 +222,8 @@ public class DownloadForegroundServiceManager {
         mIsServiceBound = false;
 
         if (mBoundService != null) {
+            DownloadForegroundServiceObservers.removeObserver(
+                    getStringFromObserver(DownloadNotificationService2.getInstance()));
             stopAndUnbindServiceInternal(isCancelled);
             mBoundService = null;
         }
