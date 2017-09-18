@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "05c2b586_16342828",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-18T14:05:30Z",
+      "side": 1,
+      "message": "Not really orthogonal because before this CL, we handled the error on line 392 with a callback.\n\nI think that was wrong because this behavior is not allowed and the error handling masked that. I removed the DCHECK and added a TODO in the constructor.\n\nThanks for the discussion!",
+      "parentUuid": "a3fef07d_6d2b4757",
+      "range": {
+        "startLine": 381,
+        "startChar": 25,
+        "endLine": 381,
+        "endChar": 0
+      },
+      "revId": "a11457bb02f8d2cdee22fd7890d023f168f8a564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6944e6e2_dd070ae4",
         "filename": "components/favicon_base/favicon_types.h",
         "patchSetId": 2

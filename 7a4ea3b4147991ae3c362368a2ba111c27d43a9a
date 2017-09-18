@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c7a2b13e_1f702a22",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-18T14:05:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29196f54_7c2f3851",
+      "revId": "7a4ea3b4147991ae3c362368a2ba111c27d43a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "848792de_1435aa0c",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "7a4ea3b4147991ae3c362368a2ba111c27d43a9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3310f8_ef256b3e",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 18643,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-18T14:05:30Z",
+      "side": 1,
+      "message": "I am sorry, I\u0027ve missed that.\n\nDone.",
+      "parentUuid": "848792de_1435aa0c",
+      "range": {
+        "startLine": 18643,
+        "startChar": 55,
+        "endLine": 18643,
+        "endChar": 0
+      },
+      "revId": "7a4ea3b4147991ae3c362368a2ba111c27d43a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
