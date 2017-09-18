@@ -131,7 +131,12 @@ bool SelectionPopupController::ShowSelectionMenu(
                           params.source_type == ui::MENU_SOURCE_LONG_PRESS ||
                           params.source_type == ui::MENU_SOURCE_TOUCH_HANDLE ||
                           params.source_type == ui::MENU_SOURCE_STYLUS;
-  if (!from_touch || (!params.is_editable && params.selection_text.empty()))
+
+  const bool after_adjust =
+      params.source_type == ui::MENU_SOURCE_ADJUST_SELECTION;
+
+  if (!(from_touch || after_adjust) ||
+      (!params.is_editable && params.selection_text.empty()))
     return false;
 
   const bool can_select_all =
@@ -145,13 +150,14 @@ bool SelectionPopupController::ShowSelectionMenu(
       ConvertUTF16ToJavaString(env, params.selection_text);
   const bool should_suggest = params.source_type == ui::MENU_SOURCE_TOUCH ||
                               params.source_type == ui::MENU_SOURCE_LONG_PRESS;
+  const bool should_classify = !after_adjust;
 
   Java_SelectionPopupController_showSelectionMenu(
       env, obj, params.selection_rect.x(), params.selection_rect.y(),
       params.selection_rect.right(),
       params.selection_rect.bottom() + handle_height, params.is_editable,
       is_password_type, jselected_text, can_select_all, can_edit_richly,
-      should_suggest);
+      should_suggest, should_classify);
   return true;
 }
 

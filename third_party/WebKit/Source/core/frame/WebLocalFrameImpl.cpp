@@ -156,6 +156,7 @@
 #include "core/html/HTMLInputElement.h"
 #include "core/html/HTMLLinkElement.h"
 #include "core/html/PluginDocument.h"
+#include "core/input/ContextMenuAllowedScope.h"
 #include "core/input/EventHandler.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/layout/HitTestResult.h"
@@ -1199,7 +1200,8 @@ void WebLocalFrameImpl::SelectRange(const WebPoint& base_in_viewport,
 
 void WebLocalFrameImpl::SelectRange(
     const WebRange& web_range,
-    HandleVisibilityBehavior handle_visibility_behavior) {
+    HandleVisibilityBehavior handle_visibility_behavior,
+    bool show_selection_menu) {
   TRACE_EVENT0("blink", "WebLocalFrameImpl::selectRange");
 
   // TODO(editing-dev): The use of updateStyleAndLayoutIgnorePendingStylesheets
@@ -1222,6 +1224,12 @@ void WebLocalFrameImpl::SelectRange(
           .SetIsDirectional(false)
           .Build(),
       SetSelectionOptions::Builder().SetShouldShowHandle(show_handles).Build());
+
+  if (show_selection_menu) {
+    ContextMenuAllowedScope scope;
+    GetFrame()->GetEventHandler().ShowNonLocatedContextMenu(
+        nullptr, kMenuSourceAdjustSelection);
+  }
 }
 
 WebString WebLocalFrameImpl::RangeAsText(const WebRange& web_range) {
