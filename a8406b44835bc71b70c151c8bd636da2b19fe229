@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "464aa23d_a0758a83",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuItemDelegate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-18T22:01:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc078889_056502ea",
+      "range": {
+        "startLine": 79,
+        "startChar": 30,
+        "endLine": 79,
+        "endChar": 60
+      },
+      "revId": "a8406b44835bc71b70c151c8bd636da2b19fe229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a3fe2ff_f07a766a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "a8406b44835bc71b70c151c8bd636da2b19fe229",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daa22b03_fe3b2e3f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-18T22:01:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a3fe2ff_f07a766a",
+      "range": {
+        "startLine": 78,
+        "startChar": 19,
+        "endLine": 78,
+        "endChar": 26
+      },
+      "revId": "a8406b44835bc71b70c151c8bd636da2b19fe229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e9466774_7fed4dc1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-18T22:01:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d511d161_209b7886",
+      "range": {
+        "startLine": 141,
+        "startChar": 12,
+        "endLine": 141,
+        "endChar": 26
+      },
+      "revId": "a8406b44835bc71b70c151c8bd636da2b19fe229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43a94521_bbc25c35",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "919e4a88_57ce22b0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-18T22:01:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43a94521_bbc25c35",
+      "range": {
+        "startLine": 161,
+        "startChar": 24,
+        "endLine": 161,
+        "endChar": 29
+      },
+      "revId": "a8406b44835bc71b70c151c8bd636da2b19fe229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad7ebe7f_05fed67e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 8
@@ -111,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "05bcf713_1e4992a1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-18T22:01:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad7ebe7f_05fed67e",
+      "revId": "a8406b44835bc71b70c151c8bd636da2b19fe229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ab81467_86411640",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 8
@@ -122,6 +236,30 @@
       "writtenOn": "2017-09-18T20:16:49Z",
       "side": 1,
       "message": "would we want to call stopService potentially at this point?",
+      "range": {
+        "startLine": 228,
+        "startChar": 20,
+        "endLine": 228,
+        "endChar": 32
+      },
+      "revId": "a8406b44835bc71b70c151c8bd636da2b19fe229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c495c7a8_9b5a8e77",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-18T22:01:29Z",
+      "side": 1,
+      "message": "I try and looks like if we call stopService, it will not go to onStartCommand. And the stopForground(boolean) is the function Android doc mentions to change the Service to background.",
+      "parentUuid": "8ab81467_86411640",
       "range": {
         "startLine": 228,
         "startChar": 20,
