@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "bdccaaa1_7f26b7c4",
+        "filename": "chromeos/network/managed_network_configuration_handler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-18T16:15:21Z",
+      "side": 1,
+      "message": "can network state be null here?",
+      "range": {
+        "startLine": 149,
+        "startChar": 19,
+        "endLine": 149,
+        "endChar": 32
+      },
+      "revId": "822d5193667d785f233f42a9d62503633242ec4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18ea92eb_baf58e56",
         "filename": "chromeos/network/network_state.h",
         "patchSetId": 2
