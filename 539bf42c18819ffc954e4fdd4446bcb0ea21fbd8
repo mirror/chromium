@@ -16,6 +16,24 @@
       "revId": "539bf42c18819ffc954e4fdd4446bcb0ea21fbd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0198081_e0562d85",
+        "filename": "ash/wm/lock_action_handler_layout_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-18T23:14:16Z",
+      "side": 1,
+      "message": "Not really, but that\u0027s also a situation that is not expected to happen (the window being created in unlocked state is not something that\u0027s expected to happen).",
+      "parentUuid": "58a862c9_64ebfc3f",
+      "revId": "539bf42c18819ffc954e4fdd4446bcb0ea21fbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
