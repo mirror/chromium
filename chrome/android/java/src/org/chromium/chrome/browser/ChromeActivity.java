@@ -463,7 +463,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
                 if (controlContainerLayoutId == R.layout.bottom_control_container) {
                     View coordinator = findViewById(R.id.coordinator);
                     mBottomSheet = (BottomSheet) findViewById(R.id.bottom_sheet);
-                    mBottomSheet.init(coordinator, controlContainer.getView(), this);
+                    mBottomSheet.init(coordinator, controlContainer.getView(), this,
+                            true /* bottomNavIsTransparent */);
                 }
             } finally {
                 StrictMode.setThreadPolicy(oldPolicy);
