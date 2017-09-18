@@ -8,6 +8,7 @@
 #include "components/viz/common/resources/resource_format_utils.h"
 #include "components/viz/common/resources/shared_bitmap_manager.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
+#include "gpu/command_buffer/client/gpu_memory_buffer_manager.h"
 #include "third_party/skia/include/gpu/GrBackendSurface.h"
 
 using gpu::gles2::GLES2Interface;
@@ -512,6 +513,116 @@ DisplayResourceProvider::ScopedReadLockSoftware::ScopedReadLockSoftware(
 
 DisplayResourceProvider::ScopedReadLockSoftware::~ScopedReadLockSoftware() {
   resource_provider_->UnlockForRead(resource_id_);
+}
+
+DisplayResourceProvider::ScopedLocalReadLockGL::ScopedLocalReadLockGL(
+    DisplayResourceProvider* resource_provider,
+    viz::ResourceId resource_id) {
+  const Resource* resource = resource_provider->GetResource(resource_id);
+  DCHECK(resource);
+  DCHECK(resource->allocated);
+  texture_id_ = resource->gl_id;
+  target_ = resource->target;
+  size_ = resource->size;
+  color_space_ = resource->color_space;
+}
+
+DisplayResourceProvider::ScopedLocalReadLockGL::~ScopedLocalReadLockGL() {}
+
+DisplayResourceProvider::ScopedLocalWriteLockGL::ScopedLocalWriteLockGL(
+    DisplayResourceProvider* resource_provider,
+    viz::ResourceId resource_id)
+    : resource_provider_(resource_provider) {
+  resource_ = resource_provider->GetResource(resource_id);
+  DCHECK(resource_);
+  DCHECK(IsGpuResourceType(resource_->type));
+  resource_provider->CreateTexture(resource_);
+}
+
+DisplayResourceProvider::ScopedLocalWriteLockGL::~ScopedLocalWriteLockGL() {
+  DCHECK(resource_);
+  if (generate_mipmap_)
+    resource_->SetGenerateMipmap();
+}
+
+GLuint DisplayResourceProvider::ScopedLocalWriteLockGL::GetTexture() {
+  LazyAllocate(resource_provider_->ContextGL(), resource_->gl_id);
+  return resource_->gl_id;
+}
+
+void DisplayResourceProvider::ScopedLocalWriteLockGL::LazyAllocate(
+    gpu::gles2::GLES2Interface* gl,
+    GLuint texture_id) {
+  DCHECK(resource_);
+  if (resource_->allocated)
+    return;
+  resource_->allocated = true;
+  if (resource_->type == RESOURCE_TYPE_GPU_MEMORY_BUFFER) {
+    AllocateGpuMemoryBuffer(gl, texture_id);
+  } else {
+    AllocateTexture(gl, texture_id);
+  }
+}
+
+void DisplayResourceProvider::ScopedLocalWriteLockGL::AllocateGpuMemoryBuffer(
+    gpu::gles2::GLES2Interface* gl,
+    GLuint texture_id) {
+  DCHECK(resource_);
+  DCHECK(!resource_->gpu_memory_buffer);
+  DCHECK(!resource_->image_id);
+
+  resource_->gpu_memory_buffer =
+      resource_provider_->gpu_memory_buffer_manager()->CreateGpuMemoryBuffer(
+          resource_->size, BufferFormat(resource_->format), resource_->usage,
+          gpu::kNullSurfaceHandle);
+  // Avoid crashing in release builds if GpuMemoryBuffer allocation fails.
+  // http://crbug.com/554541
+  if (!resource_->gpu_memory_buffer)
+    return;
+
+  if (resource_->color_space.IsValid())
+    resource_->gpu_memory_buffer->SetColorSpaceForScanout(
+        resource_->color_space);
+
+#if defined(OS_CHROMEOS) && defined(ARCH_CPU_ARM_FAMILY)
+  // TODO(reveman): This avoids a performance problem on ARM ChromeOS
+  // devices. This only works with shared memory backed buffers.
+  // crbug.com/580166
+  DCHECK_EQ(resource_->gpu_memory_buffer->GetHandle().type,
+            gfx::SHARED_MEMORY_BUFFER);
+#endif
+
+  resource_->image_id = gl->CreateImageCHROMIUM(
+      resource_->gpu_memory_buffer->AsClientBuffer(), resource_->size.width(),
+      resource_->size.height(), GLInternalFormat(resource_->format));
+  DCHECK(resource_->image_id || gl->GetGraphicsResetStatusKHR() != GL_NO_ERROR);
+  gl->BindTexture(resource_->target, texture_id);
+  gl->BindTexImage2DCHROMIUM(resource_->target, resource_->image_id);
+}
+
+void DisplayResourceProvider::ScopedLocalWriteLockGL::AllocateTexture(
+    gpu::gles2::GLES2Interface* gl,
+    GLuint texture_id) {
+  DCHECK(gl);
+  DCHECK(resource_);
+  if (resource_->format == viz::ETC1)  // ETC1 does not support preallocation.
+    return;
+  gl->BindTexture(resource_->target, texture_id);
+  const ResourceProvider::Settings& settings = resource_provider_->settings_;
+  if (settings.use_texture_storage_ext &&
+      ResourceProvider::IsFormatSupportedForStorage(
+          resource_->format, settings.use_texture_format_bgra) &&
+      (resource_->hint & ResourceProvider::TEXTURE_HINT_IMMUTABLE)) {
+    GLenum storage_format =
+        ResourceProvider::TextureToStorageFormat(resource_->format);
+    gl->TexStorage2DEXT(resource_->target, 1, storage_format,
+                        resource_->size.width(), resource_->size.height());
+  } else {
+    gl->TexImage2D(resource_->target, 0, GLInternalFormat(resource_->format),
+                   resource_->size.width(), resource_->size.height(), 0,
+                   GLDataFormat(resource_->format),
+                   GLDataType(resource_->format), nullptr);
+  }
 }
 
 }  // namespace cc
