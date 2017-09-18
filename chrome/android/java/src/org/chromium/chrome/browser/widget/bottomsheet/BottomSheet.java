@@ -705,17 +705,16 @@ public class BottomSheet
      * @param controlContainer The container for the toolbar.
      * @param activity The activity displaying the bottom sheet.
      */
-    public void init(View root, View controlContainer, ChromeActivity activity) {
+    public void init(View root, View controlContainer, ChromeActivity activity,
+            boolean bottomNavIsTransparent) {
         mControlContainer = controlContainer;
         mToolbarHeight = mControlContainer.getHeight();
         mActivity = activity;
         mActionBarDelegate = new ViewShiftingActionBarDelegate(mActivity, this);
 
-        getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
-
         mBottomSheetContentContainer = (FrameLayout) findViewById(R.id.bottom_sheet_content);
         mBottomSheetContentContainer.setPadding(
-                0, 0, 0, (int) mBottomNavHeight - mToolbarShadowHeight);
+                0, 0, 0, bottomNavIsTransparent ? 0 : (int) mBottomNavHeight);
 
         // Listen to height changes on the root.
         root.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
@@ -733,6 +732,20 @@ public class BottomSheet
 
                 if (previousWidth != mContainerWidth || previousHeight != mContainerHeight) {
                     updateSheetStateRatios();
+
+                    // Fixes visible bar at the bottom of the sheet when scrolled to the top.
+                    // Posted in a runnable for Android J.
+                    // (crbug.com/762823)
+                    if (bottomNavIsTransparent) {
+                        post(new Runnable() {
+                            @Override
+                            public void run() {
+                                getLayoutParams().height =
+                                        (int) mContainerHeight + mToolbarShadowHeight;
+                                requestLayout();
+                            }
+                        });
+                    }
                 }
 
                 int heightMinusKeyboard = (int) mContainerHeight;
@@ -763,7 +776,7 @@ public class BottomSheet
                     // Setting the padding is posted in a runnable for the sake of Android J.
                     // See crbug.com/751013.
                     final int finalPadding =
-                            keyboardHeight + ((int) mBottomNavHeight - mToolbarShadowHeight);
+                            keyboardHeight + (bottomNavIsTransparent ? 0 : (int) mBottomNavHeight);
                     post(new Runnable() {
                         @Override
                         public void run() {
