@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fa1e1d8_d221568b",
+        "filename": "chrome/browser/vr/elements/ui_element.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-18T16:24:04Z",
+      "side": 1,
+      "message": "nit: perhaps add comment about why this should not be reached?",
+      "revId": "0c7ae3607da4e8adfdb2f2eab7e897584776b143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b8e5a4b_a26d044a",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-18T16:24:04Z",
+      "side": 1,
+      "message": "optional nit: the default value is kPhaseNone. So you could probably remove these explicit calls. Or perhaps we could make the initial value to be an invalid value? So that set_draw_phase needs to be explicitly set by any element in the tree?",
+      "revId": "0c7ae3607da4e8adfdb2f2eab7e897584776b143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
