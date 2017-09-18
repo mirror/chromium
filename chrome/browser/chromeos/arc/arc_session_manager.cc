@@ -164,14 +164,15 @@ ArcSessionManager* ArcSessionManager::Get() {
 bool ArcSessionManager::IsOobeOptInActive() {
   // ARC OOBE OptIn is optional for now. Test if it exists and login host is
   // active.
-  if (!user_manager::UserManager::Get()->IsCurrentUserNew())
+  if (!chromeos::LoginDisplayHost::default_host())
+    return false;
+  if (!user_manager::UserManager::Get()->IsCurrentUserNew() &&
+      !chromeos::LoginDisplayHost::default_host()->IsVoiceInteractionOobe())
     return false;
   if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
           chromeos::switches::kEnableArcOOBEOptIn)) {
     return false;
   }
-  if (!chromeos::LoginDisplayHost::default_host())
-    return false;
   return true;
 }
 
