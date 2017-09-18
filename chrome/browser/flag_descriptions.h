@@ -183,9 +183,6 @@ extern const char kEasyUnlockPromotionsDescription[];
 extern const char kEmbeddedExtensionOptionsName[];
 extern const char kEmbeddedExtensionOptionsDescription[];
 
-extern const char kEnableAsmWasmName[];
-extern const char kEnableAsmWasmDescription[];
-
 extern const char kEnableAutofillCreditCardBankNameDisplayName[];
 extern const char kEnableAutofillCreditCardBankNameDisplayDescription[];
 
