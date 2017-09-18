@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "86fcded8_52d95e6e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 2314,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-18T17:10:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c666c5e_70a17175",
+      "range": {
+        "startLine": 2314,
+        "startChar": 31,
+        "endLine": 2314,
+        "endChar": 55
+      },
+      "revId": "f46b7e513282697daec208f88bd121bf96cd3083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fa0f2d6_1d747d96",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
         "patchSetId": 7
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "I think we should come up with some naming that makes it clearer the intent.  Something like transient or unbound or \"something\" that would say that you\u0027d use this type for things that don\u0027t pertain to a bottom section (TYPE_NO_SECTION_FOR_ME_K_THX seems a bit verbose).",
       "parentUuid": "a0fcb89c_43a90f0e",
+      "range": {
+        "startLine": 70,
+        "startChar": 28,
+        "endLine": 70,
+        "endChar": 38
+      },
+      "revId": "f46b7e513282697daec208f88bd121bf96cd3083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fa15af_2d8dfa07",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-18T17:10:44Z",
+      "side": 1,
+      "message": "Changed \u0027placeholder\u0027 and \u0027other\u0027 to \u0027TYPE_AUXILARY_CONTENT\u0027.",
+      "parentUuid": "ccb1984f_e830c9fb",
       "range": {
         "startLine": 70,
         "startChar": 28,
