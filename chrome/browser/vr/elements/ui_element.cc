@@ -78,7 +78,7 @@ void UiElement::OnScrollEnd(std::unique_ptr<blink::WebGestureEvent> gesture,
 
 void UiElement::PrepareToDraw() {}
 
-void UiElement::Animate(const base::TimeTicks& time) {
+void UiElement::OnBeginFrame(const base::TimeTicks& time) {
   animation_player_.Tick(time);
   last_frame_time_ = time;
 }

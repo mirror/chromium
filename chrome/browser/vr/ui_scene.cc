@@ -69,7 +69,7 @@ void UiScene::OnBeginFrame(const base::TimeTicks& current_time,
                            const gfx::Vector3dF& look_at) {
   ForAllElements(root_element_.get(), [current_time](UiElement* element) {
     // Process all animations before calculating object transforms.
-    element->Animate(current_time);
+    element->OnBeginFrame(current_time);
   });
 
   ForAllElements(root_element_.get(), [look_at](UiElement* element) {
@@ -127,6 +127,9 @@ std::vector<const UiElement*> UiScene::GetViewportAwareElements() const {
   std::vector<const UiElement*> elements;
   ForAllElements(root_element_.get(), [&elements](UiElement* element) {
     if (!element->viewport_aware())
+      return;
+
+    if (element->transient_element())
       return;
 
     // Note that we need to exclude ViewportAwareRoot element. It is not a

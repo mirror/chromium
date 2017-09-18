@@ -64,6 +64,7 @@ std::set<UiElementName> kSpecialOpacityElements = {
 };
 
 static constexpr float kTolerance = 1e-5;
+static constexpr float kTransienceDelayMs = 6000;
 
 MATCHER_P2(SizeFsAreApproximatelyEqual, other, tolerance, "") {
   return cc::MathUtil::ApproximatelyEqual(arg.width(), other.width(),
@@ -98,45 +99,40 @@ TEST_F(UiSceneManagerTest, WebVrWarningsShowWhenInitiallyInWebVr) {
   MakeManager(kNotInCct, kInWebVr);
 
   EXPECT_TRUE(IsVisible(kWebVrPermanentHttpSecurityWarning));
-  EXPECT_TRUE(IsVisible(kWebVrTransientHttpSecurityWarning));
+  EXPECT_TRUE(IsVisible(kWebVrHttpSecurityWarning));
 
   manager_->SetWebVrSecureOrigin(true);
   EXPECT_FALSE(IsVisible(kWebVrPermanentHttpSecurityWarning));
-  EXPECT_FALSE(IsVisible(kWebVrTransientHttpSecurityWarning));
+  EXPECT_FALSE(IsVisible(kWebVrHttpSecurityWarning));
 
   manager_->SetWebVrSecureOrigin(false);
   EXPECT_TRUE(IsVisible(kWebVrPermanentHttpSecurityWarning));
-  EXPECT_TRUE(IsVisible(kWebVrTransientHttpSecurityWarning));
+  EXPECT_TRUE(IsVisible(kWebVrHttpSecurityWarning));
 
   manager_->SetWebVrMode(false, false);
   EXPECT_FALSE(IsVisible(kWebVrPermanentHttpSecurityWarning));
-  EXPECT_FALSE(IsVisible(kWebVrTransientHttpSecurityWarning));
+  EXPECT_FALSE(IsVisible(kWebVrHttpSecurityWarning));
 }
 
 TEST_F(UiSceneManagerTest, WebVrWarningsDoNotShowWhenInitiallyOutsideWebVr) {
   MakeManager(kNotInCct, kNotInWebVr);
 
   EXPECT_FALSE(IsVisible(kWebVrPermanentHttpSecurityWarning));
-  EXPECT_FALSE(IsVisible(kWebVrTransientHttpSecurityWarning));
+  EXPECT_FALSE(IsVisible(kWebVrHttpSecurityWarning));
 
   manager_->SetWebVrMode(true, false);
   EXPECT_TRUE(IsVisible(kWebVrPermanentHttpSecurityWarning));
-  EXPECT_TRUE(IsVisible(kWebVrTransientHttpSecurityWarning));
+  EXPECT_TRUE(IsVisible(kWebVrHttpSecurityWarning));
 }
 
 TEST_F(UiSceneManagerTest, WebVrTransientWarningTimesOut) {
   base::ScopedMockTimeMessageLoopTaskRunner task_runner_;
 
   MakeManager(kNotInCct, kInWebVr);
-  EXPECT_TRUE(IsVisible(kWebVrTransientHttpSecurityWarning));
+  EXPECT_TRUE(IsVisible(kWebVrHttpSecurityWarning));
 
-  // Note: Fast-forwarding appears broken in conjunction with restarting timers.
-  // In this test, we can fast-forward by the appropriate time interval, but in
-  // other cases (until the bug is addressed), we could work around the problem
-  // by using FastForwardUntilNoTasksRemain() instead.
-  // See http://crbug.com/736558.
-  task_runner_->FastForwardBy(base::TimeDelta::FromSeconds(31));
-  EXPECT_FALSE(IsVisible(kWebVrTransientHttpSecurityWarning));
+  AnimateBy(MsToDelta(31000));
+  EXPECT_FALSE(IsVisible(kWebVrHttpSecurityWarning));
 }
 
 TEST_F(UiSceneManagerTest, ToastStateTransitions) {
@@ -182,13 +178,15 @@ TEST_F(UiSceneManagerTest, ToastTransience) {
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
 
   manager_->SetFullscreen(true);
+  AnimateBy(MsToDelta(10));
   EXPECT_TRUE(IsVisible(kExclusiveScreenToast));
-  task_runner_->FastForwardUntilNoTasksRemain();
+  AnimateBy(MsToDelta(kTransienceDelayMs));
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
 
   manager_->SetWebVrMode(true, true);
+  AnimateBy(MsToDelta(10));
   EXPECT_TRUE(IsVisible(kExclusiveScreenToastViewportAware));
-  task_runner_->FastForwardUntilNoTasksRemain();
+  AnimateBy(MsToDelta(kTransienceDelayMs));
   EXPECT_FALSE(IsVisible(kExclusiveScreenToastViewportAware));
 
   manager_->SetWebVrMode(false, false);
@@ -274,13 +272,14 @@ TEST_F(UiSceneManagerTest, WebVrAutopresentedInsecureOrigin) {
   // Start the transition, but don't finish it.
   AnimateBy(MsToDelta(50));
   VerifyElementsVisible(
-      "Autopresented", std::set<UiElementName>{
-                           kWebVrPermanentHttpSecurityWarning,
-                           kWebVrTransientHttpSecurityWarning, kWebVrUrlToast});
+      "Autopresented",
+      std::set<UiElementName>{kWebVrPermanentHttpSecurityWarning,
+                              kWebVrHttpSecurityWarning, kWebVrUrlToast});
 
   // Make sure the transient elements go away.
-  task_runner_->FastForwardUntilNoTasksRemain();
-  UiElement* transient_url_bar = scene_->GetUiElementByName(kWebVrUrlToast);
+  AnimateBy(MsToDelta(kTransienceDelayMs));
+  UiElement* transient_url_bar =
+      scene_->GetUiElementByName(kWebVrUrlToastTransientParent);
   EXPECT_TRUE(IsAnimating(transient_url_bar, {OPACITY}));
   // Finish the transition.
   AnimateBy(MsToDelta(1000));
@@ -312,10 +311,11 @@ TEST_F(UiSceneManagerTest, WebVrAutopresented) {
                         std::set<UiElementName>{kWebVrUrlToast});
 
   // Make sure the transient URL bar times out.
-  task_runner_->FastForwardUntilNoTasksRemain();
-  UiElement* transient_url_bar = scene_->GetUiElementByName(kWebVrUrlToast);
-  EXPECT_TRUE(
-      IsAnimating(transient_url_bar, {OPACITY}));  // Finish the transition.
+  AnimateBy(MsToDelta(kTransienceDelayMs));
+  UiElement* transient_url_bar =
+      scene_->GetUiElementByName(kWebVrUrlToastTransientParent);
+  EXPECT_TRUE(IsAnimating(transient_url_bar, {OPACITY}));
+  // Finish the transition.
   AnimateBy(MsToDelta(1000));
   EXPECT_FALSE(IsAnimating(transient_url_bar, {OPACITY}));
   EXPECT_FALSE(IsVisible(kWebVrUrlToast));
