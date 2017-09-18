@@ -22,6 +22,30 @@
       "revId": "430aa2d5ae5126edf6c48427b8394beb5ac3ab2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7054e437_5fd253e4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapter.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-18T18:11:07Z",
+      "side": 1,
+      "message": "Yes, that can happen in this code. But it is happening in trunk too where we don\u0027t use transient anywhere for offline pages. We also have the same check for downloads in onDownloadItemUpdated(). It feels like it might be a bug in backend where update surfaces before add or something like that.",
+      "parentUuid": "f60e48db_d74ff7ae",
+      "range": {
+        "startLine": 803,
+        "startChar": 12,
+        "endLine": 804,
+        "endChar": 88
+      },
+      "revId": "430aa2d5ae5126edf6c48427b8394beb5ac3ab2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "ad04055e_43270af9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapter.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 803,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-18T18:11:07Z",
+      "side": 1,
+      "message": "Thanks, I need this return till a bug is fixed (some weird case). Replaced the assert with a Log.e().",
+      "parentUuid": "75fc5b78_2f32b3a9",
+      "range": {
+        "startLine": 803,
+        "startChar": 12,
+        "endLine": 803,
+        "endChar": 77
+      },
+      "revId": "f89f8257005de5087315b6a0980c6fd303f64b67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "336c7e9a_ccb348bd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryItemWrapper.java",
         "patchSetId": 12
