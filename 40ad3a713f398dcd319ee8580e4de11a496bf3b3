@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "79e6167f_2d0fbf36",
+        "filename": "components/autofill/core/browser/autofill_experiments.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-18T15:44:32Z",
+      "side": 1,
+      "message": "AlwaysFillAddresses sgtm",
+      "parentUuid": "cb31ed80_97877502",
+      "range": {
+        "startLine": 29,
+        "startChar": 27,
+        "endLine": 29,
+        "endChar": 60
+      },
+      "revId": "40ad3a713f398dcd319ee8580e4de11a496bf3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0580be1_f814ed5d",
         "filename": "components/autofill/core/browser/autofill_field.cc",
         "patchSetId": 2
@@ -63,6 +87,24 @@
       "revId": "40ad3a713f398dcd319ee8580e4de11a496bf3b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5edb0418_1734fb21",
+        "filename": "components/autofill/core/browser/autofill_field.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-18T15:44:32Z",
+      "side": 1,
+      "message": "I will avoid this for now, as we already have many methods like \"IsAutofillable\", \"IsFieldFillable\", \"ShouldUpload\", \"IsAutofillEnabled\" and we always have to dig to see what they mean and do. I think it\u0027s slightly clearer to write it out here.",
+      "parentUuid": "e0580be1_f814ed5d",
+      "revId": "40ad3a713f398dcd319ee8580e4de11a496bf3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
