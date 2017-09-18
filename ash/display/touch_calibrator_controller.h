@@ -12,6 +12,7 @@
 #include "base/time/time.h"
 #include "ui/display/display.h"
 #include "ui/display/manager/managed_display_info.h"
+#include "ui/events/devices/touchscreen_device.h"
 #include "ui/events/event_handler.h"
 
 namespace ui {
@@ -54,6 +55,15 @@ class ASH_EXPORT TouchCalibratorController
   // Stops any ongoing calibration process.
   void StopCalibration();
 
+  // Initializes parameters for custom touch calibration UI and prepares to
+  // capture touch events.
+  void SetupCustomCalibration(const display::Display& target_display);
+
+  // Completes the touch calibration by storing the calibration data for the
+  // display.
+  void CompleteCalibration(const CalibrationPointPairQuad& pairs,
+                           const gfx::Size& display_size);
+
   bool is_calibrating() { return is_calibrating_; }
 
  private:
@@ -61,6 +71,8 @@ class ASH_EXPORT TouchCalibratorController
   FRIEND_TEST_ALL_PREFIXES(TouchCalibratorControllerTest, StartCalibration);
   FRIEND_TEST_ALL_PREFIXES(TouchCalibratorControllerTest, KeyEventIntercept);
   FRIEND_TEST_ALL_PREFIXES(TouchCalibratorControllerTest, TouchThreshold);
+  FRIEND_TEST_ALL_PREFIXES(TouchCalibratorControllerTest, TouchDeviceIdIsSet);
+  FRIEND_TEST_ALL_PREFIXES(TouchCalibratorControllerTest, CustomCalibration);
 
   // A map for TouchCalibrator view with the key as display id of the display
   // it is present in.
@@ -77,6 +89,14 @@ class ASH_EXPORT TouchCalibratorController
 
   // Is true if a touch calibration is already underprocess.
   bool is_calibrating_ = false;
+
+  // Is true if touch calibration is active but it is managed by an external
+  // app.
+  bool is_custom_touch_calibration_ = false;
+
+  // This is populated during calibration, based on the source id of the device
+  // the events are originating from.
+  int touchdevice_id_ = ui::InputDevice::kInvalidId;
 
   // An array of Calibration point pairs. This stores all the 4 display and
   // touch input point pairs that will be used for calibration.

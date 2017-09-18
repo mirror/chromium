@@ -806,8 +806,7 @@ bool DisplayInfoProviderChromeOS::StartCustomTouchCalibration(
   touch_calibration_target_id_ = id;
   custom_touch_calibration_active_ = true;
 
-  // Enable un-transformed touch input.
-  ash::Shell::Get()->touch_transformer_controller()->SetForCalibration(true);
+  GetTouchCalibrator()->SetupCustomCalibration(display);
   return true;
 }
 
@@ -870,8 +869,7 @@ bool DisplayInfoProviderChromeOS::CompleteCustomTouchCalibration(
   }
 
   gfx::Size display_size(bounds.width, bounds.height);
-  ash::Shell::Get()->display_manager()->SetTouchCalibrationData(
-      display.id(), calibration_points, display_size);
+  GetTouchCalibrator()->CompleteCalibration(calibration_points, display_size);
   return true;
 }
 
