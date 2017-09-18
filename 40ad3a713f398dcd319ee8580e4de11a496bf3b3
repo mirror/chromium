@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0580be1_f814ed5d",
+        "filename": "components/autofill/core/browser/autofill_field.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-18T14:10:19Z",
+      "side": 1,
+      "message": "would AutofillField benefit from a ShouldTriggerAutofill() that could be used here and in AutofillManager?",
+      "revId": "40ad3a713f398dcd319ee8580e4de11a496bf3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
