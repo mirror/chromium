@@ -28,9 +28,9 @@ import org.chromium.chrome.browser.favicon.FaviconHelper.FaviconImageCallback;
 import org.chromium.chrome.browser.ntp.ForeignSessionHelper.ForeignSession;
 import org.chromium.chrome.browser.ntp.ForeignSessionHelper.ForeignSessionTab;
 import org.chromium.chrome.browser.ntp.ForeignSessionHelper.ForeignSessionWindow;
+import org.chromium.chrome.browser.signin.PersonalizedSigninPromoView;
 import org.chromium.chrome.browser.signin.SigninAccessPoint;
 import org.chromium.chrome.browser.signin.SigninAndSyncView;
-import org.chromium.chrome.browser.signin.SigninPromoView;
 import org.chromium.components.signin.ChromeSigninController;
 import org.chromium.ui.base.DeviceFormFactor;
 import org.chromium.ui.mojom.WindowOpenDisposition;
@@ -45,7 +45,12 @@ import java.util.List;
 public class RecentTabsRowAdapter extends BaseExpandableListAdapter {
     private static final int MAX_NUM_FAVICONS_TO_CACHE = 256;
 
-    private enum ChildType { NONE, DEFAULT_CONTENT, NEW_PROMO, OLD_PROMO }
+    private enum ChildType {
+        NONE,
+        DEFAULT_CONTENT,
+        PERSONALIZED_SIGNIN_PROMO,
+        SIGNIN_AND_SYNC_PROMO
+    }
 
     private enum GroupType {
         CONTENT, VISIBLE_SEPARATOR, INVISIBLE_SEPARATOR
@@ -378,34 +383,35 @@ public class RecentTabsRowAdapter extends BaseExpandableListAdapter {
     }
 
     /**
-     * A group containing the new signin promo.
+     * A group containing the personalized signin promo.
      */
-    class NewPromoGroup extends PromoGroup {
+    class PersonalizedSigninPromoGroup extends PromoGroup {
         @Override
         ChildType getChildType() {
-            return ChildType.NEW_PROMO;
+            return ChildType.PERSONALIZED_SIGNIN_PROMO;
         }
 
         @Override
         View getChildView(
                 int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView =
-                        LayoutInflater.from(parent.getContext())
-                                .inflate(R.layout.signin_promo_view_recent_tabs, parent, false);
+                LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+                convertView = layoutInflater.inflate(
+                        R.layout.personalized_signin_promo_view_recent_tabs, parent, false);
             }
-            mRecentTabsManager.setupNewSigninPromo((SigninPromoView) convertView);
+            mRecentTabsManager.setupPersonalizedSigninPromo(
+                    (PersonalizedSigninPromoView) convertView);
             return convertView;
         }
     }
 
     /**
-     * A group containing the old signin and sync promo.
+     * A group containing the signin and sync promo.
      */
-    class OldPromoGroup extends PromoGroup {
+    class SigninAndSyncPromoGroup extends PromoGroup {
         @Override
         public ChildType getChildType() {
-            return ChildType.OLD_PROMO;
+            return ChildType.SIGNIN_AND_SYNC_PROMO;
         }
 
         @Override
@@ -782,11 +788,11 @@ public class RecentTabsRowAdapter extends BaseExpandableListAdapter {
         switch (mRecentTabsManager.getPromoType()) {
             case RecentTabsManager.PromoState.PROMO_NONE:
                 break;
-            case RecentTabsManager.PromoState.PROMO_NEW:
-                addGroup(new NewPromoGroup());
+            case RecentTabsManager.PromoState.PROMO_SIGNIN_PERSONALIZED:
+                addGroup(new PersonalizedSigninPromoGroup());
                 break;
-            case RecentTabsManager.PromoState.PROMO_OLD:
-                addGroup(new OldPromoGroup());
+            case RecentTabsManager.PromoState.PROMO_SIGNIN_AND_SYNC:
+                addGroup(new SigninAndSyncPromoGroup());
                 break;
             default:
                 assert false : "Unexpected value for promo type!";
