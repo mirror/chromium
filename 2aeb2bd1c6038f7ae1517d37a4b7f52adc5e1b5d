@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8675c67b_ef8337fe",
+        "filename": "chrome/browser/resources/download/download_internals_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-18T22:04:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33b289e1_396d6e7c",
+      "range": {
+        "startLine": 21,
+        "startChar": 47,
+        "endLine": 21,
+        "endChar": 54
+      },
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8b48fbd_fb833700",
         "filename": "chrome/browser/resources/download/download_internals_browser_proxy.js",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "affa1ec0_df27dc50",
+        "filename": "chrome/browser/resources/download/download_internals_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-18T22:04:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8b48fbd_fb833700",
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d962dc4b_116e1d89",
         "filename": "chrome/browser/ui/webui/chrome_web_ui_controller_factory.cc",
         "patchSetId": 5
@@ -53,6 +95,30 @@
       "writtenOn": "2017-09-18T20:55:29Z",
       "side": 1,
       "message": "Add this exception here instead: https://cs.chromium.org/chromium/src/chrome/browser/ui/browser_navigator.cc?type\u003dcs\u0026q\u003dfile:chrome/browser/ui/browser_navigator.cc+incognito\u0026l\u003d631\n\n(and make sure it works as expected)",
+      "range": {
+        "startLine": 334,
+        "startChar": 0,
+        "endLine": 334,
+        "endChar": 53
+      },
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7e7ba2_085d3106",
+        "filename": "chrome/browser/ui/webui/chrome_web_ui_controller_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-18T22:04:43Z",
+      "side": 1,
+      "message": "Tried moving it over and it still loaded the page :(.",
+      "parentUuid": "d962dc4b_116e1d89",
       "range": {
         "startLine": 334,
         "startChar": 0,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "c349bd0b_59562da4",
+        "filename": "chrome/browser/ui/webui/download/download_internals_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-18T22:04:43Z",
+      "side": 1,
+      "message": "Nice I didn\u0027t know we supported that!  Thanks :).",
+      "parentUuid": "c9f2f435_b59612fe",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 17
+      },
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08665644_26baebcf",
         "filename": "chrome/browser/ui/webui/download/download_internals_ui_message_handler.cc",
         "patchSetId": 5
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "5b5f7574_505e5bc4",
+        "filename": "chrome/browser/ui/webui/download/download_internals_ui_message_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-18T22:04:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08665644_26baebcf",
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b8e0d63_54453eb1",
         "filename": "chrome/browser/ui/webui/download/download_internals_ui_message_handler.cc",
         "patchSetId": 5
@@ -116,6 +224,30 @@
       "writtenOn": "2017-09-18T20:55:29Z",
       "side": 1,
       "message": "Is there a risk of this firing before AllowJavascript() has been called?",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4436543e_33179728",
+        "filename": "chrome/browser/ui/webui/download/download_internals_ui_message_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-18T22:04:43Z",
+      "side": 1,
+      "message": "Ah good point.  I\u0027ll add AllowJavascript() here.  Is that reasonable?",
+      "parentUuid": "9b8e0d63_54453eb1",
       "range": {
         "startLine": 38,
         "startChar": 2,
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "9dcc3781_a7e4f287",
+        "filename": "chrome/browser/ui/webui/download/download_internals_ui_message_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-18T22:04:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b377d15a_f5c952ac",
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88e985d8_d4976e14",
         "filename": "chrome/browser/ui/webui/download/download_internals_ui_message_handler.h",
         "patchSetId": 5
@@ -165,6 +315,30 @@
       "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3661c1b_79dd3060",
+        "filename": "chrome/browser/ui/webui/download/download_internals_ui_message_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-18T22:04:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88e985d8_d4976e14",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 26
+      },
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
