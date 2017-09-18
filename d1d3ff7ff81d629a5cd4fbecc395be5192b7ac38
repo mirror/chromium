@@ -46,6 +46,30 @@
       "revId": "d1d3ff7ff81d629a5cd4fbecc395be5192b7ac38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "541f32be_0ab5bbb5",
+        "filename": "chrome/profiling/memlog_connection_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-18T22:50:41Z",
+      "side": 1,
+      "message": "I removed the part of the comment about tests. This is also true for non-test scenarios",
+      "parentUuid": "aaf5d438_14bd6297",
+      "range": {
+        "startLine": 69,
+        "startChar": 46,
+        "endLine": 69,
+        "endChar": 70
+      },
+      "revId": "d1d3ff7ff81d629a5cd4fbecc395be5192b7ac38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
