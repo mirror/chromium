@@ -23,6 +23,7 @@ import org.chromium.base.ApplicationStatus.ActivityStateListener;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.bookmarks.BookmarkSheetContent;
 import org.chromium.chrome.browser.download.DownloadSheetContent;
 import org.chromium.chrome.browser.history.HistorySheetContent;
@@ -74,7 +75,8 @@ public class BottomSheetContentController extends BottomNavigationView
 
     // Since the placeholder content cannot be triggered by a navigation item like the others, this
     // value must also be an invalid ID.
-    private static final int PLACEHOLDER_ID = -2;
+    @VisibleForTesting
+    static final int PLACEHOLDER_ID = -2;
 
     private final Map<Integer, BottomSheetContent> mBottomSheetContents = new HashMap<>();
 
@@ -119,14 +121,23 @@ public class BottomSheetContentController extends BottomNavigationView
 
         @Override
         public void onSheetClosed(@StateChangeReason int reason) {
-            if (mSelectedItemId != 0 && mSelectedItemId != R.id.action_home) {
-                showBottomSheetContent(R.id.action_home);
+            if (ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME_DESTROY_SUGGESTIONS)) {
+                // TODO(bauerb): Implement support for destroying the home sheet after a delay.
+                mSelectedItemId = PLACEHOLDER_ID;
+                mBottomSheet.showContent(null);
+                clearBottomSheetContents(true);
             } else {
-                clearBottomSheetContents(false);
+                if (mSelectedItemId != 0 && mSelectedItemId != R.id.action_home) {
+                    showBottomSheetContent(R.id.action_home);
+                } else {
+                    clearBottomSheetContents(false);
+                }
             }
+
             // The keyboard should be hidden when the sheet is closed in case it was made visible by
             // sheet content.
-            UiUtils.hideKeyboard((View) BottomSheetContentController.this);
+            UiUtils.hideKeyboard(BottomSheetContentController.this);
+
             // TODO(twellington): determine a policy for destroying the
             //                    SuggestionsBottomSheetContent.
             ViewHighlighter.turnOffHighlight(mHighlightedView);
@@ -378,7 +389,7 @@ public class BottomSheetContentController extends BottomNavigationView
     }
 
     private void showBottomSheetContent(int navItemId) {
-        // There are some bugs related to programatically selecting menu items that are fixed in
+        // There are some bugs related to programmatically selecting menu items that are fixed in
         // newer support library versions.
         // TODO(twellington): remove this after the support library is rolled.
         if (mSelectedItemId > 0) getMenu().findItem(mSelectedItemId).setChecked(false);
