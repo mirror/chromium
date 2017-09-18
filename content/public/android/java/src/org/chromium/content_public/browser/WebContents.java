@@ -243,6 +243,17 @@ public interface WebContents extends Parcelable {
     public void adjustSelectionByCharacterOffset(int startAdjust, int endAdjust);
 
     /**
+     * Adjusts the selection starting and ending points by the given amount.
+     * A negative amount moves the selection towards the beginning of the document, a positive
+     * amount moves the selection towards the end of the document.
+     * @param startAdjust The amount to adjust the start of the selection.
+     * @param endAdjust The amount to adjust the end of the selection.
+     * @param showSelectionMenu if true, show selection menu after adjustment.
+     */
+    public void adjustSelectionByCharacterOffset(
+            int startAdjust, int endAdjust, boolean showSelectionMenu);
+
+    /**
      * Gets the last committed URL. It represents the current page that is
      * displayed in this WebContents. It represents the current security context.
      *

@@ -500,7 +500,8 @@ class WebLocalFrame : public WebFrame {
     kPreserveHandleVisibility,
   };
   virtual void SelectRange(const WebRange&,
-                           HandleVisibilityBehavior = kHideSelectionHandle) = 0;
+                           HandleVisibilityBehavior = kHideSelectionHandle,
+                           bool show_selection_menu = false) = 0;
 
   virtual WebString RangeAsText(const WebRange&) = 0;
 

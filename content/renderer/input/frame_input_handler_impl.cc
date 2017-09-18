@@ -295,12 +295,14 @@ void FrameInputHandlerImpl::SelectRange(const gfx::Point& base,
       render_view->ConvertWindowPointToViewport(extent));
 }
 
-void FrameInputHandlerImpl::AdjustSelectionByCharacterOffset(int32_t start,
-                                                             int32_t end) {
+void FrameInputHandlerImpl::AdjustSelectionByCharacterOffset(
+    int32_t start,
+    int32_t end,
+    bool show_selection_menu) {
   if (!main_thread_task_runner_->BelongsToCurrentThread()) {
     RunOnMainThread(
         base::Bind(&FrameInputHandlerImpl::AdjustSelectionByCharacterOffset,
-                   weak_this_, start, end));
+                   weak_this_, start, end, show_selection_menu));
     return;
   }
 
@@ -324,7 +326,7 @@ void FrameInputHandlerImpl::AdjustSelectionByCharacterOffset(int32_t start,
   render_frame_->GetWebFrame()->SelectRange(
       blink::WebRange(range.StartOffset() + start,
                       range.length() + end - start),
-      blink::WebLocalFrame::kPreserveHandleVisibility);
+      blink::WebLocalFrame::kPreserveHandleVisibility, show_selection_menu);
 }
 
 void FrameInputHandlerImpl::MoveRangeSelectionExtent(const gfx::Point& extent) {
