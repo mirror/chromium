@@ -218,6 +218,10 @@ TEST_P(WaitableEventWatcherTest, MultipleWatchersManual) {
 
   event.Signal();
   run_loop.Run();
+  int nb_tries = 100;
+  while ((counter1 != 1 || counter2 != 1) && --nb_tries >= 0) {
+    run_loop.RunUntilIdle();
+  }
 
   EXPECT_EQ(1, counter1);
   EXPECT_EQ(1, counter2);
