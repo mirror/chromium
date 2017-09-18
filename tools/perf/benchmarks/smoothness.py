@@ -258,7 +258,6 @@ class SmoothnessKeySilkCases(_Smoothness):
   rasterization.
   """
   page_set = page_sets.KeySilkCasesPageSet
-  SUPPORTED_PLATFORMS = [story_module.expectations.ALL_MOBILE]
 
   @classmethod
   def Name(cls):
@@ -272,25 +271,6 @@ class SmoothnessKeySilkCases(_Smoothness):
     for story in to_remove:
       stories.RemoveStory(story)
     return stories
-
-  def GetExpectations(self):
-    class StoryExpectations(story_module.expectations.StoryExpectations):
-      def SetExpectations(self):
-        self.DisableStory('https://polymer-topeka.appspot.com/',
-                          [story_module.expectations.ALL], 'crbug.com/507865')
-        self.DisableStory('http://plus.google.com/app/basic/stream',
-                          [story_module.expectations.ALL], 'crbug.com/338838')
-        self.DisableStory('inbox_app.html?slide_drawer',
-                          [story_module.expectations.ALL], 'crbug.com/446332')
-        self.DisableStory('inbox_app.html?swipe_to_dismiss',
-                          [story_module.expectations.ALL], 'crbug.com/764825')
-        self.DisableStory('masonry.html',
-                          [story_module.expectations.ALL], 'crbug.com/764825')
-        self.DisableStory('inbox_app.html?stress_hidey_bars',
-                          [story_module.expectations.ALL],
-                          'crbug.com/735679')
-
-    return StoryExpectations()
 
 
 @benchmark.Owner(emails=['vmiura@chromium.org'])

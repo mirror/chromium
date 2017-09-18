@@ -731,16 +731,6 @@ class KeySilkCasesPageSet(story.StorySet):
       archive_data_file='data/key_silk_cases.json',
       cloud_storage_bucket=story.PARTNER_BUCKET)
 
-    self.AddStory(Page1(self, run_no_page_interactions))
-    self.AddStory(Page2(self, run_no_page_interactions))
-    self.AddStory(Page3(self, run_no_page_interactions))
-    self.AddStory(Page4(self, run_no_page_interactions))
-    self.AddStory(Page5(self, run_no_page_interactions))
-    self.AddStory(Page6(self, run_no_page_interactions))
-    self.AddStory(Page7(self, run_no_page_interactions))
-    self.AddStory(Page8(self, run_no_page_interactions))
-    self.AddStory(Page9(self, run_no_page_interactions))
-    self.AddStory(Page10(self, run_no_page_interactions))
     self.AddStory(Page11(self, run_no_page_interactions))
     self.AddStory(Page12(self, run_no_page_interactions))
     self.AddStory(Page13(self, run_no_page_interactions))
