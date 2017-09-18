@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaf8cfdf_862e956d",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMarqueeElement.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-18T23:44:47Z",
+      "side": 1,
+      "message": "should remove ExceptionState\u0026 argument",
+      "revId": "79d0bca4b94a72a294b12b90b11f05d63df5b365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b431146_02ce4cad",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMarqueeElement.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-18T23:44:47Z",
+      "side": 1,
+      "message": "Should remove RaisesException\u003dSetter",
+      "revId": "79d0bca4b94a72a294b12b90b11f05d63df5b365",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
