@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ee170bbe_ed3c5b38",
+        "filename": "ui/webui/resources/js/test_timer_proxy.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-18T14:40:48Z",
+      "side": 1,
+      "message": "That is a very good point, I wasn\u0027t aware of MockTimer yet. Seems like this makes the whole TimerProxy / TestTimerProxy abstraction unnecessary for cr-toast and this change could be abandoned.\n\nThere might be value in also removing TestTimerProxy from the dnd_manager_test.js and use MockTimer there instead, but I leave that for you MD Bookmarks folks do decide. At first glance it wasn\u0027t obvious to me what needs to be done.",
+      "parentUuid": "7912fc8e_6efb11ed",
+      "revId": "f7551e1abd3b04baa9828e96dd3fa818c0eb94b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2c49a0b_a57f4540",
         "filename": "ui/webui/resources/js/test_timer_proxy.js",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "34c25639_f16d07a2",
+        "filename": "ui/webui/resources/js/test_timer_proxy.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-18T14:40:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a2c49a0b_a57f4540",
+      "revId": "f7551e1abd3b04baa9828e96dd3fa818c0eb94b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "005083ad_cad05404",
         "filename": "ui/webui/resources/js/test_timer_proxy.js",
         "patchSetId": 4
@@ -50,6 +86,24 @@
       "revId": "f7551e1abd3b04baa9828e96dd3fa818c0eb94b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92d9481f_b302e205",
+        "filename": "ui/webui/resources/js/test_timer_proxy.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-18T14:40:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "005083ad_cad05404",
+      "revId": "f7551e1abd3b04baa9828e96dd3fa818c0eb94b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
