@@ -11,8 +11,8 @@
 @protocol TabCollectionConsumer;
 class WebStateList;
 
-// Mediator listens for web state list changes, then updates the consumer.
-// This also serves as data source for a tab collection.
+// Mediator listens for web state list changes, web state updates, and snapshot
+// updates, then updates the consumer.
 @interface TabCollectionMediator : NSObject<WebStateListObserving>
 
 // The source of changes and backing of the data source.
@@ -22,8 +22,11 @@ class WebStateList;
 // list.
 @property(nonatomic, weak) id<TabCollectionConsumer> consumer;
 
-// Takes a snapshot of the active webState and updates the consumer.
-- (void)takeSnapshotWithCache:(SnapshotCache*)snapshotCache;
+// The source of snapshot updates.
+@property(nonatomic, weak) SnapshotCache* snapshotCache;
+
+// Takes a snapshot of the active webState and updates the snapshot cache.
+- (void)takeSnapshot;
 
 // Stops observing all objects.
 - (void)disconnect;
