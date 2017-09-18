@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17f3fe25_1c673148",
+        "filename": "chrome/browser/ui/views/tab_contents/chrome_web_contents_view_delegate_views_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-18T08:50:08Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s correct to instantiate two WebContentsViewDelegates. E.g. it also means there are multiple ContextMenuDelegate and two places where a RenderViewContextMenuBase could be stored.\n\nThe best approach I see is to last_focused_view_tracker_ and the logic surrounding it into a new class that ChromeWebContentsViewDelegateViewsMac and ChromeWebContentsViewDelegateViews can share.\n\nThen ChromeWebContentsViewDelegateViews can remain aura-specific, and we don\u0027t need #ifdef.",
+      "revId": "6b9c9001aea5fa13631f1935be81e509be9254ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
