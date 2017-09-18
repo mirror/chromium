@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c54a50c4_5a3f2134",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-18T16:34:11Z",
+      "side": 1,
+      "message": "I don\u0027t know if it\u0027s obvious that no filter means run everything, vs. run nothing. I imagine most people would get the distinction, but I think it may be better to be explicit.\n\nWhat if we change the comment to start with \"If present, \" ?",
+      "parentUuid": "7c70656d_36b5f180",
+      "revId": "a9f25e1b936af3e7df602b076772927b0b5b85b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d616aec_1dfa47c4",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 2
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "Per the style guide, we should not break an URL, but it should be on its own line: https://engdoc.corp.google.com/eng/doc/devguide/py/styleguide.shtml?cl\u003dhead#line-length.\n\nI would prefer what Sylvain suggested as it\u0027s more concise and fits within 80 chars. Thanks Sylvain!",
       "parentUuid": "737800b5_16def059",
+      "revId": "a9f25e1b936af3e7df602b076772927b0b5b85b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fb29662_4b895cd4",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-09-18T16:34:11Z",
+      "side": 1,
+      "message": "My comment wasn\u0027t to break the URL, but rather to put it on its own line, as mentioned in the style guide. Though I didn\u0027t count if it would fit in 80 chars.\n\nI am also totally fine with the change you made to reference the path of the file, actually it\u0027s probably better this way. :)",
+      "parentUuid": "dbdaedc9_15e7d8d4",
       "revId": "a9f25e1b936af3e7df602b076772927b0b5b85b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
