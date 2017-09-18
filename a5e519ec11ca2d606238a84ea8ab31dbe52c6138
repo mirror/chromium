@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "967ad4c1_3512a585",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-18T15:31:23Z",
+      "side": 1,
+      "message": "q: Is there a reason to swap the ordering here?",
+      "range": {
+        "startLine": 579,
+        "startChar": 13,
+        "endLine": 579,
+        "endChar": 32
+      },
+      "revId": "a5e519ec11ca2d606238a84ea8ab31dbe52c6138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c683f4ea_481bb51c",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-18T15:31:23Z",
+      "side": 1,
+      "message": "q: What actually happens here? Does the launcher appear on top of the overview mode, does it become one of the overview window tiles, or does it do nothing at all? I\u0027m not certain that testing this behavior is all that important... maybe just test the back portion of the button?",
+      "revId": "a5e519ec11ca2d606238a84ea8ab31dbe52c6138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "363feefa_773b17d6",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-18T15:31:23Z",
+      "side": 1,
+      "message": "I\u0027m not sure that this app list button test file should test anything related to the overview mode. The most important thing to test here is that the back button generates the expected event. Separately, the window selector / overview mode controller\u0027s unit tests should cover the exiting of overview mode on that event. It seems like the optional integration test of clicking the back button to exit overview mode might belong with the window selector tests, since that seems like a client of the app list button. So, this file probably shouldn\u0027t care about overview mode (ie. this file shouldn\u0027t test back button behavior for every client app).",
+      "revId": "a5e519ec11ca2d606238a84ea8ab31dbe52c6138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16e2e462_3e2f3bcd",
         "filename": "ash/shell.cc",
         "patchSetId": 2
@@ -13,6 +70,41 @@
       "writtenOn": "2017-09-15T22:53:37Z",
       "side": 1,
       "message": "this is in kind of a random spot because window_selector_controller_ is initialized in the initialize list. any ideas where this should go?",
+      "revId": "a5e519ec11ca2d606238a84ea8ab31dbe52c6138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7387674f_dd0d2143",
+        "filename": "ash/shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-18T15:31:23Z",
+      "side": 1,
+      "message": "If possible, the pre-target handler should only be added when the overview mode is activated, and should be removed when it\u0027s deactivated.",
+      "parentUuid": "16e2e462_3e2f3bcd",
+      "revId": "a5e519ec11ca2d606238a84ea8ab31dbe52c6138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25e64c07_078d6f8a",
+        "filename": "ash/wm/overview/window_selector_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-18T15:31:23Z",
+      "side": 1,
+      "message": "optional nit: combine early return conditionals",
       "revId": "a5e519ec11ca2d606238a84ea8ab31dbe52c6138",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
