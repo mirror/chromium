@@ -167,6 +167,8 @@ static_library("test_support") {
     "content_browser_sanity_checker.h",
     "content_test_suite.cc",
     "content_test_suite.h",
+    "controllable_http_response.cc",
+    "controllable_http_response.h",
     "did_commit_provisional_load_interceptor.cc",
     "did_commit_provisional_load_interceptor.h",
     "dummy_render_widget_host_delegate.h",
