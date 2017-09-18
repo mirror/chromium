@@ -18,6 +18,7 @@ import org.junit.runner.RunWith;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.components.signin.AccountManagerFacade;
+import org.chromium.components.signin.ProfileDataSource;
 import org.chromium.components.signin.test.util.AccountHolder;
 import org.chromium.components.signin.test.util.FakeAccountManagerDelegate;
 import org.chromium.components.signin.test.util.SimpleFuture;
@@ -33,7 +34,8 @@ public class AccountManagerFacadeTest {
     @Before
     public void setUp() throws Exception {
         Context context = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        mDelegate = new FakeAccountManagerDelegate(context);
+        mDelegate = new FakeAccountManagerDelegate(
+                FakeAccountManagerDelegate.ENABLE_PROFILE_DATA_SOURCE);
         Assert.assertFalse(mDelegate.isRegisterObserversCalled());
         AccountManagerFacade.overrideAccountManagerFacadeForTests(context, mDelegate);
         Assert.assertTrue(mDelegate.isRegisterObserversCalled());
@@ -66,6 +68,25 @@ public class AccountManagerFacadeTest {
         Assert.assertTrue(hasAccountForName("testme@gmail.com"));
         Assert.assertTrue(hasAccountForName("Testme@gmail.com"));
         Assert.assertTrue(hasAccountForName("te.st.me@gmail.com"));
+    }
+
+    @Test
+    @SmallTest
+    public void testProfileDataSource() throws InterruptedException {
+        String accountName = "test@gmail.com";
+        addTestAccount(accountName, "password");
+        ProfileDataSource.ProfileData profileData = new ProfileDataSource.ProfileData(
+                accountName, null, "Test Full Name", "Test Given Name");
+
+        ProfileDataSource profileDataSource = mDelegate.getProfileDataSource();
+        Assert.assertNotNull(profileDataSource);
+        mDelegate.setProfileData(accountName, profileData);
+        Assert.assertArrayEquals(profileDataSource.getProfileDataMap().values().toArray(),
+                new ProfileDataSource.ProfileData[] {profileData});
+
+        mDelegate.setProfileData(accountName, null);
+        Assert.assertArrayEquals(profileDataSource.getProfileDataMap().values().toArray(),
+                new ProfileDataSource.ProfileData[0]);
     }
 
     private Account addTestAccount(String accountName, String password) {
