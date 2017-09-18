@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "5d63abb8_93557ce3",
+        "filename": "ui/base/models/list_selection_model.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-18T21:17:02Z",
+      "side": 1,
+      "message": "Acknowledged.\n\nFWIW, if you\u0027d support it, I think renaming \"to/from\" to \"new_index/old_index\" (or \"new_start/old_start\") would actually be a pretty big help to understandability here.",
+      "parentUuid": "f468ce08_4a186d8a",
+      "range": {
+        "startLine": 44,
+        "startChar": 7,
+        "endLine": 44,
+        "endChar": 16
+      },
+      "revId": "97ca3a2e514fa402dabc20caee8739be8b2576df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e5ea36f_552c5357",
         "filename": "ui/base/models/list_selection_model.cc",
         "patchSetId": 7

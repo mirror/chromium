@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "91b47a78_460293ff",
+        "filename": "ui/base/models/list_selection_model.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-18T21:17:02Z",
+      "side": 1,
+      "message": "Even though the old code DCHECKed, it was still correct in the (to \u003d\u003d from) case, and that\u0027s what I was trying to preserve: I was originally worried that, in a release build, we\u0027d lose sortedness due to a +\u003d length operation in the (to \u003d\u003d from) case. However, I was wrong about that: this implementation actually works fine without special-casing.\n\nI\u0027ve put the DCHECKs back (and deleted the relevant unit test coverage). Or, if you\u0027d like, I could remove the DCHECK (maybe hoist it to TabStripModel::MoveWebContentsAtImpl), and add more comprehensive unittests of these cases?",
+      "parentUuid": "23c5f455_2458483e",
+      "range": {
+        "startLine": 145,
+        "startChar": 6,
+        "endLine": 145,
+        "endChar": 16
+      },
+      "revId": "8a817ea155c0f9f7719d233f5c1ecc252a8daf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e766b809_25ab1721",
         "filename": "ui/base/models/list_selection_model.cc",
         "patchSetId": 12
@@ -115,6 +139,30 @@
       "revId": "8a817ea155c0f9f7719d233f5c1ecc252a8daf47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c92695e_51e6a82f",
+        "filename": "ui/base/models/table_model_observer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-18T21:17:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c202391c_03a37971",
+      "range": {
+        "startLine": 28,
+        "startChar": 34,
+        "endLine": 28,
+        "endChar": 42
+      },
+      "revId": "8a817ea155c0f9f7719d233f5c1ecc252a8daf47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
