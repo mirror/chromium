@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40372dfc_8ef363fe",
+        "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1221,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-18T23:51:47Z",
+      "side": 1,
+      "message": "Aside, not for this CL: This metric is a little weird in a mash world. I wonder if ash should record a separate histogram for its dialogs.",
+      "revId": "87e73357aae089ab7a97e5c732a6407b81f30a48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
