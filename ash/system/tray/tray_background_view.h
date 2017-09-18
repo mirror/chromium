@@ -130,6 +130,15 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
   // based on background insets returned from GetBackgroundInsets().
   gfx::Rect GetBackgroundBounds() const;
 
+  bool is_bubble_in_animation_to_close() {
+    return is_bubble_in_animation_to_close_;
+  }
+
+  void set_is_bubble_in_animation_to_close(
+      bool is_bubble_in_animation_to_close) {
+    is_bubble_in_animation_to_close_ = is_bubble_in_animation_to_close;
+  }
+
  protected:
   // ActionableView:
   std::unique_ptr<views::InkDropMask> CreateInkDropMask() const override;
@@ -176,6 +185,9 @@ class ASH_EXPORT TrayBackgroundView : public ActionableView,
   // Visibility of this tray's separator which is a line of 1x32px and 4px to
   // right of tray.
   bool separator_visible_;
+
+  // True if the tray bubble is during animation to close.
+  bool is_bubble_in_animation_to_close_ = false;
 
   // Handles touch drag gestures on the tray area and its associated bubble.
   std::unique_ptr<TrayDragController> drag_controller_;

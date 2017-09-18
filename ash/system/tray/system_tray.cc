@@ -592,7 +592,7 @@ void SystemTray::UpdateAfterShelfAlignmentChange() {
 }
 
 void SystemTray::AnchorUpdated() {
-  if (system_bubble_) {
+  if (system_bubble_ && !is_bubble_in_animation_to_close()) {
     UpdateClippingWindowBounds();
     system_bubble_->bubble_view()->UpdateBubble();
     UpdateBubbleViewArrow(system_bubble_->bubble_view());

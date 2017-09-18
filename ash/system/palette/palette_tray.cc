@@ -388,7 +388,7 @@ aura::Window* PaletteTray::GetWindow() {
 }
 
 void PaletteTray::AnchorUpdated() {
-  if (bubble_) {
+  if (bubble_ && !is_bubble_in_animation_to_close()) {
     UpdateClippingWindowBounds();
     bubble_->bubble_view()->UpdateBubble();
   }

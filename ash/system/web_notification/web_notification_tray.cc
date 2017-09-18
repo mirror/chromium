@@ -407,7 +407,7 @@ void WebNotificationTray::UpdateAfterShelfAlignmentChange() {
 }
 
 void WebNotificationTray::AnchorUpdated() {
-  if (message_center_bubble()) {
+  if (message_center_bubble() && !is_bubble_in_animation_to_close()) {
     UpdateClippingWindowBounds();
     system_tray_->UpdateClippingWindowBounds();
     message_center_bubble()->bubble_view()->UpdateBubble();

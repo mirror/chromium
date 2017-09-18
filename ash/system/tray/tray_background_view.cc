@@ -142,6 +142,7 @@ class CloseBubbleObserver : public ui::ImplicitAnimationObserver {
 
   void OnImplicitAnimationsCompleted() override {
     tray_background_view_->CloseBubble();
+    tray_background_view_->set_is_bubble_in_animation_to_close(false);
     delete this;
   }
 
@@ -361,7 +362,7 @@ void TrayBackgroundView::UpdateAfterShelfAlignmentChange() {
 }
 
 void TrayBackgroundView::AnchorUpdated() {
-  if (GetBubbleView())
+  if (GetBubbleView() && is_bubble_in_animation_to_close())
     UpdateClippingWindowBounds();
 }
 
@@ -480,8 +481,10 @@ void TrayBackgroundView::AnimateToTargetBounds(const gfx::Rect& target_bounds,
   settings.SetTweenType(gfx::Tween::EASE_OUT);
   settings.SetPreemptionStrategy(
       ui::LayerAnimator::IMMEDIATELY_ANIMATE_TO_NEW_TARGET);
-  if (close_bubble)
+  if (close_bubble) {
+    set_is_bubble_in_animation_to_close(true);
     settings.AddObserver(new CloseBubbleObserver(this));
+  }
   GetBubbleView()->GetWidget()->SetBounds(target_bounds);
 }
 
