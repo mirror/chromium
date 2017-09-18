@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03dc1da2_ae8bdadf",
+        "filename": "ui/views/cocoa/bridged_content_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-18T08:09:05Z",
+      "side": 1,
+      "message": "This seems really arbitrary and effectively a check for \"is it the browser window\". I don\u0027t think this is the right approach.\n\nI think this always needs to return NO. Instead, just rely on View::OnFocus to call ClearNativeFocus and comment about that here. Or just delete the method entirely. and leave a note in becomeFirstResponder.\n\nDoes that cause something to fail? That\u0027s probably where the bug lies.",
+      "revId": "b38ecf990561a5d96473a63a997c8362a9c6b366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
