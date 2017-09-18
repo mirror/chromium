@@ -4,7 +4,9 @@
 
 #include "content/browser/frame_host/navigator_impl.h"
 
+#include <string>
 #include <utility>
+#include <vector>
 
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
@@ -649,6 +651,14 @@ void NavigatorImpl::DidNavigate(
   // The URL is set regardless of whether it's for a net error or not.
   frame_tree_node->SetCurrentURL(params.url);
   render_frame_host->SetLastCommittedOrigin(params.origin);
+
+  // Keep track of which renderer contains which origins - this helps restrict
+  // which renderers get access to origin-bound capabilities like localStorage.
+  if (navigation_handle->GetNetErrorCode() == net::Error::OK) {
+    auto* policy = ChildProcessSecurityPolicyImpl::GetInstance();
+    int child_id = render_frame_host->GetProcess()->GetID();
+    policy->MarkAsContainingOrigin(child_id, params.origin);
+  }
 
   // Separately, update the frame's last successful URL except for net error
   // pages, since those do not end up in the correct process after transfers
