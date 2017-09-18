@@ -513,7 +513,16 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // The LayoutManager is owned by the View and is deleted when the view is
   // deleted, or when a new LayoutManager is installed.
   LayoutManager* GetLayoutManager() const;
+  // Deprecated. Use SetLayoutManager(std::unique_ptr<LayoutManager>).
   void SetLayoutManager(LayoutManager* layout);
+
+  template <typename LayoutManager>
+  LayoutManager* SetLayoutManager(
+      std::unique_ptr<LayoutManager> layout_manager) {
+    LayoutManager* lm = layout_manager.get();
+    SetLayoutManagerImpl(std::move(layout_manager));
+    return lm;
+  }
 
   // Attributes ----------------------------------------------------------------
 
@@ -1651,6 +1660,8 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   bool DoDrag(const ui::LocatedEvent& event,
               const gfx::Point& press_pt,
               ui::DragDropTypes::DragEventSource source);
+
+  void SetLayoutManagerImpl(std::unique_ptr<LayoutManager> layout_manager);
 
   //////////////////////////////////////////////////////////////////////////////
 

@@ -634,12 +634,7 @@ LayoutManager* View::GetLayoutManager() const {
 }
 
 void View::SetLayoutManager(LayoutManager* layout_manager) {
-  if (layout_manager == layout_manager_.get())
-    return;
-
-  layout_manager_.reset(layout_manager);
-  if (layout_manager_)
-    layout_manager_->Installed(this);
+  SetLayoutManagerImpl(base::WrapUnique(layout_manager));
 }
 
 // Attributes ------------------------------------------------------------------
@@ -2748,6 +2743,14 @@ bool View::DoDrag(const ui::LocatedEvent& event,
   widget->RunShellDrag(this, data, widget_location, drag_operations, source);
   // WARNING: we may have been deleted.
   return true;
+}
+
+// Layout ----------------------------------------------------------------------
+
+void View::SetLayoutManagerImpl(std::unique_ptr<LayoutManager> layout_manager) {
+  layout_manager_ = std::move(layout_manager);
+  if (layout_manager_)
+    layout_manager_->Installed(this);
 }
 
 }  // namespace views

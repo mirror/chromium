@@ -4,6 +4,7 @@
 
 #include "ui/views/layout/fill_layout.h"
 
+#include "base/memory/ptr_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/views/border.h"
 #include "ui/views/test/test_views.h"
@@ -18,20 +19,18 @@ class FillLayoutTest : public testing::Test {
   static const int kDefaultHostWidth = 100;
   static const int kDefaultHostHeight = 200;
 
-  FillLayoutTest() : layout_(new FillLayout), host_(new View) {
-    host_->SetLayoutManager(layout_);
+  FillLayoutTest() : host_(new View) {
+    host_->SetLayoutManager(base::MakeUnique<FillLayout>());
     SetHostSize(kDefaultHostWidth, kDefaultHostHeight);
   }
 
  protected:
   // Convenience function to get the preferred size from |layout_|.
-  gfx::Size GetPreferredSize() const {
-    return layout_->GetPreferredSize(host_.get());
-  }
+  gfx::Size GetPreferredSize() const { return host_->GetPreferredSize(); }
 
   // Convenience function to get the preferred height for width from |layout_|.
   int GetPreferredHeightForWidth(int width) const {
-    return layout_->GetPreferredHeightForWidth(host_.get(), width);
+    return host_->GetHeightForWidth(width);
   }
 
   // Creates a View with the given |width| and |height| and adds it to |host_|.
@@ -48,9 +47,6 @@ class FillLayoutTest : public testing::Test {
   void SetHostInsets(int top, int left, int bottom, int right) {
     host_->SetBorder(CreateEmptyBorder(gfx::Insets(top, left, bottom, right)));
   }
-
-  // The test target.
-  FillLayout* layout_;
 
   std::unique_ptr<View> host_;
 

@@ -26,9 +26,8 @@ class BoxLayoutTest : public testing::Test {
 }  // namespace
 
 TEST_F(BoxLayoutTest, Empty) {
-  BoxLayout* layout =
-      new BoxLayout(BoxLayout::kHorizontal, gfx::Insets(10), 20);
-  host_->SetLayoutManager(layout);
+  BoxLayout* layout = host_->SetLayoutManager(
+      base::MakeUnique<BoxLayout>(BoxLayout::kHorizontal, gfx::Insets(10), 20));
   EXPECT_EQ(gfx::Size(20, 20), layout->GetPreferredSize(host_.get()));
 }
 
