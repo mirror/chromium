@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d60bdffb_50f1c3a9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-18T15:58:37Z",
+      "side": 1,
+      "message": "This only fails on release device builds.\nThere is none on public waterfall.",
+      "parentUuid": "7cc57cce_07ad18af",
+      "revId": "f127403786fa52ef630bc488fbefc9ef4da0ceff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c8d8aade_02370732",
         "filename": "/COMMIT_MSG",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "f127403786fa52ef630bc488fbefc9ef4da0ceff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92f91d9a_4da137e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-09-18T15:58:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8d8aade_02370732",
+      "revId": "f127403786fa52ef630bc488fbefc9ef4da0ceff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
