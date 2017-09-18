@@ -22,6 +22,30 @@
       "revId": "8b401b7760f342c882589cfab031ea1592ea9170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb3bd8a_be351c02",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1129864
+      },
+      "writtenOn": "2017-09-18T23:24:26Z",
+      "side": 1,
+      "message": "Done.\nUpdated the commit message to \"[Chromedriver] Return spec-complaint error in AddCookie command.\"",
+      "parentUuid": "822ea839_4d2c99fb",
+      "range": {
+        "startLine": 7,
+        "startChar": 15,
+        "endLine": 7,
+        "endChar": 71
+      },
+      "revId": "8b401b7760f342c882589cfab031ea1592ea9170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
