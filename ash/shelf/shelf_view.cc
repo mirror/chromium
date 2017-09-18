@@ -701,6 +701,8 @@ bool ShelfView::ShouldEventActivateButton(View* view, const ui::Event& event) {
 void ShelfView::PointerPressedOnButton(views::View* view,
                                        Pointer pointer,
                                        const ui::LocatedEvent& event) {
+  if (IsShowingMenu())
+    launcher_menu_runner_->Cancel();
   if (drag_view_)
     return;
 
@@ -1762,6 +1764,7 @@ void ShelfView::AfterItemSelected(
 void ShelfView::AfterGetContextMenuItems(
     const ShelfID& shelf_id,
     const gfx::Point& point,
+    views::View* source,
     ui::MenuSourceType source_type,
     std::vector<mojom::MenuItemPtr> menu_items) {
   context_menu_id_ = shelf_id;
@@ -1769,7 +1772,7 @@ void ShelfView::AfterGetContextMenuItems(
   ShowMenu(base::MakeUnique<ShelfContextMenuModel>(
                std::move(menu_items), model_->GetShelfItemDelegate(shelf_id),
                display_id),
-           nullptr /* source */, point, true /* context_menu */, source_type,
+           source, point, true /* context_menu */, source_type,
            nullptr /* ink_drop */);
 }
 
@@ -1817,7 +1820,7 @@ void ShelfView::ShowContextMenuForView(views::View* source,
   model_->GetShelfItemDelegate(item->id)->GetContextMenuItems(
       display_id, base::Bind(&ShelfView::AfterGetContextMenuItems,
                              weak_factory_.GetWeakPtr(), item->id,
-                             context_menu_point, source_type));
+                             context_menu_point, source, source_type));
 }
 
 void ShelfView::ShowMenu(std::unique_ptr<ui::MenuModel> menu_model,
@@ -1836,6 +1839,15 @@ void ShelfView::ShowMenu(std::unique_ptr<ui::MenuModel> menu_model,
   if (context_menu)
     run_types |=
         views::MenuRunner::CONTEXT_MENU | views::MenuRunner::FIXED_ANCHOR;
+
+  // Selected shelf items with context menu opened can only be dragged if the
+  // shelf is not in auto-hide.
+  const ShelfItem* item = ShelfItemForView(source);
+  if (context_menu && item && item->type != TYPE_APP_LIST &&
+      shelf()->auto_hide_behavior() == SHELF_AUTO_HIDE_BEHAVIOR_NEVER) {
+    run_types |= views::MenuRunner::SEND_GESTURE_EVENTS_TO_OWNER;
+  }
+
   launcher_menu_runner_.reset(
       new views::MenuRunner(menu_model_adapter_->CreateMenu(), run_types));
 
@@ -1888,10 +1900,6 @@ void ShelfView::ShowMenu(std::unique_ptr<ui::MenuModel> menu_model,
 
 void ShelfView::OnMenuClosed(views::InkDrop* ink_drop) {
   context_menu_id_ = ShelfID();
-
-  // Hide the hide overflow bubble after showing a context menu for its items.
-  if (owner_overflow_bubble_)
-    owner_overflow_bubble_->Hide();
 
   closing_event_time_ = launcher_menu_runner_->closing_event_time();
 
