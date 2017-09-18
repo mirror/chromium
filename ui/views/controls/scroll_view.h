@@ -22,6 +22,8 @@ namespace test {
 class ScrollViewTestApi;
 }
 
+class Separator;
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // ScrollView class
@@ -101,6 +103,10 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
   // Sets whether this ScrollView has a focus indicator or not.
   void SetHasFocusIndicator(bool has_focus_indicator);
 
+  // Sets whether this ScrollView shows indicators that there is more content
+  // beyond an edge.
+  void SetShowEdgesWithHiddenContent(bool show_edges_with_hidden_content);
+
   // View overrides:
   gfx::Size CalculatePreferredSize() const override;
   int GetHeightForWidth(int width) const override;
@@ -126,6 +132,13 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
   union BackgroundColorData {
     SkColor color;
     ui::NativeTheme::ColorId color_id;
+  };
+
+  enum class ContentEdge {
+    kLeft,
+    kTop,
+    kRight,
+    kBottom,
   };
 
   // Forces |contents_viewport_| to have a Layer (assuming it doesn't already).
@@ -183,6 +196,14 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
   void UpdateBackground();
   SkColor GetBackgroundColor() const;
 
+  // Positions the given content overflow indicator against the given content
+  // edge.
+  void PositionOverflowIndicator(Separator* indicator, ContentEdge edge);
+
+  // Shows/hides the overflow indicators depending on the position of the
+  // scrolling content within the viewport.
+  void UpdateOverflowIndicators(const gfx::ScrollOffset& offset);
+
   // The current contents and its viewport. |contents_| is contained in
   // |contents_viewport_|.
   View* contents_;
@@ -201,6 +222,12 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
 
   // Corner view.
   View* corner_view_;
+
+  // Hidden content indicators
+  Separator* more_content_left_;
+  Separator* more_content_top_;
+  Separator* more_content_right_;
+  Separator* more_content_bottom_;
 
   // The min and max height for the bounded scroll view. These are negative
   // values if the view is not bounded.
@@ -225,6 +252,10 @@ class VIEWS_EXPORT ScrollView : public View, public ScrollBarController {
 
   // Focus ring, if one is installed.
   View* focus_ring_ = nullptr;
+
+  // If true, show lines on the edge(s) of the control to indicate that there is
+  // content beyond that edge.
+  bool show_edges_with_hidden_content_ = false;
 
   // Set to true if the scroll with layers feature is enabled.
   const bool scroll_with_layers_enabled_;

@@ -421,6 +421,7 @@ void ContentSettingBubbleContents::Init() {
         list_item_container_ = new ListItemContainer(this);
         views::ScrollView* scroll_view = new views::ScrollView();
         scroll_view->SetContents(list_item_container_);
+        scroll_view->SetShowEdgesWithHiddenContent(true);
         layout->StartRow(0, kItemListColumnSetId);
         layout->AddView(scroll_view);
       }
