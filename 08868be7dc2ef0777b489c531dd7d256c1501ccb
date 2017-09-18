@@ -1,0 +1,650 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d1b5255_299897df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "For a CL as large as this, probably we should provide some more details. That would be very helpful for the review process, as well as for future reference.",
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42feb0ee_dfce4a3c",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 3950,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "This should be enabled if(enable_library_cdms)",
+      "range": {
+        "startLine": 3950,
+        "startChar": 9,
+        "endLine": 3950,
+        "endChar": 19
+      },
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e102aeda_1400ce76",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "ditto about the right BUILDFLAG",
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec311c22_d2cde72d",
+        "filename": "chrome/browser/media/cdm_storage_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "Some general thoughts about this test.\n1. Some test cases are already covered by the ECKEncryptedMediaTest.FileIOTest test.\n2. Browser tests are expensive (slow), it seems overkill to test a simple logic (e.g. empty file name) by starting the whole browser. Can we use unittests for those?\n3. Actually all the test code are in the browser side, so you really only need the file system backend for your testing. It seems this is doable in browsing_data_media_license_helper_unittest.cc [1].\n4. You only need the render_process_host for the child process ID, in which case you can use a fake an ID since you don\u0027t test from the renderer side.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/browsing_data/browsing_data_media_license_helper_unittest.cc?rcl\u003da5f2d27e43b3d7c0a1fc13bb46516c1332e69b2b\u0026l\u003d195",
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1b42a60_075d95a7",
+        "filename": "chrome/browser/media/cdm_storage_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "In the interface and impl, this is still |key_system|.",
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "937370b5_48d82f49",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "In CdmFileIOImpl, we use |file_map_lock_| because it is a class static member variable. Now this is outside of the class, it should be |g_file_map_lock|.",
+      "range": {
+        "startLine": 72,
+        "startChar": 45,
+        "endLine": 72,
+        "endChar": 59
+      },
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05dcbba9_d162a919",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "We are replacing LazyInstance with thread safe statics:\n\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d686866",
+      "range": {
+        "startLine": 72,
+        "startChar": 13,
+        "endLine": 72,
+        "endChar": 25
+      },
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51a3addf_666de4ac",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "nit: ISTM we only need to pass in the process ID (child_id) here.",
+      "range": {
+        "startLine": 130,
+        "startChar": 21,
+        "endLine": 130,
+        "endChar": 52
+      },
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c50044_e025c182",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "See crbug.com/707335 and MediaDrmStorageImpl as example. We also need hook up RenderFrameDeleted() and DidFinishNavigation(), in which case we should delete |this| as well.\n\nhttps://cs.chromium.org/chromium/src/components/cdm/browser/media_drm_storage_impl.h?rcl\u003d644360630e6d94a5b92d6d011d82044b57fba17a\u0026l\u003d74",
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed6845d_b7b4d28e",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "CdmStorageImpl and CdmFileInUsePtr are on two different mojo pipes, and the destruction order can be undeterministic, unless it\u0027s carefully controlled somehow (I haven\u0027t looked into the details so I might be missing that). If CdmStorageImpl connection error happens first, CdmStorageImpl::OnConnectionClosed() will be called first, which will delete |this|, which will also delete |in_use_|, without calling ReleaseFileLock().\n\nTo fix that, we probably want to ReleaseFileLock() as well in ~CdmStorageImpl().",
+      "range": {
+        "startLine": 146,
+        "startChar": 23,
+        "endLine": 146,
+        "endChar": 41
+      },
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "020b1997_592d92b0",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "We should try to use the CDM type instead of the key system type here. That would require us to read the CdmRegistry() to get the CDM type from the key system somehow. Given I am touching that part right now. Could you please add a TODO here?",
+      "range": {
+        "startLine": 151,
+        "startChar": 32,
+        "endLine": 151,
+        "endChar": 61
+      },
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd8c0753_0d48506f",
+        "filename": "chrome/browser/media/cdm_storage_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "hmm, following our discussion, the Initialize() call is actually synchronous here... so we should at least be able to remove the InitializeCallback even if we don\u0027t want to share CdmStorageImpl across multiple MojoCdmFileIO objects (which is fine). We can discuss more on this if you like.",
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e64a4df0_a64d8c2f",
+        "filename": "chrome/browser/media/encrypted_media_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 823,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "Can we fix this TODO as well?",
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97a04f43_d0490475",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 2444,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "nit: looks like we don\u0027t use empty spaces between if blocks in this file. I don\u0027t like it, but better be consistent with existing code.",
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e963079_28753334",
+        "filename": "content/utility/utility_service_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "This helper class is not trivial and we should move it to it\u0027s own file. Add a TODO?",
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f771610f_e2b4ab7a",
+        "filename": "content/utility/utility_service_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "nit: remove",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 10
+      },
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c80fa2c_1f4c185a",
+        "filename": "content/utility/utility_service_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "I *think* storage.is_bound() is always true here, because this returns \"whether or not this InterfacePtr is bound to a message pipe\", which should always be true after the GetInterface() call. You can test this by making the call here without registering the service in the browser side.\n\nGiven there are other places doing this check as well, it should belong to a different CL though.\n\nHow about add a TODO?",
+      "range": {
+        "startLine": 76,
+        "startChar": 9,
+        "endLine": 76,
+        "endChar": 27
+      },
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea062af8_21224c63",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "I thought we use unique_ptr + release on purpose so that the ownership transfer is more clear...",
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc58f16_58cf0e3c",
+        "filename": "media/mojo/clients/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "nit: not needed?",
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e877bab6_897676da",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "\"file_name\" to be consistent with cdm::FileIO interface?",
+      "range": {
+        "startLine": 32,
+        "startChar": 14,
+        "endLine": 32,
+        "endChar": 18
+      },
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8d2e493_2925f14f",
+        "filename": "media/mojo/interfaces/cdm_storage.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "\"InUse\" is also used in CdmStorage::Status which has a different meaning. How about CdmFileReleaser (following FrameResourceReleaser in decryptor.mojom)?",
+      "range": {
+        "startLine": 40,
+        "startChar": 10,
+        "endLine": 40,
+        "endChar": 22
+      },
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f425185_6850fdbf",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "Read() and Write() involves a chain of async operations. Could you please add comments to describe the sequence? Otherwise, it\u0027s a bit hard to follow.\n\nExample in the current ppapi CdmFileIOImpl:\nhttps://cs.chromium.org/chromium/src/media/cdm/ppapi/cdm_file_io_impl.cc?rcl\u003d5191288fe9999c8bbafc0a70dbcf44a145a023ca\u0026l\u003d148\n\nPS: in another comment, I suggest we do all sync file operations in one call, we can just comment in that function about what we are doing.",
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b82be0_c4ca2f23",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "If this PostTask returns false [1] then the file will be corrupted: data was written but length was not set. We had been hit by this problem before. To fix that, we used a temporary file (see PPAPI CdmFileIOImpl), write to the temp file, and do a rename at the end.\n\nThis is another reason we want to do Read/Write in one sync call, so that we don\u0027t need to worry about file corruption.\n\n[1] https://cs.chromium.org/chromium/src/base/threading/sequenced_worker_pool.h?rcl\u003df9c2ab69a068a6c9b589086b7c9d1331a166dc1e\u0026l\u003d120",
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4fe3e63_80c1d498",
+        "filename": "media/mojo/services/mojo_cdm_file_io.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "Documentation says flush can be slow and should not block shutdown [1], while if we don\u0027t block shutdown our file can be corrupted. In the pepper world we use the temp-file/rename trick. Please reach out to file owners to see whether we need to do that, or we can block shutdown in our case. (Also, I am not sure what PAPPI FileIO API does to avoid the problem.)\n\n[1] https://cs.chromium.org/chromium/src/base/files/file.h?rcl\u003dfe0e9f46ab247ff5a28a823f344c93230953018f\u0026l\u003d243",
+      "range": {
+        "startLine": 304,
+        "startChar": 12,
+        "endLine": 304,
+        "endChar": 17
+      },
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcdf04d0_4a9b92c2",
+        "filename": "media/mojo/services/mojo_cdm_file_io.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "hmm, what does this mean here?",
+      "range": {
+        "startLine": 31,
+        "startChar": 14,
+        "endLine": 31,
+        "endChar": 26
+      },
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0240c960_2fcff00e",
+        "filename": "media/mojo/services/mojo_cdm_file_io.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "cdm::FileIO",
+      "range": {
+        "startLine": 39,
+        "startChar": 5,
+        "endLine": 39,
+        "endChar": 14
+      },
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77a0025a_f10f7d45",
+        "filename": "media/mojo/services/mojo_cdm_file_io.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "Can we have a summary of state machine switch graph here? For example, after Read/Write finishes, should the state be kNone or kOpened?",
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4e3d5b_c7d377fa",
+        "filename": "media/mojo/services/mojo_cdm_file_io.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "nit: Should this be kReading to be consistent with kOpening?",
+      "range": {
+        "startLine": 50,
+        "startChar": 58,
+        "endLine": 50,
+        "endChar": 62
+      },
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1847a81c_aa6fa014",
+        "filename": "media/mojo/services/mojo_cdm_file_io.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "nit: const",
+      "range": {
+        "startLine": 59,
+        "startChar": 28,
+        "endLine": 59,
+        "endChar": 29
+      },
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "131d0a2d_2e25e3f7",
+        "filename": "media/mojo/services/mojo_cdm_file_io.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "The difference in type and name makes me think whether we should rename \"OperationType\" to \"State\". We use \"State\" a lot in media code for the state machine states. And states like kOpened isn\u0027t really an \"operation\".",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 32
+      },
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "164f3732_fd330ebc",
+        "filename": "media/mojo/services/mojo_cdm_file_io.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "You can forward declare this class here, and move the definition to the .cc file.",
+      "range": {
+        "startLine": 76,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 24
+      },
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c3ac829_0ca27d0a",
+        "filename": "media/mojo/services/mojo_cdm_file_io.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T23:22:23Z",
+      "side": 1,
+      "message": "Can we access the base::File directly on the |file_task_runner_|? Then we don\u0027t need to use the Proxy, and can do all of the Read/Write operations in one call. We still need to post the ReadTask to |file_task_runner_|, and post the result back though.",
+      "revId": "08868be7dc2ef0777b489c531dd7d256c1501ccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
