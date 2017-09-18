@@ -22,6 +22,30 @@
       "revId": "28a2e192ea3b134865baab759f4a3bdb59e6428c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81fbee94_fb54287c",
+        "filename": "chrome/browser/predictors/resource_prefetch_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-09-18T10:50:20Z",
+      "side": 1,
+      "message": "We share the same config between the speculative prefetch and preconnect features. The statement you mentioned is always true if we enable the speculative prefetch. If we enable only the preconnect feature this statement won\u0027t be true. See MaybeEnableSpeculativePreconnect() in chrome/browser/predictors/loading_predictor_config.cc.\nI\u0027m trying to keep both features compatible.",
+      "parentUuid": "8f18c6df_a2aa75f6",
+      "range": {
+        "startLine": 64,
+        "startChar": 46,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "28a2e192ea3b134865baab759f4a3bdb59e6428c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
