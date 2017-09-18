@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba96e50d_e07eb12f",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-18T15:41:05Z",
+      "side": 1,
+      "message": "Need the variable?",
+      "range": {
+        "startLine": 448,
+        "startChar": 2,
+        "endLine": 448,
+        "endChar": 14
+      },
+      "revId": "7fe5ec9d2b2bfb53ec2fae0410dae47debef8fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
