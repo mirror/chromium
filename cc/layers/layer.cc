@@ -504,6 +504,7 @@ void Layer::SetOpacity(float opacity) {
   // We need to force a property tree rebuild when opacity changes from 1 to a
   // non-1 value or vice-versa as render surfaces can change.
   bool force_rebuild = opacity == 1.f || inputs_.opacity == 1.f;
+  float old_opacity = inputs_.opacity;
   inputs_.opacity = opacity;
   SetSubtreePropertyChanged();
   if (layer_tree_host_ && !force_rebuild) {
@@ -518,6 +519,8 @@ void Layer::SetOpacity(float opacity) {
   if (force_rebuild)
     SetPropertyTreesNeedRebuild();
   SetNeedsCommit();
+  if (inputs_.client)
+    inputs_.client->OnLayerOpacityChanged(old_opacity, opacity);
 }
 
 float Layer::EffectiveOpacity() const {

@@ -13,6 +13,7 @@
 #include "cc/animation/keyframed_animation_curve.h"
 #include "cc/base/math_util.h"
 #include "cc/input/main_thread_scrolling_reason.h"
+#include "cc/layers/layer_client.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/layers/solid_color_scrollbar_layer.h"
 #include "cc/test/animation_test_common.h"
@@ -1484,6 +1485,48 @@ TEST_F(LayerTest, SetElementIdNotUsingLayerLists) {
   EXPECT_EQ(test_layer, layer_tree_host_->LayerByElementId(other_element_id));
 
   test_layer->SetLayerTreeHost(nullptr);
+}
+
+namespace {
+
+class MockLayerClient : public LayerClient {
+ public:
+  MockLayerClient() = default;
+
+  std::unique_ptr<base::trace_event::ConvertableToTraceFormat> TakeDebugInfo(
+      Layer* layer) override {
+    NOTIMPLEMENTED();
+    return nullptr;
+  }
+  void didUpdateMainThreadScrollingReasons() override { NOTIMPLEMENTED(); }
+  void didChangeScrollbarsHidden(bool) override { NOTIMPLEMENTED(); }
+
+  MOCK_METHOD2(OnLayerOpacityChanged, void(float, float));
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MockLayerClient);
+};
+
+}  // namespace
+
+// Verify that LayerClient::OnLayerOpacityChanged() is called when
+// Layer::SetOpacit() is called and the opacity changes.
+TEST_F(LayerTest, OnLayerOpacityChanged) {
+  testing::StrictMock<MockLayerClient> client;
+  scoped_refptr<Layer> layer = Layer::Create();
+  layer->SetLayerClient(&client);
+  EXPECT_CALL(client, OnLayerOpacityChanged(1.0f, 0.5f));
+  layer->SetOpacity(0.5f);
+}
+
+// Verify that LayerClient::OnLayerOpacityChanged() is not called when
+// Layer::SetOpacity() is called but the opacity does not change.
+TEST_F(LayerTest, OnLayerOpacityDidNotChange) {
+  testing::StrictMock<MockLayerClient> client;
+  scoped_refptr<Layer> layer = Layer::Create();
+  layer->SetLayerClient(&client);
+  // Since |client| is a StrictMock, the test will fail if it is notified.
+  layer->SetOpacity(1.0f);
 }
 
 class LayerTestWithLayerLists : public LayerTest {
