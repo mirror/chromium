@@ -20,10 +20,12 @@
 #include "components/autofill/core/browser/region_combobox_model.h"
 #include "components/autofill/core/browser/test_region_data_loader.h"
 #include "components/payments/content/payment_request_spec.h"
+#include "components/strings/grit/components_strings.h"
 #include "content/public/test/browser_test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/null_storage.h"
 #include "third_party/libaddressinput/src/cpp/include/libaddressinput/source.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/views/controls/combobox/combobox.h"
 #include "ui/views/controls/label.h"
 
@@ -778,7 +780,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
   ASSERT_EQ(1, sheet->child_count());
   views::View* error_label = sheet->child_at(0)->GetViewByID(
       static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR));
-  EXPECT_EQ(base::ASCIIToUTF16("Phone number required"),
+  EXPECT_EQ(l10n_util::GetStringUTF16(IDS_PAYMENTS_PHONE_NUMBER_REQUIRED),
             static_cast<views::Label*>(error_label)->text());
 }
 
@@ -804,7 +806,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
   ASSERT_EQ(1, sheet->child_count());
   views::View* error_label = sheet->child_at(0)->GetViewByID(
       static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR));
-  EXPECT_EQ(base::ASCIIToUTF16("Enter a valid address"),
+  EXPECT_EQ(l10n_util::GetStringUTF16(IDS_PAYMENTS_INVALID_ADDRESS),
             static_cast<views::Label*>(error_label)->text());
 
   ResetEventObserver(DialogEvent::SHIPPING_ADDRESS_EDITOR_OPENED);
@@ -877,7 +879,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
   ASSERT_EQ(1, sheet->child_count());
   views::View* error_label = sheet->child_at(0)->GetViewByID(
       static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR));
-  EXPECT_EQ(base::ASCIIToUTF16("Enter a valid address"),
+  EXPECT_EQ(l10n_util::GetStringUTF16(IDS_PAYMENTS_INVALID_ADDRESS),
             static_cast<views::Label*>(error_label)->text());
 
   ResetEventObserver(DialogEvent::SHIPPING_ADDRESS_EDITOR_OPENED);
@@ -926,7 +928,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
   ASSERT_EQ(1, sheet->child_count());
   views::View* error_label = sheet->child_at(0)->GetViewByID(
       static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR));
-  EXPECT_EQ(base::ASCIIToUTF16("Enter a valid address"),
+  EXPECT_EQ(l10n_util::GetStringUTF16(IDS_PAYMENTS_INVALID_ADDRESS),
             static_cast<views::Label*>(error_label)->text());
 
   ResetEventObserver(DialogEvent::SHIPPING_ADDRESS_EDITOR_OPENED);
@@ -980,7 +982,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
   ASSERT_EQ(1, sheet->child_count());
   views::View* error_label = sheet->child_at(0)->GetViewByID(
       static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR));
-  EXPECT_EQ(base::ASCIIToUTF16("Enter a valid address"),
+  EXPECT_EQ(l10n_util::GetStringUTF16(IDS_PAYMENTS_INVALID_ADDRESS),
             static_cast<views::Label*>(error_label)->text());
 
   ResetEventObserver(DialogEvent::SHIPPING_ADDRESS_EDITOR_OPENED);
@@ -1026,7 +1028,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestShippingAddressEditorTest,
   ASSERT_EQ(1, sheet->child_count());
   views::View* error_label = sheet->child_at(0)->GetViewByID(
       static_cast<int>(DialogViewID::PROFILE_LABEL_ERROR));
-  EXPECT_EQ(base::ASCIIToUTF16("Enter a valid address"),
+  EXPECT_EQ(l10n_util::GetStringUTF16(IDS_PAYMENTS_INVALID_ADDRESS),
             static_cast<views::Label*>(error_label)->text());
 
   ResetEventObserver(DialogEvent::SHIPPING_ADDRESS_EDITOR_OPENED);
