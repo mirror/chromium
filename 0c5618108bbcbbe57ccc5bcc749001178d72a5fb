@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "add25478_87b173c0",
+        "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-18T02:55:48Z",
+      "side": 1,
+      "message": "I think that happens in line 268?",
+      "parentUuid": "98a8569a_6a4ed47e",
+      "revId": "0c5618108bbcbbe57ccc5bcc749001178d72a5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c8cbef8_1ceaa468",
         "filename": "components/content_settings/core/browser/content_settings_info.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "0c5618108bbcbbe57ccc5bcc749001178d72a5fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcf912ed_6b261d43",
+        "filename": "components/content_settings/core/browser/content_settings_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-18T02:55:48Z",
+      "side": 1,
+      "message": "Oh, thanks!",
+      "parentUuid": "2c8cbef8_1ceaa468",
+      "revId": "0c5618108bbcbbe57ccc5bcc749001178d72a5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -68,6 +104,24 @@
       "revId": "0c5618108bbcbbe57ccc5bcc749001178d72a5fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada2ef5a_f0618766",
+        "filename": "components/content_settings/core/browser/content_settings_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-18T02:55:48Z",
+      "side": 1,
+      "message": "Done for both, thanks",
+      "parentUuid": "ce7d020a_737bae50",
+      "revId": "0c5618108bbcbbe57ccc5bcc749001178d72a5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
