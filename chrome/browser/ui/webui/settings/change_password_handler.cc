@@ -15,12 +15,19 @@
 
 namespace settings {
 
+using safe_browsing::ChromePasswordProtectionService;
+
 ChangePasswordHandler::ChangePasswordHandler(Profile* profile)
     : profile_(profile),
       service_(nullptr),
       password_protection_observer_(this) {}
 
-ChangePasswordHandler::~ChangePasswordHandler() {}
+ChangePasswordHandler::~ChangePasswordHandler() {
+  // Remove |this| from |service_|'s observer list if it is still in the list.
+  // This could happen if user closes the chrome://settings page.
+  if (service_)
+    service_->RemoveObserver(this);
+}
 
 void ChangePasswordHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
@@ -55,6 +62,29 @@ void ChangePasswordHandler::OnMarkingSiteAsLegitimate(const GURL& url) {
   }
 }
 
+void ChangePasswordHandler::InvokeActionForTesting(
+    ChromePasswordProtectionService::WarningAction action) {
+  if (!ChromePasswordProtectionService::ShouldShowChangePasswordSettingUI(
+          profile_))
+    return;
+
+  switch (action) {
+    case ChromePasswordProtectionService::CHANGE_PASSWORD: {
+      base::ListValue value;
+      HandleChangePassword(&value);
+      break;
+    }
+    default:
+      NOTREACHED();
+      break;
+  }
+}
+
+ChromePasswordProtectionService::WarningUIType
+ChangePasswordHandler::GetObserverType() {
+  return ChromePasswordProtectionService::CHROME_SETTINGS;
+}
+
 void ChangePasswordHandler::HandleChangePasswordPageShown(
     const base::ListValue* args) {
   AllowJavascript();
@@ -67,7 +97,7 @@ void ChangePasswordHandler::HandleChangePasswordPageShown(
 
 void ChangePasswordHandler::HandleChangePassword(const base::ListValue* args) {
   if (service_) {
-    service_->OnWarningDone(
+    service_->OnUserAction(
         web_ui()->GetWebContents(),
         safe_browsing::PasswordProtectionService::CHROME_SETTINGS,
         safe_browsing::PasswordProtectionService::CHANGE_PASSWORD);
