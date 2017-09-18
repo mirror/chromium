@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c503fe9_91478437",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-18T20:44:57Z",
+      "side": 1,
+      "message": "nit: Bug?",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b573c07_104e4b07",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-18T20:44:57Z",
+      "side": 1,
+      "message": "nit: most ash string IDs have IDS_ASH_ in them.",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4548270c_d8d9259c",
+        "filename": "ash/public/interfaces/session_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-18T20:44:57Z",
+      "side": 1,
+      "message": "nit: maybe just |accept|? Also, is it valid for |accept| to be false and |permanently_accept| to be true? Either document or switch to 3-state enum -- either way is fine with me.",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfabaea5_524726cc",
+        "filename": "ash/session/teleport_warning_dialog.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-18T20:44:57Z",
+      "side": 1,
+      "message": "nit: namespace ash, no ash:: below",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dcbe022_28ee17b2",
+        "filename": "ash/session/teleport_warning_dialog.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-18T20:44:57Z",
+      "side": 1,
+      "message": "nit: can this go in anonymous namespace?",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce60c9d7_2c6b7548",
+        "filename": "ash/session/teleport_warning_dialog.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-18T20:44:57Z",
+      "side": 1,
+      "message": "nit: nullptr, since you\u0027ll touch this line",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fe28468_4c656c9f",
+        "filename": "ash/session/teleport_warning_dialog.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-18T20:44:57Z",
+      "side": 1,
+      "message": "optional: Maybe |never_show_checkbox_|? or |never_show_again_|?",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "373c1ee6_68f4f207",
+        "filename": "ash/session/teleport_warning_dialog.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-18T20:44:57Z",
+      "side": 1,
+      "message": "nit: namespace ash",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8360e77_1d6a821d",
+        "filename": "ash/session/teleport_warning_dialog.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-18T20:44:57Z",
+      "side": 1,
+      "message": "super-nit: \"window teleport\"? Or even a little description of what it is / why we show a dialog?",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f617cf7d_25dfb67e",
+        "filename": "ash/session/teleport_warning_dialog.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-18T20:44:57Z",
+      "side": 1,
+      "message": "nit: \"using\". Also document what the two bools are.",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b92aaf1_6be186b6",
+        "filename": "ash/session/teleport_warning_dialog.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-18T20:44:57Z",
+      "side": 1,
+      "message": "not initialized in constructor?",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc57a38_3151af57",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_context_menu_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-18T20:44:57Z",
+      "side": 1,
+      "message": "optional: This could move into ash, we have prefs support there.",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6403ca1c_1591d7b7",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_context_menu_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-18T20:44:57Z",
+      "side": 1,
+      "message": "ditto this",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
