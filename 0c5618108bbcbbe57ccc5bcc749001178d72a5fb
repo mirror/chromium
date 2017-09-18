@@ -50,6 +50,24 @@
       "revId": "0c5618108bbcbbe57ccc5bcc749001178d72a5fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce7d020a_737bae50",
+        "filename": "components/content_settings/core/browser/content_settings_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-18T01:26:59Z",
+      "side": 1,
+      "message": "You may also want to add a very simple test to content_settings_registry_unittest.cc",
+      "parentUuid": "de53bd9b_24fe08d8",
+      "revId": "0c5618108bbcbbe57ccc5bcc749001178d72a5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
