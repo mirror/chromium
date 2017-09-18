@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce658125_8355a5ab",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-18T12:13:44Z",
+      "side": 1,
+      "message": "I think using base::ContainsValue will make this code more readable:\nhttps://cs.chromium.org/chromium/src/base/stl_util.h?rcl\u003d3e4942a52a1b4e6842cb9cb49ce7b1ef44584072\u0026l\u003d109",
+      "range": {
+        "startLine": 426,
+        "startChar": 19,
+        "endLine": 426,
+        "endChar": 27
+      },
+      "revId": "ad236ce35ea3ca2879c8989bdf2030a2f23e95fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deccfbef_f7179ab2",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-18T12:13:44Z",
+      "side": 1,
+      "message": "Nit: I think \"This should rarely happen in practice\" will not help a person working on this code in the future. I think it would be better to add a small comment when this may happen (that would also explain why this is rare).",
+      "range": {
+        "startLine": 433,
+        "startChar": 53,
+        "endLine": 433,
+        "endChar": 58
+      },
+      "revId": "ad236ce35ea3ca2879c8989bdf2030a2f23e95fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
