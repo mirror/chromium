@@ -165,6 +165,10 @@ interface SessionController {
   // or be affected by system state such as window overview mode and screen
   // casting.
   CanSwitchActiveUser() => (bool can_switch);
+
+  // Shows a dialog that explains that the given user is no longer allowed in
+  // the session due to a policy change, and aborts the session.
+  ShowMultiprofilesSessionAbortedDialog(string user_email);
 };
 
 // Interface for ash to request session service from its client (e.g. Chrome).
