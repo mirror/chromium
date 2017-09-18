@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/allocator/features.h"
+#include "base/allocator/partition_allocator/partition_alloc.h"
 #include "base/json/json_reader.h"
 #include "base/run_loop.h"
 #include "base/threading/thread_restrictions.h"
@@ -40,7 +41,8 @@ class MemlogBrowserTest : public InProcessBrowserTest,
 void ValidateDump(base::Value* dump_json,
                   int expected_alloc,
                   int expected_alloc_count,
-                  int expected_flush_fill_alloc) {
+                  const char* allocator_name,
+                  const char* type_name) {
   // Verify allocation is found.
   // See chrome/profiling/json_exporter.cc for file format info.
   base::Value* events = dump_json->FindKey("traceEvents");
@@ -60,40 +62,62 @@ void ValidateDump(base::Value* dump_json,
   base::Value* heaps_v2 = dumps->FindPath({"args", "dumps", "heaps_v2"});
   ASSERT_TRUE(heaps_v2);
 
-  base::Value* sizes = heaps_v2->FindPath({"allocators", "malloc", "sizes"});
+  base::Value* sizes =
+      heaps_v2->FindPath({"allocators", allocator_name, "sizes"});
   ASSERT_TRUE(sizes);
   const base::Value::ListStorage& sizes_list = sizes->GetList();
   EXPECT_FALSE(sizes_list.empty());
 
-  base::Value* counts = heaps_v2->FindPath({"allocators", "malloc", "counts"});
+  base::Value* counts =
+      heaps_v2->FindPath({"allocators", allocator_name, "counts"});
   ASSERT_TRUE(counts);
   const base::Value::ListStorage& counts_list = counts->GetList();
   EXPECT_FALSE(counts_list.empty());
   EXPECT_EQ(sizes_list.size(), counts_list.size());
 
-  // If given an expected allocation to look for, search the sizes and counts
-  // list for them.
-  if (expected_alloc) {
-    bool found_browser_alloc = false;
-    bool found_browser_fill_alloc = false;
-    size_t browser_alloc_index = 0;
-    for (size_t i = 0; i < sizes_list.size(); i++) {
-      if (sizes_list[i].GetInt() == expected_alloc) {
-        browser_alloc_index = i;
-        found_browser_alloc = true;
-      } else if (sizes_list[i].GetInt() == expected_flush_fill_alloc) {
-        found_browser_fill_alloc = true;
+  base::Value* types =
+      heaps_v2->FindPath({"allocators", allocator_name, "types"});
+  ASSERT_TRUE(types);
+  const base::Value::ListStorage& types_list = types->GetList();
+  EXPECT_FALSE(types_list.empty());
+  EXPECT_EQ(sizes_list.size(), types_list.size());
+
+  // Search the sizes and counts list for the allocation.
+  bool found_browser_alloc = false;
+  size_t browser_alloc_index = 0;
+  for (size_t i = 0; i < sizes_list.size(); i++) {
+    if (sizes_list[i].GetInt() == expected_alloc) {
+      browser_alloc_index = i;
+      found_browser_alloc = true;
+      break;
+    }
+  }
+
+  ASSERT_TRUE(found_browser_alloc) << "Failed to find an allocation of the "
+                                      "appropriate size. Did the send buffer "
+                                      "not flush?";
+
+  // This could be EXPECT_EQ, but that's not robust to others making allocs of
+  // the given size.
+  EXPECT_GE(counts->GetList()[browser_alloc_index].GetInt(),
+            expected_alloc_count);
+
+  // Find the type, if an expectation was passed in.
+  if (type_name) {
+    bool found = false;
+    int type = types_list[browser_alloc_index].GetInt();
+    base::Value* strings = heaps_v2->FindPath({"maps", "strings"});
+    for (base::Value& dict : strings->GetList()) {
+      // Each dict has the format {"id":1,"string":"kPartitionAllocTypeName"}
+      int id = dict.FindPath({"id"})->GetInt();
+      if (id == type) {
+        found = true;
+        std::string name = dict.FindPath({"string"})->GetString();
+        EXPECT_STREQ(name.c_str(), type_name);
+        break;
       }
     }
-
-    ASSERT_TRUE(found_browser_fill_alloc)
-        << "Fill alloc not found. Did the send buffer not flush?";
-    ASSERT_TRUE(found_browser_alloc);
-
-    // This could be EXPECT_EQ, but that's not robust to others making allocs of
-    // the given size.
-    EXPECT_GE(counts->GetList()[browser_alloc_index].GetInt(),
-              expected_alloc_count);
+    EXPECT_TRUE(found) << "Failed to find type name string.";
   }
 }
 
@@ -180,20 +204,16 @@ IN_PROC_BROWSER_TEST_P(MemlogBrowserTest, EndToEnd) {
   // This test kludges the flushing by allocating two difference sizes. The
   // presence of both sizes is a good indicator that the allocations are making
   // it through.
-  //
-  // Intentionally leak the allocations so that they can be observed in the
-  // dump.
-  char* leak = nullptr;
   constexpr int kBrowserAllocSize = 103 * 1024;
   constexpr int kBrowserAllocCount = 2048;
-  constexpr int kBrowserAllocFlushFillSize = 107 * 1024;
-  constexpr int kBrowserAllocFlushFillCount = 2048;
-  for (int i = 0; i < kBrowserAllocCount; ++i) {
-    leak = new char[kBrowserAllocSize];
-  }
-  for (int i = 0; i < kBrowserAllocFlushFillCount; ++i) {
-    leak = new char[kBrowserAllocFlushFillSize];
-  }
+
+  // Test fixed-size partition alloc. The size must be aligned to system pointer
+  // size.
+  constexpr int kPartitionAllocSize = 8 * 23;
+  constexpr int kPartitionAllocCount = 107;
+  static const char* kPartitionAllocTypeName = "kPartitionAllocTypeName";
+  base::PartitionAllocatorGeneric partition_allocator;
+  partition_allocator.init();
 
   // Assuming an average stack size of 20 frames, each alloc packet is ~160
   // bytes in size, and there are 400 packets to fill up a channel. There are 17
@@ -201,8 +221,22 @@ IN_PROC_BROWSER_TEST_P(MemlogBrowserTest, EndToEnd) {
   // even distribution of allocations across channels. Unfortunately, we're
   // using a fairly dumb hash function. To prevent test flakiness, increase
   // those allocations by an order of magnitude.
-  for (int i = 0; i < 68000; ++i) {
-    leak = new char[1];
+  constexpr int kFlushCount = 68000;
+
+  std::vector<char*> leaks;
+  leaks.reserve(kBrowserAllocCount + kPartitionAllocSize + kFlushCount);
+  for (int i = 0; i < kBrowserAllocCount; ++i) {
+    leaks.push_back(new char[kBrowserAllocSize]);
+  }
+
+  for (int i = 0; i < kPartitionAllocCount; ++i) {
+    leaks.push_back(static_cast<char*>(
+        PartitionAllocGeneric(partition_allocator.root(), kPartitionAllocSize,
+                              kPartitionAllocTypeName)));
+  }
+
+  for (int i = 0; i < kFlushCount; ++i) {
+    leaks.push_back(new char[1]);
   }
 
   // Navigate around to force allocations in the renderer.
@@ -224,10 +258,12 @@ IN_PROC_BROWSER_TEST_P(MemlogBrowserTest, EndToEnd) {
     std::unique_ptr<base::Value> dump_json =
         ReadDumpFile(browser_dumpfile_path);
     ASSERT_TRUE(dump_json);
-    // TODO(ajwong): Make these verify allocation amounts in the browser using
-    // kBrowserAllocSize, kBrowserAllocCount, and kBrowserAllocFlushFillSize
-    // after the baseline tests are determined to be stable.
-    ASSERT_NO_FATAL_FAILURE(ValidateDump(dump_json.get(), 0, 0, 0));
+    ASSERT_NO_FATAL_FAILURE(
+        ValidateDump(dump_json.get(), kBrowserAllocSize * kBrowserAllocCount,
+                     kBrowserAllocCount, "malloc", nullptr));
+    ASSERT_NO_FATAL_FAILURE(ValidateDump(
+        dump_json.get(), kPartitionAllocSize * kPartitionAllocCount,
+        kPartitionAllocCount, "partition_alloc", kPartitionAllocTypeName));
   }
 
   {
