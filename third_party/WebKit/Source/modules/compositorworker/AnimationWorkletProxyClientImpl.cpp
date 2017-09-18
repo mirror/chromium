@@ -8,6 +8,8 @@
 #include "core/dom/Document.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/WebLocalFrameImpl.h"
+#include "modules/compositorworker/AnimationWorkletThread.h"
+#include "platform/WaitableEvent.h"
 
 namespace blink {
 
@@ -42,9 +44,18 @@ void AnimationWorkletProxyClientImpl::Dispose() {
 bool AnimationWorkletProxyClientImpl::Mutate(double monotonic_time_now) {
   DCHECK(global_scope_->IsContextThread());
 
-  if (global_scope_)
-    global_scope_->Mutate();
-
+  if (global_scope_) {
+    // Getting the scheduler work to complete the decoupling is a separate slug
+    // of work, and should remove this.
+    WaitableEvent is_done;
+    AnimationWorkletThread::GetSharedBackingThread()
+        ->GetSingleThreadTaskRunner()
+        ->PostTask(BLINK_FROM_HERE,
+                   ConvertToBaseCallback(WTF::Bind(
+                       &AnimationWorkletGlobalScope::MutateWithEvent,
+                       global_scope_, CrossThreadUnretained(&is_done))));
+    is_done.Wait();
+  }
   // Always request another rAF for now.
   return true;
 }
