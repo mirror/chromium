@@ -94,6 +94,7 @@
 #include "ui/base/ime/chromeos/input_method_util.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/compositor/compositor_observer.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/layer_animation_observer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
@@ -309,6 +310,27 @@ void ScheduleCompletionCallbacks(std::vector<base::OnceClosure>&& callbacks) {
                                                   std::move(callback));
   }
 }
+
+class CloseAfterCommit : public ui::CompositorObserver {
+ public:
+  CloseAfterCommit(views::Widget* widget) : widget_(widget) {}
+  ~CloseAfterCommit() override = default;
+
+  // Overridden from ui::CompositorObserver
+  void OnCompositingDidCommit(ui::Compositor* compositor) override {
+    compositor->RemoveObserver(this);
+    widget_->Close();
+  }
+
+  void OnCompositingStarted(ui::Compositor* compositor,
+                            base::TimeTicks start_time) override {}
+  void OnCompositingEnded(ui::Compositor* compositor) override {}
+  void OnCompositingLockStateChanged(ui::Compositor* compositor) override {}
+  void OnCompositingShuttingDown(ui::Compositor* compositor) override {}
+
+ private:
+  views::Widget* widget_;
+};
 
 }  // namespace
 
@@ -1235,7 +1257,10 @@ void LoginDisplayHostImpl::ResetLoginWindowAndView() {
   }
 
   if (login_window_) {
-    login_window_->Close();
+    login_window_->Hide();
+    compositor_observer_.reset(new CloseAfterCommit(login_window_));
+    login_window_->GetCompositor()->AddObserver(compositor_observer_.get());
+    login_window_->RemoveRemovalsObserver(this);
     login_window_ = nullptr;
     login_window_delegate_ = nullptr;
   }

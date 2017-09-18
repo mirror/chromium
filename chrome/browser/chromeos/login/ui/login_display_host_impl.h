@@ -36,6 +36,10 @@
 class AccountId;
 class ScopedKeepAlive;
 
+namespace ui {
+class CompositorObserver;
+}
+
 namespace chromeos {
 
 class ArcKioskController;
@@ -310,6 +314,10 @@ class LoginDisplayHostImpl : public LoginDisplayHost,
   std::unique_ptr<wm::ScopedDragDropDisabler> scoped_drag_drop_disabler_;
 
   bool is_voice_interaction_oobe_ = false;
+
+  // Used briefly to make sure that the window closes after it's hidden state
+  // is committed.
+  std::unique_ptr<ui::CompositorObserver> compositor_observer_;
 
   base::WeakPtrFactory<LoginDisplayHostImpl> pointer_factory_;
   base::WeakPtrFactory<LoginDisplayHostImpl> animation_weak_ptr_factory_;
