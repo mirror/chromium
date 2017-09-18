@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c2f0a60_c18f9a2c",
+        "filename": "chrome/android/webapk/shell_apk/shell_apk_version.gni",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-18T19:03:47Z",
+      "side": 1,
+      "message": "Base is 24",
+      "range": {
+        "startLine": 9,
+        "startChar": 31,
+        "endLine": 9,
+        "endChar": 0
+      },
+      "revId": "4c287bfeef1a829d6c486b682192edbb65ecbb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
