@@ -115,7 +115,7 @@ size_t U2fBleFrameContinuationFragment::Serialize(
 U2fBleFrameAssembler::U2fBleFrameAssembler(
     const U2fBleFrameInitializationFragment& fragment)
     : frame_(fragment.command(), std::vector<uint8_t>()) {
-  auto& data = frame_.data();
+  std::vector<uint8_t>& data = frame_.data();
   data.reserve(fragment.data_length());
   data.insert(data.end(), fragment.data(), fragment.data() + fragment.size());
 }

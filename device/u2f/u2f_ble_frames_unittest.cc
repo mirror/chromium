@@ -23,7 +23,7 @@ std::vector<uint8_t> GetSomeData(size_t size) {
 namespace device {
 
 TEST(U2fBleFramesTest, InitializationFragment) {
-  auto data = GetSomeData(25);
+  std::vector<uint8_t> data = GetSomeData(25);
   constexpr uint16_t kDataLength = 21123;
 
   U2fBleFrameInitializationFragment fragment(
@@ -121,7 +121,7 @@ TEST(U2fBleFramesTest, FrameGettersAndValidity) {
     EXPECT_FALSE(frame.IsValid());
   }
   {
-    U2fBleFrame frame(U2fCommandType::CMD_ERROR, std::vector<uint8_t>());
+    U2fBleFrame frame(U2fCommandType::CMD_ERROR, {});
     EXPECT_FALSE(frame.IsValid());
   }
 
@@ -136,8 +136,7 @@ TEST(U2fBleFramesTest, FrameGettersAndValidity) {
   for (auto code : {U2fBleFrame::ErrorCode::INVALID_CMD,
                     U2fBleFrame::ErrorCode::INVALID_PAR,
                     U2fBleFrame::ErrorCode::INVALID_SEQ}) {
-    U2fBleFrame frame(U2fCommandType::CMD_ERROR,
-                      std::vector<uint8_t>(1, static_cast<uint8_t>(code)));
+    U2fBleFrame frame(U2fCommandType::CMD_ERROR, {static_cast<uint8_t>(code)});
     EXPECT_TRUE(frame.IsValid());
     EXPECT_EQ(code, frame.GetErrorCode());
   }
