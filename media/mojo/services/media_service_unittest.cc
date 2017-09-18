@@ -140,7 +140,7 @@ class MediaServiceTest : public service_manager::test::ServiceTest {
     std::vector<mojom::DemuxerStreamPtr> streams;
     streams.push_back(std::move(video_stream_proxy));
     renderer_->Initialize(std::move(client_ptr_info), std::move(streams),
-                          base::nullopt, base::nullopt,
+                          nullptr, base::nullopt, base::nullopt,
                           base::Bind(&MediaServiceTest::OnRendererInitialized,
                                      base::Unretained(this)));
   }

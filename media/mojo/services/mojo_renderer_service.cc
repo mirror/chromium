@@ -17,6 +17,7 @@
 #include "media/mojo/common/media_type_converters.h"
 #include "media/mojo/services/media_resource_shim.h"
 #include "media/mojo/services/mojo_cdm_service_context.h"
+#include "media/mojo/services/mojo_video_renderer_sink_adapter.h"
 
 namespace media {
 
@@ -79,6 +80,7 @@ MojoRendererService::~MojoRendererService() {}
 void MojoRendererService::Initialize(
     mojom::RendererClientAssociatedPtrInfo client,
     base::Optional<std::vector<mojom::DemuxerStreamPtr>> streams,
+    mojom::VideoRendererSinkPtr video_renderer_sink_ptr,
     const base::Optional<GURL>& media_url,
     const base::Optional<GURL>& site_for_cookies,
     InitializeCallback callback) {
@@ -87,6 +89,12 @@ void MojoRendererService::Initialize(
 
   client_.Bind(std::move(client));
   state_ = STATE_INITIALIZING;
+
+  if (video_renderer_sink_ptr) {
+    DCHECK(video_sink_);
+    static_cast<MojoVideoRendererSinkAdapter*>(video_sink_.get())
+        ->Initialize(std::move(video_renderer_sink_ptr));
+  }
 
   if (media_url == base::nullopt) {
     DCHECK(streams.has_value());
