@@ -22,6 +22,30 @@
       "revId": "74617d1fb88362a38a735ee3ec143312021f2d37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b07af3_4917e335",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-18T23:51:01Z",
+      "side": 1,
+      "message": "|*this| is a circular_deque_const_iterator. You\u0027re thinking it will invoke the |const T\u0026 operator*()| but that requires an object to call, not an object pointer.",
+      "parentUuid": "f63017d8_89c017d0",
+      "range": {
+        "startLine": 156,
+        "startChar": 67,
+        "endLine": 156,
+        "endChar": 72
+      },
+      "revId": "74617d1fb88362a38a735ee3ec143312021f2d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
