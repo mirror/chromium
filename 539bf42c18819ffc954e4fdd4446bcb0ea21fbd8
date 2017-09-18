@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58a862c9_64ebfc3f",
+        "filename": "ash/wm/lock_action_handler_layout_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-18T19:02:14Z",
+      "side": 1,
+      "message": "Do we have a coverage to enter locked state and the window is visible \u0026 focused?",
+      "revId": "539bf42c18819ffc954e4fdd4446bcb0ea21fbd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
