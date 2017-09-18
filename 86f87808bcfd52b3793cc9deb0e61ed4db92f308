@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d46d5fb4_c9ce4d78",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-18T00:15:47Z",
+      "side": 1,
+      "message": "nit: remove blank lines around this",
+      "revId": "86f87808bcfd52b3793cc9deb0e61ed4db92f308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bffd9b4_98790ed1",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-18T00:15:47Z",
+      "side": 1,
+      "message": "I don\u0027t think anything instantiates this class in this CL. So committing this by itself is adding dead code to Chrome.\n\nThis is a particular problem because I don\u0027t think the related CL -- https://chromium-review.googlesource.com/c/chromium/src/+/647410 -- will compile on Mac (I see unimplemented pure virtuals). I think you should figure out the plan for Mac there before committing here, since you might need to shuffle things around.\n\nBut also it\u0027s usually nice to order things in a way that avoids committing dead code - it can hide link errors and makes testing impossible.",
+      "revId": "86f87808bcfd52b3793cc9deb0e61ed4db92f308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05f54791_13ce0b85",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-18T00:15:47Z",
+      "side": 1,
+      "message": "explicit not needed",
+      "revId": "86f87808bcfd52b3793cc9deb0e61ed4db92f308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b25e750f_acc1fc44",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_popup.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-18T00:15:47Z",
+      "side": 1,
+      "message": "nit: // gfx::AnimationDelegate:",
+      "revId": "86f87808bcfd52b3793cc9deb0e61ed4db92f308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49347ff5_c19e7c76",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-18T00:15:47Z",
+      "side": 1,
+      "message": "remove?",
+      "revId": "86f87808bcfd52b3793cc9deb0e61ed4db92f308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e493e8_b5c05ef9",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-18T00:15:47Z",
+      "side": 1,
+      "message": "These should be constexpr, per the style guide - go/cppguide#Use_of_constexpr . The exception is SkColor, which is allowed to be `const` since SkColorSetARGB requires a static initializer in debug builds. same in fullscreen_control_popup.cc",
+      "revId": "86f87808bcfd52b3793cc9deb0e61ed4db92f308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28fce861_8ee4a4e0",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-18T00:15:47Z",
+      "side": 1,
+      "message": "a forward dec isn\u0027t enough for the data member - just the by-ref args. Some other header is probably including base/callback.h but you should do the same here.",
+      "revId": "86f87808bcfd52b3793cc9deb0e61ed4db92f308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c7c229e_d39ecc19",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-18T00:15:47Z",
+      "side": 1,
+      "message": "remove?",
+      "revId": "86f87808bcfd52b3793cc9deb0e61ed4db92f308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "653e5e5a_80e2266d",
+        "filename": "chrome/browser/ui/views/fullscreen_control/fullscreen_control_view.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-18T00:15:47Z",
+      "side": 1,
+      "message": "I don\u0027t see this being used either",
+      "revId": "86f87808bcfd52b3793cc9deb0e61ed4db92f308",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
