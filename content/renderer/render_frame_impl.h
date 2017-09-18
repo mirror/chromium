@@ -500,6 +500,8 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // blink::WebFrameClient implementation:
   blink::WebPlugin* CreatePlugin(const blink::WebPluginParams& params) override;
+  std::unique_ptr<blink::WebMediaPlayerFactory> CreateMediaPlayerFactory()
+      override;
   blink::WebMediaPlayer* CreateMediaPlayer(
       const blink::WebMediaPlayerSource& source,
       blink::WebMediaPlayerClient* client,

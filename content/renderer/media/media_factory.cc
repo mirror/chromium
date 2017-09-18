@@ -25,7 +25,6 @@
 #include "media/base/media_switches.h"
 #include "media/base/renderer_factory_selector.h"
 #include "media/base/surface_manager.h"
-#include "media/blink/resource_fetch_context.h"
 #include "media/blink/webencryptedmediaclient_impl.h"
 #include "media/blink/webmediaplayer_impl.h"
 #include "media/filters/context_3d.h"
@@ -37,6 +36,7 @@
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
 #include "third_party/WebKit/public/platform/WebSurfaceLayerBridge.h"
 #include "third_party/WebKit/public/platform/WebVideoFrameSubmitter.h"
+#include "third_party/WebKit/public/web/WebFetchContext.h"
 #include "third_party/WebKit/public/web/WebKit.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "url/origin.h"
@@ -82,7 +82,7 @@
 #endif
 
 namespace {
-class FrameFetchContext : public media::ResourceFetchContext {
+class FrameFetchContext : public blink::WebFetchContext {
  public:
   explicit FrameFetchContext(blink::WebLocalFrame* frame) : frame_(frame) {
     DCHECK(frame_);
@@ -91,7 +91,10 @@ class FrameFetchContext : public media::ResourceFetchContext {
 
   blink::WebLocalFrame* frame() const { return frame_; }
 
-  // media::ResourceFetchContext implementation.
+  // blink::WebFetchContext implementation.
+  blink::WebSecurityOrigin GetSecurityOrigin() override {
+    return frame_->GetSecurityOrigin();
+  }
   std::unique_ptr<blink::WebAssociatedURLLoader> CreateUrlLoader(
       const blink::WebAssociatedURLLoaderOptions& options) override {
     return base::WrapUnique(frame_->CreateAssociatedURLLoader(options));

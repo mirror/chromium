@@ -125,6 +125,7 @@
 #include "content/renderer/media/audio_ipc_factory.h"
 #include "content/renderer/media/media_devices_listener_impl.h"
 #include "content/renderer/media/media_permission_dispatcher.h"
+#include "content/renderer/media/media_player_factory.h"
 #include "content/renderer/media/media_stream_dispatcher.h"
 #include "content/renderer/media/user_media_client_impl.h"
 #include "content/renderer/mojo/blink_connector_js_wrapper.h"
@@ -2971,6 +2972,18 @@ blink::WebPlugin* RenderFrameImpl::CreatePlugin(
 #else
   return nullptr;
 #endif  // BUILDFLAG(ENABLE_PLUGINS)
+}
+
+std::unique_ptr<blink::WebMediaPlayerFactory>
+RenderFrameImpl::CreateMediaPlayerFactory() {
+  RenderThreadImpl* render_thread = RenderThreadImpl::current();
+  if (!render_thread)
+    return nullptr;
+
+  return base::MakeUnique<MediaPlayerFactory>(
+      GetRoutingID(), render_thread->GetMediaThreadTaskRunner(),
+      render_thread->GetWorkerTaskRunner(),
+      render_thread->compositor_task_runner());
 }
 
 blink::WebMediaPlayer* RenderFrameImpl::CreateMediaPlayer(

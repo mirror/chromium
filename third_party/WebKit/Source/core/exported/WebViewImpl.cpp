@@ -3143,7 +3143,7 @@ void WebViewImpl::PerformMediaPlayerAction(const WebMediaPlayerAction& action,
       media_element->setMuted(action.enable);
       break;
     case WebMediaPlayerAction::kLoop:
-      media_element->SetLoop(action.enable);
+      media_element->setLoop(action.enable);
       break;
     case WebMediaPlayerAction::kControls:
       media_element->SetBooleanAttribute(HTMLNames::controlsAttr,
