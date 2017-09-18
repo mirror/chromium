@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "238bc0e7_e6e8ea79",
+        "filename": "device/vr/android/gvr/gvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-18T14:58:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b65d7e9_cf0f321c",
+      "revId": "7abd59b1e439286388c81a8288d99202cc9fb6b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61dc45d3_796b979a",
         "filename": "device/vr/android/gvr/gvr_device.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4f872074_178b7161",
+        "filename": "device/vr/android/gvr/gvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-18T14:58:46Z",
+      "side": 1,
+      "message": "DON means Device ON",
+      "parentUuid": "61dc45d3_796b979a",
+      "range": {
+        "startLine": 151,
+        "startChar": 54,
+        "endLine": 151,
+        "endChar": 57
+      },
+      "revId": "7abd59b1e439286388c81a8288d99202cc9fb6b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6e6f91b_25d251f5",
         "filename": "device/vr/vr_service_impl.cc",
         "patchSetId": 1
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "1491f9fc_f6e5cfb9",
+        "filename": "device/vr/vr_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-18T14:58:46Z",
+      "side": 1,
+      "message": "No, because this is called through VRServiceImpl::SetClient. (VRDeviceManager::AddService is what calls ConnectDevice)",
+      "parentUuid": "e6e6f91b_25d251f5",
+      "revId": "7abd59b1e439286388c81a8288d99202cc9fb6b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b070c941_9d2d7be5",
         "filename": "device/vr/vr_service_impl_unittest.cc",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "7abd59b1e439286388c81a8288d99202cc9fb6b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c99b3a9_2cc31f11",
+        "filename": "device/vr/vr_service_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-18T14:58:46Z",
+      "side": 1,
+      "message": "It\u0027s used for a callback we pass to VRServiceImpl::SetClient.",
+      "parentUuid": "b070c941_9d2d7be5",
+      "revId": "7abd59b1e439286388c81a8288d99202cc9fb6b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
