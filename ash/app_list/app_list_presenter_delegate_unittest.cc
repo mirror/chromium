@@ -1004,4 +1004,26 @@ TEST_F(FullscreenAppListPresenterDelegateTest,
   ASSERT_EQ(app_list::AppListView::FULLSCREEN_ALL_APPS, view->app_list_state());
 }
 
+TEST_F(FullscreenAppListPresenterDelegateTest,
+       LongUpwardDragInFullscreenShouldNotClose) {
+  app_list_presenter_impl()->Show(GetPrimaryDisplayId());
+  app_list::AppListView* view = app_list_presenter_impl()->GetView();
+  FlingUpOrDown(GetEventGenerator(), view, true);
+  EXPECT_EQ(app_list::AppListView::FULLSCREEN_ALL_APPS, view->app_list_state());
+
+  // Drag from the center of the applist to the top of the screen very slowly.
+  // This should not trigger a state transition.
+  gfx::Point drag_start = view->GetBoundsInScreen().CenterPoint();
+  drag_start.set_x(15);
+  gfx::Point drag_end = view->GetBoundsInScreen().top_right();
+  drag_end.set_x(15);
+  GetEventGenerator().GestureScrollSequence(
+      drag_start, drag_end,
+      GetEventGenerator().CalculateScrollDurationForFlingVelocity(
+          drag_start, drag_end, 1, 1000),
+      1000);
+
+  EXPECT_EQ(app_list::AppListView::FULLSCREEN_ALL_APPS, view->app_list_state());
+}
+
 }  // namespace ash
