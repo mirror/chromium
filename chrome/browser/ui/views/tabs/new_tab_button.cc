@@ -30,6 +30,7 @@
 #if BUILDFLAG(ENABLE_DESKTOP_IN_PRODUCT_HELP)
 #include "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h"
 #include "chrome/browser/feature_engagement/new_tab/new_tab_tracker_factory.h"
+#include "chrome/browser/ui/views/feature_promos/new_tab_promo_bubble_view.h"
 #endif
 
 namespace {
@@ -87,11 +88,30 @@ void NewTabButton::ShowPromoForLastActiveBrowser() {
   browser->tabstrip()->new_tab_button()->ShowPromo();
 }
 
+// static
+bool NewTabButton::CloseBubbleForLastActiveBrowser() {
+  BrowserView* browser = static_cast<BrowserView*>(
+      BrowserList::GetInstance()->GetLastActive()->window());
+  return browser->tabstrip()->new_tab_button()->CloseBubble();
+}
+
 void NewTabButton::ShowPromo() {
   // Owned by its native widget. Will be destroyed as its widget is destroyed.
-  new_tab_promo_ = NewTabPromoBubbleView::CreateOwned(GetVisibleBounds());
-  new_tab_promo_observer_.Add(new_tab_promo_->GetWidget());
-  SchedulePaint();
+  if (!new_tab_promo_) {
+    new_tab_promo_ = NewTabPromoBubbleView::CreateOwned(this);
+    new_tab_promo_observer_.Add(new_tab_promo_->GetWidget());
+    SchedulePaint();
+  }
+}
+
+bool NewTabButton::CloseBubble() {
+  if (new_tab_promo_) {
+    new_tab_promo_observer_.Remove(new_tab_promo_->GetWidget());
+    new_tab_promo_->CloseBubble();
+  }
+  bool is_new_tab_promo_closed = !!new_tab_promo_;
+  new_tab_promo_ = nullptr;
+  return is_new_tab_promo_closed;
 }
 
 #if defined(OS_WIN)
@@ -201,6 +221,7 @@ void NewTabButton::OnWidgetDestroying(views::Widget* widget) {
       ->OnPromoClosed();
 #endif
   new_tab_promo_observer_.Remove(widget);
+  new_tab_promo_ = nullptr;
   // When the promo widget is destroyed, the NewTabButton needs to be
   // recolored.
   SchedulePaint();
