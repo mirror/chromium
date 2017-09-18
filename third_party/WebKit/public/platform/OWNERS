@@ -5,6 +5,9 @@ per-file *.mojom=file://ipc/SECURITY_OWNERS
 # review, but you should add a security team OWNER if you are changing others.
 per-file web_feature.mojom=file://third_party/WebKit/Source/core/OWNERS
 
+# For Gesture Delegation.
+per-file GestureDelegationFlags.h=beccahughes@chromium.org
+
 per-file *EnumTraits*.*=set noparent
 per-file *EnumTraits*.*=file://ipc/SECURITY_OWNERS
 per-file *StructTraits*.*=set noparent
