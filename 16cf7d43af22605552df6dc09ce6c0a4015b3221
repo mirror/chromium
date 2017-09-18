@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c7c1bf7b_946dcc1a",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-18T02:04:20Z",
+      "side": 1,
+      "message": "Sorry, was unclear. I\u0027m suggesting that we avoid requiring that the first call is from the main thread. So we always pass the task runner that it should be bound to (i.e., the gpu task runner). That way it\u0027s ok if MCVD initializes it. And then we can DCHECK that all calls to GetInstance pass the same task runner (because we can\u0027t bind it to a different one).\n\nGetInstance(task_runner) {\n  static allocator \u003d new Allocator(task_runner);\n  DCHECK(allocator-\u003etask_runner_ \u003d\u003d task_runner);\n  return allocator;\n}",
+      "parentUuid": "2aadbc30_d4480684",
+      "range": {
+        "startLine": 107,
+        "startChar": 40,
+        "endLine": 107,
+        "endChar": 51
+      },
+      "revId": "16cf7d43af22605552df6dc09ce6c0a4015b3221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0c2ede2_391fdee7",
         "filename": "media/gpu/android/avda_codec_allocator.cc",
         "patchSetId": 2
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "that\u0027s a very good idea.\n\ni think we did it this way originally so that it would fall back to another decoder instead of failing playback, which didn\u0027t work if we did it too late.  but, you\u0027re right -- it will work with a null first codec too in most cases.\n\nno idea how fallback works in MCVD.",
       "parentUuid": "d0c2ede2_391fdee7",
+      "range": {
+        "startLine": 112,
+        "startChar": 25,
+        "endLine": 112,
+        "endChar": 36
+      },
+      "revId": "16cf7d43af22605552df6dc09ce6c0a4015b3221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de328eee_4e8eb47b",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-18T02:04:20Z",
+      "side": 1,
+      "message": "tguilbert@ added decoder fallback on the first decode a while back. So MCVD is fine to always return success via init_cb. And then if we fail to create a codec or something, we\u0027ll fail the first decode and DecoderSelector can fall back tp software.",
+      "parentUuid": "163e5b6f_dba0b19d",
       "range": {
         "startLine": 112,
         "startChar": 25,
