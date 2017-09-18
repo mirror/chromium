@@ -60,4 +60,7 @@ void NewTabTracker::ShowPromo() {
   NewTabButton::ShowPromoForLastActiveBrowser();
 }
 
+bool NewTabTracker::CloseBubble() {
+  return NewTabButton::CloseBubbleForLastActiveBrowser();
+}
 }  // namespace feature_engagement
