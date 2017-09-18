@@ -95,6 +95,8 @@ class ExtensionMediaRouteProviderProxy : public mojom::MediaRouteProvider {
       mojom::MediaRouteProviderPtr media_route_provider);
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(ExtensionMediaRouteProviderProxyTest, sushisushi);
+
   // Called when the connection to |media_route_provider_| is disconnected.
   void OnConnectionError();
 
