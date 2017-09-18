@@ -92,6 +92,30 @@
       "revId": "88f528c9673cbd19f5d24cd447175284e3bbead6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "438c34f6_3ca8002e",
+        "filename": "ui/gfx/canvas.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T18:58:30Z",
+      "side": 1,
+      "message": "I don\u0027t think anything changes it currently, and the stack is still just about one line added in each function, right? I wouldn\u0027t assume it would handle canvas-\u003esk_canvas()-\u003esave() calls. We should get a ui/ owner to weigh in here.",
+      "parentUuid": "d349d46b_ae731065",
+      "range": {
+        "startLine": 147,
+        "startChar": 13,
+        "endLine": 147,
+        "endChar": 17
+      },
+      "revId": "88f528c9673cbd19f5d24cd447175284e3bbead6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
