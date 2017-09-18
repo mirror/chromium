@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "43e1fd94_d725e495",
+        "filename": "chrome/browser/devtools/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-18T17:57:28Z",
+      "side": 1,
+      "message": "This should not be conditional to chromeos, install this harness at all times.",
+      "revId": "4e420a6550e390136072cfc8672fe113b0e41de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cae80fe_e1d2cbe4",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-18T17:57:28Z",
+      "side": 1,
+      "message": "Lines 371 - 385 should migrate from ad hoc dispatching to the new uber dispatcher of yours. In order to list all the handlers in the new dispatcher, you would need to concatenate your protocol.json with the one in $root_gen_dir/blink/core/inspector/protocol.json. Your would also need a name such as cros_protocol.json to emphasize that it is specific to cros.",
+      "revId": "4e420a6550e390136072cfc8672fe113b0e41de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4eec207_60ac7160",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-18T17:57:28Z",
+      "side": 1,
+      "message": "This would go unconditionally.",
+      "revId": "4e420a6550e390136072cfc8672fe113b0e41de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918f963a_84274394",
+        "filename": "chrome/browser/devtools/chrome_devtools_manager_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-18T17:57:28Z",
+      "side": 1,
+      "message": "If you want this handler to be only available for CrOS, we might need to patch codegen for that. So that we only generated handlers for your domain when there built for CrOS.",
+      "revId": "4e420a6550e390136072cfc8672fe113b0e41de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d33218a_88bbbca9",
+        "filename": "chrome/browser/devtools/protocol_string.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-18T17:57:28Z",
+      "side": 1,
+      "message": "You would need to rebaseline it on top of https://chromium-review.googlesource.com/c/chromium/src/+/667804. I wonder if we could bake the version for base/ (std::string and string16) into inspector_protocol, but you can leave this to us.",
+      "revId": "4e420a6550e390136072cfc8672fe113b0e41de5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
