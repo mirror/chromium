@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c318d58_7ab9d690",
+        "filename": "content/browser/android/dialog_overlay_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-09-18T20:23:21Z",
+      "side": 1,
+      "message": "s/.../efficiency",
+      "range": {
+        "startLine": 75,
+        "startChar": 28,
+        "endLine": 75,
+        "endChar": 39
+      },
+      "revId": "9f17628976ac2e5928bf36048a3b62a41664d9fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed16f42_068a1480",
+        "filename": "media/base/android/mock_android_overlay.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-09-18T20:23:21Z",
+      "side": 1,
+      "message": "config_for_tests?",
+      "range": {
+        "startLine": 33,
+        "startChar": 24,
+        "endLine": 33,
+        "endChar": 30
+      },
+      "revId": "9f17628976ac2e5928bf36048a3b62a41664d9fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "887f0963_86e992b5",
+        "filename": "media/gpu/android_video_surface_chooser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-09-18T20:23:21Z",
+      "side": 1,
+      "message": "Nit: s/otherwise/Otherwise",
+      "range": {
+        "startLine": 42,
+        "startChar": 50,
+        "endLine": 42,
+        "endChar": 59
+      },
+      "revId": "9f17628976ac2e5928bf36048a3b62a41664d9fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f20b103_b9aa4410",
+        "filename": "media/gpu/android_video_surface_chooser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-09-18T20:23:21Z",
+      "side": 1,
+      "message": "I easily forget if a \"power_efficient\" means \"needs power efficient\" or \"is power efficient\". Can you update this name to needs_power_efficient?",
+      "range": {
+        "startLine": 109,
+        "startChar": 7,
+        "endLine": 109,
+        "endChar": 22
+      },
+      "revId": "9f17628976ac2e5928bf36048a3b62a41664d9fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae03e827_3d9ac98b",
+        "filename": "media/gpu/android_video_surface_chooser_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1150472
+      },
+      "writtenOn": "2017-09-18T20:23:21Z",
+      "side": 1,
+      "message": "s/.../overlay",
+      "range": {
+        "startLine": 289,
+        "startChar": 12,
+        "endLine": 289,
+        "endChar": 18
+      },
+      "revId": "9f17628976ac2e5928bf36048a3b62a41664d9fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
