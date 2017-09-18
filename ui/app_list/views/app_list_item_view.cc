@@ -56,6 +56,8 @@ constexpr int kMouseDragUIDelayInMs = 200;
 // 650ms.
 constexpr int kTouchLongpressDelayInMs = 300;
 
+constexpr int kFullscreenTitleMaxHeight = 16;
+
 gfx::FontList GetFontList() {
   ui::ResourceBundle& rb = ui::ResourceBundle::GetSharedInstance();
   return rb.GetFontList(kItemTextFontStyle);
@@ -92,10 +94,13 @@ AppListItemView::AppListItemView(AppsGridView* apps_grid_view,
   title_->SetHandlesTooltips(false);
 
   if (is_fullscreen_app_list_enabled_) {
-    const gfx::FontList& base_font =
-        ui::ResourceBundle::GetSharedInstance().GetFontList(
-            ui::ResourceBundle::BaseFont);
-    title_->SetFontList(base_font.DeriveWithSizeDelta(1));
+    const gfx::FontList font =
+        ui::ResourceBundle::GetSharedInstance()
+            .GetFontList(ui::ResourceBundle::LargeFont)
+            .DeriveWithHeightUpperBound(kFullscreenTitleMaxHeight)
+            .DeriveWithSizeDelta(1);
+    title_->SetFontList(font);
+    title_->SetLineHeight(font.GetHeight());
     title_->SetHorizontalAlignment(gfx::ALIGN_CENTER);
     title_->SetEnabledColor(kGridTitleColorFullscreen);
   } else {
