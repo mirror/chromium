@@ -31,6 +31,8 @@ class TextInputClientImpl : public ui::mojom::TextInputClient {
   void ClearCompositionText() override;
   void InsertText(const std::string& text) override;
   void InsertChar(std::unique_ptr<ui::Event> event) override;
+  void SetSelectionRange(const gfx::Range& range) override;
+  void DeleteRange(const gfx::Range& range) override;
 
   ui::TextInputClient* text_input_client_;
   mojo::Binding<ui::mojom::TextInputClient> binding_;

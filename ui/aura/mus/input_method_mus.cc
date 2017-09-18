@@ -169,6 +169,9 @@ void InputMethodMus::OnDidChangeFocusedClient(
     details->text_direction = focused->GetTextDirection();
     details->text_input_flags = focused->GetTextInputFlags();
     details->caret_bounds = focused->GetCaretBounds();
+    focused->GetTextRange(&details->text_range);
+    focused->GetCompositionTextRange(&details->composition_range);
+    focused->GetSelectionRange(&details->selection_range);
     ime_driver_->StartSession(std::move(details));
   }
 }

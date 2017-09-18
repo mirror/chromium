@@ -39,6 +39,8 @@ class TestTextInputClient : public ui::mojom::TextInputClient {
     if (run_loop_)
       run_loop_->Quit();
   }
+  void SetSelectionRange(const gfx::Range& range) override {}
+  void DeleteRange(const gfx::Range& range) override {}
 
   mojo::Binding<ui::mojom::TextInputClient> binding_;
   std::unique_ptr<base::RunLoop> run_loop_;

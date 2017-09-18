@@ -132,6 +132,9 @@ struct StartSessionDetails {
   mojo.common.mojom.TextDirection text_direction;
   int32 text_input_flags;
   gfx.mojom.Rect caret_bounds;
+  gfx.mojom.Range text_range;
+  gfx.mojom.Range composition_range;
+  gfx.mojom.Range selection_range;
 };
 
 // A service which provides the IMEDriver interface is responsible for doing
@@ -192,6 +195,10 @@ interface TextInputClient {
   // the character is not processed. See ui::TextInputClient::InsertChar()
   // for more details.
   InsertChar(ui.mojom.Event event);
+
+  SetSelectionRange(gfx.mojom.Range range);
+
+  DeleteRange(gfx.mojom.Range range);
 
   // TODO(moshayedi): Add functions corresponding to ui::TextInputClient for:
   // - Input context information

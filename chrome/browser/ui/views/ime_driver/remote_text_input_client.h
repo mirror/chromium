@@ -16,6 +16,9 @@ class RemoteTextInputClient : public ui::TextInputClient {
   RemoteTextInputClient(ui::mojom::TextInputClientPtr remote_client,
                         ui::TextInputType text_input_type,
                         ui::TextInputMode text_input_mode,
+                        gfx::Range text_range,
+                        gfx::Range composition_range,
+                        gfx::Range selection_range,
                         base::i18n::TextDirection text_direction,
                         int text_input_flags,
                         gfx::Rect caret_bounds);
@@ -25,6 +28,8 @@ class RemoteTextInputClient : public ui::TextInputClient {
   void SetCaretBounds(const gfx::Rect& caret_bounds);
 
  private:
+  bool ImeEditingAllowed() const;
+
   // ui::TextInputClient:
   void SetCompositionText(const ui::CompositionText& composition) override;
   void ConfirmCompositionText() override;
@@ -55,9 +60,13 @@ class RemoteTextInputClient : public ui::TextInputClient {
   bool IsTextEditCommandEnabled(ui::TextEditCommand command) const override;
   void SetTextEditCommandForNextKeyEvent(ui::TextEditCommand command) override;
 
+  bool has_composition_text_;
   ui::mojom::TextInputClientPtr remote_client_;
   ui::TextInputType text_input_type_;
   ui::TextInputMode text_input_mode_;
+  gfx::Range text_range_;
+  gfx::Range composition_range_;
+  gfx::Range selection_range_;
   base::i18n::TextDirection text_direction_;
   int text_input_flags_;
   gfx::Rect caret_bounds_;
