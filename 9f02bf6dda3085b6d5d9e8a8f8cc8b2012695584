@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "cc48fca3_72356219",
+        "filename": "third_party/WebKit/Source/core/svg/graphics/SVGImage.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 723,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-18T17:32:26Z",
+      "side": 1,
+      "message": "I\u0027d be fine with using load_state_ instead. The completion state is supposed to convey to the compositor whether the rendered result of this image can change from an update to the source data. For encoded images that support incremental decoding this would be the case when an image with partial data is pushed to the compositor. It doesn\u0027t look like that would ever be the case with an SVG, we don\u0027t paint it until its completely loaded (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/svg/graphics/SVGImage.cpp?sq\u003dpackage:chromium\u0026l\u003d400).",
+      "parentUuid": "47f90bb0_b46ab78c",
+      "range": {
+        "startLine": 723,
+        "startChar": 2,
+        "endLine": 723,
+        "endChar": 28
+      },
+      "revId": "9f02bf6dda3085b6d5d9e8a8f8cc8b2012695584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b85ab3a5_6b68f183",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 3
