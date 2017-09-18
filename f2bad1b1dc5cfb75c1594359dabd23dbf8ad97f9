@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a0b0457_72aa3d82",
+        "filename": "content/public/browser/desktop_media_id.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-18T18:13:13Z",
+      "side": 1,
+      "message": "I don\u0027t think that TYPE_NONE is the right value to use for audio-only case. Potentially we could support audio for tab capture. In that case there won\u0027t be a way to distinguish it from system loopback audio. So I think it\u0027s better to use TYPE_SCREEN, but have a different field to indicate that it\u0027s audio-only stream. Maybe replace audio_only flag an enum?",
+      "range": {
+        "startLine": 176,
+        "startChar": 9,
+        "endLine": 176,
+        "endChar": 18
+      },
+      "revId": "f2bad1b1dc5cfb75c1594359dabd23dbf8ad97f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
