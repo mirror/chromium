@@ -88,6 +88,12 @@ class MockIndexedDBFactory : public IndexedDBFactory {
   MOCK_METHOD2(ReportOutstandingBlobs,
                void(const url::Origin& origin, bool blobs_outstanding));
 
+  MOCK_METHOD1(NotifyIndexedDBListChanged, void(const url::Origin& origin));
+  MOCK_METHOD3(NotifyIndexedDBContentChanged,
+               void(const url::Origin& origin,
+                    const std::string& databaseName,
+                    const std::string& objectStoreName));
+
  protected:
   virtual ~MockIndexedDBFactory();
 

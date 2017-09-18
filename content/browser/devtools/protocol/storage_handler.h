@@ -14,6 +14,7 @@
 #include "content/browser/cache_storage/cache_storage_context_impl.h"
 #include "content/browser/devtools/protocol/devtools_domain_handler.h"
 #include "content/browser/devtools/protocol/storage.h"
+#include "content/browser/indexed_db/indexed_db_context_impl.h"
 
 namespace content {
 
@@ -29,6 +30,7 @@ class StorageHandler : public DevToolsDomainHandler,
 
   void Wire(UberDispatcher* dispatcher) override;
   void SetRenderFrameHost(RenderFrameHostImpl* host) override;
+  Response Disable() override;
 
   Response ClearDataForOrigin(
       const std::string& origin,
@@ -36,22 +38,35 @@ class StorageHandler : public DevToolsDomainHandler,
   void GetUsageAndQuota(
       const String& origin,
       std::unique_ptr<GetUsageAndQuotaCallback> callback) override;
+
   // Ignores all double calls to track an origin.
   Response TrackCacheStorageForOrigin(const std::string& origin) override;
   Response UntrackCacheStorageForOrigin(const std::string& origin) override;
+  Response TrackIndexedDBForOrigin(const std::string& origin) override;
+  Response UntrackIndexedDBForOrigin(const std::string& origin) override;
 
  private:
   // See definition for lifetime information.
   class CacheStorageObserver;
+  class IndexedDBObserver;
 
   CacheStorageObserver* GetCacheStorageObserver();
+  IndexedDBObserver* GetIndexedDBObserver();
+
   void NotifyCacheStorageListChanged(const std::string& origin);
   void NotifyCacheStorageContentChanged(const std::string& origin,
                                         const std::string& name);
+  void NotifyIndexedDBListChanged(const std::string& origin);
+  void NotifyIndexedDBContentChanged(const std::string& origin,
+                                     const std::string& databaseName,
+                                     const std::string& objectStoreName);
 
   std::unique_ptr<Storage::Frontend> frontend_;
   RenderFrameHostImpl* host_;
   std::unique_ptr<CacheStorageObserver> cache_storage_observer_;
+  std::unique_ptr<IndexedDBObserver> indexed_db_observer_;
+
+  scoped_refptr<base::SequencedTaskRunner> idb_task_runner_;
 
   base::WeakPtrFactory<StorageHandler> weak_ptr_factory_;
 
