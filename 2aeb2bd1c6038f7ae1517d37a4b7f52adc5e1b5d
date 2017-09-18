@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "02cad116_adbc2302",
+        "filename": "chrome/browser/ui/webui/chrome_web_ui_controller_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-18T22:17:55Z",
+      "side": 1,
+      "message": "Hrm... it should force it to load in a non-incognito tab.",
+      "parentUuid": "4f7e7ba2_085d3106",
+      "range": {
+        "startLine": 334,
+        "startChar": 0,
+        "endLine": 334,
+        "endChar": 53
+      },
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9f2f435_b59612fe",
         "filename": "chrome/browser/ui/webui/download/download_internals_ui.cc",
         "patchSetId": 5
@@ -166,6 +190,30 @@
       "side": 1,
       "message": "Nice I didn\u0027t know we supported that!  Thanks :).",
       "parentUuid": "c9f2f435_b59612fe",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 17
+      },
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "593e07fb_91efa83f",
+        "filename": "chrome/browser/ui/webui/download/download_internals_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-18T22:17:55Z",
+      "side": 1,
+      "message": "Yup, it\u0027s about the only C++14 library feature you\u0027ll see in common usage, and existing calls are being converted en masse. https://chromium-cpp.appspot.com/",
+      "parentUuid": "c349bd0b_59562da4",
       "range": {
         "startLine": 40,
         "startChar": 6,
@@ -248,6 +296,30 @@
       "side": 1,
       "message": "Ah good point.  I\u0027ll add AllowJavascript() here.  Is that reasonable?",
       "parentUuid": "9b8e0d63_54453eb1",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e22d6e_1104385b",
+        "filename": "chrome/browser/ui/webui/download/download_internals_ui_message_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-18T22:17:55Z",
+      "side": 1,
+      "message": "I don\u0027t think so, the point of AllowJavascript is to announce that we know the page is ready to execute JS. Instead use IsJavascriptAllowed() to conditionally fire this. And that\u0027s really what we want: if JS isn\u0027t allowed yet, the status change doesn\u0027t matter anyway.",
+      "parentUuid": "4436543e_33179728",
       "range": {
         "startLine": 38,
         "startChar": 2,
