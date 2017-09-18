@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b2c80a69_72299467",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-18T20:07:22Z",
+      "side": 1,
+      "message": "It does this for images on every tile when scheduling a raster task. I moved this to the step where we iterate through these images to copy the DrawImage and add all rasterization properties to avoid this additional iteration.",
+      "parentUuid": "81b282db_57ca1800",
+      "revId": "461f7cb8efb7df382500b161906cb405145cba17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caebcfa2_1e6c8709",
         "filename": "cc/trees/image_animation_controller.cc",
         "patchSetId": 23
@@ -33,6 +51,24 @@
       "revId": "461f7cb8efb7df382500b161906cb405145cba17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3631a4b1_03f44757",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-18T20:07:22Z",
+      "side": 1,
+      "message": "Yup. RestartAfterSyncCutoff in ImageAnimationControllerTest.",
+      "parentUuid": "caebcfa2_1e6c8709",
+      "revId": "461f7cb8efb7df382500b161906cb405145cba17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
