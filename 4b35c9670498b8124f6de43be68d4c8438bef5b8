@@ -22,6 +22,30 @@
       "revId": "4b35c9670498b8124f6de43be68d4c8438bef5b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce04d049_eee49b6b",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-18T11:23:35Z",
+      "side": 1,
+      "message": "I\u0027m changing back to string actually.\n\nStringPiece does not own the string, it is just a char*.\nUsing StringPiece avoids doing a copy here.\n\nThe downside is that we must be careful that the strings that are pointed (such as primary_account_, gaia_accounts_...) are not mutated, because that would invalidate the StringPiece. And actually, now that I\u0027m rereading the code, this seems very risky, in particular because there is a gaia_accounts_.clear() call somewhere in FinishReconcile().",
+      "parentUuid": "8eaea3cd_c2f26b22",
+      "range": {
+        "startLine": 415,
+        "startChar": 8,
+        "endLine": 415,
+        "endChar": 19
+      },
+      "revId": "4b35c9670498b8124f6de43be68d4c8438bef5b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

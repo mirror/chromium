@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "e80c0ce7_a85bdfb1",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-18T11:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29692242_8afb2ebe",
+      "range": {
+        "startLine": 442,
+        "startChar": 3,
+        "endLine": 442,
+        "endChar": 0
+      },
+      "revId": "bb2430ea5a630fb2b92f862520348c3e6c16560d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72a82002_2750d4ef",
         "filename": "components/signin/core/browser/account_reconcilor.h",
         "patchSetId": 3
