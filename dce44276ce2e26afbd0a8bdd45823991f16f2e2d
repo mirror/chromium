@@ -22,6 +22,30 @@
       "revId": "dce44276ce2e26afbd0a8bdd45823991f16f2e2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a3d5472_35a025aa",
+        "filename": "components/leveldb_proto/proto_database_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-09-18T22:27:39Z",
+      "side": 1,
+      "message": "Oops - thx.",
+      "parentUuid": "9ae2e29f_5354fcf1",
+      "range": {
+        "startLine": 151,
+        "startChar": 33,
+        "endLine": 151,
+        "endChar": 48
+      },
+      "revId": "dce44276ce2e26afbd0a8bdd45823991f16f2e2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
