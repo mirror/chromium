@@ -207,6 +207,7 @@ class AccountReconcilor : public KeyedService,
 
   // Overriden from OAuth2TokenService::Observer.
   void OnEndBatchChanges() override;
+  void OnRefreshTokensLoaded() override;
 
   // Overriden from SigninManagerBase::Observer.
   void GoogleSigninSucceeded(const std::string& account_id,
