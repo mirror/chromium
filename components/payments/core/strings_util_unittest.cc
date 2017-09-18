@@ -27,15 +27,15 @@ TEST(StringsUtilTest, GetAcceptedCardTypesText) {
     std::vector<CardType> card_types;
     const char* const expected_text;
   } kTestCases[] = {
-      {std::vector<CardType>(), "Accepted cards"},
-      {{UNKNOWN}, "Accepted cards"},
-      {{CREDIT}, "Accepted credit cards"},
-      {{DEBIT}, "Accepted debit cards"},
-      {{PREPAID}, "Accepted prepaid cards"},
-      {{CREDIT, DEBIT}, "Accepted credit and debit cards"},
-      {{CREDIT, PREPAID}, "Accepted credit and prepaid cards"},
-      {{DEBIT, PREPAID}, "Accepted debit and prepaid cards"},
-      {{CREDIT, DEBIT, PREPAID}, "Accepted cards"},
+      {std::vector<CardType>(), "Accepted Cards"},
+      {{UNKNOWN}, "Accepted Cards"},
+      {{CREDIT}, "Accepted Credit Cards"},
+      {{DEBIT}, "Accepted Debit Cards"},
+      {{PREPAID}, "Accepted Prepaid Cards"},
+      {{CREDIT, DEBIT}, "Accepted Credit and Debit Cards"},
+      {{CREDIT, PREPAID}, "Accepted Credit and Prepaid Cards"},
+      {{DEBIT, PREPAID}, "Accepted Debit and Prepaid Cards"},
+      {{CREDIT, DEBIT, PREPAID}, "Accepted Cards"},
   };
   for (size_t i = 0; i < arraysize(kTestCases); ++i) {
     EXPECT_EQ(
