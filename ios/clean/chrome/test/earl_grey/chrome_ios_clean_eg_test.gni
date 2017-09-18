@@ -1,0 +1,19 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("//ios/chrome/test/earl_grey/chrome_ios_eg_test.gni")
+
+# Template wrapping chrome_ios_base_eg_test, setting default values for
+# EarlGrey test based on //ios/clean/chrome/app:chrome.
+#
+template("chrome_ios_clean_eg_test") {
+  chrome_ios_base_eg_test(target_name) {
+    forward_variables_from(invoker, "*")
+    application_main_directory = "//ios/clean/chrome/app:main"
+  }
+}
+
+set_defaults("chrome_ios_clean_eg_test") {
+  configs = default_executable_configs
+}
