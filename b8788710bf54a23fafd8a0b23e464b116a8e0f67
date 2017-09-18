@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5aeb4dcc_fce580b6",
+        "filename": "content/browser/android/selection_popup_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-18T19:21:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db92648b_3d8a60e6",
+      "revId": "b8788710bf54a23fafd8a0b23e464b116a8e0f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33493f7e_603e6af3",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
         "patchSetId": 3
@@ -66,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "5fbd3e7b_0f4fd040",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-18T19:21:02Z",
+      "side": 1,
+      "message": "I was thinking to have |afterAdjust| passed to here, and having boolean |mWaitForAdjust| set to true in onClassified. Then:\nif (mWaitForAdjust !\u003d afterAdjust) return;\n\nBut since it is unlikely to having such event in between, so might not that useful.",
+      "parentUuid": "0ca8a7e9_d5d16b30",
+      "range": {
+        "startLine": 242,
+        "startChar": 16,
+        "endLine": 242,
+        "endChar": 38
+      },
+      "revId": "b8788710bf54a23fafd8a0b23e464b116a8e0f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "218cf8a6_bd9b20d6",
         "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
         "patchSetId": 3
@@ -83,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "cd8fe916_5a8913e4",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-18T19:21:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "218cf8a6_bd9b20d6",
+      "revId": "b8788710bf54a23fafd8a0b23e464b116a8e0f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd8eec32_4d41a87e",
         "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
         "patchSetId": 3
@@ -97,6 +157,24 @@
       "revId": "b8788710bf54a23fafd8a0b23e464b116a8e0f67",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd87c40_00f365a1",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-18T19:21:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd8eec32_4d41a87e",
+      "revId": "b8788710bf54a23fafd8a0b23e464b116a8e0f67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
