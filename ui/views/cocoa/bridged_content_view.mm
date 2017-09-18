@@ -650,7 +650,18 @@ ui::TextEditCommand GetTextEditCommandForMenuAction(SEL action) {
 // NSView implementation.
 
 - (BOOL)acceptsFirstResponder {
-  return YES;
+  // Top most Widgets(Browser Window) don't have to get key events when it's not
+  // focused. Otherwise it makes |web_contents|' focus got lost by mouse clicks
+  // on |this|. Child Widgets need to acceptsFirstResponder, especially for ESC
+  // key to close the Bubble.
+  // With acceptsFirstResponder set to NO, it can get key events when it's
+  // views::View get focused due to NativeWidgetMac::ClearNativeFocus().
+  views::BridgedNativeWidget* bridge =
+      views::NativeWidgetMac::GetBridgeForNativeWindow([self window]);
+  if (bridge->parent())
+    return YES;
+  else
+    return NO;
 }
 
 - (BOOL)becomeFirstResponder {
