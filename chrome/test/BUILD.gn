@@ -1254,6 +1254,7 @@ test("browser_tests") {
       "../browser/crash_recovery_browsertest.cc",
       "../browser/custom_handlers/protocol_handler_registry_browsertest.cc",
       "../browser/data_saver/data_saver_browsertest.cc",
+      "../browser/device_u2f/u2f_browsertest.cc",  # FIXME
       "../browser/devtools/device/adb/adb_client_socket_browsertest.cc",
       "../browser/devtools/device/adb/mock_adb_server.cc",
       "../browser/devtools/device/adb/mock_adb_server.h",
@@ -1666,6 +1667,7 @@ test("browser_tests") {
       "//crypto:test_support",
       "//device/base:mocks",
       "//device/bluetooth:mocks",
+      "//device/u2f",  # FIXME
       "//device/usb:test_support",
       "//google_apis:test_support",
       "//media:test_support",
