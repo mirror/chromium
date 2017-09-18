@@ -41,6 +41,8 @@
 #include "services/service_manager/runner/host/service_process_launcher.h"
 #endif
 
+#include "base/debug/stack_trace.h"
+
 namespace service_manager {
 
 namespace {
@@ -216,6 +218,7 @@ class ServiceManager::Instance
   }
 
   bool CallOnBindInterface(std::unique_ptr<ConnectParams>* in_params) {
+    LOG(ERROR) << __func__ << ": " << identity_.name();
     if (!service_.is_bound()) {
       (*in_params)
           ->set_response_data(mojom::ConnectResult::ACCESS_DENIED, identity_);
@@ -231,6 +234,7 @@ class ServiceManager::Instance
     if (!AllowsInterface(params->source(), source_connection_spec, identity_,
                          GetConnectionSpec(), params->interface_name())) {
       params->set_response_data(mojom::ConnectResult::ACCESS_DENIED, identity_);
+      LOG(ERROR) << __func__ << ": " << identity_.name();
       return false;
     }
 
@@ -243,6 +247,7 @@ class ServiceManager::Instance
             GetRequestedCapabilities(source_connection_spec, identity_)),
         params->interface_name(), params->TakeInterfaceRequestPipe(),
         base::Bind(&Instance::OnConnectComplete, base::Unretained(this)));
+    LOG(ERROR) << __func__ << ": " << identity_.name();
     return true;
   }
 
@@ -252,6 +257,7 @@ class ServiceManager::Instance
   }
 
   void StartWithService(mojom::ServicePtr service) {
+    LOG(ERROR) << __func__;
     CHECK(!service_);
     state_ = State::STARTING;
     service_ = std::move(service);
@@ -263,6 +269,9 @@ class ServiceManager::Instance
   }
 
   bool StartWithFilePath(const base::FilePath& path) {
+    base::debug::StackTrace().Print();
+
+    LOG(ERROR) << __func__ << ": " << path.value();
 #if defined(OS_IOS)
     // iOS does not support launching services in their own processes.
     NOTREACHED();
@@ -415,10 +424,14 @@ class ServiceManager::Instance
                      const std::string& interface_name,
                      mojo::ScopedMessagePipeHandle interface_pipe,
                      BindInterfaceCallback callback) override {
+    LOG(ERROR) << __func__ << ": " << in_target.name();
+    LOG(ERROR) << __func__ << ": " << in_target.instance();
+    LOG(ERROR) << __func__ << ": " << interface_name;
     Identity target = in_target;
     mojom::ConnectResult result =
         ValidateConnectParams(&target, nullptr, nullptr);
     if (!Succeeded(result)) {
+      LOG(ERROR) << __func__ << ": failed";
       std::move(callback).Run(result, Identity());
       return;
     }
@@ -443,6 +456,7 @@ class ServiceManager::Instance
 
   void StartService(const Identity& in_target,
                     StartServiceCallback callback) override {
+    LOG(ERROR) << __func__;
     Identity target = in_target;
     mojom::ConnectResult result =
         ValidateConnectParams(&target, nullptr, nullptr);
@@ -463,6 +477,7 @@ class ServiceManager::Instance
       mojo::ScopedMessagePipeHandle service_handle,
       mojom::PIDReceiverRequest pid_receiver_request,
       StartServiceWithProcessCallback callback) override {
+    LOG(ERROR) << __func__;
     Identity target = in_target;
     mojom::ServicePtr service;
     service.Bind(mojom::ServicePtrInfo(std::move(service_handle), 0));
@@ -513,6 +528,7 @@ class ServiceManager::Instance
       Identity* target,
       mojom::ServicePtr* service,
       mojom::PIDReceiverRequest* pid_receiver_request) {
+    LOG(ERROR) << __func__;
     if (target->user_id() == mojom::kInheritUserID)
       target->set_user_id(identity_.user_id());
 
@@ -569,6 +585,7 @@ class ServiceManager::Instance
   }
 
   mojom::ConnectResult ValidateConnectionSpec(const Identity& target) {
+    LOG(ERROR) << __func__;
     const InterfaceProviderSpec& connection_spec = GetConnectionSpec();
     // TODO(beng): Need to do the following additional policy validation of
     // whether this instance is allowed to connect using:
@@ -792,6 +809,7 @@ void ServiceManager::SetInstanceQuitCallback(
 }
 
 void ServiceManager::Connect(std::unique_ptr<ConnectParams> params) {
+  LOG(ERROR) << __func__ << ": " << params->target().name();
   TRACE_EVENT_INSTANT1("service_manager", "ServiceManager::Connect",
                        TRACE_EVENT_SCOPE_THREAD, "original_name",
                        params->target().name());
@@ -801,9 +819,13 @@ void ServiceManager::Connect(std::unique_ptr<ConnectParams> params) {
   DCHECK(!params->HasClientProcessInfo() ||
          !identity_to_instance_.count(params->target()));
 
+  std::string name = params->target().name();
+
   // Connect to an existing matching instance, if possible.
-  if (!params->HasClientProcessInfo() && ConnectToExistingInstance(&params))
+  if (!params->HasClientProcessInfo() && ConnectToExistingInstance(&params)) {
+    LOG(ERROR) << __func__ << ": connect to existing instance." << name;
     return;
+  }
 
   const catalog::Entry* entry =
       catalog_.GetInstanceForUserId(params->target().user_id())
@@ -854,11 +876,13 @@ void ServiceManager::Connect(std::unique_ptr<ConnectParams> params) {
   // Below are various paths through which a new Instance can be bound to a
   // Service proxy.
   if (params->HasClientProcessInfo()) {
+
     // This branch should be reachable only via a call to RegisterService() . We
     // start the instance but return early before we connect to it. Clients will
     // call Connect() with the target identity subsequently.
     instance->BindPIDReceiver(params->TakePIDReceiverRequest());
     instance->StartWithService(params->TakeService());
+    LOG(ERROR) << "1111" << name;
     return;
   } else {
     // The catalog was unable to read a manifest for this service. We can't do
@@ -873,6 +897,7 @@ void ServiceManager::Connect(std::unique_ptr<ConnectParams> params) {
     }
 
     if (entry->parent()) {
+      LOG(ERROR) << 1122 << name;
       // This service is provided by another service via a ServiceFactory.
       const std::string* target_user_id = &target.user_id();
       std::string factory_instance_name = instance_name;
@@ -890,6 +915,7 @@ void ServiceManager::Connect(std::unique_ptr<ConnectParams> params) {
       CreateServiceWithFactory(factory, target.name(),
                                mojo::MakeRequest(&service));
       instance->StartWithService(std::move(service));
+      LOG(ERROR) << 1123 << name;
     } else {
       base::FilePath package_path = entry->path();
       DCHECK(!package_path.empty());
@@ -897,6 +923,7 @@ void ServiceManager::Connect(std::unique_ptr<ConnectParams> params) {
         OnInstanceError(instance);
         params->set_response_data(mojom::ConnectResult::INVALID_ARGUMENT,
                                   Identity());
+        LOG(ERROR) << 2222 << name;
         return;
       }
     }
@@ -906,6 +933,7 @@ void ServiceManager::Connect(std::unique_ptr<ConnectParams> params) {
                             instance->identity());
   if (params->HasInterfaceRequestInfo())
     instance->CallOnBindInterface(&params);
+  LOG(ERROR) << 3333 << name;
 }
 
 void ServiceManager::StartService(const Identity& identity) {
@@ -1075,6 +1103,8 @@ ServiceManager::Instance* ServiceManager::CreateInstance(
     const Identity& source,
     const Identity& target,
     const InterfaceProviderSpecMap& specs) {
+  LOG(ERROR) << __func__;
+
   CHECK(target.user_id() != mojom::kInheritUserID);
 
   auto instance = base::MakeUnique<Instance>(this, target, std::move(specs));
@@ -1111,12 +1141,15 @@ void ServiceManager::AddListener(mojom::ServiceManagerListenerPtr listener) {
 void ServiceManager::CreateServiceWithFactory(const Identity& service_factory,
                                               const std::string& name,
                                               mojom::ServiceRequest request) {
+  LOG(ERROR) << __func__ << ": " << service_factory.name() << ", " << name;
   mojom::ServiceFactory* factory = GetServiceFactory(service_factory);
   factory->CreateService(std::move(request), name);
 }
 
 mojom::ServiceFactory* ServiceManager::GetServiceFactory(
     const Identity& service_factory_identity) {
+  LOG(ERROR) << __func__ << ": " << service_factory_identity.name();
+
   auto it = service_factories_.find(service_factory_identity);
   if (it != service_factories_.end())
     return it->second.get();

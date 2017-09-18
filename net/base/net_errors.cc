@@ -25,7 +25,7 @@ std::string ErrorToShortString(int error) {
 #include "net/base/net_error_list.h"
 #undef NET_ERROR
   default:
-    NOTREACHED();
+    //NOTREACHED();
     error_string = "<unknown>";
   }
   return std::string("ERR_") + error_string;
