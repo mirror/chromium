@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e0c9550_b3204575",
+        "filename": "ui/aura/window_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-18T19:08:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d557fa4b_ec18dd36",
+      "revId": "9b01a369557068d134c01dda05ab7b65077c00cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f374e00b_4c7aee03",
         "filename": "ui/aura/window_unittest.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "9b01a369557068d134c01dda05ab7b65077c00cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2cf67fb_af2ad9d0",
+        "filename": "ui/aura/window_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1975,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-18T19:08:31Z",
+      "side": 1,
+      "message": "Added test in ui/compositor: https://chromium-review.googlesource.com/c/chromium/src/+/671703 \n\nAnimating opacity requires interactions with cc::AnimationPlayer, which is not possible from aura/ https://cs.chromium.org/chromium/src/ui/aura/DEPS?rcl\u003d79cd919891958c00e8d8b87b504d478cc0eb437b\n\nI think it\u0027s ok to have tests only in ui/compositor/. aura/ can assume that notifications to ui::LayerDelegate are correctly implemented.",
+      "parentUuid": "f374e00b_4c7aee03",
+      "revId": "9b01a369557068d134c01dda05ab7b65077c00cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
