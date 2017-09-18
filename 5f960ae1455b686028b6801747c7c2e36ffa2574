@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad18b77b_daab2e47",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-18T21:36:19Z",
+      "side": 1,
+      "message": "btw, why do we only want this for host builds? this excludes android builds for no good reason. (if this is because of ios, do !is_xcode_clang instead)",
+      "range": {
+        "startLine": 445,
+        "startChar": 52,
+        "endLine": 445,
+        "endChar": 55
+      },
+      "revId": "5f960ae1455b686028b6801747c7c2e36ffa2574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
