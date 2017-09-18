@@ -22,6 +22,30 @@
       "revId": "dee0d1475df63bf2104c4edf77ac2c110cfaef1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c9d686_bef4d986",
+        "filename": "components/payments/content/service_worker_payment_instrument.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-18T19:39:49Z",
+      "side": 1,
+      "message": "These arguments in PaymentRequestState are only used for ServiceWorkerPaymentInstrument, so it looks a little better to keep in ServiceWorkerPaymentInstrument to avoid back and forth call.",
+      "parentUuid": "bfed8d83_812e49b1",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 31
+      },
+      "revId": "dee0d1475df63bf2104c4edf77ac2c110cfaef1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
