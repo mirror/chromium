@@ -78,12 +78,12 @@ class TestBrowserContextWithRealURLRequestContextGetter
 
 class AudioOutputAuthorizationHandlerTest : public RenderViewHostTestHarness {
  public:
-  AudioOutputAuthorizationHandlerTest() {
+  AudioOutputAuthorizationHandlerTest()
+      : RenderViewHostTestHarness(
+            content::TestBrowserThreadBundle::REAL_IO_THREAD) {
     // Not threadsafe, thus set before threads are started:
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kUseFakeDeviceForMediaStream);
-
-    SetThreadBundleOptions(TestBrowserThreadBundle::Options::REAL_IO_THREAD);
   }
 
   ~AudioOutputAuthorizationHandlerTest() override {
