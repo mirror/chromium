@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9dca840e_09137b62",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-18T14:31:24Z",
+      "side": 1,
+      "message": "Spoke to you offline, you didn\u0027t misunderstand my idea and your original comment holds.",
+      "parentUuid": "27fb5ae2_f9df015e",
+      "range": {
+        "startLine": 868,
+        "startChar": 16,
+        "endLine": 868,
+        "endChar": 20
+      },
+      "revId": "741d4866a8da734ae3f2906fb499865e4d01c961",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "762ce73e_48b5f06a",
         "filename": "chrome/browser/vr/ui_renderer.h",
         "patchSetId": 8
