@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68dccb9b_64c0c8a5",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ClipboardTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-18T06:05:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "83aa4403_4ff47ecd",
+      "revId": "fdb91ed2e255bd3c02f5f8e1df59ec81af58258e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aee89707_62883f5b",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/ClipboardTest.java",
         "patchSetId": 3
@@ -83,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "054e2d86_799bcea8",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/ClipboardTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-18T06:05:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98ecdad5_01e5d8aa",
+      "revId": "fdb91ed2e255bd3c02f5f8e1df59ec81af58258e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4007176_d707135f",
         "filename": "content/public/android/javatests/src/org/chromium/content/browser/MediaSessionTest.java",
         "patchSetId": 3
@@ -97,6 +133,24 @@
       "revId": "fdb91ed2e255bd3c02f5f8e1df59ec81af58258e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82d02350_254fc29b",
+        "filename": "content/public/android/javatests/src/org/chromium/content/browser/MediaSessionTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-09-18T06:05:36Z",
+      "side": 1,
+      "message": "Reverted - Pull MediaSessionTest out of this CL.",
+      "parentUuid": "e4007176_d707135f",
+      "revId": "fdb91ed2e255bd3c02f5f8e1df59ec81af58258e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
