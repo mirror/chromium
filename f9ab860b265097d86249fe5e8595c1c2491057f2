@@ -70,6 +70,30 @@
       "revId": "f9ab860b265097d86249fe5e8595c1c2491057f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4310c18_747d4d61",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/WebApkUma.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-18T18:53:45Z",
+      "side": 1,
+      "message": "Unfortunately yes :(\nThe status is determined by the WebAPK runtime library and returned through the service API. The runtime lib does not have any dependency to Chrome (thus can\u0027t access Chrome code).\n\nThe STATUS_MAX is used when log UMA thus it has to be in Chrome.",
+      "parentUuid": "9b07bdf6_42fc4587",
+      "range": {
+        "startLine": 43,
+        "startChar": 67,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "f9ab860b265097d86249fe5e8595c1c2491057f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
