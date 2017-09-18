@@ -327,8 +327,8 @@ void ExtensionInstalledBubbleUi::Close() {
 }
 
 void ExtensionInstalledBubbleUi::UpdateAnchorPosition() {
-  DCHECK(bubble_view_);
-  bubble_view_->UpdateAnchorView();
+  if (bubble_view_)
+    bubble_view_->UpdateAnchorView();
 }
 
 void ExtensionInstalledBubbleUi::OnWidgetClosing(views::Widget* widget) {
