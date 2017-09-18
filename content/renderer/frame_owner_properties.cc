@@ -24,6 +24,8 @@ FrameOwnerProperties ConvertWebFrameOwnerPropertiesToFrameOwnerProperties(
   result.allow_payment_request =
       web_frame_owner_properties.allow_payment_request;
   result.required_csp = web_frame_owner_properties.required_csp.Utf8();
+  result.gesture_delegation_flags =
+      web_frame_owner_properties.gesture_delegation_flags;
 
   return result;
 }
@@ -41,6 +43,8 @@ ConvertFrameOwnerPropertiesToWebFrameOwnerProperties(
   result.allow_payment_request = frame_owner_properties.allow_payment_request;
   result.required_csp =
       blink::WebString::FromUTF8(frame_owner_properties.required_csp);
+  result.gesture_delegation_flags =
+      frame_owner_properties.gesture_delegation_flags;
 
   return result;
 }

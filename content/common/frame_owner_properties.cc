@@ -12,7 +12,8 @@ FrameOwnerProperties::FrameOwnerProperties()
       margin_height(-1),
       allow_fullscreen(false),
       allow_payment_request(false),
-      is_display_none(false) {}
+      is_display_none(false),
+      gesture_delegation_flags(0) {}
 
 FrameOwnerProperties::FrameOwnerProperties(const FrameOwnerProperties& other) =
     default;
@@ -26,7 +27,8 @@ bool FrameOwnerProperties::operator==(const FrameOwnerProperties& other) const {
          allow_fullscreen == other.allow_fullscreen &&
          allow_payment_request == other.allow_payment_request &&
          is_display_none == other.is_display_none &&
-         required_csp == other.required_csp;
+         required_csp == other.required_csp &&
+         gesture_delegation_flags == other.gesture_delegation_flags;
 }
 
 }  // namespace content

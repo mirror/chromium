@@ -119,6 +119,7 @@ source_set("blink_headers") {
     "platform/BlameContext.h",
     "platform/CORSStatus.h",
     "platform/FilePathConversion.h",
+    "platform/GestureDelegationFlags.h",
     "platform/InterfaceProvider.h",
     "platform/InterfaceRegistry.h",
     "platform/Platform.h",

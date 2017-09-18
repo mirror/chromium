@@ -2,5 +2,8 @@ per-file HTMLAudio*=mlamouri@chromium.org
 per-file HTMLMedia*=mlamouri@chromium.org
 per-file HTMLVideo*=mlamouri@chromium.org
 
+# For Gesture Delegation.
+per-file HTMLIFrameElementAllowedGestureDelegation*=beccahughes@chromium.org
+
 # TEAM: dom-dev@chromium.org
 # COMPONENT: Blink>HTML
