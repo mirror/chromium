@@ -26,6 +26,7 @@ namespace autofill {
 
 struct Suggestion;
 
+extern const base::Feature kAutofillAutocompleteAllAddresses;
 extern const base::Feature kAutofillCreditCardAssist;
 extern const base::Feature kAutofillScanCardholderName;
 extern const base::Feature kAutofillCreditCardBankNameDisplay;
