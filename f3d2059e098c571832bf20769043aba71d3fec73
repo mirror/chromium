@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fa36291_7ac2f816",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-18T16:58:52Z",
+      "side": 1,
+      "message": "Could you refer to the java@ discussion thread here?\n\nhttps://groups.google.com/a/chromium.org/d/topic/java/CpIn_jDOgRk/discussion",
+      "revId": "f3d2059e098c571832bf20769043aba71d3fec73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
