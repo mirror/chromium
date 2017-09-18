@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb54c0d7_475e73d6",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1493,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-09-18T18:59:20Z",
+      "side": 1,
+      "message": "nit: make_unique.",
+      "revId": "0bf2488902f718c690e8dbd63d2617250716a982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
