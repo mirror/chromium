@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "888d2f2b_8768d2b8",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-18T20:22:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7887383_5478ca91",
+      "range": {
+        "startLine": 80,
+        "startChar": 19,
+        "endLine": 80,
+        "endChar": 27
+      },
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c952179e_2808ee80",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-18T20:22:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee86cf2a_652d6ba8",
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f214eba4_c30287f4",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.h",
         "patchSetId": 8
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "117e89bc_0302e442",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-18T20:22:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f214eba4_c30287f4",
+      "range": {
+        "startLine": 41,
+        "startChar": 45,
+        "endLine": 41,
+        "endChar": 53
+      },
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "354d04a0_52066cf8",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
         "patchSetId": 8
@@ -76,6 +142,24 @@
       "writtenOn": "2017-09-08T03:27:14Z",
       "side": 1,
       "message": "Does this post a task to the current thread? If so, it looks like |is_done| is never signaled.",
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61f04f13_8a1278a0",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-18T20:22:53Z",
+      "side": 1,
+      "message": "No, It should be posting to the AnimationWorkletThread.  If is_done was never signalled the tests would not pass.",
+      "parentUuid": "354d04a0_52066cf8",
       "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -96,6 +180,24 @@
       "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03e93b61_aeac01d9",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-18T20:22:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b50144c_9f434895",
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "31ca9b62_8bafb9a4",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-18T20:22:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7533b38_7243882a",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 46
+      },
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8d4a2b0_36e66aea",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.cpp",
         "patchSetId": 8
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "1cb50887_581220ea",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-18T20:22:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8d4a2b0_36e66aea",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 46
+      },
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "230b6753_6303ca19",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.h",
         "patchSetId": 8
@@ -156,6 +306,30 @@
       "writtenOn": "2017-09-08T03:27:14Z",
       "side": 1,
       "message": "If possible, it would be better to remove AbstractAnimationWorkletThread layer first by deprecating CompositorWorker (see https://crbug.com/746212) because this change implicitly overrides static functions.",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 43
+      },
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7457dfe0_cbe8d665",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-18T20:22:53Z",
+      "side": 1,
+      "message": "I don\u0027t understand the motivation for blocking this change on that one.\nWhat goes wrong by inheriting static functions?\nIt\u0027s not like you can call them on a derived object.",
+      "parentUuid": "230b6753_6303ca19",
       "range": {
         "startLine": 17,
         "startChar": 13,
@@ -188,6 +362,30 @@
       "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d4045b_8a5b1716",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-09-18T20:22:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb7282fe_f0198570",
+      "range": {
+        "startLine": 26,
+        "startChar": 38,
+        "endLine": 26,
+        "endChar": 43
+      },
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
