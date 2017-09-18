@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2dfa9070_18c5686a",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-18T06:06:36Z",
+      "side": 1,
+      "message": "Could you use URLFetcher.RequestType from net/url_request/url_fetcher.h instead of defining a new enum here?",
+      "revId": "3f78aaf517e4bc2ba17a9a3bca0859d88a4b3bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95992b7f_b617c0f9",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-18T06:06:36Z",
+      "side": 1,
+      "message": "I don\u0027t think this is necessary, as it will automatically add the \u0027?\u0027 if it\u0027s missing, won\u0027t it?",
+      "revId": "3f78aaf517e4bc2ba17a9a3bca0859d88a4b3bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1234292_4059c446",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-09-18T06:06:36Z",
+      "side": 1,
+      "message": "I wonder why we don\u0027t want this?\n\n(Maybe with POST it\u0027s hard to get the data to properly send over to the app window, but is there any reason for GET form requests not to open an app window?)",
+      "revId": "3f78aaf517e4bc2ba17a9a3bca0859d88a4b3bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
