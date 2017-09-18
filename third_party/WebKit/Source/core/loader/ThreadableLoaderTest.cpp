@@ -129,7 +129,7 @@ class DocumentThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
     ThreadableLoaderOptions options;
     ResourceLoaderOptions resource_loader_options;
     loader_ = DocumentThreadableLoader::Create(
-        *ThreadableLoadingContext::Create(GetDocument()), client, options,
+        *ThreadableLoadingContext::Create(&GetDocument()), client, options,
         resource_loader_options);
   }
 
@@ -236,7 +236,8 @@ class WorkerThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
     parent_frame_task_runners_ =
         ParentFrameTaskRunners::Create(dummy_page_holder_->GetFrame());
     worker_thread_ = WTF::MakeUnique<WorkerThreadForTest>(
-        ThreadableLoadingContext::Create(GetDocument()), *reporting_proxy_);
+        ThreadableLoadingContext::Create(&GetDocument()), *reporting_proxy_,
+        nullptr);
 
     worker_thread_->StartWithSourceCode(security_origin_.Get(),
                                         "//fake source code",

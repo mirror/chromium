@@ -312,6 +312,10 @@ void WorkerFetchContext::DispatchDidFail(unsigned long identifier,
   probe::didFailLoading(global_scope_, identifier, nullptr, error);
 }
 
+bool WorkerFetchContext::ShouldLoadNewResource(Resource::Type) const {
+  return true;
+}
+
 void WorkerFetchContext::AddResourceTiming(const ResourceTimingInfo& info) {
   // TODO(nhiroki): Add ResourceTiming API support once it's spec'ed for
   // worklets.

@@ -57,10 +57,9 @@ const int kInvalidContextGroupId = 0;
 
 WorkerThreadDebugger* WorkerThreadDebugger::From(v8::Isolate* isolate) {
   ThreadDebugger* debugger = ThreadDebugger::From(isolate);
-  if (!debugger)
-    return nullptr;
-  DCHECK(debugger->IsWorker());
-  return static_cast<WorkerThreadDebugger*>(debugger);
+  if (debugger && debugger->IsWorker())
+    return static_cast<WorkerThreadDebugger*>(debugger);
+  return nullptr;
 }
 
 WorkerThreadDebugger::WorkerThreadDebugger(v8::Isolate* isolate)

@@ -49,6 +49,7 @@ class CORE_EXPORT WorkerBackingThread final {
   // A worker script must not call any function after calling
   // ShutdownOnBackingThread(). They should be called from |this| thread.
   void InitializeOnBackingThread(const WorkerBackingThreadStartupData&);
+  void InitializeOnBackingThread(v8::Isolate*);
   void ShutdownOnBackingThread();
 
   WebThreadSupportingGC& BackingThread() {
@@ -69,6 +70,7 @@ class CORE_EXPORT WorkerBackingThread final {
 
   std::unique_ptr<WebThreadSupportingGC> backing_thread_;
   v8::Isolate* isolate_ = nullptr;
+  bool is_owning_isolate_ = false;
   bool is_owning_thread_;
   bool should_call_gc_on_shutdown_;
 };

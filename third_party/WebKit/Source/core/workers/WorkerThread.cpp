@@ -113,15 +113,21 @@ void WorkerThread::Start(
   DCHECK(!parent_frame_task_runners_);
   parent_frame_task_runners_ = parent_frame_task_runners;
 
-  // Synchronously initialize the per-global-scope scheduler to prevent someone
-  // from posting a task to the thread before the scheduler is ready.
-  WaitableEvent waitable_event;
+  // Synchronously initialize the per-global-scope scheduler to prevent
+  // someone from posting a task to the thread before the scheduler is ready.
+  std::unique_ptr<WaitableEvent> waitable_event;
+  if (!GetWorkerBackingThread().BackingThread().IsCurrentThread()) {
+    // This condition is only true for some unittests that share the same
+    // platform thread for main and worker contexts.
+    waitable_event = WTF::MakeUnique<WaitableEvent>();
+  }
   GetWorkerBackingThread().BackingThread().PostTask(
       BLINK_FROM_HERE,
       CrossThreadBind(&WorkerThread::InitializeSchedulerOnWorkerThread,
                       CrossThreadUnretained(this),
-                      CrossThreadUnretained(&waitable_event)));
-  waitable_event.Wait();
+                      CrossThreadUnretained(waitable_event.get())));
+  if (waitable_event)
+    waitable_event->Wait();
 
   GetWorkerBackingThread().BackingThread().PostTask(
       BLINK_FROM_HERE,
@@ -392,7 +398,8 @@ void WorkerThread::InitializeSchedulerOnWorkerThread(
   global_scope_scheduler_ =
       WTF::MakeUnique<scheduler::WorkerGlobalScopeScheduler>(
           scheduler->NewDefaultTaskQueue());
-  waitable_event->Signal();
+  if (waitable_event)
+    waitable_event->Signal();
 }
 
 void WorkerThread::InitializeOnWorkerThread(

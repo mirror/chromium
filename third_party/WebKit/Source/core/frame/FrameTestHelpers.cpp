@@ -465,5 +465,11 @@ void TestWebViewWidgetClient::DidMeaningfulLayout(
   test_web_view_client_.DidMeaningfulLayout(layout_type);
 }
 
+std::unique_ptr<WebURLLoader> TestWebWorkerFetchContext::CreateURLLoader(
+    const WebURLRequest& request,
+    SingleThreadTaskRunnerRefPtr task_runner) {
+  return Platform::Current()->CreateURLLoader(request, std::move(task_runner));
+}
+
 }  // namespace FrameTestHelpers
 }  // namespace blink

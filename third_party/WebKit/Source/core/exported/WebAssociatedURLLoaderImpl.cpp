@@ -33,7 +33,6 @@
 #include <limits.h>
 #include <memory>
 #include "core/dom/ContextLifecycleObserver.h"
-#include "core/dom/Document.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/loader/DocumentThreadableLoader.h"
 #include "core/loader/DocumentThreadableLoaderClient.h"
@@ -327,8 +326,8 @@ class WebAssociatedURLLoaderImpl::Observer final
   USING_GARBAGE_COLLECTED_MIXIN(Observer);
 
  public:
-  Observer(WebAssociatedURLLoaderImpl* parent, Document* document)
-      : ContextLifecycleObserver(document), parent_(parent) {}
+  Observer(WebAssociatedURLLoaderImpl* parent, ExecutionContext* context)
+      : ContextLifecycleObserver(context), parent_(parent) {}
 
   void Dispose() {
     parent_ = nullptr;
@@ -337,7 +336,7 @@ class WebAssociatedURLLoaderImpl::Observer final
 
   void ContextDestroyed(ExecutionContext*) override {
     if (parent_)
-      parent_->DocumentDestroyed();
+      parent_->ContextDestroyed();
   }
 
   DEFINE_INLINE_VIRTUAL_TRACE() { ContextLifecycleObserver::Trace(visitor); }
@@ -346,11 +345,11 @@ class WebAssociatedURLLoaderImpl::Observer final
 };
 
 WebAssociatedURLLoaderImpl::WebAssociatedURLLoaderImpl(
-    Document* document,
+    ExecutionContext* context,
     const WebAssociatedURLLoaderOptions& options)
     : client_(nullptr),
       options_(options),
-      observer_(new Observer(this, document)) {}
+      observer_(new Observer(this, context)) {}
 
 WebAssociatedURLLoaderImpl::~WebAssociatedURLLoaderImpl() {
   Cancel();
@@ -386,7 +385,7 @@ void WebAssociatedURLLoaderImpl::LoadAsynchronously(
 
   RefPtr<WebTaskRunner> task_runner = TaskRunnerHelper::Get(
       TaskType::kUnspecedLoading,
-      observer_ ? ToDocument(observer_->LifecycleContext()) : nullptr);
+      observer_ ? observer_->LifecycleContext() : nullptr);
   client_ = client;
   client_adapter_ = ClientAdapter::Create(this, client, options_,
                                           request.GetFetchRequestMode(),
@@ -410,11 +409,9 @@ void WebAssociatedURLLoaderImpl::LoadAsynchronously(
       new_request.SetRequestContext(WebURLRequest::kRequestContextInternal);
     }
 
-    Document* document = ToDocument(observer_->LifecycleContext());
-    DCHECK(document);
     loader_ = DocumentThreadableLoader::Create(
-        *ThreadableLoadingContext::Create(*document), client_adapter_.get(),
-        options, resource_loader_options);
+        *ThreadableLoadingContext::Create(observer_->LifecycleContext()),
+        client_adapter_.get(), options, resource_loader_options);
     loader_->Start(webcore_request);
   }
 
@@ -459,7 +456,7 @@ void WebAssociatedURLLoaderImpl::SetLoadingTaskRunner(blink::WebTaskRunner*) {
   // TODO(alexclarke): Maybe support this one day if it proves worthwhile.
 }
 
-void WebAssociatedURLLoaderImpl::DocumentDestroyed() {
+void WebAssociatedURLLoaderImpl::ContextDestroyed() {
   DisposeObserver();
   CancelLoader();
 

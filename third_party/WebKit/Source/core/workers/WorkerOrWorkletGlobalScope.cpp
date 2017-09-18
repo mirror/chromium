@@ -61,7 +61,6 @@ void WorkerOrWorkletGlobalScope::CountDeprecation(WebFeature feature) {
 }
 
 ResourceFetcher* WorkerOrWorkletGlobalScope::GetResourceFetcher() {
-  DCHECK(RuntimeEnabledFeatures::OffMainThreadFetchEnabled());
   DCHECK(!IsMainThreadWorkletGlobalScope());
   if (resource_fetcher_)
     return resource_fetcher_;
