@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f79dce1f_3df50bc4",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-18T22:11:04Z",
+      "side": 1,
+      "message": "Nit: Wrap the / for consistency with node-value?\n(I mistook the short-bit-offset part for a comment at first.)",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de8f4aa9_95ffd45c",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-18T22:11:04Z",
+      "side": 1,
+      "message": "%b1?",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eac8ec4c_310931f9",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-18T22:11:04Z",
+      "side": 1,
+      "message": "Is 8*22 meant to be an upper bound?\n\nWould it make sense to write it as *BIT or *offset-bit, similar to huffman-character?",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75b2be7c_832ee832",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-18T22:11:04Z",
+      "side": 1,
+      "message": "%b0?",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e3a019_558a3640",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-18T22:11:04Z",
+      "side": 1,
+      "message": "*BIT ?",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4924861_faf290b9",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-18T22:11:04Z",
+      "side": 1,
+      "message": "1*preloaded-entry instead of 1*BIT?\n(Or just leave this out, and inline \"(see section below\") after `node-entry \u003d preloaded-entry`.",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc05f0b_6949a889",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-18T22:11:04Z",
+      "side": 1,
+      "message": "Is there a particular reason to split out `include-subdomains` into its own definition, but inline the force-https BIT?\n(I would inline both, but maybe I\u0027m missing something.)",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e9e632_1c09fb5e",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-18T22:11:04Z",
+      "side": 1,
+      "message": "There appear to be three syntaxes in use in this patch:\n- BIT\n- 1BIT\n- 1*BIT\n\nIf these all mean the same, could you standardize on one?",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbee3bce_bccdc1b8",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-18T22:11:04Z",
+      "side": 1,
+      "message": "Is this a 4-bit literal value?",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98c156c3_a32f7bde",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-18T22:11:04Z",
+      "side": 1,
+      "message": "Nit: use separate bulleted lines for neater formatting?",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be9eb61_50f134fc",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-09-18T22:11:04Z",
+      "side": 1,
+      "message": "Nit: Wrap in \u003c\u003e to ensure linking.\n(Same below.)",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
