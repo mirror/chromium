@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7efc2f42_fb1b294d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-09-18T09:37:54Z",
+      "side": 1,
+      "message": "1) and 2) should switch place to describe the priority order? Spatnav first looks for candidates inside the current focus node\u0027s enclosing container and if one is not found there, it checks for candidates at the DocumentNode, right? \n\nIs the following description correct?\n\n...\nWhen spatial navigation selects a focus candidate, it looks within\ncurrent focus node\u0027s container. The container is:\n1) an enclosing box that is scrollable* in the navigated direction.\n2) or else, a DocumentNode (\u003cbody\u003e or \u003cbody\u003e of \u003ciframe\u003e).\n\nThis patch changes * to check for an enclosing box that has overflow in the navigated direction.\n...",
+      "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4064de7f_019b987f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-09-18T09:37:54Z",
+      "side": 1,
+      "message": "Could you elaborate a bit on \"scrolling status\"?",
+      "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f167ea30_b258dbbc",
+        "filename": "third_party/WebKit/LayoutTests/fast/spatial-navigation/snav-container-select.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-09-18T09:37:54Z",
+      "side": 1,
+      "message": "s/overfow/overflow",
+      "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73a98d9f_cf5b3260",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-09-18T09:37:54Z",
+      "side": 1,
+      "message": "Could you elaborate a bit on why CanScrollInDirection() doesn\u0027t not work in this particular case?",
+      "range": {
+        "startLine": 320,
+        "startChar": 0,
+        "endLine": 320,
+        "endChar": 3
+      },
+      "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8711eee2_de3862a2",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-09-18T09:37:54Z",
+      "side": 1,
+      "message": "I like this code. Compact and easy to read.",
+      "range": {
+        "startLine": 325,
+        "startChar": 5,
+        "endLine": 325,
+        "endChar": 27
+      },
+      "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e3cfc39_f8e0164a",
+        "filename": "third_party/WebKit/Source/core/page/SpatialNavigation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-09-18T09:37:54Z",
+      "side": 1,
+      "message": "Can we make other clients of CanScrollInDirection() use HasOverflowInDirection() instead of CanScrollInDirection()?\n\nWhy do we still need CanScrollInDirection()? When is \"can scroll\" not the same as \"has overflow\"?",
+      "revId": "eff9fbdb1d4cb27b178c259186c26ac8b98e1f3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
