@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5caabb6c_faa57e90",
+        "filename": "extensions/renderer/event_bindings.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-18T14:02:41Z",
+      "side": 1,
+      "message": "If this is only needed here, can we just add it in an anonymous namespace (GetRoutingIDForScriptContext()) rather than as a member of ScriptContext?\n\nAlso worth mentioning why we don\u0027t need to take RoutingID into account for SW contexts.",
+      "revId": "61311eba85e645f69face12d3f232275fccd8765",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
