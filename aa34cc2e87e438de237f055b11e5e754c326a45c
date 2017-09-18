@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a9e4f85_771c7507",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-18T16:35:39Z",
+      "side": 1,
+      "message": "How is the background color (assuming translucent, 0.0 \u003c alpha \u003c 1.0) done if not by adding quads? Should this only apply for exactly transparent colors (alpha \u003d\u003d 0.0)?",
+      "revId": "aa34cc2e87e438de237f055b11e5e754c326a45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

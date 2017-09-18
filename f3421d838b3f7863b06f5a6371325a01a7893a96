@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d07b0b3a_3869f85b",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-18T16:35:39Z",
+      "side": 0,
+      "message": "Is it ok to remove this logic?",
+      "revId": "f3421d838b3f7863b06f5a6371325a01a7893a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
