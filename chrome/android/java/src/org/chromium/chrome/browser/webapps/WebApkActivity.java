@@ -269,6 +269,7 @@ public class WebApkActivity extends WebappActivity {
 
         WebApkInfo info = (WebApkInfo) mWebappInfo;
         WebApkUma.recordShellApkVersion(info.shellApkVersion(), info.webApkPackageName());
+        WebApkUma.recordUpdateRequestFileAge(storage.approximatePendingUpdateRequestFileAge());
 
         mUpdateManager = new WebApkUpdateManager(WebApkActivity.this, storage);
         mUpdateManager.updateIfNeeded(getActivityTab(), info);

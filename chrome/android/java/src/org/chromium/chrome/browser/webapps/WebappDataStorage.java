@@ -534,6 +534,15 @@ public class WebappDataStorage {
         return mPreferences.getString(KEY_PENDING_UPDATE_FILE_PATH, null);
     }
 
+    /** Returns an approximation of the age of the "pending update request" file. */
+    long approximatePendingUpdateRequestFileAge() {
+        // Assume the file deletion in {@link #deletePendingUpdateRequestFile()} is always
+        // successful.
+        if (getPendingUpdateRequestPath() == null) return -1;
+
+        return System.currentTimeMillis() - getLastCheckForWebManifestUpdateTime();
+    }
+
     /**
      * Deletes the file which contains data to update the WebAPK. The file is large (> 1Kb) and
      * should be deleted when the update completes.
