@@ -70,6 +70,30 @@
       "revId": "f2bad1b1dc5cfb75c1594359dabd23dbf8ad97f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07f18869_cd127fc4",
+        "filename": "content/public/browser/desktop_media_id.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-18T23:53:32Z",
+      "side": 1,
+      "message": "I think that\u0027s a better design and don\u0027t mind doing it, but touches a lot of code not related to this patch/feature (for example in the screen picker and capture device implementation) and would be better done in a separate patch.",
+      "parentUuid": "9f9cfa44_93321d07",
+      "range": {
+        "startLine": 176,
+        "startChar": 9,
+        "endLine": 176,
+        "endChar": 18
+      },
+      "revId": "f2bad1b1dc5cfb75c1594359dabd23dbf8ad97f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
