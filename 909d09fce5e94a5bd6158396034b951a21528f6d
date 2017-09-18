@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c97a565_0f09f686",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T21:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c503fe9_91478437",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b573c07_104e4b07",
         "filename": "ash/ash_strings.grd",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-18T20:44:57Z",
       "side": 1,
       "message": "nit: most ash string IDs have IDS_ASH_ in them.",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc51391b_c0a4d173",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T21:06:11Z",
+      "side": 1,
+      "message": "Is that a good thing? I don\u0027t really understand why we\u0027d do that.",
+      "parentUuid": "5b573c07_104e4b07",
       "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d233c28f_0aad4777",
+        "filename": "ash/public/interfaces/session_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T21:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4548270c_d8d9259c",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfabaea5_524726cc",
         "filename": "ash/session/teleport_warning_dialog.cc",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b526f9f4_9173909f",
+        "filename": "ash/session/teleport_warning_dialog.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T21:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfabaea5_524726cc",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "81cbb390_1679ad4f",
+        "filename": "ash/session/teleport_warning_dialog.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T21:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dcbe022_28ee17b2",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce60c9d7_2c6b7548",
         "filename": "ash/session/teleport_warning_dialog.cc",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1304a61_16915c28",
+        "filename": "ash/session/teleport_warning_dialog.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T21:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce60c9d7_2c6b7548",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e8ba693d_cf575290",
+        "filename": "ash/session/teleport_warning_dialog.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T21:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4fe28468_4c656c9f",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "373c1ee6_68f4f207",
         "filename": "ash/session/teleport_warning_dialog.h",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3be2c5_edea74c7",
+        "filename": "ash/session/teleport_warning_dialog.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T21:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "373c1ee6_68f4f207",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "0e9b1a85_bf5c6b16",
+        "filename": "ash/session/teleport_warning_dialog.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T21:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8360e77_1d6a821d",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f617cf7d_25dfb67e",
         "filename": "ash/session/teleport_warning_dialog.h",
         "patchSetId": 3
@@ -166,6 +328,24 @@
       "writtenOn": "2017-09-18T20:44:57Z",
       "side": 1,
       "message": "nit: \"using\". Also document what the two bools are.",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d21f62cd_cc69d1a1",
+        "filename": "ash/session/teleport_warning_dialog.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T21:06:11Z",
+      "side": 1,
+      "message": "compiler error \u0027using declaration cannot refer to a template specialization\u0027\n\ndocs: done (referenced ShowTeleportWarningDialogCallback if that\u0027s ok)",
+      "parentUuid": "f617cf7d_25dfb67e",
       "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "731924fd_ecd6d572",
+        "filename": "ash/session/teleport_warning_dialog.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T21:06:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b92aaf1_6be186b6",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bc57a38_3151af57",
         "filename": "chrome/browser/ui/ash/multi_user/multi_user_context_menu_chromeos.cc",
         "patchSetId": 3
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "fb449f38_200ef500",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_context_menu_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T21:06:11Z",
+      "side": 1,
+      "message": "I prefer to keep this here as its value is checked in this file before showing the dialog",
+      "parentUuid": "6bc57a38_3151af57",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6403ca1c_1591d7b7",
         "filename": "chrome/browser/ui/ash/multi_user/multi_user_context_menu_chromeos.cc",
         "patchSetId": 3
@@ -217,6 +433,24 @@
       "writtenOn": "2017-09-18T20:44:57Z",
       "side": 1,
       "message": "ditto this",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29aaf6d0_f983b468",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_context_menu_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T21:06:11Z",
+      "side": 1,
+      "message": "I was looking at this set of uma (stuff in MultiProfileUMA) but then I found crbug.com/642762 so I decided to leave it alone for now.",
+      "parentUuid": "6403ca1c_1591d7b7",
       "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
