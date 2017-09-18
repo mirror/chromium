@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "b5b57f52_0b70a228",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2922,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T18:55:03Z",
+      "side": 1,
+      "message": "Sorry for the misleading TODO. These should only be used when ENABLE_LIBRARY_CDMS is true.",
+      "range": {
+        "startLine": 2922,
+        "startChar": 26,
+        "endLine": 2922,
+        "endChar": 31
+      },
+      "revId": "c61bc854a18a799526cce494caf5ad1229dc4971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f94a7668_adc9f275",
+        "filename": "chrome/browser/media/cdm_storage_id.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T18:55:03Z",
+      "side": 1,
+      "message": "ditto about namespace",
+      "range": {
+        "startLine": 14,
+        "startChar": 10,
+        "endLine": 14,
+        "endChar": 24
+      },
+      "revId": "c61bc854a18a799526cce494caf5ad1229dc4971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0d009ed_79bf09bc",
         "filename": "chrome/browser/media/cdm_storage_id.cc",
         "patchSetId": 4
@@ -13,6 +59,92 @@
       "writtenOn": "2017-09-15T02:38:58Z",
       "side": 1,
       "message": "Just wondering: how do we ensure this is always true?",
+      "revId": "c61bc854a18a799526cce494caf5ad1229dc4971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1411e854_7b2691e7",
+        "filename": "chrome/browser/media/cdm_storage_id.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T18:55:03Z",
+      "side": 1,
+      "message": "We don\u0027t use different namespaces for each file. Since we are in chrome/, either not using a namespace (which was recommended by many owners), or use namespace \"chrome\"/",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 24
+      },
+      "revId": "c61bc854a18a799526cce494caf5ad1229dc4971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b2a7b95_0730c9a6",
+        "filename": "chrome/browser/media/cdm_storage_id.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T18:55:03Z",
+      "side": 1,
+      "message": "nit: Compute_s_",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 10
+      },
+      "revId": "c61bc854a18a799526cce494caf5ad1229dc4971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "480a2b25_e4cc2335",
+        "filename": "chrome/browser/media/cdm_storage_id.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T18:55:03Z",
+      "side": 1,
+      "message": "nit: vector",
+      "range": {
+        "startLine": 26,
+        "startChar": 47,
+        "endLine": 26,
+        "endChar": 53
+      },
+      "revId": "c61bc854a18a799526cce494caf5ad1229dc4971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e5876fe_d48b33a7",
+        "filename": "chrome/browser/media/platform_verification_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T18:55:03Z",
+      "side": 1,
+      "message": "FYI. These\u0027s risk of race conditions and I was planning to fix that. See https://bugs.chromium.org/p/chromium/issues/detail?id\u003d707335 for details.\n\nTo fix it, we can follow the model of MediaDrmStorageImpl to make sure the service will be destroyed when navigation happens. See https://cs.chromium.org/chromium/src/components/cdm/browser/media_drm_storage_impl.cc?rcl\u003d3496d7d3598dea82fd95a9789701a0471f7c3d33\u0026l\u003d567\n\nYou don\u0027t have to do it in this CL. But could you please help add a TODO here?",
       "revId": "c61bc854a18a799526cce494caf5ad1229dc4971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -47,6 +179,40 @@
       "writtenOn": "2017-09-15T02:38:58Z",
       "side": 1,
       "message": "Please write std::string() instead of \"\".",
+      "revId": "c61bc854a18a799526cce494caf5ad1229dc4971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab3e1857_d0eff534",
+        "filename": "chrome/browser/media/platform_verification_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T18:55:03Z",
+      "side": 1,
+      "message": "nit: remove empty line",
+      "revId": "c61bc854a18a799526cce494caf5ad1229dc4971",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4866efe5_f683188d",
+        "filename": "media/mojo/interfaces/platform_verification.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T18:55:03Z",
+      "side": 1,
+      "message": "What\u0027s the returned |version|? Since this is the interface declaration, we should have all the details here as well.",
       "revId": "c61bc854a18a799526cce494caf5ad1229dc4971",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
