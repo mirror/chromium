@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "658507eb_0d6dc4b1",
+        "filename": "chrome/browser/resources/settings/site_settings/site_list.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-18T23:40:38Z",
+      "side": 1,
+      "message": "if .start is added here\n\n\u003cdiv class\u003d\"favicon-image first\"\n\ncan the flex in line 63 be removed (and the import above).",
+      "revId": "05371bfede2cc55ff0af29732b91a01546d5aea1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
