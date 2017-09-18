@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a15240d1_315462b4",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-18T08:12:48Z",
+      "side": 1,
+      "message": "I\u0027m changing this word to get around this comment :p",
+      "parentUuid": "354b4737_8bf7ba91",
+      "range": {
+        "startLine": 164,
+        "startChar": 32,
+        "endLine": 164,
+        "endChar": 33
+      },
+      "revId": "56f067ab768330436bf9146f2104ae498dc4dd9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbb640f6_6ed6473f",
         "filename": "chrome/browser/installable/installable_metrics.cc",
         "patchSetId": 7
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "61232e8f_fdc05513",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-18T08:12:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbb640f6_6ed6473f",
+      "revId": "56f067ab768330436bf9146f2104ae498dc4dd9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ffa801f6_cffb97b6",
         "filename": "chrome/browser/installable/installable_metrics.h",
         "patchSetId": 7
@@ -56,6 +98,24 @@
       "revId": "56f067ab768330436bf9146f2104ae498dc4dd9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "224299cd_c128eb5e",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-09-18T08:12:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffa801f6_cffb97b6",
+      "revId": "56f067ab768330436bf9146f2104ae498dc4dd9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
