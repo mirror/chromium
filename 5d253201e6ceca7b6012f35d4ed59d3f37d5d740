@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8e44e851_a8b74491",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-18T13:44:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d57ca719_bcf83e50",
+      "range": {
+        "startLine": 74,
+        "startChar": 47,
+        "endLine": 75,
+        "endChar": 54
+      },
+      "revId": "5d253201e6ceca7b6012f35d4ed59d3f37d5d740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "053e5174_02651f72",
         "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "780e7dad_b22d843f",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-18T13:44:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "053e5174_02651f72",
+      "range": {
+        "startLine": 151,
+        "startChar": 55,
+        "endLine": 151,
+        "endChar": 58
+      },
+      "revId": "5d253201e6ceca7b6012f35d4ed59d3f37d5d740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c94c393d_ddbdad7a",
         "filename": "content/browser/background_fetch/background_fetch_service_unittest.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "5d253201e6ceca7b6012f35d4ed59d3f37d5d740",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6809aa8_0f99b7a5",
+        "filename": "content/browser/background_fetch/background_fetch_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-18T13:44:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c94c393d_ddbdad7a",
+      "range": {
+        "startLine": 528,
+        "startChar": 5,
+        "endLine": 528,
+        "endChar": 20
+      },
+      "revId": "5d253201e6ceca7b6012f35d4ed59d3f37d5d740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
