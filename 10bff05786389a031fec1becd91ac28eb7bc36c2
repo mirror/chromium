@@ -34,6 +34,24 @@
       "revId": "10bff05786389a031fec1becd91ac28eb7bc36c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93081c77_f50bf21b",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-09-18T18:20:19Z",
+      "side": 1,
+      "message": "OK, I thought that might be the case, just wanted to make sure.",
+      "parentUuid": "617a0cbf_4eb8cd86",
+      "revId": "10bff05786389a031fec1becd91ac28eb7bc36c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
