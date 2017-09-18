@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11bd0bca_88090b19",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-18T18:48:58Z",
+      "side": 1,
+      "message": "nit: Let\u0027s make this a generic string (e.g. IDS_DELETED) and put it up at the top in the \u003c!-- Generic strings --\u003e block",
+      "range": {
+        "startLine": 425,
+        "startChar": 6,
+        "endLine": 427,
+        "endChar": 15
+      },
+      "revId": "ca56c25f6b50a6ebfa229426a1f06ad44c9bc502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
