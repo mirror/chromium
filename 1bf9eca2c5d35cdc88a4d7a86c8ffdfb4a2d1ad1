@@ -22,6 +22,30 @@
       "revId": "1bf9eca2c5d35cdc88a4d7a86c8ffdfb4a2d1ad1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "808fdee4_04ea1240",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1129864
+      },
+      "writtenOn": "2017-09-18T23:32:09Z",
+      "side": 1,
+      "message": "oops sorry that was a typo, hehe :D\nThanks John for pointing out. I have updated it accordingly.",
+      "parentUuid": "55920bac_b897a04b",
+      "range": {
+        "startLine": 7,
+        "startChar": 22,
+        "endLine": 7,
+        "endChar": 36
+      },
+      "revId": "1bf9eca2c5d35cdc88a4d7a86c8ffdfb4a2d1ad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
