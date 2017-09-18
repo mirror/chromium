@@ -412,9 +412,31 @@ void AccountReconcilor::OnReceivedManageAccountsResponse(
 base::StringPiece AccountReconcilor::GetFirstGaiaAccountForReconcile() {
   // The first account in the cookie should be the primary account if there is
   // one, otherwise use the default Gaia account.
-  if (primary_account_.empty() && gaia_accounts_.size() > 0)
-    return gaia_accounts_[0].id;
-  return primary_account_;
+  base::StringPiece first_account = primary_account_;
+  if (first_account.empty() && gaia_accounts_.size() > 0)
+    first_account = gaia_accounts_[0].id;
+
+  // If Sync is disabled, and there is no Gaia cookie, try the last known
+  // account.
+  if (first_account.empty()) {
+    for (const auto& account : chrome_accounts_) {
+      // Only use the last known account if it is actually present in the token
+      // service.
+      if (account == last_known_first_account_) {
+        first_account = last_known_first_account_;
+        break;
+      }
+    }
+  } else {
+    // Update the last known account.
+    last_known_first_account_ = first_account.as_string();
+  }
+
+  // As a last resort, use the first Chrome account.
+  if (first_account.empty() && (chrome_accounts_.size() > 0))
+    first_account = chrome_accounts_[0];
+
+  return first_account;
 }
 
 void AccountReconcilor::FinishReconcile() {
