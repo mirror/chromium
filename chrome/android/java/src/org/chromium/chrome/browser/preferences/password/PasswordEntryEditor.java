@@ -261,6 +261,9 @@ public class PasswordEntryEditor extends Fragment {
                 if (!mException) {
                     passwordUIView.removeSavedPasswordEntry(mID);
                     passwordUIView.destroy();
+                    Toast.makeText(getActivity().getApplicationContext(),
+                                 R.string.password_entry_editor_delete_message, Toast.LENGTH_SHORT)
+                            .show();
                     getActivity().finish();
                 }
             }
@@ -270,6 +273,9 @@ public class PasswordEntryEditor extends Fragment {
                 if (mException) {
                     passwordUIView.removeSavedPasswordException(mID);
                     passwordUIView.destroy();
+                    Toast.makeText(getActivity().getApplicationContext(),
+                                 R.string.password_entry_editor_delete_message, Toast.LENGTH_SHORT)
+                            .show();
                     getActivity().finish();
                 }
             }

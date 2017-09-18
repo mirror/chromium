@@ -422,6 +422,9 @@ CHAR-LIMIT guidelines:
       <message name="IDS_SAVED_PASSWORDS_NONE_TEXT" desc="Text when there are no saved passwords/exceptions.">
         Saved passwords will appear here.
       </message>
+      <message name="IDS_PASSWORD_ENTRY_EDITOR_DELETE_MESSAGE" desc='Text that announces to the user that credential was deleted.'>
+        Deleted
+      </message>
       <message name="IDS_PASSWORD_ENTRY_EDITOR_TITLE" desc='Title of the "edit a name/password" screen.'>
         Saved password
       </message>
