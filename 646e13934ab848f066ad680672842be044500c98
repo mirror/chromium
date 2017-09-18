@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96d0d400_5c73c7ff",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/payments/payment-instruments.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-18T21:39:29Z",
+      "side": 1,
+      "message": "So there\u0027s no reason to believe that this information actually matches the resource at a given URL.  What happens if the renderer sends bad info here?",
+      "range": {
+        "startLine": 29,
+        "startChar": 20,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "646e13934ab848f066ad680672842be044500c98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
