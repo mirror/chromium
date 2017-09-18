@@ -14,6 +14,10 @@
 
 namespace multidevice {
 
+namespace {
+using ResultCode = device_sync::mojom::ResultCode;
+}
+
 // Test double for DeviceSync.
 class FakeDeviceSync : public device_sync::mojom::DeviceSync {
  public:
@@ -37,16 +41,57 @@ class FakeDeviceSync : public device_sync::mojom::DeviceSync {
     device_change_result_ = device_change_result;
   }
 
+  void set_public_key(std::string public_key) { public_key_ = public_key; }
+
+  void set_capability_enabled_result_code(ResultCode result_code) {
+    capability_enabled_result_code_ = result_code;
+  }
+
+  void set_find_eligible_devices_for_capability_result_code(
+      ResultCode result_code) {
+    find_eligible_devices_for_capability_result_code_ = result_code;
+  }
+
+  void set_is_capability_promotable(bool is_promotable) {
+    is_capability_promotable_ = is_promotable;
+  }
+
+  void set_is_capability_promotable_result_code(ResultCode result_code) {
+    is_capability_promotable_result_code_ = result_code;
+  }
+
   // mojom::DeviceSync:
   void ForceEnrollmentNow() override;
   void ForceSyncNow() override;
   void AddObserver(device_sync::mojom::DeviceSyncObserverPtr observer) override;
   void GetSyncedDevices(GetSyncedDevicesCallback callback) override;
+  void SetCapabilityEnabled(
+      const std::string& device_id,
+      cryptauth::DeviceCapabilityManager::Capability capability,
+      bool enabled,
+      SetCapabilityEnabledCallback callback) override;
+  void FindEligibleDevicesForCapability(
+      cryptauth::DeviceCapabilityManager::Capability capability,
+      FindEligibleDevicesForCapabilityCallback callback) override;
+  void IsCapabilityPromotable(
+      const std::string& device_id,
+      cryptauth::DeviceCapabilityManager::Capability capability,
+      IsCapabilityPromotableCallback callback) override;
+  void GetUserPublicKey(GetUserPublicKeyCallback callback) override;
 
  private:
   bool device_change_result_ = true;
   bool should_sync_successfully_ = true;
   bool should_enroll_successfully_ = true;
+  std::vector<cryptauth::RemoteDevice> synced_devices_;
+  std::string public_key_ = "";
+  ResultCode capability_enabled_result_code_ = ResultCode::SUCCESS;
+  ResultCode find_eligible_devices_for_capability_result_code_ =
+      ResultCode::SUCCESS;
+  std::vector<std::string> device_ids_for_eligible_devices_;
+  std::vector<cryptauth::IneligibleDevice> ineligible_devices_;
+  bool is_capability_promotable_ = true;
+  ResultCode is_capability_promotable_result_code_ = ResultCode::SUCCESS;
   mojo::InterfacePtrSet<device_sync::mojom::DeviceSyncObserver> observers_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeDeviceSync);
