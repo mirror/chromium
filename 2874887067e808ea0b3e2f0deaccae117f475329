@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4722854d_ba73f2b4",
+        "filename": "components/viz/common/gl_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-18T18:17:01Z",
+      "side": 1,
+      "message": "This needs a lot more explanation.\nAre you sure you don\u0027t want to just take a source and destination color space and have gfx::ColorTransform generate the glsl for you?\n\nAlso, shouldn\u0027t this be in the YUV interface instead of the scaler?",
+      "revId": "2874887067e808ea0b3e2f0deaccae117f475329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001b28e8_45b0e150",
+        "filename": "components/viz/common/gl_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-09-18T18:17:01Z",
+      "side": 1,
+      "message": "This seems like a very odd method.\nPlease motivate it\u0027s existence.",
+      "range": {
+        "startLine": 421,
+        "startChar": 5,
+        "endLine": 421,
+        "endChar": 12
+      },
+      "revId": "2874887067e808ea0b3e2f0deaccae117f475329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
