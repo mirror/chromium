@@ -409,19 +409,38 @@ void AccountReconcilor::OnReceivedManageAccountsResponse(
   }
 }
 
-base::StringPiece AccountReconcilor::GetFirstGaiaAccountForReconcile() {
+std::string AccountReconcilor::GetFirstGaiaAccountForReconcile() const {
   // The first account in the cookie should be the primary account if there is
   // one, otherwise use the default Gaia account.
-  if (primary_account_.empty() && gaia_accounts_.size() > 0)
+  if (!primary_account_.empty())
+    return primary_account_;
+
+  if (!gaia_accounts_.empty())
     return gaia_accounts_[0].id;
-  return primary_account_;
+
+  if (chrome_accounts_.empty())
+    return std::string();  // No Chrome account and no Gaia account. Log out.
+
+  // If Sync is disabled, and there is no Gaia cookie, try the last known
+  // account. This happens when the cookies are cleared while Sync is disabled.
+  for (const auto& account : chrome_accounts_) {
+    // Only use the last known account if it is actually present in the token
+    // service.
+    if (account == last_known_first_account_)
+      return last_known_first_account_;
+  }
+
+  // As a last resort, use the first Chrome account. This should rarely happen
+  // in practice.
+  DCHECK(!chrome_accounts_.empty());
+  return chrome_accounts_[0];
 }
 
 void AccountReconcilor::FinishReconcile() {
   VLOG(1) << "AccountReconcilor::FinishReconcile";
   DCHECK(add_to_cookie_.empty());
   int number_gaia_accounts = gaia_accounts_.size();
-  base::StringPiece first_account = GetFirstGaiaAccountForReconcile();
+  std::string first_account = GetFirstGaiaAccountForReconcile();
   bool primary_account_mismatch =
       (number_gaia_accounts > 0) && (first_account != gaia_accounts_[0].id);
 
@@ -452,7 +471,7 @@ void AccountReconcilor::FinishReconcile() {
 
   // Create a list of accounts that need to be added to the gaia cookie.
   if (!first_account.empty())
-    add_to_cookie_.push_back(first_account.as_string());
+    add_to_cookie_.push_back(first_account);
   for (size_t i = 0; i < chrome_accounts_.size(); ++i) {
     if (chrome_accounts_[i] != first_account)
       add_to_cookie_.push_back(chrome_accounts_[i]);
@@ -487,6 +506,8 @@ void AccountReconcilor::FinishReconcile() {
       !primary_account_mismatch, first_execution_, number_gaia_accounts);
   first_execution_ = false;
   CalculateIfReconcileIsDone();
+  if (!is_reconcile_started_)
+    last_known_first_account_ = first_account;
   ScheduleStartReconcileIfChromeAccountsChanged();
 }
 
