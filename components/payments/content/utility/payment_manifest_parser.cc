@@ -50,7 +50,7 @@ bool ParseDefaultApplications(base::DictionaryValue* dict,
 
   std::string item;
   for (size_t i = 0; i < apps_number; ++i) {
-    if (!list->GetString(i, &item) && item.empty()) {
+    if (!list->GetString(i, &item) || item.empty()) {
       LOG(ERROR) << "Each entry in \"" << kDefaultApplications
                  << "\" must be a string.";
       web_app_manifest_urls->clear();
@@ -112,7 +112,7 @@ bool ParseSupportedOrigins(base::DictionaryValue* dict,
   }
 
   for (size_t i = 0; i < supported_origins_number; ++i) {
-    if (!list->GetString(i, &item) && item.empty()) {
+    if (!list->GetString(i, &item) || item.empty()) {
       LOG(ERROR) << "Each entry in \"" << kSupportedOrigins
                  << "\" must be a string.";
       supported_origins->clear();
