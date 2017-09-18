@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92134516_26249de1",
+        "filename": "components/payments/core/payment_details.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-18T19:11:50Z",
+      "side": 1,
+      "message": "can\u0027t you use modifier_dict here?",
+      "range": {
+        "startLine": 122,
+        "startChar": 53,
+        "endLine": 122,
+        "endChar": 69
+      },
+      "revId": "d242fb0cf6cafe8217c65e672f6d7913237043e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01200a92_d6370813",
+        "filename": "components/payments/core/payment_details_validation_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-18T19:11:50Z",
+      "side": 1,
+      "message": "Change the instantiation name to something else or leave empty?",
+      "range": {
+        "startLine": 56,
+        "startChar": 24,
+        "endLine": 56,
+        "endChar": 33
+      },
+      "revId": "d242fb0cf6cafe8217c65e672f6d7913237043e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
