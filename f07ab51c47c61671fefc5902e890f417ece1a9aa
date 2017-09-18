@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1e96aac_cc86d96b",
+        "filename": "components/autofill/core/browser/autofill_experiments.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-18T20:37:42Z",
+      "side": 1,
+      "message": "I don\u0027t intend for this flag to only create disused data. It\u0027s more as a general, create me a bunch of interesting test data.",
+      "parentUuid": "96c3741a_c119b875",
+      "revId": "f07ab51c47c61671fefc5902e890f417ece1a9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6935759a_2ad2b6aa",
         "filename": "components/autofill/core/browser/personal_data_manager.h",
         "patchSetId": 3
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "Would it be valuable for the testers to create a set of data containing both used and disused data?",
       "parentUuid": "6935759a_2ad2b6aa",
+      "revId": "f07ab51c47c61671fefc5902e890f417ece1a9aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ea2ce4_a95b6447",
+        "filename": "components/autofill/core/browser/personal_data_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-18T20:37:42Z",
+      "side": 1,
+      "message": "Added an in-use address and credit card to the generated data.",
+      "parentUuid": "77b0e6a3_259b74d4",
       "revId": "f07ab51c47c61671fefc5902e890f417ece1a9aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
