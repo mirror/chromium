@@ -709,8 +709,7 @@ void UiSceneManager::OnProjMatrixChanged(const gfx::Transform& proj_matrix) {
   gfx::SizeF main_content_size;
   if (main_content_->animation_player().IsAnimatingProperty(
           TargetProperty::BOUNDS)) {
-    main_content_size = main_content_->animation_player().GetTargetSizeValue(
-        TargetProperty::BOUNDS);
+    main_content_size = main_content_->GetTargetBounds();
   } else {
     main_content_size = main_content_->size();
   }
@@ -727,8 +726,7 @@ void UiSceneManager::OnProjMatrixChanged(const gfx::Transform& proj_matrix) {
           .IsAnimatingProperty(TargetProperty::TRANSFORM)) {
     main_content_inheritable_transform =
         scene_->GetUiElementByName(k2dBrowsingContentGroup)
-            ->animation_player()
-            .GetTargetTransformOperationsValue(TargetProperty::TRANSFORM)
+            ->GetTargetTransform()
             .Apply();
   } else {
     main_content_inheritable_transform = main_content_->inheritable_transform();

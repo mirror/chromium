@@ -151,6 +151,9 @@ class UiElement : public cc::AnimationTarget {
   void SetRotate(float x, float y, float z, float radians);
   void SetScale(float x, float y, float z);
 
+  cc::TransformOperations GetTargetTransform() const;
+  gfx::SizeF GetTargetBounds() const;
+
   AnimationPlayer& animation_player() { return animation_player_; }
 
   float opacity() const { return opacity_; }
