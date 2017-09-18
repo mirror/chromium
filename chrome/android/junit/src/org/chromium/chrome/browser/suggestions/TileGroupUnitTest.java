@@ -57,12 +57,14 @@ import java.util.List;
 /**
  * Unit tests for {@link TileGroup}.
  */
+// clang-format off
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 @Features({@Features.Register(ChromeFeatureList.NTP_OFFLINE_PAGES_FEATURE_NAME),
-        @Features.Register(ChromeFeatureList.CHROME_HOME),
-        @Features.Register(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT),
+        @Features.Register(value = ChromeFeatureList.CHROME_HOME, enabled = false),
+        @Features.Register(value = ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT, enabled = false),
         @Features.Register(ChromeFeatureList.NTP_TILES_LOWER_RESOLUTION_FAVICONS)})
+// clang-format on
 public class TileGroupUnitTest {
     private static final int MAX_TILES_TO_FETCH = 4;
     private static final int TILE_TITLE_LINES = 1;
@@ -392,7 +394,7 @@ public class TileGroupUnitTest {
 
     private TileGridViewHolder setupView(TileGroup tileGroup) {
         TileGridLayout layout = new TileGridLayout(RuntimeEnvironment.application, null);
-        TileGridViewHolder tileGrid = new TileGridViewHolder(layout, 4, 2);
+        TileGridViewHolder tileGrid = new TileGridViewHolder(layout, 4, 2, null);
         tileGrid.bindDataSource(tileGroup, mTileRenderer);
         return tileGrid;
     }
