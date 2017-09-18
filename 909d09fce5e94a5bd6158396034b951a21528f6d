@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "90cc8333_22332d02",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-18T21:20:36Z",
+      "side": 1,
+      "message": "This will be less relevant when code in chrome no longer uses strings in ash, but for now I think we should be consistent with the rest of the file.",
+      "parentUuid": "fc51391b_c0a4d173",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4548270c_d8d9259c",
         "filename": "ash/public/interfaces/session_controller.mojom",
         "patchSetId": 3
@@ -352,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "cbb29f9e_f85979cc",
+        "filename": "ash/session/teleport_warning_dialog.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-18T21:20:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d21f62cd_cc69d1a1",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b92aaf1_6be186b6",
         "filename": "ash/session/teleport_warning_dialog.h",
         "patchSetId": 3
@@ -422,6 +458,24 @@
     },
     {
       "key": {
+        "uuid": "1814d3ea_7f99545d",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_context_menu_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-18T21:20:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fb449f38_200ef500",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6403ca1c_1591d7b7",
         "filename": "chrome/browser/ui/ash/multi_user/multi_user_context_menu_chromeos.cc",
         "patchSetId": 3
@@ -454,6 +508,24 @@
       "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29ee52d2_6b77140f",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_context_menu_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-18T21:20:36Z",
+      "side": 1,
+      "message": "I think it\u0027s OK to move that stuff into ash (we have lots of metrics recording going on in ash, and I think it\u0027s orthogonal the mojo metrics service work). But that probably should be a separate CL now that I think about it.",
+      "parentUuid": "29aaf6d0_f983b468",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
