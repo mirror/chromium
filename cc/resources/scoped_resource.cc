@@ -18,13 +18,15 @@ ScopedResource::~ScopedResource() {
 void ScopedResource::Allocate(const gfx::Size& size,
                               ResourceProvider::TextureHint hint,
                               viz::ResourceFormat format,
-                              const gfx::ColorSpace& color_space) {
+                              const gfx::ColorSpace& color_space,
+                              bool local) {
   DCHECK(!id());
   DCHECK(!size.IsEmpty());
 
   set_dimensions(size, format);
   set_id(resource_provider_->CreateResource(size, hint, format, color_space));
   set_color_space(color_space);
+  set_local(local);
   hint_ = hint;
 
 #if DCHECK_IS_ON()

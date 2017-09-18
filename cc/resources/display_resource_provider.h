@@ -143,6 +143,60 @@ class CC_EXPORT DisplayResourceProvider : public ResourceProvider {
     DISALLOW_COPY_AND_ASSIGN(ScopedBatchReturnResources);
   };
 
+  // The following lock classes are part of the ResourceProvider API and
+  // are needed to read the resource contents in the same gl context.
+  class CC_EXPORT ScopedLocalReadGL {
+   public:
+    ScopedLocalReadGL(DisplayResourceProvider* resource_provider,
+                      viz::ResourceId resource_id);
+    ~ScopedLocalReadGL();
+
+    GLuint texture_id() const { return texture_id_; }
+    GLenum target() const { return target_; }
+    const gfx::Size& size() const { return size_; }
+    const gfx::ColorSpace& color_space() const { return color_space_; }
+
+   private:
+    GLuint texture_id_;
+    GLenum target_;
+    gfx::Size size_;
+    gfx::ColorSpace color_space_;
+
+    DISALLOW_COPY_AND_ASSIGN(ScopedLocalReadGL);
+  };
+
+  // The following lock classes are part of the ResourceProvider API and
+  // are needed to write the resource contents in the same gl context.
+  class CC_EXPORT ScopedLocalWriteGL {
+   public:
+    ScopedLocalWriteGL(DisplayResourceProvider* resource_provider,
+                       viz::ResourceId resource_id);
+    ~ScopedLocalWriteGL();
+
+    GLenum target() const { return resource_->target; }
+    viz::ResourceFormat format() const { return resource_->format; }
+    const gfx::Size& size() const { return resource_->size; }
+
+    void set_generate_mipmap() { generate_mipmap_ = true; }
+
+    // Returns texture id on compositor context, allocating if necessary.
+    GLuint GetTexture();
+
+   private:
+    void LazyAllocate(gpu::gles2::GLES2Interface* gl, GLuint texture_id);
+
+    void AllocateGpuMemoryBuffer(gpu::gles2::GLES2Interface* gl,
+                                 GLuint texture_id);
+
+    void AllocateTexture(gpu::gles2::GLES2Interface* gl, GLuint texture_id);
+
+    DisplayResourceProvider* const resource_provider_;
+    Resource* resource_;
+    bool generate_mipmap_ = false;
+
+    DISALLOW_COPY_AND_ASSIGN(ScopedLocalWriteGL);
+  };
+
   // Sets the current read fence. If a resource is locked for read
   // and has read fences enabled, the resource will not allow writes
   // until this fence has passed.

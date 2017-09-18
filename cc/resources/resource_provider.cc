@@ -89,50 +89,6 @@ class TextureIdAllocator {
 
 namespace {
 
-GLenum TextureToStorageFormat(viz::ResourceFormat format) {
-  GLenum storage_format = GL_RGBA8_OES;
-  switch (format) {
-    case viz::RGBA_8888:
-      break;
-    case viz::BGRA_8888:
-      storage_format = GL_BGRA8_EXT;
-      break;
-    case viz::RGBA_F16:
-      storage_format = GL_RGBA16F_EXT;
-      break;
-    case viz::RGBA_4444:
-    case viz::ALPHA_8:
-    case viz::LUMINANCE_8:
-    case viz::RGB_565:
-    case viz::ETC1:
-    case viz::RED_8:
-    case viz::LUMINANCE_F16:
-      NOTREACHED();
-      break;
-  }
-
-  return storage_format;
-}
-
-bool IsFormatSupportedForStorage(viz::ResourceFormat format, bool use_bgra) {
-  switch (format) {
-    case viz::RGBA_8888:
-    case viz::RGBA_F16:
-      return true;
-    case viz::BGRA_8888:
-      return use_bgra;
-    case viz::RGBA_4444:
-    case viz::ALPHA_8:
-    case viz::LUMINANCE_8:
-    case viz::RGB_565:
-    case viz::ETC1:
-    case viz::RED_8:
-    case viz::LUMINANCE_F16:
-      return false;
-  }
-  return false;
-}
-
 class ScopedSetActiveTexture {
  public:
   ScopedSetActiveTexture(GLES2Interface* gl, GLenum unit)
@@ -441,6 +397,51 @@ ResourceProvider::~ResourceProvider() {
 
   texture_id_allocator_ = nullptr;
   gl->Finish();
+}
+
+GLenum ResourceProvider::TextureToStorageFormat(viz::ResourceFormat format) {
+  GLenum storage_format = GL_RGBA8_OES;
+  switch (format) {
+    case viz::RGBA_8888:
+      break;
+    case viz::BGRA_8888:
+      storage_format = GL_BGRA8_EXT;
+      break;
+    case viz::RGBA_F16:
+      storage_format = GL_RGBA16F_EXT;
+      break;
+    case viz::RGBA_4444:
+    case viz::ALPHA_8:
+    case viz::LUMINANCE_8:
+    case viz::RGB_565:
+    case viz::ETC1:
+    case viz::RED_8:
+    case viz::LUMINANCE_F16:
+      NOTREACHED();
+      break;
+  }
+
+  return storage_format;
+}
+
+bool ResourceProvider::IsFormatSupportedForStorage(viz::ResourceFormat format,
+                                                   bool use_bgra) {
+  switch (format) {
+    case viz::RGBA_8888:
+    case viz::RGBA_F16:
+      return true;
+    case viz::BGRA_8888:
+      return use_bgra;
+    case viz::RGBA_4444:
+    case viz::ALPHA_8:
+    case viz::LUMINANCE_8:
+    case viz::RGB_565:
+    case viz::ETC1:
+    case viz::RED_8:
+    case viz::LUMINANCE_F16:
+      return false;
+  }
+  return false;
 }
 
 bool ResourceProvider::IsTextureFormatSupported(
