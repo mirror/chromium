@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "530b11d6_0248b246",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-18T19:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04d94d7f_e466707d",
+      "range": {
+        "startLine": 144,
+        "startChar": 12,
+        "endLine": 144,
+        "endChar": 25
+      },
+      "revId": "cb5adf193c805820ed773d0515b4ef146db9716b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "538d416a_4324cb20",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "cb5adf193c805820ed773d0515b4ef146db9716b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c78d4df_0a3a428d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-18T19:44:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "538d416a_4324cb20",
+      "range": {
+        "startLine": 159,
+        "startChar": 35,
+        "endLine": 159,
+        "endChar": 54
+      },
+      "revId": "cb5adf193c805820ed773d0515b4ef146db9716b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7e92b959_0638ab48",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-18T19:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0eac7a8_c50d826a",
+      "range": {
+        "startLine": 169,
+        "startChar": 24,
+        "endLine": 169,
+        "endChar": 45
+      },
+      "revId": "cb5adf193c805820ed773d0515b4ef146db9716b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62b8d180_52e470e4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsServiceIntentParams.java",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "cb5adf193c805820ed773d0515b4ef146db9716b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bbbb4df_a34744e1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsServiceIntentParams.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-18T19:44:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62b8d180_52e470e4",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 46
+      },
+      "revId": "cb5adf193c805820ed773d0515b4ef146db9716b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
