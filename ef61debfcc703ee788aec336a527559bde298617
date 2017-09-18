@@ -22,6 +22,30 @@
       "revId": "ef61debfcc703ee788aec336a527559bde298617",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe80c612_6cc12cfb",
+        "filename": "third_party/webdriver/patch.diff",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1181219
+      },
+      "writtenOn": "2017-09-18T14:43:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3fc0c4c_bc9f916f",
+      "range": {
+        "startLine": 54,
+        "startChar": 3,
+        "endLine": 55,
+        "endChar": 62
+      },
+      "revId": "ef61debfcc703ee788aec336a527559bde298617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
