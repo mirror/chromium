@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "e8746974_eebe9eae",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-18T09:57:19Z",
+      "side": 1,
+      "message": "this comment does not define \"stale\" suggestions. They are defined implicitly via parameter name. I would rather make the definition explicit in the comment. \"Variation parameter for minimal age of a \"stale\" suggestion\"",
+      "range": {
+        "startLine": 83,
+        "startChar": 27,
+        "endLine": 83,
+        "endChar": 35
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c06a667_d98b4eb1",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-18T09:57:19Z",
+      "side": 1,
+      "message": "Global complex types are disallowed to avoid static initialization.\n\nhttps://engdoc.corp.google.com/eng/doc/devguide/cpp/primer.shtml?cl\u003dhead#static_initialization\n\nI know that there is one above on line 80 (I\u0027ve even added it myself :) ), could you change that one too please?",
+      "range": {
+        "startLine": 90,
+        "startChar": 12,
+        "endLine": 90,
+        "endChar": 21
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ef3761_6f7e8521",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-18T09:57:19Z",
+      "side": 1,
+      "message": "when",
+      "range": {
+        "startLine": 93,
+        "startChar": 69,
+        "endLine": 93,
+        "endChar": 74
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d93a2c_e9067240",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-18T09:57:19Z",
+      "side": 1,
+      "message": "Just curious, why not a publish date? Currently it is somewhat non deterministic which suggestions will be stale.",
+      "range": {
+        "startLine": 364,
+        "startChar": 41,
+        "endLine": 364,
+        "endChar": 51
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90192938_444ebd24",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 4
@@ -18,6 +110,122 @@
         "startChar": 41,
         "endLine": 510,
         "endChar": 56
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d30f2ff8_aea4f721",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-18T09:57:19Z",
+      "side": 1,
+      "message": "\u003e the proper fix is for FetchSnippets() on the snippets fetcher \n\u003e to take a time-out and extend the error codes received from there.\n\nI like this idea. I feel like fetcher should be responsible for time out (e.g. by taking a timeout threshold and a timeout callback or returning a timeout error code). Also this will make the provider easier to test.\n\n\u003e if that\u0027s the case and we need a little hack, that should definitely be done on a higher level of abstraction, e.g. the scheduler. (at that level, we can also properly distinguish between the callbacks).\n\nBut in the scheduler we won\u0027t be able to check the suggestion, we will have to rely on fetch date. Also talking from scheduler to UI feels odd (even if through the provider). I am somewhat against doing this in scheduler, but I may misunderstand your suggestion.\n\nIn general, I still feel like this is a UI work (how to treat available loading when there are suggestions), but I don\u0027t have good arguments. Also I understand that this would lead to code duplication between iOS and Android UI.",
+      "parentUuid": "90192938_444ebd24",
+      "range": {
+        "startLine": 510,
+        "startChar": 41,
+        "endLine": 510,
+        "endChar": 56
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24c0d41_8837f14b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-18T09:57:19Z",
+      "side": 1,
+      "message": "You don\u0027t cancel this if a fetch was successful. Why? (You may have a look at OneShotTimer)\n\nYou also don\u0027t cancel the fetch if it is too long. So is it intended that you notify with stale suggestions and then get new fresh suggestions and notify with them again?",
+      "range": {
+        "startLine": 513,
+        "startChar": 44,
+        "endLine": 513,
+        "endChar": 74
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "922e6abb_d0d138dd",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-18T09:57:19Z",
+      "side": 1,
+      "message": "em, this callback is not used anywhere. Is this a bug?",
+      "range": {
+        "startLine": 519,
+        "startChar": 4,
+        "endLine": 519,
+        "endChar": 20
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e961ee65_0b0223db",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-18T09:57:19Z",
+      "side": 1,
+      "message": "I am concerned that this is a very implicit and fragile way to define \"stale\" categories. You could either check again all suggestions or add a field to mark a category as stale.",
+      "range": {
+        "startLine": 650,
+        "startChar": 4,
+        "endLine": 650,
+        "endChar": 7
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc0a309_54854d62",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-18T09:57:19Z",
+      "side": 1,
+      "message": "This feels like a bug.\n\nThis is false if a fetch failed or did not finish yet, thus, all \"stale\" categories stay AVAILABLE_LOADING and empty forever after such a fetch.",
+      "range": {
+        "startLine": 651,
+        "startChar": 7,
+        "endLine": 651,
+        "endChar": 36
       },
       "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
