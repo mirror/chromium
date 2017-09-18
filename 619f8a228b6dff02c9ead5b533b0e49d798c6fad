@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "78523564_90a4dbb8",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1140375
+      },
+      "writtenOn": "2017-09-18T23:15:54Z",
+      "side": 1,
+      "message": "Done, however when assigning the value to the dictionary blink interface from the IDL file, I have now to use a checked cast, because as far as I\u0027m aware, blink dictionary don\u0027t support unsigned types...",
+      "parentUuid": "f254c174_80323acd",
+      "range": {
+        "startLine": 56,
+        "startChar": 35,
+        "endLine": 56,
+        "endChar": 38
+      },
+      "revId": "619f8a228b6dff02c9ead5b533b0e49d798c6fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1aa53837_f334378e",
         "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-18T09:42:54Z",
       "side": 1,
       "message": "What\u0027s the need for this?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "619f8a228b6dff02c9ead5b533b0e49d798c6fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1939d97e_025edbc8",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1140375
+      },
+      "writtenOn": "2017-09-18T23:15:54Z",
+      "side": 1,
+      "message": "I introduced this line due to a warning from git cl lint.\n\nchrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.cc:195:  Add #include \u003cutility\u003e for move  [build/include_what_you_use] [4]",
+      "parentUuid": "1aa53837_f334378e",
       "range": {
         "startLine": 7,
         "startChar": 0,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "6ddb1222_efadd0c6",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1140375
+      },
+      "writtenOn": "2017-09-18T23:15:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b240bb5_44062596",
+      "revId": "619f8a228b6dff02c9ead5b533b0e49d798c6fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a493607b_223dd33f",
         "filename": "chrome/common/extensions/api/passwords_private.idl",
         "patchSetId": 5
@@ -85,6 +151,30 @@
       "revId": "619f8a228b6dff02c9ead5b533b0e49d798c6fad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a712756_da5475db",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1140375
+      },
+      "writtenOn": "2017-09-18T23:15:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a493607b_223dd33f",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 15
+      },
+      "revId": "619f8a228b6dff02c9ead5b533b0e49d798c6fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
