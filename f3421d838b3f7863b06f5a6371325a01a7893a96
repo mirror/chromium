@@ -34,6 +34,24 @@
       "revId": "f3421d838b3f7863b06f5a6371325a01a7893a96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee840f03_c3ebfd4e",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-09-18T22:47:00Z",
+      "side": 0,
+      "message": "It was added less than a year ago in https://codereview.chromium.org/2507143002 and was a compromise to solve bugs in both fullscreen enter/exit cases and tablet tab close cases.  This is a brittle area with little test coverage and a lot of use cases, so it seems unsafe to remove.\n\nIf your main goal is to clean up CC, I suggest preserving CompositorImpl::SetHasTransparentBackground() for now.  This will protect you from getting your patch reverted.  I agree this hack should eventually be removed but I\u0027d rather it be separated out into another bug to be assigned to a flicker expert like steimel@ or khushalsagar@ who knows the cases to test and pitfalls to avoid.",
+      "parentUuid": "f37adc3e_25d65a5d",
+      "revId": "f3421d838b3f7863b06f5a6371325a01a7893a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
