@@ -530,7 +530,7 @@ public class VrShellImpl
         mTab.removeObserver(mTabObserver);
         restoreTabFromVR();
 
-        if (mTab != null) {
+        if (mTab != null && mTab.getContentViewCore() != null) {
             View parent = mTab.getContentViewCore().getContainerView();
             mTab.getContentViewCore().onSizeChanged(parent.getWidth(), parent.getHeight(), 0, 0);
             mTab.updateBrowserControlsState(BrowserControlsState.SHOWN, true);
