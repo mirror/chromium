@@ -116,7 +116,7 @@ QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_handle_duplicate_trailers, true)
 
 // If true, disables support for the packets-based QUIC congestion control
 // algorithms.
-QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_disable_packets_based_cc, false)
+QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_disable_packets_based_cc, true)
 
 // When enabled, ack frame uses a deque internally instead of a set.
 QUIC_FLAG(bool, FLAGS_quic_reloadable_flag_quic_frames_deque2, false)
