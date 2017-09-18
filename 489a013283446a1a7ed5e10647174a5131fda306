@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f0d201a_c46b800a",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-18T18:43:54Z",
+      "side": 1,
+      "message": "Fixed in next patch.",
+      "range": {
+        "startLine": 205,
+        "startChar": 67,
+        "endLine": 205,
+        "endChar": 70
+      },
+      "revId": "489a013283446a1a7ed5e10647174a5131fda306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9ae9a57_cb7bb157",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-18T18:43:54Z",
+      "side": 1,
+      "message": "Renamed to new_bounds in next patch.",
+      "range": {
+        "startLine": 875,
+        "startChar": 12,
+        "endLine": 875,
+        "endChar": 27
+      },
+      "revId": "489a013283446a1a7ed5e10647174a5131fda306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
