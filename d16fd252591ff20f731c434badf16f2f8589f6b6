@@ -22,6 +22,30 @@
       "revId": "d16fd252591ff20f731c434badf16f2f8589f6b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "692b5666_b5dce4df",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-18T23:52:24Z",
+      "side": 1,
+      "message": "I see that this code is built around the assumption that SkImage::makeColorSpace does not work on untagged images. That is no longer the case. The current implementations of makeColorSpace assumes that the source image is srgb if it is untagged. (see SkImage_Gpu::onMakeColorSpace, SkImage_Raster::onMakeColorSpace)\nSo you should just delete this entire block of code that handles the null colorSpace case.",
+      "parentUuid": "3e3eb164_a8d4e063",
+      "range": {
+        "startLine": 329,
+        "startChar": 28,
+        "endLine": 329,
+        "endChar": 37
+      },
+      "revId": "d16fd252591ff20f731c434badf16f2f8589f6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
