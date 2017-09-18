@@ -129,6 +129,9 @@ class WizardController : public BaseScreenDelegate,
   // |screen_manager_|.
   BaseScreen* CreateScreen(OobeScreen screen);
 
+  // Whether the Arc ToS screen is showing.
+  bool IsArcTermsOfServiceShowing();
+
  private:
   // Show specific screen.
   void ShowNetworkScreen();
