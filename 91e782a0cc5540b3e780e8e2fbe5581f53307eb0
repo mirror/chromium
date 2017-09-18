@@ -1,0 +1,146 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a21c0336_e9495c59",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-18T14:41:00Z",
+      "side": 1,
+      "message": "Minor optional nit - it\u0027d be ideal to not create overlay_elements if we\u0027re not in WebVR(), but that may uglify this a bit.",
+      "revId": "91e782a0cc5540b3e780e8e2fbe5581f53307eb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6578f41c_858dddb0",
+        "filename": "chrome/browser/vr/elements/draw_phase.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-18T14:41:00Z",
+      "side": 1,
+      "message": "Maybe make kPhaseNone 0?  Seems to fit.",
+      "revId": "91e782a0cc5540b3e780e8e2fbe5581f53307eb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a0d5cb_5ece6eaf",
+        "filename": "chrome/browser/vr/elements/full_screen_rect.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-18T14:41:00Z",
+      "side": 1,
+      "message": "Can\u0027t use default constructor?",
+      "revId": "91e782a0cc5540b3e780e8e2fbe5581f53307eb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba57705_b97c4e95",
+        "filename": "chrome/browser/vr/elements/renderable_element.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-18T14:41:00Z",
+      "side": 1,
+      "message": "Does the formatter not put a blank line after this one?",
+      "revId": "91e782a0cc5540b3e780e8e2fbe5581f53307eb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665d95e1_3850c9a9",
+        "filename": "chrome/browser/vr/test/ui_scene_manager_test.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-18T14:41:00Z",
+      "side": 1,
+      "message": "s/element/element is/",
+      "revId": "91e782a0cc5540b3e780e8e2fbe5581f53307eb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1b405d_f0986ccc",
+        "filename": "chrome/browser/vr/ui_renderer.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-18T14:41:00Z",
+      "side": 1,
+      "message": "Why not just a bool, out of curiosity?",
+      "revId": "91e782a0cc5540b3e780e8e2fbe5581f53307eb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aa0f51e_7116b729",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-18T14:41:00Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be GetVisibleElements()?  It returns renderable elements, but excludes non-visible.",
+      "range": {
+        "startLine": 43,
+        "startChar": 38,
+        "endLine": 43,
+        "endChar": 59
+      },
+      "revId": "91e782a0cc5540b3e780e8e2fbe5581f53307eb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9b89393_7f6d1178",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-18T14:41:00Z",
+      "side": 1,
+      "message": "Maybe these methods should also include \"Visible\"?  At first glance, I\u0027d expect this would return 2D browsing elements whether they are currently visible or not.",
+      "revId": "91e782a0cc5540b3e780e8e2fbe5581f53307eb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
