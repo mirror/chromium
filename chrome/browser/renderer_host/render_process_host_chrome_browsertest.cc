@@ -101,6 +101,7 @@ class ChromeRenderProcessHostTest : public ExtensionBrowserTest {
   base::Process ShowSingletonTab(const GURL& page) {
     chrome::ShowSingletonTab(browser(), page);
     WebContents* wc = browser()->tab_strip_model()->GetActiveWebContents();
+    CHECK(content::WaitForLoadStop(wc));
     CHECK(wc->GetURL() == page);
 
     WaitForLauncherThread();
@@ -634,7 +635,7 @@ class ChromeRenderProcessHostBackgroundingTest
     ASSERT_TRUE(audio_process_.IsValid());
 #if defined(OS_MACOSX)
     port_provider_ = content::BrowserChildProcessHost::GetPortProvider();
-#endif //  defined(OS_MACOSX)
+#endif  //  defined(OS_MACOSX)
   }
 
  protected:
