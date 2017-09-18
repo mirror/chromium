@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "521cce78_15bbdb66",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-09-18T19:18:47Z",
+      "side": 1,
+      "message": "remove braces for this case?",
+      "range": {
+        "startLine": 231,
+        "startChar": 60,
+        "endLine": 231,
+        "endChar": 61
+      },
+      "revId": "b8bbacb0510117af4374871b193ba323056e4b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "136c11db_b0531543",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-09-18T19:18:47Z",
+      "side": 1,
+      "message": "+indent",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 19
+      },
+      "revId": "b8bbacb0510117af4374871b193ba323056e4b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
