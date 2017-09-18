@@ -350,9 +350,9 @@
     "args": ["--enable-features=WebAssemblyStreaming"]
   },
   {
-    "prefix": "enable_asmjs",
-    "base": "http/tests/asmjs",
-    "args": ["--enable-features=AsmJsToWebAssembly"]
+    "prefix": "disable_asmjs",
+    "base": "http",
+    "args": ["--js-flags=--suppress_asm_messages"]
   },
   {
     "prefix": "service-worker-script-streaming",
