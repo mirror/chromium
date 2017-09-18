@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "74da5748_aa0229b0",
+        "filename": "chrome/app/vector_icons/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T18:57:08Z",
+      "side": 1,
+      "message": "please add platform-specific icons only on the platforms where they\u0027re used (i.e. in is_mac below)",
+      "range": {
+        "startLine": 70,
+        "startChar": 5,
+        "endLine": 70,
+        "endChar": 27
+      },
+      "revId": "61fc1adbeb1904d78bb7af01e340b03653f6ba21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ad7848b_c18dca4e",
+        "filename": "chrome/app/vector_icons/options_menu.icon",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T18:57:08Z",
+      "side": 1,
+      "message": "how is this different from kBrowserToolsAnimatedIcon (which need not be rendered with animation)",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "61fc1adbeb1904d78bb7af01e340b03653f6ba21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19e9ee48_4b34733c",
         "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
         "patchSetId": 1
