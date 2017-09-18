@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e6fc0b1c_844817d0",
+        "filename": "android_webview/browser/aw_browser_context.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d88cc80_0cbe884d",
+      "range": {
+        "startLine": 320,
+        "startChar": 9,
+        "endLine": 320,
+        "endChar": 16
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1460a5ce_257db37d",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_factory.cc",
         "patchSetId": 18
@@ -45,6 +69,30 @@
       "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82729df4_35a26e34",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_factory.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "I think that\u0027s a better change for when we actually use the DownloadService, but thanks for the reminder as I\u0027ve missed it off my follow-up patch.",
+      "parentUuid": "1460a5ce_257db37d",
+      "range": {
+        "startLine": 27,
+        "startChar": 58,
+        "endLine": 27,
+        "endChar": 60
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "704d1913_94818472",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_factory.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6dfd71c_c93bf098",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab3e0873_2ba4777b",
         "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.h",
         "patchSetId": 18
@@ -114,6 +186,30 @@
       "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "969c9c70_c5dca523",
+        "filename": "chrome/browser/background_fetch/background_fetch_delegate_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab3e0873_2ba4777b",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 44
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "07117405_4a70c041",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e51a01f0_f3a467ea",
+      "range": {
+        "startLine": 44,
+        "startChar": 15,
+        "endLine": 44,
+        "endChar": 26
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e094e2de_84fdd1cc",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
         "patchSetId": 18
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "987a017e_79e5f76b",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e094e2de_84fdd1cc",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 17
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d8574dc_13a24091",
         "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
         "patchSetId": 18
@@ -174,6 +318,30 @@
       "writtenOn": "2017-09-14T21:07:30Z",
       "side": 1,
       "message": "Please add a comment explaining that it\u0027s ok to drop this on the floor because it\u0027s equivalent to the case where the DownloadService fails to store the request to disk, and we already have to handle such failures in the DownloadService.",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "049e72f3_fd797c95",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "Is it the same?\n\nIf DownloadService (when it\u0027s wired up) fails to store the request, I think it will send us an INTERNAL_ERROR (https://cs.chromium.org/chromium/src/components/download/public/download_params.h?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d130), which we\u0027ll report back to the client as a failed fetch in some way. In this case we just drop it on the floor and the JS side never gets a response.\n\nThere are two ways delegate_ can be nullptr:\na) BGF is not supported and we should have reported it much earlier, in which case it would never get here.\nb) The delegate has called BackgroundFetchDelegateProxy::Core::OnDelegateShutdown, but the DelegateProxy::Core hasn\u0027t yet been destroyed and so an inflight fetch cannot be completed. In this case, I would assume the BGFDataManager has the the fetch stored and will resume it on start up and so the early exit is correct.\n\nWe could perhaps DCHECK the (a) case by adding a bool that says the delegate has shut down. E.g.\nDCHECK(delegate_ !\u003d nullptr || delegate_has_shutdown_) or we could leave it as is with a comment outlining this. WDYT?",
+      "parentUuid": "2d8574dc_13a24091",
       "range": {
         "startLine": 47,
         "startChar": 9,
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "5af54462_03a02c5c",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "Both Abort and DidMarkRequestCompleted run std::move(completed_callback_).Run(this), so I think that\u0027s how we fire the fail event. Obviously without this early exit we will run completed_callback_ twice which will crash. (This definitely happens in the BackgroundFetchServiceUTest::Abort test).\n\nI\u0027ll delete the comment, though as the files should get removed as you say.",
+      "parentUuid": "b82cec51_7b49639c",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 10
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aba7c031_76972960",
         "filename": "content/browser/background_fetch/background_fetch_job_controller_unittest.cc",
         "patchSetId": 18
@@ -229,6 +421,30 @@
       "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16474599_442ac771",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aba7c031_76972960",
+      "range": {
+        "startLine": 84,
+        "startChar": 35,
+        "endLine": 84,
+        "endChar": 61
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "a588f7c1_93504369",
+        "filename": "content/browser/background_fetch/background_fetch_request_info.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ec8eaeb_ad8aff60",
+      "range": {
+        "startLine": 21,
+        "startChar": 33,
+        "endLine": 21,
+        "endChar": 58
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ba2f633_f98d3319",
         "filename": "content/browser/background_fetch/background_fetch_test_base.cc",
         "patchSetId": 18
@@ -275,6 +515,30 @@
       "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c22dddb_84416c9b",
+        "filename": "content/browser/background_fetch/background_fetch_test_base.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ba2f633_f98d3319",
+      "range": {
+        "startLine": 144,
+        "startChar": 10,
+        "endLine": 144,
+        "endChar": 21
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -301,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "f1c056d1_fa736a97",
+        "filename": "content/browser/background_fetch/background_fetch_test_browser_context.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "I would argue the other ones are wrong unless they\u0027re testing something that\u0027s frequently used by other tests. If we did this we would have to push the MockBackgroundFetchDelegate into content/public/test which would make development a pain amongst other issues like keeping alike code together.",
+      "parentUuid": "282d52d9_39303ef2",
+      "range": {
+        "startLine": 18,
+        "startChar": 21,
+        "endLine": 18,
+        "endChar": 32
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87b92266_5f761a79",
         "filename": "content/test/mock_background_fetch_delegate.cc",
         "patchSetId": 18
@@ -321,6 +609,30 @@
       "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3554d4e4_46fcab77",
+        "filename": "content/test/mock_background_fetch_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "Yeah that\u0027s reasonable and gets rid of a lot of pointless changes.",
+      "parentUuid": "87b92266_5f761a79",
+      "range": {
+        "startLine": 22,
+        "startChar": 41,
+        "endLine": 22,
+        "endChar": 55
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -347,6 +659,30 @@
     },
     {
       "key": {
+        "uuid": "31a90a88_e9d1353e",
+        "filename": "content/test/mock_background_fetch_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "Indeed make_unique doesn\u0027t seem work with implicit constructors (at least for initializer lists).\n\nI\u0027ve changed to std::make_unique.",
+      "parentUuid": "3c701cb7_a44ef8b1",
+      "range": {
+        "startLine": 80,
+        "startChar": 48,
+        "endLine": 80,
+        "endChar": 72
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c29449d_29cc7040",
         "filename": "content/test/mock_background_fetch_delegate.cc",
         "patchSetId": 18
@@ -367,6 +703,30 @@
       "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceb4852d_6517ef05",
+        "filename": "content/test/mock_background_fetch_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c29449d_29cc7040",
+      "range": {
+        "startLine": 91,
+        "startChar": 6,
+        "endLine": 91,
+        "endChar": 17
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -393,6 +753,30 @@
     },
     {
       "key": {
+        "uuid": "8e585f9c_1a0b8024",
+        "filename": "content/test/mock_background_fetch_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "Interesting. I guess the existing tests never check the fetch data...",
+      "parentUuid": "68098031_962b33e2",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 54
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "378323c7_b28591d8",
         "filename": "content/test/mock_background_fetch_delegate.cc",
         "patchSetId": 18
@@ -413,6 +797,30 @@
       "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d78bc49b_015f8c0a",
+        "filename": "content/test/mock_background_fetch_delegate.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "378323c7_b28591d8",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 44
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -439,6 +847,30 @@
     },
     {
       "key": {
+        "uuid": "bf97f6c7_11cda7a8",
+        "filename": "content/test/mock_background_fetch_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "The constructor is called by make_unique so it can\u0027t be private. I\u0027ve moved it moved into MockBackgroundFetchDelegate as content::TestResponse seems a little broad.\n\nI just copied this code from background_fetch_test_base.h and didn\u0027t read the comment. I\u0027m guessing it\u0027s saying it only ever provides unique_ptrs so that dictates the ownership semantics. Either way I think the comment is adding much so I\u0027ll remove it.",
+      "parentUuid": "151d4636_006dfdd4",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 10
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9dd6b950_b63caa0c",
         "filename": "content/test/mock_background_fetch_delegate.h",
         "patchSetId": 18
@@ -459,6 +891,30 @@
       "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73bec029_bfb1557d",
+        "filename": "content/test/mock_background_fetch_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dd6b950_b63caa0c",
+      "range": {
+        "startLine": 31,
+        "startChar": 1,
+        "endLine": 31,
+        "endChar": 2
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -485,6 +941,30 @@
     },
     {
       "key": {
+        "uuid": "3c1f9be2_66aaf5ee",
+        "filename": "content/test/mock_background_fetch_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ca9f7cc_0ba9a62b",
+      "range": {
+        "startLine": 71,
+        "startChar": 55,
+        "endLine": 71,
+        "endChar": 69
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1c257f1_defca8ff",
         "filename": "content/test/mock_background_fetch_delegate.h",
         "patchSetId": 18
@@ -505,6 +985,30 @@
       "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89785eff_fcd06e4b",
+        "filename": "content/test/mock_background_fetch_delegate.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T16:24:47Z",
+      "side": 1,
+      "message": "Seems reasonable.",
+      "parentUuid": "b1c257f1_defca8ff",
+      "range": {
+        "startLine": 72,
+        "startChar": 55,
+        "endLine": 72,
+        "endChar": 70
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
