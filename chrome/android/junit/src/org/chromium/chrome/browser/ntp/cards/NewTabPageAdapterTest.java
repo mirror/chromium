@@ -1241,7 +1241,7 @@ public class NewTabPageAdapterTest {
      * @return A descriptor for the section.
      */
     private SectionDescriptor sectionWithStatusCard() {
-        assertFalse(FeatureUtilities.isChromeHomeModernEnabled());
+        assertFalse(FeatureUtilities.isChromeHomeEnabled());
         return new SectionDescriptor(Collections.<SnippetArticle>emptyList()).withStatusCard();
     }
 
@@ -1252,7 +1252,7 @@ public class NewTabPageAdapterTest {
      * @return A descriptor for the section.
      */
     private SectionDescriptor emptySection() {
-        assertTrue(FeatureUtilities.isChromeHomeModernEnabled());
+        assertTrue(FeatureUtilities.isChromeHomeEnabled());
         return new SectionDescriptor(Collections.<SnippetArticle>emptyList());
     }
 
