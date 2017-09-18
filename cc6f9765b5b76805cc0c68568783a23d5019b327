@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6d822c7_14233e64",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-09-18T17:40:58Z",
+      "side": 1,
+      "message": "I\u0027m trying to get the largest font size that doesn\u0027t exceed the max line height.\nBut it looks very small, so I add |.DeriveWithSizeDelta(1)| below. Then the texts look good and they\u0027re not cut off.\n\nIt looks good for several languages I\u0027ve tested, but I\u0027m not sure it\u0027s safe.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 62
+      },
+      "revId": "cc6f9765b5b76805cc0c68568783a23d5019b327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
