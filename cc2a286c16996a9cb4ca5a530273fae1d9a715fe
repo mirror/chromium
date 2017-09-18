@@ -105,6 +105,30 @@
       "revId": "cc2a286c16996a9cb4ca5a530273fae1d9a715fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba9e1398_c2d6673a",
+        "filename": "ui/app_list/search_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-18T21:45:02Z",
+      "side": 1,
+      "message": "Ok, done.",
+      "parentUuid": "ee9bad87_f0265326",
+      "range": {
+        "startLine": 62,
+        "startChar": 40,
+        "endLine": 62,
+        "endChar": 78
+      },
+      "revId": "cc2a286c16996a9cb4ca5a530273fae1d9a715fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
