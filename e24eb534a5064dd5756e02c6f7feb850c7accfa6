@@ -22,6 +22,30 @@
       "revId": "e24eb534a5064dd5756e02c6f7feb850c7accfa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b21ce22f_60c3cb4f",
+        "filename": "content/browser/payments/payment_app_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-09-18T17:32:30Z",
+      "side": 1,
+      "message": "You\u0027re right! I might have to study Modern Effective C++ again. :(",
+      "parentUuid": "31d33811_50167a76",
+      "range": {
+        "startLine": 80,
+        "startChar": 10,
+        "endLine": 80,
+        "endChar": 19
+      },
+      "revId": "e24eb534a5064dd5756e02c6f7feb850c7accfa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
