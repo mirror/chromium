@@ -710,6 +710,17 @@ Response InputHandler::SetIgnoreInputEvents(bool ignore) {
   return Response::OK();
 }
 
+
+void DispatchTouchEvent(
+    const std::string& type,
+    const std::string& button,
+    double x,
+    double y,
+    std::unique_ptr<DispatchTouchEventCallback> callback) {
+
+
+}
+
 void InputHandler::SynthesizePinchGesture(
     double x,
     double y,

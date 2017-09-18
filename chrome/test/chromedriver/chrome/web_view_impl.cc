@@ -54,6 +54,21 @@ Status GetContextIdForFrame(FrameTracker* tracker,
   return Status(kOk);
 }
 
+// const char* GetAsString(PointerEventType type) {
+//   switch (type) {
+//     case kNotInitializedPointerEventType:
+//       return "pointerNotInitialized";
+//     case kPressPointerEventType:
+//       return "pointerPress";
+//     case kMovePointerEventType:
+//       return "pointerMove";
+//     case kReleasePointerEventType:
+//       return "pointerRelease";
+//     default:
+//       return "";
+//   }
+// }
+
 const char* GetAsString(MouseEventType type) {
   switch (type) {
     case kPressedMouseEventType:
@@ -335,6 +350,20 @@ Status WebViewImpl::GetFrameByFunction(const std::string& frame,
   if (!found_node)
     return Status(kNoSuchFrame);
   return dom_tracker_->GetFrameIdForNode(node_id, out_frame);
+}
+
+Status WebViewImpl::DispatchPointerDownEvent(int button, int x, int y) {
+  base::DictionaryValue params;
+  // PointerButton action_button = button;
+  params.SetInteger("x", x);
+  params.SetInteger("y", y);
+  params.SetString("type", "pointerRelease");
+  params.SetString("button", "pointerLeft");
+
+  Status status = client_->SendCommand("Input.dispatchPointerEvents", params);
+  if (status.IsError())
+    return status;
+  return Status(kOk);
 }
 
 Status WebViewImpl::DispatchMouseEvents(const std::list<MouseEvent>& events,

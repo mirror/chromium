@@ -4222,6 +4222,34 @@
                 "description": "Dispatches a touch event to the page."
             },
             {
+            	"name": "dispatchPointerEvents",
+            	"experimental": true,
+            	"parameters": [{
+            			"name": "type",
+            			"type": "string",
+            			"enum": ["pointerNotInitialized", "pointerPress", "pointerMove", "pointerRelease"],
+            			"description": ""
+            		},
+            		{
+            			"name": "button",
+            			"type": "string",
+            			"enum": ["leftPointer", "middlePointer", "rightPointer"],
+            			"description": ""
+            		},
+            		{
+            			"name": "x",
+            			"type": "integer",
+            			"description": "X coordinate of the mouse pointer in DIP."
+            		},
+            		{
+            			"name": "y",
+            			"type": "integer",
+            			"description": "Y coordinate of the mouse pointer in DIP."
+            		}
+            	],
+            	"description": "Dispatches a touch event to the page."
+            },
+            {
                 "name": "emulateTouchFromMouseEvent",
                 "experimental": true,
                 "parameters": [
