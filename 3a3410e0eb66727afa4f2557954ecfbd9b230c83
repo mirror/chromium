@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fda2e3a4_47467111",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_utils.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-18T09:42:54Z",
+      "side": 0,
+      "message": "Nit: Keep this line.",
+      "revId": "3a3410e0eb66727afa4f2557954ecfbd9b230c83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

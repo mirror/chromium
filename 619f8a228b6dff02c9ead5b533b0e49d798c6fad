@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f254c174_80323acd",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-18T09:42:54Z",
+      "side": 1,
+      "message": "For simplicity I\u0027d just make this `size_t`. Since PasswordManagerPresenter already expects a `size_t` param, this allows you to remove the explicit casts you are doing: https://codesearch.chromium.org/chromium/src/chrome/browser/ui/passwords/password_manager_presenter.h?l\u003d63\u0026rcl\u003d9d8037a736baeee658283be62e8f9d348ffac0a0\n\nAlso applies below.",
+      "range": {
+        "startLine": 56,
+        "startChar": 35,
+        "endLine": 56,
+        "endChar": 38
+      },
+      "revId": "619f8a228b6dff02c9ead5b533b0e49d798c6fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa53837_f334378e",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-18T09:42:54Z",
+      "side": 1,
+      "message": "What\u0027s the need for this?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "619f8a228b6dff02c9ead5b533b0e49d798c6fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b240bb5_44062596",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-18T09:42:54Z",
+      "side": 1,
+      "message": "Nit: Add an empty line above this.",
+      "revId": "619f8a228b6dff02c9ead5b533b0e49d798c6fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a493607b_223dd33f",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-18T09:42:54Z",
+      "side": 1,
+      "message": "I\u0027d move this out of `LoginPair` and add it to `PasswordUIEntry` directly. Also, overall the same logic applies to exception entries, so I suggest adding a `index` field to `ExceptionEntry` as well.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 15
+      },
+      "revId": "619f8a228b6dff02c9ead5b533b0e49d798c6fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
