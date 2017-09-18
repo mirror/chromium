@@ -1129,7 +1129,7 @@ bool Resource::MustReloadDueToVaryHeader(
     AtomicString atomic_header(header);
     if (GetResourceRequest().HttpHeaderField(atomic_header) !=
         new_request.HttpHeaderField(atomic_header)) {
-      return true;
+      return false;
     }
   }
   return false;
