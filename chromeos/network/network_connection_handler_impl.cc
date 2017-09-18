@@ -410,9 +410,11 @@ void NetworkConnectionHandlerImpl::VerifyConfiguredAndConnect(
   service_properties.GetStringWithoutPathExpansion(shill::kProfileProperty,
                                                    &profile);
   ::onc::ONCSource onc_source = onc::ONC_SOURCE_NONE;
-  const base::DictionaryValue* policy =
-      managed_configuration_handler_->FindPolicyByGuidAndProfile(guid, profile,
-                                                                 &onc_source);
+  const base::DictionaryValue* policy = nullptr;
+  if (!profile.empty()) {
+    policy = managed_configuration_handler_->FindPolicyByGuidAndProfile(
+        guid, profile, &onc_source);
+  }
 
   if (IsNetworkProhibitedByPolicy(type, guid, profile)) {
     ErrorCallbackForPendingRequest(service_path, kErrorUnmanagedNetwork);
@@ -529,9 +531,7 @@ bool NetworkConnectionHandlerImpl::IsNetworkProhibitedByPolicy(
     const std::string& type,
     const std::string& guid,
     const std::string& profile_path) {
-  if (!logged_in_)
-    return false;
-  if (type != shill::kTypeWifi)
+  if (!logged_in_ || type != shill::kTypeWifi || profile_path.empty())
     return false;
   const base::DictionaryValue* global_network_config =
       managed_configuration_handler_->GetGlobalConfigFromPolicy(
