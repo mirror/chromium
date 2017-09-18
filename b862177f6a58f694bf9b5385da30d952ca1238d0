@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "770d9ae8_9273349e",
+        "filename": "third_party/zlib/contrib/inffast64/inffast.c",
+        "patchSetId": 14
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1145695
+      },
+      "writtenOn": "2017-09-18T21:42:49Z",
+      "side": 1,
+      "message": "Just out of curiosity, but what was the performance impact of having this branch?",
+      "revId": "b862177f6a58f694bf9b5385da30d952ca1238d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
