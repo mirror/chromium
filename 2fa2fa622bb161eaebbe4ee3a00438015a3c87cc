@@ -1156,6 +1156,30 @@
     },
     {
       "key": {
+        "uuid": "f804bf8c_9eed6cb5",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-18T22:02:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "69a2f9d9_c26df81f",
+      "range": {
+        "startLine": 173,
+        "startChar": 53,
+        "endLine": 173,
+        "endChar": 75
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "105c255a_9fd1e0ec",
         "filename": "remoting/ios/audio/audio_player_ios.mm",
         "patchSetId": 8
@@ -1438,6 +1462,30 @@
     },
     {
       "key": {
+        "uuid": "0caac023_f98ac236",
+        "filename": "remoting/ios/audio/audio_stream_consumer_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-18T22:02:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60e88e89_17c15336",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 27
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5afd04c7_8dd322bb",
         "filename": "remoting/ios/audio/audio_stream_consumer_proxy.cc",
         "patchSetId": 8
@@ -1458,6 +1506,30 @@
       "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "773e13d1_2603453d",
+        "filename": "remoting/ios/audio/audio_stream_consumer_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-18T22:02:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5afd04c7_8dd322bb",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 16
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1484,6 +1556,30 @@
     },
     {
       "key": {
+        "uuid": "619f0c63_038c50f5",
+        "filename": "remoting/ios/audio/audio_stream_consumer_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-18T22:02:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbfe00c5_8df2ed32",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 42
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8369e6bf_24b37ffd",
         "filename": "remoting/ios/audio/audio_stream_consumer_proxy.cc",
         "patchSetId": 8
@@ -1504,6 +1600,30 @@
       "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97bc364d_bca37b59",
+        "filename": "remoting/ios/audio/audio_stream_consumer_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-18T22:02:42Z",
+      "side": 1,
+      "message": "it has been removed.",
+      "parentUuid": "8369e6bf_24b37ffd",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 25
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -1530,6 +1650,30 @@
     },
     {
       "key": {
+        "uuid": "50259a90_8ea47c2d",
+        "filename": "remoting/ios/audio/audio_stream_consumer_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-18T22:02:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e3a21fb8_7825ea2c",
+      "range": {
+        "startLine": 93,
+        "startChar": 28,
+        "endLine": 93,
+        "endChar": 44
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5f2b5e2_8becaf36",
         "filename": "remoting/ios/audio/audio_stream_consumer_proxy.cc",
         "patchSetId": 8
@@ -1550,6 +1694,30 @@
       "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4ca65a5_d7af1c89",
+        "filename": "remoting/ios/audio/audio_stream_consumer_proxy.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-18T22:02:42Z",
+      "side": 1,
+      "message": "removed.",
+      "parentUuid": "c5f2b5e2_8becaf36",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 111,
+        "endChar": 36
+      },
+      "revId": "2fa2fa622bb161eaebbe4ee3a00438015a3c87cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
