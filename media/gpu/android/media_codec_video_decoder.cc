@@ -427,9 +427,9 @@ bool MediaCodecVideoDecoder::QueueInput() {
   PendingDecode& pending_decode = pending_decodes_.front();
   auto status = codec_->QueueInputBuffer(*pending_decode.buffer,
                                          decoder_config_.encryption_scheme());
-  int lvl = status == CodecWrapper::QueueStatus::kTryAgainLater ? 3 : 2;
-  DVLOG(lvl) << "QueueInput(" << pending_decode.buffer->AsHumanReadableString()
-             << ") status=" << static_cast<int>(status);
+  DVLOG(status == CodecWrapper::QueueStatus::kTryAgainLater ? 3 : 2)
+      << "QueueInput(" << pending_decode.buffer->AsHumanReadableString()
+      << ") status=" << static_cast<int>(status);
 
   switch (status) {
     case CodecWrapper::QueueStatus::kOk:
