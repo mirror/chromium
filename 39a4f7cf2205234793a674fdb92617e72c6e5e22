@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "591d5a49_dbe25e2e",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-18T03:15:34Z",
+      "side": 1,
+      "message": "It\u0027s currently not possible to specify per-site settings on windows, so I think it\u0027s ok to leave this as ChromeOS only.",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4605941e_5bb0db6a",
         "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
         "patchSetId": 12
@@ -30,6 +47,125 @@
       "writtenOn": "2017-09-15T19:31:31Z",
       "side": 1,
       "message": "Would it work to wrap the whole function with the \u003cif\u003e instead of just the contents?",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c06f8b9d_95999b4c",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-18T03:15:34Z",
+      "side": 1,
+      "message": "Will this ever get called for non-ChromeOS? I would have expected the element not to exist?",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43ad5235_11a4956e",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-18T03:15:34Z",
+      "side": 1,
+      "message": "Just curious: how come changing the class is needed now?",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72ad9f9a_5ad3826a",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-18T03:15:34Z",
+      "side": 1,
+      "message": "Will this ever get called on non-chromeos devices?",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c176344_6db6aa40",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-18T03:15:34Z",
+      "side": 1,
+      "message": "This feels like it\u0027s the reverse to me? If the permission has a source string, then isn\u0027t it not user controlled?",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33bf0f70_635e426a",
+        "filename": "chrome/browser/resources/settings/site_settings_page/site_settings_page.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-18T03:15:34Z",
+      "side": 1,
+      "message": "nit: move the new part of this comment down to the added line.",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e63ad7_35d4c8e9",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-18T03:15:34Z",
+      "side": 1,
+      "message": "Can this actually happen? Is it possible for the setting to be non-BLOCK but for kEnableDRM to be false? I was hoping it would be simply a matter of checking that kEnableDRM is false and returning the appropriate string.\n\nAlso, could we move this into CalculateSiteSettingSource? I was thinking it should fit in at about step 5.?",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "889edb92_4cd6167e",
+        "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-18T03:15:34Z",
+      "side": 1,
+      "message": "nit: I think the argument order should be reversed",
       "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
