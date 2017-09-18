@@ -14,6 +14,7 @@
 #include "ui/views/background.h"
 #include "ui/views/border.h"
 #include "ui/views/controls/focus_ring.h"
+#include "ui/views/controls/separator.h"
 #include "ui/views/style/platform_style.h"
 #include "ui/views/widget/widget.h"
 
@@ -179,6 +180,10 @@ ScrollView::ScrollView()
       horiz_sb_(PlatformStyle::CreateScrollBar(true).release()),
       vert_sb_(PlatformStyle::CreateScrollBar(false).release()),
       corner_view_(new ScrollCornerView()),
+      more_content_left_(new Separator()),
+      more_content_top_(new Separator()),
+      more_content_right_(new Separator()),
+      more_content_bottom_(new Separator()),
       min_height_(-1),
       max_height_(-1),
       hide_horizontal_scrollbar_(false),
@@ -196,6 +201,14 @@ ScrollView::ScrollView()
   vert_sb_->SetVisible(false);
   vert_sb_->set_controller(this);
   corner_view_->SetVisible(false);
+
+  // Just make sure the more_content indicators aren't visible for now. They'll
+  // be added as child controls and appropriately made visible depending on
+  // |show_edges_with_hidden_content_|.
+  more_content_left_->SetVisible(false);
+  more_content_top_->SetVisible(false);
+  more_content_right_->SetVisible(false);
+  more_content_bottom_->SetVisible(false);
 
   if (scroll_with_layers_enabled_)
     EnableViewPortLayer();
@@ -318,6 +331,11 @@ void ScrollView::SetHasFocusIndicator(bool has_focus_indicator) {
   SchedulePaint();
 }
 
+void ScrollView::SetShowEdgesWithHiddenContent(
+    bool show_edges_with_hidden_content) {
+  show_edges_with_hidden_content_ = show_edges_with_hidden_content;
+}
+
 gfx::Size ScrollView::CalculatePreferredSize() const {
   if (!is_bounded())
     return View::CalculatePreferredSize();
@@ -362,6 +380,11 @@ void ScrollView::Layout() {
     }
     contents_->SetSize(gfx::Size(content_width, content_height));
   }
+
+  PositionOverflowIndicator(more_content_top_, ContentEdge::kTop);
+  PositionOverflowIndicator(more_content_left_, ContentEdge::kLeft);
+  PositionOverflowIndicator(more_content_right_, ContentEdge::kRight);
+  PositionOverflowIndicator(more_content_bottom_, ContentEdge::kBottom);
 
   // Most views will want to auto-fit the available space. Most of them want to
   // use all available width (without overflowing) and only overflow in
@@ -488,6 +511,7 @@ void ScrollView::Layout() {
                           scroll_with_layers_enabled_);
   SchedulePaint();
   UpdateScrollBarPositions();
+  UpdateOverflowIndicators(CurrentOffset());
 }
 
 bool ScrollView::OnKeyPressed(const ui::KeyEvent& event) {
@@ -768,6 +792,7 @@ void ScrollView::ScrollToOffset(const gfx::ScrollOffset& offset) {
     contents_->SetPosition(gfx::Point(-offset.x(), -offset.y()));
     ScrollHeader();
   }
+  UpdateOverflowIndicators(offset);
 }
 
 bool ScrollView::ScrollsWithLayers() const {
@@ -842,6 +867,46 @@ SkColor ScrollView::GetBackgroundColor() const {
   return use_color_id_
              ? GetNativeTheme()->GetSystemColor(background_color_data_.color_id)
              : background_color_data_.color;
+}
+
+void ScrollView::PositionOverflowIndicator(Separator* indicator,
+                                           ContentEdge edge) {
+  gfx::Size pref_size = indicator->GetPreferredSize();
+  gfx::Rect new_bounds = GetContentsBounds();
+  switch (edge) {
+    case ContentEdge::kBottom:
+      new_bounds.set_y(new_bounds.bottom() - pref_size.height());
+    // fall through
+    case ContentEdge::kTop:
+      new_bounds.set_height(pref_size.height());
+      break;
+    case ContentEdge::kRight:
+      new_bounds.set_x(new_bounds.right() - pref_size.width());
+    // fall through
+    case ContentEdge::kLeft:
+      new_bounds.set_width(pref_size.width());
+      break;
+  }
+  indicator->SetBoundsRect(new_bounds);
+}
+
+void ScrollView::UpdateOverflowIndicators(const gfx::ScrollOffset& offset) {
+  SetControlVisibility(more_content_top_,
+                       show_edges_with_hidden_content_ && !draw_border_ &&
+                           vert_sb_->visible() &&
+                           offset.y() > vert_sb_->GetMinPosition());
+  SetControlVisibility(more_content_bottom_,
+                       show_edges_with_hidden_content_ && !draw_border_ &&
+                           vert_sb_->visible() && !horiz_sb_->visible() &&
+                           offset.y() < vert_sb_->GetMaxPosition());
+  SetControlVisibility(more_content_left_,
+                       show_edges_with_hidden_content_ && !draw_border_ &&
+                           horiz_sb_->visible() &&
+                           offset.x() > horiz_sb_->GetMinPosition());
+  SetControlVisibility(more_content_right_,
+                       show_edges_with_hidden_content_ && !draw_border_ &&
+                           horiz_sb_->visible() && !vert_sb_->visible() &&
+                           offset.x() < horiz_sb_->GetMaxPosition());
 }
 
 // VariableRowHeightScrollHelper ----------------------------------------------
