@@ -33,7 +33,8 @@ std::unique_ptr<VideoDecoder> MojoMediaClient::CreateVideoDecoder(
     MediaLog* media_log,
     mojom::CommandBufferIdPtr command_buffer_id,
     OutputWithReleaseMailboxCB output_cb,
-    RequestOverlayInfoCB request_overlay_info_cb) {
+    RequestOverlayInfoCB request_overlay_info_cb,
+    const std::string& decoder_name) {
   return nullptr;
 }
 

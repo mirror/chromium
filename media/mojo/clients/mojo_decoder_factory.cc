@@ -6,6 +6,7 @@
 
 #include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
+#include "media/filters/gpu_video_decoder.h"
 #include "media/mojo/clients/mojo_audio_decoder.h"
 #include "media/mojo/clients/mojo_video_decoder.h"
 #include "media/mojo/features.h"
@@ -42,12 +43,18 @@ void MojoDecoderFactory::CreateVideoDecoders(
     const RequestOverlayInfoCB& request_overlay_info_cb,
     std::vector<std::unique_ptr<VideoDecoder>>* video_decoders) {
 #if BUILDFLAG(ENABLE_MOJO_VIDEO_DECODER)
-  mojom::VideoDecoderPtr video_decoder_ptr;
-  interface_factory_->CreateVideoDecoder(mojo::MakeRequest(&video_decoder_ptr));
+  std::vector<std::string> decoder_names = {
+      GpuVideoDecoder::kDecoderName, "VpxVideoDecoder", "FFmpegVideoDecoder"};
 
-  video_decoders->push_back(base::MakeUnique<MojoVideoDecoder>(
-      task_runner, gpu_factories, media_log, std::move(video_decoder_ptr),
-      request_overlay_info_cb));
+  for (auto& name : decoder_names) {
+    mojom::VideoDecoderPtr video_decoder_ptr;
+    interface_factory_->CreateVideoDecoder(
+        mojo::MakeRequest(&video_decoder_ptr), name);
+
+    video_decoders->push_back(base::MakeUnique<MojoVideoDecoder>(
+        task_runner, gpu_factories, media_log, std::move(video_decoder_ptr),
+        request_overlay_info_cb));
+  }
 #endif
 }
 

@@ -70,7 +70,8 @@ class MEDIA_MOJO_EXPORT MojoMediaClient {
       MediaLog* media_log,
       mojom::CommandBufferIdPtr command_buffer_id,
       OutputWithReleaseMailboxCB output_cb,
-      RequestOverlayInfoCB request_overlay_info_cb);
+      RequestOverlayInfoCB request_overlay_info_cb,
+      const std::string& decoder_name);
 
   // Returns the output sink used for rendering audio on |audio_device_id|.
   // May be null if the RendererFactory doesn't need an audio sink.
