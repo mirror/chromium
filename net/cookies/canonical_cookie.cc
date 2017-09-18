@@ -448,8 +448,10 @@ bool CanonicalCookie::IsCanonical() const {
   return true;
 }
 
-void CanonicalCookie::SetCreationDate(base::Time new_creation_date) {
-  DCHECK(CreationDate().is_null());
+void CanonicalCookie::SetCreationDate(base::Time new_creation_date,
+                                      CreationDateChangeCause cause) {
+  DCHECK(cause == CreationDateChangeCause::INHERIT_FROM_OVERWRITTEN ||
+         CreationDate().is_null());
   creation_date_ = new_creation_date;
 }
 

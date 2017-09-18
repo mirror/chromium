@@ -23,6 +23,15 @@ class ParsedCookie;
 
 class NET_EXPORT CanonicalCookie {
  public:
+  // CanonicalCookies' creation dates are generally set in stone; they are
+  // overwritten only in the case where a new cookie overwrites an existing
+  // cookie with the same value, and the existing cookie's creation date is
+  // persisted to the new cookie.
+  enum class CreationDateChangeCause {
+    INITIAL_POPULATION,
+    INHERIT_FROM_OVERWRITTEN
+  };
+
   CanonicalCookie();
   CanonicalCookie(const CanonicalCookie& other);
 
@@ -159,10 +168,10 @@ class NET_EXPORT CanonicalCookie {
   // greater than the last access time.
   bool IsCanonical() const;
 
-  // Sets the creation date of the cookie to the specified value.  It
-  // is only valid to call this method if the existing creation date
-  // is null.
-  void SetCreationDate(base::Time new_creation_date);
+  // Sets the creation date of the cookie to the specified value. If |cause| is
+  // `INITIAL_POPULATION`, the cookie's existing |creation_date| must be null.
+  void SetCreationDate(base::Time new_creation_date,
+                       CreationDateChangeCause cause);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(CanonicalCookieTest, TestPrefixHistograms);

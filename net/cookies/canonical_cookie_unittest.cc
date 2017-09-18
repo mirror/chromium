@@ -864,7 +864,8 @@ TEST(CanonicalCookieTest, TestSetCreationDate) {
   EXPECT_TRUE(cookie.CreationDate().is_null());
 
   base::Time now(base::Time::Now());
-  cookie.SetCreationDate(now);
+  cookie.SetCreationDate(
+      now, CanonicalCookie::CreationDateChangeCause::INITIAL_POPULATION);
   EXPECT_EQ(now, cookie.CreationDate());
 }
 
