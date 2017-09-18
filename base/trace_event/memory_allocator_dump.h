@@ -133,6 +133,8 @@ class BASE_EXPORT MemoryAllocatorDump {
   // expected to have the same guid.
   const MemoryAllocatorDumpGuid& guid() const { return guid_; }
 
+  const std::vector<Entry>& entries() const { return entries_; }
+
   const std::vector<Entry>& entries_for_testing() const { return entries_; }
 
   // Only for mojo serialization, which can mutate the collection.
