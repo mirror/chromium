@@ -13,6 +13,9 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "content/browser/background_fetch/background_fetch_data_manager.h"
+#include "content/browser/background_fetch/background_fetch_delegate_proxy.h"
+#include "content/browser/background_fetch/background_fetch_event_dispatcher.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/browser_thread.h"
 #include "third_party/WebKit/public/platform/modules/background_fetch/background_fetch.mojom.h"
@@ -23,10 +26,6 @@ class Origin;
 
 namespace content {
 
-class BackgroundFetchDataManager;
-class BackgroundFetchDelegate;
-class BackgroundFetchDelegateProxy;
-class BackgroundFetchEventDispatcher;
 class BackgroundFetchJobController;
 struct BackgroundFetchOptions;
 class BackgroundFetchRegistrationId;
@@ -109,11 +108,9 @@ class CONTENT_EXPORT BackgroundFetchContext
   // |this| is owned, indirectly, by the BrowserContext.
   BrowserContext* browser_context_;
 
-  std::unique_ptr<BackgroundFetchDataManager> data_manager_;
-  std::unique_ptr<BackgroundFetchEventDispatcher> event_dispatcher_;
-  std::unique_ptr<BackgroundFetchDelegate, BrowserThread::DeleteOnUIThread>
-      delegate_;
-  std::unique_ptr<BackgroundFetchDelegateProxy> delegate_proxy_;
+  BackgroundFetchDataManager data_manager_;
+  BackgroundFetchEventDispatcher event_dispatcher_;
+  BackgroundFetchDelegateProxy delegate_proxy_;
 
   // Map of the Background Fetch fetches that are currently in-progress.
   std::map<BackgroundFetchRegistrationId,
