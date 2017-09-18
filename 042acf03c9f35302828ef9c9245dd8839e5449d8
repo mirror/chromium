@@ -141,6 +141,30 @@
     },
     {
       "key": {
+        "uuid": "03bdc863_6d65840a",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-18T10:10:02Z",
+      "side": 1,
+      "message": "What additional data should we get besides the successful fetch-date? If we really need more (i doubt that), we can always expose it from the provider.\n\nThe scheduler doesn\u0027t have to give the suggestions to the surface, but can tell the provider to do so.\n\nMaybe we should take a step back: how would the overall flow look like?\nIt feels most intuitively, that when the surface gets opened, it should ask something to check if recent enough data is available. If not, would call something to refresh the data while it\u0027s showing the progressive \"fake\" suggestions. What\u0027s the proposed chain of events?\n\nIt seems that the approach of this CL relies on a more passive approach and we just make sure a corresponding \"push event\" will happen. I\u0027m not a big fan of this -- it\u0027s not a clear design, potentially brittle and adds more cornercases that need to be handled on multiple platforms (e.g. iOS).\n\nShould we have a quick meeting to discuss?",
+      "parentUuid": "d30f2ff8_aea4f721",
+      "range": {
+        "startLine": 510,
+        "startChar": 41,
+        "endLine": 510,
+        "endChar": 56
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f24c0d41_8837f14b",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 4
