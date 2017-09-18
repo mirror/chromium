@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98a8569a_6a4ed47e",
+        "filename": "chrome/browser/ui/page_info/page_info_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-18T01:24:54Z",
+      "side": 1,
+      "message": "nit: you may also want to check that the size of the 2 lists are equal too.",
+      "revId": "0c5618108bbcbbe57ccc5bcc749001178d72a5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c8cbef8_1ceaa468",
+        "filename": "components/content_settings/core/browser/content_settings_info.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-18T01:24:54Z",
+      "side": 1,
+      "message": "Sorry I didn\u0027t think of this earlier, but you can use ValueToContentSetting instead of these lines, see:\n\nhttps://cs.chromium.org/chromium/src/components/content_settings/core/common/content_settings_utils.cc?l\u003d32\u0026gs\u003dcpp%253Acontent_settings%253A%253AValueToContentSetting(const%2Bbase%253A%253AValue%2B*)%2540chromium%252F..%252F..%252Fcomponents%252Fcontent_settings%252Fcore%252Fcommon%252Fcontent_settings_utils.cc%257Cdef\u0026gsn\u003dValueToContentSetting\u0026ct\u003dxref_usages",
+      "revId": "0c5618108bbcbbe57ccc5bcc749001178d72a5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de53bd9b_24fe08d8",
+        "filename": "components/content_settings/core/browser/content_settings_info.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-18T01:24:54Z",
+      "side": 1,
+      "message": "nit: GetInitialDefaultSetting may be slightly more descriptive (to prevent confusion with the user-set default)",
+      "revId": "0c5618108bbcbbe57ccc5bcc749001178d72a5fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
