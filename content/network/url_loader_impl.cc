@@ -350,9 +350,18 @@ void URLLoaderImpl::ReadMore() {
                      &bytes_read);
   if (url_request_->status().is_io_pending()) {
     // Wait for OnReadCompleted.
-  } else if (url_request_->status().is_success() && bytes_read > 0) {
-    DidRead(static_cast<uint32_t>(bytes_read), true);
   } else {
+    DidRead(url_request_->status().is_success(),
+            static_cast<uint32_t>(bytes_read), true);
+    // |this| may have been deleted.
+    return;
+  }
+}
+
+void URLLoaderImpl::DidRead(bool success,
+                            uint32_t num_bytes,
+                            bool completed_synchronously) {
+  if (!success || num_bytes == 0) {
     writable_handle_watcher_.Cancel();
     CompletePendingWrite();
 
@@ -363,9 +372,7 @@ void URLLoaderImpl::ReadMore() {
     // |this| may have been deleted.
     return;
   }
-}
 
-void URLLoaderImpl::DidRead(uint32_t num_bytes, bool completed_synchronously) {
   pending_write_buffer_offset_ += num_bytes;
   DCHECK(url_request_->status().is_success());
   bool complete_read = true;
@@ -402,21 +409,9 @@ void URLLoaderImpl::DidRead(uint32_t num_bytes, bool completed_synchronously) {
 void URLLoaderImpl::OnReadCompleted(net::URLRequest* url_request,
                                     int bytes_read) {
   DCHECK(url_request == url_request_.get());
-
-  if (!url_request->status().is_success()) {
-    writable_handle_watcher_.Cancel();
-    CompletePendingWrite();
-
-    // This closes the data pipe.
-    // TODO(mmenke): Should NotifyCompleted close the data pipe itself instead?
-    response_body_stream_.reset();
-
-    NotifyCompleted(url_request_->status().ToNetError());
-    // |this| may have been deleted.
-    return;
-  }
-
-  DidRead(static_cast<uint32_t>(bytes_read), false);
+  DidRead(url_request->status().is_success(), static_cast<uint32_t>(bytes_read),
+          false);
+  // |this| may have been deleted.
 }
 
 base::WeakPtr<URLLoaderImpl> URLLoaderImpl::GetWeakPtrForTests() {

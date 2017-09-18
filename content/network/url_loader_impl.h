@@ -66,7 +66,7 @@ class CONTENT_EXPORT URLLoaderImpl : public mojom::URLLoader,
 
  private:
   void ReadMore();
-  void DidRead(uint32_t num_bytes, bool completed_synchronously);
+  void DidRead(bool success, uint32_t num_bytes, bool completed_synchronously);
   void NotifyCompleted(int error_code);
   void OnConnectionError();
   void OnResponseBodyStreamClosed(MojoResult result);
