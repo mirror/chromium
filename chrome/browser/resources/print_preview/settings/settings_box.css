@@ -6,3 +6,12 @@
   background: rgb(255, 240, 240);
   color: rgb(140, 20, 20);
 }
+
+.settings-box input[type='number'] {
+  margin-right: 16px;
+  margin-top: 7px;
+}
+
+.settings-box {
+  display: inline-flex;
+}
