@@ -4,6 +4,8 @@
 
 #include "modules/webaudio/AudioWorkletProcessor.h"
 
+#include "modules/webaudio/AudioBuffer.h"
+#include "modules/webaudio/AudioContextInfo.h"
 #include "modules/webaudio/AudioWorkletGlobalScope.h"
 
 namespace blink {
@@ -14,15 +16,19 @@ namespace blink {
 AudioWorkletProcessor* AudioWorkletProcessor::Create(
     AudioWorkletGlobalScope* global_scope,
     const String& name) {
-  DCHECK(!IsMainThread());
   DCHECK(global_scope);
-  return new AudioWorkletProcessor(global_scope, name);
+  DCHECK(global_scope->IsContextThread());
+  AudioWorkletProcessor* processor = new AudioWorkletProcessor(
+      global_scope, name);
+  return processor;
 }
 
 AudioWorkletProcessor::AudioWorkletProcessor(
     AudioWorkletGlobalScope* global_scope,
     const String& name)
-    : global_scope_(global_scope), name_(name), instance_(this) {}
+    : global_scope_(global_scope),
+      instance_(this),
+      name_(name) {}
 
 AudioWorkletProcessor::~AudioWorkletProcessor() {}
 
@@ -38,10 +44,14 @@ v8::Local<v8::Object> AudioWorkletProcessor::InstanceLocal(
   return instance_.NewLocal(isolate);
 }
 
-void AudioWorkletProcessor::Process(AudioBuffer* input_buffer,
-                                    AudioBuffer* output_buffer) {
+void AudioWorkletProcessor::Process(
+    Vector<AudioBus*>* inputBuses,
+    Vector<AudioBus*>* outputBuses,
+    HashMap<String, std::unique_ptr<AudioFloatArray>>* param_value_map,
+    double current_time) {
   DCHECK(global_scope_->IsContextThread());
-  global_scope_->Process(this, input_buffer, output_buffer);
+  global_scope_->Process(
+      this, inputBuses, outputBuses, param_value_map, current_time);
 }
 
 DEFINE_TRACE(AudioWorkletProcessor) {

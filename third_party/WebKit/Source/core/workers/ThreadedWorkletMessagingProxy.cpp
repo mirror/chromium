@@ -25,12 +25,13 @@ ThreadedWorkletMessagingProxy::ThreadedWorkletMessagingProxy(
     ExecutionContext* execution_context,
     WorkerClients* worker_clients)
     : ThreadedMessagingProxyBase(execution_context, worker_clients) {
-  worklet_object_proxy_ =
-      CreateObjectProxy(this, GetParentFrameTaskRunners());
 }
 
 void ThreadedWorkletMessagingProxy::Initialize() {
   DCHECK(IsMainThread());
+  worklet_object_proxy_ =
+      CreateObjectProxy(this, GetParentFrameTaskRunners());
+
   if (AskedToTerminate())
     return;
 
