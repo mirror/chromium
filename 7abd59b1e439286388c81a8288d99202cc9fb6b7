@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "7c5eb037_d3386ca9",
+        "filename": "device/vr/vr_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-18T16:01:42Z",
+      "side": 1,
+      "message": "Mind throwing a DCHECK(client_) here with a comment to this effect?",
+      "parentUuid": "1491f9fc_f6e5cfb9",
+      "revId": "7abd59b1e439286388c81a8288d99202cc9fb6b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b070c941_9d2d7be5",
         "filename": "device/vr/vr_service_impl_unittest.cc",
         "patchSetId": 1
