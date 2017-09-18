@@ -35,7 +35,7 @@ void TriggerCreator::MaybeCreateTriggersForWebContents(
   // later opt-in changes or quota becomes available, the trigger won't be
   // running on old tabs, but that's acceptable. The trigger will be started for
   // new tabs.
-  TriggerManager* trigger_manager =
+  scoped_refptr<TriggerManager> trigger_manager =
       g_browser_process->safe_browsing_service()->trigger_manager();
   SBErrorOptions options = TriggerManager::GetSBErrorDisplayOptions(
       *profile->GetPrefs(), *web_contents);

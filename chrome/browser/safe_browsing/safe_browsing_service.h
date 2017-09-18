@@ -164,7 +164,7 @@ class SafeBrowsingService : public base::RefCountedThreadSafe<
   const scoped_refptr<SafeBrowsingDatabaseManager>& v4_local_database_manager()
       const;
 
-  TriggerManager* trigger_manager() const;
+  scoped_refptr<TriggerManager> trigger_manager() const;
 
   // Gets PasswordProtectionService by profile.
   PasswordProtectionService* GetPasswordProtectionService(
@@ -353,7 +353,7 @@ class SafeBrowsingService : public base::RefCountedThreadSafe<
   scoped_refptr<SafeBrowsingNavigationObserverManager>
       navigation_observer_manager_;
 
-  std::unique_ptr<TriggerManager> trigger_manager_;
+  scoped_refptr<TriggerManager> trigger_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingService);
 };

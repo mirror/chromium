@@ -264,9 +264,9 @@ SafeBrowsingService::v4_local_database_manager() const {
   return services_delegate_->v4_local_database_manager();
 }
 
-TriggerManager* SafeBrowsingService::trigger_manager() const {
+scoped_refptr<TriggerManager> SafeBrowsingService::trigger_manager() const {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  return trigger_manager_.get();
+  return trigger_manager_;
 }
 
 PasswordProtectionService* SafeBrowsingService::GetPasswordProtectionService(
@@ -593,6 +593,6 @@ void SafeBrowsingService::ProcessResourceRequest(
 
 void SafeBrowsingService::CreateTriggerManager() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  trigger_manager_ = base::MakeUnique<TriggerManager>(ui_manager_.get());
+  trigger_manager_ = new TriggerManager(ui_manager_.get());
 }
 }  // namespace safe_browsing
