@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57f662fa_1e45f6fe",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-18T16:39:58Z",
+      "side": 1,
+      "message": "This needs a comment to explain how it is there can be a writer in the done_headers_queue_ when there are readers. Or to at least explain how it shouldn\u0027t be possible but appears to be anyway (with a bug link) so we have this here for safety.",
+      "revId": "8b6e17bcde36e7a4b90be1abb1c0d5b393bdcf3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60da65ff_d4e311cf",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-18T16:39:58Z",
+      "side": 1,
+      "message": "This code is tricky and needs a unittest. We need to show that readers and writers run sequentially.",
+      "range": {
+        "startLine": 1060,
+        "startChar": 0,
+        "endLine": 1061,
+        "endChar": 13
+      },
+      "revId": "8b6e17bcde36e7a4b90be1abb1c0d5b393bdcf3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
