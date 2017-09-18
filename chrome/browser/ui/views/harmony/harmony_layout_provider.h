@@ -14,6 +14,9 @@ class HarmonyLayoutProvider : public ChromeLayoutProvider {
   // The Harmony layout unit. All distances are in terms of this unit.
   static constexpr int kHarmonyLayoutUnit = 16;
 
+  // Dialog snapping widths.
+  static constexpr const int kDialogSnapPoints[] = {320, 448, 512};
+
   HarmonyLayoutProvider() {}
   ~HarmonyLayoutProvider() override {}
 

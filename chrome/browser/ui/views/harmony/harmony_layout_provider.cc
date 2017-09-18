@@ -4,6 +4,8 @@
 
 #include "chrome/browser/ui/views/harmony/harmony_layout_provider.h"
 
+constexpr const int HarmonyLayoutProvider::kDialogSnapPoints[];
+
 gfx::Insets HarmonyLayoutProvider::GetInsetsMetric(int metric) const {
   DCHECK_LT(metric, views::VIEWS_INSETS_MAX);
   switch (metric) {
@@ -113,7 +115,7 @@ bool HarmonyLayoutProvider::IsHarmonyMode() const {
 }
 
 int HarmonyLayoutProvider::GetSnappedDialogWidth(int min_width) const {
-  for (int snap_point : {320, 448, 512}) {
+  for (int snap_point : kDialogSnapPoints) {
     if (min_width <= snap_point)
       return snap_point;
   }

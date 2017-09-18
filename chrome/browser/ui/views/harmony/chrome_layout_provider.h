@@ -53,6 +53,22 @@ class ChromeLayoutProvider : public views::LayoutProvider {
   static ChromeLayoutProvider* Get();
   static std::unique_ptr<views::LayoutProvider> CreateLayoutProvider();
 
+  // Used to classify a bubble dialog based on how wide the dialog should appear
+  // in a typical user configuration. The desired width is typically
+  // characterized by the number of buttons and the lengths of the button
+  // labels, or the typical length of the dialog title.
+  enum class BubbleWidth {
+    NORMAL,
+    WIDE,
+    VERY_WIDE,
+  };
+
+  // Returns the width to use for a multiline Label in the body of a bubble
+  // dialog. This is used to guide text wrapping and may be influenced by locale
+  // and the user's configured text size. Note the bubble layout may set an
+  // actual width that is wider.
+  static int GetBubbleDialogTextWidth(BubbleWidth bubble_width);
+
   // views::LayoutProvider:
   gfx::Insets GetInsetsMetric(int metric) const override;
   int GetDistanceMetric(int metric) const override;

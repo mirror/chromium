@@ -43,6 +43,20 @@ ChromeLayoutProvider::CreateLayoutProvider() {
              : base::MakeUnique<ChromeLayoutProvider>();
 }
 
+// static
+int ChromeLayoutProvider::GetBubbleDialogTextWidth(BubbleWidth bubble_width) {
+  // Uses Harmony constants directly rather than the layout provider, so this
+  // works for dialogs with an arbitrary width outside of Harmony. Calculate
+  // assuming that the dialog margins are 16 pixels.
+  // TODO(tapted): Incorporate locale and font information.
+  static_assert(static_cast<int>(BubbleWidth::VERY_WIDE) + 1 ==
+                    arraysize(HarmonyLayoutProvider::kDialogSnapPoints),
+                "mismatch");
+  return HarmonyLayoutProvider::kDialogSnapPoints[static_cast<int>(
+             bubble_width)] -
+         2 * HarmonyLayoutProvider::kHarmonyLayoutUnit;
+}
+
 gfx::Insets ChromeLayoutProvider::GetInsetsMetric(int metric) const {
   switch (metric) {
     case ChromeInsetsMetric::INSETS_TOAST:
