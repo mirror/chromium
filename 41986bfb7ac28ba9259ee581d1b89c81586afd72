@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17420000_05460cca",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-18T22:08:16Z",
+      "side": 1,
+      "message": "use putLong instead of putString:\nhttps://developer.android.com/reference/android/content/SharedPreferences.Editor.html#putLong(java.lang.String, long)\n\nThen no need to convert to a string below.",
+      "range": {
+        "startLine": 501,
+        "startChar": 25,
+        "endLine": 501,
+        "endChar": 34
+      },
+      "revId": "41986bfb7ac28ba9259ee581d1b89c81586afd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
