@@ -1028,7 +1028,7 @@ IN_PROC_BROWSER_TEST_F(AccessibilityWinBrowserTest, TestCharacterExtents) {
   base::win::ScopedComPtr<IAccessibleText> paragraph_text;
   SetUpSampleParagraph(&paragraph_text);
 
-  const LONG newline_offset = 46;
+  const LONG newline_offset = 26;
   LONG n_characters;
   ASSERT_HRESULT_SUCCEEDED(paragraph_text->get_nCharacters(&n_characters));
   ASSERT_LT(0, n_characters);
@@ -1059,6 +1059,11 @@ IN_PROC_BROWSER_TEST_F(AccessibilityWinBrowserTest, TestCharacterExtents) {
 
     EXPECT_HRESULT_SUCCEEDED(paragraph_text->get_characterExtents(
         newline_offset + 1, coordinate_type, &x, &y, &width, &height));
+    // DO NOT SUBMIT WITH LOG LINES
+    LOG(ERROR) << "Paragraph text x: " << x << ", y: " << y << ", w: " << width
+               << ", h: " << height;
+    LOG(ERROR) << "Previous x: " << previous_x
+               << ", previous y: " << previous_y;
     EXPECT_LE(0, x) << "at offset " << newline_offset + 1;
     EXPECT_GT(previous_x, x) << "at offset " << newline_offset + 1;
     EXPECT_LT(previous_y, y) << "at offset " << newline_offset + 1;
