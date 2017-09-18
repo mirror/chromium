@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dac0f98f_64e38e1d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-18T23:02:56Z",
+      "side": 1,
+      "message": "You might want to mention that there is a requirement for an observer to have a public no-param constructor.",
+      "revId": "7c575b213bdd04420a37a787dec005a404918761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac041ce1_414c1bba",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-18T23:02:56Z",
+      "side": 1,
+      "message": "This reads from file and writes to file something that was based on the read. This is a public method. Should we assert something related to thread affinity here and below (in the remove method)?",
+      "revId": "7c575b213bdd04420a37a787dec005a404918761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c6650fd_01c65013",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-18T23:02:56Z",
+      "side": 1,
+      "message": "Nit: Do we need to do this before the last line?",
+      "revId": "7c575b213bdd04420a37a787dec005a404918761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c6ddc7e_8f1d8cff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-18T23:02:56Z",
+      "side": 1,
+      "message": "Nit: Do we need to do this before the last line?",
+      "revId": "7c575b213bdd04420a37a787dec005a404918761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a085301e_116431f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-18T23:02:56Z",
+      "side": 1,
+      "message": "Could this be simplified to:\n\n  if (!observers.contains(observer)) return;\n  \n  Set\u003cString\u003e observersCopy \u003d new HashSet\u003c\u003e(observers);\n  observersCopy.remove(observer);\n  \n  ...\n\n?",
+      "revId": "7c575b213bdd04420a37a787dec005a404918761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a90395_4b904d0d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-18T23:02:56Z",
+      "side": 1,
+      "message": "This name is a little bit odd. Maybe getClassNameFromObserver or something like that? I mean, it\u0027s not like you\u0027re asking the Observer interface for help, you\u0027re just inspecting the class of the instance.",
+      "range": {
+        "startLine": 133,
+        "startChar": 18,
+        "endLine": 133,
+        "endChar": 39
+      },
+      "revId": "7c575b213bdd04420a37a787dec005a404918761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb2354c_9df7c1f7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-18T23:02:56Z",
+      "side": 1,
+      "message": "Maybe getObserverFromClassName or something along those lines? (If so, maybe rename the param name as well?)",
+      "range": {
+        "startLine": 138,
+        "startChar": 28,
+        "endLine": 138,
+        "endChar": 49
+      },
+      "revId": "7c575b213bdd04420a37a787dec005a404918761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
