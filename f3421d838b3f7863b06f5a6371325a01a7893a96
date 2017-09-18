@@ -16,6 +16,24 @@
       "revId": "f3421d838b3f7863b06f5a6371325a01a7893a96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37adc3e_25d65a5d",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-18T19:20:35Z",
+      "side": 0,
+      "message": "To be honest, I don\u0027t know but it seems like an old hack. I haven\u0027t followed through all the refactoring to determine the origin of this.\n\nIf it has a transparent background, then it won\u0027t put in background quads and the background color doesn\u0027t matter, I think.\n\nIf it has non-transparent then it will initially use black quads, then switch to white 500ms later. I was hoping aelias@ could help me here because I\u0027m wondering if we actually still care about this?\n\nWhat\u0027s behind CompositorImpl? Isn\u0027t this the LayerTreeHost of the \"Browser UI\"?",
+      "parentUuid": "d07b0b3a_3869f85b",
+      "revId": "f3421d838b3f7863b06f5a6371325a01a7893a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
