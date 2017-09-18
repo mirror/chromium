@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd8cecc3_075467ea",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator-eg.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-18T16:29:49Z",
+      "side": 1,
+      "message": "nit: remove trailing whitespace",
+      "revId": "254b5222389becd42b7bf42ae5fd0312551727bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b732528_4d6b21b4",
+        "filename": "ios/chrome/test/earl_grey/chrome_ios_base_eg_test.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-18T16:29:49Z",
+      "side": 1,
+      "message": "Does clean use the same Info.plist as Chrome?",
+      "revId": "254b5222389becd42b7bf42ae5fd0312551727bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf74b79c_5106c927",
+        "filename": "ios/chrome/test/earl_grey/chrome_ios_base_eg_test.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-18T16:29:49Z",
+      "side": 1,
+      "message": "Is clean using configurable UIApplicationDelegate too?",
+      "revId": "254b5222389becd42b7bf42ae5fd0312551727bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d36ee176_be9798f9",
+        "filename": "ios/chrome/test/earl_grey/chrome_ios_base_eg_test.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-18T16:29:49Z",
+      "side": 1,
+      "message": "Are we using breakpad with clean?",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 46
+      },
+      "revId": "254b5222389becd42b7bf42ae5fd0312551727bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d4f62c1_ec866b63",
+        "filename": "ios/chrome/test/earl_grey/chrome_ios_base_eg_test.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-18T16:29:49Z",
+      "side": 1,
+      "message": "Does clean support Chrome extensions?",
+      "revId": "254b5222389becd42b7bf42ae5fd0312551727bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fea80d4_b33f3a00",
+        "filename": "ios/chrome/test/earl_grey/chrome_ios_base_eg_test.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-09-18T16:29:49Z",
+      "side": 1,
+      "message": "Does clean support Chrome extensions?",
+      "revId": "254b5222389becd42b7bf42ae5fd0312551727bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
