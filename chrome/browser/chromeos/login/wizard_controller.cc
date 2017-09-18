@@ -449,6 +449,10 @@ BaseScreen* WizardController::CreateScreen(OobeScreen screen) {
   return nullptr;
 }
 
+bool WizardController::IsArcTermsOfServiceShowing() {
+  return current_screen_ == GetScreen(OobeScreen::SCREEN_ARC_TERMS_OF_SERVICE);
+}
+
 void WizardController::ShowNetworkScreen() {
   VLOG(1) << "Showing network screen.";
   UpdateStatusAreaVisibilityForScreen(OobeScreen::SCREEN_OOBE_NETWORK);
