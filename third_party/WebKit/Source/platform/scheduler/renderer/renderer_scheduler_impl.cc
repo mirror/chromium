@@ -1825,6 +1825,11 @@ void RendererSchedulerImpl::SetRendererProcessType(RendererProcessType type) {
   main_thread_only().process_type = type;
 }
 
+scoped_refptr<TaskQueue> RendererSchedulerImpl::NewDefaultTaskQueue() {
+  return NewTaskQueue(MainThreadTaskQueue::QueueCreationParams(
+      MainThreadTaskQueue::QueueType::DEFAULT));
+}
+
 void RendererSchedulerImpl::RegisterTimeDomain(TimeDomain* time_domain) {
   helper_.RegisterTimeDomain(time_domain);
 }

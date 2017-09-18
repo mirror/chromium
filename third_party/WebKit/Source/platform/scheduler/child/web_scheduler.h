@@ -2,9 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_RENDERER_WEB_SCHEDULER_H_
-#define THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_RENDERER_WEB_SCHEDULER_H_
+#ifndef THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_CHILD_WEB_SCHEDULER_H_
+#define THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_CHILD_WEB_SCHEDULER_H_
 
+#include "platform/scheduler/base/task_queue.h"
 #include "platform/scheduler/renderer/web_view_scheduler.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebThread.h"
@@ -77,6 +78,11 @@ class PLATFORM_EXPORT WebScheduler {
   // and should not generally be used.
   virtual WebTaskRunner* CompositorTaskRunner() = 0;
 
+  // Creates and returns a new default task queue.
+  virtual scoped_refptr<scheduler::TaskQueue> NewDefaultTaskQueue() {
+    return nullptr;
+  }
+
   // Creates a new WebViewScheduler for a given WebView. Must be called from
   // the associated WebThread.
   virtual std::unique_ptr<WebViewScheduler> CreateWebViewScheduler(
@@ -120,4 +126,4 @@ class PLATFORM_EXPORT WebScheduler {
 
 }  // namespace blink
 
-#endif  // THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_RENDERER_WEB_SCHEDULER_H_
+#endif  // THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_CHILD_WEB_SCHEDULER_H_
