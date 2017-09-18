@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b65d7e9_cf0f321c",
+        "filename": "device/vr/android/gvr/gvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-18T03:30:57Z",
+      "side": 1,
+      "message": "I know this was pre-existing code, but I\u0027d suggest just pulling this out into a separate function and then doing:\n\ndevice-\u003eleftEye \u003d CreateEyeParamater(gvr_api, GVR_LEFT_EYE);\ndevice-\u003erightEye \u003d CreateEyeParamater(gvr_api, GVR_RIGHT_EYE);",
+      "revId": "7abd59b1e439286388c81a8288d99202cc9fb6b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61dc45d3_796b979a",
+        "filename": "device/vr/android/gvr/gvr_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-18T03:30:57Z",
+      "side": 1,
+      "message": "DOM?",
+      "range": {
+        "startLine": 151,
+        "startChar": 54,
+        "endLine": 151,
+        "endChar": 57
+      },
+      "revId": "7abd59b1e439286388c81a8288d99202cc9fb6b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e6f91b_25d251f5",
+        "filename": "device/vr/vr_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-18T03:30:57Z",
+      "side": 1,
+      "message": "My memory is a bit rusty on how the control flow here works: is it possible for this to be called when |client_| is yet set?",
+      "revId": "7abd59b1e439286388c81a8288d99202cc9fb6b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b070c941_9d2d7be5",
+        "filename": "device/vr/vr_service_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-18T03:30:57Z",
+      "side": 1,
+      "message": "Is this needed? It\u0027s not marked override and it\u0027s empty.",
+      "revId": "7abd59b1e439286388c81a8288d99202cc9fb6b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
