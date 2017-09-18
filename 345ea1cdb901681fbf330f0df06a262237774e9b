@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "608e68ea_d25c8a20",
+        "filename": "chrome/browser/android/payments/service_worker_payment_app_bridge.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-18T17:00:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "707278ab_4cfa9a9d",
+      "range": {
+        "startLine": 57,
+        "startChar": 18,
+        "endLine": 57,
+        "endChar": 34
+      },
+      "revId": "345ea1cdb901681fbf330f0df06a262237774e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ccddf1f_023471bb",
         "filename": "chrome/browser/payments/manifest_verifier_browsertest.cc",
         "patchSetId": 17
@@ -39,6 +63,24 @@
       "revId": "345ea1cdb901681fbf330f0df06a262237774e9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54755606_e602e6fa",
+        "filename": "chrome/browser/payments/manifest_verifier_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-18T17:00:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ccddf1f_023471bb",
+      "revId": "345ea1cdb901681fbf330f0df06a262237774e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "df5d3f9a_8f13b294",
+        "filename": "chrome/browser/payments/manifest_verifier_browsertest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-18T17:00:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e2cec3a_6092fb83",
+      "range": {
+        "startLine": 135,
+        "startChar": 22,
+        "endLine": 135,
+        "endChar": 23
+      },
+      "revId": "345ea1cdb901681fbf330f0df06a262237774e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e645dad4_c30d4eea",
         "filename": "chrome/browser/ui/search_engines/keyword_editor_controller_unittest.cc",
         "patchSetId": 17
@@ -79,6 +145,24 @@
       "revId": "345ea1cdb901681fbf330f0df06a262237774e9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f6551b_6d52b22e",
+        "filename": "chrome/browser/ui/search_engines/keyword_editor_controller_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-18T17:00:32Z",
+      "side": 1,
+      "message": "Reverted. I ran include-what-you-use on one of the files that I was using, which cascaded into all of these files being changed as well. It\u0027s not that important to fix them all, though, so I reverted the original include-what-you-use change.",
+      "parentUuid": "e645dad4_c30d4eea",
+      "revId": "345ea1cdb901681fbf330f0df06a262237774e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -102,6 +186,30 @@
       "revId": "345ea1cdb901681fbf330f0df06a262237774e9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c8f1c8_c63e525e",
+        "filename": "components/payments/content/payment_method_manifest_table_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-18T17:00:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a328a6e6_e83c39d8",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "345ea1cdb901681fbf330f0df06a262237774e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
