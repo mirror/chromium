@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "24287923_f3200f9f",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/MainActivityTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-18T20:03:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55d13a26_dbb69604",
+      "range": {
+        "startLine": 31,
+        "startChar": 38,
+        "endLine": 31,
+        "endChar": 41
+      },
+      "revId": "1520795ddcb3e529fe0d9bd9a1591b89eca0fda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7ce766b5_5994124b",
         "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/MainActivityTest.java",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "1520795ddcb3e529fe0d9bd9a1591b89eca0fda6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5531a78_9424880a",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/MainActivityTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1117450
+      },
+      "writtenOn": "2017-09-18T20:03:12Z",
+      "side": 1,
+      "message": "We have testNotRewriteStartUrlInsideScope for normal cases.",
+      "parentUuid": "7ce766b5_5994124b",
+      "range": {
+        "startLine": 35,
+        "startChar": 16,
+        "endLine": 35,
+        "endChar": 60
+      },
+      "revId": "1520795ddcb3e529fe0d9bd9a1591b89eca0fda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
