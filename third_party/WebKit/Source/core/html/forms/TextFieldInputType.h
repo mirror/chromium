@@ -89,7 +89,6 @@ class TextFieldInputType : public InputType,
   bool ShouldSubmitImplicitly(Event*) final;
   bool ShouldRespectListAttribute() override;
   void ListAttributeTargetChanged() override;
-  void UpdatePlaceholderText() final;
   void AppendToFormData(FormData&) const override;
   void SubtreeHasChanged() final;
 

@@ -462,34 +462,6 @@ bool TextFieldInputType::ShouldRespectListAttribute() {
   return true;
 }
 
-void TextFieldInputType::UpdatePlaceholderText() {
-  if (!SupportsPlaceholder())
-    return;
-  HTMLElement* placeholder = GetElement().PlaceholderElement();
-  String placeholder_text = GetElement().StrippedPlaceholder();
-  if (placeholder_text.IsEmpty()) {
-    if (placeholder)
-      placeholder->remove(ASSERT_NO_EXCEPTION);
-    return;
-  }
-  if (!placeholder) {
-    HTMLElement* new_element =
-        HTMLDivElement::Create(GetElement().GetDocument());
-    placeholder = new_element;
-    placeholder->SetShadowPseudoId(AtomicString("-webkit-input-placeholder"));
-    placeholder->SetInlineStyleProperty(
-        CSSPropertyDisplay,
-        GetElement().IsPlaceholderVisible() ? CSSValueBlock : CSSValueNone,
-        true);
-    placeholder->setAttribute(idAttr, ShadowElementNames::Placeholder());
-    Element* container = ContainerElement();
-    Node* previous = container ? container : GetElement().InnerEditorElement();
-    previous->parentNode()->InsertBefore(placeholder, previous);
-    SECURITY_DCHECK(placeholder->parentNode() == previous->parentNode());
-  }
-  placeholder->setTextContent(placeholder_text);
-}
-
 void TextFieldInputType::AppendToFormData(FormData& form_data) const {
   InputType::AppendToFormData(form_data);
   const AtomicString& dirname_attr_value =
@@ -531,10 +503,8 @@ void TextFieldInputType::SpinButtonStepUp() {
 }
 
 void TextFieldInputType::UpdateView() {
-  if (!GetElement().SuggestedValue().IsNull()) {
-    GetElement().SetInnerEditorValue(GetElement().SuggestedValue());
-    GetElement().UpdatePlaceholderVisibility();
-  } else if (GetElement().NeedsToUpdateViewValue()) {
+  if (GetElement().SuggestedValue().IsEmpty() &&
+      GetElement().NeedsToUpdateViewValue()) {
     // Update the view only if needsToUpdateViewValue is true. It protects
     // an unacceptable view value from being overwritten with the DOM value.
     //
