@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0027fee_16fba8da",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1682,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-18T15:45:26Z",
+      "side": 1,
+      "message": "Do we want orientation or all size changes?",
+      "range": {
+        "startLine": 1682,
+        "startChar": 25,
+        "endLine": 1682,
+        "endChar": 50
+      },
+      "revId": "749d234f627d30cce0d4201de0d4393207155463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79dca9dc_097eb3c2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 3191,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-18T15:45:26Z",
+      "side": 1,
+      "message": "Have we thought about popup vs. view in the view hierarchy?",
+      "range": {
+        "startLine": 3191,
+        "startChar": 32,
+        "endLine": 3191,
+        "endChar": 43
+      },
+      "revId": "749d234f627d30cce0d4201de0d4393207155463",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
