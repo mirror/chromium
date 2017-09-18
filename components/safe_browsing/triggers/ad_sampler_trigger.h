@@ -6,6 +6,7 @@
 #define COMPONENTS_SAFE_BROWSING_TRIGGERS_AD_SAMPLER_TRIGGER_H_
 
 #include "base/macros.h"
+#include "base/memory/ref_counted.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 
@@ -63,7 +64,7 @@ class AdSamplerTrigger : public content::WebContentsObserver,
 
   static void CreateForWebContents(
       content::WebContents* web_contents,
-      TriggerManager* trigger_manager,
+      scoped_refptr<TriggerManager> trigger_manager,
       PrefService* prefs,
       net::URLRequestContextGetter* request_context,
       history::HistoryService* history_service);
@@ -79,7 +80,7 @@ class AdSamplerTrigger : public content::WebContentsObserver,
                            FrequencyDenominatorFeature);
 
   AdSamplerTrigger(content::WebContents* web_contents,
-                   TriggerManager* trigger_manager,
+                   scoped_refptr<TriggerManager> trigger_manager,
                    PrefService* prefs,
                    net::URLRequestContextGetter* request_context,
                    history::HistoryService* history_service);
@@ -88,9 +89,13 @@ class AdSamplerTrigger : public content::WebContentsObserver,
   // 1/|sampler_frequency_denominator_|
   size_t sampler_frequency_denominator_;
 
+  // The delay (in milliseconds) to wait before finishing a report. Can be
+  // overwritten for tests.
+  int64_t finish_report_delay_ms_;
+
   // TriggerManager gets called if this trigger detects an ad and wants to
   // collect some data about it. Not owned.
-  TriggerManager* trigger_manager_;
+  scoped_refptr<TriggerManager> trigger_manager_;
 
   PrefService* prefs_;
   net::URLRequestContextGetter* request_context_;

@@ -4,6 +4,7 @@
 
 #include "components/safe_browsing/triggers/ad_sampler_trigger.h"
 
+#include "base/memory/ref_counted.h"
 #include "base/metrics/field_trial_params.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/scoped_feature_list.h"
@@ -54,11 +55,14 @@ class MockTriggerManager : public TriggerManager {
                     bool did_proceed,
                     int num_visits,
                     const SBErrorOptions& error_display_options));
+
+ private:
+  ~MockTriggerManager() override {}
 };
 
 class AdSamplerTriggerTest : public content::RenderViewHostTestHarness {
  public:
-  AdSamplerTriggerTest() {}
+  AdSamplerTriggerTest() : trigger_manager_(new MockTriggerManager) {}
   ~AdSamplerTriggerTest() override {}
 
   void SetUp() override {
@@ -73,9 +77,11 @@ class AdSamplerTriggerTest : public content::RenderViewHostTestHarness {
 
   void CreateTriggerWithFrequency(const size_t denominator) {
     safe_browsing::AdSamplerTrigger::CreateForWebContents(
-        web_contents(), &trigger_manager_, &prefs_, nullptr, nullptr);
+        web_contents(), trigger_manager_.get(), &prefs_, nullptr, nullptr);
     safe_browsing::AdSamplerTrigger::FromWebContents(web_contents())
         ->sampler_frequency_denominator_ = denominator;
+    safe_browsing::AdSamplerTrigger::FromWebContents(web_contents())
+        ->finish_report_delay_ms_ = 0;
   }
 
   // Returns the final RenderFrameHost after navigation commits.
@@ -103,12 +109,12 @@ class AdSamplerTriggerTest : public content::RenderViewHostTestHarness {
     return navigation_simulator->GetFinalRenderFrameHost();
   }
 
-  MockTriggerManager* get_trigger_manager() { return &trigger_manager_; }
+  MockTriggerManager* get_trigger_manager() { return trigger_manager_.get(); }
   base::HistogramTester* get_histograms() { return &histograms_; }
 
  private:
   TestingPrefServiceSimple prefs_;
-  MockTriggerManager trigger_manager_;
+  scoped_refptr<MockTriggerManager> trigger_manager_;
   base::HistogramTester histograms_;
 };
 

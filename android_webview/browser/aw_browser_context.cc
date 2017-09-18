@@ -194,8 +194,7 @@ void AwBrowserContext::PreMainMessageLoopRun() {
   safe_browsing_db_manager_ =
       new safe_browsing::RemoteSafeBrowsingDatabaseManager();
   safe_browsing_trigger_manager_ =
-      base::MakeUnique<safe_browsing::TriggerManager>(
-          safe_browsing_ui_manager_.get());
+      new safe_browsing::TriggerManager(safe_browsing_ui_manager_.get());
   safe_browsing_whitelist_manager_ = CreateSafeBrowsingWhitelistManager();
 
   content::WebUIControllerFactory::RegisterFactory(

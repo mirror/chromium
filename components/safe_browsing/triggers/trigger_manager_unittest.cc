@@ -4,6 +4,7 @@
 
 #include "components/safe_browsing/triggers/trigger_manager.h"
 
+#include "base/memory/ref_counted.h"
 #include "base/stl_util.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/testing_pref_service.h"
@@ -56,7 +57,7 @@ class MockTriggerThrottler : public TriggerThrottler {
 
 class TriggerManagerTest : public ::testing::Test {
  public:
-  TriggerManagerTest() : trigger_manager_(/*ui_manager=*/nullptr) {}
+  TriggerManagerTest() : trigger_manager_(new TriggerManager(nullptr)) {}
   ~TriggerManagerTest() override {}
 
   void SetUp() override {
@@ -72,7 +73,7 @@ class TriggerManagerTest : public ::testing::Test {
     MockTriggerThrottler* mock_throttler = new MockTriggerThrottler();
     ON_CALL(*mock_throttler, TriggerCanFire(_)).WillByDefault(Return(true));
     // Trigger Manager takes ownership of the mock throttler.
-    trigger_manager_.set_trigger_throttler(mock_throttler);
+    trigger_manager_->set_trigger_throttler(mock_throttler);
   }
 
   void SetPref(const std::string& pref, bool value) {
@@ -85,7 +86,7 @@ class TriggerManagerTest : public ::testing::Test {
 
   void SetTriggerHasQuota(const TriggerType trigger_type, bool has_quota) {
     MockTriggerThrottler* mock_throttler = static_cast<MockTriggerThrottler*>(
-        trigger_manager_.trigger_throttler_.get());
+        trigger_manager_->trigger_throttler_.get());
     EXPECT_CALL(*mock_throttler, TriggerCanFire(trigger_type))
         .WillOnce(Return(has_quota));
   }
@@ -106,7 +107,7 @@ class TriggerManagerTest : public ::testing::Test {
                                     content::WebContents* web_contents) {
     SBErrorOptions options =
         TriggerManager::GetSBErrorDisplayOptions(pref_service_, *web_contents);
-    return trigger_manager_.StartCollectingThreatDetails(
+    return trigger_manager_->StartCollectingThreatDetails(
         trigger_type, web_contents, security_interstitials::UnsafeResource(),
         nullptr, nullptr, options);
   }
@@ -116,22 +117,22 @@ class TriggerManagerTest : public ::testing::Test {
                                      bool expect_report_sent) {
     if (expect_report_sent) {
       MockThreatDetails* threat_details = static_cast<MockThreatDetails*>(
-          trigger_manager_.data_collectors_map_[web_contents]
+          trigger_manager_->data_collectors_map_[web_contents]
               .threat_details.get());
       EXPECT_CALL(*threat_details, FinishCollection(_, _)).Times(1);
     }
     SBErrorOptions options =
         TriggerManager::GetSBErrorDisplayOptions(pref_service_, *web_contents);
-    return trigger_manager_.FinishCollectingThreatDetails(
+    return trigger_manager_->FinishCollectingThreatDetails(
         trigger_type, web_contents, base::TimeDelta(), false, 0, options);
   }
 
   const DataCollectorsMap& data_collectors_map() {
-    return trigger_manager_.data_collectors_map_;
+    return trigger_manager_->data_collectors_map_;
   }
 
  private:
-  TriggerManager trigger_manager_;
+  scoped_refptr<TriggerManager> trigger_manager_;
   MockThreatDetailsFactory mock_threat_details_factory_;
   content::TestBrowserThreadBundle thread_bundle_;
   content::TestBrowserContext browser_context_;

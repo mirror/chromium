@@ -61,10 +61,9 @@ using SBErrorOptions =
 // The TriggerManager has two main responsibilities: 1) ensuring triggers only
 // run when appropriate, by honouring user opt-ins and incognito state, and 2)
 // tracking how often triggers fire and throttling them when necessary.
-class TriggerManager {
+class TriggerManager : public base::RefCountedThreadSafe<TriggerManager> {
  public:
   TriggerManager(BaseUIManager* ui_manager);
-  virtual ~TriggerManager();
 
   // Returns a SBErrorDisplayOptions struct containing user state that is
   // relevant for TriggerManager to decide whether to start/finish data
@@ -112,6 +111,10 @@ class TriggerManager {
       bool did_proceed,
       int num_visits,
       const SBErrorOptions& error_display_options);
+
+ protected:
+  friend class base::RefCountedThreadSafe<TriggerManager>;
+  virtual ~TriggerManager();
 
  private:
   friend class TriggerManagerTest;
