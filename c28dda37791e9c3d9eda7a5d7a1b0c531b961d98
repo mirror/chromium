@@ -16,6 +16,24 @@
       "revId": "c28dda37791e9c3d9eda7a5d7a1b0c531b961d98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89ff378d_5f3f35e7",
+        "filename": "ui/views/window/dialog_client_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-09-18T14:38:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f85bbfa_1b7161c1",
+      "revId": "c28dda37791e9c3d9eda7a5d7a1b0c531b961d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
