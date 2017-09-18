@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "c60c643f_b8241079",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-18T22:37:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de328eee_4e8eb47b",
+      "range": {
+        "startLine": 112,
+        "startChar": 25,
+        "endLine": 112,
+        "endChar": 36
+      },
+      "revId": "16cf7d43af22605552df6dc09ce6c0a4015b3221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "192172d7_bdf25f7b",
         "filename": "media/gpu/android/avda_codec_allocator.cc",
         "patchSetId": 2
@@ -167,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "c6f341aa_fe3ca51a",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-18T22:37:14Z",
+      "side": 1,
+      "message": "indeed.",
+      "parentUuid": "192172d7_bdf25f7b",
+      "range": {
+        "startLine": 214,
+        "startChar": 0,
+        "endLine": 214,
+        "endChar": 47
+      },
+      "revId": "16cf7d43af22605552df6dc09ce6c0a4015b3221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7957de9f_52bbd30e",
         "filename": "media/gpu/android/avda_codec_allocator.cc",
         "patchSetId": 2
@@ -187,6 +235,30 @@
       "revId": "16cf7d43af22605552df6dc09ce6c0a4015b3221",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a83a7bba_2e155b57",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-18T22:37:14Z",
+      "side": 1,
+      "message": "ended up making a class to hold the pair with a destructor that posts deletion if needed.  was easier than trying to figure out the syntax to friend the unique_ptr custom deleter.  :)",
+      "parentUuid": "7957de9f_52bbd30e",
+      "range": {
+        "startLine": 274,
+        "startChar": 0,
+        "endLine": 274,
+        "endChar": 31
+      },
+      "revId": "16cf7d43af22605552df6dc09ce6c0a4015b3221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
