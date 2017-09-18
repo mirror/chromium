@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "da56af7c_1352a74d",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-18T20:50:30Z",
+      "side": 1,
+      "message": "Or maybe make this a member of LoginDisplayHostImpl::LoginWidgetDelegate instead of as a member of LoginDisplayHostImpl.",
+      "parentUuid": "cb540b8a_ad177213",
+      "revId": "7b586124be82cb2378c13f461540fd500f7c7657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99479643_e72c66ab",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-18T20:50:30Z",
+      "side": 1,
+      "message": "What if this happens before OnCompositingDidCommit is called ? This could happen when LoginDisplayHostImpl is deleted and ResetLoginWindowAndView() is called from its dtor.",
+      "revId": "7b586124be82cb2378c13f461540fd500f7c7657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aeff3982_e6794303",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
         "patchSetId": 1
