@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d57ca719_bcf83e50",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T13:04:32Z",
+      "side": 1,
+      "message": "this -\u003e |this| (assuming that\u0027s what you mean).",
+      "range": {
+        "startLine": 74,
+        "startChar": 47,
+        "endLine": 75,
+        "endChar": 54
+      },
+      "revId": "5d253201e6ceca7b6012f35d4ed59d3f37d5d740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "053e5174_02651f72",
+        "filename": "content/browser/background_fetch/background_fetch_data_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T13:04:32Z",
+      "side": 1,
+      "message": "nit: any -\u003e the \n\nsince any implies there could be more than one listener.",
+      "range": {
+        "startLine": 151,
+        "startChar": 55,
+        "endLine": 151,
+        "endChar": 58
+      },
+      "revId": "5d253201e6ceca7b6012f35d4ed59d3f37d5d740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c94c393d_ddbdad7a",
+        "filename": "content/browser/background_fetch/background_fetch_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 528,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-18T13:04:32Z",
+      "side": 1,
+      "message": "make this a bug TODO, since it may not be me doing this.",
+      "range": {
+        "startLine": 528,
+        "startChar": 5,
+        "endLine": 528,
+        "endChar": 20
+      },
+      "revId": "5d253201e6ceca7b6012f35d4ed59d3f37d5d740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
