@@ -64,6 +64,8 @@ constexpr base::TimeDelta kDisusedProfileTimeDelta =
     base::TimeDelta::FromDays(180);
 constexpr base::TimeDelta kDisusedCreditCardTimeDelta =
     base::TimeDelta::FromDays(180);
+constexpr base::TimeDelta kDisusedCreditCardDeletionTimeDelta =
+    base::TimeDelta::FromDays(395);
 
 template <typename T>
 class FormGroupMatchesByGUIDFunctor {
@@ -339,6 +341,10 @@ void PersonalDataManager::OnSyncServiceInitialized(
   // This runs at most once per major version, tracked in syncable prefs. If it
   // has already run for this version, it's a NOP, other than checking the pref.
   ApplyDedupingRoutine();
+
+  // This runs at most once per major version, tracked in syncable prefs. If it
+  // has already run for this version, it's a NOP, other than checking the pref.
+  DeleteDisusedCreditCards();
 }
 
 void PersonalDataManager::OnWebDataServiceRequestDone(
@@ -416,6 +422,11 @@ void PersonalDataManager::SyncStarted(syncer::ModelType model_type) {
     // it has already run for this version, it's a NOP, other than checking the
     // pref.
     ApplyDedupingRoutine();
+
+    // This runs at most once per major version, tracked in syncable prefs. If
+    // it has already run for this version, it's a NOP, other than checking the
+    // pref.
+    DeleteDisusedCreditCards();
   }
 }
 
@@ -2150,6 +2161,44 @@ std::string PersonalDataManager::MergeServerAddressesIntoProfiles(
   }
 
   return guid;
+}
+
+bool PersonalDataManager::DeleteDisusedCreditCards() {
+  if (!base::FeatureList::IsEnabled(kAutofillDeleteDisusedCreditCards)) {
+    return false;
+  }
+
+  // Check if credit cards deletion has already been performed this major
+  // version.
+  int current_major_version = atoi(version_info::GetVersionNumber().c_str());
+  if (pref_service_->GetInteger(
+          prefs::kAutofillLastVersionDisusedCreditCardsDeleted) >=
+      current_major_version) {
+    DVLOG(1)
+        << "Autofill credit cards deletion already performed for this version";
+    return false;
+  }
+
+  const base::Time min_last_used =
+      AutofillClock::Now() - kDisusedCreditCardDeletionTimeDelta;
+
+  std::vector<std::string> guidToDelete;
+  for (CreditCard* card : GetLocalCreditCards()) {
+    if (card->use_date() < min_last_used && card->IsExpired(min_last_used)) {
+      guidToDelete.push_back(card->guid());
+    }
+  }
+
+  for (auto const guid : guidToDelete) {
+    RemoveByGUID(guid);
+  }
+
+  // Set the pref to the current major version.
+  pref_service_->SetInteger(
+      prefs::kAutofillLastVersionDisusedCreditCardsDeleted,
+      current_major_version);
+
+  return true;
 }
 
 }  // namespace autofill
