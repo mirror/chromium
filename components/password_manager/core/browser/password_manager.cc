@@ -593,6 +593,8 @@ void PasswordManager::ProvisionallySaveManager(
         Logger::STRING_IGNORE_POSSIBLE_USERNAMES,
         action == PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
   }
+  LOG(ERROR) << "ProvisionallySaveManager "
+             << submitted_form.form_data.fields.size();
   manager->ProvisionallySave(submitted_form, action);
   provisional_save_manager_.swap(manager);
 }

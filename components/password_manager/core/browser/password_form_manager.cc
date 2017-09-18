@@ -165,6 +165,8 @@ void SetFieldLabelsOnSave(const autofill::ServerFieldType password_type,
          password_type == autofill::ACCOUNT_CREATION_PASSWORD ||
          password_type == autofill::NOT_ACCOUNT_CREATION_PASSWORD)
       << password_type;
+  LOG(ERROR) << "SetFieldLabelsOnSave: " << submitted_form.new_password_element
+             << " " << submitted_form.password_element;
 
   if (!submitted_form.new_password_element.empty()) {
     (*field_types)[submitted_form.new_password_element] = password_type;
@@ -393,6 +395,8 @@ void PasswordFormManager::ProvisionallySave(
   }
   submitted_form_ = std::move(mutable_submitted_form);
   other_possible_username_action_ = action;
+  LOG(ERROR) << "ProvisionallySave "
+             << submitted_form_->form_data.fields.size();
 
   if (form_fetcher_->GetState() == FormFetcher::State::NOT_WAITING)
     CreatePendingCredentials();
@@ -927,6 +931,9 @@ bool PasswordFormManager::UploadPasswordVote(
     logger.LogFormStructure(Logger::STRING_FORM_VOTES, form_structure);
   }
 
+  LOG(ERROR) << "upload " << form_structure.FormSignatureAsStr();
+  for (auto e : available_field_types)
+    LOG(ERROR) << "type " << e;
   bool success = autofill_manager->download_manager()->StartUploadRequest(
       form_structure, false /* was_autofilled */, available_field_types,
       login_form_signature, true /* observed_submission */);
@@ -1157,6 +1164,7 @@ void PasswordFormManager::CreatePendingCredentials() {
 
   if (has_generated_password_)
     pending_credentials_.type = PasswordForm::TYPE_GENERATED;
+  LOG(ERROR) << "pending " << pending_credentials_.form_data.fields.size();
 }
 
 uint32_t PasswordFormManager::ScoreResult(const PasswordForm& candidate) const {
@@ -1471,6 +1479,9 @@ void PasswordFormManager::SendVotesOnSave() {
 
   // Send votes for sign-in form.
   autofill::FormData& form_data = pending_credentials_.form_data;
+  LOG(ERROR) << "fields:";
+  for (auto field : form_data.fields)
+    LOG(ERROR) << "field " << field.name;
   if (form_data.fields.size() == 2 &&
       form_data.fields[0].form_control_type == "text" &&
       form_data.fields[1].form_control_type == "password") {
@@ -1489,11 +1500,19 @@ void PasswordFormManager::SendVotesOnSave() {
     autofill::ServerFieldType password_type = autofill::PASSWORD;
     if (submitted_form_->does_look_like_signup_form)
       password_type = autofill::PROBABLY_ACCOUNT_CREATION_PASSWORD;
+    LOG(ERROR)
+        << "pending "
+        << FormStructure(pending_credentials_.form_data).FormSignatureAsStr()
+        << " password_type " << password_type;
     UploadPasswordVote(pending_credentials_, password_type, std::string());
     if (username_correction_vote_) {
+      LOG(ERROR) << "correction "
+                 << FormStructure(username_correction_vote_->form_data)
+                        .FormSignatureAsStr();
       UploadPasswordVote(
           *username_correction_vote_, autofill::USERNAME,
           FormStructure(observed_form_.form_data).FormSignatureAsStr());
+      username_correction_vote_.reset();
     }
   } else
     SendVoteOnCredentialsReuse(observed_form_, &pending_credentials_);
