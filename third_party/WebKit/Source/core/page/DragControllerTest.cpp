@@ -6,17 +6,11 @@
 
 #include "core/clipboard/DataObject.h"
 #include "core/editing/FrameSelection.h"
-#include "core/frame/LocalFrame.h"
-#include "core/frame/LocalFrameView.h"
-#include "core/frame/PerformanceMonitor.h"
 #include "core/frame/VisualViewport.h"
-#include "core/html/HTMLElement.h"
-#include "core/layout/LayoutObject.h"
-#include "core/layout/LayoutView.h"
+#include "core/layout/LayoutTestHelper.h"
 #include "core/page/AutoscrollController.h"
 #include "core/page/DragData.h"
 #include "core/page/DragSession.h"
-#include "core/testing/DummyPageHolder.h"
 #include "core/testing/sim/SimDisplayItemList.h"
 #include "core/testing/sim/SimRequest.h"
 #include "core/testing/sim/SimTest.h"
@@ -27,36 +21,19 @@
 
 namespace blink {
 
-class DragControllerTest : public ::testing::Test {
+class DragControllerTest : public RenderingTest {
  protected:
-  DragControllerTest() = default;
-  ~DragControllerTest() override = default;
+  DragControllerTest() : RenderingTest(SingleChildLocalFrameClient::Create()) {}
 
-  Document& GetDocument() const { return dummy_page_holder_->GetDocument(); }
   LocalFrame& GetFrame() const { return *GetDocument().GetFrame(); }
-  Performance* GetPerformance() const { return performance_; }
-
-  void SetBodyContent(const std::string& body_content) {
-    GetDocument().body()->setInnerHTML(String::FromUTF8(body_content.c_str()));
-    UpdateAllLifecyclePhases();
-  }
 
   void UpdateAllLifecyclePhases() {
     GetDocument().View()->UpdateAllLifecyclePhases();
   }
-
- private:
-  void SetUp() override {
-    dummy_page_holder_ = DummyPageHolder::Create(IntSize(800, 600));
-    performance_ = Performance::Create(GetDocument().domWindow());
-  }
-
-  std::unique_ptr<DummyPageHolder> dummy_page_holder_;
-  Persistent<Performance> performance_;
 };
 
 TEST_F(DragControllerTest, dragImageForSelectionUsesPageScaleFactor) {
-  SetBodyContent(
+  SetBodyInnerHTML(
       "<div>Hello world! This tests that the bitmap for drag image is scaled "
       "by page scale factor</div>");
   GetFrame().GetPage()->GetVisualViewport().SetScale(1);
@@ -126,7 +103,7 @@ TEST_P(DragControllerSimTest, DropURLOnNonNavigatingClearsState) {
 }
 
 TEST_F(DragControllerTest, DragImageForSelectionClipsToViewport) {
-  SetBodyContent(
+  SetBodyInnerHTML(
       "<style>"
       "  * { margin: 0; } "
       "  html, body { height: 2000px; }"
@@ -188,6 +165,136 @@ TEST_F(DragControllerTest, DragImageForSelectionClipsToViewport) {
                                  node_height + node_margin_top - scroll_offset);
   EXPECT_EQ(expected_selection, DragController::ClippedSelection(GetFrame()));
   selection_image = DragController::DragImageForSelection(GetFrame(), 1);
+  expected_image_size = IntSize(RoundedIntSize(expected_selection.Size()));
+  expected_image_size.Scale(page_scale_factor);
+  EXPECT_EQ(expected_image_size, selection_image->Size());
+}
+
+TEST_F(DragControllerTest, DragImageForSelectionClipsChildFrameToViewport) {
+  SetBodyInnerHTML(
+      "<style>"
+      "  * { margin: 0; } "
+      "  html, body { height: 2000px; }"
+      "  iframe {"
+      "    margin-top: 200px;"
+      "    border: none;"
+      "    width: 30px;"
+      "    height: 30px;"
+      "  }"
+      "</style>"
+      "<iframe></iframe>");
+  SetChildFrameHTML(
+      "<style>"
+      "  * { margin: 0; } "
+      "  html, body { height: 2000px; }"
+      "  div {"
+      "    width: 30px;"
+      "    height: 20px;"
+      "    font-size: 30px;"
+      "    overflow: hidden;"
+      "  }"
+      "</style>"
+      "<div>abcdefg</div>");
+  UpdateAllLifecyclePhases();
+  auto& child_frame = *ToLocalFrame(GetFrame().Tree().FirstChild());
+  child_frame.Selection().SelectAll();
+
+  // The iframe's selection rect is in the frame's local coordinates and should
+  // not include the iframe's margin.
+  FloatRect expected_selection(0, 0, 30, 20);
+  EXPECT_EQ(expected_selection, DragController::ClippedSelection(child_frame));
+  auto selection_image(DragController::DragImageForSelection(child_frame, 1));
+  IntSize expected_image_size(RoundedIntSize(expected_selection.Size()));
+  EXPECT_EQ(expected_image_size, selection_image->Size());
+
+  // The iframe's selection rect is in the frame's local coordinates and should
+  // not include scroll offset.
+  int scroll_offset = 50;
+  LocalFrameView* frame_view = GetDocument().View();
+  frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
+      ScrollOffset(0, scroll_offset), kProgrammaticScroll);
+  expected_selection = FloatRect(0, 0, 30, 20);
+  EXPECT_EQ(expected_selection, DragController::ClippedSelection(child_frame));
+  selection_image = DragController::DragImageForSelection(child_frame, 1);
+  expected_image_size = IntSize(RoundedIntSize(expected_selection.Size()));
+  EXPECT_EQ(expected_image_size, selection_image->Size());
+
+  // The parent frame's scroll offset of 210 should cause the iframe content to
+  // be shifted which should cause the iframe's selection rect to be clipped by
+  // the visual viewport.
+  scroll_offset = 205;
+  frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
+      ScrollOffset(0, scroll_offset), kProgrammaticScroll);
+  expected_selection = FloatRect(0, 10, 30, 10);
+  EXPECT_EQ(expected_selection, DragController::ClippedSelection(child_frame));
+  selection_image = DragController::DragImageForSelection(child_frame, 1);
+  expected_image_size = IntSize(RoundedIntSize(expected_selection.Size()));
+  EXPECT_EQ(expected_image_size, selection_image->Size());
+}
+
+TEST_F(DragControllerTest,
+       DragImageForSelectionClipsChildFrameToViewportWithPageScaleFactor) {
+  SetBodyInnerHTML(
+      "<style>"
+      "  * { margin: 0; } "
+      "  html, body { height: 2000px; }"
+      "  iframe {"
+      "    margin-top: 200px;"
+      "    border: none;"
+      "    width: 30px;"
+      "    height: 30px;"
+      "  }"
+      "</style>"
+      "<iframe></iframe>");
+  SetChildFrameHTML(
+      "<style>"
+      "  * { margin: 0; } "
+      "  html, body { height: 2000px; }"
+      "  div {"
+      "    width: 30px;"
+      "    height: 20px;"
+      "    font-size: 30px;"
+      "    overflow: hidden;"
+      "  }"
+      "</style>"
+      "<div>abcdefg</div>");
+  const int page_scale_factor = 2;
+  GetFrame().GetPage()->SetPageScaleFactor(page_scale_factor);
+  UpdateAllLifecyclePhases();
+  auto& child_frame = *ToLocalFrame(GetFrame().Tree().FirstChild());
+  child_frame.Selection().SelectAll();
+
+  // The iframe's selection rect is in the frame's local coordinates and should
+  // not include the iframe's margin.
+  FloatRect expected_selection(0, 0, 30, 20);
+  EXPECT_EQ(expected_selection, DragController::ClippedSelection(child_frame));
+  auto selection_image(DragController::DragImageForSelection(child_frame, 1));
+  IntSize expected_image_size(RoundedIntSize(expected_selection.Size()));
+  expected_image_size.Scale(page_scale_factor);
+  EXPECT_EQ(expected_image_size, selection_image->Size());
+
+  // The iframe's selection rect is in the frame's local coordinates and should
+  // not include scroll offset.
+  int scroll_offset = 50;
+  LocalFrameView* frame_view = GetDocument().View();
+  frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
+      ScrollOffset(0, scroll_offset), kProgrammaticScroll);
+  expected_selection = FloatRect(0, 0, 30, 20);
+  EXPECT_EQ(expected_selection, DragController::ClippedSelection(child_frame));
+  selection_image = DragController::DragImageForSelection(child_frame, 1);
+  expected_image_size = IntSize(RoundedIntSize(expected_selection.Size()));
+  expected_image_size.Scale(page_scale_factor);
+  EXPECT_EQ(expected_image_size, selection_image->Size());
+
+  // The parent frame's scroll offset of 105 should cause the iframe content to
+  // be shifted by (105 * device_pixel_ratio) css pixels which should cause the
+  // iframe's selection rect to be clipped by the visual viewport.
+  scroll_offset = 105;
+  frame_view->LayoutViewportScrollableArea()->SetScrollOffset(
+      ScrollOffset(0, scroll_offset), kProgrammaticScroll);
+  expected_selection = FloatRect(0, 10, 30, 10);
+  EXPECT_EQ(expected_selection, DragController::ClippedSelection(child_frame));
+  selection_image = DragController::DragImageForSelection(child_frame, 1);
   expected_image_size = IntSize(RoundedIntSize(expected_selection.Size()));
   expected_image_size.Scale(page_scale_factor);
   EXPECT_EQ(expected_image_size, selection_image->Size());
