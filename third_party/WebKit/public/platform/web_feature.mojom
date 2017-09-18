@@ -1680,6 +1680,10 @@ enum WebFeature {
   kFeaturePolicyAllowAttributeDeprecatedSyntax = 2145,
   kSuppressHistoryEntryWithoutUserGesture = 2146,
   kImageInputTypeFormDataWithNonEmptyValue = 2147,
+  kSpeechRecognitionSecureOrigin = 2148,
+  kSpeechRecognitionSecureOriginIframe = 2149,
+  kSpeechRecognitionInsecureOrigin = 2150,
+  kSpeechRecognitionInsecureOriginIframe = 2151,
 
   // Add new features immediately above this line. Don't change assigned
   // numbers of any item, and don't reuse removed slots.

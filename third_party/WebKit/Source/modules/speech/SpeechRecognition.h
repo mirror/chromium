@@ -39,6 +39,7 @@
 
 namespace blink {
 
+class Document;
 class ExceptionState;
 class ExecutionContext;
 class MediaStreamTrack;
@@ -54,7 +55,7 @@ class MODULES_EXPORT SpeechRecognition final
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static SpeechRecognition* Create(ExecutionContext*);
+  static SpeechRecognition* Create(ExecutionContext*, ExceptionState&);
   ~SpeechRecognition() override;
 
   // SpeechRecognition.idl implemementation.
@@ -125,6 +126,8 @@ class MODULES_EXPORT SpeechRecognition final
 
  private:
   SpeechRecognition(Page*, ExecutionContext*);
+
+  static bool IsSecureContext(Document*, String& error_message);
 
   Member<SpeechGrammarList> grammars_;
   Member<MediaStreamTrack> audio_track_;

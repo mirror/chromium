@@ -564,6 +564,13 @@ String Deprecation::DeprecationMessage(WebFeature feature) {
           "PaymentRequest's supportedMethods taking an array",
           "a single string", M64, "5177301645918208");
 
+    case WebFeature::kSpeechRecognitionInsecureOrigin:
+    case WebFeature::kSpeechRecognitionInsecureOriginIframe:
+      return "SpeechRecognition() no longer works on insecure origins. To use "
+             "this feature, you should consider switching your application to "
+             "a secure origin, such as HTTPS. See https://goo.gl/rStTGz for "
+             "more details.";
+
     // Features that aren't deprecated don't have a deprecation message.
     default:
       return String();
