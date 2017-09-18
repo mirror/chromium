@@ -22,6 +22,30 @@
       "revId": "c2f8a47b40f7479449b29947208a925689b118ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "606e95b6_c4ef7290",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-09-18T22:19:27Z",
+      "side": 1,
+      "message": "I realized the double negativity made it hard to read.  How about turning it into positive checks?\n\n  bool is_arc_oobe_optin \u003d base::CommandLine::ForCurrentProcess()-\u003eHasSwitch(\n          chromeos::switches::kEnableArcOOBEOptIn);\n  bool is_new_user \u003d user_manager::UserManager::Get()-\u003eIsCurrentUserNew();\n  bool is_login_or_oobe_showing \u003d chromeos::LoginDisplayHost::default_host();\n  bool is_voice_interaction_oobe \u003d is_login_or_oobe_showing \u0026\u0026\n          chromeos::LoginDisplayHost::default_host()-\u003eIsVoiceInteractionOobe();\n\n  return is_arc_oobe_optin \u0026\u0026\n         is_login_or_oobe_showing \u0026\u0026\n         (is_new_user || is_voice_interaction_oobe);",
+      "parentUuid": "60826726_a7483caf",
+      "range": {
+        "startLine": 170,
+        "startChar": 6,
+        "endLine": 170,
+        "endChar": 75
+      },
+      "revId": "c2f8a47b40f7479449b29947208a925689b118ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
