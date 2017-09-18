@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f8b794c4_b2bbd0e6",
+        "filename": "chrome/app/theme/theme_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-18T19:03:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17eb86cd_5f058a9e",
+      "revId": "9f0ab40b8c0359a79f4dcca0e621d9fdc33ec30d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19e1aa53_83ca7b25",
         "filename": "chrome/browser/ui/BUILD.gn",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7da5d86c_a8d72237",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1579,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-18T19:03:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "19e1aa53_83ca7b25",
+      "revId": "9f0ab40b8c0359a79f4dcca0e621d9fdc33ec30d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1d8b17b_2bb5eb6c",
         "filename": "chrome/browser/ui/BUILD.gn",
         "patchSetId": 5
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-18T08:23:50Z",
       "side": 1,
       "message": "in here might be better, but it\u0027s not needed with mac_views_browser either.\n\nI think we need a new block, or an !is_mac block inside an if (enable_extensions) block.",
+      "revId": "9f0ab40b8c0359a79f4dcca0e621d9fdc33ec30d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2017ff6b_92e6ca6f",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1634,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-18T19:03:30Z",
+      "side": 1,
+      "message": "I stuck it back where I found it, with an extra if condition. Overall, the conditionals in this file are somewhat messy. I\u0027ll work on cleaning it up separately.",
+      "parentUuid": "c1d8b17b_2bb5eb6c",
       "revId": "9f0ab40b8c0359a79f4dcca0e621d9fdc33ec30d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
