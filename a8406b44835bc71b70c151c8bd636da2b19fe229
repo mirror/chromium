@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc078889_056502ea",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsContextMenuItemDelegate.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-18T20:16:49Z",
+      "side": 1,
+      "message": "seeing this now, let\u0027s just call this openLinkInBackground",
+      "range": {
+        "startLine": 79,
+        "startChar": 30,
+        "endLine": 79,
+        "endChar": 60
+      },
+      "revId": "a8406b44835bc71b70c151c8bd636da2b19fe229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a3fe2ff_f07a766a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-18T20:16:49Z",
+      "side": 1,
+      "message": "we should use the generic type on the left side of the assignment Set vs HashSet",
+      "range": {
+        "startLine": 78,
+        "startChar": 19,
+        "endLine": 78,
+        "endChar": 26
+      },
+      "revId": "a8406b44835bc71b70c151c8bd636da2b19fe229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d511d161_209b7886",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-18T20:16:49Z",
+      "side": 1,
+      "message": "you can just call remove w/o the contains as it will handle the case when it doesn\u0027t internally",
+      "range": {
+        "startLine": 141,
+        "startChar": 12,
+        "endLine": 141,
+        "endChar": 26
+      },
+      "revId": "a8406b44835bc71b70c151c8bd636da2b19fe229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a94521_bbc25c35",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-18T20:16:49Z",
+      "side": 1,
+      "message": "can you file a bug for this as well so we track it?",
+      "range": {
+        "startLine": 161,
+        "startChar": 24,
+        "endLine": 161,
+        "endChar": 29
+      },
+      "revId": "a8406b44835bc71b70c151c8bd636da2b19fe229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7ebe7f_05fed67e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-18T20:16:49Z",
+      "side": 1,
+      "message": "you\u0027ll need to remove the observer here after calling finishTabCreation",
+      "revId": "a8406b44835bc71b70c151c8bd636da2b19fe229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab81467_86411640",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-18T20:16:49Z",
+      "side": 1,
+      "message": "would we want to call stopService potentially at this point?",
+      "range": {
+        "startLine": 228,
+        "startChar": 20,
+        "endLine": 228,
+        "endChar": 32
+      },
+      "revId": "a8406b44835bc71b70c151c8bd636da2b19fe229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
