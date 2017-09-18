@@ -35,6 +35,9 @@ public class CompositorAnimationHandler {
      */
     private boolean mWasUpdateRequestedForAnimationStart;
 
+    /** Whether or not testing mode is enabled. In this mode, animations end immediately. */
+    private boolean mIsInTestingMode;
+
     /**
      * Default constructor.
      * @param host A {@link LayoutUpdateHost} responsible for requesting frames when an animation
@@ -62,6 +65,12 @@ public class CompositorAnimationHandler {
         if (!mWasUpdateRequestedForAnimationStart) {
             mUpdateHost.requestUpdate();
             mWasUpdateRequestedForAnimationStart = true;
+        }
+
+        // If in testing mode, immediately push and update and end the animation.
+        if (mIsInTestingMode) {
+            animator.setDuration(0);
+            pushUpdate(0);
         }
     }
 
@@ -102,5 +111,13 @@ public class CompositorAnimationHandler {
     @VisibleForTesting
     public int getActiveAnimationCount() {
         return mAnimators.size();
+    }
+
+    /**
+     * Enable testing mode. This causes any animations to end immediately.
+     */
+    @VisibleForTesting
+    public void enableTestingMode() {
+        mIsInTestingMode = true;
     }
 }

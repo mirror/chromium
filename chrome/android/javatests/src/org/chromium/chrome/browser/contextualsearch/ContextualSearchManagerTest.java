@@ -196,6 +196,7 @@ public class ContextualSearchManagerTest {
 
         Assert.assertNotNull(mManager);
         mPanel = mManager.getContextualSearchPanel();
+        mPanel.getAnimationHandler().enableTestingMode();
 
         mSelectionController = mManager.getSelectionController();
         mPolicy = mManager.getContextualSearchPolicy();
@@ -2944,8 +2945,6 @@ public class ContextualSearchManagerTest {
             public void run() {
                 mPanel.onSearchTermResolved("search", null, "tel:555-555-5555",
                         QuickActionCategory.PHONE);
-                // Finish all running animations.
-                mPanel.onUpdateAnimation(System.currentTimeMillis(), true);
             }
         });
 
