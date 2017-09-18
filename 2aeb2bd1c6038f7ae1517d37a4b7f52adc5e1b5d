@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33b289e1_396d6e7c",
+        "filename": "chrome/browser/resources/download/download_internals_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-18T20:55:29Z",
+      "side": 1,
+      "message": "nit: period after comment",
+      "range": {
+        "startLine": 21,
+        "startChar": 47,
+        "endLine": 21,
+        "endChar": 54
+      },
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8b48fbd_fb833700",
+        "filename": "chrome/browser/resources/download/download_internals_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-18T20:55:29Z",
+      "side": 1,
+      "message": "remove extra blank line",
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d962dc4b_116e1d89",
+        "filename": "chrome/browser/ui/webui/chrome_web_ui_controller_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-18T20:55:29Z",
+      "side": 1,
+      "message": "Add this exception here instead: https://cs.chromium.org/chromium/src/chrome/browser/ui/browser_navigator.cc?type\u003dcs\u0026q\u003dfile:chrome/browser/ui/browser_navigator.cc+incognito\u0026l\u003d631\n\n(and make sure it works as expected)",
+      "range": {
+        "startLine": 334,
+        "startChar": 0,
+        "endLine": 334,
+        "endChar": 53
+      },
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9f2f435_b59612fe",
+        "filename": "chrome/browser/ui/webui/download/download_internals_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-18T20:55:29Z",
+      "side": 1,
+      "message": "#include \u003cutility\u003e and use std::make_unique (same syntax as base::MakeUnique).",
+      "range": {
+        "startLine": 40,
+        "startChar": 6,
+        "endLine": 40,
+        "endChar": 17
+      },
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08665644_26baebcf",
+        "filename": "chrome/browser/ui/webui/download/download_internals_ui_message_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-18T20:55:29Z",
+      "side": 1,
+      "message": "remove - already included in header",
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b8e0d63_54453eb1",
+        "filename": "chrome/browser/ui/webui/download/download_internals_ui_message_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-18T20:55:29Z",
+      "side": 1,
+      "message": "Is there a risk of this firing before AllowJavascript() has been called?",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b377d15a_f5c952ac",
+        "filename": "chrome/browser/ui/webui/download/download_internals_ui_message_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-18T20:55:29Z",
+      "side": 1,
+      "message": "Unnecessary include -- forward-declare base::ListValue if you have to. (but you shouldn\u0027t have to since you already include web_ui_message_handler.h.)",
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88e985d8_d4976e14",
+        "filename": "chrome/browser/ui/webui/download/download_internals_ui_message_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-09-18T20:55:29Z",
+      "side": 1,
+      "message": "#include \"base/macros.h\" for IWYU",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 26
+      },
+      "revId": "2aeb2bd1c6038f7ae1517d37a4b7f52adc5e1b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
