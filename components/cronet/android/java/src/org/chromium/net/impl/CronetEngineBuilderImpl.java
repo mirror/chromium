@@ -83,7 +83,6 @@ public abstract class CronetEngineBuilderImpl extends ICronetEngineBuilder {
     private boolean mPublicKeyPinningBypassForLocalTrustAnchorsEnabled;
     private String mUserAgent;
     private String mStoragePath;
-    private VersionSafeCallbacks.LibraryLoader mLibraryLoader;
     private boolean mQuicEnabled;
     private boolean mHttp2Enabled;
     private boolean mBrotiEnabled;
@@ -140,12 +139,14 @@ public abstract class CronetEngineBuilderImpl extends ICronetEngineBuilder {
 
     @Override
     public CronetEngineBuilderImpl setLibraryLoader(CronetEngine.Builder.LibraryLoader loader) {
-        mLibraryLoader = new VersionSafeCallbacks.LibraryLoader(loader);
+        // This is an abstract class that is also used by the Java Engine; therefore, the
+        // method should be no-op. A subclass should implement this method if it wants to make
+        // use of it.
         return this;
     }
 
     VersionSafeCallbacks.LibraryLoader libraryLoader() {
-        return mLibraryLoader;
+        return null;
     }
 
     @Override
