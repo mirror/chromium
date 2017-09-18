@@ -707,6 +707,8 @@ split_static_library("browser") {
     "metrics/thread_watcher_android.h",
     "metrics/thread_watcher_report_hang.cc",
     "metrics/thread_watcher_report_hang.h",
+    "metrics/upgrade_metrics_provider.cc",
+    "metrics/upgrade_metrics_provider.h",
     "metrics/variations/chrome_variations_service_client.cc",
     "metrics/variations/chrome_variations_service_client.h",
     "mod_pagespeed/mod_pagespeed_metrics.cc",
