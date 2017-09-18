@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cbd120d_316822ca",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-18T15:22:08Z",
+      "side": 1,
+      "message": "Random idea: This looks a lot like animation. Do we have an animation curve that set opacity to 0 at the end of the animation? If so, using the animation curve is probably easier and more robust?",
+      "revId": "eb8cd3956fa932837b320d1025cae9468858929c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
