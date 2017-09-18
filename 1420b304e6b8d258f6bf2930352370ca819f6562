@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fff864de_f96b28a9",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2233,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-18T10:42:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44b87ba6_256759ae",
+      "revId": "1420b304e6b8d258f6bf2930352370ca819f6562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebba5214_7200c341",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-15T08:58:48Z",
       "side": 1,
       "message": "I think we can define a more general API here, returning the StyleContentAlignmentData structure, which holds all the Content Alignment information (distribution, position and overflow). We can later call the different getters depending on demand. This is the pattern we are using for Self and Default Alignment properties.\n\nThis change would require to implement new functions in ComputedStyle, but it\u0027d not be complex at all.\n\nAdditionally, I\u0027d move the declaration of this function closer to the ones we have for Self and Default Alignment properties.",
+      "revId": "1420b304e6b8d258f6bf2930352370ca819f6562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85862db4_4da334d6",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115747
+      },
+      "writtenOn": "2017-09-18T10:42:53Z",
+      "side": 1,
+      "message": "\u003e I think we can define a more general API here, returning the StyleContentAlignmentData structure, which holds all the Content Alignment information (distribution, position and overflow). We can later call the different getters depending on demand. This is the pattern we are using for Self and Default Alignment properties.\n\nDone.\n\n\u003e This change would require to implement new functions in ComputedStyle, but it\u0027d not be complex at all.\n\nI didn\u0027t need to do this, but maybe you were thinking in something different of my patch.\n\n\u003e Additionally, I\u0027d move the declaration of this function closer to the ones we have for Self and Default Alignment properties.\n\nWe need this here, as we need this to be public in order to be called from GridTrackSizingAlgorithm.",
+      "parentUuid": "ebba5214_7200c341",
       "revId": "1420b304e6b8d258f6bf2930352370ca819f6562",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
