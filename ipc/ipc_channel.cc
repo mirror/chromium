@@ -24,6 +24,9 @@ base::AtomicSequenceNumber g_last_id;
 namespace IPC {
 
 // static
+const size_t Channel::kMaximumMessageSize = 128 * 1024 * 1024;
+
+// static
 std::string Channel::GenerateUniqueRandomChannelID() {
   // Note: the string must start with the current process id, this is how
   // some child processes determine the pid of the parent.
