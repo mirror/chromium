@@ -22,6 +22,30 @@
       "revId": "8cbf599b192170975ed9ae7ba9baa8cc5f2c6c8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcaf5cd1_51b4ebc7",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-18T07:54:00Z",
+      "side": 1,
+      "message": "On iPad the UI has multiple elements that match the Bookmark folder after we move / edit it. I couldn\u0027t figure out why the eg test was spotting multiple elements (maybe from the edit screen? Not sure, as the edit screen is gone by the time we look for this element). Adding sufficiently_visible enabled getting the right element in the test. \nDo you have any idea why this could be happening?",
+      "parentUuid": "ecbad1c4_6982595a",
+      "range": {
+        "startLine": 115,
+        "startChar": 49,
+        "endLine": 115,
+        "endChar": 73
+      },
+      "revId": "8cbf599b192170975ed9ae7ba9baa8cc5f2c6c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
