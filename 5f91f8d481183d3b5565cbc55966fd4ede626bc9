@@ -154,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "b60e2d25_31df0a53",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-18T18:43:27Z",
+      "side": 1,
+      "message": "Looking more closely, I think you\u0027re right. \n\nSuggest doing a couple things to make this more obvious:\n\n1)  Add this precondition to the function comment. \n2)  Turn the DCHECK you added into a CHECK.  If it\u0027s actually a hard programming error, we should always crash when encountering it.",
+      "parentUuid": "3e125c9e_cde9a45b",
+      "revId": "5f91f8d481183d3b5565cbc55966fd4ede626bc9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c29abb49_1d778b22",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 1

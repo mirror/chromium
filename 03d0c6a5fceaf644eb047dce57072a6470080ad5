@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9a0fb0f_434049d2",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-18T18:43:27Z",
+      "side": 1,
+      "message": "Maybe log the offending URI?",
+      "revId": "03d0c6a5fceaf644eb047dce57072a6470080ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ec577f_777b6ca8",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-18T18:43:27Z",
+      "side": 1,
+      "message": "I suspect you meant for one of these to be ipps.",
+      "range": {
+        "startLine": 95,
+        "startChar": 43,
+        "endLine": 95,
+        "endChar": 53
+      },
+      "revId": "03d0c6a5fceaf644eb047dce57072a6470080ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29519b11_b735b75e",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1165454
+      },
+      "writtenOn": "2017-09-18T18:43:27Z",
+      "side": 1,
+      "message": "The paranoid parrot in me says this isn\u0027t sufficient validation, because you could fool it with a longer scheme which has one of these schemes as a prefix.\n\nI don\u0027t actually see any way you should be able to get into this code path with an arbitrary uri, but just to make my paranoid parrot calm down, can you include the colon in the compares here?  That should be sufficient to ensure you are actually getting the scheme in the comparison.",
+      "revId": "03d0c6a5fceaf644eb047dce57072a6470080ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
