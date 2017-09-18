@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f817283_eadda229",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-09-18T07:52:44Z",
+      "side": 1,
+      "message": "Please check local consistency but I\u0027d recommend putting using declarations within the unnamed namespace.",
+      "range": {
+        "startLine": 37,
+        "startChar": 53,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "a11457bb02f8d2cdee22fd7890d023f168f8a564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88db46a9_68e305b3",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-09-18T07:52:44Z",
+      "side": 1,
+      "message": "Remove? This kind of DCHECKs are used to validate input parameters, but here you\u0027re referring to a member variable.",
+      "range": {
+        "startLine": 381,
+        "startChar": 25,
+        "endLine": 381,
+        "endChar": 0
+      },
+      "revId": "a11457bb02f8d2cdee22fd7890d023f168f8a564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6944e6e2_dd070ae4",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-09-18T07:52:44Z",
+      "side": 1,
+      "message": "BLOCKED seems to have some implications like persistency. How about SKIPPED or IGNORED?",
+      "range": {
+        "startLine": 146,
+        "startChar": 29,
+        "endLine": 146,
+        "endChar": 0
+      },
+      "revId": "a11457bb02f8d2cdee22fd7890d023f168f8a564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad4a7e11_f0ef04a5",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-09-18T07:52:44Z",
+      "side": 1,
+      "message": "TARGET_PAGE_URL_INVALID?",
+      "range": {
+        "startLine": 148,
+        "startChar": 29,
+        "endLine": 148,
+        "endChar": 0
+      },
+      "revId": "a11457bb02f8d2cdee22fd7890d023f168f8a564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c0fd4ff_dbf0118e",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 18644,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-09-18T07:52:44Z",
+      "side": 1,
+      "message": "If you addressed my earlier comments about renaming, please update accordingly.",
+      "revId": "a11457bb02f8d2cdee22fd7890d023f168f8a564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
