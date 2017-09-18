@@ -16,6 +16,24 @@
       "revId": "b38ecf990561a5d96473a63a997c8362a9c6b366",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84292505_4dd17c6a",
+        "filename": "ui/views/cocoa/bridged_content_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1234814
+      },
+      "writtenOn": "2017-09-18T08:28:35Z",
+      "side": 1,
+      "message": "If it always returns NO, dialogs and bubbles cannot get key events. For example, bubbles do not close on ESC key.",
+      "parentUuid": "03dc1da2_ae8bdadf",
+      "revId": "b38ecf990561a5d96473a63a997c8362a9c6b366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
