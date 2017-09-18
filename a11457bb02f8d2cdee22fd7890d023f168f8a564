@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dd8bdefb_461e98ed",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-18T08:21:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f817283_eadda229",
+      "range": {
+        "startLine": 37,
+        "startChar": 53,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "a11457bb02f8d2cdee22fd7890d023f168f8a564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88db46a9_68e305b3",
         "filename": "components/favicon/core/large_icon_service.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-18T07:52:44Z",
       "side": 1,
       "message": "Remove? This kind of DCHECKs are used to validate input parameters, but here you\u0027re referring to a member variable.",
+      "range": {
+        "startLine": 381,
+        "startChar": 25,
+        "endLine": 381,
+        "endChar": 0
+      },
+      "revId": "a11457bb02f8d2cdee22fd7890d023f168f8a564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bcd728_16eeaa30",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-18T08:21:54Z",
+      "side": 1,
+      "message": "Well, I want to allow nullptr image_fetcher passed in the constructor (because of some unit-tests) but I do now want to allow calling this function in such a case.\n\nAnd I do not want to have a special error code here for something that is actually broken code.\n\nDo you see a clean solution?",
+      "parentUuid": "88db46a9_68e305b3",
       "range": {
         "startLine": 381,
         "startChar": 25,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "615c0ae0_7407ef01",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-18T08:21:54Z",
+      "side": 1,
+      "message": "I am not sure what kind of implications you mean. Anyway, SKIPPED is also fine for me.\n\nDone.",
+      "parentUuid": "6944e6e2_dd070ae4",
+      "range": {
+        "startLine": 146,
+        "startChar": 29,
+        "endLine": 146,
+        "endChar": 0
+      },
+      "revId": "a11457bb02f8d2cdee22fd7890d023f168f8a564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad4a7e11_f0ef04a5",
         "filename": "components/favicon_base/favicon_types.h",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7af8bf84_305808c6",
+        "filename": "components/favicon_base/favicon_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-18T08:21:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad4a7e11_f0ef04a5",
+      "range": {
+        "startLine": 148,
+        "startChar": 29,
+        "endLine": 148,
+        "endChar": 0
+      },
+      "revId": "a11457bb02f8d2cdee22fd7890d023f168f8a564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c0fd4ff_dbf0118e",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 2
@@ -108,6 +204,24 @@
       "revId": "a11457bb02f8d2cdee22fd7890d023f168f8a564",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c169fd9_435291cd",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 18644,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-09-18T08:21:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c0fd4ff_dbf0118e",
+      "revId": "a11457bb02f8d2cdee22fd7890d023f168f8a564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
