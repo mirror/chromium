@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09966c47_e76641d0",
+        "filename": "components/payments/content/payment_response_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-18T17:23:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cf4b91f_e3e53aa7",
+      "range": {
+        "startLine": 75,
+        "startChar": 27,
+        "endLine": 76,
+        "endChar": 66
+      },
+      "revId": "fbb9066fd401dae0a6453d49f6658cfa2c799b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a352d717_bf8437dd",
         "filename": "components/payments/content/service_worker_payment_instrument.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "fbb9066fd401dae0a6453d49f6658cfa2c799b9e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf73ea08_564b9407",
+        "filename": "components/payments/content/service_worker_payment_instrument.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-18T17:23:55Z",
+      "side": 1,
+      "message": "Done, worried a little about too many weak pointers flying around,",
+      "parentUuid": "a352d717_bf8437dd",
+      "range": {
+        "startLine": 42,
+        "startChar": 18,
+        "endLine": 46,
+        "endChar": 35
+      },
+      "revId": "fbb9066fd401dae0a6453d49f6658cfa2c799b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
