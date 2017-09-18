@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca67dd3d_e9be14e5",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-18T16:51:01Z",
+      "side": 1,
+      "message": "When would we expect email to be empty?  Should collect UMA metrics on the latter so we\u0027ll know if this is happening more than expected, and so we can see if it\u0027s more effective at conversions (change password) if it\u0027s present?",
+      "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7b01ab_6b8ebe79",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-18T16:51:01Z",
+      "side": 1,
+      "message": "remove leading space after quote.\n\nAlso, add a comment about what this URL is (\"This page will prompt for re-auth and then will prompt for a new password\" or some such)",
+      "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8284f18e_64c72b7b",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-18T16:51:01Z",
+      "side": 1,
+      "message": "The inserted URL should be escaped, I\u0027m assuming.  And the email should be escaped too.  Hopefully it doesn\u0027t have weird chars in it, but it could.\n\nI vaugely thought there were some functions for assembling URL params, that does the escaping for you.  Not sure though.",
+      "range": {
+        "startLine": 111,
+        "startChar": 69,
+        "endLine": 111,
+        "endChar": 70
+      },
+      "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f74b096_31dbd72b",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-18T16:51:01Z",
+      "side": 1,
+      "message": "Is there a change in ownership w/ this CL, such that you no longer need the weak ptr? And is the weak ptr used anywhere else?",
+      "range": {
+        "startLine": 209,
+        "startChar": 27,
+        "endLine": 209,
+        "endChar": 37
+      },
+      "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45093a2_06237472",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-18T16:51:01Z",
+      "side": 1,
+      "message": "nit: The nested switch statements are a little hard to read, though I\u0027m not sure if splitting them out into separate functions would be that much better.  Meh.",
+      "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e90310e7_2b5b81d5",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-18T16:51:01Z",
+      "side": 1,
+      "message": "nit: I _think_ you could use stl_util.h\u0027s Erase(u_p_r_, url::Origin(url))",
+      "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be72d801_75487645",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-18T16:51:01Z",
+      "side": 1,
+      "message": "Q: So is this the third tab? (orig tab w/ warning, chrome://settings, then change password). Would it be cleaner to reuse the chrome://settings tab?",
+      "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef340ff_fa5a6322",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-18T16:51:01Z",
+      "side": 1,
+      "message": "Can you add a comment as to when this gets called? It\u0027s not obvious what \"done\" means (closed?)",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 20
+      },
+      "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f6153d7_5301c25d",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-09-18T16:51:01Z",
+      "side": 1,
+      "message": "Q: Is there any of these repeated steps that would be better in a helper function?  (Initialize state, Show modal dialog).  I could go either way.",
+      "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
