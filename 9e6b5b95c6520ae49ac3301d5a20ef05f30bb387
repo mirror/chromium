@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8c19ee5_e185c4ed",
+        "filename": "chrome/installer/mini_installer/chrome.release",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-18T13:11:59Z",
+      "side": 1,
+      "message": "if v8_context_snapshot.bin replaces shapshot_blob.bin, can this line be removed?",
+      "revId": "9e6b5b95c6520ae49ac3301d5a20ef05f30bb387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
