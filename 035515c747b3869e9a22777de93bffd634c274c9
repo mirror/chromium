@@ -22,6 +22,30 @@
       "revId": "035515c747b3869e9a22777de93bffd634c274c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da3657e3_f02e4b82",
+        "filename": "ios/chrome/browser/ui/settings/compose_email_handler_collection_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-18T20:17:28Z",
+      "side": 1,
+      "message": "The context makes the \"it\" unnecessary, but I added it in anyway.",
+      "parentUuid": "91dca6b7_7f3f3402",
+      "range": {
+        "startLine": 95,
+        "startChar": 27,
+        "endLine": 95,
+        "endChar": 36
+      },
+      "revId": "035515c747b3869e9a22777de93bffd634c274c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
