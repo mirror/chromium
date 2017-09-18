@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5481d8c9_80226b9d",
+        "filename": "rules.pl",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-09-18T18:20:34Z",
+      "side": 1,
+      "message": "this needs updating for the master branch change.",
+      "range": {
+        "startLine": 6,
+        "startChar": 2,
+        "endLine": 6,
+        "endChar": 21
+      },
+      "revId": "d85476002bd3cee17939c55f68b8fb4822da342d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
