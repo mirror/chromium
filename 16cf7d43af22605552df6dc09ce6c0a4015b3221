@@ -167,6 +167,29 @@
     },
     {
       "key": {
+        "uuid": "7957de9f_52bbd30e",
+        "filename": "media/gpu/android/avda_codec_allocator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-09-18T04:27:31Z",
+      "side": 1,
+      "message": "Hmm, I realised that this races with the MCVD thread being torn down. Specifically this might return false, meaning the task (and codec) is deleted on this thread. \n\nIt may also be possible for it to be deleted without being run on the client thread, but I\u0027m not sure about that one.\n\nI think we either have to prove that if this returns true then it will run on the MCVD thread, or we have to use an RAII wrapper.\n\nMaybe a unique_ptr with a custom deleter if that\u0027s easiest. unique_ptr\u003cMediaCodecBridge, ReleaseCodecSurfacePairWithAllocator\u003e",
+      "range": {
+        "startLine": 274,
+        "startChar": 0,
+        "endLine": 274,
+        "endChar": 31
+      },
+      "revId": "16cf7d43af22605552df6dc09ce6c0a4015b3221",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "276d8fb8_8d8e2995",
         "filename": "media/gpu/android/avda_codec_allocator.cc",
         "patchSetId": 2
