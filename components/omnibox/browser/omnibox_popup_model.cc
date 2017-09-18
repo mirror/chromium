@@ -41,20 +41,22 @@ size_t GetFaviconCacheSize() {
 
 const size_t OmniboxPopupModel::kNoMatch = static_cast<size_t>(-1);
 
-OmniboxPopupModel::OmniboxPopupModel(OmniboxPopupView* popup_view,
-                                     OmniboxEditModel* edit_model)
+OmniboxPopupModel::OmniboxPopupModel(
+    OmniboxPopupView* popup_view,
+    OmniboxPopupModelDelegate* delegate,
+    OmniboxClient* client,
+    AutocompleteController* const autocomplete_controller)
     : favicons_cache_(GetFaviconCacheSize()),
       view_(popup_view),
-      edit_model_(edit_model),
+      delegate_(delegate),
+      client_(client),
+      autocomplete_controller_(autocomplete_controller),
       selected_line_(kNoMatch),
       selected_line_state_(NORMAL),
       has_selected_match_(false),
-      weak_factory_(this) {
-  edit_model->set_popup_model(this);
-}
+      weak_factory_(this) {}
 
-OmniboxPopupModel::~OmniboxPopupModel() {
-}
+OmniboxPopupModel::~OmniboxPopupModel() {}
 
 // static
 void OmniboxPopupModel::ComputeMatchMaxWidths(int contents_width,
@@ -74,8 +76,8 @@ void OmniboxPopupModel::ComputeMatchMaxWidths(int contents_width,
   if (!description_width || description_on_separate_line)
     return;
 
-  // If we want to display the description, we need to reserve enough space for
-  // the separator.
+  // If we want to display the description, we need to reserve enough space
+  // for the separator.
   available_width -= separator_width;
   if (available_width < 0) {
     *description_max_width = 0;
@@ -89,8 +91,8 @@ void OmniboxPopupModel::ComputeMatchMaxWidths(int contents_width,
       // give the other the remaining space; otherwise, give each half).
       // However, if this makes the contents too narrow to show a significant
       // amount of information, give the contents more space.
-      *contents_max_width = std::max(
-          (available_width + 1) / 2, available_width - description_width);
+      *contents_max_width = std::max((available_width + 1) / 2,
+                                     available_width - description_width);
 
       const int kMinimumContentsWidth = 300;
       *contents_max_width = std::min(
@@ -99,17 +101,17 @@ void OmniboxPopupModel::ComputeMatchMaxWidths(int contents_width,
           available_width);
     }
 
-    // Give the description the remaining space, unless this makes it too small
-    // to display anything meaningful, in which case just hide the description
-    // and let the contents take up the whole width.
+    // Give the description the remaining space, unless this makes it too
+    // small to display anything meaningful, in which case just hide the
+    // description and let the contents take up the whole width.
     *description_max_width =
         std::min(description_width, available_width - *contents_max_width);
     const int kMinimumDescriptionWidth = 75;
     if (*description_max_width <
         std::min(description_width, kMinimumDescriptionWidth)) {
       *description_max_width = 0;
-      // Since we're not going to display the description, the contents can have
-      // the space we reserved for the separator.
+      // Since we're not going to display the description, the contents can
+      // have the space we reserved for the separator.
       available_width += separator_width;
       *contents_max_width = std::min(contents_width, available_width);
     }
@@ -143,9 +145,9 @@ void OmniboxPopupModel::SetSelectedLine(size_t line,
   // OnPopupDataChanged(), so that when the edit notifies its controller that
   // something has changed, the controller can get the correct updated data.
   //
-  // NOTE: We should never reach here with no selected line; the same code that
-  // opened the popup and made it possible to get here should have also set a
-  // selected line.
+  // NOTE: We should never reach here with no selected line; the same code
+  // that opened the popup and made it possible to get here should have also
+  // set a selected line.
   CHECK(selected_line_ != kNoMatch);
   GURL current_destination(result.match_at(selected_line_).destination_url);
   const size_t prev_selected_line = selected_line_;
@@ -161,15 +163,15 @@ void OmniboxPopupModel::SetSelectedLine(size_t line,
   // eliminated and just become a call to the observer on the edit.
   base::string16 keyword;
   bool is_keyword_hint;
-  TemplateURLService* service = edit_model_->client()->GetTemplateURLService();
+  TemplateURLService* service = client_->GetTemplateURLService();
   match.GetKeywordUIState(service, &keyword, &is_keyword_hint);
 
   if (reset_to_default) {
-    edit_model_->OnPopupDataChanged(match.inline_autocompletion, NULL,
-                                    keyword, is_keyword_hint);
+    delegate_->OnPopupDataChanged(match.inline_autocompletion, NULL, keyword,
+                                  is_keyword_hint);
   } else {
-    edit_model_->OnPopupDataChanged(match.fill_into_edit, &current_destination,
-                                    keyword, is_keyword_hint);
+    delegate_->OnPopupDataChanged(match.fill_into_edit, &current_destination,
+                                  keyword, is_keyword_hint);
   }
 
   // Repaint old and new selected lines immediately, so that the edit doesn't
@@ -228,8 +230,8 @@ void OmniboxPopupModel::TryDeletingCurrentItem() {
     if (!result.empty() &&
         (was_temporary_text || selected_line != selected_line_)) {
       // Move the selection to the next choice after the deleted one.
-      // SetSelectedLine() will clamp to take care of the case where we deleted
-      // the last item.
+      // SetSelectedLine() will clamp to take care of the case where we
+      // deleted the last item.
       // TODO(pkasting): Eventually the controller should take care of this
       // before notifying us, reducing flicker.  At that point the check for
       // deletability can move there too.
@@ -239,15 +241,17 @@ void OmniboxPopupModel::TryDeletingCurrentItem() {
 }
 
 bool OmniboxPopupModel::IsStarredMatch(const AutocompleteMatch& match) const {
-  auto* bookmark_model = edit_model_->client()->GetBookmarkModel();
+  auto* bookmark_model = client_->GetBookmarkModel();
   return bookmark_model && bookmark_model->IsBookmarked(match.destination_url);
 }
 
 void OmniboxPopupModel::OnResultChanged() {
   answer_bitmap_ = SkBitmap();
   const AutocompleteResult& result = this->result();
-  selected_line_ = result.default_match() == result.end() ?
-      kNoMatch : static_cast<size_t>(result.default_match() - result.begin());
+  selected_line_ =
+      result.default_match() == result.end()
+          ? kNoMatch
+          : static_cast<size_t>(result.default_match() - result.begin());
   // There had better not be a nonempty result set with no default match.
   CHECK((selected_line_ != kNoMatch) || result.empty());
   has_selected_match_ = false;
@@ -279,8 +283,7 @@ void OmniboxPopupModel::SetAnswerBitmap(const SkBitmap& bitmap) {
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
 gfx::Image OmniboxPopupModel::GetMatchIcon(const AutocompleteMatch& match,
                                            SkColor vector_icon_color) {
-  gfx::Image extension_icon =
-      edit_model_->client()->GetIconIfExtensionMatch(match);
+  gfx::Image extension_icon = client_->GetIconIfExtensionMatch(match);
   if (!extension_icon.IsEmpty())
     return extension_icon;
 
@@ -301,7 +304,7 @@ gfx::Image OmniboxPopupModel::GetMatchIcon(const AutocompleteMatch& match,
     // Note: We're relying on GetFaviconForPageUrl to call the callback
     // asynchronously. If the callback is called synchronously, the fetched
     // favicon may get clobbered by the vector icon once this method returns.
-    edit_model_->client()->GetFaviconForPageUrl(
+    client_->GetFaviconForPageUrl(
         &favicon_task_tracker_, match.destination_url,
         base::Bind(&OmniboxPopupModel::OnFaviconFetched,
                    weak_factory_.GetWeakPtr(), match.destination_url));

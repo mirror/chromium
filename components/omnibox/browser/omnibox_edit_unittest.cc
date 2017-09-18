@@ -225,7 +225,10 @@ class OmniboxEditTest : public ::testing::Test {
       : controller_(&toolbar_model_),
         view_(&controller_),
         model_(&view_, &controller_, base::MakeUnique<TestingOmniboxClient>()),
-        popup_model_(&popup_view_, &model_) {}
+        popup_model_(&popup_view_,
+                     &model_,
+                     model_.client(),
+                     model_.autocomplete_controller()) {}
 
   TestToolbarModel* toolbar_model() { return &toolbar_model_; }
   const TestingOmniboxView& view() { return view_; }
