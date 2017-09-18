@@ -15,6 +15,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "ui/app_list/app_list_constants.h"
+#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/search/history.h"
 #include "ui/app_list/search_box_model.h"
 #include "ui/app_list/search_provider.h"
@@ -24,6 +25,9 @@ namespace {
 
 // Maximum time (in milliseconds) to wait to the search providers to finish.
 constexpr int kStopTimeMS = 1500;
+
+// Stop time for fullscreen app list.
+constexpr int kStopTimeFullscreenMS = 60000;
 }
 
 namespace app_list {
@@ -31,7 +35,10 @@ namespace app_list {
 SearchController::SearchController(SearchBoxModel* search_box,
                                    AppListModel::SearchResults* results,
                                    History* history)
-    : search_box_(search_box), mixer_(new Mixer(results)), history_(history) {}
+    : search_box_(search_box),
+      mixer_(new Mixer(results)),
+      history_(history),
+      is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {}
 
 SearchController::~SearchController() {
 }
@@ -53,10 +60,12 @@ void SearchController::Start() {
 
   OnResultsChanged();
 
-  stop_timer_.Start(FROM_HERE,
-                    base::TimeDelta::FromMilliseconds(kStopTimeMS),
-                    base::Bind(&SearchController::Stop,
-                               base::Unretained(this)));
+  stop_timer_.Start(
+      FROM_HERE,
+      base::TimeDelta::FromMilliseconds(is_fullscreen_app_list_enabled_
+                                            ? kStopTimeFullscreenMS
+                                            : kStopTimeMS),
+      base::Bind(&SearchController::Stop, base::Unretained(this)));
 }
 
 void SearchController::Stop() {

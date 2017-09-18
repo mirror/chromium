@@ -67,6 +67,9 @@ class APP_LIST_EXPORT SearchController {
 
   base::OneShotTimer stop_timer_;
 
+  // True if the fullscreen app list feature is enabled.
+  const bool is_fullscreen_app_list_enabled_;
+
   DISALLOW_COPY_AND_ASSIGN(SearchController);
 };
 
