@@ -16,6 +16,6 @@
     android:paddingStart="16dp"
     android:paddingTop="12dp">
 
-    <include layout="@layout/signin_promo_view_impl"/>
+    <include layout="@layout/personalized_signin_promo_view_impl"/>
 
 </org.chromium.chrome.browser.signin.SigninPromoView>
