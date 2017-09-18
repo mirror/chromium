@@ -10,6 +10,8 @@ test(function() {
   assert_true(window.testRunner !== undefined, 'This test requires testRunner');
   testRunner.setJavaScriptCanAccessClipboard(false);
 
+  assert_false(document.queryCommandSupported('copy'));
+  assert_false(document.queryCommandSupported('cut'));
   assert_false(document.queryCommandSupported('paste'));
 });
 </script>
