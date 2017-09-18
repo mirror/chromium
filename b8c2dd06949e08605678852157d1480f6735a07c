@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb46e307_ca7680a5",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2930,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T22:51:31Z",
+      "side": 1,
+      "message": "This will break Android. This block should be outside the BUILDFLAG(ENABLE_LIBRARY_CDMS) block.",
+      "revId": "b8c2dd06949e08605678852157d1480f6735a07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f6ebb9_6dc80309",
+        "filename": "media/mojo/interfaces/platform_verification.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-18T22:51:31Z",
+      "side": 1,
+      "message": "What\u0027s the |version| if the returned |storage_id| is null?\n\nHow about:\n\nReturned |version| will be the same as the requested |version| except when the requested |version| is 0 and the returned |storage_id| is not empty, in which case the latest version is returned.",
+      "revId": "b8c2dd06949e08605678852157d1480f6735a07c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
