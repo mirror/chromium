@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4e0a2664_fbbfe0c8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-09-18T19:56:07Z",
+      "side": 1,
+      "message": "No reason--changed it to string, which hopefully is slightly better?",
+      "parentUuid": "87849c76_1c3e158d",
+      "range": {
+        "startLine": 48,
+        "startChar": 35,
+        "endLine": 48,
+        "endChar": 52
+      },
+      "revId": "6623608e74f75b7389f2600f6b6391f351c4e6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9d8f3a1_2634c67f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "6623608e74f75b7389f2600f6b6391f351c4e6d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f38d2ca_19f6cf0e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-09-18T19:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9d8f3a1_2634c67f",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 10
+      },
+      "revId": "6623608e74f75b7389f2600f6b6391f351c4e6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
