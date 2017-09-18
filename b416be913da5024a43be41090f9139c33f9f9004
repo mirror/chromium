@@ -25,6 +25,75 @@
     },
     {
       "key": {
+        "uuid": "e6ddc4fa_fd743cf0",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-18T11:36:37Z",
+      "side": 1,
+      "message": "USER vs DEVELOPER? \n\nwhat users see vs what developers see",
+      "range": {
+        "startLine": 26,
+        "startChar": 21,
+        "endLine": 26,
+        "endChar": 44
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3714ec4c_537f6157",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-18T11:36:37Z",
+      "side": 1,
+      "message": "To me, it looks like a promise to support all these languages. But the support may be imperfect or even weird at closer look. I would remove it.\n\nMartin: WDYT?",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b7cde8c_698dec81",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-18T11:36:37Z",
+      "side": 1,
+      "message": "it is not precise. It can, but then we will exclude this field.",
+      "range": {
+        "startLine": 53,
+        "startChar": 3,
+        "endLine": 53,
+        "endChar": 51
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3d95efc_c45214cd",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 12
@@ -41,6 +110,98 @@
         "startChar": 18,
         "endLine": 72,
         "endChar": 34
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a658c2f4_3ae84c6d",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-18T11:36:37Z",
+      "side": 1,
+      "message": "I would prefer NonLatin. IMO, \"Foreign\" is a bit strange name.",
+      "range": {
+        "startLine": 133,
+        "startChar": 26,
+        "endLine": 133,
+        "endChar": 33
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "524388f6_96f541ae",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-18T11:36:37Z",
+      "side": 1,
+      "message": "this is actually two words. For other names as well I believe. We should keep in mind.",
+      "range": {
+        "startLine": 158,
+        "startChar": 39,
+        "endLine": 158,
+        "endChar": 56
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e7caef_6e375231",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-18T11:36:37Z",
+      "side": 1,
+      "message": "newtel and newmobile look suspicious.",
+      "range": {
+        "startLine": 267,
+        "startChar": 20,
+        "endLine": 267,
+        "endChar": 26
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b5638ff_6580c49d",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-18T11:36:37Z",
+      "side": 1,
+      "message": "Do we search for \"@\"? Is it a signal?",
+      "range": {
+        "startLine": 282,
+        "startChar": 58,
+        "endLine": 282,
+        "endChar": 59
       },
       "revId": "b416be913da5024a43be41090f9139c33f9f9004",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
