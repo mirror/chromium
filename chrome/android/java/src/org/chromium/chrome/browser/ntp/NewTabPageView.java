@@ -214,7 +214,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
                 if (holder.itemView == mNewTabPageLayout) mIsMovingNewTabPageView = true;
 
                 // Cancel any pending scroll update handling, a new one will be scheduled in
-                // onAnimationFinished().
+                // onHeightAnimationFinished().
                 mRecyclerView.removeCallbacks(mUpdateSearchBoxOnScrollRunnable);
 
                 return super.animateMove(holder, fromX, fromY, toX, toY);
