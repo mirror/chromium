@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.chrome.browser.ntp.cards;
+package org.chromium.chrome.browser.metrics;
 
 import android.graphics.Rect;
 import android.support.annotation.Nullable;
@@ -37,6 +37,13 @@ public class ImpressionTracker
     private View mView;
     private final Listener mListener;
     private boolean mTriggered;
+
+    /**
+     * Creates an {@link ImpressionTracker} with no view being observed.
+     */
+    public ImpressionTracker(Listener listener) {
+        this(null, listener);
+    }
 
     /**
      * Creates an {@link ImpressionTracker}. {@code view} can be {@code null} if the tracked should
