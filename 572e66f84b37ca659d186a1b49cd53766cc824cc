@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1058c612_06f93d08",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-18T03:49:14Z",
+      "side": 1,
+      "message": "not necessary with unique_ptr. Just do nothing, it will release\nautomatically.",
+      "revId": "572e66f84b37ca659d186a1b49cd53766cc824cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17720f2c_2762f6b6",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-18T03:49:14Z",
+      "side": 1,
+      "message": "not necessary with unique_ptr. Just do nothing, it will release\nautomatically.",
+      "revId": "572e66f84b37ca659d186a1b49cd53766cc824cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c567a75_7707789d",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRelationCache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-18T03:49:14Z",
+      "side": 1,
+      "message": "Comment for this one",
+      "revId": "572e66f84b37ca659d186a1b49cd53766cc824cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
