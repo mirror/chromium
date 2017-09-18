@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ededa6ff_f32bbdc5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-18T20:26:20Z",
+      "side": 1,
+      "message": "Why are we doing that, rather than fixing the test to use TimeTicks rather than making bogus assumptions of Time?\n\nIn general Time is not monotonic, e.g. if you have an NTP client then it can re-set the clock, and therefore Time, if it has to make a large correction.  TimeTicks, can be relied on to be monotonic.",
+      "revId": "0f3d3357977bcbec1957dcad7cf1fb9280cc2c3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
