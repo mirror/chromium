@@ -12,8 +12,6 @@
 #include "components/download/internal/proto_conversions.h"
 #include "components/leveldb_proto/proto_database_impl.h"
 
-using leveldb_env::SharedReadCache;
-
 namespace download {
 
 namespace {
@@ -42,7 +40,7 @@ bool DownloadStore::IsInitialized() {
 void DownloadStore::Initialize(InitCallback callback) {
   DCHECK(!IsInitialized());
   db_->InitWithOptions(
-      kDatabaseClientName, database_dir_, leveldb_env::Options(),
+      kDatabaseClientName, database_dir_, leveldb_chrome::Options(),
       base::BindOnce(&DownloadStore::OnDatabaseInited,
                      weak_factory_.GetWeakPtr(), std::move(callback)));
 }
@@ -84,7 +82,7 @@ void DownloadStore::OnDatabaseDestroyed(StoreCallback callback, bool success) {
   }
 
   db_->InitWithOptions(
-      kDatabaseClientName, database_dir_, leveldb_env::Options(),
+      kDatabaseClientName, database_dir_, leveldb_chrome::Options(),
       base::BindOnce(&DownloadStore::OnDatabaseInitedAfterDestroy,
                      weak_factory_.GetWeakPtr(), std::move(callback)));
 }

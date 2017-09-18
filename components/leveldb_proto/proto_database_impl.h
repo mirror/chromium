@@ -46,7 +46,7 @@ class ProtoDatabaseImpl : public ProtoDatabase<T> {
   void InitWithOptions(
       const char* client_name,
       const base::FilePath& database_dir,
-      const leveldb_env::Options& options,
+      const leveldb_chrome::Options& options,
       typename ProtoDatabase<T>::InitCallback callback) override;
   void UpdateEntries(
       std::unique_ptr<typename ProtoDatabase<T>::KeyEntryVector>
@@ -62,7 +62,7 @@ class ProtoDatabaseImpl : public ProtoDatabase<T> {
   // Allow callers to provide their own Database implementation.
   void InitWithDatabase(std::unique_ptr<LevelDB> database,
                         const base::FilePath& database_dir,
-                        const leveldb_env::Options& options,
+                        const leveldb_chrome::Options& options,
                         typename ProtoDatabase<T>::InitCallback callback);
 
  private:
@@ -121,7 +121,7 @@ void RunDestroyCallback(typename ProtoDatabase<T>::DestroyCallback callback,
 
 inline void InitFromTaskRunner(LevelDB* database,
                                const base::FilePath& database_dir,
-                               const leveldb_env::Options& options,
+                               const leveldb_chrome::Options& options,
                                bool* success) {
   DCHECK(success);
 
@@ -224,7 +224,7 @@ template <typename T>
 void ProtoDatabaseImpl<T>::InitWithOptions(
     const char* client_name,
     const base::FilePath& database_dir,
-    const leveldb_env::Options& options,
+    const leveldb_chrome::Options& options,
     typename ProtoDatabase<T>::InitCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   database_dir_ = database_dir;
@@ -258,7 +258,7 @@ template <typename T>
 void ProtoDatabaseImpl<T>::InitWithDatabase(
     std::unique_ptr<LevelDB> database,
     const base::FilePath& database_dir,
-    const leveldb_env::Options& options,
+    const leveldb_chrome::Options& options,
     typename ProtoDatabase<T>::InitCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!db_);

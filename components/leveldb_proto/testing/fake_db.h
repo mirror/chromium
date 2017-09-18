@@ -33,7 +33,7 @@ class FakeDB : public ProtoDatabase<T> {
   void InitWithOptions(
       const char* client_name,
       const base::FilePath& database_dir,
-      const leveldb_env::Options& options,
+      const leveldb_chrome::Options& options,
       typename ProtoDatabase<T>::InitCallback callback) override;
   void UpdateEntries(
       std::unique_ptr<typename ProtoDatabase<T>::KeyEntryVector>
@@ -98,7 +98,7 @@ template <typename T>
 void FakeDB<T>::InitWithOptions(
     const char* client_name,
     const base::FilePath& database_dir,
-    const leveldb_env::Options& options,
+    const leveldb_chrome::Options& options,
     typename ProtoDatabase<T>::InitCallback callback) {
   dir_ = database_dir;
   init_callback_ = std::move(callback);

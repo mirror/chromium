@@ -610,6 +610,7 @@ static_library("sync") {
     "//third_party/cacheinvalidation",
     "//third_party/crc32c",
     "//third_party/leveldatabase",
+    "//third_party/leveldatabase:leveldb",
     "//third_party/zlib",
     "//third_party/zlib/google:compression_utils",
   ]
@@ -987,6 +988,7 @@ source_set("unit_tests") {
     "//testing/gtest",
     "//third_party/crc32c",
     "//third_party/leveldatabase",
+    "//third_party/leveldatabase:leveldb",
     "//third_party/protobuf:protobuf_lite",
     "//third_party/zlib/google:compression_utils",
     "//url",

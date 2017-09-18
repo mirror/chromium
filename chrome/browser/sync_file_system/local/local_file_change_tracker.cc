@@ -22,6 +22,7 @@
 #include "storage/browser/fileapi/file_system_operation_context.h"
 #include "storage/common/fileapi/file_system_util.h"
 #include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/leveldb_chrome.h"
 #include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 #include "third_party/leveldatabase/src/include/leveldb/env.h"
@@ -488,12 +489,12 @@ SyncStatusCode LocalFileChangeTracker::TrackerDB::Init(
 
   std::string path =
       storage::FilePathToString(base_path_.Append(kDatabaseName));
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.max_open_files = 0;  // Use minimum.
   options.create_if_missing = true;
   if (env_override_)
     options.env = env_override_;
-  leveldb::Status status = leveldb_env::OpenDB(options, path, &db_);
+  leveldb::Status status = leveldb_chrome::OpenDB(options, path, &db_);
   UMA_HISTOGRAM_ENUMERATION("SyncFileSystem.TrackerDB.Open",
                             leveldb_env::GetLevelDBStatusUMAValue(status),
                             leveldb_env::LEVELDB_STATUS_MAX);
@@ -521,7 +522,7 @@ SyncStatusCode LocalFileChangeTracker::TrackerDB::Repair(
   DCHECK(!db_.get());
   LOG(WARNING) << "Attempting to repair TrackerDB.";
 
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.reuse_logs = false;  // Compact log file if repairing.
   options.max_open_files = 0;  // Use minimum.
   if (leveldb::RepairDB(db_path, options).ok() &&
