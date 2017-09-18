@@ -80,6 +80,7 @@ struct SiteSettingSourceStringMapping {
 
 const SiteSettingSourceStringMapping kSiteSettingSourceStringMapping[] = {
     {SiteSettingSource::kDefault, "default"},
+    {SiteSettingSource::kDrmDisabled, "drm-disabled"},
     {SiteSettingSource::kEmbargo, "embargo"},
     {SiteSettingSource::kExtension, "extension"},
     {SiteSettingSource::kInsecureOrigin, "insecure-origin"},
@@ -105,7 +106,7 @@ static_assert(arraysize(kSiteSettingSourceStringMapping) ==
 //    9. Chrome's built-in default.
 SiteSettingSource CalculateSiteSettingSource(
     const content_settings::SettingInfo& info,
-    PermissionStatusSource permission_status_source) {
+    const PermissionStatusSource permission_status_source) {
   if (permission_status_source == PermissionStatusSource::KILL_SWITCH)
     return SiteSettingSource::kKillSwitch;  // Source #1.
 
@@ -143,6 +144,14 @@ SiteSettingSource CalculateSiteSettingSource(
 
   NOTREACHED();
   return SiteSettingSource::kPreference;
+}
+
+bool SiteSettingSourceIsUserControlled(const std::string& source_string) {
+  return (
+      source_string == SiteSettingSourceToString(SiteSettingSource::kDefault) ||
+      source_string == SiteSettingSourceToString(SiteSettingSource::kEmbargo) ||
+      source_string ==
+          SiteSettingSourceToString(SiteSettingSource::kPreference));
 }
 
 }  // namespace
@@ -412,6 +421,19 @@ ContentSetting GetContentSettingForOrigin(
   *source_string = SiteSettingSourceToString(
       CalculateSiteSettingSource(info, result.source));
   *display_name = GetDisplayNameForGURL(origin, extension_registry);
+
+  // Protected Content cannot be allowed if the |kEnableDRM| pref is off, so
+  // override any non-block or user-controlled values for it here. This allows
+  // non-user-controlled block-only sources (|kKillSwitch|, |kInsecureOrigin|)
+  // through, but steps in when other non-user-controlled, non-block-only
+  // sources are setting it to a non-block setting (e.g. |kExtension|).
+  if (content_type == CONTENT_SETTINGS_TYPE_PROTECTED_MEDIA_IDENTIFIER &&
+      (result.content_setting != CONTENT_SETTING_BLOCK ||
+       SiteSettingSourceIsUserControlled(*source_string)) &&
+      !profile->GetPrefs()->GetBoolean(prefs::kEnableDRM)) {
+    *source_string = SiteSettingSourceToString(SiteSettingSource::kDrmDisabled);
+    return CONTENT_SETTING_BLOCK;
+  }
   return result.content_setting;
 }
 
