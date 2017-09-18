@@ -228,6 +228,7 @@ void ExtensionMediaRouteProviderProxy::RegisterMediaRouteProvider(
 }
 
 void ExtensionMediaRouteProviderProxy::OnConnectionError() {
+  request_manager_->OnMojoConnectionError();
   media_route_provider_.reset();
 }
 
