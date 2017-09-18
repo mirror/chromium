@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ff8171d_e026e7bf",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3418,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T17:43:03Z",
+      "side": 1,
+      "message": "Do we still need it?",
+      "range": {
+        "startLine": 3418,
+        "startChar": 13,
+        "endLine": 3418,
+        "endChar": 38
+      },
+      "revId": "65b77326382a0d73b43b9b72e3d2ea1165e030d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ebc1cc_c10c5a1c",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3451,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T17:43:03Z",
+      "side": 1,
+      "message": "Here and everywhere IsSavePromptAvailable()",
+      "range": {
+        "startLine": 3451,
+        "startChar": 32,
+        "endLine": 3451,
+        "endChar": 62
+      },
+      "revId": "65b77326382a0d73b43b9b72e3d2ea1165e030d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0bdacd4_38125bd3",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3475,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T17:43:03Z",
+      "side": 1,
+      "message": "Please start a new test here.",
+      "range": {
+        "startLine": 3475,
+        "startChar": 5,
+        "endLine": 3475,
+        "endChar": 42
+      },
+      "revId": "65b77326382a0d73b43b9b72e3d2ea1165e030d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b92d8fea_f8dc2f09",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3492,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T17:43:03Z",
+      "side": 1,
+      "message": "IsSavePromptAvailable()\n\nIt\u0027s not valid to call IsSavePromptShownAutomatically for anything different from WebContents()",
+      "range": {
+        "startLine": 3492,
+        "startChar": 34,
+        "endLine": 3492,
+        "endChar": 64
+      },
+      "revId": "65b77326382a0d73b43b9b72e3d2ea1165e030d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba01ecfb_6ded0504",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3513,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T17:43:03Z",
+      "side": 1,
+      "message": "Are you sure that it\u0027s not about:blank for the current credentials?",
+      "range": {
+        "startLine": 3513,
+        "startChar": 30,
+        "endLine": 3513,
+        "endChar": 35
+      },
+      "revId": "65b77326382a0d73b43b9b72e3d2ea1165e030d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e27eb9be_4f33230a",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3533,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T17:43:03Z",
+      "side": 1,
+      "message": "Seems like the code above is shared between the tests. You can move it to a helper function.",
+      "range": {
+        "startLine": 3533,
+        "startChar": 23,
+        "endLine": 3533,
+        "endChar": 36
+      },
+      "revId": "65b77326382a0d73b43b9b72e3d2ea1165e030d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d2394a_0169bb15",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3562,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T17:43:03Z",
+      "side": 1,
+      "message": "What if you create a static form hardcoded in the test html file? Then you don\u0027t need to wait anything. If the fix has a bug then the username would be filled immediately after page load. The password value is accessible after the click.",
+      "range": {
+        "startLine": 3562,
+        "startChar": 34,
+        "endLine": 3562,
+        "endChar": 60
+      },
+      "revId": "65b77326382a0d73b43b9b72e3d2ea1165e030d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
