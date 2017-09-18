@@ -1,0 +1,62 @@
+<script>
+
+if (window.testRunner) {
+    testRunner.waitUntilDone();
+    testRunner.dumpAsText();
+    testRunner.setShouldStayOnPageAfterHandlingBeforeUnload(false);
+    testRunner.dumpBackForwardList();
+}
+
+// JavaScript onbeforeunload dialogs require a user gesture.
+if (window.eventSender) {
+    eventSender.mouseMoveTo(5, 5);
+    eventSender.mouseDown();
+    eventSender.mouseUp();
+}
+
+_confirmationDialogDisplayedOnce = false;
+
+window.onbeforeunload = function() {
+
+  if (!window._confirmationDialogDisplayedOnce) {
+    window._confirmationDialogDisplayedOnce = true;
+        return "Click 'Leave Page'";
+  }
+
+    window.setTimeout(function() {
+        if (window.testRunner)
+            testRunner.setShouldStayOnPageAfterHandlingBeforeUnload(true);
+
+        window.setTimeout(function() {
+            if (window.testRunner)
+                testRunner.notifyDone();
+        }, 1000);
+
+    }, 0);
+
+
+    return "Click 'Stay on Page'";
+};
+</script>
+
+<p>This tests that selecting not to proceed during BeforeUnload will cancel an ongoing renderer-initiated navigation.
+To test manually, click on the button below. Select Reload on the first BeforeUnload dialog and Stay on the second one.
+</p>
+
+<div id="console">SUCCESS</div>
+<button id="navigate" onclick="history.back();location.reload();">Click me</button>
+<script>
+var currentState = window.localStorage;
+if (!currentState.getItem("visited")) {
+  currentState.setItem("visited","1");
+} else if (currentState.getItem("visited") == "1") {
+  currentState.setItem("visited","2");
+  // The page shouldn't have reloaded.
+  document.getElementById("console").innerHTML = "FAIL";
+if (window.testRunner)
+  testRunner.notifyDone();
+} else {
+  currentState.removeItem("visited");
+}
+</script>
+
