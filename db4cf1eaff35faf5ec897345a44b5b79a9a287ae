@@ -16,6 +16,24 @@
       "revId": "db4cf1eaff35faf5ec897345a44b5b79a9a287ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6e99c53_c976d83c",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-09-18T21:12:07Z",
+      "side": 1,
+      "message": "RenderViewCreated check if the delegate exists, implying that the delegate might be added before the RenderView is created. I am not sure what the implications are of starting DevTools without a RenderViewHost, but I added the check to be consistent so that we always start with delegate + RenderView.",
+      "parentUuid": "cc0eeddf_42446b9a",
+      "revId": "db4cf1eaff35faf5ec897345a44b5b79a9a287ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
