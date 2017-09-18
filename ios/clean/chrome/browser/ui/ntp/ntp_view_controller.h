@@ -35,6 +35,8 @@
 // The panel currently selected.
 @property(nonatomic, assign) ntp_home::PanelIdentifier selectedNTPPanel;
 
+@property(nonatomic, strong) UIViewPropertyAnimator* colorAnimator;
+
 @end
 
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_NTP_NTP_VIEW_CONTROLLER_H_

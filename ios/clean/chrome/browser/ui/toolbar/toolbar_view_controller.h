@@ -60,6 +60,8 @@
 // A second tap on the tab switcher displays the tab grid.
 @property(nonatomic, assign) BOOL usesTabStrip;
 
+@property(nonatomic, strong) UIViewPropertyAnimator* colorAnimator;
+
 @end
 
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_TOOLBAR_TOOLBAR_VIEW_CONTROLLER_H_

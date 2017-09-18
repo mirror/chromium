@@ -11,6 +11,9 @@
 #import "ios/clean/chrome/browser/ui/transitions/containment_transitioning_delegate.h"
 #import "ios/clean/chrome/browser/ui/ui_types.h"
 
+#import "ios/clean/chrome/browser/ui/ntp/ntp_view_controller.h"
+#import "ios/clean/chrome/browser/ui/toolbar/toolbar_view_controller.h"
+
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
 #endif
@@ -35,6 +38,8 @@ const CGFloat kToolbarHeight = 56.0f;
 // means that this view will not be displayed on landscape.
 @property(nonatomic, strong) UIView* statusBarBackgroundView;
 
+@property(nonatomic, strong) UIViewPropertyAnimator* colorAnimator;
+
 @end
 
 @implementation TabContainerViewController
@@ -50,6 +55,7 @@ const CGFloat kToolbarHeight = 56.0f;
     _containmentTransitioningDelegate;
 @synthesize usesBottomToolbar = _usesBottomToolbar;
 @synthesize statusBarBackgroundColor = _statusBarBackgroundColor;
+@synthesize colorAnimator = _colorAnimator;
 
 #pragma mark - UIViewController
 
@@ -66,6 +72,25 @@ const CGFloat kToolbarHeight = 56.0f;
   [constraints addObjectsFromArray:[self findbarConstraints]];
   [constraints addObjectsFromArray:[self containerConstraints]];
   [NSLayoutConstraint activateConstraints:constraints];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+  self.colorAnimator = [[UIViewPropertyAnimator alloc]
+      initWithDuration:2
+                 curve:UIViewAnimationCurveEaseIn
+            animations:^{
+            }];
+  ToolbarViewController* tvc =
+      static_cast<ToolbarViewController*>(self.toolbarViewController);
+  tvc.colorAnimator = self.colorAnimator;
+
+  if ([self.contentViewController isKindOfClass:[NTPViewController class]]) {
+    NTPViewController* ntpVC =
+        static_cast<NTPViewController*>(self.contentViewController);
+    ntpVC.colorAnimator = self.colorAnimator;
+  }
+
+  [self.colorAnimator startAnimation];
 }
 
 #pragma mark - Public properties

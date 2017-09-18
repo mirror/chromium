@@ -39,6 +39,7 @@
 @synthesize tabBarItems = _tabBarItems;
 @synthesize itemToDisplay = _itemToDisplay;
 @synthesize selectedNTPPanel = _selectedNTPPanel;
+@synthesize colorAnimator = _colorAnimator;
 
 #pragma mark - UIViewController
 
@@ -132,6 +133,19 @@
   }
   self.selectedNTPPanel = ntp_home::INCOGNITO_PANEL;
   [self addControllerToScrollView:_incognitoViewController];
+}
+
+- (void)setColorAnimator:(UIViewPropertyAnimator*)colorAnimator {
+  _colorAnimator = colorAnimator;
+  __weak NTPViewController* weakSelf = self;
+  [_colorAnimator addAnimations:^{
+    [weakSelf animateForAction];
+  }
+                    delayFactor:1];
+}
+
+- (void)animateForAction {
+  self.view.backgroundColor = [UIColor blueColor];
 }
 
 #pragma mark - Private
