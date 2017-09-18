@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74a8e030_8e214e66",
+        "filename": "components/autofill/core/browser/autofill_profile.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 713,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-18T15:25:41Z",
+      "side": 1,
+      "message": "this does the lookup twice (once in ContainsKey and again in find or operator[]\n\nInstead:\n\nauto it \u003d validity_states_.find(type);\nreturn (it \u003d\u003d validity_states_.end()) ?  UNVALIDATED : it-\u003esecond;",
+      "revId": "c46ce3d25e5deb581f753997cd35ca71bdadc642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b2347c_dcdf1e88",
+        "filename": "components/autofill/core/browser/webdata/autofill_table_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-18T15:25:41Z",
+      "side": 1,
+      "message": "hmm... what exactly is this testing?",
+      "range": {
+        "startLine": 737,
+        "startChar": 26,
+        "endLine": 737,
+        "endChar": 41
+      },
+      "revId": "c46ce3d25e5deb581f753997cd35ca71bdadc642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23845fad_121e7663",
+        "filename": "components/autofill/core/browser/webdata/autofill_table_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 757,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-18T15:25:41Z",
+      "side": 1,
+      "message": "plz define as a constant somewhere. Or a comment that it\u0027s an arbitrary dummy value.\n\nThere\u0027s not way for me to understand what this number is supposed to mean.\n\nSimilarly below.",
+      "range": {
+        "startLine": 757,
+        "startChar": 44,
+        "endLine": 757,
+        "endChar": 45
+      },
+      "revId": "c46ce3d25e5deb581f753997cd35ca71bdadc642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54f5cfa_a93f11b3",
+        "filename": "components/autofill/core/browser/webdata/autofill_table_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-18T15:25:41Z",
+      "side": 1,
+      "message": "add a comment that he value isn\u0027t signicant, you\u0027re only validating serialization and deserialization.",
+      "revId": "c46ce3d25e5deb581f753997cd35ca71bdadc642",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
