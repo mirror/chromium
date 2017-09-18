@@ -31,4 +31,21 @@ void FakeDeviceSync::AddObserver(
 
 void FakeDeviceSync::GetSyncedDevices(GetSyncedDevicesCallback callback) {}
 
+void FakeDeviceSync::SetCapabilityEnabled(
+    const std::string& device_id,
+    cryptauth::DeviceCapabilityManager::Capability capability,
+    bool enabled,
+    SetCapabilityEnabledCallback callback){};
+
+void FakeDeviceSync::FindEligibleDevicesForCapability(
+    cryptauth::DeviceCapabilityManager::Capability capability,
+    FindEligibleDevicesForCapabilityCallback callback){};
+
+void FakeDeviceSync::IsCapabilityPromotable(
+    const std::string& device_id,
+    cryptauth::DeviceCapabilityManager::Capability capability,
+    IsCapabilityPromotableCallback callback){};
+
+void FakeDeviceSync::GetUserPublicKey(GetUserPublicKeyCallback callback){};
+
 }  // namespace multidevice

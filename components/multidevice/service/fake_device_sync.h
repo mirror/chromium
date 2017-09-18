@@ -42,6 +42,19 @@ class FakeDeviceSync : public device_sync::mojom::DeviceSync {
   void ForceSyncNow() override;
   void AddObserver(device_sync::mojom::DeviceSyncObserverPtr observer) override;
   void GetSyncedDevices(GetSyncedDevicesCallback callback) override;
+  void SetCapabilityEnabled(
+      const std::string& device_id,
+      cryptauth::DeviceCapabilityManager::Capability capability,
+      bool enabled,
+      SetCapabilityEnabledCallback callback) override;
+  void FindEligibleDevicesForCapability(
+      cryptauth::DeviceCapabilityManager::Capability capability,
+      FindEligibleDevicesForCapabilityCallback callback) override;
+  void IsCapabilityPromotable(
+      const std::string& device_id,
+      cryptauth::DeviceCapabilityManager::Capability capability,
+      IsCapabilityPromotableCallback callback) override;
+  void GetUserPublicKey(GetUserPublicKeyCallback callback) override;
 
  private:
   bool device_change_result_ = true;
