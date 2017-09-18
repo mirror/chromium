@@ -180,6 +180,24 @@
     },
     {
       "key": {
+        "uuid": "51da8e74_01bb369c",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-18T17:54:57Z",
+      "side": 1,
+      "message": "This patch adds getters for the target animations: https://chromium-review.googlesource.com/c/chromium/src/+/671065. \n\nI\u0027ll update this to depend on that.",
+      "parentUuid": "3fe8bc39_800d6ab0",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d95ed610_6081c115",
         "filename": "chrome/browser/vr/elements/transient_element.cc",
         "patchSetId": 2
