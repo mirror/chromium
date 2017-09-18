@@ -761,16 +761,16 @@ void ArcSessionManager::OnTermsOfServiceNegotiated(bool accepted) {
   DCHECK(terms_of_service_negotiator_ || g_disable_ui_for_testing);
   terms_of_service_negotiator_.reset();
 
-  if (!accepted) {
+  if (accepted) {
+    profile_->GetPrefs()->SetBoolean(prefs::kArcTermsAccepted, true);
+    StartAndroidManagementCheck();
+  } else {
+    // Stop the mini-container
+    RequestDisable();
     // User does not accept the Terms of Service. Disable Google Play Store.
     MaybeUpdateOptInCancelUMA(support_host_.get());
     SetArcPlayStoreEnabledForProfile(profile_, false);
-    return;
   }
-
-  // Terms were accepted.
-  profile_->GetPrefs()->SetBoolean(prefs::kArcTermsAccepted, true);
-  StartAndroidManagementCheck();
 }
 
 bool ArcSessionManager::IsArcTermsOfServiceNegotiationNeeded() const {

@@ -53,10 +53,14 @@ void ArcPlayStoreEnabledPreferenceHandler::Start() {
   const bool is_play_store_enabled = IsArcPlayStoreEnabledForProfile(profile_);
   VLOG(1) << "Start observing Google Play Store enabled preference. "
           << "Initial value: " << is_play_store_enabled;
-  UpdateArcSessionManager();
 
-  if (is_play_store_enabled)
+  // If play store is enabled, we need to upgrade the mini-container.
+  // If the OOBE screen is shown, don't kill the mini-container.
+  // we'll do it if and when the user declines the TOS
+  if (is_play_store_enabled || !ArcSessionManager::IsOobeOptInActive()) {
+    UpdateArcSessionManager();
     return;
+  }
 
   // Google Play Store is initially disabled, here.
 
