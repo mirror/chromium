@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b7a5006_e8aaade4",
+        "filename": "base/synchronization/waitable_event_watcher_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-18T23:23:59Z",
+      "side": 1,
+      "message": "This is all on the same thread, so perhaps |expected_total_count| ?",
+      "range": {
+        "startLine": 203,
+        "startChar": 15,
+        "endLine": 203,
+        "endChar": 23
+      },
+      "revId": "2272fe5c9dcdf36a631dbc0bb67ebce936e202fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
