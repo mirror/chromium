@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "408c6858_7dae6198",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-18T16:49:05Z",
+      "side": 1,
+      "message": "This aligns with the way we use gtest_filter to run unit tests, which is if not specified, run everything by default. I understand your concern, and I agree it\u0027s always better to make it explicit, and adding \"If present\" is a good idea :)",
+      "parentUuid": "c54a50c4_5a3f2134",
+      "revId": "a9f25e1b936af3e7df602b076772927b0b5b85b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d616aec_1dfa47c4",
         "filename": "ios/tools/coverage/coverage.py",
         "patchSetId": 2
@@ -123,6 +141,24 @@
       "revId": "a9f25e1b936af3e7df602b076772927b0b5b85b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f2a3f3_2a6a60c2",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-09-18T16:49:05Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5fb29662_4b895cd4",
+      "revId": "a9f25e1b936af3e7df602b076772927b0b5b85b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
