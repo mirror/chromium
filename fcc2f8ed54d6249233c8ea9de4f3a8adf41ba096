@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fa77213_3bf8892b",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2185,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-18T20:01:10Z",
+      "side": 1,
+      "message": "nit: guids_to_delete",
+      "range": {
+        "startLine": 2185,
+        "startChar": 27,
+        "endLine": 2185,
+        "endChar": 39
+      },
+      "revId": "fcc2f8ed54d6249233c8ea9de4f3a8adf41ba096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c3207c_00c6d71a",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2187,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-18T20:01:10Z",
+      "side": 1,
+      "message": "nit: I would reverse either the comment or the if condition to make them in the same order.",
+      "range": {
+        "startLine": 2187,
+        "startChar": 7,
+        "endLine": 2187,
+        "endChar": 80
+      },
+      "revId": "fcc2f8ed54d6249233c8ea9de4f3a8adf41ba096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "200f4539_694b164d",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2188,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-18T20:01:10Z",
+      "side": 1,
+      "message": "shouldn\u0027t this be AutofillClock::Now()? If it is could you add a test? Thanks!",
+      "range": {
+        "startLine": 2188,
+        "startChar": 60,
+        "endLine": 2188,
+        "endChar": 73
+      },
+      "revId": "fcc2f8ed54d6249233c8ea9de4f3a8adf41ba096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8729afff_536606af",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2194,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-18T20:01:10Z",
+      "side": 1,
+      "message": "Could you remove them directly like this instead?:  database_-\u003eRemoveCreditCard(guid); \n\nAnd then add Refresh() at like 2201?\n\nThis way we will not refresh at every card deletion but only once at the end. Thanks!",
+      "range": {
+        "startLine": 2194,
+        "startChar": 4,
+        "endLine": 2194,
+        "endChar": 16
+      },
+      "revId": "fcc2f8ed54d6249233c8ea9de4f3a8adf41ba096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b9d21d9_06fb7276",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6314,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-18T20:01:10Z",
+      "side": 1,
+      "message": "Could you extract this into a CreateExpiredAndDisusedCard() function to reuse in your multiple tests?",
+      "range": {
+        "startLine": 6305,
+        "startChar": 2,
+        "endLine": 6314,
+        "endChar": 57
+      },
+      "revId": "fcc2f8ed54d6249233c8ea9de4f3a8adf41ba096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "200aef97_d4c343b7",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6379,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-18T20:01:10Z",
+      "side": 1,
+      "message": "Could you add that it\u0027s because we don\u0027t delete server cards? Here and the other one Thanks! :)",
+      "range": {
+        "startLine": 6379,
+        "startChar": 5,
+        "endLine": 6379,
+        "endChar": 12
+      },
+      "revId": "fcc2f8ed54d6249233c8ea9de4f3a8adf41ba096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
