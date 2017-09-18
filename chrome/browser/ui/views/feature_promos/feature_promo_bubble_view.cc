@@ -31,21 +31,28 @@ constexpr base::TimeDelta kDelayShort = base::TimeDelta::FromSeconds(1);
 
 FeaturePromoBubbleView::FeaturePromoBubbleView(views::View* anchor_view,
                                                views::BubbleBorder::Arrow arrow,
-                                               int string_specifier)
+                                               int string_specifier,
+                                               bool can_activate)
     : FeaturePromoBubbleView(anchor_view,
                              gfx::Rect(),
                              arrow,
-                             string_specifier) {}
+                             string_specifier,
+                             can_activate) {}
 
 FeaturePromoBubbleView::FeaturePromoBubbleView(const gfx::Rect& anchor_rect,
                                                views::BubbleBorder::Arrow arrow,
                                                int string_specifier)
-    : FeaturePromoBubbleView(nullptr, anchor_rect, arrow, string_specifier) {}
+    : FeaturePromoBubbleView(nullptr,
+                             anchor_rect,
+                             arrow,
+                             string_specifier,
+                             true) {}
 
 FeaturePromoBubbleView::FeaturePromoBubbleView(views::View* anchor_view,
                                                const gfx::Rect& anchor_rect,
                                                views::BubbleBorder::Arrow arrow,
-                                               int string_specifier)
+                                               int string_specifier,
+                                               bool can_activate)
     : BubbleDialogDelegateView(anchor_view, arrow) {
   UseCompactMargins();
   if (!anchor_view)
@@ -61,15 +68,21 @@ FeaturePromoBubbleView::FeaturePromoBubbleView(views::View* anchor_view,
 
   AddChildView(new views::Label(l10n_util::GetStringUTF16(string_specifier)));
 
+  set_can_activate(can_activate);
   views::Widget* widget = views::BubbleDialogDelegateView::CreateBubble(this);
   if (!anchor_view)
     SetArrowPaintType(views::BubbleBorder::PAINT_TRANSPARENT);
   UseCompactMargins();
   widget->Show();
-  StartAutoCloseTimer(kDelayDefault);
+  if (can_activate)
+    StartAutoCloseTimer(kDelayDefault);
 }
 
 FeaturePromoBubbleView::~FeaturePromoBubbleView() = default;
+
+void FeaturePromoBubbleView::CloseBubble() {
+  GetWidget()->Close();
+}
 
 int FeaturePromoBubbleView::GetDialogButtons() const {
   return ui::DIALOG_BUTTON_NONE;
@@ -86,10 +99,6 @@ void FeaturePromoBubbleView::OnMouseEntered(const ui::MouseEvent& event) {
 
 void FeaturePromoBubbleView::OnMouseExited(const ui::MouseEvent& event) {
   StartAutoCloseTimer(kDelayShort);
-}
-
-void FeaturePromoBubbleView::CloseBubble() {
-  GetWidget()->Close();
 }
 
 void FeaturePromoBubbleView::StartAutoCloseTimer(
