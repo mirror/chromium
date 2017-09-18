@@ -145,6 +145,8 @@ def main():
 
   test_concurrency = args.test_launcher_jobs \
       if args.test_launcher_jobs else DEFAULT_TEST_CONCURRENCY
+  print "--test-launcher-jobs=", test_concurrency
+  print file("/proc/cpuinfo").read()
   child_args.append('--test-launcher-jobs=%d' % test_concurrency)
 
   if args.gtest_filter:
