@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5da9e032_70770707",
+        "filename": "chrome/browser/resources/print_preview/data/ticket_items/color.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-18T21:44:40Z",
+      "side": 1,
+      "message": "Does this mean that capability.option can look like [null, null, null] ? Can we filter those null values out in the C++ so that we don\u0027t have to account for them in JS?",
+      "revId": "b025a0d8681204dae340793a11f195871950928d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca6b783e_3c4321d7",
         "filename": "chrome/browser/resources/print_preview/data/ticket_items/color.js",
         "patchSetId": 2
