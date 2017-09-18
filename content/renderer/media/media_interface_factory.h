@@ -31,7 +31,8 @@ class CONTENT_EXPORT MediaInterfaceFactory
 
   // media::mojom::InterfaceFactory implementation.
   void CreateAudioDecoder(media::mojom::AudioDecoderRequest request) final;
-  void CreateVideoDecoder(media::mojom::VideoDecoderRequest request) final;
+  void CreateVideoDecoder(media::mojom::VideoDecoderRequest request,
+                          const std::string& decoder_name) final;
   void CreateRenderer(const std::string& audio_device_id,
                       media::mojom::RendererRequest request) final;
   void CreateCdm(media::mojom::ContentDecryptionModuleRequest request) final;

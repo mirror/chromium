@@ -14,6 +14,10 @@
 #include "media/filters/ffmpeg_video_decoder.h"
 #endif
 
+#if !defined(MEDIA_DISABLE_LIBVPX)
+#include "media/filters/vpx_video_decoder.h"
+#endif
+
 namespace media {
 
 UtilityMojoMediaClient::UtilityMojoMediaClient() {}
@@ -30,17 +34,27 @@ std::unique_ptr<VideoDecoder> UtilityMojoMediaClient::CreateVideoDecoder(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     MediaLog* media_log,
     mojom::CommandBufferIdPtr command_buffer_id,
-    OutputWithReleaseMailboxCB output_cb) {
-  std::unique_ptr<VideoDecoder> decoder;
-
-#if !defined(DISABLE_FFMPEG_VIDEO_DECODERS)
-  std::unique_ptr<MojoVideoFrameProvider> video_frame_provider(
-      new MojoVideoFrameProvider());
-  decoder.reset(
-      new FFmpegVideoDecoder(media_log, std::move(video_frame_provider)));
+    OutputWithReleaseMailboxCB output_cb,
+    const std::string& decoder_name) {
+#if !defined(MEDIA_DISABLE_LIBVPX)
+  if (decoder_name == "VpxVideoDecoder") {
+    std::unique_ptr<VideoDecoder> decoder(
+        new VpxVideoDecoder(base::MakeUnique<MojoVideoFrameProvider>()));
+    CHECK_EQ(decoder_name, decoder->GetDisplayName());
+    return decoder;
+  }
 #endif
 
-  return decoder;
+#if !defined(DISABLE_FFMPEG_VIDEO_DECODERS)
+  if (decoder_name == "FFmpegVideoDecoder") {
+    std::unique_ptr<VideoDecoder> decoder(new FFmpegVideoDecoder(
+        media_log, base::MakeUnique<MojoVideoFrameProvider>()));
+    CHECK_EQ(decoder_name, decoder->GetDisplayName());
+    return decoder;
+  }
+#endif
+
+  return nullptr;
 }
 
 }  // namespace media
