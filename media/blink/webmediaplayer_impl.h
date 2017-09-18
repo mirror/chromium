@@ -41,6 +41,7 @@
 #include "media/filters/pipeline_controller.h"
 #include "media/mojo/interfaces/video_decode_stats_recorder.mojom.h"
 #include "media/renderers/skcanvas_video_renderer.h"
+#include "media/video/gpu_video_accelerator_factories.h"
 #include "third_party/WebKit/public/platform/WebAudioSourceProvider.h"
 #include "third_party/WebKit/public/platform/WebContentDecryptionModuleResult.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayer.h"
@@ -104,6 +105,8 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
       WebMediaPlayerDelegate* delegate,
       std::unique_ptr<RendererFactorySelector> renderer_factory_selector,
       UrlIndex* url_index,
+      std::unique_ptr<GpuVideoAcceleratorFactories::ScopedGLContextLock>
+          media_context_lock,
       std::unique_ptr<WebMediaPlayerParams> params);
   ~WebMediaPlayerImpl() override;
 
@@ -650,6 +653,9 @@ class MEDIA_BLINK_EXPORT WebMediaPlayerImpl
 
   BufferedDataSourceHostImpl buffered_data_source_host_;
   UrlIndex* url_index_;
+
+  std::unique_ptr<GpuVideoAcceleratorFactories::ScopedGLContextLock>
+      media_context_lock_;
 
   // Video rendering members.
   // The |compositor_| runs on the compositor thread, or if

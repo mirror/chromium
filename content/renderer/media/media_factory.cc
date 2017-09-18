@@ -292,7 +292,9 @@ blink::WebMediaPlayer* MediaFactory::CreateMediaPlayer(
 
   media::WebMediaPlayerImpl* media_player = new media::WebMediaPlayerImpl(
       web_frame, client, encrypted_client, GetWebMediaPlayerDelegate(),
-      std::move(factory_selector), url_index_.get(), std::move(params));
+      std::move(factory_selector), url_index_.get(),
+      RenderThreadImpl::current()->GetGpuFactories()->GetGLContextLock(),
+      std::move(params));
 
 #if defined(OS_ANDROID)  // WMPI_CAST
   media_player->SetMediaPlayerManager(GetMediaPlayerManager());
