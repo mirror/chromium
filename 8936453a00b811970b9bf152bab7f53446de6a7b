@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1277cb4d_420013f0",
+        "filename": "third_party/WebKit/LayoutTests/vr/getVRDisplays_detached.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-18T15:55:20Z",
+      "side": 1,
+      "message": "Yes. The expectation changed. I talked to Brandon offline and the new expectation seems more correct. Previously, we created a promise but never rejected or resolved that promise (even after called RejectNavigatorDetached). So we were expecting undefined. With my change, we immediately reject the promise. It is the same behavior as usb api.",
+      "parentUuid": "3ff0adb6_79cedaa1",
+      "revId": "8936453a00b811970b9bf152bab7f53446de6a7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e0a80dd_2a16b2ac",
         "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "8936453a00b811970b9bf152bab7f53446de6a7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89df5d31_07762b2f",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-18T15:55:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e0a80dd_2a16b2ac",
+      "revId": "8936453a00b811970b9bf152bab7f53446de6a7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "eac4bf38_d7f4e023",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-18T15:55:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a0d55b3_30a67724",
+      "range": {
+        "startLine": 33,
+        "startChar": 57,
+        "endLine": 33,
+        "endChar": 58
+      },
+      "revId": "8936453a00b811970b9bf152bab7f53446de6a7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f50d83af_40bb033b",
         "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
         "patchSetId": 3
@@ -70,6 +130,24 @@
       "writtenOn": "2017-09-14T22:24:16Z",
       "side": 1,
       "message": "What is the purpose of this check? Why was it added in https://chromium-review.googlesource.com/#/c/636663/?\n\nThere should be a frame gesture check in requestPresent(), but it appears we want to prevent even access to the devices in cross-origin iframe cases where there is no gesture. That seems reasonable due to the pose data being available. We should note this in a comment, though.",
+      "revId": "8936453a00b811970b9bf152bab7f53446de6a7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48340960_7e0897ea",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-18T15:55:20Z",
+      "side": 1,
+      "message": "This related to this topic: what should feature behave when feature policy is disabled (i.e. user turned off the runtime flag from about://flags) ? We were planning to disable webvr for cross-origin frames in that case. But Micheal worried that we are too aggressive. So we changed to requiring a user gesture before the cross-origin iframes have access to webvr apis(This is similar to vibration api). This way, any existing site that relies on cross-origin iframes have access to WebVR api should at least have a work around when user disabled feature policy.\nAdded a comment to explain why.",
+      "parentUuid": "f50d83af_40bb033b",
       "revId": "8936453a00b811970b9bf152bab7f53446de6a7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
