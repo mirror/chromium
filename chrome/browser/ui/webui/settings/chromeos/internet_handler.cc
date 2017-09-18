@@ -8,7 +8,6 @@
 #include "base/values.h"
 #include "chrome/browser/chromeos/options/network_config_view.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
-#include "chrome/browser/chromeos/ui/choose_mobile_network_dialog.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chromeos/network/network_state.h"
 #include "chromeos/network/network_state_handler.h"
@@ -84,7 +83,7 @@ void InternetHandler::AddNetwork(const base::ListValue* args) {
   } else if (onc_type == ::onc::network_type::kWiFi) {
     NetworkConfigView::ShowForType(shill::kTypeWifi);
   } else if (onc_type == ::onc::network_type::kCellular) {
-    ChooseMobileNetworkDialog::ShowDialog(GetNativeWindow());
+    NOTREACHED();
   } else {
     LOG(ERROR) << "Unsupported type for: " << kAddNetworkMessage;
   }
