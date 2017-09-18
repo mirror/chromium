@@ -16,6 +16,24 @@
       "revId": "5e99d578bc29a7332b864a7a7c2f2f54c7e4aaca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62ef2f34_772becc6",
+        "filename": "styleguide/java/java.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-09-18T14:59:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7789336_88813262",
+      "revId": "5e99d578bc29a7332b864a7a7c2f2f54c7e4aaca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
