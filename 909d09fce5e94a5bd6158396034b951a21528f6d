@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "d361191d_e2841021",
+        "filename": "ash/ash_strings.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T21:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90cc8333_22332d02",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4548270c_d8d9259c",
         "filename": "ash/public/interfaces/session_controller.mojom",
         "patchSetId": 3
@@ -523,6 +541,24 @@
       "side": 1,
       "message": "I think it\u0027s OK to move that stuff into ash (we have lots of metrics recording going on in ash, and I think it\u0027s orthogonal the mojo metrics service work). But that probably should be a separate CL now that I think about it.",
       "parentUuid": "29aaf6d0_f983b468",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbedd92a_f5d67713",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_context_menu_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T21:32:26Z",
+      "side": 1,
+      "message": "Which stuff? MultiProfileUMA already lives in ash but the majority of it is only used in chrome/.",
+      "parentUuid": "29ee52d2_6b77140f",
       "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

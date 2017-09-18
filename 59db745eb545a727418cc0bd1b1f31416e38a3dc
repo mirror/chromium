@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "863f4ed9_baaeb289",
+        "filename": "ash/session/teleport_warning_dialog.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T21:32:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cd08145_b911a3b4",
+      "revId": "59db745eb545a727418cc0bd1b1f31416e38a3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22c4f19b_37192123",
         "filename": "ash/session/teleport_warning_dialog.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-18T21:20:36Z",
       "side": 1,
       "message": "nit: no ash::",
+      "revId": "59db745eb545a727418cc0bd1b1f31416e38a3dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ecdb3c_13a01842",
+        "filename": "ash/session/teleport_warning_dialog.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T21:32:26Z",
+      "side": 1,
+      "message": "oops, thought I deleted that",
+      "parentUuid": "22c4f19b_37192123",
       "revId": "59db745eb545a727418cc0bd1b1f31416e38a3dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
