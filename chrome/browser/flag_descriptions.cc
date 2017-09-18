@@ -251,12 +251,6 @@ const char kEmbeddedExtensionOptionsDescription[] =
     "Display extension options as an embedded element in chrome://extensions "
     "rather than opening a new tab.";
 
-const char kEnableAsmWasmName[] =
-    "Experimental Validate Asm.js and convert to WebAssembly when valid.";
-const char kEnableAsmWasmDescription[] =
-    R"*(Validate Asm.js when "use asm" is present and then convert to )*"
-    R"*(WebAssembly.)*";
-
 const char kEnableAutofillCreditCardBankNameDisplayName[] =
     "Display the issuer bank name of a credit card in autofill.";
 const char kEnableAutofillCreditCardBankNameDisplayDescription[] =

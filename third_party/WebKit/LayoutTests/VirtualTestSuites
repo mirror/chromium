@@ -350,11 +350,6 @@
     "args": ["--enable-features=WebAssemblyStreaming"]
   },
   {
-    "prefix": "enable_asmjs",
-    "base": "http/tests/asmjs",
-    "args": ["--enable-features=AsmJsToWebAssembly"]
-  },
-  {
     "prefix": "service-worker-script-streaming",
     "base": "external/wpt/service-workers",
     "args": ["--enable-features=ServiceWorkerScriptStreaming"]
