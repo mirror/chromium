@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9630ed3d_bd869095",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 582,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-18T08:45:32Z",
+      "side": 1,
+      "message": "\u003e It is not a pair anymore.\n\nDone.",
+      "parentUuid": "69cbea8e_17483da0",
+      "range": {
+        "startLine": 582,
+        "startChar": 12,
+        "endLine": 582,
+        "endChar": 16
+      },
+      "revId": "f29c81a2562e6be0f983e4395a510aacca43a283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a17aa19c_1d6f55d4",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-16T20:34:26Z",
       "side": 1,
       "message": "...other text fields should be added to |other_possible_usernames|. \n\n\"Autocomplete may be wrong\" may be not enough, we have to mention crowdsourcing, etc. Let\u0027s omit that.",
+      "range": {
+        "startLine": 328,
+        "startChar": 41,
+        "endLine": 330,
+        "endChar": 43
+      },
+      "revId": "f29c81a2562e6be0f983e4395a510aacca43a283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da4834b6_ef74007c",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-18T08:45:32Z",
+      "side": 1,
+      "message": "\u003e ...other text fields should be added to |other_possible_usernames|. \n\u003e \n\u003e \"Autocomplete may be wrong\" may be not enough, we have to mention crowdsourcing, etc. Let\u0027s omit that.\n\nDone.",
+      "parentUuid": "a17aa19c_1d6f55d4",
       "range": {
         "startLine": 328,
         "startChar": 41,
