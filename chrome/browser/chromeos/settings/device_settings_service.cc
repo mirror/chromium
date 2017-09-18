@@ -65,7 +65,10 @@ DeviceSettingsService* DeviceSettingsService::Get() {
   return g_device_settings_service;
 }
 
-DeviceSettingsService::DeviceSettingsService() {}
+DeviceSettingsService::DeviceSettingsService() {
+  device_off_hours_controller_ =
+      base::MakeUnique<policy::DeviceOffHoursController>();
+}
 
 DeviceSettingsService::~DeviceSettingsService() {
   DCHECK(pending_operations_.empty());
@@ -289,6 +292,14 @@ void DeviceSettingsService::HandleCompletedOperation(
   if (status == STORE_SUCCESS) {
     policy_data_ = std::move(operation->policy_data());
     device_settings_ = std::move(operation->device_settings());
+    // Apply "OffHours" policy to current proto.
+    // (see DeviceOffHoursController class description)
+    device_off_hours_controller_->UpdateOffHoursPolicy(*device_settings_);
+    if (device_off_hours_controller_->IsOffHoursMode()) {
+      std::unique_ptr<em::ChromeDeviceSettingsProto> off_device_settings =
+          policy::ApplyOffHoursPolicyToProto(*device_settings_);
+      device_settings_.swap(off_device_settings);
+    }
   } else if (status != STORE_KEY_UNAVAILABLE) {
     LOG(ERROR) << "Session manager operation failed: " << status;
   }
