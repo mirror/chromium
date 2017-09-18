@@ -255,3 +255,21 @@ set_defaults("jumbo_component") {
     configs = default_compiler_configs
   }
 }
+
+# See documentation above by "internal_jumbo_target".
+template("jumbo_test") {
+  internal_jumbo_target(target_name) {
+    target_type = "test"
+    forward_variables_from(invoker, "*")
+  }
+}
+
+set_defaults("jumbo_test") {
+  if (is_android) {
+    configs = default_shared_library_configs
+    configs -= [ "//build/config/android:hide_all_but_jni_onload" ]
+    configs += [ "//build/config/android:hide_all_but_jni" ]
+  } else {
+    configs = default_executable_configs
+  }
+}
