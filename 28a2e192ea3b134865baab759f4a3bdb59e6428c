@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f18c6df_a2aa75f6",
+        "filename": "chrome/browser/predictors/resource_prefetch_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-09-18T10:38:27Z",
+      "side": 1,
+      "message": "is config-\u003eis_host_learning_enabled \u003d\u003d config \u0026 LoadingPredictorConfig::LEARNING always true?\n\nI suppose it\u0027s convenient to have a simple boolean to check, but I\u0027m always a little nervous when the same data is represented two different ways.\n\nYour call on what to do.",
+      "range": {
+        "startLine": 64,
+        "startChar": 46,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "28a2e192ea3b134865baab759f4a3bdb59e6428c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
