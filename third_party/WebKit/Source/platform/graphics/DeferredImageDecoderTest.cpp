@@ -441,17 +441,4 @@ TEST_F(MultiFrameDeferredImageDecoderTest, PaintImage) {
   EXPECT_NE(updated_frame1_key, complete_frame1_key);
 }
 
-TEST_F(MultiFrameDeferredImageDecoderTest, FrameDurationOverride) {
-  frame_count_ = 2;
-  frame_duration_ = TimeDelta::FromMilliseconds(5);
-  last_complete_frame_ = 1u;
-  lazy_decoder_->SetData(data_, true);
-
-  PaintImage image = CreatePaintImageAtIndex(0);
-  EXPECT_EQ(image.GetFrameMetadata()[0].duration,
-            base::TimeDelta::FromMilliseconds(100));
-  EXPECT_EQ(image.GetFrameMetadata()[1].duration,
-            base::TimeDelta::FromMilliseconds(100));
-}
-
 }  // namespace blink

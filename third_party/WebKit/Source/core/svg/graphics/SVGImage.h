@@ -75,7 +75,7 @@ class CORE_EXPORT SVGImage final : public Image {
   void StartAnimation(CatchUpAnimation = kCatchUp) override;
   void ResetAnimation() override;
 
-  PaintImage::CompletionState completion_state() const {
+  PaintImage::CompletionState completion_state() const override {
     return all_data_received_ ? PaintImage::CompletionState::DONE
                               : PaintImage::CompletionState::PARTIALLY_DONE;
   }
