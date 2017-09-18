@@ -206,6 +206,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
 
     private static final int RECORD_MULTI_WINDOW_SCREEN_WIDTH_DELAY_MS = 5000;
 
+    private static final int DPI_RESTORE_WHEN_EXITING_VR_TIMEOUT_MS = 1000;
+
     /**
      * Timeout in ms for reading PartnerBrowserCustomizations provider.
      */
@@ -273,6 +275,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
     private long mInflateInitialLayoutDurationMs;
 
     private int mUiMode;
+    private int mDensityDpi;
+    private boolean mChangedDensityWhileInVr;
     private int mScreenWidthDp;
     private Runnable mRecordMultiWindowModeScreenWidthRunnable;
 
@@ -1065,8 +1069,12 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         // See crbug.com/541546.
         checkAccessibility();
 
-        mUiMode = getResources().getConfiguration().uiMode;
-        mScreenWidthDp = getResources().getConfiguration().screenWidthDp;
+        Configuration config = getResources().getConfiguration();
+        mUiMode = config.uiMode;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            mDensityDpi = config.densityDpi;
+        }
+        mScreenWidthDp = config.screenWidthDp;
     }
 
     @Override
@@ -1706,6 +1714,21 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
         }
         mUiMode = newConfig.uiMode;
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            if (newConfig.densityDpi != mDensityDpi) {
+                mDensityDpi = newConfig.densityDpi;
+                // Screen density may change when entering and exiting VR. Note that even though
+                // the original screen density will likely be restored when exiting VR, we need to
+                // recreate anyways because any Android UI created while in the VR density may
+                // persist at the wrong density.
+                if (VrShellDelegate.isInOrEnteringVr()) {
+                    mChangedDensityWhileInVr = true;
+                } else {
+                    recreate();
+                }
+            }
+        }
+
         if (newConfig.screenWidthDp != mScreenWidthDp) {
             mScreenWidthDp = newConfig.screenWidthDp;
             final Activity activity = this;
@@ -2229,7 +2252,17 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      * Called when VR mode using this activity is exited. Any state set for VR should be restored
      * in this call, including showing 2D UI that was hidden.
      */
-    public void onExitVr() {}
+    public void onExitVr() {
+        if (!mChangedDensityWhileInVr) return;
+        // If density changed while we were in VR, we need to guarantee that we call recreate()
+        // after exiting, as Java UI that was created while in VR may persist at the wrong density.
+        getWindow().getDecorView().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                recreate();
+            }
+        }, DPI_RESTORE_WHEN_EXITING_VR_TIMEOUT_MS);
+    }
 
     /**
      * Whether this Activity supports moving a {@link Tab} to the {@link FullscreenActivity} when it

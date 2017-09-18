@@ -281,6 +281,11 @@ public class VrShellDelegate
         return sInstance.mVrShell.isDisplayingUrlForTesting();
     }
 
+    public static boolean isInOrEnteringVr() {
+        if (sInstance == null) return false;
+        return sInstance.mInVr || sInstance.mDonSucceeded;
+    }
+
     /**
      * Whether or not we are currently in VR.
      */
@@ -708,8 +713,9 @@ public class VrShellDelegate
             cancelPendingVrEntry();
             return;
         }
-        mVrClassesWrapper.setVrModeEnabled(mActivity, true);
         mInVr = true;
+        mVrClassesWrapper.setVrModeEnabled(mActivity, true);
+
         setWindowModeForVr(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         boolean donSuceeded = mDonSucceeded;
         mDonSucceeded = false;
@@ -1061,7 +1067,7 @@ public class VrShellDelegate
 
         // TODO(ymalik): We should be able to remove this if we handle it for multi-window in
         // {@link onMultiWindowModeChanged} since we're calling it in onStop.
-        if (!mInVr) cancelPendingVrEntry();
+        if (!mInVr && !mProbablyInDon) cancelPendingVrEntry();
 
         // When the active web page has a vrdisplayactivate event handler,
         // mListeningForWebVrActivate should be set to true, which means a vrdisplayactive event
@@ -1088,7 +1094,7 @@ public class VrShellDelegate
 
     private void onStop() {
         mStopped = true;
-        cancelPendingVrEntry();
+        if (!mProbablyInDon) cancelPendingVrEntry();
         assert !mCancellingEntryAnimation;
     }
 
