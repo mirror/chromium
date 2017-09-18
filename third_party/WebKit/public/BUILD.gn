@@ -225,6 +225,7 @@ source_set("blink_headers") {
     "platform/WebHTTPBody.h",
     "platform/WebHTTPHeaderVisitor.h",
     "platform/WebHTTPLoadInfo.h",
+    "platform/WebHeapAllocHooks.h",
     "platform/WebHistoryScrollRestorationType.h",
     "platform/WebIconSizesParser.h",
     "platform/WebImage.h",

@@ -33,6 +33,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/crash_keys.h"
 #include "chrome/common/pepper_flash.h"
+#include "chrome/common/profiling/memlog_allocator_shim.h"
 #include "chrome/common/profiling/memlog_client.h"
 #include "chrome/common/secure_origin_whitelist.h"
 #include "chrome/common/url_constants.h"
@@ -532,6 +533,11 @@ void ChromeContentClient::AddPepperPlugins(
 #endif  // defined(GOOGLE_CHROME_BUILD) && defined(FLAPPER_AVAILABLE)
   }
 #endif  // BUILDFLAG(ENABLE_PLUGINS)
+}
+
+void ChromeContentClient::SetGCHeapAllocationHookFunction(
+    GCHeapAllocationHookFunction fn) {
+  profiling::SetGCHeapAllocationHookFunction(fn);
 }
 
 void ChromeContentClient::AddContentDecryptionModules(

@@ -89,6 +89,20 @@ class CONTENT_EXPORT ContentClient {
   virtual void AddPepperPlugins(
       std::vector<content::PepperPluginInfo>* plugins) {}
 
+  // Notifies the embedder that this process type supports a garbage collected
+  // heap for which allocations can be hooked with the given function call.
+  //
+  // The parameter is a function to call to provide hook functions for alloc
+  // (with a null-termianted string describiing the object type) and free
+  // functions. Only process types with Blink in them will have this type of
+  // alternative heap.
+  //
+  // The function may be called with null hook functions to unregister hooks.
+  using GCHeapAllocationHookFunction =
+      void (*)(void (*)(uint8_t*, size_t, const char*), void (*)(uint8_t*));
+  virtual void SetGCHeapAllocationHookFunction(
+      GCHeapAllocationHookFunction fn) {}
+
   // Gives the embedder a chance to register the Content Decryption Modules
   // (CDM) it supports, as well as the CDM host file paths to verify CDM host.
   // |cdms| or |cdm_host_file_paths| can be null which means that specific list

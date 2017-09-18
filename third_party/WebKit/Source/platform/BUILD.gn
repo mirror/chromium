@@ -609,6 +609,7 @@ jumbo_component("platform") {
     "exported/WebHTTPBody.cpp",
     "exported/WebHTTPHeaderMap.cpp",
     "exported/WebHTTPLoadInfo.cpp",
+    "exported/WebHeapAllocHooks.cpp",
     "exported/WebImage.cpp",
     "exported/WebImageGenerator.cpp",
     "exported/WebInputEvent.cpp",
