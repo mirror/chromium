@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7430a5be_b31e6fe6",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-18T22:36:10Z",
+      "side": 1,
+      "message": "I guess you changed TriggerManager to RefCounted because of this calling point. \nAlternatively, you can use \"base::Unretained(trigger_manager_)\", such that you don\u0027t need to change TriggerManager into a RefCounted class. \n\nQ: what will happen if user immediately closes browser after this PostDelayedTask(..)? \nYou probably don\u0027t want this to block shutdown. Something like this:\nhttps://cs.chromium.org/chromium/src/base/task_scheduler/post_task.cc?l\u003d67\u0026ct\u003dxref_jump_to_def\u0026gsn\u003dPostDelayedTaskWithTraits",
+      "revId": "bab81a7ca36f5d92b0d8a3c7c6215d49f6963a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
