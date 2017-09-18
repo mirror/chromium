@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97dd6011_71c5598c",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkUtils.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-18T15:19:15Z",
+      "side": 1,
+      "message": "intentStartUrl. But you\u0027re still not doing the spirit of what I asked last round - namely don\u0027t bother processing the url a whole bunch (isUrlInScope) if the param isn\u0027t included",
+      "range": {
+        "startLine": 144,
+        "startChar": 19,
+        "endLine": 144,
+        "endChar": 27
+      },
+      "revId": "7b912e5d8fdaf187d33286c941d23bd1a5501964",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
