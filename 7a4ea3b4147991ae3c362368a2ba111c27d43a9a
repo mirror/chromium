@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29196f54_7c2f3851",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-09-18T08:52:04Z",
+      "side": 1,
+      "message": "Nit: revert, there\u0027s no need.",
+      "revId": "7a4ea3b4147991ae3c362368a2ba111c27d43a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "848792de_1435aa0c",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 18643,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-09-18T08:52:04Z",
+      "side": 1,
+      "message": "For the two lines above, use \"target page URL\" for clarity?",
+      "range": {
+        "startLine": 18643,
+        "startChar": 55,
+        "endLine": 18643,
+        "endChar": 0
+      },
+      "revId": "7a4ea3b4147991ae3c362368a2ba111c27d43a9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a3fef07d_6d2b4757",
+        "filename": "components/favicon/core/large_icon_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-09-18T08:52:04Z",
+      "side": 1,
+      "message": "First, it seems like the DCHECK is orthogonal to this CL, isn\u0027t it? So I\u0027d recommend dropping, and I know pkotwicz@ is not a big fan of checks.\n\nBesides, what does it really improve? The function will crash a bit later if null is dereferenced, so I don\u0027t think it does anything particularly useful besides documentation (modulo the early returns but that is unlikely the goal). For documentation purposes specifically, it\u0027s not clear to me if it does more good than harm, because of my earlier point (not being an actual parameter).\n\nIf, at all, I\u0027d add this DCHECK in the constructor and require all clients to provide a image fetcher (MockImageFetcher, NullImageFetcher or whatever). But not in this patch.",
+      "parentUuid": "f7bcd728_16eeaa30",
+      "range": {
+        "startLine": 381,
+        "startChar": 25,
+        "endLine": 381,
+        "endChar": 0
+      },
+      "revId": "a11457bb02f8d2cdee22fd7890d023f168f8a564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6944e6e2_dd070ae4",
         "filename": "components/favicon_base/favicon_types.h",
         "patchSetId": 2
