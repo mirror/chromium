@@ -207,6 +207,7 @@ public class BottomSheetContentController extends BottomNavigationView
         mBottomSheet.addObserver(mBottomSheetObserver);
         mActivity = activity;
         mTabModelSelector = tabModelSelector;
+
         mTabModelSelectorObserver = new EmptyTabModelSelectorObserver() {
             @Override
             public void onTabModelSelected(TabModel newModel, TabModel oldModel) {
@@ -251,6 +252,9 @@ public class BottomSheetContentController extends BottomNavigationView
                 updateMenuItemSpacing();
             }
         });
+
+        // Update visuals right away to properly set the color of the bottom navigation menu.
+        updateVisuals(mTabModelSelector.isIncognitoSelected());
     }
 
     /**
