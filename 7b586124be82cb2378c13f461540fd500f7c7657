@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb540b8a_ad177213",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-18T20:15:43Z",
+      "side": 1,
+      "message": "explicit\n\nPlease observe WidgetObserver::OnWindowDestroying and reset it just in case? It can happen during shutdown.",
+      "revId": "7b586124be82cb2378c13f461540fd500f7c7657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeff3982_e6794303",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-18T20:15:43Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "revId": "7b586124be82cb2378c13f461540fd500f7c7657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
