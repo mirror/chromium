@@ -14,6 +14,7 @@ import android.os.RemoteException;
 
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
+import org.chromium.chrome.browser.metrics.WebApkUma;
 import org.chromium.chrome.browser.notifications.NotificationBuilderBase;
 import org.chromium.webapk.lib.client.WebApkServiceConnectionManager;
 import org.chromium.webapk.lib.runtime_library.IWebApkApi;
@@ -85,6 +86,7 @@ public class WebApkServiceClient {
                     notificationBuilder.setSmallIcon(smallIconId);
                 }
                 api.notifyNotification(platformTag, platformID, notificationBuilder.build());
+                WebApkUma.recordNotificationPermissionStatus(api.determineAppNotificationStatus());
             }
         };
 
