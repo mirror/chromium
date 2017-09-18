@@ -293,6 +293,30 @@
       "revId": "a8406b44835bc71b70c151c8bd636da2b19fe229",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d62b7cb_bf929cdc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1161045
+      },
+      "writtenOn": "2017-09-18T22:34:38Z",
+      "side": 1,
+      "message": "I also tried the stopSelf before, the problem for it is it also cancel the notification. Now what we do is we only change the service into background and manually manage the notification.",
+      "parentUuid": "9d9f7eeb_ed197919",
+      "range": {
+        "startLine": 228,
+        "startChar": 20,
+        "endLine": 228,
+        "endChar": 32
+      },
+      "revId": "a8406b44835bc71b70c151c8bd636da2b19fe229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
