@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41c54f41_9234dd4b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-18T20:19:31Z",
+      "side": 1,
+      "message": "s/referenced/references",
+      "revId": "42b7e4501794dbe15dac140a9181eeb429de86c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "936c9de5_d3653b71",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-18T20:19:31Z",
+      "side": 1,
+      "message": "nit: Remove \"be used by\", i.e. just \"adds SFL to that test\"\n\nOtherwise it sounds like you specially added a new class, SFL, for use by this test, which is not the case. :)",
+      "revId": "42b7e4501794dbe15dac140a9181eeb429de86c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0265835_f881806d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-18T20:19:31Z",
+      "side": 1,
+      "message": "nit: Suggest saying \"implicitly relying on a FeatureList having been set (and leaked) by some earlier test in the same batch.\"",
+      "revId": "42b7e4501794dbe15dac140a9181eeb429de86c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b227d04_2ba52f39",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-09-18T20:19:31Z",
+      "side": 1,
+      "message": "It\u0027s not clear from this wording what the new semantics are; in particular it\u0027s not clear whether we are e.g. making GetFieldTrial() have a special path for use only in unit-tests, thereby potentially making it more fragile in production?",
+      "revId": "42b7e4501794dbe15dac140a9181eeb429de86c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
