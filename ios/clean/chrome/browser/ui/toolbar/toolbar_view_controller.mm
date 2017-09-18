@@ -54,6 +54,7 @@
 @synthesize stopButton = _stopButton;
 @synthesize progressBar = _progressBar;
 @synthesize usesTabStrip = _usesTabStrip;
+@synthesize colorAnimator = _colorAnimator;
 
 - (instancetype)initWithDispatcher:(id<NavigationCommands,
                                        TabGridCommands,
@@ -83,6 +84,19 @@
   [self.view addSubview:self.stackView];
   [self.view addSubview:self.progressBar];
   [self setConstraints];
+}
+
+- (void)setColorAnimator:(UIViewPropertyAnimator*)colorAnimator {
+  _colorAnimator = colorAnimator;
+  __weak ToolbarViewController* weakSelf = self;
+  [_colorAnimator addAnimations:^{
+    [weakSelf animateForAction];
+  }
+                    delayFactor:2];
+}
+
+- (void)animateForAction {
+  self.view.backgroundColor = [UIColor redColor];
 }
 
 #pragma mark - View Setup
