@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eef96cc_1c18b272",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-18T16:51:37Z",
+      "side": 1,
+      "message": "Nit: Use android.support.annotation.Nullable? I think that one is not retained at runtime, which would ever so slightly decrease binary size. (And yeah, we are super inconsistent about this :-/)",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 32
+      },
+      "revId": "2afec680d9cf7150c89e2d964a8817ad9ef08fbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
