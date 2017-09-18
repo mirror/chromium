@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "52e1341d_8ebd405a",
+        "filename": "ui/app_list/search_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-18T21:32:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43284cbd_ab225048",
+      "revId": "cc2a286c16996a9cb4ca5a530273fae1d9a715fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e16f6cce_a118dd8c",
         "filename": "ui/app_list/search_controller.cc",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-18T21:18:19Z",
       "side": 1,
       "message": "Feature checking is costly and we cached it in other code. SearchController::Start is called frequently when user is typing. Let\u0027s add a member to SearchController (either a boolean flag of the feature, or a base::TimeDelta) to avoid feature checking here.",
+      "range": {
+        "startLine": 62,
+        "startChar": 40,
+        "endLine": 62,
+        "endChar": 78
+      },
+      "revId": "cc2a286c16996a9cb4ca5a530273fae1d9a715fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca7d3fe3_6d7b6d0f",
+        "filename": "ui/app_list/search_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-09-18T21:32:18Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e16f6cce_a118dd8c",
       "range": {
         "startLine": 62,
         "startChar": 40,
