@@ -1,5 +1,11 @@
 include_rules = [
+  "+mojo/public/cpp",
   "+gpu/ipc/common",
   "+ipc",
-  "-media/base/media_export.h",
 ]
+
+specific_include_rules = {
+  "gpu_jpeg_decode_accelerator_mojo_unittest.cc": [
+    "+mojo/edk/embedder"
+  ],
+}
