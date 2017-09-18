@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "63b5a44f_5ba30041",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-09-18T22:05:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4c34e4a_25d30876",
+      "range": {
+        "startLine": 17,
+        "startChar": 12,
+        "endLine": 17,
+        "endChar": 16
+      },
+      "revId": "621773bef4d52e3707ccdddc8908ebc171e0244a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b209f149_aaee2385",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "25c34194_17a0f8bb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 495,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-09-18T22:05:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b209f149_aaee2385",
+      "range": {
+        "startLine": 495,
+        "startChar": 55,
+        "endLine": 495,
+        "endChar": 76
+      },
+      "revId": "621773bef4d52e3707ccdddc8908ebc171e0244a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96a5c100_8369ddb2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
         "patchSetId": 9
@@ -62,6 +110,24 @@
       "revId": "621773bef4d52e3707ccdddc8908ebc171e0244a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0927553_033701b9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/ChromePreferenceManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1227244
+      },
+      "writtenOn": "2017-09-18T22:05:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96a5c100_8369ddb2",
+      "revId": "621773bef4d52e3707ccdddc8908ebc171e0244a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
