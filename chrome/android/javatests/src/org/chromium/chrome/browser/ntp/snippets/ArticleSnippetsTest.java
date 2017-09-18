@@ -364,7 +364,7 @@ public class ArticleSnippetsTest {
         FeatureUtilities.resetChromeHomeEnabledForTests();
         FeatureUtilities.cacheChromeHomeEnabled();
 
-        if (FeatureUtilities.isChromeHomeModernEnabled()) {
+        if (FeatureUtilities.isChromeHomeEnabled()) {
             mRenderTestRule.setVariantPrefix("modern");
         }
     }
