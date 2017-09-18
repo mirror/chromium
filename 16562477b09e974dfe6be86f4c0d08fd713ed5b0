@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bf6dccf_4eb002bc",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-18T17:15:02Z",
+      "side": 1,
+      "message": "Maybe add a comment that this need to cancel the navigation because if the request fails in error before we do the hand off we\u0027ll get two calls to OnRequestFailed.\n\nAlternatively you could make NavigationURLLoader be responsible for cleaning up (e.g. calling OnRequestFailed) or guarantee it\u0027s only called once.",
+      "range": {
+        "startLine": 988,
+        "startChar": 6,
+        "endLine": 988,
+        "endChar": 69
+      },
+      "revId": "16562477b09e974dfe6be86f4c0d08fd713ed5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
