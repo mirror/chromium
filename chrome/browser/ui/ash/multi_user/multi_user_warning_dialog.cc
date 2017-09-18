@@ -7,7 +7,6 @@
 #include "ash/shell.h"
 #include "base/macros.h"
 #include "chrome/browser/ui/browser_dialogs.h"
-#include "chrome/browser/ui/views/harmony/chrome_layout_provider.h"
 #include "chrome/grit/generated_resources.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -15,6 +14,7 @@
 #include "ui/views/controls/button/checkbox.h"
 #include "ui/views/controls/label.h"
 #include "ui/views/layout/fill_layout.h"
+#include "ui/views/layout/layout_provider.h"
 #include "ui/views/widget/widget.h"
 #include "ui/views/window/dialog_delegate.h"
 
@@ -107,7 +107,7 @@ gfx::Size TeleportWarningView::CalculatePreferredSize() const {
 
 void TeleportWarningView::InitDialog() {
   SetBorder(
-      views::CreateEmptyBorder(ChromeLayoutProvider::Get()->GetInsetsMetric(
+      views::CreateEmptyBorder(views::LayoutProvider::Get()->GetInsetsMetric(
           views::INSETS_DIALOG_TITLE)));
   SetLayoutManager(new views::FillLayout());
 
