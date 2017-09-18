@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92529ae3_6a41fa71",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-18T14:31:45Z",
+      "side": 1,
+      "message": "this is fine as-is, but I would probably call this day_of_week() to indicate it\u0027s a simple getter (same with getMilliseconds()-\u003emilliseconds() below)",
+      "range": {
+        "startLine": 52,
+        "startChar": 6,
+        "endLine": 52,
+        "endChar": 18
+      },
+      "revId": "0aa0ecf4179f798579ce1960aad3e67bc592314c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb5089e_f7de1632",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-18T14:31:45Z",
+      "side": 1,
+      "message": "Can you make this a better error? Like also output the timezone string itself?:\n\nLOG(ERROR) \u003c\u003c \"Unsupported timezone: \" \u003c\u003c timezone;",
+      "range": {
+        "startLine": 119,
+        "startChar": 28,
+        "endLine": 119,
+        "endChar": 33
+      },
+      "revId": "0aa0ecf4179f798579ce1960aad3e67bc592314c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2e40a5b_5834a799",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-18T14:31:45Z",
+      "side": 1,
+      "message": "I think this comment is obsolete since there\u0027s no |timezone|?",
+      "range": {
+        "startLine": 146,
+        "startChar": 42,
+        "endLine": 146,
+        "endChar": 50
+      },
+      "revId": "0aa0ecf4179f798579ce1960aad3e67bc592314c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4339562_10d3eeda",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-18T14:31:45Z",
+      "side": 1,
+      "message": "btw, why did we make Day of Week 1-based?",
+      "range": {
+        "startLine": 161,
+        "startChar": 0,
+        "endLine": 161,
+        "endChar": 40
+      },
+      "revId": "0aa0ecf4179f798579ce1960aad3e67bc592314c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "824012fe_859b787c",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-18T14:31:45Z",
+      "side": 1,
+      "message": "I\u0027d just remove the networkchange notifier for now. It doesn\u0027t do what we want anyway.",
+      "range": {
+        "startLine": 289,
+        "startChar": 34,
+        "endLine": 289,
+        "endChar": 35
+      },
+      "revId": "0aa0ecf4179f798579ce1960aad3e67bc592314c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c88921d7_46f0343e",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-18T14:31:45Z",
+      "side": 1,
+      "message": "I\u0027d probably replace all this by DVLOG(1) \u003c\u003c \"OffHours mode: \" \u003c\u003c off_hours_mode_ because this doesn\u0027t add any code to the release version.",
+      "range": {
+        "startLine": 306,
+        "startChar": 6,
+        "endLine": 306,
+        "endChar": 21
+      },
+      "revId": "0aa0ecf4179f798579ce1960aad3e67bc592314c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "834abeb1_7cf5483d",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-18T14:31:45Z",
+      "side": 1,
+      "message": "I\u0027m not a huge fan of lots of VLOG() statements since they bloat up the codebase even though they are rarely executed. I usually only use DVLOG(), but I defer to Sergey on this - ask him if it\u0027s OK to keep these.",
+      "range": {
+        "startLine": 314,
+        "startChar": 2,
+        "endLine": 314,
+        "endChar": 6
+      },
+      "revId": "0aa0ecf4179f798579ce1960aad3e67bc592314c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "552c391c_a246c28b",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-18T14:31:45Z",
+      "side": 1,
+      "message": "See my previous note re: offhours mode \"probably\" changing. Why do we ever want to call observers if offhours mode didn\u0027t change?\n\nEdit: OK, now I\u0027m remembering - this observer isn\u0027t for random objects to know when off hours mode has change - it\u0027s so the device settings service knows it has to re-initialize this object.\n\nI think you should either change this object to cache the original policies so you don\u0027t have to call out to device settings service, or else you should *explicitly* call out to device settings service instead of using a generic observer, since this interface is only for notifying device settings service, and in fact the basic functioning of this class requires that device settings service get notified at various times and call UpdateOffHoursMode(), which kind of violates the contract of observers.",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 327,
+        "endChar": 50
+      },
+      "revId": "0aa0ecf4179f798579ce1960aad3e67bc592314c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b44c705_42f2d565",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-18T14:31:45Z",
+      "side": 1,
+      "message": "Why do we only do this if the time is less than a week? In general this function needs comments explaining what the code is doing (for example, why is till_off_hours initialized to kWeek above)?",
+      "range": {
+        "startLine": 360,
+        "startChar": 4,
+        "endLine": 360,
+        "endChar": 22
+      },
+      "revId": "0aa0ecf4179f798579ce1960aad3e67bc592314c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0139201_e95003fb",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-18T14:31:45Z",
+      "side": 1,
+      "message": "As we discussed, this comment troubles me - a contract that this observer is invoked because OffHours *could* be changed is pretty weak. Why are we not invoking this only when we are transitioning between OffHours and managed hours?",
+      "range": {
+        "startLine": 66,
+        "startChar": 70,
+        "endLine": 66,
+        "endChar": 72
+      },
+      "revId": "0aa0ecf4179f798579ce1960aad3e67bc592314c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5007d80f_5421689f",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-18T14:31:45Z",
+      "side": 1,
+      "message": "So OffHours mode controls a bunch of policies - why does this class enforce the \"user whitelist\" policy but not the other policies? Feels like this class shouldn\u0027t be enforcing this since it doesn\u0027t enforce other stuff (like network restrictions).",
+      "range": {
+        "startLine": 86,
+        "startChar": 70,
+        "endLine": 86,
+        "endChar": 73
+      },
+      "revId": "0aa0ecf4179f798579ce1960aad3e67bc592314c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd8378ee_fcfc3f28",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-18T14:31:45Z",
+      "side": 1,
+      "message": "Still don\u0027t understand why we\u0027re catching this notification since it\u0027s not a reliable way to detect the device has gone to sleep.",
+      "range": {
+        "startLine": 96,
+        "startChar": 7,
+        "endLine": 96,
+        "endChar": 23
+      },
+      "revId": "0aa0ecf4179f798579ce1960aad3e67bc592314c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d66136e_40c40313",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-18T14:31:45Z",
+      "side": 1,
+      "message": "Maybe just have DeviceOffHourseController invoke Load() directly and remove this observer interface?",
+      "range": {
+        "startLine": 247,
+        "startChar": 2,
+        "endLine": 247,
+        "endChar": 6
+      },
+      "revId": "0aa0ecf4179f798579ce1960aad3e67bc592314c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d44ae2_ccb85b04",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-18T14:31:45Z",
+      "side": 1,
+      "message": "This is a weird place to put this code - what happens if the DeviceUserWhitelist changes dynamically? We want to log the user out in that case also - seems like we should build some kind of policy handler that in general listens for changes to that whitelist and logs users out rather than baking off-hours code here. Ideally off-hours code wouldn\u0027t leak into this class.",
+      "range": {
+        "startLine": 316,
+        "startChar": 17,
+        "endLine": 316,
+        "endChar": 21
+      },
+      "revId": "0aa0ecf4179f798579ce1960aad3e67bc592314c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ffd2751_b22efd6d",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001963
+      },
+      "writtenOn": "2017-09-18T14:31:45Z",
+      "side": 1,
+      "message": "See my previous comment - better to not make this an Observer interface, but instead remove the need to call back into DeviceSettingsService at all, or explicitly have an API like \"DeviceOffHoursController::ReloadCachedPolicy()\" which OffHoursController can invoke.",
+      "range": {
+        "startLine": 202,
+        "startChar": 7,
+        "endLine": 202,
+        "endChar": 32
+      },
+      "revId": "0aa0ecf4179f798579ce1960aad3e67bc592314c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
