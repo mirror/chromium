@@ -22,6 +22,30 @@
       "revId": "e1cd7e67e4f7039c1922ccf11521e36fdbcb85fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94961b56_604df16c",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-18T22:37:08Z",
+      "side": 1,
+      "message": "I don\u0027t know. I expected is_chromeos to be set in CrOS builds, but it wasn\u0027t. target_os does get set though.\n\nI\u0027m not entirely happy with this solution either, but at least it seems to have fixed your build. See the bug for more context.",
+      "parentUuid": "89299f45_d3f8433b",
+      "range": {
+        "startLine": 446,
+        "startChar": 17,
+        "endLine": 446,
+        "endChar": 18
+      },
+      "revId": "e1cd7e67e4f7039c1922ccf11521e36fdbcb85fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
