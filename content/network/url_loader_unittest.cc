@@ -21,6 +21,8 @@
 #include "net/base/io_buffer.h"
 #include "net/base/mime_sniffer.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "net/test/embedded_test_server/http_response.h"
+#include "net/test/embedded_test_server/request_handler_util.h"
 #include "net/test/url_request/url_request_failed_job.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request.h"
@@ -118,6 +120,35 @@ class MultipleWritesInterceptor : public net::URLRequestInterceptor {
   DISALLOW_COPY_AND_ASSIGN(MultipleWritesInterceptor);
 };
 
+void DelayThenComplete(const net::test_server::SendCompleteCallback& done) {
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, done, base::TimeDelta::FromSecondsD(2.0));
+}
+
+// Return headers, then waits, then returns empty.
+class SlowAfterHeadersHttpResponse : public net::test_server::HttpResponse {
+ public:
+  SlowAfterHeadersHttpResponse() {}
+
+  void SendResponse(
+      const net::test_server::SendBytesCallback& send,
+      const net::test_server::SendCompleteCallback& done) override {
+    send.Run("HTTP/1.1 OK\r\n\r\n", base::Bind(&DelayThenComplete, done));
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(SlowAfterHeadersHttpResponse);
+};
+
+// /slow-empty: Delays after sending headers before returning an empty
+// document. This makes sure that the sniffing exercises the io-is-pending path
+// in CantSniffEmptyHtmlSlow, which is the same as the data returned by an html
+// file in CantSniffEmptyHtml other than the delay.
+std::unique_ptr<net::test_server::HttpResponse> HandleSlowAfterHeadersResponse(
+    const net::test_server::HttpRequest& request) {
+  return std::make_unique<SlowAfterHeadersHttpResponse>();
+}
+
 }  // namespace
 
 class URLLoaderImplTest : public testing::Test {
@@ -135,6 +166,9 @@ class URLLoaderImplTest : public testing::Test {
   void SetUp() override {
     test_server_.AddDefaultHandlers(
         base::FilePath(FILE_PATH_LITERAL("content/test/data")));
+    test_server_.RegisterDefaultHandler(
+        base::Bind(&net::test_server::HandlePrefixedRequest, "/slow-empty",
+                   base::Bind(&HandleSlowAfterHeadersResponse)));
     ASSERT_TRUE(test_server_.Start());
   }
 
@@ -428,6 +462,12 @@ TEST_F(URLLoaderImplTest, DoNotSniffHTMLFromImageGIF) {
 TEST_F(URLLoaderImplTest, CantSniffEmptyHtml) {
   set_sniff();
   Load(test_server()->GetURL("/content-sniffer-test4.html"));
+  ASSERT_TRUE(mime_type().empty());
+}
+
+TEST_F(URLLoaderImplTest, CantSniffEmptyHtmlSlow) {
+  set_sniff();
+  Load(test_server()->GetURL("/slow-empty"));
   ASSERT_TRUE(mime_type().empty());
 }
 
