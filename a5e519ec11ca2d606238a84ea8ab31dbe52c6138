@@ -94,6 +94,24 @@
     },
     {
       "key": {
+        "uuid": "0eabbcf0_9ceb1a28",
+        "filename": "ash/shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-18T16:33:23Z",
+      "side": 1,
+      "message": "As James suggests an accelerator is preferable.",
+      "parentUuid": "7387674f_dd0d2143",
+      "revId": "a5e519ec11ca2d606238a84ea8ab31dbe52c6138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25e64c07_078d6f8a",
         "filename": "ash/wm/overview/window_selector_controller.cc",
         "patchSetId": 2
