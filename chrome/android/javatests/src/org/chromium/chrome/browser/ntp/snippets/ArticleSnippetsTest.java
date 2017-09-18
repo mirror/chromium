@@ -127,8 +127,7 @@ public class ArticleSnippetsTest {
     @MediumTest
     @DisabledTest(message = "crbug.com/757735")
     @Feature({"ArticleSnippets", "RenderTest"})
-    @CommandLineParameter({"", "enable-features=" + ChromeFeatureList.CHROME_HOME + ","
-            + ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT})
+    @CommandLineParameter({"", "enable-features=" + ChromeFeatureList.CHROME_HOME})
     @RetryOnFailure
     public void testSnippetAppearance() throws IOException {
         // Don't load the Bitmap on the UI thread - this is a StrictModeViolation.
@@ -264,8 +263,7 @@ public class ArticleSnippetsTest {
     @Test
     @MediumTest
     @Feature({"ArticleSnippets", "RenderTest"})
-    @CommandLineParameter({"", "enable-features=" + ChromeFeatureList.CHROME_HOME + ","
-                    + ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT})
+    @CommandLineParameter({"", "enable-features=" + ChromeFeatureList.CHROME_HOME})
     public void testSigninPromo() throws IOException {
         ThreadUtils.runOnUiThreadBlocking(() -> {
             mContentView = new FrameLayout(mActivityTestRule.getActivity());
@@ -364,7 +362,7 @@ public class ArticleSnippetsTest {
         FeatureUtilities.resetChromeHomeEnabledForTests();
         FeatureUtilities.cacheChromeHomeEnabled();
 
-        if (FeatureUtilities.isChromeHomeModernEnabled()) {
+        if (FeatureUtilities.isChromeHomeEnabled()) {
             mRenderTestRule.setVariantPrefix("modern");
         }
     }

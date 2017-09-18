@@ -97,7 +97,7 @@ public class SuggestionsSection extends InnerNode {
 
         mHeader = new SectionHeader(info.getTitle());
         mSuggestionsList = new SuggestionsList(mSuggestionsSource, ranker, info);
-        boolean useModern = FeatureUtilities.isChromeHomeModernEnabled();
+        boolean useModern = FeatureUtilities.isChromeHomeEnabled();
         if (useModern) {
             mStatus = null;
         } else {
@@ -251,7 +251,7 @@ public class SuggestionsSection extends InnerNode {
         int newSuggestionsCount = getSuggestionsCount();
         if ((newSuggestionsCount == 0) == (oldSuggestionsCount == 0)) return;
 
-        if (!FeatureUtilities.isChromeHomeModernEnabled()) {
+        if (!FeatureUtilities.isChromeHomeEnabled()) {
             mStatus.setVisible(newSuggestionsCount == 0);
         }
 
@@ -583,7 +583,7 @@ public class SuggestionsSection extends InnerNode {
      * (as opposed to individual items in it).
      */
     private Set<Integer> getSectionDismissalRange() {
-        if (hasSuggestions() || FeatureUtilities.isChromeHomeModernEnabled()) {
+        if (hasSuggestions() || FeatureUtilities.isChromeHomeEnabled()) {
             return Collections.emptySet();
         }
 
