@@ -272,9 +272,8 @@ void ValidateAndConvertShippingOptions(
           kJSMessageSource, kWarningMessageLevel,
           "Duplicate shipping option identifier '" + option.id() +
               "' is treated as an invalid address indicator."));
-      // Clear |output| instead of throwing an exception.
-      output.clear();
-      shipping_option_output = String();
+      exception_state.ThrowTypeError(
+          "Cannot have duplicate shipping option identifiers");
       return;
     }
 
