@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "174df95b_e8b25aaf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-18T17:54:10Z",
+      "side": 1,
+      "message": "We should call this regardless of whether or not we have a ContentViewCore.",
+      "range": {
+        "startLine": 536,
+        "startChar": 12,
+        "endLine": 536,
+        "endChar": 43
+      },
+      "revId": "c284de95305b60f72a78d383c036a28c6ffa6e02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
