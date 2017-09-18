@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1cf10ebd_badbe868",
+        "filename": "chrome/browser/resources/settings/route.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-18T07:07:30Z",
+      "side": 1,
+      "message": "I\u0027ve added a test that hopefully checks this works properly, though I\u0027m not 100% sure if it\u0027s actually testing the first test case properly - please have a look. I also checked it manually (navigating directly to chrome://settings/content/siteDetails?site\u003d\u003corigin\u003e from chrome:newtab and also from chrome://settings) and both seem to work fine.\n\nI also tried window.location.pathname, but I think this isn\u0027t correct - we want the path of the route it\u0027s called on, not the current page (otherwise, it wouldn\u0027t need to be a method on Route at all).",
+      "parentUuid": "50b482b6_db7f9af6",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "591d5a49_dbe25e2e",
         "filename": "chrome/browser/resources/settings/site_settings/site_details.html",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6402704_c4dac1c7",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-18T07:07:30Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "591d5a49_dbe25e2e",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "17405bb7_3d23b91b",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-18T07:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4605941e_5bb0db6a",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c06f8b9d_95999b4c",
         "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66b58190_b58a4c65",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-18T07:07:30Z",
+      "side": 1,
+      "message": "Deleted! Thanks, this was from before when I hadn\u0027t added the preprocess\u003dtrue into the grit files yet.",
+      "parentUuid": "c06f8b9d_95999b4c",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9017ba3d_206fb37b",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-18T07:07:30Z",
+      "side": 1,
+      "message": "It\u0027s kinda a cleanup that writing a test for the DRM disabled source made me realise was good to have. The class was previously being updated in SiteDetailsPermissionElement.siteChanged(), but since I wasn\u0027t triggering that observer in the test, testing for this class would fail.",
+      "parentUuid": "43ad5235_11a4956e",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72ad9f9a_5ad3826a",
         "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
         "patchSetId": 12
@@ -101,6 +191,24 @@
       "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4a607f9_29527417",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-18T07:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72ad9f9a_5ad3826a",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "7a737ad6_e34094aa",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-18T07:07:30Z",
+      "side": 1,
+      "message": "Yes, you\u0027re totally right. Thanks for pointing this out. Fixed",
+      "parentUuid": "9c176344_6db6aa40",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33bf0f70_635e426a",
         "filename": "chrome/browser/resources/settings/site_settings_page/site_settings_page.js",
         "patchSetId": 12
@@ -135,6 +261,24 @@
       "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c6791cf_cb92dd13",
+        "filename": "chrome/browser/resources/settings/site_settings_page/site_settings_page.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-18T07:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33bf0f70_635e426a",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "ab7cbfe9_4e4cf558",
+        "filename": "chrome/browser/ui/webui/site_settings_helper.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-18T07:07:30Z",
+      "side": 1,
+      "message": "I think you\u0027re right - sorry, I assumed it might be controllable by policy/extension, but I took a look at the code and I don\u0027t think that\u0027s the case. I\u0027ll change it into a DCHECK.\n\nRE moving it:\nYup - I originally thought avoiding it might be better because you have to pass a few extra arguments, but I think it\u0027s ok now (it\u0027s fewer than what I would have had to add before). Done.",
+      "parentUuid": "48e63ad7_35d4c8e9",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "889edb92_4cd6167e",
         "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
         "patchSetId": 12
@@ -166,6 +328,24 @@
       "writtenOn": "2017-09-18T03:15:34Z",
       "side": 1,
       "message": "nit: I think the argument order should be reversed",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaeddf49_80e8a1f5",
+        "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-09-18T07:07:30Z",
+      "side": 1,
+      "message": "You mean, it should be assertEquals(actual, expected)? I always thought it was the other way around? https://cs.chromium.org/chromium/src/chrome/test/data/webui/test_api.js?rcl\u003d5d08b0ed27dbb81e6aa53dec25dadc255877efc4\u0026l\u003d891",
+      "parentUuid": "889edb92_4cd6167e",
       "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
