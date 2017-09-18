@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e4dc0b95_3039be56",
+        "filename": "chromeos/network/managed_network_configuration_handler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T17:11:55Z",
+      "side": 1,
+      "message": "Good catch. Unlikely but not impossible. Fixed.",
+      "parentUuid": "bdccaaa1_7f26b7c4",
+      "range": {
+        "startLine": 149,
+        "startChar": 19,
+        "endLine": 149,
+        "endChar": 32
+      },
+      "revId": "822d5193667d785f233f42a9d62503633242ec4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18ea92eb_baf58e56",
         "filename": "chromeos/network/network_state.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "822d5193667d785f233f42a9d62503633242ec4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a8b00f7_df69f1c0",
+        "filename": "chromeos/network/network_state.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T17:11:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18ea92eb_baf58e56",
+      "range": {
+        "startLine": 147,
+        "startChar": 7,
+        "endLine": 147,
+        "endChar": 21
+      },
+      "revId": "822d5193667d785f233f42a9d62503633242ec4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
