@@ -9,6 +9,8 @@
 
 #include <string>
 
+#include "base/strings/string_util.h"
+
 namespace base {
 namespace trace_event {
 namespace {
@@ -265,6 +267,14 @@ bool IsMemoryDumpProviderWhitelistedForSummary(const char* mdp_name) {
 }
 
 bool IsMemoryAllocatorDumpNameWhitelisted(const std::string& name) {
+  // Global dumps are explicitly whitelisted for background use.
+  if (base::StartsWith(name, "global/", CompareCase::SENSITIVE)) {
+    for (size_t i = sizeof("global/"); i < name.size(); i++)
+      if (!isxdigit(name[i]))
+        return false;
+    return true;
+  }
+
   // Remove special characters, numbers (including hexadecimal which are marked
   // by '0x') from the given string.
   const size_t length = name.size();
