@@ -1408,8 +1408,19 @@ void FeatureInfo::InitializeFloatAndHalfFloatFeatures(
   // rendered to via framebuffer objects.
   if (gl::HasExtension(extensions, "GL_EXT_color_buffer_float"))
     enable_ext_color_buffer_float = true;
-  if (gl::HasExtension(extensions, "GL_EXT_color_buffer_half_float"))
+  if (gl_version_info_->is_es2 &&
+      gl::HasExtension(extensions, "GL_EXT_color_buffer_half_float")) {
+    // Don't use the ES3 version of this extension because many implementations
+    // behave incorrectly, i.e., (RGBA, RGBA, HALF_FLOAT_OES) textures aren't
+    // color-renderable even if the extension is reported.
+
+    // TODO(zmo): even if the underlying driver reports the extension, WebGL
+    // version of the extension requires RGBA16F to be color-renderable,
+    // whereas the OpenGL ES extension only requires one of the format to be
+    // color-renderable. So we still need to do some verification before
+    // exposing the extension.
     enable_ext_color_buffer_half_float = true;
+  }
 
   if (gl::HasExtension(extensions, "GL_ARB_texture_float") ||
       gl_version_info_->is_desktop_core_profile) {
