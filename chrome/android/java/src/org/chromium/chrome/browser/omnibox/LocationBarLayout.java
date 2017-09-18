@@ -30,6 +30,7 @@ import android.provider.Settings;
 import android.speech.RecognizerIntent;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
+import android.support.annotation.Nullable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -83,6 +84,8 @@ import org.chromium.chrome.browser.util.ViewUtils;
 import org.chromium.chrome.browser.widget.FadingBackgroundView;
 import org.chromium.chrome.browser.widget.TintedImageButton;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
+import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.BottomSheetContent;
+import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetContentController;
 import org.chromium.components.security_state.ConnectionSecurityLevel;
 import org.chromium.content_public.browser.LoadUrlParams;
 import org.chromium.content_public.browser.WebContents;
@@ -217,6 +220,8 @@ public class LocationBarLayout extends FrameLayout
     private boolean mSuggestionModalShown;
     private boolean mUseDarkColors;
     private boolean mIsEmphasizingHttpsScheme;
+
+    private BottomSheetContent mOmniboxSuggestionsSheetContent;
 
     // True if the user has just selected a suggestion from the suggestion list. This suppresses
     // the recording of the dismissal of the suggestion list. (The list is only considered to have
@@ -640,8 +645,8 @@ public class LocationBarLayout extends FrameLayout
         /**
          * @return Whether or not the suggestions list is scrolled any amount.
          */
-        private boolean isScrolled() {
-            return computeVerticalScrollOffset() > 0;
+        private int getVerticalScroll() {
+            return computeVerticalScrollOffset();
         }
     }
 
@@ -690,12 +695,6 @@ public class LocationBarLayout extends FrameLayout
     @Override
     public boolean isSuggestionsListShown() {
         return mSuggestionsShown;
-    }
-
-    @Override
-    public boolean isSuggestionsListScrolled() {
-        if (!mSuggestionsShown || mSuggestionList == null) return false;
-        return mSuggestionList.isScrolled();
     }
 
     @Override
@@ -2287,14 +2286,60 @@ public class LocationBarLayout extends FrameLayout
     private void initOmniboxResultsContainer() {
         if (mOmniboxResultsContainer != null) return;
 
-        // Use the omnibox results container in the bottom sheet if it exists.
-        int omniboxResultsContainerId = R.id.omnibox_results_container_stub;
+        // If the bottom sheet exists, use it as the means to display the omnibox suggestions.
         if (mBottomSheet != null) {
-            omniboxResultsContainerId = R.id.bottom_omnibox_results_container_stub;
-        }
+            mOmniboxResultsContainer = new FrameLayout(getContext());
+            LayoutParams groupParams =
+                    new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+            mOmniboxResultsContainer.setLayoutParams(groupParams);
 
-        ViewStub overlayStub = (ViewStub) getRootView().findViewById(omniboxResultsContainerId);
-        mOmniboxResultsContainer = (ViewGroup) overlayStub.inflate();
+            mOmniboxSuggestionsSheetContent = new BottomSheetContent() {
+                @Override
+                public View getContentView() {
+                    return mOmniboxResultsContainer;
+                }
+
+                @Nullable
+                @Override
+                public View getToolbarView() {
+                    return null;
+                }
+
+                @Override
+                public boolean isUsingLightToolbarTheme() {
+                    return false;
+                }
+
+                @Override
+                public boolean isIncognitoThemedContent() {
+                    return mToolbarDataProvider != null && mToolbarDataProvider.isIncognito();
+                }
+
+                @Override
+                public int getVerticalScrollOffset() {
+                    // On certain pages, the suggestions list is not shown.
+                    if (mSuggestionList == null || !mSuggestionList.isShown()) return 0;
+                    return mSuggestionList.getVerticalScroll();
+                }
+
+                @Override
+                public void destroy() {}
+
+                @Override
+                public int getType() {
+                    return BottomSheetContentController.TYPE_AUXILARY_CONTENT;
+                }
+
+                @Override
+                public boolean applyDefaultTopPadding() {
+                    return false;
+                }
+            };
+        } else {
+            ViewStub overlayStub =
+                    (ViewStub) getRootView().findViewById(R.id.omnibox_results_container_stub);
+            mOmniboxResultsContainer = (ViewGroup) overlayStub.inflate();
+        }
     }
 
     private void updateOmniboxResultsContainer() {
@@ -2309,13 +2354,23 @@ public class LocationBarLayout extends FrameLayout
     private void updateOmniboxResultsContainerVisibility(boolean visible) {
         if (mOmniboxResultsContainer == null) return;
 
-        boolean currentlyVisible = mOmniboxResultsContainer.getVisibility() == VISIBLE;
-        if (currentlyVisible == visible) return;
-
-        if (visible) {
-            mOmniboxResultsContainer.setVisibility(VISIBLE);
+        // If the bottom sheet is managing the display of the suggestions, view visibility does not
+        // need to be set here.
+        if (mBottomSheet != null) {
+            boolean showingOmniboxSuggestions =
+                    mBottomSheet.getCurrentSheetContent() == mOmniboxSuggestionsSheetContent;
+            if (visible && !showingOmniboxSuggestions) {
+                mBottomSheet.showContent(mOmniboxSuggestionsSheetContent);
+            }
         } else {
-            mOmniboxResultsContainer.setVisibility(INVISIBLE);
+            boolean currentlyVisible = mOmniboxResultsContainer.getVisibility() == VISIBLE;
+            if (currentlyVisible == visible) return;
+
+            if (visible) {
+                mOmniboxResultsContainer.setVisibility(VISIBLE);
+            } else {
+                mOmniboxResultsContainer.setVisibility(INVISIBLE);
+            }
         }
     }
 
