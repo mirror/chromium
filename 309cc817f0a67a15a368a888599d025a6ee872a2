@@ -274,6 +274,24 @@
       "revId": "309cc817f0a67a15a368a888599d025a6ee872a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eaec4d2_ff1dedbe",
+        "filename": "chromeos/dbus/services/org.chromium.ComponentUpdaterService.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-09-18T22:34:33Z",
+      "side": 1,
+      "message": "Done\nthanks!",
+      "parentUuid": "49ec1283_726373c1",
+      "revId": "309cc817f0a67a15a368a888599d025a6ee872a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

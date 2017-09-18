@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ebfbbbf3_a9e0fa44",
+        "filename": "chrome/browser/chromeos/dbus/chrome_component_updater_service_provider_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-09-18T22:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed87f501_6a6ff5f3",
+      "revId": "63d616d764fa99a30570dc57cb7fe39bddc9b819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff5ca1ec_1ba063ed",
         "filename": "chrome/browser/chromeos/dbus/chrome_component_updater_service_provider_delegate.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "63d616d764fa99a30570dc57cb7fe39bddc9b819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3bab43b_43d5e85b",
+        "filename": "chrome/browser/chromeos/dbus/chrome_component_updater_service_provider_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-09-18T22:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff5ca1ec_1ba063ed",
+      "revId": "63d616d764fa99a30570dc57cb7fe39bddc9b819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8a8d31b1_4891f320",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-09-18T22:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "314b4f80_2b4a5b73",
+      "revId": "63d616d764fa99a30570dc57cb7fe39bddc9b819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f4a2f9e_18efad0d",
         "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e9419b06_a4aecc89",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-09-18T22:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f4a2f9e_18efad0d",
+      "revId": "63d616d764fa99a30570dc57cb7fe39bddc9b819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e441fcc9_2410d953",
         "filename": "chromeos/dbus/services/component_updater_service_provider.h",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "63d616d764fa99a30570dc57cb7fe39bddc9b819",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d13a3e_43758162",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-09-18T22:34:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e441fcc9_2410d953",
+      "revId": "63d616d764fa99a30570dc57cb7fe39bddc9b819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
