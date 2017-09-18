@@ -562,6 +562,24 @@
       "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "481621a2_d425dd4f",
+        "filename": "chrome/browser/ui/ash/multi_user/multi_user_context_menu_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-18T21:37:46Z",
+      "side": 1,
+      "message": "Yeah, I meant to consolidate MultiProfileUMA in one place, either in ash or in chrome, rather than having it split across both.",
+      "parentUuid": "fbedd92a_f5d67713",
+      "revId": "909d09fce5e94a5bd6158396034b951a21528f6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
