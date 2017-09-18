@@ -14,6 +14,17 @@ class HTMLIFrameElementTest : public ::testing::Test {
   RefPtr<SecurityOrigin> GetOriginForFeaturePolicy(HTMLIFrameElement* element) {
     return element->GetOriginForFeaturePolicy();
   }
+
+  void TestGestureDelegationFlags(GestureDelegationFlags expected,
+                                  const AtomicString& value) {
+    Document* document = Document::CreateForTest();
+    KURL document_url = KURL(NullURL(), "http://example.com");
+    document->SetURL(document_url);
+
+    HTMLIFrameElement* frame_element = HTMLIFrameElement::Create(*document);
+    frame_element->setAttribute(HTMLNames::allowedgesturedelegationAttr, value);
+    EXPECT_EQ(expected, frame_element->GetGestureDelegationFlags());
+  }
 };
 
 // Test that the correct origin is used when constructing the container policy,
@@ -404,6 +415,24 @@ TEST_F(HTMLIFrameElementTest, ConstructContainerPolicyWithAllowAttributes) {
                       container_policy[1].origins[0].Get()));
   EXPECT_EQ(WebFeaturePolicyFeature::kFullscreen, container_policy[2].feature);
   EXPECT_TRUE(container_policy[2].matches_all_origins);
+}
+
+// Test that gesture delegation flags are correctly set from the
+// "allowedGestureDelegation" attribute.
+TEST_F(HTMLIFrameElementTest, GestureDelegationFlag_Empty) {
+  TestGestureDelegationFlags(kGestureDelegationNone, "");
+}
+
+TEST_F(HTMLIFrameElementTest, GestureDelegationFlag_Bad) {
+  TestGestureDelegationFlags(kGestureDelegationNone, "bad");
+}
+
+TEST_F(HTMLIFrameElementTest, GestureDelegationFlag_Good) {
+  TestGestureDelegationFlags(kGestureDelegationMedia, "media");
+}
+
+TEST_F(HTMLIFrameElementTest, GestureDelegationFlag_Multiple) {
+  TestGestureDelegationFlags(kGestureDelegationMedia, "bad media");
 }
 
 }  // namespace blink

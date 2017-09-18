@@ -35,6 +35,13 @@ class CORE_EXPORT RemoteFrameOwner final
   Frame* ContentFrame() const override { return frame_.Get(); }
   void SetContentFrame(Frame&) override;
   void ClearContentFrame() override;
+  GestureDelegationFlags GetGestureDelegationFlags() const override {
+    return gesture_delegation_flags_;
+  }
+  void SetGestureDelegationFlags(GestureDelegationFlags flags) {
+    DLOG(ERROR) << "gdf: " + std::to_string(flags);
+    gesture_delegation_flags_ = flags;
+  }
   SandboxFlags GetSandboxFlags() const override { return sandbox_flags_; }
   void SetSandboxFlags(SandboxFlags flags) { sandbox_flags_ = flags; }
   void DispatchLoad() override;
@@ -89,6 +96,7 @@ class CORE_EXPORT RemoteFrameOwner final
   bool IsRemote() const override { return true; }
 
   Member<Frame> frame_;
+  GestureDelegationFlags gesture_delegation_flags_;
   SandboxFlags sandbox_flags_;
   AtomicString browsing_context_container_name_;
   ScrollbarMode scrolling_;
