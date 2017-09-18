@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "546d2bb4_02b84b09",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-09-18T17:44:06Z",
+      "side": 1,
+      "message": "Ok great, that makes total sense. I was pretty sure this was a no-op but wasn\u0027t 100%. Thanks for the clarification.",
+      "parentUuid": "221c3584_b9fb8620",
+      "revId": "b673cdc0c730325e19307ab95ac62d4e7c276d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "377d8e93_c7a74b92",
         "filename": "DEPS",
         "patchSetId": 1
