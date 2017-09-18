@@ -88,6 +88,24 @@
       "revId": "3d2885afc78232d1a176bca34be4792c5cc447c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b217e710_e55aac7d",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-18T22:51:41Z",
+      "side": 1,
+      "message": "Can you clarify why we\u0027d need to call super in each OnLayerCreated()?",
+      "parentUuid": "2ccb8e98_3142b6ee",
+      "revId": "3d2885afc78232d1a176bca34be4792c5cc447c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
