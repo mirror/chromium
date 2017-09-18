@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "096c67cd_9fe3e0e3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadManagerUi.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-18T19:01:05Z",
+      "side": 1,
+      "message": "Discussion continued on the most recent patch.",
+      "parentUuid": "daa57ae5_d149acbc",
+      "range": {
+        "startLine": 74,
+        "startChar": 12,
+        "endLine": 74,
+        "endChar": 30
+      },
+      "revId": "c24630aa8df6e790e0140baf8653953f2d7051ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74899ac5_9cd07970",
         "filename": "chrome/browser/offline_pages/android/downloads/offline_page_download_bridge.h",
         "patchSetId": 9
