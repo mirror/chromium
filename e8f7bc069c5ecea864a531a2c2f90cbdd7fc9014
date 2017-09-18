@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3be634d_319e457d",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 756,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T21:46:12Z",
+      "side": 1,
+      "message": "Instead of using a comment, comment out the arg name so it can\u0027t be used:\n\nConnectArcVpn(const std::string\u0026 service_path, const std::string\u0026 /* guid */)",
+      "revId": "e8f7bc069c5ecea864a531a2c2f90cbdd7fc9014",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
