@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3ccfa496_0d3a7459",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-18T13:55:45Z",
+      "side": 1,
+      "message": "We started using this code in M50. The GCM Driver is supported on iOS and AFAIK there is one user, but I can\u0027t recall what it is. (Yay lack of xrefs).",
+      "parentUuid": "2363edc3_687e9343",
+      "revId": "0e9d676f0ff24fe56d226488d3d0d85721ff1726",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49ac3282_045124e9",
         "filename": "components/gcm_driver/crypto/proto/gcm_encryption_data.proto",
         "patchSetId": 1
