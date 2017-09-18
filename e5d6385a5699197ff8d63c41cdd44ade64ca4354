@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "fe7cdf64_5db475e8",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-18T21:58:23Z",
+      "side": 1,
+      "message": "oops, sorry, I completely misread this comment, I thought it was talking about the overarching if statement for the new_tab_tracker_",
+      "parentUuid": "c939ece0_2734093e",
+      "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "012a3221_99761b61",
         "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
         "patchSetId": 10
@@ -242,6 +260,24 @@
       "side": 1,
       "message": "Sync vs. async close is the issue of when the widget is destroyed versus when you ask it to close: synchronously in the same call stack, asynchronously via posting a task or similar, or sometimes one/sometimes the other.  If the widget is ever synchronously destroyed, then moving the nulling where you have won\u0027t cause this function to return the right thing, whereas if it\u0027s always asynchronously destroyed you\u0027re fine.  You should be sure which case you\u0027re in.\n\nFor multiple promos showing, I mean sequentially rather than simultaneously: let\u0027s say we decide we should show a promo after it has previously been shown and closed.  (For example, if we decide to make the promo policy \"show up to n times\" in the future).",
       "parentUuid": "ad7f2c3a_0b6161ea",
+      "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acac1327_1720c341",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-18T21:58:23Z",
+      "side": 1,
+      "message": "Made several changes:\n\nIn ShowPromo, I check it a new_tab_promo exists for the current active window. If one does not exist, only then do we show a promo. We don\u0027t want to have overlapping promos. (this is currently taken care of by the finch param since we have comparator\u003d\u003d0 but sanity check)\n\nIn CloseBubble, I now remove the widget from observation and close the bubble. In addition, I also set the new_tab_promo_ to nullptr to address the problem of the widget not closing on its own (which it doesn\u0027t unless a user clicks on it or hovers over it which starts a 2.5 seconds timer before closing).",
+      "parentUuid": "3c90171e_2350d4c6",
       "revId": "e5d6385a5699197ff8d63c41cdd44ade64ca4354",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

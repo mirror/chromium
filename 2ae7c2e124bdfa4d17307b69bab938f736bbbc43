@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "962ebf0a_2f7d50ff",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-18T21:58:23Z",
+      "side": 1,
+      "message": "You are correct that this is an old comment.",
+      "parentUuid": "f052351b_71d3e861",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 46
+      },
+      "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15dfa0fc_04b6f3db",
         "filename": "chrome/browser/ui/browser_command_controller.cc",
         "patchSetId": 11
@@ -39,6 +63,24 @@
       "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9758c74_cfb1d4b9",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-18T21:58:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15dfa0fc_04b6f3db",
+      "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "a6ccfc89_daed3db6",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-18T21:58:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f3e624a_d7dba3c8",
+      "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "672244ad_55b37170",
         "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.h",
         "patchSetId": 11
@@ -73,6 +133,24 @@
       "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a31aa12a_6282a7f1",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-18T21:58:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "672244ad_55b37170",
+      "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "cfc0e983_91591621",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-18T21:58:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6130cece_9d2c116f",
+      "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "121f7226_70e6e4cf",
         "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
         "patchSetId": 11
@@ -107,6 +203,24 @@
       "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b62b0541_a6848b72",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-18T21:58:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "121f7226_70e6e4cf",
+      "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "0bdee457_77a7ea6f",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-18T21:58:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c38340cd_85838e40",
+      "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ca7a27a_36c05215",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 11
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "e84b7a98_431e018c",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-18T21:58:23Z",
+      "side": 1,
+      "message": "Decided to remove observation of the widget making it 2 lines",
+      "parentUuid": "8ca7a27a_36c05215",
+      "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89fd24fa_37c8fca0",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 11
@@ -158,6 +308,24 @@
       "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b76fbb43_0b2c1dbd",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-18T21:58:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89fd24fa_37c8fca0",
+      "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
