@@ -67,6 +67,8 @@ aggregate_vector_icons("chrome_vector_icons") {
     "notification_image.1x.icon",
     "notification_image.icon",
     "notification_installed.icon",
+    "options_menu.1x.icon",
+    "options_menu.icon",
     "overflow_chevron.1x.icon",
     "overflow_chevron.icon",
     "paintbrush.icon",
