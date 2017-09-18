@@ -1169,6 +1169,8 @@ void AddPasswordsAndFormsStrings(content::WebUIDataSource* html_source) {
       {"noCreditCardsFound", IDS_SETTINGS_CREDIT_CARD_NONE},
       {"noPasswordsFound", IDS_SETTINGS_PASSWORDS_NONE},
       {"noExceptionsFound", IDS_SETTINGS_PASSWORDS_EXCEPTIONS_NONE},
+      {"undoRemovePassword", IDS_SETTINGS_PASSWORD_UNDO},
+      {"passwordDeleted", IDS_SETTINGS_PASSWORD_DELETED_PASSWORD},
   };
 
   html_source->AddString(

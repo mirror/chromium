@@ -64,6 +64,9 @@ class PasswordsPrivateDelegate : public KeyedService {
   //     be obtained using CreateUrlCollectionFromForm().origin.
   virtual void RemovePasswordException(const std::string& exception_url) = 0;
 
+  // Undoes the last removal of a saved password or exception.
+  virtual void UndoRemoveSavedPasswordOrException() = 0;
+
   // Requests the plain text password for entry corresponding to |origin_url|
   // and |username|.
   // |origin_url| The origin for the URL where the password is used; should be

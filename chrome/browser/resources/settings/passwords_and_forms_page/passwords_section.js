@@ -64,6 +64,12 @@ class PasswordManager {
   removeException(exception) {}
 
   /**
+   * Should undo the last saved password or exception removal and notify that
+   * the list has changed.
+   */
+  undoRemoveSavedPasswordOrException() {}
+
+  /**
    * Gets the saved password for a given login pair.
    * @param {!PasswordManager.LoginPair} loginPair The saved password that
    *     should be retrieved.
@@ -133,6 +139,11 @@ class PasswordManagerImpl {
   }
 
   /** @override */
+  undoRemoveSavedPasswordOrException() {
+    chrome.passwordsPrivate.undoRemoveSavedPasswordOrException();
+  }
+
+  /** @override */
   getPlaintextPassword(loginPair, callback) {
     var listener = function(reply) {
       // Only handle the reply for our loginPair request.
@@ -162,7 +173,10 @@ var ExceptionEntryEntryEvent;
 Polymer({
   is: 'passwords-section',
 
-  behaviors: [settings.GlobalScrollTargetBehavior, I18nBehavior],
+  behaviors: [
+    settings.GlobalScrollTargetBehavior, I18nBehavior,
+    Polymer.IronA11yKeysBehavior
+  ],
 
   properties: {
     /** Preferences state. */
@@ -183,6 +197,18 @@ Polymer({
      */
     passwordExceptions: Array,
 
+    /**
+     * Duration of the undo toast in ms
+     * @private
+     */
+    toastDuration_: {
+      type: Number,
+      value: 5000,
+    },
+
+    /** Label of the undo toast */
+    undoLabel: String,
+
     /** @override */
     subpageRoute: {
       type: Object,
@@ -194,6 +220,13 @@ Polymer({
      * @private {?chrome.passwordsPrivate.PasswordUiEntry}
      */
     activePassword: Object,
+
+
+    /** The target of the key bindings defined below. */
+    keyEventTarget: {
+      type: Object,
+      value: () => document,
+    },
 
     /** @private */
     showPasswordEditDialog_: Boolean,
@@ -211,6 +244,11 @@ Polymer({
   listeners: {
     'show-password': 'showPassword_',
     'password-menu-tap': 'onPasswordMenuTap_',
+    'command-undo': 'undoRemoveSavedPasswordOrException_',
+  },
+
+  keyBindings: {
+    'ctrl+z': 'onUndoButtonTap_',
   },
 
   /**
@@ -264,6 +302,10 @@ Polymer({
         setSavedPasswordsListener);
     this.passwordManager_.addExceptionListChangedListener(
         setPasswordExceptionsListener);
+
+    Polymer.RenderStatus.afterNextRender(this, function() {
+      Polymer.IronA11yAnnouncer.requestAvailability();
+    });
   },
 
   /** @override */
@@ -327,9 +369,16 @@ Polymer({
    */
   onMenuRemovePasswordTap_: function() {
     this.passwordManager_.removeSavedPassword(this.activePassword.loginPair);
+    this.undoLabel = this.i18n('passwordDeleted');
+    this.fire('iron-announce', {text: this.undoLabel});
+    this.$.undoToast.show();
     /** @type {CrActionMenuElement} */ (this.$.menu).close();
   },
 
+  onUndoButtonTap_: function() {
+    this.passwordManager_.undoRemoveSavedPasswordOrException();
+    this.$.undoToast.hide();
+  },
   /**
    * Fires an event that should delete the password exception.
    * @param {!ExceptionEntryEntryEvent} e The polymer event.
@@ -353,6 +402,10 @@ Polymer({
             event.detail.item);
     menu.showAt(target);
     this.activeDialogAnchor_ = target;
+  },
+
+  undoRemoveSavedPasswordOrException_: function(event) {
+    this.passwordManager_.undoRemoveSavedPasswordOrException();
   },
 
   /**
