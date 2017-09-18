@@ -16,6 +16,24 @@
       "revId": "e6084cd049a7c36c3377dc440d83114e765c80c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb3e230d_96970a33",
+        "filename": "content/renderer/accessibility/render_accessibility_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-18T03:53:45Z",
+      "side": 1,
+      "message": "Timer task queue might be right. FWIW, the main purpose of this\nPostTask is because HandleAXEvent could be called at any time,\nincluding during layout. We want to wait to process the event\nuntil the top of the main event loop when not in the middle of\nanything else.",
+      "parentUuid": "553ddd19_d7527123",
+      "revId": "e6084cd049a7c36c3377dc440d83114e765c80c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
