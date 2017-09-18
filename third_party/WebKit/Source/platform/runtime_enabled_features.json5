@@ -861,6 +861,10 @@
       status: "experimental",
     },
     {
+      name: "SafeHTMLTypes",
+      status: "experimental",
+    },
+    {
       name: "ScriptedSpeech",
       status: "stable",
     },

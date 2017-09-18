@@ -111,6 +111,7 @@
 #include "core/dom/events/Event.h"
 #include "core/dom/events/EventListener.h"
 #include "core/dom/events/ScopedEventQueue.h"
+#include "core/dom/safetypes/SafeHTML.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/FrameSelection.h"
 #include "core/editing/markers/DocumentMarkerController.h"
@@ -3601,6 +3602,14 @@ void Document::write(LocalDOMWindow* calling_window,
                      const Vector<String>& text,
                      ExceptionState& exception_state) {
   DCHECK(calling_window);
+
+  if (GetSecurityContext().RequireSafeTypes()) {
+    DCHECK(RuntimeEnabledFeatures::SafeHTMLTypesEnabled());
+    exception_state.ThrowTypeError(
+        "This document can only write `SafeHTML` objects.");
+    return;
+  }
+
   StringBuilder builder;
   for (const String& string : text)
     builder.Append(string);
@@ -3611,10 +3620,34 @@ void Document::writeln(LocalDOMWindow* calling_window,
                        const Vector<String>& text,
                        ExceptionState& exception_state) {
   DCHECK(calling_window);
+
+  if (GetSecurityContext().RequireSafeTypes()) {
+    DCHECK(RuntimeEnabledFeatures::SafeHTMLTypesEnabled());
+    exception_state.ThrowTypeError(
+        "This document can only write `SafeHTML` objects.");
+    return;
+  }
+
   StringBuilder builder;
   for (const String& string : text)
     builder.Append(string);
   writeln(builder.ToString(), calling_window->document(), exception_state);
+}
+
+void Document::write(LocalDOMWindow* calling_window,
+                     SafeHTML* text,
+                     ExceptionState& exception_state) {
+  DCHECK(calling_window);
+  DCHECK(RuntimeEnabledFeatures::SafeHTMLTypesEnabled());
+  write(text->toString(), calling_window->document(), exception_state);
+}
+
+void Document::writeln(LocalDOMWindow* calling_window,
+                       SafeHTML* text,
+                       ExceptionState& exception_state) {
+  DCHECK(calling_window);
+  DCHECK(RuntimeEnabledFeatures::SafeHTMLTypesEnabled());
+  writeln(text->toString(), calling_window->document(), exception_state);
 }
 
 const KURL& Document::VirtualURL() const {

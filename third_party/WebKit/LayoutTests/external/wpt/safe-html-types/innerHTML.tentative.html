@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="./support/helper.js"></script>
+<body>
+<script>
+  test(t => {
+    var html = SafeHTML.escape(STRINGS.unescapedHTML);
+
+    var d = document.createElement('div');
+    d.innerHTML = html;
+    assert_equals(d.innerText, STRINGS.unescapedHTML);
+  }, "innerHTML = SafeHTML.escape().");
+
+  test(t => {
+    var html = SafeHTML.unsafelyCreate(STRINGS.unescapedHTML);
+
+    var d = document.createElement('div');
+    d.innerHTML = html;
+    assert_equals(d.innerText, STRINGS.unescapedText);
+  }, "innerHTML = SafeHTML.unsafelyCreate().");
+</script>

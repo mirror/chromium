@@ -121,6 +121,8 @@ core_idl_files =
                     "dom/events/CustomEvent.idl",
                     "dom/events/Event.idl",
                     "dom/events/EventTarget.idl",
+                    "dom/safetypes/SafeHTML.idl",
+                    "dom/safetypes/SafeURL.idl",
                     "editing/Selection.idl",
                     "events/AnimationEvent.idl",
                     "events/AnimationPlaybackEvent.idl",
