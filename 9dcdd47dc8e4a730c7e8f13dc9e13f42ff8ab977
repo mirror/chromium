@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f10fe9f3_8a5b237f",
+        "filename": "content/browser/accessibility/dump_accessibility_tree_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1649,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-09-18T16:39:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b1f9b70_7ed44e95",
+      "revId": "9dcdd47dc8e4a730c7e8f13dc9e13f42ff8ab977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b3b05e6_d56b4891",
         "filename": "ui/accessibility/ax_tree.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-18T04:12:47Z",
       "side": 1,
       "message": "Instead of checking for the role, just apply this logic to\nthe root of the tree.\n\nCheck if container \u003d\u003d root().\n\nThat will be a bit more general. Update the comment too.",
+      "revId": "9dcdd47dc8e4a730c7e8f13dc9e13f42ff8ab977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b207e62f_3d2b753d",
+        "filename": "ui/accessibility/ax_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-09-18T16:39:24Z",
+      "side": 1,
+      "message": "I tried that first but it actually didn\u0027t work on my ChromeOS running on my desktop -- looks like on that ChromeOS, the root() is not always the rootWebArea. Specifically, if I log container-\u003edata().role when container \u003d\u003d root(), I can see the role can be 89 or 31, i.e. AX_ROLE_ROOT_WEB_AREA or AX_ROLE_DESKTOP. That causes the container always to be drawn in the top left corner at size ~1x1 on Chrome OS on my desktop.",
+      "parentUuid": "9b3b05e6_d56b4891",
       "revId": "9dcdd47dc8e4a730c7e8f13dc9e13f42ff8ab977",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
