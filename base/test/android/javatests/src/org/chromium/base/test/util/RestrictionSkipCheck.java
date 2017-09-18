@@ -11,6 +11,7 @@ import android.text.TextUtils;
 
 import org.junit.runners.model.FrameworkMethod;
 
+import org.chromium.base.CommandLine;
 import org.chromium.base.Log;
 import org.chromium.base.SysUtils;
 
@@ -34,6 +35,10 @@ public class RestrictionSkipCheck extends SkipCheck {
     @Override
     public boolean shouldSkip(FrameworkMethod frameworkMethod) {
         if (frameworkMethod == null) return true;
+
+        // Restriction.RESTRICTION_TYPE_NON_LOW_END_DEVICE requires {@link CommandLine}
+        // be initialized. Sets the instance with an empty one here.
+        if (!CommandLine.isInitialized()) CommandLine.init(null);
 
         for (Restriction restriction : getAnnotations(frameworkMethod, Restriction.class)) {
             for (String restrictionVal : restriction.value()) {
