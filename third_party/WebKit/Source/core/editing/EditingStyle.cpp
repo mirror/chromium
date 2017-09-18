@@ -752,14 +752,14 @@ static const CSSPropertyID kTextOnlyProperties[] = {
     CSSPropertyColor,
 };
 
-TriState EditingStyle::TriStateOfStyle(EditingStyle* style) const {
+EditingTriState EditingStyle::TriStateOfStyle(EditingStyle* style) const {
   if (!style || !style->mutable_style_)
     return kFalseTriState;
   return TriStateOfStyle(style->mutable_style_->EnsureCSSStyleDeclaration(),
                          kDoNotIgnoreTextOnlyProperties);
 }
 
-TriState EditingStyle::TriStateOfStyle(
+EditingTriState EditingStyle::TriStateOfStyle(
     CSSStyleDeclaration* style_to_compare,
     ShouldIgnoreTextOnlyProperties should_ignore_text_only_properties) const {
   MutableStylePropertySet* difference =
@@ -777,7 +777,7 @@ TriState EditingStyle::TriStateOfStyle(
   return kMixedTriState;
 }
 
-TriState EditingStyle::TriStateOfStyle(
+EditingTriState EditingStyle::TriStateOfStyle(
     const VisibleSelection& selection) const {
   if (selection.IsNone())
     return kFalseTriState;
@@ -787,7 +787,7 @@ TriState EditingStyle::TriStateOfStyle(
         EditingStyleUtilities::CreateStyleAtSelectionStart(selection));
   }
 
-  TriState state = kFalseTriState;
+  EditingTriState state = kFalseTriState;
   bool node_is_start = true;
   for (Node& node : NodeTraversal::StartsAt(*selection.Start().AnchorNode())) {
     if (node.GetLayoutObject() && HasEditableStyle(node)) {
@@ -812,7 +812,7 @@ TriState EditingStyle::TriStateOfStyle(
         // Pass EditingStyle::DoNotIgnoreTextOnlyProperties without checking if
         // node.isTextNode() because the node can be an element node. See bug
         // http://crbug.com/584939.
-        TriState node_state = TriStateOfStyle(
+        EditingTriState node_state = TriStateOfStyle(
             node_style, EditingStyle::kDoNotIgnoreTextOnlyProperties);
         if (node_is_start) {
           state = node_state;

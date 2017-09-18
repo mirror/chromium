@@ -878,8 +878,8 @@ bool Editor::SelectionStartHasStyle(CSSPropertyID property_id,
   return style_to_check->TriStateOfStyle(style_at_start);
 }
 
-TriState Editor::SelectionHasStyle(CSSPropertyID property_id,
-                                   const String& value) const {
+EditingTriState Editor::SelectionHasStyle(CSSPropertyID property_id,
+                                          const String& value) const {
   return EditingStyle::Create(property_id, value)
       ->TriStateOfStyle(
           GetFrame().Selection().ComputeVisibleSelectionInDOMTreeDeprecated());

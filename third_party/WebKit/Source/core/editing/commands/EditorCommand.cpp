@@ -224,7 +224,7 @@ class EditorInternalCommand {
   bool (*execute)(LocalFrame&, Event*, EditorCommandSource, const String&);
   bool (*is_supported_from_dom)(LocalFrame*);
   bool (*is_enabled)(LocalFrame&, Event*, EditorCommandSource);
-  TriState (*state)(LocalFrame&, Event*);
+  EditingTriState (*state)(LocalFrame&, Event*);
   String (*value)(const EditorInternalCommand&, LocalFrame&, Event*);
   bool is_text_insertion;
   // TODO(yosin) We should have |canExecute()|, which checks clipboard
@@ -420,8 +420,8 @@ static bool HasChildTags(Element& element, const QualifiedName& tag_name) {
   return !element.getElementsByTagName(tag_name.LocalName())->IsEmpty();
 }
 
-static TriState SelectionListState(const FrameSelection& selection,
-                                   const QualifiedName& tag_name) {
+static EditingTriState SelectionListState(const FrameSelection& selection,
+                                          const QualifiedName& tag_name) {
   if (selection.ComputeVisibleSelectionInDOMTreeDeprecated().IsCaret()) {
     if (EnclosingElementWithTag(
             selection.ComputeVisibleSelectionInDOMTreeDeprecated().Start(),
@@ -447,9 +447,9 @@ static TriState SelectionListState(const FrameSelection& selection,
   return kFalseTriState;
 }
 
-static TriState StateStyle(LocalFrame& frame,
-                           CSSPropertyID property_id,
-                           const char* desired_value) {
+static EditingTriState StateStyle(LocalFrame& frame,
+                                  CSSPropertyID property_id,
+                                  const char* desired_value) {
   frame.GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
   if (frame.GetEditor().Behavior().ShouldToggleStyleBasedOnStartOfSelection())
     return frame.GetEditor().SelectionStartHasStyle(property_id, desired_value)
@@ -581,8 +581,8 @@ static WritingDirection TextDirectionForSelection(
   return found_direction;
 }
 
-static TriState StateTextWritingDirection(LocalFrame& frame,
-                                          WritingDirection direction) {
+static EditingTriState StateTextWritingDirection(LocalFrame& frame,
+                                                 WritingDirection direction) {
   frame.GetDocument()->UpdateStyleAndLayoutIgnorePendingStylesheets();
 
   bool has_nested_or_multiple_embeddings;
@@ -2270,76 +2270,77 @@ static bool EnabledSelectAll(LocalFrame& frame,
 
 // State functions
 
-static TriState StateNone(LocalFrame&, Event*) {
+static EditingTriState StateNone(LocalFrame&, Event*) {
   return kFalseTriState;
 }
 
-static TriState StateBold(LocalFrame& frame, Event*) {
+static EditingTriState StateBold(LocalFrame& frame, Event*) {
   return StateStyle(frame, CSSPropertyFontWeight, "bold");
 }
 
-static TriState StateItalic(LocalFrame& frame, Event*) {
+static EditingTriState StateItalic(LocalFrame& frame, Event*) {
   return StateStyle(frame, CSSPropertyFontStyle, "italic");
 }
 
-static TriState StateOrderedList(LocalFrame& frame, Event*) {
+static EditingTriState StateOrderedList(LocalFrame& frame, Event*) {
   return SelectionListState(frame.Selection(), olTag);
 }
 
-static TriState StateStrikethrough(LocalFrame& frame, Event*) {
+static EditingTriState StateStrikethrough(LocalFrame& frame, Event*) {
   return StateStyle(frame, CSSPropertyWebkitTextDecorationsInEffect,
                     "line-through");
 }
 
-static TriState StateStyleWithCSS(LocalFrame& frame, Event*) {
+static EditingTriState StateStyleWithCSS(LocalFrame& frame, Event*) {
   return frame.GetEditor().ShouldStyleWithCSS() ? kTrueTriState
                                                 : kFalseTriState;
 }
 
-static TriState StateSubscript(LocalFrame& frame, Event*) {
+static EditingTriState StateSubscript(LocalFrame& frame, Event*) {
   return StateStyle(frame, CSSPropertyVerticalAlign, "sub");
 }
 
-static TriState StateSuperscript(LocalFrame& frame, Event*) {
+static EditingTriState StateSuperscript(LocalFrame& frame, Event*) {
   return StateStyle(frame, CSSPropertyVerticalAlign, "super");
 }
 
-static TriState StateTextWritingDirectionLeftToRight(LocalFrame& frame,
-                                                     Event*) {
+static EditingTriState StateTextWritingDirectionLeftToRight(LocalFrame& frame,
+                                                            Event*) {
   return StateTextWritingDirection(frame, LeftToRightWritingDirection);
 }
 
-static TriState StateTextWritingDirectionNatural(LocalFrame& frame, Event*) {
+static EditingTriState StateTextWritingDirectionNatural(LocalFrame& frame,
+                                                        Event*) {
   return StateTextWritingDirection(frame, NaturalWritingDirection);
 }
 
-static TriState StateTextWritingDirectionRightToLeft(LocalFrame& frame,
-                                                     Event*) {
+static EditingTriState StateTextWritingDirectionRightToLeft(LocalFrame& frame,
+                                                            Event*) {
   return StateTextWritingDirection(frame, RightToLeftWritingDirection);
 }
 
-static TriState StateUnderline(LocalFrame& frame, Event*) {
+static EditingTriState StateUnderline(LocalFrame& frame, Event*) {
   return StateStyle(frame, CSSPropertyWebkitTextDecorationsInEffect,
                     "underline");
 }
 
-static TriState StateUnorderedList(LocalFrame& frame, Event*) {
+static EditingTriState StateUnorderedList(LocalFrame& frame, Event*) {
   return SelectionListState(frame.Selection(), ulTag);
 }
 
-static TriState StateJustifyCenter(LocalFrame& frame, Event*) {
+static EditingTriState StateJustifyCenter(LocalFrame& frame, Event*) {
   return StateStyle(frame, CSSPropertyTextAlign, "center");
 }
 
-static TriState StateJustifyFull(LocalFrame& frame, Event*) {
+static EditingTriState StateJustifyFull(LocalFrame& frame, Event*) {
   return StateStyle(frame, CSSPropertyTextAlign, "justify");
 }
 
-static TriState StateJustifyLeft(LocalFrame& frame, Event*) {
+static EditingTriState StateJustifyLeft(LocalFrame& frame, Event*) {
   return StateStyle(frame, CSSPropertyTextAlign, "left");
 }
 
-static TriState StateJustifyRight(LocalFrame& frame, Event*) {
+static EditingTriState StateJustifyRight(LocalFrame& frame, Event*) {
   return StateStyle(frame, CSSPropertyTextAlign, "right");
 }
 
@@ -3057,7 +3058,7 @@ bool Editor::Command::IsEnabled(Event* triggering_event) const {
   return command_->is_enabled(*frame_, triggering_event, source_);
 }
 
-TriState Editor::Command::GetState(Event* triggering_event) const {
+EditingTriState Editor::Command::GetState(Event* triggering_event) const {
   if (!IsSupported() || !frame_)
     return kFalseTriState;
   return command_->state(*frame_, triggering_event);
