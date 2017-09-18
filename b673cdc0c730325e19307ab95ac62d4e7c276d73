@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "221c3584_b9fb8620",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-09-18T17:42:39Z",
+      "side": 1,
+      "message": "\u003e This hook (and the two below) are already in a hooks_os[\u0027android\u0027] block. Do they need this condition as well?\n\nCurrently none of these entries need the condition. In terms of what they do, this patch is a no-op.\n\nHowever, it was one of the smallest experiments I could come up with.\n\n\u003e What is the purpose of having both at the same time?\n\nEventually we could get rid of hooks_os (also deps_os), and just use conditions. This could help get rid of some duplication like where we have same entries for both mac and ios, or linux and android. With conditions you\u0027d have one entry with an \"or\".\n\nSince this generated a comment, I removed this part of the change for now.",
+      "parentUuid": "bdf4ff41_1fe7f36f",
+      "revId": "b673cdc0c730325e19307ab95ac62d4e7c276d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "377d8e93_c7a74b92",
         "filename": "DEPS",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-18T17:37:30Z",
       "side": 1,
       "message": "I know you\u0027re not modifying this line in this change, but do you know why these \u0027action\u0027 lines are outdented compared to the name/pattern/condition above, and compared to the \u0027action\u0027 key in earlier stanzas (e.g. line 885)? It would be good for you to fix this for the sake of consistency.",
+      "revId": "b673cdc0c730325e19307ab95ac62d4e7c276d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3186e96_500dfbc0",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1002740
+      },
+      "writtenOn": "2017-09-18T17:42:39Z",
+      "side": 1,
+      "message": "See comment above.\n\nThis will probably get fixed when we get rid of hooks_os then.",
+      "parentUuid": "377d8e93_c7a74b92",
       "revId": "b673cdc0c730325e19307ab95ac62d4e7c276d73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
