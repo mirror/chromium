@@ -22,6 +22,30 @@
       "revId": "d6f22f076cdefdc402c2b5ec00ab13337411605b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7353e691_42faf5a7",
+        "filename": "ios/chrome/browser/ui/external_app/open_mail_handler_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-09-18T20:09:54Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "4777abb0_b138970b",
+      "range": {
+        "startLine": 94,
+        "startChar": 1,
+        "endLine": 94,
+        "endChar": 45
+      },
+      "revId": "d6f22f076cdefdc402c2b5ec00ab13337411605b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
