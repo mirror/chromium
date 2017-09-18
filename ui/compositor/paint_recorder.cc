@@ -38,7 +38,6 @@ PaintRecorder::PaintRecorder(const PaintContext& context,
   } else {
     context_.list_->StartPaint();
   }
-
 #if DCHECK_IS_ON()
   DCHECK(!context_.inside_paint_recorder_);
   context_.inside_paint_recorder_ = true;

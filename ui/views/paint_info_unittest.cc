@@ -251,4 +251,30 @@ TEST_F(PaintInfoTest, Invalidation) {
   }
 }
 
+// Make sure the PaintInfo used for view's layer uses the
+// corderedbounds.
+TEST_F(PaintInfoTest, LayerPaintInfo) {
+  const gfx::Rect kViewBounds(15, 20, 7, 13);
+  struct TestData {
+    const float dsf;
+    const gfx::Size size;
+  };
+  const TestData kTestData[6]{
+      {1.0f, {7, 13}},    // rounded    enclosing (if these scaling is appleid)
+      {1.25f, {9, 16}},   // 9x16       10x17
+      {1.5f, {10, 20}},   // 11x20      11x20
+      {1.6f, {11, 21}},   // 11x21      12x21
+      {1.75f, {13, 23}},  // 12x23      13x23
+      {2.f, {14, 26}},    // 14x26      14x26
+  };
+
+  for (const TestData& data : kTestData) {
+    SCOPED_TRACE(testing::Message() << "dsf:" << data.dsf);
+    ui::PaintContext context(nullptr, data.dsf, gfx::Rect(), true);
+    PaintInfo paint_info =
+        PaintInfo::CreateLayerPaintInfo(context, kViewBounds);
+    EXPECT_EQ(data.size, paint_info.paint_recording_size());
+  }
+}
+
 }  // namespace views

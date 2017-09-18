@@ -6,10 +6,63 @@
 
 namespace views {
 
+namespace {
+
+gfx::Rect GetSnappedRecordingBoundsInternal(
+    const gfx::Rect& paint_recording_bounds,
+    float device_scale_factor,
+    const gfx::Size& parent_size,
+    const gfx::Rect& child_bounds) {
+  const gfx::Vector2d& child_origin = child_bounds.OffsetFromOrigin();
+
+  int right = child_origin.x() + child_bounds.width();
+  int bottom = child_origin.y() + child_bounds.height();
+
+  int new_x = std::round(child_origin.x() * device_scale_factor);
+  int new_y = std::round(child_origin.y() * device_scale_factor);
+
+  int new_right;
+  int new_bottom;
+
+  if (right == parent_size.width())
+    new_right = paint_recording_bounds.width();
+  else
+    new_right = std::round(right * device_scale_factor);
+
+  if (bottom == parent_size.height())
+    new_bottom = paint_recording_bounds.height();
+  else
+    new_bottom = std::round(bottom * device_scale_factor);
+
+  return gfx::Rect(new_x + paint_recording_bounds.x(),
+                   new_y + paint_recording_bounds.y(), new_right - new_x,
+                   new_bottom - new_y);
+}
+
+gfx::Rect GetCorneredRecordingBounds(const ui::PaintContext& context,
+                                     const gfx::Rect& child_bounds) {
+  static const gfx::Rect kUnusedRecordingBounds;
+  static const gfx::Size kUnusedParentSize;
+
+  if (!context.is_pixel_canvas())
+    return child_bounds;
+  return GetSnappedRecordingBoundsInternal(kUnusedRecordingBounds,
+                                           context.device_scale_factor(),
+                                           kUnusedParentSize, child_bounds);
+}
+
+}  // namespace
+
 // static
 PaintInfo PaintInfo::CreateRootPaintInfo(const ui::PaintContext& root_context,
                                          const gfx::Size& size) {
   return PaintInfo(root_context, size);
+}
+
+// static
+PaintInfo PaintInfo::CreateLayerPaintInfo(const ui::PaintContext& root_context,
+                                          const gfx::Rect& bounds) {
+  return PaintInfo(root_context, bounds);
 }
 
 //  static
@@ -56,9 +109,20 @@ PaintInfo::PaintInfo(const ui::PaintContext& root_context,
                                    : 1.f),
       paint_recording_scale_y_(paint_recording_scale_x_),
       paint_recording_bounds_(
-          gfx::ScaleToRoundedRect(gfx::Rect(size), paint_recording_scale_x_)),
+          gfx::ScaleToEnclosingRect(gfx::Rect(size), paint_recording_scale_x_)),
       context_(root_context, gfx::Vector2d()),
       root_context_(&root_context) {}
+
+PaintInfo::PaintInfo(const ui::PaintContext& layer_context,
+                     const gfx::Rect& bounds)
+    : paint_recording_scale_x_(layer_context.is_pixel_canvas()
+                                   ? layer_context.device_scale_factor()
+                                   : 1.f),
+      paint_recording_scale_y_(paint_recording_scale_x_),
+      paint_recording_bounds_(
+          GetCorneredRecordingBounds(layer_context, bounds)),
+      context_(layer_context, gfx::Vector2d()),
+      root_context_(&layer_context) {}
 
 PaintInfo::PaintInfo(const PaintInfo& parent_paint_info,
                      const gfx::Rect& bounds,
@@ -97,31 +161,9 @@ gfx::Rect PaintInfo::GetSnappedRecordingBounds(
     const gfx::Rect& child_bounds) const {
   if (!IsPixelCanvas())
     return (child_bounds + paint_recording_bounds_.OffsetFromOrigin());
-
-  const gfx::Vector2d& child_origin = child_bounds.OffsetFromOrigin();
-
-  int right = child_origin.x() + child_bounds.width();
-  int bottom = child_origin.y() + child_bounds.height();
-
-  int new_x = std::round(child_origin.x() * context().device_scale_factor());
-  int new_y = std::round(child_origin.y() * context().device_scale_factor());
-
-  int new_right;
-  int new_bottom;
-
-  if (right == parent_size.width())
-    new_right = paint_recording_bounds_.width();
-  else
-    new_right = std::round(right * context().device_scale_factor());
-
-  if (bottom == parent_size.height())
-    new_bottom = paint_recording_bounds_.height();
-  else
-    new_bottom = std::round(bottom * context().device_scale_factor());
-
-  return gfx::Rect(new_x + paint_recording_bounds_.x(),
-                   new_y + paint_recording_bounds_.y(), new_right - new_x,
-                   new_bottom - new_y);
+  return GetSnappedRecordingBoundsInternal(paint_recording_bounds_,
+                                           context().device_scale_factor(),
+                                           parent_size, child_bounds);
 }
 
 }  // namespace views
