@@ -166,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "cda1ee38_96ba5203",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-18T23:07:55Z",
+      "side": 1,
+      "message": "Hmm... which thread AnimationWorkletGlobalScope runs on? I\u0027m assuming it\u0027s on AnimationWorkletThread::GetSharedBackingThread() and we\u0027re on AnimationWorkletThread::GetSharedBackingThread() here because of the check at line 45).\n\nIf |global_scope_-\u003eIsContextThread()| is not |AnimationWorkletThread::GetSharedBackingThread()|, this would be thread-violation because WorkletGlobalScope must be accessed only on its context thread.",
+      "parentUuid": "61f04f13_8a1278a0",
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b50144c_9f434895",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.cpp",
         "patchSetId": 8
@@ -330,6 +348,30 @@
       "side": 1,
       "message": "I don\u0027t understand the motivation for blocking this change on that one.\nWhat goes wrong by inheriting static functions?\nIt\u0027s not like you can call them on a derived object.",
       "parentUuid": "230b6753_6303ca19",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 43
+      },
+      "revId": "3fc09d5109a8a204e6c127a8f442459ff73c5f49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c93191_8e1f8153",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThread.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-18T23:07:55Z",
+      "side": 1,
+      "message": "Because this would be error-prone and confusing for code readers.\n\nFor example, ModulesInitializer::CollectAllGarbageForAnimationWorklet() calls AbstractAnimationWorkletThread::CollectAllGarbage(), but not AnimationWorkletThread::CollectAllGarbage(). IIUC, AbstractAnimationWorkletThread::CollectAllGarbage() does nothing for AnimationWorklet after this change. This is not intuitive.\n\nIf it\u0027s difficult to deprecate the entire CompositorWorker now, how about moving (static) functions used only for CompositorWorker from AbstractAnimationWorkletThread into CompositorThread?",
+      "parentUuid": "7457dfe0_cbe8d665",
       "range": {
         "startLine": 17,
         "startChar": 13,

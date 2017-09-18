@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12e555d7_8246eb7b",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThreadTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-18T23:07:55Z",
+      "side": 1,
+      "message": "I think \"//\" is more common comment style in Blink except for function parameter names and outdated file licenses.",
+      "revId": "3a29c79a4dac0b82d6203a8a1e2e1663eddd4dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
