@@ -195,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "5f0d41a3_f462636e",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-18T14:45:53Z",
+      "side": 1,
+      "message": "Drive-by comment: if distance() allowed us to keep the new-style for loop and avoid initializing and incrementing a separate index variable, that sounds like a nice readability win.",
+      "parentUuid": "5ee47dae_2c6a4ba7",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9c2b01b_bac8d46a",
         "filename": "components/omnibox/browser/autocomplete_controller.cc",
         "patchSetId": 4
