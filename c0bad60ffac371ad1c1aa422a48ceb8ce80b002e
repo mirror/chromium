@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6991053a_b0dcda49",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-09-18T19:51:03Z",
+      "side": 1,
+      "message": "Weird formatting. Is it really necessary? Also, I don\u0027t think it\u0027s necessary to specify border-collapse?",
+      "revId": "c0bad60ffac371ad1c1aa422a48ceb8ce80b002e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
