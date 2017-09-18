@@ -763,9 +763,11 @@ void TopSitesImpl::SetTopSites(const MostVisitedURLList& new_top_sites,
   }
   // If there is no url change in top sites, check if the titles have changes.
   // Notify observers if there's a change in titles.
-  if (!should_notify_observers) {
+  if (!should_notify_observers)
     should_notify_observers = DoTitlesDiffer(cache_->top_sites(), top_sites);
-  }
+
+  UMA_HISTOGRAM_BOOLEAN("TopSites.ShouldNotifyObservers",
+                        should_notify_observers);
 
   last_num_urls_changed_ = delta.added.size() + delta.moved.size();
 

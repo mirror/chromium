@@ -84058,6 +84058,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="TopSites.ShouldNotifyObservers" enum="BooleanSuccess">
+  <owner>chengx@chromium.org</owner>
+  <summary>
+    Tracks whether a TopSitesChanged notification is sent to the observers.
+  </summary>
+</histogram>
+
 <histogram name="TouchAction.EffectiveTouchAction" enum="TouchActions">
   <owner>hayleyferr@chromium.org</owner>
   <owner>xidachen@chromium.org</owner>
