@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "48251a84_5624e8ac",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-18T20:01:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "94e4dce2_ea8bdd50",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 25
+      },
+      "revId": "48e6954cfea3069ee02639059501f9cdcb1ba4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38eab350_a3c8e395",
         "filename": "components/offline_pages/core/model/delete_page_task.cc",
         "patchSetId": 6
@@ -131,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "87a16f32_99fb0392",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-18T20:01:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8382051b_1ddad677",
+      "range": {
+        "startLine": 75,
+        "startChar": 10,
+        "endLine": 75,
+        "endChar": 40
+      },
+      "revId": "48e6954cfea3069ee02639059501f9cdcb1ba4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a856d2b7_00e97afb",
         "filename": "components/offline_pages/core/model/delete_page_task.cc",
         "patchSetId": 6
@@ -175,6 +223,30 @@
       "revId": "48e6954cfea3069ee02639059501f9cdcb1ba4a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe2b4821_9712de3d",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-18T20:01:24Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "82824e76_630bcf15",
+      "range": {
+        "startLine": 76,
+        "startChar": 27,
+        "endLine": 76,
+        "endChar": 39
+      },
+      "revId": "48e6954cfea3069ee02639059501f9cdcb1ba4a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

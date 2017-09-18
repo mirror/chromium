@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3d07191_cd1cbdb8",
+        "filename": "components/offline_pages/core/model/delete_page_task.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-18T20:01:24Z",
+      "side": 1,
+      "message": "name the semantic concept instead of a type, that way you are right regardless of the return type: page information\n\nalso typo: satisfys -\u003e satisfies",
+      "range": {
+        "startLine": 207,
+        "startChar": 12,
+        "endLine": 207,
+        "endChar": 22
+      },
+      "revId": "362c462693f7fe20ea30bfe52a8fc7073cd2a138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdeb297d_96744809",
+        "filename": "components/offline_pages/core/model/offline_store_utils.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-18T20:01:24Z",
+      "side": 1,
+      "message": "Remove per Justin\u0027s discovery of matching call on base::FilePath",
+      "range": {
+        "startLine": 26,
+        "startChar": 34,
+        "endLine": 26,
+        "endChar": 55
+      },
+      "revId": "362c462693f7fe20ea30bfe52a8fc7073cd2a138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
