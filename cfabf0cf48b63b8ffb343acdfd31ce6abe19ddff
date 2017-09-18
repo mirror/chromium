@@ -95,6 +95,24 @@
     },
     {
       "key": {
+        "uuid": "a0a6d8d2_a80b0e3f",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-09-18T16:22:12Z",
+      "side": 1,
+      "message": "One thing that confused me about your original comment is that you refer to OverridingBinderForTesting, but that function doesn\u0027t exist on the MockRenderProcessHost defined in shared_worker_service_impl_unittest.cc. Perhaps I could migrate to the standard MockRenderProcessHost, but I was also thinking that I could rid the unit test of a dependency on RenderProcessHost and that might be overall better.\n\nI will definitely be cleaning up all of this mess in a follow-up CL. It is the next one I have planned to write after this one. I just didn\u0027t want to include it as part of this CL.\n\nThanks for explaining the ref count business. Ugh, I look forward to getting rid of the thread hopping!",
+      "parentUuid": "a3772860_79110c86",
+      "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9f26168_e506c284",
         "filename": "content/browser/shared_worker/shared_worker_service_impl_unittest.cc",
         "patchSetId": 10
