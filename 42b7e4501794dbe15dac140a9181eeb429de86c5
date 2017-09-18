@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ec8118aa_97674036",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-18T20:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41c54f41_9234dd4b",
+      "revId": "42b7e4501794dbe15dac140a9181eeb429de86c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "936c9de5_d3653b71",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "42b7e4501794dbe15dac140a9181eeb429de86c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6eb3aa_0325c7e0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-18T20:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "936c9de5_d3653b71",
+      "revId": "42b7e4501794dbe15dac140a9181eeb429de86c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "43eef2c5_d0559712",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-18T20:32:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0265835_f881806d",
+      "revId": "42b7e4501794dbe15dac140a9181eeb429de86c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b227d04_2ba52f39",
         "filename": "/COMMIT_MSG",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-18T20:19:31Z",
       "side": 1,
       "message": "It\u0027s not clear from this wording what the new semantics are; in particular it\u0027s not clear whether we are e.g. making GetFieldTrial() have a special path for use only in unit-tests, thereby potentially making it more fragile in production?",
+      "revId": "42b7e4501794dbe15dac140a9181eeb429de86c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b856a11_d31bba1d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-18T20:32:59Z",
+      "side": 1,
+      "message": "Thanks, updated CL description to add a paragraph explaining the semantics. Because we already have same behavior for IsEnabled(), I think it\u0027s correct to make it consistent for this case.",
+      "parentUuid": "7b227d04_2ba52f39",
       "revId": "42b7e4501794dbe15dac140a9181eeb429de86c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
