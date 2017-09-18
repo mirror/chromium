@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f60e48db_d74ff7ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadHistoryAdapter.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-18T17:19:23Z",
+      "side": 1,
+      "message": "Could this happen if an item was previously transient but isn\u0027t now?",
+      "range": {
+        "startLine": 803,
+        "startChar": 12,
+        "endLine": 804,
+        "endChar": 88
+      },
+      "revId": "430aa2d5ae5126edf6c48427b8394beb5ac3ab2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
