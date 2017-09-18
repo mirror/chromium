@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "267693b9_4cce0953",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchPrefs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-18T23:13:10Z",
+      "side": 1,
+      "message": "nit: hasNewPages?",
+      "revId": "943ab0118f74307d6c3369b1ae59b2f0da30f10e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5010f426_b506b8e4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchPrefs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-18T23:13:10Z",
+      "side": 1,
+      "message": "this could probably be called just Prefs, since it lives in the prefetch package.",
+      "revId": "943ab0118f74307d6c3369b1ae59b2f0da30f10e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86fba901_3ff3c3b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchPrefs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-18T23:13:10Z",
+      "side": 1,
+      "message": "seems like all these should be prefixed with prefetch_notification_",
+      "revId": "943ab0118f74307d6c3369b1ae59b2f0da30f10e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81b78b9_beb8f9e3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchPrefs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-18T23:13:10Z",
+      "side": 1,
+      "message": "Could this take a time object and do the conversion here?",
+      "revId": "943ab0118f74307d6c3369b1ae59b2f0da30f10e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
