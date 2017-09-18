@@ -2071,6 +2071,13 @@ static bool PasteSupported(LocalFrame* frame) {
   return frame->GetEditor().Client().CanPaste(frame, default_value);
 }
 
+static bool CopyCutSupported(LocalFrame* frame) {
+  const Settings* const settings = frame->GetSettings();
+  const bool default_value =
+      settings && settings->GetJavaScriptCanAccessClipboard();
+  return frame->GetEditor().Client().CanCopyCut(frame, default_value);
+}
+
 static bool SupportedFromMenuOrKeyBinding(LocalFrame*) {
   return false;
 }
@@ -2449,13 +2456,13 @@ static const EditorInternalCommand* InternalCommand(
       {WebEditingCommandType::kBold, ExecuteToggleBold, Supported,
        EnabledInRichlyEditableText, StateBold, ValueStateOrNull,
        kNotTextInsertion, kDoNotAllowExecutionWhenDisabled},
-      {WebEditingCommandType::kCopy, ExecuteCopy, Supported, EnabledCopy,
+      {WebEditingCommandType::kCopy, ExecuteCopy, CopyCutSupported, EnabledCopy,
        StateNone, ValueStateOrNull, kNotTextInsertion,
        kAllowExecutionWhenDisabled},
       {WebEditingCommandType::kCreateLink, ExecuteCreateLink, Supported,
        EnabledInRichlyEditableText, StateNone, ValueStateOrNull,
        kNotTextInsertion, kDoNotAllowExecutionWhenDisabled},
-      {WebEditingCommandType::kCut, ExecuteCut, Supported, EnabledCut,
+      {WebEditingCommandType::kCut, ExecuteCut, CopyCutSupported, EnabledCut,
        StateNone, ValueStateOrNull, kNotTextInsertion,
        kAllowExecutionWhenDisabled},
       {WebEditingCommandType::kDefaultParagraphSeparator,
