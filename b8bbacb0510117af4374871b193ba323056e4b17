@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b8d1492b_c3cda06a",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-18T23:22:48Z",
+      "side": 1,
+      "message": "ACK.\nSince there is a local variable |url| declare it here, it needs the braces to establish the scope. Otherwise, compiler will scream if removing braces.",
+      "parentUuid": "521cce78_15bbdb66",
+      "range": {
+        "startLine": 231,
+        "startChar": 60,
+        "endLine": 231,
+        "endChar": 61
+      },
+      "revId": "b8bbacb0510117af4374871b193ba323056e4b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "136c11db_b0531543",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "b8bbacb0510117af4374871b193ba323056e4b17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "109aa68e_b7ad43ab",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-18T23:22:48Z",
+      "side": 1,
+      "message": "ACK.\nI think it looks weird too, but git cl format doesn\u0027t like the indent.",
+      "parentUuid": "136c11db_b0531543",
+      "range": {
+        "startLine": 70,
+        "startChar": 4,
+        "endLine": 70,
+        "endChar": 19
+      },
+      "revId": "b8bbacb0510117af4374871b193ba323056e4b17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
