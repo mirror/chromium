@@ -97,6 +97,7 @@ public class BottomNavigationItemView extends FrameLayout implements MenuView.It
         setIcon(itemData.getIcon());
         setTitle(itemData.getTitle());
         setId(itemData.getItemId());
+        setContentDescription(itemData.getTitle());
     }
 
     public void setItemPosition(int position) {
