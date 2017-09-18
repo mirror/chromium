@@ -34,6 +34,24 @@
       "revId": "af87508cebb79767f412ca3d09bd2057f7a76fdb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b56dabf_6c332884",
+        "filename": "third_party/WebKit/Source/core/svg/SVGImageElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-09-18T05:09:42Z",
+      "side": 1,
+      "message": "Ah right, thanks for explaining that.",
+      "parentUuid": "c13d810c_d56e5ae0",
+      "revId": "af87508cebb79767f412ca3d09bd2057f7a76fdb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
