@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa04192b_0030cbf7",
+        "filename": "chrome/android/webapk/libs/runtime_library/src/org/chromium/webapk/lib/runtime_library/WebApkServiceImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-18T18:55:56Z",
+      "side": 1,
+      "message": "Can you see if we pulled in NotificationManagerCompat (https://developer.android.com/reference/android/support/v4/app/NotificationManagerCompat.html) from the support library - how much would it bloat the library size? I\u0027m interested in the after-proguard size cause it looks like NotificationManagerCompatareNotificationsEnabled() is exactly what you want",
+      "range": {
+        "startLine": 86,
+        "startChar": 18,
+        "endLine": 86,
+        "endChar": 25
+      },
+      "revId": "a6a7a451c69ddc0dbb38f5a79934091a2984168d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
