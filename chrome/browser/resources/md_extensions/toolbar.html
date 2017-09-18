@@ -89,6 +89,11 @@
         <paper-button id="update-now" on-tap="onUpdateNowTap_">
           $i18n{toolbarUpdateNow}
         </paper-button>
+       
+      <!-- TODO(scottchen): hide this behind "enable-consumer-kiosk" flag --> 
+        <paper-button id="kiosk-extensions" on-tap="onKioskTap_">
+          $i18n{kioskAppButton}
+        </paper-button>
       </div>
     </div>
   </template>
