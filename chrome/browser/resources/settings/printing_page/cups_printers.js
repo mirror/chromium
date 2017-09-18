@@ -95,19 +95,51 @@ Polymer({
   },
 
   /**
-   * @param {boolean} success
+   * @param {PrinterSetupResult} result_code
    * @param {string} printerName
    * @private
    */
-  onAddPrinter_: function(success, printerName) {
-    if (success) {
+  onAddPrinter_: function(result_code, printerName) {
+    if (result_code == PrinterSetupResult.kSuccess) {
       this.updateCupsPrintersList_();
       var message = this.$.addPrinterDoneMessage;
       message.textContent =
           loadTimeData.getStringF('printerAddedSuccessfulMessage', printerName);
     } else {
       var message = this.$.addPrinterErrorMessage;
+      var messageText = this.$.addPrinterFailedMessage;
+      switch (result_code) {
+        case PrinterSetupResult.kFatalError:
+          messageText.textContent =
+              loadTimeData.getString('printerAddedFatalErrorMessage');
+          break;
+        case PrinterSetupResult.kPrinterUnreachable:
+          messageText.textContent =
+              loadTimeData.getString('printerAddedPrinterUnreachableMessage');
+          break;
+        case PrinterSetupResult.kDbusError:
+          // PrinterSetupResult::kDbusError
+          messageText.textContent =
+              loadTimeData.getString('printerAddedDbusErrorMessage');
+        case PrinterSetupResult.kPpdTooLarge:
+          // PrinterSetupResult::kPpdTooLarge
+          messageText.textContent =
+              loadTimeData.getString('printerAddedPpdTooLargeMessage');
+          break;
+        case PrinterSetupResult.kInvalidPpd:
+          messageText.textContent =
+              loadTimeData.getString('printerAddedInvalidPpdMessage');
+          break;
+        case PrinterSetupResult.kPpdNotFound:
+          messageText.textContent =
+              loadTimeData.getString('printerAddedPpdNotFoundMessage');
+          break;
+        case PrinterSetupResult.kPpdUnretrievable:
+          messageText.textContent =
+              loadTimeData.getString('printerAddedPpdUnretrievableMessage');
+      }
     }
+
     message.hidden = false;
     window.setTimeout(function() {
       message.hidden = true;
