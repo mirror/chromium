@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da08af18_dd2810b6",
+        "filename": "build/android/pylib/gtest/gtest_test_instance.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-09-18T19:49:49Z",
+      "side": 1,
+      "message": "It looks like this json_results_file arg is going to determine whether or not we upload per-test logcats to logdog. Is that correct? If so, I don\u0027t think we should be using that arg to gate the uploading. I\u0027d suggest adding another arg to the test_runner, (or at least update json_results_file\u0027s help text.)",
+      "revId": "fb5bde9628e761d69aedc8c317fc9a4d53c44517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9404b189_b6a79858",
+        "filename": "build/android/pylib/local/device/local_device_environment.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-09-18T19:49:49Z",
+      "side": 1,
+      "message": "\"Modified: 3 weeks, 3 days ago\"\n\n... is this a never-to-be-done todo?",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 45
+      },
+      "revId": "fb5bde9628e761d69aedc8c317fc9a4d53c44517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b78c41e_ccb1305d",
+        "filename": "build/android/pylib/local/device/local_device_environment.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-09-18T19:49:49Z",
+      "side": 1,
+      "message": "nit: add the deobfuscate_func arg to the doc string",
+      "revId": "fb5bde9628e761d69aedc8c317fc9a4d53c44517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4228c46_98a5838c",
+        "filename": "build/android/pylib/local/device/local_device_gtest_run.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-09-18T19:49:49Z",
+      "side": 1,
+      "message": "Holy nested-optional-context-managers, batman",
+      "revId": "fb5bde9628e761d69aedc8c317fc9a4d53c44517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3236d888_16fffb07",
+        "filename": "build/android/pylib/local/device/local_device_gtest_run.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-09-18T19:49:49Z",
+      "side": 1,
+      "message": "If self._test_instance.should_save_logcat is False, what is this line going to do?",
+      "revId": "fb5bde9628e761d69aedc8c317fc9a4d53c44517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0abab72d_6cdb8a4f",
+        "filename": "build/android/test_wrapper/logdog_wrapper.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1170419
+      },
+      "writtenOn": "2017-09-18T19:49:49Z",
+      "side": 1,
+      "message": "To help with the scary logdog-terminated text in the logs, maybe do a poll-based approach with a timeout and print a warning before killing it. Something like:\n\ntimeout \u003d 30\nstart \u003d time.time()\nwhile True:\n  if logdog_proc.poll() is not None:\n    return result\n  elif time.time() - start \u003e timeout:\n    print \u0027Logdog upload timed out. Killing process...\u0027\n    logdog_proc.terminate()\n    return result\n  time.sleep(1)\n\n\nwdyt?",
+      "revId": "fb5bde9628e761d69aedc8c317fc9a4d53c44517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
