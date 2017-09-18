@@ -1031,6 +1031,11 @@ Layer::TakeDebugInfo(cc::Layer* layer) {
 void Layer::didUpdateMainThreadScrollingReasons() {}
 void Layer::didChangeScrollbarsHidden(bool) {}
 
+void Layer::OnLayerOpacityChanged(float old_opacity, float new_opacity) {
+  if (delegate_ && old_opacity != new_opacity)
+    delegate_->OnLayerOpacityChanged(old_opacity, new_opacity);
+}
+
 void Layer::CollectAnimators(
     std::vector<scoped_refptr<LayerAnimator>>* animators) {
   if (animator_ && animator_->is_animating())
@@ -1118,10 +1123,7 @@ void Layer::SetTransformFromAnimation(const gfx::Transform& transform) {
 }
 
 void Layer::SetOpacityFromAnimation(float opacity) {
-  float old_opacity = cc_layer_->opacity();
   cc_layer_->SetOpacity(opacity);
-  if (delegate_ && old_opacity != opacity)
-    delegate_->OnLayerOpacityChanged(old_opacity, opacity);
   ScheduleDraw();
 }
 
