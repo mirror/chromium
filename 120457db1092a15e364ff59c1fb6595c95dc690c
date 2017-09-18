@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "ad4f2bc5_1ad62646",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-18T22:03:26Z",
+      "side": 1,
+      "message": "please add details.",
+      "parentUuid": "1cad721d_9266fac3",
+      "range": {
+        "startLine": 51,
+        "startChar": 46,
+        "endLine": 51,
+        "endChar": 79
+      },
+      "revId": "120457db1092a15e364ff59c1fb6595c95dc690c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "554d9ec7_634cad93",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
         "patchSetId": 4
