@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "44bd5d94_19d3f1d9",
+        "filename": "cc/trees/image_animation_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-18T23:35:45Z",
+      "side": 1,
+      "message": "Since num_of_frames_skipped_ is not being tracked on the class anymore, I\u0027m not sure how to unittest what we are recording in an UMA. Is there any test infrastructure for it?",
+      "parentUuid": "327a79c0_5ad79d57",
+      "revId": "4a8d2f053780533079b284f523cb6b31d5cb7db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f2e26d43_35930a60",
         "filename": "cc/trees/image_animation_controller.h",
         "patchSetId": 5
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "7863352d_6285c6ac",
+        "filename": "cc/trees/image_animation_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-18T23:35:45Z",
+      "side": 1,
+      "message": "I went with num_frames_skipped at the place where it was being recorded. Either one seems fine to me.",
+      "parentUuid": "d316c0c8_f78f27ee",
+      "revId": "4a8d2f053780533079b284f523cb6b31d5cb7db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f672b48f_a35460ec",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 5
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "6d00399e_76e3b7ae",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-18T23:35:45Z",
+      "side": 1,
+      "message": "I went with render because I thought that was the name for the main thread throughout the code. If we want to use blink here then may be I should rename the histogram_suffixes from RendererThreadType to something else. Did you have a suggestion for that?",
+      "parentUuid": "f672b48f_a35460ec",
+      "revId": "4a8d2f053780533079b284f523cb6b31d5cb7db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f205113_2961d0f4",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 5
@@ -82,6 +136,24 @@
       "writtenOn": "2017-09-15T19:04:39Z",
       "side": 1,
       "message": "Please unittest this.",
+      "revId": "4a8d2f053780533079b284f523cb6b31d5cb7db8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e5a802d_6bd1f175",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-18T23:35:45Z",
+      "side": 1,
+      "message": "Same question.",
+      "parentUuid": "0f205113_2961d0f4",
       "revId": "4a8d2f053780533079b284f523cb6b31d5cb7db8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
