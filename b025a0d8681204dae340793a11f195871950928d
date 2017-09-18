@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca6b783e_3c4321d7",
+        "filename": "chrome/browser/resources/print_preview/data/ticket_items/color.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-18T21:25:58Z",
+      "side": 1,
+      "message": "I didn\u0027t see anything that guaranteed we have !Object here, so changed it.",
+      "range": {
+        "startLine": 115,
+        "startChar": 28,
+        "endLine": 115,
+        "endChar": 29
+      },
+      "revId": "b025a0d8681204dae340793a11f195871950928d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
