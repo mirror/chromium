@@ -21,6 +21,7 @@ void TestURLLoaderClient::OnReceiveResponse(
   EXPECT_FALSE(has_received_cached_metadata_);
   EXPECT_FALSE(has_received_completion_);
   has_received_response_ = true;
+  LOG(ERROR) << "setting " << this << " mime_type=" << response_head.mime_type;
   response_head_ = response_head;
   ssl_info_ = ssl_info;
   if (quit_closure_for_on_receive_response_)
@@ -40,6 +41,7 @@ void TestURLLoaderClient::OnReceiveRedirect(
   EXPECT_FALSE(has_received_completion_);
   has_received_redirect_ = true;
   redirect_info_ = redirect_info;
+  LOG(ERROR) << "setting " << this << " mime_type=" << response_head.mime_type;
   response_head_ = response_head;
   if (quit_closure_for_on_receive_redirect_)
     quit_closure_for_on_receive_redirect_.Run();

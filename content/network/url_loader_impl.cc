@@ -59,6 +59,7 @@ void PopulateResourceResponse(net::URLRequest* request,
   request->GetCharset(&response->head.charset);
   response->head.content_length = request->GetExpectedContentSize();
   request->GetMimeType(&response->head.mime_type);
+  LOG(ERROR) << "PopulateResourceResponse, " << response->head.mime_type;
   net::HttpResponseInfo response_info = request->response_info();
   response->head.was_fetched_via_spdy = response_info.was_fetched_via_spdy;
   response->head.was_alpn_negotiated = response_info.was_alpn_negotiated;
@@ -225,6 +226,7 @@ void URLLoaderImpl::Cleanup() {
 
 void URLLoaderImpl::FollowRedirect() {
   if (!url_request_) {
+    LOG(ERROR) << "NotifyCompleted0";
     NotifyCompleted(net::ERR_UNEXPECTED);
     // |this| may have been deleted.
     return;
@@ -274,6 +276,7 @@ void URLLoaderImpl::OnResponseStarted(net::URLRequest* url_request,
   DCHECK(url_request == url_request_.get());
 
   if (net_error != net::OK) {
+    LOG(ERROR) << "NotifyCompleted1";
     NotifyCompleted(net_error);
     // |this| may have been deleted.
     return;
@@ -303,16 +306,22 @@ void URLLoaderImpl::OnResponseStarted(net::URLRequest* url_request,
                  base::Unretained(this)));
 
   if (!(options_ & mojom::kURLLoadOptionSniffMimeType) ||
-      !ShouldSniffContent(url_request_.get(), response_.get()))
+      !ShouldSniffContent(url_request_.get(), response_.get())) {
+    LOG(ERROR) << "Send0";
     SendResponseToClient();
+  }
 
   // Start reading...
+  LOG(ERROR) << "calling ReadMore loc0";
   ReadMore();
 }
 
 void URLLoaderImpl::ReadMore() {
   // Once the MIME type is sniffed, all data is sent as soon as it is read from
   // the network.
+  LOG(ERROR) << "ReadMorex0, "
+             << (response_ ? response_->head.mime_type
+                           : " <response_ is null>");
   DCHECK(consumer_handle_.is_valid() || !pending_write_);
   if (!pending_write_.get()) {
     // TODO: we should use the abstractions in MojoAsyncResourceHandler.
@@ -327,6 +336,9 @@ void URLLoaderImpl::ReadMore() {
       DeleteIfNeeded();
       return;
     }
+    LOG(ERROR) << "ReadMorex1, "
+               << (response_ ? response_->head.mime_type
+                             : " <response_ is null>");
 
     DCHECK_GT(static_cast<uint32_t>(std::numeric_limits<int>::max()),
               pending_write_buffer_size_);
@@ -340,6 +352,9 @@ void URLLoaderImpl::ReadMore() {
       return;
     }
   }
+  LOG(ERROR) << "ReadMorex2, "
+             << (response_ ? response_->head.mime_type
+                           : " <response_ is null>");
 
   auto buf = base::MakeRefCounted<network::NetToMojoIOBuffer>(
       pending_write_.get(), pending_write_buffer_offset_);
@@ -349,16 +364,27 @@ void URLLoaderImpl::ReadMore() {
                                       pending_write_buffer_offset_),
                      &bytes_read);
   if (url_request_->status().is_io_pending()) {
+    LOG(ERROR) << "io was pending";
     // Wait for OnReadCompleted.
   } else if (url_request_->status().is_success() && bytes_read > 0) {
+    LOG(ERROR) << "DidRead call0";
     DidRead(static_cast<uint32_t>(bytes_read), true);
   } else {
     writable_handle_watcher_.Cancel();
+    LOG(ERROR) << "ReadMorex3, "
+               << (response_ ? response_->head.mime_type
+                             : " <response_ is null>");
     CompletePendingWrite();
+    LOG(ERROR) << "ReadMorex4, "
+               << (response_ ? response_->head.mime_type
+                             : " <response_ is null>");
 
     // Close body pipe.
     response_body_stream_.reset();
 
+    LOG(ERROR) << "NotifyCompleted2, "
+               << (response_ ? response_->head.mime_type
+                             : " <response_ is null>");
     NotifyCompleted(url_request_->status().ToNetError());
     // |this| may have been deleted.
     return;
@@ -371,16 +397,19 @@ void URLLoaderImpl::DidRead(uint32_t num_bytes, bool completed_synchronously) {
   bool complete_read = true;
   if (consumer_handle_.is_valid()) {
     const std::string& type_hint = response_->head.mime_type;
+    LOG(ERROR) << "hint=" << type_hint;
     std::string new_type;
     bool made_final_decision = net::SniffMimeType(
         pending_write_->buffer(), pending_write_buffer_offset_,
         url_request_->url(), type_hint, &new_type);
+    LOG(ERROR) << "DidRead, new_type=" << new_type;
     // SniffMimeType() returns false if there is not enough data to determine
     // the mime type. However, even if it returns false, it returns a new type
     // that is probably better than the current one.
     response_->head.mime_type.assign(new_type);
 
     if (made_final_decision) {
+      LOG(ERROR) << "Send1";
       SendResponseToClient();
     } else {
       complete_read = false;
@@ -391,10 +420,12 @@ void URLLoaderImpl::DidRead(uint32_t num_bytes, bool completed_synchronously) {
     CompletePendingWrite();
   }
   if (completed_synchronously) {
+    LOG(ERROR) << "calling ReadMore loc1 (post)";
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::BindOnce(&URLLoaderImpl::ReadMore,
                                   weak_ptr_factory_.GetWeakPtr()));
   } else {
+    LOG(ERROR) << "calling ReadMore loc2";
     ReadMore();
   }
 }
@@ -411,11 +442,13 @@ void URLLoaderImpl::OnReadCompleted(net::URLRequest* url_request,
     // TODO(mmenke): Should NotifyCompleted close the data pipe itself instead?
     response_body_stream_.reset();
 
+    LOG(ERROR) << "NotifyCompleted3";
     NotifyCompleted(url_request_->status().ToNetError());
     // |this| may have been deleted.
     return;
   }
 
+  LOG(ERROR) << "DidRead call1";
   DidRead(static_cast<uint32_t>(bytes_read), false);
 }
 
@@ -424,8 +457,10 @@ base::WeakPtr<URLLoaderImpl> URLLoaderImpl::GetWeakPtrForTests() {
 }
 
 void URLLoaderImpl::NotifyCompleted(int error_code) {
-  if (consumer_handle_.is_valid())
+  if (consumer_handle_.is_valid()) {
+    LOG(ERROR) << "Send2, " << response_->head.mime_type;
     SendResponseToClient();
+  }
 
   ResourceRequestCompletionStatus request_complete_data;
   request_complete_data.error_code = error_code;
@@ -456,6 +491,7 @@ void URLLoaderImpl::OnResponseBodyStreamClosed(MojoResult result) {
 void URLLoaderImpl::OnResponseBodyStreamReady(MojoResult result) {
   // TODO: Handle a bad |result| value.
   DCHECK_EQ(result, MOJO_RESULT_OK);
+  LOG(ERROR) << "calling ReadMore loc3";
   ReadMore();
 }
 
@@ -470,6 +506,7 @@ void URLLoaderImpl::SendResponseToClient() {
   if (options_ & mojom::kURLLoadOptionSendSSLInfo)
     ssl_info = url_request_->ssl_info();
   mojom::DownloadedTempFilePtr downloaded_file_ptr;
+  LOG(ERROR) << "SendResponseToClient, " << response_->head.mime_type;
   url_loader_client_->OnReceiveResponse(response_->head, ssl_info,
                                         std::move(downloaded_file_ptr));
 

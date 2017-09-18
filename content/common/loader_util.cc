@@ -19,6 +19,7 @@ namespace content {
 bool ShouldSniffContent(net::URLRequest* url_request,
                         ResourceResponse* response) {
   const std::string& mime_type = response->head.mime_type;
+  LOG(ERROR) << "ShouldSniffContent, mime_type=" << mime_type;
 
   std::string content_type_options;
   url_request->GetResponseHeaderByName("x-content-type-options",
@@ -32,7 +33,7 @@ bool ShouldSniffContent(net::URLRequest* url_request,
   if (!sniffing_blocked && we_would_like_to_sniff) {
     // We're going to look at the data before deciding what the content type
     // is.  That means we need to delay sending the response started IPC.
-    VLOG(1) << "To buffer: " << url_request->url().spec();
+    LOG(ERROR) << "To buffer: " << url_request->url().spec();
     return true;
   }
 

@@ -641,6 +641,8 @@ static bool SniffBinary(const char* content,
     return true;
   }
 
+  LOG(ERROR) << "SniffBinary assigned text/plain";
+
   // No evidence either way. Default to non-binary and, if truncated, clear
   // have_enough_content because there could be a binary looking byte in the
   // truncated data.
