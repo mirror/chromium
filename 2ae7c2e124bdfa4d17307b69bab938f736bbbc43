@@ -2,6 +2,97 @@
   "comments": [
     {
       "key": {
+        "uuid": "f052351b_71d3e861",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-18T21:11:50Z",
+      "side": 1,
+      "message": "Which preference is this? Is this maybe an old comment that needs to be updated? I think it just depends on the //components/feature_engagement backend now.",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 46
+      },
+      "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15dfa0fc_04b6f3db",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-18T21:11:50Z",
+      "side": 1,
+      "message": "Nit: BUILDFLAG?",
+      "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3e624a_d7dba3c8",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-18T21:11:50Z",
+      "side": 1,
+      "message": "Nit: BUILDFLAG?",
+      "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "672244ad_55b37170",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-18T21:11:50Z",
+      "side": 1,
+      "message": "Optional: This protected constructor seems unnecessary now. Would we want to update the subclasses to invoke the other constructor instead?",
+      "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6130cece_9d2c116f",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-18T21:11:50Z",
+      "side": 1,
+      "message": "Nit: BUILDFLAG?",
+      "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "121f7226_70e6e4cf",
         "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
         "patchSetId": 11
@@ -19,6 +110,23 @@
     },
     {
       "key": {
+        "uuid": "c38340cd_85838e40",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-18T21:11:50Z",
+      "side": 1,
+      "message": "Nit: BUILDFLAG?",
+      "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ca7a27a_36c05215",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 11
@@ -30,6 +138,23 @@
       "writtenOn": "2017-09-16T00:25:04Z",
       "side": 1,
       "message": "Nit: {} unnecessary",
+      "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89fd24fa_37c8fca0",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-09-18T21:11:50Z",
+      "side": 1,
+      "message": "Nit: BUILDFLAG?",
       "revId": "2ae7c2e124bdfa4d17307b69bab938f736bbbc43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
