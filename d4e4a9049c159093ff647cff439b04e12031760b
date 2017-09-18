@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f147a9c3_7b4f9a7c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-18T23:06:05Z",
+      "side": 1,
+      "message": "CL desc updated.",
+      "parentUuid": "7f184099_c9ed458b",
+      "revId": "d4e4a9049c159093ff647cff439b04e12031760b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90ec904e_ea2f3641",
         "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-18T19:43:00Z",
       "side": 1,
       "message": "Is there a test that covers this case? Do we need one?",
+      "revId": "d4e4a9049c159093ff647cff439b04e12031760b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4c3d7d8_0dbdbbb7",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-18T23:06:05Z",
+      "side": 1,
+      "message": "We don\u0027t have this covered in a test. Let me think of something.",
+      "parentUuid": "90ec904e_ea2f3641",
       "revId": "d4e4a9049c159093ff647cff439b04e12031760b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
