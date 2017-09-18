@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87849c76_1c3e158d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-18T17:08:28Z",
+      "side": 1,
+      "message": "It feels weird to have to pass in an instance of the class that will never be used (e.g. it will always create a new one).  Is there a reason this isn\u0027t something like \"Class\u003c? implements Observer\u003e observer\"?",
+      "range": {
+        "startLine": 48,
+        "startChar": 35,
+        "endLine": 48,
+        "endChar": 52
+      },
+      "revId": "6623608e74f75b7389f2600f6b6391f351c4e6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d8f3a1_2634c67f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-18T17:08:28Z",
+      "side": 1,
+      "message": "Should these all be package protected?",
+      "range": {
+        "startLine": 93,
+        "startChar": 4,
+        "endLine": 93,
+        "endChar": 10
+      },
+      "revId": "6623608e74f75b7389f2600f6b6391f351c4e6d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
