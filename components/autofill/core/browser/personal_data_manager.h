@@ -286,9 +286,7 @@ class PersonalDataManager : public KeyedService,
       std::list<CreditCard*>* cards_to_suggest);
 
   // Notifies test observers that personal data has changed.
-  void NotifyPersonalDataChangedForTest() {
-    NotifyPersonalDataChanged();
-  }
+  void NotifyPersonalDataChangedForTest() { NotifyPersonalDataChanged(); }
 
   // Sets the URL request context getter to be used when normalizing addresses
   // with libaddressinput's address validator.
@@ -351,6 +349,14 @@ class PersonalDataManager : public KeyedService,
   FRIEND_TEST_ALL_PREFIXES(
       PersonalDataManagerTest,
       ConvertWalletAddressesAndUpdateWalletCards_MultipleSimilarWalletAddresses);  // NOLINT
+  FRIEND_TEST_ALL_PREFIXES(PersonalDataManagerTest,
+                           DeleteDisusedCreditCards_OncePerVersion);
+  FRIEND_TEST_ALL_PREFIXES(PersonalDataManagerTest,
+                           DeleteDisusedCreditCards_DoNothingWhenDisabled);
+  FRIEND_TEST_ALL_PREFIXES(
+      PersonalDataManagerTest,
+      DeleteDisusedCreditCards_OnlyDeleteExpiredDisusedLocalCards);
+
   friend class autofill::AutofillInteractiveTest;
   friend class autofill::AutofillTest;
   friend class autofill::PersonalDataManagerFactory;
@@ -361,11 +367,13 @@ class PersonalDataManager : public KeyedService,
   friend class ::RemoveAutofillTester;
   friend std::default_delete<PersonalDataManager>;
   friend void autofill_helper::SetProfiles(
-      int, std::vector<autofill::AutofillProfile>*);
+      int,
+      std::vector<autofill::AutofillProfile>*);
   friend void autofill_helper::SetCreditCards(
-      int, std::vector<autofill::CreditCard>*);
-  friend void SetTestProfiles(
-      Browser* browser, std::vector<AutofillProfile>* profiles);
+      int,
+      std::vector<autofill::CreditCard>*);
+  friend void SetTestProfiles(Browser* browser,
+                              std::vector<AutofillProfile>* profiles);
 
   // Sets |web_profiles_| to the contents of |profiles| and updates the web
   // database by adding, updating and removing profiles.
@@ -573,6 +581,10 @@ class PersonalDataManager : public KeyedService,
   std::string MergeServerAddressesIntoProfiles(
       const AutofillProfile& server_address,
       std::vector<AutofillProfile>* existing_profiles);
+
+  // Tries to delete disused credit cards once per major version if the
+  // feature is enabled.
+  bool DeleteDisusedCreditCards();
 
   const std::string app_locale_;
 

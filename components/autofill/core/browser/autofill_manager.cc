@@ -275,14 +275,16 @@ void AutofillManager::RegisterProfilePrefs(
   registry->RegisterIntegerPref(
       prefs::kAutofillCreditCardSigninPromoImpressionCount, 0);
   registry->RegisterBooleanPref(
-      prefs::kAutofillEnabled,
-      true,
+      prefs::kAutofillEnabled, true,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   registry->RegisterBooleanPref(
       prefs::kAutofillProfileUseDatesFixed, false,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   registry->RegisterIntegerPref(
       prefs::kAutofillLastVersionDeduped, 0,
+      user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
+  registry->RegisterIntegerPref(
+      prefs::kAutofillLastVersionDisusedCreditCardsDeleted, 0,
       user_prefs::PrefRegistrySyncable::SYNCABLE_PREF);
   // These choices are made on a per-device basis, so they're not syncable.
   registry->RegisterBooleanPref(prefs::kAutofillWalletImportEnabled, true);
@@ -1000,8 +1002,7 @@ void AutofillManager::SetTestDelegate(AutofillManagerTestDelegate* delegate) {
 
 void AutofillManager::OnSetDataList(const std::vector<base::string16>& values,
                                     const std::vector<base::string16>& labels) {
-  if (!IsValidString16Vector(values) ||
-      !IsValidString16Vector(labels) ||
+  if (!IsValidString16Vector(values) || !IsValidString16Vector(labels) ||
       values.size() != labels.size())
     return;
 
@@ -1217,8 +1218,8 @@ void AutofillManager::ImportFormData(const FormStructure& submitted_form) {
 #ifdef ENABLE_FORM_DEBUG_DUMP
   // Debug code for research on what autofill Chrome extracts from the last few
   // forms when submitting credit card data. See DumpAutofillData().
-  bool dump_data = base::CommandLine::ForCurrentProcess()->HasSwitch(
-      "dump-autofill-data");
+  bool dump_data =
+      base::CommandLine::ForCurrentProcess()->HasSwitch("dump-autofill-data");
 
   // Save the form data for future dumping.
   if (dump_data) {
@@ -1453,8 +1454,8 @@ int AutofillManager::SetProfilesForCreditCardUpload(
     }
     if (found_conflicting_names) {
       if (!upload_decision_metrics)
-      upload_decision_metrics |=
-          AutofillMetrics::UPLOAD_NOT_OFFERED_CONFLICTING_NAMES;
+        upload_decision_metrics |=
+            AutofillMetrics::UPLOAD_NOT_OFFERED_CONFLICTING_NAMES;
     }
   }
 
@@ -1462,7 +1463,7 @@ int AutofillManager::SetProfilesForCreditCardUpload(
   // them, the candidate set is invalid.
   if (verified_name.empty()) {
     if (!upload_decision_metrics)
-    upload_decision_metrics |= AutofillMetrics::UPLOAD_NOT_OFFERED_NO_NAME;
+      upload_decision_metrics |= AutofillMetrics::UPLOAD_NOT_OFFERED_NO_NAME;
   }
 
   // If any of the candidate addresses have a non-empty zip that doesn't match
@@ -1648,8 +1649,7 @@ bool AutofillManager::RefreshDataModels() {
     return false;
 
   // No autofill data to return if the profiles are empty.
-  const std::vector<AutofillProfile*>& profiles =
-      personal_data_->GetProfiles();
+  const std::vector<AutofillProfile*>& profiles = personal_data_->GetProfiles();
   const std::vector<CreditCard*>& credit_cards =
       personal_data_->GetCreditCards();
 
@@ -1750,8 +1750,8 @@ void AutofillManager::FillOrPreviewDataModelForm(
   base::string16 profile_full_name;
   std::string profile_language_code;
   if (!is_credit_card) {
-    profile_full_name = data_model.GetInfo(
-        AutofillType(NAME_FULL), app_locale_);
+    profile_full_name =
+        data_model.GetInfo(AutofillType(NAME_FULL), app_locale_);
     profile_language_code =
         static_cast<const AutofillProfile*>(&data_model)->language_code();
   }
@@ -1763,10 +1763,8 @@ void AutofillManager::FillOrPreviewDataModelForm(
       if (iter.SameFieldAs(field)) {
         base::string16 value =
             data_model.GetInfo(autofill_field->Type(), app_locale_);
-        if (AutofillField::FillFormField(*autofill_field,
-                                         value,
-                                         profile_language_code,
-                                         app_locale_,
+        if (AutofillField::FillFormField(*autofill_field, value,
+                                         profile_language_code, app_locale_,
                                          &iter)) {
           // Mark the cached field as autofilled, so that we can detect when a
           // user edits an autofilled field (for metrics).
@@ -1808,12 +1806,12 @@ void AutofillManager::FillOrPreviewDataModelForm(
 
     base::string16 value =
         data_model.GetInfo(cached_field->Type(), app_locale_);
-    if (is_credit_card &&
-        cached_field->Type().GetStorableType() ==
-            CREDIT_CARD_VERIFICATION_CODE) {
+    if (is_credit_card && cached_field->Type().GetStorableType() ==
+                              CREDIT_CARD_VERIFICATION_CODE) {
       value = cvc;
-    } else if (is_credit_card && IsCreditCardExpirationType(
-                                     cached_field->Type().GetStorableType()) &&
+    } else if (is_credit_card &&
+               IsCreditCardExpirationType(
+                   cached_field->Type().GetStorableType()) &&
                static_cast<const CreditCard*>(&data_model)
                    ->IsExpired(AutofillClock::Now())) {
       // Don't fill expired cards expiration date.
@@ -1824,16 +1822,12 @@ void AutofillManager::FillOrPreviewDataModelForm(
     // Only notify autofilling of empty fields and the field that initiated
     // the filling (note that "select-one" controls may not be empty but will
     // still be autofilled).
-    bool should_notify =
-        !is_credit_card &&
-        !value.empty() &&
-        (result.fields[i].SameFieldAs(field) ||
-         result.fields[i].form_control_type == "select-one" ||
-         result.fields[i].value.empty());
-    if (AutofillField::FillFormField(*cached_field,
-                                     value,
-                                     profile_language_code,
-                                     app_locale_,
+    bool should_notify = !is_credit_card && !value.empty() &&
+                         (result.fields[i].SameFieldAs(field) ||
+                          result.fields[i].form_control_type == "select-one" ||
+                          result.fields[i].value.empty());
+    if (AutofillField::FillFormField(*cached_field, value,
+                                     profile_language_code, app_locale_,
                                      &result.fields[i])) {
       // Mark the cached field as autofilled, so that we can detect when a
       // user edits an autofilled field (for metrics).
@@ -1965,8 +1959,7 @@ bool AutofillManager::UpdateCachedForm(const FormData& live_form,
                                        const FormStructure* cached_form,
                                        FormStructure** updated_form) {
   bool needs_update =
-      (!cached_form ||
-       live_form.fields.size() != cached_form->field_count());
+      (!cached_form || live_form.fields.size() != cached_form->field_count());
   for (size_t i = 0; !needs_update && i < cached_form->field_count(); ++i)
     needs_update = !cached_form->field(i)->SameFieldAs(live_form.fields[i]);
 
@@ -2183,7 +2176,7 @@ void AutofillManager::SplitFrontendID(int frontend_id,
                                       std::string* cc_backend_id,
                                       std::string* profile_backend_id) const {
   int cc_int_id = (frontend_id >> std::numeric_limits<uint16_t>::digits) &
-      std::numeric_limits<uint16_t>::max();
+                  std::numeric_limits<uint16_t>::max();
   int profile_int_id = frontend_id & std::numeric_limits<uint16_t>::max();
 
   *cc_backend_id = IntToBackendID(cc_int_id);
@@ -2389,8 +2382,8 @@ void AutofillManager::DumpAutofillData(bool imported_cc) const {
     fputs("Got a new credit card on CC form:\n", file);
   else
     fputs("Submitted form:\n", file);
-  for (int i = static_cast<int>(recently_autofilled_forms_.size()) - 1;
-       i >= 0; i--) {
+  for (int i = static_cast<int>(recently_autofilled_forms_.size()) - 1; i >= 0;
+       i--) {
     for (const auto& pair : recently_autofilled_forms_[i]) {
       fputs("  ", file);
       fputs(pair.first.c_str(), file);
