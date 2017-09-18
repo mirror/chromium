@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2953917f_52ef34e9",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-18T18:58:57Z",
+      "side": 1,
+      "message": "Second thought. empty email should never happen except in test, since for Sync users there\u0027s should always be a email for sync account.\nRemoved checking code.",
+      "parentUuid": "ca67dd3d_e9be14e5",
+      "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee7b01ab_6b8ebe79",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b5ea99f_0fceac14",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-18T18:58:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee7b01ab_6b8ebe79",
+      "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "ce4d4582_ac3d5005",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-18T18:58:57Z",
+      "side": 1,
+      "message": "Good catch.  it should be escaped by using url::EncodeURIComponent(..)",
+      "parentUuid": "8284f18e_64c72b7b",
+      "range": {
+        "startLine": 111,
+        "startChar": 69,
+        "endLine": 111,
+        "endChar": 70
+      },
+      "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f74b096_31dbd72b",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 9
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "4af20afe_31ff9769",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-18T18:58:57Z",
+      "side": 1,
+      "message": "GetWeakPtr() returns a weak ptr of PasswordProtectionService. In this CL I moved the actual implementation of OnWarningDone() from PPS to ChromePasswordProtectionService, so this Bind should directly apply to a CPPS object.  GetWeakPtr() will cause compilation error. \n\nAnd CPPS will only be destroyed when SafeBrowsingService is destroyed, therefore it is safe to use use base::Unretained(this) here.",
+      "parentUuid": "2f74b096_31dbd72b",
+      "range": {
+        "startLine": 209,
+        "startChar": 27,
+        "endLine": 209,
+        "endChar": 37
+      },
+      "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b45093a2_06237472",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 9
@@ -96,6 +180,24 @@
       "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ad205ad_99311f25",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-18T18:58:57Z",
+      "side": 1,
+      "message": "ACK. \nIt is easier to have a unified handler to be called by different UI components.  And for each ui_type \u0026 action, the behavior is quite straight forward.",
+      "parentUuid": "b45093a2_06237472",
+      "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "c5607eec_52796c4c",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-18T18:58:57Z",
+      "side": 1,
+      "message": "Ah, after consulting with c++ reference, simply call upr_.erase(origin) would be sufficient.",
+      "parentUuid": "e90310e7_2b5b81d5",
+      "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be72d801_75487645",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
         "patchSetId": 9
@@ -130,6 +250,24 @@
       "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50b2d5fc_18419a4d",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-18T18:58:57Z",
+      "side": 1,
+      "message": "I asked Max the same question in the UI mock deck. Here is his reply:\n\"Regarding open in new tab: I adopted the behavior Settings has for other items, e.g. clicking the Themes item or any link will open a new tab, too. I think there are advantages in keeping the warning open as long as possible: in a world where we use the same tab a user might get distracted and do something else in the accounts.google.com tab. Keeping the warning alive in the Settings tab leaves behind a reminder.\"\n\nSo I got convinced.",
+      "parentUuid": "be72d801_75487645",
+      "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -156,6 +294,30 @@
     },
     {
       "key": {
+        "uuid": "069ad2c0_051edf55",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-18T18:58:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ef340ff_fa5a6322",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 20
+      },
+      "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f6153d7_5301c25d",
         "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_browsertest.cc",
         "patchSetId": 9
@@ -170,6 +332,24 @@
       "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9329c731_965fa00b",
+        "filename": "chrome/browser/safe_browsing/chrome_password_protection_service_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-18T18:58:57Z",
+      "side": 1,
+      "message": "It is more readable in this way. Though some code gets repeated, reader can clearly see what\u0027s the action, what is the expected behaviors without scrolling up/down to find and parse helper functions.",
+      "parentUuid": "2f6153d7_5301c25d",
+      "revId": "a0580ffc9a8c8d68aff2d0d31b080d421cdac8b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
