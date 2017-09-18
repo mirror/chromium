@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f85bbfa_1b7161c1",
+        "filename": "ui/views/window/dialog_client_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-18T08:30:48Z",
+      "side": 1,
+      "message": "This is OK.\n\n(what I had in mind was to replace the text starting at, \", or if it is a..\". I.e.\n\n  // If |views[0]| is non-null, it is a visible |extra_view_| and its column\n  // will be in |link[0]|. Skip that if it is not a button, or if it is a\n  // specific subclass of Button that should never be linked. Otherwise,\n  // link everything.",
+      "revId": "c28dda37791e9c3d9eda7a5d7a1b0c531b961d98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
