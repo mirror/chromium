@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fcac3ff_6f103ba1",
+        "filename": "base/android/java/src/org/chromium/base/PathUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-18T20:46:25Z",
+      "side": 1,
+      "message": "Nit: The nested class makes this a bit verbose. How about:\n\nStrictModeContext _ \u003d StrictModeContext.allowDiskWrites()",
+      "range": {
+        "startLine": 70,
+        "startChar": 37,
+        "endLine": 70,
+        "endChar": 49
+      },
+      "revId": "11d456962ce7f54e1589921e0fa5c6a0fdf31dad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
