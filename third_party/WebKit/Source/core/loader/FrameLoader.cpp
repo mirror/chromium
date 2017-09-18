@@ -402,8 +402,13 @@ void FrameLoader::ReplaceDocumentWhileExecutingJavaScriptURL(
   // child frame during or after detaching children results in an attached
   // frame on a detached DOM tree, which is bad.
   SubframeLoadingDisabler disabler(frame_->GetDocument());
-  frame_->DetachChildren();
-  frame_->GetDocument()->Shutdown();
+  {
+    // A child navigating this frame in the middle of committing a JS url
+    // is also brittle.
+    FrameNavigationDisabler navigation_disabler(*frame_);
+    frame_->DetachChildren();
+    frame_->GetDocument()->Shutdown();
+  }
 
   // detachChildren() potentially detaches the frame from the document. The
   // loading cannot continue in that case.
