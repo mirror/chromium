@@ -58,6 +58,32 @@ EARL_GREY_TEST_TARGET_POSTFIX = 'egtests'
 TEST_FILES_POSTFIXES = ['unittest.mm', 'unittest.cc', 'egtest.mm']
 
 
+def _GenerateLineByLineFileCoverageInHtml(
+    target, profdata_path, per_file_line_coverage_report, output_dir):
+  """Generate per file line-by-line coverage for in html using 'llvm-cov show'.
+
+  Args:
+    target: A string representing the name of the target to be tested.
+    profdata_path: A string representing the path to the profdata file.
+    per_file_line_coverage_report: A json object with the following format:
+      Root: dict => A dictionary of objects describing line covearge for files
+      -- file_name: dict => Line coverage summary.
+      ---- total_lines: int => Number of total lines.
+      ---- executed_lines: int => Number of executed lines.
+    output_dir: output directory for generated html files.
+  """
+  application_path = _GetApplicationBundlePath(target)
+  binary_path = os.path.join(application_path, target)
+  cmd = ['xcrun', 'llvm-cov', 'show', '-instr-profile', profdata_path,
+         '-arch=x86_64', binary_path, '-format=html']
+  cmd.append('-output-dir=' + output_dir)
+
+  for source_file in per_file_line_coverage_report.keys():
+    cmd.append(source_file)
+
+  subprocess.check_call(cmd)
+
+
 def _CreateCoverageProfileDataForTarget(target, jobs_count=None,
                                         gtest_filter=None):
   """Builds and runs target to generate the coverage profile data.
