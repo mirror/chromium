@@ -1231,7 +1231,6 @@ TEST_P(QuicConnectionTest, PeerAddressChangeAtServer) {
 }
 
 TEST_P(QuicConnectionTest, PeerAddressChangeAtClient) {
-  FLAGS_quic_reloadable_flag_quic_disable_peer_migration_on_client = true;
   EXPECT_CALL(visitor_, OnSuccessfulVersionNegotiation(_));
   set_perspective(Perspective::IS_CLIENT);
   EXPECT_EQ(Perspective::IS_CLIENT, connection_.perspective());
