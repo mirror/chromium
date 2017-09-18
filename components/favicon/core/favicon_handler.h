@@ -333,6 +333,10 @@ class FaviconHandler {
   // called, regardless of whether the provided list was empty).
   bool candidates_received_;
 
+  // Whether among the processed candidates at least one download attempt
+  // resulted in an error other than a 404.
+  bool error_other_than_404_found_;
+
   // The manifest URL from the renderer (or empty URL if none).
   GURL manifest_url_;
 
