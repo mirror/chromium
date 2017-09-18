@@ -5,6 +5,8 @@
 #include "core/html/HTMLIFrameElement.h"
 
 #include "core/dom/Document.h"
+#include "platform/runtime_enabled_features.h"
+#include "platform/testing/RuntimeEnabledFeaturesTestHelpers.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
@@ -14,6 +16,31 @@ class HTMLIFrameElementTest : public ::testing::Test {
   scoped_refptr<SecurityOrigin> GetOriginForFeaturePolicy(
       HTMLIFrameElement* element) {
     return element->GetOriginForFeaturePolicy();
+  }
+};
+
+typedef ScopedRuntimeEnabledFeatureForTest<
+    RuntimeEnabledFeatures::AllowActivationDelegationAttrEnabled,
+    RuntimeEnabledFeatures::SetAllowActivationDelegationAttrEnabled>
+    ScopedAllowActivationDelegationAttrForTest;
+
+class HTMLIFrameElementDelegateStickyUserActivationTest
+    : public ::testing::Test,
+      private ScopedAllowActivationDelegationAttrForTest {
+ public:
+  HTMLIFrameElementDelegateStickyUserActivationTest()
+      : ScopedAllowActivationDelegationAttrForTest(true) {}
+
+  void TestActivationDelegationFlags(ActivationDelegationFlags expected,
+                                     const AtomicString& value) {
+    Document* document = Document::CreateForTest();
+    KURL document_url = KURL(NullURL(), "http://example.com");
+    document->SetURL(document_url);
+
+    HTMLIFrameElement* frame_element = HTMLIFrameElement::Create(*document);
+    frame_element->setAttribute(HTMLNames::delegatestickyuseractivationAttr,
+                                value);
+    EXPECT_EQ(expected, frame_element->GetActivationDelegationFlags());
   }
 };
 
@@ -405,6 +432,28 @@ TEST_F(HTMLIFrameElementTest, ConstructContainerPolicyWithAllowAttributes) {
                       container_policy[1].origins[0].Get()));
   EXPECT_EQ(WebFeaturePolicyFeature::kFullscreen, container_policy[2].feature);
   EXPECT_TRUE(container_policy[2].matches_all_origins);
+}
+
+// Test that activation delegation flags are correctly set from the
+// "delegateStickyUserActivation" attribute.
+TEST_F(HTMLIFrameElementDelegateStickyUserActivationTest,
+       ActivationDelegationFlag_Empty) {
+  TestActivationDelegationFlags(kActivationDelegationNone, "");
+}
+
+TEST_F(HTMLIFrameElementDelegateStickyUserActivationTest,
+       ActivationDelegationFlag_Bad) {
+  TestActivationDelegationFlags(kActivationDelegationNone, "bad");
+}
+
+TEST_F(HTMLIFrameElementDelegateStickyUserActivationTest,
+       ActivationDelegationFlag_Good) {
+  TestActivationDelegationFlags(kActivationDelegationMedia, "media");
+}
+
+TEST_F(HTMLIFrameElementDelegateStickyUserActivationTest,
+       ActivationDelegationFlag_Multiple) {
+  TestActivationDelegationFlags(kActivationDelegationMedia, "bad media");
 }
 
 }  // namespace blink
