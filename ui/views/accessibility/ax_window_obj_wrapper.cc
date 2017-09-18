@@ -9,6 +9,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/accessibility/platform/aura_window_properties.h"
+#include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/focus_client.h"
 #include "ui/aura/window.h"
 #include "ui/views/accessibility/ax_aura_obj_cache.h"
@@ -57,7 +58,11 @@ void AXWindowObjWrapper::GetChildren(
 
 void AXWindowObjWrapper::Serialize(ui::AXNodeData* out_node_data) {
   out_node_data->id = GetID();
-  out_node_data->role = is_alert_ ? ui::AX_ROLE_ALERT : ui::AX_ROLE_WINDOW;
+  int role = window_->GetProperty(aura::client::kAccessibilityRole);
+  if (role)
+    out_node_data->role = static_cast<ui::AXRole>(role);
+  else
+    out_node_data->role = is_alert_ ? ui::AX_ROLE_ALERT : ui::AX_ROLE_WINDOW;
   out_node_data->AddStringAttribute(ui::AX_ATTR_NAME,
                                     base::UTF16ToUTF8(window_->GetTitle()));
   if (!window_->IsVisible())

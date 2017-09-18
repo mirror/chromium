@@ -36,6 +36,9 @@ enum class WindowEmbedType {
 AURA_EXPORT extern const WindowProperty<bool>* const
     kAccessibilityFocusFallsbackToWidgetKey;
 
+// A property key to store the accessible role of this window.
+AURA_EXPORT extern const WindowProperty<int>* const kAccessibilityRole;
+
 // A property key to store whether activation on pointer event is enabled or
 // not. The default value is true, which means windows are activated when a
 // pointer down event occurs on them.
