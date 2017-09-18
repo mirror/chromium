@@ -70,6 +70,30 @@
       "revId": "0d10d0341808463c7b92b180e97be5f4ba8bbb9a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "270836fe_375356a7",
+        "filename": "components/payments_strings.grdp",
+        "patchSetId": 7
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-09-18T19:30:46Z",
+      "side": 1,
+      "message": "Followed up with UX. These should also be sentence-cased without periods.",
+      "parentUuid": "261d5f5b_d6fa0307",
+      "range": {
+        "startLine": 477,
+        "startChar": 2,
+        "endLine": 477,
+        "endChar": 34
+      },
+      "revId": "0d10d0341808463c7b92b180e97be5f4ba8bbb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
