@@ -28,6 +28,8 @@
 #import "ios/chrome/browser/reading_list/reading_list_web_state_observer.h"
 #import "ios/chrome/browser/sessions/ios_chrome_session_tab_helper.h"
 #import "ios/chrome/browser/signin/account_consistency_service_factory.h"
+#import "ios/chrome/browser/snapshots/snapshot_cache_factory.h"
+#import "ios/chrome/browser/snapshots/snapshot_tab_helper.h"
 #import "ios/chrome/browser/ssl/captive_portal_detector_tab_helper.h"
 #import "ios/chrome/browser/ssl/ios_security_state_tab_helper.h"
 #import "ios/chrome/browser/store_kit/store_kit_tab_helper.h"
@@ -54,6 +56,12 @@ void AttachTabHelpers(web::WebState* web_state) {
 
   ios::ChromeBrowserState* browser_state =
       ios::ChromeBrowserState::FromBrowserState(web_state->GetBrowserState());
+
+  TabIdTabHelper* tab_id_helper = TabIdTabHelper::FromWebState(web_state);
+  SnapshotCache* snapshot_cache =
+      SnapshotCacheFactory::GetForBrowserState(browser_state);
+  SnapshotTabHelper::CreateForWebState(web_state, tab_id_helper->tab_id(),
+                                       snapshot_cache);
 
   // IOSChromeSessionTabHelper sets up the session ID used by other helpers,
   // so it needs to be created before them.
