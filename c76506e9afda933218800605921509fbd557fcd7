@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "898dd09b_cb62571d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ContextMenuHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-18T17:21:48Z",
+      "side": 1,
+      "message": "I would import android.os.Build to shorten this a bit.",
+      "range": {
+        "startLine": 166,
+        "startChar": 12,
+        "endLine": 166,
+        "endChar": 28
+      },
+      "revId": "c76506e9afda933218800605921509fbd557fcd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0382920_83bf69f0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ContextMenuHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-18T17:21:48Z",
+      "side": 1,
+      "message": "I would use view.getResources() here instead of Resources.getSystem()\n\nIn theory, we might get to the point where we have multiple activities with different densities so we should try to use the closes context ref to get the resources.",
+      "range": {
+        "startLine": 167,
+        "startChar": 34,
+        "endLine": 167,
+        "endChar": 55
+      },
+      "revId": "c76506e9afda933218800605921509fbd557fcd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
