@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5be056e7_26ded094",
+        "filename": "build/config/jumbo.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1114374
+      },
+      "writtenOn": "2017-09-18T20:17:10Z",
+      "side": 1,
+      "message": "Temporary for testing of the change since no try bot would notice a compilation error otherwise.\n\nWill be reverted before push to master.",
+      "range": {
+        "startLine": 9,
+        "startChar": 18,
+        "endLine": 11,
+        "endChar": 19
+      },
+      "revId": "78e20f383186fa5d546901b261983b602c9ec8d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
