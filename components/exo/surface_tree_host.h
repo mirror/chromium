@@ -30,7 +30,6 @@ class BeginFrameSource;
 }  // namespace viz
 
 namespace exo {
-class LayerTreeFrameSinkHolder;
 
 // This class provides functionality for hosting a surface tree. The surface
 // tree is hosted in the |host_window_|.
