@@ -1,0 +1,198 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a1e27c6_dbc7a5d4",
+        "filename": "chrome/browser/ui/webui/print_preview/extension_printer_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-18T20:49:50Z",
+      "side": 1,
+      "message": "Can this just be: *list?",
+      "range": {
+        "startLine": 383,
+        "startChar": 17,
+        "endLine": 383,
+        "endChar": 28
+      },
+      "revId": "030802341e6e992f4df8f92b222521fce0e220a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00c85bd1_e38cc998",
+        "filename": "chrome/browser/ui/webui/print_preview/local_printer_handler_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-18T20:49:50Z",
+      "side": 1,
+      "message": "Why do we need to PostTask() from the UI thread to the UI thread?",
+      "revId": "030802341e6e992f4df8f92b222521fce0e220a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e367240_e1b8220d",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-18T20:49:50Z",
+      "side": 1,
+      "message": "Are we done after this CL?",
+      "revId": "030802341e6e992f4df8f92b222521fce0e220a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03131ef4_fc813710",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-18T20:49:50Z",
+      "side": 1,
+      "message": "Closure",
+      "range": {
+        "startLine": 47,
+        "startChar": 40,
+        "endLine": 47,
+        "endChar": 56
+      },
+      "revId": "030802341e6e992f4df8f92b222521fce0e220a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ba598c_a0677659",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-18T20:49:50Z",
+      "side": 1,
+      "message": "Can we just unify the signature in header, and ignore |profile| for non-ChromeOS in the impl?",
+      "revId": "030802341e6e992f4df8f92b222521fce0e220a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adfce8d6_55f1f958",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-18T20:49:50Z",
+      "side": 1,
+      "message": "Does this apply to the entire class?",
+      "revId": "030802341e6e992f4df8f92b222521fce0e220a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74f3bc94_1f0f1008",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-18T20:49:50Z",
+      "side": 1,
+      "message": "Instead of having this as pure virtual, can we just add the NOTREACHED() implementation in printer_handler.cc? StartGrantPrinterAccess() can probably have a default impl as well.",
+      "revId": "030802341e6e992f4df8f92b222521fce0e220a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f34bcfa_2e5264e0",
+        "filename": "chrome/browser/ui/webui/print_preview/printer_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-18T20:49:50Z",
+      "side": 1,
+      "message": "must",
+      "range": {
+        "startLine": 91,
+        "startChar": 21,
+        "endLine": 91,
+        "endChar": 27
+      },
+      "revId": "030802341e6e992f4df8f92b222521fce0e220a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a54a4c89_b4ba15f5",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-18T20:49:50Z",
+      "side": 1,
+      "message": "Match the name in the header -\u003e added_printers_callback",
+      "range": {
+        "startLine": 62,
+        "startChar": 49,
+        "endLine": 62,
+        "endChar": 57
+      },
+      "revId": "030802341e6e992f4df8f92b222521fce0e220a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "299b36cd_8325488a",
+        "filename": "chrome/browser/ui/webui/print_preview/privet_printer_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-18T20:49:50Z",
+      "side": 1,
+      "message": "Should we also DCHECK() and make sure the callback members are null to start with?",
+      "revId": "030802341e6e992f4df8f92b222521fce0e220a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
