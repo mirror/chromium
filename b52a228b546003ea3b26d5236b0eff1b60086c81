@@ -16,6 +16,41 @@
       "revId": "b52a228b546003ea3b26d5236b0eff1b60086c81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "788fc25d_14b31dcb",
+        "filename": "chrome/installer/zucchini/io_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-18T22:35:17Z",
+      "side": 1,
+      "message": "Maybe land this separately?\n\nIn case we need to revert the pugin change for any reason, it seems unnecessary to drag this along with it.",
+      "parentUuid": "6dc2845c_5fa3a8c9",
+      "revId": "b52a228b546003ea3b26d5236b0eff1b60086c81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0204b2f_ec68a148",
+        "filename": "tools/clang/plugins/ChromeClassTester.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1002927
+      },
+      "writtenOn": "2017-09-18T22:35:17Z",
+      "side": 1,
+      "message": "Maybe comment or todo or something that we\u0027re expecting WebKit to be renamed to blink?",
+      "revId": "b52a228b546003ea3b26d5236b0eff1b60086c81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
