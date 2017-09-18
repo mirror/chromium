@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f184099_c9ed458b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-18T19:43:00Z",
+      "side": 1,
+      "message": "Are there any further details that can be added here about other refactorings in this CL?",
+      "revId": "d4e4a9049c159093ff647cff439b04e12031760b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90ec904e_ea2f3641",
+        "filename": "chrome/browser/chromeos/login/session/user_session_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 866,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-09-18T19:43:00Z",
+      "side": 1,
+      "message": "Is there a test that covers this case? Do we need one?",
+      "revId": "d4e4a9049c159093ff647cff439b04e12031760b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
