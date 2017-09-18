@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ef8900e_e2cc8606",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-09-18T23:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dac0f98f_64e38e1d",
+      "revId": "7c575b213bdd04420a37a787dec005a404918761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac041ce1_414c1bba",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "7c575b213bdd04420a37a787dec005a404918761",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a880b7_f3883491",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-09-18T23:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac041ce1_414c1bba",
+      "revId": "7c575b213bdd04420a37a787dec005a404918761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2a76c855_9148977b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-09-18T23:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c6650fd_01c65013",
+      "revId": "7c575b213bdd04420a37a787dec005a404918761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c6ddc7e_8f1d8cff",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "2be29a5c_23cf1c32",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-09-18T23:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c6ddc7e_8f1d8cff",
+      "revId": "7c575b213bdd04420a37a787dec005a404918761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a085301e_116431f1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
         "patchSetId": 7
@@ -84,6 +156,24 @@
       "revId": "7c575b213bdd04420a37a787dec005a404918761",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2edbae06_ebcf60d5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-09-18T23:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a085301e_116431f1",
+      "revId": "7c575b213bdd04420a37a787dec005a404918761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "c3c02d2e_c50cdcf1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-09-18T23:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21a90395_4b904d0d",
+      "range": {
+        "startLine": 133,
+        "startChar": 18,
+        "endLine": 133,
+        "endChar": 39
+      },
+      "revId": "7c575b213bdd04420a37a787dec005a404918761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5cb2354c_9df7c1f7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
         "patchSetId": 7
@@ -130,6 +244,30 @@
       "revId": "7c575b213bdd04420a37a787dec005a404918761",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9745707_2da00b60",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-09-18T23:23:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5cb2354c_9df7c1f7",
+      "range": {
+        "startLine": 138,
+        "startChar": 28,
+        "endLine": 138,
+        "endChar": 49
+      },
+      "revId": "7c575b213bdd04420a37a787dec005a404918761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
