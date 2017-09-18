@@ -55,19 +55,6 @@
 
 #pragma mark - Public
 
-- (void)takeSnapshot {
-  web::WebState* webState = self.webStateList->GetActiveWebState();
-  TabIdTabHelper* tabHelper = TabIdTabHelper::FromWebState(webState);
-  DCHECK(tabHelper);
-  NSString* tabID = tabHelper->tab_id();
-  SnapshotCache* snapshotCache = self.snapshotCache;
-  webState->TakeSnapshot(base::BindBlockArc(^(const gfx::Image& snapshot) {
-                           [snapshotCache setImage:snapshot.ToUIImage()
-                                     withSessionID:tabID];
-                         }),
-                         kSnapshotThumbnailSize);
-}
-
 - (void)disconnect {
   _webStateList = nullptr;
   _webStateObserver.reset();
@@ -160,7 +147,7 @@
 #pragma mark - CRWWebStateObserver
 
 // Navigational changes to the web state update the tab collection, such as
-// the title and snapshot.
+// the title.
 - (void)webState:(web::WebState*)webState didLoadPageWithSuccess:(BOOL)success {
   DCHECK(self.webStateList);
   DCHECK(self.consumer);

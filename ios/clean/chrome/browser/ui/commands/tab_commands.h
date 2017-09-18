@@ -7,10 +7,12 @@
 
 #import "ios/web/public/navigation_manager.h"
 
-// Commands relating to the Settings UI.
+// Commands relating to a tab.
 @protocol TabCommands
 // Open a URL.
 - (void)loadURL:(web::NavigationManager::WebLoadParams)params;
+// Take a snapshot.
+- (void)takeTabSnapshot;
 @end
 
 #endif  // IOS_CLEAN_CHROME_BROWSER_UI_COMMANDS_TAB_COMMANDS_H_

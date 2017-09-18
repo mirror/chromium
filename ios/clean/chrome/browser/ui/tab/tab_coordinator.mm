@@ -6,14 +6,20 @@
 
 #include <memory>
 
+#include "base/mac/bind_objc_block.h"
 #include "base/memory/ptr_util.h"
 #include "base/scoped_observer.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
+#import "ios/chrome/browser/snapshots/snapshot_cache.h"
+#import "ios/chrome/browser/snapshots/snapshot_cache_factory.h"
+#import "ios/chrome/browser/snapshots/snapshot_constants.h"
+#import "ios/chrome/browser/snapshots/snapshots_util.h"
 #import "ios/chrome/browser/ui/broadcaster/chrome_broadcaster.h"
 #import "ios/chrome/browser/ui/browser_list/browser.h"
 #import "ios/chrome/browser/ui/commands/command_dispatcher.h"
 #import "ios/chrome/browser/ui/coordinators/browser_coordinator+internal.h"
+#import "ios/chrome/browser/web/tab_id_tab_helper.h"
 #include "ios/chrome/browser/web_state_list/web_state_list.h"
 #include "ios/chrome/browser/web_state_list/web_state_list_observer_bridge.h"
 #import "ios/clean/chrome/browser/ui/commands/tab_commands.h"
@@ -29,6 +35,7 @@
 #import "ios/clean/chrome/browser/ui/web_contents/web_coordinator.h"
 #import "ios/web/public/web_state/web_state.h"
 #import "ios/web/public/web_state/web_state_observer_bridge.h"
+#include "ui/gfx/image/image.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -43,6 +50,7 @@
 @property(nonatomic, weak) WebCoordinator* webCoordinator;
 @property(nonatomic, weak) ToolbarCoordinator* toolbarCoordinator;
 @property(nonatomic, strong) TabNavigationController* navigationController;
+@property(nonatomic, readonly) SnapshotCache* snapshotCache;
 
 // Creates and returns a new view controller for use as a tab container.
 // Subclasses may override this method with a custom layout view controller.
@@ -93,6 +101,8 @@
 
   [self.dispatcher startDispatchingToTarget:self
                                 forSelector:@selector(loadURL:)];
+  [self.dispatcher startDispatchingToTarget:self
+                                forSelector:@selector(takeTabSnapshot)];
 
   // NavigationController will handle all the dispatcher navigation calls.
   self.navigationController = [[TabNavigationController alloc]
@@ -183,6 +193,11 @@
   return _viewController;
 }
 
+- (SnapshotCache*)snapshotCache {
+  return SnapshotCacheFactory::GetForBrowserState(
+      self.browser->browser_state());
+}
+
 #pragma mark - Methods for subclasses to override
 
 - (TabContainerViewController*)newTabContainer {
@@ -253,6 +268,28 @@
 
 - (void)loadURL:(web::NavigationManager::WebLoadParams)params {
   self.webState->GetNavigationManager()->LoadURLWithParams(params);
+}
+
+- (void)takeTabSnapshot {
+  TabIdTabHelper* tabHelper = TabIdTabHelper::FromWebState(self.webState);
+  DCHECK(tabHelper);
+  NSString* tabID = tabHelper->tab_id();
+  SnapshotCache* snapshotCache = self.snapshotCache;
+
+  if (self.ntpCoordinator.started) {
+    TakeSnapshotOfView(self.viewController.contentViewController.view,
+                       base::BindBlockArc(^(const gfx::Image& snapshot) {
+                         [snapshotCache setImage:snapshot.ToUIImage()
+                                   withSessionID:tabID];
+                       }),
+                       kSnapshotThumbnailSize);
+  } else {
+    self.webState->TakeSnapshot(
+        base::BindBlockArc(^(const gfx::Image& snapshot) {
+          [snapshotCache setImage:snapshot.ToUIImage() withSessionID:tabID];
+        }),
+        kSnapshotThumbnailSize);
+  }
 }
 
 @end

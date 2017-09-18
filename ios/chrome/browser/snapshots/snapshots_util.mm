@@ -6,6 +6,7 @@
 
 #import <UIKit/UIKit.h>
 
+#include "base/bind.h"
 #include "base/files/file_util.h"
 #include "base/ios/ios_util.h"
 #include "base/location.h"
@@ -14,6 +15,8 @@
 #include "base/path_service.h"
 #include "base/strings/stringprintf.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/threading/sequenced_task_runner_handle.h"
+#include "ui/gfx/image/image.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -63,4 +66,22 @@ void GetSnapshotsPaths(std::vector<base::FilePath>* snapshotsPaths) {
     base::FilePath snapshotPath = snapshotsDir.Append(snapshotFilename);
     snapshotsPaths->push_back(snapshotPath);
   }
+}
+
+void TakeSnapshotOfView(UIView* view,
+                        const SnapshotViewCallback& callback,
+                        const CGSize target_size) {
+  DCHECK(view);
+  UIImage* snapshot = nil;
+  if (view && !CGRectIsEmpty(view.bounds)) {
+    CGFloat scaled_height =
+        view.bounds.size.height * target_size.width / view.bounds.size.width;
+    CGRect scaled_rect = CGRectMake(0, 0, target_size.width, scaled_height);
+    UIGraphicsBeginImageContextWithOptions(target_size, YES, 0);
+    [view drawViewHierarchyInRect:scaled_rect afterScreenUpdates:NO];
+    snapshot = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+  }
+  base::SequencedTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(callback, gfx::Image(snapshot)));
 }
