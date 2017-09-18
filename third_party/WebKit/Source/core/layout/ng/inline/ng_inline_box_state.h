@@ -65,7 +65,7 @@ struct NGInlineBoxState {
   bool needs_box_fragment_when_empty = false;
 
   // Compute text metrics for a box. All text in a box share the same metrics.
-  void ComputeTextMetrics(const ComputedStyle& style, FontBaseline);
+  void ComputeTextMetrics(const ComputedStyle& style, FontBaseline, bool);
   void AccumulateUsedFonts(const ShapeResult*, FontBaseline);
 
   // Create a box fragment for this box.
@@ -84,9 +84,13 @@ class NGInlineLayoutStateStack {
   // The box state for the line box.
   NGInlineBoxState& LineBoxState() { return stack_.front(); }
 
+  // Deactivate line height quirk
+  void DeactivateLineHeightQuirk();
+  bool LineHeightQuirkActive() const { return line_height_quirk_active_; }
+
   // Initialize the box state stack for a new line.
   // @return The initial box state for the line.
-  NGInlineBoxState* OnBeginPlaceItems(const ComputedStyle*, FontBaseline);
+  NGInlineBoxState* OnBeginPlaceItems(const ComputedStyle*, FontBaseline, bool);
 
   // Push a box state stack.
   NGInlineBoxState* OnOpenTag(const NGInlineItem&,
@@ -136,6 +140,8 @@ class NGInlineLayoutStateStack {
     NGLogicalSize size;
     NGBorderEdges border_edges;
   };
+
+  bool line_height_quirk_active_ = false;
 
   Vector<NGInlineBoxState, 4> stack_;
   Vector<BoxFragmentPlaceholder, 4> box_placeholders_;

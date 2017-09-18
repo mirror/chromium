@@ -16,11 +16,16 @@
 namespace blink {
 
 void NGInlineBoxState::ComputeTextMetrics(const ComputedStyle& style,
-                                          FontBaseline baseline_type) {
+                                          FontBaseline baseline_type,
+                                          bool line_height_quirk_active) {
   text_metrics = NGLineHeightMetrics(style, baseline_type);
   text_top = -text_metrics.ascent;
   text_metrics.AddLeading(style.ComputedLineHeightAsFixed());
-  metrics.Unite(text_metrics);
+
+  if (!line_height_quirk_active)
+    metrics.Unite(text_metrics);
+  else
+    metrics = NGLineHeightMetrics(LayoutUnit(), LayoutUnit());
 
   include_used_fonts = style.LineHeight().IsNegative();
 }
@@ -38,9 +43,21 @@ void NGInlineBoxState::AccumulateUsedFonts(const ShapeResult* shape_result,
   }
 }
 
+void NGInlineLayoutStateStack::DeactivateLineHeightQuirk() {
+  if (line_height_quirk_active_) {
+    for (auto& box : stack_)
+      box.metrics.Unite(box.text_metrics);
+
+    line_height_quirk_active_ = false;
+  }
+}
+
 NGInlineBoxState* NGInlineLayoutStateStack::OnBeginPlaceItems(
     const ComputedStyle* line_style,
-    FontBaseline baseline_type) {
+    FontBaseline baseline_type,
+    bool line_height_quirk_active) {
+  line_height_quirk_active_ = line_height_quirk_active;
+
   if (stack_.IsEmpty()) {
     // For the first line, push a box state for the line itself.
     stack_.resize(1);
@@ -50,7 +67,10 @@ NGInlineBoxState* NGInlineLayoutStateStack::OnBeginPlaceItems(
     // For the following lines, clear states that are not shared across lines.
     for (auto& box : stack_) {
       box.fragment_start = 0;
-      box.metrics = box.text_metrics;
+      if (line_height_quirk_active_)
+        box.metrics = NGLineHeightMetrics(LayoutUnit(), LayoutUnit());
+      else
+        box.metrics = box.text_metrics;
       if (box.needs_box_fragment) {
         box.line_left_position = LayoutUnit();
         // Existing box states are wrapped boxes, and hence no left edges.
@@ -67,7 +87,8 @@ NGInlineBoxState* NGInlineLayoutStateStack::OnBeginPlaceItems(
   // Use a "strut" (a zero-width inline box with the element's font and
   // line height properties) as the initial metrics for the line box.
   // https://drafts.csswg.org/css2/visudet.html#strut
-  line_box.ComputeTextMetrics(*line_style, baseline_type);
+  line_box.ComputeTextMetrics(*line_style, baseline_type,
+                              line_height_quirk_active_);
 
   return &stack_.back();
 }
@@ -118,7 +139,6 @@ void NGInlineLayoutStateStack::OnEndPlaceItems(
   if (!box_placeholders_.IsEmpty())
     CreateBoxFragments(line_box);
 
-  DCHECK(!LineBoxState().metrics.IsEmpty());
   line_box->SetMetrics(LineBoxState().metrics);
 }
 
