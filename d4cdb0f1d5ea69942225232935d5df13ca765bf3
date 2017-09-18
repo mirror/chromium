@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2547f4f0_f3c4b809",
+        "filename": "ui/webui/resources/OWNERS",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-18T20:35:29Z",
+      "side": 1,
+      "message": "cr_components/ already has an OWNERS file. I assume you need this line for \ncr_components_resources.grdp. Perhaps a better alternative would be to move this file under cr_components/ such that it does not require a separate OWNERS file entry.",
+      "revId": "d4cdb0f1d5ea69942225232935d5df13ca765bf3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
