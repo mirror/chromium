@@ -327,7 +327,7 @@ const base::Feature kMediaFoundationH264Encoding{
 
 std::string GetEffectiveAutoplayPolicy(const base::CommandLine& command_line) {
   // |kIgnoreAutoplayRestrictionsForTests| overrides all other settings.
-  if (command_line.HasSwitch(switches::kIgnoreAutoplayRestrictionsForTests))
+  if (true || command_line.HasSwitch(switches::kIgnoreAutoplayRestrictionsForTests))
     return switches::autoplay::kNoUserGestureRequiredPolicy;
 
   // Return the autoplay policy set in the command line, if any.
