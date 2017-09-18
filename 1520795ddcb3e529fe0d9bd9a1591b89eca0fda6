@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55d13a26_dbb69604",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/MainActivityTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-18T19:15:14Z",
+      "side": 1,
+      "message": "this doesn\u0027t reflect what\u0027s being tested (you are providing the logged_intent_url_param)",
+      "range": {
+        "startLine": 31,
+        "startChar": 38,
+        "endLine": 31,
+        "endChar": 41
+      },
+      "revId": "1520795ddcb3e529fe0d9bd9a1591b89eca0fda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ce766b5_5994124b",
+        "filename": "chrome/android/webapk/shell_apk/junit/src/org/chromium/webapk/shell_apk/MainActivityTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-18T19:15:14Z",
+      "side": 1,
+      "message": "these \"testIgnore\" tests aren\u0027t ignoring anymore. Please update names and also add an actual \"ignore\" test",
+      "range": {
+        "startLine": 35,
+        "startChar": 16,
+        "endLine": 35,
+        "endChar": 60
+      },
+      "revId": "1520795ddcb3e529fe0d9bd9a1591b89eca0fda6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
