@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c408474_77192e46",
+        "filename": "tools/perf/perf_device_trigger_unittest.py",
+        "patchSetId": 13
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-09-18T13:11:34Z",
+      "side": 1,
+      "message": "This test is failing because you don\u0027t close the tempfile handle before removing it. \n\nYou can see here https://build.chromium.org/p/tryserver.chromium.win/builders/win_chromium_rel_ng/builds/534328\n\nthat perf_device_trigger_unittest.PerfDeviceTriggerUnittest.testBasic is failing on windows.  If you look in the logs it is timing out: https://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.win%2Fwin_chromium_rel_ng%2F534328%2F%2B%2Frecipes%2Fsteps%2FUpload_to_test-results__telemetry_perf_unittests__with_patch__%2F0%2Fstdout\n\nThis is because the file access on windows is much stricter than mac \u0026 linux (those OSes are much more forgiving) so you can\u0027t remove a file that has an open file handle.",
+      "range": {
+        "startLine": 63,
+        "startChar": 22,
+        "endLine": 63,
+        "endChar": 31
+      },
+      "revId": "125fafacf81a822e10da4818015badd47ede7a0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
