@@ -46,6 +46,30 @@
       "revId": "f2bad1b1dc5cfb75c1594359dabd23dbf8ad97f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f9cfa44_93321d07",
+        "filename": "content/public/browser/desktop_media_id.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-18T21:22:01Z",
+      "side": 1,
+      "message": "Sorry I wasn\u0027t clear. I\u0027m suggesting to replace \"audio_share\" boolean field in DesktopMediaID with an enum field that will indicated what type of media is being requested. It would have have 3 allowed values: AUDIO, VIDEO and AUDIO_VIDEO (probably better to make it a bitmask with two bits for audio and video). Type enum will stay the same.\n\nCurrently \u0027type\u0027 indicates the source type, while \u0027audio_share\u0027 flag indicates type of the media that\u0027s being received from that source (video or video+audio). So |type| is not the best name for that field. It may be better if we rename it to source_type. WDYT?",
+      "parentUuid": "a5f9a6ef_32c59133",
+      "range": {
+        "startLine": 176,
+        "startChar": 9,
+        "endLine": 176,
+        "endChar": 18
+      },
+      "revId": "f2bad1b1dc5cfb75c1594359dabd23dbf8ad97f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
