@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3869ceb8_42ee6242",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-18T18:49:34Z",
+      "side": 1,
+      "message": "Do you mean Download Home here?",
+      "range": {
+        "startLine": 50,
+        "startChar": 40,
+        "endLine": 50,
+        "endChar": 56
+      },
+      "revId": "120457db1092a15e364ff59c1fb6595c95dc690c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57935e64_d88eaa77",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-18T18:49:34Z",
+      "side": 1,
+      "message": "Is there a specific scenario for that?",
+      "range": {
+        "startLine": 51,
+        "startChar": 46,
+        "endLine": 51,
+        "endChar": 79
+      },
+      "revId": "120457db1092a15e364ff59c1fb6595c95dc690c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554d9ec7_634cad93",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-18T18:49:34Z",
+      "side": 1,
+      "message": "If this one is called from both native and java, please document that.\n\nOtherwise I don\u0027t understand the relationship between this and 115:\nrecordNotificationActionWhenChromeStarts(NOTIFICATION_ACTION_SHOWN);",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 19
+      },
+      "revId": "120457db1092a15e364ff59c1fb6595c95dc690c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ae003d_a92c1b09",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-18T18:49:34Z",
+      "side": 1,
+      "message": "what are the magic numbers in here?",
+      "range": {
+        "startLine": 84,
+        "startChar": 17,
+        "endLine": 84,
+        "endChar": 100
+      },
+      "revId": "120457db1092a15e364ff59c1fb6595c95dc690c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "057cc316_62997d91",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-18T18:49:34Z",
+      "side": 1,
+      "message": "ditto re magic numbers.",
+      "range": {
+        "startLine": 105,
+        "startChar": 29,
+        "endLine": 105,
+        "endChar": 78
+      },
+      "revId": "120457db1092a15e364ff59c1fb6595c95dc690c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c01e08b_1f17a480",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-18T18:49:34Z",
+      "side": 1,
+      "message": "so we\u0027ll start Chrome just to report UMA? Heavy... was there anything else considered?",
+      "range": {
+        "startLine": 121,
+        "startChar": 24,
+        "endLine": 121,
+        "endChar": 64
+      },
+      "revId": "120457db1092a15e364ff59c1fb6595c95dc690c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aeff40d_b0bd8dfe",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 2585,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-09-18T18:49:34Z",
+      "side": 1,
+      "message": "will this include the scheme?\nIf not, is calling it ORIGIN the best choice? DOMAIN maybe?",
+      "range": {
+        "startLine": 2585,
+        "startChar": 12,
+        "endLine": 2585,
+        "endChar": 50
+      },
+      "revId": "120457db1092a15e364ff59c1fb6595c95dc690c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
