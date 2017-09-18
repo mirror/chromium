@@ -11,6 +11,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/sequenced_task_runner_helpers.h"
 #include "content/child/service_worker/service_worker_dispatcher.h"
+#include "content/child/service_worker/web_service_worker_provider_impl.h"
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker_container.mojom.h"
 #include "content/common/service_worker/service_worker_provider.mojom.h"
@@ -18,6 +19,8 @@
 #include "content/public/child/child_url_loader_factory_getter.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
+
+#include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProviderClient.h"
 
 namespace base {
 class SingleThreadTaskRunner;
@@ -100,8 +103,6 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
 
   // For service worker clients. The controller for
   // ServiceWorkerContainer#controller.
-  void SetController(std::unique_ptr<ServiceWorkerHandleReference> controller,
-                     const std::set<uint32_t>& used_features);
   ServiceWorkerHandleReference* controller();
 
   // S13nServiceWorker:
@@ -112,6 +113,8 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // For service worker clients. Keeps track of feature usage for UseCounter.
   void CountFeature(uint32_t feature);
   const std::set<uint32_t>& used_features() const;
+
+  void SetProvider(WebServiceWorkerProviderImpl* provider);
 
   // For service worker clients. Creates a ServiceWorkerWorkerClientRequest
   // which can be used to bind with a WorkerFetchContextImpl in a (dedicated or
@@ -145,6 +148,10 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   friend class base::RefCountedThreadSafe<ServiceWorkerProviderContext,
                                           ServiceWorkerProviderContextDeleter>;
   friend struct ServiceWorkerProviderContextDeleter;
+  FRIEND_TEST_ALL_PREFIXES(ServiceWorkerProviderContextTest, SetController);
+  FRIEND_TEST_ALL_PREFIXES(ServiceWorkerProviderContextTest,
+                           SetController_Null);
+
   struct ControlleeState;
   struct ControllerState;
 
@@ -154,6 +161,9 @@ class CONTENT_EXPORT ServiceWorkerProviderContext
   // Clears the information of the ServiceWorkerWorkerClient of dedicated (or
   // shared) worker, when the connection to the worker is disconnected.
   void UnregisterWorkerFetchContext(mojom::ServiceWorkerWorkerClient*);
+
+  // Implementation of mojom::ServiceWorkerContainer.
+  void SetController(mojom::SetControllerParamsPtr params) override;
 
   const ServiceWorkerProviderType provider_type_;
   const int provider_id_;
