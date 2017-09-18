@@ -354,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "96833c1b_338bddf9",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-18T17:05:52Z",
+      "side": 1,
+      "message": "\u003e we\u0027ll report back DownloadService INTERNAL_ERROR to the client as a failed fetch\n\nAh interesting. I guess I was assuming we\u0027d just retry these on next startup (or after a backoff timer) rather than bubbling the error up to the client. It\u0027d be useful to know whether these errors are due to transient I/O failures, or whether it could persistently fail.\n\n\u003e There are two ways delegate_ can be nullptr:\n\nYes, I was thinking of case (b). You can add crbug.com/757760 to a TODO about retrying fetches fetches that occurred during shutdown on next startup.",
+      "parentUuid": "049e72f3_fd797c95",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b82cec51_7b49639c",
         "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
         "patchSetId": 18
@@ -398,6 +422,30 @@
       "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "268c4e0f_bcec43fd",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-18T17:05:52Z",
+      "side": 1,
+      "message": "Hmm, I think my original comment misunderstood this. Looking at it again, can we just make this NOTREACHED()? We\u0027ve synchronously called Abort on the DelegateProxy by this point, so it shouldn\u0027t synchronously call DidCompleteRequest after that. I guess that\u0027d require implementing more of BackgroundFetchDelegateProxy::Abort, so that can happen as a follow-up (and just add a TODO). Keeping it as an early out in the meantime sgtm.",
+      "parentUuid": "5af54462_03a02c5c",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 10
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -577,6 +625,30 @@
       "side": 1,
       "message": "I would argue the other ones are wrong unless they\u0027re testing something that\u0027s frequently used by other tests. If we did this we would have to push the MockBackgroundFetchDelegate into content/public/test which would make development a pain amongst other issues like keeping alike code together.",
       "parentUuid": "282d52d9_39303ef2",
+      "range": {
+        "startLine": 18,
+        "startChar": 21,
+        "endLine": 18,
+        "endChar": 32
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0d0251e_cf67cf0f",
+        "filename": "content/browser/background_fetch/background_fetch_test_browser_context.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-18T17:05:52Z",
+      "side": 1,
+      "message": "Technically you wouldn\u0027t need to move MockBackgroundFetchDelegate, as content/public/test/test_browser_context.cc can still include from content/non-public. But I buy the argument that needing a background fetch delegate is fairly niche, and it doesn\u0027t necessarily make sense to give all TestBrowserContexts that ability.",
+      "parentUuid": "f1c056d1_fa736a97",
       "range": {
         "startLine": 18,
         "startChar": 21,

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee99af13_a58e18cf",
+        "filename": "content/browser/background_fetch/mock_background_fetch_delegate.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-18T17:05:52Z",
+      "side": 1,
+      "message": "Don\u0027t rely on DCHECK argument getting evaluated, even though this is test code. Either use `if (!foo) NOTREACHED()` or `CHECK(foo)`.",
+      "range": {
+        "startLine": 96,
+        "startChar": 6,
+        "endLine": 96,
+        "endChar": 51
+      },
+      "revId": "feab6e1654f0a4a46458ccc8f7396f9db3faba67",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
