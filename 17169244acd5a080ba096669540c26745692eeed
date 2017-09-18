@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d31ff3a_e2b271b6",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 715,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-09-18T03:59:21Z",
+      "side": 1,
+      "message": "It would be better if we can put down some associated bugs here.",
+      "revId": "17169244acd5a080ba096669540c26745692eeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "95fe9e0c_0203c843",
+        "filename": "components/translate/core/browser/translate_prefs_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-09-18T03:59:21Z",
+      "side": 1,
+      "message": "can you extract a common function like here:\n\nvoid ExpectLanguagesPref(const std::string\u0026 expected_prefs) {\n  EXPECT_EQ(expected_prefs, prefs_-\u003eGetString(kAcceptLanguagesPref));\n#if defined(OS_CHROMEOS)\n  EXPECT_EQ(expected_prefs, prefs_-\u003eGetString(kPreferredLanguagesPref));\n#endif\n}",
+      "revId": "17169244acd5a080ba096669540c26745692eeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "634cee09_15c4b562",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 12256,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-09-18T03:59:21Z",
+      "side": 1,
+      "message": "nit: seems \u0027.\u0027 is not needed",
+      "revId": "17169244acd5a080ba096669540c26745692eeed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
