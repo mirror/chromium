@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d01726e4_3a3f9664",
+        "filename": "chrome/browser/resources/settings/lifetime_browser_proxy.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-18T21:13:56Z",
+      "side": 1,
+      "message": "Should we remove this?",
+      "revId": "420f0fdfa80c773bed39dce13becfd9c28cca0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a51223d_362f11a4",
+        "filename": "chrome/browser/ui/webui/settings/about_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-18T21:13:56Z",
+      "side": 1,
+      "message": "Just to confirm that we don\u0027t bail here even if kTPMFirmwareUpdate is not enabled ?",
+      "revId": "420f0fdfa80c773bed39dce13becfd9c28cca0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f48355_a81596d8",
+        "filename": "chrome/browser/ui/webui/settings/about_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-18T21:13:56Z",
+      "side": 1,
+      "message": "If this is the same as L602, should we consider merge with it so that we only call this once ?",
+      "revId": "420f0fdfa80c773bed39dce13becfd9c28cca0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
