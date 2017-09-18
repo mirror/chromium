@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecbad1c4_6982595a",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-18T07:46:18Z",
+      "side": 1,
+      "message": "Why do you need this on iPad?",
+      "range": {
+        "startLine": 115,
+        "startChar": 49,
+        "endLine": 115,
+        "endChar": 73
+      },
+      "revId": "8cbf599b192170975ed9ae7ba9baa8cc5f2c6c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
