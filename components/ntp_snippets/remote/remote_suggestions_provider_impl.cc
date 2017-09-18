@@ -80,6 +80,26 @@ const char kMaxAgeForAdditionalPrefetchedSuggestionParamName[] =
 const base::TimeDelta kDefaultMaxAgeForAdditionalPrefetchedSuggestion =
     base::TimeDelta::FromHours(36);
 
+// Variation parameter for defining "stale" suggestions. If there are stale
+// suggestions and there is a background refetch, we would switch to category
+// status AVAILABLE_LOADING and pretend there are no suggestions until we fetch
+// new ones or until a timeout is over.
+const char kMinAgeForStaleSuggestionParamName[] =
+    "min_age_for_stale_suggestions_minutes";
+
+const base::TimeDelta kDefaultMinAgeForStaleSuggestion =
+    base::TimeDelta::FromMinutes(1);
+
+// Variation parameter for the timeout when fetching new suggestions while the
+// existing ones are "stale". If the fetch takes too long and the timeout is
+// over, the category status is forced back to AVAILABLE and the existing
+// (stale) suggestions are notified.
+const char kTimeoutForFetchWithStaleSuggestionParamName[] =
+    "timeout_for_fetch_with_stale_suggestions_milliseconds";
+
+const base::TimeDelta kDefaultTimeoutForFetchWithStaleSuggestion =
+    base::TimeDelta::FromSeconds(5);
+
 bool IsOrderingNewRemoteCategoriesBasedOnArticlesCategoryEnabled() {
   // TODO(vitaliii): Use GetFieldTrialParamByFeature(As.*)? from
   // base/metrics/field_trial_params.h. GetVariationParamByFeature(As.*)? are
@@ -134,6 +154,21 @@ base::TimeDelta GetMaxAgeForAdditionalPrefetchedSuggestion() {
       kKeepPrefetchedContentSuggestions,
       kMaxAgeForAdditionalPrefetchedSuggestionParamName,
       kDefaultMaxAgeForAdditionalPrefetchedSuggestion.InMinutes()));
+}
+
+base::TimeDelta GetMinAgeForStaleSuggestion() {
+  return base::TimeDelta::FromMinutes(base::GetFieldTrialParamByFeatureAsInt(
+      ntp_snippets::kArticleSuggestionsFeature,
+      kMinAgeForStaleSuggestionParamName,
+      kDefaultMinAgeForStaleSuggestion.InMinutes()));
+}
+
+base::TimeDelta GetTimeoutForFetchWithStaleSuggestion() {
+  return base::TimeDelta::FromMilliseconds(
+      base::GetFieldTrialParamByFeatureAsInt(
+          ntp_snippets::kArticleSuggestionsFeature,
+          kTimeoutForFetchWithStaleSuggestionParamName,
+          kDefaultTimeoutForFetchWithStaleSuggestion.InMilliseconds()));
 }
 
 // Whether notifications for fetched suggestions are enabled. Note that this
@@ -325,6 +360,11 @@ void AddDismissedArchivedIdsToRequest(
   }
 }
 
+bool IsSuggestionStale(const std::unique_ptr<RemoteSuggestion>& suggestion) {
+  return base::Time::Now() - suggestion->fetch_date() >
+         GetMinAgeForStaleSuggestion();
+}
+
 }  // namespace
 
 RemoteSuggestionsProviderImpl::RemoteSuggestionsProviderImpl(
@@ -359,7 +399,8 @@ RemoteSuggestionsProviderImpl::RemoteSuggestionsProviderImpl(
       prefetched_pages_tracker_(std::move(prefetched_pages_tracker)),
       breaking_news_raw_data_provider_(
           std::move(breaking_news_raw_data_provider)),
-      debug_logger_(debug_logger) {
+      debug_logger_(debug_logger),
+      weak_ptr_factory_(this) {
   DCHECK(debug_logger_);
   RestoreCategoriesFromPrefs();
   // The articles category always exists. Add it if we didn't get it from prefs.
@@ -457,7 +498,40 @@ void RemoteSuggestionsProviderImpl::FetchSuggestions(
     return;
   }
 
+  DLOG(WARNING) << "fetch initiated";
+
   MarkEmptyCategoriesAsLoading();
+
+  FetchStatusCallback callback_wrapped;
+  if (!interactive_request && HasStaleCategories()) {
+    MarkStaleCategoriesAsLoading();
+    // If the fetch takes too long, we need to stop waiting for new results and
+    // notify the current (stale) resuts, instead.
+    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        FROM_HERE,
+        base::BindOnce(
+            &RemoteSuggestionsProviderImpl::MarkStaleCategoriesAsAvailable,
+            weak_ptr_factory_.GetWeakPtr()),
+        GetTimeoutForFetchWithStaleSuggestion());
+
+    // If the fetch is fast enough, but it fails, we want to notify the current
+    // (stale) results as well.
+    callback_wrapped = base::BindOnce(
+        [](RemoteSuggestionsProviderImpl* provider,
+           FetchStatusCallback callback, Status status) {
+          if (!status.IsSuccess()) {
+            DLOG(WARNING) << "fetch failed";
+            provider->MarkStaleCategoriesAsAvailable();
+          }
+          if (callback) {
+            std::move(callback).Run(status);
+          }
+        },
+        base::Unretained(this), std::move(callback));
+
+  } else {
+    callback_wrapped = std::move(callback);
+  }
 
   RequestParams params = BuildFetchParams(/*fetched_category=*/base::nullopt);
   params.interactive_request = interactive_request;
@@ -537,6 +611,48 @@ void RemoteSuggestionsProviderImpl::MarkEmptyCategoriesAsLoading() {
     const CategoryContent& content = item.second;
     if (content.suggestions.empty()) {
       UpdateCategoryStatus(category, CategoryStatus::AVAILABLE_LOADING);
+    }
+  }
+}
+
+bool RemoteSuggestionsProviderImpl::HasStaleCategories() {
+  for (const auto& item : category_contents_) {
+    for (const std::unique_ptr<RemoteSuggestion>& suggestion :
+         item.second.suggestions) {
+      if (IsSuggestionStale(suggestion)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+void RemoteSuggestionsProviderImpl::MarkStaleCategoriesAsLoading() {
+  for (const auto& item : category_contents_) {
+    Category category = item.first;
+    const CategoryContent& content = item.second;
+    for (const std::unique_ptr<RemoteSuggestion>& suggestion :
+         content.suggestions) {
+      if (IsSuggestionStale(suggestion)) {
+        DLOG(WARNING) << "fetch category stale " << category.id();
+        UpdateCategoryStatus(category, CategoryStatus::AVAILABLE_LOADING);
+        NotifyNewSuggestions(category, RemoteSuggestion::PtrVector());
+        break;
+      }
+    }
+  }
+}
+
+void RemoteSuggestionsProviderImpl::MarkStaleCategoriesAsAvailable() {
+  for (const auto& item : category_contents_) {
+    Category category = item.first;
+    const CategoryContent& content = item.second;
+    if (content.status == CategoryStatus::AVAILABLE_LOADING &&
+        !content.suggestions.empty()) {
+      DLOG(WARNING) << "fetch category not stale any more " << category.id();
+      UpdateCategoryStatus(category, CategoryStatus::AVAILABLE);
+      NotifyNewSuggestions(category, content.suggestions);
+      continue;
     }
   }
 }
@@ -900,6 +1016,7 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
   for (auto& item : category_contents_) {
     Category category = item.first;
     UpdateCategoryStatus(category, CategoryStatus::AVAILABLE);
+    DLOG(WARNING) << "fetch category available " << category.id();
     // TODO(sfiera): notify only when a category changed above.
     NotifyNewSuggestions(category, item.second.suggestions);
 

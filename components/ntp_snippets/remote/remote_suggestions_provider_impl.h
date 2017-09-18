@@ -17,6 +17,7 @@
 #include "base/containers/circular_deque.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/optional.h"
 #include "base/time/clock.h"
 #include "base/time/time.h"
@@ -386,6 +387,10 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
 
   void MarkEmptyCategoriesAsLoading();
 
+  bool HasStaleCategories();
+  void MarkStaleCategoriesAsLoading();
+  void MarkStaleCategoriesAsAvailable();
+
   State state_;
 
   PrefService* pref_service_;
@@ -448,6 +453,8 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
 
   // Additional logging, accesible through snippets-internals.
   Logger* debug_logger_;
+
+  base::WeakPtrFactory<RemoteSuggestionsProviderImpl> weak_ptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(RemoteSuggestionsProviderImpl);
 };
