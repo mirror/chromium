@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b51f36e_37894d0a",
+        "filename": "net/quic/core/quic_flags_list.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-09-18T19:27:24Z",
+      "side": 1,
+      "message": "per my comment on the flags CL, please make this true.",
+      "range": {
+        "startLine": 176,
+        "startChar": 67,
+        "endLine": 176,
+        "endChar": 72
+      },
+      "revId": "f10a496492534679e5149ee7b1d8bca05d5dad36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
