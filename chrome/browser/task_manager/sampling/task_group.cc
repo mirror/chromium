@@ -89,6 +89,7 @@ TaskGroup::TaskGroup(
       expected_on_bg_done_flags_(kBackgroundRefreshTypesMask),
       current_on_bg_done_flags_(0),
       platform_independent_cpu_usage_(0.0),
+      memory_footprint_(-1),
       gpu_memory_(-1),
       memory_state_(base::MemoryState::UNKNOWN),
       per_process_network_usage_rate_(-1),
