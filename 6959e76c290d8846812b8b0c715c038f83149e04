@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea1cff2c_9d949ecf",
+        "filename": "rules.pl",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002882
+      },
+      "writtenOn": "2017-09-18T15:50:17Z",
+      "side": 1,
+      "message": "Is it possible to limit the submit just to the master branch and not to all other branches like Dev/Beta/Stable channel branches?",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 11
+      },
+      "revId": "6959e76c290d8846812b8b0c715c038f83149e04",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
