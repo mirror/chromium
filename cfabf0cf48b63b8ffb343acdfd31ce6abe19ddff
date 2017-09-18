@@ -77,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "a3772860_79110c86",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-18T15:45:51Z",
+      "side": 1,
+      "message": "Yep I\u0027m aware that this part needs to run on UI thread (we have similar code for SW). I was talking about how the try-reserve logic is given and overridden for tests, which seems to add a little more awkwardness. If I\u0027m not mistaken... it looks we can directly call what we do in TryReserveWorker here, and it\u0027s probably mockable with the more standard, readable way... but it \u0027ll need more changes in the test code.  If we\u0027re cleaning up all this messy race case handling code in a follow-up I\u0027ll be just happy with that.\n\n\u003e I don\u0027t know why this code wants to increment refcounts in that case. It seems like we should just keep the renderer alive if it has a shared worker regardless of the number of clients.\n\nSince we look for an available worker host on IO thread there could be a race where the # of clients could reach 0 and the renderer may shut down on UI thread while we\u0027re trying to attach the worker to the existing one on IO thread?",
+      "parentUuid": "5a877197_ab7ed781",
+      "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9f26168_e506c284",
         "filename": "content/browser/shared_worker/shared_worker_service_impl_unittest.cc",
         "patchSetId": 10
@@ -164,6 +182,24 @@
       "side": 1,
       "message": "OK, I worry a bit about comments like this going stale. What if in the future we decide that shared worker hosts should run in a different process (e.g., the network process). Not saying that should happen but it might. No idea if that will be true or not. Clients of this interface shouldn\u0027t need to care what process the host runs in.",
       "parentUuid": "b256a3f5_0b760ada",
+      "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af0f7e0a_e925d490",
+        "filename": "content/common/shared_worker/shared_worker_host.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-18T15:45:51Z",
+      "side": 1,
+      "message": "Fair enough, I think I have made similar comments before in some other reviews... for reasonably well maintained interface we should keep updating such comments but I can see reasons we don\u0027t want to make interfaces speak about some particular implementations.",
+      "parentUuid": "787f4dbb_333cd11f",
       "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
