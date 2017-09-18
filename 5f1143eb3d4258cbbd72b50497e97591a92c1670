@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b898ba52_3f04b12c",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-09-18T22:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f31632a_067feaea",
+      "range": {
+        "startLine": 45,
+        "startChar": 55,
+        "endLine": 45,
+        "endChar": 72
+      },
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e60ff666_9a4debbb",
         "filename": "chrome/browser/media/router/discovery/discovery_network_monitor_metric_observer.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "370d6b15_17db46ef",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor_metric_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-09-18T22:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e60ff666_9a4debbb",
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "382b0ba8_43ba8ccc",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor_metric_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-09-18T22:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "440bd8b4_1ab64ef9",
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da0f3e32_5b0de3d6",
         "filename": "chrome/browser/media/router/discovery/discovery_network_monitor_metric_observer.h",
         "patchSetId": 1
@@ -73,6 +133,24 @@
       "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb10495_b32547be",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor_metric_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-09-18T22:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da0f3e32_5b0de3d6",
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "9dd50d51_4f621d92",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor_metric_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-09-18T22:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dc23e22_6ee2d0a0",
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "535f06ae_733e60ff",
         "filename": "chrome/browser/media/router/discovery/discovery_network_monitor_metric_observer.h",
         "patchSetId": 1
@@ -107,6 +203,24 @@
       "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c1355b_90a1b7c1",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor_metric_observer.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-09-18T22:13:15Z",
+      "side": 1,
+      "message": "Good catch.  I was thinking I would need it for some condition but never did and forgot to remove it.",
+      "parentUuid": "535f06ae_733e60ff",
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +247,30 @@
     },
     {
       "key": {
+        "uuid": "3a31c205_fb01531d",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-09-18T22:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63e74393_f4cb4870",
+      "range": {
+        "startLine": 26,
+        "startChar": 76,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1083e0ad_b51f0bb0",
         "filename": "chrome/browser/media/router/discovery/discovery_network_monitor_metrics.h",
         "patchSetId": 1
@@ -153,6 +291,30 @@
       "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cad48992_e2431329",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_monitor_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-09-18T22:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1083e0ad_b51f0bb0",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +341,30 @@
     },
     {
       "key": {
+        "uuid": "d8b7b400_8205b79d",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-09-18T22:13:15Z",
+      "side": 1,
+      "message": "Done.  I used a separate value for retries from OnError so we don\u0027t have to store the source with the sink.  LMK if you think that would be worthwhile though.",
+      "parentUuid": "01889997_6abf8d00",
+      "range": {
+        "startLine": 160,
+        "startChar": 4,
+        "endLine": 160,
+        "endChar": 8
+      },
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8543ab4_550e6ac5",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 1
@@ -193,6 +379,24 @@
       "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ebc8c23_16d21c95",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-09-18T22:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8543ab4_550e6ac5",
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -219,6 +423,30 @@
     },
     {
       "key": {
+        "uuid": "65a20fdd_16ff2409",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-09-18T22:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb585092_6aa716d1",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 1
+      },
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34f17ec2_39426d8f",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 1
@@ -239,6 +467,30 @@
       "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35fa9dd2_6d1630e8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 33584,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-09-18T22:13:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34f17ec2_39426d8f",
+      "range": {
+        "startLine": 33584,
+        "startChar": 64,
+        "endLine": 33584,
+        "endChar": 0
+      },
+      "revId": "5f1143eb3d4258cbbd72b50497e97591a92c1670",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
