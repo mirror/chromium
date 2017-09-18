@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff325693_33767c78",
+        "filename": "chrome/browser/media/router/issue_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-18T17:56:28Z",
+      "side": 1,
+      "message": "Would it be simpler to have separate maps for blocking and non-blocking issues? This and the code in MaybeUpdateTopIssue() would be one-liners I think.",
+      "revId": "8564a32f5262c6f41f1df7eb4ac3bdfa9862fe03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

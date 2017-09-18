@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "1fe660ad_986f1421",
+        "filename": "chrome/browser/media/router/issue_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-18T17:56:28Z",
+      "side": 1,
+      "message": "My comment was a bit of a rhetorical question, in that you would never make a copy of a CancelableClosure, so why not make it move-only.  But I like your idea better, so go ahead and make the feature request if you like.",
+      "parentUuid": "26ac5635_e572c20f",
+      "revId": "cd88019f604e187b9f18e3fd19509e064ea78c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c5eac67_3c8c7925",
         "filename": "chrome/browser/media/router/issue_manager.h",
         "patchSetId": 5
@@ -156,6 +174,24 @@
       "revId": "cd88019f604e187b9f18e3fd19509e064ea78c61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8741809a_0057c2c0",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-09-18T17:56:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b06eb67f_5caaa19a",
+      "revId": "cd88019f604e187b9f18e3fd19509e064ea78c61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
