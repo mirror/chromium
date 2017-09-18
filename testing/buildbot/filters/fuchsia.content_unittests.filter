@@ -9,14 +9,6 @@
 -RenderWidgetHostViewAuraCopyRequestTest.PresentTime
 -ServiceWorkerDatabaseTest.DatabaseVersion_CorruptedSchemaVersion
 -ServiceWorkerProviderHostTest.ActiveIsNotController
--URLLoaderImplTest.Basic
--URLLoaderImplTest.BasicSSL
--URLLoaderImplTest.CantSniffEmptyHtml
--URLLoaderImplTest.DoNotSniffHTMLFromImageGIF
--URLLoaderImplTest.DoNotSniffHTMLFromTextPlain
--URLLoaderImplTest.Empty
--URLLoaderImplTest.SSLSentOnlyWhenRequested
--URLLoaderImplTest.SniffMimeType
 -WebContentsAudioInputStreamTest.MirroringOneStreamAfterTargetChange/0
 
 # Crashes occasionally, possibly related to https://crbug.com/758634.
