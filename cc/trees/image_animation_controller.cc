@@ -5,6 +5,7 @@
 #include "cc/trees/image_animation_controller.h"
 
 #include "base/bind.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/trace_event/trace_event.h"
 #include "cc/paint/image_animation_count.h"
 
@@ -245,7 +246,9 @@ bool ImageAnimationController::AnimationState::AdvanceFrame(
   // TODO(khushalsagar): Avoid unnecessary iterations for skipping whole loops
   // in the animations.
   size_t last_frame_index = frames_.size() - 1;
+  size_t num_of_frames_advanced = 0u;
   while (next_desired_frame_time_ <= now && ShouldAnimate()) {
+    num_of_frames_advanced++;
     size_t next_frame_index = NextFrameIndex();
     base::TimeTicks next_desired_frame_time =
         next_desired_frame_time_ + frames_[next_frame_index].duration;
@@ -276,6 +279,14 @@ bool ImageAnimationController::AnimationState::AdvanceFrame(
     // just finished a loop in the animation.
     if (pending_index_ == last_frame_index && is_complete())
       repetitions_completed_++;
+  }
+
+  // We should have advanced a single frame, anything more than that are frames
+  // skipped trying to catch up.
+  DCHECK_GT(num_of_frames_advanced, 0u);
+  if (num_of_frames_advanced > 1u) {
+    UMA_HISTOGRAM_COUNTS_1M("AnimatedImage.NumOfFramesSkipped.Compositor",
+                            num_of_frames_advanced - 1);
   }
 
   return pending_index_ != active_index_;
