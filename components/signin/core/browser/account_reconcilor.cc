@@ -426,6 +426,13 @@ std::string AccountReconcilor::GetFirstGaiaAccountForReconcile() const {
     }
   }
 
+  // If Sync is disabled, and there is no Gaia cookie, try the last known
+  // account. This happens when the cookies are cleared while Sync is disabled.
+  for (const auto& account : chrome_accounts_) {
+    if (account == last_known_first_account_)
+      return account;
+  }
+
   // As a last resort, use the first Chrome account.
   DCHECK(!chrome_accounts_.empty());
   return chrome_accounts_[0];
@@ -505,6 +512,8 @@ void AccountReconcilor::FinishReconcile() {
       !primary_account_mismatch, first_execution_, number_gaia_accounts);
   first_execution_ = false;
   CalculateIfReconcileIsDone();
+  if (!is_reconcile_started_)
+    last_known_first_account_ = first_account;
   ScheduleStartReconcileIfChromeAccountsChanged();
 }
 
