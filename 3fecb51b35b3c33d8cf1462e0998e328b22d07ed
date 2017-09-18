@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3d7e339_9a1a3986",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-18T13:47:06Z",
+      "side": 1,
+      "message": "Please follow the guide https://google.github.io/styleguide/cppguide.html#Constant_Names",
+      "range": {
+        "startLine": 58,
+        "startChar": 18,
+        "endLine": 58,
+        "endChar": 32
+      },
+      "revId": "3fecb51b35b3c33d8cf1462e0998e328b22d07ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
