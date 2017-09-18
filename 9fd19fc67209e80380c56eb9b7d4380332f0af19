@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee8f5bf4_14e36b98",
+        "filename": "remoting/client/audio/audio_player_buffer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-18T23:46:40Z",
+      "side": 1,
+      "message": "Alternatively you could expose a Start or Initialize function to be called on the audio thread and expect the caller to post a task to call that function right after the buffer is constructed. This way the buffer will not need to know any details about threading...",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 32
+      },
+      "revId": "9fd19fc67209e80380c56eb9b7d4380332f0af19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5815a6a2_2dad7f6d",
+        "filename": "remoting/client/audio/audio_player_buffer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-18T23:46:40Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to take a task runner just to DCHECKing thread safety... You could just use the thread checker:\n\nhttps://cs.chromium.org/chromium/src/base/threading/thread_checker.h\n\nDon\u0027t forget to call DETACH_FROM_THREAD in constructor.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 65
+      },
+      "revId": "9fd19fc67209e80380c56eb9b7d4380332f0af19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4fc1557_b5f0a5be",
+        "filename": "remoting/client/display/gl_render_layer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-18T23:46:40Z",
+      "side": 1,
+      "message": "What is this change for?",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 34
+      },
+      "revId": "9fd19fc67209e80380c56eb9b7d4380332f0af19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e7581b7_4d348eea",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-18T23:46:40Z",
+      "side": 1,
+      "message": "Please comment that the destructor must be run on the audio thread.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 20
+      },
+      "revId": "9fd19fc67209e80380c56eb9b7d4380332f0af19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6722cbb_3a7a1b96",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-18T23:46:40Z",
+      "side": 1,
+      "message": "I think your weak_factory_ will not allow you to destroy the object on a non-audio thread. The code below doesn\u0027t seem safe either. DCHECK that the destructor should be run on audio thread?\n\nThere is a bug in RemotingClient that prevents the destructor to be called. Please see my comments below.",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 78
+      },
+      "revId": "9fd19fc67209e80380c56eb9b7d4380332f0af19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa3cad6_4dcef9bc",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-18T23:46:40Z",
+      "side": 1,
+      "message": "Also check thread here?",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 15
+      },
+      "revId": "9fd19fc67209e80380c56eb9b7d4380332f0af19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52beb69f_2b973f6f",
+        "filename": "remoting/ios/audio/audio_stream_consumer_proxy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-18T23:46:40Z",
+      "side": 1,
+      "message": "I think you will need to DeleteSoon the Core on the audio thread.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 56
+      },
+      "revId": "9fd19fc67209e80380c56eb9b7d4380332f0af19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e262c0_e1293156",
+        "filename": "remoting/ios/session/remoting_client.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-18T23:46:40Z",
+      "side": 1,
+      "message": "unique_ptr::release doesn\u0027t destroy the object. It just simply releases the pointer. The function that both releases and destroys the object is unique_ptr::reset, but your app probably crashes if you call reset here.\n\nI think you\u0027ll need to DeleteSoon the audio player here on the audio thread.",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 27
+      },
+      "revId": "9fd19fc67209e80380c56eb9b7d4380332f0af19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
