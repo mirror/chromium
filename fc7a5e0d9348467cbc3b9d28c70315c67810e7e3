@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f92570c1_66505727",
+        "filename": "ios/chrome/browser/history/history_tab_helper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-18T13:09:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21911226_0c9793f0",
+      "revId": "fc7a5e0d9348467cbc3b9d28c70315c67810e7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "519d45f1_daac9b18",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "20c8d360_4cecbd8c",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-18T13:09:01Z",
+      "side": 1,
+      "message": "Prerendering complicates this, because data isn\u0027t necessarily coming from that specific NavigationItem.  This is more clearly an issue with the visits themselves, where prerendered pages save up an array of HistoryAddPageArgs and then push it into history only when the prerender is swapped in.",
+      "parentUuid": "519d45f1_daac9b18",
+      "range": {
+        "startLine": 560,
+        "startChar": 12,
+        "endLine": 560,
+        "endChar": 34
+      },
+      "revId": "fc7a5e0d9348467cbc3b9d28c70315c67810e7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b166293b_859fd5b2",
         "filename": "ios/chrome/browser/tabs/tab.mm",
         "patchSetId": 5
@@ -53,6 +95,24 @@
       "writtenOn": "2017-09-18T10:56:57Z",
       "side": 1,
       "message": "Since -webStateDidChangeTitle: is a WebStateObserver call, should this call to -saveTitleToHistoryDB be pulled into the tabHelper as well?",
+      "revId": "fc7a5e0d9348467cbc3b9d28c70315c67810e7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "449454b7_69345b17",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-18T13:09:01Z",
+      "side": 1,
+      "message": "Yup, the goal is to get all of the history code out of Tab, but I\u0027m planning to do it in steps so each individual CL is easy to understand and review.",
+      "parentUuid": "b166293b_859fd5b2",
       "revId": "fc7a5e0d9348467cbc3b9d28c70315c67810e7e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
