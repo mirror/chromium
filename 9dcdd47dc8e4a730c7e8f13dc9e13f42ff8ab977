@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b1f9b70_7ed44e95",
+        "filename": "content/browser/accessibility/dump_accessibility_tree_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1649,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-18T04:12:47Z",
+      "side": 1,
+      "message": "It looks like you renamed the file to window-crops-items.html\nbut you need to update this.",
+      "revId": "9dcdd47dc8e4a730c7e8f13dc9e13f42ff8ab977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b3b05e6_d56b4891",
+        "filename": "ui/accessibility/ax_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-18T04:12:47Z",
+      "side": 1,
+      "message": "Instead of checking for the role, just apply this logic to\nthe root of the tree.\n\nCheck if container \u003d\u003d root().\n\nThat will be a bit more general. Update the comment too.",
+      "revId": "9dcdd47dc8e4a730c7e8f13dc9e13f42ff8ab977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
