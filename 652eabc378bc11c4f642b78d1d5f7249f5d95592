@@ -231,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "06619b55_e1676e85",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-18T16:56:59Z",
+      "side": 1,
+      "message": "I don\u0027t like providing match_at() for people because they could potentially build bad loops with it.  But on the consumer side, if we know we have code whose perf isn\u0027t going to be meaningfully impacted, I\u0027m OK with trading off micro-optimized loops for readability.\n\nI think Justin\u0027s suggestion is that the combination of range-based for _and_ not having a second variable, together, is enough of a readability win to justify this.  I probably agree, though I don\u0027t feel strongly.",
+      "parentUuid": "545ea384_38044a2e",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9c2b01b_bac8d46a",
         "filename": "components/omnibox/browser/autocomplete_controller.cc",
         "patchSetId": 4
@@ -560,6 +578,24 @@
       "side": 1,
       "message": "It\u0027s my understanding that that is \"implementation defined behavior\", but if you\u0027re ok with it, so am I.",
       "parentUuid": "668d7073_d21bd18c",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d3452a3_007c6afa",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-18T16:56:59Z",
+      "side": 1,
+      "message": "What\u0027s implementation-defined is what an iterator that points to end() points to after the container is swapped.  So if |this_was_end|, then after swap, |default_match_|\u0027s value is unspecified.  It has a value, we just don\u0027t know what it is.  If we now swap it with the other iterator, it\u0027s the other iterator whose value is unspecified.  So that\u0027s what we reset.\n\nAn alternate formulation of the code that might make readers more comfortable:\n\n  matches_.swap(other-\u003ematches_);\n  if (this_was_end)\n    default_match_ \u003d other-\u003eend();\n  if (other_was_end)\n    other-\u003edefault_match_ \u003d end();\n  swap(default_match_, other-\u003edefault_match_);\n\nI find this slightly less clear, but it resets any unspecified values before reading them, so perhaps it\u0027s more obvious.",
+      "parentUuid": "648e6542_cfc9a258",
       "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
