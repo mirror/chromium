@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4120bb01_6fa55452",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 1648,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-18T21:47:28Z",
+      "side": 1,
+      "message": "I think we should do this regardless of the opacity change, otherwise we\u0027ll keep around a color from a previous call, which would be odd.\nI suppose it doesn\u0027t exactly matter today because the compositor is resized to the size of the frame in BrowserCompositorMac::SubmitCompositorFrame (so the compositor itself never gutters), but that will likely have to change in the viz world.",
+      "revId": "e3f7c7a18723066c7bf5f922b1393c79509a3c71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
