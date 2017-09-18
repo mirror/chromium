@@ -6,8 +6,6 @@
 
 #include "base/bind_helpers.h"
 #include "chrome/browser/media/cdm_storage_id.h"
-#include "chrome/browser/media/media_storage_id_salt.h"
-#include "chrome/browser/profiles/profile.h"
 #include "content/public/browser/browser_ppapi_host.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_frame_host.h"
@@ -20,17 +18,6 @@
 #include "ppapi/proxy/ppapi_messages.h"
 
 namespace chrome {
-
-namespace {
-
-std::vector<uint8_t> GetSalt(content::RenderFrameHost* rfh) {
-  DCHECK(rfh);
-  Profile* profile =
-      Profile::FromBrowserContext(rfh->GetProcess()->GetBrowserContext());
-  return MediaStorageIdSalt::GetSalt(profile->GetPrefs());
-}
-
-}  // namespace
 
 PepperPlatformVerificationMessageFilter::
     PepperPlatformVerificationMessageFilter(content::BrowserPpapiHost* host,
@@ -133,19 +120,16 @@ int32_t PepperPlatformVerificationMessageFilter::OnGetStorageId(
   content::RenderFrameHost* rfh =
       content::RenderFrameHost::FromID(render_process_id_, render_frame_id_);
   if (!rfh) {
-    // Won't be able to get the salt, so return empty buffer.
+    // Won't be able to get the storage id, so return empty buffer.
     GetStorageIdCallback(context->MakeReplyMessageContext(),
                          std::vector<uint8_t>());
     return PP_OK_COMPLETIONPENDING;
   }
 
-  std::vector<uint8_t> salt = GetSalt(rfh);
-  DCHECK(salt.size());
-  cdm_storage_id::ComputeStorageId(
-      salt, rfh->GetLastCommittedOrigin(),
-      base::BindOnce(
-          &PepperPlatformVerificationMessageFilter::GetStorageIdCallback, this,
-          context->MakeReplyMessageContext()));
+  ComputeStorageId(
+      rfh, base::BindOnce(
+               &PepperPlatformVerificationMessageFilter::GetStorageIdCallback,
+               this, context->MakeReplyMessageContext()));
   return PP_OK_COMPLETIONPENDING;
 }
 
