@@ -36,6 +36,7 @@ class UpgradeDetector {
     UPGRADE_ANNOYANCE_HIGH,      // Red.
     UPGRADE_ANNOYANCE_SEVERE,    // Orange.
     UPGRADE_ANNOYANCE_CRITICAL,  // Red exclamation mark.
+    UPGRADE_ANNOYANCE_COUNT
   };
 
   // Returns the singleton implementation instance.
@@ -166,6 +167,7 @@ class UpgradeDetector {
  private:
   FRIEND_TEST_ALL_PREFIXES(AppMenuModelTest, Basics);
   FRIEND_TEST_ALL_PREFIXES(SystemTrayClientTest, UpdateTrayIcon);
+  friend class UpgradeMetricsProviderTest;
 
   // Initiates an Idle check. See IdleCallback below.
   void CheckIdle();
