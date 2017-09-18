@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6dfc5522_d7cd2b73",
+        "filename": "chrome/app/vector_icons/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-18T19:16:48Z",
+      "side": 1,
+      "message": "This will be used on other platforms, too: crbug/765387.",
+      "parentUuid": "74da5748_aa0229b0",
+      "range": {
+        "startLine": 70,
+        "startChar": 5,
+        "endLine": 70,
+        "endChar": 27
+      },
+      "revId": "61fc1adbeb1904d78bb7af01e340b03653f6ba21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ad7848b_c18dca4e",
         "filename": "chrome/app/vector_icons/options_menu.icon",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-18T18:57:08Z",
       "side": 1,
       "message": "how is this different from kBrowserToolsAnimatedIcon (which need not be rendered with animation)",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 22
+      },
+      "revId": "61fc1adbeb1904d78bb7af01e340b03653f6ba21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30509d2_c6526918",
+        "filename": "chrome/app/vector_icons/options_menu.icon",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-18T19:16:48Z",
+      "side": 1,
+      "message": "Is there an easy way to see that icon? From looking at the file, I think the main differences are:\n\n- This icon has horizontal (left, middle, right) dots instead of vertical.\n- The dots are slightly closer together than the in the browser tools menu.\n\nSee here for a screenshot: https://docs.google.com/presentation/d/1v0E28vc0IdtnOjn0zLhnvao8eKXJwoPGdfM9r7aRT78/edit#slide\u003did.g2612fe63ce_0_0",
+      "parentUuid": "3ad7848b_c18dca4e",
       "range": {
         "startLine": 5,
         "startChar": 0,
