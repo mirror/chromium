@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "f97177aa_c97a6112",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-18T09:03:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d925904e_916e38f1",
+      "range": {
+        "startLine": 438,
+        "startChar": 5,
+        "endLine": 438,
+        "endChar": 0
+      },
+      "revId": "bb2430ea5a630fb2b92f862520348c3e6c16560d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "597be647_43c9a322",
         "filename": "components/signin/core/browser/account_reconcilor.cc",
         "patchSetId": 3
@@ -59,6 +83,30 @@
       "writtenOn": "2017-09-15T15:08:26Z",
       "side": 1,
       "message": "I think we should always set cached_first_account_ \u003d first_account, even when there the list of accounts in the token service is empty.",
+      "range": {
+        "startLine": 442,
+        "startChar": 3,
+        "endLine": 442,
+        "endChar": 0
+      },
+      "revId": "bb2430ea5a630fb2b92f862520348c3e6c16560d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9a4c10_084bd890",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-18T09:03:39Z",
+      "side": 1,
+      "message": "Do you mean removing the \"else\" and do\ncached_first_account_ \u003d first_account;\nin all cases?\n\nI would be concerned that we could lose the first account if the reconcile is aborted and restarted later.",
+      "parentUuid": "597be647_43c9a322",
       "range": {
         "startLine": 442,
         "startChar": 3,
@@ -91,6 +139,30 @@
       "revId": "bb2430ea5a630fb2b92f862520348c3e6c16560d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0814aefe_d1b40ac9",
+        "filename": "components/signin/core/browser/account_reconcilor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001438
+      },
+      "writtenOn": "2017-09-18T09:03:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72a82002_2750d4ef",
+      "range": {
+        "startLine": 258,
+        "startChar": 14,
+        "endLine": 258,
+        "endChar": 20
+      },
+      "revId": "bb2430ea5a630fb2b92f862520348c3e6c16560d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
