@@ -34,6 +34,24 @@
       "revId": "b38ecf990561a5d96473a63a997c8362a9c6b366",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce537b20_9711d05b",
+        "filename": "ui/views/cocoa/bridged_content_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-18T08:54:31Z",
+      "side": 1,
+      "message": "Can we fix that? What\u0027s the call stack at the point this would return NO and cause the bubble use-case to fail?\n\nThings to try\n - calling makeFirstResponder at an appropriate time during Widget::Show or Widget Init\n - having acceptsFirstResponder return YES only if there is no current firstResponder",
+      "parentUuid": "84292505_4dd17c6a",
+      "revId": "b38ecf990561a5d96473a63a997c8362a9c6b366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
