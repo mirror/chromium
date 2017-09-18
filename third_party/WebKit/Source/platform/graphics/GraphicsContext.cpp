@@ -656,7 +656,7 @@ void GraphicsContext::DrawTextInternal(const Font& font,
     return;
 
   if (font.DrawText(canvas_, text_info, point, device_scale_factor_,
-                    ApplyHighContrastFilter(&flags))) {
+                    ApplyHighContrastFilter(&flags), Printing())) {
     paint_controller_.SetTextPainted();
   }
 }
@@ -703,7 +703,7 @@ void GraphicsContext::DrawTextInternal(const Font& font,
 
   DrawTextPasses([&font, &text_info, &point, this](const PaintFlags& flags) {
     if (font.DrawText(canvas_, text_info, point, device_scale_factor_,
-                      ApplyHighContrastFilter(&flags)))
+                      ApplyHighContrastFilter(&flags), Printing()))
       paint_controller_.SetTextPainted();
   });
 }

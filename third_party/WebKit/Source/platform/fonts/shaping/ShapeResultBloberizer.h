@@ -25,8 +25,13 @@ class PLATFORM_EXPORT ShapeResultBloberizer {
  public:
   enum class Type { kNormal, kTextIntercepts };
 
+  enum Flags {
+      kIncludeUTF8Text = 0x01,
+  };
+
   ShapeResultBloberizer(const Font&,
                         float device_scale_factor,
+                        unsigned flags = 0,
                         Type = Type::kNormal);
 
   Type GetType() const { return type_; }
@@ -107,6 +112,12 @@ class PLATFORM_EXPORT ShapeResultBloberizer {
                             float initial_advance,
                             unsigned run_offset);
 
+  template <typename TextContainerType>
+  void AddUtf8Data(const ShapeResult::RunInfo&,
+                   const TextContainerType&,
+                   const Vector<unsigned>& char_offsets,
+                   unsigned run_offset);
+
   // Whether the FillFastHorizontalGlyphs can be used. Only applies for full
   // runs with no vertical offsets and no text intercepts.
   bool CanUseFastPath(unsigned from,
@@ -131,10 +142,12 @@ class PLATFORM_EXPORT ShapeResultBloberizer {
   void CommitPendingBlob();
 
   bool HasPendingVerticalOffsets() const;
+  bool HasPendingUtf8Text() const;
   static BlobRotation GetBlobRotation(const SimpleFontData*);
 
   const Font& font_;
   const float device_scale_factor_;
+  const unsigned flags_;
   const Type type_;
 
   // Current text blob state.
@@ -146,6 +159,11 @@ class PLATFORM_EXPORT ShapeResultBloberizer {
   const SimpleFontData* pending_font_data_ = nullptr;
   Vector<Glyph, 1024> pending_glyphs_;
   Vector<float, 1024> pending_offsets_;
+
+  // Optional character data, only filled when printing to PDF.
+  Vector<uint32_t> pending_character_offsets_;
+  Vector<char> pending_utf8_text_;
+
   float pending_vertical_baseline_x_offset_ = 0;
 
   // Constructed blobs.
