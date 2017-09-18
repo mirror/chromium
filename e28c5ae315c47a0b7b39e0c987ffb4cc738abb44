@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4236bbb1_72527db8",
+        "filename": "components/omnibox/browser/keyword_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-18T23:06:54Z",
+      "side": 1,
+      "message": "Done.  (Good catch.)",
+      "parentUuid": "bb196a57_aad9bcff",
+      "revId": "e28c5ae315c47a0b7b39e0c987ffb4cc738abb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f55d6a1_f77333a8",
         "filename": "components/omnibox/browser/keyword_provider.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "e28c5ae315c47a0b7b39e0c987ffb4cc738abb44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e20b018_89cb99d4",
+        "filename": "components/omnibox/browser/keyword_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-18T23:06:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f55d6a1_f77333a8",
+      "revId": "e28c5ae315c47a0b7b39e0c987ffb4cc738abb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c27d03e9_95ce4384",
+        "filename": "components/omnibox/browser/keyword_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-18T23:06:54Z",
+      "side": 1,
+      "message": "Done.\n\n(and removed the now extra word \"any\" in \"any trailing slash\")",
+      "parentUuid": "976cf12e_95c4f9c1",
+      "revId": "e28c5ae315c47a0b7b39e0c987ffb4cc738abb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9832c7fa_6d97e248",
         "filename": "components/omnibox/browser/keyword_provider.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "e28c5ae315c47a0b7b39e0c987ffb4cc738abb44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1569581_303855d0",
+        "filename": "components/omnibox/browser/keyword_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-18T23:06:54Z",
+      "side": 1,
+      "message": "\u003e Nit: |model| is an unusual name choice; |template_url_service| seems clearer\n\nI thought so too.  I often see code with the name model in it, such as the local variable in this class.  Renamed nonetheless, as this is a static class and there\u0027s not much need to be consistent with the members of the class.",
+      "parentUuid": "9832c7fa_6d97e248",
+      "revId": "e28c5ae315c47a0b7b39e0c987ffb4cc738abb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
