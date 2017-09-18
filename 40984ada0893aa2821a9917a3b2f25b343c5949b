@@ -16,6 +16,24 @@
       "revId": "40984ada0893aa2821a9917a3b2f25b343c5949b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "435d22b1_cd5fef41",
+        "filename": "net/extras/sqlite/sqlite_channel_id_store.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1121934
+      },
+      "writtenOn": "2017-09-18T17:36:51Z",
+      "side": 1,
+      "message": "I think it\u0027s reasonable to remove this now - the migration was added in April. I have a CL to remove it.",
+      "parentUuid": "be1b6721_85a7d756",
+      "revId": "40984ada0893aa2821a9917a3b2f25b343c5949b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
