@@ -158,6 +158,7 @@ include_rules = [
   "-ui/events/ozone",
   "-ui/ozone",
   "+ui/ozone/public/ozone_switches.h",
+
   # ui/events/devices is tied with ozone, which is controlled by mus, and
   # shouldn't be used by Chrome directly.
   "-ui/events/devices",
