@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2431ae3e_faf2c3d9",
+        "filename": "components/viz/common/gl_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-18T22:17:08Z",
+      "side": 1,
+      "message": "This shouldn\u0027t have been in the public interface. Moved it to internal impl in gl_helper_scaling.cc.\n\nAs for the larger question: Yes, I eventually do want to be able to set the gfx::Transforms when doing RGB--\u003eYUV conversion. It wasn\u0027t my intention to do that in this CL; although, I did get sort of started by moving the \"RGBtoYUV\" constants out of the shader programs.",
+      "parentUuid": "4722854d_ba73f2b4",
+      "revId": "2874887067e808ea0b3e2f0deaccae117f475329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "001b28e8_45b0e150",
         "filename": "components/viz/common/gl_helper.h",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-09-18T18:17:01Z",
       "side": 1,
       "message": "This seems like a very odd method.\nPlease motivate it\u0027s existence.",
+      "range": {
+        "startLine": 421,
+        "startChar": 5,
+        "endLine": 421,
+        "endChar": 12
+      },
+      "revId": "2874887067e808ea0b3e2f0deaccae117f475329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "957b73ad_f968b7fc",
+        "filename": "components/viz/common/gl_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-18T22:17:08Z",
+      "side": 1,
+      "message": "It\u0027s purpose is so client code can check whether it needs to re-create the scaler pipeline and call SetScaler(). Since it feels odd to you, I\u0027ll just put this back to a scaler() accessor and have the client code call that directly.",
+      "parentUuid": "001b28e8_45b0e150",
       "range": {
         "startLine": 421,
         "startChar": 5,
