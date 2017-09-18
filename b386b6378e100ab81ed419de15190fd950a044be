@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f68f845_d7092eb1",
+        "filename": "content/browser/background_fetch/background_fetch_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-18T14:09:03Z",
+      "side": 1,
+      "message": "I dislike publicly exposing this. From an API point of view the fact that there is a data manager really is an implementation detail. How would a user know whether to use:\n\ncontext-\u003edata_manager().UpdateUI()\ncontext-\u003eGetActiveFetch()-\u003eUpdateUI()\n\nCould we maybe just add UpdateUI here that just calls the data manager\u0027s method?",
+      "revId": "b386b6378e100ab81ed419de15190fd950a044be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b9fc861_f45011b7",
+        "filename": "content/browser/background_fetch/background_fetch_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-09-18T14:09:03Z",
+      "side": 1,
+      "message": "nit: delete, there are no asserts",
+      "revId": "b386b6378e100ab81ed419de15190fd950a044be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
