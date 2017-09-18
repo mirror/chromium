@@ -94,6 +94,7 @@
 #include "ui/base/ime/chromeos/input_method_util.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/compositor/compositor_observer.h"
 #include "ui/compositor/layer.h"
 #include "ui/compositor/layer_animation_observer.h"
 #include "ui/compositor/scoped_layer_animation_settings.h"
@@ -309,6 +310,46 @@ void ScheduleCompletionCallbacks(std::vector<base::OnceClosure>&& callbacks) {
                                                   std::move(callback));
   }
 }
+
+class CloseAfterCommit : public ui::CompositorObserver,
+                         public views::WidgetObserver {
+ public:
+  explicit CloseAfterCommit(views::Widget* widget)
+      : widget_(widget), compositor_(widget->GetCompositor()) {
+    DCHECK(compositor_);
+    compositor_->AddObserver(this);
+    widget_->AddObserver(this);
+  }
+  ~CloseAfterCommit() override { OnCompositingDidCommit(compositor_); }
+
+  // Overridden from ui::CompositorObserver
+  void OnCompositingDidCommit(ui::Compositor* compositor) override {
+    if (!widget_)
+      return;
+    compositor->RemoveObserver(this);
+    widget_->RemoveObserver(this);
+    widget_->Close();
+    widget_ = nullptr;
+  }
+
+  void OnCompositingStarted(ui::Compositor* compositor,
+                            base::TimeTicks start_time) override {}
+  void OnCompositingEnded(ui::Compositor* compositor) override {}
+  void OnCompositingLockStateChanged(ui::Compositor* compositor) override {}
+  void OnCompositingShuttingDown(ui::Compositor* compositor) override {}
+
+  // WidgetObserver interface
+  void OnWidgetClosing(views::Widget* widget) override {
+    widget_ = nullptr;
+    compositor_->RemoveObserver(this);
+  }
+
+ private:
+  views::Widget* widget_;
+  ui::Compositor* compositor_;
+
+  DISALLOW_COPY_AND_ASSIGN(CloseAfterCommit);
+};
 
 }  // namespace
 
@@ -1235,7 +1276,9 @@ void LoginDisplayHostImpl::ResetLoginWindowAndView() {
   }
 
   if (login_window_) {
-    login_window_->Close();
+    login_window_->Hide();
+    compositor_observer_.reset(new CloseAfterCommit(login_window_));
+    login_window_->RemoveRemovalsObserver(this);
     login_window_ = nullptr;
     login_window_delegate_ = nullptr;
   }
