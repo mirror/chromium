@@ -34,6 +34,24 @@
       "revId": "aa34cc2e87e438de237f055b11e5e754c326a45c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0436c28_b7795a5d",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-18T19:31:59Z",
+      "side": 1,
+      "message": "I\u0027m not sure we want to second-guess the higher levels (maybe they don\u0027t do it today, but maybe they will in the future). What\u0027s wrong with only skipping quads if we want fully transparent?",
+      "parentUuid": "dd55ce37_83568f5f",
+      "revId": "aa34cc2e87e438de237f055b11e5e754c326a45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
