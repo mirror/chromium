@@ -3535,36 +3535,6 @@ crbug.com/626703 [ Win Debug ] external/wpt/encoding/legacy-mb-tchinese/big5/big
 
 crbug.com/766129 svg/wicd/test-rightsizing-b.xhtml [ Failure Pass ]
 
-# Tests need rebaselining due to slight pixel changes after Skia GPU image rendering change.
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-clipping.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-color-over-color.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-color-over-gradient.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-color-over-image.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-color-over-pattern.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-fill-style.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-global-alpha.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-gradient-over-color.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-gradient-over-gradient.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-gradient-over-image.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-gradient-over-pattern.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-image-over-color.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-image-over-gradient.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-image-over-image.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-image-over-pattern.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-pattern-over-color.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-pattern-over-gradient.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-pattern-over-image.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-pattern-over-pattern.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-shadow.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-text.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-blending-transforms.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-composite-video-shadow.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-composite-video.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-incremental-repaint.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-scale-drawImage-shadow.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/canvas-strokeRect-alpha-shadow.html [ NeedsManualRebaseline Timeout ]
-crbug.com/757195 virtual/gpu/fast/canvas/image-object-in-canvas.html [ NeedsManualRebaseline Timeout ]
-
 # These tests have a low level amount of flakyness on Mac and Windows and are
 # failing everywhere. Disabling for now.
 crbug.com/655458 crbug.com/721814 external/wpt/WebCryptoAPI/idlharness.html [ Skip ]
