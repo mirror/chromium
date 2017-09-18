@@ -331,4 +331,66 @@ TEST_F(PasswordControllerJsTest, FormActionIsNotSet) {
               ExecuteJavaScriptWithFormat(@"__gCrWeb.findPasswordForms()"));
 };
 
+// Check that a touchend event from a button which contains in a password form
+// works as a submission indicator for this password form.
+TEST_F(PasswordControllerJsTest, TestTouchendAsSubmissionIndicator) {
+  LoadHtmlAndInject(
+      @"<html><body>"
+       "<form name='login_form' id='login_form'>"
+       "  Name: <input type='text' name='username'>"
+       "  Password: <input type='password' name='password'>"
+       "  <button id='submit_button' value='Submit'>"
+       "</form>"
+       "</body></html>");
+
+  const std::string base_url = BaseUrl();
+  NSString* result = [NSString
+      stringWithFormat:
+          @"[{\"action\":\"%s\","
+           "\"method\":null,"
+           "\"name\":\"login_form\","
+           "\"origin\":\"%s\","
+           "\"fields\":[{\"element\":\"username\",\"type\":\"text\"},"
+           "{\"element\":\"password\",\"type\":\"password\"}],"
+           "\"usernameElement\":\"username\","
+           "\"usernameValue\":\"\","
+           "\"passwords\":[{\"element\":\"password\",\"value\":\"\"}]}]",
+          base_url.c_str(), base_url.c_str()];
+  // Call __gCrWeb.findPasswordForms for in order to set an event handler on the
+  // button touchend.
+  EXPECT_NSEQ(result,
+              ExecuteJavaScriptWithFormat(@"__gCrWeb.findPasswordForms()"));
+
+  // Replace __gCrWeb.message.invokeOnHost with mock method for checking of call
+  // arguments.
+  ExecuteJavaScriptWithFormat(
+      @"var invokeOnHostArgument = null;"
+       "var invokeOnHostCalls = 0;"
+       "__gCrWeb.message.invokeOnHost = function(command) {"
+       "  invokeOnHostArgument = command;"
+       "  invokeOnHostCalls++;"
+       "}");
+
+  // Simulate touchend event on the button.
+  ExecuteJavaScriptWithFormat(
+      @"document.getElementsByName('username')[0].value = 'user1';"
+       "document.getElementsByName('password')[0].value = 'password1';"
+       "var e = new UIEvent('touchend');"
+       "document.getElementsByTagName('button')[0].dispatchEvent(e);");
+
+  // Check that there was only 1 call for invokeOnHost.
+  EXPECT_NSEQ(@1, ExecuteJavaScriptWithFormat(@"invokeOnHostCalls"));
+
+  NSString* expected_command =
+      [NSString stringWithFormat:
+                    @"{\"command\":\"document.submit\","
+                     "\"formName\":\"login_form\","
+                     "\"href\":\"%s\"}",
+                    base_url.c_str()];
+  // Check that invokeOnHost was called with the correct argument.
+  EXPECT_NSEQ(
+      expected_command,
+      ExecuteJavaScriptWithFormat(@"__gCrWeb.stringify(invokeOnHostArgument)"));
+};
+
 }  // namespace
