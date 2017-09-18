@@ -1169,6 +1169,26 @@
             ]
         }
     ],
+    "GaiaPasswordReuse": [
+        {
+            "platforms": [
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "SofterWarning",
+                    "params": {
+                        "softer_warning": "true"
+                    },
+                    "enable_features": [
+                        "PasswordProtectionGoogleBrandedPhishingWarning"
+                    ]
+                }
+            ]
+        }
+    ],
     "GoogleBrandedContextMenu": [
         {
             "platforms": [
