@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63d31b2b_e1fe7b2c",
+        "filename": "components/download/internal/stats.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-18T15:50:23Z",
+      "side": 1,
+      "message": "Let\u0027s pass in the values (e.g. the enum value) and push the calculation to the controller IMO.  it would shrink 4 bools to one enum.  We can also call this only if the download isn\u0027t in progress?  Feels odd to call this when the download isn\u0027t paused.",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 51
+      },
+      "revId": "794961a48f8200750b85fff9db1e02cc890aa5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
