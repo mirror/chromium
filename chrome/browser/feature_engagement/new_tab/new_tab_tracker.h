@@ -37,6 +37,12 @@ class NewTabTracker : public FeatureTracker {
   void OnOmniboxFocused();
   // Clears the flag for whether there is any in-product help being displayed.
   void OnPromoClosed();
+  // Show NewTab IPH promo bubble in last active browser.
+  void ShowPromo();
+
+  // Returns whether there was a bubble that was closed. A bubble closes only
+  // when it exists.
+  bool CloseBubble();
 
  protected:
   // Alternate constructor to support unit testing.
@@ -52,9 +58,6 @@ class NewTabTracker : public FeatureTracker {
   base::TimeTicks last_promo_seen_;
   // FeatureTracker:
   void OnSessionTimeMet() override;
-
-  // Sets the NewTabInProductHelp pref to true and calls the New Tab Promo.
-  void ShowPromo();
 
   DISALLOW_COPY_AND_ASSIGN(NewTabTracker);
 };
