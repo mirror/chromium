@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cf4b91f_e3e53aa7",
+        "filename": "components/payments/content/payment_response_helper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-18T15:52:28Z",
+      "side": 1,
+      "message": "Is it possible to have all these arguments passed when the instrument is created? This way, this class doesn\u0027t have to know whether it\u0027s a ServiceWorkerPaymentInstrument or an AutofillInstrument...",
+      "range": {
+        "startLine": 75,
+        "startChar": 27,
+        "endLine": 76,
+        "endChar": 66
+      },
+      "revId": "fbb9066fd401dae0a6453d49f6658cfa2c799b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a352d717_bf8437dd",
+        "filename": "components/payments/content/service_worker_payment_instrument.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-18T15:52:28Z",
+      "side": 1,
+      "message": "See other comment. Is it possible to have this be passed in the constructor?\n\ndetails + method_data would probably need to be transformed to a pointer to PaymentRequestState (in case details change between the time the instrument is created, and the time it is used).",
+      "range": {
+        "startLine": 42,
+        "startChar": 18,
+        "endLine": 46,
+        "endChar": 35
+      },
+      "revId": "fbb9066fd401dae0a6453d49f6658cfa2c799b9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
