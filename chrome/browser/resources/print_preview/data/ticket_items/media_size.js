@@ -48,7 +48,7 @@ cr.define('print_preview.ticket_items', function() {
         return false;
       }
       return this.capability.option.some(function(option) {
-        return option.width_microns == value.width_microns &&
+        return option && option.width_microns == value.width_microns &&
             option.height_microns == value.height_microns &&
             option.is_continuous_feed == value.is_continuous_feed &&
             option.vendor_id == value.vendor_id;
@@ -63,7 +63,8 @@ cr.define('print_preview.ticket_items', function() {
           this.getSelectedDestInternal() &&
           this.getSelectedDestInternal().id ==
               print_preview.Destination.GooglePromotedId.SAVE_AS_PDF;
-      return !knownSizeToSaveAsPdf && !!this.capability;
+      return !knownSizeToSaveAsPdf && !!this.capability &&
+          !!this.capability.option;
     },
 
     /** @override */
@@ -86,8 +87,10 @@ cr.define('print_preview.ticket_items', function() {
 
     /** @override */
     getDefaultValueInternal: function() {
+      if (!this.isCapabilityAvailable())
+        return null;
       var defaultOptions = this.capability.option.filter(function(option) {
-        return option.is_default;
+        return option && option.is_default;
       });
       return defaultOptions.length > 0 ? defaultOptions[0] : null;
     },

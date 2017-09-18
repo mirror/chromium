@@ -27,7 +27,7 @@ cr.define('print_preview.ticket_items', function() {
       if (!this.isCapabilityAvailable())
         return false;
       return this.capability.option.some(function(option) {
-        return option.horizontal_dpi == value.horizontal_dpi &&
+        return option && option.horizontal_dpi == value.horizontal_dpi &&
             option.vertical_dpi == value.vertical_dpi &&
             option.vendor_id == value.vendor_id;
       });
@@ -58,8 +58,10 @@ cr.define('print_preview.ticket_items', function() {
 
     /** @override */
     getDefaultValueInternal: function() {
+      if (!this.isCapabilityAvailable())
+        return null;
       var defaultOptions = this.capability.option.filter(function(option) {
-        return option.is_default;
+        return option && option.is_default;
       });
       return defaultOptions.length > 0 ? defaultOptions[0] : null;
     },
