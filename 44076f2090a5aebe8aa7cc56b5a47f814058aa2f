@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b4d8500_50de2baa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-09-18T23:13:21Z",
+      "side": 1,
+      "message": "Bug: 765754",
+      "revId": "44076f2090a5aebe8aa7cc56b5a47f814058aa2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
