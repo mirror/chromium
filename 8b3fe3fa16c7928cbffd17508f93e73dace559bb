@@ -122,6 +122,24 @@
       "revId": "8b3fe3fa16c7928cbffd17508f93e73dace559bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5926dfa5_57d7162c",
+        "filename": "tools/grit/grit_rule.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-09-18T13:24:47Z",
+      "side": 1,
+      "message": "Yep! It filters out the files that match the filter.",
+      "parentUuid": "4bbaedbd_0b7eac36",
+      "revId": "8b3fe3fa16c7928cbffd17508f93e73dace559bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
