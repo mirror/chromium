@@ -141,6 +141,57 @@
       "revId": "91e782a0cc5540b3e780e8e2fbe5581f53307eb0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0471ebdf_6a4aaa2a",
+        "filename": "chrome/browser/vr/ui_scene_manager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-18T14:49:39Z",
+      "side": 1,
+      "message": "IIUC, kSplashScreenText should be the parent?",
+      "revId": "91e782a0cc5540b3e780e8e2fbe5581f53307eb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25a80762_54454a22",
+        "filename": "chrome/browser/vr/ui_scene_manager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-18T14:49:39Z",
+      "side": 1,
+      "message": "nit: s/kWebVrPresentationToast/kExclusiveScreenToastViewportAware",
+      "revId": "91e782a0cc5540b3e780e8e2fbe5581f53307eb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f8de891_9a9cbe59",
+        "filename": "chrome/browser/vr/ui_scene_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-18T14:49:39Z",
+      "side": 1,
+      "message": "nit: MakeViewportAwareElements was only used by two unit tests. Now that you have removed one of them. It might make sense to nuke it and move the implementation back to this unit test.",
+      "revId": "91e782a0cc5540b3e780e8e2fbe5581f53307eb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
