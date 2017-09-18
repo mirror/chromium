@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18ea92eb_baf58e56",
+        "filename": "chromeos/network/network_state.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-09-18T15:41:38Z",
+      "side": 1,
+      "message": "nit: the name seems different than other IsXXX() methods, perhaps IsNonProfileType()?",
+      "range": {
+        "startLine": 147,
+        "startChar": 7,
+        "endLine": 147,
+        "endChar": 21
+      },
+      "revId": "822d5193667d785f233f42a9d62503633242ec4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
