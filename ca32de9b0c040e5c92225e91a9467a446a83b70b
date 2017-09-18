@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6071b03d_298b5cde",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-18T23:34:11Z",
+      "side": 1,
+      "message": "Add a trailing break statement.",
+      "range": {
+        "startLine": 140,
+        "startChar": 2,
+        "endLine": 140,
+        "endChar": 7
+      },
+      "revId": "ca32de9b0c040e5c92225e91a9467a446a83b70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4af4228e_5d1f6011",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-18T23:34:11Z",
+      "side": 1,
+      "message": "chromeos",
+      "range": {
+        "startLine": 74,
+        "startChar": 19,
+        "endLine": 74,
+        "endChar": 25
+      },
+      "revId": "ca32de9b0c040e5c92225e91a9467a446a83b70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92c87ff7_4b0b1f38",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-18T23:34:11Z",
+      "side": 1,
+      "message": "Javascript enum style still uses MACRO_STYLE\n\nhttps://google.github.io/styleguide/jsguide.html#features-objects-enums",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 13
+      },
+      "revId": "ca32de9b0c040e5c92225e91a9467a446a83b70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
