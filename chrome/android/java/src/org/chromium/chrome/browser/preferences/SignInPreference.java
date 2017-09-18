@@ -19,12 +19,12 @@ import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.signin.AccountManagementFragment;
 import org.chromium.chrome.browser.signin.AccountSigninActivity;
 import org.chromium.chrome.browser.signin.DisplayableProfileData;
+import org.chromium.chrome.browser.signin.PersonalizedSigninPromoView;
 import org.chromium.chrome.browser.signin.ProfileDataCache;
 import org.chromium.chrome.browser.signin.SigninAccessPoint;
 import org.chromium.chrome.browser.signin.SigninManager;
 import org.chromium.chrome.browser.signin.SigninManager.SignInAllowedObserver;
 import org.chromium.chrome.browser.signin.SigninPromoController;
-import org.chromium.chrome.browser.signin.SigninPromoView;
 import org.chromium.chrome.browser.sync.ProfileSyncService;
 import org.chromium.chrome.browser.sync.ProfileSyncService.SyncStateChangedListener;
 import org.chromium.chrome.browser.util.ViewUtils;
@@ -35,6 +35,8 @@ import org.chromium.components.sync.AndroidSyncSettings;
 
 import java.util.Collections;
 
+import javax.annotation.Nullable;
+
 /**
  * A preference that displays "Sign in to Chrome" when the user is not sign in, and displays
  * the user's name, email, profile image and sync error icon if necessary when the user is signed
@@ -44,9 +46,9 @@ public class SignInPreference
         extends Preference implements SignInAllowedObserver, ProfileDataCache.Observer,
                                       AndroidSyncSettings.AndroidSyncSettingsObserver,
                                       SyncStateChangedListener, AccountsChangeObserver {
-    private boolean mShowingPromo;
+    private boolean mWasSigninPromoDisplayed;
     private boolean mViewEnabled;
-    private SigninPromoController mSigninPromoController;
+    private @Nullable SigninPromoController mSigninPromoController;
     private final ProfileDataCache mProfileDataCache;
 
     /**
@@ -111,10 +113,12 @@ public class SignInPreference
         } else if (accountName == null) {
             // Don't change the promo type if the promo is already being shown.
             final boolean forceNew = mSigninPromoController != null;
-            if (forceNew || SigninPromoController.shouldShowPromo(SigninAccessPoint.SETTINGS)) {
-                setupNewPromo();
+            if ((SigninPromoController.hasNotReachedImpressionLimit(SigninAccessPoint.SETTINGS)
+                        && SigninPromoController.arePersonalizedPromosEnabled())
+                    || forceNew) {
+                setupPersonalizedPromo();
             } else {
-                setupOldPromo();
+                setupGenericPromo();
             }
         } else {
             setupSignedIn(accountName);
@@ -133,16 +137,16 @@ public class SignInPreference
         setWidgetLayoutResource(0);
         setViewEnabled(false);
         mSigninPromoController = null;
-        mShowingPromo = false;
+        mWasSigninPromoDisplayed = false;
     }
 
-    private void setupNewPromo() {
+    private void setupPersonalizedPromo() {
         setLayoutResource(R.layout.custom_preference);
         setTitle("");
         setSummary("");
         setFragment(null);
         setIcon(null);
-        setWidgetLayoutResource(R.layout.signin_promo_view_settings);
+        setWidgetLayoutResource(R.layout.personalized_signin_promo_view_settings);
         setViewEnabled(true);
 
         if (mSigninPromoController == null) {
@@ -159,15 +163,15 @@ public class SignInPreference
         }
         mSigninPromoController.setProfileData(profileData);
 
-        if (!mShowingPromo) {
+        if (!mWasSigninPromoDisplayed) {
             mSigninPromoController.recordSigninPromoImpression();
         }
 
-        mShowingPromo = true;
+        mWasSigninPromoDisplayed = true;
         notifyChanged();
     }
 
-    private void setupOldPromo() {
+    private void setupGenericPromo() {
         setLayoutResource(R.layout.account_management_account_row);
         setTitle(R.string.sign_in_to_chrome);
         setSummary(R.string.sign_in_to_chrome_summary);
@@ -177,11 +181,11 @@ public class SignInPreference
         setViewEnabled(true);
         mSigninPromoController = null;
 
-        if (!mShowingPromo) {
+        if (!mWasSigninPromoDisplayed) {
             RecordUserAction.record("Signin_Impression_FromSettings");
         }
 
-        mShowingPromo = true;
+        mWasSigninPromoDisplayed = true;
     }
 
     private void setupSignedIn(String accountName) {
@@ -198,7 +202,7 @@ public class SignInPreference
         setViewEnabled(true);
 
         mSigninPromoController = null;
-        mShowingPromo = false;
+        mWasSigninPromoDisplayed = false;
     }
 
     // This just changes visual representation. Actual enabled flag in preference stays
@@ -216,8 +220,9 @@ public class SignInPreference
         super.onBindView(view);
         ViewUtils.setEnabledRecursive(view, mViewEnabled);
         if (mSigninPromoController != null) {
-            SigninPromoView signinPromoView = view.findViewById(R.id.signin_promo_view_container);
-            mSigninPromoController.setupSigninPromoView(getContext(), signinPromoView, null);
+            PersonalizedSigninPromoView signinPromoView =
+                    view.findViewById(R.id.signin_promo_view_container);
+            mSigninPromoController.setupPromoView(getContext(), signinPromoView, null);
         }
     }
 
