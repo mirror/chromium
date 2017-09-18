@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2439dcb3_652f1ccd",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-09-18T23:10:01Z",
+      "side": 1,
+      "message": "This was done differently because task runner was accessed through context. Since we\u0027re saving the task runner, changed back to how it\u0027s done in cache storage observer.",
+      "parentUuid": "87cd8b63_54decf98",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8c03d6a_a685e787",
         "filename": "content/browser/devtools/protocol/storage_handler.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9683f2b9_ea64e12f",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-09-18T23:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8c03d6a_a685e787",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "064a3a51_1a26c084",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-09-18T23:10:01Z",
+      "side": 1,
+      "message": "Ah, got this clarified, and the storage context will be the same if the browser context is the same. Removed!",
+      "parentUuid": "318357ed_c114c2d5",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4bd0645_ec7cd2d6",
         "filename": "content/browser/devtools/protocol/storage_handler.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07fb70bc_2a707030",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-09-18T23:10:01Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "b4bd0645_ec7cd2d6",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8518650e_90fcebb3",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-09-18T23:10:01Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "096a4f4a_2ab256ba",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbc5d8fd_2caff15c",
         "filename": "content/browser/devtools/protocol/storage_handler.cc",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f00de1c_ed11786e",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-09-18T23:10:01Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "fbc5d8fd_2caff15c",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "cd30a1d4_2afa7e13",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-09-18T23:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94b022c4_1839733a",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b415c68c_5a76737a",
         "filename": "content/browser/devtools/protocol/storage_handler.cc",
         "patchSetId": 5
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "e0e77131_c38653f7",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-09-18T23:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b415c68c_5a76737a",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3950c320_9c958e8e",
         "filename": "content/browser/indexed_db/indexed_db_database.cc",
         "patchSetId": 5
@@ -152,6 +296,24 @@
       "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16ad64ca_f04804ea",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-09-18T23:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3950c320_9c958e8e",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +349,24 @@
       "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1a90222_68f83cf3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/IndexedDBModel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1222287
+      },
+      "writtenOn": "2017-09-18T23:10:01Z",
+      "side": 1,
+      "message": "Splitting off frontend for now",
+      "parentUuid": "d1169a1b_4f0c48ea",
+      "revId": "d0e9a3e0a193d9e66996660b07ffe2efcc5e3dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
