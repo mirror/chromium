@@ -375,6 +375,16 @@ cc::Animation* AnimationPlayer::GetRunningAnimationForProperty(
   return nullptr;
 }
 
+cc::Animation* AnimationPlayer::GetAnimationForProperty(
+    int target_property) const {
+  for (auto& animation : animations_) {
+    if (animation->target_property_id() == target_property) {
+      return animation.get();
+    }
+  }
+  return nullptr;
+}
+
 bool AnimationPlayer::IsAnimatingProperty(int property) const {
   for (auto& animation : animations_) {
     if (animation->target_property_id() == property)
@@ -384,27 +394,39 @@ bool AnimationPlayer::IsAnimatingProperty(int property) const {
 }
 
 cc::TransformOperations AnimationPlayer::GetTargetTransformOperationsValue(
-    int target_property) const {
-  cc::Animation* running_animation = nullptr;
-  for (auto& animation : animations_) {
-    if (animation->target_property_id() == target_property) {
-      running_animation = animation.get();
-    }
-  }
-  DCHECK(running_animation);
+    int target_property,
+    cc::TransformOperations default_value) const {
+  cc::Animation* running_animation = GetAnimationForProperty(target_property);
+  if (!running_animation)
+    return default_value;
   const auto* curve = running_animation->curve()->ToTransformAnimationCurve();
   return curve->GetValue(GetEndTime(running_animation));
 }
 
-gfx::SizeF AnimationPlayer::GetTargetSizeValue(int target_property) const {
-  cc::Animation* running_animation = nullptr;
-  for (auto& animation : animations_) {
-    if (animation->target_property_id() == target_property) {
-      running_animation = animation.get();
-    }
-  }
-  DCHECK(running_animation);
+gfx::SizeF AnimationPlayer::GetTargetSizeValue(int target_property,
+                                               gfx::SizeF default_value) const {
+  cc::Animation* running_animation = GetAnimationForProperty(target_property);
+  if (!running_animation)
+    return default_value;
   const auto* curve = running_animation->curve()->ToSizeAnimationCurve();
+  return curve->GetValue(GetEndTime(running_animation));
+}
+
+float AnimationPlayer::GetTargetFloatValue(int target_property,
+                                           float default_value) const {
+  cc::Animation* running_animation = GetAnimationForProperty(target_property);
+  if (!running_animation)
+    return default_value;
+  const auto* curve = running_animation->curve()->ToFloatAnimationCurve();
+  return curve->GetValue(GetEndTime(running_animation));
+}
+
+SkColor AnimationPlayer::GetTargetColorValue(int target_property,
+                                             SkColor default_value) const {
+  cc::Animation* running_animation = GetAnimationForProperty(target_property);
+  if (!running_animation)
+    return default_value;
+  const auto* curve = running_animation->curve()->ToColorAnimationCurve();
   return curve->GetValue(GetEndTime(running_animation));
 }
 
