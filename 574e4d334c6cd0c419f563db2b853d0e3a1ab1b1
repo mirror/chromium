@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e5e9e63_acb148ab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-18T23:00:15Z",
+      "side": 1,
+      "message": "Two nits:\n(1) Use the present tense (i.e., \"Add\" instead of \"Adding\").\n(2) Wrap lines to 72-char limit.",
+      "range": {
+        "startLine": 7,
+        "startChar": 31,
+        "endLine": 7,
+        "endChar": 195
+      },
+      "revId": "574e4d334c6cd0c419f563db2b853d0e3a1ab1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d24bc6_473c8208",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-18T23:00:15Z",
+      "side": 1,
+      "message": "[CrOS MultiDevice]",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 30
+      },
+      "revId": "574e4d334c6cd0c419f563db2b853d0e3a1ab1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30abd2aa_e7051254",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-18T23:00:15Z",
+      "side": 1,
+      "message": "Instant Tethering",
+      "range": {
+        "startLine": 16,
+        "startChar": 31,
+        "endLine": 16,
+        "endChar": 43
+      },
+      "revId": "574e4d334c6cd0c419f563db2b853d0e3a1ab1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a273cf_29e238f0",
+        "filename": "components/cryptauth/fake_device_capability_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-18T23:00:15Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 1
+      },
+      "revId": "574e4d334c6cd0c419f563db2b853d0e3a1ab1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e929e2ca_c2903d6e",
+        "filename": "components/cryptauth/fake_device_capability_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-18T23:00:15Z",
+      "side": 1,
+      "message": "// cryptauth::DeviceCapabilityManager:",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 1
+      },
+      "revId": "574e4d334c6cd0c419f563db2b853d0e3a1ab1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30ec8b50_b7166db6",
+        "filename": "components/cryptauth/fake_device_capability_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-18T23:00:15Z",
+      "side": 1,
+      "message": "Non-overrides before overrides.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 1
+      },
+      "revId": "574e4d334c6cd0c419f563db2b853d0e3a1ab1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d66113ea_336f07a2",
+        "filename": "components/cryptauth/fake_device_capability_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-18T23:00:15Z",
+      "side": 1,
+      "message": "Instead of having two separate functions, just have one function where you set the error code. Then, if you want success, you just leave the error code empty.\n\nThen, in your implementation, you can do something like:\n\nif (error_code.empty())\n  success_callback.Run();\nelse\n  error_callback.Run(error_code);",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 3
+      },
+      "revId": "574e4d334c6cd0c419f563db2b853d0e3a1ab1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
