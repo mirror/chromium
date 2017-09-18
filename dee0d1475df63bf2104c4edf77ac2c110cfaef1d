@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfed8d83_812e49b1",
+        "filename": "components/payments/content/service_worker_payment_instrument.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-09-18T18:17:29Z",
+      "side": 1,
+      "message": "This can be a pointer to PaymentRequestState",
+      "range": {
+        "startLine": 20,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 31
+      },
+      "revId": "dee0d1475df63bf2104c4edf77ac2c110cfaef1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
