@@ -46,6 +46,30 @@
       "revId": "8cbf599b192170975ed9ae7ba9baa8cc5f2c6c8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ea1a174a_9931b17c",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-18T08:17:10Z",
+      "side": 1,
+      "message": "I tried to run the tests on iPad (top of tree), just by enabling the feature in setUp and commenting the \"EARL_GREY_TEST_DISABLED\", the first tests are running fine.\n\nIs it a problem only happening when you run the full test suite? I am running the tests individually.",
+      "parentUuid": "dcaf5cd1_51b4ebc7",
+      "range": {
+        "startLine": 115,
+        "startChar": 49,
+        "endLine": 115,
+        "endChar": 73
+      },
+      "revId": "8cbf599b192170975ed9ae7ba9baa8cc5f2c6c8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
