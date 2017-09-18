@@ -2652,4 +2652,63 @@ TEST_F(AXPlatformNodeWinTest,
   EXPECT_EQ(2, end_offset);
 }
 
+TEST_F(AXPlatformNodeWinTest, TestIAccessibleTextTextFieldGetCaretOffset) {
+  Init(BuildTextField());
+
+  ScopedComPtr<IAccessible2> ia2_text_field =
+      ToIAccessible2(GetRootIAccessible());
+  ScopedComPtr<IAccessibleText> text_field;
+  ia2_text_field.CopyTo(text_field.GetAddressOf());
+  ASSERT_NE(nullptr, text_field.Get());
+
+  LONG offset;
+  EXPECT_HRESULT_SUCCEEDED(text_field->get_caretOffset(&offset));
+  EXPECT_EQ(0, offset);
+}
+
+TEST_F(AXPlatformNodeWinTest,
+       TestIAccessibleTextTextFieldGetCaretOffsetSelected) {
+  Init(BuildTextFieldWithSelectionRange(1, 2));
+
+  ScopedComPtr<IAccessible2> ia2_text_field =
+      ToIAccessible2(GetRootIAccessible());
+  ScopedComPtr<IAccessibleText> text_field;
+  ia2_text_field.CopyTo(text_field.GetAddressOf());
+  ASSERT_NE(nullptr, text_field.Get());
+
+  LONG offset;
+  EXPECT_HRESULT_SUCCEEDED(text_field->get_caretOffset(&offset));
+  EXPECT_EQ(2, offset);
+}
+
+TEST_F(AXPlatformNodeWinTest,
+       TestIAccessibleTextContextEditableGetCaretOffset) {
+  Init(BuildContentEditable());
+
+  ScopedComPtr<IAccessible2> ia2_text_field =
+      ToIAccessible2(GetRootIAccessible());
+  ScopedComPtr<IAccessibleText> text_field;
+  ia2_text_field.CopyTo(text_field.GetAddressOf());
+  ASSERT_NE(nullptr, text_field.Get());
+
+  LONG offset;
+  EXPECT_HRESULT_SUCCEEDED(text_field->get_caretOffset(&offset));
+  EXPECT_EQ(0, offset);
+}
+
+TEST_F(AXPlatformNodeWinTest,
+       TestIAccessibleTextContentEditableGetCaretOffsetSelected) {
+  Init(BuildContentEditableWithSelectionRange(1, 2));
+
+  ScopedComPtr<IAccessible2> ia2_text_field =
+      ToIAccessible2(GetRootIAccessible());
+  ScopedComPtr<IAccessibleText> text_field;
+  ia2_text_field.CopyTo(text_field.GetAddressOf());
+  ASSERT_NE(nullptr, text_field.Get());
+
+  LONG offset;
+  EXPECT_HRESULT_SUCCEEDED(text_field->get_caretOffset(&offset));
+  EXPECT_EQ(2, offset);
+}
+
 }  // namespace ui
