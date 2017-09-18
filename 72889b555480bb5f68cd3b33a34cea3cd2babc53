@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce6d2462_355e1f74",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-18T19:31:03Z",
+      "side": 1,
+      "message": "nit: successfully",
+      "range": {
+        "startLine": 1159,
+        "startChar": 21,
+        "endLine": 1159,
+        "endChar": 32
+      },
+      "revId": "72889b555480bb5f68cd3b33a34cea3cd2babc53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15003a9e_d6064793",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-18T19:31:03Z",
+      "side": 1,
+      "message": "nit: s/is/falls back to/",
+      "range": {
+        "startLine": 1160,
+        "startChar": 5,
+        "endLine": 1160,
+        "endChar": 7
+      },
+      "revId": "72889b555480bb5f68cd3b33a34cea3cd2babc53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "400a9f27_fc33d13b",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1178,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-09-18T19:31:03Z",
+      "side": 1,
+      "message": "Agreed.  Let\u0027s file a bug for this.  (Maybe we should have the RFH track whether it\u0027s in view-source mode to make it possible to compare?)  No rush on this part.",
+      "revId": "72889b555480bb5f68cd3b33a34cea3cd2babc53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
