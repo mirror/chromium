@@ -69,6 +69,24 @@
       "revId": "1420b304e6b8d258f6bf2930352370ca819f6562",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d846cc3_a6e1e4e9",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-09-18T12:16:36Z",
+      "side": 1,
+      "message": "You are building a new StyleContentAlignmentData structure every time we call to this method. My idea would be to use, either the result of JustifyContent()/AlignContent() or the one associated to the \u0027normal\u0027 value, which is global and static.",
+      "parentUuid": "85862db4_4da334d6",
+      "revId": "1420b304e6b8d258f6bf2930352370ca819f6562",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
