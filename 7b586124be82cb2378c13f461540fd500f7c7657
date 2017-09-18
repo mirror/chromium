@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0d7d9aa9_d8fdfde4",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-18T22:45:05Z",
+      "side": 1,
+      "message": "What I meant is that widget_ may be destroyed in between, in which case, calling widget_-\u003eClose() will crash.",
+      "parentUuid": "dcd0470d_d2d112e2",
+      "revId": "7b586124be82cb2378c13f461540fd500f7c7657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99479643_e72c66ab",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
         "patchSetId": 1

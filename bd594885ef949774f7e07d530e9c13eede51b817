@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30b4b20c_35c3b4bd",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-18T22:45:05Z",
+      "side": 1,
+      "message": "DCHECK(widget_-\u003eGetCompositor(), compositor);",
+      "revId": "bd594885ef949774f7e07d530e9c13eede51b817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1fca593_b9d61caa",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-18T22:45:05Z",
+      "side": 1,
+      "message": "// WidgetObserver:",
+      "revId": "bd594885ef949774f7e07d530e9c13eede51b817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76336b0f_3850afa2",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-18T22:45:05Z",
+      "side": 1,
+      "message": "Couldn\u0027t you just use widget_-\u003eGetCompositor() ?",
+      "revId": "bd594885ef949774f7e07d530e9c13eede51b817",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
