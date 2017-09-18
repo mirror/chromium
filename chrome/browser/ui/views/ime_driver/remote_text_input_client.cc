@@ -15,12 +15,19 @@ RemoteTextInputClient::RemoteTextInputClient(
     ui::mojom::TextInputClientPtr remote_client,
     ui::TextInputType text_input_type,
     ui::TextInputMode text_input_mode,
+    gfx::Range text_range,
+    gfx::Range composition_range,
+    gfx::Range selection_range,
     base::i18n::TextDirection text_direction,
     int text_input_flags,
     gfx::Rect caret_bounds)
-    : remote_client_(std::move(remote_client)),
+    : has_composition_text_(false),
+      remote_client_(std::move(remote_client)),
       text_input_type_(text_input_type),
       text_input_mode_(text_input_mode),
+      text_range_(text_range),
+      composition_range_(composition_range),
+      selection_range_(selection_range),
       text_direction_(text_direction),
       text_input_flags_(text_input_flags),
       caret_bounds_(caret_bounds) {}
@@ -36,8 +43,14 @@ void RemoteTextInputClient::SetCaretBounds(const gfx::Rect& caret_bounds) {
   caret_bounds_ = caret_bounds;
 }
 
+bool RemoteTextInputClient::ImeEditingAllowed() const {
+  return (text_input_type_ != ui::TEXT_INPUT_TYPE_NONE &&
+          text_input_type_ != ui::TEXT_INPUT_TYPE_PASSWORD);
+}
+
 void RemoteTextInputClient::SetCompositionText(
     const ui::CompositionText& composition) {
+  has_composition_text_ = !composition.text.empty();
   remote_client_->SetCompositionText(composition);
 }
 
@@ -93,46 +106,59 @@ bool RemoteTextInputClient::GetCompositionCharacterBounds(
 }
 
 bool RemoteTextInputClient::HasCompositionText() const {
-  // TODO(moshayedi): crbug.com/631527.
-  NOTIMPLEMENTED();
-  return false;
+  return has_composition_text_;
 }
 
 bool RemoteTextInputClient::GetTextRange(gfx::Range* range) const {
-  // TODO(moshayedi): crbug.com/631527.
-  NOTIMPLEMENTED();
-  return false;
+  if (!ImeEditingAllowed())
+    return false;
+
+  *range = text_range_;
+  return true;
 }
 
 bool RemoteTextInputClient::GetCompositionTextRange(gfx::Range* range) const {
-  // TODO(moshayedi): crbug.com/631527.
-  NOTIMPLEMENTED();
-  return false;
+  if (!ImeEditingAllowed())
+    return false;
+
+  *range = composition_range_;
+  return true;
 }
 
 bool RemoteTextInputClient::GetSelectionRange(gfx::Range* range) const {
-  // TODO(moshayedi): crbug.com/631527.
-  NOTIMPLEMENTED();
-  return false;
+  if (!ImeEditingAllowed())
+    return false;
+
+  *range = selection_range_;
+  return true;
 }
 
 bool RemoteTextInputClient::SetSelectionRange(const gfx::Range& range) {
-  // TODO(moshayedi): crbug.com/631527.
-  NOTIMPLEMENTED();
-  return false;
+  if (!ImeEditingAllowed() || range.is_empty())
+    return false;
+
+  remote_client_->SetSelectionRange(range);
+  return true;
 }
 
 bool RemoteTextInputClient::DeleteRange(const gfx::Range& range) {
-  // TODO(moshayedi): crbug.com/631527.
-  NOTIMPLEMENTED();
-  return false;
+  if (!ImeEditingAllowed() || range.is_empty())
+    return false;
+
+  remote_client_->DeleteRange(range);
+  return true;
 }
 
 bool RemoteTextInputClient::GetTextFromRange(const gfx::Range& range,
                                              base::string16* text) const {
-  // TODO(moshayedi): crbug.com/631527.
-  NOTIMPLEMENTED();
-  return false;
+  if (!ImeEditingAllowed() || !range.IsValid())
+    return false;
+
+  if (text_range_.is_empty() && !text_range_.Contains(range))
+    return false;
+
+  // return remote_client_->GetTextFromRange(range, text);
+  return true;
 }
 
 void RemoteTextInputClient::OnInputMethodChanged() {

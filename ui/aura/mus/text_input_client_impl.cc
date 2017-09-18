@@ -43,4 +43,12 @@ void TextInputClientImpl::InsertChar(std::unique_ptr<ui::Event> event) {
   text_input_client_->InsertChar(*event->AsKeyEvent());
 }
 
+void TextInputClientImpl::SetSelectionRange(const gfx::Range& range) {
+  text_input_client_->SetSelectionRange(range);
+}
+
+void TextInputClientImpl::DeleteRange(const gfx::Range& range) {
+  text_input_client_->DeleteRange(range);
+}
+
 }  // namespace aura
