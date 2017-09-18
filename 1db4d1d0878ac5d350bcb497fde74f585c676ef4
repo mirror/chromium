@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cd62762_93475a32",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_welcome.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-18T16:26:53Z",
+      "side": 1,
+      "message": "This comment is confusing if one does not know the \u0027Add another mobile network\u0027 was part of this UI. I\u0027d drop it",
+      "revId": "1db4d1d0878ac5d350bcb497fde74f585c676ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7472d38_6e774ff4",
+        "filename": "chrome/browser/ui/webui/chromeos/login/network_dropdown_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-18T16:26:53Z",
+      "side": 1,
+      "message": "HandleShowNetwokDetails (given that this handles \u0027showNetworkDetails\u0027 message)",
+      "range": {
+        "startLine": 57,
+        "startChar": 7,
+        "endLine": 57,
+        "endChar": 33
+      },
+      "revId": "1db4d1d0878ac5d350bcb497fde74f585c676ef4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
