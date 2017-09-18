@@ -113,6 +113,8 @@ void MediaStreamSource::GetSettings(WebMediaStreamTrack::Settings& settings) {
 
   if (echo_cancellation_.has_value())
     settings.echo_cancellation = *echo_cancellation_;
+  if (latency_.has_value())
+    settings.latency = *latency_;
 }
 
 void MediaStreamSource::SetAudioFormat(size_t number_of_channels,

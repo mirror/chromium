@@ -70,6 +70,28 @@ class AudioDeviceInfo {
 
 using AudioDeviceSet = DiscreteSet<AudioDeviceInfo>;
 
+double GetDeviceLatencyFromExact(double latency_seconds,
+                                 const media::AudioParameters& device_params) {
+  int device_buffer_size = media::AudioLatency::GetExactBufferSize(
+      base::TimeDelta::FromSecondsD(latency_seconds),
+      device_params.sample_rate(), device_params.frames_per_buffer());
+  return device_buffer_size / static_cast<double>(device_params.sample_rate());
+}
+
+NumericRangeSet<double> GetDeviceConstrainedLatency(
+    const media::AudioParameters& audio_parameters,
+    const blink::DoubleConstraint& latency_constraint) {
+  // XXX(andrew.macpherson): Add new AudioLatency methods for min/max?
+  double min_device_latency = GetDeviceLatencyFromExact(0.0, audio_parameters);
+  double max_device_latency =
+      GetDeviceLatencyFromExact(100.0, audio_parameters);
+  NumericRangeSet<double> constrained_latency =
+      NumericRangeSet<double>(min_device_latency, max_device_latency)
+          .Intersection(NumericRangeSet<double>::FromConstraint(
+              latency_constraint, min_device_latency, max_device_latency));
+  return constrained_latency;
+}
+
 AudioDeviceSet AudioDeviceSetForDeviceCapture(
     const blink::WebMediaTrackConstraintSet& constraint_set,
     const AudioDeviceCaptureCapabilities& capabilities,
@@ -83,6 +105,27 @@ AudioDeviceSet AudioDeviceSetForDeviceCapture(
         *failed_constraint_name = constraint_set.device_id.GetName();
       continue;
     }
+
+    NumericRangeSet<double> constrained_latency = GetDeviceConstrainedLatency(
+        device_capabilities->parameters, constraint_set.latency);
+    if (constrained_latency.IsEmpty()) {
+      *failed_constraint_name = constraint_set.latency.GetName();
+      continue;
+    }
+
+    if (constraint_set.latency.HasExact()) {
+      double exact_device_latency = GetDeviceLatencyFromExact(
+          constraint_set.latency.Exact(), device_capabilities->parameters);
+      double latency_diff =
+          std::abs(exact_device_latency - constraint_set.latency.Exact());
+      // Allow some reasonable difference (1ms?)
+      const double kMaxLatencyDiffSecs = 0.001;
+      if (latency_diff > kMaxLatencyDiffSecs) {
+        *failed_constraint_name = constraint_set.latency.GetName();
+        continue;
+      }
+    }
+
     result.push_back(AudioDeviceInfo(device_capabilities));
   }
 
@@ -95,6 +138,11 @@ AudioDeviceSet AudioDeviceSetForDeviceCapture(
 AudioDeviceSet AudioDeviceSetForContentCapture(
     const blink::WebMediaTrackConstraintSet& constraint_set,
     const char** failed_constraint_name = nullptr) {
+  if (constraint_set.latency.HasMandatory()) {
+    *failed_constraint_name = constraint_set.latency.GetName();
+    return AudioDeviceSet::EmptySet();
+  }
+
   if (!constraint_set.device_id.HasExact())
     return AudioDeviceSet::UniversalSet();
 
@@ -301,6 +349,17 @@ void AudioCaptureCandidates::CheckContradictoryEchoCancellation() {
   }
 }
 
+double LatencyConstraintFitnessDistance(
+    double value,
+    const blink::DoubleConstraint& constraint) {
+  if (!constraint.HasIdeal())
+    return 0.0;
+
+  // XXX(andrew.macpherson): Need better calculation here?
+
+  return NumericConstraintFitnessDistance(value, constraint.Ideal());
+}
+
 // Fitness function for constraints involved in device selection.
 // Based on https://w3c.github.io/mediacapture-main/#dfn-fitness-distance
 // TODO(guidou): Add support for sampleRate, sampleSize and channelCount
@@ -309,9 +368,14 @@ double DeviceInfoFitness(
     bool is_device_capture,
     const AudioDeviceInfo& device_info,
     const blink::WebMediaTrackConstraintSet& basic_constraint_set) {
-  return StringConstraintFitnessDistance(
+  double fitness = 0.0;
+  fitness += LatencyConstraintFitnessDistance(
+      device_info.parameters().frames_per_buffer(),
+      basic_constraint_set.latency);
+  fitness += StringConstraintFitnessDistance(
       blink::WebString::FromASCII(device_info.device_id()),
       basic_constraint_set.device_id);
+  return fitness;
 }
 
 AudioDeviceInfo SelectDevice(
@@ -511,6 +575,8 @@ AudioProcessingProperties SelectAudioProcessingProperties(
 AudioCaptureSettings SelectResult(
     const AudioCaptureCandidates& candidates,
     const blink::WebMediaTrackConstraintSet& basic_constraint_set,
+    const blink::WebVector<blink::WebMediaTrackConstraintSet>&
+        advanced_constraint_set,
     const std::string& default_device_id,
     const std::string& media_stream_source) {
   bool is_device_capture = media_stream_source.empty();
@@ -534,10 +600,39 @@ AudioCaptureSettings SelectResult(
                                       device_info.parameters(),
                                       is_device_capture);
 
+  base::Optional<double> latency;
+  if (basic_constraint_set.latency.HasExact())
+    latency = basic_constraint_set.latency.Exact();
+  else if (basic_constraint_set.latency.HasMin() ||
+           basic_constraint_set.latency.HasMax()) {
+    NumericRangeSet<double> constrained_latency = GetDeviceConstrainedLatency(
+        device_info.parameters(), basic_constraint_set.latency);
+    DCHECK(!constrained_latency.IsEmpty());
+    latency = constrained_latency.Max();
+  } else if (basic_constraint_set.latency.HasIdeal())
+    latency = basic_constraint_set.latency.Ideal();
+  else {
+    for (const auto& advanced : advanced_constraint_set) {
+      if (advanced.latency.HasExact()) {
+        latency = advanced.latency.Exact();
+        break;
+      } else if (advanced.latency.HasMin() || advanced.latency.HasMax()) {
+        NumericRangeSet<double> constrained_latency =
+            GetDeviceConstrainedLatency(device_info.parameters(),
+                                        advanced.latency);
+        DCHECK(!constrained_latency.IsEmpty());
+        latency = constrained_latency.Max();
+      } else if (advanced.latency.HasIdeal()) {
+        latency = advanced.latency.Ideal();
+        break;
+      }
+    }
+  }
+
   return AudioCaptureSettings(device_info.device_id(), device_info.parameters(),
                               hotword_enabled, disable_local_echo,
                               render_to_associated_sink,
-                              audio_processing_properties);
+                              audio_processing_properties, latency);
 }
 
 }  // namespace
@@ -570,8 +665,8 @@ AudioCaptureSettings SelectSettingsAudioCapture(
   if (!capabilities.empty())
     default_device_id = (*capabilities.begin())->device_id;
 
-  return SelectResult(candidates, constraints.Basic(), default_device_id,
-                      media_stream_source);
+  return SelectResult(candidates, constraints.Basic(), constraints.Advanced(),
+                      default_device_id, media_stream_source);
 }
 
 }  // namespace content

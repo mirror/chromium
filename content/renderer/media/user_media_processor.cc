@@ -95,14 +95,17 @@ bool IsValidVideoContentSource(const std::string& source) {
          source == kMediaStreamSourceScreen;
 }
 
-void SurfaceHardwareEchoCancellationSetting(
-    blink::WebMediaStreamSource* source) {
+void SurfaceHardwareSettings(blink::WebMediaStreamSource* source) {
   MediaStreamAudioSource* source_impl =
       static_cast<MediaStreamAudioSource*>(source->GetExtraData());
   media::AudioParameters params = source_impl->GetAudioParameters();
-  if (params.IsValid() &&
-      (params.effects() & media::AudioParameters::ECHO_CANCELLER))
-    source->SetEchoCancellation(true);
+  if (params.IsValid()) {
+    if (params.effects() & media::AudioParameters::ECHO_CANCELLER) {
+      source->SetEchoCancellation(true);
+    }
+    source->SetLatency(params.frames_per_buffer() /
+                       static_cast<double>(params.sample_rate()));
+  }
 }
 
 }  // namespace
@@ -782,8 +785,10 @@ MediaStreamAudioSource* UserMediaProcessor::CreateAudioSource(
       !MediaStreamAudioProcessor::WouldModifyAudio(
           audio_processing_properties)) {
     *has_sw_echo_cancellation = false;
-    return new LocalMediaStreamAudioSource(render_frame_->GetRoutingID(),
-                                           device, source_ready);
+    return new LocalMediaStreamAudioSource(
+        render_frame_->GetRoutingID(), device,
+        current_request_info_->audio_capture_settings().requested_latency(),
+        source_ready);
   }
 
   // The audio device is not associated with screen capture and also requires
@@ -856,7 +861,7 @@ void UserMediaProcessor::CreateAudioTracks(
     // At this point the source has started, and its audio parameters have been
     // set. From the parameters, it is known if hardware echo cancellation is
     // being used. If this is the case, let |source| know.
-    SurfaceHardwareEchoCancellationSetting(&source);
+    SurfaceHardwareSettings(&source);
   }
 }
 

@@ -15,8 +15,8 @@ dictionary MediaTrackSettings {
     // long sampleRate;
     // long sampleSize;
     boolean echoCancellation;
-    // latency and channelCount are not implemented.
-    // double latency;
+    double latency;
+    // channelCount is not implemented.
     // long channelCount;
     DOMString deviceId;
     // groupId is not implemented.

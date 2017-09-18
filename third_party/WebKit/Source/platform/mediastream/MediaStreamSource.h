@@ -97,6 +97,8 @@ class PLATFORM_EXPORT MediaStreamSource final
     echo_cancellation_ = WTF::make_optional(echo_cancellation);
   }
 
+  void SetLatency(double latency) { latency_ = WTF::make_optional(latency); }
+
   void SetConstraints(WebMediaConstraints constraints) {
     constraints_ = constraints;
   }
@@ -139,6 +141,7 @@ class PLATFORM_EXPORT MediaStreamSource final
   std::unique_ptr<ExtraData> extra_data_;
   WebMediaConstraints constraints_;
   WTF::Optional<bool> echo_cancellation_;
+  WTF::Optional<double> latency_;
 };
 
 typedef HeapVector<Member<MediaStreamSource>> MediaStreamSourceVector;

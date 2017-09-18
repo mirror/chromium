@@ -187,11 +187,13 @@ class CONTENT_EXPORT AudioCaptureSettings {
       bool enable_hotword,
       bool disable_local_echo,
       bool enable_automatic_output_device_selection,
-      const AudioProcessingProperties& audio_processing_properties);
+      const AudioProcessingProperties& audio_processing_properties,
+      base::Optional<double> requested_latency);
   AudioCaptureSettings(const AudioCaptureSettings& other);
   AudioCaptureSettings& operator=(const AudioCaptureSettings& other);
   AudioCaptureSettings(AudioCaptureSettings&& other);
   AudioCaptureSettings& operator=(AudioCaptureSettings&& other);
+  ~AudioCaptureSettings();
 
   bool HasValue() const { return failed_constraint_name_ == nullptr; }
 
@@ -222,6 +224,10 @@ class CONTENT_EXPORT AudioCaptureSettings {
     DCHECK(HasValue());
     return audio_processing_properties_;
   }
+  base::Optional<double> requested_latency() const {
+    DCHECK(HasValue());
+    return requested_latency_;
+  }
 
  private:
   const char* failed_constraint_name_;
@@ -231,6 +237,7 @@ class CONTENT_EXPORT AudioCaptureSettings {
   bool disable_local_echo_;
   bool render_to_associated_sink_;
   AudioProcessingProperties audio_processing_properties_;
+  base::Optional<double> requested_latency_;
 };
 
 // Method to get boolean value of constraint with |name| from constraints.

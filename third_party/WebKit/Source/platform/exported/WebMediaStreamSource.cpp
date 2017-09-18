@@ -161,6 +161,11 @@ void WebMediaStreamSource::SetEchoCancellation(bool echo_cancellation) {
   private_->SetEchoCancellation(echo_cancellation);
 }
 
+void WebMediaStreamSource::SetLatency(double latency) {
+  DCHECK(!private_.IsNull());
+  private_->SetLatency(latency);
+}
+
 WebMediaConstraints WebMediaStreamSource::Constraints() {
   DCHECK(!private_.IsNull());
   return private_->Constraints();
