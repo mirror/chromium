@@ -16,6 +16,24 @@
       "revId": "0bf2488902f718c690e8dbd63d2617250716a982",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18a74d3_5623a5dc",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1493,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-18T19:48:05Z",
+      "side": 1,
+      "message": "going to change all of exo in follow up cl",
+      "parentUuid": "fb54c0d7_475e73d6",
+      "revId": "0bf2488902f718c690e8dbd63d2617250716a982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
