@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "91bc4f64_a1a08544",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-18T20:27:23Z",
+      "side": 1,
+      "message": "This method needs a refactor to handle addresses and credit cards separately (i.e., the early exit on AUTOFILL_PROFILE enabled shouldn\u0027t apply to the credit card related logic.\n\nI\u0027ve got a CL in flight that does some of the necessary refactor (and generate some test data that the test team can use to manually verify this and your previous CL to suppress disused credit cards).\n\nSee: https://chromium-review.googlesource.com/c/chromium/src/+/661061",
+      "range": {
+        "startLine": 347,
+        "startChar": 2,
+        "endLine": 347,
+        "endChar": 26
+      },
+      "revId": "fcc2f8ed54d6249233c8ea9de4f3a8adf41ba096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b5d9e2_34ceb310",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-18T20:27:23Z",
+      "side": 1,
+      "message": "This method needs a refactor to handle addresses and credit cards separately (i.e., the early exit on AUTOFILL_PROFILE enabled shouldn\u0027t apply to the credit card related logic.\n\nI\u0027ve got a CL in flight that does some of the necessary refactor (and generate some test data that the test team can use to manually verify this and your previous CL to suppress disused credit cards).\n\nSee: https://chromium-review.googlesource.com/c/chromium/src/+/661061",
+      "range": {
+        "startLine": 429,
+        "startChar": 4,
+        "endLine": 429,
+        "endChar": 28
+      },
+      "revId": "fcc2f8ed54d6249233c8ea9de4f3a8adf41ba096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7fa77213_3bf8892b",
         "filename": "components/autofill/core/browser/personal_data_manager.cc",
         "patchSetId": 2
@@ -111,6 +157,23 @@
         "endLine": 6314,
         "endChar": 57
       },
+      "revId": "fcc2f8ed54d6249233c8ea9de4f3a8adf41ba096",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c500bb_094a8b4a",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 6341,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-09-18T20:27:23Z",
+      "side": 1,
+      "message": "nit: Throughout this CL, plz write your comments as sentences, complete with capitalization and ending punctuation.\n\nhttps://google.github.io/styleguide/cppguide.html#Punctuation,_Spelling_and_Grammar",
       "revId": "fcc2f8ed54d6249233c8ea9de4f3a8adf41ba096",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
