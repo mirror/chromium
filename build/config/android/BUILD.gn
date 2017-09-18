@@ -122,6 +122,7 @@ config("runtime_library") {
   ]
 
   defines = [ "__GNU_SOURCE=1" ]  # Necessary for clone().
+  defines += [ "CHROMIUM_CXX_TWEAK_INLINES" ]
   ldflags = [ "-nostdlib" ]
   lib_dirs = [ android_libcpp_lib_dir ]
 
