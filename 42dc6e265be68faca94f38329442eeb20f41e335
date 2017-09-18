@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2c144e3_d19500b8",
+        "filename": "ios/chrome/browser/passwords/password_controller_js_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-18T18:22:27Z",
+      "side": 1,
+      "message": "nit: s/Check/Checks",
+      "range": {
+        "startLine": 334,
+        "startChar": 3,
+        "endLine": 334,
+        "endChar": 8
+      },
+      "revId": "42dc6e265be68faca94f38329442eeb20f41e335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "286e99b4_edf76a11",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-18T18:22:27Z",
+      "side": 1,
+      "message": "What if the button does something else rather than form submission? If WebStateObserver::DocumentSubmitted will start giving false positives it may lead to new bugs.\n\nCan we use a different callback instead of DocumentSubmitted?",
+      "range": {
+        "startLine": 117,
+        "startChar": 28,
+        "endLine": 117,
+        "endChar": 34
+      },
+      "revId": "42dc6e265be68faca94f38329442eeb20f41e335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
