@@ -70,6 +70,30 @@
       "revId": "2549b3a8b4f93a8c8fb24e99cffcaef8cf340f23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db9cc65_b230811e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1717,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-18T20:50:42Z",
+      "side": 1,
+      "message": "So some of the things that are definitely broken by density changes are the omnibox, New Tab Page, tab switcher, and more. Are you saying this is because of our custom logic somehow?\n\nIf we were to go down the path in the future of properly handling density changes without recreating, what would we actually have to do? Destroy the existing UI and reinflate it?",
+      "parentUuid": "2aed2957_dc3ba209",
+      "range": {
+        "startLine": 1717,
+        "startChar": 45,
+        "endLine": 1717,
+        "endChar": 46
+      },
+      "revId": "2549b3a8b4f93a8c8fb24e99cffcaef8cf340f23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
