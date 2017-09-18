@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7f91d9ea_ab385adb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-09-18T07:39:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c46ccda1_3af0988c",
+      "revId": "306b3a11260b5d5ceaae00b0bfda9b81fb8f571a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "362d4878_a4c4e04e",
         "filename": "ui/ozone/platform/wayland/fake_server.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "306b3a11260b5d5ceaae00b0bfda9b81fb8f571a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a9bc63_e06d19f1",
+        "filename": "ui/ozone/platform/wayland/fake_server.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-09-18T07:39:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "362d4878_a4c4e04e",
+      "revId": "306b3a11260b5d5ceaae00b0bfda9b81fb8f571a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a146d0ae_0d9de417",
+        "filename": "ui/ozone/platform/wayland/xdg_surface_wrapper_v5.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-09-18T07:39:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "721abb02_4380aed8",
+      "revId": "306b3a11260b5d5ceaae00b0bfda9b81fb8f571a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8506f203_a23f7972",
         "filename": "ui/ozone/platform/wayland/xdg_surface_wrapper_v6.cc",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-15T16:55:18Z",
       "side": 1,
       "message": "resize doesn\u0027t work? or is handled a different way?",
+      "revId": "306b3a11260b5d5ceaae00b0bfda9b81fb8f571a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b89224_2fb49ef3",
+        "filename": "ui/ozone/platform/wayland/xdg_surface_wrapper_v6.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1228974
+      },
+      "writtenOn": "2017-09-18T07:39:00Z",
+      "side": 1,
+      "message": "No, it works, but it requires additional injections into aura \u003c-\u003e mus code. So, that\u0027s not a right time to commit that part yet.",
+      "parentUuid": "8506f203_a23f7972",
       "revId": "306b3a11260b5d5ceaae00b0bfda9b81fb8f571a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
