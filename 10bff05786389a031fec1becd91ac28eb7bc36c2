@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3ee4d120_fb4cab16",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-09-18T18:49:38Z",
+      "side": 1,
+      "message": "This doesn\u0027t really seem like the right bug. This bug is about the mechanism which enables this change; I thought there was another bug tracking pinning src-internal inside chrome.",
+      "revId": "10bff05786389a031fec1becd91ac28eb7bc36c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16c3ef99_853c8b8b",
         "filename": "DEPS",
         "patchSetId": 1
