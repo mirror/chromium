@@ -46,6 +46,30 @@
       "revId": "cc6f9765b5b76805cc0c68568783a23d5019b327",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61dba39b_faf8dcbb",
+        "filename": "ui/app_list/views/search_result_tile_item_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-09-18T21:28:28Z",
+      "side": 1,
+      "message": "The tile view doesn\u0027t have enough space for the BaseFont size.\nThe new PS will add more comments for this.",
+      "parentUuid": "5c0d953e_2f40f418",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 62
+      },
+      "revId": "cc6f9765b5b76805cc0c68568783a23d5019b327",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
