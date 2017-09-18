@@ -834,36 +834,12 @@ int HttpCache::DoneWithResponseHeaders(ActiveEntry* entry,
   // through done_headers_queue for performance benefit. (Also, in case of
   // writer transaction, the consumer sometimes depend on synchronous behaviour
   // e.g. while computing raw headers size. (crbug.com/711766))
-  if (transaction->mode() & Transaction::WRITE) {
-    // Partial requests may have write mode even when there is a writer present
-    // since they may be reader for a particular range and writer for another
-    // range.
-    if (!is_partial) {
-      // TODO(shivanisha): Convert these to DCHECKs after crbug.com/750725 is
-      // fixed.
-      CHECK(!entry->writer)
-          << "Writer's mode: " << entry->writer->mode() << " entry: " << entry
-          << " writer's entry: " << entry->writer->entry();
-      CHECK(entry->done_headers_queue.empty())
-          << "done_headers_queue size: " << entry->done_headers_queue.size()
-          << " first element's mode: "
-          << (*(entry->done_headers_queue.begin()))->mode()
-          << " first element's entry: "
-          << (*(entry->done_headers_queue.begin()))->entry()
-          << " entry: " << entry;
-    }
-
-    if (!entry->writer) {
-      entry->writer = transaction;
-      ProcessQueuedTransactions(entry);
-      return OK;
-    }
+  if (transaction->mode() & Transaction::WRITE && !entry->writer &&
+      entry->readers.empty()) {
+    entry->writer = transaction;
+    ProcessQueuedTransactions(entry);
+    return OK;
   }
-
-  // If this is not the first transaction in done_headers_queue, it should be a
-  // read-mode transaction except if it is a partial request.
-  DCHECK(is_partial || (entry->done_headers_queue.empty() ||
-                        !(transaction->mode() & Transaction::WRITE)));
 
   entry->done_headers_queue.push_back(transaction);
   ProcessQueuedTransactions(entry);
@@ -1081,6 +1057,14 @@ void HttpCache::ProcessDoneHeadersQueue(ActiveEntry* entry) {
 
   // If this transaction is responsible for writing the response body.
   if (transaction->mode() & Transaction::WRITE) {
+    // There should not be a scenario where we have a write mode transaction in
+    // this entry when it already has readers since the write transaction would
+    // have created a new entry and doomed this entry. But HttpCache should not
+    // assume mode of transaction based on presence of other transactions. See
+    // crbug.com/750725.
+    if (!entry->readers.empty())
+      return;
+
     entry->writer = transaction;
   } else {
     // If a transaction is in front of this queue with only read mode set and
