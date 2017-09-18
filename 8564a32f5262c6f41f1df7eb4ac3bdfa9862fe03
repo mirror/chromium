@@ -16,6 +16,24 @@
       "revId": "8564a32f5262c6f41f1df7eb4ac3bdfa9862fe03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a3b8881_698bb9c0",
+        "filename": "chrome/browser/media/router/issue_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-18T22:48:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff325693_33767c78",
+      "revId": "8564a32f5262c6f41f1df7eb4ac3bdfa9862fe03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
