@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f63017d8_89c017d0",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-09-18T21:20:15Z",
+      "side": 1,
+      "message": "I\u0027m not actually sure what\u0027s going on here.\n\n|*this| is a |const T\u0026| (line 146). How do we know that there is an |operator+| for |const T\u0026|?\n\nThe confusion is presumably mine if the unit test passes, but I\u0027d like to know!",
+      "range": {
+        "startLine": 156,
+        "startChar": 67,
+        "endLine": 156,
+        "endChar": 72
+      },
+      "revId": "74617d1fb88362a38a735ee3ec143312021f2d37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
