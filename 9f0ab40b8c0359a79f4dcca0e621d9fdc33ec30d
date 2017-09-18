@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17eb86cd_5f058a9e",
+        "filename": "chrome/app/theme/theme_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-18T08:23:50Z",
+      "side": 1,
+      "message": "mac (even mac_views_browser) shouldn\u0027t need these. I think the \"//apps/ui/views\" dep needs to go somewhere !is_mac and the old condition here restored.",
+      "revId": "9f0ab40b8c0359a79f4dcca0e621d9fdc33ec30d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e1aa53_83ca7b25",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1579,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-18T08:23:50Z",
+      "side": 1,
+      "message": "I don\u0027t think this belongs here",
+      "revId": "9f0ab40b8c0359a79f4dcca0e621d9fdc33ec30d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1d8b17b_2bb5eb6c",
+        "filename": "chrome/browser/ui/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 1634,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-18T08:23:50Z",
+      "side": 1,
+      "message": "in here might be better, but it\u0027s not needed with mac_views_browser either.\n\nI think we need a new block, or an !is_mac block inside an if (enable_extensions) block.",
+      "revId": "9f0ab40b8c0359a79f4dcca0e621d9fdc33ec30d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
