@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "ui/base/window_open_disposition.h"
+#include "ui/events/event.h"
 
 class CommandObserver;
 class CommandUpdaterDelegate;
@@ -40,13 +41,15 @@ class CommandUpdater {
   // disposition.
   // Returns true if the command was executed (i.e. it is supported and is
   // enabled).
-  bool ExecuteCommand(int id);
+  bool ExecuteCommand(int id, ui::Event* event = nullptr);
 
   // Performs the action associated with this command ID using the given
   // disposition.
   // Returns true if the command was executed (i.e. it is supported and is
   // enabled).
-  bool ExecuteCommandWithDisposition(int id, WindowOpenDisposition disposition);
+  bool ExecuteCommandWithDisposition(int id,
+                                     WindowOpenDisposition disposition,
+                                     ui::Event* event = nullptr);
 
   // Adds an observer to the state of a particular command. If the command does
   // not exist, it is created, initialized to false.

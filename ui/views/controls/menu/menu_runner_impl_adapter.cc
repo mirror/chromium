@@ -30,8 +30,9 @@ void MenuRunnerImplAdapter::RunMenuAt(Widget* parent,
                                       MenuButton* button,
                                       const gfx::Rect& bounds,
                                       MenuAnchorPosition anchor,
+                                      ui::MenuSourceType source_type,
                                       int32_t types) {
-  impl_->RunMenuAt(parent, button, bounds, anchor, types);
+  impl_->RunMenuAt(parent, button, bounds, anchor, source_type, types);
 }
 
 void MenuRunnerImplAdapter::Cancel() {

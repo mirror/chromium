@@ -38,15 +38,17 @@ bool CommandUpdater::IsCommandEnabled(int id) const {
   return command->second->enabled;
 }
 
-bool CommandUpdater::ExecuteCommand(int id) {
-  return ExecuteCommandWithDisposition(id, WindowOpenDisposition::CURRENT_TAB);
+bool CommandUpdater::ExecuteCommand(int id, ui::Event* event) {
+  return ExecuteCommandWithDisposition(id, WindowOpenDisposition::CURRENT_TAB,
+                                       event);
 }
 
 bool CommandUpdater::ExecuteCommandWithDisposition(
     int id,
-    WindowOpenDisposition disposition) {
+    WindowOpenDisposition disposition,
+    ui::Event* event) {
   if (SupportsCommand(id) && IsCommandEnabled(id)) {
-    delegate_->ExecuteCommandWithDisposition(id, disposition);
+    delegate_->ExecuteCommandWithDisposition(id, disposition, event);
     return true;
   }
   return false;

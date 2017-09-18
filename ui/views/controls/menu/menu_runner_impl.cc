@@ -77,6 +77,7 @@ void MenuRunnerImpl::RunMenuAt(Widget* parent,
                                MenuButton* button,
                                const gfx::Rect& bounds,
                                MenuAnchorPosition anchor,
+                               ui::MenuSourceType source_type,
                                int32_t run_types) {
   closing_event_time_ = base::TimeTicks();
   if (running_) {
@@ -124,9 +125,8 @@ void MenuRunnerImpl::RunMenuAt(Widget* parent,
   controller->set_is_combobox((run_types & MenuRunner::COMBOBOX) != 0);
   controller_ = controller->AsWeakPtr();
   menu_->set_controller(controller_.get());
-  menu_->PrepareForRun(owns_controller_,
-                       has_mnemonics,
-                       !for_drop_ && ShouldShowMnemonics(button));
+  menu_->PrepareForRun(owns_controller_, has_mnemonics,
+                       !for_drop_ && ShouldShowMnemonics(button, source_type));
 
   controller->Run(parent, button, menu_, bounds, anchor,
                   (run_types & MenuRunner::CONTEXT_MENU) != 0,
@@ -190,14 +190,14 @@ MenuRunnerImpl::~MenuRunnerImpl() {
     delete *i;
 }
 
-bool MenuRunnerImpl::ShouldShowMnemonics(MenuButton* button) {
-  // Show mnemonics if the button has focus or alt is pressed.
+bool MenuRunnerImpl::ShouldShowMnemonics(MenuButton* button,
+                                         ui::MenuSourceType source_type) {
+  // Show mnemonics if the button has focus or the menu was shown using a
+  // keypress.
   bool show_mnemonics = button ? button->HasFocus() : false;
-#if defined(OS_WIN)
-  // This is only needed on Windows.
   if (!show_mnemonics)
-    show_mnemonics = ui::win::IsAltPressed();
-#endif
+    show_mnemonics = (source_type == ui::MENU_SOURCE_KEYBOARD);
+
   return show_mnemonics;
 }
 

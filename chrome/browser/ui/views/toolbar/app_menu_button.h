@@ -44,7 +44,7 @@ class AppMenuButton : public views::MenuButton,
 
   // Shows the app menu. |for_drop| indicates whether the menu is opened for a
   // drag-and-drop operation.
-  void ShowMenu(bool for_drop);
+  void ShowMenu(bool for_drop, ui::MenuSourceType source_type);
 
   // Closes the app menu, if it's open.
   void CloseMenu();

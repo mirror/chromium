@@ -804,12 +804,7 @@ void Combobox::ButtonPressed(Button* sender, const ui::Event& event) {
     if (delta.InMilliseconds() <= kMinimumMsBetweenButtonClicks)
       return;
 
-    ui::MenuSourceType source_type = ui::MENU_SOURCE_MOUSE;
-    if (event.IsKeyEvent())
-      source_type = ui::MENU_SOURCE_KEYBOARD;
-    else if (event.IsGestureEvent() || event.IsTouchEvent())
-      source_type = ui::MENU_SOURCE_TOUCH;
-    ShowDropDownMenu(source_type);
+    ShowDropDownMenu(ui::GetMenuSourceTypeForEvent(event));
   }
 }
 

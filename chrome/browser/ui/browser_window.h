@@ -283,7 +283,7 @@ class BrowserWindow : public ui::BaseWindow {
   virtual void UserChangedTheme() = 0;
 
   // Shows the app menu (for accessibility).
-  virtual void ShowAppMenu() = 0;
+  virtual void ShowAppMenu(const ui::Event* event) = 0;
 
   // Allows the BrowserWindow object to handle the specified keyboard event
   // before sending it to the renderer.

@@ -14,6 +14,7 @@
 #include "chrome/browser/ui/views/location_bar/location_bar_view.h"
 #include "content/public/browser/page_navigator.h"
 #include "content/public/browser/web_contents_delegate.h"
+#include "ui/events/event.h"
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/widget/widget_delegate.h"
 #include "url/gurl.h"
@@ -83,7 +84,9 @@ class SimpleWebViewDialog : public views::ButtonListener,
   content::WebContents* GetActiveWebContents() const override;
 
   // Implements CommandUpdaterDelegate:
-  void ExecuteCommandWithDisposition(int id, WindowOpenDisposition) override;
+  void ExecuteCommandWithDisposition(int id,
+                                     WindowOpenDisposition,
+                                     ui::Event* event = nullptr) override;
 
  private:
   friend class SimpleWebViewDialogTest;

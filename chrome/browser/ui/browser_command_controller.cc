@@ -266,7 +266,8 @@ void BrowserCommandController::ExtensionStateChanged() {
 
 void BrowserCommandController::ExecuteCommandWithDisposition(
     int id,
-    WindowOpenDisposition disposition) {
+    WindowOpenDisposition disposition,
+    ui::Event* event) {
   // No commands are enabled if there is not yet any selected tab.
   // TODO(pkasting): It seems like we should not need this, because either
   // most/all commands should not have been enabled yet anyway or the ones that
@@ -562,7 +563,7 @@ void BrowserCommandController::ExecuteCommandWithDisposition(
       break;
     case IDC_SHOW_APP_MENU:
       base::RecordAction(base::UserMetricsAction("Accel_Show_App_Menu"));
-      ShowAppMenu(browser_);
+      ShowAppMenu(browser_, event);
       break;
     case IDC_SHOW_AVATAR_MENU:
       ShowAvatarMenu(browser_);

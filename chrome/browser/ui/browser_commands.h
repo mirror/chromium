@@ -14,6 +14,7 @@
 #include "content/public/common/page_zoom.h"
 #include "printing/features/features.h"
 #include "ui/base/window_open_disposition.h"
+#include "ui/events/event.h"
 
 class Browser;
 class CommandObserver;
@@ -31,10 +32,11 @@ namespace chrome {
 
 bool IsCommandEnabled(Browser* browser, int command);
 bool SupportsCommand(Browser* browser, int command);
-bool ExecuteCommand(Browser* browser, int command);
+bool ExecuteCommand(Browser* browser, int command, ui::Event* event = nullptr);
 bool ExecuteCommandWithDisposition(Browser* browser,
                                    int command,
-                                   WindowOpenDisposition disposition);
+                                   WindowOpenDisposition disposition,
+                                   ui::Event* event = nullptr);
 void UpdateCommandEnabled(Browser* browser, int command, bool enabled);
 void AddCommandObserver(Browser*, int command, CommandObserver* observer);
 void RemoveCommandObserver(Browser*, int command, CommandObserver* observer);
@@ -134,7 +136,7 @@ bool CanOpenTaskManager();
 void OpenTaskManager(Browser* browser);
 void OpenFeedbackDialog(Browser* browser, FeedbackSource source);
 void ToggleBookmarkBar(Browser* browser);
-void ShowAppMenu(Browser* browser);
+void ShowAppMenu(Browser* browser, ui::Event* event);
 void ShowAvatarMenu(Browser* browser);
 void OpenUpdateChromeDialog(Browser* browser);
 void DistillCurrentPage(Browser* browser);

@@ -342,7 +342,7 @@ class BrowserView : public BrowserWindow,
       bool app_modal,
       const base::Callback<void(bool)>& callback) override;
   void UserChangedTheme() override;
-  void ShowAppMenu() override;
+  void ShowAppMenu(const ui::Event* event) override;
   content::KeyboardEventProcessingResult PreHandleKeyboardEvent(
       const content::NativeWebKeyboardEvent& event) override;
   void HandleKeyboardEvent(

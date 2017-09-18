@@ -382,7 +382,9 @@ void ToolbarView::OnMenuButtonClicked(views::MenuButton* source,
                                       const ui::Event* event) {
   TRACE_EVENT0("views", "ToolbarView::OnMenuButtonClicked");
   DCHECK_EQ(VIEW_ID_APP_MENU, source->id());
-  app_menu_button_->ShowMenu(false);  // Not for drop.
+  app_menu_button_->ShowMenu(
+      false,  // not for drop
+      event ? ui::GetMenuSourceTypeForEvent(*event) : ui::MENU_SOURCE_NONE);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

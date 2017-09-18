@@ -126,6 +126,7 @@
 #include "ui/content_accelerators/accelerator_util.h"
 #include "ui/display/screen.h"
 #include "ui/events/event_utils.h"
+#include "ui/events/keycodes/dom/dom_code.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/color_utils.h"
 #include "ui/gfx/geometry/rect_conversions.h"
@@ -1245,7 +1246,7 @@ void BrowserView::UserChangedTheme() {
   frame_->FrameTypeChanged();
 }
 
-void BrowserView::ShowAppMenu() {
+void BrowserView::ShowAppMenu(const ui::Event* event) {
   if (!toolbar_->app_menu_button())
     return;
 
@@ -1254,7 +1255,7 @@ void BrowserView::ShowAppMenu() {
       immersive_mode_controller_->GetRevealedLock(
           ImmersiveModeController::ANIMATE_REVEAL_NO));
 
-  toolbar_->app_menu_button()->Activate(nullptr);
+  toolbar_->app_menu_button()->Activate(event);
 }
 
 content::KeyboardEventProcessingResult BrowserView::PreHandleKeyboardEvent(
@@ -1996,7 +1997,8 @@ bool BrowserView::AcceleratorPressed(const ui::Accelerator& accelerator) {
     return false;
 
   UpdateAcceleratorMetrics(accelerator, command_id);
-  return chrome::ExecuteCommand(browser_.get(), command_id);
+  return chrome::ExecuteCommand(browser_.get(), command_id,
+                                new ui::KeyEvent(accelerator.ToKeyEvent()));
 }
 
 ///////////////////////////////////////////////////////////////////////////////

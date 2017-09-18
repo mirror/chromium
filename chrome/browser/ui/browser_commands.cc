@@ -304,14 +304,15 @@ bool SupportsCommand(Browser* browser, int command) {
       command);
 }
 
-bool ExecuteCommand(Browser* browser, int command) {
+bool ExecuteCommand(Browser* browser, int command, ui::Event* event) {
   return browser->command_controller()->command_updater()->ExecuteCommand(
-      command);
+      command, event);
 }
 
 bool ExecuteCommandWithDisposition(Browser* browser,
                                    int command,
-                                   WindowOpenDisposition disposition) {
+                                   WindowOpenDisposition disposition,
+                                   ui::Event* event) {
   return browser->command_controller()->command_updater()->
       ExecuteCommandWithDisposition(command, disposition);
 }
@@ -1093,9 +1094,9 @@ void ToggleBookmarkBar(Browser* browser) {
   ToggleBookmarkBarWhenVisible(browser->profile());
 }
 
-void ShowAppMenu(Browser* browser) {
+void ShowAppMenu(Browser* browser, ui::Event* event) {
   // We record the user metric for this event in AppMenu::RunMenu.
-  browser->window()->ShowAppMenu();
+  browser->window()->ShowAppMenu(event);
 }
 
 void ShowAvatarMenu(Browser* browser) {

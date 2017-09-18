@@ -43,6 +43,7 @@ class VIEWS_EXPORT MenuRunnerImpl : public MenuRunnerImplInterface,
                  MenuButton* button,
                  const gfx::Rect& bounds,
                  MenuAnchorPosition anchor,
+                 ui::MenuSourceType source_type,
                  int32_t run_types) override;
   void Cancel() override;
   base::TimeTicks GetClosingEventTime() const override;
@@ -59,7 +60,7 @@ class VIEWS_EXPORT MenuRunnerImpl : public MenuRunnerImplInterface,
   ~MenuRunnerImpl() override;
 
   // Returns true if mnemonics should be shown in the menu.
-  bool ShouldShowMnemonics(MenuButton* button);
+  bool ShouldShowMnemonics(MenuButton* button, ui::MenuSourceType source_type);
 
   // The menu. We own this. We don't use scoped_ptr as the destructor is
   // protected and we're a friend.

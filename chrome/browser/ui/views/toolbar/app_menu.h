@@ -46,7 +46,7 @@ class AppMenu : public views::MenuDelegate,
   void Init(ui::MenuModel* model);
 
   // Shows the menu relative to the specified view.
-  void RunMenu(views::MenuButton* host);
+  void RunMenu(views::MenuButton* host, ui::MenuSourceType source_type);
 
   // Closes the menu if it is open, otherwise does nothing.
   void CloseMenu();

@@ -6,6 +6,7 @@
 #define CHROME_BROWSER_COMMAND_UPDATER_DELEGATE_H_
 
 #include "ui/base/window_open_disposition.h"
+#include "ui/events/event.h"
 
 // Implement this interface so that your object can execute commands when
 // needed.
@@ -13,9 +14,9 @@ class CommandUpdaterDelegate {
  public:
   // Performs the action associated with the command with the specified ID and
   // using the given disposition.
-  virtual void ExecuteCommandWithDisposition(
-      int id,
-      WindowOpenDisposition disposition) = 0;
+  virtual void ExecuteCommandWithDisposition(int id,
+                                             WindowOpenDisposition disposition,
+                                             ui::Event* event) = 0;
 
  protected:
   virtual ~CommandUpdaterDelegate() {}

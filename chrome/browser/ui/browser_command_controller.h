@@ -15,6 +15,7 @@
 #include "components/prefs/pref_member.h"
 #include "components/sessions/core/tab_restore_service_observer.h"
 #include "ui/base/window_open_disposition.h"
+#include "ui/events/event.h"
 
 class Browser;
 class BrowserWindow;
@@ -67,8 +68,9 @@ class BrowserCommandController : public CommandUpdaterDelegate,
   class InterstitialObserver;
 
   // Overridden from CommandUpdaterDelegate:
-  void ExecuteCommandWithDisposition(int id, WindowOpenDisposition disposition)
-      override;
+  void ExecuteCommandWithDisposition(int id,
+                                     WindowOpenDisposition disposition,
+                                     ui::Event* event = nullptr) override;
 
   // Overridden from TabStripModelObserver:
   void TabInsertedAt(TabStripModel* tab_strip_model,

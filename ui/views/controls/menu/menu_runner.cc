@@ -69,7 +69,7 @@ void MenuRunner::RunMenuAt(Widget* parent,
     }
   }
 
-  impl_->RunMenuAt(parent, button, bounds, anchor, run_types_);
+  impl_->RunMenuAt(parent, button, bounds, anchor, source_type, run_types_);
 }
 
 bool MenuRunner::IsRunning() const {

@@ -68,7 +68,7 @@ void AppMenuButton::SetSeverity(AppMenuIconController::IconType type,
   UpdateIcon(animate);
 }
 
-void AppMenuButton::ShowMenu(bool for_drop) {
+void AppMenuButton::ShowMenu(bool for_drop, ui::MenuSourceType source_type) {
   if (menu_ && menu_->IsShowing())
     return;
 
@@ -91,7 +91,7 @@ void AppMenuButton::ShowMenu(bool for_drop) {
     observer.OnMenuOpened();
 
   base::TimeTicks menu_open_time = base::TimeTicks::Now();
-  menu_->RunMenu(this);
+  menu_->RunMenu(this, source_type);
 
   if (!for_drop) {
     // Record the time-to-action for the menu. We don't record in the case of a
@@ -284,14 +284,15 @@ bool AppMenuButton::CanDrop(const ui::OSExchangeData& data) {
 
 void AppMenuButton::OnDragEntered(const ui::DropTargetEvent& event) {
   DCHECK(!weak_factory_.HasWeakPtrs());
+  ui::MenuSourceType source_type = ui::GetMenuSourceTypeForEvent(event);
   if (!g_open_app_immediately_for_testing) {
     base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
         FROM_HERE,
         base::BindOnce(&AppMenuButton::ShowMenu, weak_factory_.GetWeakPtr(),
-                       true),
+                       true, source_type),
         base::TimeDelta::FromMilliseconds(views::GetMenuShowDelay()));
   } else {
-    ShowMenu(true);
+    ShowMenu(true, source_type);
   }
 }
 

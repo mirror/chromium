@@ -808,13 +808,13 @@ void AppMenu::Init(ui::MenuModel* model) {
   menu_runner_.reset(new views::MenuRunner(root_, types));
 }
 
-void AppMenu::RunMenu(views::MenuButton* host) {
+void AppMenu::RunMenu(views::MenuButton* host, ui::MenuSourceType source_type) {
   gfx::Point screen_loc;
   views::View::ConvertPointToScreen(host, &screen_loc);
   gfx::Rect bounds(screen_loc, host->size());
   base::RecordAction(UserMetricsAction("ShowAppMenu"));
   menu_runner_->RunMenuAt(host->GetWidget(), host, bounds,
-                          views::MENU_ANCHOR_TOPRIGHT, ui::MENU_SOURCE_NONE);
+                          views::MENU_ANCHOR_TOPRIGHT, source_type);
 }
 
 void AppMenu::CloseMenu() {
