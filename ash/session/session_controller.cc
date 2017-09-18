@@ -9,6 +9,7 @@
 
 #include "ash/public/interfaces/pref_connector.mojom.h"
 #include "ash/public/interfaces/user_info.mojom.h"
+#include "ash/session/session_aborted_dialog.h"
 #include "ash/session/session_observer.h"
 #include "ash/shell.h"
 #include "ash/system/power/power_event_observer.h"
@@ -403,6 +404,11 @@ void SessionController::CanSwitchActiveUser(
 
   ash::Shell::Get()->GetPrimarySystemTray()->CanSwitchAwayFromActiveUser(
       std::move(callback));
+}
+
+void SessionController::ShowMultiprofilesSessionAbortedDialog(
+    const std::string& user_email) {
+  SessionAbortedDialog::Show(user_email);
 }
 
 void SessionController::ClearUserSessionsForTest() {
