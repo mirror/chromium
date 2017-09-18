@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fea348c2_ac5d9698",
+        "filename": "chrome/browser/installable/installable_manager_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1174915
+      },
+      "writtenOn": "2017-09-18T06:44:13Z",
+      "side": 1,
+      "message": "None of the statuses below are \"NON_PROGRESSIVE_WEB_APP\".",
+      "revId": "5b74557f6342b0bc82a0f1b207c2d4bd91efe9d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
