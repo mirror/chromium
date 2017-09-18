@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "493d80f7_503082e4",
+        "filename": "chrome/browser/resources/settings/device_page/night_light_slider.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T21:36:23Z",
+      "side": 0,
+      "message": "This might be (and was) called before |prefs| was loaded causing an assert. This is not necessary, the observer will call hourFormatChanged_() when prefs.settings.clock.use_24hour_clock is initially populated (I confirmed this).",
+      "revId": "8658e4dc1a5d03fb5e67575b9192ba37bf26bad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
