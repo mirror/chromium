@@ -1,0 +1,27 @@
+-keepattributes InnerClasses,Signature,*Annotation*
+-printseeds
+-dontwarn
+#-keep class com.google.common.annotations.VisibleForTesting
+#-keep @com.google.common.annotations.VisibleForTesting class *
+-keep class com.google.common.base.Absent { *; }
+-keep class com.google.common.base.Charsets { *; }
+-keep class com.google.common.base.Joiner { *; }
+-keep class com.google.common.base.Optional { *; }
+-keep class com.google.common.base.Preconditions { *; }
+-keep class com.google.common.base.Present { *; }
+-keep class com.google.common.collect.Iterators { *; }
+-keep class com.google.common.collect.Iterators$1 { *; }
+-keep class com.google.common.collect.Iterators$2 { *; }
+-keep class com.google.common.UnmodifiableIterator { *; }
+-keep class com.google.common.UnmodifiableListIterator { *; }
+-keep class com.google.common.io.ByteArrayDataOutput { *; }
+-keep class com.google.common.io.ByteStreams { *; }
+-keep class com.google.common.io.ByteStreams$1 { *; }
+-keep class com.google.common.io.ByteStreams$ByteArrayDataOutputStream { *; }
+-keep class com.google.common.io.Closeables { *; }
+-keep class com.google.common.io.CountingOutputStream { *; }
+-keep class com.google.common.io.LittleEndianDataInputStream { *; }
+-keep class com.google.common.io.LittleEndianDataOutputStream { *; }
+-keep class com.google.common.primitives.Ints { *; }
+-keep class com.google.common.primitives.Longs { *; }
+-keep class com.google.common.primitives.UnsignedBytes { *; }

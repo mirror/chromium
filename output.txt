@@ -1,0 +1,167 @@
+ProGuard (google/proguard version 0.9)
+Reading input...
+Reading program jar [/usr/local/google/code/clankium/src/third_party/guava/lib/guava-20.0.jar]
+Initializing...
+Note: the configuration refers to unknown class 'com.google.common.UnmodifiableIterator' in Class specification from Configuration in: file 'proguard.flags'
+Configuration file 'proguard.flags': (line: 11)
+Configuration:
+	-keep class com.google.common.UnmodifiableIterator
+      Maybe you meant the fully qualified name 'com.google.common.collect.UnmodifiableIterator'?
+Note: the configuration refers to unknown class 'com.google.common.UnmodifiableListIterator' in Class specification from Configuration in: file 'proguard.flags'
+Configuration file 'proguard.flags': (line: 12)
+Configuration:
+	-keep class com.google.common.UnmodifiableListIterator
+      Maybe you meant the fully qualified name 'com.google.common.collect.UnmodifiableListIterator'?
+Note: com.google.common.eventbus.Subscriber calls method java.lang.annotation.Annotation java.lang.reflect.Method.getAnnotation(java.lang.Class)
+ProgramClass: com.google.common.eventbus.Subscriber from: [third_party/guava/lib/guava-20.0.jar].
+Note: com.google.common.reflect.Invokable$MethodInvokable calls method java.lang.annotation.Annotation[][] java.lang.reflect.Method.getParameterAnnotations()
+ProgramClass: com.google.common.reflect.Invokable$MethodInvokable from: [third_party/guava/lib/guava-20.0.jar].
+Note: com.google.common.reflect.Invokable$ConstructorInvokable calls method java.lang.reflect.TypeVariable[] java.lang.Class.getTypeParameters()
+ProgramClass: com.google.common.reflect.Invokable$ConstructorInvokable from: [third_party/guava/lib/guava-20.0.jar].
+Note: com.google.common.reflect.Invokable$MethodInvokable calls method java.lang.reflect.Type java.lang.reflect.Method.getGenericReturnType()
+ProgramClass: com.google.common.reflect.Invokable$MethodInvokable from: [third_party/guava/lib/guava-20.0.jar].
+Note: com.google.common.reflect.Invokable$MethodInvokable calls method java.lang.reflect.Type[] java.lang.reflect.Method.getGenericParameterTypes()
+ProgramClass: com.google.common.reflect.Invokable$MethodInvokable from: [third_party/guava/lib/guava-20.0.jar].
+Note: com.google.common.reflect.Invokable$MethodInvokable calls method java.lang.reflect.Type[] java.lang.reflect.Method.getGenericExceptionTypes()
+ProgramClass: com.google.common.reflect.Invokable$MethodInvokable from: [third_party/guava/lib/guava-20.0.jar].
+Note: com.google.common.reflect.Invokable$MethodInvokable calls method java.lang.reflect.TypeVariable[] java.lang.reflect.Method.getTypeParameters()
+ProgramClass: com.google.common.reflect.Invokable$MethodInvokable from: [third_party/guava/lib/guava-20.0.jar].
+Note: com.google.common.reflect.TypeCapture calls method java.lang.reflect.Type java.lang.Class.getGenericSuperclass()
+ProgramClass: com.google.common.reflect.TypeCapture from: [third_party/guava/lib/guava-20.0.jar].
+Note: com.google.common.reflect.TypeResolver$TypeMappingIntrospector calls method java.lang.reflect.Type java.lang.Class.getGenericSuperclass()
+ProgramClass: com.google.common.reflect.TypeResolver$TypeMappingIntrospector from: [third_party/guava/lib/guava-20.0.jar].
+Note: com.google.common.reflect.TypeResolver$TypeMappingIntrospector calls method java.lang.reflect.Type[] java.lang.Class.getGenericInterfaces()
+ProgramClass: com.google.common.reflect.TypeResolver$TypeMappingIntrospector from: [third_party/guava/lib/guava-20.0.jar].
+Note: com.google.common.reflect.TypeResolver$TypeMappingIntrospector calls method java.lang.reflect.TypeVariable[] java.lang.Class.getTypeParameters()
+ProgramClass: com.google.common.reflect.TypeResolver$TypeMappingIntrospector from: [third_party/guava/lib/guava-20.0.jar].
+Note: com.google.common.reflect.TypeToken calls method java.lang.reflect.Type java.lang.Class.getGenericSuperclass()
+ProgramClass: com.google.common.reflect.TypeToken from: [third_party/guava/lib/guava-20.0.jar].
+Note: com.google.common.reflect.TypeToken calls method java.lang.reflect.Type[] java.lang.Class.getGenericInterfaces()
+ProgramClass: com.google.common.reflect.TypeToken from: [third_party/guava/lib/guava-20.0.jar].
+Note: com.google.common.reflect.TypeToken calls method java.lang.reflect.TypeVariable[] java.lang.Class.getTypeParameters()
+ProgramClass: com.google.common.reflect.TypeToken from: [third_party/guava/lib/guava-20.0.jar].
+Note: com.google.common.reflect.Types$ClassOwnership calls method java.lang.reflect.Type java.lang.Class.getGenericSuperclass()
+ProgramClass: com.google.common.reflect.Types$ClassOwnership from: [third_party/guava/lib/guava-20.0.jar].
+Note: com.google.common.reflect.Types$NativeTypeVariableEquals calls method java.lang.reflect.TypeVariable[] java.lang.Class.getTypeParameters()
+ProgramClass: com.google.common.reflect.Types$NativeTypeVariableEquals from: [third_party/guava/lib/guava-20.0.jar].
+Note: com.google.common.reflect.Types$ParameterizedTypeImpl calls method java.lang.reflect.TypeVariable[] java.lang.Class.getTypeParameters()
+ProgramClass: com.google.common.reflect.Types$ParameterizedTypeImpl from: [third_party/guava/lib/guava-20.0.jar].
+Note: com.google.common.reflect.Invokable$ConstructorInvokable calls 'Class.getEnclosingClass'
+Note: com.google.common.reflect.TypeToken calls 'Class.getEnclosingClass'
+Note: com.google.common.reflect.Types calls 'Class.getEnclosingClass'
+Note: com.google.common.reflect.Types$ClassOwnership$1 calls 'Class.getEnclosingClass'
+Note: com.google.common.reflect.Types$ClassOwnership$2 calls 'Class.getEnclosingClass'
+Note: com.google.common.reflect.Invokable$ConstructorInvokable calls 'Class.getEnclosingConstructor'
+Note: com.google.common.reflect.Invokable$ConstructorInvokable calls 'Class.getEnclosingMethod'
+Note: com.google.common.util.concurrent.MoreExecutors: can't find dynamically referenced class com.google.appengine.api.ThreadManager
+ProgramClass: com.google.common.util.concurrent.MoreExecutors from: [third_party/guava/lib/guava-20.0.jar].
+Note: com.google.common.util.concurrent.MoreExecutors: can't find dynamically referenced class com.google.apphosting.api.ApiProxy
+ProgramClass: com.google.common.util.concurrent.MoreExecutors from: [third_party/guava/lib/guava-20.0.jar].
+Note: com.google.common.base.Throwables accesses a method 'getJavaLangAccess()' dynamically
+Note: com.google.common.base.internal.Finalizer accesses a method 'finalizeReferent()' dynamically
+      Maybe this is program method 'com.google.common.base.FinalizableReference { void finalizeReferent(); }'
+Note: com.google.common.cache.Striped64 accesses a declared field 'base' dynamically
+      Maybe this is program field 'com.google.common.cache.Striped64 { long base; }'
+Note: com.google.common.cache.Striped64 accesses a declared field 'busy' dynamically
+      Maybe this is program field 'com.google.common.cache.Striped64 { int busy; }'
+Note: com.google.common.cache.Striped64$Cell accesses a declared field 'value' dynamically
+      Maybe this is program field 'com.google.common.base.Functions$ConstantFunction { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.base.MoreObjects$ToStringHelper$ValueHolder { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.base.Objects$ToStringHelper$ValueHolder { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.base.Suppliers$ExpiringMemoizingSupplier { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.base.Suppliers$MemoizingSupplier { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.cache.LocalCache$WriteThroughEntry { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.cache.Striped64$Cell { long value; }'
+      Maybe this is program field 'com.google.common.collect.Count { int value; }'
+      Maybe this is program field 'com.google.common.collect.ImmutableEntry { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.collect.LinkedListMultimap$Node { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.collect.MapMakerInternalMap$StrongKeyStrongValueEntry { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.collect.MapMakerInternalMap$WeakKeyStrongValueEntry { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.collect.MapMakerInternalMap$WriteThroughEntry { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.collect.Ordering$IncomparableValueException { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.collect.Tables$ImmutableCell { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.collect.TreeMultiset$Reference { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.collect.TreeRangeMap$RangeMapEntry { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.graph.MapRetrievalCache$CacheEntry { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.primitives.UnsignedInteger { int value; }'
+      Maybe this is program field 'com.google.common.primitives.UnsignedLong { long value; }'
+      Maybe this is program field 'com.google.common.util.concurrent.AbstractFuture { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.util.concurrent.AtomicDouble { long value; }'
+      Maybe this is program field 'com.google.common.util.concurrent.ImmediateFuture$ImmediateSuccessfulCheckedFuture { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.util.concurrent.ImmediateFuture$ImmediateSuccessfulFuture { java.lang.Object value; }'
+Note: com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper accesses a declared field 'waiters' dynamically
+      Maybe this is program field 'com.google.common.util.concurrent.AbstractFuture { com.google.common.util.concurrent.AbstractFuture$Waiter waiters; }'
+Note: com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper accesses a declared field 'listeners' dynamically
+      Maybe this is program field 'com.google.common.util.concurrent.AbstractFuture { com.google.common.util.concurrent.AbstractFuture$Listener listeners; }'
+      Maybe this is program field 'com.google.common.util.concurrent.AbstractService { java.util.List listeners; }'
+      Maybe this is program field 'com.google.common.util.concurrent.ServiceManager$ServiceManagerState { java.util.List listeners; }'
+Note: com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper accesses a declared field 'value' dynamically
+      Maybe this is program field 'com.google.common.base.Functions$ConstantFunction { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.base.MoreObjects$ToStringHelper$ValueHolder { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.base.Objects$ToStringHelper$ValueHolder { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.base.Suppliers$ExpiringMemoizingSupplier { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.base.Suppliers$MemoizingSupplier { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.cache.LocalCache$WriteThroughEntry { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.cache.Striped64$Cell { long value; }'
+      Maybe this is program field 'com.google.common.collect.Count { int value; }'
+      Maybe this is program field 'com.google.common.collect.ImmutableEntry { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.collect.LinkedListMultimap$Node { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.collect.MapMakerInternalMap$StrongKeyStrongValueEntry { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.collect.MapMakerInternalMap$WeakKeyStrongValueEntry { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.collect.MapMakerInternalMap$WriteThroughEntry { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.collect.Ordering$IncomparableValueException { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.collect.Tables$ImmutableCell { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.collect.TreeMultiset$Reference { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.collect.TreeRangeMap$RangeMapEntry { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.graph.MapRetrievalCache$CacheEntry { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.primitives.UnsignedInteger { int value; }'
+      Maybe this is program field 'com.google.common.primitives.UnsignedLong { long value; }'
+      Maybe this is program field 'com.google.common.util.concurrent.AbstractFuture { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.util.concurrent.AtomicDouble { long value; }'
+      Maybe this is program field 'com.google.common.util.concurrent.ImmediateFuture$ImmediateSuccessfulCheckedFuture { java.lang.Object value; }'
+      Maybe this is program field 'com.google.common.util.concurrent.ImmediateFuture$ImmediateSuccessfulFuture { java.lang.Object value; }'
+Note: com.google.common.util.concurrent.MoreExecutors accesses a method 'currentRequestThreadFactory()' dynamically
+Note: com.google.common.util.concurrent.MoreExecutors accesses a method 'getCurrentEnvironment()' dynamically
+Printing kept classes, fields, and methods...
+com.google.common.base.Absent
+com.google.common.base.Charsets
+com.google.common.base.Joiner
+com.google.common.base.Optional
+com.google.common.base.Preconditions
+com.google.common.base.Present
+com.google.common.collect.Iterators
+com.google.common.io.ByteArrayDataOutput
+com.google.common.io.ByteStreams
+com.google.common.io.Closeables
+com.google.common.io.CountingOutputStream
+com.google.common.io.LittleEndianDataInputStream
+com.google.common.io.LittleEndianDataOutputStream
+com.google.common.primitives.Ints
+com.google.common.primitives.Longs
+com.google.common.primitives.UnsignedBytes
+Note: there were 2 references to unknown classes.
+      You should check your configuration for typos.
+      (http://proguard.sourceforge.net/manual/troubleshooting.html#unknownclass)
+Note: there were 2 classes trying to access annotations using reflection.
+      You should consider keeping the annotation attributes
+      (using '-keepattributes *LowLevelAnnotation*').
+      (http://proguard.sourceforge.net/manual/troubleshooting.html#attributes)
+Note: there were 15 classes trying to access generic signatures using reflection.
+      You should consider keeping the signature attributes
+      (using '-keepattributes Signature').
+      (http://proguard.sourceforge.net/manual/troubleshooting.html#attributes)
+Note: there were 5 classes trying to access enclosing classes using reflection.
+      You should consider keeping the inner classes attributes
+      (using '-keepattributes InnerClasses').
+      (http://proguard.sourceforge.net/manual/troubleshooting.html#attributes)
+Note: there were 2 classes trying to access enclosing methods using reflection.
+      You should consider keeping the enclosing method attributes
+      (using '-keepattributes InnerClasses,EnclosingMethod').
+      (http://proguard.sourceforge.net/manual/troubleshooting.html#attributes)
+Note: there were 2 unresolved dynamic references to classes or interfaces.
+      You should check if you need to specify additional program jars.
+      (http://proguard.sourceforge.net/manual/troubleshooting.html#dynamicalclass)
+Note: there were 10 accesses to class members by means of introspection.
+      You should consider explicitly keeping the mentioned class members
+      (using '-keep' or '-keepclassmembers').
+      (http://proguard.sourceforge.net/manual/troubleshooting.html#dynamicalclassmember)

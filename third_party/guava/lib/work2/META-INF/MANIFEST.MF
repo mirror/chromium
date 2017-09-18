@@ -1,0 +1,42 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1477688179261
+Build-Jdk: 1.7.0-google-v5
+Built-By: cgdecker
+Bundle-Description: Guava is a suite of core and expanded libraries that
+  include    utility classes, google's collections, io classes, and much
+     much more.    Guava has only one code dependency - javax.annotation
+ ,    per the JSR-305 spec.
+Bundle-DocURL: https://github.com/google/guava/
+Bundle-License: http://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-ManifestVersion: 2
+Bundle-Name: Guava: Google Core Libraries for Java
+Bundle-SymbolicName: com.google.guava
+Bundle-Version: 20.0.0
+Created-By: Apache Maven Bundle Plugin
+Export-Package: com.google.common.annotations;version="20.0.0",com.googl
+ e.common.base;version="20.0.0";uses:="javax.annotation",com.google.comm
+ on.cache;version="20.0.0";uses:="com.google.common.base,com.google.comm
+ on.collect,com.google.common.util.concurrent,javax.annotation",com.goog
+ le.common.collect;version="20.0.0";uses:="com.google.common.base,javax.
+ annotation",com.google.common.escape;version="20.0.0";uses:="com.google
+ .common.base,javax.annotation",com.google.common.eventbus;version="20.0
+ .0",com.google.common.graph;version="20.0.0";uses:="com.google.common.c
+ ollect,javax.annotation",com.google.common.hash;version="20.0.0";uses:=
+ "com.google.common.base,javax.annotation",com.google.common.html;versio
+ n="20.0.0";uses:="com.google.common.escape",com.google.common.io;versio
+ n="20.0.0";uses:="com.google.common.base,com.google.common.collect,com.
+ google.common.hash,javax.annotation",com.google.common.math;version="20
+ .0.0";uses:="javax.annotation",com.google.common.net;version="20.0.0";u
+ ses:="com.google.common.base,com.google.common.collect,com.google.commo
+ n.escape,javax.annotation",com.google.common.primitives;version="20.0.0
+ ";uses:="com.google.common.base,javax.annotation",com.google.common.ref
+ lect;version="20.0.0";uses:="com.google.common.collect,com.google.commo
+ n.io,javax.annotation",com.google.common.util.concurrent;version="20.0.
+ 0";uses:="com.google.common.base,com.google.common.collect,javax.annota
+ tion",com.google.common.xml;version="20.0.0";uses:="com.google.common.e
+ scape"
+Import-Package: javax.annotation;resolution:=optional,javax.crypto;resol
+ ution:=optional,javax.crypto.spec;resolution:=optional,sun.misc;resolut
+ ion:=optional
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.6))"
+Tool: Bnd-2.3.0.201405100607
