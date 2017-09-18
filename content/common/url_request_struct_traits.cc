@@ -12,8 +12,6 @@ content::mojom::RequestPriority
 EnumTraits<content::mojom::RequestPriority, net::RequestPriority>::ToMojom(
     net::RequestPriority priority) {
   switch (priority) {
-    case net::THROTTLED:
-      return content::mojom::RequestPriority::kThrottled;
     case net::IDLE:
       return content::mojom::RequestPriority::kIdle;
     case net::LOWEST:
@@ -32,9 +30,6 @@ EnumTraits<content::mojom::RequestPriority, net::RequestPriority>::ToMojom(
 bool EnumTraits<content::mojom::RequestPriority, net::RequestPriority>::
     FromMojom(content::mojom::RequestPriority in, net::RequestPriority* out) {
   switch (in) {
-    case content::mojom::RequestPriority::kThrottled:
-      *out = net::THROTTLED;
-      return true;
     case content::mojom::RequestPriority::kIdle:
       *out = net::IDLE;
       return true;

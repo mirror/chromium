@@ -21,8 +21,7 @@ struct URLLoaderStatus;
 
 // This enum corresponds to net::RequestPriority. See its comments for details.
 enum RequestPriority {
-  kThrottled = 0,
-  kIdle,
+  kIdle = 0,
   kLowest,
   kLow,
   kMedium,

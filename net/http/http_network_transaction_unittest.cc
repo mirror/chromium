@@ -9,7 +9,6 @@
 #include <stdint.h>
 
 #include <limits>
-#include <set>
 #include <string>
 #include <utility>
 #include <vector>
@@ -35,7 +34,6 @@
 #include "net/base/load_timing_info.h"
 #include "net/base/load_timing_info_test_util.h"
 #include "net/base/net_errors.h"
-#include "net/base/network_throttle_manager.h"
 #include "net/base/proxy_delegate.h"
 #include "net/base/request_priority.h"
 #include "net/base/test_completion_callback.h"
@@ -113,105 +111,6 @@ using base::ASCIIToUTF16;
 namespace net {
 
 namespace {
-
-class TestNetworkStreamThrottler : public NetworkThrottleManager {
- public:
-  TestNetworkStreamThrottler()
-      : throttle_new_requests_(false),
-        num_set_priority_calls_(0),
-        last_priority_set_(IDLE) {}
-
-  ~TestNetworkStreamThrottler() override {
-    EXPECT_TRUE(outstanding_throttles_.empty());
-  }
-
-  // NetworkThrottleManager
-  std::unique_ptr<Throttle> CreateThrottle(ThrottleDelegate* delegate,
-                                           RequestPriority priority,
-                                           bool ignore_limits) override {
-    auto test_throttle =
-        std::make_unique<TestThrottle>(throttle_new_requests_, delegate, this);
-    outstanding_throttles_.insert(test_throttle.get());
-    return std::move(test_throttle);
-  }
-
-  void UnthrottleAllRequests() {
-    std::set<TestThrottle*> outstanding_throttles_copy(outstanding_throttles_);
-    for (auto* throttle : outstanding_throttles_copy) {
-      if (throttle->IsBlocked())
-        throttle->Unthrottle();
-    }
-  }
-
-  void set_throttle_new_requests(bool throttle_new_requests) {
-    throttle_new_requests_ = throttle_new_requests;
-  }
-
-  // Includes both throttled and unthrottled throttles.
-  size_t num_outstanding_requests() const {
-    return outstanding_throttles_.size();
-  }
-
-  int num_set_priority_calls() const { return num_set_priority_calls_; }
-  RequestPriority last_priority_set() const { return last_priority_set_; }
-  void set_priority_change_closure(
-      const base::Closure& priority_change_closure) {
-    priority_change_closure_ = priority_change_closure;
-  }
-
- private:
-  class TestThrottle : public NetworkThrottleManager::Throttle {
-   public:
-    ~TestThrottle() override { throttler_->OnThrottleDestroyed(this); }
-
-    // Throttle
-    bool IsBlocked() const override { return throttled_; }
-    RequestPriority Priority() const override {
-      NOTREACHED();
-      return IDLE;
-    }
-    void SetPriority(RequestPriority priority) override {
-      throttler_->SetPriorityCalled(priority);
-    }
-
-    TestThrottle(bool throttled,
-                 ThrottleDelegate* delegate,
-                 TestNetworkStreamThrottler* throttler)
-        : throttled_(throttled), delegate_(delegate), throttler_(throttler) {}
-
-    void Unthrottle() {
-      EXPECT_TRUE(throttled_);
-
-      throttled_ = false;
-      delegate_->OnThrottleUnblocked(this);
-    }
-
-    bool throttled_;
-    ThrottleDelegate* delegate_;
-    TestNetworkStreamThrottler* throttler_;
-  };
-
-  void OnThrottleDestroyed(TestThrottle* throttle) {
-    EXPECT_NE(0u, outstanding_throttles_.count(throttle));
-    outstanding_throttles_.erase(throttle);
-  }
-
-  void SetPriorityCalled(RequestPriority priority) {
-    ++num_set_priority_calls_;
-    last_priority_set_ = priority;
-    if (!priority_change_closure_.is_null())
-      priority_change_closure_.Run();
-  }
-
-  // Includes both throttled and unthrottled throttles.
-  std::set<TestThrottle*> outstanding_throttles_;
-  bool throttle_new_requests_;
-  int num_set_priority_calls_;
-  RequestPriority last_priority_set_;
-  base::Closure priority_change_closure_;
-
-  DISALLOW_COPY_AND_ASSIGN(TestNetworkStreamThrottler);
-};
 
 const base::string16 kBar(ASCIIToUTF16("bar"));
 const base::string16 kBar2(ASCIIToUTF16("bar2"));
@@ -361,23 +260,6 @@ std::unique_ptr<HttpNetworkSession> CreateSession(
   return SpdySessionDependencies::SpdyCreateSession(session_deps);
 }
 
-// Note that the pointer written into |*throttler| will only be valid
-// for the lifetime of the returned HttpNetworkSession.
-std::unique_ptr<HttpNetworkSession> CreateSessionWithThrottler(
-    SpdySessionDependencies* session_deps,
-    TestNetworkStreamThrottler** throttler) {
-  std::unique_ptr<HttpNetworkSession> session(
-      SpdySessionDependencies::SpdyCreateSession(session_deps));
-
-  auto owned_throttler = std::make_unique<TestNetworkStreamThrottler>();
-  *throttler = owned_throttler.get();
-
-  HttpNetworkSessionPeer peer(session.get());
-  peer.SetNetworkStreamThrottler(std::move(owned_throttler));
-
-  return session;
-}
-
 class FailingProxyResolverFactory : public ProxyResolverFactory {
  public:
   FailingProxyResolverFactory() : ProxyResolverFactory(false) {}
@@ -463,6 +345,7 @@ class HttpNetworkTransactionTest : public PlatformTest {
     HttpRequestInfo request;
     request.method = "GET";
     request.url = GURL("http://www.example.org/");
+    request.load_flags = 0;
 
     BoundTestNetLog log;
     session_deps_.net_log = log.bound().net_log();
@@ -1185,6 +1068,7 @@ TEST_F(HttpNetworkTransactionTest, TwoIdenticalLocationHeaders) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://redirect.com/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -1229,6 +1113,7 @@ TEST_F(HttpNetworkTransactionTest, Head) {
   HttpRequestInfo request;
   request.method = "HEAD";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -1309,6 +1194,7 @@ TEST_F(HttpNetworkTransactionTest, ReuseConnection) {
     HttpRequestInfo request;
     request.method = "GET";
     request.url = GURL("http://www.example.org/");
+    request.load_flags = 0;
 
     HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
 
@@ -1344,6 +1230,7 @@ TEST_F(HttpNetworkTransactionTest, Ignores100) {
   request.method = "POST";
   request.url = GURL("http://www.foo.com/");
   request.upload_data_stream = &upload_data_stream;
+  request.load_flags = 0;
 
   // Check the upload progress returned before initialization is correct.
   UploadProgress progress = request.upload_data_stream->GetUploadProgress();
@@ -1389,6 +1276,7 @@ TEST_F(HttpNetworkTransactionTest, Ignores1xx) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.foo.com/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -1426,6 +1314,7 @@ TEST_F(HttpNetworkTransactionTest, Incomplete100ThenEOF) {
   HttpRequestInfo request;
   request.method = "POST";
   request.url = GURL("http://www.foo.com/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -1455,6 +1344,7 @@ TEST_F(HttpNetworkTransactionTest, EmptyResponse) {
   HttpRequestInfo request;
   request.method = "POST";
   request.url = GURL("http://www.foo.com/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -1480,6 +1370,7 @@ void HttpNetworkTransactionTest::KeepAliveConnectionResendRequestTest(
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.foo.com/");
+  request.load_flags = 0;
 
   TestNetLog net_log;
   session_deps_.net_log = &net_log;
@@ -1569,6 +1460,7 @@ void HttpNetworkTransactionTest::PreconnectErrorResendRequestTest(
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.foo.com/");
+  request.load_flags = 0;
 
   TestNetLog net_log;
   session_deps_.net_log = &net_log;
@@ -1847,6 +1739,7 @@ TEST_F(HttpNetworkTransactionTest, NonKeepAliveConnectionReset) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -1902,6 +1795,7 @@ TEST_F(HttpNetworkTransactionTest, KeepAliveEarlyClose) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   auto trans =
@@ -1942,6 +1836,7 @@ TEST_F(HttpNetworkTransactionTest, KeepAliveEarlyClose2) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   auto trans =
@@ -1981,6 +1876,7 @@ TEST_F(HttpNetworkTransactionTest, KeepAliveAfterUnreadBody) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.foo.com/");
+  request.load_flags = 0;
 
   TestNetLog net_log;
   session_deps_.net_log = &net_log;
@@ -2397,6 +2293,7 @@ TEST_F(HttpNetworkTransactionTest, BasicAuth) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   TestNetLog log;
   session_deps_.net_log = &log;
@@ -2503,6 +2400,7 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthWithAddressChange) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   TestNetLog log;
   MockHostResolver* resolver = new MockHostResolver();
@@ -2667,6 +2565,7 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthKeepAlive) {
     HttpRequestInfo request;
     request.method = "GET";
     request.url = GURL("http://www.example.org/");
+    request.load_flags = 0;
 
     TestNetLog log;
     session_deps_.net_log = &log;
@@ -2756,6 +2655,7 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthKeepAliveNoBody) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
 
@@ -2829,6 +2729,7 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthKeepAliveLargeBody) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
 
@@ -2910,6 +2811,7 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthKeepAliveImpatientServer) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
 
@@ -3680,6 +3582,7 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthProxyCancelTunnel) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   // Configure against proxy server "myproxy:70".
   session_deps_.proxy_service = ProxyService::CreateFixed("myproxy:70");
@@ -3737,6 +3640,7 @@ TEST_F(HttpNetworkTransactionTest, SanitizeProxyAuthHeaders) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   // Configure against proxy server "myproxy:70".
   session_deps_.proxy_service = ProxyService::CreateFixed("myproxy:70");
@@ -3797,6 +3701,7 @@ TEST_F(HttpNetworkTransactionTest, UnexpectedProxyAuth) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   // We are using a DIRECT connection (i.e. no proxy) for this session.
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
@@ -4724,6 +4629,7 @@ TEST_F(HttpNetworkTransactionTest, HttpsProxySpdyGet) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   // Configure against https proxy server "proxy:70".
   session_deps_.proxy_service = ProxyService::CreateFixed("https://proxy:70");
@@ -4783,6 +4689,7 @@ TEST_F(HttpNetworkTransactionTest, HttpsProxySpdyGetWithSessionRace) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   // Configure SPDY proxy server "proxy:70".
   session_deps_.proxy_service = ProxyService::CreateFixed("https://proxy:70");
@@ -4850,6 +4757,7 @@ TEST_F(HttpNetworkTransactionTest, HttpsProxySpdyGetWithProxyAuth) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   // Configure against https proxy server "myproxy:70".
   session_deps_.proxy_service = ProxyService::CreateFixed("https://myproxy:70");
@@ -4942,6 +4850,7 @@ TEST_F(HttpNetworkTransactionTest, HttpsProxySpdyConnectHttps) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   // Configure against https proxy server "proxy:70".
   session_deps_.proxy_service = ProxyService::CreateFixed("https://proxy:70");
@@ -5024,6 +4933,7 @@ TEST_F(HttpNetworkTransactionTest, HttpsProxySpdyConnectSpdy) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   // Configure against https proxy server "proxy:70".
   session_deps_.proxy_service = ProxyService::CreateFixed("https://proxy:70");
@@ -5110,6 +5020,7 @@ TEST_F(HttpNetworkTransactionTest, HttpsProxySpdyConnectFailure) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   // Configure against https proxy server "proxy:70".
   session_deps_.proxy_service = ProxyService::CreateFixed("https://proxy:70");
@@ -5607,6 +5518,7 @@ void HttpNetworkTransactionTest::ConnectStatusHelperWithExpectedStatus(
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   // Configure against proxy server "myproxy:70".
   session_deps_.proxy_service = ProxyService::CreateFixed("myproxy:70");
@@ -5821,6 +5733,7 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthProxyThenServer) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   // Configure against proxy server "myproxy:70".
   session_deps_.proxy_service = ProxyService::CreateFixed("myproxy:70");
@@ -6438,6 +6351,7 @@ TEST_F(HttpNetworkTransactionTest, LargeHeadersNoBody) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -6471,6 +6385,7 @@ TEST_F(HttpNetworkTransactionTest, DontRecycleTransportSocketForSSLTunnel) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   // Configure against proxy server "myproxy:70".
   session_deps_.proxy_service = ProxyService::CreateFixed("myproxy:70");
@@ -6526,6 +6441,7 @@ TEST_F(HttpNetworkTransactionTest, RecycleSocket) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
 
@@ -6580,6 +6496,7 @@ TEST_F(HttpNetworkTransactionTest, RecycleSSLSocket) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   MockWrite data_writes[] = {
       MockWrite(
@@ -6638,6 +6555,7 @@ TEST_F(HttpNetworkTransactionTest, RecycleDeadSSLSocket) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   MockWrite data_writes[] = {
       MockWrite(
@@ -6869,6 +6787,7 @@ TEST_F(HttpNetworkTransactionTest, RecycleSocketAfterZeroContentLength) {
       "tran=undefined&ei=mAXcSeegAo-SMurloeUN&"
       "e=17259,18167,19592,19773,19981,20133,20173,20233&"
       "rt=prt.2642,ol.2649,xjs.2951");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
 
@@ -7285,6 +7204,7 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthCacheAndPreauth) {
     HttpRequestInfo request;
     request.method = "GET";
     request.url = GURL("http://www.example.org/x/y/z");
+    request.load_flags = 0;
 
     HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
 
@@ -7361,6 +7281,7 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthCacheAndPreauth) {
     // Note that Transaction 1 was at /x/y/z, so this is in the same
     // protection space as MyRealm1.
     request.url = GURL("http://www.example.org/x/y/a/b");
+    request.load_flags = 0;
 
     HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
 
@@ -7445,6 +7366,7 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthCacheAndPreauth) {
     HttpRequestInfo request;
     request.method = "GET";
     request.url = GURL("http://www.example.org/x/y/z2");
+    request.load_flags = 0;
 
     HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
 
@@ -7492,6 +7414,7 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthCacheAndPreauth) {
     HttpRequestInfo request;
     request.method = "GET";
     request.url = GURL("http://www.example.org/x/1");
+    request.load_flags = 0;
 
     HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
 
@@ -7562,6 +7485,7 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthCacheAndPreauth) {
     HttpRequestInfo request;
     request.method = "GET";
     request.url = GURL("http://www.example.org/p/q/t");
+    request.load_flags = 0;
 
     HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
 
@@ -7675,6 +7599,7 @@ TEST_F(HttpNetworkTransactionTest, DigestPreAuthNonceCount) {
     HttpRequestInfo request;
     request.method = "GET";
     request.url = GURL("http://www.example.org/x/y/z");
+    request.load_flags = 0;
 
     HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
 
@@ -7754,6 +7679,7 @@ TEST_F(HttpNetworkTransactionTest, DigestPreAuthNonceCount) {
     // Note that Transaction 1 was at /x/y/z, so this is in the same
     // protection space as digest.
     request.url = GURL("http://www.example.org/x/y/a/b");
+    request.load_flags = 0;
 
     HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
 
@@ -7840,6 +7766,7 @@ TEST_F(HttpNetworkTransactionTest, HTTPSBadCertificate) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -7897,6 +7824,7 @@ TEST_F(HttpNetworkTransactionTest, HTTPSBadCertificateViaProxy) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   MockWrite proxy_writes[] = {
       MockWrite("CONNECT www.example.org:443 HTTP/1.1\r\n"
@@ -7977,6 +7905,7 @@ TEST_F(HttpNetworkTransactionTest, HTTPSViaHttpsProxy) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   MockWrite data_writes[] = {
       MockWrite("CONNECT www.example.org:443 HTTP/1.1\r\n"
@@ -8040,6 +7969,7 @@ TEST_F(HttpNetworkTransactionTest, RedirectOfHttpsConnectViaHttpsProxy) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   MockWrite data_writes[] = {
       MockWrite("CONNECT www.example.org:443 HTTP/1.1\r\n"
@@ -8111,6 +8041,7 @@ TEST_F(HttpNetworkTransactionTest, RedirectOfHttpsConnectViaSpdyProxy) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   SpdySerializedFrame conn(spdy_util_.ConstructSpdyConnect(
       NULL, 0, 1, LOWEST, HostPortPair("www.example.org", 443)));
@@ -8166,6 +8097,7 @@ TEST_F(HttpNetworkTransactionTest, ErrorResponseToHttpsConnectViaHttpsProxy) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   MockWrite data_writes[] = {
       MockWrite("CONNECT www.example.org:443 HTTP/1.1\r\n"
@@ -8208,6 +8140,7 @@ TEST_F(HttpNetworkTransactionTest, ErrorResponseToHttpsConnectViaSpdyProxy) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   SpdySerializedFrame conn(spdy_util_.ConstructSpdyConnect(
       NULL, 0, 1, LOWEST, HostPortPair("www.example.org", 443)));
@@ -8681,6 +8614,7 @@ TEST_F(HttpNetworkTransactionTest, HTTPSBadCertificateViaHttpsProxy) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   // Attempt to fetch the URL from a server with a bad cert
   MockWrite bad_cert_writes[] = {
@@ -8834,6 +8768,7 @@ TEST_F(HttpNetworkTransactionTest, BuildRequest_Referer) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
   request.extra_headers.SetHeader(HttpRequestHeaders::kReferer,
                                   "http://the.previous.site.com/");
 
@@ -9139,6 +9074,7 @@ TEST_F(HttpNetworkTransactionTest, SOCKS4_HTTP_GET) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   session_deps_.proxy_service =
       ProxyService::CreateFixedFromPacResult("SOCKS myproxy:1080");
@@ -9197,6 +9133,7 @@ TEST_F(HttpNetworkTransactionTest, SOCKS4_SSL_GET) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   session_deps_.proxy_service =
       ProxyService::CreateFixedFromPacResult("SOCKS myproxy:1080");
@@ -9260,6 +9197,7 @@ TEST_F(HttpNetworkTransactionTest, SOCKS4_HTTP_GET_no_PAC) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   session_deps_.proxy_service =
       ProxyService::CreateFixed("socks4://myproxy:1080");
@@ -9317,6 +9255,7 @@ TEST_F(HttpNetworkTransactionTest, SOCKS5_HTTP_GET) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   session_deps_.proxy_service =
       ProxyService::CreateFixedFromPacResult("SOCKS5 myproxy:1080");
@@ -9388,6 +9327,7 @@ TEST_F(HttpNetworkTransactionTest, SOCKS5_SSL_GET) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   session_deps_.proxy_service =
       ProxyService::CreateFixedFromPacResult("SOCKS5 myproxy:1080");
@@ -9491,6 +9431,7 @@ int GroupNameTransactionHelper(const std::string& url,
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL(url);
+  request.load_flags = 0;
 
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session);
 
@@ -9799,6 +9740,7 @@ TEST_F(HttpNetworkTransactionTest, RequestWriteError) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.foo.com/");
+  request.load_flags = 0;
 
   MockWrite write_failure[] = {
     MockWrite(ASYNC, ERR_CONNECTION_RESET),
@@ -9828,6 +9770,7 @@ TEST_F(HttpNetworkTransactionTest, ConnectionClosedAfterStartOfHeaders) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.foo.com/");
+  request.load_flags = 0;
 
   MockRead data_reads[] = {
     MockRead("HTTP/1."),
@@ -9870,6 +9813,7 @@ TEST_F(HttpNetworkTransactionTest, DrainResetOK) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   MockWrite data_writes1[] = {
       MockWrite(
@@ -9949,6 +9893,7 @@ TEST_F(HttpNetworkTransactionTest, HTTPSViaProxyWithExtraData) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   MockRead proxy_reads[] = {
     MockRead("HTTP/1.0 200 Connected\r\n\r\nExtra data"),
@@ -9979,6 +9924,7 @@ TEST_F(HttpNetworkTransactionTest, LargeContentLengthThenClose) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -10026,6 +9972,7 @@ TEST_F(HttpNetworkTransactionTest, UploadFileSmallerThanLength) {
   request.method = "POST";
   request.url = GURL("http://www.example.org/upload");
   request.upload_data_stream = &upload_data_stream;
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -10073,6 +10020,7 @@ TEST_F(HttpNetworkTransactionTest, UploadUnreadableFile) {
   request.method = "POST";
   request.url = GURL("http://www.example.org/upload");
   request.upload_data_stream = &upload_data_stream;
+  request.load_flags = 0;
 
   // If we try to upload an unreadable file, the transaction should fail.
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
@@ -10126,6 +10074,7 @@ TEST_F(HttpNetworkTransactionTest, CancelDuringInitRequestBody) {
   request.method = "POST";
   request.url = GURL("http://www.example.org/upload");
   request.upload_data_stream = &upload_data_stream;
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   auto trans =
@@ -10152,6 +10101,7 @@ TEST_F(HttpNetworkTransactionTest, ChangeAuthRealms) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   // First transaction will request a resource and receive a Basic challenge
   // with realm="first_realm".
@@ -10367,6 +10317,7 @@ TEST_F(HttpNetworkTransactionTest, HonorAlternativeServiceHeader) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   StaticSocketDataProvider data(data_reads, arraysize(data_reads), NULL, 0);
   session_deps_.socket_factory->AddSocketDataProvider(&data);
@@ -10578,6 +10529,7 @@ TEST_F(HttpNetworkTransactionTest, ClearAlternativeServices) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   TestCompletionCallback callback;
 
@@ -10613,6 +10565,7 @@ TEST_F(HttpNetworkTransactionTest, HonorMultipleAlternativeServiceHeaders) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   StaticSocketDataProvider data(data_reads, arraysize(data_reads), NULL, 0);
   session_deps_.socket_factory->AddSocketDataProvider(&data);
@@ -10710,6 +10663,7 @@ TEST_F(HttpNetworkTransactionTest, IdentifyQuicBroken) {
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
   request.method = "GET";
   request.url = GURL(origin_url);
+  request.load_flags = 0;
   TestCompletionCallback callback;
   NetErrorDetails details;
   EXPECT_FALSE(details.quic_broken);
@@ -10784,6 +10738,7 @@ TEST_F(HttpNetworkTransactionTest, IdentifyQuicNotBroken) {
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
   request.method = "GET";
   request.url = GURL(origin_url);
+  request.load_flags = 0;
   TestCompletionCallback callback;
   NetErrorDetails details;
   EXPECT_FALSE(details.quic_broken);
@@ -10797,6 +10752,7 @@ TEST_F(HttpNetworkTransactionTest, MarkBrokenAlternateProtocolAndFallback) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   MockConnect mock_connect(ASYNC, ERR_CONNECTION_REFUSED);
   StaticSocketDataProvider first_data;
@@ -11107,6 +11063,7 @@ TEST_F(HttpNetworkTransactionTest, AlternateProtocolUnsafeBlocked) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   // The alternate protocol request will error out before we attempt to connect,
   // so only the standard HTTP request will try to connect.
@@ -11152,6 +11109,7 @@ TEST_F(HttpNetworkTransactionTest, UseAlternateProtocolForNpnSpdy) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   MockRead data_reads[] = {
       MockRead("HTTP/1.1 200 OK\r\n"),
@@ -11233,6 +11191,7 @@ TEST_F(HttpNetworkTransactionTest, AlternateProtocolWithSpdyLateBinding) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   // First transaction receives Alt-Svc header over HTTP/1.1.
   MockRead data_reads[] = {
@@ -11347,6 +11306,7 @@ TEST_F(HttpNetworkTransactionTest, StallAlternativeServiceForNpnSpdy) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   MockRead data_reads[] = {
       MockRead("HTTP/1.1 200 OK\r\n"),
@@ -11563,6 +11523,7 @@ TEST_F(HttpNetworkTransactionTest, UseAlternativeServiceForTunneledNpnSpdy) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   MockRead data_reads[] = {
       MockRead("HTTP/1.1 200 OK\r\n"),
@@ -11667,6 +11628,7 @@ TEST_F(HttpNetworkTransactionTest,
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   MockRead data_reads[] = {
       MockRead("HTTP/1.1 200 OK\r\n"),
@@ -12600,6 +12562,7 @@ TEST_F(HttpNetworkTransactionTest, GenerateAuthToken) {
     HttpRequestInfo request;
     request.method = "GET";
     request.url = GURL(test_config.server_url);
+    request.load_flags = 0;
 
     std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
 
@@ -12705,6 +12668,7 @@ TEST_F(HttpNetworkTransactionTest, MultiRoundAuth) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = origin;
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
 
@@ -12878,6 +12842,7 @@ TEST_F(HttpNetworkTransactionTest, NpnWithHttpOverSSL) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   MockWrite data_writes[] = {
       MockWrite(
@@ -12933,6 +12898,7 @@ TEST_F(HttpNetworkTransactionTest, SpdyPostNPNServerHangup) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   SSLSocketDataProvider ssl(ASYNC, OK);
   ssl.next_proto = kProtoHTTP2;
@@ -13001,6 +12967,7 @@ TEST_F(HttpNetworkTransactionTest, SimpleCancel) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   session_deps_.host_resolver->set_synchronous_mode(true);
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
@@ -13047,6 +13014,7 @@ TEST_F(HttpNetworkTransactionTest, CancelAfterHeaders) {
     HttpRequestInfo request;
     request.method = "GET";
     request.url = GURL("http://www.example.org/");
+    request.load_flags = 0;
 
     HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
     TestCompletionCallback callback;
@@ -13380,6 +13348,7 @@ TEST_F(HttpNetworkTransactionTest, PreconnectWithExistingSpdySession) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("https://www.example.org/");
+  request.load_flags = 0;
 
   // This is the important line that marks this as a preconnect.
   request.motivation = HttpRequestInfo::PRECONNECT_MOTIVATED;
@@ -14382,6 +14351,7 @@ TEST_F(HttpNetworkTransactionTest, AlternativeServiceNotOnHttp11) {
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
   request.method = "GET";
   request.url = GURL("https://www.example.org:443");
+  request.load_flags = 0;
   TestCompletionCallback callback;
 
   // HTTP/2 (or SPDY) is required for alternative service, if HTTP/1.1 is
@@ -15081,6 +15051,7 @@ TEST_F(HttpNetworkTransactionTest, HttpSyncConnectError) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -15116,6 +15087,7 @@ TEST_F(HttpNetworkTransactionTest, HttpAsyncConnectError) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -15151,6 +15123,7 @@ TEST_F(HttpNetworkTransactionTest, HttpSyncWriteError) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -15183,6 +15156,7 @@ TEST_F(HttpNetworkTransactionTest, HttpAsyncWriteError) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -15215,6 +15189,7 @@ TEST_F(HttpNetworkTransactionTest, HttpSyncReadError) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -15250,6 +15225,7 @@ TEST_F(HttpNetworkTransactionTest, HttpAsyncReadError) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -15285,6 +15261,7 @@ TEST_F(HttpNetworkTransactionTest, GetFullRequestHeadersIncludesExtraHeader) {
   HttpRequestInfo request;
   request.method = "GET";
   request.url = GURL("http://www.example.org/");
+  request.load_flags = 0;
   request.extra_headers.SetHeader("X-Foo", "bar");
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
@@ -15992,6 +15969,7 @@ TEST_F(HttpNetworkTransactionTest, PostReadsErrorResponseAfterReset) {
   request.method = "POST";
   request.url = GURL("http://www.foo.com/");
   request.upload_data_stream = &upload_data_stream;
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -16130,6 +16108,7 @@ TEST_F(HttpNetworkTransactionTest,
   request.method = "POST";
   request.url = GURL("http://www.foo.com/");
   request.upload_data_stream = &upload_data_stream;
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -16181,6 +16160,7 @@ TEST_F(HttpNetworkTransactionTest, ChunkedPostReadsErrorResponseAfterReset) {
   request.method = "POST";
   request.url = GURL("http://www.foo.com/");
   request.upload_data_stream = &upload_data_stream;
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -16239,6 +16219,7 @@ TEST_F(HttpNetworkTransactionTest, PostReadsErrorResponseAfterResetAnd100) {
   request.method = "POST";
   request.url = GURL("http://www.foo.com/");
   request.upload_data_stream = &upload_data_stream;
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -16291,6 +16272,7 @@ TEST_F(HttpNetworkTransactionTest, PostIgnoresNonErrorResponseAfterReset) {
   request.method = "POST";
   request.url = GURL("http://www.foo.com/");
   request.upload_data_stream = &upload_data_stream;
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -16332,6 +16314,7 @@ TEST_F(HttpNetworkTransactionTest,
   request.method = "POST";
   request.url = GURL("http://www.foo.com/");
   request.upload_data_stream = &upload_data_stream;
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -16374,6 +16357,7 @@ TEST_F(HttpNetworkTransactionTest, PostIgnoresHttp09ResponseAfterReset) {
   request.method = "POST";
   request.url = GURL("http://www.foo.com/");
   request.upload_data_stream = &upload_data_stream;
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -16413,6 +16397,7 @@ TEST_F(HttpNetworkTransactionTest, PostIgnoresPartial400HeadersAfterReset) {
   request.method = "POST";
   request.url = GURL("http://www.foo.com/");
   request.upload_data_stream = &upload_data_stream;
+  request.load_flags = 0;
 
   std::unique_ptr<HttpNetworkSession> session(CreateSession(&session_deps_));
   HttpNetworkTransaction trans(DEFAULT_PRIORITY, session.get());
@@ -16760,294 +16745,6 @@ TEST_F(HttpNetworkTransactionTest, TotalNetworkBytesChunkedPost) {
             trans.GetTotalSentBytes());
   EXPECT_EQ(CountReadBytes(data_reads, arraysize(data_reads)),
             trans.GetTotalReceivedBytes());
-}
-
-// Confirm that transactions whose throttle is created in (and stays in)
-// the unthrottled state are not blocked.
-TEST_F(HttpNetworkTransactionTest, ThrottlingUnthrottled) {
-  TestNetworkStreamThrottler* throttler(nullptr);
-  std::unique_ptr<HttpNetworkSession> session(
-      CreateSessionWithThrottler(&session_deps_, &throttler));
-
-  // Send a simple request and make sure it goes through.
-  HttpRequestInfo request;
-  request.method = "GET";
-  request.url = GURL("http://www.example.org/");
-
-  auto trans =
-      std::make_unique<HttpNetworkTransaction>(DEFAULT_PRIORITY, session.get());
-
-  MockWrite data_writes[] = {
-      MockWrite("GET / HTTP/1.1\r\n"
-                "Host: www.example.org\r\n"
-                "Connection: keep-alive\r\n\r\n"),
-  };
-  MockRead data_reads[] = {
-      MockRead("HTTP/1.0 200 OK\r\n\r\n"), MockRead("hello world"),
-      MockRead(SYNCHRONOUS, OK),
-  };
-  StaticSocketDataProvider reads(data_reads, arraysize(data_reads), data_writes,
-                                 arraysize(data_writes));
-  session_deps_.socket_factory->AddSocketDataProvider(&reads);
-
-  TestCompletionCallback callback;
-  trans->Start(&request, callback.callback(), NetLogWithSource());
-  EXPECT_EQ(OK, callback.WaitForResult());
-}
-
-// Confirm requests can be blocked by a throttler, and are resumed
-// when the throttle is unblocked.
-TEST_F(HttpNetworkTransactionTest, ThrottlingBasic) {
-  TestNetworkStreamThrottler* throttler(nullptr);
-  std::unique_ptr<HttpNetworkSession> session(
-      CreateSessionWithThrottler(&session_deps_, &throttler));
-
-  // Send a simple request and make sure it goes through.
-  HttpRequestInfo request;
-  request.method = "GET";
-  request.url = GURL("http://www.example.org/");
-
-  MockWrite data_writes[] = {
-      MockWrite("GET / HTTP/1.1\r\n"
-                "Host: www.example.org\r\n"
-                "Connection: keep-alive\r\n\r\n"),
-  };
-  MockRead data_reads[] = {
-      MockRead("HTTP/1.0 200 OK\r\n\r\n"), MockRead("hello world"),
-      MockRead(SYNCHRONOUS, OK),
-  };
-  StaticSocketDataProvider reads(data_reads, arraysize(data_reads), data_writes,
-                                 arraysize(data_writes));
-  session_deps_.socket_factory->AddSocketDataProvider(&reads);
-
-  // Start a request that will be throttled at start; confirm it
-  // doesn't complete.
-  throttler->set_throttle_new_requests(true);
-  auto trans =
-      std::make_unique<HttpNetworkTransaction>(DEFAULT_PRIORITY, session.get());
-
-  TestCompletionCallback callback;
-  int rv = trans->Start(&request, callback.callback(), NetLogWithSource());
-  EXPECT_EQ(ERR_IO_PENDING, rv);
-
-  base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(LOAD_STATE_THROTTLED, trans->GetLoadState());
-  EXPECT_FALSE(callback.have_result());
-
-  // Confirm the request goes on to complete when unthrottled.
-  throttler->UnthrottleAllRequests();
-  base::RunLoop().RunUntilIdle();
-  ASSERT_TRUE(callback.have_result());
-  EXPECT_EQ(OK, callback.WaitForResult());
-}
-
-// Destroy a request while it's throttled.
-TEST_F(HttpNetworkTransactionTest, ThrottlingDestruction) {
-  TestNetworkStreamThrottler* throttler(nullptr);
-  std::unique_ptr<HttpNetworkSession> session(
-      CreateSessionWithThrottler(&session_deps_, &throttler));
-
-  // Send a simple request and make sure it goes through.
-  HttpRequestInfo request;
-  request.method = "GET";
-  request.url = GURL("http://www.example.org/");
-
-  MockWrite data_writes[] = {
-      MockWrite("GET / HTTP/1.1\r\n"
-                "Host: www.example.org\r\n"
-                "Connection: keep-alive\r\n\r\n"),
-  };
-  MockRead data_reads[] = {
-      MockRead("HTTP/1.0 200 OK\r\n\r\n"), MockRead("hello world"),
-      MockRead(SYNCHRONOUS, OK),
-  };
-  StaticSocketDataProvider reads(data_reads, arraysize(data_reads), data_writes,
-                                 arraysize(data_writes));
-  session_deps_.socket_factory->AddSocketDataProvider(&reads);
-
-  // Start a request that will be throttled at start; confirm it
-  // doesn't complete.
-  throttler->set_throttle_new_requests(true);
-  auto trans =
-      std::make_unique<HttpNetworkTransaction>(DEFAULT_PRIORITY, session.get());
-
-  TestCompletionCallback callback;
-  int rv = trans->Start(&request, callback.callback(), NetLogWithSource());
-  EXPECT_EQ(ERR_IO_PENDING, rv);
-
-  base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(LOAD_STATE_THROTTLED, trans->GetLoadState());
-  EXPECT_FALSE(callback.have_result());
-
-  EXPECT_EQ(1u, throttler->num_outstanding_requests());
-  trans.reset();
-  EXPECT_EQ(0u, throttler->num_outstanding_requests());
-}
-
-// Confirm the throttler receives SetPriority calls.
-TEST_F(HttpNetworkTransactionTest, ThrottlingPrioritySet) {
-  TestNetworkStreamThrottler* throttler(nullptr);
-  std::unique_ptr<HttpNetworkSession> session(
-      CreateSessionWithThrottler(&session_deps_, &throttler));
-
-  // Send a simple request and make sure it goes through.
-  HttpRequestInfo request;
-  request.method = "GET";
-  request.url = GURL("http://www.example.org/");
-
-  MockWrite data_writes[] = {
-      MockWrite("GET / HTTP/1.1\r\n"
-                "Host: www.example.org\r\n"
-                "Connection: keep-alive\r\n\r\n"),
-  };
-  MockRead data_reads[] = {
-      MockRead("HTTP/1.0 200 OK\r\n\r\n"), MockRead("hello world"),
-      MockRead(SYNCHRONOUS, OK),
-  };
-  StaticSocketDataProvider reads(data_reads, arraysize(data_reads), data_writes,
-                                 arraysize(data_writes));
-  session_deps_.socket_factory->AddSocketDataProvider(&reads);
-
-  throttler->set_throttle_new_requests(true);
-  auto trans = std::make_unique<HttpNetworkTransaction>(IDLE, session.get());
-  // Start the transaction to associate a throttle with it.
-  TestCompletionCallback callback;
-  int rv = trans->Start(&request, callback.callback(), NetLogWithSource());
-  EXPECT_EQ(ERR_IO_PENDING, rv);
-
-  EXPECT_EQ(0, throttler->num_set_priority_calls());
-  trans->SetPriority(LOW);
-  EXPECT_EQ(1, throttler->num_set_priority_calls());
-  EXPECT_EQ(LOW, throttler->last_priority_set());
-
-  throttler->UnthrottleAllRequests();
-  base::RunLoop().RunUntilIdle();
-  ASSERT_TRUE(callback.have_result());
-  EXPECT_EQ(OK, callback.WaitForResult());
-}
-
-// Confirm that unthrottling from a SetPriority call by the
-// throttler works properly.
-TEST_F(HttpNetworkTransactionTest, ThrottlingPrioritySetUnthrottle) {
-  TestNetworkStreamThrottler* throttler(nullptr);
-  std::unique_ptr<HttpNetworkSession> session(
-      CreateSessionWithThrottler(&session_deps_, &throttler));
-
-  // Send a simple request and make sure it goes through.
-  HttpRequestInfo request;
-  request.method = "GET";
-  request.url = GURL("http://www.example.org/");
-
-  MockWrite data_writes[] = {
-      MockWrite("GET / HTTP/1.1\r\n"
-                "Host: www.example.org\r\n"
-                "Connection: keep-alive\r\n\r\n"),
-  };
-  MockRead data_reads[] = {
-      MockRead("HTTP/1.0 200 OK\r\n\r\n"), MockRead("hello world"),
-      MockRead(SYNCHRONOUS, OK),
-  };
-  StaticSocketDataProvider reads(data_reads, arraysize(data_reads), data_writes,
-                                 arraysize(data_writes));
-  session_deps_.socket_factory->AddSocketDataProvider(&reads);
-
-  StaticSocketDataProvider reads1(data_reads, arraysize(data_reads),
-                                  data_writes, arraysize(data_writes));
-  session_deps_.socket_factory->AddSocketDataProvider(&reads1);
-
-  // Start a request that will be throttled at start; confirm it
-  // doesn't complete.
-  throttler->set_throttle_new_requests(true);
-  auto trans =
-      std::make_unique<HttpNetworkTransaction>(DEFAULT_PRIORITY, session.get());
-
-  TestCompletionCallback callback;
-  int rv = trans->Start(&request, callback.callback(), NetLogWithSource());
-  EXPECT_EQ(ERR_IO_PENDING, rv);
-
-  base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(LOAD_STATE_THROTTLED, trans->GetLoadState());
-  EXPECT_FALSE(callback.have_result());
-
-  // Create a new request, call SetPriority on it to unthrottle,
-  // and make sure that allows the original request to complete.
-  auto trans1 = std::make_unique<HttpNetworkTransaction>(LOW, session.get());
-  throttler->set_priority_change_closure(
-      base::Bind(&TestNetworkStreamThrottler::UnthrottleAllRequests,
-                 base::Unretained(throttler)));
-
-  // Start the transaction to associate a throttle with it.
-  TestCompletionCallback callback1;
-  rv = trans1->Start(&request, callback1.callback(), NetLogWithSource());
-  EXPECT_EQ(ERR_IO_PENDING, rv);
-
-  trans1->SetPriority(IDLE);
-
-  base::RunLoop().RunUntilIdle();
-  ASSERT_TRUE(callback.have_result());
-  EXPECT_EQ(OK, callback.WaitForResult());
-  ASSERT_TRUE(callback1.have_result());
-  EXPECT_EQ(OK, callback1.WaitForResult());
-}
-
-// Transaction will be destroyed when the unique_ptr goes out of scope.
-void DestroyTransaction(std::unique_ptr<HttpNetworkTransaction> transaction) {}
-
-// Confirm that destroying a transaction from a SetPriority call by the
-// throttler works properly.
-TEST_F(HttpNetworkTransactionTest, ThrottlingPrioritySetDestroy) {
-  TestNetworkStreamThrottler* throttler(nullptr);
-  std::unique_ptr<HttpNetworkSession> session(
-      CreateSessionWithThrottler(&session_deps_, &throttler));
-
-  // Send a simple request and make sure it goes through.
-  HttpRequestInfo request;
-  request.method = "GET";
-  request.url = GURL("http://www.example.org/");
-
-  MockWrite data_writes[] = {
-      MockWrite("GET / HTTP/1.1\r\n"
-                "Host: www.example.org\r\n"
-                "Connection: keep-alive\r\n\r\n"),
-  };
-  MockRead data_reads[] = {
-      MockRead("HTTP/1.0 200 OK\r\n\r\n"), MockRead("hello world"),
-      MockRead(SYNCHRONOUS, OK),
-  };
-  StaticSocketDataProvider reads(data_reads, arraysize(data_reads), data_writes,
-                                 arraysize(data_writes));
-  session_deps_.socket_factory->AddSocketDataProvider(&reads);
-
-  StaticSocketDataProvider reads1(data_reads, arraysize(data_reads),
-                                  data_writes, arraysize(data_writes));
-  session_deps_.socket_factory->AddSocketDataProvider(&reads1);
-
-  // Start a request that will be throttled at start; confirm it
-  // doesn't complete.
-  throttler->set_throttle_new_requests(true);
-  auto trans =
-      std::make_unique<HttpNetworkTransaction>(DEFAULT_PRIORITY, session.get());
-
-  TestCompletionCallback callback;
-  int rv = trans->Start(&request, callback.callback(), NetLogWithSource());
-  EXPECT_EQ(ERR_IO_PENDING, rv);
-
-  base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(LOAD_STATE_THROTTLED, trans->GetLoadState());
-  EXPECT_FALSE(callback.have_result());
-
-  // Arrange for the set priority call on the above transaction to delete
-  // the transaction.
-  HttpNetworkTransaction* trans_ptr(trans.get());
-  throttler->set_priority_change_closure(
-      base::Bind(&DestroyTransaction, base::Passed(&trans)));
-
-  // Call it and check results (partially a "doesn't crash" test).
-  trans_ptr->SetPriority(IDLE);
-  trans_ptr = nullptr;  // No longer a valid pointer.
-
-  base::RunLoop().RunUntilIdle();
-  ASSERT_FALSE(callback.have_result());
 }
 
 #if !defined(OS_IOS)

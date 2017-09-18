@@ -650,9 +650,6 @@ TEST_F(SpdyNetworkTransactionTest, GetAtEachPriority) {
       case IDLE:
         EXPECT_EQ(4, spdy_prio);
         break;
-      case THROTTLED:
-        EXPECT_EQ(5, spdy_prio);
-        break;
       default:
         FAIL();
     }
