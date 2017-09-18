@@ -54,11 +54,13 @@ cr.define('print_preview.ticket_items', function() {
     /** @override */
     isCapabilityAvailable: function() {
       var cap = this.getPageOrientationCapability_();
-      if (!cap)
+      if (!cap || !cap.option)
         return false;
       var hasAutoOrPortraitOption = false;
       var hasLandscapeOption = false;
       cap.option.forEach(function(option) {
+        if (!option)
+          return;
         hasAutoOrPortraitOption = hasAutoOrPortraitOption ||
             option.type == 'AUTO' || option.type == 'PORTRAIT';
         hasLandscapeOption = hasLandscapeOption || option.type == 'LANDSCAPE';
@@ -75,8 +77,10 @@ cr.define('print_preview.ticket_items', function() {
     /** @override */
     getDefaultValueInternal: function() {
       var cap = this.getPageOrientationCapability_();
+      if (!cap || !cap.option)
+        return false;
       var defaultOptions = cap.option.filter(function(option) {
-        return option.is_default;
+        return option && option.is_default;
       });
       return defaultOptions.length == 0 ? false :
                                           defaultOptions[0].type == 'LANDSCAPE';
@@ -109,10 +113,10 @@ cr.define('print_preview.ticket_items', function() {
      */
     hasOption: function(value) {
       var cap = this.getPageOrientationCapability_();
-      if (!cap)
+      if (!cap || !cap.option)
         return false;
       return cap.option.some(function(option) {
-        return option.type == value;
+        return option && option.type == value;
       });
     },
 

@@ -32,12 +32,14 @@ cr.define('print_preview.ticket_items', function() {
     /** @override */
     isCapabilityAvailable: function() {
       var cap = this.getDuplexCapability_();
-      if (!cap) {
+      if (!cap || !cap.option) {
         return false;
       }
       var hasLongEdgeOption = false;
       var hasSimplexOption = false;
       cap.option.forEach(function(option) {
+        if (!option)
+          return;
         hasLongEdgeOption = hasLongEdgeOption || option.type == 'LONG_EDGE';
         hasSimplexOption = hasSimplexOption || option.type == 'NO_DUPLEX';
       });
@@ -48,7 +50,7 @@ cr.define('print_preview.ticket_items', function() {
     getDefaultValueInternal: function() {
       var cap = this.getDuplexCapability_();
       var defaultOptions = cap.option.filter(function(option) {
-        return option.is_default;
+        return option && option.is_default;
       });
       return defaultOptions.length == 0 ? false :
                                           defaultOptions[0].type == 'LONG_EDGE';

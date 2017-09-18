@@ -44,12 +44,14 @@ cr.define('print_preview.ticket_items', function() {
     /** @override */
     isCapabilityAvailable: function() {
       var capability = this.capability;
-      if (!capability) {
+      if (!capability || !capability.option) {
         return false;
       }
       var hasColor = false;
       var hasMonochrome = false;
       capability.option.forEach(function(option) {
+        if (!option)
+          return;
         hasColor = hasColor || (Color.COLOR_TYPES_.indexOf(option.type) >= 0);
         hasMonochrome = hasMonochrome ||
             (Color.MONOCHROME_TYPES_.indexOf(option.type) >= 0);
@@ -74,7 +76,7 @@ cr.define('print_preview.ticket_items', function() {
             this.getValue() ? Color.COLOR_TYPES_ : Color.MONOCHROME_TYPES_;
         for (var i = 0; i < typesToLookFor.length; i++) {
           var matchingOptions = options.filter(function(option) {
-            return option.type == typesToLookFor[i];
+            return option && option.type == typesToLookFor[i];
           });
           if (matchingOptions.length > 0) {
             return matchingOptions[0];
@@ -87,8 +89,9 @@ cr.define('print_preview.ticket_items', function() {
     /** @override */
     getDefaultValueInternal: function() {
       var capability = this.capability;
-      var defaultOption =
-          capability ? this.getDefaultColorOption_(capability.option) : null;
+      var defaultOption = capability && capability.option ?
+          this.getDefaultColorOption_(capability.option) :
+          null;
       return defaultOption &&
           (Color.COLOR_TYPES_.indexOf(defaultOption.type) >= 0);
     },
@@ -109,8 +112,8 @@ cr.define('print_preview.ticket_items', function() {
     },
 
     /**
-     * @param {!Array<!Object<{type: (string|undefined),
-     *                           is_default: (boolean|undefined)}>>} options
+     * @param {!Array<Object<{type: (string|undefined),
+     *                        is_default: (boolean|undefined)}>>} options
      * @return {Object<{type: (string|undefined),
      *                   is_default: (boolean|undefined)}>} Default color
      *     option of the given list.
@@ -118,7 +121,7 @@ cr.define('print_preview.ticket_items', function() {
      */
     getDefaultColorOption_: function(options) {
       var defaultOptions = options.filter(function(option) {
-        return option.is_default;
+        return option && option.is_default;
       });
       return (defaultOptions.length == 0) ? null : defaultOptions[0];
     }
