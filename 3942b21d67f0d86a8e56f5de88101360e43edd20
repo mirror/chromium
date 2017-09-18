@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f036771_e3c20ad7",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-18T23:37:52Z",
+      "side": 1,
+      "message": "It looks like this variable is not used. Was it intended to be used in this CL?",
+      "revId": "3942b21d67f0d86a8e56f5de88101360e43edd20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
