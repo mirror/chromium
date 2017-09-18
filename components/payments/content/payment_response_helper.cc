@@ -13,9 +13,11 @@
 #include "components/autofill/core/browser/autofill_data_util.h"
 #include "components/autofill/core/browser/autofill_type.h"
 #include "components/payments/content/payment_request_spec.h"
+#include "components/payments/content/service_worker_payment_instrument.h"
 #include "components/payments/core/payment_request_data_util.h"
 #include "components/payments/core/payment_request_delegate.h"
 #include "components/payments/core/payments_validators.h"
+#include "content/public/browser/browser_context.h"
 
 namespace payments {
 
@@ -62,8 +64,6 @@ PaymentResponseHelper::PaymentResponseHelper(
                                     /*timeout_seconds=*/5, this);
   }
 
-  // Start to get the instrument details. Will call back into
-  // OnInstrumentDetailsReady.
   selected_instrument_->InvokePaymentApp(this);
 }
 
