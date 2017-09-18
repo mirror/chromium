@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4d8cb8d_51dce57b",
+        "filename": "ui/app_list/app_list_constants.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-18T21:43:00Z",
+      "side": 1,
+      "message": "Get rid of \u0027\u0026\u0027. Otherwise, we are referencing a temp object.",
+      "range": {
+        "startLine": 292,
+        "startChar": 28,
+        "endLine": 292,
+        "endChar": 29
+      },
+      "revId": "b5465af45237cc14aab41ff4617f85969ef84231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
