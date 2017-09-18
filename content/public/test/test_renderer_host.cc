@@ -171,9 +171,10 @@ RenderViewHostTestEnabler::~RenderViewHostTestEnabler() {
 
 // RenderViewHostTestHarness --------------------------------------------------
 
-RenderViewHostTestHarness::RenderViewHostTestHarness()
-    : use_scoped_task_environment_(true),
-      thread_bundle_options_(TestBrowserThreadBundle::DEFAULT) {}
+RenderViewHostTestHarness::RenderViewHostTestHarness(int thread_bundle_options)
+    : scoped_task_environment_(
+          base::test::ScopedTaskEnvironment::MainThreadType::UI),
+      thread_bundle_(thread_bundle_options) {}
 
 RenderViewHostTestHarness::~RenderViewHostTestHarness() {
 }
@@ -268,15 +269,6 @@ void RenderViewHostTestHarness::SetUp() {
   ui::test::MaterialDesignControllerTestAPI::Uninitialize();
   ui::MaterialDesignController::Initialize();
 
-  if (use_scoped_task_environment_) {
-    // The TestBrowserThreadBundle is compatible with an existing
-    // ScopedTaskEnvironment if the main message loop is of UI type.
-    scoped_task_environment_ =
-        base::MakeUnique<base::test::ScopedTaskEnvironment>(
-            base::test::ScopedTaskEnvironment::MainThreadType::UI);
-  }
-  thread_bundle_.reset(new TestBrowserThreadBundle(thread_bundle_options_));
-
   rvh_test_enabler_.reset(new RenderViewHostTestEnabler);
   if (factory_)
     rvh_test_enabler_->rvh_factory_->set_render_process_host_factory(factory_);
@@ -336,8 +328,6 @@ void RenderViewHostTestHarness::TearDown() {
   BrowserThread::DeleteSoon(content::BrowserThread::UI,
                             FROM_HERE,
                             browser_context_.release());
-  thread_bundle_.reset();
-  scoped_task_environment_.reset();
 }
 
 BrowserContext* RenderViewHostTestHarness::CreateBrowserContext() {

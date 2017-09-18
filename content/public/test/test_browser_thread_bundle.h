@@ -114,6 +114,7 @@ class TestBrowserThreadBundle {
     REAL_FILE_THREAD = 1 << 2,
     REAL_IO_THREAD = 1 << 3,
     DONT_CREATE_BROWSER_THREADS = 1 << 4,
+    LAST = DONT_CREATE_BROWSER_THREADS
   };
 
   TestBrowserThreadBundle();

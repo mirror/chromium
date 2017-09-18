@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
+#include "base/test/scoped_task_environment.h"
 #include "chrome/browser/browser_process_platform_part.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/policy/device_cloud_policy_manager_chromeos.h"
@@ -73,6 +74,7 @@ class DeviceDisablingManagerTestBase : public testing::Test,
  private:
   chromeos::StubInstallAttributes* GetInstallAttributes();
 
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   chromeos::ScopedStubInstallAttributes install_attributes_;
   chromeos::ScopedTestDeviceSettingsService test_device_settings_service_;
   chromeos::ScopedTestCrosSettings test_cros_settings_;
