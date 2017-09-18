@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d56bdf9_73b5907e",
+        "filename": "chrome/browser/ui/ash/system_tray_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T16:15:48Z",
+      "side": 1,
+      "message": "nit: Let\u0027s use LOG(ERROR) here, or even DCHECK; in theory, this shouldn\u0027t be possible, should it?",
+      "revId": "4408dd69bdfe22ac1e483bc0458e4a40b340316b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2ae9b7a_f1f4aab7",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T16:15:48Z",
+      "side": 1,
+      "message": "Instead of adding the complexity of caching the default network in this class, use GetStateHandler()-\u003eFirstNetworkByType(NetworkTypePattern::NonVirtual()) below instead of DefaultNetwork(). That will also eliminate some potential edge cases.",
+      "revId": "4408dd69bdfe22ac1e483bc0458e4a40b340316b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08101cb_e2b4371c",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 749,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T16:15:48Z",
+      "side": 1,
+      "message": "We should add a comment somewhere that this code assumes that there is at most one Arc VPN Shill configuration.",
+      "revId": "4408dd69bdfe22ac1e483bc0458e4a40b340316b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4565e8a9_bdfdb5bb",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T16:15:48Z",
+      "side": 1,
+      "message": "We mix and match \u0027AndroidVpn\u0027 and \u0027arc_vpn\u0027 in this class, which is confusing to those of us not used to using those interchangably; let\u0027s pick one (presumably \u0027arc\u0027 since that\u0027s the directory/file name and its shorter).",
+      "revId": "4408dd69bdfe22ac1e483bc0458e4a40b340316b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e01e0342_cb788a3a",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T16:15:48Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to actually be used?",
+      "revId": "4408dd69bdfe22ac1e483bc0458e4a40b340316b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71f57072_3dfdd94d",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T16:15:48Z",
+      "side": 1,
+      "message": "This is really \u0027StringListToValue\u0027. Also, instead of using MakeUnique, you can just declare the result as a unique_ptr:\n\nstd::unique_ptr\u003cbase::Value\u003e result(new base::value);\nfor (const auto\u0026 s : strings)\n  result-\u003epush_back(base::Value(s));\nreturn result;",
+      "revId": "4408dd69bdfe22ac1e483bc0458e4a40b340316b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d2b3b96_108fa530",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T16:15:48Z",
+      "side": 1,
+      "message": "Since |guid| doesn\u0027t seem to actually be used here, we could have LookupArcVpn return |service_path| instead and avoid the extra lookup here.",
+      "revId": "4408dd69bdfe22ac1e483bc0458e4a40b340316b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52fda796_181c63b1",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T16:15:48Z",
+      "side": 1,
+      "message": "nit: return here and remove the \u0027else\u0027.",
+      "revId": "4408dd69bdfe22ac1e483bc0458e4a40b340316b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa73ecdd_b10499bd",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T16:15:48Z",
+      "side": 1,
+      "message": "Invert and early exit",
+      "revId": "4408dd69bdfe22ac1e483bc0458e4a40b340316b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c7fa629_d7a60792",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T16:15:48Z",
+      "side": 1,
+      "message": "LOG(ERROR)",
+      "revId": "4408dd69bdfe22ac1e483bc0458e4a40b340316b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6b69544_c2cfec38",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T16:15:48Z",
+      "side": 1,
+      "message": "Assuming that |service_path| should never be empty, this can just be:\nif (service_path !\u003d arc_vpn_service_path_)\n  return;",
+      "revId": "4408dd69bdfe22ac1e483bc0458e4a40b340316b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8392b95_21e0d2b1",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 923,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T16:15:48Z",
+      "side": 1,
+      "message": "networ-\u003epath() will never be empty, so the first empty test is not needed.",
+      "revId": "4408dd69bdfe22ac1e483bc0458e4a40b340316b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbdfe82a_7595b19a",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T16:15:48Z",
+      "side": 1,
+      "message": "nit: network-\u003eIsConnectingOrConnected()",
+      "revId": "4408dd69bdfe22ac1e483bc0458e4a40b340316b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377a54f1_aca9281a",
+        "filename": "components/arc/net/arc_net_host_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T16:15:48Z",
+      "side": 1,
+      "message": "I think this would be simpler if it returned a string, with an empty string indicating no VPN found.",
+      "revId": "4408dd69bdfe22ac1e483bc0458e4a40b340316b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a9fbdd0_e0a12bcb",
+        "filename": "components/arc/net/arc_net_host_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T16:15:48Z",
+      "side": 1,
+      "message": "Please document this. String list of what? Please use a more descriptive arg name than |in|.",
+      "revId": "4408dd69bdfe22ac1e483bc0458e4a40b340316b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7bafa47_e81f0b35",
+        "filename": "components/arc/net/arc_net_host_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-18T16:15:48Z",
+      "side": 1,
+      "message": "nit: Shill",
+      "revId": "4408dd69bdfe22ac1e483bc0458e4a40b340316b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
