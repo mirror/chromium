@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4cf4d9d_b09611ad",
+        "filename": "services/shape_detection/face_detection_impl_mac_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-09-18T16:46:12Z",
+      "side": 1,
+      "message": "s/image_datas/image_data/ ?\n\"Data\" is both singular and plural, so \"datas\" makes\nno sense.",
+      "range": {
+        "startLine": 75,
+        "startChar": 14,
+        "endLine": 75,
+        "endChar": 25
+      },
+      "revId": "1d232adc1cf9f21e19d1f4650d39271aae8243c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1f83c1c_a030cdd4",
+        "filename": "services/shape_detection/face_detection_impl_mac_unittest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-09-18T16:46:12Z",
+      "side": 1,
+      "message": "This function returns a boolean that should be\nASSERTed:\n\nhttps://cs.chromium.org/chromium/src/base/files/file_util.h?type\u003dcs\u0026q\u003dReadFileToString\u0026sq\u003dpackage:chromium\u0026l\u003d146",
+      "range": {
+        "startLine": 76,
+        "startChar": 8,
+        "endLine": 76,
+        "endChar": 24
+      },
+      "revId": "1d232adc1cf9f21e19d1f4650d39271aae8243c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
