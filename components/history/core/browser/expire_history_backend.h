@@ -223,7 +223,7 @@ class ExpireHistoryBackend {
   void DoExpireIteration();
 
   // Clears all old on-demand favicons from thumbnail database.
-  void ClearOldOnDemandFavicons(base::Time expiration_threshold);
+  void ClearOldOnDemandFavicons();
 
   // Tries to expire the oldest |max_visits| visits from history that are older
   // than |time_threshold|. The return value indicates if we think there might
