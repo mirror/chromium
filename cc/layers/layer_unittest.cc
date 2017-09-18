@@ -13,6 +13,7 @@
 #include "cc/animation/keyframed_animation_curve.h"
 #include "cc/base/math_util.h"
 #include "cc/input/main_thread_scrolling_reason.h"
+#include "cc/layers/layer_client.h"
 #include "cc/layers/layer_impl.h"
 #include "cc/layers/solid_color_scrollbar_layer.h"
 #include "cc/test/animation_test_common.h"
@@ -215,6 +216,8 @@ class LayerTest : public testing::Test {
 
   LayerTreeSettings settings_;
 };
+
+}  // namespace
 
 TEST_F(LayerTest, BasicCreateAndDestroy) {
   scoped_refptr<Layer> test_layer = Layer::Create();
@@ -1025,6 +1028,8 @@ TEST_F(LayerTest, MaskHasParent) {
   EXPECT_EQ(child.get(), mask_replacement->parent());
 }
 
+namespace {
+
 class LayerTreeHostFactory {
  public:
   std::unique_ptr<LayerTreeHost> Create(MutatorHost* mutator_host) {
@@ -1060,6 +1065,8 @@ void AssertLayerTreeHostMatchesForSubtree(Layer* layer, LayerTreeHost* host) {
 }
 
 class LayerLayerTreeHostTest : public testing::Test {};
+
+}  // namespace
 
 TEST_F(LayerLayerTreeHostTest, EnteringTree) {
   scoped_refptr<Layer> parent = Layer::Create();
@@ -1263,6 +1270,8 @@ TEST_F(LayerTest, SafeOpaqueBackgroundColor) {
   }
 }
 
+namespace {
+
 class DrawsContentChangeLayer : public Layer {
  public:
   static scoped_refptr<DrawsContentChangeLayer> Create() {
@@ -1290,6 +1299,8 @@ class DrawsContentChangeLayer : public Layer {
   bool fake_draws_content_;
 };
 
+}  // namespace
+
 TEST_F(LayerTest, DrawsContentChangedInSetLayerTreeHost) {
   scoped_refptr<Layer> root_layer = Layer::Create();
   scoped_refptr<DrawsContentChangeLayer> becomes_not_draws_content =
@@ -1308,10 +1319,14 @@ TEST_F(LayerTest, DrawsContentChangedInSetLayerTreeHost) {
   EXPECT_EQ(1, root_layer->NumDescendantsThatDrawContent());
 }
 
+namespace {
+
 void ReceiveCopyOutputResult(int* result_count,
                              std::unique_ptr<viz::CopyOutputResult> result) {
   ++(*result_count);
 }
+
+}  // namespace
 
 TEST_F(LayerTest, DedupesCopyOutputRequestsBySource) {
   scoped_refptr<Layer> layer = Layer::Create();
@@ -1486,6 +1501,70 @@ TEST_F(LayerTest, SetElementIdNotUsingLayerLists) {
   test_layer->SetLayerTreeHost(nullptr);
 }
 
+namespace {
+
+class MockLayerClient : public LayerClient {
+ public:
+  MockLayerClient() = default;
+
+  std::unique_ptr<base::trace_event::ConvertableToTraceFormat> TakeDebugInfo(
+      Layer* layer) override {
+    NOTIMPLEMENTED();
+    return nullptr;
+  }
+  void didUpdateMainThreadScrollingReasons() override { NOTIMPLEMENTED(); }
+  void didChangeScrollbarsHidden(bool) override { NOTIMPLEMENTED(); }
+
+  MOCK_METHOD2(OnLayerOpacityChanged, void(float, float));
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MockLayerClient);
+};
+
+}  // namespace
+
+// Verify that LayerClient::OnLayerOpacityChanged() is called when
+// Layer::SetOpacity() is called and the opacity changes.
+TEST_F(LayerTest, SetOpacityNotifiesClient) {
+  testing::StrictMock<MockLayerClient> client;
+  scoped_refptr<Layer> layer = Layer::Create();
+  layer->SetLayerClient(&client);
+  EXPECT_CALL(client, OnLayerOpacityChanged(1.0f, 0.5f));
+  layer->SetOpacity(0.5f);
+}
+
+// Verify that LayerClient::OnLayerOpacityChanged() is called when
+// Layer::OnOpacityAnimated() is called and the opacity changes.
+TEST_F(LayerTest, OnOpacityAnimatedNotifiesClient) {
+  testing::StrictMock<MockLayerClient> client;
+  scoped_refptr<Layer> layer = Layer::Create();
+  layer->SetLayerClient(&client);
+  EXPECT_CALL(client, OnLayerOpacityChanged(1.0f, 0.5f));
+  layer->OnOpacityAnimated(0.5f);
+}
+
+// Verify that LayerClient::OnLayerOpacityChanged() is not called when
+// Layer::SetOpacity() is called but the opacity does not change.
+TEST_F(LayerTest, SetOpacityNoChangeDoesNotNotifyClient) {
+  testing::StrictMock<MockLayerClient> client;
+  scoped_refptr<Layer> layer = Layer::Create();
+  layer->SetLayerClient(&client);
+  // Since |client| is a StrictMock, the test will fail if it is notified.
+  layer->SetOpacity(1.0f);
+}
+
+// Verify that LayerClient::OnLayerOpacityChanged() is not called when
+// Layer::OnOpacityAnimated() is called but the opacity does not change.
+TEST_F(LayerTest, OnOpacityAnimatedNoChangeDoesNotNotifyClient) {
+  testing::StrictMock<MockLayerClient> client;
+  scoped_refptr<Layer> layer = Layer::Create();
+  layer->SetLayerClient(&client);
+  // Since |client| is a StrictMock, the test will fail if it is notified.
+  layer->OnOpacityAnimated(1.0f);
+}
+
+namespace {
+
 class LayerTestWithLayerLists : public LayerTest {
  protected:
   void SetUp() override {
@@ -1493,6 +1572,8 @@ class LayerTestWithLayerLists : public LayerTest {
     LayerTest::SetUp();
   }
 };
+
+}  // namespace
 
 TEST_F(LayerTestWithLayerLists,
        SetLayerTreeHostUsingLayerListsDoesNotManageElementId) {
@@ -1528,5 +1609,4 @@ TEST_F(LayerTestWithLayerLists, SetElementIdUsingLayerLists) {
   EXPECT_EQ(nullptr, layer_tree_host_->LayerByElementId(element_id));
 }
 
-}  // namespace
 }  // namespace cc

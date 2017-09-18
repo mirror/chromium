@@ -14,6 +14,7 @@
 #include <vector>
 
 #include "base/callback.h"
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/observer_list.h"
@@ -477,6 +478,10 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
 
   bool IsPropertyChangeAllowed() const;
 
+  // Sets |inputs_.opacity| to |new_opacity| and notifies |inputs_.client| if it
+  // is different from the previous value.
+  void SetOpacityInternal(float new_opacity);
+
   // When true, the layer is about to perform an update. Any commit requests
   // will be handled implicitly after the update completes.
   bool ignore_set_needs_commit_;
@@ -485,6 +490,9 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   friend class base::RefCounted<Layer>;
   friend class LayerTreeHostCommon;
   friend class LayerTreeHost;
+  FRIEND_TEST_ALL_PREFIXES(LayerTest, OnOpacityAnimatedNotifiesClient);
+  FRIEND_TEST_ALL_PREFIXES(LayerTest,
+                           OnOpacityAnimatedNoChangeDoesNotNotifyClient);
 
   // Interactions with attached animations.
   void OnFilterAnimated(const FilterOperations& filters);
