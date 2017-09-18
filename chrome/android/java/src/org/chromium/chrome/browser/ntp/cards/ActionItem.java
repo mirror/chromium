@@ -5,12 +5,15 @@
 package org.chromium.chrome.browser.ntp.cards;
 
 import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.view.View;
 
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.snippets.CategoryInt;
+import org.chromium.chrome.browser.snackbar.Snackbar;
+import org.chromium.chrome.browser.snackbar.SnackbarManager;
 import org.chromium.chrome.browser.suggestions.ContentSuggestionsAdditionalAction;
 import org.chromium.chrome.browser.suggestions.SuggestionsMetrics;
 import org.chromium.chrome.browser.suggestions.SuggestionsRanker;
@@ -18,6 +21,7 @@ import org.chromium.chrome.browser.suggestions.SuggestionsRecyclerView;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
+
 
 /**
  * Item that allows the user to perform an action on the NTP.
@@ -69,8 +73,14 @@ public class ActionItem extends OptionalLeaf {
         return mPerSectionRank;
     }
 
+    /**
+     * Perform the Action associated with this ActionItem.
+     * @param uiDelegate A {@link SuggestionsUiDelegate} to provide context.
+     * @param onFailure A {@link Runnable} that will be run if the action was to fetch more
+     *                  suggestions but that action failed.
+     */
     @VisibleForTesting
-    void performAction(SuggestionsUiDelegate uiDelegate) {
+    void performAction(SuggestionsUiDelegate uiDelegate, @Nullable Runnable onFailure) {
         if (!mEnabled) return;
 
         uiDelegate.getEventReporter().onMoreButtonClicked(this);
@@ -85,7 +95,7 @@ public class ActionItem extends OptionalLeaf {
                         && mParentSection.getCategoryInfo().isRemote()) {
                     uiDelegate.getSuggestionsSource().fetchRemoteSuggestions();
                 } else {
-                    mParentSection.fetchSuggestions();
+                    mParentSection.fetchSuggestions(onFailure);
                 }
                 return;
             case ContentSuggestionsAdditionalAction.NONE:
@@ -113,11 +123,27 @@ public class ActionItem extends OptionalLeaf {
                 UiConfig uiConfig) {
             super(getLayout(), recyclerView, uiConfig, contextMenuManager);
 
+            final Runnable displaySnackbarOnFailure = new Runnable() {
+                @Override
+                public void run() {
+                    uiDelegate.getSnackbarManager().showSnackbar(Snackbar.make(
+                            itemView.getResources().getString(
+                                    R.string.ntp_suggestions_fetch_failed),
+                            new SnackbarManager.SnackbarController() {
+                                @Override public void onAction(Object actionData) { }
+                                @Override public void onDismissNoAction(Object actionData) { }
+                            },
+                            Snackbar.TYPE_ACTION,
+                            Snackbar.UMA_SNIPPET_FETCH_FAILED)
+                    );
+                }
+            };
+
             itemView.findViewById(R.id.action_button)
                     .setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            mActionListItem.performAction(uiDelegate);
+                            mActionListItem.performAction(uiDelegate, displaySnackbarOnFailure);
                         }
                     });
 

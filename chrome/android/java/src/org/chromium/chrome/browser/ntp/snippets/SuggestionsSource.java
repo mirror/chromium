@@ -100,10 +100,10 @@ public interface SuggestionsSource {
      * Fetches new suggestions.
      * @param category the category to fetch new suggestions for.
      * @param displayedSuggestionIds ids of suggestions already known and that we want to keep.
-     * @param callback The callback to run with the received suggestions.
+     * @param callbacks The {@link FetchSuggestionsCallbacks} to be run when operation completes.
      */
     void fetchSuggestions(@CategoryInt int category, String[] displayedSuggestionIds,
-            Callback<List<SnippetArticle>> callback);
+            FetchSuggestionsCallbacks callbacks);
 
     /**
      * Fetches suggestions related to the provided URL.

@@ -5,6 +5,7 @@
 package org.chromium.chrome.browser.ntp.cards;
 
 import android.support.annotation.CallSuper;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.chromium.base.Callback;
@@ -12,6 +13,7 @@ import org.chromium.base.Log;
 import org.chromium.chrome.browser.ntp.NewTabPageUma;
 import org.chromium.chrome.browser.ntp.snippets.CategoryInt;
 import org.chromium.chrome.browser.ntp.snippets.CategoryStatus;
+import org.chromium.chrome.browser.ntp.snippets.FetchSuggestionsCallbacks;
 import org.chromium.chrome.browser.ntp.snippets.SectionHeader;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticleViewHolder;
@@ -508,36 +510,48 @@ public class SuggestionsSection extends InnerNode {
 
         return true;
     }
-    /** Fetches additional suggestions only for this section. */
-    public void fetchSuggestions() {
+    /**
+     * Fetches additional suggestions only for this section.
+     * @param onFailure A {@link Runnable} that will be run if the fetch fails.
+     */
+    public void fetchSuggestions(@Nullable final Runnable onFailure) {
         // We want to disable the action item while we are fetching suggestions in order to
         // avoid fetching the same suggestions twice. See crbug.com/739648.
-        mMoreButton.setEnabled(false);
-        mMoreButton.setVisible(false);
+        switchButtonAndSpinner(false);
+
         mSuggestionsSource.fetchSuggestions(mCategoryInfo.getCategory(),
-                getDisplayedSuggestionIds(), new Callback<List<SnippetArticle>>() {
+                getDisplayedSuggestionIds(), new FetchSuggestionsCallbacks() {
                     @Override
-                    public void onResult(List<SnippetArticle> additionalSuggestions) {
+                    public void onMoreSuggestions(List<SnippetArticle> suggestions) {
                         if (!isAttached()) return; // The section has been dismissed.
 
-                        mProgressIndicator.setVisible(false);
+                        switchButtonAndSpinner(true);
+                        appendSuggestions(suggestions, /* keepSectionSize = */ false);
+                    }
 
-                        appendSuggestions(additionalSuggestions, /* keepSectionSize = */ false);
+                    @Override
+                    public void onFailure() {
+                        if (!isAttached()) return; // The section has been dismissed.
 
-                        mMoreButton.setEnabled(true);
-                        mMoreButton.setVisible(true);
+                        switchButtonAndSpinner(true);
+                        if (onFailure != null) onFailure.run();
                     }
                 });
+    }
 
-        mProgressIndicator.setVisible(true);
+    /** Switches between the action button being visible and the spinner being visible. */
+    private void switchButtonAndSpinner(boolean button) {
+        mMoreButton.setEnabled(button);
+        mMoreButton.setVisible(button);
+        mProgressIndicator.setVisible(!button);
     }
 
     /**
      * Programmatically click the more button. This differs from directly calling
-     * {@link #fetchSuggestions()} in that it disables the button.
+     * {@link #fetchSuggestions} in that it disables the button.
      */
     public void clickMoreButton(SuggestionsUiDelegate delegate) {
-        mMoreButton.performAction(delegate);
+        mMoreButton.performAction(delegate, null);
     }
 
     /** Sets the status for the section. Some statuses can cause the suggestions to be cleared. */

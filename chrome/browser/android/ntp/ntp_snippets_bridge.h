@@ -77,7 +77,7 @@ class NTPSnippetsBridge
       const base::android::JavaParamRef<jobject>& obj,
       jint j_category_id,
       const base::android::JavaParamRef<jobjectArray>& j_displayed_suggestions,
-      const base::android::JavaParamRef<jobject>& j_callback);
+      const base::android::JavaParamRef<jobject>& j_fetch_callbacks);
 
   void FetchContextualSuggestions(
       JNIEnv* env,
