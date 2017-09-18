@@ -16,6 +16,7 @@
 #include "content/public/utility/utility_thread.h"
 #include "content/utility/utility_thread_impl.h"
 #include "media/media_features.h"
+#include "media/mojo/features.h"
 #include "services/data_decoder/data_decoder_service.h"
 #include "services/data_decoder/public/interfaces/constants.mojom.h"
 #include "services/shape_detection/public/interfaces/constants.mojom.h"
@@ -28,7 +29,6 @@
 #include "media/base/scoped_callback_runner.h"
 #include "media/cdm/cdm_adapter_factory.h"           // nogncheck
 #include "media/cdm/cdm_helpers.h"                   // nogncheck
-#include "media/mojo/features.h"                     // nogncheck
 #include "media/mojo/interfaces/constants.mojom.h"   // nogncheck
 #include "media/mojo/interfaces/output_protection.mojom.h"      // nogncheck
 #include "media/mojo/interfaces/platform_verification.mojom.h"  // nogncheck
@@ -36,6 +36,10 @@
 #include "media/mojo/services/mojo_cdm_allocator.h"  // nogncheck
 #include "media/mojo/services/mojo_media_client.h"   // nogncheck
 #include "services/service_manager/public/cpp/connect.h"
+#endif
+
+#if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_UTILITY_PROCESS)
+#include "media/mojo/services/media_service_factory.h"  // nogncheck
 #endif
 
 namespace {
@@ -205,6 +209,13 @@ void UtilityServiceFactory::RegisterServices(ServiceMap* services) {
   service_manager::EmbeddedServiceInfo info;
   info.factory = base::Bind(&CreateCdmService);
   services->insert(std::make_pair(media::mojom::kCdmServiceName, info));
+#endif
+
+#if BUILDFLAG(ENABLE_MOJO_MEDIA_IN_UTILITY_PROCESS)
+  service_manager::EmbeddedServiceInfo info_utility;
+  info_utility.factory = base::Bind(&media::CreateUtilityMediaService);
+  services->insert(
+      std::make_pair(media::mojom::kMediaServiceName, info_utility));
 #endif
 
   service_manager::EmbeddedServiceInfo shape_detection_info;
