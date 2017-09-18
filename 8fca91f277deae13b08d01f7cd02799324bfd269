@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62d20abd_8750c389",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1677,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-09-18T21:50:43Z",
+      "side": 0,
+      "message": "Can this if(..) be removed now? If we still need it, what are the conditions under which top_section \u0026\u0026 !bottom_section evaluates to true?",
+      "revId": "8fca91f277deae13b08d01f7cd02799324bfd269",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
