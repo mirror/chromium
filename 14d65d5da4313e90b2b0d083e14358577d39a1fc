@@ -16,6 +16,24 @@
       "revId": "14d65d5da4313e90b2b0d083e14358577d39a1fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb5fd239_f395d173",
+        "filename": "content/browser/devtools/protocol/devtools_protocol_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-09-18T04:02:46Z",
+      "side": 1,
+      "message": "There is a reload down below, so we test both now :) This navigation is to exercise a cross-process variant as well.",
+      "parentUuid": "18e331d5_e7913f7a",
+      "revId": "14d65d5da4313e90b2b0d083e14358577d39a1fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
