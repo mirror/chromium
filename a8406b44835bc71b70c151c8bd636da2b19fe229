@@ -269,6 +269,30 @@
       "revId": "a8406b44835bc71b70c151c8bd636da2b19fe229",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d9f7eeb_ed197919",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-18T22:06:10Z",
+      "side": 1,
+      "message": "I was thinking we might be able to call stopSelf in the handling of onStartCommand.  I don\u0027t think we explicitly need to do it though as Android will kill this eventually.  It might just be  a \"nice\" thing to do for the ecosystem, but we can hold off for now.",
+      "parentUuid": "c495c7a8_9b5a8e77",
+      "range": {
+        "startLine": 228,
+        "startChar": 20,
+        "endLine": 228,
+        "endChar": 32
+      },
+      "revId": "a8406b44835bc71b70c151c8bd636da2b19fe229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
