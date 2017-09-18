@@ -16,6 +16,46 @@
       "revId": "fc7a5e0d9348467cbc3b9d28c70315c67810e7e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "519d45f1_daac9b18",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-18T10:56:57Z",
+      "side": 1,
+      "message": "Can this be UpdateHistoryPageTitleForLastNavigation(), so that the tab helper takes care of getting the nav item from the webstate?",
+      "range": {
+        "startLine": 560,
+        "startChar": 12,
+        "endLine": 560,
+        "endChar": 34
+      },
+      "revId": "fc7a5e0d9348467cbc3b9d28c70315c67810e7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b166293b_859fd5b2",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 1138,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-18T10:56:57Z",
+      "side": 1,
+      "message": "Since -webStateDidChangeTitle: is a WebStateObserver call, should this call to -saveTitleToHistoryDB be pulled into the tabHelper as well?",
+      "revId": "fc7a5e0d9348467cbc3b9d28c70315c67810e7e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
