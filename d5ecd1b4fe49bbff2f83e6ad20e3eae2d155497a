@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2657e28a_72ef81f7",
+        "filename": "content/renderer/browser_plugin/browser_plugin.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-18T19:41:01Z",
+      "side": 1,
+      "message": "nit: this isn\u0027t always safe...If view_rect_ doesn\u0027t\u0027 have a value then you\u0027ll get a DCHECK. Maybe:\n\nreturn view_rect_.has_value() ? view_rect_.value() : gfx::Rect();",
+      "revId": "d5ecd1b4fe49bbff2f83e6ad20e3eae2d155497a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
