@@ -61,6 +61,24 @@ Target HitTestQuery::FindTargetForLocation(
   return target;
 }
 
+gfx::Point HitTestQuery::TransformLocationForTarget(
+    EventSource event_source,
+    const std::vector<FrameSinkId>& target_ancestors,
+    const gfx::Point& location_in_root) const {
+  if (!active_hit_test_list_size_)
+    return location_in_root;
+
+  gfx::Point location_in_target(location_in_root);
+  // TODO(riajiang): Cache the matrix product such that the transform can be
+  // done immediately. crbug/758062.
+  bool success = TransformLocationForTargetRecursively(
+      event_source, target_ancestors, target_ancestors.size() - 1,
+      active_hit_test_list_, &location_in_target);
+  // Must provide a valid target.
+  DCHECK(success);
+  return location_in_target;
+}
+
 bool HitTestQuery::FindTargetInRegionForLocation(
     EventSource event_source,
     const gfx::Point& location_in_parent,
@@ -104,6 +122,53 @@ bool HitTestQuery::FindTargetInRegionForLocation(
     target->flags = region->flags;
     return true;
   }
+  return false;
+}
+
+bool HitTestQuery::TransformLocationForTargetRecursively(
+    EventSource event_source,
+    const std::vector<FrameSinkId>& target_ancestors,
+    size_t target_ancestor,
+    AggregatedHitTestRegion* region,
+    gfx::Point* location_in_target) const {
+  bool match_touch_or_mouse_region =
+      ShouldUseTouchBounds(event_source)
+          ? (region->flags & mojom::kHitTestTouch) != 0u
+          : (region->flags & mojom::kHitTestMouse) != 0u;
+  const FrameSinkId& frame_sink_id = target_ancestors.at(target_ancestor);
+  if (region->frame_sink_id != frame_sink_id ||
+      !((region->flags & mojom::kHitTestChildSurface) != 0u ||
+        match_touch_or_mouse_region)) {
+    return false;
+  }
+
+  region->transform.TransformPoint(location_in_target);
+  location_in_target->Offset(-region->rect.x(), -region->rect.y());
+  if (!target_ancestor)
+    return true;
+
+  if (region->child_count < 0 ||
+      region->child_count >
+          (active_hit_test_list_ + active_hit_test_list_size_ - region - 1)) {
+    return false;
+  }
+  AggregatedHitTestRegion* child_region = region + 1;
+  AggregatedHitTestRegion* child_region_end =
+      child_region + region->child_count;
+  while (child_region < child_region_end) {
+    if (TransformLocationForTargetRecursively(event_source, target_ancestors,
+                                              target_ancestor - 1, child_region,
+                                              location_in_target)) {
+      return true;
+    }
+
+    if (child_region->child_count < 0 ||
+        child_region->child_count >= region->child_count) {
+      return false;
+    }
+    child_region = child_region + child_region->child_count + 1;
+  }
+
   return false;
 }
 
