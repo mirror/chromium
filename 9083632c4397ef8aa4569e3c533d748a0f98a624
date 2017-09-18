@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "d1d2531b_25a3cec5",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-18T13:55:40Z",
+      "side": 1,
+      "message": "The flag pertains to the value after the transient timeout, rather than after animation.\n\nBut, this spawns a tangent that Yash shouldn\u0027t be gated by. :)  Maybe we can chat about this again.  I don\u0027t have a history with animation frameworks, but I feel like the state of animation should be invisible to everything except the rendering system.  In the case of a color, it feels like I\u0027d want to be able to \"set red, get red, set blue, get blue\", and have the getters return the target/final value even if the actual color hasn\u0027t yet reached that color.\n\nIn the example you linked, presumably Transform() yields the mid-animation \"current\" value, while GetTargetTransform() is what I suggested above.  My first instinct would have been to reverse them, such that Transform() is the post-animation steady-state version, and there\u0027s a GetCurrentTransform() or something to return the transient animating version.  Then you don\u0027t get weird things like:\n\nSetTranform(A)\nDCHECK(GetTransform() \u003d\u003d A)   \u003c---  Fails.  What the heck?!?",
+      "parentUuid": "7bc26af2_bb36c66c",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d95ed610_6081c115",
         "filename": "chrome/browser/vr/elements/transient_element.cc",
         "patchSetId": 2
