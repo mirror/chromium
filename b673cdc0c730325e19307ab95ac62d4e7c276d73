@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdf4ff41_1fe7f36f",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-09-18T17:37:30Z",
+      "side": 1,
+      "message": "This hook (and the two below) are already in a hooks_os[\u0027android\u0027] block. Do they need this condition as well? What is the purpose of having both at the same time?",
+      "revId": "b673cdc0c730325e19307ab95ac62d4e7c276d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377d8e93_c7a74b92",
+        "filename": "DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1184,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-09-18T17:37:30Z",
+      "side": 1,
+      "message": "I know you\u0027re not modifying this line in this change, but do you know why these \u0027action\u0027 lines are outdented compared to the name/pattern/condition above, and compared to the \u0027action\u0027 key in earlier stanzas (e.g. line 885)? It would be good for you to fix this for the sake of consistency.",
+      "revId": "b673cdc0c730325e19307ab95ac62d4e7c276d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
