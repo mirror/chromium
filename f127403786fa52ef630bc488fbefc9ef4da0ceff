@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cc57cce_07ad18af",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-18T15:09:50Z",
+      "side": 1,
+      "message": "Are there public links for this?",
+      "revId": "f127403786fa52ef630bc488fbefc9ef4da0ceff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d8aade_02370732",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-18T15:09:50Z",
+      "side": 1,
+      "message": "There\u0027s no bug associated here?",
+      "revId": "f127403786fa52ef630bc488fbefc9ef4da0ceff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
