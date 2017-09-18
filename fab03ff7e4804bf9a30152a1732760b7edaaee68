@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d713553e_6e999691",
+        "filename": "ios/web_view/internal/signin/web_view_profile_oauth2_token_service_ios_provider_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-18T13:14:12Z",
+      "side": 1,
+      "message": "Is this duplicated from ProfileOAuth2TokenServiceIOSProviderImpl? Is so, then we need a way to avoid this as it will be hard to maintain twice the same code.",
+      "range": {
+        "startLine": 14,
+        "startChar": 7,
+        "endLine": 14,
+        "endChar": 47
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "523de3e5_9d5e2ec4",
+        "filename": "ios/web_view/internal/signin/web_view_signin_client_impl.mm",
+        "patchSetId": 21
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-18T13:14:12Z",
+      "side": 1,
+      "message": "Is this code duplicated from https://cs.chromium.org/chromium/src/ios/chrome/browser/signin/signin_client_impl.mm? If so, then this is really something we should avoid (we should not have to maintain twice the same code).",
+      "range": {
+        "startLine": 37,
+        "startChar": 25,
+        "endLine": 37,
+        "endChar": 48
+      },
+      "revId": "fab03ff7e4804bf9a30152a1732760b7edaaee68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
