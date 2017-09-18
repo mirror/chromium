@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d53acd3c_c5775231",
+        "filename": "chrome/browser/ui/views/outdated_upgrade_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-18T11:43:09Z",
+      "side": 1,
+      "message": "I think this particular number for this particular dialog is fine. Unless you have another language in mind. More prominent dialogs in Chrome become unusable above about 16pt (e.g. Edit Bookmark easily goes offscreen above this, Page Info actually needs to be a lot smaller). I tried out Bulgarian which tends to tickle the long-text-runs issues, and it looks OK at 16pt using the old, much longer string.\n\nBut I\u0027m not a fan of arbitrary numbers, so I\u0027ve put a helper on ChromeLayoutProvider -- see what you think.\n\nBut I don\u0027t think we want to put much logic behind this. There\u0027s a deeper issue - http://crbug.com/766069 - which means we really don\u0027t want to use anything other than (exactly)  288, 416 or 480 to ensure that the text wrapping plays nice with the Harmony dialog widths. The open problem is picking which one to use.\n\nI\u0027m not sure how much we can rely on character-widths if it would go above 480, since doing that is what makes the edit bookmark dialog unusable above 16px.",
+      "parentUuid": "5d15e910_a4ce82e7",
+      "revId": "751640d00c69c58538d51f82446997e8ceba05fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de38d7a9_579a0dd5",
         "filename": "chrome/browser/ui/views/outdated_upgrade_bubble_view.cc",
         "patchSetId": 5
