@@ -69,6 +69,24 @@
       "revId": "9dcdd47dc8e4a730c7e8f13dc9e13f42ff8ab977",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89be0366_fbb8005d",
+        "filename": "ui/accessibility/ax_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-18T18:24:38Z",
+      "side": 1,
+      "message": "Interesting. That means that the bounds of the desktop aren\u0027t\nwhat we think they are.\n\nLet\u0027s land this change as-is because it sounds like it will\ncompletely solve the problem on other platforms, and then for\nChrome OS we can try to follow up to handle the desktop tree\nbetter.\n\nYou can try this:\n\nLOG(ERROR) \u003c\u003c ToString();\n\nTo dump the whole accessibility tree at the time this function\nis called. The \"desktop\" tree is something we create out of\nthe C++ code that handles all of the desktops, windows, and\nviews for the Chrome OS desktop and the Chrome browser UI.\nPerhaps the root of the tree doesn\u0027t have very good bounds,\nmaybe we should handle it a bit differently.",
+      "parentUuid": "b207e62f_3d2b753d",
+      "revId": "9dcdd47dc8e4a730c7e8f13dc9e13f42ff8ab977",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
