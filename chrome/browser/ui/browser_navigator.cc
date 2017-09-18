@@ -648,7 +648,8 @@ bool IsURLAllowedInIncognito(const GURL& url,
 #if defined(OS_CHROMEOS)
        url.host_piece() == chrome::kChromeUIVoiceSearchHost ||
 #endif
-       url.host_piece() == chrome::kChromeUIDevicesHost)) {
+       url.host_piece() == chrome::kChromeUIDevicesHost ||
+       url.host_piece() == chrome::kChromeUIDownloadInternalsHost)) {
     return false;
   }
 
