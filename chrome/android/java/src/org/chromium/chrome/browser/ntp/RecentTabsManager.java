@@ -85,7 +85,6 @@ public class RecentTabsManager implements AndroidSyncSettingsObserver, SignInSta
 
     private ProfileDataCache mProfileDataCache;
     private SigninPromoController mSigninPromoController;
-    private boolean mIsNewPromoShowing;
 
     /**
      * Create an RecentTabsManager to be used with RecentTabsPage and RecentTabsRowAdapter.
@@ -411,12 +410,6 @@ public class RecentTabsManager implements AndroidSyncSettingsObserver, SignInSta
             profileData = mProfileDataCache.getProfileDataOrDefault(defaultAccountName);
         }
         mSigninPromoController.setProfileData(profileData);
-
-        if (!mIsNewPromoShowing) {
-            mIsNewPromoShowing = true;
-            mSigninPromoController.recordSigninPromoImpression();
-        }
-
         mSigninPromoController.setupSigninPromoView(mContext, view, null);
     }
 
