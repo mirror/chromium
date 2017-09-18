@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09ae71b5_c38dd766",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-18T18:51:05Z",
+      "side": 1,
+      "message": "Should this be a per-file ThumbnailProvider*\u003dbauerb@ or have you done significant work with the other classes in widget/?",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 19
+      },
+      "revId": "f2e8228ffc7231ad1c7cb4aa93d76ef97e25f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
