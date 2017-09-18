@@ -41,12 +41,15 @@ inline HTMLIFrameElement::HTMLIFrameElement(Document& document)
     : HTMLFrameElementBase(iframeTag, document),
       did_load_non_empty_document_(false),
       collapsed_by_client_(false),
+      allowed_activation_delegation_(
+          HTMLIFrameElementAllowedActivationDelegation::Create(this)),
       sandbox_(HTMLIFrameElementSandbox::Create(this)),
       referrer_policy_(kReferrerPolicyDefault) {}
 
 DEFINE_NODE_FACTORY(HTMLIFrameElement)
 
 DEFINE_TRACE(HTMLIFrameElement) {
+  visitor->Trace(allowed_activation_delegation_);
   visitor->Trace(sandbox_);
   HTMLFrameElementBase::Trace(visitor);
   Supplementable<HTMLIFrameElement>::Trace(visitor);
@@ -68,6 +71,10 @@ void HTMLIFrameElement::SetCollapsed(bool collapse) {
 
 DOMTokenList* HTMLIFrameElement::sandbox() const {
   return sandbox_.Get();
+}
+
+DOMTokenList* HTMLIFrameElement::allowedActivationDelegation() const {
+  return allowed_activation_delegation_.Get();
 }
 
 bool HTMLIFrameElement::IsPresentationAttribute(
@@ -130,6 +137,19 @@ void HTMLIFrameElement::ParseAttribute(
           "Error while parsing the 'sandbox' attribute: " + invalid_tokens));
     }
     UseCounter::Count(GetDocument(), WebFeature::kSandboxViaIFrame);
+  } else if (name == allowedactivationdelegationAttr) {
+    allowed_activation_delegation_->DidUpdateAttributeValue(params.old_value,
+                                                            value);
+    String invalid_tokens;
+    SetActivationDelegationFlags(
+        allowed_activation_delegation_->GetFlags(invalid_tokens));
+    if (!invalid_tokens.IsNull()) {
+      GetDocument().AddConsoleMessage(ConsoleMessage::Create(
+          kOtherMessageSource, kErrorMessageLevel,
+          "Error while parsing the 'allowedActivationDelegation' attribute: " +
+              invalid_tokens));
+    }
+    UseCounter::Count(GetDocument(), WebFeature::kAllowedActivationDelegation);
   } else if (name == referrerpolicyAttr) {
     referrer_policy_ = kReferrerPolicyDefault;
     if (!value.IsNull()) {
