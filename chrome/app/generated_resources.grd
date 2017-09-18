@@ -6461,9 +6461,6 @@ I don't think this site should be blocked!
       <message name="IDS_REENABLE_UPDATES" desc="Text for the button the user clicks to re-enable automatic updates.">
         Enable autoupdate
       </message>
-      <message name="IDS_LATER" desc="Text for the button the user clicks to be reminded of reinstalling the app later.">
-        Later
-      </message>
 
       <!-- Print -->
       <message name="IDS_DEFAULT_PRINT_DOCUMENT_TITLE" desc="Default title for a print document">
