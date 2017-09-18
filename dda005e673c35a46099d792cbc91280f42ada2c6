@@ -16,6 +16,24 @@
       "revId": "dda005e673c35a46099d792cbc91280f42ada2c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37b14f10_ae03cf0a",
+        "filename": "ash/system/network/vpn_list_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1123084
+      },
+      "writtenOn": "2017-09-18T17:56:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9382607_ca6816b9",
+      "revId": "dda005e673c35a46099d792cbc91280f42ada2c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
