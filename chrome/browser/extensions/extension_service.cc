@@ -1507,9 +1507,6 @@ void ExtensionService::AddExtension(const Extension* extension) {
   system_->runtime_data()->SetBeingUpgraded(extension->id(),
                                             is_extension_upgrade || reloading);
 
-  // The extension is now loaded, remove its data from unloaded extension map.
-  unloaded_extension_paths_.erase(extension->id());
-
   // If a terminated extension is loaded, remove it from the terminated list.
   UntrackTerminatedExtension(extension->id());
 
@@ -1522,6 +1519,10 @@ void ExtensionService::AddExtension(const Extension* extension) {
     // new one.  ReloadExtension disables the extension, which is sufficient.
     UnloadExtension(extension->id(), UnloadedExtensionReason::UPDATE);
   }
+
+  // The extension is being registered, so remove its entry in the unloaded
+  // extension map.
+  unloaded_extension_paths_.erase(extension->id());
 
   if (extension_prefs_->IsExtensionBlacklisted(extension->id())) {
     // Only prefs is checked for the blacklist. We rely on callers to check the
