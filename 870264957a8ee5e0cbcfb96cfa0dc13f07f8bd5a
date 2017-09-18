@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "153e4507_e7e9974a",
+        "filename": "net/base/mime_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001532
+      },
+      "writtenOn": "2017-09-18T15:45:18Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like we have unit-tests to assure that these constraints specified in the comments are satisfied. Would it be low-burden to add some which cover that?",
+      "range": {
+        "startLine": 108,
+        "startChar": 20,
+        "endLine": 108,
+        "endChar": 31
+      },
+      "revId": "870264957a8ee5e0cbcfb96cfa0dc13f07f8bd5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
