@@ -59,6 +59,7 @@
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/platform/scheduler/child/webthread_base.h"
+#include "third_party/WebKit/Source/platform/heap/Heap.h"  // FIXME(brettw) ===========
 #include "third_party/zlib/google/compression_utils.h"
 #include "ui/base/layout.h"
 #include "ui/events/gestures/blink/web_gesture_curve_impl.h"
@@ -74,6 +75,17 @@ using blink::WebURLError;
 using blink::WebURLLoader;
 
 namespace content {
+
+namespace {
+
+// Function for the embedder to call to hook oilpan allocations.
+void HookOilpan(void (*hook_alloc)(uint8_t*, size_t, const char*),
+                void (*hook_free)(uint8_t*)) {
+  blink::HeapAllocHooks::SetAllocationHook(hook_alloc);
+  blink::HeapAllocHooks::SetFreeHook(hook_free);
+}
+
+}  // namespace
 
 static int ToMessageID(WebLocalizedString::Name name) {
   switch (name) {
@@ -337,6 +349,8 @@ void BlinkPlatformImpl::InternalInit() {
     notification_dispatcher_ =
         ChildThreadImpl::current()->notification_dispatcher();
   }
+
+  GetContentClient()->SetGCHeapAllocationHookFunction(&HookOilpan);
 }
 
 void BlinkPlatformImpl::WaitUntilWebThreadTLSUpdate(
