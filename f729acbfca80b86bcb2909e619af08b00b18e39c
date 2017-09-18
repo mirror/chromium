@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1a3b052_4c18fffa",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-18T18:00:33Z",
+      "side": 1,
+      "message": "No one should have to be checking IsAnimatingProperty when using these new functions.",
+      "revId": "f729acbfca80b86bcb2909e619af08b00b18e39c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
