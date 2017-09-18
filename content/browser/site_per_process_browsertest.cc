@@ -88,6 +88,7 @@
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/public/platform/ActivationDelegationFlags.h"
 #include "third_party/WebKit/public/platform/WebFeaturePolicy.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/WebInsecureRequestPolicy.h"
@@ -698,6 +699,24 @@ class SitePerProcessIgnoreCertErrorsBrowserTest
     SitePerProcessBrowserTest::SetUpCommandLine(command_line);
     command_line->AppendSwitch(switches::kIgnoreCertificateErrors);
   }
+};
+
+// SitePerProcessActivationDelegationBrowserTest
+
+class SitePerProcessActivationDelegationBrowserTest
+    : public SitePerProcessBrowserTest {
+ public:
+  SitePerProcessActivationDelegationBrowserTest() {}
+
+ protected:
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    SitePerProcessBrowserTest::SetUpCommandLine(command_line);
+    feature_list_.InitAndEnableFeature(
+        features::kAllowActivationDelegationAttr);
+  }
+
+ private:
+  base::test::ScopedFeatureList feature_list_;
 };
 
 // SitePerProcessEmbedderCSPEnforcementBrowserTest
@@ -3956,6 +3975,82 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, OriginReplication) {
       "window.domAutomationController.send(location.ancestorOrigins[2]);",
       &result));
   EXPECT_EQ(a_origin, result + "/");
+}
+
+// Check that iframe activation delegation flags are replicated correctly.
+IN_PROC_BROWSER_TEST_F(SitePerProcessActivationDelegationBrowserTest,
+                       ActivationDelegationFlagsReplication) {
+  GURL main_url(embedded_test_server()->GetURL("/sandboxed_frames.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), main_url));
+
+  // It is safe to obtain the root frame tree node here, as it doesn't change.
+  FrameTreeNode* root = web_contents()->GetFrameTree()->root();
+  TestNavigationObserver observer(shell()->web_contents());
+
+  // Check the first frame has no flags on it.
+  EXPECT_EQ(
+      blink::kActivationDelegationNone,
+      root->child_at(1)->frame_owner_properties().activation_delegation_flags);
+
+  // Update the activation delegation flags for the first frame.
+  EXPECT_TRUE(ExecuteScript(shell(),
+                            "document.getElementById('child-2')."
+                            "allowedActivationDelegation='media';"));
+
+  // Check the first frame has now has flags on it.
+  EXPECT_EQ(
+      blink::kActivationDelegationMedia,
+      root->child_at(1)->frame_owner_properties().activation_delegation_flags);
+
+  // Navigate the subframe to a cross-site page with a subframe.
+  GURL foo_url(
+      embedded_test_server()->GetURL("foo.com", "/frame_tree/2-4.html"));
+  NavigateFrameToURL(root->child_at(1), foo_url);
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+  EXPECT_EQ(foo_url, root->child_at(1)->current_url());
+
+  // The subframe should still have the activation delegation flag on it.
+  EXPECT_EQ(
+      blink::kActivationDelegationMedia,
+      root->child_at(1)->frame_owner_properties().activation_delegation_flags);
+
+  // Load cross-site page into subframe's subframe.
+  ASSERT_EQ(1U, root->child_at(1)->child_count());
+  GURL bar_url(embedded_test_server()->GetURL("bar.com", "/title1.html"));
+  NavigateFrameToURL(root->child_at(1)->child_at(0), bar_url);
+  EXPECT_TRUE(observer.last_navigation_succeeded());
+  EXPECT_EQ(bar_url, observer.last_navigation_url());
+
+  // The bar.com iframe should not have activation delegation flag.
+  EXPECT_EQ(blink::kActivationDelegationNone, root->child_at(1)
+                                                  ->child_at(0)
+                                                  ->frame_owner_properties()
+                                                  .activation_delegation_flags);
+
+  // Set activation delegation on the bar.com iframe and check that it has the
+  // flag.
+  EXPECT_TRUE(ExecuteScript(
+      root->child_at(1),
+      "document.querySelector('iframe').allowedActivationDelegation='media';"));
+  EXPECT_EQ(blink::kActivationDelegationMedia,
+            root->child_at(1)
+                ->child_at(0)
+                ->frame_owner_properties()
+                .activation_delegation_flags);
+
+  // Clear the activation delegation flag on foo.com and make sure that it no
+  // longer has the flag, but bar.com does.
+  EXPECT_TRUE(ExecuteScript(shell(),
+                            "document.getElementById('child-2')."
+                            "allowedActivationDelegation='test';"));
+  EXPECT_EQ(
+      blink::kActivationDelegationNone,
+      root->child_at(1)->frame_owner_properties().activation_delegation_flags);
+  EXPECT_EQ(blink::kActivationDelegationMedia,
+            root->child_at(1)
+                ->child_at(0)
+                ->frame_owner_properties()
+                .activation_delegation_flags);
 }
 
 // Check that iframe sandbox flags are replicated correctly.
