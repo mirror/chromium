@@ -16,6 +16,24 @@
       "revId": "ca9ef736f153976a338f4a260669c08a52299da2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c8ecb85_ccec812d",
+        "filename": "docs/accessibility/chromevox_on_desktop_linux.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1242552
+      },
+      "writtenOn": "2017-09-18T19:31:15Z",
+      "side": 1,
+      "message": "Good catch, thanks.",
+      "parentUuid": "a438abb2_2559a99a",
+      "revId": "ca9ef736f153976a338f4a260669c08a52299da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
