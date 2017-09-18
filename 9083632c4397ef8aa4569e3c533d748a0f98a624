@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "04072f70_1e0a6bcc",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-18T14:40:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44fcf524_7ac2cc73",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15c1aa8e_f05b6394",
         "filename": "chrome/browser/vr/elements/transient_element.cc",
         "patchSetId": 2
@@ -144,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "3fe8bc39_800d6ab0",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-18T14:40:48Z",
+      "side": 1,
+      "message": "RE\n\nSetTranform(A)\nDCHECK(GetTransform() \u003d\u003d A)\n\nI think its probably fine to not return the final value if the expectation is that we\u0027re animating something. \n\nFor example, this happens on the Web often where you scroll with an animation and reading the scroll value gives you the current scroll position and not the target.",
+      "parentUuid": "d1d2531b_25a3cec5",
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d95ed610_6081c115",
         "filename": "chrome/browser/vr/elements/transient_element.cc",
         "patchSetId": 2
@@ -164,6 +200,30 @@
       "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af17fbe_c6bf8302",
+        "filename": "chrome/browser/vr/elements/transient_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-18T14:40:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d95ed610_6081c115",
+      "range": {
+        "startLine": 23,
+        "startChar": 44,
+        "endLine": 23,
+        "endChar": 57
+      },
+      "revId": "9083632c4397ef8aa4569e3c533d748a0f98a624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
