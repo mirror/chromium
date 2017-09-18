@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed87f501_6a6ff5f3",
+        "filename": "chrome/browser/chromeos/dbus/chrome_component_updater_service_provider_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-18T21:44:55Z",
+      "side": 1,
+      "message": "fix this comment",
+      "revId": "63d616d764fa99a30570dc57cb7fe39bddc9b819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff5ca1ec_1ba063ed",
+        "filename": "chrome/browser/chromeos/dbus/chrome_component_updater_service_provider_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-18T21:44:55Z",
+      "side": 1,
+      "message": "we usually just have a comment documenting where overridden methods come from:\n\n  // ComponentUpdaterServiceProvider::Delegate:",
+      "revId": "63d616d764fa99a30570dc57cb7fe39bddc9b819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314b4f80_2b4a5b73",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-18T21:44:55Z",
+      "side": 1,
+      "message": "return an actual ErrorResponse from here instead: https://chromium.googlesource.com/chromium/src/+/master/dbus/message.h#227",
+      "revId": "63d616d764fa99a30570dc57cb7fe39bddc9b819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4a2f9e_18efad0d",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-18T21:44:55Z",
+      "side": 1,
+      "message": "return an ErrorResponse instead",
+      "revId": "63d616d764fa99a30570dc57cb7fe39bddc9b819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e441fcc9_2410d953",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-18T21:44:55Z",
+      "side": 1,
+      "message": "nit: OnLoadComponent or OnComponentLoaded? we usually use names like FooCallback for typedefs to base::Callback types",
+      "revId": "63d616d764fa99a30570dc57cb7fe39bddc9b819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
