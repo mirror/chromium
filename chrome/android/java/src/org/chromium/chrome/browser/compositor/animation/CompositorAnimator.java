@@ -145,7 +145,9 @@ public class CompositorAnimator extends Animator {
         // Wait until the start delay has passed.
         if (finalTimeMs < 0) return;
 
-        mAnimatedFraction = mTimeInterpolator.getInterpolation(finalTimeMs / (float) mDurationMs);
+        // In the case where duration is 0, the animation is complete.
+        mAnimatedFraction = 1;
+        if (mDurationMs > 0) mTimeInterpolator.getInterpolation(finalTimeMs / (float) mDurationMs);
 
         // Push update to listeners.
         mClonedList.addAll(mAnimatorUpdateListeners);
