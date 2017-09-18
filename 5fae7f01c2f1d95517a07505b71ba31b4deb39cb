@@ -16,6 +16,24 @@
       "revId": "5fae7f01c2f1d95517a07505b71ba31b4deb39cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2072de18_aba27904",
+        "filename": "chrome/browser/notifications/platform_notification_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-18T23:33:58Z",
+      "side": 1,
+      "message": "ah, yes, I guess that\u0027s true (in the event that linux actually uses this parameter), so we probably need to make it a unique ptr. Aside from that, this approach lgty?",
+      "parentUuid": "44123d79_355d52ed",
+      "revId": "5fae7f01c2f1d95517a07505b71ba31b4deb39cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
