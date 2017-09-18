@@ -169,6 +169,24 @@
       "revId": "8936453a00b811970b9bf152bab7f53446de6a7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3f09d8f_fc0b8f4a",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-18T21:41:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9dda3a25_9a0fb222",
+      "revId": "8936453a00b811970b9bf152bab7f53446de6a7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
