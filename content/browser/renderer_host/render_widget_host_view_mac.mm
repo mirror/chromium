@@ -1645,7 +1645,7 @@ void RenderWidgetHostViewMac::SetBackgroundColor(SkColor color) {
   bool opaque = SkColorGetA(color) == SK_AlphaOPAQUE;
   if (background_is_opaque_ != opaque) {
     background_is_opaque_ = opaque;
-    browser_compositor_->SetHasTransparentBackground(!opaque);
+    browser_compositor_->SetBackgroundColor(color);
     if (render_widget_host_)
       render_widget_host_->SetBackgroundOpaque(opaque);
   }
