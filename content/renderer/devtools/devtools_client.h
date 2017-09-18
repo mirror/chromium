@@ -11,6 +11,7 @@
 #include <string>
 
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "content/public/renderer/render_frame_observer.h"
 #include "third_party/WebKit/public/web/WebDevToolsFrontendClient.h"
 
@@ -46,8 +47,12 @@ class CONTENT_EXPORT DevToolsClient : public RenderFrameObserver,
   void OnDispatchOnInspectorFrontend(const std::string& message,
                                      uint32_t total_size);
 
+  void ExecuteApiScript();
+
   std::string api_script_;
   std::unique_ptr<blink::WebDevToolsFrontend> web_tools_frontend_;
+
+  base::WeakPtrFactory<DevToolsClient> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(DevToolsClient);
 };

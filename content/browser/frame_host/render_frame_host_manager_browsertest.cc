@@ -289,15 +289,7 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
 
   // Wait for the window to open.
   Shell* new_shell = new_shell_observer.GetShell();
-
   EXPECT_EQ("/title2.html", new_shell->web_contents()->GetVisibleURL().path());
-
-  // Check that `window.opener` is not set.
-  success = false;
-  EXPECT_TRUE(ExecuteScriptAndExtractBool(
-      new_shell, "window.domAutomationController.send(window.opener == null);",
-      &success));
-  EXPECT_TRUE(success);
 
   // Wait for the cross-site transition in the new tab to finish.
   WaitForLoadStop(new_shell->web_contents());
@@ -305,6 +297,13 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
       new_shell->web_contents());
   EXPECT_FALSE(web_contents->GetRenderManagerForTesting()->
       pending_render_view_host());
+
+  // Check that `window.opener` is not set.
+  success = false;
+  EXPECT_TRUE(ExecuteScriptAndExtractBool(
+      new_shell, "window.domAutomationController.send(window.opener == null);",
+      &success));
+  EXPECT_TRUE(success);
 
   // Should have a new SiteInstance.
   scoped_refptr<SiteInstance> noref_blank_site_instance(
@@ -338,19 +337,19 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
 
   EXPECT_EQ("/title2.html", new_shell->web_contents()->GetVisibleURL().path());
 
-  // Check that `window.opener` is not set.
-  success = false;
-  EXPECT_TRUE(ExecuteScriptAndExtractBool(
-      new_shell, "window.domAutomationController.send(window.opener == null);",
-      &success));
-  EXPECT_TRUE(success);
-
   // Wait for the cross-site transition in the new tab to finish.
   WaitForLoadStop(new_shell->web_contents());
   WebContentsImpl* web_contents =
       static_cast<WebContentsImpl*>(new_shell->web_contents());
   EXPECT_FALSE(
       web_contents->GetRenderManagerForTesting()->pending_render_view_host());
+
+  // Check that `window.opener` is not set.
+  success = false;
+  EXPECT_TRUE(ExecuteScriptAndExtractBool(
+      new_shell, "window.domAutomationController.send(window.opener == null);",
+      &success));
+  EXPECT_TRUE(success);
 
   // Check that the referrer is set correctly.
   std::string expected_referrer =
@@ -458,19 +457,19 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
   // Opens in new window.
   EXPECT_EQ("/title2.html", new_shell->web_contents()->GetVisibleURL().path());
 
-  // Check that `window.opener` is not set.
-  success = false;
-  EXPECT_TRUE(ExecuteScriptAndExtractBool(
-      new_shell, "window.domAutomationController.send(window.opener == null);",
-      &success));
-  EXPECT_TRUE(success);
-
   // Wait for the cross-site transition in the new tab to finish.
   WaitForLoadStop(new_shell->web_contents());
   WebContentsImpl* web_contents =
       static_cast<WebContentsImpl*>(new_shell->web_contents());
   EXPECT_FALSE(
       web_contents->GetRenderManagerForTesting()->pending_render_view_host());
+
+  // Check that `window.opener` is not set.
+  success = false;
+  EXPECT_TRUE(ExecuteScriptAndExtractBool(
+      new_shell, "window.domAutomationController.send(window.opener == null);",
+      &success));
+  EXPECT_TRUE(success);
 
   // Should have a new SiteInstance (in a new BrowsingInstance).
   scoped_refptr<SiteInstance> noref_blank_site_instance(
@@ -507,19 +506,19 @@ IN_PROC_BROWSER_TEST_F(RenderFrameHostManagerTest,
   // Opens in new window.
   EXPECT_EQ("/title2.html", new_shell->web_contents()->GetVisibleURL().path());
 
-  // Check that `window.opener` is not set.
-  success = false;
-  EXPECT_TRUE(ExecuteScriptAndExtractBool(
-      new_shell, "window.domAutomationController.send(window.opener == null);",
-      &success));
-  EXPECT_TRUE(success);
-
   // Wait for the cross-site transition in the new tab to finish.
   WaitForLoadStop(new_shell->web_contents());
   WebContentsImpl* web_contents = static_cast<WebContentsImpl*>(
       new_shell->web_contents());
   EXPECT_FALSE(web_contents->GetRenderManagerForTesting()->
       pending_render_view_host());
+
+  // Check that `window.opener` is not set.
+  success = false;
+  EXPECT_TRUE(ExecuteScriptAndExtractBool(
+      new_shell, "window.domAutomationController.send(window.opener == null);",
+      &success));
+  EXPECT_TRUE(success);
 
   // Should have a new SiteInstance (in a new BrowsingInstance).
   scoped_refptr<SiteInstance> noref_blank_site_instance(
