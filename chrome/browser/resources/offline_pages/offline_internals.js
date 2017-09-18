@@ -300,6 +300,9 @@ cr.define('offlineInternals', function() {
     $('cancel-nwake').onclick = function() {
       browserProxy.cancelNwake().then(setPrefetchResult);
     };
+    $('show-notification').onclick = function() {
+      browserProxy.showPrefetchNotification().then(setPrefetchResult);
+    };
     $('generate-page-bundle').onclick = function() {
       browserProxy.generatePageBundle($('generate-urls').value)
           .then(setPrefetchResult);
