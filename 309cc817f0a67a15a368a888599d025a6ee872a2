@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ec42ba7_3bfa9010",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-09-18T21:31:13Z",
+      "side": 1,
+      "message": "Done\n\nThis method was still a static method inside CrOSComponent class. It is set to be a friend class of class OnDemandUpdater to avoid keep adding more friend methods https://cs.chromium.org/chromium/src/components/component_updater/component_updater_service.h?type\u003dcs\u0026q\u003dCrOSComponent\u0026sq\u003dpackage:chromium\u0026l\u003d162",
+      "parentUuid": "3f6af7f6_b2d49f65",
+      "revId": "309cc817f0a67a15a368a888599d025a6ee872a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "380fdae5_01d65109",
         "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "309cc817f0a67a15a368a888599d025a6ee872a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de147a5_b2f83a67",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-09-18T21:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "380fdae5_01d65109",
+      "revId": "309cc817f0a67a15a368a888599d025a6ee872a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "313d764b_657a0092",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-09-18T21:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbdb4a17_4edf6c11",
+      "revId": "309cc817f0a67a15a368a888599d025a6ee872a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "353dd9c5_29eb5ed8",
         "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "309cc817f0a67a15a368a888599d025a6ee872a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c44a44b8_31f0df11",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-09-18T21:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "353dd9c5_29eb5ed8",
+      "revId": "309cc817f0a67a15a368a888599d025a6ee872a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "45626d13_1d07cdd6",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-09-18T21:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb8a9073_e0fa2e08",
+      "range": {
+        "startLine": 25,
+        "startChar": 66,
+        "endLine": 25,
+        "endChar": 73
+      },
+      "revId": "309cc817f0a67a15a368a888599d025a6ee872a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a3c2626_a9942a6f",
         "filename": "chromeos/dbus/services/component_updater_service_provider.h",
         "patchSetId": 1
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "802162ba_3174c1ef",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-09-18T21:31:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a3c2626_a9942a6f",
+      "revId": "309cc817f0a67a15a368a888599d025a6ee872a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d330c882_f17ecbbc",
         "filename": "chromeos/dbus/services/org.chromium.ComponentUpdaterService.conf",
         "patchSetId": 1
@@ -121,6 +235,24 @@
       "writtenOn": "2017-09-15T19:56:40Z",
       "side": 1,
       "message": "i don\u0027t think you want to allow everyone to call this. who will actually be calling it? something running as root?",
+      "revId": "309cc817f0a67a15a368a888599d025a6ee872a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9804dbc_f8463fd7",
+        "filename": "chromeos/dbus/services/org.chromium.ComponentUpdaterService.conf",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-09-18T21:31:13Z",
+      "side": 1,
+      "message": "For now vm_launcher (caller) runs as root. But in the future they will have a new user \u0027vm_xxx\u0027 and run as that. In this case, can we go with root for now?",
+      "parentUuid": "d330c882_f17ecbbc",
       "revId": "309cc817f0a67a15a368a888599d025a6ee872a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
