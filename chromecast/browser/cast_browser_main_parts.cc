@@ -36,7 +36,6 @@
 #include "chromecast/browser/cast_memory_pressure_monitor.h"
 #include "chromecast/browser/cast_net_log.h"
 #include "chromecast/browser/devtools/remote_debugging_server.h"
-#include "chromecast/browser/geolocation/cast_access_token_store.h"
 #include "chromecast/browser/media/media_caps_impl.h"
 #include "chromecast/browser/metrics/cast_metrics_prefs.h"
 #include "chromecast/browser/metrics/cast_metrics_service_client.h"
@@ -198,19 +197,13 @@ namespace shell {
 
 namespace {
 
-// A provider of services for Geolocation.
+// Embedder-provided Geolocation services. Cast doesn't currently override any
+// defaults.
 class CastGeolocationDelegate : public device::GeolocationDelegate {
  public:
-  explicit CastGeolocationDelegate(CastBrowserContext* context)
-      : context_(context) {}
-
-  scoped_refptr<device::AccessTokenStore> CreateAccessTokenStore() override {
-    return new CastAccessTokenStore(context_);
-  }
+  CastGeolocationDelegate() = default;
 
  private:
-  CastBrowserContext* context_;
-
   DISALLOW_COPY_AND_ASSIGN(CastGeolocationDelegate);
 };
 
@@ -530,7 +523,7 @@ void CastBrowserMainParts::PreMainMessageLoopRun() {
   media_caps_->Initialize();
 
   device::GeolocationProvider::SetGeolocationDelegate(
-      new CastGeolocationDelegate(cast_browser_process_->browser_context()));
+      new CastGeolocationDelegate());
 
   // Initializing metrics service and network delegates must happen after cast
   // service is intialized because CastMetricsServiceClient and

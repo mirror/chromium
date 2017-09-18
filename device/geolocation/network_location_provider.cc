@@ -12,6 +12,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
+#include "net/url_request/url_request_context_getter.h"
 
 namespace device {
 namespace {
@@ -91,17 +92,10 @@ bool NetworkLocationProvider::PositionCache::MakeKey(const WifiData& wifi_data,
   return !key->empty();
 }
 
-// NetworkLocationProvider factory function
-LocationProvider* NewNetworkLocationProvider(
-    const scoped_refptr<net::URLRequestContextGetter>& context,
-    const GURL& url) {
-  return new NetworkLocationProvider(context, url);
-}
-
 // NetworkLocationProvider
 NetworkLocationProvider::NetworkLocationProvider(
-    const scoped_refptr<net::URLRequestContextGetter>& url_context_getter,
-    const GURL& url)
+    scoped_refptr<net::URLRequestContextGetter> url_context_getter,
+    const std::string& api_key)
     : wifi_data_provider_manager_(nullptr),
       wifi_data_update_callback_(
           base::Bind(&NetworkLocationProvider::OnWifiDataUpdate,
@@ -110,8 +104,8 @@ NetworkLocationProvider::NetworkLocationProvider(
       is_permission_granted_(false),
       is_new_data_available_(false),
       request_(new NetworkLocationRequest(
-          url_context_getter,
-          url,
+          std::move(url_context_getter),
+          api_key,
           base::Bind(&NetworkLocationProvider::OnLocationResponse,
                      base::Unretained(this)))),
       position_cache_(new PositionCache),

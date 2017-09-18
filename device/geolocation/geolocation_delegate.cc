@@ -4,17 +4,12 @@
 
 #include "device/geolocation/geolocation_delegate.h"
 
-#include "device/geolocation/access_token_store.h"
 #include "device/geolocation/location_provider.h"
 
 namespace device {
 
 bool GeolocationDelegate::UseNetworkLocationProviders() {
   return true;
-}
-
-scoped_refptr<AccessTokenStore> GeolocationDelegate::CreateAccessTokenStore() {
-  return nullptr;
 }
 
 std::unique_ptr<LocationProvider>
