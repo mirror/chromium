@@ -59,14 +59,12 @@ public class BottomSheetContentControllerTest {
         int closedCount = mObserver.mClosedCallbackHelper.getCallCount();
 
         mBottomSheetTestRule.setSheetState(BottomSheet.SHEET_STATE_HALF, false);
-        mObserver.mOpenedCallbackHelper.waitForCallback(openedCount, 1);
-        openedCount++;
-        assertEquals(contentChangedCount, mObserver.mContentChangedCallbackHelper.getCallCount());
+        mObserver.mOpenedCallbackHelper.waitForCallback(openedCount++, 1);
+        mObserver.mContentChangedCallbackHelper.waitForCallback(contentChangedCount++, 1);
         assertEquals(closedCount, mObserver.mClosedCallbackHelper.getCallCount());
 
         mBottomSheetTestRule.selectBottomSheetContent(R.id.action_history);
-        mObserver.mContentChangedCallbackHelper.waitForCallback(contentChangedCount, 1);
-        contentChangedCount++;
+        mObserver.mContentChangedCallbackHelper.waitForCallback(contentChangedCount++, 1);
         assertEquals(openedCount, mObserver.mOpenedCallbackHelper.getCallCount());
         assertEquals(closedCount, mObserver.mClosedCallbackHelper.getCallCount());
         assertTrue(mBottomSheet.getCurrentSheetContent() instanceof HistorySheetContent);
@@ -75,7 +73,7 @@ public class BottomSheetContentControllerTest {
 
         mBottomSheetTestRule.setSheetState(BottomSheet.SHEET_STATE_PEEK, false);
         mObserver.mClosedCallbackHelper.waitForCallback(closedCount, 1);
-        mObserver.mContentChangedCallbackHelper.waitForCallback(contentChangedCount, 1);
+        mObserver.mContentChangedCallbackHelper.waitForCallback(contentChangedCount++, 1);
         assertEquals(openedCount, mObserver.mOpenedCallbackHelper.getCallCount());
         assertTrue(mBottomSheet.getCurrentSheetContent() instanceof SuggestionsBottomSheetContent);
         assertEquals(R.id.action_home, mBottomSheetContentController.getSelectedItemIdForTests());

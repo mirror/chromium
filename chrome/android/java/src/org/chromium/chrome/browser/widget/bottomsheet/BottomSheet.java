@@ -983,12 +983,18 @@ public class BottomSheet
         // If the desired content is already showing, do nothing.
         if (mSheetContent == content) return;
 
+        View oldContent = mSheetContent != null ? mSheetContent.getContentView() : null;
+        if (content == null) {
+            setContent(null);
+            ((ViewGroup) oldContent.getParent()).removeView(oldContent);
+            return;
+        }
+
         View newToolbar =
                 content.getToolbarView() != null ? content.getToolbarView() : mDefaultToolbarView;
         View oldToolbar = mSheetContent != null && mSheetContent.getToolbarView() != null
                 ? mSheetContent.getToolbarView()
                 : mDefaultToolbarView;
-        View oldContent = mSheetContent != null ? mSheetContent.getContentView() : null;
 
         List<Animator> animators = new ArrayList<>();
         mContentSwapAnimatorSet = new AnimatorSet();
@@ -997,12 +1003,7 @@ public class BottomSheet
             public void onAnimationEnd(Animator animation) {
                 if (mIsDestroyed) return;
 
-                mSheetContent = content;
-                for (BottomSheetObserver o : mObservers) {
-                    o.onSheetContentChanged(content);
-                }
-                updateHandleTint();
-                mToolbarHolder.setBackgroundColor(Color.TRANSPARENT);
+                setContent(content);
                 mContentSwapAnimatorSet = null;
             }
         });
@@ -1693,5 +1694,14 @@ public class BottomSheet
                 R.dimen.bottom_sheet_help_bubble_inset);
         helpBubble.setInsetPx(0, inset, 0, inset);
         helpBubble.show();
+    }
+
+    private void setContent(final BottomSheetContent content) {
+        mSheetContent = content;
+        for (BottomSheetObserver o : mObservers) {
+            o.onSheetContentChanged(content);
+        }
+        updateHandleTint();
+        mToolbarHolder.setBackgroundColor(Color.TRANSPARENT);
     }
 }
