@@ -22,6 +22,30 @@
       "revId": "eb04efa548c78d5f7d427beb4440829598d10f6c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c233fb_8605ae32",
+        "filename": "components/payments/content/utility/payment_manifest_parser.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-18T20:46:58Z",
+      "side": 1,
+      "message": "Good catch! Yes. Will fix.",
+      "parentUuid": "03b9c055_c49f7371",
+      "range": {
+        "startLine": 51,
+        "startChar": 35,
+        "endLine": 51,
+        "endChar": 37
+      },
+      "revId": "eb04efa548c78d5f7d427beb4440829598d10f6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
