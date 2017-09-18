@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ca58c585_ad2900e4",
+        "filename": "content/browser/background_fetch/background_fetch_context.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-18T14:45:13Z",
+      "side": 1,
+      "message": "It\u0027s not just UpdateUI, it\u0027s also GetIds, GetRegistration, and soon Abort. I\u0027d rather not have wrappers for all of them.\n\nAnd conversely, GetActiveFetch will be going away soon thanks to these changes - so in exchange for exposing the DataManager, we\u0027ll be able to stop exposing the JobController. Given that the JobController is an internal implementation detail with soon-to-be-complex lifetime, that\u0027s a tradeoff I\u0027m very happy to make.",
+      "parentUuid": "0f68f845_d7092eb1",
+      "revId": "b386b6378e100ab81ed419de15190fd950a044be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b9fc861_f45011b7",
         "filename": "content/browser/background_fetch/background_fetch_service_unittest.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "b386b6378e100ab81ed419de15190fd950a044be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f6f1829_a6600244",
+        "filename": "content/browser/background_fetch/background_fetch_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-09-18T14:45:13Z",
+      "side": 1,
+      "message": "Done, and also updated other methods and their callers.",
+      "parentUuid": "8b9fc861_f45011b7",
+      "revId": "b386b6378e100ab81ed419de15190fd950a044be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
