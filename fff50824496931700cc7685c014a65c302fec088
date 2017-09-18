@@ -16,6 +16,24 @@
       "revId": "fff50824496931700cc7685c014a65c302fec088",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e33d9dd0_3edb7fe7",
+        "filename": "ui/webui/resources/js/cr/ui/focus_outline_manager.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-09-18T17:22:46Z",
+      "side": 1,
+      "message": "Removed the usage of null, using !manager instead, to also avoid using undefined. The map can\u0027t hold fals-y values anyway, so this check is more concise and sufficient.",
+      "parentUuid": "7e182628_aeec0dc0",
+      "revId": "fff50824496931700cc7685c014a65c302fec088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
