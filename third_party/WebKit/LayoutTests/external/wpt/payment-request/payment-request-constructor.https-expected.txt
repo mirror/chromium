@@ -22,9 +22,7 @@ FAIL If there are any duplicate shipping option ids, and shipping is requested, 
       requestShipping: true,
     });
   }" passed to assert_throws()
-FAIL Throw when there are duplicate shippingOption ids, even if other values are different assert_throws: Expected to throw a TypeError because duplicate IDs function "() => {
-      new PaymentRequest(defaultMethods, details, { requestShipping: true });
-    }" did not throw
+PASS Throw when there are duplicate shippingOption ids, even if other values are different
 PASS Throw TypeError if modifier.total.amount.value is not a valid decimal monetary value
 PASS If amount.value of additionalDisplayItems is not a valid decimal monetary value, then throw a TypeError
 PASS Modifier data must be JSON-serializable object (an Array in this case)
