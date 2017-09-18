@@ -190,6 +190,7 @@ FaviconHandler::FaviconHandler(
           handler_type == FaviconDriverObserver::NON_TOUCH_LARGEST ||
           handler_type == FaviconDriverObserver::TOUCH_LARGEST),
       candidates_received_(false),
+      error_other_than_404_found_(false),
       notification_icon_type_(favicon_base::INVALID_ICON),
       service_(service),
       delegate_(delegate),
@@ -343,7 +344,8 @@ void FaviconHandler::OnUpdateCandidates(
 
   // |candidates| or |manifest_url| could have been modified via Javascript. If
   // neither changed, ignore the call.
-  if ((!manifests_feature_enabled || manifest_url_ == manifest_url) &&
+  if (candidates_received_ &&
+      (!manifests_feature_enabled || manifest_url_ == manifest_url) &&
       (non_manifest_original_candidates_.size() == candidates.size() &&
        std::equal(candidates.begin(), candidates.end(),
                   non_manifest_original_candidates_.begin(),
@@ -352,6 +354,7 @@ void FaviconHandler::OnUpdateCandidates(
   }
 
   candidates_received_ = true;
+  error_other_than_404_found_ = false;
   non_manifest_original_candidates_ = candidates;
   cancelable_task_tracker_for_candidates_.TryCancelAll();
   manifest_download_request_.Cancel();
@@ -456,10 +459,14 @@ void FaviconHandler::OnGotFinalIconURLCandidates(
 
   candidates_ = std::move(sorted_candidates);
 
-  // TODO(davemoore) Should clear on empty url. Currently we ignore it.
-  // This appears to be what FF does as well.
-  if (current_candidate() && got_favicon_from_history_)
+  if (candidates_.empty()) {
+    if (!delegate_->IsOffTheRecord() &&
+        notification_icon_type_ != favicon_base::INVALID_ICON) {
+      service_->DeleteFaviconMappings(page_urls_, notification_icon_type_);
+    }
+  } else if (got_favicon_from_history_) {
     OnGotInitialHistoryDataAndIconURLCandidates();
+  }
 }
 
 // static
@@ -502,14 +509,16 @@ void FaviconHandler::OnDidDownloadFavicon(
   // Mark download as finished.
   image_download_request_.Cancel();
 
-  if (bitmaps.empty() && http_status_code == 404) {
-    DVLOG(1) << "Failed to Download Favicon:" << image_url;
-    RecordDownloadOutcome(DownloadOutcome::FAILED);
-    service_->UnableToDownloadFavicon(image_url);
-  }
-
   bool request_next_icon = true;
-  if (!bitmaps.empty()) {
+  if (bitmaps.empty()) {
+    if (http_status_code == 404) {
+      DVLOG(1) << "Failed to Download Favicon:" << image_url;
+      RecordDownloadOutcome(DownloadOutcome::FAILED);
+      service_->UnableToDownloadFavicon(image_url);
+    } else {
+      error_other_than_404_found_ = true;
+    }
+  } else {
     RecordDownloadOutcome(DownloadOutcome::SUCCEEDED);
     float score = 0.0f;
     gfx::ImageSkia image_skia;
@@ -550,8 +559,18 @@ void FaviconHandler::OnDidDownloadFavicon(
     // |num_image_download_requests_| can never be 0.
     RecordDownloadAttemptsForHandlerType(handler_type_,
                                          num_image_download_requests_);
-    // We have either found the ideal candidate or run out of candidates.
-    if (best_favicon_.candidate.icon_type != favicon_base::INVALID_ICON) {
+    if (best_favicon_.candidate.icon_type == favicon_base::INVALID_ICON) {
+      // No valid icon found, so make sure mappings are deleted. We do this only
+      // if a mapping is known to exist (reflected by notification_icon_type_)
+      // and if all download attempts return a 404 (to ignore temporary server
+      // errors), which most importantly handles the default favicon.ico case,
+      // when a page lists no other candidate.
+      if (!delegate_->IsOffTheRecord() && !error_other_than_404_found_ &&
+          notification_icon_type_ != favicon_base::INVALID_ICON) {
+        service_->DeleteFaviconMappings(page_urls_, notification_icon_type_);
+      }
+    } else {
+      // We have either found the ideal candidate or run out of candidates.
       // No more icons to request, set the favicon from the candidate. The
       // manifest URL, if available, is used instead of the icon URL.
       SetFavicon(manifest_url_.is_empty() ? best_favicon_.candidate.icon_url
