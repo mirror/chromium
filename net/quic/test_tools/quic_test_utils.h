@@ -738,7 +738,7 @@ class MockSendAlgorithm : public SendAlgorithmInterface {
                     const AckedPacketVector& acked_packets,
                     const CongestionVector& lost_packets));
   MOCK_METHOD5(OnPacketSent,
-               bool(QuicTime,
+               void(QuicTime,
                     QuicByteCount,
                     QuicPacketNumber,
                     QuicByteCount,
