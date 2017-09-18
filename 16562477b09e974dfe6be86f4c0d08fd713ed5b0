@@ -22,6 +22,30 @@
       "revId": "16562477b09e974dfe6be86f4c0d08fd713ed5b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c03622e7_da7b295f",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-09-18T18:08:53Z",
+      "side": 1,
+      "message": "Added the logic to avoiding calling OnRequestFailed() twice, and added a DCHECK to in OnRequestFailed() to verify that this is only possible with interception.",
+      "parentUuid": "8bf6dccf_4eb002bc",
+      "range": {
+        "startLine": 988,
+        "startChar": 6,
+        "endLine": 988,
+        "endChar": 69
+      },
+      "revId": "16562477b09e974dfe6be86f4c0d08fd713ed5b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
