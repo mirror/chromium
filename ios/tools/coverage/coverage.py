@@ -14,23 +14,27 @@
         such as ios_chrome_unittests. To simply play with this tool, you are
         suggested to start with 'url_unittests'.
 
-  ios/tools/coverage/coverage.py -p path1 -p path2 target
-    Generate code coverage report for |target| for |path1| and |path2|.
+  Usages:
+  ios/tools/coverage/coverage.py target --top_level_dir/-t top_level_dir
+  --include/-i sources_to_include --exlcude/-e sources_to_exclude
+  # Generate code coverage report for |target| for directory |top_level_dir|,
+  # only including files specified in |sources_to_include| and excluding files
+  # specified in |sources_to_exclude|
 
-  ios/tools/coverage/coverage.py target -p path --reuse-profdata
-  out/Coverage-iphonesimulator/coverage.profdata
-    Skip running tests and reuse the specified profile data file to generate
-    code coverage report.
+  ios/tools/coverage/coverage.py target --top_level_dir/-t top_level_dir
+  --include/-i sources_to_include --exlcude/-e sources_to_exclude
+  --reuse-profdata/-r out/Coverage-iphonesimulator/coverage.profdata
+  # Skip running tests and reuse the specified profile data file to generate
+  # code coverage report.
 
   For more options, please refer to ios/tools/coverage/coverage.py -h
-
 """
-
 import sys
 
 import argparse
 import collections
 import ConfigParser
+import json
 import os
 import subprocess
 
@@ -77,7 +81,8 @@ def _CreateCoverageProfileDataForTarget(target, jobs_count=None):
   return profdata_path
 
 
-def _DisplayLineCoverageReport(target, profdata_path, paths):
+def _DisplayLineCoverageReport(target, profdata_path, top_level_dir,
+                               include_sources, exclude_sources):
   """Generates and displays line coverage report.
 
   The output has the following format:
@@ -92,39 +97,28 @@ def _DisplayLineCoverageReport(target, profdata_path, paths):
   Args:
     target: A string representing the name of the target to be tested.
     profdata_path: A string representing the path to the profdata file.
-    paths: A list of directories to generate code coverage for.
+    top_level_dir: The top level directory to show code coverage report.
+    include_sources: A list of paths.
+    exclude_sources: A list of paths.
   """
   print 'Generating code coverge report'
   raw_line_coverage_report = _GenerateLineCoverageReport(target, profdata_path)
   line_coverage_report_with_test = _FilterLineCoverageReport(
-      raw_line_coverage_report, paths)
+      raw_line_coverage_report, include_sources, exclude_sources)
   line_coverage_report = _ExcludeTestFiles(line_coverage_report_with_test)
 
-  coverage_by_path = collections.defaultdict(
-      lambda: collections.defaultdict(lambda: 0))
+  top_level_dir_coverage = collections.defaultdict(lambda: 0)
   for file_name in line_coverage_report:
     total_lines = line_coverage_report[file_name]['total_lines']
     executed_lines = line_coverage_report[file_name]['executed_lines']
 
-    matched_paths = _MatchFilePathWithDirectories(file_name, paths)
-    for matched_path in matched_paths:
-      coverage_by_path[matched_path]['total_lines'] += total_lines
-      coverage_by_path[matched_path]['executed_lines'] += executed_lines
+    if file_name.startswith(top_level_dir):
+      top_level_dir_coverage['total_lines'] += total_lines
+      top_level_dir_coverage['executed_lines'] += executed_lines
 
-    if matched_paths:
-      coverage_by_path['aggregate']['total_lines'] += total_lines
-      coverage_by_path['aggregate']['executed_lines'] += executed_lines
-
-  print '\nLine Coverage Report for Following Directories: ' + str(paths)
-  for path in paths:
-    print path + ':'
-    _PrintLineCoverageStats(coverage_by_path[path]['total_lines'],
-                            coverage_by_path[path]['executed_lines'])
-
-  if len(paths) > 1:
-    print 'In Aggregate:'
-    _PrintLineCoverageStats(coverage_by_path['aggregate']['total_lines'],
-                            coverage_by_path['aggregate']['executed_lines'])
+  print '\nLine Coverage Report for Directory: ' + str(top_level_dir)
+  _PrintLineCoverageStats(top_level_dir_coverage['total_lines'],
+                          top_level_dir_coverage['executed_lines'])
 
 
 def _GenerateLineCoverageReport(target, profdata_path):
@@ -197,14 +191,13 @@ def _GenerateLineCoverageReport(target, profdata_path):
       continue
 
     executed_lines = total_lines - missed_lines
-
     line_coverage_report[file_name]['total_lines'] = total_lines
     line_coverage_report[file_name]['executed_lines'] = executed_lines
 
   return line_coverage_report
 
 
-def _FilterLineCoverageReport(raw_report, paths):
+def _FilterLineCoverageReport(raw_report, include_sources, exclude_sources):
   """Filter line coverage report to only include directories in |paths|.
 
   Args:
@@ -213,7 +206,8 @@ def _FilterLineCoverageReport(raw_report, paths):
       -- file_name: dict => Line coverage summary.
       ---- total_lines: int => Number of total lines.
       ---- executed_lines: int => Number of executed lines.
-    paths: A list of directories to generate code coverage for.
+    include_sources: A list of paths.
+    exclude_sources: A list of paths.
 
   Returns:
     A json object with the following format:
@@ -225,7 +219,11 @@ def _FilterLineCoverageReport(raw_report, paths):
   """
   filtered_report = {}
   for file_name in raw_report:
-    if _MatchFilePathWithDirectories(file_name, paths):
+    should_include = (any(file_name.startswith(source)
+                          for source in include_sources))
+    should_exclude = (any(file_name.startswith(source)
+                          for source in exclude_sources))
+    if should_include and not should_exclude:
       filtered_report[file_name] = raw_report[file_name]
 
   return filtered_report
@@ -276,30 +274,10 @@ def _PrintLineCoverageStats(total_lines, executed_lines):
   coverage = float(executed_lines) / total_lines if total_lines > 0 else None
   percentage_coverage = '{}%'.format(int(coverage * 100)) if coverage else None
 
-  output = ('\tTotal Lines: {}\tExecuted Lines: {}\tMissed Lines: {}\t'
+  output = ('Total Lines: {}\tExecuted Lines: {}\tMissed Lines: {}\t'
             'Coverage: {}\n')
   print output.format(total_lines, executed_lines, missed_lines,
                       percentage_coverage or 'NA')
-
-
-def _MatchFilePathWithDirectories(file_path, directories):
-  """Returns the directories that contains the file.
-
-  Args:
-    file_path: the absolute path of a file that is to be matched.
-    directories: A list of directories that are relative to source root.
-
-  Returns:
-    A list of directories that contains the file.
-  """
-  matched_directories = []
-  src_root = _GetSrcRootPath()
-  relative_file_path = os.path.relpath(file_path, src_root)
-  for directory in directories:
-    if relative_file_path.startswith(directory):
-      matched_directories.append(directory)
-
-  return matched_directories
 
 
 def _BuildTargetWithCoverageConfiguration(target, jobs_count):
@@ -491,35 +469,6 @@ def _TargetNameIsValidTestTarget(target):
               VALID_TEST_TARGET_POSTFIXES))
 
 
-def _ParseCommandArguments():
-  """Add and parse relevant arguments for tool commands.
-
-  Returns:
-    A dictionanry representing the arguments.
-  """
-  arg_parser = argparse.ArgumentParser()
-  arg_parser.usage = __doc__
-
-  arg_parser.add_argument('-p', '--path', action='append', required=True,
-                          help='Directories to get code coverage for.')
-
-  arg_parser.add_argument('-j', '--jobs', type=int, default=None,
-                          help='Run N jobs to build in parallel. If not '
-                               'specified, a default value will be derived '
-                               'based on CPUs availability. Please refer to '
-                               '\'ninja -h\' for more details.')
-
-  arg_parser.add_argument('-r', '--reuse-profdata',
-                          help='Skip building test target and running tests '
-                               'and re-use the specified profile data file.')
-
-  arg_parser.add_argument('target', nargs='+',
-                          help='The name of the test target to run.')
-
-  args = arg_parser.parse_args()
-  return args
-
-
 def _AssertCoverageBuildDirectoryExists():
   """Asserts that the build directory with converage configuration exists."""
   src_root = _GetSrcRootPath()
@@ -529,20 +478,190 @@ def _AssertCoverageBuildDirectoryExists():
                                           'ios/build/tools/setup-gn.py.')
 
 
-def _AssertPathsExist(paths):
-  """Asserts that paths specified in |paths| exist.
+def _SeparatePathsAndBuildTargets(paths_or_build_targets):
+  paths = []
+  build_targets = []
+  for path_or_build_target in paths_or_build_targets:
+    if path_or_build_target.startswith('//'):
+      build_targets.append(path_or_build_target)
+    else:
+      paths.append(path_or_build_target)
+
+  return paths, build_targets
+
+
+def _FormatBuildTargetPaths(build_targets):
+  """Format build target paths to explicitly specify target name.
+
+  Build target paths may have target name omitted, this method adds a target
+  name for the path if it is.
+  For example, //url is converted to //url:url.
 
   Args:
-    paths: A list of directories.
+    build_targets: A list of build targets.
+
+  Returns:
+    A list of build targets.
+  """
+  formatted_build_targets = []
+  for build_target in build_targets:
+    if ':' not in os.path.basename(build_target):
+      formatted_build_targets.append(
+          build_target + ':' + os.path.basename(build_target))
+    else:
+      formatted_build_targets.append(build_target)
+
+  return formatted_build_targets
+
+
+def _AssertBuildTargetsExist(build_targets):
+  """Asserts that the build targets specified in |build_targets| exist.
+
+  Args:
+    build_targets: A list of build targets.
+  """
+  # The returned json objec has the following format:
+  # Root: dict => A dictionary of sources of build targets.
+  # -- target: dict => A dictionary that describes the target.
+  # ---- sources: list => A list of source files.
+  #
+  # For example:
+  # {u'//url:url': {u'sources': [u'//url/gurl.cc', u'//url/url_canon_icu.cc']}}
+  #
+  target_source_descriptions = _GetSourcesDescriptionOfBuildTargets(
+      build_targets)
+  for build_target in target_source_descriptions:
+    assert build_target in target_source_descriptions, (('{} is not a valid '
+                                                         'build target. Please '
+                                                         'run \'gn desc {} '
+                                                         'sources\' to debug.')
+                                                        .format(build_target,
+                                                                build_target))
+
+
+def _AssertPathsExist(paths):
+  """Asserts that the paths specified in |paths| exist.
+
+  Args:
+    paths: A list of files or directories.
   """
   src_root = _GetSrcRootPath()
   for path in paths:
     abspath = os.path.join(src_root, path)
-    assert os.path.exists(abspath), (('Path: {} doesn\'t exist.\n A valid '
+    assert os.path.exists(abspath), (('Path: {} doesn\'t exist.\nA valid '
                                       'path must exist and be relative to the '
-                                      'root of source, which is {} \nFor '
+                                      'root of source, which is {}. For '
                                       'example, \'ios/\' is a valid path.').
                                      format(abspath, src_root))
+
+
+def _GetSourcesOfBuildTargets(build_targets):
+  """Returns a list of paths corresponding to the sources of the build targets.
+
+  Args:
+    build_targets: A list of build targets.
+
+  Returns:
+    A list of os paths relative to the root of checkout.
+  """
+  target_sources_description = _GetSourcesDescriptionOfBuildTargets(
+      build_targets)
+  sources = []
+  for build_target in build_targets:
+    sources.extend(_ConvertBuildFilePathsToOsPaths(
+        target_sources_description[build_target]['sources']))
+
+  return sources
+
+
+def _GetSourcesDescriptionOfBuildTargets(build_targets):
+  """Returns the description of sources of the build targets using 'gn desc'.
+
+  Args:
+    build_targets: A list of build targets.
+
+  Returns:
+    A json object with the following format:
+
+    Root: dict => A dictionary of sources of build targets.
+    -- target: dict => A dictionary that describes the target.
+    ---- sources: list => A list of source files.
+  """
+  src_root = _GetSrcRootPath()
+  build_dir_path = os.path.join(src_root, BUILD_DIRECTORY)
+  cmd = ['gn', 'desc', build_dir_path]
+  for build_target in build_targets:
+    cmd.append(build_target)
+  cmd.extend(['sources', '--format=json'])
+
+  return json.loads(subprocess.check_output(cmd))
+
+
+def _ConvertBuildFilePathsToOsPaths(build_file_paths):
+  """Converts paths in build file format to os path format.
+
+  Args:
+    build_file_paths: A list of paths starts with '//'.
+
+  Returns:
+   A list of os paths relative to the root of checkout.
+  """
+  os_paths = []
+  for build_file_path in build_file_paths:
+    os_paths.append(build_file_path[2:])
+
+  return os_paths
+
+
+def _ParseCommandArguments():
+  """Add and parse relevant arguments for tool commands.
+
+  Returns:
+    A dictionanry representing the arguments.
+  """
+  arg_parser = argparse.ArgumentParser()
+  arg_parser.usage = __doc__
+
+  arg_parser.add_argument('-t', '--top-level-dir', type=str, required=True,
+                          help='The top level directory to show code coverage '
+                               'report, the path needs to be relative to the '
+                               'root of the checkout.')
+
+  arg_parser.add_argument('-i', '--include', action='append', required=True,
+                          help='Directories or build targets to get code '
+                               'coverage for. For directories, paths need to '
+                               'be relative to the root of the checkoutand and '
+                               'all files under them are included recursively; '
+                               'for build targets, only the \'sources\' of the '
+                               'targets are included, and the format of '
+                               'specifying build targets is the same as in '
+                               '\'deps\' in BUILD.gn.')
+
+  arg_parser.add_argument('-e', '--exclude', action='append',
+                          help='Directories or build targets to get code '
+                               'coverage for. For directories, paths need to '
+                               'be relative to the root of the checkoutand and '
+                               'all files under them are excluded recursively; '
+                               'for build targets, only the \'sources\' of the '
+                               'targets are excluded, and the format of '
+                               'specifying build targets is the same as in '
+                               '\'deps\' in BUILD.gn.')
+
+  arg_parser.add_argument('-j', '--jobs', type=int, default=None,
+                          help='Run N jobs to build in parallel. If not '
+                               'specified, a default value will be derived '
+                               'based on CPUs availability. Please refer to '
+                               '\'ninja -h\' for more details.')
+
+  arg_parser.add_argument('-r', '--reuse-profdata', type=str,
+                          help='Skip building test target and running tests '
+                               'and re-use the specified profile data file.')
+
+  arg_parser.add_argument('target', nargs='+',
+                          help='The name of the test target to run.')
+
+  args = arg_parser.parse_args()
+  return args
 
 
 def Main():
@@ -562,8 +681,24 @@ def Main():
   if not jobs and _IsGomaConfigured():
     jobs = DEFAULT_GOMA_JOBS
 
+  print 'Validating inputs'
   _AssertCoverageBuildDirectoryExists()
-  _AssertPathsExist(args.path)
+  _AssertPathsExist([args.top_level_dir])
+
+  include_paths, raw_include_targets = _SeparatePathsAndBuildTargets(
+      args.include)
+  exclude_paths, raw_exclude_targets = _SeparatePathsAndBuildTargets(
+      args.exclude or [])
+  include_targets = _FormatBuildTargetPaths(raw_include_targets)
+  exclude_targets = _FormatBuildTargetPaths(raw_exclude_targets)
+
+  _AssertPathsExist(include_paths)
+  _AssertPathsExist(exclude_paths)
+  _AssertBuildTargetsExist(include_targets)
+  _AssertBuildTargetsExist(exclude_targets)
+
+  include_sources = include_paths + _GetSourcesOfBuildTargets(include_targets)
+  exclude_sources = exclude_paths + _GetSourcesOfBuildTargets(exclude_targets)
 
   profdata_path = args.reuse_profdata
   if profdata_path:
@@ -573,7 +708,8 @@ def Main():
   else:
     profdata_path = _CreateCoverageProfileDataForTarget(target, jobs)
 
-  _DisplayLineCoverageReport(target, profdata_path, args.path)
+  _DisplayLineCoverageReport(target, profdata_path, args.top_level_dir,
+                             include_sources, exclude_sources)
 
 if __name__ == '__main__':
   sys.exit(Main())
