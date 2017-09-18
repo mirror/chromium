@@ -16,6 +16,24 @@
       "revId": "46a6bbbcc72c7ef2ff62efbdf3969d490c4dabc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "252b4a81_b693ea71",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-09-18T14:31:28Z",
+      "side": 1,
+      "message": "Added an early return here in case the transaction cannot become a writer or reader.",
+      "parentUuid": "364f73e6_e394a00f",
+      "revId": "46a6bbbcc72c7ef2ff62efbdf3969d490c4dabc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
