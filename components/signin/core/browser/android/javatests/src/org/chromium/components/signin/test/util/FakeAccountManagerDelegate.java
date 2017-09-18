@@ -7,7 +7,7 @@ package org.chromium.components.signin.test.util;
 import android.accounts.Account;
 import android.accounts.AuthenticatorDescription;
 import android.app.Activity;
-import android.content.Context;
+import android.support.annotation.Nullable;
 
 import org.junit.Assert;
 
@@ -20,9 +20,14 @@ import org.chromium.components.signin.AccountManagerDelegate;
 import org.chromium.components.signin.AccountManagerDelegateException;
 import org.chromium.components.signin.AccountManagerFacade;
 import org.chromium.components.signin.AccountsChangeObserver;
+import org.chromium.components.signin.ProfileDataSource;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -42,21 +47,81 @@ import java.util.UUID;
  * AccountHolder} builder method alwaysAccept(true).
  */
 public class FakeAccountManagerDelegate implements AccountManagerDelegate {
+    private class FakeProfileDataSource implements ProfileDataSource {
+        private final ObserverList<Observer> mObservers = new ObserverList<>();
+        private final Map<String, ProfileData> mProfileDataMap = new HashMap<>();
+
+        FakeProfileDataSource() {}
+
+        @Override
+        public Map<String, ProfileData> getProfileDataMap() {
+            ThreadUtils.assertOnUiThread();
+            assert !mObservers.isEmpty();
+            return Collections.unmodifiableMap(mProfileDataMap);
+        }
+
+        @Override
+        public @Nullable ProfileData getProfileDataForAccount(String accountId) {
+            ThreadUtils.assertOnUiThread();
+            assert !mObservers.isEmpty();
+            return mProfileDataMap.get(accountId);
+        }
+
+        @Override
+        public void addObserver(Observer observer) {
+            ThreadUtils.assertOnUiThread();
+            mObservers.addObserver(observer);
+        }
+
+        @Override
+        public void removeObserver(Observer observer) {
+            ThreadUtils.assertOnUiThread();
+            boolean success = mObservers.removeObserver(observer);
+            assert success : "Can't find observer";
+        }
+
+        public void setProfileData(String accountId, @Nullable ProfileData profileData) {
+            ThreadUtils.assertOnUiThread();
+            if (profileData == null) {
+                mProfileDataMap.remove(accountId);
+            } else {
+                assert Objects.equals(accountId, profileData.getAccountName());
+                mProfileDataMap.put(accountId, profileData);
+            }
+            fireOnProfileDataUpdatedNotification(accountId);
+        }
+
+        private void fireOnProfileDataUpdatedNotification(String accountId) {
+            for (Observer observer : mObservers) {
+                observer.onProfileDataUpdated(accountId);
+            }
+        }
+    }
+
     private static final String TAG = "FakeAccountManager";
 
-    private final Context mContext;
     private final Set<AccountHolder> mAccounts = new HashSet<>();
     private final ObserverList<AccountsChangeObserver> mObservers = new ObserverList<>();
     private boolean mRegisterObserversCalled;
+    private FakeProfileDataSource mFakeProfileDataSource;
 
     @VisibleForTesting
-    public FakeAccountManagerDelegate(Context context, Account... accounts) {
-        mContext = context;
-        if (accounts != null) {
-            for (Account account : accounts) {
-                mAccounts.add(AccountHolder.builder(account).alwaysAccept(true).build());
-            }
+    public FakeAccountManagerDelegate(boolean enableProfileDataSource) {
+        if (enableProfileDataSource) {
+            mFakeProfileDataSource = new FakeProfileDataSource();
         }
+    }
+
+    public void setProfileData(
+            String accountId, @Nullable ProfileDataSource.ProfileData profileData) {
+        assert mFakeProfileDataSource != null : "ProfileDataSource was disabled!";
+        mFakeProfileDataSource.setProfileData(accountId, profileData);
+    }
+
+    @Nullable
+    @Override
+    public ProfileDataSource getProfileDataSource() {
+        return mFakeProfileDataSource;
     }
 
     @Override

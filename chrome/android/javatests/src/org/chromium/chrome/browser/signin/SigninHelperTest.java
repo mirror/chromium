@@ -39,7 +39,7 @@ public class SigninHelperTest {
                 InstrumentationRegistry.getInstrumentation().getTargetContext());
         mEventChecker = new MockChangeEventChecker();
 
-        mAccountManager = new FakeAccountManagerDelegate(mContext);
+        mAccountManager = new FakeAccountManagerDelegate(false);
         AccountManagerFacade.overrideAccountManagerFacadeForTests(mContext, mAccountManager);
     }
 

@@ -48,7 +48,7 @@ public class ChromeSigninUtils {
         mContext = instrumentation.getContext();
         mTargetContext = instrumentation.getTargetContext();
         mAccountManager = AccountManager.get(mTargetContext);
-        mFakeAccountManagerDelegate = new FakeAccountManagerDelegate(mContext);
+        mFakeAccountManagerDelegate = new FakeAccountManagerDelegate(false);
     }
 
     /**
