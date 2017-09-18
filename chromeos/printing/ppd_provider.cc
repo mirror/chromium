@@ -323,6 +323,7 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
     }
     while (!ppd_resolution_queue_.empty()) {
       const auto& next = ppd_resolution_queue_.front();
+      LOG(ERROR) << "Trying to fetch " << next.first.user_supplied_ppd_url;
       if (!next.first.user_supplied_ppd_url.empty()) {
         DCHECK(next.first.effective_make_and_model.empty());
         GURL url(next.first.user_supplied_ppd_url);
@@ -531,6 +532,7 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
                                 ExtractFiltersFromPpd(ppd_contents)));
     } else {
       // Just post the failure.
+      LOG(ERROR) << "FinishPpdResolution " << result_code;
       base::SequencedTaskRunnerHandle::Get()->PostTask(
           FROM_HERE, base::Bind(cb, result_code, std::string(),
                                 std::vector<std::string>()));
@@ -548,6 +550,8 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
       FinishPpdResolution(cb, PpdProvider::SUCCESS, result.contents);
     } else {
       // Cache miss.  Queue it to be satisfied by the fetcher queue.
+      LOG(ERROR) << "There was a cache miss on reference "
+                 << reference.user_supplied_ppd_url;
       ppd_resolution_queue_.push_back({reference, cb});
       MaybeStartFetch();
     }
@@ -921,6 +925,7 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
       // if the underlying causes is lack of access or similar, this seems to be
       // the best match for intent.
       ret = file_fetch_success_ ? PpdProvider::SUCCESS : PpdProvider::NOT_FOUND;
+      LOG(ERROR) << "ValidateAndGetResponseAsString " << file_fetch_success_;
       file_fetch_contents_.clear();
     }
     return ret;

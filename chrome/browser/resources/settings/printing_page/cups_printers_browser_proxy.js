@@ -69,6 +69,22 @@ var PrinterMakeModel;
 var PrinterPpdMakeModel;
 
 /**
+ *  @enum {number}
+ *  These values must be kept in sync with the PrinterSetupResult enum in
+ *  chrome/browser/comeos/printing/printer_configurer.h.
+ */
+var PrinterSetupResult = {
+  kFatalError: 0,
+  kSuccess: 1,
+  kPrinterUnreachable: 2,
+  kDbusError: 3,
+  kPpdTooLarge: 10,
+  kInvalidPpd: 11,
+  kPpdNotFound: 12,
+  kPpdUnretrievable: 13,
+};
+
+/**
  * @typedef {{
  *   message: string
  * }}
