@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b2994c2_c8013020",
+        "filename": "ios/chrome/browser/ui/webui/net_export/net_export_ui.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-18T15:52:17Z",
+      "side": 1,
+      "message": "Optional nit: Do you need |helper| local variable?",
+      "range": {
+        "startLine": 199,
+        "startChar": 22,
+        "endLine": 199,
+        "endChar": 28
+      },
+      "revId": "1ba9a695e90b53f75dc97e1bcafbaff7c1b70b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244984fe_7259de54",
+        "filename": "ios/chrome/browser/webui/net_export_tab_helper_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-18T15:52:17Z",
+      "side": 1,
+      "message": "EXPECT_FALSE(_hasShownMailComposer); ?",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 23
+      },
+      "revId": "1ba9a695e90b53f75dc97e1bcafbaff7c1b70b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d39b1998_d8491152",
+        "filename": "ios/chrome/browser/webui/net_export_tab_helper_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-18T15:52:17Z",
+      "side": 1,
+      "message": "Do you need a destructor?",
+      "revId": "1ba9a695e90b53f75dc97e1bcafbaff7c1b70b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f23adb4c_cfa62653",
+        "filename": "ios/chrome/browser/webui/net_export_tab_helper_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-18T15:52:17Z",
+      "side": 1,
+      "message": "nit: Do you want to create delegate in constructor\u0027s initialization list?",
+      "range": {
+        "startLine": 48,
+        "startChar": 18,
+        "endLine": 48,
+        "endChar": 48
+      },
+      "revId": "1ba9a695e90b53f75dc97e1bcafbaff7c1b70b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8d617c6_089f4cdf",
+        "filename": "ios/chrome/browser/webui/net_export_tab_helper_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-18T15:52:17Z",
+      "side": 1,
+      "message": "nit: No need for this. No one is going to copy test fixture.",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 26
+      },
+      "revId": "1ba9a695e90b53f75dc97e1bcafbaff7c1b70b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e6553e5_71fbd4e0",
+        "filename": "ios/chrome/browser/webui/net_export_tab_helper_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-18T15:52:17Z",
+      "side": 1,
+      "message": "Do you want to verify that passed tabHelper and context are correct?",
+      "range": {
+        "startLine": 70,
+        "startChar": 25,
+        "endLine": 70,
+        "endChar": 45
+      },
+      "revId": "1ba9a695e90b53f75dc97e1bcafbaff7c1b70b94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
