@@ -186,6 +186,7 @@ source_set("browser") {
     "//media/mojo/interfaces:remoting",
     "//third_party/WebKit/public:offscreen_canvas_mojo_bindings",
     "//third_party/leveldatabase",
+    "//third_party/leveldatabase:leveldb",
   ]
 
   sources = [
@@ -2259,6 +2260,7 @@ group("for_content_tests") {
   } else {
     public_deps = [
       "//third_party/leveldatabase",
+      "//third_party/leveldatabase:leveldb",
     ]
   }
 }

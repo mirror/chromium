@@ -260,7 +260,7 @@ TEST_F(LevelDBServiceTest, Reconnect) {
     temp_directory->Clone(MakeRequest(&directory));
 
     mojom::LevelDBDatabaseAssociatedPtr database;
-    leveldb_env::Options options;
+    leveldb_chrome::Options options;
     options.error_if_exists = true;
     options.create_if_missing = true;
     base::RunLoop run_loop;
@@ -311,7 +311,7 @@ TEST_F(LevelDBServiceTest, Destroy) {
     temp_directory->Clone(MakeRequest(&directory));
 
     mojom::LevelDBDatabaseAssociatedPtr database;
-    leveldb_env::Options options;
+    leveldb_chrome::Options options;
     options.error_if_exists = true;
     options.create_if_missing = true;
     base::RunLoop run_loop;

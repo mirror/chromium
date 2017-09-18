@@ -591,6 +591,7 @@ source_set("unit_tests") {
     "//services/device/public/interfaces",
     "//storage/browser:test_support",
     "//third_party/leveldatabase",
+    "//third_party/leveldatabase:leveldb",
     "//third_party/zlib/google:zip",
   ]
 

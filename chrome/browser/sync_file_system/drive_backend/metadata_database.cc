@@ -38,6 +38,7 @@
 #include "google_apis/drive/drive_api_parser.h"
 #include "storage/common/fileapi/file_system_util.h"
 #include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/leveldb_chrome.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
 #include "third_party/leveldatabase/src/include/leveldb/env.h"
 #include "third_party/leveldatabase/src/include/leveldb/status.h"
@@ -215,7 +216,7 @@ SyncStatusCode OpenDatabase(const base::FilePath& path,
   DCHECK(created);
   DCHECK(path.IsAbsolute());
 
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.max_open_files = 0;  // Use minimum.
   options.create_if_missing = true;
   options.paranoid_checks = true;
@@ -223,7 +224,7 @@ SyncStatusCode OpenDatabase(const base::FilePath& path,
     options.env = env_override;
   std::unique_ptr<leveldb::DB> db;
   leveldb::Status db_status =
-      leveldb_env::OpenDB(options, path.AsUTF8Unsafe(), &db);
+      leveldb_chrome::OpenDB(options, path.AsUTF8Unsafe(), &db);
   UMA_HISTOGRAM_ENUMERATION("SyncFileSystem.Database.Open",
                             leveldb_env::GetLevelDBStatusUMAValue(db_status),
                             leveldb_env::LEVELDB_STATUS_MAX);

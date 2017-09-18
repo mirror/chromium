@@ -33,7 +33,7 @@ void LevelDBServiceImpl::Open(
         memory_dump_id,
     leveldb::mojom::LevelDBDatabaseAssociatedRequest database,
     OpenCallback callback) {
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   // the default here to 80 instead of leveldb's default 1000 because we don't
   // want to consume all file descriptors. See
   // https://code.google.com/p/chromium/issues/detail?id=227313#c11 for
@@ -45,7 +45,7 @@ void LevelDBServiceImpl::Open(
 }
 
 void LevelDBServiceImpl::OpenWithOptions(
-    const leveldb_env::Options& options,
+    const leveldb_chrome::Options& options,
     filesystem::mojom::DirectoryPtr directory,
     const std::string& dbname,
     const base::Optional<base::trace_event::MemoryAllocatorDumpGuid>&
@@ -57,11 +57,11 @@ void LevelDBServiceImpl::OpenWithOptions(
       thread_->RegisterDirectory(std::move(directory));
 
   std::unique_ptr<MojoEnv> env_mojo(new MojoEnv(thread_, dir));
-  leveldb_env::Options open_options = options;
+  leveldb_chrome::Options open_options = options;
   open_options.env = env_mojo.get();
 
   std::unique_ptr<leveldb::DB> db;
-  leveldb::Status s = leveldb_env::OpenDB(open_options, dbname, &db);
+  leveldb::Status s = leveldb_chrome::OpenDB(open_options, dbname, &db);
 
   if (s.ok()) {
     mojo::MakeStrongAssociatedBinding(
@@ -78,7 +78,7 @@ void LevelDBServiceImpl::OpenInMemory(
         memory_dump_id,
     leveldb::mojom::LevelDBDatabaseAssociatedRequest database,
     OpenCallback callback) {
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.create_if_missing = true;
   options.max_open_files = 0;  // Use minimum.
 
@@ -87,7 +87,7 @@ void LevelDBServiceImpl::OpenInMemory(
   options.env = env.get();
 
   std::unique_ptr<leveldb::DB> db;
-  leveldb::Status s = leveldb_env::OpenDB(options, "", &db);
+  leveldb::Status s = leveldb_chrome::OpenDB(options, "", &db);
 
   if (s.ok()) {
     mojo::MakeStrongAssociatedBinding(
@@ -102,7 +102,7 @@ void LevelDBServiceImpl::OpenInMemory(
 void LevelDBServiceImpl::Destroy(filesystem::mojom::DirectoryPtr directory,
                                  const std::string& dbname,
                                  DestroyCallback callback) {
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   // Register our directory with the file thread.
   LevelDBMojoProxy::OpaqueDir* dir =
       thread_->RegisterDirectory(std::move(directory));

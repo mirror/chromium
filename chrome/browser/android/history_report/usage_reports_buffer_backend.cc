@@ -33,18 +33,18 @@ UsageReportsBufferBackend::UsageReportsBufferBackend(const base::FilePath& dir)
 UsageReportsBufferBackend::~UsageReportsBufferBackend() {}
 
 bool UsageReportsBufferBackend::Init() {
-  leveldb_env::Options options;
+  leveldb_chrome::Options options;
   options.create_if_missing = true;
   options.max_open_files = 0;  // Use minimum number of files.
   std::string path = db_file_name_.value();
-  leveldb::Status status = leveldb_env::OpenDB(options, path, &db_);
+  leveldb::Status status = leveldb_chrome::OpenDB(options, path, &db_);
   UMA_HISTOGRAM_ENUMERATION("LevelDB.Open.UsageReportsBufferBackend",
                             leveldb_env::GetLevelDBStatusUMAValue(status),
                             leveldb_env::LEVELDB_STATUS_MAX);
   if (status.IsCorruption()) {
     LOG(ERROR) << "Deleting corrupt database";
     base::DeleteFile(db_file_name_, true);
-    status = leveldb_env::OpenDB(options, path, &db_);
+    status = leveldb_chrome::OpenDB(options, path, &db_);
   }
   if (status.ok()) {
     CHECK(db_);
