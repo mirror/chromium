@@ -17,6 +17,7 @@
 #include "base/macros.h"
 #include "build/build_config.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/sandbox_type.h"
 #include "sandbox/linux/bpf_dsl/bpf_dsl.h"
 #include "sandbox/sandbox_features.h"
 
@@ -129,31 +130,36 @@ inline bool IsArchitectureArm() {
 }
 
 // If a BPF policy is engaged for |process_type|, run a few sanity checks.
-void RunSandboxSanityChecks(const std::string& process_type) {
-  if (process_type == switches::kRendererProcess ||
-      process_type == switches::kGpuProcess ||
-      process_type == switches::kPpapiPluginProcess) {
-    int syscall_ret;
-    errno = 0;
+void RunSandboxSanityChecks(SandboxType sandbox_type) {
+  switch (sandbox_type) {
+    case SANDBOX_TYPE_RENDERER:
+    case SANDBOX_TYPE_GPU:
+    case SANDBOX_TYPE_PPAPI: {
+      int syscall_ret;
+      errno = 0;
 
-    // Without the sandbox, this would EBADF.
-    syscall_ret = fchmod(-1, 07777);
-    CHECK_EQ(-1, syscall_ret);
-    CHECK_EQ(EPERM, errno);
+      // Without the sandbox, this would EBADF.
+      syscall_ret = fchmod(-1, 07777);
+      CHECK_EQ(-1, syscall_ret);
+      CHECK_EQ(EPERM, errno);
 
-    // Run most of the sanity checks only in DEBUG mode to avoid a perf.
-    // impact.
+// Run most of the sanity checks only in DEBUG mode to avoid a perf.
+// impact.
 #if !defined(NDEBUG)
-    // open() must be restricted.
-    syscall_ret = open("/etc/passwd", O_RDONLY);
-    CHECK_EQ(-1, syscall_ret);
-    CHECK_EQ(SandboxBPFBasePolicy::GetFSDeniedErrno(), errno);
+      // open() must be restricted.
+      syscall_ret = open("/etc/passwd", O_RDONLY);
+      CHECK_EQ(-1, syscall_ret);
+      CHECK_EQ(SandboxBPFBasePolicy::GetFSDeniedErrno(), errno);
 
-    // We should never allow the creation of netlink sockets.
-    syscall_ret = socket(AF_NETLINK, SOCK_DGRAM, 0);
-    CHECK_EQ(-1, syscall_ret);
-    CHECK_EQ(EPERM, errno);
+      // We should never allow the creation of netlink sockets.
+      syscall_ret = socket(AF_NETLINK, SOCK_DGRAM, 0);
+      CHECK_EQ(-1, syscall_ret);
+      CHECK_EQ(EPERM, errno);
 #endif  // !defined(NDEBUG)
+    } break;
+    default:
+      // Otherwise, no checks required.
+      break;
   }
 }
 
@@ -167,25 +173,30 @@ std::unique_ptr<SandboxBPFBasePolicy> GetGpuProcessSandbox() {
 }
 
 // Initialize the seccomp-bpf sandbox.
-bool StartBPFSandbox(const base::CommandLine& command_line,
-                     const std::string& process_type,
-                     base::ScopedFD proc_fd) {
+bool StartBPFSandbox(SandboxType sandbox_type, base::ScopedFD proc_fd) {
   std::unique_ptr<SandboxBPFBasePolicy> policy;
-  if (process_type == switches::kGpuProcess) {
-    policy = GetGpuProcessSandbox();
-  } else if (process_type == switches::kRendererProcess) {
-    policy = std::make_unique<RendererProcessPolicy>();
-  } else if (process_type == switches::kPpapiPluginProcess) {
-    policy = std::make_unique<PpapiProcessPolicy>();
-  } else if (process_type == switches::kUtilityProcess) {
-    policy = std::make_unique<UtilityProcessPolicy>();
-  } else {
-    NOTREACHED();
-    policy = std::make_unique<AllowAllPolicy>();
+  switch (sandbox_type) {
+    case SANDBOX_TYPE_GPU:
+      policy = GetGpuProcessSandbox();
+      break;
+    case SANDBOX_TYPE_RENDERER:
+      policy = std::make_unique<RendererProcessPolicy>();
+      break;
+    case SANDBOX_TYPE_PPAPI:
+    case SANDBOX_TYPE_WIDEVINE:  // Give CDM same sandbox as PPAPI for now.
+      policy = std::make_unique<PpapiProcessPolicy>();
+      break;
+    case SANDBOX_TYPE_UTILITY:
+      policy = std::make_unique<UtilityProcessPolicy>();
+      break;
+    default:
+    case SANDBOX_TYPE_NO_SANDBOX:
+      policy = std::make_unique<AllowAllPolicy>();
+      break;
   }
   CHECK(policy->PreSandboxHook());
   StartSandboxWithPolicy(std::move(policy), std::move(proc_fd));
-  RunSandboxSanityChecks(process_type);
+  RunSandboxSanityChecks(sandbox_type);
   return true;
 }
 #endif  // !defined(IN_NACL_HELPER)
@@ -235,15 +246,14 @@ bool SandboxSeccompBPF::SupportsSandboxWithTsync() {
 bool SandboxSeccompBPF::StartSandbox(const std::string& process_type,
                                      base::ScopedFD proc_fd) {
 #if BUILDFLAG(USE_SECCOMP_BPF)
-  const base::CommandLine& command_line =
-      *base::CommandLine::ForCurrentProcess();
-
   if (IsSeccompBPFDesired() &&  // Global switches policy.
       ShouldEnableSeccompBPF(process_type) &&  // Process-specific policy.
       SupportsSandbox()) {
     // If the kernel supports the sandbox, and if the command line says we
     // should enable it, enable it or die.
-    CHECK(StartBPFSandbox(command_line, process_type, std::move(proc_fd)));
+    CHECK(StartBPFSandbox(
+        SandboxTypeFromCommandLine(*base::CommandLine::ForCurrentProcess()),
+        std::move(proc_fd)));
     return true;
   }
 #endif
