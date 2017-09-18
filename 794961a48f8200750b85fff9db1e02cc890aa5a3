@@ -22,6 +22,30 @@
       "revId": "794961a48f8200750b85fff9db1e02cc890aa5a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "202575e0_fb2b57ad",
+        "filename": "components/download/internal/stats.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-09-18T17:56:15Z",
+      "side": 1,
+      "message": "I was thinking of keeping changes to ControllerImpl::UpdateDriverState() minimal since that function can change or have more stuff in future. I felt like moving as much of stats related code to this file as possible.\n\nWe can move line 251:257 to the call site i.e.\n\nif (currently_in_progress \u0026\u0026 pause_driver) {\n   stats::LogDownloadPauseReason(!meets_device_criteria,\n                                entry_paused, should_block_on_navigation,\n                                force_pause);\n}",
+      "parentUuid": "63d31b2b_e1fe7b2c",
+      "range": {
+        "startLine": 246,
+        "startChar": 0,
+        "endLine": 250,
+        "endChar": 51
+      },
+      "revId": "794961a48f8200750b85fff9db1e02cc890aa5a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
