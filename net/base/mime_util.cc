@@ -76,7 +76,7 @@ struct MimeInfo {
 // Order of entries in the following mapping lists matters only when the same
 // extension is shared between multiple MIME types.
 static const MimeInfo kPrimaryMappings[] = {
-    // Must precede audio/webm .
+    // Must precede audio/webm.
     {"video/webm", "webm"},
 
     {"application/x-chrome-extension", "crx"},
@@ -100,11 +100,29 @@ static const MimeInfo kPrimaryMappings[] = {
 };
 
 static const MimeInfo kSecondaryMappings[] = {
-    // Must precede image/vnd.microsoft.icon .
+    // Must precede image/vnd.microsoft.icon.
     {"image/x-icon", "ico"},
 
     {"application/epub+zip", "epub"},
+
+    // Must precede application/font-woff.
+    {"font/woff", "woff"},
     {"application/font-woff", "woff"},
+
+    // Must precede font/opentype.
+    {"font/otf", "otf"},
+    {"font/opentype", "otf"},
+
+    // Must precede application/font-woff2.
+    {"font/woff2", "woff2"},
+    {"application/font-woff2", "woff2"},
+
+    // Must precede application/x-font-ttf.
+    {"font/ttf", "ttf"},
+    // Must precede application/x-font-ttf.
+    {"font/collection", "ttc"},
+    {"application/x-font-ttf", "ttf,ttc"},
+
     {"application/gzip", "gz,tgz"},
     {"application/javascript", "js"},
     {"application/octet-stream", "bin,exe,com"},
@@ -364,11 +382,12 @@ bool MimeUtil::MatchesMimeType(const std::string& mime_type_pattern,
   return MatchesMimeTypeParameters(mime_type_pattern, mime_type);
 }
 
-// See http://www.iana.org/assignments/media-types/media-types.xhtml
+// See https://www.iana.org/assignments/media-types/media-types.xhtml
 static const char* const legal_top_level_types[] = {
   "application",
   "audio",
   "example",
+  "font",
   "image",
   "message",
   "model",
