@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "12689f00_ab22640a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-18T21:22:37Z",
+      "side": 1,
+      "message": "yes, but in code it\u0027s called download manager.",
+      "parentUuid": "3869ceb8_42ee6242",
+      "range": {
+        "startLine": 50,
+        "startChar": 40,
+        "endLine": 50,
+        "endChar": 56
+      },
+      "revId": "120457db1092a15e364ff59c1fb6595c95dc690c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57935e64_d88eaa77",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-18T18:49:34Z",
       "side": 1,
       "message": "Is there a specific scenario for that?",
+      "range": {
+        "startLine": 51,
+        "startChar": 46,
+        "endLine": 51,
+        "endChar": 79
+      },
+      "revId": "120457db1092a15e364ff59c1fb6595c95dc690c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cad721d_9266fac3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-18T21:22:37Z",
+      "side": 1,
+      "message": "There are some branches in code where we use the Android downloads app instead of downloads home.",
+      "parentUuid": "57935e64_d88eaa77",
       "range": {
         "startLine": 51,
         "startChar": 46,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "65852e70_61fc46ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-18T21:22:37Z",
+      "side": 1,
+      "message": "Refactored so we don\u0027t wait for startup.",
+      "parentUuid": "554d9ec7_634cad93",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 19
+      },
+      "revId": "120457db1092a15e364ff59c1fb6595c95dc690c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24ae003d_a92c1b09",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "120457db1092a15e364ff59c1fb6595c95dc690c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c5d67f1_2072d6e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-18T21:22:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24ae003d_a92c1b09",
+      "range": {
+        "startLine": 84,
+        "startChar": 17,
+        "endLine": 84,
+        "endChar": 100
+      },
+      "revId": "120457db1092a15e364ff59c1fb6595c95dc690c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "aab38153_42f92886",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-18T21:22:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "057cc316_62997d91",
+      "range": {
+        "startLine": 105,
+        "startChar": 29,
+        "endLine": 105,
+        "endChar": 78
+      },
+      "revId": "120457db1092a15e364ff59c1fb6595c95dc690c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c01e08b_1f17a480",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "56940c9e_3a94c088",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchedPagesNotifier.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-18T21:22:37Z",
+      "side": 1,
+      "message": "This doesn\u0027t itself start Chrome, this will only observe startup.  So it is a no-op if native never boots.",
+      "parentUuid": "2c01e08b_1f17a480",
+      "range": {
+        "startLine": 121,
+        "startChar": 24,
+        "endLine": 121,
+        "endChar": 64
+      },
+      "revId": "120457db1092a15e364ff59c1fb6595c95dc690c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aeff40d_b0bd8dfe",
         "filename": "chrome/android/java/strings/android_chrome_strings.grd",
         "patchSetId": 4
@@ -160,6 +304,30 @@
       "revId": "120457db1092a15e364ff59c1fb6595c95dc690c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d90256_08016483",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 2585,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-18T21:22:37Z",
+      "side": 1,
+      "message": "great point.  Found some other entries that use DOMAIN_NAME, so changed to that.",
+      "parentUuid": "1aeff40d_b0bd8dfe",
+      "range": {
+        "startLine": 2585,
+        "startChar": 12,
+        "endLine": 2585,
+        "endChar": 50
+      },
+      "revId": "120457db1092a15e364ff59c1fb6595c95dc690c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
