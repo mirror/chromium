@@ -51,6 +51,24 @@
       "revId": "751640d00c69c58538d51f82446997e8ceba05fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20434141_be3e94ae",
+        "filename": "chrome/browser/ui/views/outdated_upgrade_bubble_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-18T11:48:43Z",
+      "side": 1,
+      "message": "\u003e You checked with the relevant feature owners that this histogram change makes sense to them?\n\nmad@: does this approach (replacing OutdatedUpgradeBubble.Later with OutdatedUpgradeBubble.Dismiss) seem reasonable?  (since we are removing the \"Later\" button and replacing it with a close [x]/Esc/Click-outside to dismiss)",
+      "parentUuid": "de38d7a9_579a0dd5",
+      "revId": "751640d00c69c58538d51f82446997e8ceba05fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
