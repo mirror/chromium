@@ -88380,6 +88380,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="WebApk.Update.UpdateRequestFileAge" units="ms">
+  <owner>hanxi@chromium.org</owner>
+  <owner>pkotwicz@chromium.org</owner>
+  <owner>yfriedman@chromium.org</owner>
+  <summary>
+    When a WebAPK requests an update, a file is written to disk so that the
+    update can occur in the background. Records the age of the file.
+  </summary>
+</histogram>
+
 <histogram name="Webapp.InstallabilityCheckStatus.MenuItemAddToHomescreen"
     enum="InstallabilityCheckStatus">
   <owner>dominickn@chromium.org</owner>

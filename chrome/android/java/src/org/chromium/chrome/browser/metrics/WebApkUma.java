@@ -155,6 +155,17 @@ public class WebApkUma {
     }
 
     /**
+     * Records an approximation of the age of the file storing a WebAPK's pending update request.
+     */
+    public static void recordUpdateRequestFileAge(long approximateAgeMs) {
+        if (approximateAgeMs < 0) return;
+
+        RecordHistogram.recordCustomTimesHistogram("WebApk.Update.UpdateRequestFileAge",
+                approximateAgeMs, TimeUnit.DAYS.toMillis(1), TimeUnit.DAYS.toMillis(10),
+                TimeUnit.MILLISECONDS, 10);
+    }
+
+    /**
      * Log the estimated amount of space above the minimum free space threshold that can be used
      * for WebAPK installation in UMA.
      */
