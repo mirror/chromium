@@ -70,6 +70,8 @@ class CORE_EXPORT DevToolsHost final
 
   String getSelectionBackgroundColor();
   String getSelectionForegroundColor();
+  String getInactiveSelectionBackgroundColor();
+  String getInactiveSelectionForegroundColor();
 
   bool isUnderTest();
   bool isHostedMode();
