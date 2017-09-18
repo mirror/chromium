@@ -97,6 +97,9 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
   void SetContentFrame(Frame&) final;
   void ClearContentFrame() final;
   void DispatchLoad() final;
+  GestureDelegationFlags GetGestureDelegationFlags() const final {
+    return gesture_delegation_flags_;
+  }
   SandboxFlags GetSandboxFlags() const final { return sandbox_flags_; }
   bool CanRenderFallbackContent() const override { return false; }
   void RenderFallbackContent() override {}
@@ -119,6 +122,7 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
 
  protected:
   HTMLFrameOwnerElement(const QualifiedName& tag_name, Document&);
+  void SetGestureDelegationFlags(GestureDelegationFlags);
   void SetSandboxFlags(SandboxFlags);
 
   bool LoadOrRedirectSubframe(const KURL&,
@@ -168,6 +172,7 @@ class CORE_EXPORT HTMLFrameOwnerElement : public HTMLElement,
 
   Member<Frame> content_frame_;
   Member<EmbeddedContentView> embedded_content_view_;
+  GestureDelegationFlags gesture_delegation_flags_;
   SandboxFlags sandbox_flags_;
 
   WebParsedFeaturePolicy container_policy_;
