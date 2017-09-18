@@ -16,6 +16,24 @@
       "revId": "9e6b5b95c6520ae49ac3301d5a20ef05f30bb387",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d9c5ef9_bc97684a",
+        "filename": "chrome/installer/mini_installer/chrome.release",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-18T13:47:32Z",
+      "side": 1,
+      "message": "Feasibly, it is replacable, but due to dependency, it is not yet.\nWhen I resolve the dependencies I\u0027ll remove snapshot_blob.bin.",
+      "parentUuid": "c8c19ee5_e185c4ed",
+      "revId": "9e6b5b95c6520ae49ac3301d5a20ef05f30bb387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
