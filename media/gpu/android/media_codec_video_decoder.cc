@@ -162,13 +162,8 @@ void MediaCodecVideoDecoder::Initialize(const VideoDecoderConfig& config,
 
   decoder_config_ = config;
 
-  if (first_init) {
-    if (!codec_allocator_->StartThread(this)) {
-      LOG(ERROR) << "Unable to start thread";
-      bound_init_cb.Run(false);
-      return;
-    }
-  }
+  if (first_init)
+    codec_allocator_->StartThread(this);
 
 #if BUILDFLAG(USE_PROPRIETARY_CODECS)
   if (config.codec() == kCodecH264)
@@ -427,9 +422,9 @@ bool MediaCodecVideoDecoder::QueueInput() {
   PendingDecode& pending_decode = pending_decodes_.front();
   auto status = codec_->QueueInputBuffer(*pending_decode.buffer,
                                          decoder_config_.encryption_scheme());
-  int lvl = status == CodecWrapper::QueueStatus::kTryAgainLater ? 3 : 2;
-  DVLOG(lvl) << "QueueInput(" << pending_decode.buffer->AsHumanReadableString()
-             << ") status=" << static_cast<int>(status);
+  DVLOG(status == CodecWrapper::QueueStatus::kTryAgainLater ? 3 : 2)
+      << "QueueInput(" << pending_decode.buffer->AsHumanReadableString()
+      << ") status=" << static_cast<int>(status);
 
   switch (status) {
     case CodecWrapper::QueueStatus::kOk:

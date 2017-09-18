@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "media/gpu/android/content_video_view_overlay_allocator.h"
+#include "base/threading/thread_task_runner_handle.h"
 
 #include "media/gpu/android/avda_codec_allocator.h"
 
@@ -17,7 +18,8 @@ ContentVideoViewOverlayAllocator::GetInstance() {
 }
 
 ContentVideoViewOverlayAllocator::ContentVideoViewOverlayAllocator()
-    : allocator_(AVDACodecAllocator::GetInstance()) {}
+    : allocator_(AVDACodecAllocator::GetInstance(
+          base::ThreadTaskRunnerHandle::Get())) {}
 
 ContentVideoViewOverlayAllocator::~ContentVideoViewOverlayAllocator() {}
 
