@@ -70,7 +70,7 @@ public class OAuth2TokenServiceIntegrationTest {
         // be initialized beforehand.
         mContext = new AdvancedMockContext(
                 InstrumentationRegistry.getInstrumentation().getTargetContext());
-        mAccountManager = new FakeAccountManagerDelegate(mContext);
+        mAccountManager = new FakeAccountManagerDelegate(false);
         AccountManagerFacade.overrideAccountManagerFacadeForTests(mContext, mAccountManager);
 
         mActivityTestRule.loadNativeLibraryAndInitBrowserProcess();
