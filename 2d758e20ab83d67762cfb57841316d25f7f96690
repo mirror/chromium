@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e9e850b_b0e5d902",
+        "filename": "net/dns/dns_query.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-18T21:31:09Z",
+      "side": 1,
+      "message": "I\u0027d find this easier to read the other way around.",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 17
+      },
+      "revId": "2d758e20ab83d67762cfb57841316d25f7f96690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c87beaa7_9fa5860c",
+        "filename": "net/dns/record_rdata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-18T21:31:09Z",
+      "side": 1,
+      "message": "This would be more clear if it had a different name from the argument",
+      "range": {
+        "startLine": 294,
+        "startChar": 22,
+        "endLine": 294,
+        "endChar": 26
+      },
+      "revId": "2d758e20ab83d67762cfb57841316d25f7f96690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25159c36_5edc4ca0",
+        "filename": "net/dns/record_rdata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-18T21:31:09Z",
+      "side": 1,
+      "message": "Create() isn\u0027t expected to return nullptr. The others return a unique_ptr with nothing in it in this kind of case.",
+      "range": {
+        "startLine": 298,
+        "startChar": 13,
+        "endLine": 298,
+        "endChar": 20
+      },
+      "revId": "2d758e20ab83d67762cfb57841316d25f7f96690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5ea7063_62048517",
+        "filename": "net/dns/record_rdata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-09-18T21:31:09Z",
+      "side": 1,
+      "message": "nit: this should be opt_data",
+      "range": {
+        "startLine": 317,
+        "startChar": 20,
+        "endLine": 317,
+        "endChar": 27
+      },
+      "revId": "2d758e20ab83d67762cfb57841316d25f7f96690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
