@@ -56,6 +56,7 @@
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/ResourceResponse.h"
+#include "platform/origin_manifest/OriginManifestStoreClient.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/text/StringBuilder.h"
 #include "public/platform/WebURLRequest.h"
@@ -134,9 +135,17 @@ void EventSource::Connect() {
   request.SetHTTPHeaderField(HTTPNames::Cache_Control, "no-cache");
   request.SetRequestContext(WebURLRequest::kRequestContextEventSource);
   request.SetFetchRequestMode(WebURLRequest::kFetchRequestModeCORS);
-  request.SetFetchCredentialsMode(
-      with_credentials_ ? WebURLRequest::kFetchCredentialsModeInclude
-                        : WebURLRequest::kFetchCredentialsModeSameOrigin);
+
+  // If we have an Origin Manifest with CORS for our origin, use it
+  OriginManifestStoreClient origin_manifest_store;
+  if (origin_manifest_store.DefinesCORSPreflight(request)) {
+    origin_manifest_store.SetCORSFetchModes(request);
+  } else {
+    request.SetFetchCredentialsMode(
+        with_credentials_ ? WebURLRequest::kFetchCredentialsModeInclude
+                          : WebURLRequest::kFetchCredentialsModeSameOrigin);
+  }
+
   request.SetExternalRequestStateFromRequestorAddressSpace(
       execution_context.GetSecurityContext().AddressSpace());
   if (parser_ && !parser_->LastEventId().IsEmpty()) {

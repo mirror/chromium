@@ -104,6 +104,7 @@ class CORE_EXPORT SecurityContext : public GarbageCollectedMixin {
   virtual ~SecurityContext();
 
   void SetContentSecurityPolicy(ContentSecurityPolicy*);
+  void SetContentSecurityPolicyFromOriginManifest();
 
  private:
   RefPtr<SecurityOrigin> security_origin_;

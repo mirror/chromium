@@ -54,6 +54,7 @@
 #include "build/build_config.h"
 #include "cc/base/switches.h"
 #include "components/metrics/single_sample_metrics.h"
+#include "components/origin_manifest/origin_manifest_store_impl.h"
 #include "components/tracing/common/tracing_switches.h"
 #include "components/viz/common/resources/buffer_to_texture_target_map.h"
 #include "components/viz/common/switches.h"
@@ -1873,6 +1874,10 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
                          base::Bind(&CreateResourceCoordinatorProcessInterface,
                                     base::Unretained(this)));
   }
+
+  registry->AddInterface(
+      base::Bind(&origin_manifest::OriginManifestStoreImpl::BindRequest,
+                 GetBrowserContext()->GetOriginManifestStore()));
 
   registry->AddInterface(
       base::Bind(&MimeRegistryImpl::Create),
