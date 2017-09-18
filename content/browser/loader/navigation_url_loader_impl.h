@@ -45,6 +45,7 @@ class NavigationURLLoaderImpl : public NavigationURLLoader {
   // NavigationURLLoader implementation.
   void FollowRedirect() override;
   void ProceedWithResponse() override;
+  void OnNavigationIntercepted(NavigationInterceptionCB callback) override;
 
  private:
   friend class NavigationURLLoaderImplCore;

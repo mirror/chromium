@@ -13,6 +13,7 @@
 #include "content/browser/appcache/chrome_appcache_service.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/devtools/render_frame_devtools_agent_host.h"
+#include "content/browser/download/download_manager_impl.h"
 #include "content/browser/frame_host/debug_urls.h"
 #include "content/browser/frame_host/frame_tree.h"
 #include "content/browser/frame_host/frame_tree_node.h"
@@ -728,6 +729,8 @@ void NavigationRequest::OnResponseStarted(
   response_ = response;
   body_ = std::move(body);
   handle_ = std::move(consumer_handle);
+  ssl_status_ = ssl_status;
+  is_download_ = is_download;
 
   subresource_loader_factory_info_ = std::move(subresource_loader_factory_info);
 
@@ -747,6 +750,13 @@ void NavigationRequest::OnRequestFailed(
     int net_error,
     const base::Optional<net::SSLInfo>& ssl_info,
     bool should_ssl_errors_be_fatal) {
+  // The navigation might have already been cancelled if it was intercepted by
+  // download.
+  if (state_ == FAILED) {
+    DCHECK(!handle_.is_valid());
+    return;
+  }
+
   DCHECK(state_ == STARTED || state_ == RESPONSE_STARTED);
   // TODO(https://crbug.com/757633): Check that ssl_info.has_value() if
   // net_error is a certificate error.
@@ -970,8 +980,24 @@ void NavigationRequest::OnWillProcessResponseChecksComplete(
 
   // If the NavigationThrottles allowed the navigation to continue, have the
   // processing of the response resume in the network stack.
-  if (result.action() == NavigationThrottle::PROCEED)
+  if (result.action() == NavigationThrottle::PROCEED) {
+    // If this is a download, intercept the navigation response and pass it to
+    // DownloadManager, and cancel the navigation.
+    if (is_download_ &&
+        base::FeatureList::IsEnabled(features::kNetworkService)) {
+      BrowserContext* browser_context =
+          frame_tree_node_->navigator()->GetController()->GetBrowserContext();
+      DownloadManagerImpl* download_manager = static_cast<DownloadManagerImpl*>(
+          BrowserContext::GetDownloadManager(browser_context));
+      loader_->OnNavigationIntercepted(
+          download_manager->GetNavigationInterceptionCB(
+              response_, std::move(handle_), ssl_status_));
+      if (state_ != FAILED)
+        OnRequestFailed(false, net::ERR_ABORTED, base::nullopt, false);
+      return;
+    }
     loader_->ProceedWithResponse();
+  }
 
   // Abort the request if needed. This includes requests that were blocked by
   // NavigationThrottles and requests that should not commit (e.g. downloads,
