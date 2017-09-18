@@ -272,12 +272,14 @@ class SurfaceAggregatorTest : public testing::Test {
     gfx::Rect quad_rect = gfx::Rect(surface_size);
     surface_quad->SetNew(pass->shared_quad_state_list.back(), quad_rect,
                          quad_rect, primary_surface_id,
-                         SurfaceDrawQuadType::PRIMARY, fallback_surface_quad);
+                         SurfaceDrawQuadType::PRIMARY, SK_ColorWHITE,
+                         fallback_surface_quad);
 
     if (fallback_surface_quad) {
       fallback_surface_quad->SetNew(pass->shared_quad_state_list.back(),
                                     quad_rect, quad_rect, fallback_surface_id,
-                                    SurfaceDrawQuadType::FALLBACK, nullptr);
+                                    SurfaceDrawQuadType::FALLBACK,
+                                    SK_ColorWHITE, nullptr);
     }
   }
 
@@ -1328,7 +1330,7 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, AggregateSharedQuadStateProperties) {
   grandchild_surface_quad->SetNew(
       child_one_pass->shared_quad_state_list.back(), gfx::Rect(SurfaceSize()),
       gfx::Rect(SurfaceSize()), grandchild_surface_id,
-      SurfaceDrawQuadType::PRIMARY, nullptr);
+      SurfaceDrawQuadType::PRIMARY, SK_ColorWHITE, nullptr);
   AddSolidColorQuadWithBlendMode(SurfaceSize(), child_one_pass.get(),
                                  blend_modes[3]);
   QueuePassAsFrame(std::move(child_one_pass), child_one_local_surface_id,
@@ -1354,18 +1356,18 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, AggregateSharedQuadStateProperties) {
                                  blend_modes[0]);
   auto* child_one_surface_quad =
       root_pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
-  child_one_surface_quad->SetNew(root_pass->shared_quad_state_list.back(),
-                                 gfx::Rect(SurfaceSize()),
-                                 gfx::Rect(SurfaceSize()), child_one_surface_id,
-                                 SurfaceDrawQuadType::PRIMARY, nullptr);
+  child_one_surface_quad->SetNew(
+      root_pass->shared_quad_state_list.back(), gfx::Rect(SurfaceSize()),
+      gfx::Rect(SurfaceSize()), child_one_surface_id,
+      SurfaceDrawQuadType::PRIMARY, SK_ColorWHITE, nullptr);
   AddSolidColorQuadWithBlendMode(SurfaceSize(), root_pass.get(),
                                  blend_modes[4]);
   auto* child_two_surface_quad =
       root_pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
-  child_two_surface_quad->SetNew(root_pass->shared_quad_state_list.back(),
-                                 gfx::Rect(SurfaceSize()),
-                                 gfx::Rect(SurfaceSize()), child_two_surface_id,
-                                 SurfaceDrawQuadType::PRIMARY, nullptr);
+  child_two_surface_quad->SetNew(
+      root_pass->shared_quad_state_list.back(), gfx::Rect(SurfaceSize()),
+      gfx::Rect(SurfaceSize()), child_two_surface_id,
+      SurfaceDrawQuadType::PRIMARY, SK_ColorWHITE, nullptr);
   AddSolidColorQuadWithBlendMode(SurfaceSize(), root_pass.get(),
                                  blend_modes[6]);
 
@@ -2188,7 +2190,8 @@ void SubmitCompositorFrameWithResources(ResourceId* resource_ids,
   if (child_id.is_valid()) {
     auto* surface_quad = pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
     surface_quad->SetNew(sqs, gfx::Rect(0, 0, 1, 1), gfx::Rect(0, 0, 1, 1),
-                         child_id, SurfaceDrawQuadType::PRIMARY, nullptr);
+                         child_id, SurfaceDrawQuadType::PRIMARY, SK_ColorWHITE,
+                         nullptr);
   }
 
   for (size_t i = 0u; i < num_resource_ids; ++i) {
@@ -2453,7 +2456,8 @@ TEST_F(SurfaceAggregatorWithResourcesTest, SecureOutputTexture) {
     auto* surface_quad = pass->CreateAndAppendDrawQuad<SurfaceDrawQuad>();
 
     surface_quad->SetNew(sqs, gfx::Rect(0, 0, 1, 1), gfx::Rect(0, 0, 1, 1),
-                         surface1_id, SurfaceDrawQuadType::PRIMARY, nullptr);
+                         surface1_id, SurfaceDrawQuadType::PRIMARY,
+                         SK_ColorWHITE, nullptr);
     pass->copy_requests.push_back(CopyOutputRequest::CreateStubForTesting());
 
     cc::CompositorFrame frame = test::MakeEmptyCompositorFrame();
