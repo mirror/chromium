@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "622da971_948044be",
+        "filename": "build/android/test_wrapper/logdog_wrapper.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-18T17:52:19Z",
+      "side": 1,
+      "message": "Terminating the butler server like this results in the following log:\n\n\n[W2017-09-18T15:46:47.286271Z 2291 0 butler.go:240] Butler Context was cancelled. Initiating shutdown. {\"error\":\"context canceled\"}\n[E2017-09-18T15:46:47.324144Z 2291 0 main.go:205] Butler terminated with error.               {\"error\":\"context canceled\"}\n[E2017-09-18T15:46:47.324329Z 2291 0 main.go:233] Failed to serve.\noriginal error: context canceled\n\n[I2017-09-18T15:46:47.324385Z 2291 0 main.go:349] Terminating.                                {\"returnCode\":250}\n\n\nI\u0027m a bit concerned about two things:\n 1) The language may scare users who aren\u0027t familiar w/ the test runner, which is to say most of them.\n 2) The butler may not have finished handling all of the test runner\u0027s streams. I think this is an acceptable risk (and is, in some cases, the error this CL is trying to work around).\n\nI\u0027ve reached out to Dan to see if there\u0027s a slightly more orderly way to do this, though.",
+      "revId": "62a221b57ef51c8142e6b1464295755c72e6debb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
