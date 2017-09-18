@@ -81,6 +81,30 @@
       "revId": "cc2a286c16996a9cb4ca5a530273fae1d9a715fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee9bad87_f0265326",
+        "filename": "ui/app_list/search_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-09-18T21:32:28Z",
+      "side": 1,
+      "message": "Let\u0027s just apply the timeout to the old launcher too. It will make it only better.",
+      "parentUuid": "e16f6cce_a118dd8c",
+      "range": {
+        "startLine": 62,
+        "startChar": 40,
+        "endLine": 62,
+        "endChar": 78
+      },
+      "revId": "cc2a286c16996a9cb4ca5a530273fae1d9a715fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
