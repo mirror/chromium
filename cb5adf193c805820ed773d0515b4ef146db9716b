@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04d94d7f_e466707d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-18T18:09:21Z",
+      "side": 1,
+      "message": "what happens if there are multiple tabs running in the background?  If the second page load finished first, could this end the service unexpectedly?  I\u0027m wondering if we need to keep a list of pending tab loads or \"something\" to handle this.",
+      "range": {
+        "startLine": 144,
+        "startChar": 12,
+        "endLine": 144,
+        "endChar": 25
+      },
+      "revId": "cb5adf193c805820ed773d0515b4ef146db9716b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "538d416a_4324cb20",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-18T18:09:21Z",
+      "side": 1,
+      "message": "Does this open the tab in the background or the foreground of the CTA?  For svelte devices, we only have a single renderer, so you likely wouldn\u0027t ever get a onPageLoadFinished for those tabs if they\u0027re in the background.\n\nI think we might need to special case FROM_BROWSER_ACTIONS in TabModelSelectorImpl to save to the queue the same place we do tab.hasPendingLoadParams()) in onNewTabCreated:\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/tabmodel/TabModelSelectorImpl.java?l\u003d155\n\nThen I think we likely wouldn\u0027t need the observer at all.  I still think we need to add an observer to the tab persistent store than to the tab itself to be notified when the tab has been saved to disk before we actually kill this off (again can be a TODO)",
+      "range": {
+        "startLine": 159,
+        "startChar": 35,
+        "endLine": 159,
+        "endChar": 54
+      },
+      "revId": "cb5adf193c805820ed773d0515b4ef146db9716b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0eac7a8_c50d826a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsService.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-18T18:09:21Z",
+      "side": 1,
+      "message": "we shouldn\u0027t need to send this intent, we should just be able to tell the service to stop since we\u0027re now in this file.",
+      "range": {
+        "startLine": 169,
+        "startChar": 24,
+        "endLine": 169,
+        "endChar": 45
+      },
+      "revId": "cb5adf193c805820ed773d0515b4ef146db9716b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62b8d180_52e470e4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/browseractions/BrowserActionsServiceIntentParams.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-18T18:09:21Z",
+      "side": 1,
+      "message": "IMO, this seems a bit overkill for now.  I think we could just have a single method on BrowserActionsService that returns an intent.  Since we should only need the one actions for now, I think it would be ok to have:\n\nIntent generateOpenLinkInBackgroundIntent(String linkUrl, String packageName)",
+      "range": {
+        "startLine": 12,
+        "startChar": 13,
+        "endLine": 12,
+        "endChar": 46
+      },
+      "revId": "cb5adf193c805820ed773d0515b4ef146db9716b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
