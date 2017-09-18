@@ -6,10 +6,14 @@
 
 #include <memory>
 
+#include "base/mac/bind_objc_block.h"
 #include "base/memory/ptr_util.h"
 #include "base/scoped_observer.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
+#import "ios/chrome/browser/snapshots/snapshot_constants.h"
+#import "ios/chrome/browser/snapshots/snapshot_tab_helper.h"
+#import "ios/chrome/browser/snapshots/snapshots_util.h"
 #import "ios/chrome/browser/ui/broadcaster/chrome_broadcaster.h"
 #import "ios/chrome/browser/ui/browser_list/browser.h"
 #import "ios/chrome/browser/ui/commands/command_dispatcher.h"
@@ -93,6 +97,8 @@
 
   [self.dispatcher startDispatchingToTarget:self
                                 forSelector:@selector(loadURL:)];
+  [self.dispatcher startDispatchingToTarget:self
+                                forSelector:@selector(takeTabSnapshot)];
 
   // NavigationController will handle all the dispatcher navigation calls.
   self.navigationController = [[TabNavigationController alloc]
@@ -235,9 +241,10 @@
   } else {
     NTPCoordinator* ntpCoordinator = [[NTPCoordinator alloc] init];
     [self addChildCoordinator:ntpCoordinator];
-    [ntpCoordinator start];
     self.ntpCoordinator = ntpCoordinator;
+    [ntpCoordinator start];
   }
+  [self registerNTPAsSnapshotProvider];
 }
 
 - (void)removeNTPCoordinator {
@@ -249,10 +256,24 @@
   }
 }
 
+- (void)registerNTPAsSnapshotProvider {
+  SnapshotTabHelper* tabHelper = SnapshotTabHelper::FromWebState(self.webState);
+  DCHECK(tabHelper);
+  tabHelper->SetSnapshotProvider(
+      base::BindBlockArc(^(const ImageCallback& callback) {
+        TakeSnapshotOfView(self.viewController.contentViewController.view,
+                           callback, kSnapshotThumbnailSize);
+      }));
+}
+
 #pragma mark - TabCommands
 
 - (void)loadURL:(web::NavigationManager::WebLoadParams)params {
   self.webState->GetNavigationManager()->LoadURLWithParams(params);
+}
+
+- (void)takeTabSnapshot {
+  SnapshotTabHelper::FromWebState(self.webState)->TakeSnapshot();
 }
 
 @end

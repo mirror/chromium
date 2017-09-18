@@ -23,6 +23,8 @@ source_set("snapshots") {
     "snapshot_manager.mm",
     "snapshot_overlay.h",
     "snapshot_overlay.mm",
+    "snapshot_tab_helper.h",
+    "snapshot_tab_helper.mm",
     "snapshots_util.h",
     "snapshots_util.mm",
   ]
@@ -34,8 +36,10 @@ source_set("snapshots") {
     "//ios/chrome/browser/browser_state",
     "//ios/chrome/browser/tabs",
     "//ios/chrome/browser/ui",
+    "//ios/chrome/browser/web",
     "//ios/chrome/browser/web_state_list",
     "//ios/web",
+    "//ui/gfx",
   ]
   libs = [ "QuartzCore.framework" ]
   configs += [ "//build/config/compiler:enable_arc" ]
