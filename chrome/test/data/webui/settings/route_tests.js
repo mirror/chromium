@@ -228,4 +228,20 @@ suite('route', function() {
     assertFalse(hasRoute('PEOPLE'));
     assertFalse(hasRoute('RESET'));
   });
+
+  test(
+      'getAbsolutePath works in direct and within-settings navigation',
+      function() {
+        settings.resetRouteForTesting();
+
+        settings.navigateTo(settings.routes.CLOUD_PRINTERS);
+        assertEquals(
+            'chrome://settings/cloudPrinters',
+            settings.getCurrentRoute().getAbsolutePath());
+
+        settings.navigateTo(settings.routes.DOWNLOADS);
+        assertEquals(
+            'chrome://settings/downloads',
+            settings.getCurrentRoute().getAbsolutePath());
+      });
 });
