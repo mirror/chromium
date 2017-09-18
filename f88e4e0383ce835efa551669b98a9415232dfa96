@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36c95bef_bf7a50f9",
+        "filename": "chrome/browser/ui/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T16:15:19Z",
+      "side": 1,
+      "message": "You should use WebContentsTester. It\u0027s in content/public/ instead of the private part. Then I don\u0027t think you need this include rule.",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 11
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d8ce528_4eab6afe",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T16:15:19Z",
+      "side": 1,
+      "message": "Seems like you don\u0027t really care about |password_manager_presenter_|. This is the only method used. How about writing an interface for it which you could also stub in the tests?",
+      "range": {
+        "startLine": 154,
+        "startChar": 35,
+        "endLine": 154,
+        "endChar": 50
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3de457fc_fd9f06d6",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T16:15:19Z",
+      "side": 1,
+      "message": "Don\u0027t forget DISALLOW_COPY_AND_ASSIGN in the new classes.",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c6b453_77c9fdf6",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T16:15:19Z",
+      "side": 1,
+      "message": "This is difficult to read. Move the class out of TestSelectFileDialogFactory, just before it.",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 28
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab580085_52c03f4e",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T16:15:19Z",
+      "side": 1,
+      "message": "SelectFileDialog without ui:: works",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d228372_4ef205fe",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T16:15:19Z",
+      "side": 1,
+      "message": "destructor before other methods",
+      "range": {
+        "startLine": 57,
+        "startChar": 5,
+        "endLine": 57,
+        "endChar": 25
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f5c340e_28f361f2",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T16:15:19Z",
+      "side": 1,
+      "message": "You use Mock and Test interchangeably. In fact, this class has no mocked methods. Should also be Test.",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 34
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc09196_2c710384",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T16:15:19Z",
+      "side": 1,
+      "message": "What about using GMock for those methods?",
+      "range": {
+        "startLine": 83,
+        "startChar": 7,
+        "endLine": 83,
+        "endChar": 30
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd6513f_0db5fac9",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T16:15:19Z",
+      "side": 1,
+      "message": "You don\u0027t need it.",
+      "range": {
+        "startLine": 101,
+        "startChar": 6,
+        "endLine": 101,
+        "endChar": 21
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1057175_6f5fe898",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T16:15:19Z",
+      "side": 1,
+      "message": "If you get rid of the dependency on PasswordManagerPresenter then you don\u0027t need it.",
+      "range": {
+        "startLine": 103,
+        "startChar": 6,
+        "endLine": 103,
+        "endChar": 24
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d943196_afb31410",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T16:15:19Z",
+      "side": 1,
+      "message": "Is it leaked?",
+      "range": {
+        "startLine": 147,
+        "startChar": 37,
+        "endLine": 147,
+        "endChar": 68
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af75a4cd_f9ab4833",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T16:15:19Z",
+      "side": 1,
+      "message": "Would not this happen anyway?",
+      "range": {
+        "startLine": 154,
+        "startChar": 4,
+        "endLine": 154,
+        "endChar": 21
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6852dbb5_7634ac70",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T16:15:19Z",
+      "side": 1,
+      "message": "I don\u0027t get it. You import passwords from another password manager.",
+      "range": {
+        "startLine": 158,
+        "startChar": 3,
+        "endLine": 158,
+        "endChar": 73
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e811e7c7_4ccf68c0",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T16:15:19Z",
+      "side": 1,
+      "message": "Can you use base::test::ScopedTaskEnvironment instead?",
+      "range": {
+        "startLine": 178,
+        "startChar": 11,
+        "endLine": 178,
+        "endChar": 34
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d003eaca_f4041a34",
+        "filename": "chrome/browser/ui/passwords/password_manager_porter_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-18T16:15:19Z",
+      "side": 1,
+      "message": "One test for import and one test for export.",
+      "range": {
+        "startLine": 185,
+        "startChar": 2,
+        "endLine": 185,
+        "endChar": 17
+      },
+      "revId": "f88e4e0383ce835efa551669b98a9415232dfa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
