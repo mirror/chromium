@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a74d9d1_8dd28b53",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-18T14:37:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0136b11_b5ad5458",
+      "revId": "d7add142abc36c7e9e0b26c49ac47f54fef7f86a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8727b2d3_ee07916e",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 4
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "Thanks, I will do that.",
       "parentUuid": "8727b2d3_ee07916e",
+      "revId": "d7add142abc36c7e9e0b26c49ac47f54fef7f86a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "37cfa395_353c5d6e",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-18T14:37:01Z",
+      "side": 1,
+      "message": "Move it into the header will cause an compile error, so let\u0027s keep it here.",
+      "parentUuid": "a6f03ae5_62db50ba",
       "revId": "d7add142abc36c7e9e0b26c49ac47f54fef7f86a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -104,6 +140,24 @@
       "revId": "d7add142abc36c7e9e0b26c49ac47f54fef7f86a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7bdd1a7_968cb375",
+        "filename": "content/common/service_worker/service_worker_container.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-18T14:37:01Z",
+      "side": 1,
+      "message": "Done. It was deleted in a Kinuko\u0027s patch. :-)",
+      "parentUuid": "53d2768c_9f278ebe",
+      "revId": "d7add142abc36c7e9e0b26c49ac47f54fef7f86a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

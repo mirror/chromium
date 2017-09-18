@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5db4f91_fad5d62f",
+        "filename": "content/child/service_worker/service_worker_dispatcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-18T14:37:01Z",
+      "side": 1,
+      "message": "This line should be deleted.",
+      "range": {
+        "startLine": 150,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 18
+      },
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3ac27e9_9e24a608",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-18T14:37:01Z",
+      "side": 1,
+      "message": "Since we use WebServiceWorkerProviderImpl instead of blink::WebServiceWorkerProviderClient, does it also better to change the name \"provider_\" to \"controllee_\"?",
+      "range": {
+        "startLine": 58,
+        "startChar": 16,
+        "endLine": 58,
+        "endChar": 44
+      },
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
