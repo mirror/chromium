@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1a0cc04_04bec36e",
+        "filename": "components/autofill/core/browser/personal_data_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-18T21:48:54Z",
+      "side": 1,
+      "message": "Nice improvement in readability here, thanks! Could you appy it a lines 420+ too?",
+      "range": {
+        "startLine": 509,
+        "startChar": 4,
+        "endLine": 511,
+        "endChar": 65
+      },
+      "revId": "3fe0cb478b1b8ef3e85566573a3fc40086e8cadc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
