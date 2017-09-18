@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90192938_444ebd24",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-09-18T07:53:47Z",
+      "side": 1,
+      "message": "this smells like an anti-pattern.\nthe proper fix is for FetchSnippets() on the snippets fetcher to take a time-out and extend the error codes received from there.\n\nI had a quick look at the fetcher and it seems not easy to support. If that\u0027s the case and we need a little hack, that should definitely be done on a higher level of abstraction, e.g. the scheduler. (at that level, we can also properly distinguish between the callbacks).",
+      "range": {
+        "startLine": 510,
+        "startChar": 41,
+        "endLine": 510,
+        "endChar": 56
+      },
+      "revId": "042acf03c9f35302828ef9c9245dd8839e5449d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
