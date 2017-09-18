@@ -143,4 +143,21 @@ TEST_F(ContentSettingsRegistryTest, IsDefaultSettingValid) {
 #endif
 }
 
+// Check the correct factory default setting is retrieved. Note the factory
+// default settings are hard coded, so changing them in ContentSettingsRegistry
+// would require this test to be updated.
+TEST_F(ContentSettingsRegistryTest, GetInitialDefaultSetting) {
+  const ContentSettingsInfo* notifications =
+      registry()->Get(CONTENT_SETTINGS_TYPE_NOTIFICATIONS);
+  EXPECT_EQ(CONTENT_SETTING_ASK, notifications->GetInitialDefaultSetting());
+
+  const ContentSettingsInfo* javascript =
+      registry()->Get(CONTENT_SETTINGS_TYPE_JAVASCRIPT);
+  EXPECT_EQ(CONTENT_SETTING_ALLOW, javascript->GetInitialDefaultSetting());
+
+  const ContentSettingsInfo* popups =
+      registry()->Get(CONTENT_SETTINGS_TYPE_POPUPS);
+  EXPECT_EQ(CONTENT_SETTING_BLOCK, popups->GetInitialDefaultSetting());
+}
+
 }  // namespace content_settings
