@@ -186,6 +186,10 @@
         <include name="IDR_MD_EXTENSIONS_ERROR_PAGE_JS" file="resources\md_extensions\error_page.js" type="BINDATA" />
         <include name="IDR_MD_EXTENSIONS_KEYBOARD_SHORTCUTS_HTML" file="resources\md_extensions\keyboard_shortcuts.html" type="BINDATA" />
         <include name="IDR_MD_EXTENSIONS_KEYBOARD_SHORTCUTS_JS" file="resources\md_extensions\keyboard_shortcuts.js" type="BINDATA" />
+        <include name="IDR_MD_EXTENSIONS_KIOSK_BROWSER_PROXY_HTML" file="resources\md_extensions\kiosk_browser_proxy.html" type="BINDATA" />
+        <include name="IDR_MD_EXTENSIONS_KIOSK_BROWSER_PROXY_JS" file="resources\md_extensions\kiosk_browser_proxy.js" type="BINDATA" />
+        <include name="IDR_MD_EXTENSIONS_KIOSK_DIALOG_HTML" file="resources\md_extensions\kiosk_dialog.html" type="BINDATA" />
+        <include name="IDR_MD_EXTENSIONS_KIOSK_DIALOG_JS" file="resources\md_extensions\kiosk_dialog.js" type="BINDATA" />
         <include name="IDR_MD_EXTENSIONS_MANAGER_HTML" file="resources\md_extensions\manager.html" type="BINDATA" />
         <include name="IDR_MD_EXTENSIONS_MANAGER_JS" file="resources\md_extensions\manager.js" type="BINDATA" />
         <include name="IDR_MD_EXTENSIONS_ICONS_HTML" file="resources\md_extensions\icons.html" type="BINDATA" />
