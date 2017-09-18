@@ -213,6 +213,24 @@
     },
     {
       "key": {
+        "uuid": "545ea384_38044a2e",
+        "filename": "components/omnibox/browser/autocomplete_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 669,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-18T16:29:41Z",
+      "side": 1,
+      "message": "Peter, obviously we don\u0027t care in a unit test, but it seems like an easy win to simply have this extra variable to avoid it in production code. I assumed you shared the concern based on the \u0027match_at\u0027 comments.\n\nJustin, I\u0027m not sure I understand your comment. We could have the new-style loop, if it\u0027s that important, without std::distance. I was simply trying to address Peter\u0027s update issue.",
+      "parentUuid": "5f0d41a3_f462636e",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9c2b01b_bac8d46a",
         "filename": "components/omnibox/browser/autocomplete_controller.cc",
         "patchSetId": 4
@@ -459,6 +477,24 @@
     },
     {
       "key": {
+        "uuid": "3a215de4_b6ad3ed7",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-18T16:29:41Z",
+      "side": 1,
+      "message": "We can certainly provide some friction - I don\u0027t know, maybe just add some ugly parameter - but I can\u0027t think of anything beyond that.\n\nI think more helpful is that I added a comment, and fixed up the biggest caller.",
+      "parentUuid": "b92aeb3c_63c9410b",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32a91cf3_24638123",
         "filename": "components/omnibox/browser/autocomplete_result.cc",
         "patchSetId": 4
@@ -506,6 +542,24 @@
       "side": 1,
       "message": "Your implementation is more complex than I was thinking:\n\n  swap(default_match_, other-\u003edefault_match_);\n  if (this_was_end)\n    other-\u003edefault_match_ \u003d other-\u003eend();\n  if (other_was_end)\n    default_match_ \u003d end();\n\nYou can swap invalid iterators, you just can\u0027t dereference them.",
       "parentUuid": "b27e800a_16dd617c",
+      "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "648e6542_cfc9a258",
+        "filename": "components/omnibox/browser/autocomplete_result.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-18T16:29:41Z",
+      "side": 1,
+      "message": "It\u0027s my understanding that that is \"implementation defined behavior\", but if you\u0027re ok with it, so am I.",
+      "parentUuid": "668d7073_d21bd18c",
       "revId": "652eabc378bc11c4f642b78d1d5f7249f5d95592",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bf79abc6_3f31f789",
+        "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-18T16:29:41Z",
+      "side": 1,
+      "message": "Done, and fixed many occurrences where we weren\u0027t verifying the first range \u003c\u003d second range.",
+      "parentUuid": "f7c953cb_b43e150a",
+      "revId": "9f1d08f6f80141534146fb9e515b0c62398130cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbc885da_37a1d830",
         "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "9f1d08f6f80141534146fb9e515b0c62398130cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d9a2f66_8b0549c5",
+        "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-18T16:29:41Z",
+      "side": 1,
+      "message": "Converted to actual type. The \"no anonymous lambdas\" rule really hurt on the second parameter. Every other one was different.",
+      "parentUuid": "dbc885da_37a1d830",
+      "revId": "9f1d08f6f80141534146fb9e515b0c62398130cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e1b72a1d_c4f1a8df",
+        "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1978,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-18T16:29:41Z",
+      "side": 1,
+      "message": "I aligned all the lambdas in the file similarly, which helped. The next step would be to hoist them out of their loops, gaining a couple more columns, but I like seeing them close to the call site (and trust the compiler to hoist them for us.)",
+      "parentUuid": "7b0c1047_1cf7d49c",
+      "revId": "9f1d08f6f80141534146fb9e515b0c62398130cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c886bf52_ce0b26f8",
         "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "9f1d08f6f80141534146fb9e515b0c62398130cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bfe94a7_dbba52f2",
+        "filename": "chrome/browser/autocomplete/search_provider_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3223,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-18T16:29:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c886bf52_ce0b26f8",
+      "revId": "9f1d08f6f80141534146fb9e515b0c62398130cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
