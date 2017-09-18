@@ -16,6 +16,24 @@
       "revId": "61fc1adbeb1904d78bb7af01e340b03653f6ba21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c2bcb2c_4b46f33f",
+        "filename": "chrome/browser/ui/cocoa/download/md_download_item_progress_indicator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-09-18T17:32:53Z",
+      "side": 1,
+      "message": "This gives control over the start point and orientation of the path, which is needed for the stroked path (otherwise the progress bar starts in the wrong place and goes in the wrong direction). I could use CGPathCreateWithEllipseInRect for the circle, but would prefer to create them both in the same way so that they match up exactly.",
+      "parentUuid": "19e9ee48_4b34733c",
+      "revId": "61fc1adbeb1904d78bb7af01e340b03653f6ba21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
