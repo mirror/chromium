@@ -9,6 +9,7 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/numerics/safe_conversions.h"
 #include "base/observer_list.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
@@ -88,8 +89,7 @@ class TestDelegate : public PasswordsPrivateDelegate {
     callback.Run(current_exceptions_);
   }
 
-  void RemoveSavedPassword(const std::string& origin,
-                           const std::string& username) override {
+  void RemoveSavedPassword(int index) override {
     if (current_entries_.empty())
       return;
 
@@ -109,15 +109,19 @@ class TestDelegate : public PasswordsPrivateDelegate {
     SendPasswordExceptionsList();
   }
 
-  void RequestShowPassword(const std::string& origin,
-                           const std::string& username,
+  void RequestShowPassword(int index,
                            content::WebContents* web_contents) override {
     // Return a mocked password value.
     std::string plaintext_password(kPlaintextPassword);
     PasswordsPrivateEventRouter* router =
         PasswordsPrivateEventRouterFactory::GetForProfile(profile_);
     if (router) {
-      router->OnPlaintextPasswordFetched(origin, username, plaintext_password);
+      if (current_entries_.size() <= base::as_unsigned(index))
+        return;
+      const auto& entry = current_entries_[index];
+      router->OnPlaintextPasswordFetched(entry.login_pair.urls.origin,
+                                         entry.login_pair.username,
+                                         plaintext_password);
     }
   }
 

@@ -4,6 +4,8 @@
 
 #include "chrome/browser/extensions/api/passwords_private/passwords_private_api.h"
 
+#include <memory>
+
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/location.h"
@@ -33,8 +35,8 @@ ExtensionFunction::ResponseAction
   PasswordsPrivateDelegate* delegate =
       PasswordsPrivateDelegateFactory::GetForBrowserContext(browser_context(),
                                                             true /* create */);
-  delegate->RemoveSavedPassword(parameters->login_pair.urls.origin,
-                                parameters->login_pair.username);
+
+  delegate->RemoveSavedPassword(parameters->login_pair.index);
 
   return RespondNow(NoArguments());
 }
@@ -78,9 +80,7 @@ ExtensionFunction::ResponseAction
   PasswordsPrivateDelegate* delegate =
       PasswordsPrivateDelegateFactory::GetForBrowserContext(browser_context(),
                                                             true /* create */);
-
-  delegate->RequestShowPassword(parameters->login_pair.urls.origin,
-                                parameters->login_pair.username,
+  delegate->RequestShowPassword(parameters->login_pair.index,
                                 GetSenderWebContents());
 
   // No response given from this API function; instead, listeners wait for the

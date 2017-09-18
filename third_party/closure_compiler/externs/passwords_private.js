@@ -29,7 +29,8 @@ chrome.passwordsPrivate.UrlCollection;
 /**
  * @typedef {{
  *   urls: !chrome.passwordsPrivate.UrlCollection,
- *   username: string
+ *   username: string,
+ *   index: number
  * }}
  * @see https://developer.chrome.com/extensions/passwordsPrivate#type-LoginPair
  */
