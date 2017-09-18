@@ -16,6 +16,24 @@
       "revId": "0f3d3357977bcbec1957dcad7cf1fb9280cc2c3a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a94cee11_04a76737",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-18T22:08:13Z",
+      "side": 1,
+      "message": "TimeTicks is converted to Time when CacheEntry is serialized to JSON. Serialization is used to store NetLog to disk, see //components/net_log/net_export_file_writer.cc . Obviously it makes little sense to use tick clock for any data that\u0027s written to the disk. So TimeTicks-\u003eTime conversion seems reasonable.\nI agree that it\u0027s not ideal that the code being tested uses real clocks even when executed under the test, so the test may still flake. But I don\u0027t think it\u0027s worth spending much time fixing it unless it starts failing frequently. I don\u0027t see any other flakes on the flakiness dashboard.",
+      "parentUuid": "ededa6ff_f32bbdc5",
+      "revId": "0f3d3357977bcbec1957dcad7cf1fb9280cc2c3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
