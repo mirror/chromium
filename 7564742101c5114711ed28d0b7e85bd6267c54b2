@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "155db7f2_5d43c0b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-09-18T23:01:12Z",
+      "side": 1,
+      "message": "This param here is what caused the tab to start being null - canEnterVr must have been true before we decided to create VrShellImpl, and it was true because we just completed the DON flow. However, VrShellImpl isn\u0027t aware of DON flow state, so it was calling canEnterVr with this false on initialization, which was erroneously telling us we couldn\u0027t enter VR on the tab. So let\u0027s just not call it on initialization, there\u0027s no point.",
+      "range": {
+        "startLine": 362,
+        "startChar": 54,
+        "endLine": 362,
+        "endChar": 59
+      },
+      "revId": "7564742101c5114711ed28d0b7e85bd6267c54b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
