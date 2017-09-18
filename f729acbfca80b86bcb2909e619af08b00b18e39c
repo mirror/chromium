@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "40b61a8f_82ba2453",
+        "filename": "chrome/browser/vr/animation_player.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-18T18:24:53Z",
+      "side": 1,
+      "message": "Nit: Move this function down to follow order of functions used in the header.",
+      "revId": "f729acbfca80b86bcb2909e619af08b00b18e39c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1a3b052_4c18fffa",
         "filename": "chrome/browser/vr/ui_scene_manager.cc",
         "patchSetId": 3
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "+1 big-time.  Personally I\u0027d rather that main_content_-\u003esize() returns the target value (ignoring animation), but I know that differs from Ian\u0027s preference.  Either way, there needs to be a method that reliably gets the future value, animating or not (IMO).",
       "parentUuid": "c1a3b052_4c18fffa",
+      "revId": "f729acbfca80b86bcb2909e619af08b00b18e39c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9becf5d2_ce1704dd",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-18T18:24:53Z",
+      "side": 1,
+      "message": "I like the idea of having size() just return the final value (should be renamed to GetSize() then I guess). This would make it transparent to the user of elements if its properties are animated or not. This is the approach we have for setting attribute values.",
+      "parentUuid": "3a3926d5_6f45fba6",
       "revId": "f729acbfca80b86bcb2909e619af08b00b18e39c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
