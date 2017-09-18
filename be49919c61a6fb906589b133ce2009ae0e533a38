@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a5b5af5_08dd8956",
+        "filename": "components/policy_strings.grdp",
+        "patchSetId": 22
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-09-18T12:23:14Z",
+      "side": 1,
+      "message": "please explain in a few more words what that session is because some languages might require this clarification.",
+      "range": {
+        "startLine": 243,
+        "startChar": 141,
+        "endLine": 243,
+        "endChar": 152
+      },
+      "revId": "be49919c61a6fb906589b133ce2009ae0e533a38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c591be3_ba5813b0",
+        "filename": "components/policy_strings.grdp",
+        "patchSetId": 22
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-09-18T12:23:14Z",
+      "side": 1,
+      "message": "what do you think about skipping the first sentence altogether?",
+      "range": {
+        "startLine": 247,
+        "startChar": 4,
+        "endLine": 247,
+        "endChar": 67
+      },
+      "revId": "be49919c61a6fb906589b133ce2009ae0e533a38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f5229e_e03d7643",
+        "filename": "components/policy_strings.grdp",
+        "patchSetId": 22
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-09-18T12:23:14Z",
+      "side": 1,
+      "message": "I am not quite sure this is clear enough. I would rather keep this one short.\n\nThe session file is corrupt. An new empty session has been created.\n\nor some such?",
+      "range": {
+        "startLine": 250,
+        "startChar": 4,
+        "endLine": 250,
+        "endChar": 91
+      },
+      "revId": "be49919c61a6fb906589b133ce2009ae0e533a38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
