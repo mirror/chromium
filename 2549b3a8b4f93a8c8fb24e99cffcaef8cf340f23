@@ -94,6 +94,30 @@
       "revId": "2549b3a8b4f93a8c8fb24e99cffcaef8cf340f23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8ad98d_f4b3de0b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1717,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-09-18T21:54:34Z",
+      "side": 1,
+      "message": "I think any of our custom views would need to override:\nhttps://developer.android.com/reference/android/view/View.html#onConfigurationChanged(android.content.res.Configuration)\n\nWhile I don\u0027t know exactly why things are broken, I could imagine that anything that caches drawables, dimensions, etc... would be broken:\n\nhttps://cs.chromium.org/chromium/src/chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java?q\u003dgetDimensionPixelOffset+LocationBarLay\u0026sq\u003dpackage:chromium\u0026l\u003d466\n\nSo I think we\u0027d need to override onConfigurationChange and recalculate all those.",
+      "parentUuid": "1db9cc65_b230811e",
+      "range": {
+        "startLine": 1717,
+        "startChar": 45,
+        "endLine": 1717,
+        "endChar": 46
+      },
+      "revId": "2549b3a8b4f93a8c8fb24e99cffcaef8cf340f23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
