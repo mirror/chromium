@@ -151,6 +151,24 @@
       "revId": "8936453a00b811970b9bf152bab7f53446de6a7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dda3a25_9a0fb222",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-09-18T20:51:26Z",
+      "side": 1,
+      "message": "Thank you for the explanation.\n\nNote that we don\u0027t plan for users to flip flags, so we don\u0027t necessarily need to worry about that. Also, I expect that flag to go away at some point.\n\nHowever, we\u0027d want to fail in this case for cross-origin iframes, so I guess the only question is whether a gesture can override that. We _may_ also want to consider requiring a gesture in all cases. https://github.com/w3c/webvr/issues/250 tracks these types of issues.",
+      "parentUuid": "48340960_7e0897ea",
+      "revId": "8936453a00b811970b9bf152bab7f53446de6a7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

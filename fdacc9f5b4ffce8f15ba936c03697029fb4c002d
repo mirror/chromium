@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8f43dcf_ad2ff3c9",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-09-18T20:51:26Z",
+      "side": 1,
+      "message": "nit: \u0027ed\u0027",
+      "range": {
+        "startLine": 89,
+        "startChar": 25,
+        "endLine": 89,
+        "endChar": 26
+      },
+      "revId": "fdacc9f5b4ffce8f15ba936c03697029fb4c002d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "990ac987_41ca065e",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-09-18T20:51:26Z",
+      "side": 1,
+      "message": "nit: had",
+      "range": {
+        "startLine": 89,
+        "startChar": 64,
+        "endLine": 89,
+        "endChar": 68
+      },
+      "revId": "fdacc9f5b4ffce8f15ba936c03697029fb4c002d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0fe06e2_7dd235ea",
+        "filename": "third_party/WebKit/Source/modules/vr/NavigatorVR.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-09-18T20:51:26Z",
+      "side": 1,
+      "message": "nit: APIs\nand again later on this line.",
+      "range": {
+        "startLine": 90,
+        "startChar": 13,
+        "endLine": 90,
+        "endChar": 17
+      },
+      "revId": "fdacc9f5b4ffce8f15ba936c03697029fb4c002d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
