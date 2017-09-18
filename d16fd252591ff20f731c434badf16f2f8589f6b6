@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e3eb164_a8d4e063",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-09-18T23:36:41Z",
+      "side": 1,
+      "message": "This is not great since it still causes a GPU readback.  Instead of using an intermediate SkSurface, you should just use SkImage::makeColorSpace.  It will keep the image on the GPU if that is where it is stored, and it will even compute the transform on the GPU, which is much faster.",
+      "range": {
+        "startLine": 329,
+        "startChar": 28,
+        "endLine": 329,
+        "endChar": 37
+      },
+      "revId": "d16fd252591ff20f731c434badf16f2f8589f6b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
