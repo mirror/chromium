@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e16d65fa_4e989b11",
+        "filename": "device/u2f/fake_hid_impl_for_testing.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-18T06:46:16Z",
+      "side": 1,
+      "message": "auto it \u003d devices_.find(device_guid);\nif (it \u003d\u003d devices_.end()) {\n  std::move(callback).Run(nullptr);\n  return;\n}",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 3
+      },
+      "revId": "7c370a529cc00281d920c1462cf88ae894968148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3f86600_5673d09e",
+        "filename": "device/u2f/fake_hid_impl_for_testing.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-18T06:46:16Z",
+      "side": 1,
+      "message": "it-\u003esecond",
+      "range": {
+        "startLine": 88,
+        "startChar": 46,
+        "endLine": 88,
+        "endChar": 67
+      },
+      "revId": "7c370a529cc00281d920c1462cf88ae894968148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96136017_b0fed171",
+        "filename": "device/u2f/fake_hid_impl_for_testing.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-18T06:46:16Z",
+      "side": 1,
+      "message": "auto it \u003d devices_.find(device_guid);\nif (it \u003d\u003d devices_.end())\n  return;\n\nif (client_ptr_)\n  client_ptr_-\u003eDeviceRemoved(std::move(it-\u003esecond));\ndevices_.erase(it);",
+      "range": {
+        "startLine": 101,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 3
+      },
+      "revId": "7c370a529cc00281d920c1462cf88ae894968148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00bf2ef6_00967d05",
+        "filename": "device/u2f/fake_hid_impl_for_testing.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-18T06:46:16Z",
+      "side": 1,
+      "message": "FakeHidConnection?",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 27
+      },
+      "revId": "7c370a529cc00281d920c1462cf88ae894968148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d33337b_bd190adf",
+        "filename": "device/u2f/u2f_hid_device.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-18T06:46:16Z",
+      "side": 1,
+      "message": "The report ID in this buffer is always 0. Let\u0027s update U2fPacket::GetSerializedData() to return the buffer we want to begin with.",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 69
+      },
+      "revId": "7c370a529cc00281d920c1462cf88ae894968148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daaab630_9ed9dea7",
+        "filename": "device/u2f/u2f_hid_device.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-18T06:46:16Z",
+      "side": 1,
+      "message": "Passing around raw HidManager pointers makes me very nervous. We should make U2fRequest::Start() take a service_manager::Connector* and internally open a connection to HidManager for the request. We can then guarantee that the HidManager pointer held by this object doesn\u0027t become invalid because U2fDevice objects are owned by a request.\n\nPerhaps we should even move U2fHidDevice::Connect into U2fRequest since it doesn\u0027t really do anything interesting here.",
+      "revId": "7c370a529cc00281d920c1462cf88ae894968148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8e002a3_0046dce6",
+        "filename": "device/u2f/u2f_request.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-09-18T06:46:16Z",
+      "side": 1,
+      "message": "This isn\u0027t necessary because Start() is only called once.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 11
+      },
+      "revId": "7c370a529cc00281d920c1462cf88ae894968148",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
