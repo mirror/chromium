@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "29692242_8afb2ebe",
+        "filename": "components/signin/core/browser/account_reconcilor.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-09-18T09:21:05Z",
+      "side": 1,
+      "message": "I do not think that reconcile can be aborted here (we are already in FinishReconcile). I mean after this method is called we have already made all the calls to GCSM to logout and merge sessions.\n\nIf you think this is still a concern, we should set |last_known_first_account_| to |first_account| when the reconcile is done. If we do this, then GetFirstGaiaAccountForReconcile can become a const function.",
+      "parentUuid": "cc9a4c10_084bd890",
+      "range": {
+        "startLine": 442,
+        "startChar": 3,
+        "endLine": 442,
+        "endChar": 0
+      },
+      "revId": "bb2430ea5a630fb2b92f862520348c3e6c16560d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72a82002_2750d4ef",
         "filename": "components/signin/core/browser/account_reconcilor.h",
         "patchSetId": 3
