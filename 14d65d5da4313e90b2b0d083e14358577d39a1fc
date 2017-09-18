@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18e331d5_e7913f7a",
+        "filename": "content/browser/devtools/protocol/devtools_protocol_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2037,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-09-18T00:20:22Z",
+      "side": 1,
+      "message": "Is this testing something new now? Should we keep the old (reload) test in place, and add this (navigate) test as a new test?",
+      "revId": "14d65d5da4313e90b2b0d083e14358577d39a1fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
