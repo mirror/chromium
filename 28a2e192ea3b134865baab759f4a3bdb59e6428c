@@ -46,6 +46,30 @@
       "revId": "28a2e192ea3b134865baab759f4a3bdb59e6428c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eab45c9d_ddb0a5bd",
+        "filename": "chrome/browser/predictors/resource_prefetch_common.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1154589
+      },
+      "writtenOn": "2017-09-18T10:54:09Z",
+      "side": 1,
+      "message": "Ah, good point. Makes sense, thanks.",
+      "parentUuid": "81fbee94_fb54287c",
+      "range": {
+        "startLine": 64,
+        "startChar": 46,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "28a2e192ea3b134865baab759f4a3bdb59e6428c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
