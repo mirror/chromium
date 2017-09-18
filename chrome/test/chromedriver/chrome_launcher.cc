@@ -65,8 +65,9 @@
 namespace {
 
 const char* const kCommonSwitches[] = {
-    "disable-popup-blocking", "enable-automation", "ignore-certificate-errors",
-    "metrics-recording-only", "disable-browser-side-navigation",
+    "disable-popup-blocking",          "enable-automation",
+    "ignore-certificate-errors",       "metrics-recording-only",
+    "disable-browser-side-navigation",
 };
 
 const char* const kDesktopSwitches[] = {
