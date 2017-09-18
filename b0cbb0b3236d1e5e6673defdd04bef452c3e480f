@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a7b9358_a3e23881",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-18T21:59:49Z",
+      "side": 1,
+      "message": "nit: be consistent with usage of \"ARC VPN\" (here and in L363).",
+      "range": {
+        "startLine": 369,
+        "startChar": 36,
+        "endLine": 369,
+        "endChar": 42
+      },
+      "revId": "b0cbb0b3236d1e5e6673defdd04bef452c3e480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9111a9e6_8c109ecb",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-18T21:59:49Z",
+      "side": 1,
+      "message": "nit: believing",
+      "range": {
+        "startLine": 704,
+        "startChar": 5,
+        "endLine": 704,
+        "endChar": 13
+      },
+      "revId": "b0cbb0b3236d1e5e6673defdd04bef452c3e480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2e894a8_99a36b7a",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-18T21:59:49Z",
+      "side": 1,
+      "message": "nit: std::string()",
+      "range": {
+        "startLine": 750,
+        "startChar": 9,
+        "endLine": 750,
+        "endChar": 11
+      },
+      "revId": "b0cbb0b3236d1e5e6673defdd04bef452c3e480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a7617c7_39c1503b",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-18T21:59:49Z",
+      "side": 1,
+      "message": "can this (and the other logging calls that only state a method was called) be DVLOG? security reviewers have been pushing to tone down our logging.",
+      "range": {
+        "startLine": 755,
+        "startChar": 2,
+        "endLine": 755,
+        "endChar": 6
+      },
+      "revId": "b0cbb0b3236d1e5e6673defdd04bef452c3e480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea24607_de122761",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-18T21:59:49Z",
+      "side": 1,
+      "message": "Can these two be in the anonymous namespace?",
+      "range": {
+        "startLine": 767,
+        "startChar": 0,
+        "endLine": 775,
+        "endChar": 1
+      },
+      "revId": "b0cbb0b3236d1e5e6673defdd04bef452c3e480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff99b00_8288a8ef",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-18T21:59:49Z",
+      "side": 1,
+      "message": "nit: \u003d std::make_unique\u003cbase::Value\u003e(...)",
+      "range": {
+        "startLine": 779,
+        "startChar": 37,
+        "endLine": 779,
+        "endChar": 54
+      },
+      "revId": "b0cbb0b3236d1e5e6673defdd04bef452c3e480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cac7e3ad_93bd164f",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-18T21:59:49Z",
+      "side": 1,
+      "message": "nit: can this be emplace_back?",
+      "range": {
+        "startLine": 781,
+        "startChar": 22,
+        "endLine": 781,
+        "endChar": 31
+      },
+      "revId": "b0cbb0b3236d1e5e6673defdd04bef452c3e480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41099ea7_288a8d49",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-18T21:59:49Z",
+      "side": 1,
+      "message": "nit: \u003d std::make_unique\u003cbase::DictionaryValue\u003e();\n\nsame in all the other places base::DictionaryValue is being created.",
+      "range": {
+        "startLine": 789,
+        "startChar": 49,
+        "endLine": 789,
+        "endChar": 75
+      },
+      "revId": "b0cbb0b3236d1e5e6673defdd04bef452c3e480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "692da904_52471cd1",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-18T21:59:49Z",
+      "side": 1,
+      "message": "nit: one line",
+      "range": {
+        "startLine": 844,
+        "startChar": 41,
+        "endLine": 845,
+        "endChar": 12
+      },
+      "revId": "b0cbb0b3236d1e5e6673defdd04bef452c3e480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a5436d8_d5635ba4",
+        "filename": "components/arc/net/arc_net_host_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-09-18T21:59:49Z",
+      "side": 1,
+      "message": "nit: std::string()",
+      "range": {
+        "startLine": 853,
+        "startChar": 33,
+        "endLine": 853,
+        "endChar": 35
+      },
+      "revId": "b0cbb0b3236d1e5e6673defdd04bef452c3e480f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
