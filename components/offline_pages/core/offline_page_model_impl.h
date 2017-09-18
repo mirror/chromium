@@ -104,6 +104,11 @@ class OfflinePageModelImpl : public OfflinePageModel, public KeyedService {
       const GURL& url,
       URLSearchMode url_search_mode,
       const MultipleOfflinePageItemCallback& callback) override;
+  void GetPagesRemovedOnCacheReset(
+      const MultipleOfflinePageItemCallback& callback) override;
+  void GetPagesByNamespace(
+      const std::string& name_space,
+      const MultipleOfflinePageItemCallback& callback) override;
   ClientPolicyController* GetPolicyController() override;
 
   // Methods for testing only:

@@ -51,6 +51,11 @@ void StubOfflinePageModel::GetPagesByURL(
 void StubOfflinePageModel::GetPagesByRequestOrigin(
     const std::string& origin,
     const MultipleOfflinePageItemCallback& callback) {}
+void StubOfflinePageModel::GetPagesRemovedOnCacheReset(
+    const MultipleOfflinePageItemCallback& callback) {}
+void StubOfflinePageModel::GetPagesByNamespace(
+    const std::string& name_space,
+    const MultipleOfflinePageItemCallback& callback) {}
 ClientPolicyController* StubOfflinePageModel::GetPolicyController() {
   return &policy_controller_;
 }

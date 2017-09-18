@@ -190,6 +190,15 @@ class OfflinePageModel : public base::SupportsUserData {
       URLSearchMode url_search_mode,
       const MultipleOfflinePageItemCallback& callback) = 0;
 
+  // Returns the offline pages that are removed when cache is reset.
+  virtual void GetPagesRemovedOnCacheReset(
+      const MultipleOfflinePageItemCallback& callback) = 0;
+
+  // Returns the offline pages that belong in |name_space|.
+  virtual void GetPagesByNamespace(
+      const std::string& name_space,
+      const MultipleOfflinePageItemCallback& callback) = 0;
+
   // Returns the policy controller.
   virtual ClientPolicyController* GetPolicyController() = 0;
 
