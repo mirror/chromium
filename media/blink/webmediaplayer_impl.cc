@@ -188,8 +188,7 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
                    ? MultibufferDataSource::METADATA
                    : MultibufferDataSource::AUTO),
       has_poster_(false),
-      main_task_runner_(
-          frame->GetTaskRunner(blink::TaskType::kMediaElementEvent)),
+      main_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       media_task_runner_(params->media_task_runner()),
       worker_task_runner_(params->worker_task_runner()),
       media_log_(params->take_media_log()),
@@ -298,12 +297,12 @@ WebMediaPlayerImpl::WebMediaPlayerImpl(
   delegate_id_ = delegate_->AddObserver(this);
   delegate_->SetIdle(delegate_id_, true);
 
-  media_log_->AddEvent(media_log_->CreateCreatedEvent(
-      url::Origin(frame_->GetSecurityOrigin()).GetURL().spec()));
-  media_log_->SetStringProperty("frame_url",
-                                frame_->GetDocument().Url().GetString().Utf8());
-  media_log_->SetStringProperty("frame_title",
-                                frame_->GetDocument().Title().Utf8());
+  // media_log_->AddEvent(media_log_->CreateCreatedEvent(
+  //     url::Origin(frame_->GetSecurityOrigin()).GetURL().spec()));
+  // media_log_->SetStringProperty("frame_url",
+  //                               frame_->GetDocument().Url().GetString().Utf8());
+  // media_log_->SetStringProperty("frame_title",
+  //                               frame_->GetDocument().Title().Utf8());
 
   if (params->initial_cdm())
     SetCdm(params->initial_cdm());
@@ -513,7 +512,8 @@ void WebMediaPlayerImpl::DoLoad(LoadType load_type,
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
   GURL gurl(url);
-  ReportMetrics(load_type, gurl, frame_->GetSecurityOrigin(), media_log_.get());
+  // ReportMetrics(load_type, gurl, frame_->GetSecurityOrigin(),
+  // media_log_.get());
 
   // Report poster availability for SRC=.
   if (load_type == kLoadTypeURL) {
@@ -561,7 +561,7 @@ void WebMediaPlayerImpl::Play() {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
   // User initiated play unlocks background video playback.
-  if (blink::WebUserGestureIndicator::IsProcessingUserGesture())
+  //if (blink::WebUserGestureIndicator::IsProcessingUserGesture())
     video_locked_when_paused_when_hidden_ = false;
 
 #if defined(OS_ANDROID)  // WMPI_CAST
@@ -585,8 +585,7 @@ void WebMediaPlayerImpl::Play() {
   // If we're seeking we'll trigger the watch time reporter upon seek completed;
   // we don't want to start it here since the seek time is unstable. E.g., when
   // playing content with a positive start time we would have a zero seek time.
-  if (!Seeking()) {
-    DCHECK(watch_time_reporter_);
+  if (!Seeking() && watch_time_reporter_) {
     watch_time_reporter_->OnPlaying();
   }
 
@@ -610,7 +609,7 @@ void WebMediaPlayerImpl::Pause() {
   paused_when_hidden_ = false;
 
   // User initiated pause locks background videos.
-  if (blink::WebUserGestureIndicator::IsProcessingUserGesture())
+  //if (blink::WebUserGestureIndicator::IsProcessingUserGesture())
     video_locked_when_paused_when_hidden_ = true;
 
 #if defined(OS_ANDROID)  // WMPI_CAST
@@ -2571,6 +2570,9 @@ void WebMediaPlayerImpl::ScheduleIdlePauseTimer() {
 
 void WebMediaPlayerImpl::CreateWatchTimeReporter() {
   if (!HasVideo() && !HasAudio())
+    return;
+
+  if (!watch_time_recorder_provider_)
     return;
 
   // Create the watch time reporter and synchronize its initial state.
