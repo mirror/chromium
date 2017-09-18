@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9130a7ef_e62b0bb0",
+        "filename": "chrome/profiling/memlog_connection_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-09-18T22:11:42Z",
+      "side": 1,
+      "message": "Maybe rename hop_to_connection_thread_for_test or something?\n\nThat\u0027s getting really long, but I dislike having things in the public API that are for testing without it being marked as \"for test.\"\n\nAlso, why is this just not in the DumpProcessargs?",
+      "range": {
+        "startLine": 69,
+        "startChar": 46,
+        "endLine": 69,
+        "endChar": 70
+      },
+      "revId": "d1d3ff7ff81d629a5cd4fbecc395be5192b7ac38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
