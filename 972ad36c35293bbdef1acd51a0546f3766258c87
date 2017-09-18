@@ -779,6 +779,30 @@
     },
     {
       "key": {
+        "uuid": "9b51e896_f9cfb3c2",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-18T17:45:40Z",
+      "side": 1,
+      "message": "The idea in the previous comment didn\u0027t work either, I will stick with the wrappers around AddLogin and RemoveLogin.",
+      "parentUuid": "b4f867db_395f0420",
+      "range": {
+        "startLine": 449,
+        "startChar": 2,
+        "endLine": 450,
+        "endChar": 69
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6e4c3bd_951542bb",
         "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
         "patchSetId": 5
@@ -1038,6 +1062,30 @@
     },
     {
       "key": {
+        "uuid": "3013e687_98bd739e",
+        "filename": "components/undo_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-18T17:45:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a72c2960_83f5d753",
+      "range": {
+        "startLine": 41,
+        "startChar": 19,
+        "endLine": 41,
+        "endChar": 46
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc8685cd_3b88246e",
         "filename": "components/undo_strings.grdp",
         "patchSetId": 5
@@ -1106,6 +1154,30 @@
       "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c712790c_da67cc9f",
+        "filename": "components/undo_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-18T17:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b660686_e4e35aed",
+      "range": {
+        "startLine": 42,
+        "startChar": 11,
+        "endLine": 42,
+        "endChar": 19
+      },
+      "revId": "972ad36c35293bbdef1acd51a0546f3766258c87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

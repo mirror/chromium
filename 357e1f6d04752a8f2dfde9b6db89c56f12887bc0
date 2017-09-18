@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "42fe1900_8a1a3ea6",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 7
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-18T17:45:40Z",
+      "side": 1,
+      "message": "After talking to maxwalker@ I decided to drop this string. We agreed on not showing a bubble when a blacklisted site gets deleted, as this is way less severe than deleting a password. The CTRL+Z shortcut works for this as well, though.",
+      "range": {
+        "startLine": 601,
+        "startChar": 0,
+        "endLine": 603,
+        "endChar": 12
+      },
+      "revId": "357e1f6d04752a8f2dfde9b6db89c56f12887bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e305c74_a373d92f",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
         "patchSetId": 7
@@ -16,6 +39,24 @@
       "revId": "357e1f6d04752a8f2dfde9b6db89c56f12887bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3508a9cd_bb32f707",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-18T17:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e305c74_a373d92f",
+      "revId": "357e1f6d04752a8f2dfde9b6db89c56f12887bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -36,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "17f29a43_2cdfe0d6",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-18T17:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b525c5d3_9f60038b",
+      "revId": "357e1f6d04752a8f2dfde9b6db89c56f12887bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7be12c5d_e4516e64",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_shared_css.html",
         "patchSetId": 7
@@ -50,6 +109,24 @@
       "revId": "357e1f6d04752a8f2dfde9b6db89c56f12887bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6700064_aadc5046",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_shared_css.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-18T17:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7be12c5d_e4516e64",
+      "revId": "357e1f6d04752a8f2dfde9b6db89c56f12887bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +153,30 @@
     },
     {
       "key": {
+        "uuid": "991ef6cf_50a3c63e",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-18T17:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "597740ee_5171fd20",
+      "range": {
+        "startLine": 273,
+        "startChar": 2,
+        "endLine": 273,
+        "endChar": 30
+      },
+      "revId": "357e1f6d04752a8f2dfde9b6db89c56f12887bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2bf15cad_f0e7f9b8",
         "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
         "patchSetId": 7
@@ -99,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "595bf659_765c5a40",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-18T17:45:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bf15cad_f0e7f9b8",
+      "range": {
+        "startLine": 20,
+        "startChar": 26,
+        "endLine": 20,
+        "endChar": 40
+      },
+      "revId": "357e1f6d04752a8f2dfde9b6db89c56f12887bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be73f21f_951e1332",
         "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
         "patchSetId": 7
@@ -119,6 +244,30 @@
       "revId": "357e1f6d04752a8f2dfde9b6db89c56f12887bc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bde6aa8_5867abf0",
+        "filename": "chrome/browser/ui/passwords/password_manager_presenter.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-18T17:45:40Z",
+      "side": 1,
+      "message": "Yeah.",
+      "parentUuid": "be73f21f_951e1332",
+      "range": {
+        "startLine": 71,
+        "startChar": 39,
+        "endLine": 71,
+        "endChar": 48
+      },
+      "revId": "357e1f6d04752a8f2dfde9b6db89c56f12887bc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
