@@ -1582,6 +1582,11 @@ interface NavigatorOnLine {
   readonly attribute boolean onLine;
 };
 
+[NoInterfaceObject, Exposed=(Window)]
+interface NavigatorAutomationInformation {
+  readonly attribute boolean webdriver;
+}
+
 [Constructor(DOMString type, optional ErrorEventInit eventInitDict), Exposed=(Window,Worker)]
 interface ErrorEvent : Event {
   readonly attribute DOMString message;
@@ -1748,6 +1753,7 @@ Navigator implements NavigatorContentUtils;
 Navigator implements NavigatorCookies;
 Navigator implements NavigatorPlugins;
 Navigator implements NavigatorConcurrentHardware;
+Navigator implements NavigatorAutomationInformation;
 
 [NoInterfaceObject, Exposed=(Window,Worker)]
 interface NavigatorID {
