@@ -1378,7 +1378,7 @@ bool AXNodeObject::CanvasHasFallbackContent() const {
 int AXNodeObject::HeadingLevel() const {
   // headings can be in block flow and non-block flow
   Node* node = this->GetNode();
-  if (!node)
+  if (!node || !node->IsHTMLElement())
     return 0;
 
   if (RoleValue() == kHeadingRole) {
@@ -1386,12 +1386,8 @@ int AXNodeObject::HeadingLevel() const {
     if (HasAOMPropertyOrARIAAttribute(AOMUIntProperty::kLevel, level)) {
       if (level >= 1 && level <= 9)
         return level;
-      return 1;
     }
   }
-
-  if (!node->IsHTMLElement())
-    return 0;
 
   HTMLElement& element = ToHTMLElement(*node);
   if (element.HasTagName(h1Tag))
@@ -1412,7 +1408,8 @@ int AXNodeObject::HeadingLevel() const {
   if (element.HasTagName(h6Tag))
     return 6;
 
-  return 0;
+  // In ARIA 1.1, default value of aria-level were changed to 2.
+  return 2;
 }
 
 unsigned AXNodeObject::HierarchicalLevel() const {
