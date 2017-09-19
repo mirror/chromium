@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a155f443_92b3529f",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-19T00:06:51Z",
+      "side": 1,
+      "message": "Please remove AllowJavascript() since allowing JS should only be initiated by the JS side (rather than the C++ side). By that I mean that the JS side sends a message (e.g. HandleGetOriginPermissions()) that implies that the page is up and ready to receive calls to JS functions.\n\nCallJavascriptFunction() will CHECK that IsJavascriptAllows() for you. If that CHECK is triggering without line 259 above, please let me know.\n\nSee\nhttps://cs.chromium.org/chromium/src/content/public/browser/web_ui_message_handler.h?type\u003dcs\u0026q\u003dCallJavascriptFunction\u0026sq\u003dpackage:chromium\u0026l\u003d122",
+      "revId": "c14384845eef514eb9af3455f4c3f025fb69f1fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8203fa70_b707aa82",
+        "filename": "chrome/test/data/webui/settings/site_details_tests.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-19T00:06:51Z",
+      "side": 1,
+      "message": "Please avoid using Foo in a function name (because when someone is hacking, Foo is not expected to be defined). This is a personal appeal rather than something in the style guide. So you can (afaik) name a function with foo in the name (and I\u0027ll LG it), but I\u0027m just asking please don\u0027t :)\n\nHow about createExceptionForTest() or createTestException() instead?",
+      "revId": "c14384845eef514eb9af3455f4c3f025fb69f1fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
