@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e9984cd_2cd40756",
+        "filename": "third_party/WebKit/Source/core/frame/Intervention.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-19T21:23:44Z",
+      "side": 1,
+      "message": "This looks like it\u0027s unused?",
+      "revId": "b69be89a3a80b61da387022ec1782ab498dde7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2cd8088_35639de6",
+        "filename": "third_party/WebKit/Source/core/frame/Intervention.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-19T21:23:44Z",
+      "side": 1,
+      "message": "I can\u0027t remember, do these need to be manually specified alongside DISALLOW_NEW()? If so, can they be private?",
+      "revId": "b69be89a3a80b61da387022ec1782ab498dde7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c3baeeb_9de8e834",
+        "filename": "third_party/WebKit/Source/core/frame/InterventionReport.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-09-19T21:23:44Z",
+      "side": 1,
+      "message": "This class looks identical to DeprecationReport, can we merge or at least share some logic between them?",
+      "revId": "b69be89a3a80b61da387022ec1782ab498dde7eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
