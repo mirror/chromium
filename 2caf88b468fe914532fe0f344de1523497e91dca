@@ -70,6 +70,24 @@
       "revId": "2caf88b468fe914532fe0f344de1523497e91dca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84e32a7e_e6a5cb9c",
+        "filename": "media/gpu/android/android_video_surface_chooser_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-09-19T18:52:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63b8c356_d6c27309",
+      "revId": "2caf88b468fe914532fe0f344de1523497e91dca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
