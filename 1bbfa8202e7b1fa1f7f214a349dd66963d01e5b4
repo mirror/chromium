@@ -16,6 +16,24 @@
       "revId": "1bbfa8202e7b1fa1f7f214a349dd66963d01e5b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e7d6481_5014d3f5",
+        "filename": "third_party/zlib/0004-use-defines-for-inffast.patch",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1189229
+      },
+      "writtenOn": "2017-09-19T19:41:34Z",
+      "side": 1,
+      "message": "Odd. I checked to see if I added any tabs and I don\u0027t think I did. For example, if you look at inffast.h there is no tab before the new block comment. But it shows up in this .patch file. Also note that the tab isn\u0027t an addition (with the leading +).\n\nIt seems like this is just something in .patch files. You\u0027ll see them in 0001-simd.patch as well.",
+      "parentUuid": "b60c3dbd_24a2a4be",
+      "revId": "1bbfa8202e7b1fa1f7f214a349dd66963d01e5b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
