@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "010a859d_2e7ef46b",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-09-19T00:24:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc827fb8_d83c4e05",
+      "revId": "1053ff15399b3a87a8d6e714fdd55cefec238179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2bb43df_71467f69",
         "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "1053ff15399b3a87a8d6e714fdd55cefec238179",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0ce38d4_6a8c6218",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-09-19T00:24:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2bb43df_71467f69",
+      "revId": "1053ff15399b3a87a8d6e714fdd55cefec238179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "51149896_db22e01e",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-09-19T00:24:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a155a8ae_2d2206bb",
+      "revId": "1053ff15399b3a87a8d6e714fdd55cefec238179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28f4615e_5694cd05",
         "filename": "chromeos/dbus/services/component_updater_service_provider.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "1053ff15399b3a87a8d6e714fdd55cefec238179",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1c53e7_03539b47",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-09-19T00:24:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28f4615e_5694cd05",
+      "revId": "1053ff15399b3a87a8d6e714fdd55cefec238179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b8e05f47_033d80eb",
+        "filename": "chromeos/dbus/services/org.chromium.ComponentUpdaterService.conf",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-09-19T00:24:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1f96e75_e174618c",
+      "revId": "1053ff15399b3a87a8d6e714fdd55cefec238179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb6cdd88_98e9e4ae",
         "filename": "chromeos/dbus/services/org.chromium.ComponentUpdaterService.conf",
         "patchSetId": 6
@@ -101,6 +191,24 @@
       "revId": "1053ff15399b3a87a8d6e714fdd55cefec238179",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95779aba_59868b03",
+        "filename": "chromeos/dbus/services/org.chromium.ComponentUpdaterService.conf",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1178302
+      },
+      "writtenOn": "2017-09-19T00:24:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb6cdd88_98e9e4ae",
+      "revId": "1053ff15399b3a87a8d6e714fdd55cefec238179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
