@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea6c5683_c6bdfaa6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-09-19T22:01:12Z",
+      "side": 1,
+      "message": "This seems longer than just class.getName() in the code.  It can\u0027t ever be anything other than class.getName() or the reflection will fail, so abstracting it to the method doesn\u0027t seem too helpful!",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 134,
+        "endChar": 5
+      },
+      "revId": "f04f70d4bf9e6da210dd5916ef682f9102b6e501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
