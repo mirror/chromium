@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "62e2c3c5_77763f16",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T15:59:47Z",
+      "side": 1,
+      "message": "Done (This CL is now the initial one, that adds BodyReader)",
+      "parentUuid": "3e4a79b7_a94cb8b4",
+      "range": {
+        "startLine": 43,
+        "startChar": 18,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68bd2ea7_ee7eb178",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 4
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "d4a580b9_d2e2b64e",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T15:59:47Z",
+      "side": 1,
+      "message": "I think that may be the default behavior, if I don\u0027t specify priority, but I\u0027m skeptical of relying on that.  I suspect that most callers are on the UI thread, currently, so don\u0027t think that\u0027s a good signal.",
+      "parentUuid": "9a31f5af_76da1fa8",
+      "range": {
+        "startLine": 303,
+        "startChar": 21,
+        "endLine": 303,
+        "endChar": 29
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4afb87d_0b936189",
         "filename": "content/public/common/simple_url_loader.cc",
         "patchSetId": 4
@@ -178,6 +226,30 @@
       "side": 1,
       "message": "Yeah, this is annoying.  I went looking for some way to mock a base::File, but it doesn\u0027t seem to exist.  It wouldn\u0027t have to be a global; you could have a test-only setter on SimpleURLFileLoader which plumbs down through to SaveTofileBodyHandler to FileWriter that interposes on file creation.  Having written that out,though, a global would be cleaner :-} :-|.  \n\nI\u0027d vote in favor of the global (static test only method method on SimpleURLLoader, I think) interposing on file_ creation and creating a mock that would then be used here, but if you don\u0027t think it\u0027s worth it I\u0027m ok with that.",
       "parentUuid": "f4afb87d_0b936189",
+      "range": {
+        "startLine": 397,
+        "startChar": 22,
+        "endLine": 397,
+        "endChar": 36
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b04f5e86_f4c2b53a",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T15:59:47Z",
+      "side": 1,
+      "message": "I would like a test, but we currently don\u0027t expose any private test-only APIs in content/public, and I\u0027m not sure I want to introduce the first instance of that.\n\nFortunately, I want to add a streaming API, too, and it will need something similar to BodyReader::Delegate, so we\u0027ll at least be able to test that part of the failure path.",
+      "parentUuid": "64f8649c_47cf056a",
       "range": {
         "startLine": 397,
         "startChar": 22,
@@ -237,6 +309,30 @@
     },
     {
       "key": {
+        "uuid": "d6481858_86ca2be8",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T15:59:47Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean by \"shoving all the temp file logic into URLFetcher\" - URLFetcher will no longer exist.\n\nNote that base::CreateTemporaryFile uses various methods to try and ensure success (On windows, has a loop, on POSIX, uses a system API), and creates an empty file, hopefully preventing any conflict.  It also needs to be done off the main thread, so it\u0027s just convenient to have a method on SimpleURLLoader that uses it.\n\nThere are only 3 consumers of URLFetcher::SaveResponseToTemporaryFile, but that\u0027s still 3 consumers that potentially have to all do the exact same thing: Jump over to another thread, create a temp file, jump back, start the SimpleURLLoader with the temporary file path...And if the parent class is destroyed before that happens, they\u0027d ideally delete the temporary file, too.  If we bake it into SimpleURLLoader, we avoid all that - it\u0027s like 10-20 extra lines of code on top of this CL to get all that working.",
+      "parentUuid": "d38a6c7c_a2c6d0d9",
+      "range": {
+        "startLine": 64,
+        "startChar": 36,
+        "endLine": 64,
+        "endChar": 40
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec30a664_9c2a3861",
         "filename": "content/public/common/simple_url_loader.h",
         "patchSetId": 4
@@ -257,6 +353,30 @@
       "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2b52e9e_16b82dfa",
+        "filename": "content/public/common/simple_url_loader.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T15:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec30a664_9c2a3861",
+      "range": {
+        "startLine": 99,
+        "startChar": 10,
+        "endLine": 99,
+        "endChar": 13
+      },
+      "revId": "81c2289faee3df84175f17d5f99b8c852ed61701",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

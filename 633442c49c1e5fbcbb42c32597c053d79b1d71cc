@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f86c1729_4c824eb9",
+        "filename": "content/public/common/simple_url_loader.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T15:59:47Z",
+      "side": 1,
+      "message": "Left this change in this CL (And the sequence checker), out of a combination of laziness, and to make the followup one simpler, as it\u0027s the more complicated CL.",
+      "range": {
+        "startLine": 437,
+        "startChar": 17,
+        "endLine": 437,
+        "endChar": 43
+      },
+      "revId": "633442c49c1e5fbcbb42c32597c053d79b1d71cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
