@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "69652655_cb9b0a0c",
+        "filename": "chrome/browser/vr/elements/ui_element_iterator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-19T16:38:09Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m not at all proud of the cuteness of this code.",
+      "parentUuid": "2cc456dc_f240334d",
+      "revId": "31823af8db06a826746d2d0510e890831a11731b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "917f44d4_fa92646e",
         "filename": "chrome/browser/vr/elements/ui_element_iterator_unittest.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-19T14:59:11Z",
       "side": 1,
       "message": "You could use a local dummy enum for names if it helps, or even just hard-coded strings.  Using actual element names doesn\u0027t appear to add much value, does it?",
+      "revId": "31823af8db06a826746d2d0510e890831a11731b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1efff5d4_93981ca7",
+        "filename": "chrome/browser/vr/elements/ui_element_iterator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-19T16:38:09Z",
+      "side": 1,
+      "message": "I don\u0027t think this\u0027ll work in this case. With draw phase, we\u0027re backed by an int, but with set_name, I have to pass a UiElementName. You\u0027re right, though, that my enum choices here don\u0027t matter at all.",
+      "parentUuid": "917f44d4_fa92646e",
       "revId": "31823af8db06a826746d2d0510e890831a11731b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "988351aa_be7be176",
+        "filename": "chrome/browser/vr/elements/ui_element_iterator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-19T16:38:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "872b06b4_5e148cc6",
+      "revId": "31823af8db06a826746d2d0510e890831a11731b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8339198e_3ac85810",
         "filename": "chrome/browser/vr/elements/ui_element_iterator_unittest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "31823af8db06a826746d2d0510e890831a11731b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ebd25b_4c6ccf7f",
+        "filename": "chrome/browser/vr/elements/ui_element_iterator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-09-19T16:38:09Z",
+      "side": 1,
+      "message": "Good call. That reduced a bunch of duplication. Thanks.",
+      "parentUuid": "8339198e_3ac85810",
+      "revId": "31823af8db06a826746d2d0510e890831a11731b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
