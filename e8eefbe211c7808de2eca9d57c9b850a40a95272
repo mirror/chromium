@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dfd1b43_0f57e951",
+        "filename": "third_party/WebKit/Source/core/dom/Element.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-09-19T07:57:44Z",
+      "side": 1,
+      "message": "I\u0027m probably misunderstanding something here, but what\u0027s preventing JS from calling the DOMString variant directly, rather than go through the `StringOrTrustedHTML` one?",
+      "range": {
+        "startLine": 85,
+        "startChar": 142,
+        "endLine": 85,
+        "endChar": 168
+      },
+      "revId": "e8eefbe211c7808de2eca9d57c9b850a40a95272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
