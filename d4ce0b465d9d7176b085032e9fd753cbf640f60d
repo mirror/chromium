@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4239010e_c3fd6b53",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-19T20:50:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20b5180b_e3929806",
+      "revId": "d4ce0b465d9d7176b085032e9fd753cbf640f60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbf88783_61fbf03a",
         "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/popup.html",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "d4ce0b465d9d7176b085032e9fd753cbf640f60d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24d7e6a3_538cd696",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/popup.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-19T20:50:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbf88783_61fbf03a",
+      "revId": "d4ce0b465d9d7176b085032e9fd753cbf640f60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8d669c73_bc88409d",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/popup.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-19T20:50:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8513bc0_1805fa84",
+      "revId": "d4ce0b465d9d7176b085032e9fd753cbf640f60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59033e40_e18aa7d5",
         "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/popup.js",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-15T22:55:46Z",
       "side": 1,
       "message": "Might be getting complicated, but should we update any existing alarms?  e.g., if the user hits 15 minutes, and then hits 15 minutes one minute later, do we want two separate alarms set?",
+      "revId": "d4ce0b465d9d7176b085032e9fd753cbf640f60d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185568f4_65907d57",
+        "filename": "chrome/common/extensions/docs/examples/api/water_alarm_notification/popup.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1242379
+      },
+      "writtenOn": "2017-09-19T20:50:43Z",
+      "side": 1,
+      "message": "Since there is only one alarm with no name, the alarm is automatically replaced instead of duplicated, per the documentation. \n\n\"chrome.alarms.create(string name, object alarmInfo)\nCreates an alarm. Near the time(s) specified by alarmInfo, the onAlarm event is fired. If there is another alarm with the same name (or no name if none is specified), it will be cancelled and replaced by this alarm.\"\n\nhttps://developer.chrome.com/apps/alarms\n\nPlease let me know if I am misunderstanding, or if is outdated.",
+      "parentUuid": "59033e40_e18aa7d5",
       "revId": "d4ce0b465d9d7176b085032e9fd753cbf640f60d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
