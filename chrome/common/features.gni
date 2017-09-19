@@ -77,6 +77,10 @@ declare_args() {
   # speed benefits at runtime (so we skip in debug builds). TODO(dbeam): rename
   # this flag "optimize_web_uis" because we run more than vulcanize these days.
   use_vulcanize = !is_debug
+
+  # Enable donwloadable language PAK files to reduce the size of the main
+  # Chrome APK. TODO(digit): Restrict this to official builds.
+  enable_downloadable_strings = is_android
 }
 
 # Use brlapi from brltty for braille display support.
