@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31dd6bf6_2c64261a",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-19T00:15:24Z",
+      "side": 1,
+      "message": "Store the |module_script| here which will be used as result of the algorithm when success.\nAlso, this ensures that the |module_script| is TraceWrappers()ed via ModuleTreeLinker.",
+      "revId": "a1b4280f690a5a7bd51e4d8107ce7a9758dde844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4390e826_f16f8d2e",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-19T00:15:24Z",
+      "side": 1,
+      "message": "Fix or remove?",
+      "range": {
+        "startLine": 443,
+        "startChar": 31,
+        "endLine": 443,
+        "endChar": 32
+      },
+      "revId": "a1b4280f690a5a7bd51e4d8107ce7a9758dde844",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
