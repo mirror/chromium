@@ -1,0 +1,20 @@
+<!--
+@WAIT-FOR:oranges
+@BLINK-DENY:descriptionFrom*
+-->
+<!DOCTYPE html>
+<html>
+<body>
+  <div role="main" aria-describedby="title">
+    <p id="title" aria-hidden="true">apples</p>
+  </div>
+</div>
+
+<script>
+  setTimeout(() => {
+    const label = document.getElementById('title');
+    label.innerHTML = 'oranges';
+  }, 1000);
+</script>
+</body>
+</html>

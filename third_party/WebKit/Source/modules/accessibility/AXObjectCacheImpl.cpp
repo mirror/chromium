@@ -434,8 +434,7 @@ AXObject* AXObjectCacheImpl::GetOrCreate(Node* node) {
   new_obj->Init();
   new_obj->SetLastKnownIsIgnoredValue(new_obj->AccessibilityIsIgnored());
 
-  if (node->IsElementNode())
-    relation_cache_->UpdateTreeIfElementIdIsAriaOwned(ToElement(node));
+  relation_cache_->UpdateRelatedContent(node);
 
   return new_obj;
 }
@@ -644,6 +643,40 @@ void AXObjectCacheImpl::SelectionChanged(Node* node) {
     nearestAncestor->SelectionChanged();
 }
 
+void AXObjectCacheImpl::RelationChanged(Element* element,
+                                        const QualifiedName& attr_name) {
+  // TODO initial value must call here.
+  // TODO what about AOM prop and changes to it?
+  // TODO for labelled by we really want to check 3 things.
+
+  AXObject* obj = GetOrCreate(element);
+  if (!obj)
+    return;
+
+  AOMRelationListProperty prop;
+  QualifiedName& use_attr_name = const_cast<QualifiedName&>(attr_name);
+  if (attr_name == aria_labeledbyAttr || attr_name == aria_labelledbyAttr) {
+    use_attr_name = element->FastHasAttribute(aria_labeledbyAttr)
+                        ? aria_labeledbyAttr
+                        : aria_labelledbyAttr;
+    prop = AOMRelationListProperty::kLabeledBy;
+  } else if (attr_name == aria_describedbyAttr) {
+    prop = AOMRelationListProperty::kDescribedBy;
+  } else if (attr_name == aria_ownsAttr) {
+    prop = AOMRelationListProperty::kOwns;
+  } else {
+    NOTREACHED();
+    return;
+  }
+
+  // Check AOM property first.
+  HeapVector<Member<Element>> related_elements;
+  if (!obj->HasAOMProperty(prop, related_elements))
+    obj->ElementsFromAttribute(related_elements, use_attr_name);
+
+  relation_cache_->UpdateReverseRelationMap(element, related_elements);
+}
+
 void AXObjectCacheImpl::TextChanged(Node* node) {
   TextChanged(Get(node));
 }
@@ -657,6 +690,8 @@ void AXObjectCacheImpl::TextChanged(AXObject* obj) {
     return;
 
   obj->TextChanged();
+  relation_cache_->UpdateRelatedContent(obj->GetNode());
+
   PostNotification(obj, AXObjectCacheImpl::kAXTextChanged);
 }
 
@@ -665,8 +700,7 @@ void AXObjectCacheImpl::UpdateCacheAfterNodeIsAttached(Node* node) {
   // we need an AXLayoutObject, because it was reparented to a location outside
   // of a canvas.
   Get(node);
-  if (node->IsElementNode())
-    relation_cache_->UpdateTreeIfElementIdIsAriaOwned(ToElement(node));
+  relation_cache_->UpdateRelatedContent(node);
 }
 
 void AXObjectCacheImpl::ChildrenChanged(Node* node) {
@@ -681,11 +715,19 @@ void AXObjectCacheImpl::ChildrenChanged(AccessibleNode* accessible_node) {
   ChildrenChanged(Get(accessible_node));
 }
 
-void AXObjectCacheImpl::ChildrenChanged(AXObject* obj) {
+void AXObjectCacheImpl::ChildrenChanged(AXObject* obj, bool do_update_related) {
   if (!obj)
     return;
 
   obj->ChildrenChanged();
+  if (do_update_related) {
+    Node* node = obj->GetNode();
+    if (node) {
+      relation_cache_->UpdateRelatedContent(node);
+      if (isHTMLLabelElement(*node))
+        LabelChanged(ToElement(node));
+    }
+  }
 }
 
 void AXObjectCacheImpl::NotificationPostTimerFired(TimerBase*) {
@@ -864,11 +906,13 @@ void AXObjectCacheImpl::HandleAttributeChanged(const QualifiedName& attr_name,
     TextChanged(element);
   else if (attr_name == forAttr && isHTMLLabelElement(*element))
     LabelChanged(element);
-  else if (attr_name == idAttr)
-    relation_cache_->UpdateTreeIfElementIdIsAriaOwned(element);
 
   if (!attr_name.LocalName().StartsWith("aria-"))
     return;
+
+  if (attr_name == aria_labeledbyAttr || attr_name == aria_labelledbyAttr ||
+      attr_name == aria_describedbyAttr || attr_name == aria_ownsAttr)
+    RelationChanged(element, attr_name);
 
   if (attr_name == aria_activedescendantAttr)
     HandleActiveDescendantChanged(element);
@@ -894,7 +938,11 @@ void AXObjectCacheImpl::HandleAttributeChanged(const QualifiedName& attr_name,
 }
 
 void AXObjectCacheImpl::LabelChanged(Element* element) {
-  TextChanged(toHTMLLabelElement(element)->control());
+  Element* control = toHTMLLabelElement(element)->control();
+  if (control) {
+    ChildrenChanged(Get(control), false);
+    TextChanged(control);
+  }
 }
 
 void AXObjectCacheImpl::InlineTextBoxesUpdated(

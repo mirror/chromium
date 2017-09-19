@@ -67,6 +67,7 @@ class MODULES_EXPORT AXObjectCacheImpl
   void Dispose() override;
 
   void SelectionChanged(Node*) override;
+  void RelationChanged(Element*, const QualifiedName& attr_name);
   void ChildrenChanged(Node*) override;
   void ChildrenChanged(LayoutObject*) override;
   void ChildrenChanged(AccessibleNode*) override;
@@ -149,7 +150,7 @@ class MODULES_EXPORT AXObjectCacheImpl
 
   void Remove(AXID);
 
-  void ChildrenChanged(AXObject*);
+  void ChildrenChanged(AXObject*, bool do_update_related = true);
 
   void HandleActiveDescendantChanged(Node*);
   void HandleAriaRoleChanged(Node*);

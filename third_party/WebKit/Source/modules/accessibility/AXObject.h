@@ -835,6 +835,8 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   static const AtomicString& InternalRoleName(AccessibilityRole);
   static void AccessibleNodeListToElementVector(const AccessibleNodeList&,
                                                 HeapVector<Member<Element>>&);
+  void ElementsFromAttribute(HeapVector<Member<Element>>& elements,
+                             const QualifiedName&) const;
 
  protected:
   AXID id_;
@@ -864,8 +866,6 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
                           HeapVector<Member<Element>>& elements,
                           AXRelatedObjectVector* related_objects) const;
   void TokenVectorFromAttribute(Vector<String>&, const QualifiedName&) const;
-  void ElementsFromAttribute(HeapVector<Member<Element>>& elements,
-                             const QualifiedName&) const;
   void AriaLabelledbyElementVector(HeapVector<Member<Element>>& elements) const;
   String TextFromAriaLabelledby(AXObjectSet& visited,
                                 AXRelatedObjectVector* related_objects) const;
