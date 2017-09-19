@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64ab43be_f6d999ac",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-19T20:57:01Z",
+      "side": 1,
+      "message": "As this isn\u0027t needed if you early out, move it after the early out.",
+      "range": {
+        "startLine": 902,
+        "startChar": 2,
+        "endLine": 902,
+        "endChar": 29
+      },
+      "revId": "3b638d53592196e59c656a0eda917f2d8b4df8b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
