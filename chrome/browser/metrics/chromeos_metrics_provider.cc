@@ -86,7 +86,7 @@ void IncrementPrefValue(const char* path) {
 
 // Called on a background thread to load hardware class information.
 std::string GetHardwareClassOnBackgroundThread() {
-  base::ThreadRestrictions::AssertWaitAllowed();
+  base::AssertBaseSyncPrimitivesAllowed();
   std::string hardware_class;
   chromeos::system::StatisticsProvider::GetInstance()->GetMachineStatistic(
       "hardware_class", &hardware_class);

@@ -28,7 +28,7 @@ void ConditionVariable::Wait() {
 }
 
 void ConditionVariable::TimedWait(const TimeDelta& max_time) {
-  base::ThreadRestrictions::AssertWaitAllowed();
+  base::AssertBaseSyncPrimitivesAllowed();
   ScopedBlockingCall scoped_blocking_call(BlockingType::MAY_BLOCK);
   DWORD timeout = static_cast<DWORD>(max_time.InMilliseconds());
 
