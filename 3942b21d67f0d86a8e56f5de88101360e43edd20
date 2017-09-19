@@ -16,6 +16,24 @@
       "revId": "3942b21d67f0d86a8e56f5de88101360e43edd20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7102222b_72649002",
+        "filename": "chrome/browser/resources/settings/clear_browsing_data_dialog/clear_browsing_data_dialog_tabs.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1183839
+      },
+      "writtenOn": "2017-09-19T13:05:44Z",
+      "side": 1,
+      "message": "The variable is used in settings-checkbox.html to increase the distance between two checkboxes. I choose this approach (\u0027+\u0027 selector and margin-top) because I wanted to keep the first checkbox in basic and advanced aligned.",
+      "parentUuid": "3f036771_e3c20ad7",
+      "revId": "3942b21d67f0d86a8e56f5de88101360e43edd20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
