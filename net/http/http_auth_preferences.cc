@@ -23,6 +23,7 @@ HttpAuthPreferences::HttpAuthPreferences(
     : auth_schemes_(auth_schemes.begin(), auth_schemes.end()),
       negotiate_disable_cname_lookup_(false),
       negotiate_enable_port_(false),
+      enable_ntlm_v2_(false),
 #if defined(OS_POSIX) && !defined(OS_ANDROID)
       gssapi_library_name_(gssapi_library_name),
 #endif
@@ -44,6 +45,10 @@ bool HttpAuthPreferences::NegotiateDisableCnameLookup() const {
 
 bool HttpAuthPreferences::NegotiateEnablePort() const {
   return negotiate_enable_port_;
+}
+
+bool HttpAuthPreferences::EnableNtlmV2() const {
+  return enable_ntlm_v2_;
 }
 
 #if defined(OS_ANDROID)

@@ -8,6 +8,7 @@
 #include "base/time/time.h"
 #include "net/base/net_errors.h"
 #include "net/base/network_interfaces.h"
+#include "net/http/http_auth_preferences.h"
 
 namespace net {
 
@@ -35,8 +36,11 @@ HttpAuthHandlerNTLM::GenerateRandomProc
 HttpAuthHandlerNTLM::HostNameProc HttpAuthHandlerNTLM::get_host_name_proc_ =
     GetHostName;
 
-HttpAuthHandlerNTLM::HttpAuthHandlerNTLM()
-    : ntlm_client_(ntlm::NtlmFeatures(false)) {}
+HttpAuthHandlerNTLM::HttpAuthHandlerNTLM(
+    const HttpAuthPreferences* http_auth_preferences)
+    : ntlm_client_(ntlm::NtlmFeatures(
+          http_auth_preferences ? http_auth_preferences->EnableNtlmV2()
+                                : false)) {}
 
 bool HttpAuthHandlerNTLM::NeedsIdentity() {
   // This gets called for each round-trip.  Only require identity on
@@ -99,6 +103,12 @@ ntlm::Buffer HttpAuthHandlerNTLM::GetNextToken(const ntlm::Buffer& in_token) {
     generate_random_proc_(client_challenge, 8);
     uint64_t client_time = get_ms_time_proc_();
 
+    LOG(ERROR) << "***** HttpAuthHandlerNTLM::GetNextToken cb="
+               << channel_bindings_;
+    LOG(ERROR) << "***** HttpAuthHandlerNTLM::GetNextToken origin=" << origin_;
+    LOG(ERROR) << "***** HttpAuthHandlerNTLM::GetNextToken spn="
+               << CreateSPN(origin_);
+
     return ntlm_client_.GenerateAuthenticateMessage(
         domain_, credentials_.username(), credentials_.password(), hostname,
         channel_bindings_, CreateSPN(origin_), client_time, client_challenge,
@@ -121,7 +131,8 @@ int HttpAuthHandlerNTLM::Factory::CreateAuthHandler(
   //                 method and only constructing when valid.
   // NOTE: Default credentials are not supported for the portable implementation
   // of NTLM.
-  std::unique_ptr<HttpAuthHandler> tmp_handler(new HttpAuthHandlerNTLM);
+  std::unique_ptr<HttpAuthHandler> tmp_handler(
+      new HttpAuthHandlerNTLM(http_auth_preferences()));
   if (!tmp_handler->InitFromChallenge(challenge, target, ssl_info, origin,
                                       net_log))
     return ERR_INVALID_RESPONSE;

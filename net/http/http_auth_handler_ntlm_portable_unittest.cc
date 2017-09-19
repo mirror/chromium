@@ -40,7 +40,8 @@ class HttpAuthHandlerNtlmPortableTest : public PlatformTest {
   }
 
   int CreateHandler() {
-    GURL gurl("https://foo.com");
+    GURL gurl("https://server");
+    // TODO (zentaro): How to populate this with something real?
     SSLInfo null_ssl_info;
 
     return factory_->CreateAuthHandlerFromString(
@@ -134,6 +135,10 @@ class HttpAuthHandlerNtlmPortableTest : public PlatformTest {
 
   HttpAuthHandlerNTLM* GetAuthHandler() {
     return static_cast<HttpAuthHandlerNTLM*>(auth_handler_.get());
+  }
+
+  HttpAuthPreferences* GetAuthPreferences() {
+    return http_auth_preferences_.get();
   }
 
   static void MockRandom(uint8_t* output, size_t n) {
@@ -230,6 +235,32 @@ TEST_F(HttpAuthHandlerNtlmPortableTest, NtlmV1AuthenticationSuccess) {
             decoded.size());
   ASSERT_EQ(0, memcmp(decoded.data(),
                       ntlm::test::kExpectedAuthenticateMsgSpecResponseV1,
+                      decoded.size()));
+}
+
+TEST_F(HttpAuthHandlerNtlmPortableTest, NtlmV2AuthenticationSuccess) {
+  HttpAuthHandlerNTLM::ScopedProcSetter proc_setter(MockGetMSTime, MockRandom,
+                                                    MockGetHostName);
+  GetAuthPreferences()->set_enable_ntlm_v2(true);
+  ASSERT_EQ(OK, CreateHandler());
+  ASSERT_EQ(OK, GetGenerateAuthTokenResult());
+
+  std::string token;
+  ASSERT_EQ(HttpAuth::AUTHORIZATION_RESULT_ACCEPT,
+            HandleAnotherChallenge(CreateNtlmAuthHeader(
+                ntlm::test::kChallengeMsgFromSpecV2,
+                arraysize(ntlm::test::kChallengeMsgFromSpecV2))));
+  ASSERT_EQ(OK, GenerateAuthToken(&token));
+
+  // Validate the authenticate message
+  std::string decoded;
+  ASSERT_TRUE(DecodeChallenge(token, &decoded));
+  CompareBuf(ntlm::test::kExpectedAuthenticateMsgSpecResponseV2,
+             reinterpret_cast<const uint8_t*>(decoded.data()), decoded.size());
+  ASSERT_EQ(arraysize(ntlm::test::kExpectedAuthenticateMsgSpecResponseV2),
+            decoded.size());
+  ASSERT_EQ(0, memcmp(decoded.data(),
+                      ntlm::test::kExpectedAuthenticateMsgSpecResponseV2,
                       decoded.size()));
 }
 
