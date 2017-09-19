@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "31ecbeec_242fbf1f",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1235784
+      },
+      "writtenOn": "2017-09-19T00:39:11Z",
+      "side": 1,
+      "message": "Actually, the lifetime of this can\u0027t be tied to the login screen because the whole point of this is to postpone widget destruction until after the window is hidden/committed",
+      "parentUuid": "9e580c8e_9b704366",
+      "revId": "7b586124be82cb2378c13f461540fd500f7c7657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aeff3982_e6794303",
         "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
         "patchSetId": 1
