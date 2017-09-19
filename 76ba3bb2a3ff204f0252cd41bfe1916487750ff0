@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "095893b7_33dd7e58",
+        "filename": "components/autofill/content/renderer/html_username_detection_classifier.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "\u003e \u003e \u003e Done\n\u003e \u003e \n\u003e \u003e What does \"Done\" mean here? \n\u003e \u003e \n\u003e \u003e do we also consider placeholder and aria-label or not?\n\u003e \u003e \n\u003e \u003e Please explain your decisions.\n\u003e \n\u003e We do consider placeholder, but not aria-label (yet). I will make analysis to see if aria-label is also useful, even though I doubt that it brings extra-information (i.e. which is not included in normal label).\n\nI did the following: for my data set (data for training and testing the detector), I selected the sites for which the HTML detector currently fails, and checked for aria-label. None of them had aria-label attribute. So, I assume that we can skip including aria-label for now, because:\n\n1) only few sites have aria-label (I unfortunately cannot give numbers here, because when I collected data with the extension, I had the following:\n\nvar placeholder \u003d GetAttr(element, \"placeholder\");\n    if (placeholder \u003d\u003d\u003d \"\") {\n      var placeholder \u003d GetAttr(element, \"aria-label\");\n    }\n\nSo, I only collected aria-label for the sites that did not have placeholder.\n\n2) we are already analyzing lots of attributes. At first, we thought about analyzing only field name and id, but now, we also take into account the inferred label (which, as I said, takes into account label, placeholder and surrounding DOM elements). I believe that we shouldn\u0027t add too many elements to be analyzed.\n\nMaybe it would be good as a future improvement, but I don\u0027t think it\u0027s vital for now.\n\nI also left some related comments in the beginning of the classifier source code file.",
+      "parentUuid": "af83832d_bf347bf7",
+      "range": {
+        "startLine": 16,
+        "startChar": 13,
+        "endLine": 16,
+        "endChar": 69
+      },
+      "revId": "76ba3bb2a3ff204f0252cd41bfe1916487750ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c2a4c4c_24f7e786",
         "filename": "components/autofill/content/renderer/html_username_detection_classifier.h",
         "patchSetId": 5

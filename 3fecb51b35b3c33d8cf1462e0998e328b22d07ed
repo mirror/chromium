@@ -22,6 +22,30 @@
       "revId": "3fecb51b35b3c33d8cf1462e0998e328b22d07ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "018d46e8_bef5057e",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "\u003e Please follow the guide https://google.github.io/styleguide/cppguide.html#Constant_Names\n\nDone.",
+      "parentUuid": "f3d7e339_9a1a3986",
+      "range": {
+        "startLine": 58,
+        "startChar": 18,
+        "endLine": 58,
+        "endChar": 32
+      },
+      "revId": "3fecb51b35b3c33d8cf1462e0998e328b22d07ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

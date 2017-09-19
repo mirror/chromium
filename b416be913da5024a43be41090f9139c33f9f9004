@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e4d7867a_c3b8fee8",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "\u003e space\n\nDone.",
+      "parentUuid": "9d5b9aa0_46776892",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 18
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6ddc4fa_fd743cf0",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 12
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-18T11:36:37Z",
       "side": 1,
       "message": "USER vs DEVELOPER? \n\nwhat users see vs what developers see",
+      "range": {
+        "startLine": 26,
+        "startChar": 21,
+        "endLine": 26,
+        "endChar": 44
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d304f83_0773b2c1",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "\u003e USER vs DEVELOPER? \n\u003e \n\u003e what users see vs what developers see\n\nDone.",
+      "parentUuid": "e6ddc4fa_fd743cf0",
       "range": {
         "startLine": 26,
         "startChar": 21,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "efcf94dc_8e8fec30",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "\u003e To me, it looks like a promise to support all these languages. But the support may be imperfect or even weird at closer look. I would remove it.\n\u003e \n\u003e Martin: WDYT?\n\nDone.",
+      "parentUuid": "3714ec4c_537f6157",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b7cde8c_698dec81",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 12
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-18T11:36:37Z",
       "side": 1,
       "message": "it is not precise. It can, but then we will exclude this field.",
+      "range": {
+        "startLine": 53,
+        "startChar": 3,
+        "endLine": 53,
+        "endChar": 51
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9134d67_4b0b2cfd",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "\u003e it is not precise. It can, but then we will exclude this field.\n\nDone.",
+      "parentUuid": "4b7cde8c_698dec81",
       "range": {
         "startLine": 53,
         "startChar": 3,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4b5a8fe6_12a5ceab",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "\u003e did you translate only \"password\"? not family name, first name?\n\nYes, I only translated password, because it is the only word that is relevant when being translated. The others might ruin results, because they have translations that might not be trustworthy. \n\nI tried to translate first name, family name, last name, middle name etc, and in some languages it translated just like \"name\". We don\u0027t want this.\n\nOn the other hand, password cannot be wrongly translated (it is not a composed noun) and also has the highest probability of being a negative word.",
+      "parentUuid": "d3d95efc_c45214cd",
+      "range": {
+        "startLine": 72,
+        "startChar": 18,
+        "endLine": 72,
+        "endChar": 34
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a658c2f4_3ae84c6d",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 12
@@ -128,6 +248,30 @@
       "writtenOn": "2017-09-18T11:36:37Z",
       "side": 1,
       "message": "I would prefer NonLatin. IMO, \"Foreign\" is a bit strange name.",
+      "range": {
+        "startLine": 133,
+        "startChar": 26,
+        "endLine": 133,
+        "endChar": 33
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278458b7_f3ce59a5",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "\u003e I would prefer NonLatin. IMO, \"Foreign\" is a bit strange name.\n\nDone.",
+      "parentUuid": "a658c2f4_3ae84c6d",
       "range": {
         "startLine": 133,
         "startChar": 26,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "be3eda92_6c0c94ae",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "524388f6_96f541ae",
+      "range": {
+        "startLine": 158,
+        "startChar": 39,
+        "endLine": 158,
+        "endChar": 56
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77e7caef_6e375231",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 12
@@ -174,6 +342,30 @@
       "writtenOn": "2017-09-18T11:36:37Z",
       "side": 1,
       "message": "newtel and newmobile look suspicious.",
+      "range": {
+        "startLine": 267,
+        "startChar": 20,
+        "endLine": 267,
+        "endChar": 26
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38e387aa_3ffcdbbb",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "\u003e newtel and newmobile look suspicious.\n\nI don\u0027t think there are lots of cases where they would help, but, on the other hand, they don\u0027t do bad either. So, my opinion would be to leave them here.",
+      "parentUuid": "77e7caef_6e375231",
       "range": {
         "startLine": 267,
         "startChar": 20,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "ba1aa658_539b32aa",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "\u003e Do we search for \"@\"? Is it a signal?\n\nYes. It might indicate email, if we have a field label like \"abc@example.com\". In my research, I only found one case where this happened. As previously, it doesn\u0027t have a big impact, but it also doesn\u0027t do bad.",
+      "parentUuid": "6b5638ff_6580c49d",
+      "range": {
+        "startLine": 282,
+        "startChar": 58,
+        "endLine": 282,
+        "endChar": 59
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd7ed857_c5343c40",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 12
@@ -220,6 +436,30 @@
       "writtenOn": "2017-09-15T11:20:31Z",
       "side": 1,
       "message": "we can check only name. See https://cs.chromium.org/chromium/src/components/autofill/content/renderer/form_autofill_util.cc?rcl\u003d33d75239787b24f3f2b6bdcd60b0ab5e0746681a\u0026l\u003d1373",
+      "range": {
+        "startLine": 342,
+        "startChar": 12,
+        "endLine": 342,
+        "endChar": 67
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33766f0a_f29825af",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "\u003e we can check only name. See https://cs.chromium.org/chromium/src/components/autofill/content/renderer/form_autofill_util.cc?rcl\u003d33d75239787b24f3f2b6bdcd60b0ab5e0746681a\u0026l\u003d1373\n\nI modified. Thank you.",
+      "parentUuid": "bd7ed857_c5343c40",
       "range": {
         "startLine": 342,
         "startChar": 12,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "a9978024_2c2d1c87",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "\u003e I dislike that we duplicate the logic from GetPasswordForm. Let\u0027s finish this CL https://chromium-review.googlesource.com/c/chromium/src/+/667114. Use |all_possible_usernames| as an input for GetUsernameFieldBasedOnHtmlAttributes.\n\nDone.",
+      "parentUuid": "9a343611_f8e8d4c5",
+      "range": {
+        "startLine": 347,
+        "startChar": 10,
+        "endLine": 351,
+        "endChar": 62
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "424a085f_7aec3a23",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 12
@@ -266,6 +530,30 @@
       "writtenOn": "2017-09-15T11:20:31Z",
       "side": 1,
       "message": "we prefer TODO(crbug.com/XXXXX). Resolve TODOs (if it is high priority and not very big effort) or file a bug that blocks crbug.com/699530",
+      "range": {
+        "startLine": 360,
+        "startChar": 15,
+        "endLine": 360,
+        "endChar": 32
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a13cd2f_1fb5f90e",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "\u003e we prefer TODO(crbug.com/XXXXX). Resolve TODOs (if it is high priority and not very big effort) or file a bug that blocks crbug.com/699530\n\nUnderstood. This time, I solved them, but I\u0027ll keep info in mind for next times :).",
+      "parentUuid": "424a085f_7aec3a23",
       "range": {
         "startLine": 360,
         "startChar": 15,
@@ -301,6 +589,30 @@
     },
     {
       "key": {
+        "uuid": "71e9e614_bc7c692e",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "\u003e why do we need that? Let\u0027s concatenate name and id and search for special words within it.\n\n|name_group| means exactly this: concatenation of name and id.\nBut we also need |label_group|, because we want to exclude negative words from both groups.\n\nWe exclude:\n- latin words from both label and name group\n- words with foreign characters only from label group (because non-ASCII characters do not appear in name+id).",
+      "parentUuid": "cf92494e_ae2877c6",
+      "range": {
+        "startLine": 361,
+        "startChar": 0,
+        "endLine": 362,
+        "endChar": 65
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9bda903_d9b529c8",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 12
@@ -312,6 +624,30 @@
       "writtenOn": "2017-09-15T11:20:31Z",
       "side": 1,
       "message": "it should be static. We don\u0027t want to create it on every call.",
+      "range": {
+        "startLine": 476,
+        "startChar": 47,
+        "endLine": 476,
+        "endChar": 61
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4429e79_be67cfd3",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "\u003e it should be static. We don\u0027t want to create it on every call.\n\nDone. I also removed the size of the array, because it is anyways inferred from the immediate declaration of the elements.",
+      "parentUuid": "e9bda903_d9b529c8",
       "range": {
         "startLine": 476,
         "startChar": 47,
@@ -347,6 +683,30 @@
     },
     {
       "key": {
+        "uuid": "511730d5_49068ebd",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "\u003e don\u0027t forget to remove this when https://chromium-review.googlesource.com/c/chromium/src/+/667114 is landed.\n\nDone.",
+      "parentUuid": "2f25a2ed_49aedceb",
+      "range": {
+        "startLine": 538,
+        "startChar": 4,
+        "endLine": 542,
+        "endChar": 5
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b1357d8_c1e66fc8",
         "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
         "patchSetId": 12
@@ -358,6 +718,30 @@
       "writtenOn": "2017-09-15T13:55:04Z",
       "side": 1,
       "message": "I would move it to line 570 and append with \"... for username detection\".",
+      "range": {
+        "startLine": 545,
+        "startChar": 2,
+        "endLine": 545,
+        "endChar": 20
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ef4a6b_210cca09",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 545,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "\u003e I would move it to line 570 and append with \"... for username detection\".\n\nDone.",
+      "parentUuid": "7b1357d8_c1e66fc8",
       "range": {
         "startLine": 545,
         "startChar": 2,
@@ -390,6 +774,30 @@
       "revId": "b416be913da5024a43be41090f9139c33f9f9004",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b9dce1_ba6b0ac6",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d277e0ca_83b56ccd",
+      "range": {
+        "startLine": 577,
+        "startChar": 4,
+        "endLine": 577,
+        "endChar": 37
+      },
+      "revId": "b416be913da5024a43be41090f9139c33f9f9004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

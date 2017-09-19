@@ -472,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "22f55d13_7c9b44e9",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1242286
+      },
+      "writtenOn": "2017-09-19T00:57:23Z",
+      "side": 1,
+      "message": "\u003e \u003e you can do the following: \n\u003e \u003e bool username_found \u003d !username_element.IsNull();\n\u003e \u003e \n\u003e \u003e But I would prefer to ignore whether username_element.IsNull() within the method. Caller says \"get username field\" and gives a pointer for output. \n\u003e \u003e \n\u003e \u003e To me, the method should not care about the content of |username_element|.\n\u003e \u003e \n\u003e \u003e For the code reader who didn\u0027t go into this method, this logic would be a suprise. The logic should be on the caller side. \n\u003e \u003e \n\u003e \u003e I would add DCHECK(username_element), to check whether username_element is not null and to show expectations of this method.\n\u003e \n\u003e I now only call the method if username_element.IsNull(). Do I still need DCHECK(username_element)? I think that it\u0027s pretty obvious from the calling part that we only call this function when I haven\u0027t found |username_element| yet.\n\nI also added DCHECK.",
+      "parentUuid": "ccc23faf_a6d640b1",
+      "range": {
+        "startLine": 484,
+        "startChar": 2,
+        "endLine": 486,
+        "endChar": 27
+      },
+      "revId": "01b5ceddb0fe76423d67dc452d258779bf46a072",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cfc5e6c_078a7853",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 9
