@@ -16,6 +16,24 @@
       "revId": "119ea789db9b53b594773f102dff2543cf429d88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a1ffbd_4ddbd4c8",
+        "filename": "components/payments/content/service_worker_payment_instrument.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-09-19T16:10:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17af0bd8_6b443a95",
+      "revId": "119ea789db9b53b594773f102dff2543cf429d88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
