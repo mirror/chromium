@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "360d0b13_f61e35a9",
+        "filename": "chrome/browser/extensions/api/messaging/native_message_host_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-19T18:45:38Z",
+      "side": 1,
+      "message": "Style guide says statics like this should only be POD. Maybe leaky instance?",
+      "range": {
+        "startLine": 120,
+        "startChar": 2,
+        "endLine": 120,
+        "endChar": 49
+      },
+      "revId": "5d6624ec8ae5820e765b08d92e5c81e895717a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
