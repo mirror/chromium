@@ -76,13 +76,6 @@ void TestHostClient::ClearMutatedProperties() {
     kv.second->ClearMutatedProperties();
 }
 
-bool TestHostClient::IsElementInList(ElementId element_id,
-                                     ElementListType list_type) const {
-  return list_type == ElementListType::ACTIVE
-             ? layers_in_active_tree_.count(element_id)
-             : layers_in_pending_tree_.count(element_id);
-}
-
 void TestHostClient::SetMutatorsNeedCommit() {
   mutators_need_commit_ = true;
 }

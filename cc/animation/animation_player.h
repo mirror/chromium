@@ -158,6 +158,9 @@ class CC_ANIMATION_EXPORT AnimationPlayer
 
   void SetNeedsCommit();
 
+  bool HasActiveAnimations() const;
+  bool HasPendingAnimations() const;
+
  private:
   friend class base::RefCounted<AnimationPlayer>;
 
