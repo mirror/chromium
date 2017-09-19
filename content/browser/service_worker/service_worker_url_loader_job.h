@@ -26,6 +26,8 @@ struct RedirectInfo;
 
 namespace storage {
 class BlobStorageContext;
+class BlobDataHandle;
+class BlobStorageContext;
 }
 
 namespace content {
@@ -114,6 +116,10 @@ class CONTENT_EXPORT ServiceWorkerURLLoaderJob : public mojom::URLLoader,
                      mojom::URLLoaderClientPtr client);
   void AfterRead(scoped_refptr<net::IOBuffer> buffer, int bytes);
 
+  // Create request body.
+  void CreateRequestBodyBlob();
+  bool HasRequestBody();
+
   // Calls url_loader_client_->OnReceiveResopnse() with |response_head_|.
   void CommitResponseHeaders();
   // Calls url_loader_client_->OnComplete(). Expected to be called after
@@ -156,6 +162,9 @@ class CONTENT_EXPORT ServiceWorkerURLLoaderJob : public mojom::URLLoader,
   base::WeakPtr<storage::BlobStorageContext> blob_storage_context_;
   std::unique_ptr<ServiceWorkerFetchDispatcher> fetch_dispatcher_;
   std::unique_ptr<StreamWaiter> stream_waiter_;
+
+  std::unique_ptr<storage::BlobDataHandle> request_body_blob_data_handle_;
+  scoped_refptr<storage::BlobHandle> request_body_blob_handle_;
 
   bool did_navigation_preload_ = false;
   ResourceResponseHead response_head_;

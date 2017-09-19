@@ -17,8 +17,7 @@ std::unique_ptr<ServiceWorkerFetchRequest>
 ServiceWorkerLoaderHelpers::CreateFetchRequest(const ResourceRequest& request) {
   std::string blob_uuid;
   uint64_t blob_size = 0;
-  // TODO(kinuko): Implement request.request_body handling.
-  DCHECK(!request.request_body);
+
   std::unique_ptr<ServiceWorkerFetchRequest> new_request =
       base::MakeUnique<ServiceWorkerFetchRequest>();
   new_request->mode = request.fetch_request_mode;
