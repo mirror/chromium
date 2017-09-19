@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98c4aa95_91c8fb80",
+        "filename": "tools/perf/generate_system_health_csv_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2017-09-19T18:43:20Z",
+      "side": 1,
+      "message": "could we hard code all_expects here? Like we did for expected_result? That way if someone changes SystemHealthDesktopCommonExpectations, they won\u0027t have to change this test case\n\nAlso it looks like there are tabs here instead of spaces, thus the red \u003e\u003e",
+      "revId": "5b93666aaf288a5721bba1d559136c9375303d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cb7e047_f8a44ef0",
+        "filename": "tools/perf/generate_system_health_csv_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2017-09-19T18:43:20Z",
+      "side": 1,
+      "message": "We don\u0027t need this; we can run the tests with tools/perf/run_tests generate_system_health_csv_unittest",
+      "revId": "5b93666aaf288a5721bba1d559136c9375303d20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
