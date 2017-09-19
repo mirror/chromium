@@ -4,6 +4,8 @@
 
 #include "ash/wm/splitview/split_view_divider.h"
 
+#include <cmath>
+
 #include "ash/ash_constants.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/shell.h"
@@ -206,14 +208,13 @@ gfx::Rect SplitViewDivider::GetDividerBoundsInScreen(bool is_dragging) {
   const int divider_position = controller_->divider_position();
   const gfx::Size divider_size = GetDividerSize(
       controller_->GetDisplayWorkAreaBoundsInScreen(root_window), is_dragging);
-  return is_dragging
-             ? gfx::Rect(divider_position - (kDividerEnlargedShortSideLength -
-                                             kDividerShortSideLength) /
-                                                2,
-                         work_area_bounds_in_screen.y(), divider_size.width(),
-                         divider_size.height())
-             : gfx::Rect(divider_position, work_area_bounds_in_screen.y(),
-                         divider_size.width(), divider_size.height());
+  return gfx::Rect(
+      gfx::Point(divider_position -
+                     std::floor((is_dragging ? kDividerEnlargedShortSideLength
+                                             : kDividerShortSideLength) /
+                                2.f),
+                 work_area_bounds_in_screen.y()),
+      divider_size);
 }
 
 void SplitViewDivider::AddObservedWindow(aura::Window* window) {
