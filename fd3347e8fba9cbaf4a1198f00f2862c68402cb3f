@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bed7f9e_ee166f43",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T01:47:35Z",
+      "side": 1,
+      "message": "Nit: DISALLOW_COPY_AND_ASSIGN on these?",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09be3b84_1219e92d",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T01:47:35Z",
+      "side": 1,
+      "message": "Why a hash map?  Can we just use a std::map?",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d98b7f5_42ddb60b",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T01:47:35Z",
+      "side": 1,
+      "message": "Nit: Maybe drop \"fake\" from both struct and var names?",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "563fc715_6c9bf659",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T01:47:35Z",
+      "side": 1,
+      "message": "Nit: Can this be constexpr?  Or is std::string() not constexpr?",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40cec8ea_259f8565",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T01:47:35Z",
+      "side": 1,
+      "message": "Nit: |fake_responses|?",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e44b94_a0dc9b46",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T01:47:35Z",
+      "side": 1,
+      "message": "Nit: We typically use std::string() in place of \"\" to init empty strings",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0e6c680_cd912399",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T01:47:35Z",
+      "side": 1,
+      "message": "Nit: Might want to consider range-based for or at least using a ref \"case \u003d cases[i]\" below.  Dunno whether the SCOPED_TRACE helps much, maybe a SCOPED_TRACE of more of the details of the case, if one is needed at all?",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b30b8e0a_fde036aa",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T01:47:35Z",
+      "side": 1,
+      "message": "TBH, you shouldn\u0027t even need the cast; since the target is an enum rather than an enum class, it should silently coerce.",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adbef74a_7e97b34a",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T01:47:35Z",
+      "side": 1,
+      "message": "Your CL here (coupled with another one recently) makes me wonder if we should change this lifetime model to expect people to clean up their own observers.  Maybe it would be clearer.",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d0063a5_bc181c46",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T01:47:35Z",
+      "side": 1,
+      "message": "Nit: Prefer \u003d to () for unique_ptrs; see https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Variable-initialization",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
