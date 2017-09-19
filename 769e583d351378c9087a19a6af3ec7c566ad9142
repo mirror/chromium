@@ -16,6 +16,24 @@
       "revId": "769e583d351378c9087a19a6af3ec7c566ad9142",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed653247_bf1b59b8",
+        "filename": "chrome/browser/resources/md_extensions/shortcut_input.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-09-19T19:16:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "822c8a33_4d69f7c9",
+      "revId": "769e583d351378c9087a19a6af3ec7c566ad9142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
