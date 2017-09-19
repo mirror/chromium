@@ -70,15 +70,24 @@ body.hide-fakebox-logo #fakebox {
   display: none;
 }
 
-#logo-default {
-  background-image: url(../../../../ui/webui/resources/images/google_logo.svg);
+#logo-default,
+#logo-doodle {
   background-repeat: no-repeat;
   bottom: 0;
-  height: 92px;
-  left: calc(50% - 272px/2);
   position: absolute;
   transition: opacity 130ms;
+}
+
+#logo-default {
+  background-image: url(../../../../ui/webui/resources/images/google_logo.svg);
+  height: 92px;
+  left: calc(50% - 272px/2);
   width: 272px;
+}
+
+#logo-doodle {
+  display: block;
+  opacity: 0;
 }
 
 body.alternate-logo #logo-default {
