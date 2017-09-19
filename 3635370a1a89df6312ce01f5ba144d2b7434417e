@@ -94,6 +94,30 @@
       "revId": "3635370a1a89df6312ce01f5ba144d2b7434417e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a7b8af5_43720716",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-19T23:29:36Z",
+      "side": 1,
+      "message": "I\u0027m confused as to how a flash would be visible if the sheet is already closed. If there is a flash in the toolbar during that process, that\u0027s definitely a bug.",
+      "parentUuid": "c2498fcd_be94aa1b",
+      "range": {
+        "startLine": 986,
+        "startChar": 8,
+        "endLine": 991,
+        "endChar": 9
+      },
+      "revId": "3635370a1a89df6312ce01f5ba144d2b7434417e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
