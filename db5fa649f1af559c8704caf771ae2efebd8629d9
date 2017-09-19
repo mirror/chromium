@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78e6c206_a51a968f",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T12:39:53Z",
+      "side": 0,
+      "message": "The difference is the bytes_read \u003e 0 check?",
+      "range": {
+        "startLine": 353,
+        "startChar": 64,
+        "endLine": 353,
+        "endChar": 65
+      },
+      "revId": "db5fa649f1af559c8704caf771ae2efebd8629d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
