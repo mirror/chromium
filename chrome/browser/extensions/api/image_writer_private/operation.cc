@@ -108,7 +108,7 @@ void Operation::Unzip(const base::Closure& continuation) {
 
   SetStage(image_writer_api::STAGE_UNZIP);
 
-  auto unzip_helper = make_scoped_refptr(new UnzipHelper(
+  auto unzip_helper = base::WrapRefCounted(new UnzipHelper(
       task_runner(), base::Bind(&Operation::OnUnzipOpenComplete, this),
       base::Bind(&Operation::CompleteAndContinue, this, continuation),
       base::Bind(&Operation::OnUnzipFailure, this),

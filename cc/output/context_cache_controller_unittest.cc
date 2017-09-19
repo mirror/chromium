@@ -26,7 +26,7 @@ class MockContextSupport : public TestContextSupport {
 
 TEST(ContextCacheControllerTest, ScopedVisibilityBasic) {
   StrictMock<MockContextSupport> context_support;
-  auto task_runner = make_scoped_refptr(new base::TestMockTimeTaskRunner);
+  auto task_runner = base::WrapRefCounted(new base::TestMockTimeTaskRunner);
   viz::ContextCacheController cache_controller(&context_support, task_runner);
 
   EXPECT_CALL(context_support, SetAggressivelyFreeResources(false));
@@ -40,7 +40,7 @@ TEST(ContextCacheControllerTest, ScopedVisibilityBasic) {
 
 TEST(ContextCacheControllerTest, ScopedVisibilityMulti) {
   StrictMock<MockContextSupport> context_support;
-  auto task_runner = make_scoped_refptr(new base::TestMockTimeTaskRunner);
+  auto task_runner = base::WrapRefCounted(new base::TestMockTimeTaskRunner);
   viz::ContextCacheController cache_controller(&context_support, task_runner);
 
   EXPECT_CALL(context_support, SetAggressivelyFreeResources(false));
@@ -55,7 +55,7 @@ TEST(ContextCacheControllerTest, ScopedVisibilityMulti) {
 
 TEST(ContextCacheControllerTest, ScopedBusyWhileVisible) {
   StrictMock<MockContextSupport> context_support;
-  auto task_runner = make_scoped_refptr(new base::TestMockTimeTaskRunner);
+  auto task_runner = base::WrapRefCounted(new base::TestMockTimeTaskRunner);
   viz::ContextCacheController cache_controller(&context_support, task_runner);
 
   EXPECT_CALL(context_support, SetAggressivelyFreeResources(false));
@@ -77,7 +77,7 @@ TEST(ContextCacheControllerTest, ScopedBusyWhileVisible) {
 
 TEST(ContextCacheControllerTest, ScopedBusyWhileNotVisible) {
   StrictMock<MockContextSupport> context_support;
-  auto task_runner = make_scoped_refptr(new base::TestMockTimeTaskRunner);
+  auto task_runner = base::WrapRefCounted(new base::TestMockTimeTaskRunner);
   viz::ContextCacheController cache_controller(&context_support, task_runner);
 
   auto busy = cache_controller.ClientBecameBusy();
@@ -89,7 +89,7 @@ TEST(ContextCacheControllerTest, ScopedBusyWhileNotVisible) {
 
 TEST(ContextCacheControllerTest, ScopedBusyMulitpleWhileVisible) {
   StrictMock<MockContextSupport> context_support;
-  auto task_runner = make_scoped_refptr(new base::TestMockTimeTaskRunner);
+  auto task_runner = base::WrapRefCounted(new base::TestMockTimeTaskRunner);
   viz::ContextCacheController cache_controller(&context_support, task_runner);
 
   EXPECT_CALL(context_support, SetAggressivelyFreeResources(false));

@@ -376,7 +376,7 @@ void PrepareFactory(sync_preferences::PrefServiceSyncableFactory* factory,
 
 #if BUILDFLAG(ENABLE_SUPERVISED_USERS)
   if (supervised_user_settings) {
-    scoped_refptr<PrefStore> supervised_user_prefs = make_scoped_refptr(
+    scoped_refptr<PrefStore> supervised_user_prefs = base::WrapRefCounted(
         new SupervisedUserPrefStore(supervised_user_settings));
     DCHECK(async || supervised_user_prefs->IsInitializationComplete());
     factory->set_supervised_user_prefs(supervised_user_prefs);
@@ -385,7 +385,7 @@ void PrepareFactory(sync_preferences::PrefServiceSyncableFactory* factory,
 
   factory->set_async(async);
   factory->set_extension_prefs(extension_prefs);
-  factory->set_command_line_prefs(make_scoped_refptr(
+  factory->set_command_line_prefs(base::WrapRefCounted(
       new ChromeCommandLinePrefStore(base::CommandLine::ForCurrentProcess())));
   factory->set_read_error_callback(base::Bind(&HandleReadError, pref_filename));
   factory->set_user_prefs(user_pref_store);

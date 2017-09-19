@@ -236,7 +236,7 @@ scoped_refptr<SSLPrivateKey> WrapCAPIPrivateKey(
     const X509Certificate* certificate,
     HCRYPTPROV prov,
     DWORD key_spec) {
-  return make_scoped_refptr(new ThreadedSSLPrivateKey(
+  return base::WrapRefCounted(new ThreadedSSLPrivateKey(
       std::make_unique<SSLPlatformKeyCAPI>(prov, key_spec),
       GetSSLPlatformKeyTaskRunner()));
 }
@@ -254,7 +254,7 @@ scoped_refptr<SSLPrivateKey> WrapCNGPrivateKey(
     return nullptr;
   }
 
-  return make_scoped_refptr(new ThreadedSSLPrivateKey(
+  return base::WrapRefCounted(new ThreadedSSLPrivateKey(
       std::make_unique<SSLPlatformKeyCNG>(key, key_type, max_length),
       GetSSLPlatformKeyTaskRunner()));
 }

@@ -30,8 +30,8 @@ class WebFrameSchedulerImplTest : public ::testing::Test {
   void SetUp() override {
     clock_.reset(new base::SimpleTestTickClock());
     clock_->Advance(base::TimeDelta::FromMicroseconds(5000));
-    mock_task_runner_ =
-        make_scoped_refptr(new cc::OrderedSimpleTaskRunner(clock_.get(), true));
+    mock_task_runner_ = base::WrapRefCounted(
+        new cc::OrderedSimpleTaskRunner(clock_.get(), true));
     delegate_ = SchedulerTqmDelegateForTest::Create(
         mock_task_runner_, base::WrapUnique(new TestTimeSource(clock_.get())));
     scheduler_.reset(new RendererSchedulerImpl(delegate_));

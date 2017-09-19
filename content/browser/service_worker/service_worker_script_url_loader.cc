@@ -352,7 +352,7 @@ void ServiceWorkerScriptURLLoader::WriteData(
       buffer.get(), bytes_written,
       base::Bind(&ServiceWorkerScriptURLLoader::OnWriteDataComplete,
                  weak_factory_.GetWeakPtr(), bytes_written,
-                 make_scoped_refptr(pending_buffer.get())));
+                 base::WrapRefCounted(pending_buffer.get())));
   if (error == net::ERR_IO_PENDING) {
     // OnWriteDataComplete() will be called asynchronously.
     return;

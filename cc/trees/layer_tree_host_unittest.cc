@@ -1685,9 +1685,9 @@ class LayerTreeHostTestSwitchMaskLayer : public LayerTreeHostTest {
   void SetupTree() override {
     scoped_refptr<Layer> root = Layer::Create();
     root->SetBounds(gfx::Size(10, 10));
-    child_layer_ = make_scoped_refptr(new UpdateCountingLayer);
+    child_layer_ = base::WrapRefCounted(new UpdateCountingLayer);
     child_layer_->SetBounds(gfx::Size(10, 10));
-    mask_layer_ = make_scoped_refptr(new UpdateCountingLayer);
+    mask_layer_ = base::WrapRefCounted(new UpdateCountingLayer);
     mask_layer_->SetBounds(gfx::Size(10, 10));
     child_layer_->SetMaskLayer(mask_layer_.get());
     root->AddChild(child_layer_);

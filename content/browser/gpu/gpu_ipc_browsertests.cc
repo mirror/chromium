@@ -38,7 +38,7 @@ scoped_refptr<ui::ContextProviderCommandBuffer> CreateContext(
   attributes.bind_generates_resource = false;
   constexpr bool automatic_flushes = false;
   constexpr bool support_locking = false;
-  return make_scoped_refptr(new ui::ContextProviderCommandBuffer(
+  return base::WrapRefCounted(new ui::ContextProviderCommandBuffer(
       std::move(gpu_channel_host), content::kGpuStreamIdDefault,
       content::kGpuStreamPriorityDefault, gpu::kNullSurfaceHandle, GURL(),
       automatic_flushes, support_locking, gpu::SharedMemoryLimits(), attributes,

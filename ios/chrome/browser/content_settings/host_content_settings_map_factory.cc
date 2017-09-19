@@ -42,7 +42,7 @@ HostContentSettingsMapFactory::BuildServiceInstanceFor(
     // browser state to ensure the preferences have been migrated.
     GetForBrowserState(browser_state->GetOriginalChromeBrowserState());
   }
-  return make_scoped_refptr(new HostContentSettingsMap(
+  return base::WrapRefCounted(new HostContentSettingsMap(
       browser_state->GetPrefs(), browser_state->IsOffTheRecord(),
       false /* guest_profile */, false /* store_last_modified */));
 }

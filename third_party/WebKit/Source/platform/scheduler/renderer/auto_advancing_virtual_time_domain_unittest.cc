@@ -28,7 +28,7 @@ class AutoAdvancingVirtualTimeDomainTest : public ::testing::Test {
     clock_->Advance(base::TimeDelta::FromMicroseconds(5000));
 
     test_time_source_.reset(new TestTimeSource(clock_.get()));
-    mock_task_runner_ = make_scoped_refptr(
+    mock_task_runner_ = base::WrapRefCounted(
         new cc::OrderedSimpleTaskRunner(clock_.get(), false));
     main_task_runner_ = SchedulerTqmDelegateForTest::Create(
         mock_task_runner_, base::MakeUnique<TestTimeSource>(clock_.get()));

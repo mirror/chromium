@@ -288,7 +288,7 @@ class RendererSchedulerImplTest : public ::testing::Test {
       main_task_runner_ = SchedulerTqmDelegateImpl::Create(
           message_loop_.get(), base::MakeUnique<TestTimeSource>(clock_.get()));
     } else {
-      mock_task_runner_ = make_scoped_refptr(
+      mock_task_runner_ = base::WrapRefCounted(
           new cc::OrderedSimpleTaskRunner(clock_.get(), false));
       main_task_runner_ = SchedulerTqmDelegateForTest::Create(
           mock_task_runner_, base::MakeUnique<TestTimeSource>(clock_.get()));
@@ -1846,7 +1846,7 @@ class RendererSchedulerImplWithMockSchedulerTest
     : public RendererSchedulerImplTest {
  public:
   void SetUp() override {
-    mock_task_runner_ = make_scoped_refptr(
+    mock_task_runner_ = base::WrapRefCounted(
         new cc::OrderedSimpleTaskRunner(clock_.get(), false));
     main_task_runner_ = SchedulerTqmDelegateForTest::Create(
         mock_task_runner_, base::MakeUnique<TestTimeSource>(clock_.get()));
