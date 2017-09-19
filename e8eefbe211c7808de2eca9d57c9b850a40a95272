@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71835677_8b0883a7",
+        "filename": "third_party/WebKit/Source/core/dom/Element.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-19T08:54:05Z",
+      "side": 1,
+      "message": "Which DOMString variant? We\u0027re only exposing a setter that accepts a `(DOMString or TrustedHTML)` type, which maps onto `StringOrTrustedHTML` in `Element.h`. The fact that a similarly-named `DOMString` overload exists doesn\u0027t mean that it\u0027s exposed to the web.\n\nWould you be happier if we renamed `setInnerHTML(const String\u0026 html, ...)` to `SetInnerHTMLFromString(...)` or something?",
+      "parentUuid": "9dfd1b43_0f57e951",
+      "range": {
+        "startLine": 85,
+        "startChar": 142,
+        "endLine": 85,
+        "endChar": 168
+      },
+      "revId": "e8eefbe211c7808de2eca9d57c9b850a40a95272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1eb2fab_1d2ffb06",
         "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.h",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-19T08:11:42Z",
       "side": 1,
       "message": "should you also move down kFrameAncestors to make it alphabetical?",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 13
+      },
+      "revId": "e8eefbe211c7808de2eca9d57c9b850a40a95272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8482465_34bd6f3a",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-09-19T08:54:05Z",
+      "side": 1,
+      "message": "Sure, I can do that.",
+      "parentUuid": "e1eb2fab_1d2ffb06",
       "range": {
         "startLine": 99,
         "startChar": 4,
