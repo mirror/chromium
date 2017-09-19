@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82be00cb_3d409263",
+        "filename": "components/history/core/browser/history_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 750,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-09-19T20:52:45Z",
+      "side": 1,
+      "message": "We would expect the number of elements in this to normally be small, right? In that case we should use a flat_set to avoid allocating nodes all over.",
+      "revId": "92a222ab2aff296727349e00e5e5dcde4d980418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
