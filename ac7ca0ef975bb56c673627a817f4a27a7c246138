@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34360eeb_2ccf7ac1",
+        "filename": "extensions/common/extension_messages.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-19T16:30:16Z",
+      "side": 1,
+      "message": "nit: maybe just ServiceWorkerIdentifier, since the struct isn\u0027t a message itself.",
+      "range": {
+        "startLine": 281,
+        "startChar": 17,
+        "endLine": 281,
+        "endChar": 33
+      },
+      "revId": "ac7ca0ef975bb56c673627a817f4a27a7c246138",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
