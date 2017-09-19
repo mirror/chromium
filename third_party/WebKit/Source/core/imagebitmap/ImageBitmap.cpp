@@ -302,48 +302,8 @@ RefPtr<StaticBitmapImage> ScaleImage(RefPtr<StaticBitmapImage>&& image,
 RefPtr<StaticBitmapImage> ApplyColorSpaceConversion(
     RefPtr<StaticBitmapImage>&& image,
     ImageBitmap::ParsedOptions& options) {
-  if (!CanvasColorParams::ColorCorrectRenderingEnabled())
-    return image;
-
-  // TODO(zakerinasab): crbug.com/754713
-  // If image does not have any color space info and we must color convert to
-  // SRGB, we should tag the image as SRGB. Since we cannot use SkImage::
-  // makeColorSpace() on SkImages with no color space to get the image in SRGB,
-  // we have to do this using a slow code path (reading the pixels and creating
-  // a new SRGB SkImage). This is inefficient and also converts GPU-backed
-  // images to CPU-backed. For now, we ignore this and let the images be in
-  // null color space. This must be okay if color management is only supported
-  // for SRGB. Please see crbug.com/754713 for more details.
-
   if (!CanvasColorParams::ColorCorrectRenderingInAnyColorSpace())
     return image;
-
-  // If the image is still in legacy color mode (no color space info) use a
-  // slow code path to tag the image as SRGB. This is inefficient and
-  // problematic. We eventually need to replace this with a check for the
-  // color space information of the image (crbug.com/754713).
-  sk_sp<SkImage> sk_image = image->PaintImageForCurrentFrame().GetSkImage();
-  if (!sk_image->colorSpace()) {
-    SkImageInfo srgb_info =
-        SkImageInfo::Make(sk_image->width(), sk_image->height(),
-                          kN32_SkColorType, sk_image->alphaType(), nullptr);
-    size_t size =
-        sk_image->width() * sk_image->height() * srgb_info.bytesPerPixel();
-    sk_sp<SkData> srgb_data = SkData::MakeUninitialized(size);
-    if (srgb_data && srgb_data->size() == size) {
-      sk_sp<SkImage> srgb_image;
-      if (sk_image->readPixels(srgb_info, srgb_data->writable_data(),
-                               sk_image->width() * srgb_info.bytesPerPixel(), 0,
-                               0)) {
-        srgb_info = srgb_info.makeColorSpace(SkColorSpace::MakeSRGB());
-        srgb_image = SkImage::MakeRasterData(
-            srgb_info, srgb_data,
-            sk_image->width() * srgb_info.bytesPerPixel());
-      }
-      if (srgb_image)
-        image = StaticBitmapImage::Create(srgb_image);
-    }
-  }
 
   // Color correct the image. This code path uses SkImage::makeColorSpace(). If
   // the color space of the source image is nullptr, it will be assumed in SRGB.
