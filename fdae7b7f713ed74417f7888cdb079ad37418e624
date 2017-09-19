@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d012230_48af4630",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-19T19:10:42Z",
+      "side": 1,
+      "message": "This will not get the right region. As discussed offline, this needs to talk to the appropriate WindowTargeter.",
+      "revId": "fdae7b7f713ed74417f7888cdb079ad37418e624",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
