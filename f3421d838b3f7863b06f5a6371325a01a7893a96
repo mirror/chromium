@@ -52,6 +52,23 @@
       "revId": "f3421d838b3f7863b06f5a6371325a01a7893a96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d5fd1ac_6c32c26d",
+        "filename": "content/browser/renderer_host/compositor_impl_android.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-09-19T01:02:36Z",
+      "side": 0,
+      "message": "I\u0027m still worried that this may cause breakage because this doesn\u0027t look equivalent to the previous approach.  It used to immediately change the transparency (keeping old background color), then 500 milliseconds later change the background color.\n\nFor entering transparency, I think it would be closer to the old approach to simply change the color to transparent anyway.  And keep the delayed action only for !transparent case.\n\nSince it seems hard to make this change obviously no-op, I\u0027d suggest getting an Android tablet and at least doing a quick smoke test that you don\u0027t see white (or webcontent) flashes when entering/exiting fullscreen video nor black flashes when closing a Clank tablet tab, which were the two bugs this hack addressed.",
+      "revId": "f3421d838b3f7863b06f5a6371325a01a7893a96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
