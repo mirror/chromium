@@ -207,4 +207,76 @@ TEST_F(SelectionSampleTest, SerializeVoidElementBR) {
       << "When BR has child nodes, it is not void element.";
 }
 
+TEST_F(SelectionSampleTest, ConvertTemplatesToShadowRoots) {
+  SetBodyContent(
+      "<div id='host'>"
+      "<template data-mode='open'>"
+      "<div>shadow_first</div>"
+      "<div>shadow_second</div>"
+      "</template>"
+      "</div>");
+  Element* body = GetDocument().body();
+  Element* host = body->getElementById("host");
+  SelectionSample::ConvertTemplatesToShadowRootsForTesring(
+      *(ToHTMLElement(host)));
+  ShadowRoot* shadow_root = host->ShadowRootIfV1();
+  EXPECT_TRUE(shadow_root->IsShadowRoot());
+  EXPECT_EQ("<div>shadow_first</div><div>shadow_second</div>",
+            shadow_root->innerHTML());
+}
+
+TEST_F(SelectionSampleTest, ConvertTemplatesToShadowRootsNoTemplates) {
+  SetBodyContent(
+      "<div id='host'>"
+      "<div>first</div>"
+      "<div>second</div>"
+      "</div>");
+  Element* body = GetDocument().body();
+  Element* host = body->getElementById("host");
+  SelectionSample::ConvertTemplatesToShadowRootsForTesring(
+      *(ToHTMLElement(host)));
+  // ShadowRoot* shadow_root = host->ShadowRootIfV1();
+  // EXPECT_TRUE(shadow_root->IsShadowRoot());
+  EXPECT_EQ("<div>first</div><div>second</div>", host->innerHTML());
+}
+
+TEST_F(SelectionSampleTest, ConvertTemplatesToShadowRootsMultipleTemplates) {
+  SetBodyContent(
+      "<div id='host1'>"
+      "<template data-mode='open'>"
+      "<div>shadow_first</div>"
+      "<div>shadow_second</div>"
+      "</template>"
+      "</div>"
+      "<div id='host2'>"
+      "<template data-mode='open'>"
+      "<div>shadow_third</div>"
+      "<div>shadow_forth</div>"
+      "</template>"
+      "</div>");
+  Element* body = GetDocument().body();
+  Element* host1 = body->getElementById("host1");
+  Element* host2 = body->getElementById("host2");
+  SelectionSample::ConvertTemplatesToShadowRootsForTesring(
+      *(ToHTMLElement(body)));
+  ShadowRoot* shadow_root_1 = host1->ShadowRootIfV1();
+  ShadowRoot* shadow_root_2 = host2->ShadowRootIfV1();
+
+  EXPECT_TRUE(shadow_root_1->IsShadowRoot());
+  EXPECT_EQ("<div>shadow_first</div><div>shadow_second</div>",
+            shadow_root_1->innerHTML());
+  EXPECT_TRUE(shadow_root_2->IsShadowRoot());
+  EXPECT_EQ("<div>shadow_third</div><div>shadow_forth</div>",
+            shadow_root_2->innerHTML());
+}
+
+TEST_F(SelectionSampleTest, TraverseShadowContent) {
+  EXPECT_EQ("", SetAndGetSelectionText("<div id='host'>"
+                                       "<template data-mode='open'>"
+                                       "<div>^shadow_first|</div>"
+                                       "<div>shadow_second</div>"
+                                       "</template>"
+                                       "</div>"));
+}
+
 }  // namespace blink
