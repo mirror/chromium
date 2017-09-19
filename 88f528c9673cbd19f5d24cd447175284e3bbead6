@@ -77,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "4e4cd7f6_4933ec06",
+        "filename": "chrome/browser/vr/elements/vector_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T17:24:34Z",
+      "side": 1,
+      "message": "My concern is that we\u0027re avoiding this parameter by adding a dependency on global state in canvas, which is more complex and I suspect will eventually be removed, forcing authors to turn to this back into a parameter.\n\nToo many variations is a concern, but this does seem implicitly to be another variation regardless? Adding a global canvas state-changer introduces potential API interaction with every other method on gfx::Canvas, when it can be limited in scope to just the PaintVectorIcon operation instead. That seems like a good tradeoff vs the method having lots of variations (maybe it should be a method with a different name).\n\nPoint b) suggests that it shouldn\u0027t be a Canvas state to me, since it is only for this operation, and doesn\u0027t need to be a state that is preserved across operations.",
+      "parentUuid": "89a8f2fb_91151f45",
+      "revId": "88f528c9673cbd19f5d24cd447175284e3bbead6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d09cd47a_bb408d60",
         "filename": "chrome/browser/vr/elements/vector_icon.cc",
         "patchSetId": 1
