@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b60c3dbd_24a2a4be",
+        "filename": "third_party/zlib/0004-use-defines-for-inffast.patch",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-19T01:24:37Z",
+      "side": 1,
+      "message": "Stray tabs in this file for me.",
+      "revId": "1bbfa8202e7b1fa1f7f214a349dd66963d01e5b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
