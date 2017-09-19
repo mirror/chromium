@@ -78,7 +78,9 @@ class ZoomValue : public views::Label {
       : Label(base::string16(),
               views::style::CONTEXT_LABEL,
               views::style::STYLE_PRIMARY),
-        max_width_(GetLabelMaxWidth(web_contents)) {}
+        max_width_(GetLabelMaxWidth(web_contents)) {
+    SetHorizontalAlignment(gfx::ALIGN_LEFT);
+  }
   ~ZoomValue() override {}
 
   // views::Label:
@@ -88,7 +90,11 @@ class ZoomValue : public views::Label {
 
  private:
   int GetLabelMaxWidth(const content::WebContents* web_contents) const {
-    int border_width = border() ? border()->GetInsets().width() : 0;
+    constexpr int kPercentLabelAdditionalPadding = 64;
+    const int border_width = kPercentLabelAdditionalPadding -
+                             ChromeLayoutProvider::Get()->GetDistanceMetric(
+                                 DISTANCE_UNRELATED_CONTROL_HORIZONTAL) +
+                             (border() ? border()->GetInsets().width() : 0);
     int max_w = 0;
     auto* zoom_controller = zoom::ZoomController::FromWebContents(web_contents);
     DCHECK(zoom_controller);
@@ -269,10 +275,14 @@ void ZoomBubbleView::OnMouseExited(const ui::MouseEvent& event) {
 void ZoomBubbleView::Init() {
   // Set up the layout of the zoom bubble.
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
-  const int margin =
-      provider->GetDistanceMetric(views::DISTANCE_RELATED_BUTTON_HORIZONTAL);
+  const int horizontal_margin =
+      provider->GetDistanceMetric(DISTANCE_UNRELATED_CONTROL_HORIZONTAL);
+  gfx::Insets border_insets(
+      provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_VERTICAL),
+      horizontal_margin);
+  border_insets -= margins();
   views::BoxLayout* box_layout = new views::BoxLayout(
-      views::BoxLayout::kHorizontal, gfx::Insets(0, margin), margin);
+      views::BoxLayout::kHorizontal, border_insets, horizontal_margin);
 
   box_layout->set_main_axis_alignment(
       views::BoxLayout::MAIN_AXIS_ALIGNMENT_CENTER);
@@ -292,16 +302,16 @@ void ZoomBubbleView::Init() {
     AddChildView(image_button_);
   }
 
+  // Add zoom label with the new zoom percent.
+  label_ = new ZoomValue(web_contents_);
+  UpdateZoomPercent();
+  AddChildView(label_);
+
   // Add Zoom Out ("-") button.
   std::unique_ptr<views::Button> zoom_out_button =
       CreateZoomButton(this, kRemoveIcon, IDS_ACCNAME_ZOOM_MINUS2);
   zoom_out_button_ = zoom_out_button.get();
   AddChildView(zoom_out_button.release());
-
-  // Add zoom label with the new zoom percent.
-  label_ = new ZoomValue(web_contents_);
-  UpdateZoomPercent();
-  AddChildView(label_);
 
   // Add Zoom In ("+") button.
   std::unique_ptr<views::Button> zoom_in_button =
