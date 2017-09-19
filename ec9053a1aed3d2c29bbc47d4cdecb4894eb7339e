@@ -22,6 +22,30 @@
       "revId": "ec9053a1aed3d2c29bbc47d4cdecb4894eb7339e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b4cd4cf_be3189ab",
+        "filename": "content/common/sandbox_linux/bpf_widevine_policy_linux.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-09-19T19:01:01Z",
+      "side": 1,
+      "message": "I agree we should be able to trim this a bit, but copying it over from utility for now is a good route.",
+      "parentUuid": "28fc3d50_57bd2ac1",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 3
+      },
+      "revId": "ec9053a1aed3d2c29bbc47d4cdecb4894eb7339e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
