@@ -18,6 +18,14 @@ class PolicyToolUIHandler : public PolicyUIHandler {
   void OnJavascriptDisallowed() override;
 
  private:
+  friend class PolicyToolUITest;
+  FRIEND_TEST_ALL_PREFIXES(PolicyToolUITest, CreatingSessionFiles);
+  FRIEND_TEST_ALL_PREFIXES(PolicyToolUITest, Editing);
+  FRIEND_TEST_ALL_PREFIXES(PolicyToolUITest, DefaultSession);
+
+  static const base::FilePath::StringType kPolicyToolSessionsDir;
+  static const base::FilePath::StringType kPolicyToolDefaultSessionName;
+
   // Reads the current session file (based on the session_name_) and sends the
   // contents to the UI.
   void ImportFile();
@@ -36,6 +44,9 @@ class PolicyToolUIHandler : public PolicyUIHandler {
   void ShowErrorMessageToUser(const std::string& message);
 
   base::FilePath GetSessionPath(const base::FilePath::StringType& name) const;
+  base::ListValue GetSessionsList();
+
+  void SetDefaultSessionName();
 
   base::FilePath sessions_dir_;
   base::FilePath::StringType session_name_;
