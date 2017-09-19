@@ -1,0 +1,107 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+//
+// CertStoreHost is modeled after Android keymaster interface
+// hardware/libhardware/include/hardware/keymaster2.h
+//
+// and must follow the concept if extended in the future.
+// Please keep names in sync as far as it is possible.
+//
+// Enums/structures are modeled after structures from
+// hardware/libhardware/include/hardware/keymaster_defs.h
+//
+
+module arc.mojom;
+
+// Describes an operation result.
+[Extensible]
+enum Error {
+  ERROR_OK = 0,
+  ERROR_INVALID_KEY_BLOB = -33,
+  ERROR_UNIMPLEMENTED = -100,
+  ERROR_UNKNOWN_ERROR = -1000,
+};
+
+// Enumerates the crypto algorithms supported by Host.
+[Extensible]
+enum Algorithm {
+  ALGORITHM_RSA = 1,
+  ALGORITHM_EC = 3,
+};
+
+// Enumerates the digests supported by Host.
+[Extensible]
+enum Digest {
+  DIGEST_NONE = 0,
+  DIGEST_SHA1 = 2,
+  DIGEST_SHA_2_224 = 3,
+  DIGEST_SHA_2_256 = 4,
+  DIGEST_SHA_2_384 = 5,
+  DIGEST_SHA_2_512 = 6,
+};
+
+// Enumerates the paddings supported by Host.
+[Extensible]
+enum Padding {
+  PAD_NONE = 1,
+  PAD_RSA_PKCS1_1_5_SIGN = 5,
+};
+
+// Describes a parameter of client certificate provided by Host.
+union KeyParam {
+  Algorithm algorithm;
+  Digest digest;
+  Padding padding;
+};
+
+// Describes a client certificate provided by Host.
+// Does not correspond to keymaster type.
+struct Certificate {
+  // Name of the certificate.
+  string alias;
+
+  // Base64-encoded client certificate.
+  string cert;
+};
+
+// Next method ID: 6
+// The interface is modeled after keymaster interface and must follow the format
+// if extended in the future.
+interface CertStoreHost {
+  // The helper method, which does not correspond to keymaster interface.
+  // It returns a list of Chrome OS corporate usage client certificates if
+  // any Android app is whitelisted to use them, otherwise returns an
+  // empty list.
+  ListCertificates@0() => (array<Certificate> certs);
+
+  // Retrieves key characteristics.
+  GetKeyCharacteristics@1(string alias)
+      => (Error error, array<KeyParam>? params);
+
+  // Begins the operation.
+  // Currently only signature operations are supported.
+  Begin@2(string alias, array<KeyParam> params)
+      => (Error error, uint64 op_handle);
+
+  // Updates the operation information.
+  Update@3(uint64 op_handle, array<uint8> data)
+      => (Error error, uint32 input_consumed);
+
+  // Finishes the operation, retrieves the result.
+  Finish@4(uint64 op_handle)
+      => (Error error, array<uint8>? signed_data);
+
+  // Abort the operation.
+  Abort@5(uint64 op_handle) => (Error error);
+};
+
+// Next method ID: 2
+interface CertStoreInstance {
+  // Establishes full-duplex communication with the host.
+  Init@0(CertStoreHost host_ptr);
+
+  // Informs the key permissions are changed.
+  OnKeyPermissionsChanged@1(array<string> permissions);
+};
