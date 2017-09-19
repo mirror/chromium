@@ -43,7 +43,10 @@ class HTMLElement;
 class HTMLSpanElement;
 class Text;
 
-class CORE_EXPORT CompositeEditCommand : public EditCommand {
+class CORE_EXPORT CompositeEditCommand : public EditCommand,
+                                         public DocumentShutdownObserver {
+  USING_GARBAGE_COLLECTED_MIXIN(CompositeEditCommand);
+
  public:
   enum ShouldPreserveSelection { kPreserveSelection, kDoNotPreserveSelection };
   enum ShouldPreserveStyle { kPreserveStyle, kDoNotPreserveStyle };
@@ -88,7 +91,7 @@ class CORE_EXPORT CompositeEditCommand : public EditCommand {
 
  protected:
   explicit CompositeEditCommand(Document&);
-
+  bool IsAvailable();
   VisibleSelection EndingVisibleSelection() const;
   //
   // sugary-sweet convenience functions to help create and apply edit commands

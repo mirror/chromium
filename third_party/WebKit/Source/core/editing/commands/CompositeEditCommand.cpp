@@ -84,6 +84,7 @@ using namespace HTMLNames;
 
 CompositeEditCommand::CompositeEditCommand(Document& document)
     : EditCommand(document) {
+  SetContext(&document);
   SetStartingSelection(document.GetFrame()
                            ->Selection()
                            .ComputeVisibleSelectionInDOMTreeDeprecated());
@@ -92,6 +93,10 @@ CompositeEditCommand::CompositeEditCommand(Document& document)
 
 CompositeEditCommand::~CompositeEditCommand() {
   DCHECK(IsTopLevelCommand() || !undo_step_);
+}
+
+bool CompositeEditCommand::IsAvailable() {
+  return LifecycleContext();
 }
 
 VisibleSelection CompositeEditCommand::EndingVisibleSelection() const {
@@ -2013,6 +2018,7 @@ DEFINE_TRACE(CompositeEditCommand) {
   visitor->Trace(starting_selection_);
   visitor->Trace(ending_selection_);
   visitor->Trace(undo_step_);
+  DocumentShutdownObserver::Trace(visitor);
   EditCommand::Trace(visitor);
 }
 
