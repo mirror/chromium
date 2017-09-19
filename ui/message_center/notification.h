@@ -127,6 +127,8 @@ class MESSAGE_CENTER_EXPORT RichNotificationData {
   std::vector<NotificationItem> items;
 
   // Progress, in range of [0-100], of NOTIFICATION_TYPE_PROGRESS notifications.
+  // Values outside of the range (e.g. -1) will show an infinite loading
+  // progress bar.
   int progress = 0;
 
   // Status text string shown in NOTIFICATION_TYPE_PROGRESS notifications.
