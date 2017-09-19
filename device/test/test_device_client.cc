@@ -11,7 +11,6 @@
 // depending on the corresponding targets. The code below needs the destructors
 // of the classes defined even when the classes are never instantiated.
 // TODO: This should probably be done more explicitly to avoid ambiguity.
-#include "device/hid/hid_service.h"  // nogncheck
 #include "device/usb/usb_service.h"  // nogncheck
 
 namespace device {
@@ -19,15 +18,6 @@ namespace device {
 TestDeviceClient::TestDeviceClient() = default;
 
 TestDeviceClient::~TestDeviceClient() = default;
-
-HidService* TestDeviceClient::GetHidService() {
-#if !defined(OS_ANDROID) && !defined(OS_IOS) && \
-    !(defined(OS_LINUX) && !defined(USE_UDEV))
-  if (!hid_service_)
-    hid_service_ = HidService::Create();
-#endif
-  return hid_service_.get();
-}
 
 UsbService* TestDeviceClient::GetUsbService() {
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
