@@ -112,14 +112,14 @@ class PopupBlockerTabHelper
   void DidFinishNavigation(
       content::NavigationHandle* navigation_handle) override;
 
+  void AddBlockedPopup(const chrome::NavigateParams& params,
+                       const blink::mojom::WindowFeatures& window_features);
+
  private:
   struct BlockedRequest;
   friend class content::WebContentsUserData<PopupBlockerTabHelper>;
 
   explicit PopupBlockerTabHelper(content::WebContents* web_contents);
-
-  void AddBlockedPopup(const chrome::NavigateParams& params,
-                       const blink::mojom::WindowFeatures& window_features);
 
   // Called when the blocked popup notification is shown or hidden.
   void PopupNotificationVisibilityChanged(bool visible);

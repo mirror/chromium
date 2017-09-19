@@ -7,8 +7,11 @@
 
 #include <memory>
 
+#include "base/callback.h"
 #include "base/macros.h"
 #include "base/time/time.h"
+#include "chrome/browser/ui/blocked_content/blocked_window_params.h"
+#include "chrome/browser/ui/blocked_content/popup_opener_tracker.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_contents_user_data.h"
 
@@ -25,12 +28,16 @@ class ScopedVisibilityTracker;
 class PopupTracker : public content::WebContentsObserver,
                      public content::WebContentsUserData<PopupTracker> {
  public:
+  static void CreateForWebContents(content::WebContents* web_contents,
+                                   content::WebContents* opener);
   ~PopupTracker() override;
 
- private:
-  friend class content::WebContentsUserData<PopupTracker>;
+  bool OnDidFinishNavigationInOpener(content::NavigationHandle* handle);
+  void OnOpenerGoingAway();
 
-  explicit PopupTracker(content::WebContents* web_contents);
+ private:
+  PopupTracker(content::WebContents* web_contents,
+               content::WebContents* opener);
 
   // content::WebContentsObserver:
   void DidFinishNavigation(
@@ -38,9 +45,15 @@ class PopupTracker : public content::WebContentsObserver,
   void WasShown() override;
   void WasHidden() override;
 
+  void MaybeCloseOpener(const chrome::NavigateParams& params,
+                        const blink::mojom::WindowFeatures& window_features);
   // The |first_load_visibility_tracker_| tracks the time this WebContents is in
   // the foreground for the duration of the first page load.
   std::unique_ptr<ScopedVisibilityTracker> first_load_visibility_tracker_;
+
+  base::OnceClosure first_navigation_closure_;
+
+  PopupOpenerTracker* opener_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(PopupTracker);
 };
