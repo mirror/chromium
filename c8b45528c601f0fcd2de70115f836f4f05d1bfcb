@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "bf6b2658_3a469c1e",
+        "filename": "net/cert/multi_threaded_cert_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-19T20:13:29Z",
+      "side": 1,
+      "message": "Now using ScopedAllowBaseSyncPrimitives, which removes the need for the post task call site to know whether the posted task will use //base sync primitives.",
+      "parentUuid": "e12211d3_a691d167",
+      "revId": "c8b45528c601f0fcd2de70115f836f4f05d1bfcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c910e17_b99d65b7",
         "filename": "net/cert/multi_threaded_cert_verifier.cc",
         "patchSetId": 4
@@ -122,6 +140,24 @@
       "revId": "c8b45528c601f0fcd2de70115f836f4f05d1bfcb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1827d4cf_24de6622",
+        "filename": "net/cert/multi_threaded_cert_verifier.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-19T20:13:29Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f8e06a8d_7f38749e",
+      "revId": "c8b45528c601f0fcd2de70115f836f4f05d1bfcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
