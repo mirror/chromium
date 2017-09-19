@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40d27436_bdd7e4d2",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-19T19:01:34Z",
+      "side": 1,
+      "message": "There is nothing about devtools in this class, why the name?",
+      "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16adfa99_45755c15",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-19T19:01:34Z",
+      "side": 1,
+      "message": "Consider exposing convenience AddMessageToConsole overload on WebLocalFrame instead. Why buffering nodes otherwise?",
+      "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4f108b_d27dea78",
+        "filename": "components/autofill/content/renderer/devtools_page_passwords_analyser.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-19T19:01:34Z",
+      "side": 1,
+      "message": "In you use RemoteObjects for parameters, you would be able to use %%o here to format messages containing nodes in console.",
+      "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98cf4f3b_42d981e8",
+        "filename": "third_party/WebKit/Source/core/frame/WebLocalFrameImpl.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 724,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-19T19:01:34Z",
+      "side": 1,
+      "message": "Allow setting nodes (or arguments) for the existing ConsoleMessage, that would make this code read better.",
+      "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60edabdc_40891680",
+        "filename": "third_party/WebKit/Source/core/inspector/ConsoleMessage.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-19T19:01:34Z",
+      "side": 1,
+      "message": "ConsoleMessage should not know what backend_node_id is - otherwise you make all blink/ clients aware of backend node id. You should pass Node here instead and rely upon inspector to pass it to the front-end in the terms it likes. Also, as mentioned above, should be SetNodes instead.",
+      "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0704ee2_396e64e8",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorLogAgent.cpp",
+        "patchSetId": 26
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-19T19:01:34Z",
+      "side": 1,
+      "message": "You should not need specific message source, pass nodes as arguments in any.",
+      "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5452845f_a05471a9",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 26
+      },
+      "lineNbr": 4904,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-19T19:01:34Z",
+      "side": 1,
+      "message": "It seems like we can pass call arguments here instead similarly to those of consoleAPI:\n\n{ \"name\": \"args\", \"type\": \"array\", \"items\": { \"$ref\": \"RemoteObject\" }, \"description\": \"Call arguments.\" },",
+      "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18e77e1d_77a943d8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
+        "patchSetId": 26
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-19T19:01:34Z",
+      "side": 1,
+      "message": "parameters is what you will use for nodes, you won\u0027t need to do anything, console already knows how to treat parameters.",
+      "revId": "b415abe15de337bc9c4c9757b62bec39301afae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
