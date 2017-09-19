@@ -159,10 +159,6 @@ public class SignInPreference
         }
         mSigninPromoController.setProfileData(profileData);
 
-        if (!mShowingPromo) {
-            mSigninPromoController.recordSigninPromoImpression();
-        }
-
         mShowingPromo = true;
         notifyChanged();
     }

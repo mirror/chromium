@@ -77,7 +77,6 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver, SignInStateObs
     private final BookmarkDelegate mBookmarkDelegate;
     private SigninPromoController mSigninPromoController;
     private ProfileDataCache mProfileDataCache;
-    private boolean mIsNewPromoShowing;
     private @PromoState int mPromoState;
 
     /**
@@ -182,11 +181,6 @@ class BookmarkPromoHeader implements AndroidSyncSettingsObserver, SignInStateObs
             profileData = mProfileDataCache.getProfileDataOrDefault(defaultAccountName);
         }
         mSigninPromoController.setProfileData(profileData);
-
-        if (!mIsNewPromoShowing) {
-            mIsNewPromoShowing = true;
-            mSigninPromoController.recordSigninPromoImpression();
-        }
 
         SigninPromoController.OnDismissListener listener = this ::setNewSigninPromoDeclined;
         mSigninPromoController.setupSigninPromoView(mContext, view, listener);
