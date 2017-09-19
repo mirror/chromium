@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d13b6b49_933c966b",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-19T00:36:05Z",
+      "side": 1,
+      "message": "I think you should pass the the gpu factories themselves to the WebMediaPlayerImpl, similar to how WebMediaPlayerMS does it (or alternatively just the .  Passing a lock means that you\u0027re holding that lock and nothing else can use this context for the lifetime of the WebMediaPlayerImpl.  Can you just pass the viz::ContextProvider directly?  This is what VideoResourceUpdater itself needs.",
+      "revId": "38b40ae4c96ea79122e4e036bcb55a374f487bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
