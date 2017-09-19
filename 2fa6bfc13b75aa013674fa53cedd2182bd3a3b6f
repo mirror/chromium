@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "726be3ae_8ea20f1b",
+        "filename": "content/renderer/browser_plugin/browser_plugin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-09-19T11:36:42Z",
+      "side": 1,
+      "message": "We have 300+ occurences of this pattern in the codebase. Given that, I\u0027d say this is the norm.",
+      "parentUuid": "2c28d0bd_c4a08588",
+      "range": {
+        "startLine": 391,
+        "startChar": 23,
+        "endLine": 391,
+        "endChar": 36
+      },
+      "revId": "2fa6bfc13b75aa013674fa53cedd2182bd3a3b6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da9d423f_0a8ee335",
         "filename": "content/renderer/browser_plugin/browser_plugin.cc",
         "patchSetId": 1
