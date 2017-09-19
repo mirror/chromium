@@ -17,6 +17,8 @@ NtCreateKeyFunction g_nt_create_key = nullptr;
 NtDeleteKeyFunction g_nt_delete_key = nullptr;
 NtOpenKeyExFunction g_nt_open_key_ex = nullptr;
 NtCloseFunction g_nt_close = nullptr;
+NtQueryKeyFunction g_nt_query_key = nullptr;
+NtEnumerateKeyFunction g_nt_enumerate_key = nullptr;
 NtQueryValueKeyFunction g_nt_query_value_key = nullptr;
 NtSetValueKeyFunction g_nt_set_value_key = nullptr;
 
@@ -88,6 +90,12 @@ bool InitNativeRegApi() {
   g_nt_close =
       reinterpret_cast<NtCloseFunction>(::GetProcAddress(ntdll, "NtClose"));
 
+  g_nt_query_key = reinterpret_cast<NtQueryKeyFunction>(
+      ::GetProcAddress(ntdll, "NtQueryKey"));
+
+  g_nt_enumerate_key = reinterpret_cast<NtEnumerateKeyFunction>(
+      ::GetProcAddress(ntdll, "NtEnumerateKey"));
+
   g_nt_query_value_key = reinterpret_cast<NtQueryValueKeyFunction>(
       ::GetProcAddress(ntdll, "NtQueryValueKey"));
 
@@ -95,8 +103,8 @@ bool InitNativeRegApi() {
       ::GetProcAddress(ntdll, "NtSetValueKey"));
 
   if (!g_rtl_init_unicode_string || !g_nt_create_key || !g_nt_open_key_ex ||
-      !g_nt_delete_key || !g_nt_close || !g_nt_query_value_key ||
-      !g_nt_set_value_key)
+      !g_nt_delete_key || !g_nt_close || !g_nt_query_key ||
+      !g_nt_enumerate_key || !g_nt_query_value_key || !g_nt_set_value_key)
     return false;
 
   // We need to set HKCU based on the sid of the current user account.
@@ -1088,6 +1096,80 @@ bool SetRegValueMULTISZ(ROOT_KEY root,
     CloseRegKey(key);
     return false;
   }
+
+  return true;
+}
+
+//------------------------------------------------------------------------------
+// Enumeration Support
+//------------------------------------------------------------------------------
+
+bool QueryRegEnumerationInfo(HANDLE key, ULONG* out_subkey_count) {
+  if (!key || !out_subkey_count)
+    return false;
+
+  if (!g_initialized)
+    InitNativeRegApi();
+
+  NTSTATUS ntstatus = STATUS_UNSUCCESSFUL;
+  DWORD size_needed = 0;
+
+  // First call to find out how much room we need for the information!
+  ntstatus = g_nt_query_key(key, KeyFullInformation, nullptr, 0, &size_needed);
+  if (ntstatus != STATUS_BUFFER_TOO_SMALL)
+    return false;
+
+  std::unique_ptr<BYTE[]> buffer(new BYTE[size_needed]);
+  KEY_FULL_INFORMATION* key_info =
+      reinterpret_cast<KEY_FULL_INFORMATION*>(buffer.get());
+
+  // Second call to get the info.
+  ntstatus = g_nt_query_key(key, KeyFullInformation, key_info, size_needed,
+                            &size_needed);
+  if (!NT_SUCCESS(ntstatus))
+    return false;
+
+  // Move desired information to out variables.
+  *out_subkey_count = key_info->SubKeys;
+
+  return true;
+}
+
+bool QueryRegSubkey(HANDLE key,
+                    ULONG subkey_index,
+                    std::wstring* out_subkey_name) {
+  if (!key || !out_subkey_name)
+    return false;
+
+  if (!g_initialized)
+    InitNativeRegApi();
+
+  NTSTATUS ntstatus = STATUS_UNSUCCESSFUL;
+  DWORD size_needed = 0;
+
+  // First call to find out how much room we need for the subkey info!
+  ntstatus = g_nt_enumerate_key(key, subkey_index, KeyBasicInformation, nullptr,
+                                0, &size_needed);
+  if (ntstatus != STATUS_BUFFER_TOO_SMALL)
+    return false;
+
+  std::unique_ptr<BYTE[]> buffer(new BYTE[size_needed]);
+  KEY_BASIC_INFORMATION* subkey_info =
+      reinterpret_cast<KEY_BASIC_INFORMATION*>(buffer.get());
+
+  // Second call to get the info.
+  ntstatus = g_nt_enumerate_key(key, subkey_index, KeyBasicInformation,
+                                subkey_info, size_needed, &size_needed);
+  if (!NT_SUCCESS(ntstatus))
+    return false;
+
+  // Move desired information to out variables.
+  // NOTE: NameLength is size of Name array in bytes.  Name array is also
+  //       NOT null terminated!
+  BYTE* name = reinterpret_cast<BYTE*>(subkey_info->Name);
+  std::vector<BYTE> content(name, name + subkey_info->NameLength);
+  EnsureTerminatedSZ(&content, false);
+  out_subkey_name->assign(reinterpret_cast<wchar_t*>(&content[0]));
 
   return true;
 }
