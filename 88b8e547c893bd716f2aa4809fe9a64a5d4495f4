@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7be8fab6_f8ff1e3c",
+        "filename": "ash/wm/lock_state_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1080,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-19T01:01:33Z",
+      "side": 1,
+      "message": "Not-code-related: If user has display off after locking, and then press power button to stop forcing off. Then I believe user has to unlock the device to redo display off after locking? I am wondering whether we can just make display off when power button is pressed/released on locked state.\nFor two reasons:\n(1) power button is no-op when screen is locked and not off.\n(2) I don\u0027t think it is annoying that power button makes display off when screen is already locked. As user already has to unlock the device to use the device.",
+      "revId": "88b8e547c893bd716f2aa4809fe9a64a5d4495f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "201a8c74_abae002d",
         "filename": "chromeos/dbus/fake_power_manager_client.h",
         "patchSetId": 2
@@ -16,6 +33,24 @@
       "revId": "88b8e547c893bd716f2aa4809fe9a64a5d4495f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f1a4bc_a6607811",
+        "filename": "chromeos/dbus/fake_power_manager_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-19T01:01:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "201a8c74_abae002d",
+      "revId": "88b8e547c893bd716f2aa4809fe9a64a5d4495f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
