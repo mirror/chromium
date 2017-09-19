@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c32c72c4_d88b031f",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2402,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-19T06:26:47Z",
+      "side": 1,
+      "message": "Could you make this |const|?",
+      "revId": "2c3c0536e41ecae9c8fa885df3d18b671e737b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ab26b1_a5156ed8",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2425,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-09-19T06:26:47Z",
+      "side": 1,
+      "message": "Could you share more logic between CreateShadowRootInternal and AttachShadowInternal\n at least not having copied error message.",
+      "revId": "2c3c0536e41ecae9c8fa885df3d18b671e737b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
