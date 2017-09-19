@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0098efa1_4023435e",
+        "filename": "chrome/installer/mini_installer/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-19T23:42:41Z",
+      "side": 1,
+      "message": "No. We always use v8_context_snapshot on Windows.",
+      "parentUuid": "d791440f_5a299c6d",
+      "revId": "009bb8f650cbe1c7a40365ed9c704660670ee8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd3e972e_78945e80",
         "filename": "chrome/installer/mini_installer/BUILD.gn",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d480d5b7_7245579c",
+        "filename": "chrome/installer/mini_installer/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-19T23:42:41Z",
+      "side": 1,
+      "message": "ditto.",
+      "parentUuid": "bd3e972e_78945e80",
+      "revId": "009bb8f650cbe1c7a40365ed9c704660670ee8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "183f892a_0ef071d5",
         "filename": "chrome/tools/build/win/FILES.cfg",
         "patchSetId": 4
@@ -47,6 +83,30 @@
       "writtenOn": "2017-09-19T13:51:04Z",
       "side": 1,
       "message": "v8_context_snapshot.bin",
+      "range": {
+        "startLine": 121,
+        "startChar": 17,
+        "endLine": 121,
+        "endChar": 38
+      },
+      "revId": "009bb8f650cbe1c7a40365ed9c704660670ee8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf2b2e75_11aecb05",
+        "filename": "chrome/tools/build/win/FILES.cfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-19T23:42:41Z",
+      "side": 1,
+      "message": "Oops. Done.",
+      "parentUuid": "183f892a_0ef071d5",
       "range": {
         "startLine": 121,
         "startChar": 17,
