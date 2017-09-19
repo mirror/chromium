@@ -74,6 +74,8 @@ class ChromeContentClient : public content::ContentClient {
   void SetGpuInfo(const gpu::GPUInfo& gpu_info) override;
   void AddPepperPlugins(
       std::vector<content::PepperPluginInfo>* plugins) override;
+  void SetGCHeapAllocationHookFunction(
+      GCHeapAllocationHookFunction fn) override;
   void AddContentDecryptionModules(
       std::vector<content::CdmInfo>* cdms,
       std::vector<content::CdmHostFilePath>* cdm_host_file_paths) override;
