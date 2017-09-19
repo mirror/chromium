@@ -485,6 +485,30 @@
     },
     {
       "key": {
+        "uuid": "15bb942f_7e476ee8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/accessibility/AccessibilityTabModelWrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-19T15:22:25Z",
+      "side": 1,
+      "message": "Fancy animations are definitely a plus! I don\u0027t think it makes it much more complex and we will remove the fork at some point (hopefully soon), which will greatly simply this class so I\u0027m OK with the TabLayout.",
+      "parentUuid": "2d2e93e1_f9114dd6",
+      "range": {
+        "startLine": 142,
+        "startChar": 12,
+        "endLine": 163,
+        "endChar": 15
+      },
+      "revId": "f7190c12a78800823e98d9872895e14c788bee2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4203f7d1_56105d49",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/newtab/NewTabButton.java",
         "patchSetId": 1

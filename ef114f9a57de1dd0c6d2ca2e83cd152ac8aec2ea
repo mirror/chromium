@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f8f78ce_cf090de1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/accessibility/AccessibilityTabModelWrapper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-19T15:22:25Z",
+      "side": 1,
+      "message": "nit: s/is currently/as currently",
+      "revId": "ef114f9a57de1dd0c6d2ca2e83cd152ac8aec2ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b5dba84_8a815f20",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/accessibility/AccessibilityTabModelWrapper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-19T15:22:25Z",
+      "side": 1,
+      "message": "nit: s/Whether incognito/Whether the incognito",
+      "range": {
+        "startLine": 234,
+        "startChar": 32,
+        "endLine": 234,
+        "endChar": 49
+      },
+      "revId": "ef114f9a57de1dd0c6d2ca2e83cd152ac8aec2ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6082e4d6_fcb691ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/accessibility/AccessibilityTabModelWrapper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-19T15:22:25Z",
+      "side": 1,
+      "message": "nit: How about an early return here if mTabModelSelect \u003d\u003d null || incognitoSelected \u003d\u003d mTabModelSelector.isIncognitoSelected() to avoid indenting.",
+      "range": {
+        "startLine": 237,
+        "startChar": 8,
+        "endLine": 237,
+        "endChar": 40
+      },
+      "revId": "ef114f9a57de1dd0c6d2ca2e83cd152ac8aec2ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
