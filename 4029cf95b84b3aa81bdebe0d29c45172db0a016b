@@ -22,6 +22,30 @@
       "revId": "4029cf95b84b3aa81bdebe0d29c45172db0a016b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87492c8e_c69b0334",
+        "filename": "chrome/browser/ui/views/tabs/tab_drag_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1550,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-09-19T20:24:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66e9cf20_1d03e1da",
+      "range": {
+        "startLine": 1550,
+        "startChar": 4,
+        "endLine": 1550,
+        "endChar": 26
+      },
+      "revId": "4029cf95b84b3aa81bdebe0d29c45172db0a016b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
