@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "efbe40c2_1816e7f0",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-19T08:46:50Z",
+      "side": 1,
+      "message": "Yeah, adding a checked_cast is probably a good idea, thank you!",
+      "parentUuid": "78523564_90a4dbb8",
+      "range": {
+        "startLine": 56,
+        "startChar": 35,
+        "endLine": 56,
+        "endChar": 38
+      },
+      "revId": "619f8a228b6dff02c9ead5b533b0e49d798c6fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1aa53837_f334378e",
         "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.cc",
         "patchSetId": 5
@@ -93,6 +117,30 @@
       "revId": "619f8a228b6dff02c9ead5b533b0e49d798c6fad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce5882e6_19a6aeb8",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-19T08:46:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1939d97e_025edbc8",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "619f8a228b6dff02c9ead5b533b0e49d798c6fad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "423cba25_2ff63f8c",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-19T08:46:50Z",
+      "side": 1,
+      "message": "Arguably you don\u0027t need the loginPair here anymore, but it might be a good idea to still have this as a sanity check that we are getting back the username and password we are expecting.",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 29
+      },
+      "revId": "6924add874edab4c5db07dd8e5760da03c6df424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
