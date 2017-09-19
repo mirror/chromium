@@ -14,6 +14,10 @@
 #include "base/callback_forward.h"
 #include "content/common/content_export.h"
 
+namespace base {
+class FilePath;
+}
+
 namespace net {
 struct NetworkTrafficAnnotationTag;
 }  // namespace net
@@ -54,6 +58,11 @@ class CONTENT_EXPORT SimpleURLLoader {
   using BodyAsStringCallback =
       base::OnceCallback<void(std::unique_ptr<std::string> response_body)>;
 
+  // Callback used when download the response body to a file. On failure, |path|
+  // will be empty.
+  using DownloadToFileCompleteCallback =
+      base::OnceCallback<void(const base::FilePath& path)>;
+
   static std::unique_ptr<SimpleURLLoader> Create();
 
   virtual ~SimpleURLLoader();
@@ -84,6 +93,27 @@ class CONTENT_EXPORT SimpleURLLoader {
       mojom::URLLoaderFactory* url_loader_factory,
       const net::NetworkTrafficAnnotationTag& annotation_tag,
       BodyAsStringCallback body_as_string_callback) = 0;
+
+  // SimpleURLLoader will download the entire response to a file at the
+  // specified path. File I/O will happen on another sequence, so it's safe to
+  // use this on any sequence.
+  //
+  // If there's a file, network, or http error, or the max limit
+  // is exceeded, the file will be automatically destroyed before the callback
+  // is invoked and en empty path passed to the callback, unless
+  // SetAllowPartialResults() and/or SetAllowHttpErrorResults() were used to
+  // indicate partial results are allowed.
+  //
+  // If the SimpleURLLoader is destroyed before it has invoked the callback, the
+  // downloaded file will be deleted asynchronously, regardless of other
+  // settings.
+  virtual void DownloadToFile(
+      const ResourceRequest& resource_request,
+      mojom::URLLoaderFactory* url_loader_factory,
+      const net::NetworkTrafficAnnotationTag& annotation_tag,
+      DownloadToFileCompleteCallback download_to_file_complete_callback,
+      const base::FilePath& file_path,
+      int64_t max_body_size = std::numeric_limits<int64_t>::max()) = 0;
 
   // Sets whether partially received results are allowed. Defaults to false.
   // When true, if an error is received after reading the body starts or the max
