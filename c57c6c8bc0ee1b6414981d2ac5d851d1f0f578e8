@@ -1,0 +1,648 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8549cb33_091d5b58",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: #include \"base/logging.h\"",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 14
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d02a5e6f_ad2a8fc6",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: No uppercase letters in parameter names, according to the style guide.",
+      "range": {
+        "startLine": 112,
+        "startChar": 51,
+        "endLine": 112,
+        "endChar": 54
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "095bf939_eec24f3e",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: No uppercase letters in parameter names, according to the style guide.",
+      "range": {
+        "startLine": 112,
+        "startChar": 51,
+        "endLine": 112,
+        "endChar": 54
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef28d261_501341b1",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit 1: The \"IfExists\" part doesn\u0027t clarify much - it\u0027s anyway understandable that the returned vector will be empty when there\u0027s no data.\nnit 2: It\u0027s a bit hard to get the difference from the GetIntervals() method above. Maybe make the names longer, but clearer - GetIntervalsFromDeviceSettingsProto(), GetIntervalsFromOffHoursProto()?",
+      "range": {
+        "startLine": 142,
+        "startChar": 22,
+        "endLine": 142,
+        "endChar": 42
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd36306_7eb00561",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: It\u0027ll be cleaner to check whether has_device_off_hours() before.",
+      "range": {
+        "startLine": 177,
+        "startChar": 58,
+        "endLine": 177,
+        "endChar": 74
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc753ca_15165215",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: Not needed.",
+      "range": {
+        "startLine": 186,
+        "startChar": 2,
+        "endLine": 187,
+        "endChar": 26
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9656429_6d5d6fcd",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: I believe, this is unnecessary - the timer destruction should stop it too.",
+      "range": {
+        "startLine": 193,
+        "startChar": 2,
+        "endLine": 193,
+        "endChar": 22
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a93651_e11bcd61",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: Can this be extracted into a separate function GetCurrentWeeklyTime()?\nIt can be even a member of |WeeklyTime|.",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 211,
+        "endChar": 54
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3233b30e_58ed90bb",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: Better extract this complex piece of code into a separate method - e.g. base::TimeDelta GetDeltaTillOffHours().",
+      "range": {
+        "startLine": 214,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 3
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3ddad6_969b4ef2",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: (not insisting) Wouldn\u0027t the standard operator\u003c\u003c that already exists for base::TimeDelta suit you here?",
+      "range": {
+        "startLine": 242,
+        "startChar": 14,
+        "endLine": 242,
+        "endChar": 63
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a87e680e_cf8341fe",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "Now that the OffHours-related functionality started being divided into multiple file - it makes sense to extract these global functions ConvertOffHoursProtoToValue() and ConvertOffHoursProtoToValue() as well, so that only the controller itself stays in this header. Will it be possible to achieve that?",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "932baf6c_ffed2919",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: \"updating\"",
+      "range": {
+        "startLine": 86,
+        "startChar": 15,
+        "endLine": 86,
+        "endChar": 21
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a06de5_27965af3",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: #include \u003cvector\u003e\n(and remove this include from .cc)",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 13
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dadf5113_20b8e1fb",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: Remove \"MillisecondsIn\" here too.",
+      "range": {
+        "startLine": 29,
+        "startChar": 27,
+        "endLine": 29,
+        "endChar": 41
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc81b7e9_e6123dc8",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: Typically it\u0027s advised to avoid default parameters unless you really need them (see also the style guide). Here in the test, it will also make the call places a little bit more readable.",
+      "range": {
+        "startLine": 86,
+        "startChar": 49,
+        "endLine": 86,
+        "endChar": 69
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "737bfffd_3d5db0f3",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: Please find a way to get rid of the duplication in this method.",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 57
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e874825_6fe89be0",
+        "filename": "chrome/browser/chromeos/policy/device_off_hours_controller_unittest.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: Outdated comment? (maybe just remove it?)",
+      "range": {
+        "startLine": 153,
+        "startChar": 2,
+        "endLine": 153,
+        "endChar": 44
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60eafc4c_6cda48f5",
+        "filename": "chrome/browser/chromeos/policy/off_hours/interval.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: No need to duplicate the docs from the .h file in the .cc file.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 32
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf8a85d_c28079c9",
+        "filename": "chrome/browser/chromeos/policy/off_hours/interval.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: Move this after the next \"if\", as it\u0027s not used in it.",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 35
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0fe74be_dba8070e",
+        "filename": "chrome/browser/chromeos/policy/off_hours/interval.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: Move to .cc.",
+      "range": {
+        "startLine": 10,
+        "startChar": 9,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27db75de_0037b18f",
+        "filename": "chrome/browser/chromeos/policy/off_hours/interval.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: \"Represents a time interval between two weekly times.\"?\nAlso add a note that the intervals can be wrapped across the week end.",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 23
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7881dbe_30c015ce",
+        "filename": "chrome/browser/chromeos/policy/off_hours/interval.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "The names \"policy::Interval\", \"policy::WeeklyTime\" are too generic. These types are likely to make sense only to the OffHours-related code.\nSo either prepend them with the words \"OffHours\", or restore back the \"policy::off_hours\" namespace and put everything related into it.",
+      "range": {
+        "startLine": 17,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 14
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6346962_4b487ef8",
+        "filename": "chrome/browser/chromeos/policy/off_hours/interval.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: The description should say what the method does (specifically, in this case - what is the format of the returned dictionary), but not where the method is used.\n\n(Ditto for WeeklyTime.)",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 22,
+        "endChar": 34
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8784ced8_ded7373e",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: Move to .cc.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 33
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dbefcae_22938a34",
+        "filename": "chrome/browser/chromeos/policy/off_hours/weekly_time.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: Why make this static? It can be GetDurationTo(const WeeklyTime\u0026 other).",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 8
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a4b4f3c_e6e12274",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: Surround with \"|\".",
+      "range": {
+        "startLine": 296,
+        "startChar": 12,
+        "endLine": 296,
+        "endChar": 36
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f43ea88_ae4f1583",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: The controller is created in the constructor - therefore the doc should be changed to something like \"The returned pointer is guaranteed to be non-null.\"",
+      "range": {
+        "startLine": 135,
+        "startChar": 5,
+        "endLine": 135,
+        "endChar": 60
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdc9ad12_3ac2539e",
+        "filename": "chrome/browser/chromeos/settings/device_settings_service.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-09-19T16:27:47Z",
+      "side": 1,
+      "message": "nit: Not needed - it\u0027s null-constructed by default.",
+      "range": {
+        "startLine": 269,
+        "startChar": 34,
+        "endLine": 269,
+        "endChar": 44
+      },
+      "revId": "c57c6c8bc0ee1b6414981d2ac5d851d1f0f578e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
