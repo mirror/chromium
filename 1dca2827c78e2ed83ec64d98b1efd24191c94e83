@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe9ed224_4fdd1203",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-19T12:15:54Z",
+      "side": 1,
+      "message": "do we need to set self.addingNewFolder \u003d NO here too?",
+      "revId": "1dca2827c78e2ed83ec64d98b1efd24191c94e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ad34f9_a4700cb9",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-19T12:15:54Z",
+      "side": 1,
+      "message": "When user changes input method, I guess this function will be called too?",
+      "revId": "1dca2827c78e2ed83ec64d98b1efd24191c94e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf0adc44_bfc9e700",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-19T12:15:54Z",
+      "side": 1,
+      "message": "Do we need a TODO to test adding new folder to a out of screen position (very long table) later?",
+      "revId": "1dca2827c78e2ed83ec64d98b1efd24191c94e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
