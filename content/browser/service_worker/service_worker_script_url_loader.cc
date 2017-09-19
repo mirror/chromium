@@ -21,7 +21,7 @@ namespace {
 
 // Buffer size for reading script data from network. We chose this size because
 // the AppCache uses this.
-const size_t kReadBufferSize = 32768;
+const uint32_t kReadBufferSize = 32768;
 
 }  // namespace
 
@@ -320,27 +320,30 @@ void ServiceWorkerScriptURLLoader::OnNetworkDataAvailable(MojoResult) {
       return;
   }
 
-  // Read the received data to |buffer|.
-  size_t bytes_to_be_read = std::min<size_t>(kReadBufferSize, available);
-  auto buffer = base::MakeRefCounted<network::MojoToNetIOBuffer>(
-      pending_buffer.get(), bytes_to_be_read);
-
-  WriteData(std::move(buffer), bytes_to_be_read, std::move(pending_buffer));
+  WriteData(std::move(pending_buffer), available);
 }
 
 void ServiceWorkerScriptURLLoader::WriteData(
-    scoped_refptr<net::IOBuffer> buffer,
-    size_t available_bytes,
-    scoped_refptr<network::MojoToNetPendingBuffer> pending_buffer) {
-  uint32_t bytes_written = available_bytes;
+    scoped_refptr<network::MojoToNetPendingBuffer> pending_buffer,
+    uint32_t available) {
+  uint32_t bytes_written = std::min<uint32_t>(kReadBufferSize, available);
+  auto buffer = base::MakeRefCounted<network::MojoToNetIOBuffer>(
+      pending_buffer.get(), bytes_written);
   MojoResult result = client_producer_->WriteData(
-      buffer->data(), &bytes_written, MOJO_WRITE_DATA_FLAG_ALL_OR_NONE);
+      buffer->data(), &bytes_written, MOJO_WRITE_DATA_FLAG_NONE);
   switch (result) {
     case MOJO_RESULT_FAILED_PRECONDITION:
       CommitCompleted(ResourceRequestCompletionStatus(net::ERR_FAILED));
       return;
     case MOJO_RESULT_OK:
       break;
+    case MOJO_RESULT_SHOULD_WAIT:
+      // No data was written to |client_producer_| because the pipe was full.
+      // Retry when the pipe becomes ready again.
+      pending_buffer->CompleteRead(0);
+      network_consumer_ = pending_buffer->ReleaseHandle();
+      network_watcher_.ArmOrNotify();
+      return;
     default:
       // TODO(nhiroki): Currently we handle a few limited cases. Audit other
       // cases.
@@ -359,7 +362,7 @@ void ServiceWorkerScriptURLLoader::WriteData(
   }
   // MaybeWriteData() doesn't run the callback if it finishes synchronously, so
   // explicitly call it here.
-  OnWriteDataComplete(available_bytes, std::move(pending_buffer), error);
+  OnWriteDataComplete(bytes_written, std::move(pending_buffer), error);
 }
 
 void ServiceWorkerScriptURLLoader::OnWriteDataComplete(
@@ -375,7 +378,6 @@ void ServiceWorkerScriptURLLoader::OnWriteDataComplete(
   pending_buffer->CompleteRead(bytes_written);
   // Get the consumer handle from a previous read operation if we have one.
   network_consumer_ = pending_buffer->ReleaseHandle();
-  pending_buffer = nullptr;
   network_watcher_.ArmOrNotify();
 }
 
