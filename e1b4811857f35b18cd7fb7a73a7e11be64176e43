@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d04ffa47_f15a2e18",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T03:27:06Z",
+      "side": 1,
+      "message": "I was wondering why those places manually called OnPromoClosed(), but I didn\u0027t think enough of it.\n\nYes, I would remove those calls from those places, and then go back to how the code was here before.  You could alternately call that and SchedulePaint() here, but why duplicate the functionality when it will work fine the other way?  That also has the nice property that this function is solely about requesting bubble closure, and the other function about handling bubble closure.",
+      "parentUuid": "229d1ba4_6f9e07b5",
+      "revId": "e1b4811857f35b18cd7fb7a73a7e11be64176e43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "456228d6_1f2e58e2",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 17
