@@ -112,6 +112,10 @@ std::unique_ptr<net::HttpRequestHeaders> GetAdditionalRequestHeaders(
   return headers;
 }
 
+bool IsPartialRequest(DownloadSaveInfo* save_info) {
+  return save_info && (save_info->offset > 0 || save_info->length > 0);
+}
+
 }  // namespace
 
 DownloadInterruptReason HandleRequestCompletionStatus(
@@ -274,7 +278,9 @@ CreateURLRequestOnIOThread(DownloadUrlParameters* params) {
 
 DownloadInterruptReason HandleSuccessfulServerResponse(
     const net::HttpResponseHeaders& http_headers,
-    DownloadSaveInfo* save_info) {
+    DownloadSaveInfo* save_info,
+    bool fetch_error_body) {
+  DownloadInterruptReason result = DOWNLOAD_INTERRUPT_REASON_NONE;
   switch (http_headers.response_code()) {
     case -1:  // Non-HTTP request.
     case net::HTTP_OK:
@@ -300,22 +306,22 @@ DownloadInterruptReason HandleSuccessfulServerResponse(
     // resource not being found since there is no entity to download.
 
     case net::HTTP_NOT_FOUND:
-      return DOWNLOAD_INTERRUPT_REASON_SERVER_BAD_CONTENT;
+      result = DOWNLOAD_INTERRUPT_REASON_SERVER_BAD_CONTENT;
       break;
 
     case net::HTTP_REQUESTED_RANGE_NOT_SATISFIABLE:
       // Retry by downloading from the start automatically:
       // If we haven't received data when we get this error, we won't.
-      return DOWNLOAD_INTERRUPT_REASON_SERVER_NO_RANGE;
+      result = DOWNLOAD_INTERRUPT_REASON_SERVER_NO_RANGE;
       break;
     case net::HTTP_UNAUTHORIZED:
     case net::HTTP_PROXY_AUTHENTICATION_REQUIRED:
       // Server didn't authorize this request.
-      return DOWNLOAD_INTERRUPT_REASON_SERVER_UNAUTHORIZED;
+      result = DOWNLOAD_INTERRUPT_REASON_SERVER_UNAUTHORIZED;
       break;
     case net::HTTP_FORBIDDEN:
       // Server forbids access to this resource.
-      return DOWNLOAD_INTERRUPT_REASON_SERVER_FORBIDDEN;
+      result = DOWNLOAD_INTERRUPT_REASON_SERVER_FORBIDDEN;
       break;
     default:  // All other errors.
       // Redirection and informational codes should have been handled earlier
@@ -325,13 +331,21 @@ DownloadInterruptReason HandleSuccessfulServerResponse(
       // This will change extensions::api::download::InterruptReason.
       DCHECK_NE(3, http_headers.response_code() / 100);
       DCHECK_NE(1, http_headers.response_code() / 100);
-      return DOWNLOAD_INTERRUPT_REASON_SERVER_FAILED;
+      result = DOWNLOAD_INTERRUPT_REASON_SERVER_FAILED;
+  }
+
+  if (result != DOWNLOAD_INTERRUPT_REASON_NONE) {
+    // Don't fetch error response body if this is a partial request, since error
+    // response body should not be attached to the content fetched by successful
+    // responses.
+    if (!fetch_error_body || (fetch_error_body && IsPartialRequest(save_info)))
+      return result;
   }
 
   // The caller is expecting a partial response.
-  if (save_info && (save_info->offset > 0 || save_info->length > 0)) {
+  if (IsPartialRequest(save_info)) {
     if (http_headers.response_code() != net::HTTP_PARTIAL_CONTENT) {
-      // Server should send partial content when "If-Match" or
+      // Server should send partial content response code when "If-Match" or
       // "If-Unmodified-Since" check passes, and the range request header has
       // last byte position. e.g. "Range:bytes=50-99".
       if (save_info->length != DownloadSaveInfo::kLengthFullContent)
