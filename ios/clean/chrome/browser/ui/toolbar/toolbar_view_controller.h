@@ -14,6 +14,7 @@
 #import "ios/clean/chrome/browser/ui/transitions/animators/zoom_transition_delegate.h"
 
 @protocol NavigationCommands;
+@protocol TabCommands;
 @protocol TabGridCommands;
 @protocol TabHistoryPopupCommands;
 @protocol TabStripCommands;
@@ -33,6 +34,7 @@
                                                     ZoomTransitionDelegate>
 
 - (instancetype)initWithDispatcher:(id<NavigationCommands,
+                                       TabCommands,
                                        TabGridCommands,
                                        TabHistoryPopupCommands,
                                        TabStripCommands,
@@ -47,6 +49,7 @@
 
 // The dispatcher for this view controller.
 @property(nonatomic, weak) id<NavigationCommands,
+                              TabCommands,
                               TabGridCommands,
                               TabHistoryPopupCommands,
                               TabStripCommands,

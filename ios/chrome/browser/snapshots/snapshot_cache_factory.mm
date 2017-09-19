@@ -10,7 +10,6 @@
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/keyed_service/ios/browser_state_dependency_manager.h"
 #include "ios/chrome/browser/browser_state/browser_state_otr_helper.h"
-#include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/snapshots/snapshot_cache.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -19,7 +18,7 @@
 
 namespace {
 // C++ wrapper around SnapshotCache, owning the SnapshotCache and allowing it
-// bind it to an ios::ChromeBrowserState as a KeyedService.
+// bind it to a web::BrowserState as a KeyedService.
 class SnapshotCacheWrapper : public KeyedService {
  public:
   explicit SnapshotCacheWrapper(SnapshotCache* snapshot_cache);
@@ -53,7 +52,7 @@ void SnapshotCacheWrapper::Shutdown() {
 
 // static
 SnapshotCache* SnapshotCacheFactory::GetForBrowserState(
-    ios::ChromeBrowserState* browser_state) {
+    web::BrowserState* browser_state) {
   SnapshotCacheWrapper* wrapper = static_cast<SnapshotCacheWrapper*>(
       GetInstance()->GetServiceForBrowserState(browser_state, true));
   return wrapper ? wrapper->snapshot_cache() : nil;
