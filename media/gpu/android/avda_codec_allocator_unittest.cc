@@ -11,7 +11,9 @@
 #include "base/bind.h"
 #include "base/logging.h"
 #include "base/single_thread_task_runner.h"
+#include "base/test/scoped_task_environment.h"
 #include "base/test/simple_test_tick_clock.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/time/tick_clock.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -74,12 +76,15 @@ class AVDACodecAllocatorTest : public testing::Test {
 
     // Create the first allocator on the allocator thread.
     allocator_ = PostAndWait(
-        FROM_HERE, base::Bind(
-                       [](base::TickClock* clock, base::WaitableEvent* event) {
-                         return new AVDACodecAllocator(clock, event);
-                       },
-                       &tick_clock_, &stop_event_));
-    allocator2_ = new AVDACodecAllocator();
+        FROM_HERE,
+        base::Bind(
+            [](scoped_refptr<base::SequencedTaskRunner> task_runner,
+               base::TickClock* clock, base::WaitableEvent* event) {
+              return new AVDACodecAllocator(task_runner, clock, event);
+            },
+            allocator_thread_.task_runner(), &tick_clock_, &stop_event_));
+    allocator2_ =
+        new AVDACodecAllocator(base::SequencedTaskRunnerHandle::Get());
   }
 
   void TearDown() override {
@@ -99,13 +104,14 @@ class AVDACodecAllocatorTest : public testing::Test {
 
  protected:
   // Start / stop the threads for |avda| on the right thread.
-  bool StartThread(AVDACodecAllocatorClient* avda) {
-    return PostAndWait(FROM_HERE, base::Bind(
-                                      [](AVDACodecAllocator* allocator,
-                                         AVDACodecAllocatorClient* avda) {
-                                        return allocator->StartThread(avda);
-                                      },
-                                      allocator_, avda));
+  void StartThread(AVDACodecAllocatorClient* avda) {
+    PostAndWait(FROM_HERE, base::Bind(
+                               [](AVDACodecAllocator* allocator,
+                                  AVDACodecAllocatorClient* avda) {
+                                 allocator->StartThread(avda);
+                                 return true;  // void won't work.
+                               },
+                               allocator_, avda));
   }
 
   void StopThread(AVDACodecAllocatorClient* avda) {
@@ -164,6 +170,9 @@ class AVDACodecAllocatorTest : public testing::Test {
     event.Wait();
     return return_value;
   }
+
+  // So that we can get the thread's task runner.
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
 
   base::Thread allocator_thread_;
 
