@@ -240,6 +240,7 @@
 #include "platform/network/ContentSecurityPolicyParsers.h"
 #include "platform/network/HTTPParsers.h"
 #include "platform/network/NetworkStateNotifier.h"
+#include "platform/origin_manifest/OriginManifestStoreClient.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/scroll/ScrollbarTheme.h"
 #include "platform/text/PlatformLocale.h"
@@ -6022,6 +6023,7 @@ void Document::InitContentSecurityPolicy(
   if (policy_to_inherit && IsPluginDocument())
     GetContentSecurityPolicy()->CopyPluginTypesFrom(policy_to_inherit);
 
+  SetContentSecurityPolicyFromOriginManifest();
   GetContentSecurityPolicy()->BindToExecutionContext(this);
 }
 
