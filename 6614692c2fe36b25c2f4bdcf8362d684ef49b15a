@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f493aa3c_36b009ad",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-09-19T22:49:15Z",
+      "side": 1,
+      "message": "Good idea, although there is a lot going on in this method that could be simpler?",
+      "revId": "6614692c2fe36b25c2f4bdcf8362d684ef49b15a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
