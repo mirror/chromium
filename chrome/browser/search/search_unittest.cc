@@ -4,6 +4,9 @@
 
 #include <stddef.h>
 
+#include <map>
+#include <memory>
+
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -31,6 +34,7 @@
 #include "components/search_engines/template_url_service.h"
 #include "components/variations/entropy_provider.h"
 #include "content/public/browser/navigation_entry.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/browser/site_instance.h"
@@ -108,7 +112,7 @@ class SearchTest : public BrowserWithTestWindowTest {
     InstantService* instant_service =
         InstantServiceFactory::GetForProfile(profile());
     return instant_service->IsInstantProcess(
-        contents->GetRenderProcessHost()->GetID());
+        contents->GetMainFrame()->GetProcess()->GetID());
   }
 
   std::unique_ptr<base::FieldTrialList> field_trial_list_;
@@ -249,7 +253,7 @@ TEST_F(SearchTest, ProcessIsolation) {
     const scoped_refptr<content::SiteInstance> start_site_instance =
         contents->GetSiteInstance();
     const content::RenderProcessHost* start_rph =
-        contents->GetRenderProcessHost();
+        contents->GetMainFrame()->GetProcess();
     const content::RenderViewHost* start_rvh =
         contents->GetRenderViewHost();
 
@@ -265,7 +269,7 @@ TEST_F(SearchTest, ProcessIsolation) {
               start_rvh == contents->GetRenderViewHost())
         << test.description;
     EXPECT_EQ(test.same_site_instance,
-              start_rph == contents->GetRenderProcessHost())
+              start_rph == contents->GetMainFrame()->GetProcess())
         << test.description;
   }
 }
@@ -286,7 +290,7 @@ TEST_F(SearchTest, ProcessIsolation_RendererInitiated) {
     const scoped_refptr<content::SiteInstance> start_site_instance =
         contents->GetSiteInstance();
     const content::RenderProcessHost* start_rph =
-        contents->GetRenderProcessHost();
+        contents->GetMainFrame()->GetProcess();
     const content::RenderViewHost* start_rvh =
         contents->GetRenderViewHost();
 
@@ -309,7 +313,7 @@ TEST_F(SearchTest, ProcessIsolation_RendererInitiated) {
               start_rvh == contents->GetRenderViewHost())
         << test.description;
     EXPECT_EQ(test.same_site_instance,
-              start_rph == contents->GetRenderProcessHost())
+              start_rph == contents->GetMainFrame()->GetProcess())
         << test.description;
   }
 }
