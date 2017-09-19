@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "268def41_51351419",
+        "filename": "chrome/installer/zucchini/io_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-19T04:10:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "788fc25d_14b31dcb",
+      "revId": "b52a228b546003ea3b26d5236b0eff1b60086c81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0204b2f_ec68a148",
         "filename": "tools/clang/plugins/ChromeClassTester.cpp",
         "patchSetId": 2
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "e0292419_a69ec4df",
+        "filename": "tools/clang/plugins/ChromeClassTester.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-19T04:10:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0204b2f_ec68a148",
+      "revId": "b52a228b546003ea3b26d5236b0eff1b60086c81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e30a4dc_4b1725d0",
         "filename": "tools/clang/plugins/ChromeClassTester.cpp",
         "patchSetId": 2
@@ -65,6 +101,24 @@
       "writtenOn": "2017-09-19T01:12:00Z",
       "side": 1,
       "message": "Probably we want to enable all checks for //third_party/blink/{common,browser}/.  So this might be \"/third_party/blink/renderer/\".",
+      "revId": "b52a228b546003ea3b26d5236b0eff1b60086c81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852f22a2_bcf6afa7",
+        "filename": "tools/clang/plugins/ChromeClassTester.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-09-19T04:10:54Z",
+      "side": 1,
+      "message": "I opted to just specifically allow /third_party/blink/browser for now (common currently lives in third_party/WebKit and is exempt from these checks).",
+      "parentUuid": "0e30a4dc_4b1725d0",
       "revId": "b52a228b546003ea3b26d5236b0eff1b60086c81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
