@@ -1604,6 +1604,5 @@ TEST_F(DisplayInfoProviderChromeosTouchviewTest, GetTabletMode) {
   EXPECT_FALSE(result[1].has_accelerometer_support);
   EXPECT_FALSE(result[1].is_tablet_mode);
 }
-
 }  // namespace
 }  // namespace extensions
