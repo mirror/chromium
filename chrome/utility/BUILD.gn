@@ -161,6 +161,8 @@ static_library("utility") {
     sources += [
       "printing/pdf_to_pwg_raster_converter_impl.cc",
       "printing/pdf_to_pwg_raster_converter_impl.h",
+      "printing/printing_utility_service.cc",
+      "printing/printing_utility_service.h",
     ]
     deps += [ "//pdf" ]
   } else {
@@ -194,4 +196,9 @@ if (!is_android) {
     name = "profile_import"
     source = "importer/profile_import_manifest.json"
   }
+}
+
+service_manifest("printing_utility_manifest") {
+  name = "printing_utility"
+  source = "printing/printing_utility_manifest.json"
 }

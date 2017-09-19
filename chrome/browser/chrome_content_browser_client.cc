@@ -395,6 +395,9 @@
 
 #if BUILDFLAG(ENABLE_PRINTING)
 #include "components/printing/service/public/interfaces/pdf_compositor.mojom.h"
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
+#include "chrome/common/printing/pdf_to_pwg_raster_converter.mojom.h"
+#endif
 #endif
 
 #if BUILDFLAG(ENABLE_MOJO_MEDIA)
@@ -3003,6 +3006,12 @@ void ChromeContentBrowserClient::RegisterOutOfProcessServices(
 #if BUILDFLAG(ENABLE_PRINTING)
   (*services)[printing::mojom::kServiceName] =
       base::ASCIIToUTF16("PDF Compositor Service");
+
+#if BUILDFLAG(ENABLE_PRINT_PREVIEW)
+  (*services)[printing::mojom::kUtilityServiceName] =
+      l10n_util::GetStringUTF16(IDS_UTILITY_PROCESS_PWG_RASTER_CONVERTOR_NAME);
+#endif
+
 #endif
 
   (*services)[profiling::mojom::kServiceName] =

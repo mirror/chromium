@@ -1,0 +1,2 @@
+per-file printing_utility_manifest.json=set noparent
+per-file printing_utility_manifest.json=file://ipc/SECURITY_OWNERS
