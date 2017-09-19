@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b9c718b_6f0c9418",
+        "filename": "gpu/command_buffer/service/feature_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1557,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-09-19T00:32:46Z",
+      "side": 1,
+      "message": "For ES2, it requires the extension to exist, so enable_ext_color_buffer_half_float has to be true. In theory we can make this a DCHECK, but probably not a big deal.",
+      "range": {
+        "startLine": 1557,
+        "startChar": 27,
+        "endLine": 1557,
+        "endChar": 40
+      },
+      "revId": "c363c6eb5e42d55d891b1884e77c6a7505980bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
