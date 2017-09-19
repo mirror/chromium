@@ -5,11 +5,13 @@
 #ifndef COMPONENTS_NTP_SNIPPETS_CONTENT_SUGGESTION_H_
 #define COMPONENTS_NTP_SNIPPETS_CONTENT_SUGGESTION_H_
 
+#include <cstdint>
 #include <memory>
 #include <string>
 
 #include "base/files/file_path.h"
 #include "base/macros.h"
+#include "base/optional.h"
 #include "base/strings/string16.h"
 #include "base/time/time.h"
 #include "components/ntp_snippets/category.h"
@@ -193,6 +195,13 @@ class ContentSuggestion {
     fetch_date_ = fetch_date;
   }
 
+  const base::Optional<uint32_t>& optional_image_dominant_color() const {
+    return image_dominant_color_;
+  }
+  void set_image_dominant_color(uint32_t color_int) {
+    image_dominant_color_ = color_int;
+  }
+
  private:
   ID id_;
   GURL url_;
@@ -213,6 +222,9 @@ class ContentSuggestion {
   base::Time fetch_date_;
 
   bool is_video_suggestion_;
+
+  // Encoded as @ColorInt.
+  base::Optional<uint32_t> image_dominant_color_;
 
   DISALLOW_COPY_AND_ASSIGN(ContentSuggestion);
 };
