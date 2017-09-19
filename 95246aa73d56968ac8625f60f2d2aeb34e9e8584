@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40b7b6cc_b7cd731d",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1476,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-19T08:42:14Z",
+      "side": 1,
+      "message": "I don\u0027t think the sticky offset *should* be in ContentOffsetInCompositingLayer if we\u0027re shifting the compositing layer for sticky position. I suspect the right thing to do would be to remove the sticky offset in ComputeBoundsOfOwningLayer which should mean we don\u0027t have to remove it in UpdateMainGraphicsLayerGeometry and anything else which relies on the content position.",
+      "revId": "95246aa73d56968ac8625f60f2d2aeb34e9e8584",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
