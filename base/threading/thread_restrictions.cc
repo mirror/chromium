@@ -124,11 +124,6 @@ void ThreadRestrictions::DisallowWaiting() {
   DisallowBaseSyncPrimitives();
 }
 
-// static
-void ThreadRestrictions::AssertWaitAllowed() {
-  AssertBaseSyncPrimitivesAllowed();
-}
-
 bool ThreadRestrictions::SetWaitAllowed(bool allowed) {
   bool previous_disallowed = g_base_sync_primitives_disallowed.Get().Get();
   g_base_sync_primitives_disallowed.Get().Set(!allowed);
