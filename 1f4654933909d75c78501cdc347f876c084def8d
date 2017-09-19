@@ -16,6 +16,24 @@
       "revId": "1f4654933909d75c78501cdc347f876c084def8d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d558a80_acdae6f2",
+        "filename": "third_party/WebKit/Source/core/editing/EditingTriState.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-09-19T06:37:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c215936_f22785de",
+      "revId": "1f4654933909d75c78501cdc347f876c084def8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
