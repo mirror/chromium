@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7b4ec36_7294ed07",
+        "filename": "chrome/browser/feature_engagement/bookmark/bookmark_tracker.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-19T03:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0b2a3d0_c13efea9",
+      "revId": "e1b4811857f35b18cd7fb7a73a7e11be64176e43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d58e6fc9_8e2d39bf",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 17
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-19T02:01:55Z",
       "side": 1,
       "message": "This will mean we don\u0027t call OnPromoClosed() or SchedulePaint().  I know the latter is needed, I\u0027m not sure about the former.\n\nI think the preferable route would be to leave things as they were, maybe with some comments.  Widget::Close() is documented as always being async (I went and looked).",
+      "revId": "e1b4811857f35b18cd7fb7a73a7e11be64176e43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229d1ba4_6f9e07b5",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-19T03:22:52Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand why OnPromoClosed() won\u0027t be called? CloseBubbleForLastActiveBrowser which calls this function is called from tab_strip_model, browser_tab_strip, and browser_command_controller which all manually call OnPromoClosed. (which now that I think about it, should I just do it in here to make it more similiar to make it less confusing?) Could I just changed this to also have SchedulePaint? However, if you would like for me to keep observing here, I can go back to the way it was.",
+      "parentUuid": "d58e6fc9_8e2d39bf",
       "revId": "e1b4811857f35b18cd7fb7a73a7e11be64176e43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "e1b4811857f35b18cd7fb7a73a7e11be64176e43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33ce9a4d_9c59f4b6",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-19T03:22:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "456228d6_1f2e58e2",
+      "revId": "e1b4811857f35b18cd7fb7a73a7e11be64176e43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
