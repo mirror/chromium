@@ -54,6 +54,7 @@ const char kLargeIconUrl[] = "large_icon_url";
 const char kFaviconUrl[] = "favicon_url";
 const char kSection[] = "section";
 const char kSites[] = "sites";
+const char kNameSource[] = "title_source";
 
 using TestPopularSite = std::map<std::string, std::string>;
 using TestPopularSiteVector = std::vector<TestPopularSite>;
@@ -83,11 +84,13 @@ class PopularSitesTest : public ::testing::Test {
             {kTitle, "Wikipedia, fhta Ph'nglui mglw'nafh"},
             {kUrl, "https://zz.m.wikipedia.org/"},
             {kLargeIconUrl, "https://zz.m.wikipedia.org/wikipedia.png"},
+            {kNameSource, "1"},  // Name extracted from title tag.
         },
         kYouTube{
             {kTitle, "YouTube"},
             {kUrl, "https://m.youtube.com/"},
             {kLargeIconUrl, "https://s.ytimg.com/apple-touch-icon.png"},
+            {kNameSource, "2"},  // Name extracted from manifest.
         },
         kChromium{
             {kTitle, "The Chromium Project"},
@@ -113,6 +116,12 @@ class PopularSitesTest : public ::testing::Test {
     for (const TestPopularSite& site : sites) {
       auto site_value = base::MakeUnique<base::DictionaryValue>();
       for (const std::pair<std::string, std::string>& kv : site) {
+        if (kv.first == kNameSource) {
+          int source;
+          base::StringToInt(kv.second, &source);
+          site_value->SetInteger(kv.first, source);
+          continue;
+        }
         site_value->SetString(kv.first, kv.second);
       }
       sites_value->Append(std::move(site_value));
@@ -256,6 +265,7 @@ TEST_F(PopularSitesTest, ShouldSucceedFetching) {
   EXPECT_THAT(sites[0].large_icon_url,
               URLEq("https://zz.m.wikipedia.org/wikipedia.png"));
   EXPECT_THAT(sites[0].favicon_url, URLEq(""));
+  EXPECT_THAT(sites[0].name_source, Eq(TileNameSource::TITLE));
 }
 
 TEST_F(PopularSitesTest, Fallback) {
@@ -276,11 +286,13 @@ TEST_F(PopularSitesTest, Fallback) {
   EXPECT_THAT(sites[0].large_icon_url,
               URLEq("https://s.ytimg.com/apple-touch-icon.png"));
   EXPECT_THAT(sites[0].favicon_url, URLEq(""));
+  EXPECT_THAT(sites[0].name_source, Eq(TileNameSource::MANIFEST));
   EXPECT_THAT(sites[1].title, Str16Eq("The Chromium Project"));
   EXPECT_THAT(sites[1].url, URLEq("https://www.chromium.org/"));
   EXPECT_THAT(sites[1].large_icon_url, URLEq(""));
   EXPECT_THAT(sites[1].favicon_url,
               URLEq("https://www.chromium.org/favicon.ico"));
+  EXPECT_THAT(sites[1].name_source, Eq(TileNameSource::UNKNOWN));
 }
 
 TEST_F(PopularSitesTest, PopulatesWithDefaultResoucesOnFailure) {

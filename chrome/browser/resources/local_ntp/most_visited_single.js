@@ -27,6 +27,20 @@ var LOG_TYPE = {
 
 
 /**
+ * The different sources where an NTP tile's title can originate from.
+ * Note: Keep in sync with components/ntp_tiles/tile_source.h
+ * @enum {number}
+ * @const
+ */
+var TileNameSource = {
+  UNKNOWN: 0,
+  TITLE: 1,
+  MANIFEST: 2,
+  META_TAG: 3,
+};
+
+
+/**
  * The different sources that an NTP tile can have.
  * Note: Keep in sync with components/ntp_tiles/tile_source.h
  * @enum {number}
@@ -113,23 +127,27 @@ var logEvent = function(eventType) {
 /**
  * Log impression of an NTP tile.
  * @param {number} tileIndex Position of the tile, >= 0 and < NUMBER_OF_TILES.
+ * @param {number} tileNameSource The name source from TileNameSource.
  * @param {number} tileSource The source from TileSource.
  * @param {number} tileType The type from TileVisualType.
  */
-function logMostVisitedImpression(tileIndex, tileSource, tileType) {
+function logMostVisitedImpression(
+    tileIndex, tileNameSource, tileSource, tileType) {
   chrome.embeddedSearch.newTabPage.logMostVisitedImpression(
-      tileIndex, tileSource, tileType);
+      tileIndex, tileNameSource, tileSource, tileType);
 }
 
 /**
  * Log click on an NTP tile.
  * @param {number} tileIndex Position of the tile, >= 0 and < NUMBER_OF_TILES.
+ * @param {number} tileNameSource The name source from TileNameSource.
  * @param {number} tileSource The source from TileSource.
  * @param {number} tileType The type from TileVisualType.
  */
-function logMostVisitedNavigation(tileIndex, tileSource, tileType) {
+function logMostVisitedNavigation(
+    tileIndex, tileNameSource, tileSource, tileType) {
   chrome.embeddedSearch.newTabPage.logMostVisitedNavigation(
-      tileIndex, tileSource, tileType);
+      tileIndex, tileNameSource, tileSource, tileType);
 }
 
 /**
@@ -321,6 +339,7 @@ var addTile = function(args) {
   } else if (args.url) {
     // If a URL is passed: a server-side suggestion.
     args.tileSource = TileSource.SUGGESTIONS_SERVICE;
+    args.tileNameSource = TileNameSource.UNKNOWN;
     // check sanity of the arguments
     if (/^javascript:/i.test(args.url) ||
         /^javascript:/i.test(args.thumbnailUrl))
@@ -395,7 +414,8 @@ var renderTile = function(data) {
   tile.title = data.title;
 
   tile.addEventListener('click', function(ev) {
-    logMostVisitedNavigation(position, data.tileSource, tileType);
+    logMostVisitedNavigation(
+        position, data.tileNameSource, data.tileSource, tileType);
   });
 
   tile.addEventListener('keydown', function(event) {
@@ -455,7 +475,8 @@ var renderTile = function(data) {
   img.addEventListener('load', function(ev) {
     // Store the type for a potential later navigation.
     tileType = TileVisualType.THUMBNAIL;
-    logMostVisitedImpression(position, data.tileSource, tileType);
+    logMostVisitedImpression(
+        position, data.tileNameSource, data.tileSource, tileType);
     // Note: It's important to call countLoad last, because that might emit the
     // NTP_ALL_TILES_LOADED event, which must happen after the impression log.
     countLoad();
@@ -465,7 +486,8 @@ var renderTile = function(data) {
     thumb.removeChild(img);
     // Store the type for a potential later navigation.
     tileType = TileVisualType.THUMBNAIL_FAILED;
-    logMostVisitedImpression(position, data.tileSource, tileType);
+    logMostVisitedImpression(
+        position, data.tileNameSource, data.tileSource, tileType);
     // Note: It's important to call countLoad last, because that might emit the
     // NTP_ALL_TILES_LOADED event, which must happen after the impression log.
     countLoad();

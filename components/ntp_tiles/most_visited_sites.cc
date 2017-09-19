@@ -291,6 +291,9 @@ void MostVisitedSites::OnMostVisitedURLsAvailable(
     tile.url = visited.url;
     tile.source = TileSource::TOP_SITES;
     tile.whitelist_icon_path = GetWhitelistLargeIconPath(visited.url);
+    // MostVisitedURLs are either the title or the URL which is treated exactly
+    // as the title. Differentiating here is not worth the overhead.
+    tile.name_source = TileNameSource::TITLE;
 
     tiles.push_back(std::move(tile));
   }
@@ -339,6 +342,9 @@ void MostVisitedSites::BuildCurrentTilesGivenSuggestionsProfile(
     tile.title = base::UTF8ToUTF16(suggestion_pb.title());
     tile.url = url;
     tile.source = TileSource::SUGGESTIONS_SERVICE;
+    // The backend might change this so we can not be sure unless we submit it.
+    // As of this writing, it's an aggregated title.
+    tile.name_source = TileNameSource::UNKNOWN;
     tile.whitelist_icon_path = GetWhitelistLargeIconPath(url);
     tile.thumbnail_url = GURL(suggestion_pb.thumbnail());
     tile.favicon_url = GURL(suggestion_pb.favicon_url());
@@ -383,6 +389,8 @@ NTPTilesVector MostVisitedSites::CreateWhitelistEntryPointTiles(
     tile.title = whitelist.title;
     tile.url = whitelist.entry_point;
     tile.source = TileSource::WHITELIST;
+    // User-set. Might be the title but we cannot be sure.
+    tile.name_source = TileNameSource::UNKNOWN;
     tile.whitelist_icon_path = whitelist.large_icon_path;
     whitelist_tiles.push_back(std::move(tile));
   }
@@ -448,6 +456,7 @@ NTPTilesVector MostVisitedSites::CreatePopularSitesTiles(
     NTPTile tile;
     tile.title = popular_site.title;
     tile.url = GURL(popular_site.url);
+    tile.name_source = popular_site.name_source;
     tile.source = popular_site.baked_in ? TileSource::POPULAR_BAKED_IN
                                         : TileSource::POPULAR;
     popular_sites_tiles.push_back(std::move(tile));
@@ -504,6 +513,7 @@ NTPTilesVector MostVisitedSites::InsertHomeTile(
     home_tile.url = home_page_url;
     home_tile.title = title;
     home_tile.source = TileSource::HOMEPAGE;
+    home_tile.name_source = TileNameSource::TITLE;  // Fetched from history.
 
     new_tiles.push_back(std::move(home_tile));
   }
