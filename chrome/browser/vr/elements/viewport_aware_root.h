@@ -25,7 +25,11 @@ class ViewportAwareRoot : public UiElement {
 
  private:
   void OnUpdatedInheritedProperties() override;
-  float viewport_aware_total_rotation_ = 0;
+
+  bool HasVisibleChildren();
+
+  float viewport_aware_total_rotation_ = 0.f;
+  bool has_visible_children_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(ViewportAwareRoot);
 };
