@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0b2a3d0_c13efea9",
+        "filename": "chrome/browser/feature_engagement/bookmark/bookmark_tracker.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T02:01:55Z",
+      "side": 1,
+      "message": "Nit: Please spell out things like IPH (\"in-product help\") or make sure that where you say it above in this file it says \"(IPH)\" afterwards so people can ctrl-f it.  (Multiple files)",
+      "revId": "e1b4811857f35b18cd7fb7a73a7e11be64176e43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58e6fc9_8e2d39bf",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T02:01:55Z",
+      "side": 1,
+      "message": "This will mean we don\u0027t call OnPromoClosed() or SchedulePaint().  I know the latter is needed, I\u0027m not sure about the former.\n\nI think the preferable route would be to leave things as they were, maybe with some comments.  Widget::Close() is documented as always being async (I went and looked).",
+      "revId": "e1b4811857f35b18cd7fb7a73a7e11be64176e43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "456228d6_1f2e58e2",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T02:01:55Z",
+      "side": 1,
+      "message": "Nit: Misleading variable name, since this won\u0027t actually be closed yet when we reach here.",
+      "revId": "e1b4811857f35b18cd7fb7a73a7e11be64176e43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
