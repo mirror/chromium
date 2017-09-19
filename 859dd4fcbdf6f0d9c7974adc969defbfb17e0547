@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3354c8f7_bc4eed3a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-19T16:18:07Z",
+      "side": 1,
+      "message": "nit: @Nullable",
+      "range": {
+        "startLine": 224,
+        "startChar": 12,
+        "endLine": 224,
+        "endChar": 30
+      },
+      "revId": "859dd4fcbdf6f0d9c7974adc969defbfb17e0547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2180dc3_9bdec810",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsSheetVisibilityChangeObserver.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-19T16:18:07Z",
+      "side": 1,
+      "message": "?\n\nI think this check covered by isObservedContentCurrent(), which checks even that they are the same instance",
+      "range": {
+        "startLine": 136,
+        "startChar": 19,
+        "endLine": 136,
+        "endChar": 45
+      },
+      "revId": "859dd4fcbdf6f0d9c7974adc969defbfb17e0547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
