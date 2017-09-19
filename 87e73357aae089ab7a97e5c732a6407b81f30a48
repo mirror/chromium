@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8172ca63_3d10ed82",
+        "filename": "ash/session/session_aborted_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-19T00:01:30Z",
+      "side": 1,
+      "message": "+tapted, are you OK with me adding this TODO? The code itself is just being relocated.",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 15
+      },
+      "revId": "87e73357aae089ab7a97e5c732a6407b81f30a48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40372dfc_8ef363fe",
         "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
         "patchSetId": 2
