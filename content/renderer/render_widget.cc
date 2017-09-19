@@ -388,6 +388,9 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
       current_content_source_id_(0),
       widget_binding_(this, std::move(widget_request)),
       weak_ptr_factory_(this) {
+
+  LOG(ERROR) << "RenderWidget::RenderWidget this=" << this
+             << " routing_id=" << routing_id_;
   DCHECK_NE(routing_id_, MSG_ROUTING_NONE);
   if (!swapped_out)
     RenderProcess::current()->AddRefProcess();
@@ -659,6 +662,10 @@ bool RenderWidget::OnMessageReceived(const IPC::Message& message) {
 #if defined(OS_ANDROID)
     IPC_MESSAGE_HANDLER(InputMsg_RequestTextInputStateUpdate,
                         OnRequestTextInputStateUpdate)
+#endif
+#if defined(USE_AURA)
+    IPC_MESSAGE_HANDLER(ViewMsg_EmbedWindowTreeClient, OnEmbedWindowTreeClient)
+    IPC_MESSAGE_HANDLER(ViewMsg_GetWindowTreeClient, OnGetWindowTreeClient)
 #endif
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
@@ -1755,6 +1762,33 @@ void RenderWidget::OnDeviceScaleFactorChanged() {
   else
     compositor_->SetDeviceScaleFactor(device_scale_factor_);
 }
+
+#if defined(USE_AURA)
+void RenderWidget::OnEmbedWindowTreeClient(
+    const viz::FrameSinkId& frame_sink_id,
+    mojo::MessagePipeHandle window_tree_client_handle) {
+  LOG(ERROR) << "RenderWidget::EmbedWindowTreeClient this=" << this
+             << " routing_id=" << routing_id_
+             << " frame_sink_id=" << frame_sink_id.ToString();
+  DCHECK(RendererWindowTreeClient::Get(routing_id_));
+  ui::mojom::WindowTreeClientPtr window_tree_client;
+  mojo::ScopedMessagePipeHandle pipe_handle;
+  pipe_handle.reset(window_tree_client_handle);
+  window_tree_client.Bind(
+      ui::mojom::WindowTreeClientPtrInfo(std::move(pipe_handle), 0));
+  RendererWindowTreeClient::Get(routing_id_)
+      ->Embed(frame_sink_id, std::move(window_tree_client));
+}
+
+void RenderWidget::OnGetWindowTreeClient(
+    mojo::MessagePipeHandle window_tree_client_request) {
+  LOG(ERROR) << "OnGetWindowTreeClient!";
+  DCHECK(RendererWindowTreeClient::Get(routing_id_));
+  RendererWindowTreeClient::Get(routing_id_)
+      ->Bind(ui::mojom::WindowTreeClientRequest(
+          mojo::ScopedMessagePipeHandle(window_tree_client_request)));
+}
+#endif
 
 void RenderWidget::OnRepaint(gfx::Size size_to_paint) {
   // During shutdown we can just ignore this message.

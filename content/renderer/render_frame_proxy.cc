@@ -40,6 +40,10 @@
 #include "third_party/WebKit/public/web/WebUserGestureIndicator.h"
 #include "third_party/WebKit/public/web/WebView.h"
 
+#if defined(USE_AURA)
+#include "content/renderer/mus/renderer_window_tree_client.h"
+#endif
+
 namespace content {
 
 namespace {
@@ -352,6 +356,11 @@ void RenderFrameProxy::OnSetChildFrameSurface(
   if (!compositing_helper_) {
     compositing_helper_.reset(
         ChildFrameCompositingHelper::CreateForRenderFrameProxy(this));
+    LOG(ERROR) << "RenderFrameProxy::OnSetChildFrameSurface widget=" << render_widget_
+               << " this=" << this
+               << " routing_id=" << routing_id_
+               << " enable=" << enable_surface_synchronization_
+               << " ch=" << compositing_helper_.get();
     if (enable_surface_synchronization_) {
       // We wait until there is a single CompositorFrame guaranteed to be
       // available and ready for display in the display compositor before using
@@ -384,6 +393,10 @@ void RenderFrameProxy::OnDidStartLoading() {
 
 void RenderFrameProxy::OnViewChanged(const viz::FrameSinkId& frame_sink_id) {
   frame_sink_id_ = frame_sink_id;
+  LOG(ERROR) << "RenderFrameProxy::OnViewChanged widget=" << render_widget_
+             << " this=" << this
+             << " routing_id=" << routing_id_
+             << " frame_sink_id=" << frame_sink_id_.ToString();
   // Resend the FrameRects and allocate a new viz::LocalSurfaceId when the view
   // changes.
   ResendFrameRects();
@@ -458,6 +471,8 @@ void RenderFrameProxy::OnSetHasReceivedUserGesture() {
 }
 
 void RenderFrameProxy::FrameDetached(DetachType type) {
+  // XXX: notify RendererWindowTreeClient of detach!
+
   if (type == DetachType::kRemove && web_frame_->Parent()) {
     // Let the browser process know this subframe is removed, so that it is
     // destroyed in its current process.
@@ -542,19 +557,44 @@ void RenderFrameProxy::Navigate(const blink::WebURLRequest& request,
 
 void RenderFrameProxy::FrameRectsChanged(const blink::WebRect& frame_rect) {
   gfx::Rect rect = frame_rect;
+  LOG(ERROR) << "RenderFrameProxy::FrameRectsChanged widget=" << render_widget_
+             << " this=" << this
+             << " routing_id=" << routing_id_
+             << " frame_rect=" << rect.ToString()
+             << " frame_sink_id=" << frame_sink_id_.ToString();
+
   if (frame_rect_.size() != rect.size() || !local_surface_id_.is_valid()) {
     local_surface_id_ = local_surface_id_allocator_.GenerateId();
-    if (compositing_helper_ && enable_surface_synchronization_ &&
-        frame_sink_id_.is_valid()) {
-      float device_scale_factor =
-          render_widget()->GetOriginalDeviceScaleFactor();
-      viz::SurfaceInfo surface_info(
+    float device_scale_factor =
+        render_widget_->GetOriginalDeviceScaleFactor();
+    viz::SurfaceInfo surface_info(
           viz::SurfaceId(frame_sink_id_, local_surface_id_),
           device_scale_factor,
           gfx::ScaleToCeiledSize(rect.size(), device_scale_factor));
+    // XXX only do this if mash.
+    if (!compositing_helper_ && web_frame_->Parent() &&
+        frame_sink_id_.is_valid()) {
+      RendererWindowTreeClient* renderer_window_tree_client =
+          RendererWindowTreeClient::Get(render_widget_->routing_id());
+      DCHECK(renderer_window_tree_client);
+      if (renderer_window_tree_client->DidEmbed(frame_sink_id_))
+        OnSetChildFrameSurface(surface_info, viz::SurfaceSequence());
+    }
+    if (compositing_helper_ && enable_surface_synchronization_ &&
+        frame_sink_id_.is_valid()) {
       compositing_helper_->SetPrimarySurfaceInfo(surface_info);
     }
   }
+
+#if defined(USE_AURA)
+  if (frame_rect_ != rect && web_frame_->Parent()) {
+    RendererWindowTreeClient* renderer_window_tree_client =
+        RendererWindowTreeClient::Get(render_widget_->routing_id());
+    DCHECK(renderer_window_tree_client);
+    renderer_window_tree_client->SetChildWindowBounds(frame_sink_id_,
+                                                      local_surface_id_, rect);
+  }
+#endif
 
   frame_rect_ = rect;
 

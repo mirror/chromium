@@ -16,9 +16,15 @@
 namespace content {
 
 namespace {
-typedef std::map<int, RendererWindowTreeClient*> ConnectionMap;
+
+using ConnectionMap = std::map<int, RendererWindowTreeClient*>;
 base::LazyInstance<ConnectionMap>::Leaky g_connections =
     LAZY_INSTANCE_INITIALIZER;
+
+void OnEmbedAck(bool success) {
+  DCHECK(success);
+}
+
 }  // namespace
 
 // static
@@ -48,6 +54,35 @@ void RendererWindowTreeClient::Destroy(int routing_id) {
 void RendererWindowTreeClient::Bind(
     ui::mojom::WindowTreeClientRequest request) {
   binding_.Bind(std::move(request));
+}
+
+void RendererWindowTreeClient::Embed(
+    const viz::FrameSinkId& frame_sink_id,
+    ui::mojom::WindowTreeClientPtr window_tree_client) {
+  LOG(ERROR) << "Embedding this=" << this << " id=" << frame_sink_id.ToString()
+             << " root=" << root_window_id_;
+  const ui::ClientSpecificId window_id = ++next_window_id_;
+  frame_sink_id_to_window_id_[frame_sink_id] = window_id;
+  tree_->NewWindow(++next_change_id_, window_id, base::nullopt);
+  tree_->SetWindowVisibility(++next_change_id_, window_id, true);
+  // XXX: need to verify we have a root window id.
+  tree_->AddWindow(++next_change_id_, root_window_id_, window_id);
+  tree_->Embed(window_id, std::move(window_tree_client), 0,
+               base::Bind(&OnEmbedAck));
+}
+
+void RendererWindowTreeClient::SetChildWindowBounds(
+    const viz::FrameSinkId& frame_sink_id,
+    const viz::LocalSurfaceId& local_surface_id,
+    const gfx::Rect& bounds) {
+  // XXX: should queue this up if haven't received OnEmbed() yet.
+  auto iter = frame_sink_id_to_window_id_.find(frame_sink_id);
+  if (iter == frame_sink_id_to_window_id_.end())
+    return;
+
+  LOG(ERROR) << "SetChildWindowBounds!";
+  tree_->SetWindowBounds(++next_change_id_, iter->second, bounds,
+                         local_surface_id);
 }
 
 void RendererWindowTreeClient::RequestLayerTreeFrameSink(
@@ -109,6 +144,8 @@ void RendererWindowTreeClient::OnEmbed(
     bool drawn,
     const base::Optional<viz::LocalSurfaceId>& local_surface_id) {
   root_window_id_ = root->window_id;
+  LOG(ERROR) << "OnEmbed this=" << this
+             << " root=" << (root_window_id_ & 0xFFFF);
   tree_ = std::move(tree);
   if (!pending_layer_tree_frame_sink_callback_.is_null()) {
     RequestLayerTreeFrameSinkInternal(std::move(pending_context_provider_),
@@ -137,6 +174,10 @@ void RendererWindowTreeClient::OnFrameSinkIdAllocated(
     const viz::FrameSinkId& frame_sink_id) {
   // TODO(fsamuel): OOPIF's |frame_sink_id| is ready. The OOPIF can now be
   // embedded by the parent.
+  LOG(ERROR) << "OnFrameSinkIdAllocated id=" << window_id
+             << " id2=" << (window_id & 0xFFFF) << " has_frame_sink_id="
+             << (frame_sink_id_to_window_id_.find(frame_sink_id) !=
+                 frame_sink_id_to_window_id_.end());
 }
 
 void RendererWindowTreeClient::OnTopLevelCreated(
@@ -266,7 +307,9 @@ void RendererWindowTreeClient::OnPerformDragDropCompleted(
 void RendererWindowTreeClient::OnDragDropDone() {}
 
 void RendererWindowTreeClient::OnChangeCompleted(uint32_t change_id,
-                                                 bool success) {}
+                                                 bool success) {
+  DCHECK(success);
+}
 
 void RendererWindowTreeClient::RequestClose(uint32_t window_id) {}
 

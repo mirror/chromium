@@ -406,6 +406,7 @@ RenderWidgetHostViewAura::RenderWidgetHostViewAura(RenderWidgetHost* host,
       frame_sink_id_(IsMus() ? viz::FrameSinkId()
                              : host_->AllocateFrameSinkId(is_guest_view_hack_)),
       weak_ptr_factory_(this) {
+  LOG(ERROR) << "RenderWidgetHostViewAura this=" << this << " host=" << host;
   if (!is_guest_view_hack_)
     host_->SetView(this);
 

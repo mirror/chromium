@@ -18,6 +18,7 @@
 #include "cc/output/compositor_frame.h"
 #include "components/viz/common/frame_sinks/begin_frame_args.h"
 #include "components/viz/common/quads/shared_bitmap.h"
+#include "components/viz/common/surfaces/frame_sink_id.h"
 #include "content/common/content_export.h"
 #include "content/common/content_param_traits.h"
 #include "content/common/date_time_suggestion.h"
@@ -41,6 +42,7 @@
 #include "media/base/channel_layout.h"
 #include "media/base/ipc/media_param_traits.h"
 #include "media/capture/ipc/capture_param_traits.h"
+#include "mojo/public/cpp/system/message_pipe.h"
 #include "net/base/network_change_notifier.h"
 #include "ppapi/features/features.h"
 #include "third_party/WebKit/public/platform/WebDisplayMode.h"
@@ -553,6 +555,14 @@ IPC_MESSAGE_ROUTED1(ViewMsg_SetViewportIntersection,
 
 // Sets the inert bit on an out-of-process iframe.
 IPC_MESSAGE_ROUTED1(ViewMsg_SetIsInert, bool /* inert */)
+
+#if defined(USE_AURA)
+IPC_MESSAGE_ROUTED2(ViewMsg_EmbedWindowTreeClient,
+                    viz::FrameSinkId /* frame_sink_id */,
+                    mojo::MessagePipeHandle /* window_tree_client */)
+IPC_MESSAGE_ROUTED1(ViewMsg_GetWindowTreeClient,
+                    mojo::MessagePipeHandle /* window_tree_client_request */)
+#endif
 
 // -----------------------------------------------------------------------------
 // Messages sent from the renderer to the browser.

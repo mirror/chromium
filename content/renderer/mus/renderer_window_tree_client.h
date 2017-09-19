@@ -5,6 +5,8 @@
 #ifndef CONTENT_RENDERER_MUS_RENDERER_WINDOW_TREE_CLIENT_H_
 #define CONTENT_RENDERER_MUS_RENDERER_WINDOW_TREE_CLIENT_H_
 
+#include <map>
+
 #include "base/macros.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/ui/common/types.h"
@@ -42,6 +44,15 @@ class RendererWindowTreeClient : public ui::mojom::WindowTreeClient {
   static RendererWindowTreeClient* Get(int routing_id);
 
   void Bind(ui::mojom::WindowTreeClientRequest request);
+
+  void Embed(const viz::FrameSinkId& frame_sink_id,
+             ui::mojom::WindowTreeClientPtr window_tree_client);
+  bool DidEmbed(const viz::FrameSinkId& frame_sink_id) const {
+    return frame_sink_id_to_window_id_.count(frame_sink_id) > 0;
+  }
+  void SetChildWindowBounds(const viz::FrameSinkId& frame_sink_id,
+                            const viz::LocalSurfaceId& local_surface_id,
+                            const gfx::Rect& bounds);
 
   using LayerTreeFrameSinkCallback =
       base::Callback<void(std::unique_ptr<cc::LayerTreeFrameSink>)>;
@@ -169,6 +180,10 @@ class RendererWindowTreeClient : public ui::mojom::WindowTreeClient {
   LayerTreeFrameSinkCallback pending_layer_tree_frame_sink_callback_;
   ui::mojom::WindowTreePtr tree_;
   mojo::Binding<ui::mojom::WindowTreeClient> binding_;
+  ui::ClientSpecificId next_window_id_ = 0;
+  uint32_t next_change_id_ = 0;
+
+  std::map<viz::FrameSinkId, ui::ClientSpecificId> frame_sink_id_to_window_id_;
 
   DISALLOW_COPY_AND_ASSIGN(RendererWindowTreeClient);
 };

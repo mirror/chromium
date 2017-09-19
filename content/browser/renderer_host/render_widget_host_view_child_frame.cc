@@ -45,7 +45,10 @@
 #include "ui/touch_selection/touch_selection_controller.h"
 
 #if defined(USE_AURA)
+#include "mojo/public/cpp/bindings/interface_request.h"
+#include "services/ui/public/interfaces/window_tree.mojom.h"
 #include "ui/aura/env.h"
+//#include "ui/aura/window.h"
 #endif
 
 namespace content {
@@ -82,6 +85,8 @@ RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
       background_color_(SK_ColorWHITE),
       destroy_was_called_(false),
       weak_factory_(this) {
+  LOG(ERROR) << "RenderWidgetHostViewChildFrame this=" << this
+             << " host=" << widget_host;
   if (!IsUsingMus()) {
     GetHostFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_, this);
 #if DCHECK_IS_ON()
@@ -140,6 +145,13 @@ void RenderWidgetHostViewChildFrame::SetFrameConnectorDelegate(
   if (frame_connector_ == frame_connector)
     return;
 
+  // Cancel pending request.
+  LOG(ERROR) << "RenderWidgetHostViewChildFrame::SetFrameConnectorDelegate"
+             << " this=" << this << " fc=" << frame_connector << " parent="
+             << (frame_connector
+                     ? frame_connector->GetParentRenderWidgetHostView()
+                     : nullptr);
+
   if (frame_connector_) {
     SetParentFrameSinkId(viz::FrameSinkId());
     last_received_local_surface_id_ = viz::LocalSurfaceId();
@@ -147,6 +159,8 @@ void RenderWidgetHostViewChildFrame::SetFrameConnectorDelegate(
     // Unlocks the mouse if this RenderWidgetHostView holds the lock.
     UnlockMouse();
     DetachFromTouchSelectionClientManagerIfNecessary();
+
+    // XXX disconnect.
   }
   frame_connector_ = frame_connector;
   if (frame_connector_) {
@@ -175,6 +189,32 @@ void RenderWidgetHostViewChildFrame::SetFrameConnectorDelegate(
         manager->AddObserver(this);
       }
     }
+
+#if defined(USE_AURA)
+    if (IsUsingMus() && frame_connector_->GetParentRenderWidgetHostView()) {
+      ui::mojom::WindowTreeClientPtr window_tree_client;
+      host_->Send(new ViewMsg_GetWindowTreeClient(
+          host_->GetRoutingID(),
+          MakeRequest(&window_tree_client).PassMessagePipe().release()));
+      RenderWidgetHostImpl* parent_render_widget_host =
+          RenderWidgetHostImpl::From(
+              frame_connector_->GetParentRenderWidgetHostView()
+                  ->GetRenderWidgetHost());
+      parent_render_widget_host->Send(new ViewMsg_EmbedWindowTreeClient(
+          parent_render_widget_host->GetRoutingID(), frame_sink_id_,
+          window_tree_client.PassInterface().PassHandle().release()));
+      /*
+      if (render_widget_host->GetView()->IsRenderWidgetHostViewChildFrame()) {
+        // render_widget_host->Send(ViewMsg_Embed
+        NOTREACHED();
+      } else {
+        if (!window_) {
+          window = base::MakeUnique<aura::Window>(
+        render_widget_host->GetView()->
+      }
+      */
+    }
+#endif
   }
 }
 
