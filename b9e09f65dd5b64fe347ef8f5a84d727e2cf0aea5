@@ -188,6 +188,30 @@
       "revId": "b9e09f65dd5b64fe347ef8f5a84d727e2cf0aea5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb6c428_5ef769f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-19T16:50:45Z",
+      "side": 1,
+      "message": "\u003e We shouldn\u0027t re-use PLACEHOLDER_ID for mSelectedItemId if we\u0027re not actually showing the placeholder content.\n\nOK, sure.\n\n\u003e Perhaps we could use something like \"AUXILIARY_CONTENT_ID\" to match Matt\u0027s in-flight change to introduce TYPE_AUXILIARY_CONTENT and use that when the content is set to something the sheet doesn\u0027t know about.\n\nHow about we use a new constant NO_CONTENT with the value 0 (which also is the default)? That way we don\u0027t have to add a new state for this case.",
+      "parentUuid": "e6a2a783_3816d1f6",
+      "range": {
+        "startLine": 126,
+        "startChar": 16,
+        "endLine": 127,
+        "endChar": 47
+      },
+      "revId": "b9e09f65dd5b64fe347ef8f5a84d727e2cf0aea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
