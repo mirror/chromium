@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77a3dfcc_0519d8c3",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-19T21:02:31Z",
+      "side": 1,
+      "message": "I\u0027m assuming this was taken from the javascript implementation. :)\n\nI think there was a bug open about improving error reporting, but if not (or we can\u0027t find it) we should create one for this (and probably replace my username with that bug reference).",
+      "revId": "008a6d09a82febf5770f8bcf94d8df4767ef1f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad73a236_bcd949c5",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-19T21:02:31Z",
+      "side": 1,
+      "message": "Same as above note on TODO.\n\nAlso, we should have plenty of data from when these were first added to know if we are getting more specific cert errors, but I\u0027m not sure if anyone ever looked at it.",
+      "revId": "008a6d09a82febf5770f8bcf94d8df4767ef1f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b30bf0_c33fb7f5",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-09-19T21:02:31Z",
+      "side": 1,
+      "message": "It might be possible to use the base net definitions for these errors.  I\u0027m not sure if the dependencies would be an issue though.\n\nhttps://cs.chromium.org/chromium/src/net/base/net_error_list.h?l\u003d256\n\nThe cert errors above on line 81 could also maybe refer to https://cs.chromium.org/chromium/src/net/base/net_error_list.h?l\u003d520\n\nAt the very least it would be nice to see a comment about where they are defined.",
+      "revId": "008a6d09a82febf5770f8bcf94d8df4767ef1f41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
