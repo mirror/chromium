@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbd03e75_e45dcce9",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1525,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-19T01:29:43Z",
+      "side": 1,
+      "message": "Hmm... are we sure that the extension will be loaded after this, unconditionally?",
+      "revId": "d8c5d6a98822a6479b3ac08d71485c65c0a5660a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
