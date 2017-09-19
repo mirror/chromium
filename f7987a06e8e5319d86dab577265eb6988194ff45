@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ac76254_05bf9f99",
+        "filename": "base/threading/thread_restrictions.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-19T23:40:44Z",
+      "side": 1,
+      "message": "Sad rant: It does feel like a fairly big abstraction leak to have this, since we know that for some of these, we will never be able to remove (that is, this is not a temporary/in-progress thing). At best, we\u0027re using this file to scope visibility of the API, which feels weird.",
+      "revId": "f7987a06e8e5319d86dab577265eb6988194ff45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
