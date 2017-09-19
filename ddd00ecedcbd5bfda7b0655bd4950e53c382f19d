@@ -16,6 +16,24 @@
       "revId": "ddd00ecedcbd5bfda7b0655bd4950e53c382f19d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2c29ca2_73d91551",
+        "filename": "chrome/common/chrome_constants.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-09-19T19:41:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "377eb6ae_a83340c4",
+      "revId": "ddd00ecedcbd5bfda7b0655bd4950e53c382f19d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
