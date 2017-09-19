@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8a1894f_a3cd5dc4",
+        "filename": "chrome/browser/printing/pdf_to_emf_converter_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-09-19T00:55:26Z",
+      "side": 1,
+      "message": "Shadow variable.",
+      "revId": "3630045e8ba2964dc73173b0007d73df1fb5659e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
