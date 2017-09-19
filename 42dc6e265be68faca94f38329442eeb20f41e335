@@ -93,6 +93,30 @@
       "revId": "42dc6e265be68faca94f38329442eeb20f41e335",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ead187f_5123f51a",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-19T14:27:57Z",
+      "side": 1,
+      "message": "This may not break current consumers of WebStateObserver::DocumentSubmitted, but the change breaks WebStateObserver::DocumentSubmitted API contract by introducing false positives. \n\nHow about form.buttonClicked for message name and no changes to WebStateObserver? WebStateObserver lives in ios/web and passworrd_controller.js is a part of ios/chrome. ios/web does not (and should not) have any dependencies on ios/chrome. ios/chrome code can listen for form.buttonClicked message by using AddScriptCommandCallback API.",
+      "parentUuid": "bd8d726e_1c766f2f",
+      "range": {
+        "startLine": 117,
+        "startChar": 28,
+        "endLine": 117,
+        "endChar": 34
+      },
+      "revId": "42dc6e265be68faca94f38329442eeb20f41e335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
