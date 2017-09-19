@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "993e73b0_c9aa566f",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1537,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-09-19T05:30:52Z",
+      "side": 1,
+      "message": "nit: Update the comment to say: \"If we\u0027re currently scrolling a node other than this one, prevent the scroll from propagating to this node.\"",
+      "range": {
+        "startLine": 1537,
+        "startChar": 9,
+        "endLine": 1537,
+        "endChar": 15
+      },
+      "revId": "36f08a4a390a647dcd9e926210c5109476e3331b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
