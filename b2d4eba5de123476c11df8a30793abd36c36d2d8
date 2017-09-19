@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e790467c_27b41c7b",
+        "filename": "cc/layers/layer_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T17:57:08Z",
+      "side": 1,
+      "message": "Pure virtual please.\n\nAnd maybe follow the style of other function names here? DidChangeLayerOpacity?",
+      "revId": "b2d4eba5de123476c11df8a30793abd36c36d2d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e0e7e9_500276d0",
+        "filename": "cc/layers/layer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1506,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T17:57:08Z",
+      "side": 1,
+      "message": "can you put this in cc/test/ and MOCK all the methods?",
+      "revId": "b2d4eba5de123476c11df8a30793abd36c36d2d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d061afb_bc4a72a8",
+        "filename": "cc/layers/layer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1543,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T17:57:08Z",
+      "side": 1,
+      "message": "It should be possible to test this without friends. Can you use a real animation? Maybe you\u0027ll want to make it a test in https://cs.chromium.org/chromium/src/cc/trees/layer_tree_host_unittest_animation.cc to do so?",
+      "revId": "b2d4eba5de123476c11df8a30793abd36c36d2d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244cc664_645d5d30",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T17:57:08Z",
+      "side": 1,
+      "message": "I am confused about this function now. Is this never called? Or is it called from different animations? Cuz this is setting opacity on the cc layer?",
+      "revId": "b2d4eba5de123476c11df8a30793abd36c36d2d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
