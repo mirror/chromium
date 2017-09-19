@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f596326a_e3cf905c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ProgressIndicatorView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-19T17:46:14Z",
+      "side": 1,
+      "message": "Will remove this with the ProgressItemViewHolder.",
+      "range": {
+        "startLine": 75,
+        "startChar": 16,
+        "endLine": 75,
+        "endChar": 20
+      },
+      "revId": "4284b33629fb24ccc9507db3140bd8aadcfe4e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
