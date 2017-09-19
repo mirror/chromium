@@ -69,6 +69,30 @@
       "revId": "ccad71108899ce073ae0638560e9a5fb677c2100",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789341ac_f72cd59e",
+        "filename": "ui/base/ime/input_method_chromeos.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-09-19T22:24:01Z",
+      "side": 1,
+      "message": "I move this method to InputMethodBase::DispatchKeyEventPostIME() so no need to override it here.",
+      "parentUuid": "e1566c44_b890ee05",
+      "range": {
+        "startLine": 60,
+        "startChar": 27,
+        "endLine": 60,
+        "endChar": 50
+      },
+      "revId": "ccad71108899ce073ae0638560e9a5fb677c2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
