@@ -48,6 +48,10 @@ PasswordTabHelper::GetPasswordGenerationManager() {
   return controller_.passwordGenerationManager;
 }
 
+void PasswordTabHelper::WasHidden() {
+  [controller_ wasHidden];
+}
+
 PasswordTabHelper::PasswordTabHelper(
     web::WebState* web_state,
     id<PasswordsUiDelegate> passwords_ui_delegate)

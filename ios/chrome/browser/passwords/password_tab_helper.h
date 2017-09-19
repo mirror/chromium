@@ -48,6 +48,9 @@ class PasswordTabHelper : public web::WebStateObserver,
   // Returns the PasswordGenerationManager owned by the PasswordController.
   password_manager::PasswordGenerationManager* GetPasswordGenerationManager();
 
+  // web::WebStateObserver implementation.
+  void WasHidden() override;
+
  private:
   PasswordTabHelper(web::WebState* web_state,
                     id<PasswordsUiDelegate> passwords_ui_delegate);
