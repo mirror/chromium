@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f2f414f_430e1892",
+        "filename": "content/public/test/controllable_http_response.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T16:50:01Z",
+      "side": 1,
+      "message": "Should we remove the assumption that the ControllableHttpResponse lives on the UI thread, and just pass in a task runner in the constructor?  That makes it so this can also be used in unit tests, which may not otherwise need to set up a UI thread.",
+      "range": {
+        "startLine": 25,
+        "startChar": 8,
+        "endLine": 25,
+        "endChar": 21
+      },
+      "revId": "9313aa9ab5bff1c8b958b959ddd02831e13be578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b60f15_2064d80b",
+        "filename": "content/public/test/controllable_http_response.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T16:50:01Z",
+      "side": 1,
+      "message": "So my concern about handling multiple requests like this is it can result in flakiness.  What if there are two requests for the same URL at once?  Do we intercept the first one or the second one?  We don\u0027t know.  Maybe most times we we intercept the right one, but not always.  That leads to a test sometimes randomly failing.  I suggest single-use for just that reason.  After a request is intercepted, we can set a bool to ignore future requests.  If a test wants to intercept multiple requests for the same URL, it can use multiple ControllableHttpResponses.\n\nYou can either make a ControllableHttpResponse::InterceptorFactory which is owned (And called) by the callback passed to RegisterRequestHandler, or pass in a std::make_unique\u003cbool\u003e(false) at an argument.  The factory is a little cleaner, but uses more code.",
+      "range": {
+        "startLine": 27,
+        "startChar": 29,
+        "endLine": 27,
+        "endChar": 51
+      },
+      "revId": "9313aa9ab5bff1c8b958b959ddd02831e13be578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8342dd_4ff3731d",
+        "filename": "content/public/test/controllable_http_response.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T16:50:01Z",
+      "side": 1,
+      "message": "DCHECK on send_ and done_, too.",
+      "range": {
+        "startLine": 52,
+        "startChar": 9,
+        "endLine": 52,
+        "endChar": 42
+      },
+      "revId": "9313aa9ab5bff1c8b958b959ddd02831e13be578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88b904a2_a078e066",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T16:50:01Z",
+      "side": 1,
+      "message": "virtual not needed.",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 10
+      },
+      "revId": "9313aa9ab5bff1c8b958b959ddd02831e13be578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "765b4c74_d882c575",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T16:50:01Z",
+      "side": 1,
+      "message": "nit:  WaitForRequest",
+      "range": {
+        "startLine": 27,
+        "startChar": 18,
+        "endLine": 27,
+        "endChar": 19
+      },
+      "revId": "9313aa9ab5bff1c8b958b959ddd02831e13be578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a20e19_16514514",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T16:50:01Z",
+      "side": 1,
+      "message": "nit:  Maybe \"Send raw response data in response to a request.\"  \"browser\" seems ambiguous - we could be sending data to the renderer process, or a service worker, etc.  \"Raw response\" to make it clearer this is the headers+body, not just the body.",
+      "range": {
+        "startLine": 29,
+        "startChar": 32,
+        "endLine": 29,
+        "endChar": 34
+      },
+      "revId": "9313aa9ab5bff1c8b958b959ddd02831e13be578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fe1c270_e8644f29",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T16:50:01Z",
+      "side": 1,
+      "message": "Maybe add \"and to close the socket\"",
+      "range": {
+        "startLine": 32,
+        "startChar": 15,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "9313aa9ab5bff1c8b958b959ddd02831e13be578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f939e2_501ccc29",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T16:50:01Z",
+      "side": 1,
+      "message": "include \u003cstring\u003e",
+      "range": {
+        "startLine": 44,
+        "startChar": 17,
+        "endLine": 44,
+        "endChar": 23
+      },
+      "revId": "9313aa9ab5bff1c8b958b959ddd02831e13be578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f4ea85c_725c4df5",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T16:50:01Z",
+      "side": 1,
+      "message": "include weak_ptr",
+      "range": {
+        "startLine": 45,
+        "startChar": 19,
+        "endLine": 45,
+        "endChar": 20
+      },
+      "revId": "9313aa9ab5bff1c8b958b959ddd02831e13be578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c682a8_8abb0780",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T16:50:01Z",
+      "side": 1,
+      "message": "include \u003cmemory\u003e",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 31
+      },
+      "revId": "9313aa9ab5bff1c8b958b959ddd02831e13be578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a2ff79_f31fe5fe",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T16:50:01Z",
+      "side": 1,
+      "message": "include ref_counted.h",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 15
+      },
+      "revId": "9313aa9ab5bff1c8b958b959ddd02831e13be578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23b9f8de_646cd8c5",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T16:50:01Z",
+      "side": 1,
+      "message": "Optional:  Could add a SequenceChecker here, and make it DCHECK that all methods are called on the same sequence.",
+      "range": {
+        "startLine": 52,
+        "startChar": 47,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "9313aa9ab5bff1c8b958b959ddd02831e13be578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9c23d60_7a35ce7f",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T16:50:01Z",
+      "side": 1,
+      "message": "nit: Blank line before the WeakPtrFactory (To draw attention to the fact it should always be last)",
+      "range": {
+        "startLine": 53,
+        "startChar": 22,
+        "endLine": 53,
+        "endChar": 23
+      },
+      "revId": "9313aa9ab5bff1c8b958b959ddd02831e13be578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5528f4e_6b48dd99",
+        "filename": "content/public/test/controllable_http_response.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T16:50:01Z",
+      "side": 1,
+      "message": "include macros.h",
+      "range": {
+        "startLine": 55,
+        "startChar": 27,
+        "endLine": 55,
+        "endChar": 51
+      },
+      "revId": "9313aa9ab5bff1c8b958b959ddd02831e13be578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
