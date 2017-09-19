@@ -232,6 +232,24 @@
     },
     {
       "key": {
+        "uuid": "72a1eb35_2a02b7dc",
+        "filename": "third_party/zlib/inflate.c",
+        "patchSetId": 26
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-19T03:11:14Z",
+      "side": 1,
+      "message": "Refer to https://cs.chromium.org/search/?q\u003dzlib+deflate.c+x86_check_features\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "0bfb04a6_6c1551ed",
+      "revId": "dd4d156d3a2dc62a0ab96691a7302b4717c4158b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cfdd6b5_7ae85f5d",
         "filename": "third_party/zlib/names.h",
         "patchSetId": 26
