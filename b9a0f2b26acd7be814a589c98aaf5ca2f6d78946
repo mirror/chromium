@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6da398bb_3fdd361e",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-09-19T08:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc920f4a_54d645de",
+      "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39545616_3d69fe1d",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-19T06:40:04Z",
       "side": 1,
       "message": "SlotScopedFocusNavigation would be a better name IMO.",
+      "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e27a1b3_5385fc41",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-09-19T08:15:13Z",
+      "side": 1,
+      "message": "I thought \"SlotScopedFocusNavigation\" is misleading.\nThis name might seem to be inheriting ScopedFocusNavigation class.\nHow about \"SlotFocusNavigation\"?",
+      "parentUuid": "39545616_3d69fe1d",
       "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "266d957e_927d14c5",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-09-19T08:15:13Z",
+      "side": 1,
+      "message": "Same here\n\"FallBackFocusNavigation\"",
+      "parentUuid": "f44bbb77_f85b4716",
+      "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c29c80b_334ff646",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 4
@@ -84,6 +138,24 @@
       "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "888ec191_0f3a6dc6",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-09-19T08:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c29c80b_334ff646",
+      "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "70ffaa29_203922e0",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-09-19T08:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10655957_27daaa12",
+      "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ccafbb8_ce1d6a6a",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 4
@@ -115,6 +205,24 @@
       "writtenOn": "2017-09-19T06:40:04Z",
       "side": 1,
       "message": "TreeScopedFocusNavigation?",
+      "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c4526c_c1221817",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-09-19T08:15:13Z",
+      "side": 1,
+      "message": "Same",
+      "parentUuid": "8ccafbb8_ce1d6a6a",
       "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "ae2a8143_e06a7ff4",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-09-19T08:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a57ed416_99d35fcd",
+      "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d1aa4ee_9005d1fb",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 4
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "51b92588_f95b3ae8",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-09-19T08:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d1aa4ee_9005d1fb",
+      "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e038ed79_51bb4b7a",
         "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
         "patchSetId": 4
@@ -169,6 +313,24 @@
       "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3098fd8_998e3aff",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1238298
+      },
+      "writtenOn": "2017-09-19T08:15:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e038ed79_51bb4b7a",
+      "revId": "b9a0f2b26acd7be814a589c98aaf5ca2f6d78946",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
