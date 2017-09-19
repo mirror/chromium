@@ -45,6 +45,12 @@
       return mediaSRC;
     }
 
+    function MakeBusy() {
+      setTimeout(MakeBusy, 0);
+      var t = new Date().getTime();
+      while (new Date().getTime() - t < 20); // 20 ms busy loop
+    }
+
     qsParams = getQueryStrings();
     var type = qsParams['type'] || 'video';
     var testElement = document.createElement(type);
@@ -54,6 +60,8 @@
     testElement.controls = true;
     if (qsParams['id'])
       testElement.id = qsParams['id'];
+    if ('busy' in qsParams)
+      MakeBusy();
     testElement.src = getMediaSRC();
     document.body.appendChild(testElement);
   </script>
