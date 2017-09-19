@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4786d6ab_1a7cfe8d",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-19T19:08:12Z",
+      "side": 1,
+      "message": "q: How does this avoid the re-entrancy? e.g. what if the trace log generation changes between here and the TRACE_EVENTs?",
+      "revId": "bae8d4bec9002d9c49c4279c9a882587c275e001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
