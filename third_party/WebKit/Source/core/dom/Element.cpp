@@ -2862,7 +2862,7 @@ void Element::UpdateFocusAppearance(
     // focus to a new Element.
     frame->Selection().SetSelection(
         SelectionInDOMTree::Builder()
-            .Collapse(FirstPositionInOrBeforeNode(this))
+            .Collapse(FirstPositionInOrBeforeNode(*this))
             .Build(),
         SetSelectionOptions::Builder()
             .SetShouldCloseTyping(true)

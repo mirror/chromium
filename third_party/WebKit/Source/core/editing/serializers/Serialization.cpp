@@ -147,7 +147,7 @@ static inline HTMLElement* AncestorToRetainStructureAndAppearance(
 
 static inline HTMLElement*
 AncestorToRetainStructureAndAppearanceWithNoLayoutObject(
-    Node* common_ancestor) {
+    const Node& common_ancestor) {
   HTMLElement* common_ancestor_block = ToHTMLElement(EnclosingNodeOfType(
       FirstPositionInOrBeforeNode(common_ancestor), IsHTMLBlockElement));
   return AncestorToRetainStructureAndAppearanceForBlock(common_ancestor_block);
@@ -185,7 +185,7 @@ static HTMLElement* HighestAncestorToWrapMarkup(
     special_common_ancestor =
         AncestorToRetainStructureAndAppearance(common_ancestor);
     if (Node* parent_list_node = EnclosingNodeOfType(
-            FirstPositionInOrBeforeNode(first_node), IsListItem)) {
+            FirstPositionInOrBeforeNodeDeprecated(first_node), IsListItem)) {
       EphemeralRangeTemplate<Strategy> markup_range =
           EphemeralRangeTemplate<Strategy>(start_position, end_position);
       EphemeralRangeTemplate<Strategy> node_range = NormalizeRange(
@@ -201,7 +201,7 @@ static HTMLElement* HighestAncestorToWrapMarkup(
     // Retain the Mail quote level by including all ancestor mail block quotes.
     if (HTMLQuoteElement* highest_mail_blockquote =
             ToHTMLQuoteElement(HighestEnclosingNodeOfType(
-                FirstPositionInOrBeforeNode(first_node),
+                FirstPositionInOrBeforeNodeDeprecated(first_node),
                 IsMailHTMLBlockquoteElement, kCanCrossEditingBoundary)))
       special_common_ancestor = highest_mail_blockquote;
   }
@@ -417,7 +417,10 @@ DocumentFragment* CreateFragmentFromMarkupWithContext(
 
   Node* common_ancestor = range.CommonAncestorContainer();
   HTMLElement* special_common_ancestor =
-      AncestorToRetainStructureAndAppearanceWithNoLayoutObject(common_ancestor);
+      common_ancestor
+          ? AncestorToRetainStructureAndAppearanceWithNoLayoutObject(
+                *common_ancestor)
+          : nullptr;
 
   // When there's a special common ancestor outside of the fragment, we must
   // include it as well to preserve the structure and appearance of the

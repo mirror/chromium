@@ -535,21 +535,17 @@ PositionTemplate<Strategy> PositionTemplate<Strategy>::LastPositionInNode(
 // static
 template <typename Strategy>
 PositionTemplate<Strategy>
-PositionTemplate<Strategy>::FirstPositionInOrBeforeNode(Node* node) {
-  if (!node)
-    return PositionTemplate<Strategy>();
-  return EditingIgnoresContent(*node) ? BeforeNode(*node)
-                                      : FirstPositionInNode(*node);
+PositionTemplate<Strategy>::FirstPositionInOrBeforeNode(const Node& node) {
+  return EditingIgnoresContent(node) ? BeforeNode(node)
+                                     : FirstPositionInNode(node);
 }
 
 // static
 template <typename Strategy>
 PositionTemplate<Strategy>
-PositionTemplate<Strategy>::LastPositionInOrAfterNode(Node* node) {
-  if (!node)
-    return PositionTemplate<Strategy>();
-  return EditingIgnoresContent(*node) ? AfterNode(*node)
-                                      : LastPositionInNode(*node);
+PositionTemplate<Strategy>::LastPositionInOrAfterNode(const Node& node) {
+  return EditingIgnoresContent(node) ? AfterNode(node)
+                                     : LastPositionInNode(node);
 }
 
 PositionInFlatTree ToPositionInFlatTree(const Position& pos) {
