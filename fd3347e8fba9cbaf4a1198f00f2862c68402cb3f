@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "75444bf8_ec7f33fd",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-19T23:29:26Z",
+      "side": 1,
+      "message": "\u003e It\u0027s correct that you can\u0027t make a non-static data member constexpr.  It turns out std::string can\u0027t be made to work with this, even if you add a constexpr constructor to Response (which was my instinct on how to do this).  You could maybe use const char[] members (and go back to \"\").  C++17\u0027s answer to this is std::string_view, which is basically a standardization of StringPiece -- so another route would be to use StringPiece instead of std::string for this member, though I didn\u0027t look to see if we\u0027d added constexpr constructors for it.\n\u003e \n\u003e I think this is not worth worrying about :)\n\nHappy to hear that.  Left it as is.",
+      "parentUuid": "a3c85272_372237e9",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40cec8ea_259f8565",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
         "patchSetId": 2
