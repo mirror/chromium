@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3227fec8_44afe47a",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-09-19T17:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6071b03d_298b5cde",
+      "range": {
+        "startLine": 140,
+        "startChar": 2,
+        "endLine": 140,
+        "endChar": 7
+      },
+      "revId": "ca32de9b0c040e5c92225e91a9467a446a83b70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4af4228e_5d1f6011",
         "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ba4f60e1_445d28fe",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-09-19T17:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4af4228e_5d1f6011",
+      "range": {
+        "startLine": 74,
+        "startChar": 19,
+        "endLine": 74,
+        "endChar": 25
+      },
+      "revId": "ca32de9b0c040e5c92225e91a9467a446a83b70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92c87ff7_4b0b1f38",
         "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "ca32de9b0c040e5c92225e91a9467a446a83b70b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77bca25a_dd73db70",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1242535
+      },
+      "writtenOn": "2017-09-19T17:08:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92c87ff7_4b0b1f38",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 77,
+        "endChar": 13
+      },
+      "revId": "ca32de9b0c040e5c92225e91a9467a446a83b70b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
