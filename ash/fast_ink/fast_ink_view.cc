@@ -131,6 +131,9 @@ FastInkView::FastInkView(aura::Window* root_window) : weak_ptr_factory_(this) {
 }
 
 FastInkView::~FastInkView() {
+  if (gpu_memory_buffer_)
+    gpu_memory_buffer_->Unmap();
+
   frame_sink_->DetachFromClient();
 
   // Use ExportedTextureDeleter to delete currently exported textures. This
@@ -224,6 +227,13 @@ void FastInkView::UpdateBuffer() {
       return;
     }
 
+    // Map buffer for writing.
+    if (!gpu_memory_buffer_->Map()) {
+      gpu_memory_buffer_.reset();
+      LOG(ERROR) << "Failed to map GPU memory buffer";
+      return;
+    }
+
     // Make sure the first update rectangle covers the whole buffer.
     update_rect = gfx::Rect(screen_bounds.size());
   }
@@ -237,12 +247,6 @@ void FastInkView::UpdateBuffer() {
   if (pixel_rect.IsEmpty())
     return;
 
-  // Map buffer for writing.
-  if (!gpu_memory_buffer_->Map()) {
-    LOG(ERROR) << "Failed to map GPU memory buffer";
-    return;
-  }
-
   // Create a temporary canvas for update rectangle.
   gfx::Canvas canvas(pixel_rect.size(), 1.0f, false);
   canvas.Translate(-pixel_rect.OffsetFromOrigin());
@@ -255,6 +259,8 @@ void FastInkView::UpdateBuffer() {
     OnRedraw(canvas);
   }
 
+  int stride = gpu_memory_buffer_->stride(0);
+
   // Copy result to GPU memory buffer. This is effectively a memcpy and unlike
   // drawing to the buffer directly this ensures that the buffer is never in a
   // state that would result in flicker.
@@ -263,14 +269,28 @@ void FastInkView::UpdateBuffer() {
                  pixel_rect.ToString());
 
     uint8_t* data = static_cast<uint8_t*>(gpu_memory_buffer_->memory(0));
-    int stride = gpu_memory_buffer_->stride(0);
     canvas.GetBitmap().readPixels(
         SkImageInfo::MakeN32Premul(pixel_rect.width(), pixel_rect.height()),
         data + pixel_rect.y() * stride + pixel_rect.x() * 4, stride, 0, 0);
   }
 
-  // Unmap to flush writes to buffer.
-  gpu_memory_buffer_->Unmap();
+  {
+    TRACE_EVENT1("ui", "FastInkView::UpdateBuffer::Flush", "pixel_rect",
+                 pixel_rect.ToString());
+
+    // Make sure no memory write instructions are re-ordered to be executed
+    // after the flush.
+    base::subtle::MemoryBarrier();
+
+    // Flush writes to buffer.
+    int bytes = pixel_rect.width() * 4;
+    int p = pixel_rect.y() * stride + pixel_rect.x() * 4;
+    int end = p + pixel_rect.height() * stride;
+    while (p < end) {
+      gpu_memory_buffer_->Flush(0, p, bytes);
+      p += stride;
+    }
+  }
 
   // Update surface damage rectangle.
   surface_damage_rect_.Union(update_rect);

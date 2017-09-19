@@ -123,6 +123,8 @@ class GpuMemoryBufferImplGbm : public gfx::GpuMemoryBuffer {
     return mapped_planes_[plane].addr;
   }
 
+  void Flush(size_t plane, off_t offset, size_t bytes) override {}
+
   void Unmap() override {
     for (size_t i = 0; i < mapped_planes_.size(); ++i) {
       if (mapped_planes_[i].addr) {

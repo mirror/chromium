@@ -83,6 +83,7 @@ class GpuMemoryBufferImpl : public gfx::GpuMemoryBuffer {
     return reinterpret_cast<uint8_t*>(&bytes_->data().front()) +
            gfx::BufferOffsetForBufferFormat(size_, format_, plane);
   }
+  void Flush(size_t plane, off_t offset, size_t bytes) override {}
   void Unmap() override {
     DCHECK(mapped_);
     mapped_ = false;
@@ -141,6 +142,7 @@ class IOSurfaceGpuMemoryBuffer : public gfx::GpuMemoryBuffer {
     DCHECK_LT(plane, gfx::NumberOfPlanesForBufferFormat(format_));
     return IOSurfaceGetBaseAddressOfPlane(iosurface_, plane);
   }
+  void Flush(size_t plane, off_t offset, size_t bytes) override {}
   void Unmap() override {
     DCHECK(mapped_);
     mapped_ = false;

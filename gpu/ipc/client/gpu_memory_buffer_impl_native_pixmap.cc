@@ -130,6 +130,13 @@ void* GpuMemoryBufferImplNativePixmap::memory(size_t plane) {
   return pixmap_->GetMemoryAddress(plane);
 }
 
+void GpuMemoryBufferImplNativePixmap::Flush(size_t plane,
+                                            off_t offset,
+                                            size_t bytes) {
+  DCHECK(mapped_);
+  pixmap_->Flush(plane, offset, bytes);
+}
+
 void GpuMemoryBufferImplNativePixmap::Unmap() {
   DCHECK(mapped_);
   pixmap_->Unmap();

@@ -26,7 +26,10 @@ class ClientNativePixmapCast : public gfx::ClientNativePixmap {
   void* GetMemoryAddress(size_t plane) const override {
     NOTREACHED();
     return nullptr;
-  };
+  }
+  void Flush(size_t plane, off_t offset, size_t bytes) override {
+    NOTREACHED();
+  }
   void Unmap() override { NOTREACHED(); }
   int GetStride(size_t plane) const override {
     NOTREACHED();

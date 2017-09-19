@@ -40,6 +40,9 @@ class ClientNativePixmapOpaque : public ClientNativePixmap {
     NOTREACHED();
     return 0;
   }
+  void Flush(size_t plane, off_t offset, size_t bytes) override {
+    NOTREACHED();
+  }
 };
 
 }  // namespace

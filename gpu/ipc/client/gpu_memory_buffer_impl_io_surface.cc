@@ -103,6 +103,13 @@ void* GpuMemoryBufferImplIOSurface::memory(size_t plane) {
   return IOSurfaceGetBaseAddressOfPlane(io_surface_, plane);
 }
 
+void GpuMemoryBufferImplIOSurface::Flush(size_t plane,
+                                         off_t offset,
+                                         size_t bytes) {
+  DCHECK(mapped_);
+  NOTIMPLEMENTED();
+}
+
 void GpuMemoryBufferImplIOSurface::Unmap() {
   DCHECK(mapped_);
   IOSurfaceUnlock(io_surface_, lock_flags_, NULL);

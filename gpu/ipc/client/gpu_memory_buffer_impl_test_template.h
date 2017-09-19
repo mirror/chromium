@@ -202,12 +202,63 @@ TYPED_TEST_P(GpuMemoryBufferImplTest, PersistentMap) {
   }
 }
 
+TYPED_TEST_P(GpuMemoryBufferImplTest, Flush) {
+  // Use a multiple of 4 for both dimensions to support compressed formats.
+  const gfx::Size kBufferSize(4, 4);
+
+  for (auto format : gfx::GetBufferFormatsForTesting()) {
+    if (!TypeParam::IsConfigurationSupported(
+            format, gfx::BufferUsage::SCANOUT_CPU_READ_WRITE)) {
+      continue;
+    }
+
+    gfx::GpuMemoryBufferHandle handle;
+    GpuMemoryBufferImpl::DestructionCallback destroy_callback =
+        TestFixture::CreateGpuMemoryBuffer(
+            kBufferSize, format, gfx::BufferUsage::SCANOUT_CPU_READ_WRITE,
+            &handle, nullptr);
+    std::unique_ptr<TypeParam> buffer(TypeParam::CreateFromHandle(
+        handle, kBufferSize, format, gfx::BufferUsage::SCANOUT_CPU_READ_WRITE,
+        destroy_callback));
+    ASSERT_TRUE(buffer);
+
+    const size_t num_planes = gfx::NumberOfPlanesForBufferFormat(format);
+
+    // Map buffer into user space.
+    ASSERT_TRUE(buffer->Map());
+
+    // Set and flush mapped buffers.
+    for (size_t plane = 0; plane < num_planes; ++plane) {
+      const size_t row_size_in_bytes =
+          gfx::RowSizeForBufferFormat(kBufferSize.width(), format, plane);
+      EXPECT_GT(row_size_in_bytes, 0u);
+
+      std::unique_ptr<char[]> data(new char[row_size_in_bytes]);
+      memset(data.get(), 0x2a + plane, row_size_in_bytes);
+
+      size_t height = kBufferSize.height() /
+                      gfx::SubsamplingFactorForBufferFormat(format, plane);
+      for (size_t y = 0; y < height; ++y) {
+        memcpy(static_cast<char*>(buffer->memory(plane)) +
+                   y * buffer->stride(plane),
+               data.get(), row_size_in_bytes);
+
+        // Flush memory range.
+        buffer->Flush(plane, y * buffer->stride(plane), row_size_in_bytes);
+      }
+    }
+
+    buffer->Unmap();
+  }
+}
+
 // The GpuMemoryBufferImplTest test case verifies behavior that is expected
 // from a GpuMemoryBuffer implementation in order to be conformant.
 REGISTER_TYPED_TEST_CASE_P(GpuMemoryBufferImplTest,
                            CreateFromHandle,
                            Map,
-                           PersistentMap);
+                           PersistentMap,
+                           Flush);
 
 }  // namespace gpu
 

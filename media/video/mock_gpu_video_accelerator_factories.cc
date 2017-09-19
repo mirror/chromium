@@ -45,6 +45,7 @@ class GpuMemoryBufferImpl : public gfx::GpuMemoryBuffer {
     DCHECK_LT(plane, num_planes_);
     return &bytes_[plane][0];
   }
+  void Flush(size_t plane, off_t offset, size_t bytes) override {}
   void Unmap() override {
     DCHECK(mapped_);
     mapped_ = false;

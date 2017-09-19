@@ -72,6 +72,10 @@ class GFX_EXPORT GpuMemoryBuffer {
   // successfully mapped using a call to Map() before calling this function.
   virtual void* memory(size_t plane) = 0;
 
+  // Flush memory range of a plane. Buffer must have been successfully mapped
+  // using a call to Map() before calling this function.
+  virtual void Flush(size_t plane, off_t offset, size_t bytes) = 0;
+
   // Unmaps the buffer. It's illegal to use any pointer returned by memory()
   // after this has been called.
   virtual void Unmap() = 0;
