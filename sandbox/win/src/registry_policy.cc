@@ -212,7 +212,7 @@ bool RegistryPolicy::OpenKeyAction(EvalResult eval_result,
   // file as specified.
   if (ASK_BROKER != eval_result) {
     *nt_status = STATUS_ACCESS_DENIED;
-    return true;
+    return false;
   }
 
   UNICODE_STRING uni_name = {0};
