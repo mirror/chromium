@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import org.chromium.base.ContextUtils;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ntp.ContextMenuManager;
@@ -31,7 +32,7 @@ public class SiteSection extends OptionalLeaf implements TileGroup.Observer {
      * The maximum number of tiles to try and fit in a row. On smaller screens, there may not be
      * enough space to fit all of them.
      */
-    private static final int MAX_TILE_COLUMNS = 4;
+    public static final int MAX_TILE_COLUMNS = 4;
 
     /**
      * Experiment parameter for the maximum number of tile suggestion rows to show.
@@ -51,10 +52,10 @@ public class SiteSection extends OptionalLeaf implements TileGroup.Observer {
                 .inflate(getLayout(), parent, false);
     }
 
-    public static SiteSectionViewHolder createViewHolder(ViewGroup view) {
+    public static SiteSectionViewHolder createViewHolder(ViewGroup view, UiConfig uiConfig) {
         return SuggestionsConfig.useSitesExplorationUi()
                 ? new SiteExploreViewHolder(view, MAX_TILE_COLUMNS)
-                : new TileGridViewHolder(view, getMaxTileRows(), MAX_TILE_COLUMNS);
+                : new TileGridViewHolder(view, getMaxTileRows(), MAX_TILE_COLUMNS, uiConfig);
     }
 
     public SiteSection(SuggestionsUiDelegate uiDelegate, ContextMenuManager contextMenuManager,
@@ -65,7 +66,7 @@ public class SiteSection extends OptionalLeaf implements TileGroup.Observer {
                 uiDelegate.getImageFetcher());
         mTileGroup = new TileGroup(mTileRenderer, uiDelegate, contextMenuManager, tileGroupDelegate,
                 /* observer = */ this, offlinePageBridge);
-        mTileGroup.startObserving(getMaxTileRows() * MAX_TILE_COLUMNS);
+        mTileGroup.startObserving(getMaxTiles());
     }
 
     @Override
@@ -109,6 +110,11 @@ public class SiteSection extends OptionalLeaf implements TileGroup.Observer {
 
     public TileGroup getTileGroup() {
         return mTileGroup;
+    }
+
+    @VisibleForTesting
+    static int getMaxTiles() {
+        return MAX_TILE_COLUMNS * getMaxTileRows();
     }
 
     private static int getMaxTileRows() {
