@@ -5,6 +5,9 @@
 #ifndef CONTENT_PUBLIC_COMMON_SIMPLE_URL_LOADER_H_
 #define CONTENT_PUBLIC_COMMON_SIMPLE_URL_LOADER_H_
 
+#include <stdint.h>
+
+#include <limits>
 #include <memory>
 #include <string>
 
@@ -73,7 +76,9 @@ class CONTENT_EXPORT SimpleURLLoader {
 
   // Same as DownloadToString, but downloads to a buffer of unbounded size,
   // potentially causing a crash if the amount of addressable memory is
-  // exceeded. It's recommended consumers use DownloadToString instead.
+  // exceeded. It's recommended consumers use one of the other download methods
+  // instead (DownloadToString if the body is expected to be of reasonable
+  // length, or DownloadToFile otherwise).
   virtual void DownloadToStringOfUnboundedSizeUntilCrashAndDie(
       const ResourceRequest& resource_request,
       mojom::URLLoaderFactory* url_loader_factory,
