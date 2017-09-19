@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<title>Test document user gesture is delegated to iframes after navigation</title>
+<script>
+  eventSender.mouseDown();
+
+  if (window.testRunner) {
+    testRunner.clearBackForwardList();
+    testRunner.waitUntilDone();
+  }
+
+  document.location.href = 'document-user-activation-iframe-delegation-nogesture.html';
+</script>

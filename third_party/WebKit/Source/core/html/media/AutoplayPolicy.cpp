@@ -8,12 +8,14 @@
 #include "core/dom/ElementVisibilityObserver.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/frame/ContentSettingsClient.h"
+#include "core/frame/FrameOwner.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLMediaElement.h"
 #include "core/html/media/AutoplayUmaHelper.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/wtf/Assertions.h"
+#include "public/platform/GestureDelegationFlags.h"
 #include "public/platform/WebMediaPlayer.h"
 #include "public/web/WebSettings.h"
 
@@ -24,6 +26,11 @@ namespace {
 bool IsDocumentCrossOrigin(const Document& document) {
   const LocalFrame* frame = document.GetFrame();
   return frame && frame->IsCrossOriginSubframe();
+}
+
+bool ShouldDelegateMediaGesture(const Document& document) {
+  return document.GetFrame()->Owner()->GetGestureDelegationFlags() &
+         kGestureDelegationMedia;
 }
 
 // Returns whether |document| is whitelisted for autoplay. If true, the user
@@ -84,8 +91,18 @@ AutoplayPolicy::Type AutoplayPolicy::GetAutoplayPolicyForDocument(
 bool AutoplayPolicy::IsDocumentAllowedToPlay(const Document& document) {
   if (!document.GetFrame())
     return false;
-  return document.GetFrame()->HasReceivedUserGesture() ||
-         document.GetFrame()->HasReceivedUserGestureBeforeNavigation();
+
+  // Check if the current frame has received a user gesture.
+  if (document.GetFrame()->HasReceivedUserGesture() ||
+      document.GetFrame()->HasReceivedUserGestureBeforeNavigation()) {
+    return true;
+  }
+
+  // If gesture delegation is enabled then check if the parent document is
+  // allowed to play.
+  const Document* parent = document.ParentDocument();
+  return parent && ShouldDelegateMediaGesture(document) &&
+         IsDocumentAllowedToPlay(*parent);
 }
 
 AutoplayPolicy::AutoplayPolicy(HTMLMediaElement* element)
