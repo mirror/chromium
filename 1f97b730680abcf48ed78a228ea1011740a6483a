@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6afb8ac6_457574ad",
+        "filename": "cc/tiles/image_decode_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-09-19T22:02:30Z",
+      "side": 1,
+      "message": "This cleanup is great!\n\nJust one thought. Could we make the parameters here private? It would be a nice way to assert that the TaskResult will always have valid state, if you have a task then it implies a need_unref.",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 85,
+        "endChar": 4
+      },
+      "revId": "1f97b730680abcf48ed78a228ea1011740a6483a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
