@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86ffe730_23a631bd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-19T10:22:57Z",
+      "side": 1,
+      "message": "How about \"Refactor ScopedFocusNavigation class\"?",
+      "revId": "13c26d3efa2d9a4cd080bc6be4e51a0cd8168fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3b189da_aa833d46",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-19T10:22:57Z",
+      "side": 1,
+      "message": "If the reason for the change is obvious, you can skip \"the reason\" part and describe\nwhat the change does or what you changed, otherwise explaining why this is better than\nbefore, or why it was bad here would make it easier for readers to understand\nthe intention of this change.\n\nCould you try explaining why this change makes readability better?",
+      "revId": "13c26d3efa2d9a4cd080bc6be4e51a0cd8168fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b45df70_490807e6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-19T10:22:57Z",
+      "side": 1,
+      "message": "Please wrap the line at 72 chars.\n\nHow about replacing \"In this code\" with \"In ScopedFocusNavigation class\"?",
+      "revId": "13c26d3efa2d9a4cd080bc6be4e51a0cd8168fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96e3959c_2d6a40d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-19T10:22:57Z",
+      "side": 1,
+      "message": "s/compexity/complexity/\n\nSo this explains \"the reason\" as well - for maintainability.",
+      "revId": "13c26d3efa2d9a4cd080bc6be4e51a0cd8168fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4904e696_25341b31",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-19T10:22:57Z",
+      "side": 1,
+      "message": "It would be nice if you have a design doc, and put link here (even if the doc\nis work-in-progress).",
+      "revId": "13c26d3efa2d9a4cd080bc6be4e51a0cd8168fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d11487d_71a999b3",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-19T10:22:57Z",
+      "side": 1,
+      "message": "All these 4 functions can be const.",
+      "revId": "13c26d3efa2d9a4cd080bc6be4e51a0cd8168fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76edcfaf_8f6550bb",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-19T10:22:57Z",
+      "side": 1,
+      "message": "ScopedFocusNavigation instances are all created via factory methods (line 116-122),\nyou don\u0027t have to move constructors to public.",
+      "revId": "13c26d3efa2d9a4cd080bc6be4e51a0cd8168fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695f9786_1b4f8a29",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-19T10:22:57Z",
+      "side": 1,
+      "message": "Could you add a brief explanation for these 3 classes as comments?",
+      "revId": "13c26d3efa2d9a4cd080bc6be4e51a0cd8168fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5bfdef9_dec35691",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-19T10:22:57Z",
+      "side": 1,
+      "message": "Usually constructor comes first in the public section.\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "13c26d3efa2d9a4cd080bc6be4e51a0cd8168fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97ac3185_5fd76cbb",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-19T10:22:57Z",
+      "side": 1,
+      "message": "How about \"SlotFallbackContentsFocusNavigation\"?\n\n\"fallback\" alone is somewhat ambiguous.\nWe usually prefer descriptive, unambiguous name to shorter or abbreviated name.",
+      "revId": "13c26d3efa2d9a4cd080bc6be4e51a0cd8168fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb6de86_68f10845",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-19T10:22:57Z",
+      "side": 1,
+      "message": "Move constructor to first in public section.",
+      "revId": "13c26d3efa2d9a4cd080bc6be4e51a0cd8168fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21530a9_6a25de58",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-09-19T10:22:57Z",
+      "side": 1,
+      "message": "Move constructor first in public.",
+      "revId": "13c26d3efa2d9a4cd080bc6be4e51a0cd8168fe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
