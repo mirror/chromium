@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ec10b3c_085f6c5f",
+        "filename": "chrome/browser/printing/print_view_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-19T08:13:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa0590c5_e555e637",
+      "revId": "6d5cf554cca6d782641782798bb0f219178ecdd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b711245_2ba8dc30",
         "filename": "chrome/browser/printing/print_view_manager.cc",
         "patchSetId": 16
@@ -59,6 +77,48 @@
     },
     {
       "key": {
+        "uuid": "01e6e89e_27bfd83a",
+        "filename": "chrome/browser/printing/print_view_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-19T08:13:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b711245_2ba8dc30",
+      "revId": "6d5cf554cca6d782641782798bb0f219178ecdd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3c4e4f0a_24e4b443",
+        "filename": "chrome/browser/printing/print_view_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-19T08:13:48Z",
+      "side": 1,
+      "message": "Confirmed on Linux. So new patch set introduces new flag to detect this scenario.",
+      "parentUuid": "1600e64d_862289ca",
+      "range": {
+        "startLine": 138,
+        "startChar": 53,
+        "endLine": 138,
+        "endChar": 64
+      },
+      "revId": "6d5cf554cca6d782641782798bb0f219178ecdd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0af75763_da3cc6be",
         "filename": "chrome/browser/printing/print_view_manager.cc",
         "patchSetId": 16
@@ -73,6 +133,24 @@
       "revId": "6d5cf554cca6d782641782798bb0f219178ecdd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5463e201_31b78761",
+        "filename": "chrome/browser/printing/print_view_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-19T08:13:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0af75763_da3cc6be",
+      "revId": "6d5cf554cca6d782641782798bb0f219178ecdd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
