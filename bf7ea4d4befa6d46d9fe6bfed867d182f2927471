@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77a91a03_8ec49d3a",
+        "filename": "content/browser/renderer_host/input/input_router_impl.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-19T11:02:35Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused about this. I think it may be incorrect to ever reset the touch action here since the result NO_CONSUMER_EXISTS does not necessarily mean AUTO but rather that we don\u0027t need to block on the touch event. However, we need a time when we\u0027re guaranteed to reset the touch action. I assume that currently the set white listed touch action is an out of band message which we don\u0027t know if it will arrive before or after the touch start so perhaps we should reset the touch action on the last touch end?",
+      "revId": "bf7ea4d4befa6d46d9fe6bfed867d182f2927471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fdf98f6_a0fcf03e",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-19T11:02:35Z",
+      "side": 1,
+      "message": "This seems like it defeats the purpose of using the Optional. Can we not return access to the Optional variable so that it will fail if not set?",
+      "revId": "bf7ea4d4befa6d46d9fe6bfed867d182f2927471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0737aeed_3397bb61",
+        "filename": "content/browser/renderer_host/input/touch_action_filter.h",
+        "patchSetId": 37
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-19T11:02:35Z",
+      "side": 1,
+      "message": "Despite the comment, the name is confusing since it doesn\u0027t disambiguate from checking whether suppress_manipulation_events has a value. We could probably switch this to has_final_suppress_manipulation_events_value_ or something explicit like that.\n\nAlternately we could have two variables for suppress_manipulation_events_:\nsuppressing_manipulation_events_ // true iff we are suppressing events.\nshould_supress_manipulation_events_ // based on effective touch action.",
+      "revId": "bf7ea4d4befa6d46d9fe6bfed867d182f2927471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
