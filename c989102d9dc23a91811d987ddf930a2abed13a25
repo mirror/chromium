@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2685225c_235af7b1",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-19T00:00:47Z",
+      "side": 1,
+      "message": "nit: const.\nand this is no longer required once we analyze default_host current_screen",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 6
+      },
+      "revId": "c989102d9dc23a91811d987ddf930a2abed13a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e29d1d_bd317613",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-19T00:00:47Z",
+      "side": 1,
+      "message": "nit: you call chromeos::LoginDisplayHost::default_host() twice.\nHow about:\n\nLoginDisplayHost* host \u003d chromeos::LoginDisplayHost::default_host();\nif (!host)\n   return false;\nconst WizardController* wizard_controller \u003d host-\u003eGetWizardController();\nif (!wizard_controller)\n   return false;\nreturn wizard_controller-\u003ecurrent_screen()-\u003escreen_id() \u003d\u003d chromeos::OobeScreen::SCREEN_ARC_TERMS_OF_SERVICE;",
+      "range": {
+        "startLine": 176,
+        "startChar": 36,
+        "endLine": 176,
+        "endChar": 55
+      },
+      "revId": "c989102d9dc23a91811d987ddf930a2abed13a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3105f0a_811f6430",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-09-19T00:00:47Z",
+      "side": 1,
+      "message": "nit: we have mix of getters and functions here. Please move it to L112",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 33
+      },
+      "revId": "c989102d9dc23a91811d987ddf930a2abed13a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
