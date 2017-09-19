@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f68ad49f_2ab29568",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-19T15:28:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcb24abd_ab427919",
+      "range": {
+        "startLine": 52,
+        "startChar": 20,
+        "endLine": 52,
+        "endChar": 32
+      },
+      "revId": "66930d909114ca0e95152c77dd362b287333f859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "581c9075_7e5768f2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "66930d909114ca0e95152c77dd362b287333f859",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b5bfdfe_ac1918d5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-19T15:28:05Z",
+      "side": 1,
+      "message": "Much nicer, thanks!",
+      "parentUuid": "581c9075_7e5768f2",
+      "revId": "66930d909114ca0e95152c77dd362b287333f859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "46366fb7_0adeac5b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-19T15:28:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df8e69c2_1a9aa1fb",
+      "range": {
+        "startLine": 192,
+        "startChar": 85,
+        "endLine": 192,
+        "endChar": 86
+      },
+      "revId": "66930d909114ca0e95152c77dd362b287333f859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9cb9400_006b0127",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
         "patchSetId": 3
@@ -85,6 +151,30 @@
       "revId": "66930d909114ca0e95152c77dd362b287333f859",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d68755ab_d0bd1140",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-19T15:28:05Z",
+      "side": 1,
+      "message": "So... by just using a lambda, Android Studio says it can\u0027t cast the viewHolder, so I gave up. However the compiler give another error: \n\nincompatible types: PartialBindCallback is not a functional interface\n\nSo I addressed it in https://chromium-review.googlesource.com/c/chromium/src/+/672946",
+      "parentUuid": "a9cb9400_006b0127",
+      "range": {
+        "startLine": 197,
+        "startChar": 25,
+        "endLine": 197,
+        "endChar": 44
+      },
+      "revId": "66930d909114ca0e95152c77dd362b287333f859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "b8a5264e_bde09a31",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-19T15:28:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddd59d39_bc9db3cd",
+      "range": {
+        "startLine": 514,
+        "startChar": 52,
+        "endLine": 514,
+        "endChar": 60
+      },
+      "revId": "66930d909114ca0e95152c77dd362b287333f859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adbe0fc5_d483d448",
         "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSectionTest.java",
         "patchSetId": 3
@@ -131,6 +245,30 @@
       "revId": "66930d909114ca0e95152c77dd362b287333f859",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c6caba8_266bfa34",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSectionTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-09-19T15:28:05Z",
+      "side": 1,
+      "message": "Tried, but it still messes up and conflicts with presumbit",
+      "parentUuid": "adbe0fc5_d483d448",
+      "range": {
+        "startLine": 78,
+        "startChar": 11,
+        "endLine": 79,
+        "endChar": 8
+      },
+      "revId": "66930d909114ca0e95152c77dd362b287333f859",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
