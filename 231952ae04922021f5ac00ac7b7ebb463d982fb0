@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc384c7a_d02fd880",
+        "filename": "content/browser/android/selection_popup_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-19T04:57:01Z",
+      "side": 1,
+      "message": "probably deserves a comment",
+      "revId": "231952ae04922021f5ac00ac7b7ebb463d982fb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0392b7d_2ebb8415",
+        "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-19T04:57:01Z",
+      "side": 1,
+      "message": "don\u0027t add to public interface (ie content_public for java) unless there\u0027s an embedder calling the method\n\ninside content, it\u0027s fine to cast to impl type instead",
+      "revId": "231952ae04922021f5ac00ac7b7ebb463d982fb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
