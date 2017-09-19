@@ -1044,6 +1044,11 @@ bool DesktopWindowTreeHostX11::IsFullscreen() const {
   return is_fullscreen_;
 }
 
+bool DesktopWindowTreeHostX11::IsSnapped() const {
+  // This is for mus and ash.
+  return false;
+}
+
 void DesktopWindowTreeHostX11::SetOpacity(float opacity) {
   // X server opacity is in terms of 32 bit unsigned int space, and counts from
   // the opposite direction.

@@ -720,6 +720,14 @@ bool DesktopWindowTreeHostMus::IsFullscreen() const {
   return window()->GetProperty(aura::client::kShowStateKey) ==
          ui::SHOW_STATE_FULLSCREEN;
 }
+
+bool DesktopWindowTreeHostMus::IsSnapped() const {
+  ui::WindowShowState state =
+      window()->GetProperty(aura::client::kShowStateKey);
+  return state == ui::SHOW_STATE_LEFT_SNAPPED ||
+         state == ui::SHOW_STATE_RIGHT_SNAPPED;
+}
+
 void DesktopWindowTreeHostMus::SetOpacity(float opacity) {
   WindowTreeHostMus::SetOpacity(opacity);
 }

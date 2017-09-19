@@ -140,6 +140,8 @@ class VIEWS_EXPORT DesktopWindowTreeHost {
   virtual void SetFullscreen(bool fullscreen) = 0;
   virtual bool IsFullscreen() const = 0;
 
+  virtual bool IsSnapped() const = 0;
+
   virtual void SetOpacity(float opacity) = 0;
 
   virtual void SetWindowIcons(const gfx::ImageSkia& window_icon,
