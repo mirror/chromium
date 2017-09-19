@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9b49d1aa_719536f3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-19T21:57:10Z",
+      "side": 1,
+      "message": "Cool. I was following the PPAPI model and didn\u0027t know about this.\n\nOn Mac, the only thing we need is to preload the CDM itself. I have no idea what \"add the resources to the profile\" means. Do you have any examples I can look at?\n\n---\n\nWhat about Windows? Does the current preloading logic look fine to you? On Windows, I need to do more pre-sandbox-startup, e.g. preload dxva2.dll [1], and initialize VMP [2]\n\n[1] https://cs.chromium.org/chromium/src/content/ppapi_plugin/ppapi_thread.cc?rcl\u003d0bdf1625e816838b2a545f6a4e845770f4613e3e\u0026l\u003d405\n[2] https://cs.chromium.org/chromium/src/content/ppapi_plugin/ppapi_thread.cc?rcl\u003d0bdf1625e816838b2a545f6a4e845770f4613e3e\u0026l\u003d376",
+      "parentUuid": "ac066f5b_5d53286a",
+      "revId": "50e419878cdddd906647c7dc2beed04633fc1276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb0aa549_5f6dcf6e",
         "filename": "content/browser/media/media_interface_proxy.cc",
         "patchSetId": 6
@@ -94,6 +112,24 @@
       "writtenOn": "2017-09-19T20:15:47Z",
       "side": 1,
       "message": "I\u0027m wondering if this is needed. I think the browser can open() the .so and transfer the FD to the CDM modules over IPC, and then you could dlopen using /proc/self/fd/\u003cfd\u003e.",
+      "revId": "50e419878cdddd906647c7dc2beed04633fc1276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b21df4a_efb30477",
+        "filename": "content/zygote/zygote_main_linux.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-19T21:57:10Z",
+      "side": 1,
+      "message": "Thanks! I am not super familiar with this. Do you have any example I can look at?",
+      "parentUuid": "79639533_b22c18e1",
       "revId": "50e419878cdddd906647c7dc2beed04633fc1276",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
