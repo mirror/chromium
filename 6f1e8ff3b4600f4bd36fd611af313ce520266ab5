@@ -16,6 +16,24 @@
       "revId": "6f1e8ff3b4600f4bd36fd611af313ce520266ab5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b9f5c4f_00ab396d",
+        "filename": "net/cert/internal/general_names.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-19T20:36:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "928fc55e_b1b46e49",
+      "revId": "6f1e8ff3b4600f4bd36fd611af313ce520266ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
