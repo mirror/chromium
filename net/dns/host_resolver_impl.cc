@@ -250,20 +250,20 @@ bool ResemblesMulticastDNSName(const std::string& hostname) {
   } while (0)
 
 // Record time from Request creation until a valid DNS response.
-void RecordTotalTime(bool had_dns_config,
-                     bool speculative,
+void RecordTotalTime(bool speculative,
+                     bool from_cache,
                      base::TimeDelta duration) {
-  if (had_dns_config) {
-    if (speculative) {
-      DNS_HISTOGRAM("AsyncDNS.TotalTime_speculative", duration);
-    } else {
-      DNS_HISTOGRAM("AsyncDNS.TotalTime", duration);
-    }
+  if (speculative) {
+    DNS_HISTOGRAM("Net.DNS.TotalTime_speculative", duration);
   } else {
+    DNS_HISTOGRAM("Net.DNS.TotalTime", duration);
+  }
+
+  if (!from_cache) {
     if (speculative) {
-      DNS_HISTOGRAM("DNS.TotalTime_speculative", duration);
+      DNS_HISTOGRAM("Net.DNS.TotalTimeNotCached_speculative", duration);
     } else {
-      DNS_HISTOGRAM("DNS.TotalTime", duration);
+      DNS_HISTOGRAM("Net.DNS.TotalTimeNotCached", duration);
     }
   }
 }
@@ -1579,16 +1579,9 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
     base::TimeDelta queue_time = now - creation_time_;
     base::TimeDelta queue_time_after_change = now - priority_change_time_;
 
-    if (had_dns_config_) {
-      DNS_HISTOGRAM_BY_PRIORITY("AsyncDNS.JobQueueTime", priority(),
-                                queue_time);
-      DNS_HISTOGRAM_BY_PRIORITY("AsyncDNS.JobQueueTimeAfterChange", priority(),
-                                queue_time_after_change);
-    } else {
-      DNS_HISTOGRAM_BY_PRIORITY("DNS.JobQueueTime", priority(), queue_time);
-      DNS_HISTOGRAM_BY_PRIORITY("DNS.JobQueueTimeAfterChange", priority(),
-                                queue_time_after_change);
-    }
+    DNS_HISTOGRAM_BY_PRIORITY("Net.DNS.JobQueueTime", priority(), queue_time);
+    DNS_HISTOGRAM_BY_PRIORITY("Net.DNS.JobQueueTimeAfterChange", priority(),
+                              queue_time_after_change);
 
     bool system_only =
         (key_.host_resolver_flags & HOST_RESOLVER_SYSTEM_ONLY) != 0;
@@ -1822,7 +1815,7 @@ class HostResolverImpl::Job : public PrioritizedDispatcher::Job,
       LogFinishRequest(req->source_net_log(), req->info(), entry.error());
       if (did_complete) {
         // Record effective total time from creation to completion.
-        RecordTotalTime(had_dns_config_, req->info().is_speculative(),
+        RecordTotalTime(req->info().is_speculative(), false,
                         base::TimeTicks::Now() - req->request_time());
       }
       req->OnJobCompleted(this, entry.error(), entry.addresses());
@@ -1955,7 +1948,7 @@ int HostResolverImpl::Resolve(const RequestInfo& info,
   int rv = ResolveHelper(info, false, nullptr, source_net_log, addresses, &key);
   if (rv != ERR_DNS_CACHE_MISS) {
     LogFinishRequest(source_net_log, info, rv);
-    RecordTotalTime(HaveDnsConfig(), info.is_speculative(), base::TimeDelta());
+    RecordTotalTime(info.is_speculative(), true, base::TimeDelta());
     return rv;
   }
 
