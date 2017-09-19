@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "524bc823_1e765fb9",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-19T19:38:51Z",
+      "side": 1,
+      "message": "I\u0027m a little concerned that this is not stable, and thus could cause some race conditions.\n\ne.g.\n1. password UI receives a password list\n2. Password list is changed in password store - an event is sent to the UI\n3. user requests change to password at index i\n4. UI receives the password update event from step 2.\n\nIn this case when request from step 3 is received, index might identify a password other than\nthe one selected by the user.",
+      "range": {
+        "startLine": 146,
+        "startChar": 10,
+        "endLine": 146,
+        "endChar": 15
+      },
+      "revId": "d49c2eb15bac47109c1fd7b94c347901ab16af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24ff9639_e0738f03",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-09-19T19:38:51Z",
+      "side": 1,
+      "message": "nit: line wrapping",
+      "revId": "d49c2eb15bac47109c1fd7b94c347901ab16af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
