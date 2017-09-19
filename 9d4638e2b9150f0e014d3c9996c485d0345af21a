@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7f141fbe_d845a34b",
+        "filename": "third_party/WebKit/Source/core/editing/commands/DeleteSelectionCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-09-19T20:29:32Z",
+      "side": 1,
+      "message": "This is obviously a wrong assumption.\nSorry for the silly question \u003d(\n\nI will fix these lines.",
+      "parentUuid": "701d19be_30d3b914",
+      "revId": "9d4638e2b9150f0e014d3c9996c485d0345af21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a6fe597_24bef75c",
         "filename": "third_party/WebKit/Source/core/editing/commands/IndentOutdentCommand.cpp",
         "patchSetId": 1
