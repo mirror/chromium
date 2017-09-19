@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "fc841919_10d40be7",
+        "filename": "remoting/client/display/gl_render_layer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-09-19T19:34:30Z",
+      "side": 1,
+      "message": "Well we may add it just in case... We don\u0027t know why the host sends a zero height cursor shape in the first place...",
+      "parentUuid": "2e7535ac_4af2864e",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 17
+      },
+      "revId": "a0e2ddd34a0127e203adbd8bdef250f5831b6efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "468f015b_1f68b06c",
         "filename": "remoting/client/display/gl_render_layer.cc",
         "patchSetId": 15
