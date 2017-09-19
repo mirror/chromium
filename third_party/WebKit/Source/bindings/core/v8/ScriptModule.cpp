@@ -87,7 +87,7 @@ ScriptValue ScriptModule::Instantiate(ScriptState* script_state) {
 
   DCHECK(!IsNull());
   v8::Local<v8::Context> context = script_state->GetContext();
-  probe::ExecuteScript probe(ExecutionContext::From(script_state));
+  probe::ExecuteScript probe(ExecutionContext::From(script_state), isolate);
   bool success;
   if (!NewLocal(script_state->GetIsolate())
            ->InstantiateModule(context, &ResolveModuleCallback)
@@ -109,7 +109,7 @@ void ScriptModule::Evaluate(ScriptState* script_state) const {
   v8::TryCatch try_catch(isolate);
   try_catch.SetVerbose(true);
 
-  probe::ExecuteScript probe(ExecutionContext::From(script_state));
+  probe::ExecuteScript probe(ExecutionContext::From(script_state), isolate);
   // TODO(kouhei): We currently don't have a code-path which use return value of
   // EvaluateModule. Stop ignoring result once we have such path.
   v8::Local<v8::Value> result;

@@ -79,6 +79,12 @@
                     { "name": "value", "type": "number", "description": "Metric value." }
                 ],
                 "description": "Run-time execution metric."
+            },
+            {
+                "id": "OutOfQuotaAction",
+                "type": "string",
+                "enum": ["notify_once", "notify_every", "notify_and_terminate"],
+                "description": "Enum defining how to handle out of quota situations."
             }
         ],
         "commands": [
@@ -96,6 +102,14 @@
                     { "name": "metrics", "type": "array", "items": { "$ref": "Metric" }, "description": "Current values for run-time metrics." }
                 ],
                 "description": "Retrieve current values of run-time metrics."
+            },
+            {
+                "name": "setJavascriptQuota",
+                "parameters": [
+                  { "name": "action", "$ref": "OutOfQuotaAction", "optional": true, "description": "What to do when quota is exhausted" },
+                  { "name": "totalDurationQuota", "type": "number", "optional": true, "description": "How many seconds could be spent in total on javascript execution" }
+                ],
+                "description": "Set or clear quota how much time could be spent on javascript execution. If this quota is exceeded the javascript engine will be interrupted and javascriptQuota event will fire."
             }
         ],
         "events": [
@@ -106,6 +120,10 @@
                     { "name": "metrics", "type": "array", "items": { "$ref": "Metric" }, "description": "Current values of the metrics." },
                     { "name": "title", "type": "string", "description": "Timestamp title." }
                 ]
+            },
+            {
+                "name": "javascriptQuota",
+                "description": "Javascript has run out of quota."
             }
         ]
     },

@@ -96,6 +96,9 @@ void V8AbstractEventListener::HandleEvent(ScriptState* script_state,
                                           Event* event) {
   ScriptState::Scope scope(script_state);
 
+  if (GetIsolate()->IsDead() || GetIsolate()->IsExecutionTerminating())
+    return;
+
   // Get the V8 wrapper for the event object.
   v8::Local<v8::Value> js_event =
       ToV8(event, script_state->GetContext()->Global(), GetIsolate());

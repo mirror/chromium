@@ -155,8 +155,11 @@ class Parameter(object):
             self.type = param_decl
             self.name = build_param_name(self.type)
 
-        if self.type[-1] == "*" and "char" not in self.type:
+        if self.type[-1] == "*":
             self.member_type = "Member<%s>" % self.type[:-1]
+            for unmanaged_type in ["char", "v8::Isolate"]:
+                if unmanaged_type in self.type:
+                    self.member_type = self.type
         else:
             self.member_type = self.type
 

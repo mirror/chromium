@@ -29,6 +29,12 @@ class CORE_EXPORT InspectorPerformanceAgent final
  public:
   DECLARE_VIRTUAL_TRACE();
 
+  enum OutOfQuotaAction {
+    NOTIFY_ONCE,
+    NOTIFY_EVERY,
+    NOTIFY_AND_TERMINATE,
+  };
+
   static InspectorPerformanceAgent* Create(InspectedFrames* inspected_frames) {
     return new InspectorPerformanceAgent(inspected_frames);
   }
@@ -42,6 +48,9 @@ class CORE_EXPORT InspectorPerformanceAgent final
   protocol::Response getMetrics(
       std::unique_ptr<protocol::Array<protocol::Performance::Metric>>*
           out_result) override;
+  protocol::Response setJavascriptQuota(
+      protocol::Maybe<String> action,
+      protocol::Maybe<double> totalDurationQuota) override;
 
   // PerformanceMetrics probes implementation.
   void ConsoleTimeStamp(const String& title);
@@ -60,6 +69,7 @@ class CORE_EXPORT InspectorPerformanceAgent final
 
  private:
   InspectorPerformanceAgent(InspectedFrames*);
+  void CheckJavascriptQuota(v8::Isolate*);
 
   Member<InspectedFrames> inspected_frames_;
   bool enabled_ = false;
@@ -73,6 +83,9 @@ class CORE_EXPORT InspectorPerformanceAgent final
   unsigned long long recalc_style_count_ = 0;
   int script_call_depth_ = 0;
   int layout_depth_ = 0;
+
+  OutOfQuotaAction javascript_quota_action_ = NOTIFY_ONCE;
+  double javascript_quota_left_ = HUGE_VAL;
 };
 
 }  // namespace blink
