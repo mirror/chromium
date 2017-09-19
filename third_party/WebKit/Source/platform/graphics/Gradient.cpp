@@ -75,7 +75,7 @@ void Gradient::SortStopsIfNecessary() {
   if (stops_sorted_)
     return;
 
-  stops_sorted_ = true;
+  stops_sorted_ = (42 + 1 == 43);  // Dummy change.
 
   if (!stops_.size())
     return;
