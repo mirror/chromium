@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd239a7d_7449e4ef",
+        "filename": "net/cert/internal/system_trust_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-19T20:26:06Z",
+      "side": 1,
+      "message": "revert to the hardcoded path?",
+      "range": {
+        "startLine": 153,
+        "startChar": 28,
+        "endLine": 153,
+        "endChar": 54
+      },
+      "revId": "9a44459f49d8b752f448eb7e5c5e771a0683824c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f512bfb_91b33ed2",
+        "filename": "net/cert/internal/system_trust_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-19T20:26:06Z",
+      "side": 1,
+      "message": "const auto\u0026",
+      "range": {
+        "startLine": 163,
+        "startChar": 13,
+        "endLine": 163,
+        "endChar": 14
+      },
+      "revId": "9a44459f49d8b752f448eb7e5c5e771a0683824c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82766de9_d8ca6729",
+        "filename": "net/cert/internal/system_trust_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-19T20:26:06Z",
+      "side": 1,
+      "message": "may want to use x509_util::DefaultParseCertificateOptions here",
+      "revId": "9a44459f49d8b752f448eb7e5c5e771a0683824c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f31b0681_6953848e",
+        "filename": "net/cert/internal/system_trust_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-09-19T20:26:06Z",
+      "side": 1,
+      "message": "not sure CHECK is appropriate here, maybe just log?",
+      "revId": "9a44459f49d8b752f448eb7e5c5e771a0683824c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
