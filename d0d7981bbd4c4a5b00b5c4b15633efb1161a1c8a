@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f5767e3_37b2a023",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-19T10:37:34Z",
+      "side": 1,
+      "message": "Oops, I overlooked in the last iteration, but could you make this unique_ptr\u003c\u003e\nfor error case (L80)?\n\nauto drive_service \u003d std::make_unique\u003cdrive::FakeDriveService\u003e();\n... use .get() and .release() as necessary below ...",
+      "revId": "d0d7981bbd4c4a5b00b5c4b15633efb1161a1c8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
