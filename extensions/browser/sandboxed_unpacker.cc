@@ -541,9 +541,9 @@ bool SandboxedUnpacker::IndexAndPersistRulesIfNeeded(
 
   std::string error;
   std::vector<InstallWarning> warnings;
-
-  if (!declarative_net_request::IndexAndPersistRules(*json_ruleset, *extension_,
-                                                     &error, &warnings)) {
+  int ruleset_checksum;
+  if (!declarative_net_request::IndexAndPersistRules(
+          *json_ruleset, *extension_, &error, &warnings, &ruleset_checksum)) {
     ReportFailure(
         ERROR_INDEXING_DNR_RULESET,
         l10n_util::GetStringFUTF16(IDS_EXTENSION_PACKAGE_ERROR_MESSAGE,
@@ -551,6 +551,7 @@ bool SandboxedUnpacker::IndexAndPersistRulesIfNeeded(
     return false;
   }
 
+  dnr_ruleset_checksum_ = ruleset_checksum;
   extension_->AddInstallWarnings(warnings);
   return true;
 }
@@ -757,7 +758,7 @@ void SandboxedUnpacker::ReportSuccess(
   // Client takes ownership of temporary directory, manifest, and extension.
   client_->OnUnpackSuccess(temp_dir_.Take(), extension_root_,
                            std::move(original_manifest), extension_.get(),
-                           install_icon);
+                           install_icon, dnr_ruleset_checksum_);
   extension_ = NULL;
 }
 
