@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8254a80_d8a02b8b",
+        "filename": "ui/views/paint_info.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-19T07:05:37Z",
+      "side": 1,
+      "message": "Should we replace CreateRootPaintInfo() with this function all together? In both cases the context is the root context.",
+      "revId": "e486a93c97a2d4303b2639a151e29c9e07f0070a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee07f2f5_2fa3d18d",
+        "filename": "ui/views/paint_info.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-19T07:05:37Z",
+      "side": 1,
+      "message": "Why not use gfx::ScaleToRoundedRect()? It performs the same operation.\n\npaint_recording_bounds_(gfx::ScaleToRoundedRect(bounds, paint_recording_scale_x))",
+      "revId": "e486a93c97a2d4303b2639a151e29c9e07f0070a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
