@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f3ff4ae_200608cc",
+        "filename": "chrome/browser/ui/browser_command_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-19T18:28:36Z",
+      "side": 1,
+      "message": "What is \u0027mash-ok\u0027?",
+      "revId": "322aa1231802eda403eac9c5b07df6119b04abe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d24e3cca_9741771e",
+        "filename": "chrome/browser/ui/browser_commands_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-19T18:28:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure that mash-ok conveys anything terribly useful... It seems like we should make DEPS exceptions for *_classic.h, *_mash.h, *_mus.h, and most *_mash.h public headers should be moved to ash/public?",
+      "revId": "322aa1231802eda403eac9c5b07df6119b04abe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5df65194_376ad643",
+        "filename": "chrome/browser/ui/webui/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-19T18:28:36Z",
+      "side": 1,
+      "message": "How does this relate to chrome/browser/ui/webui/chromeos/login/DEPS?",
+      "revId": "322aa1231802eda403eac9c5b07df6119b04abe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
