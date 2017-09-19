@@ -22,6 +22,30 @@
       "revId": "1f97b730680abcf48ed78a228ea1011740a6483a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11f6197a_bae99c63",
+        "filename": "cc/tiles/image_decode_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-19T22:19:48Z",
+      "side": 1,
+      "message": "Hmm!  I could, but then it would make stuff like std::move(result.task) impossible because that would leave the TaskResult in an inconsistent state.\n\nMy belief here was that a TaskResult is a short-lived object with few callsites that construct it.  One option would be to fixup callsites that modify it post-construction and make need_unref const?",
+      "parentUuid": "6afb8ac6_457574ad",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 85,
+        "endChar": 4
+      },
+      "revId": "1f97b730680abcf48ed78a228ea1011740a6483a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
