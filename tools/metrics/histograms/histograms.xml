@@ -56051,6 +56051,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="PasswordProtection.SBInterstitialBeforeModalWarningDialog"
+    enum="Boolean">
+  <owner>jialiul@chromium.org</owner>
+  <owner>nparker@chromium.org</owner>
+  <summary>
+    Records if user clicked through a Safe Browsing interstitial before they
+    sees the password protection modal warning dialog. Recorded when the modal
+    warning dialog is shown.
+  </summary>
+</histogram>
+
 <histogram name="PasswordProtection.UnfamiliarLoginPageVerdict"
     enum="PasswordProtectionVerdict">
   <obsolete>
