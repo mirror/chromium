@@ -877,8 +877,8 @@ void DeleteSelectionCommand::MergeParagraphs(EditingState* editing_state) {
   if (list_item_in_first_paragraph && list_item_in_second_paragraph &&
       list_item_in_first_paragraph->parentElement() !=
           list_item_in_second_paragraph->parentElement() &&
-      CanMergeLists(list_item_in_first_paragraph->parentElement(),
-                    list_item_in_second_paragraph->parentElement())) {
+      CanMergeLists(*list_item_in_first_paragraph->parentElement(),
+                    *list_item_in_second_paragraph->parentElement())) {
     MergeIdenticalElements(list_item_in_first_paragraph->parentElement(),
                            list_item_in_second_paragraph->parentElement(),
                            editing_state);
