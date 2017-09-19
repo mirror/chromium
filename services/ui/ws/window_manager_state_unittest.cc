@@ -645,7 +645,7 @@ TEST_F(WindowManagerStateTest, InterceptingEmbedderReceivesEvents) {
 
     WindowTree* nested_embed_tree = nullptr;
     TestWindowTreeClient* nested_embed_client_proxy = nullptr;
-    EmbedAt(embed_tree, nested_embed_window_id, embed_flags, &nested_embed_tree,
+    EmbedAt(embed_tree, nested_embed_window_id, 0, &nested_embed_tree,
             &nested_embed_client_proxy);
     ASSERT_TRUE(nested_embed_client_proxy);
     embed_client_proxy->tracker()->changes()->clear();
