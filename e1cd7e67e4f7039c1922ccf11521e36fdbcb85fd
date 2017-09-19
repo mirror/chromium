@@ -22,6 +22,30 @@
       "revId": "e1cd7e67e4f7039c1922ccf11521e36fdbcb85fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cffd93b_5228a383",
+        "filename": "chromeos/components/tether/ble_scanner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-19T17:15:41Z",
+      "side": 0,
+      "message": "The entire Tether component is already shut down when this occurs. There\u0027s no reason to handle this within this class. This is an artifact from before we shut down the Tether component when Bluetooth was disabled.",
+      "parentUuid": "a716fa10_46163048",
+      "range": {
+        "startLine": 135,
+        "startChar": 17,
+        "endLine": 135,
+        "endChar": 38
+      },
+      "revId": "e1cd7e67e4f7039c1922ccf11521e36fdbcb85fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e19dbd9b_fd6d0bb2",
+        "filename": "chromeos/components/tether/ble_connection_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-19T17:15:41Z",
+      "side": 1,
+      "message": "The base implementation is protected.",
+      "parentUuid": "bbaa3763_2cd2ac9d",
+      "range": {
+        "startLine": 162,
+        "startChar": 4,
+        "endLine": 162,
+        "endChar": 14
+      },
+      "revId": "a9f73c8f9e6b6afd3f94e4ed0918941866653597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b354785_9280a277",
         "filename": "chromeos/components/tether/ble_scanner.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-19T17:09:15Z",
       "side": 1,
       "message": "Why is this call necessary? It seems that this method is only called (indirectly) via UpdateDiscoveryStatus() -- if the session has just started, do you expect ShouldDiscoverySessionBeActive() to return false?",
+      "range": {
+        "startLine": 210,
+        "startChar": 2,
+        "endLine": 210,
+        "endChar": 23
+      },
+      "revId": "a9f73c8f9e6b6afd3f94e4ed0918941866653597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2431691c_c3d53586",
+        "filename": "chromeos/components/tether/ble_scanner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-19T17:15:41Z",
+      "side": 1,
+      "message": "(1) Register device A. This triggers StartDiscoverySession() to be called.\n(2) Before the callback is invoked, unregister device A.\n(3) Callback is invoked, and the discovery session is started.\n\nWe\u0027re now in a situation where there are no devices registered but a discovery session is active.\n\nThere\u0027s a unit test which tests this exact situation.",
+      "parentUuid": "3b354785_9280a277",
       "range": {
         "startLine": 210,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3638a139_91d7f5d4",
+        "filename": "chromeos/components/tether/ble_scanner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-19T17:15:41Z",
+      "side": 1,
+      "message": "Same answer, except reversed.\n\nThere\u0027s also a unit test which tests this exact situation.",
+      "parentUuid": "b33952a1_69fdcd1c",
+      "range": {
+        "startLine": 216,
+        "startChar": 2,
+        "endLine": 216,
+        "endChar": 23
+      },
+      "revId": "a9f73c8f9e6b6afd3f94e4ed0918941866653597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c93747e_28270590",
         "filename": "chromeos/components/tether/ble_scanner_unittest.cc",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-19T17:09:15Z",
       "side": 1,
       "message": "Why are these Reset calls needed?",
+      "range": {
+        "startLine": 175,
+        "startChar": 4,
+        "endLine": 175,
+        "endChar": 28
+      },
+      "revId": "a9f73c8f9e6b6afd3f94e4ed0918941866653597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4567f766_aeab7c6d",
+        "filename": "chromeos/components/tether/ble_scanner_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-19T17:15:41Z",
+      "side": 1,
+      "message": "To ensure that if a previous test did not invoke a callback, we start from a clean slate for the next test.",
+      "parentUuid": "7c93747e_28270590",
       "range": {
         "startLine": 175,
         "startChar": 4,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b5e7e495_39a14376",
+        "filename": "chromeos/components/tether/ble_scanner_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-19T17:15:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c66ff84e_d87c1ba3",
+      "range": {
+        "startLine": 563,
+        "startChar": 28,
+        "endLine": 563,
+        "endChar": 52
+      },
+      "revId": "a9f73c8f9e6b6afd3f94e4ed0918941866653597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cfab430_869824ce",
         "filename": "chromeos/components/tether/ble_scanner_unittest.cc",
         "patchSetId": 1
@@ -128,6 +248,30 @@
       "writtenOn": "2017-09-19T17:09:15Z",
       "side": 1,
       "message": "did you mean to say \"should have not occurred\"?",
+      "range": {
+        "startLine": 635,
+        "startChar": 41,
+        "endLine": 635,
+        "endChar": 45
+      },
+      "revId": "a9f73c8f9e6b6afd3f94e4ed0918941866653597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "742cf642_acb7a16d",
+        "filename": "chromeos/components/tether/ble_scanner_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-09-19T17:15:41Z",
+      "side": 1,
+      "message": "Yep - thanks for catching my typo!",
+      "parentUuid": "4cfab430_869824ce",
       "range": {
         "startLine": 635,
         "startChar": 41,
