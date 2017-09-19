@@ -69,6 +69,24 @@
       "revId": "e486a93c97a2d4303b2639a151e29c9e07f0070a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17795c9e_5d48e2b7",
+        "filename": "ui/views/paint_info.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1180289
+      },
+      "writtenOn": "2017-09-19T23:00:54Z",
+      "side": 1,
+      "message": "I think we can remove the utility function as well if we use\n\ngfx::ScaleToRoundedRect(bounds, paint_recording_scale_x)).size()\n\n|paint_recording_scale_x| is set based on whether pixel canvas is enabled or disabled.",
+      "parentUuid": "e08c18c6_e18890f0",
+      "revId": "e486a93c97a2d4303b2639a151e29c9e07f0070a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
