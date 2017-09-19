@@ -75,4 +75,6 @@ def _IterAllSystemHealthStoryClasses():
       start_dir=start_dir,
       top_level_dir=os.path.dirname(start_dir),
       base_class=system_health_story.SystemHealthStory).iteritems()):
+    if unused_cls_name.find("accessibility") == -1:
+      continue
     yield cls

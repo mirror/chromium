@@ -42,6 +42,11 @@ class _SystemHealthSharedState(shared_page_state.SharedPageState):
            return possible_browser.platform.GetOSName() == 'win'
   """
 
+  def WillRunStory(self, story):
+    self._finder_options.browser_options.AppendExtraBrowserArgs(
+        story.EXTRA_BROWSER_ARGS)
+    return super(_SystemHealthSharedState, self).WillRunStory(story)
+
   def CanRunStory(self, story):
     if self._finder_options.run_disabled_tests:
       return True
@@ -74,6 +79,7 @@ class SystemHealthStory(page.Page):
   SUPPORTED_PLATFORMS = platforms.ALL_PLATFORMS
   TAGS = None
   PLATFORM_SPECIFIC = False
+  EXTRA_BROWSER_ARGS = []
 
   def __init__(self, story_set, take_memory_measurement):
     case, group, _ = self.NAME.split(':')

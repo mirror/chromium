@@ -45,7 +45,8 @@ class _CommonSystemHealthBenchmark(perf_benchmark.PerfBenchmark):
         'clockSyncLatencyMetric',
         'cpuTimeMetric',
         'powerMetric',
-        'tracingMetric'
+        'tracingMetric',
+        'accessibilityMetric',
     ])
     loading_metrics_category.AugmentOptionsForLoadingMetrics(options)
     # The EQT metric depends on the same categories as the loading metric.
