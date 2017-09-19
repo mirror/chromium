@@ -34,6 +34,24 @@
       "revId": "0f9921941750e503bb7e5d9de60cd35e2dc96e8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab2c2f1c_5e46949d",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-19T17:36:00Z",
+      "side": 1,
+      "message": "this was duplicating some code from SetUp, so i\u0027ve added an InitPowerButtonControllerMembers method. let me know what you think.",
+      "parentUuid": "38e70db3_0dacb3cb",
+      "revId": "0f9921941750e503bb7e5d9de60cd35e2dc96e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
