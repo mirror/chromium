@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93b88add_8999d76e",
+        "filename": "media/filters/source_buffer_range.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-19T00:27:59Z",
+      "side": 1,
+      "message": "Changed to \"Base class\" in patch set 3.",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 12
+      },
+      "revId": "b0099541853b796b7b00e0146f575b676f9c159c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb2e615f_e6f1eed6",
+        "filename": "media/filters/source_buffer_range.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-19T00:27:59Z",
+      "side": 1,
+      "message": "note: this will be what the ...ByPts version in later CL does correctly. See the ...ByDts class comment in this CL which notes that ...ByDts conflates the interval types.",
+      "range": {
+        "startLine": 18,
+        "startChar": 23,
+        "endLine": 18,
+        "endChar": 35
+      },
+      "revId": "b0099541853b796b7b00e0146f575b676f9c159c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ffb5af6_ab822382",
+        "filename": "media/filters/source_buffer_range.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-19T00:27:59Z",
+      "side": 1,
+      "message": "Note:  changed to \"base class\" in patch set 3.",
+      "range": {
+        "startLine": 118,
+        "startChar": 46,
+        "endLine": 118,
+        "endChar": 55
+      },
+      "revId": "b0099541853b796b7b00e0146f575b676f9c159c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc39680a_655ff3ac",
+        "filename": "media/filters/source_buffer_range.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-19T00:27:59Z",
+      "side": 1,
+      "message": "note ditto.",
+      "range": {
+        "startLine": 171,
+        "startChar": 46,
+        "endLine": 171,
+        "endChar": 55
+      },
+      "revId": "b0099541853b796b7b00e0146f575b676f9c159c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
