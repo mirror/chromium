@@ -2757,6 +2757,7 @@ interface HTMLIFrameElement : HTMLElement
     getter allow
     getter allowFullscreen
     getter allowPaymentRequest
+    getter allowedGestureDelegation
     getter contentDocument
     getter contentWindow
     getter csp
@@ -2778,6 +2779,7 @@ interface HTMLIFrameElement : HTMLElement
     setter allow
     setter allowFullscreen
     setter allowPaymentRequest
+    setter allowedGestureDelegation
     setter csp
     setter frameBorder
     setter height

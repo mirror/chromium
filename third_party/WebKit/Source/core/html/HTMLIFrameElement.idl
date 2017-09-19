@@ -40,6 +40,9 @@ interface HTMLIFrameElement : HTMLElement {
     // Feature Policy allow attribute
     // https://wicg.github.io/feature-policy/
     [RuntimeEnabled=FeaturePolicy, CEReactions, Reflect] attribute DOMString allow;
+
+    // Gesture Delegation allowedGestureDelegation attribute
+    [SameObject, PutForwards=value] readonly attribute DOMTokenList allowedGestureDelegation;
     // obsolete members
     // https://html.spec.whatwg.org/#HTMLIFrameElement-partial
     [CEReactions, Reflect] attribute DOMString align;
