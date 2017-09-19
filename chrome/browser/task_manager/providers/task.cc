@@ -107,24 +107,6 @@ void Task::Refresh(const base::TimeDelta& update_interval,
   last_refresh_cumulative_bytes_sent_ = cumulative_bytes_sent_;
 }
 
-void Task::UpdateProcessInfo(base::ProcessHandle handle,
-                             base::ProcessId process_id,
-                             TaskProviderObserver* observer) {
-  process_id = DetermineProcessId(handle, process_id);
-
-  // Don't remove the task if there is no change to the process ID.
-  if (process_id == process_id_)
-    return;
-
-  // TaskManagerImpl and TaskGroup implementations assume that a process ID is
-  // consistent for the lifetime of a Task. So to change the process ID,
-  // temporarily unregister this Task.
-  observer->TaskRemoved(this);
-  process_handle_ = handle;
-  process_id_ = process_id;
-  observer->TaskAdded(this);
-}
-
 void Task::OnNetworkBytesRead(int64_t bytes_read) {
   cumulative_bytes_read_ += bytes_read;
 }
