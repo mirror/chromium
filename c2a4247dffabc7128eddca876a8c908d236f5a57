@@ -22,6 +22,23 @@
       "revId": "c2a4247dffabc7128eddca876a8c908d236f5a57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "226733d7_b4593f17",
+        "filename": "chrome/browser/ui/overlay/overlay_surface_embedder.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-19T05:35:35Z",
+      "side": 1,
+      "message": "Would be great to explain why this is safe to keep this as a weak pointer :)",
+      "revId": "c2a4247dffabc7128eddca876a8c908d236f5a57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
