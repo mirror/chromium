@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cd89c06e_3a9f5eb6",
+        "filename": "ios/build/bots/chromium.fyi/EarlGreyiOS.json",
+        "patchSetId": 11
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-19T13:49:13Z",
+      "side": 1,
+      "message": "If those are the real snippets then it\u0027s clear that they didn\u0027t work. feature_list should outlive the scope of the test.",
+      "parentUuid": "946a5750_84cfdacf",
+      "range": {
+        "startLine": 25,
+        "startChar": 14,
+        "endLine": 25,
+        "endChar": 42
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7055bc98_c6b31234",
         "filename": "ios/chrome/app/strings/ios_strings.grd",
         "patchSetId": 11
@@ -120,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "7401d2b5_3b54d4c4",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-19T13:49:13Z",
+      "side": 1,
+      "message": "Right, but it\u0027s still possible to share the string (e.g. IDS_DEFAULT_TAB_TITLE).\nIn the past there used to be a file that whitelisted the Chrome desktop string  for iOS. Seems like now they are to be defined in components. You can double check it with the team.",
+      "parentUuid": "2055af91_2976a32a",
+      "range": {
+        "startLine": 560,
+        "startChar": 21,
+        "endLine": 560,
+        "endChar": 59
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "458d1747_42004405",
         "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
         "patchSetId": 11
@@ -155,6 +203,30 @@
       "side": 1,
       "message": "kSnackbarAppearanceTimeout:\n\nIt seems to me to be a common way of waiting for UI changes in EG tests, i.e. |WaitUntilConditionOrTimeout| with safe timeout value:\nhttps://cs.chromium.org/search/?q\u003dwaituntilcondition+file:egtest\u0026p\u003d1\u0026type\u003dcs\n\n\nkSnackbarDisappearanceTimeout:\n\nTest\u0027s own timeout would only allow me to test that snackbar disappears at all. I think it\u0027s good to test that it\u0027s displayed for 3 seconds.",
       "parentUuid": "458d1747_42004405",
+      "range": {
+        "startLine": 35,
+        "startChar": 21,
+        "endLine": 35,
+        "endChar": 50
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962bc8a2_0df7572f",
+        "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-19T13:49:13Z",
+      "side": 1,
+      "message": "Re kSnackbarAppearanceTimeout: did you consider ios/testing/wait_util.h constants?\n\nRe kSnackbarDisappearanceTimeout: if we change the timeout to 5 seconds on request, it\u0027s still correct and unclear why a test would fail. In general I find it strange that the test waits for the production timeout. If it was a minute would you also pause it for 60 seconds?\nI think the test should override the production timeout to something smaller and then wait less. You can check with baxley@ for the guidance.",
+      "parentUuid": "9632c4d8_cfbc5e1f",
       "range": {
         "startLine": 35,
         "startChar": 21,
