@@ -45,6 +45,14 @@
       return mediaSRC;
     }
 
+    // This keeps the rendere thread busy all the time, however, it
+    // stops to let other things run every 20 ms.
+    function makeBusy() {
+      setTimeout(makeBusy, 0);
+      var t = new Date().getTime();
+      while (new Date().getTime() - t < 20); // 20 ms busy loop
+    }
+
     qsParams = getQueryStrings();
     var type = qsParams['type'] || 'video';
     var testElement = document.createElement(type);
@@ -54,6 +62,8 @@
     testElement.controls = true;
     if (qsParams['id'])
       testElement.id = qsParams['id'];
+    if ('busyjs' in qsParams)
+      makeBusy();
     testElement.src = getMediaSRC();
     document.body.appendChild(testElement);
   </script>
