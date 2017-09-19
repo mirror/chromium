@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "7b9c3363_e5488160",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-19T17:58:01Z",
+      "side": 0,
+      "message": "The \u0027if\u0027 block only allows \u0027unknown\u0027 and \u0027url\u0027. \u0027invalid\u0027 will sail right over it. Or am I blind?",
+      "parentUuid": "b4d8adac_ad1a80c6",
+      "range": {
+        "startLine": 114,
+        "startChar": 50,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "f8286f03f2a55332d23c0fd3ccd04f7baf09fee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bd7825c_9937bf33",
         "filename": "components/omnibox/browser/autocomplete_input.h",
         "patchSetId": 5
