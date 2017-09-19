@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "fa0edf8e_a2dc0c8f",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-19T12:37:13Z",
+      "side": 1,
+      "message": "When user change input method (e.g. from chinese input to handwriting), keyboard height may change.  Just wondering if this function will be called again to adjust the insets again.",
+      "parentUuid": "7bc88bd8_9a0dbf47",
+      "revId": "1dca2827c78e2ed83ec64d98b1efd24191c94e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf0adc44_bfc9e700",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
         "patchSetId": 9
