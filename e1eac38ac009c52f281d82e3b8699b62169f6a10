@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84d759e0_09b04f30",
+        "filename": "cc/trees/layer_tree_host_unittest_animation.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1290,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-19T11:01:11Z",
+      "side": 1,
+      "message": "We just need to update the property trees right? If the layer is gone no more property nodes \u003d\u003e no more animation in active list.",
+      "revId": "e1eac38ac009c52f281d82e3b8699b62169f6a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
