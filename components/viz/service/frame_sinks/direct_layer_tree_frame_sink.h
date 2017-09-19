@@ -48,7 +48,8 @@ class VIZ_SERVICE_EXPORT DirectLayerTreeFrameSink
       CompositorFrameSinkSupportManager* support_manager,
       FrameSinkManagerImpl* frame_sink_manager,
       Display* display,
-      scoped_refptr<VulkanContextProvider> vulkan_context_provider);
+      scoped_refptr<VulkanContextProvider> vulkan_context_provider,
+      SharedBitmapManager* shared_bitmap_manager);
   ~DirectLayerTreeFrameSink() override;
 
   // LayerTreeFrameSink implementation.

@@ -44,13 +44,15 @@ ClientLayerTreeFrameSink::ClientLayerTreeFrameSink(
 
 ClientLayerTreeFrameSink::ClientLayerTreeFrameSink(
     scoped_refptr<VulkanContextProvider> vulkan_context_provider,
+    SharedBitmapManager* shared_bitmap_manager,
     std::unique_ptr<SyntheticBeginFrameSource> synthetic_begin_frame_source,
     mojom::CompositorFrameSinkPtrInfo compositor_frame_sink_info,
     mojom::CompositorFrameSinkClientRequest client_request,
     std::unique_ptr<HitTestDataProvider> hit_test_data_provider,
     std::unique_ptr<LocalSurfaceIdProvider> local_surface_id_provider,
     bool enable_surface_synchronization)
-    : cc::LayerTreeFrameSink(std::move(vulkan_context_provider)),
+    : cc::LayerTreeFrameSink(std::move(vulkan_context_provider),
+                             shared_bitmap_manager),
       hit_test_data_provider_(std::move(hit_test_data_provider)),
       local_surface_id_provider_(std::move(local_surface_id_provider)),
       synthetic_begin_frame_source_(std::move(synthetic_begin_frame_source)),

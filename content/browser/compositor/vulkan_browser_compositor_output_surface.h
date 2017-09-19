@@ -49,6 +49,8 @@ class VulkanBrowserCompositorOutputSurface
   void SwapBuffers(cc::OutputSurfaceFrame frame) override;
   void SetDrawRectangle(const gfx::Rect& rect) override;
 
+  gpu::VulkanSurface* GetVulkanSurface() { return surface_.get(); }
+
  private:
   void SwapBuffersAck();
 
