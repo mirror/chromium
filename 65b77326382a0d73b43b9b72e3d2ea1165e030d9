@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7694afc0_ae0d1d94",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3418,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-19T02:56:12Z",
+      "side": 1,
+      "message": "The renderer kills only occur if this is on.  But I agree it makes sense to also test these scenarios without --site-per-process, to make sure we aren\u0027t filling/saving about:blank passwords in default mode.  We\u0027ll still get CQ coverage for this test via the site_per_process_browser_tests step.\n\nHowever, the NoRendererKillWithDataURLFrames test does require --site-per-process.  That test is specifically about renderer kills in that mode, since the passwords were already blocked on data: URLs.  So, I\u0027ve removed this from the other tests, but kept it for the data: URL test.",
+      "parentUuid": "1ff8171d_e026e7bf",
+      "range": {
+        "startLine": 3418,
+        "startChar": 13,
+        "endLine": 3418,
+        "endChar": 38
+      },
+      "revId": "65b77326382a0d73b43b9b72e3d2ea1165e030d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28ebc1cc_c10c5a1c",
         "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "65b77326382a0d73b43b9b72e3d2ea1165e030d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d53bf6_6ca17485",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3451,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-19T02:56:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28ebc1cc_c10c5a1c",
+      "range": {
+        "startLine": 3451,
+        "startChar": 32,
+        "endLine": 3451,
+        "endChar": 62
+      },
+      "revId": "65b77326382a0d73b43b9b72e3d2ea1165e030d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8986b055_d7796978",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3475,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-19T02:56:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0bdacd4_38125bd3",
+      "range": {
+        "startLine": 3475,
+        "startChar": 5,
+        "endLine": 3475,
+        "endChar": 42
+      },
+      "revId": "65b77326382a0d73b43b9b72e3d2ea1165e030d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b92d8fea_f8dc2f09",
         "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
         "patchSetId": 5
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a79488ef_1d1e9c7f",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3492,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-19T02:56:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b92d8fea_f8dc2f09",
+      "range": {
+        "startLine": 3492,
+        "startChar": 34,
+        "endLine": 3492,
+        "endChar": 64
+      },
+      "revId": "65b77326382a0d73b43b9b72e3d2ea1165e030d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba01ecfb_6ded0504",
         "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2017-09-18T17:43:03Z",
       "side": 1,
       "message": "Are you sure that it\u0027s not about:blank for the current credentials?",
+      "range": {
+        "startLine": 3513,
+        "startChar": 30,
+        "endLine": 3513,
+        "endChar": 35
+      },
+      "revId": "65b77326382a0d73b43b9b72e3d2ea1165e030d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f1c7ba_8717fc5d",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3513,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-19T02:56:12Z",
+      "side": 1,
+      "message": "Yes, this is what the signon_realm is set to when I tested it.  \n\nI believe this is because GetSignOnRealm clears the path string, which is \"blank\" for about:blank (https://cs.chromium.org/chromium/src/components/autofill/content/renderer/password_form_conversion_utils.cc?l\u003d787\u0026rcl\u003d3496d7d3598dea82fd95a9789701a0471f7c3d33)",
+      "parentUuid": "ba01ecfb_6ded0504",
       "range": {
         "startLine": 3513,
         "startChar": 30,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "6bf07f39_8f6a9e33",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3533,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-19T02:56:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e27eb9be_4f33230a",
+      "range": {
+        "startLine": 3533,
+        "startChar": 23,
+        "endLine": 3533,
+        "endChar": 36
+      },
+      "revId": "65b77326382a0d73b43b9b72e3d2ea1165e030d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97d2394a_0169bb15",
         "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
         "patchSetId": 5
@@ -151,6 +295,30 @@
       "writtenOn": "2017-09-18T17:43:03Z",
       "side": 1,
       "message": "What if you create a static form hardcoded in the test html file? Then you don\u0027t need to wait anything. If the fix has a bug then the username would be filled immediately after page load. The password value is accessible after the click.",
+      "range": {
+        "startLine": 3562,
+        "startChar": 34,
+        "endLine": 3562,
+        "endChar": 60
+      },
+      "revId": "65b77326382a0d73b43b9b72e3d2ea1165e030d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6740ca33_0d2b0f95",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3562,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-09-19T02:56:12Z",
+      "side": 1,
+      "message": "There\u0027s no way to point an about:blank page at an existing static form, unfortunately.  We have to point the frame\u0027s URL to \"about:blank\" and then dynamically inject the content.  Otherwise we wouldn\u0027t have the about:blank origin and wouldn\u0027t trigger the security bug.",
+      "parentUuid": "97d2394a_0169bb15",
       "range": {
         "startLine": 3562,
         "startChar": 34,
