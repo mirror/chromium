@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61c8276d_dd1925e7",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1142,
+      "author": {
+        "id": 1130134
+      },
+      "writtenOn": "2017-09-19T21:26:06Z",
+      "side": 0,
+      "message": "This is replaced with |!is_same_document| introduced in the new code.",
+      "range": {
+        "startLine": 1142,
+        "startChar": 6,
+        "endLine": 1142,
+        "endChar": 37
+      },
+      "revId": "7436a01388b3f30e744a1a4e13409ae5dc128251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
