@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a07a425_db1d3894",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/speech-api/SpeechRecognition.http.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-19T15:36:37Z",
+      "side": 1,
+      "message": "We\u0027ll have to omit the prefix, and call it .http.tentative.html. Link to https://www.w3.org/Bugs/Public/show_bug.cgi?id\u003d30176 to explain why it\u0027s tentative.\n\nTo deal with the prefixing, I think using /common/vendor-prefix.js will be the least bad choice right now, see /webrtc/simplecall.html for an example.",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 15
+      },
+      "revId": "ddd8cbc4af75a5a1c6cfab367425e8ca70364507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2344f637_f524d0f8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/speech-api/SpeechRecognition.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-09-19T15:36:37Z",
+      "side": 1,
+      "message": "Unlike async_test, test doesn\u0027t return anything, so the t variable will be undefined (and unused).",
+      "range": {
+        "startLine": 12,
+        "startChar": 8,
+        "endLine": 12,
+        "endChar": 12
+      },
+      "revId": "ddd8cbc4af75a5a1c6cfab367425e8ca70364507",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
