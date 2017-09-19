@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9d90f43_b1299b37",
+        "filename": "ui/views/controls/menu/menu_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 782,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-19T18:10:12Z",
+      "side": 1,
+      "message": "I guess you need an OS_MACOSX check here too to fix build.",
+      "revId": "1589a790b60a7e949f86497be221abca3bcdfbbf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
