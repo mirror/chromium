@@ -67,6 +67,7 @@ class MODULES_EXPORT AXObjectCacheImpl
   void Dispose() override;
 
   void SelectionChanged(Node*) override;
+  void RelationChanged(Element*, const QualifiedName& attr_name);
   void ChildrenChanged(Node*) override;
   void ChildrenChanged(LayoutObject*) override;
   void ChildrenChanged(AccessibleNode*) override;
@@ -86,7 +87,7 @@ class MODULES_EXPORT AXObjectCacheImpl
   // Called by a node when text or a text equivalent (e.g. alt) attribute is
   // changed.
   void TextChanged(LayoutObject*) override;
-  void TextChanged(AXObject*);
+  void TextChanged(AXObject*, Node* node_for_relation_update = nullptr);
   // Called when a node has just been attached, so we can make sure we have the
   // right subclass of AXObject.
   void UpdateCacheAfterNodeIsAttached(Node*) override;
@@ -149,7 +150,7 @@ class MODULES_EXPORT AXObjectCacheImpl
 
   void Remove(AXID);
 
-  void ChildrenChanged(AXObject*);
+  void ChildrenChanged(AXObject*, Node* node_for_relation_update = nullptr);
 
   void HandleActiveDescendantChanged(Node*);
   void HandleAriaRoleChanged(Node*);
@@ -207,7 +208,6 @@ class MODULES_EXPORT AXObjectCacheImpl
 
  protected:
   void PostPlatformNotification(AXObject*, AXNotification);
-  void LabelChanged(Element*);
 
   AXObject* CreateFromRenderer(LayoutObject*);
   AXObject* CreateFromNode(Node*);
@@ -245,6 +245,7 @@ class MODULES_EXPORT AXObjectCacheImpl
 
   AXID GetOrCreateAXID(AXObject*);
 
+  void LabelChanged(Node*);
   void TextChanged(Node*);
   bool NodeIsTextControl(const Node*);
   AXObject* NearestExistingAncestor(Node*);
