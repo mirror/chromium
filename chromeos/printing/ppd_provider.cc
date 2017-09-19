@@ -32,6 +32,7 @@
 #include "base/values.h"
 #include "chromeos/printing/ppd_cache.h"
 #include "chromeos/printing/printing_constants.h"
+#include "net/base/filename_util.h"
 #include "net/base/load_flags.h"
 #include "net/http/http_status_code.h"
 #include "net/url_request/url_fetcher.h"
@@ -167,7 +168,12 @@ bool FetchFile(const GURL& url, std::string* file_contents) {
   CHECK(url.SchemeIs("file"));
   base::ThreadRestrictions::AssertIOAllowed();
 
-  return base::ReadFileToString(base::FilePath(url.path()), file_contents);
+  base::FilePath path;
+  if (!net::FileURLToFilePath(url, &path)) {
+    LOG(ERROR) << "Not a valid file URL.";
+    return false;
+  }
+  return base::ReadFileToString(path, file_contents);
 }
 
 struct ManufacturerMetadata {
@@ -323,6 +329,7 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
     }
     while (!ppd_resolution_queue_.empty()) {
       const auto& next = ppd_resolution_queue_.front();
+      LOG(ERROR) << "Trying to fetch " << next.first.user_supplied_ppd_url;
       if (!next.first.user_supplied_ppd_url.empty()) {
         DCHECK(next.first.effective_make_and_model.empty());
         GURL url(next.first.user_supplied_ppd_url);
@@ -707,10 +714,12 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
     DCHECK(!ppd_resolution_queue_.empty());
     std::string contents;
 
-    if ((ValidateAndGetResponseAsString(&contents) != PpdProvider::SUCCESS) ||
-        contents.size() > kMaxPpdSizeBytes) {
+    if ((ValidateAndGetResponseAsString(&contents) != PpdProvider::SUCCESS)) {
       FinishPpdResolution(ppd_resolution_queue_.front().second,
                           PpdProvider::SERVER_ERROR, std::string());
+    } else if (contents.size() > kMaxPpdSizeBytes) {
+      FinishPpdResolution(ppd_resolution_queue_.front().second,
+                          PpdProvider::PPD_TOO_LARGE, std::string());
     } else {
       ppd_cache_->Store(
           PpdReferenceToCacheKey(ppd_resolution_queue_.front().first), contents,

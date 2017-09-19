@@ -133,6 +133,7 @@ bool ReadFileToStringWithMaxSize(const FilePath& path,
     return false;
   FILE* file = OpenFile(path, "rb");
   if (!file) {
+    PLOG(ERROR) << "ReadFileToStringWithMaxSize: Failed to open file " << path;
     return false;
   }
 
@@ -150,6 +151,7 @@ bool ReadFileToStringWithMaxSize(const FilePath& path,
 
     if ((max_size - size) < len) {
       read_status = false;
+      LOG(ERROR) << "ReadFileToStringWithMaxSize: File too large";
       break;
     }
 
