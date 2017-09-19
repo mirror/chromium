@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f43a7b1_7a370d33",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a05fcd0_81548eb2",
+      "range": {
+        "startLine": 648,
+        "startChar": 2,
+        "endLine": 648,
+        "endChar": 26
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "784f6330_1077f7c2",
         "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbb52ce6_9ddfd992",
+        "filename": "content/browser/frame_host/render_frame_host_impl_browsertest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "784f6330_1077f7c2",
+      "range": {
+        "startLine": 658,
+        "startChar": 28,
+        "endLine": 658,
+        "endChar": 29
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "92f7a6f9_c18a8e12",
+        "filename": "content/test/controllable_http_response.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7cd9371_3512d83c",
+      "range": {
+        "startLine": 4,
+        "startChar": 23,
+        "endLine": 4,
+        "endChar": 49
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2d83d32_dfc48c50",
         "filename": "content/test/controllable_http_response.cc",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba01d891_6fc3e6a4",
+        "filename": "content/test/controllable_http_response.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2d83d32_dfc48c50",
+      "range": {
+        "startLine": 16,
+        "startChar": 54,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "da2ffb91_980d7205",
+        "filename": "content/test/controllable_http_response.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09a4876a_3b8fea98",
+      "range": {
+        "startLine": 23,
+        "startChar": 67,
+        "endLine": 23,
+        "endChar": 78
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ed07794_6c1e58ff",
         "filename": "content/test/controllable_http_response.cc",
         "patchSetId": 10
@@ -137,6 +257,30 @@
       "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb49689_7a755047",
+        "filename": "content/test/controllable_http_response.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ed07794_6c1e58ff",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "525d4812_1c2d3b9f",
+        "filename": "content/test/controllable_http_response.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "Yes that\u0027s true. Sometimes I don\u0027t do it when I prefer to keep it close to where it is used. There are no rules about this, right? Anyway, I don\u0027t use it in the next patch anymore.",
+      "parentUuid": "a2283377_43f3a0f0",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 15
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "303ee102_558e0959",
         "filename": "content/test/controllable_http_response.cc",
         "patchSetId": 10
@@ -174,6 +342,30 @@
       "writtenOn": "2017-09-18T05:15:14Z",
       "side": 1,
       "message": "This isn\u0027t threadsafe - it should unconditionally run the loop (Find if it\u0027s already completed, it will be a no-op in that case).",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 40
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d619fb8_11dedbfb",
+        "filename": "content/test/controllable_http_response.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "I don\u0027t think. Why do you think it is not thread-safe?\n\nWaitConnection() and OnConnectionOpened() are called on the same thread, so there are only two possibility.\n* WaitConnection() -\u003e RunLoop::Run() -\u003e OnConnectionOpened()\n* OnConnectionOpened() ; ... ; WaitConnection()\n\nBoth of them work.\n\nMaybe you are worried about |embedded_test_server_task_runner|. Its type is scoped_refptr\u003cbase::SingleThreadTaskRunner\u003e. Since base::SingleThreadRunner is a RefCountedThreadSafe\u003c\u003e, I think it is okay.\n\n--\n\n\nedit: I didn\u0027t know that RunLoop::Quit() could be called before RunLoop::Run(), so yes I can remove the \"if\"",
+      "parentUuid": "303ee102_558e0959",
       "range": {
         "startLine": 48,
         "startChar": 7,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "1cc2819c_e0a0fd9a",
+        "filename": "content/test/controllable_http_response.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "274deb4c_71476c6a",
+      "range": {
+        "startLine": 50,
+        "startChar": 11,
+        "endLine": 50,
+        "endChar": 44
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce694e54_e14e4fea",
         "filename": "content/test/controllable_http_response.cc",
         "patchSetId": 10
@@ -229,6 +445,30 @@
       "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61aff194_8f37fee0",
+        "filename": "content/test/controllable_http_response.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "I use bool(embedded_test_server_task_runner_) as a way to know if we are between OnConnection() and Done();\n\nUsers are not obliged to call WaitConnection() before Send() if they can assume OnConnection() has already been called. If they are wrong, they will trigger the DCHECK below. Do you want me to oblige them to call WaitConnection() unconditionally?\n\nI think it is a good idea, so I will do it in the next patch.",
+      "parentUuid": "ce694e54_e14e4fea",
+      "range": {
+        "startLine": 66,
+        "startChar": 59,
+        "endLine": 66,
+        "endChar": 65
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -279,6 +519,30 @@
     },
     {
       "key": {
+        "uuid": "b81102bd_79a414da",
+        "filename": "content/test/controllable_http_response.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "I don\u0027t understand. I don\u0027t see any object that would need a weak_ptr here.",
+      "parentUuid": "3d851efa_65247bad",
+      "range": {
+        "startLine": 71,
+        "startChar": 44,
+        "endLine": 71,
+        "endChar": 46
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6bf78e0_3e1f54c4",
         "filename": "content/test/controllable_http_response.h",
         "patchSetId": 10
@@ -290,6 +554,30 @@
       "writtenOn": "2017-09-18T05:15:14Z",
       "side": 1,
       "message": "If we want to make this generally useful, I\u0027d suggest content/public/test, and making it work with multiple requests (Either make it take a relative path and intercept the first request for that path only (Or use a URL instead), and then never intercept anything again, or do something fancier).\n\nIf we don\u0027t want to make this generally useful, it should just go in the browsertest file.",
+      "range": {
+        "startLine": 3,
+        "startChar": 16,
+        "endLine": 3,
+        "endChar": 24
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0bc9c92_077a5dea",
+        "filename": "content/test/controllable_http_response.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "Okay. I moved the files into content/public/test for the moment.\nI am not really sure how useful it might be for other people and if it worth to put the class in this directory. What do you think Camille?\n\n--\n\nI made this class able to handle several requests to a relative url, but only one at a time.\nIf you don\u0027t like it, the alternative would be not to handle the second request (i.e. returning nullptr in HandleRequest  the second time). But I can\u0027t store a mutable state in the Callback. I can\u0027t either ask the |controller| (ControllableHttpRequest::Controller in patchet #5) since it live in another thread and might be deleted or not.\n\nI probably need a test that make use of one ControllableHttpRequest for several requests (or a test for ControllableHttpRequest if I don\u0027t have any idea of an useful test)",
+      "parentUuid": "c6bf78e0_3e1f54c4",
       "range": {
         "startLine": 3,
         "startChar": 16,
@@ -325,6 +613,30 @@
     },
     {
       "key": {
+        "uuid": "af9b44a2_9ec8cbc8",
+        "filename": "content/test/controllable_http_response.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b4ec35d_8dd1e753",
+      "range": {
+        "startLine": 5,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 9
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09ed1b0d_52a0b2ec",
         "filename": "content/test/controllable_http_response.h",
         "patchSetId": 10
@@ -345,6 +657,30 @@
       "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda13bbc_60e2df99",
+        "filename": "content/test/controllable_http_response.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "I really like this idea.",
+      "parentUuid": "09ed1b0d_52a0b2ec",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 31
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -371,6 +707,30 @@
     },
     {
       "key": {
+        "uuid": "7923f4d2_68755f96",
+        "filename": "content/test/controllable_http_response.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "I didn\u0027t know it. Thanks for the lesson.",
+      "parentUuid": "6132b8be_ec57d0de",
+      "range": {
+        "startLine": 17,
+        "startChar": 15,
+        "endLine": 17,
+        "endChar": 25
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7390dee1_dddb864d",
         "filename": "content/test/controllable_http_response.h",
         "patchSetId": 10
@@ -391,6 +751,30 @@
       "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df898e3_14d95eb1",
+        "filename": "content/test/controllable_http_response.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7390dee1_dddb864d",
+      "range": {
+        "startLine": 19,
+        "startChar": 2,
+        "endLine": 19,
+        "endChar": 26
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -417,6 +801,30 @@
     },
     {
       "key": {
+        "uuid": "27b941f0_1f40cb13",
+        "filename": "content/test/controllable_http_response.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6a1ed38_e104a1db",
+      "range": {
+        "startLine": 27,
+        "startChar": 26,
+        "endLine": 27,
+        "endChar": 0
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3001ba07_8b38778d",
         "filename": "content/test/controllable_http_response.h",
         "patchSetId": 10
@@ -437,6 +845,30 @@
       "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd63bbc_71b5953f",
+        "filename": "content/test/controllable_http_response.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3001ba07_8b38778d",
+      "range": {
+        "startLine": 33,
+        "startChar": 9,
+        "endLine": 33,
+        "endChar": 15
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -463,6 +895,30 @@
     },
     {
       "key": {
+        "uuid": "17fd58ca_0779e62e",
+        "filename": "content/test/controllable_http_response.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "Yes as soon as we make ControllableHttpResponse::Controller private.",
+      "parentUuid": "7bda0fd9_5af65f2b",
+      "range": {
+        "startLine": 44,
+        "startChar": 39,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ddc964e_f3252199",
         "filename": "content/test/controllable_http_response.h",
         "patchSetId": 10
@@ -486,6 +942,30 @@
     },
     {
       "key": {
+        "uuid": "2e146925_23d302af",
+        "filename": "content/test/controllable_http_response.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ddc964e_f3252199",
+      "range": {
+        "startLine": 48,
+        "startChar": 24,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7209b8ff_2b7a4b00",
         "filename": "content/test/controllable_http_response.h",
         "patchSetId": 10
@@ -506,6 +986,30 @@
       "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4afeb4dd_8dc8eac0",
+        "filename": "content/test/controllable_http_response.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1228344
+      },
+      "writtenOn": "2017-09-19T01:50:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7209b8ff_2b7a4b00",
+      "range": {
+        "startLine": 65,
+        "startChar": 20,
+        "endLine": 65,
+        "endChar": 41
+      },
+      "revId": "c7b0eb26bd313a24bc4b4a4831be25f216b006af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
