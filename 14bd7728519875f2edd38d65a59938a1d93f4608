@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "171e151d_c7a16088",
+        "filename": "build/config/chromecast_build.gni",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-09-19T04:03:56Z",
+      "side": 1,
+      "message": "I\u0027d prefer we don\u0027t move this here.  If anything, we probably want to remove it soon rather than introduce new reliance on it ... \n* It\u0027s kind of an OS flag, but not really, because Chromium doesn\u0027t need it generally, only Cast shell.\n* It\u0027s also going to get more complicated with new products coming.\n* We have the new product args system that mbjorge@ wrote to allow defining arg combinations for all the different products.",
+      "revId": "14bd7728519875f2edd38d65a59938a1d93f4608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d16c0d1_eacb0d1d",
+        "filename": "chromecast/browser/DEPS",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1132404
+      },
+      "writtenOn": "2017-09-19T04:03:56Z",
+      "side": 1,
+      "message": "why is this needed?  I don\u0027t see any chromecast/browser changes here.",
+      "revId": "14bd7728519875f2edd38d65a59938a1d93f4608",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
