@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "452353b3_97f04733",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-19T10:48:33Z",
+      "side": 1,
+      "message": "Having thought about this some more, let\u0027s keep it as a one-off, but the more sustainable solution might be to have a OnCreated callback that allowed the delegate to receive the worker pointer. The tricky bit here is it would be one of the first callbacks that doesn\u0027t get called on the target thread, which isn\u0027t great either.",
+      "parentUuid": "8918d2d8_e87f4b55",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 58
+      },
+      "revId": "ee5d0f9a9582bda48f19b713aab0c171325e854a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18613d08_5b3a7a72",
         "filename": "base/task_scheduler/task_tracker.cc",
         "patchSetId": 10
@@ -234,6 +258,30 @@
       "revId": "ee5d0f9a9582bda48f19b713aab0c171325e854a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6848606d_b2f53e89",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-19T10:48:33Z",
+      "side": 1,
+      "message": "So be it then. There\u0027s a lot of implicit assumptions about the sequencing of calls in the TaskTracker. I don\u0027t have a proposal at the moment, but it would be nice if we could somehow capture this in a lightweight way in the API instead of relying on documentation to make sure that future calls are in line with the expectations of the counters set by TaskScheduler at various times.",
+      "parentUuid": "cdfb5535_a22feb9d",
+      "range": {
+        "startLine": 659,
+        "startChar": 10,
+        "endLine": 659,
+        "endChar": 48
+      },
+      "revId": "ee5d0f9a9582bda48f19b713aab0c171325e854a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
