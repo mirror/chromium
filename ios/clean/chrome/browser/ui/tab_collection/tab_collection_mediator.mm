@@ -9,6 +9,7 @@
 #include "base/scoped_observer.h"
 #include "base/strings/sys_string_conversions.h"
 #import "ios/chrome/browser/snapshots/snapshot_cache.h"
+#import "ios/chrome/browser/snapshots/snapshot_cache_observer_bridge.h"
 #import "ios/chrome/browser/snapshots/snapshot_constants.h"
 #import "ios/chrome/browser/web/tab_id_tab_helper.h"
 #import "ios/chrome/browser/web_state_list/web_state_list.h"
@@ -22,7 +23,7 @@
 #error "This file requires ARC support."
 #endif
 
-@interface TabCollectionMediator ()<CRWWebStateObserver>
+@interface TabCollectionMediator ()<CRWWebStateObserver, SnapshotCacheObserving>
 @end
 
 @implementation TabCollectionMediator {
@@ -30,10 +31,12 @@
   std::unique_ptr<ScopedObserver<WebStateList, WebStateListObserverBridge>>
       _scopedWebStateListObserver;
   std::unique_ptr<web::WebStateObserverBridge> _webStateObserver;
+  std::unique_ptr<SnapshotCacheObserverBridge> _snapshotCacheObserver;
 }
 
 @synthesize webStateList = _webStateList;
 @synthesize consumer = _consumer;
+@synthesize snapshotCache = _snapshotCache;
 
 - (instancetype)init {
   self = [super init];
@@ -52,17 +55,15 @@
 
 #pragma mark - Public
 
-- (void)takeSnapshotWithCache:(SnapshotCache*)snapshotCache {
+- (void)takeSnapshot {
   web::WebState* webState = self.webStateList->GetActiveWebState();
   TabIdTabHelper* tabHelper = TabIdTabHelper::FromWebState(webState);
   DCHECK(tabHelper);
   NSString* tabID = tabHelper->tab_id();
-  int index = self.webStateList->active_index();
-  __weak TabCollectionMediator* weakSelf = self;
+  SnapshotCache* snapshotCache = self.snapshotCache;
   webState->TakeSnapshot(base::BindBlockArc(^(const gfx::Image& snapshot) {
                            [snapshotCache setImage:snapshot.ToUIImage()
                                      withSessionID:tabID];
-                           [weakSelf.consumer updateSnapshotAtIndex:index];
                          }),
                          kSnapshotThumbnailSize);
 }
@@ -71,6 +72,7 @@
   _webStateList = nullptr;
   _webStateObserver.reset();
   _scopedWebStateListObserver->RemoveAll();
+  self.snapshotCache = nil;
 }
 
 #pragma mark - Properties
@@ -89,6 +91,19 @@
   DCHECK(consumer);
   _consumer = consumer;
   [self populateConsumerItems];
+}
+
+- (void)setSnapshotCache:(SnapshotCache*)snapshotCache {
+  if (_snapshotCache) {
+    [_snapshotCache removeObserver:_snapshotCacheObserver.get()];
+    _snapshotCacheObserver.reset();
+  }
+  _snapshotCache = snapshotCache;
+  if (_snapshotCache) {
+    _snapshotCacheObserver =
+        base::MakeUnique<SnapshotCacheObserverBridge>(self);
+    [_snapshotCache addObserver:_snapshotCacheObserver.get()];
+  }
 }
 
 #pragma mark - WebStateListObserving
@@ -153,6 +168,21 @@
   [self.consumer
       replaceItemAtIndex:index
                 withItem:[self tabCollectionItemFromWebState:webState]];
+}
+
+#pragma mark - SnapshotCacheObserving
+
+- (void)snapshotCache:(SnapshotCache*)snapshotCache
+    didUpdateSnapshot:(NSString*)tabID {
+  for (int i = 0; i < self.webStateList->count(); i++) {
+    TabIdTabHelper* tabHelper =
+        TabIdTabHelper::FromWebState(self.webStateList->GetWebStateAt(i));
+    DCHECK(tabHelper);
+    if ([tabID isEqualToString:tabHelper->tab_id()]) {
+      [self.consumer updateSnapshotAtIndex:i];
+      return;
+    }
+  }
 }
 
 #pragma mark - Private
