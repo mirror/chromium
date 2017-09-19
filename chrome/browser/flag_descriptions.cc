@@ -381,11 +381,6 @@ const char kEnableMaterialDesignExtensionsDescription[] =
     "If enabled, the chrome://extensions/ URL loads the Material Design "
     "extensions page.";
 
-const char kEnableMaterialDesignFeedbackName[] =
-    "Enable Material Design feedback";
-const char kEnableMaterialDesignFeedbackDescription[] =
-    "If enabled, reporting an issue will load the Material Design feedback UI.";
-
 const char kEnableMidiManagerDynamicInstantiationName[] =
     "MIDIManager dynamic instantiation for Web MIDI.";
 const char kEnableMidiManagerDynamicInstantiationDescription[] =

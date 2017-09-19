@@ -109,7 +109,6 @@ extern const char kEnableExperimentalHotwordHardware[];
 extern const char kEnableExtensionActivityLogging[];
 extern const char kEnableExtensionActivityLogTesting[];
 extern const char kEnableFastUnload[];
-extern const char kEnableMaterialDesignFeedback[];
 extern const char kEnableNaCl[];
 extern const char kEnableNavigationTracing[];
 extern const char kEnableNetBenchmarking[];
@@ -338,7 +337,6 @@ extern const char kUseSystemDefaultPrinter[];
 
 bool ExtensionsDisabled(const base::CommandLine& command_line);
 bool ExtensionsDisabled();
-bool MdFeedbackEnabled();
 
 #if defined(OS_CHROMEOS)
 bool PowerOverlayEnabled();
