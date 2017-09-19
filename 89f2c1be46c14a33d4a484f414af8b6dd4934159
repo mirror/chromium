@@ -22,6 +22,30 @@
       "revId": "89f2c1be46c14a33d4a484f414af8b6dd4934159",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6e0f51_48e7cfe7",
+        "filename": "chrome/common/chrome_switches.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-09-19T07:34:19Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "b7fa3b90_60e2451a",
+      "range": {
+        "startLine": 1057,
+        "startChar": 18,
+        "endLine": 1057,
+        "endChar": 47
+      },
+      "revId": "89f2c1be46c14a33d4a484f414af8b6dd4934159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
