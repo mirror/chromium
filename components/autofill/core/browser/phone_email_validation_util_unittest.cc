@@ -43,12 +43,10 @@ TEST_F(AutofillPhoneValidationTest, ValidateFullValidProfile) {
 }
 
 TEST_F(AutofillPhoneValidationTest, ValidateEmptyPhoneNumber) {
-  // This is a profile with empty phone number. Since phone number field is
-  // always required, it is considered as invalid.
   AutofillProfile profile(autofill::test::GetFullValidProfile());
   profile.SetRawInfo(PHONE_HOME_WHOLE_NUMBER, base::string16());
   EXPECT_EQ(AutofillProfile::INVALID, ValidatePhoneAndEmailTest(&profile));
-  EXPECT_EQ(AutofillProfile::INVALID,
+  EXPECT_EQ(AutofillProfile::EMPTY,
             profile.GetValidityState(PHONE_HOME_WHOLE_NUMBER));
   EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(EMAIL_ADDRESS));
 }
@@ -59,7 +57,7 @@ TEST_F(AutofillPhoneValidationTest, ValidateValidPhone_CountryCodeNotExist) {
   const std::string country_code = "PP";
   AutofillProfile profile(autofill::test::GetFullValidProfile());
   profile.SetRawInfo(ADDRESS_HOME_COUNTRY, base::UTF8ToUTF16(country_code));
-  EXPECT_EQ(AutofillProfile::UNVALIDATED, ValidatePhoneAndEmailTest(&profile));
+  EXPECT_EQ(AutofillProfile::INVALID, ValidatePhoneAndEmailTest(&profile));
   EXPECT_EQ(AutofillProfile::UNVALIDATED,
             profile.GetValidityState(PHONE_HOME_WHOLE_NUMBER));
   EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(EMAIL_ADDRESS));
@@ -73,7 +71,7 @@ TEST_F(AutofillPhoneValidationTest, ValidateEmptyPhone_CountryCodeNotExist) {
   profile.SetRawInfo(ADDRESS_HOME_COUNTRY, base::UTF8ToUTF16(country_code));
   profile.SetRawInfo(PHONE_HOME_WHOLE_NUMBER, base::string16());
   EXPECT_EQ(AutofillProfile::INVALID, ValidatePhoneAndEmailTest(&profile));
-  EXPECT_EQ(AutofillProfile::INVALID,
+  EXPECT_EQ(AutofillProfile::EMPTY,
             profile.GetValidityState(PHONE_HOME_WHOLE_NUMBER));
   EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(EMAIL_ADDRESS));
 }
@@ -160,33 +158,31 @@ TEST_F(AutofillPhoneValidationTest, ValidateValidPhoneNumber) {
 }
 
 TEST_F(AutofillPhoneValidationTest, ValidateEmptyEmailAddress) {
-  // This is a profile with empty email address. Since email field is
-  // not required, it is considered as valid.
   AutofillProfile profile(autofill::test::GetFullValidProfile());
   profile.SetRawInfo(EMAIL_ADDRESS, base::string16());
-  EXPECT_EQ(AutofillProfile::VALID, ValidatePhoneAndEmailTest(&profile));
+  EXPECT_EQ(AutofillProfile::INVALID, ValidatePhoneAndEmailTest(&profile));
   EXPECT_EQ(AutofillProfile::VALID,
             profile.GetValidityState(PHONE_HOME_WHOLE_NUMBER));
-  EXPECT_EQ(AutofillProfile::VALID, profile.GetValidityState(EMAIL_ADDRESS));
+  EXPECT_EQ(AutofillProfile::EMPTY, profile.GetValidityState(EMAIL_ADDRESS));
 }
 
 TEST_F(AutofillPhoneValidationTest, ValidateInvalidEmailAddress) {
   AutofillProfile profile(autofill::test::GetFullValidProfile());
   profile.SetRawInfo(EMAIL_ADDRESS, base::ASCIIToUTF16("Hello!"));
-  EXPECT_EQ(AutofillProfile::VALID, ValidatePhoneAndEmailTest(&profile));
+  EXPECT_EQ(AutofillProfile::INVALID, ValidatePhoneAndEmailTest(&profile));
   EXPECT_EQ(AutofillProfile::INVALID, profile.GetValidityState(EMAIL_ADDRESS));
 
   profile.SetRawInfo(EMAIL_ADDRESS, base::ASCIIToUTF16("alice.wonderland"));
-  EXPECT_EQ(AutofillProfile::VALID, ValidatePhoneAndEmailTest(&profile));
+  EXPECT_EQ(AutofillProfile::INVALID, ValidatePhoneAndEmailTest(&profile));
   EXPECT_EQ(AutofillProfile::INVALID, profile.GetValidityState(EMAIL_ADDRESS));
 
   profile.SetRawInfo(EMAIL_ADDRESS, base::ASCIIToUTF16("alice@"));
-  EXPECT_EQ(AutofillProfile::VALID, ValidatePhoneAndEmailTest(&profile));
+  EXPECT_EQ(AutofillProfile::INVALID, ValidatePhoneAndEmailTest(&profile));
   EXPECT_EQ(AutofillProfile::INVALID, profile.GetValidityState(EMAIL_ADDRESS));
 
   profile.SetRawInfo(EMAIL_ADDRESS,
                      base::ASCIIToUTF16("alice@=wonderland.com"));
-  EXPECT_EQ(AutofillProfile::VALID, ValidatePhoneAndEmailTest(&profile));
+  EXPECT_EQ(AutofillProfile::INVALID, ValidatePhoneAndEmailTest(&profile));
   EXPECT_EQ(AutofillProfile::INVALID, profile.GetValidityState(EMAIL_ADDRESS));
 }
 
