@@ -2,6 +2,91 @@
   "comments": [
     {
       "key": {
+        "uuid": "427cf7bb_6f69caba",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-19T21:20:06Z",
+      "side": 1,
+      "message": "What\u0027s the reason to not use \u0027state_ \u003d\u003d RUNNING\u0027? Can you document the reason?",
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e77ae84_bdda4db6",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-19T21:20:06Z",
+      "side": 1,
+      "message": "nit/ot: you can use a forward declaration instead.",
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37533f0_bb44c29e",
+        "filename": "components/arc/arc_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-19T21:20:06Z",
+      "side": 1,
+      "message": "document missing for the new parameter? Also, is it a good idea to leak the existence of mojo socket to the ASR layer? You (primarily) used the term \u0027fully set up\u0027 at L65 rather than mojo.",
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40be38af_898cfd26",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-19T21:20:06Z",
+      "side": 1,
+      "message": "nit/ot: unused?",
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b53555_c699dd11",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-19T21:20:06Z",
+      "side": 1,
+      "message": "nit: this maybe my fault, but the message seems a bit irrelevant now. Can you use \"Stop requested\"?",
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7696a611_9f5ae4ec",
         "filename": "components/arc/arc_session_runner.cc",
         "patchSetId": 1
@@ -25,6 +110,46 @@
     },
     {
       "key": {
+        "uuid": "e45cc4ef_96c5a2c2",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-19T21:20:06Z",
+      "side": 1,
+      "message": "This might be slightly off topic, but I\u0027m not sure if we really want to allow c/b/chromeos/ code to peek into the state of ASR (and AS) object. I think the observer interface is sufficient.\n\nActually, it seems possible to rename this (and AS\u0027) to IsRunningForTesting() because ASM and others only calls this function from their test.cc.",
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99568e2d_6e04b1d6",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-19T21:20:06Z",
+      "side": 1,
+      "message": "These 3 are also used in DCHECKs in ASM though. Are these DCHECKs in ASM worth keeping? (you removed bunch of DCHECKs from ASR in this CL.)\n\nIsStopped() is also used in ArcSessionManager::OnRetryClicked() but I guess ASM can do the same with the observer interface.",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 62
+      },
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "649617d8_966a976a",
         "filename": "components/arc/arc_session_runner.cc",
         "patchSetId": 1
@@ -36,6 +161,30 @@
       "writtenOn": "2017-09-19T16:53:27Z",
       "side": 1,
       "message": "This does not exactly map to the older meaning. Now even if it\u0027s stopping or running, this will return true. do we want to preserve the old semantics (by, say, adding !arc_session_-\u003eIsRunning()) or do we want to rename this method and update the comments?",
+      "range": {
+        "startLine": 142,
+        "startChar": 9,
+        "endLine": 142,
+        "endChar": 58
+      },
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0af98420_90b62093",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-19T21:20:06Z",
+      "side": 1,
+      "message": "Another idea is to change the function name (L140) from \"Starting\" to something else. The function is called only in DCHECK atm.",
+      "parentUuid": "649617d8_966a976a",
       "range": {
         "startLine": 142,
         "startChar": 9,
@@ -88,6 +237,46 @@
         "endLine": 203,
         "endChar": 7
       },
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f22c9c0_102ed298",
+        "filename": "components/arc/arc_session_runner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-19T21:20:06Z",
+      "side": 1,
+      "message": "Can you factor this out to a separate function? Then, I guess using if and switch-case would be easier to read.\n\n // ...\n if (!run_requested_)\n   return false;\n\n switch (stop_reason) {\n   case ArcStopReason::CRASH:\n     // ...\n     return was_mojo_connected;\n   case ArcStopReason::SHUTDOWN:\n     // ...\n     return true;\n   case ArcStopReason::GENERIC_BOOT_FAILURE:\n     ...\n }",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 49
+      },
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "739d0801_a321858a",
+        "filename": "components/arc/arc_session_runner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-19T21:20:06Z",
+      "side": 1,
+      "message": "nit/ot: \u003cbase/memory/weak_ptr.h\u003e missing?",
       "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
