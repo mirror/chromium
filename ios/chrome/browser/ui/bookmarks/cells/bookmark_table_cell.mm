@@ -70,6 +70,13 @@ const CGFloat kBookmarkTableCellImagePadding = 16.0;
   }
 }
 
+- (void)setNewFolderState {
+  self.titleText.text = @"New Folder";
+  self.titleText.accessibilityIdentifier = self.titleText.text;
+
+  self.imageView.image = [UIImage imageNamed:@"bookmark_gray_folder_new"];
+}
+
 - (void)startEdit {
   // TODO(crbug.com/695749): Prevent the keyboard from overlapping the editing
   // cell.
@@ -172,7 +179,12 @@ const CGFloat kBookmarkTableCellImagePadding = 16.0;
 - (BOOL)textFieldShouldReturn:(UITextField*)textField {
   [self.textDelegate textDidChangeTo:self.titleText.text];
   self.titleText.userInteractionEnabled = NO;
+  //[self.titleText resignFirstResponder];
   return YES;
+}
+
+- (void)textFieldDidEndEditing:(UITextField*)textField {
+  //[self.textDelegate textFieldDidFocus:NO OnCell:self];
 }
 
 @end

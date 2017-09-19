@@ -41,6 +41,8 @@ class BookmarkNode;
 
 - (instancetype)initWithCoder:(NSCoder*)aDecoder NS_UNAVAILABLE;
 
+@property(nonatomic, readonly) UITextField* titleText;
+
 // Returns the preferred image size for favicons.
 + (CGFloat)preferredImageSize;
 
@@ -57,6 +59,9 @@ class BookmarkNode;
 
 // Set the bookmark node this cell shows.
 - (void)setNode:(const bookmarks::BookmarkNode*)node;
+
+//
+- (void)setNewFolderState;
 
 // Start editing the |titleText| of this cell.
 - (void)startEdit;

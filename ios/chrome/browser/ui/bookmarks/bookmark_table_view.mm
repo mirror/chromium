@@ -113,6 +113,7 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
 @property(nonatomic, readonly, assign) NSInteger promoSection;
 @property(nonatomic, readonly, assign) NSInteger bookmarksSection;
 @property(nonatomic, readonly, assign) NSInteger sectionCount;
+@property(nonatomic, assign) BOOL addingNewFolder;
 
 @end
 
@@ -126,6 +127,7 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
 @synthesize spinnerView = _spinnerView;
 @synthesize editing = _editing;
 @synthesize dispatcher = _dispatcher;
+@synthesize addingNewFolder = _addingNewFolder;
 
 + (void)registerBrowserStatePrefs:(user_prefs::PrefRegistrySyncable*)registry {
   registry->RegisterIntegerPref(prefs::kIosBookmarkSigninPromoDisplayedCount,
@@ -238,6 +240,7 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
   if (!_currentRootNode) {
     return;
   }
+  self.addingNewFolder = YES;
   base::string16 folderTitle = base::SysNSStringToUTF16(
       l10n_util::GetNSString(IDS_IOS_BOOKMARK_NEW_GROUP_DEFAULT_NAME));
   _editingFolderNode = self.bookmarkModel->AddFolder(
@@ -294,9 +297,10 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
 - (void)setContentPosition:(CGFloat)position {
   NSIndexPath* path =
       [NSIndexPath indexPathForRow:position inSection:self.bookmarksSection];
-  [self.tableView scrollToRowAtIndexPath:path
-                        atScrollPosition:UITableViewScrollPositionTop
-                                animated:NO];
+  CGRect cellRect = [self.tableView rectForRowAtIndexPath:path];
+  cellRect = CGRectMake(cellRect.origin.x, cellRect.origin.y,
+                        cellRect.size.width, self.bounds.size.height);
+  [self.tableView scrollRectToVisible:cellRect animated:NO];
 }
 
 #pragma mark - UITableViewDataSource
@@ -351,8 +355,10 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
   [cell setNode:node];
 
   if (node == _editingFolderNode) {
-    [cell startEdit];
-    cell.textDelegate = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+      [cell startEdit];
+      cell.textDelegate = self;
+    });
   }
   [self loadFaviconAtIndexPath:indexPath];
   return cell;
@@ -637,6 +643,17 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
   [self resetEditNodes];
   [self.delegate bookmarkTableViewRefreshContextBar:self];
   [self.tableView reloadData];
+  if (self.addingNewFolder) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      NSIndexPath* indexPath =
+          [NSIndexPath indexPathForRow:_bookmarkItems.size() - 1
+                             inSection:self.bookmarksSection];
+
+      [self.tableView scrollToRowAtIndexPath:indexPath
+                            atScrollPosition:UITableViewScrollPositionBottom
+                                    animated:YES];
+    });
+  }
 }
 
 // Returns the bookmark node associated with |indexPath|.
@@ -879,6 +896,7 @@ using IntegerPair = std::pair<NSInteger, NSInteger>;
 
 - (void)textDidChangeTo:(NSString*)newName {
   DCHECK(_editingFolderNode);
+  self.addingNewFolder = NO;
   if (newName.length > 0) {
     self.bookmarkModel->SetTitle(_editingFolderNode,
                                  base::SysNSStringToUTF16(newName));
