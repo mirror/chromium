@@ -466,6 +466,10 @@ void MemoryDumpManager::UnregisterDumpProviderInternal(
            (*mdp_iter)->task_runner->RunsTasksInCurrentSequence())
         << "MemoryDumpProvider \"" << (*mdp_iter)->name << "\" attempted to "
         << "unregister itself in a racy way. Please file a crbug.";
+
+    // Make races on MDP destruction easier to debug.
+    *const_cast<MemoryDumpProvider**>(&(*mdp_iter)->dump_provider) =
+        reinterpret_cast<MemoryDumpProvider*>(0x0000dead);
   }
 
   if ((*mdp_iter)->options.is_fast_polling_supported) {
@@ -669,6 +673,11 @@ void MemoryDumpManager::InvokeOnMemoryDump(
   // skip the hop and move on. Hence the manual naked -> scoped ptr juggling.
   auto pmd_async_state = WrapUnique(owned_pmd_async_state);
   owned_pmd_async_state = nullptr;
+
+  // Initalizes the ThreadLocalEventBuffer to guarantee that the TRACE_EVENTs
+  // below don't end up re-entering MemoryDumpManager.
+  // See https://crbug.com/766274#c5.
+  TraceLog::GetInstance()->InitializeThreadLocalEventBufferIfSupported();
 
   // Read MemoryDumpProviderInfo thread safety considerations in
   // memory_dump_manager.h when accessing |mdpinfo| fields.
