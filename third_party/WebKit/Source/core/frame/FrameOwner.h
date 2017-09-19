@@ -9,6 +9,7 @@
 #include "core/dom/SandboxFlags.h"
 #include "platform/heap/Handle.h"
 #include "platform/scroll/ScrollTypes.h"
+#include "public/platform/GestureDelegationFlags.h"
 #include "public/platform/WebFeaturePolicy.h"
 #include "public/platform/WebVector.h"
 
@@ -31,6 +32,7 @@ class CORE_EXPORT FrameOwner : public GarbageCollectedMixin {
   virtual void SetContentFrame(Frame&) = 0;
   virtual void ClearContentFrame() = 0;
 
+  virtual GestureDelegationFlags GetGestureDelegationFlags() const = 0;
   virtual SandboxFlags GetSandboxFlags() const = 0;
   virtual void DispatchLoad() = 0;
 
@@ -70,6 +72,9 @@ class CORE_EXPORT DummyFrameOwner
   Frame* ContentFrame() const override { return nullptr; }
   void SetContentFrame(Frame&) override {}
   void ClearContentFrame() override {}
+  GestureDelegationFlags GetGestureDelegationFlags() const override {
+    return kGestureDelegationNone;
+  }
   SandboxFlags GetSandboxFlags() const override { return kSandboxNone; }
   void DispatchLoad() override {}
   bool CanRenderFallbackContent() const override { return false; }

@@ -16328,6 +16328,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2145" label="FeaturePolicyAllowAttributeDeprecatedSyntax"/>
   <int value="2146" label="SuppressHistoryEntryWithoutUserGesture"/>
   <int value="2147" label="ImageInputTypeFormDataWithNonEmptyValue"/>
+  <int value="2148" label="AllowedGestureDelegation"/>
 </enum>
 
 <enum name="FeedbackSource">

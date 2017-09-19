@@ -88,6 +88,7 @@
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/public/platform/GestureDelegationFlags.h"
 #include "third_party/WebKit/public/platform/WebFeaturePolicy.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/WebInsecureRequestPolicy.h"
@@ -3897,6 +3898,80 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, OriginReplication) {
       "window.domAutomationController.send(location.ancestorOrigins[2]);",
       &result));
   EXPECT_EQ(a_origin, result + "/");
+}
+
+// Check that iframe gesture delegation flags are replicated correctly.
+IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest,
+                       GestureDelegationFlagsReplication) {
+  GURL main_url(embedded_test_server()->GetURL("/sandboxed_frames.html"));
+  EXPECT_TRUE(NavigateToURL(shell(), main_url));
+
+  // It is safe to obtain the root frame tree node here, as it doesn't change.
+  FrameTreeNode* root = web_contents()->GetFrameTree()->root();
+  TestNavigationObserver observer(shell()->web_contents());
+
+  // Check the first frame has no flags on it.
+  EXPECT_EQ(
+      blink::kGestureDelegationNone,
+      root->child_at(1)->frame_owner_properties().gesture_delegation_flags);
+
+  // Update the gesture delegation flags for the first frame.
+  EXPECT_TRUE(ExecuteScript(
+      shell(),
+      "document.getElementById('child-2').allowedGestureDelegation='media';"));
+
+  // Check the first frame has now has flags on it.
+  EXPECT_EQ(
+      blink::kGestureDelegationMedia,
+      root->child_at(1)->frame_owner_properties().gesture_delegation_flags);
+
+  // Navigate the subframe to a cross-site page with a subframe.
+  GURL foo_url(
+      embedded_test_server()->GetURL("foo.com", "/frame_tree/2-4.html"));
+  NavigateFrameToURL(root->child_at(1), foo_url);
+  EXPECT_TRUE(WaitForLoadStop(shell()->web_contents()));
+  EXPECT_EQ(foo_url, root->child_at(1)->current_url());
+
+  // The subframe should still have the gesture delegation flag on it.
+  EXPECT_EQ(
+      blink::kGestureDelegationMedia,
+      root->child_at(1)->frame_owner_properties().gesture_delegation_flags);
+
+  // Load cross-site page into subframe's subframe.
+  ASSERT_EQ(1U, root->child_at(1)->child_count());
+  GURL bar_url(embedded_test_server()->GetURL("bar.com", "/title1.html"));
+  NavigateFrameToURL(root->child_at(1)->child_at(0), bar_url);
+  EXPECT_TRUE(observer.last_navigation_succeeded());
+  EXPECT_EQ(bar_url, observer.last_navigation_url());
+
+  // The bar.com iframe should not have gesture delegation flag.
+  EXPECT_EQ(blink::kGestureDelegationNone, root->child_at(1)
+                                               ->child_at(0)
+                                               ->frame_owner_properties()
+                                               .gesture_delegation_flags);
+
+  // Set gesture delegation on the bar.com iframe and check that it has the
+  // flag.
+  EXPECT_TRUE(ExecuteScript(
+      root->child_at(1),
+      "document.querySelector('iframe').allowedGestureDelegation='media';"));
+  EXPECT_EQ(blink::kGestureDelegationMedia, root->child_at(1)
+                                                ->child_at(0)
+                                                ->frame_owner_properties()
+                                                .gesture_delegation_flags);
+
+  // Clear the gesture delegation flag on foo.com and make sure that it no
+  // longer has the flag, but bar.com does.
+  EXPECT_TRUE(ExecuteScript(
+      shell(),
+      "document.getElementById('child-2').allowedGestureDelegation='test';"));
+  EXPECT_EQ(
+      blink::kGestureDelegationNone,
+      root->child_at(1)->frame_owner_properties().gesture_delegation_flags);
+  EXPECT_EQ(blink::kGestureDelegationMedia, root->child_at(1)
+                                                ->child_at(0)
+                                                ->frame_owner_properties()
+                                                .gesture_delegation_flags);
 }
 
 // Check that iframe sandbox flags are replicated correctly.
