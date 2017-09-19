@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b75d3c9d_2d85cc6d",
+        "filename": "remoting/client/audio/audio_player_buffer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-19T15:41:35Z",
+      "side": 1,
+      "message": "I don\u0027t think this is needed now.",
+      "parentUuid": "ee8f5bf4_14e36b98",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 32
+      },
+      "revId": "9fd19fc67209e80380c56eb9b7d4380332f0af19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5815a6a2_2dad7f6d",
         "filename": "remoting/client/audio/audio_player_buffer.h",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "76b4c874_802c395b",
+        "filename": "remoting/client/audio/audio_player_buffer.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-19T15:41:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5815a6a2_2dad7f6d",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 65
+      },
+      "revId": "9fd19fc67209e80380c56eb9b7d4380332f0af19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4fc1557_b5f0a5be",
         "filename": "remoting/client/display/gl_render_layer.cc",
         "patchSetId": 13
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-18T23:46:40Z",
       "side": 1,
       "message": "What is this change for?",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 34
+      },
+      "revId": "9fd19fc67209e80380c56eb9b7d4380332f0af19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3fa80f_9f1faec0",
+        "filename": "remoting/client/display/gl_render_layer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-19T15:41:35Z",
+      "side": 1,
+      "message": "https://bugs.chromium.org/p/chromium/issues/detail?id\u003d766335",
+      "parentUuid": "c4fc1557_b5f0a5be",
       "range": {
         "startLine": 59,
         "startChar": 0,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "b30c9e94_7ac70f70",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-19T15:41:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e7581b7_4d348eea",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 20
+      },
+      "revId": "9fd19fc67209e80380c56eb9b7d4380332f0af19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6722cbb_3a7a1b96",
         "filename": "remoting/ios/audio/audio_player_ios.mm",
         "patchSetId": 13
@@ -114,6 +210,30 @@
       "revId": "9fd19fc67209e80380c56eb9b7d4380332f0af19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3554f367_1290b8cf",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-19T15:41:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6722cbb_3a7a1b96",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 78
+      },
+      "revId": "9fd19fc67209e80380c56eb9b7d4380332f0af19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "0f630c93_2bc8c001",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-19T15:41:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fa3cad6_4dcef9bc",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 15
+      },
+      "revId": "9fd19fc67209e80380c56eb9b7d4380332f0af19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52beb69f_2b973f6f",
         "filename": "remoting/ios/audio/audio_stream_consumer_proxy.cc",
         "patchSetId": 13
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "6df5f453_b337b3d3",
+        "filename": "remoting/ios/audio/audio_stream_consumer_proxy.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-19T15:41:35Z",
+      "side": 1,
+      "message": "Not finding this to be true now that the audio player is deconstructed on the audio thread.",
+      "parentUuid": "52beb69f_2b973f6f",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 56
+      },
+      "revId": "9fd19fc67209e80380c56eb9b7d4380332f0af19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11e262c0_e1293156",
         "filename": "remoting/ios/session/remoting_client.mm",
         "patchSetId": 13
@@ -183,6 +351,30 @@
       "revId": "9fd19fc67209e80380c56eb9b7d4380332f0af19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae0ae63f_571c7166",
+        "filename": "remoting/ios/session/remoting_client.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-19T15:41:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "11e262c0_e1293156",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 27
+      },
+      "revId": "9fd19fc67209e80380c56eb9b7d4380332f0af19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
