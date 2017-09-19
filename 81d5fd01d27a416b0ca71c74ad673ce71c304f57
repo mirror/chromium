@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d231ec29_ce281161",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-19T17:36:11Z",
+      "side": 1,
+      "message": "nit: isn\u0027t this just, if (has_visible_children \u0026\u0026 !has_visible_children)?\n\nAlso, rename has_visible_children to children_visible_?",
+      "range": {
+        "startLine": 27,
+        "startChar": 55,
+        "endLine": 27,
+        "endChar": 75
+      },
+      "revId": "81d5fd01d27a416b0ca71c74ad673ce71c304f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2300450c_c40ca24c",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-19T17:36:11Z",
+      "side": 1,
+      "message": "Don\u0027t we want to check the visibility of all children? For example, your child could be visible and have no rendering, but its children can be invisible?",
+      "range": {
+        "startLine": 62,
+        "startChar": 20,
+        "endLine": 62,
+        "endChar": 21
+      },
+      "revId": "81d5fd01d27a416b0ca71c74ad673ce71c304f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3608d88_005f306e",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-19T17:36:11Z",
+      "side": 1,
+      "message": "I\u0027m working on a patch to query the target velocity of an animation \"GetTargetOpacity\". You can probably just use that when it lands?\n\nSee Ian\u0027s comments here: https://chromium-review.googlesource.com/c/chromium/src/+/669009/2/chrome/browser/vr/elements/transient_element.cc",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 13
+      },
+      "revId": "81d5fd01d27a416b0ca71c74ad673ce71c304f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
