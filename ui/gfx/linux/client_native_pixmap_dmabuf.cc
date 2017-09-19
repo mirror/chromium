@@ -139,4 +139,19 @@ int ClientNativePixmapDmaBuf::GetStride(size_t plane) const {
   return pixmap_handle_.planes[plane].stride;
 }
 
+void ClientNativePixmapDmaBuf::Flush(size_t plane, off_t offset, size_t bytes) {
+#if defined(__i386__) || defined(__x86_64__)
+  const size_t kCachelineSize = 64;
+  const uintptr_t kCachelineMask = kCachelineSize - 1;
+
+  uint8_t* start = reinterpret_cast<uint8_t*>(data_) + offset;
+  uintptr_t p = reinterpret_cast<uintptr_t>(start) & ~kCachelineMask;
+  uintptr_t end = reinterpret_cast<uintptr_t>(start + bytes);
+  while (p < end) {
+    __builtin_ia32_clflush(reinterpret_cast<void*>(p));
+    p += kCachelineSize;
+  }
+#endif
+}
+
 }  // namespace gfx

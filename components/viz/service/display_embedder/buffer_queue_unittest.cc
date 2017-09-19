@@ -37,6 +37,7 @@ class StubGpuMemoryBufferImpl : public gfx::GpuMemoryBuffer {
   // Overridden from gfx::GpuMemoryBuffer:
   bool Map() override { return false; }
   void* memory(size_t plane) override { return nullptr; }
+  void Flush(size_t plane, off_t offset, size_t bytes) override {}
   void Unmap() override {}
   gfx::Size GetSize() const override { return gfx::Size(); }
   gfx::BufferFormat GetFormat() const override {

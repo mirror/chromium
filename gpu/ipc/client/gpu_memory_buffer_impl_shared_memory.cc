@@ -196,6 +196,12 @@ void* GpuMemoryBufferImplSharedMemory::memory(size_t plane) {
          gfx::BufferOffsetForBufferFormat(size_, format_, plane);
 }
 
+void GpuMemoryBufferImplSharedMemory::Flush(size_t plane,
+                                            off_t offset,
+                                            size_t bytes) {
+  DCHECK(mapped_);
+}
+
 void GpuMemoryBufferImplSharedMemory::Unmap() {
   DCHECK(mapped_);
   mapped_ = false;

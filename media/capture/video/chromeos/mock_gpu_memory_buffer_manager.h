@@ -23,6 +23,8 @@ class MockGpuMemoryBuffer : public gfx::GpuMemoryBuffer {
 
   MOCK_METHOD1(memory, void*(size_t plane));
 
+  MOCK_METHOD3(Flush, void(size_t plane, off_t offset, size_t bytes));
+
   MOCK_METHOD0(Unmap, void());
 
   MOCK_CONST_METHOD0(GetSize, gfx::Size());
