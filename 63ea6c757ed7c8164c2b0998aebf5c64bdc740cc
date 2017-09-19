@@ -149,6 +149,24 @@
     },
     {
       "key": {
+        "uuid": "52140210_114c5f06",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-19T09:14:59Z",
+      "side": 1,
+      "message": "\u003e Larger than int32max, you mean?\n\nYes.\n\n\u003e Even in this case, double can still represent uint32max exactly, so I don\u0027t think the +0.5 should be necessary below.\n\nHow can I be sure that I am not getting x - 1e-10 instead of x?",
+      "parentUuid": "635757ff_dd47c720",
+      "revId": "63ea6c757ed7c8164c2b0998aebf5c64bdc740cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ebd99d4_97fd9207",
         "filename": "components/ntp_snippets/remote/remote_suggestion.h",
         "patchSetId": 3
