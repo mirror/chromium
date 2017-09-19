@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f4c885c_3b14b47e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 48030,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-19T05:10:00Z",
+      "side": 1,
+      "message": "nit: Perhaps \"LogoClick.Id.CallToAction\", and \"LogoClick.Id.StaticOrAnimated\" below?",
+      "range": {
+        "startLine": 48030,
+        "startChar": 28,
+        "endLine": 48030,
+        "endChar": 42
+      },
+      "revId": "09be32a2edaf6af9b961d94cc3fbf35a22e5edb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b7bf93e_5ce61fd7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 48030,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-09-19T05:10:00Z",
+      "side": 1,
+      "message": "Please provide either an enum, or a reference to where to look to understand what logo corresponds to what id.  (Ditto for all of the other ID-recording histograms.)",
+      "range": {
+        "startLine": 48030,
+        "startChar": 44,
+        "endLine": 48030,
+        "endChar": 0
+      },
+      "revId": "09be32a2edaf6af9b961d94cc3fbf35a22e5edb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
