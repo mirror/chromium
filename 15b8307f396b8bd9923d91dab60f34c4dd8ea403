@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69ecc128_239caa6e",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1299,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-19T14:28:14Z",
+      "side": 1,
+      "message": "This skips ClearSelectedView() call. Would it be a problem?",
+      "revId": "15b8307f396b8bd9923d91dab60f34c4dd8ea403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5f3861_7ff688b2",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1322,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-19T14:28:14Z",
+      "side": 1,
+      "message": "Similarly, ClearSelectedView() would be skipped here too.",
+      "revId": "15b8307f396b8bd9923d91dab60f34c4dd8ea403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e4586a3_3e1de54f",
+        "filename": "ui/app_list/views/apps_grid_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-19T14:28:14Z",
+      "side": 1,
+      "message": "Remove \u0027explicit\u0027 since it is only needed for single arg ctor.",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 10
+      },
+      "revId": "15b8307f396b8bd9923d91dab60f34c4dd8ea403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
