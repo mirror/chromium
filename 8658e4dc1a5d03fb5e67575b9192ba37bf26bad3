@@ -16,6 +16,24 @@
       "revId": "8658e4dc1a5d03fb5e67575b9192ba37bf26bad3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "440fcd79_98c4f339",
+        "filename": "net/http/transport_security_state_static.json",
+        "patchSetId": 4
+      },
+      "lineNbr": 5521,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-19T18:27:32Z",
+      "side": 0,
+      "message": "Ah, missed this one, moved to the \"Manual HSTS\" section above now. Thanks!",
+      "parentUuid": "c3e7efa7_06960226",
+      "revId": "8658e4dc1a5d03fb5e67575b9192ba37bf26bad3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
