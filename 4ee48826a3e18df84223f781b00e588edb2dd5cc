@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5292325e_67e7e85c",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-19T18:50:31Z",
+      "side": 1,
+      "message": "Chromium style guide says no else after a return.",
+      "range": {
+        "startLine": 898,
+        "startChar": 2,
+        "endLine": 898,
+        "endChar": 9
+      },
+      "revId": "4ee48826a3e18df84223f781b00e588edb2dd5cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ec5a60_a010799f",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-19T18:50:31Z",
+      "side": 1,
+      "message": "Might this be negative?",
+      "range": {
+        "startLine": 900,
+        "startChar": 8,
+        "endLine": 900,
+        "endChar": 75
+      },
+      "revId": "4ee48826a3e18df84223f781b00e588edb2dd5cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3035eb5_6d09e378",
+        "filename": "ui/views/controls/tree/tree_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-19T18:50:31Z",
+      "side": 1,
+      "message": "As this calls a destructor it\u0027s no longer trivial and shouldn\u0027t be inlined.",
+      "range": {
+        "startLine": 124,
+        "startChar": 7,
+        "endLine": 124,
+        "endChar": 25
+      },
+      "revId": "4ee48826a3e18df84223f781b00e588edb2dd5cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3c9864_36d55097",
+        "filename": "ui/views/controls/tree/tree_view_drawing_provider.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-19T18:50:31Z",
+      "side": 1,
+      "message": "Please add a description.",
+      "range": {
+        "startLine": 20,
+        "startChar": 19,
+        "endLine": 20,
+        "endChar": 42
+      },
+      "revId": "4ee48826a3e18df84223f781b00e588edb2dd5cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
