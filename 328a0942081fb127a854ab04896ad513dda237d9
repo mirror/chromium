@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e4056e4_bd9900c5",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T08:34:12Z",
+      "side": 1,
+      "message": "sounds like TODO.",
+      "range": {
+        "startLine": 24,
+        "startChar": 58,
+        "endLine": 28,
+        "endChar": 19
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c5b7ada_c24b9bde",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T08:34:12Z",
+      "side": 1,
+      "message": "string16 We work with non-latin languages as well.",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 13
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1272a7a_0fd4a471",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T08:34:12Z",
+      "side": 1,
+      "message": "Sounds like TODO. \n\nLet\u0027s keep issues we need to re-consider in a file. We will add them to the source code at the end if neede.",
+      "range": {
+        "startLine": 268,
+        "startChar": 0,
+        "endLine": 270,
+        "endChar": 15
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15047466_90a5e3a6",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T08:34:12Z",
+      "side": 1,
+      "message": "always work with string16, non-latin letter will be lost on standard string.",
+      "range": {
+        "startLine": 299,
+        "startChar": 0,
+        "endLine": 299,
+        "endChar": 11
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62379ed7_e2250567",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T08:34:12Z",
+      "side": 1,
+      "message": "It should be a constant outside the method.",
+      "range": {
+        "startLine": 314,
+        "startChar": 2,
+        "endLine": 314,
+        "endChar": 26
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da304700_dd6056a4",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T08:34:12Z",
+      "side": 1,
+      "message": "why to create method that only forward a call to another function. The function are not called anywhere else.",
+      "range": {
+        "startLine": 322,
+        "startChar": 2,
+        "endLine": 322,
+        "endChar": 8
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6834186_216f8bd9",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T08:34:12Z",
+      "side": 1,
+      "message": "Sounds like we remove non-latin letters.",
+      "range": {
+        "startLine": 322,
+        "startChar": 9,
+        "endLine": 322,
+        "endChar": 34
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0a491f_c4a10604",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T08:34:12Z",
+      "side": 1,
+      "message": "why? there may be neither name nor id attributes, but there may be label that we will use for classification.",
+      "range": {
+        "startLine": 325,
+        "startChar": 34,
+        "endLine": 326,
+        "endChar": 75
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9960d485_7a1b8122",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T08:34:12Z",
+      "side": 1,
+      "message": "I would clarify the main function of this method - extracting USER and DEVELOPER groups for further processing. In the comment to |current_index|, I would mention that we have to match |all_possible_usernames| and |form_data|.\n\nMy suggestions.\nMethod description\nExtracts values of user and developer groups from |WebInputElement|s to |PossibleUsername|s.\n\nTo |current_index| and the loop:\n|all_possible_usernames| and |form_data.fields| may have different set of fields. Match them based on |WebInputElement.NameForAutofill| and |FormFieldData.name|.",
+      "range": {
+        "startLine": 327,
+        "startChar": 0,
+        "endLine": 328,
+        "endChar": 66
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee90200_e46d8eaa",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T08:34:12Z",
+      "side": 1,
+      "message": "must be a pointer. It is output parameter.",
+      "range": {
+        "startLine": 332,
+        "startChar": 4,
+        "endLine": 332,
+        "endChar": 53
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49eff96f_0ce1a378",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T08:34:12Z",
+      "side": 1,
+      "message": "const and reference (\u0026). \n\nAlways try to avoid copying, use references or pointers.",
+      "range": {
+        "startLine": 339,
+        "startChar": 7,
+        "endLine": 339,
+        "endChar": 47
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0e49636_0eb30779",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T08:34:12Z",
+      "side": 1,
+      "message": "Good point, but nit: convert to \nif (possible_username.NameForAutofill().IsEmpty()) continue;\n\nit will shorten the ladder of curly braces at the end of function.",
+      "range": {
+        "startLine": 343,
+        "startChar": 6,
+        "endLine": 343,
+        "endChar": 59
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f6fba0b_92f34763",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T08:34:12Z",
+      "side": 1,
+      "message": "DCHECK(username_element);\n\nWe have to check that the pointer is not nullptr.",
+      "range": {
+        "startLine": 459,
+        "startChar": 2,
+        "endLine": 459,
+        "endChar": 37
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db963b57_4f5fdc5e",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T08:34:12Z",
+      "side": 1,
+      "message": "the variable should be static. Feel free to declare struct outside the method.",
+      "range": {
+        "startLine": 471,
+        "startChar": 2,
+        "endLine": 471,
+        "endChar": 20
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
