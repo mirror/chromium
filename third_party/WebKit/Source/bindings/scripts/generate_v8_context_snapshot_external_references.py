@@ -6,6 +6,7 @@
 
 import argparse
 import os
+import re
 
 from code_generator import initialize_jinja_env
 from idl_reader import IdlReader
@@ -197,10 +198,20 @@ class ExternalReferenceTableGenerator(object):
         header_name = 'V8ContextSnapshotExternalReferences.h'
         if self._opts.snake_case_generated_files:
             header_name = 'v8_context_snapshot_external_references.h'
+        include_files = []
+        for include in self._include_files:
+            if self._opts.snake_case_generated_files:
+                match = re.search(r'/([^/]+)\.h$', include)
+                if match:
+                    name = match.group(1)
+                    if name.lower() != name:
+                        include = include[0:match.start(1)] + \
+                            utilities.to_snake_case(name) + '.h'
+            include_files.append(include)
         return {
             'class': 'V8ContextSnapshotExternalReferences',
             'interfaces': interfaces,
-            'include_files': sorted(list(self._include_files)),
+            'include_files': sorted(include_files),
             'this_include_header_name': header_name,
         }
 
