@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1525609c_ea34b450",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-19T07:21:09Z",
+      "side": 1,
+      "message": "This CL should work in either way. Commented in detail at https://chromium-review.googlesource.com/c/chromium/src/+/656751/7/ui/arc/notification/arc_notification_content_view.cc#686",
+      "parentUuid": "dda0340b_f6a3cc04",
+      "range": {
+        "startLine": 490,
+        "startChar": 6,
+        "endLine": 490,
+        "endChar": 27
+      },
+      "revId": "2257788c5136c77553277cb0b7cdfc798124a36e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11461fd5_607246a1",
         "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-19T05:58:46Z",
       "side": 1,
       "message": "Probably, you should do this in ArcNotificationContentView?",
+      "range": {
+        "startLine": 491,
+        "startChar": 4,
+        "endLine": 491,
+        "endChar": 56
+      },
+      "revId": "2257788c5136c77553277cb0b7cdfc798124a36e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b63d7aa_a410265d",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1121230
+      },
+      "writtenOn": "2017-09-19T07:21:09Z",
+      "side": 1,
+      "message": "See the reply in above comment. We need to notify this event both in ArcAccessibilityHelperBridge and ArcNotificationContentView to make this work regardless of order of OnNotificationSurfaceAdded.",
+      "parentUuid": "11461fd5_607246a1",
       "range": {
         "startLine": 491,
         "startChar": 4,
