@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "186b0bce_370f579c",
+        "filename": "net/extras/sqlite/sqlite_channel_id_store_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-19T19:33:59Z",
+      "side": 1,
+      "message": "This probably should say something like ReadLegacyTestKey since it\u0027s not the new format. (Should this still put the cert in there?)",
+      "revId": "a63009cc7adba6569641d3581d37ddc0945c256b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a8e87ab_fc15af7d",
+        "filename": "net/extras/sqlite/sqlite_channel_id_store_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-09-19T19:33:59Z",
+      "side": 1,
+      "message": "Oh, this comment is off too. Ditto throughout.\n\n(Is loading twice actually still useful? I guess it tests that we created the tables we were supposed to create.)",
+      "revId": "a63009cc7adba6569641d3581d37ddc0945c256b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
