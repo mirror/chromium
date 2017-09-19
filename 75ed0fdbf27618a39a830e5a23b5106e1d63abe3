@@ -16,6 +16,24 @@
       "revId": "75ed0fdbf27618a39a830e5a23b5106e1d63abe3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f7ee824_c9b38557",
+        "filename": "media/gpu/video_decode_accelerator_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1207129
+      },
+      "writtenOn": "2017-09-19T05:44:20Z",
+      "side": 1,
+      "message": "removed.",
+      "parentUuid": "7cfffc32_e05b17b3",
+      "revId": "75ed0fdbf27618a39a830e5a23b5106e1d63abe3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
