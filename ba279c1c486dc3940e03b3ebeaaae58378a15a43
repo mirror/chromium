@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a8b4b31_bf3c5b8d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/dangling-markup/a-ping.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-19T20:30:54Z",
+      "side": 1,
+      "message": "Is it necessary that this code be different than the equivalent a.ping code used in the should_block cases?\n\nMore generally, could the nested function \"var a...\" to \"...url)));\" be hoisted up so its used for both should_load and should_block?",
+      "range": {
+        "startLine": 37,
+        "startChar": 12,
+        "endLine": 37,
+        "endChar": 51
+      },
+      "revId": "ba279c1c486dc3940e03b3ebeaaae58378a15a43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0567478_af3ccf0a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/dangling-markup/a-ping.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-09-19T20:30:54Z",
+      "side": 1,
+      "message": "Copy/paste error? Or is this somehow related to prefetch rather than a ping?",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 14
+      },
+      "revId": "ba279c1c486dc3940e03b3ebeaaae58378a15a43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
