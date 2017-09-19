@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adb5336a_a6f5f64d",
+        "filename": "chrome/browser/ui/cocoa/browser/exclusive_access_controller_views.mm",
+        "patchSetId": 13
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-19T22:30:47Z",
+      "side": 1,
+      "message": "just `return true;` would be clearer here\n\n(context: immersive mode has a different/opposite meaning in the Mac codebase versus ChromeOS e.g. \"immersive fullscreen\" is what youtube does, \"appkit fullscreen\" is what you get by pressing Ctrl+Cmd+f)",
+      "range": {
+        "startLine": 222,
+        "startChar": 9,
+        "endLine": 222,
+        "endChar": 34
+      },
+      "revId": "908d9ef42e75f2551653623dd44216bec3abce8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b320d26_99361d44",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-19T22:30:47Z",
+      "side": 1,
+      "message": "Can you add these elsewhere in the file - all the sections should be consistent",
+      "revId": "908d9ef42e75f2551653623dd44216bec3abce8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b20c084_ef51a3ee",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-19T22:30:47Z",
+      "side": 1,
+      "message": "woah - if you return true here, you also need to assign to *accelerator. Isn\u0027t it what populates the text of the fullscreen bubble? (what does the bubble say?)",
+      "revId": "908d9ef42e75f2551653623dd44216bec3abce8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5fb7e20_ea48aed4",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-19T22:30:47Z",
+      "side": 1,
+      "message": "Is this actually called? It\u0027s possible that only FullscreenController calls this, which you don\u0027t have -- (you only have an ImmersiveFullscreenController). If there\u0027s not codepath to it, it should be NOTREACHED(). The same may be true for ExitFullscreen.",
+      "revId": "908d9ef42e75f2551653623dd44216bec3abce8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2aae985_ecb85b6b",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-19T22:30:47Z",
+      "side": 1,
+      "message": "// ui::AcceleratorProvider:",
+      "revId": "908d9ef42e75f2551653623dd44216bec3abce8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cc67a85_b7dc15f0",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-19T22:30:47Z",
+      "side": 1,
+      "message": "// ExclusiveAccessContext:",
+      "revId": "908d9ef42e75f2551653623dd44216bec3abce8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c16b582_24ab2fbc",
+        "filename": "chrome/browser/ui/views/apps/chrome_native_app_window_views_aura_ash.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-19T22:30:47Z",
+      "side": 1,
+      "message": "// ExclusiveAccessBubbleViewsContext:",
+      "revId": "908d9ef42e75f2551653623dd44216bec3abce8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
