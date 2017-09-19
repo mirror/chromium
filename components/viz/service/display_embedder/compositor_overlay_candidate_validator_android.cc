@@ -7,8 +7,8 @@
 #include <memory>
 
 #include "base/memory/ptr_util.h"
-#include "cc/output/overlay_processor.h"
-#include "cc/output/overlay_strategy_underlay.h"
+#include "components/viz/service/display/overlay_processor.h"
+#include "components/viz/service/display/overlay_strategy_underlay.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 
 namespace viz {
@@ -20,8 +20,8 @@ CompositorOverlayCandidateValidatorAndroid::
     ~CompositorOverlayCandidateValidatorAndroid() {}
 
 void CompositorOverlayCandidateValidatorAndroid::GetStrategies(
-    cc::OverlayProcessor::StrategyList* strategies) {
-  strategies->push_back(base::MakeUnique<cc::OverlayStrategyUnderlay>(this));
+    OverlayProcessor::StrategyList* strategies) {
+  strategies->push_back(base::MakeUnique<OverlayStrategyUnderlay>(this));
 }
 
 void CompositorOverlayCandidateValidatorAndroid::CheckOverlaySupport(
@@ -33,7 +33,7 @@ void CompositorOverlayCandidateValidatorAndroid::CheckOverlaySupport(
   DCHECK_LE(candidates->size(), 1u);
 
   if (!candidates->empty()) {
-    cc::OverlayCandidate& candidate = candidates->front();
+    OverlayCandidate& candidate = candidates->front();
 
     // This quad either will be promoted, or would be if it were backed by a
     // SurfaceView.  Record that it should get a promotion hint.
