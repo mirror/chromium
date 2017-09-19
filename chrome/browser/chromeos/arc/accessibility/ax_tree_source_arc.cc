@@ -60,6 +60,7 @@ ui::AXEvent ToAXEvent(arc::mojom::AccessibilityEventType arc_event_type) {
   return ui::AX_EVENT_CHILDREN_CHANGED;
 }
 
+// Returned bounds is in non-dip and relative to focused window.
 const gfx::Rect GetBounds(arc::mojom::AccessibilityNodeInfoData* node) {
   exo::WMHelper* wm_helper = exo::WMHelper::GetInstance();
   if (!wm_helper)
@@ -67,12 +68,18 @@ const gfx::Rect GetBounds(arc::mojom::AccessibilityNodeInfoData* node) {
 
   aura::Window* focused_window = wm_helper->GetFocusedWindow();
   gfx::Rect bounds_in_screen = node->bounds_in_screen;
-  if (focused_window) {
-    aura::Window* toplevel_window = focused_window->GetToplevelWindow();
-    return gfx::ScaleToEnclosingRect(
-        bounds_in_screen,
-        1.0f / toplevel_window->layer()->device_scale_factor());
-  }
+  if (!focused_window)
+    return bounds_in_screen;
+
+  // Top level window returns its bounds in dip.
+  aura::Window* toplevel_window = focused_window->GetToplevelWindow();
+  float scale = toplevel_window->layer()->device_scale_factor();
+  bounds_in_screen.Offset(
+      static_cast<int>(-1.0f * scale *
+                       static_cast<float>(toplevel_window->bounds().x())),
+      static_cast<int>(-1.0f * scale *
+                       static_cast<float>(toplevel_window->bounds().y())));
+
   return bounds_in_screen;
 }
 
