@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "86982f0d_d40c272c",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-19T18:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "753dc2c4_c7e62ffb",
+      "range": {
+        "startLine": 42,
+        "startChar": 17,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "f35e80c0e14e4f4c3ca9bf2be9c881851bd68ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf5a4eb2_33ec6ff7",
         "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
         "patchSetId": 21
@@ -45,6 +69,30 @@
       "revId": "f35e80c0e14e4f4c3ca9bf2be9c881851bd68ec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c169fb80_fc286180",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-19T18:06:51Z",
+      "side": 1,
+      "message": "I don\u0027t think we do, it\u0027s very unlikely to happen and we can hope TSan catches errors (and even if sequence-checked there could be errors -- i.e. setting pre-shutdown while there are getters).",
+      "parentUuid": "cf5a4eb2_33ec6ff7",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 32
+      },
+      "revId": "f35e80c0e14e4f4c3ca9bf2be9c881851bd68ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4dceb7d8_438b4a2f",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-19T18:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1edf35db_186e900b",
+      "range": {
+        "startLine": 22,
+        "startChar": 57,
+        "endLine": 22,
+        "endChar": 76
+      },
+      "revId": "f35e80c0e14e4f4c3ca9bf2be9c881851bd68ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b3a0bc8_aa80170f",
         "filename": "base/task_scheduler/scheduler_worker_pool.cc",
         "patchSetId": 21
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "49ed2f92_1d208e49",
+        "filename": "base/task_scheduler/scheduler_worker_pool.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-19T18:06:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b3a0bc8_aa80170f",
+      "range": {
+        "startLine": 23,
+        "startChar": 32,
+        "endLine": 23,
+        "endChar": 38
+      },
+      "revId": "f35e80c0e14e4f4c3ca9bf2be9c881851bd68ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdf1f6ed_a3f46b11",
         "filename": "chrome/test/base/chrome_unit_test_suite.cc",
         "patchSetId": 21
@@ -114,6 +210,30 @@
       "revId": "f35e80c0e14e4f4c3ca9bf2be9c881851bd68ec2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f5467e_8d326496",
+        "filename": "chrome/test/base/chrome_unit_test_suite.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-09-19T18:06:51Z",
+      "side": 1,
+      "message": "I was worried that it did too, but looking closer it\u0027s just the tests with a chromeos::ScopedTestCrosSettings which need a TestBrowserThreadBundle (for some reason, LTO?, the stacks jumps straight to CrosSettings::Initialize() and don\u0027t show the chromeos::ScopedTestCrosSettings but it\u0027s there).\n\nWrote precursor CL to address that @ https://chromium-review.googlesource.com/c/chromium/src/+/671635",
+      "parentUuid": "bdf1f6ed_a3f46b11",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 3
+      },
+      "revId": "f35e80c0e14e4f4c3ca9bf2be9c881851bd68ec2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
