@@ -259,7 +259,7 @@ class TypedURLSyncBridgeTest : public testing::Test {
     const auto error =
         bridge()->MergeSyncData(bridge()->CreateMetadataChangeList(),
                                 CreateEntityChangeList(specifics));
-
+    typed_url_sync_bridge_->history_backend_observer_.RemoveAll();
     EXPECT_FALSE(error);
   }
 
@@ -328,6 +328,7 @@ class TypedURLSyncBridgeTest : public testing::Test {
         break;
     }
     bridge()->ApplySyncChanges(std::move(metadata_changes), entity_changes);
+    typed_url_sync_bridge_->history_backend_observer_.RemoveAll();
     return visits;
   }
 
