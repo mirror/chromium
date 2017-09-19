@@ -117,6 +117,30 @@
       "revId": "42dc6e265be68faca94f38329442eeb20f41e335",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "285012d8_50fa6792",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-19T16:30:05Z",
+      "side": 1,
+      "message": "Great, thanks, I didn\u0027t know about AddScriptCommandCallback, it looks like a great solution.\n\nCorrectly do I understand that I can pass any data as dictionary to invokeOnHost, and then AddScriptCommandCallback will receive it as base::DictionaryValue? \n\nI\u0027m asking, because |formName| is not so great identifier for forms, we don\u0027t use it on other platforms. It looks it would be better to pass to invokeOnHost all that is needed to save credentials with invokeOnHost (i.e. username/passwords/action etc). Does it make sense to use invokeOnHost for such purposes?\n\nThe additional benefit of sending credentials to invokeOnHost would be saving round trip between PasswordController.mm and PasswordController.js for extracting form data which currently exists to form.submit.",
+      "parentUuid": "1ead187f_5123f51a",
+      "range": {
+        "startLine": 117,
+        "startChar": 28,
+        "endLine": 117,
+        "endChar": 34
+      },
+      "revId": "42dc6e265be68faca94f38329442eeb20f41e335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
