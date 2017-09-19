@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bbceb3e_9eee266c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-19T17:39:50Z",
+      "side": 1,
+      "message": "Please mention that you\u0027ve also split sync and generic signin promos in some places.",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 11
+      },
+      "revId": "579d086bcc8ccac03762ac0e97e6a490c62b9ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015092e2_31ea6241",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-19T17:39:50Z",
+      "side": 1,
+      "message": "hasNotReachedImpressionLimit will always return true for RECENT_TABS, right? I think it makes sense to remove this part of condition altogether then.",
+      "range": {
+        "startLine": 376,
+        "startChar": 12,
+        "endLine": 376,
+        "endChar": 93
+      },
+      "revId": "579d086bcc8ccac03762ac0e97e6a490c62b9ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74ef2ebf_2394e94e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsRowAdapter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-19T17:39:50Z",
+      "side": 1,
+      "message": "Please add something like \"TODO(https://crbug.com/737743): Remove this after rolling out personalized promos.\"",
+      "range": {
+        "startLine": 396,
+        "startChar": 0,
+        "endLine": 396,
+        "endChar": 51
+      },
+      "revId": "579d086bcc8ccac03762ac0e97e6a490c62b9ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
