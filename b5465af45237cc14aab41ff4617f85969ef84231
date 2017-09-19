@@ -22,6 +22,30 @@
       "revId": "b5465af45237cc14aab41ff4617f85969ef84231",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3390c381_4cf50efb",
+        "filename": "ui/app_list/app_list_constants.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1145089
+      },
+      "writtenOn": "2017-09-19T06:07:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4d8cb8d_51dce57b",
+      "range": {
+        "startLine": 292,
+        "startChar": 28,
+        "endLine": 292,
+        "endChar": 29
+      },
+      "revId": "b5465af45237cc14aab41ff4617f85969ef84231",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
