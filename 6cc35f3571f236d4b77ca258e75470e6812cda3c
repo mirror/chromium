@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c77f1da4_6c38cfbc",
+        "filename": "components/viz/common/gl_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-09-19T23:06:55Z",
+      "side": 1,
+      "message": "Ack. Thanks for the explain.",
+      "parentUuid": "9e1f7843_1dfc6dca",
+      "range": {
+        "startLine": 313,
+        "startChar": 17,
+        "endLine": 313,
+        "endChar": 33
+      },
+      "revId": "6cc35f3571f236d4b77ca258e75470e6812cda3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ce820a4_79ba5cf1",
         "filename": "components/viz/common/gl_helper.h",
         "patchSetId": 3
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "I think the existing comments cover what you\u0027re asking. If not, what wording would you propose I add to the existing comments?\n\nNo, we can\u0027t (and don\u0027t want to) reset the scaler inside ReadbackYUV(): The |src_texture_size| in the ReadbackYUV call is not the source size. ;) In fact, this argument only exists because of ridiculous limitations in the OpenGL ES 2.0 API: This argument is needed only so that we can compute the texel coordinates when sampling the source texture.\n\nThe actual sampling region of the source texture is back-computed from the |output_rect| argument. In other words, you tell ReadbackYUV() what subregion of the output you want, and it figures out how that maps back to the coordinate system of the source texture, and samples the needed rect from it. Internally, ReadbackYUV() is just telling the Scaler what output_rect it needs, and Scaler back-computes to determine the source rect to sample (see the ScalerImpl class in gl_helper_scaling.cc).",
       "parentUuid": "2ce820a4_79ba5cf1",
+      "range": {
+        "startLine": 387,
+        "startChar": 5,
+        "endLine": 387,
+        "endChar": 22
+      },
+      "revId": "6cc35f3571f236d4b77ca258e75470e6812cda3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "934f1557_1a5abcc3",
+        "filename": "components/viz/common/gl_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-09-19T23:06:55Z",
+      "side": 1,
+      "message": "I am fine with your current impl.:) \nBut was thinking that since every time before calling ReadbackYUV, the client need to figure out whether SetScaler() needs to be called (at least for current applications), there might be a way to do it in ReadbackYUV(), e.g., pass the src sub rect as an argument. And we can still check whether a new scaler need to be created or not in ReadbackYUV. \n\nThough according to what you commented, that the src sub rect is back-computed from output_rect by the Scaler. Is the back-computation necessary because that we only know the output_rect and the Scaler, but not the src sub rect when calling ReadbackYUV()?",
+      "parentUuid": "b83514cc_515c12de",
       "range": {
         "startLine": 387,
         "startChar": 5,
