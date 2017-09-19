@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "1c194394_70eb54ae",
+        "filename": "third_party/WebKit/Source/core/dom/FrameRequestCallback.idl",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-19T10:37:37Z",
+      "side": 1,
+      "message": "nit: s|//https|// https|\nPut one space character between \u0027//\u0027 and \u0027https:...\u0027.",
+      "revId": "56ba843a16feccab21b8ac7236ffa916eb0c82e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b1197ee_d469129e",
         "filename": "third_party/WebKit/Source/core/dom/FrameRequestCallbackCollection.h",
         "patchSetId": 13
@@ -48,6 +65,46 @@
     },
     {
       "key": {
+        "uuid": "c797741f_04343471",
+        "filename": "third_party/WebKit/Source/core/dom/FrameRequestCallbackCollection.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-19T10:37:37Z",
+      "side": 1,
+      "message": "Maybe \"GetUseLegacyTimeBase\" is a better name in this case.\n\"UseLegacyTimeBase\" doesn\u0027t sound like a predictor.\n\nOr, \"WillUseLegacyTimeBase\".",
+      "revId": "56ba843a16feccab21b8ac7236ffa916eb0c82e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1456381_f8d48913",
+        "filename": "third_party/WebKit/Source/core/dom/FrameRequestCallbackCollection.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-19T10:37:37Z",
+      "side": 1,
+      "message": "nit: no need of \"explicit\".",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 13
+      },
+      "revId": "56ba843a16feccab21b8ac7236ffa916eb0c82e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92f1cbac_d8899d51",
         "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
         "patchSetId": 13
@@ -59,6 +116,23 @@
       "writtenOn": "2017-09-19T07:02:52Z",
       "side": 1,
       "message": "nit: we usually call base class\u0027 TraceWrappers() at the bottom.",
+      "revId": "56ba843a16feccab21b8ac7236ffa916eb0c82e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b58d005_94a52083",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-09-19T10:37:37Z",
+      "side": 1,
+      "message": "See line 102.\n\nThis should be DECLARE_VIRTUAL_TRACE_WRAPPERS, and placed right after line 102.  (Note that line 46 is private:, but line 102 is public:.)",
       "revId": "56ba843a16feccab21b8ac7236ffa916eb0c82e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
