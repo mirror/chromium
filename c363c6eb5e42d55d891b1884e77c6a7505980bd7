@@ -22,6 +22,29 @@
       "revId": "c363c6eb5e42d55d891b1884e77c6a7505980bd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a562badc_d47f64f9",
+        "filename": "third_party/WebKit/Source/modules/webgl/OESTextureHalfFloat.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-09-19T00:33:58Z",
+      "side": 1,
+      "message": "This fixes the passthrough command buffer failure. The rest of the CL fixes Android failure.",
+      "range": {
+        "startLine": 34,
+        "startChar": 11,
+        "endLine": 34,
+        "endChar": 25
+      },
+      "revId": "c363c6eb5e42d55d891b1884e77c6a7505980bd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
