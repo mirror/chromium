@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63b33dce_b2d63077",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6076,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-09-19T07:33:50Z",
+      "side": 1,
+      "message": "sequence",
+      "range": {
+        "startLine": 6076,
+        "startChar": 5,
+        "endLine": 6076,
+        "endChar": 13
+      },
+      "revId": "f2809bf9a97b5e3957efb3b57cdffafd03b1df88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
