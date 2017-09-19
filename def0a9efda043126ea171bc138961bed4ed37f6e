@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39196d61_e59a55da",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-19T11:48:41Z",
+      "side": 1,
+      "message": "Is this required? The position is cached when the view closes.",
+      "range": {
+        "startLine": 389,
+        "startChar": 2,
+        "endLine": 389,
+        "endChar": 23
+      },
+      "revId": "def0a9efda043126ea171bc138961bed4ed37f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6c1dd2c_fc319325",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1939,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-19T11:48:41Z",
+      "side": 1,
+      "message": "Why are you adding this in the end? If this is effecting other tests should we do this in tearDown instead?",
+      "range": {
+        "startLine": 1939,
+        "startChar": 2,
+        "endLine": 1939,
+        "endChar": 53
+      },
+      "revId": "def0a9efda043126ea171bc138961bed4ed37f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
