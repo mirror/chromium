@@ -26,12 +26,12 @@ FakeOfflinePageModel::FakeOfflinePageModel() {
 
 FakeOfflinePageModel::~FakeOfflinePageModel() = default;
 
-void FakeOfflinePageModel::GetPagesMatchingQuery(
-    std::unique_ptr<offline_pages::OfflinePageModelQuery> query,
+void FakeOfflinePageModel::GetPagesByNamespace(
+    const std::string& name_space,
     const MultipleOfflinePageItemCallback& callback) {
   MultipleOfflinePageItemResult filtered_result;
   for (auto& item : items_) {
-    if (query->Matches(item)) {
+    if (item.client_id.name_space == name_space) {
       filtered_result.emplace_back(item);
     }
   }
