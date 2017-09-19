@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb3ec84e_2eb16765",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/BindingManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-19T18:14:15Z",
+      "side": 1,
+      "message": "\u003e Nit: \"Inserts or moves\"\n\u003e Same below\n\nYou mean remove? Done",
+      "parentUuid": "8f2de936_a88b6bc2",
+      "range": {
+        "startLine": 16,
+        "startChar": 21,
+        "endLine": 16,
+        "endChar": 25
+      },
+      "revId": "3f64ba5cf039d632087406dee71412004e9172b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d70e41a5_5a861d9c",
         "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-19T15:38:51Z",
       "side": 1,
       "message": "Nit s/int/in/",
+      "range": {
+        "startLine": 152,
+        "startChar": 7,
+        "endLine": 152,
+        "endChar": 10
+      },
+      "revId": "3f64ba5cf039d632087406dee71412004e9172b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd9f14b0_0a742aea",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ChildProcessLauncherHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-09-19T18:14:15Z",
+      "side": 1,
+      "message": "\u003e Nit s/int/in/\n\nDone",
+      "parentUuid": "d70e41a5_5a861d9c",
       "range": {
         "startLine": 152,
         "startChar": 7,
