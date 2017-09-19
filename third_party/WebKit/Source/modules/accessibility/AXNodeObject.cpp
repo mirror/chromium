@@ -980,6 +980,12 @@ void AXNodeObject::Init() {
   initialized_ = true;
 #endif
   AXObject::Init();
+  Element* element = GetElement();
+  if (element) {
+    AxObjectCache().RelationChanged(element, aria_describedbyAttr);
+    AxObjectCache().RelationChanged(element, aria_labeledbyAttr);
+    AxObjectCache().RelationChanged(element, aria_ownsAttr);
+  }
 }
 
 void AXNodeObject::Detach() {
