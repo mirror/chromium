@@ -135,6 +135,13 @@ cr.define('offlineInternals', function() {
     cancelNwake: function() {},
 
     /**
+     * Shows the prefetching notification with an example origin.
+     * @return {!Promise<string>} A promise firing when the notification has
+     *   been shown.
+     */
+    showPrefetchNotification: function() {},
+
+    /**
      * Sends and processes a request to generate page bundle.
      * @param {string} urls A list of comma-separated URLs.
      * @return {!Promise<string>} A string describing the result.
@@ -226,6 +233,11 @@ cr.define('offlineInternals', function() {
     /** @override */
     cancelNwake: function() {
       return cr.sendWithPromise('cancelNwake');
+    },
+
+    /** @override */
+    showPrefetchNotification: function() {
+      return cr.sendWithPromise('showPrefetchNotification');
     },
 
     /** @override */
