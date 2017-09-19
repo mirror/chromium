@@ -843,7 +843,7 @@ TEST_F(TextAutosizerTest, LayoutViewWidthProvider) {
                   content->GetLayoutObject()->Style()->ComputedFontSize());
 
   GetDocument().getElementById("panel")->setInnerHTML("insert text");
-  content->setInnerHTML(content->innerHTML());
+  content->setInnerHTML(content->InnerHTMLAsString());
   GetDocument().View()->UpdateAllLifecyclePhases();
 
   // (specified font-size = 16px) * (viewport width = 800px) /
