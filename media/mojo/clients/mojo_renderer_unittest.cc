@@ -75,7 +75,7 @@ class MojoRendererTest : public ::testing::Test {
     mojo_renderer_.reset(
         new MojoRenderer(message_loop_.task_runner(),
                          std::unique_ptr<VideoOverlayFactory>(nullptr), nullptr,
-                         std::move(remote_renderer)));
+                         nullptr, std::move(remote_renderer)));
 
     // CreateAudioStream() and CreateVideoStream() overrides expectations for
     // expected non-NULL streams.

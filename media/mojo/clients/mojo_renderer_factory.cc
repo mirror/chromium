@@ -38,7 +38,7 @@ MojoRendererFactory::~MojoRendererFactory() {}
 std::unique_ptr<Renderer> MojoRendererFactory::CreateRenderer(
     const scoped_refptr<base::SingleThreadTaskRunner>& media_task_runner,
     const scoped_refptr<base::TaskRunner>& /* worker_task_runner */,
-    AudioRendererSink* /* audio_renderer_sink */,
+    AudioRendererSink* audio_renderer_sink,
     VideoRendererSink* video_renderer_sink,
     const RequestOverlayInfoCB& /* request_overlay_info_cb */,
     const gfx::ColorSpace& /* target_color_space */) {
@@ -51,9 +51,9 @@ std::unique_ptr<Renderer> MojoRendererFactory::CreateRenderer(
         base::MakeUnique<VideoOverlayFactory>(get_gpu_factories_cb_.Run());
   }
 
-  return std::unique_ptr<Renderer>(
-      new MojoRenderer(media_task_runner, std::move(overlay_factory),
-                       video_renderer_sink, GetRendererPtr()));
+  return std::unique_ptr<Renderer>(new MojoRenderer(
+      media_task_runner, std::move(overlay_factory), audio_renderer_sink,
+      video_renderer_sink, GetRendererPtr()));
 }
 
 mojom::RendererPtr MojoRendererFactory::GetRendererPtr() {

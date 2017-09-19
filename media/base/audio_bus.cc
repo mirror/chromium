@@ -62,34 +62,33 @@ void AudioBus::CheckOverflow(int start_frame, int frames, int total_frames) {
 }
 
 AudioBus::AudioBus(int channels, int frames)
-    : frames_(frames),
-      can_set_channel_data_(false) {
+    : data_size_(0), frames_(frames), can_set_channel_data_(false) {
   ValidateConfig(channels, frames_);
 
   int aligned_frames = 0;
-  int size = CalculateMemorySizeInternal(channels, frames, &aligned_frames);
+  data_size_ = CalculateMemorySizeInternal(channels, frames, &aligned_frames);
 
-  data_.reset(static_cast<float*>(base::AlignedAlloc(
-      size, AudioBus::kChannelAlignment)));
+  data_.reset(static_cast<float*>(
+      base::AlignedAlloc(data_size_, AudioBus::kChannelAlignment)));
 
   BuildChannelData(channels, aligned_frames, data_.get());
 }
 
 AudioBus::AudioBus(int channels, int frames, float* data)
-    : frames_(frames),
-      can_set_channel_data_(false) {
+    : data_size_(0), frames_(frames), can_set_channel_data_(false) {
   // Since |data| may have come from an external source, ensure it's valid.
   CHECK(data);
   ValidateConfig(channels, frames_);
 
   int aligned_frames = 0;
-  CalculateMemorySizeInternal(channels, frames, &aligned_frames);
+  data_size_ = CalculateMemorySizeInternal(channels, frames, &aligned_frames);
 
   BuildChannelData(channels, aligned_frames, data);
 }
 
 AudioBus::AudioBus(int frames, const std::vector<float*>& channel_data)
-    : channel_data_(channel_data),
+    : data_size_(0),
+      channel_data_(channel_data),
       frames_(frames),
       can_set_channel_data_(false) {
   ValidateConfig(
@@ -101,7 +100,8 @@ AudioBus::AudioBus(int frames, const std::vector<float*>& channel_data)
 }
 
 AudioBus::AudioBus(int channels)
-    : channel_data_(channels),
+    : data_size_(0),
+      channel_data_(channels),
       frames_(0),
       can_set_channel_data_(true) {
   CHECK_GT(channels, 0);
