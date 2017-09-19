@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "46b0ab06_65f3d0b3",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-09-19T07:25:38Z",
+      "side": 1,
+      "message": "nit: here and below a double space\nnit: I am not sure whether every translator knows what a \"TPM firmware update action\" is. Maybe you want to elaborate for them to find better translations.\nnit: Is \"Powerwash for added security\" a good string? It suggests to me that I should do that regularly to improve my security.",
+      "range": {
+        "startLine": 60,
+        "startChar": 67,
+        "endLine": 60,
+        "endChar": 68
+      },
+      "revId": "420f0fdfa80c773bed39dce13becfd9c28cca0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caf08ac1_d7e22e70",
+        "filename": "chrome/browser/chromeos/login/screens/reset_screen.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-09-19T07:25:38Z",
+      "side": 1,
+      "message": "nit: add a comment to this line and the following why you are doing this?",
+      "revId": "420f0fdfa80c773bed39dce13becfd9c28cca0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "553afff2_d5a9c048",
+        "filename": "chrome/browser/resources/settings/about_page/about_page.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-09-19T07:25:38Z",
+      "side": 1,
+      "message": "nit: just from the variable names, I don\u0027t understand the difference between these two.",
+      "revId": "420f0fdfa80c773bed39dce13becfd9c28cca0da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d01726e4_3a3f9664",
         "filename": "chrome/browser/resources/settings/lifetime_browser_proxy.js",
         "patchSetId": 3
