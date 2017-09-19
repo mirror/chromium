@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf2ba4c1_f22b70a5",
+        "filename": "ui/views/widget/desktop_aura/desktop_window_tree_host_x11.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 1920,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-09-19T16:10:15Z",
+      "side": 1,
+      "message": "How come you use black here, but white in the other places?",
+      "range": {
+        "startLine": 1920,
+        "startChar": 54,
+        "endLine": 1920,
+        "endChar": 67
+      },
+      "revId": "6e602293081a72a37cbe8111f18d757df0472e34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
