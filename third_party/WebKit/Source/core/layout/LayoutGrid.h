@@ -86,6 +86,8 @@ class LayoutGrid final : public LayoutBlock {
     return grid_.AutoRepeatTracks(direction);
   }
 
+  LayoutUnit TranslateOutOfFlowRTLCoordinate(const LayoutBox&,
+                                             LayoutUnit) const;
   LayoutUnit TranslateRTLCoordinate(LayoutUnit) const;
 
   // TODO(svillar): We need these for the GridTrackSizingAlgorithm. Let's figure
@@ -190,11 +192,33 @@ class LayoutGrid final : public LayoutBlock {
   void LayoutPositionedObjects(
       bool relayout_children,
       PositionedLayoutBehavior = kDefaultLayout) override;
-  void OffsetAndBreadthForPositionedChild(const LayoutBox&,
-                                          GridTrackSizingDirection,
-                                          LayoutUnit& offset,
-                                          LayoutUnit& breadth);
   void PopulateGridPositionsForDirection(GridTrackSizingDirection);
+
+  Optional<size_t> StartGridLineForOutOfFlowChild(
+      const LayoutBox&,
+      GridTrackSizingDirection) const;
+  Optional<size_t> EndGridLineForOutOfFlowChild(const LayoutBox&,
+                                                GridTrackSizingDirection) const;
+  bool GridPositionIsAuto(GridPosition, GridTrackSizingDirection) const;
+  LayoutUnit ResolveAutoStartGridPosition(GridTrackSizingDirection) const;
+  LayoutUnit ResolveAutoEndGridPosition(GridTrackSizingDirection) const;
+  LayoutUnit LogicalOffsetForChild(const LayoutBox&,
+                                   GridTrackSizingDirection,
+                                   LayoutUnit) const;
+  LayoutUnit GridAreaSizeForOutOfFlowChild(const LayoutBox&,
+                                           GridTrackSizingDirection) const;
+  void GridAreaPositionForOutOfFlowChild(const LayoutBox&,
+                                         GridTrackSizingDirection,
+                                         LayoutUnit& start,
+                                         LayoutUnit& end) const;
+  void GridAreaPositionForInFlowChild(const LayoutBox&,
+                                      GridTrackSizingDirection,
+                                      LayoutUnit& start,
+                                      LayoutUnit& end) const;
+  void GridAreaPositionForChild(const LayoutBox&,
+                                GridTrackSizingDirection,
+                                LayoutUnit& start,
+                                LayoutUnit& end) const;
 
   GridAxisPosition ColumnAxisPositionForChild(const LayoutBox&) const;
   GridAxisPosition RowAxisPositionForChild(const LayoutBox&) const;
