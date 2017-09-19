@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "bbb94426_341fae2b",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_v8_context_snapshot_external_references.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-19T14:13:30Z",
+      "side": 1,
+      "message": "Umm. If to_snapke_cake() accepts it, many parts could be more simple, I think.\nBut it should be independent from this CL.",
+      "parentUuid": "4d9e50f5_e60e6551",
+      "revId": "f450dd9ee5f1f1966e1dd631e5629d3094f30dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8c7ee0f_1473a6ba",
         "filename": "third_party/WebKit/Source/bindings/scripts/generate_v8_context_snapshot_external_references.py",
         "patchSetId": 3
