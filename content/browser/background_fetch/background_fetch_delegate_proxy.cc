@@ -108,6 +108,8 @@ class BackgroundFetchDelegateProxy::Core
   void OnDownloadComplete(
       const std::string& guid,
       std::unique_ptr<BackgroundFetchResult> result) override;
+  void OnDownloadFailed(const std::string& guid,
+                        BackgroundFetchDelegate::FailureReason reason) override;
   void OnDownloadStarted(
       const std::string& guid,
       std::unique_ptr<content::BackgroundFetchResponse> response) override;
@@ -140,6 +142,12 @@ void BackgroundFetchDelegateProxy::Core::OnDownloadComplete(
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&BackgroundFetchDelegateProxy::OnDownloadComplete,
                      io_parent_, guid, std::move(result)));
+}
+
+void BackgroundFetchDelegateProxy::Core::OnDownloadFailed(
+    const std::string& guid,
+    BackgroundFetchDelegate::FailureReason reason) {
+  // TODO(delphick): do something with this
 }
 
 void BackgroundFetchDelegateProxy::Core::OnDownloadStarted(
