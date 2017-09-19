@@ -61,13 +61,13 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   static ResourceFetcher* CreateFetcherFromDocumentLoader(
       DocumentLoader* loader) {
     auto* context = new FrameFetchContext(loader, nullptr);
-    return ResourceFetcher::Create(context, context->GetTaskRunner());
+    return ResourceFetcher::Create(context, context->GetLoadingTaskRunner());
   }
   // Used for creating a FrameFetchContext for an imported Document.
   // |document_loader_| will be set to nullptr.
   static ResourceFetcher* CreateFetcherFromDocument(Document* document) {
     auto* context = new FrameFetchContext(nullptr, document);
-    return ResourceFetcher::Create(context, context->GetTaskRunner());
+    return ResourceFetcher::Create(context, context->GetLoadingTaskRunner());
   }
 
   static void ProvideDocumentToContext(FetchContext&, Document*);
@@ -175,10 +175,10 @@ class CORE_EXPORT FrameFetchContext final : public BaseFetchContext {
   LocalFrame* GetFrame() const;
   LocalFrameClient* GetLocalFrameClient() const;
   LocalFrame* FrameOfImportsController() const;
-  RefPtr<WebTaskRunner> GetTaskRunner() const;
 
   // FetchContext overrides:
   WebFrameScheduler* GetFrameScheduler() override;
+  WebTaskRunner* GetLoadingTaskRunner() override;
 
   // BaseFetchContext overrides:
   KURL GetSiteForCookies() const override;
