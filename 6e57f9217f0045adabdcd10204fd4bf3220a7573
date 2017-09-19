@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44679dcd_cb71dacd",
+        "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-09-19T00:01:54Z",
+      "side": 1,
+      "message": "Handling mojo connection error is now split across this class and MRDesktop (where we do call into request_manager_, but only for binding_). For consistency can we use MRDesktop::OnConnectionError as the error handler for both media_route_provider_ and binding_?\n\n- MRDesktop::RegisterMRP calls set_connection_error_handler with MRDesktop::OnConnectionError\n- MRDesktop::OnConnectionError calls EMRPP.OnConnectionError() instead of request_manager_-\u003eOnMojoConnectionError()\n\nAs a side note I think we can get rid of MRDesktop::request_manager_ by reordering certain statements and delegating to this class.",
+      "revId": "6e57f9217f0045adabdcd10204fd4bf3220a7573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
