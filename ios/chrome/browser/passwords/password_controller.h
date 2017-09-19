@@ -68,6 +68,9 @@ passwordsUiDelegate:(id<PasswordsUiDelegate>)delegate
              client:(std::unique_ptr<password_manager::PasswordManagerClient>)
                         passwordManagerClient NS_DESIGNATED_INITIALIZER;
 
+// TODO(crbug.com/435048): Add WasHidden to WebStateObserverBridge.
+- (void)wasHidden;
+
 - (instancetype)init NS_UNAVAILABLE;
 
 // Releases all tab-specific members. Must be called when the Tab is closing,
