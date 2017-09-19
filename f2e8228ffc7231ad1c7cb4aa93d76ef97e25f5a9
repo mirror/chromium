@@ -22,6 +22,30 @@
       "revId": "f2e8228ffc7231ad1c7cb4aa93d76ef97e25f5a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aed4cbf_90581c67",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/OWNERS",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-19T08:53:02Z",
+      "side": 1,
+      "message": "Not really – I think I just misunderstood your original comment. Done.",
+      "parentUuid": "09ae71b5_c38dd766",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 19
+      },
+      "revId": "f2e8228ffc7231ad1c7cb4aa93d76ef97e25f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
