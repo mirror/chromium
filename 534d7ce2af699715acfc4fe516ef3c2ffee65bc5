@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7d5cb1c_5ecaf3bd",
+        "filename": "base/macros.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115898
+      },
+      "writtenOn": "2017-09-19T02:00:44Z",
+      "side": 1,
+      "message": "these cause a build error under libyuv mips builds?\n\n../../third_party/llvm-build/Release+Asserts/bin/clang++ -MMD -MF obj/base/base/task_tracker.o.d -DV8_DEPRECATION_WARNINGS -DNO_TCMALLOC -DSAFE_BROWSING_DB_REMOTE -DCHROMIUM_BUILD -DFIELDTRIAL_TESTING_ENABLED -DCR_CLANG_REVISION\u003d\\\"313222-1\\\" -D_FILE_OFFSET_BITS\u003d64 -DANDROID -DHAVE_SYS_UIO_H -DANDROID_NDK_VERSION_ROLL\u003dr12b_1 -D__STDC_CONSTANT_MACROS -D__STDC_FORMAT_MACROS -D_FORTIFY_SOURCE\u003d2 -DCOMPONENT_BUILD -D__GNU_SOURCE\u003d1 -D__compiler_offsetof\u003d__builtin_offsetof -Dnan\u003d__builtin_nan -Dsnprintf\u003dsnprintf -DNDEBUG -DNVALGRIND -DDYNAMIC_ANNOTATIONS_ENABLED\u003d0 -DBASE_IMPLEMENTATION -I../.. -Igen -Igen/base/base_jni_headers -Igen/base/base_jni_headers/base -Igen/android_runtime_jni_headers/base -I../../third_party/android_tools/ndk/sources/android/cpufeatures -fno-strict-aliasing --param\u003dssp-buffer-size\u003d4 -fstack-protector -Wno-builtin-macro-redefined -D__DATE__\u003d -D__TIME__\u003d -D__TIMESTAMP__\u003d -funwind-tables -fPIC -pipe -fcolor-diagnostics -ffunction-sections -fno-short-enums -fintegrated-as --target\u003dmips64el-linux-androideabi --target\u003dmips64el-linux-android -march\u003dmips64el -mcpu\u003dmips64r6 -mmsa -mfp64 -Wall -Werror -Wextra -Wno-missing-field-initializers -Wno-unused-parameter -Wno-c++11-narrowing -Wno-covered-switch-default -Wno-unneeded-internal-declaration -Wno-inconsistent-missing-override -Wno-undefined-var-template -Wno-nonportable-include-path -Wno-address-of-packed-member -Wno-unused-lambda-capture -Wno-user-defined-warnings -Wno-enum-compare-switch -Wno-tautological-unsigned-zero-compare -fomit-frame-pointer -g2 -fvisibility\u003dhidden -Xclang -load -Xclang ../../third_party/llvm-build/Release+Asserts/lib/libFindBadConstructs.so -Xclang -add-plugin -Xclang find-bad-constructs -Xclang -plugin-arg-find-bad-constructs -Xclang check-auto-raw-pointer -Xclang -plugin-arg-find-bad-constructs -Xclang check-ipc -Wheader-hygiene -Wstring-conversion -Wtautological-overlap-compare -Wno-char-subscripts -Wexit-time-destructors -Wexit-time-destructors -O2 -fno-ident -fdata-sections -ffunction-sections -std\u003dgnu++14 -fno-rtti -isystem../../third_party/android_tools/ndk/sources/cxx-stl/llvm-libc++/libcxx/include -isystem../../third_party/android_tools/ndk/sources/cxx-stl/llvm-libc++abi/libcxxabi/include -isystem../../third_party/android_tools/ndk/sources/android/support/include --sysroot\u003d../../third_party/android_tools/ndk/platforms/android-21/arch-mips64 -fno-exceptions -fvisibility-inlines-hidden -c ../../base/task_scheduler/task_tracker.cc -o obj/base/base/task_tracker.o\nIn file included from ../../base/task_scheduler/task_tracker.cc:5:\nIn file included from ../../base/task_scheduler/task_tracker.h:13:\nIn file included from ../../base/logging.h:21:\n../../base/macros.h:22:9: error: \u0027__mips64__\u0027 macro redefined [-Werror,-Wmacro-redefined]\n#define __mips64__\n        ^\n\u003cbuilt-in\u003e:360:9: note: previous definition is here\n#define __mips64__ 1\n        ^\n1 error generated.\nninja: build stopped: subcommand failed.",
+      "revId": "534d7ce2af699715acfc4fe516ef3c2ffee65bc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
