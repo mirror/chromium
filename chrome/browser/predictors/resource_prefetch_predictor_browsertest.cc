@@ -323,9 +323,9 @@ class ResourcePrefetchPredictorBrowserTest : public InProcessBrowserTest {
   using URLRequestSummary = URLRequestSummary;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
-    content::EnableFeatureWithParam(kSpeculativeResourcePrefetchingFeature,
-                                    kModeParamName, kExternalPrefetchingMode,
-                                    command_line);
+    content::DeprecatedEnableFeatureWithParam(
+        kSpeculativeResourcePrefetchingFeature, kModeParamName,
+        kExternalPrefetchingMode, command_line);
   }
 
   void SetUpOnMainThread() override {
