@@ -19,7 +19,7 @@ HidManagerImpl::HidManagerImpl()
       hid_service_observer_(this),
       weak_factory_(this) {
   DCHECK(hid_service_);
-  hid_service_observer_.Add(hid_service_.get());
+  hid_service_observer_.Add(hid_service_);
 }
 
 HidManagerImpl::~HidManagerImpl() {}
