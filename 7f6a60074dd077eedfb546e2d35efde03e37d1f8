@@ -1,0 +1,251 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f94a5242_ef3a52d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-19T04:50:35Z",
+      "side": 1,
+      "message": "Implement",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "7f6a60074dd077eedfb546e2d35efde03e37d1f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88976aa1_6811cd13",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-19T04:50:35Z",
+      "side": 1,
+      "message": "I don\u0027t think you must mention about the test when you add a test for what you implemented on the same CL.\nHow about saying something like the following?\n--\nThis CL implements blob request body for bypassing to a service worker. When a request body exists, SWURLLoaderJob creates another BlobHandle to forward a request to the service worker. (Is this correct?)",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 26
+      },
+      "revId": "7f6a60074dd077eedfb546e2d35efde03e37d1f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb12727c_68d41eb2",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-19T04:50:35Z",
+      "side": 1,
+      "message": "fetch_request\nhttps://google.github.io/styleguide/cppguide.html#Variable_Names",
+      "range": {
+        "startLine": 152,
+        "startChar": 45,
+        "endLine": 152,
+        "endChar": 57
+      },
+      "revId": "7f6a60074dd077eedfb546e2d35efde03e37d1f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1deaaa6_8aa19d5b",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-19T04:50:35Z",
+      "side": 1,
+      "message": "I wonder if we can put everything to convert ResourceRequest to SWFetchRequest into SWLoaderHelpers because CreateFetchRequest should have full responsibility of creating a SWFetchRequest from a ResourceRequest.\nHow about passing what is needed to creating blob related stuffs?",
+      "revId": "7f6a60074dd077eedfb546e2d35efde03e37d1f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "264a3321_52d57c8c",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-19T04:50:35Z",
+      "side": 1,
+      "message": "How about storage::BlobImpl::Create(std::move(request_body_blob_data_handle_)) ?\nIf you can do that, |request_body_blob_data_handle_| could be a local variable.\n\n// Sorry if I\u0027m missing something!",
+      "range": {
+        "startLine": 183,
+        "startChar": 33,
+        "endLine": 183,
+        "endChar": 63
+      },
+      "revId": "7f6a60074dd077eedfb546e2d35efde03e37d1f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c9a75b3_880e85e1",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-19T04:50:35Z",
+      "side": 1,
+      "message": "If what you want to have is only |request_body_blob_handle_|, it\u0027d be simpler to return the handle instead of keeping it as a member. \nGenerally speaking, calling another method (CreateReqeustBodyBlob) to update a member inside of a method (StartRequest) makes the code complicated because it\u0027s hard to figure out where \n the member is initialized. In this case, if you can change CreateRequestBodyBlob just to return a parameter and not to change any members, you can clearly say CreateRequestBodyBlob just creates a blob handle and it doesn\u0027t modify any other members.",
+      "range": {
+        "startLine": 185,
+        "startChar": 2,
+        "endLine": 185,
+        "endChar": 27
+      },
+      "revId": "7f6a60074dd077eedfb546e2d35efde03e37d1f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1552dbd5_ac7b5644",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-19T04:50:35Z",
+      "side": 1,
+      "message": "You don\u0027t need to have a \"Test\" prefix since all of them are for testing.\nkBlobRequest might be enough.",
+      "range": {
+        "startLine": 392,
+        "startChar": 4,
+        "endLine": 392,
+        "endChar": 20
+      },
+      "revId": "7f6a60074dd077eedfb546e2d35efde03e37d1f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d536ab6c_f7a0c925",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-19T04:50:35Z",
+      "side": 1,
+      "message": "How about passing ResourceRequest as an argument of StartRequest to customize the request?",
+      "range": {
+        "startLine": 500,
+        "startChar": 12,
+        "endLine": 500,
+        "endChar": 24
+      },
+      "revId": "7f6a60074dd077eedfb546e2d35efde03e37d1f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ef112ac_fa10ae32",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-19T04:50:35Z",
+      "side": 1,
+      "message": "const std::string\u0026 data\n\nkFoo style is used for constant values.",
+      "range": {
+        "startLine": 524,
+        "startChar": 27,
+        "endLine": 524,
+        "endChar": 44
+      },
+      "revId": "7f6a60074dd077eedfb546e2d35efde03e37d1f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aab4c14_061793d0",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-19T04:50:35Z",
+      "side": 1,
+      "message": "base::MakeRefCounted\u003c\u003e()",
+      "range": {
+        "startLine": 525,
+        "startChar": 54,
+        "endLine": 525,
+        "endChar": 77
+      },
+      "revId": "7f6a60074dd077eedfb546e2d35efde03e37d1f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af42002_7db0e28f",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-09-19T04:50:35Z",
+      "side": 1,
+      "message": "request_?",
+      "range": {
+        "startLine": 579,
+        "startChar": 18,
+        "endLine": 579,
+        "endChar": 25
+      },
+      "revId": "7f6a60074dd077eedfb546e2d35efde03e37d1f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
