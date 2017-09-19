@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1cab1fa_529afafa",
+        "filename": "dbus/object_proxy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-09-19T06:10:00Z",
+      "side": 1,
+      "message": "Now the code is in the D-Bus thread.\nPlease fix this part.",
+      "range": {
+        "startLine": 337,
+        "startChar": 22,
+        "endLine": 337,
+        "endChar": 72
+      },
+      "revId": "88e82f500401bcb9de81d22c39f7fd9b3fe4b75e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
