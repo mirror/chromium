@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b16e814b_3d49c164",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-19T16:47:22Z",
+      "side": 1,
+      "message": "I\u0027d rather the portion of WritersDoneWritingToEntry (e.g., !success \u0026\u0026 shouldkeepentry) that this call will use be pulled out into its own function.",
+      "range": {
+        "startLine": 915,
+        "startChar": 6,
+        "endLine": 915,
+        "endChar": 31
+      },
+      "revId": "63084100866d87fb94eb2e54d3172fa7cdeaee37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c112665c_402ec7fb",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-19T16:47:22Z",
+      "side": 1,
+      "message": "suggest: The entry will be doomed if |keep_entry| is false.",
+      "range": {
+        "startLine": 141,
+        "startChar": 27,
+        "endLine": 142,
+        "endChar": 47
+      },
+      "revId": "63084100866d87fb94eb2e54d3172fa7cdeaee37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91701346_8e998fa5",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-19T16:47:22Z",
+      "side": 1,
+      "message": "rename to keep_entry?",
+      "range": {
+        "startLine": 145,
+        "startChar": 36,
+        "endLine": 145,
+        "endChar": 43
+      },
+      "revId": "63084100866d87fb94eb2e54d3172fa7cdeaee37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

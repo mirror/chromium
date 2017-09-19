@@ -1,0 +1,314 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07d43ff2_f4bb11f9",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-19T16:47:22Z",
+      "side": 1,
+      "message": "Every caller of ContinueInNetworkReadOnlyMode calls RecordHistograms directly before it. How about ContinueInNetworkReadOnlyMode calls  RecordHistograms()?",
+      "range": {
+        "startLine": 359,
+        "startChar": 4,
+        "endLine": 359,
+        "endChar": 33
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84109cbe_714284d7",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-19T16:47:22Z",
+      "side": 1,
+      "message": "Being InWriters is likely the more common case, it\u0027s also a lot more code. Can we change the early return to !InWriters()?\n\nE.g.,\n\nif (!InWriters()) {\n  // Since transaction is not a writer and we are in Read(), it must be a\n  // reader.\n  DCHECK(entry_-\u003ereaders.count(this));\n  DCHECK(mode_ \u003d\u003d READ || (mode_ \u003d\u003d READ_WRITE \u0026\u0026 partial_));\n  next_state_ \u003d STATE_CACHE_READ_DATA;\n  return OK;\n}",
+      "range": {
+        "startLine": 429,
+        "startChar": 0,
+        "endLine": 432,
+        "endChar": 12
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf5149b6_d6dced7c",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-19T16:47:22Z",
+      "side": 1,
+      "message": "What if StopCaching is called before we get to the stage that we\u0027re InWriters? E.g., what if it\u0027s a headers transaction when StopCaching is called? I believe we still want to prevent it from caching in the future.\n\nOr is StopCaching meant to only be called after the first Read? In which case that needs to be documented in HttpTransaction and we need to verify that existing consumers obey that.",
+      "range": {
+        "startLine": 444,
+        "startChar": 41,
+        "endLine": 444,
+        "endChar": 50
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44602f3a_9543dc21",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-19T16:47:22Z",
+      "side": 1,
+      "message": "Why can\u0027t we call DoneWritingToEntry as usual here?",
+      "range": {
+        "startLine": 484,
+        "startChar": 6,
+        "endLine": 484,
+        "endChar": 41
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee70621_1761117b",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-19T16:47:22Z",
+      "side": 1,
+      "message": "DCHECK (!InWriters())",
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc9b7b2_040878c9",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 641,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-19T16:47:22Z",
+      "side": 1,
+      "message": "The name of this function (and its comments) do not make it clear that the entry has removed this transaction, which this function needs to recover from.  The name sounds like a normal setter.\n\nPerhaps instead: AboutToBeRemovedFromActiveEntry(int error_code);\n\nThis same function could also be used for saving network information from writers when necessary so that Writers doesn\u0027t have to do it on HC::T\u0027s behalf. This is a continuation of an earlier comment.\n\n\nIn F2F we agreed to use AboutToBeRemovedFromActiveEntry rather than use the util method to save network info.",
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba3cf97_e37add80",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-19T16:47:22Z",
+      "side": 1,
+      "message": "After F2F we agreed to remove this function and have ActiveEntry get the particular members it needs when adding a transaction to writers.",
+      "range": {
+        "startLine": 646,
+        "startChar": 24,
+        "endLine": 646,
+        "endChar": 52
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "450d9147_4bd61caa",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2073,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-19T16:47:22Z",
+      "side": 1,
+      "message": "I believe that the HC::T is supposed to be blissfully unaware of other transactions, so I don\u0027t think we need this part of the comment.",
+      "range": {
+        "startLine": 2072,
+        "startChar": 0,
+        "endLine": 2073,
+        "endChar": 76
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd78a8ab_e6a06f7d",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2089,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-19T16:47:22Z",
+      "side": 1,
+      "message": "I\u0027d prefer if the uncommon case (partial_) gets the early return here.",
+      "range": {
+        "startLine": 2085,
+        "startChar": 0,
+        "endLine": 2089,
+        "endChar": 3
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c870fd_d3a1c0ef",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2130,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-19T16:47:22Z",
+      "side": 1,
+      "message": "I\u0027d prefer if the uncommon case (partial_) gets the early return here.",
+      "range": {
+        "startLine": 2126,
+        "startChar": 0,
+        "endLine": 2130,
+        "endChar": 3
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4282fb5f_b152fa0b",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2915,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-19T16:47:22Z",
+      "side": 1,
+      "message": "Can you add a comment here why it\u0027s okay to keep writing to disk if MaybeSetNetworkReadOnly fails? It\u0027s non-obvious because we can call this function for no-store resources.",
+      "range": {
+        "startLine": 2915,
+        "startChar": 21,
+        "endLine": 2915,
+        "endChar": 57
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11bc7551_61cb0a75",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 2921,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-19T16:47:22Z",
+      "side": 1,
+      "message": "This function is identical to DoneWritingToEntry (save for RecordHistograms, which I think we need anyway). Recommend removing this function and verifying that we won\u0027t change the histogram data much. If histogram data will be substantially changed we\u0027ll need to up the histogram versions.",
+      "range": {
+        "startLine": 2921,
+        "startChar": 29,
+        "endLine": 2921,
+        "endChar": 61
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b4d7a3_b29d9e26",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-19T16:47:22Z",
+      "side": 1,
+      "message": "That\u0027s implied by the newline, no need for this comment.",
+      "range": {
+        "startLine": 173,
+        "startChar": 5,
+        "endLine": 173,
+        "endChar": 20
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10afce85_9c612845",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-19T16:47:22Z",
+      "side": 1,
+      "message": "Why would it be null for range requests?\n\nnit: nullptr instead of null",
+      "range": {
+        "startLine": 111,
+        "startChar": 37,
+        "endLine": 111,
+        "endChar": 74
+      },
+      "revId": "a39d2a5fcdeec7e7f0f51425653f8af5385832a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
