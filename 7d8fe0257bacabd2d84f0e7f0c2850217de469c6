@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3219f102_4e0dea34",
+        "filename": "base/process/process.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T17:39:13Z",
+      "side": 1,
+      "message": "maybe",
+      "revId": "7d8fe0257bacabd2d84f0e7f0c2850217de469c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "095098f2_44dd4a4c",
+        "filename": "base/process/process_handle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T17:39:13Z",
+      "side": 1,
+      "message": "\"Returning a negative\"\n\n\"usually it means\" -\u003e \"such as if the\"",
+      "revId": "7d8fe0257bacabd2d84f0e7f0c2850217de469c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6932e2bf_bf8de0bd",
+        "filename": "base/process/process_handle.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T17:39:13Z",
+      "side": 1,
+      "message": "\"Returns 0\"\n\nBut it looks like this isn\u0027t quite what linux does. It can\u0027t return 0? https://cs.chromium.org/chromium/src/base/process/process_handle_linux.cc?rcl\u003d2817c9d44cf9178f8c1b2d09b2d46a7736a6d857\u0026l\u003d23\n\nMaybe we should just say it returns \u003e 0 if it finds the parent process id and \u003c\u003d 0 if it doesn\u0027t?",
+      "revId": "7d8fe0257bacabd2d84f0e7f0c2850217de469c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
