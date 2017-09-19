@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "e463b3ec_9888d7c4",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-09-19T13:18:51Z",
+      "side": 1,
+      "message": "You can\u0027t depend on chrome/. But you could move the string to components/. It would be a good idea if there are multiple strings. If there is only one, I would let password\u0027s owners decide.",
+      "parentUuid": "2055af91_2976a32a",
+      "range": {
+        "startLine": 560,
+        "startChar": 21,
+        "endLine": 560,
+        "endChar": 59
+      },
+      "revId": "6d29de4435c8f177ae0cc4989d8ed224cb916821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "458d1747_42004405",
         "filename": "ios/chrome/browser/passwords/credential_manager_notify_auto_signin_egtest.mm",
         "patchSetId": 11
