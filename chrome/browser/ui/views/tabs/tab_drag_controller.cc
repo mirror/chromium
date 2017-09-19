@@ -43,7 +43,6 @@
 #if defined(USE_ASH)
 #include "ash/shell.h"                   // nogncheck
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"  // nogncheck
-#include "ash/wm/window_state.h"  // nogncheck
 #include "ui/wm/core/coordinate_conversion.h"  // nogncheck
 #endif
 
@@ -100,9 +99,7 @@ const int kMaximizedWindowInset = 10;  // DIPs.
 // Returns true if |tab_strip| browser window is snapped.
 bool IsSnapped(const TabStrip* tab_strip) {
   DCHECK(tab_strip);
-  ash::wm::WindowState* window_state =
-      ash::wm::GetWindowState(tab_strip->GetWidget()->GetNativeWindow());
-  return window_state->IsSnapped();
+  return tab_strip->GetWidget()->IsSnapped();
 }
 #else
 bool IsSnapped(const TabStrip* tab_strip) {

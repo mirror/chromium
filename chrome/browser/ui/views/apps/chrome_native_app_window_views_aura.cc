@@ -45,6 +45,8 @@ ChromeNativeAppWindowViewsAura::GetRestorableState(
     case ui::SHOW_STATE_DEFAULT:
     case ui::SHOW_STATE_MINIMIZED:
     case ui::SHOW_STATE_INACTIVE:
+    case ui::SHOW_STATE_LEFT_SNAPPED:
+    case ui::SHOW_STATE_RIGHT_SNAPPED:
     case ui::SHOW_STATE_END:
       return ui::SHOW_STATE_NORMAL;
   }

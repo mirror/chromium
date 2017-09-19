@@ -510,6 +510,12 @@ bool NativeWidgetMac::IsFullscreen() const {
   return bridge_ && bridge_->target_fullscreen_state();
 }
 
+bool NativeWidgetMac::IsSnapped() const {
+  // While there might be edge snapping on osx, it doesn't correspond with the
+  // internal show state.
+  return false;
+}
+
 void NativeWidgetMac::SetOpacity(float opacity) {
   [GetNativeWindow() setAlphaValue:opacity];
 }
