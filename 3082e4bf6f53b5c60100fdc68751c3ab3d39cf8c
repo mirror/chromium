@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b48eff93_ddb510ca",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-09-19T13:17:59Z",
+      "side": 1,
+      "message": "Maybe EnclosingBlock function can explicitly return null as an Element in case of |node \u003d\u003d nullptr|?",
+      "revId": "3082e4bf6f53b5c60100fdc68751c3ab3d39cf8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c28b8a41_d9182c2b",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyBlockElementCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-09-19T13:17:59Z",
+      "side": 1,
+      "message": "I have to introduce and use the deprecated version of changed functions to avoid complex changes in some places. Is it OK?\nOr should I explicitly check for nullptr node here and remove these deprecated functions?",
+      "revId": "3082e4bf6f53b5c60100fdc68751c3ab3d39cf8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc31820_ccdf036e",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ApplyStyleCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1839,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-09-19T13:17:59Z",
+      "side": 1,
+      "message": "Looks like here |start_node| is always a valid pointer, but I\u0027m not sure.\nShould I keep this dcheck?",
+      "revId": "3082e4bf6f53b5c60100fdc68751c3ab3d39cf8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772da183_d6840ad4",
+        "filename": "third_party/WebKit/Source/core/editing/commands/ReplaceSelectionCommand.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-09-19T13:17:59Z",
+      "side": 1,
+      "message": "In this function the |element| parameter is always a pointer to the valid object, passed as MoveElementOutOfAncestor(\u0026elementReference).\nBut I wanted to explicitly specify that it should not be nullptr.",
+      "revId": "3082e4bf6f53b5c60100fdc68751c3ab3d39cf8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
