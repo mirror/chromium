@@ -34,6 +34,8 @@ class PermissionManager : public KeyedService,
   explicit PermissionManager(Profile* profile);
   ~PermissionManager() override;
 
+  GURL GetCanonicalOrigin(const GURL& url) const;
+
   // Callers from within chrome/ should use the methods which take the
   // ContentSettingsType enum. The methods which take PermissionType values
   // are for the content::PermissionManager overrides and shouldn't be used
