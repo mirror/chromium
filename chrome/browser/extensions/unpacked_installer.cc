@@ -349,10 +349,14 @@ bool UnpackedInstaller::IndexAndPersistRulesIfNeeded(std::string* error) {
     return false;
 
   std::vector<InstallWarning> warnings;
-  const bool success = declarative_net_request::IndexAndPersistRules(
-      *parsed_rules, *extension(), error, &warnings);
+  int ruleset_checksum;
+  if (!declarative_net_request::IndexAndPersistRules(
+          *parsed_rules, *extension(), error, &warnings, &ruleset_checksum))
+    return false;
+
+  dnr_ruleset_checksum_ = ruleset_checksum;
   extension_->AddInstallWarnings(warnings);
-  return success;
+  return true;
 }
 
 bool UnpackedInstaller::IsLoadingUnpackedAllowed() const {
@@ -435,8 +439,9 @@ void UnpackedInstaller::InstallExtension() {
   perms_updater.InitializePermissions(extension());
   perms_updater.GrantActivePermissions(extension());
 
-  service_weak_->OnExtensionInstalled(
-      extension(), syncer::StringOrdinal(), kInstallFlagInstallImmediately);
+  service_weak_->OnExtensionInstalled(extension(), syncer::StringOrdinal(),
+                                      kInstallFlagInstallImmediately,
+                                      dnr_ruleset_checksum_);
 
   if (!callback_.is_null()) {
     callback_.Run(extension(), extension_path_, std::string());
