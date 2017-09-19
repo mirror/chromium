@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "14530256_089c46e2",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-19T06:51:17Z",
+      "side": 1,
+      "message": "Yes, we can, the parent doesn\u0027t HAVE to specify a fallback, then we just plug in a SolidColorDrawQuad and this is not an error.",
+      "parentUuid": "00cba4f1_249feaf1",
+      "revId": "f8d15729abb9f046a5f6cf05b9917f9d67f7427b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be68bcbb_9bd0d9e5",
         "filename": "components/viz/service/display/surface_aggregator.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "f8d15729abb9f046a5f6cf05b9917f9d67f7427b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbb51981_effd3711",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-19T06:51:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be68bcbb_9bd0d9e5",
+      "revId": "f8d15729abb9f046a5f6cf05b9917f9d67f7427b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6c36b98b_c9aabd3f",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1128,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-19T06:51:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "470ce202_1c2b53b2",
+      "revId": "f8d15729abb9f046a5f6cf05b9917f9d67f7427b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb10efcf_9351e2d7",
         "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "f8d15729abb9f046a5f6cf05b9917f9d67f7427b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92f5d0b5_00286214",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-09-19T06:51:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb10efcf_9351e2d7",
+      "revId": "f8d15729abb9f046a5f6cf05b9917f9d67f7427b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
