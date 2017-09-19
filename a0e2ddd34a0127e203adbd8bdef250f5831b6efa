@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "52885e13_d8cd858b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 15
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-19T19:31:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f7e65927_10284d50",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "a0e2ddd34a0127e203adbd8bdef250f5831b6efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "661d04ef_66e16e62",
         "filename": "remoting/client/audio/audio_player_buffer.h",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "a0e2ddd34a0127e203adbd8bdef250f5831b6efa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fa1fb58_c7c4356c",
+        "filename": "remoting/client/audio/audio_player_buffer.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-19T19:31:59Z",
+      "side": 1,
+      "message": "I added to call the reset function on another thread but I decided it was not needed. removed.",
+      "parentUuid": "661d04ef_66e16e62",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 48
+      },
+      "revId": "a0e2ddd34a0127e203adbd8bdef250f5831b6efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "2e7535ac_4af2864e",
+        "filename": "remoting/client/display/gl_render_layer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-19T19:31:59Z",
+      "side": 1,
+      "message": "I was not getting any zero sized widths",
+      "parentUuid": "3b476a78_f6f9ecf6",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 17
+      },
+      "revId": "a0e2ddd34a0127e203adbd8bdef250f5831b6efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7acfeccc_b4886b59",
+        "filename": "remoting/client/display/gl_render_layer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-19T19:31:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8c5ae7f9_1e8ae0d6",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 34
+      },
+      "revId": "a0e2ddd34a0127e203adbd8bdef250f5831b6efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "468f015b_1f68b06c",
         "filename": "remoting/client/display/gl_render_layer.cc",
         "patchSetId": 15
@@ -114,6 +210,30 @@
       "revId": "a0e2ddd34a0127e203adbd8bdef250f5831b6efa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b7f4c7_edae3ce3",
+        "filename": "remoting/client/display/gl_render_layer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-19T19:31:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "468f015b_1f68b06c",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 23
+      },
+      "revId": "a0e2ddd34a0127e203adbd8bdef250f5831b6efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "39b9f2ed_65df2d99",
+        "filename": "remoting/ios/audio/audio_player_ios.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-19T19:31:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6860d763_56e8105f",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 37
+      },
+      "revId": "a0e2ddd34a0127e203adbd8bdef250f5831b6efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d781820_62723d72",
         "filename": "remoting/ios/audio/audio_player_ios.mm",
         "patchSetId": 15
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "9305579a_5c55a864",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-19T19:31:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9d781820_62723d72",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 37
+      },
+      "revId": "a0e2ddd34a0127e203adbd8bdef250f5831b6efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de0020d4_1e455524",
         "filename": "remoting/ios/audio/audio_player_ios.mm",
         "patchSetId": 15
@@ -183,6 +351,30 @@
       "revId": "a0e2ddd34a0127e203adbd8bdef250f5831b6efa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82aafe9e_572ad995",
+        "filename": "remoting/ios/audio/audio_player_ios.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-09-19T19:31:59Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "de0020d4_1e455524",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 25
+      },
+      "revId": "a0e2ddd34a0127e203adbd8bdef250f5831b6efa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
