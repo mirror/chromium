@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0aa1f4bd_25a89866",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-19T18:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9a0fb0f_434049d2",
+      "revId": "03d0c6a5fceaf644eb047dce57072a6470080ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12ec577f_777b6ca8",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "37bd05ae_e37a4a59",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-19T18:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12ec577f_777b6ca8",
+      "range": {
+        "startLine": 95,
+        "startChar": 43,
+        "endLine": 95,
+        "endChar": 53
+      },
+      "revId": "03d0c6a5fceaf644eb047dce57072a6470080ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29519b11_b735b75e",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "03d0c6a5fceaf644eb047dce57072a6470080ad5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91c1bb3_b276bacc",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 775,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-19T18:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29519b11_b735b75e",
+      "revId": "03d0c6a5fceaf644eb047dce57072a6470080ad5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
