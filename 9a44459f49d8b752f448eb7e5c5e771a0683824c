@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fe83bc1f_785463d2",
+        "filename": "net/cert/internal/system_trust_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-19T21:57:42Z",
+      "side": 1,
+      "message": "This function returns the value hard-coded in boringssl, see\nhttps://codesearch.chromium.org/chromium/src/third_party/boringssl/src/crypto/x509/x509_def.c\nboringssl is linked statically. I don\u0027t think there is any benefit to copying that value here.",
+      "parentUuid": "cd239a7d_7449e4ef",
+      "range": {
+        "startLine": 153,
+        "startChar": 28,
+        "endLine": 153,
+        "endChar": 54
+      },
+      "revId": "9a44459f49d8b752f448eb7e5c5e771a0683824c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f512bfb_91b33ed2",
         "filename": "net/cert/internal/system_trust_store.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5536b40f_bf657bfa",
+        "filename": "net/cert/internal/system_trust_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-19T21:57:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f512bfb_91b33ed2",
+      "range": {
+        "startLine": 163,
+        "startChar": 13,
+        "endLine": 163,
+        "endChar": 14
+      },
+      "revId": "9a44459f49d8b752f448eb7e5c5e771a0683824c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82766de9_d8ca6729",
         "filename": "net/cert/internal/system_trust_store.cc",
         "patchSetId": 4
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "0d3e59e5_6f07adaa",
+        "filename": "net/cert/internal/system_trust_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-19T21:57:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82766de9_d8ca6729",
+      "revId": "9a44459f49d8b752f448eb7e5c5e771a0683824c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f31b0681_6953848e",
         "filename": "net/cert/internal/system_trust_store.cc",
         "patchSetId": 4
@@ -76,6 +142,24 @@
       "writtenOn": "2017-09-19T20:26:06Z",
       "side": 1,
       "message": "not sure CHECK is appropriate here, maybe just log?",
+      "revId": "9a44459f49d8b752f448eb7e5c5e771a0683824c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0c526d6_28d71f36",
+        "filename": "net/cert/internal/system_trust_store.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-09-19T21:57:42Z",
+      "side": 1,
+      "message": "This is a static file, so something should go terribly wrong for the parser to fail here, so I think it\u0027s better to keep CHECK here, especially given that we won\u0027t keep this code long-term.",
+      "parentUuid": "f31b0681_6953848e",
       "revId": "9a44459f49d8b752f448eb7e5c5e771a0683824c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
