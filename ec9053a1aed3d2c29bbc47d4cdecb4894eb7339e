@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28fc3d50_57bd2ac1",
+        "filename": "content/common/sandbox_linux/bpf_widevine_policy_linux.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-19T18:55:15Z",
+      "side": 1,
+      "message": "note:  I didn\u0027t do inheritance from utility to allow us to maybe remove some of these other ones.",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 3
+      },
+      "revId": "ec9053a1aed3d2c29bbc47d4cdecb4894eb7339e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
