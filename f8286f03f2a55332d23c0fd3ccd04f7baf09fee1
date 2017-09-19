@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "6382e1b6_20124da6",
+        "filename": "components/omnibox/browser/autocomplete_input.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-19T18:56:50Z",
+      "side": 0,
+      "message": "Sorry, I\u0027m not getting this. \u0027desired_tld\u0027 is used in the call to \u0027Parse\u0027 in the constructor. If I just pass an empty string, several tests fail (and I assume production code would too.) Should I re-call \u0027Parse\u0027 outside the constructor in these cases? That seems excessive just to remove a parameter.",
+      "parentUuid": "f35254b8_485e8dcd",
+      "range": {
+        "startLine": 77,
+        "startChar": 20,
+        "endLine": 77,
+        "endChar": 51
+      },
+      "revId": "f8286f03f2a55332d23c0fd3ccd04f7baf09fee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0f7f43e_a319ab05",
         "filename": "components/omnibox/browser/autocomplete_input.h",
         "patchSetId": 5
