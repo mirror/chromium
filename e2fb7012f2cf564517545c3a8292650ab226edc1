@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d663a35e_69143bf1",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-19T07:15:17Z",
+      "side": 1,
+      "message": "optional: I think you can simply drop this empty line similar to other classes.",
+      "revId": "e2fb7012f2cf564517545c3a8292650ab226edc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "202d6f3b_788aec0c",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-19T07:15:17Z",
+      "side": 1,
+      "message": "As chatted offline, could you comment where this file is created?",
+      "revId": "e2fb7012f2cf564517545c3a8292650ab226edc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f3d3f82_189c1904",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-19T07:15:17Z",
+      "side": 1,
+      "message": "std::make_unique can be used?",
+      "revId": "e2fb7012f2cf564517545c3a8292650ab226edc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31eae685_527c6f09",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_bridge_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-19T07:15:17Z",
+      "side": 1,
+      "message": "Could you keep ()?\ncf) https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Prefer-MakeUnique-to-WrapUnique",
+      "revId": "e2fb7012f2cf564517545c3a8292650ab226edc1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
