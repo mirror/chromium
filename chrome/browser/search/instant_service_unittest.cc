@@ -26,4 +26,5 @@ TEST_F(InstantServiceTest, GetNTPTileSuggestion) {
   auto items = instant_service_->most_visited_items_;
   ASSERT_EQ(1, (int)items.size());
   ASSERT_EQ(ntp_tiles::TileSource::TOP_SITES, items[0].source);
+  ASSERT_EQ(ntp_tiles::TileNameSource::TITLE, items[0].name_source);
 }

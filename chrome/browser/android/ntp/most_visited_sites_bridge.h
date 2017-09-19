@@ -49,6 +49,7 @@ class MostVisitedSitesBridge {
                             const base::android::JavaParamRef<jobject>& obj,
                             jint jindex,
                             jint jtype,
+                            jint jname_source,
                             jint jsource,
                             const base::android::JavaParamRef<jstring>& jurl);
   void RecordOpenedMostVisitedItem(
@@ -56,6 +57,7 @@ class MostVisitedSitesBridge {
       const base::android::JavaParamRef<jobject>& obj,
       jint index,
       jint tile_type,
+      jint name_source,
       jint source);
 
  private:
