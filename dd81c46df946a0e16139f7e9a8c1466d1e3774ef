@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e46fda3_12a7029b",
+        "filename": "chrome/browser/ui/views/tabs/window_finder_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-19T00:03:36Z",
+      "side": 1,
+      "message": "How about adding \"// mash-ok\" after the include?",
+      "revId": "dd81c46df946a0e16139f7e9a8c1466d1e3774ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
