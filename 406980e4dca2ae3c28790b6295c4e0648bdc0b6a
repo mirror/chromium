@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dc06f06f_5f403e11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-19T18:28:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88c0e6f9_62083817",
+      "range": {
+        "startLine": 11,
+        "startChar": 35,
+        "endLine": 11,
+        "endChar": 44
+      },
+      "revId": "406980e4dca2ae3c28790b6295c4e0648bdc0b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4df67776_69aafa39",
         "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "406980e4dca2ae3c28790b6295c4e0648bdc0b6a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bf362ec_b7554af4",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-19T18:28:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4df67776_69aafa39",
+      "range": {
+        "startLine": 477,
+        "startChar": 31,
+        "endLine": 477,
+        "endChar": 36
+      },
+      "revId": "406980e4dca2ae3c28790b6295c4e0648bdc0b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
