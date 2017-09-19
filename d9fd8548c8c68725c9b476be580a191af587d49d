@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7aae6ccd_728413fa",
+        "filename": "third_party/WebKit/Source/core/html/HTMLInputElement.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1698,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-19T19:47:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d22178fd_86eeeb33",
+      "revId": "d9fd8548c8c68725c9b476be580a191af587d49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8d8eac9_934b5979",
         "filename": "third_party/WebKit/Source/core/html/HTMLTextAreaElement.cpp",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "33f5b35c_24b7b376",
+        "filename": "third_party/WebKit/Source/core/html/HTMLTextAreaElement.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-19T19:47:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8d8eac9_934b5979",
+      "revId": "d9fd8548c8c68725c9b476be580a191af587d49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38a90a1a_a4b94db2",
         "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
         "patchSetId": 13
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-19T01:30:58Z",
       "side": 1,
       "message": "Why do we update InnerEditorValue with suggested value? We want to stop it, right?",
+      "revId": "d9fd8548c8c68725c9b476be580a191af587d49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9142bf5e_5a1dd4c1",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-09-19T19:47:04Z",
+      "side": 1,
+      "message": "We will only set it if it\u0027s not empty, so only when the user has already types something in the field. For all cases where the user didn\u0027t type, the InnerEditorValue will not be set.",
+      "parentUuid": "38a90a1a_a4b94db2",
       "revId": "d9fd8548c8c68725c9b476be580a191af587d49d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
