@@ -40,8 +40,8 @@ class DidCommitProvisionalLoadInterceptor::FrameAgent
   void DidCommitProvisionalLoad(
       std::unique_ptr<::FrameHostMsg_DidCommitProvisionalLoad_Params> params)
       override {
-    interceptor_->WillDispatchDidCommitProvisionalLoad(rfhi_, params.get());
-    GetForwardingInterface()->DidCommitProvisionalLoad(std::move(params));
+    if (interceptor_->WillDispatchDidCommitProvisionalLoad(rfhi_, params.get()))
+      GetForwardingInterface()->DidCommitProvisionalLoad(std::move(params));
   }
 
  private:
