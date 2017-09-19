@@ -6,7 +6,9 @@
 
 namespace media {
 
-MediaResource::MediaResource() {}
+const int MediaResource::kInvalidRemoteId = 0;
+
+MediaResource::MediaResource() : remote_id_(kInvalidRemoteId) {}
 
 MediaResource::~MediaResource() {}
 
@@ -26,6 +28,20 @@ DemuxerStream* MediaResource::GetFirstStream(DemuxerStream::Type type) {
       return stream;
   }
   return nullptr;
+}
+
+int32_t MediaResource::GetRemoteId() const {
+  return remote_id_;
+}
+
+bool MediaResource::HasAudio() const {
+  NOTREACHED();
+  return false;
+}
+
+bool MediaResource::HasVideo() const {
+  NOTREACHED();
+  return false;
 }
 
 }  // namespace media
