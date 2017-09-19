@@ -331,11 +331,11 @@ public class SignInPromo extends OptionalLeaf implements ImpressionTracker.Liste
         public PersonalizedPromoViewHolder(SuggestionsRecyclerView parent,
                 ContextMenuManager contextMenuManager, UiConfig config,
                 ProfileDataCache profileDataCache, SigninPromoController signinPromoController) {
-            super(FeatureUtilities.isChromeHomeModernEnabled()
+            super(FeatureUtilities.isChromeHomeEnabled()
                             ? R.layout.personalized_signin_promo_view_modern_content_suggestions
                             : R.layout.personalized_signin_promo_view_ntp_content_suggestions,
                     parent, config, contextMenuManager);
-            if (!FeatureUtilities.isChromeHomeModernEnabled()) {
+            if (!FeatureUtilities.isChromeHomeEnabled()) {
                 getParams().topMargin = parent.getResources().getDimensionPixelSize(
                         R.dimen.ntp_sign_in_promo_margin_top);
             }
@@ -354,7 +354,7 @@ public class SignInPromo extends OptionalLeaf implements ImpressionTracker.Liste
         @Override
         protected int selectBackground(boolean hasCardAbove, boolean hasCardBelow) {
             // Modern does not update the card background.
-            assert !FeatureUtilities.isChromeHomeModernEnabled();
+            assert !FeatureUtilities.isChromeHomeEnabled();
             return R.drawable.ntp_signin_promo_card_single;
         }
 
@@ -409,7 +409,7 @@ public class SignInPromo extends OptionalLeaf implements ImpressionTracker.Liste
         public GenericPromoViewHolder(SuggestionsRecyclerView parent,
                 ContextMenuManager contextMenuManager, UiConfig config) {
             super(parent, contextMenuManager, config);
-            if (!FeatureUtilities.isChromeHomeModernEnabled()) {
+            if (!FeatureUtilities.isChromeHomeEnabled()) {
                 getParams().topMargin = parent.getResources().getDimensionPixelSize(
                         R.dimen.ntp_sign_in_promo_margin_top);
             }
@@ -419,7 +419,7 @@ public class SignInPromo extends OptionalLeaf implements ImpressionTracker.Liste
         @Override
         protected int selectBackground(boolean hasCardAbove, boolean hasCardBelow) {
             // Modern does not update the card background.
-            assert !FeatureUtilities.isChromeHomeModernEnabled();
+            assert !FeatureUtilities.isChromeHomeEnabled();
             return R.drawable.ntp_signin_promo_card_single;
         }
     }

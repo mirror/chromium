@@ -92,7 +92,6 @@ import java.util.List;
 @Config(manifest = Config.NONE)
 @Features({@Features.Register(value = ChromeFeatureList.NTP_CONDENSED_LAYOUT, enabled = false),
         @Features.Register(value = ChromeFeatureList.CHROME_HOME, enabled = false),
-        @Features.Register(value = ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT, enabled = false),
         @Features.Register(value = ChromeFeatureList.CONTENT_SUGGESTIONS_SCROLL_TO_LOAD,
                 enabled = false),
         @Features.Register(value = ChromeFeatureList.ANDROID_SIGNIN_PROMOS, enabled = false)})
@@ -962,10 +961,7 @@ public class NewTabPageAdapterTest {
 
     @Test
     @Feature({"Ntp"})
-    @Features({
-            @Features.Register(ChromeFeatureList.CHROME_HOME),
-            @Features.Register(ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT)
-    })
+    @Features({ @Features.Register(ChromeFeatureList.CHROME_HOME) })
     public void testSigninPromoModern() {
         when(mMockSigninManager.isSignInAllowed()).thenReturn(true);
         when(mMockSigninManager.isSignedInOnNative()).thenReturn(false);
@@ -1132,10 +1128,7 @@ public class NewTabPageAdapterTest {
 
     @Test
     @Feature({"Ntp"})
-    @Features({
-            @Features.Register(value = ChromeFeatureList.CHROME_HOME),
-            @Features.Register(value = ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT)
-    })
+    @Features({ @Features.Register(value = ChromeFeatureList.CHROME_HOME) })
     public void testAllDismissedModern() {
         when(mUiDelegate.isVisible()).thenReturn(true);
 
@@ -1241,7 +1234,7 @@ public class NewTabPageAdapterTest {
      * @return A descriptor for the section.
      */
     private SectionDescriptor sectionWithStatusCard() {
-        assertFalse(FeatureUtilities.isChromeHomeModernEnabled());
+        assertFalse(FeatureUtilities.isChromeHomeEnabled());
         return new SectionDescriptor(Collections.<SnippetArticle>emptyList()).withStatusCard();
     }
 
@@ -1252,7 +1245,7 @@ public class NewTabPageAdapterTest {
      * @return A descriptor for the section.
      */
     private SectionDescriptor emptySection() {
-        assertTrue(FeatureUtilities.isChromeHomeModernEnabled());
+        assertTrue(FeatureUtilities.isChromeHomeEnabled());
         return new SectionDescriptor(Collections.<SnippetArticle>emptyList());
     }
 

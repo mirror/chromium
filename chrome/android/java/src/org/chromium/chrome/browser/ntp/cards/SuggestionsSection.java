@@ -97,15 +97,15 @@ public class SuggestionsSection extends InnerNode {
 
         mHeader = new SectionHeader(info.getTitle());
         mSuggestionsList = new SuggestionsList(mSuggestionsSource, ranker, info);
-        boolean useModern = FeatureUtilities.isChromeHomeModernEnabled();
-        if (useModern) {
+        boolean isChromeHomeEnabled = FeatureUtilities.isChromeHomeEnabled();
+        if (isChromeHomeEnabled) {
             mStatus = null;
         } else {
             mStatus = StatusItem.createNoSuggestionsItem(info);
         }
         mMoreButton = new ActionItem(this, ranker);
         mProgressIndicator = new ProgressItem();
-        if (useModern) {
+        if (isChromeHomeEnabled) {
             addChildren(mHeader, mSuggestionsList, mMoreButton, mProgressIndicator);
         } else {
             addChildren(mHeader, mSuggestionsList, mStatus, mMoreButton, mProgressIndicator);
@@ -114,7 +114,7 @@ public class SuggestionsSection extends InnerNode {
         mOfflineModelObserver = new OfflineModelObserver(offlinePageBridge);
         uiDelegate.addDestructionObserver(mOfflineModelObserver);
 
-        if (!useModern) {
+        if (!isChromeHomeEnabled) {
             mStatus.setVisible(!hasSuggestions());
         }
     }
@@ -251,7 +251,7 @@ public class SuggestionsSection extends InnerNode {
         int newSuggestionsCount = getSuggestionsCount();
         if ((newSuggestionsCount == 0) == (oldSuggestionsCount == 0)) return;
 
-        if (!FeatureUtilities.isChromeHomeModernEnabled()) {
+        if (!FeatureUtilities.isChromeHomeEnabled()) {
             mStatus.setVisible(newSuggestionsCount == 0);
         }
 
@@ -583,7 +583,7 @@ public class SuggestionsSection extends InnerNode {
      * (as opposed to individual items in it).
      */
     private Set<Integer> getSectionDismissalRange() {
-        if (hasSuggestions() || FeatureUtilities.isChromeHomeModernEnabled()) {
+        if (hasSuggestions() || FeatureUtilities.isChromeHomeEnabled()) {
             return Collections.emptySet();
         }
 
