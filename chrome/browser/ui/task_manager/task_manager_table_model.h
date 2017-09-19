@@ -73,6 +73,8 @@ class TaskManagerTableModel
   // task_manager::TaskManagerObserver:
   void OnTaskAdded(TaskId id) override;
   void OnTaskToBeRemoved(TaskId id) override;
+  void OnTaskReplaced(TaskId old_task_id, TaskId new_task_id) override;
+
   void OnTasksRefreshed(const TaskIdList& task_ids) override;
 
   // Gets the start index and length of the group to which the task at
@@ -121,6 +123,18 @@ class TaskManagerTableModel
   // group of tasks.
   bool IsTaskFirstInGroup(int row_index) const;
 
+  // Move |length| many elements of |tasks_| from |old_index| to |new_index|.
+  // |new_index| must be less than |old_index|.
+  void MoveTasksToLowerIndex(int old_index, int length, int new_index);
+
+  // Find the offset of |tasks_| at which |id| belongs, according to the model
+  // sort order.
+  int FindInsertionRow(TaskId id);
+
+  // Search inside |tasks_| for |id|, and return the offset. Returns -1 if |id|
+  // is not in |tasks_|.
+  int FindExistingRow(TaskId id);
+
   // The delegate that will be used to communicate with the platform-specific
   // TableView.
   TableViewDelegate* table_view_delegate_;
@@ -135,7 +149,8 @@ class TaskManagerTableModel
   // manager.
   ui::TableModelObserver* table_model_observer_;
 
-  // The sorted list of task IDs by process ID then by task ID.
+  // The task IDs in their model order; the ordering is determined by the
+  // heuristic FindInsertionRow().
   std::vector<TaskId> tasks_;
 
   // The owned task manager values stringifier that will be used to convert the

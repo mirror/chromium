@@ -90,6 +90,19 @@ class TaskManagerObserver {
   // this task upon its removal may do so inside this call.
   virtual void OnTaskToBeRemoved(TaskId id) {}
 
+  // Notifies the observer that the Chrome task with |old_task_id| will be
+  // deleted and replaced with |new_task_id|. This is an atomic Add/Remove
+  // operation. If the subclass does not override this method, its default
+  // implementation will simply call OnTaskAdded(), followed by
+  // OnTaskToBeRemoved().
+  //
+  // This notification exists to communicate a semantic relationship between the
+  // old and new tasks; so that, for example, if |old_task_id| is selected, the
+  // selection can transfer to |new_task_id|.
+  //
+  // This event can occur, for example, when a tab navigates cross-process.
+  virtual void OnTaskReplaced(TaskId old_task_id, TaskId new_task_id);
+
   // Notifies the observer that the task manager has just finished a refresh
   // cycle to calculate the resources usage of all tasks whose IDs are given in
   // |task_ids|. |task_ids| will be sorted such that the task representing the
