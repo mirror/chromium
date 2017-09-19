@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e77537f_981cbd46",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-19T14:20:09Z",
+      "side": 1,
+      "message": "nit: Can we move this into dtor so that we don\u0027t have to repeat it three times.",
+      "range": {
+        "startLine": 326,
+        "startChar": 0,
+        "endLine": 327,
+        "endChar": 34
+      },
+      "revId": "8bbb17a7d4744ed76674494dd936591f00639b35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eedf574_940b74ae",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-19T14:20:09Z",
+      "side": 1,
+      "message": "nit: views::Widget* const since we don\u0027t need to change |widget_| for the lifetime of the object.",
+      "revId": "8bbb17a7d4744ed76674494dd936591f00639b35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e20466a_34031af3",
+        "filename": "chrome/browser/chromeos/login/ui/login_display_host_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1285,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-09-19T14:20:09Z",
+      "side": 1,
+      "message": "nit: Add a comment to document ownership.",
+      "revId": "8bbb17a7d4744ed76674494dd936591f00639b35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
