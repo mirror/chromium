@@ -52,6 +52,24 @@
       "revId": "2caf88b468fe914532fe0f344de1523497e91dca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63b8c356_d6c27309",
+        "filename": "media/gpu/android/android_video_surface_chooser_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-19T18:16:53Z",
+      "side": 1,
+      "message": "(re: stack trace which goes through AVDA::SetOverlayInfo, copied from email thread for posterity.)\n\nah!  interesting.\n\nplease modify AVDA::SetOverlayInfo return immediately if |state_| is ERROR, and remove the if(surface_texture_cb_) in SurfaceChooser (or convert DCHECK, if you\u0027d prefer).",
+      "parentUuid": "a7d966ea_c33b3e54",
+      "revId": "2caf88b468fe914532fe0f344de1523497e91dca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
