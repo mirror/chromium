@@ -21,7 +21,6 @@ class ContentSettingsInfo {
   enum IncognitoBehavior {
     // Content setting will be inherited from regular to incognito profiles
     // as usual.
-    // TODO(dullweber): Remove as soon as INHERIT_IF_LESS_PERMISSIVE was tested.
     INHERIT_IN_INCOGNITO,
 
     // Content settings can be inherited if the setting is less permissive
