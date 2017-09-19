@@ -225,6 +225,30 @@
     },
     {
       "key": {
+        "uuid": "e83118f6_b07fdf0a",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-19T21:16:54Z",
+      "side": 1,
+      "message": "Could you clarify why you want to do testing in a separate CL? Normally, tests help understand behavior of production code and prevent bugs, so it is an unusual practice to split testing from the production code change. If you believe that adding first few tests would change code in a distracting way, could you try to land those tests first and then fix/add test in this CL?",
+      "parentUuid": "1eed0dfe_96ee8c0f",
+      "range": {
+        "startLine": 1152,
+        "startChar": 16,
+        "endLine": 1152,
+        "endChar": 22
+      },
+      "revId": "231952ae04922021f5ac00ac7b7ebb463d982fb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66b8d820_00e18da2",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
         "patchSetId": 5
