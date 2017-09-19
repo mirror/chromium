@@ -14,13 +14,13 @@
 
 namespace media {
 
-FakeCodecAllocator::FakeCodecAllocator() = default;
+FakeCodecAllocator::FakeCodecAllocator(
+    scoped_refptr<base::SequencedTaskRunner> task_runner)
+    : testing::NiceMock<AVDACodecAllocator>(task_runner) {}
 
 FakeCodecAllocator::~FakeCodecAllocator() = default;
 
-bool FakeCodecAllocator::StartThread(AVDACodecAllocatorClient* client) {
-  return true;
-}
+void FakeCodecAllocator::StartThread(AVDACodecAllocatorClient* client) {}
 
 void FakeCodecAllocator::StopThread(AVDACodecAllocatorClient* client) {}
 
