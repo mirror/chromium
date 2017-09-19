@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cc456dc_f240334d",
+        "filename": "chrome/browser/vr/elements/ui_element_iterator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-19T14:59:11Z",
+      "side": 1,
+      "message": "Thank goodness for unit tests.  This line is \"challenging\" to follow.  :)",
+      "revId": "31823af8db06a826746d2d0510e890831a11731b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917f44d4_fa92646e",
+        "filename": "chrome/browser/vr/elements/ui_element_iterator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-19T14:59:11Z",
+      "side": 1,
+      "message": "You could use a local dummy enum for names if it helps, or even just hard-coded strings.  Using actual element names doesn\u0027t appear to add much value, does it?",
+      "revId": "31823af8db06a826746d2d0510e890831a11731b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "872b06b4_5e148cc6",
+        "filename": "chrome/browser/vr/elements/ui_element_iterator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-19T14:59:11Z",
+      "side": 1,
+      "message": "Should probably be asserting that \u0027i\u0027 is less than elements.size() as you go, as a size mismatch could crash the test before you hit the final size check below.",
+      "revId": "31823af8db06a826746d2d0510e890831a11731b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8339198e_3ac85810",
+        "filename": "chrome/browser/vr/elements/ui_element_iterator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-09-19T14:59:11Z",
+      "side": 1,
+      "message": "I think you could have parameterized the three forward tests by specifying root node name and expected tree size, and same fore reverse.  Not a big deal though.",
+      "revId": "31823af8db06a826746d2d0510e890831a11731b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
