@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "562bcd72_01205db5",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_v8_context_snapshot_external_references.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-19T10:19:27Z",
+      "side": 1,
+      "message": "This flag check should be located out of for loop.",
+      "revId": "503ea772c305fbdce483599bc3de34fae5f181e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f974be6_8895ae93",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_v8_context_snapshot_external_references.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-09-19T10:19:27Z",
+      "side": 1,
+      "message": "Hopefully we don\u0027t want to introduce re.\nCould you rewrite using split() and join()?",
+      "revId": "503ea772c305fbdce483599bc3de34fae5f181e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
