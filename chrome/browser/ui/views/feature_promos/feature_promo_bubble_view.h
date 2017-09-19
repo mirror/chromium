@@ -24,13 +24,18 @@ class FeaturePromoBubbleView : public views::BubbleDialogDelegateView {
  public:
   ~FeaturePromoBubbleView() override;
 
+  // Closes the promo bubble.
+  void CloseBubble();
+
  protected:
   // The |anchor_view| is used to anchor the FeaturePromoBubbleView. The |arrow|
   // sets where the arrow hangs off the bubble and the |string_specifier| is
-  // the text that is displayed on the bubble.
+  // the text that is displayed on the bubble. The |can_activate| sets if the
+  // bubble is active or not.
   FeaturePromoBubbleView(views::View* anchor_view,
                          views::BubbleBorder::Arrow arrow,
-                         int string_specifier);
+                         int string_specifier,
+                         bool can_activate);
 
   // The |anchor_rect| is used to anchor bubble views that have custom
   // positioning requirements. The |arrow| sets where the arrow hangs off the
@@ -44,16 +49,14 @@ class FeaturePromoBubbleView : public views::BubbleDialogDelegateView {
   FeaturePromoBubbleView(views::View* anchor_view,
                          const gfx::Rect& anchor_rect,
                          views::BubbleBorder::Arrow arrow,
-                         int string_specifier);
+                         int string_specifier,
+                         bool can_activate);
 
   // BubbleDialogDelegateView:
   int GetDialogButtons() const override;
   bool OnMousePressed(const ui::MouseEvent& event) override;
   void OnMouseEntered(const ui::MouseEvent& event) override;
   void OnMouseExited(const ui::MouseEvent& event) override;
-
-  // Closes the promo bubble.
-  void CloseBubble();
 
   // Starts a timer to close the promo bubble.
   void StartAutoCloseTimer(base::TimeDelta auto_close_duration);
