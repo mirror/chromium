@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3b54bd5a_5a70daed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-09-19T06:50:36Z",
+      "side": 1,
+      "message": "You don\u0027t need to mention third_party/WebKit/Source/core/dom here.\nUsually, just Element.{cpp,h} is enough.",
+      "revId": "2c3c0536e41ecae9c8fa885df3d18b671e737b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c32c72c4_d88b031f",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 4
@@ -19,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "242d2f48_fffe0d91",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2402,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-09-19T06:50:36Z",
+      "side": 1,
+      "message": "shadow_root_has_mode is confusing name here. The shadow root isn\u0027t created yet.",
+      "revId": "2c3c0536e41ecae9c8fa885df3d18b671e737b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06ab26b1_a5156ed8",
         "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
         "patchSetId": 4
@@ -30,6 +64,57 @@
       "writtenOn": "2017-09-19T06:26:47Z",
       "side": 1,
       "message": "Could you share more logic between CreateShadowRootInternal and AttachShadowInternal\n at least not having copied error message.",
+      "revId": "2c3c0536e41ecae9c8fa885df3d18b671e737b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b200bde_3cb5070f",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2463,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-09-19T06:50:36Z",
+      "side": 1,
+      "message": "It looks shadow_root_has_mode is used only in DCHECK() in this function.\nYou could remove this parameter and DCHECK here.\nInstead, you should DCHECK() in a caller side, if necessary.",
+      "revId": "2c3c0536e41ecae9c8fa885df3d18b671e737b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8990e9_d428c81e",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2466,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-09-19T06:50:36Z",
+      "side": 1,
+      "message": "Could you explain why this DCHECK() is added here?",
+      "revId": "2c3c0536e41ecae9c8fa885df3d18b671e737b76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af9b6cd_b3bcc77f",
+        "filename": "third_party/WebKit/Source/core/dom/Element.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-09-19T06:50:36Z",
+      "side": 1,
+      "message": "It looks strange that this *non-static* function takes tag_name parameter, given that \nit\u0027s just the result of this-\u003elocalName().\n\nI would rather make this function not to take any parameter.\n, or have another static function which checks whether given tag_name is valid or not.\ne.g. static bool IsSupportedTagBlahBlar(const AtomicString\u0026 tag_name)",
       "revId": "2c3c0536e41ecae9c8fa885df3d18b671e737b76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
