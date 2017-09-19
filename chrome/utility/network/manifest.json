@@ -1,0 +1,14 @@
+{
+  "name": "net_proxy_resolver_factory",
+  "display_name": "Proxy resolver factory",
+  "interface_provider_specs": {
+    "service_manager:connector": {
+      "provides": {
+        "factory": [ "net::interfaces::ProxyResolverFactory" ]
+       },
+       "requires": {
+         "service_manager": [ "service_manager:all_users" ]
+       }
+     }
+  }
+}

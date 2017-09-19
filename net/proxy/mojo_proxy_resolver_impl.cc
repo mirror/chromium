@@ -45,7 +45,9 @@ class MojoProxyResolverImpl::Job {
 
 MojoProxyResolverImpl::MojoProxyResolverImpl(
     std::unique_ptr<ProxyResolverV8Tracing> resolver)
-    : resolver_(std::move(resolver)) {}
+    : resolver_(std::move(resolver)) {
+  LOG(ERROR) << "** JAY ** MojoProxyResolverImpl::MojoProxyResolverImpl";
+}
 
 MojoProxyResolverImpl::~MojoProxyResolverImpl() {
 }
@@ -53,6 +55,7 @@ MojoProxyResolverImpl::~MojoProxyResolverImpl() {
 void MojoProxyResolverImpl::GetProxyForUrl(
     const GURL& url,
     interfaces::ProxyResolverRequestClientPtr client) {
+  LOG(ERROR) << "** JAY ** MojoProxyResolverImpl::GetProxyForUrl " << url;
   DVLOG(1) << "GetProxyForUrl(" << url << ")";
   std::unique_ptr<Job> job =
       std::make_unique<Job>(std::move(client), this, url);

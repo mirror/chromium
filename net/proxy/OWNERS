@@ -3,4 +3,7 @@ per-file *_struct_traits*.*=file://ipc/SECURITY_OWNERS
 
 per-file *_v8*=jochen@chromium.org
 
+per-file mojo_proxy_resolver_factory_manifest.json=set noparent
+per-file mojo_proxy_resolver_factory_manifest.json=file://ipc/SECURITY_OWNERS
+
 # COMPONENT: Internals>Network>Proxy
