@@ -22,6 +22,30 @@
       "revId": "02b8319acd10d6e5862ccafbaf91fa2c94ee74cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "317634bf_b84281dd",
+        "filename": "components/arc/common/protected_buffer_manager.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1192808
+      },
+      "writtenOn": "2017-09-19T18:13:21Z",
+      "side": 1,
+      "message": "Yeah...as you recall, I had to figure that out the hard way. :(",
+      "parentUuid": "f64e04a5_341d73ef",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 66
+      },
+      "revId": "02b8319acd10d6e5862ccafbaf91fa2c94ee74cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
