@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78792e96_331c6ad3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/ImpressionTracker.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-19T10:02:54Z",
+      "side": 1,
+      "message": "If we now have a dedicated constructor for the case without a view, remove the @Nullable here and forward to the other constructor instead of this way around?",
+      "range": {
+        "startLine": 52,
+        "startChar": 29,
+        "endLine": 52,
+        "endChar": 39
+      },
+      "revId": "0da8873db03a58f804b647a4e1090c64bc55df90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49af41e2_64a20915",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-19T10:02:54Z",
+      "side": 1,
+      "message": "final?",
+      "revId": "0da8873db03a58f804b647a4e1090c64bc55df90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
