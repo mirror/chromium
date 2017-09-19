@@ -36,6 +36,41 @@
     },
     {
       "key": {
+        "uuid": "26c42432_4b3372a5",
+        "filename": "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-19T07:28:30Z",
+      "side": 1,
+      "message": "IsOobeOptInActive() is being used in another purpose. \nhttps://chromium-review.googlesource.com/c/chromium/src/+/660921\n\nSo, the assumption that mini container is running here can be wrong unfortunately.\n\nThere could be couple of options I think.\nOne of my recommendation is; change ASM::enable_requested_ from bool to Optional\u003cbool\u003e initialized by nullopt.\nThen, you can find your special case in ASM.",
+      "parentUuid": "2202a9f9_90104212",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f305c6_e5942f17",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-19T07:28:30Z",
+      "side": 1,
+      "message": "Style: Could you keep the current error-guard style?",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56837aba_ccd9fad3",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 1
@@ -47,6 +82,23 @@
       "writtenOn": "2017-09-19T01:00:22Z",
       "side": 1,
       "message": "Just to confirm, this path is taken when the user presses [x] button on the top-right corner of the ToS window too, correct?",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34da70cf_6ea56d10",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 769,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-19T07:28:30Z",
+      "side": 1,
+      "message": "SetArcPlayStoreEnabledForProfile(*, false); should trigger this?\nWhy is it necessary to call here explicitly?",
       "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
