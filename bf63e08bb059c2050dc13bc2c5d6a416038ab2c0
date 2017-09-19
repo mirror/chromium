@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9f05d08_b7039d04",
+        "filename": "net/base/net_string_util.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-09-19T05:35:03Z",
+      "side": 1,
+      "message": "What\u0027s the use case of ToUpper in net/ ?  Does it need to be locale-dependent?",
+      "range": {
+        "startLine": 41,
+        "startChar": 31,
+        "endLine": 41,
+        "endChar": 55
+      },
+      "revId": "bf63e08bb059c2050dc13bc2c5d6a416038ab2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
