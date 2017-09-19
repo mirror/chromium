@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbaa3763_2cd2ac9d",
+        "filename": "chromeos/components/tether/ble_connection_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-19T17:09:15Z",
+      "side": 1,
+      "message": "Why override this method if you just call the base implementation?",
+      "range": {
+        "startLine": 162,
+        "startChar": 4,
+        "endLine": 162,
+        "endChar": 14
+      },
+      "revId": "a9f73c8f9e6b6afd3f94e4ed0918941866653597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b354785_9280a277",
+        "filename": "chromeos/components/tether/ble_scanner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-19T17:09:15Z",
+      "side": 1,
+      "message": "Why is this call necessary? It seems that this method is only called (indirectly) via UpdateDiscoveryStatus() -- if the session has just started, do you expect ShouldDiscoverySessionBeActive() to return false?",
+      "range": {
+        "startLine": 210,
+        "startChar": 2,
+        "endLine": 210,
+        "endChar": 23
+      },
+      "revId": "a9f73c8f9e6b6afd3f94e4ed0918941866653597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b33952a1_69fdcd1c",
+        "filename": "chromeos/components/tether/ble_scanner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-19T17:09:15Z",
+      "side": 1,
+      "message": "Similar question -- will this result in forever calling EnsureDiscoverySessionActive() or will ShouldDiscoverySessionBeActive() eventually return false?",
+      "range": {
+        "startLine": 216,
+        "startChar": 2,
+        "endLine": 216,
+        "endChar": 23
+      },
+      "revId": "a9f73c8f9e6b6afd3f94e4ed0918941866653597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c93747e_28270590",
+        "filename": "chromeos/components/tether/ble_scanner_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-19T17:09:15Z",
+      "side": 1,
+      "message": "Why are these Reset calls needed?",
+      "range": {
+        "startLine": 175,
+        "startChar": 4,
+        "endLine": 175,
+        "endChar": 28
+      },
+      "revId": "a9f73c8f9e6b6afd3f94e4ed0918941866653597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c66ff84e_d87c1ba3",
+        "filename": "chromeos/components/tether/ble_scanner_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-19T17:09:15Z",
+      "side": 1,
+      "message": "This line is same as the one above.",
+      "range": {
+        "startLine": 563,
+        "startChar": 28,
+        "endLine": 563,
+        "endChar": 52
+      },
+      "revId": "a9f73c8f9e6b6afd3f94e4ed0918941866653597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cfab430_869824ce",
+        "filename": "chromeos/components/tether/ble_scanner_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-09-19T17:09:15Z",
+      "side": 1,
+      "message": "did you mean to say \"should have not occurred\"?",
+      "range": {
+        "startLine": 635,
+        "startChar": 41,
+        "endLine": 635,
+        "endChar": 45
+      },
+      "revId": "a9f73c8f9e6b6afd3f94e4ed0918941866653597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
