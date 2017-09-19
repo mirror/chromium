@@ -745,9 +745,11 @@ void TabManager::AddTabStats(const BrowserInfo& browser_info,
       stats.discard_count = GetWebContentsData(contents)->DiscardCount();
       stats.last_active = contents->GetLastActiveTime();
       stats.last_hidden = contents->GetLastHiddenTime();
-      stats.render_process_host = contents->GetRenderProcessHost();
-      stats.renderer_handle = contents->GetRenderProcessHost()->GetHandle();
-      stats.child_process_host_id = contents->GetRenderProcessHost()->GetID();
+      stats.render_process_host = contents->GetMainFrame()->GetProcess();
+      stats.renderer_handle =
+          contents->GetMainFrame()->GetProcess()->GetHandle();
+      stats.child_process_host_id =
+          contents->GetMainFrame()->GetProcess()->GetID();
 #if defined(OS_CHROMEOS)
       stats.oom_score = delegate_->GetCachedOomScore(stats.renderer_handle);
 #endif
@@ -869,7 +871,8 @@ WebContents* TabManager::DiscardWebContentsAt(int index,
 
   // First try to fast-kill the process, if it's just running a single tab.
   bool fast_shutdown_success =
-      old_contents->GetRenderProcessHost()->FastShutdownIfPossible(1u, false);
+      old_contents->GetMainFrame()->GetProcess()->FastShutdownIfPossible(1u,
+                                                                         false);
 
 #ifdef OS_CHROMEOS
   if (!fast_shutdown_success && condition == kUrgentShutdown) {

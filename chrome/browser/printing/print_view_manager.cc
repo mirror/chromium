@@ -74,7 +74,7 @@ PrintViewManager::PrintViewManager(content::WebContents* web_contents)
       scripted_print_preview_rph_(nullptr) {
   if (PrintPreviewDialogController::IsPrintPreviewURL(web_contents->GetURL())) {
     EnableInternalPDFPluginForContents(
-        web_contents->GetRenderProcessHost()->GetID(),
+        web_contents->GetMainFrame()->GetProcess()->GetID(),
         web_contents->GetMainFrame()->GetRoutingID());
   }
 }
