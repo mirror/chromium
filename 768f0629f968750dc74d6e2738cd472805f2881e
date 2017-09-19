@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "390df8aa_dfdc4ad3",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-19T18:43:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f79dce1f_3df50bc4",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de8f4aa9_95ffd45c",
         "filename": "net/tools/transport_security_state_generator/README.md",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd7c9744_26677483",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-19T18:43:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de8f4aa9_95ffd45c",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c3a19269_3f0e3937",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-19T18:43:55Z",
+      "side": 1,
+      "message": "8*22BIT in ABNF means minimum 8 \u0026 maximum 22 bits. Updated to comment to clarify this a bit.",
+      "parentUuid": "eac8ec4c_310931f9",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75b2be7c_832ee832",
         "filename": "net/tools/transport_security_state_generator/README.md",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fa829b7_9f6de0de",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-19T18:43:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75b2be7c_832ee832",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "1d1c0a4f_6f7bc2a8",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-19T18:43:55Z",
+      "side": 1,
+      "message": "I think this is correct, *BIT would mean zero, one, or more bits but you need at least 1 bit for a huffman coding.",
+      "parentUuid": "23e3a019_558a3640",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4924861_faf290b9",
         "filename": "net/tools/transport_security_state_generator/README.md",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5099e70_a11fe27b",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-19T18:43:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4924861_faf290b9",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "87eb2217_09bdd6ff",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-19T18:43:55Z",
+      "side": 1,
+      "message": "No reason, I split out include-subdomains because it was used multiple times. The comment at the end of the line also explains what the flag means so it\u0027s still clear what the BIT represents.",
+      "parentUuid": "ebc05f0b_6949a889",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5e9e632_1c09fb5e",
         "filename": "net/tools/transport_security_state_generator/README.md",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e6a0fe_4fc5ed76",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-19T18:43:55Z",
+      "side": 1,
+      "message": "BIT means exactly 1 bit, 4BIT (or 7BIT) means exactly 4 (or 7) bits, and 1*BIT means one or more bits so they have slightly different sementatic meanings (except BIT and 1BIT).\n\nhttps://tools.ietf.org/html/rfc5234#section-3.6",
+      "parentUuid": "e5e9e632_1c09fb5e",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "f1d0f61b_44c0325d",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-19T18:43:55Z",
+      "side": 1,
+      "message": "Yes, a 4 bit number.",
+      "parentUuid": "cbee3bce_bccdc1b8",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98c156c3_a32f7bde",
         "filename": "net/tools/transport_security_state_generator/README.md",
         "patchSetId": 3
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "20cdf981_a14afd5c",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-19T18:43:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98c156c3_a32f7bde",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6be9eb61_50f134fc",
         "filename": "net/tools/transport_security_state_generator/README.md",
         "patchSetId": 3
@@ -186,6 +366,24 @@
       "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7388c2a2_e151324e",
+        "filename": "net/tools/transport_security_state_generator/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-19T18:43:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6be9eb61_50f134fc",
+      "revId": "768f0629f968750dc74d6e2738cd472805f2881e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
