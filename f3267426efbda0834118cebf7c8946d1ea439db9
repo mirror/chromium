@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41d3f47f_83c20d32",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 1357,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-09-19T19:57:29Z",
+      "side": 1,
+      "message": "Not sure how the webapk runtime library is loaded (is it within Chrome?), but will we also need the build_hooks_android_impl deps? Or will this code always be run within the APK that already has this target?\n\nI\u0027m also surprised proguard doesn\u0027t complain about BuildHooksAndroidImpl.java missing.",
+      "range": {
+        "startLine": 1357,
+        "startChar": 34,
+        "endLine": 1357,
+        "endChar": 69
+      },
+      "revId": "f3267426efbda0834118cebf7c8946d1ea439db9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
