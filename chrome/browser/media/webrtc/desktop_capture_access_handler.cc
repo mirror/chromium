@@ -75,67 +75,67 @@ base::string16 GetStopSharingUIString(
     const base::string16& application_title,
     const base::string16& registered_extension_name,
     bool capture_audio,
-    content::DesktopMediaID::Type capture_type) {
+    content::DesktopMediaID::Source capture_type) {
   if (!capture_audio) {
     if (application_title == registered_extension_name) {
       switch (capture_type) {
-        case content::DesktopMediaID::TYPE_SCREEN:
+        case content::DesktopMediaID::SOURCE_SCREEN:
           return l10n_util::GetStringFUTF16(
               IDS_MEDIA_SCREEN_CAPTURE_NOTIFICATION_TEXT, application_title);
-        case content::DesktopMediaID::TYPE_WINDOW:
+        case content::DesktopMediaID::SOURCE_WINDOW:
           return l10n_util::GetStringFUTF16(
               IDS_MEDIA_WINDOW_CAPTURE_NOTIFICATION_TEXT, application_title);
-        case content::DesktopMediaID::TYPE_WEB_CONTENTS:
+        case content::DesktopMediaID::SOURCE_WEB_CONTENTS:
           return l10n_util::GetStringFUTF16(
               IDS_MEDIA_TAB_CAPTURE_NOTIFICATION_TEXT, application_title);
-        case content::DesktopMediaID::TYPE_NONE:
+        case content::DesktopMediaID::SOURCE_NONE:
           NOTREACHED();
       }
     } else {
       switch (capture_type) {
-        case content::DesktopMediaID::TYPE_SCREEN:
+        case content::DesktopMediaID::SOURCE_SCREEN:
           return l10n_util::GetStringFUTF16(
               IDS_MEDIA_SCREEN_CAPTURE_NOTIFICATION_TEXT_DELEGATED,
               registered_extension_name, application_title);
-        case content::DesktopMediaID::TYPE_WINDOW:
+        case content::DesktopMediaID::SOURCE_WINDOW:
           return l10n_util::GetStringFUTF16(
               IDS_MEDIA_WINDOW_CAPTURE_NOTIFICATION_TEXT_DELEGATED,
               registered_extension_name, application_title);
-        case content::DesktopMediaID::TYPE_WEB_CONTENTS:
+        case content::DesktopMediaID::SOURCE_WEB_CONTENTS:
           return l10n_util::GetStringFUTF16(
               IDS_MEDIA_TAB_CAPTURE_NOTIFICATION_TEXT_DELEGATED,
               registered_extension_name, application_title);
-        case content::DesktopMediaID::TYPE_NONE:
+        case content::DesktopMediaID::SOURCE_NONE:
           NOTREACHED();
       }
     }
   } else {  // The case with audio
     if (application_title == registered_extension_name) {
       switch (capture_type) {
-        case content::DesktopMediaID::TYPE_SCREEN:
+        case content::DesktopMediaID::SOURCE_SCREEN:
           return l10n_util::GetStringFUTF16(
               IDS_MEDIA_SCREEN_CAPTURE_WITH_AUDIO_NOTIFICATION_TEXT,
               application_title);
-        case content::DesktopMediaID::TYPE_WEB_CONTENTS:
+        case content::DesktopMediaID::SOURCE_WEB_CONTENTS:
           return l10n_util::GetStringFUTF16(
               IDS_MEDIA_TAB_CAPTURE_WITH_AUDIO_NOTIFICATION_TEXT,
               application_title);
-        case content::DesktopMediaID::TYPE_NONE:
-        case content::DesktopMediaID::TYPE_WINDOW:
+        case content::DesktopMediaID::SOURCE_NONE:
+        case content::DesktopMediaID::SOURCE_WINDOW:
           NOTREACHED();
       }
     } else {
       switch (capture_type) {
-        case content::DesktopMediaID::TYPE_SCREEN:
+        case content::DesktopMediaID::SOURCE_SCREEN:
           return l10n_util::GetStringFUTF16(
               IDS_MEDIA_SCREEN_CAPTURE_WITH_AUDIO_NOTIFICATION_TEXT_DELEGATED,
               registered_extension_name, application_title);
-        case content::DesktopMediaID::TYPE_WEB_CONTENTS:
+        case content::DesktopMediaID::SOURCE_WEB_CONTENTS:
           return l10n_util::GetStringFUTF16(
               IDS_MEDIA_TAB_CAPTURE_WITH_AUDIO_NOTIFICATION_TEXT_DELEGATED,
               registered_extension_name, application_title);
-        case content::DesktopMediaID::TYPE_NONE:
-        case content::DesktopMediaID::TYPE_WINDOW:
+        case content::DesktopMediaID::SOURCE_NONE:
+        case content::DesktopMediaID::SOURCE_WINDOW:
           NOTREACHED();
       }
     }
@@ -168,7 +168,7 @@ std::unique_ptr<content::MediaStreamUI> GetDevicesForDesktopCapture(
       content::MediaStreamDevice(content::MEDIA_DESKTOP_VIDEO_CAPTURE,
                                  media_id.ToString(), media_id.ToString()));
   if (capture_audio) {
-    if (media_id.type == content::DesktopMediaID::TYPE_WEB_CONTENTS) {
+    if (media_id.source_type == content::DesktopMediaID::SOURCE_WEB_CONTENTS) {
       content::WebContentsMediaCaptureId web_id = media_id.web_contents_id;
       web_id.disable_local_echo = disable_local_echo;
       devices->push_back(
@@ -194,9 +194,9 @@ std::unique_ptr<content::MediaStreamUI> GetDevicesForDesktopCapture(
     return ui;
   }
 
-  ui = ScreenCaptureNotificationUI::Create(GetStopSharingUIString(
-      application_title, registered_extension_name, capture_audio,
-      media_id.type));
+  ui = ScreenCaptureNotificationUI::Create(
+      GetStopSharingUIString(application_title, registered_extension_name,
+                             capture_audio, media_id.source_type));
 
   return ui;
 }
@@ -314,11 +314,11 @@ void DesktopCaptureAccessHandler::ProcessScreenCaptureAccessRequest(
       content::DesktopMediaID screen_id;
 #if defined(OS_CHROMEOS)
       screen_id = content::DesktopMediaID::RegisterAuraWindow(
-          content::DesktopMediaID::TYPE_SCREEN,
+          content::DesktopMediaID::SOURCE_SCREEN,
           ash::Shell::Get()->GetPrimaryRootWindow());
 #else   // defined(OS_CHROMEOS)
-      screen_id = content::DesktopMediaID(content::DesktopMediaID::TYPE_SCREEN,
-                                          webrtc::kFullDesktopScreenId);
+      screen_id = content::DesktopMediaID(
+          content::DesktopMediaID::SOURCE_SCREEN, webrtc::kFullDesktopScreenId);
 #endif  // !defined(OS_CHROMEOS)
 
       bool capture_audio =
@@ -412,7 +412,7 @@ void DesktopCaptureAccessHandler::HandleRequest(
   }
 
   // Received invalid device id.
-  if (media_id.type == content::DesktopMediaID::TYPE_NONE) {
+  if (media_id.source_type == content::DesktopMediaID::SOURCE_NONE) {
     callback.Run(devices, content::MEDIA_DEVICE_INVALID_STATE, std::move(ui));
     return;
   }
@@ -425,7 +425,7 @@ void DesktopCaptureAccessHandler::HandleRequest(
 
   // This value essentially from the checkbox on picker window, so it
   // corresponds to user permission.
-  const bool audio_permitted = media_id.audio_share;
+  const bool audio_permitted = media_id.is_audio_capture();
 
   // This value essentially from whether getUserMedia requests audio stream.
   const bool audio_requested =
@@ -435,9 +435,9 @@ void DesktopCaptureAccessHandler::HandleRequest(
   // can support audio sharing. Currently audio is only supported for screen and
   // tab/webcontents capture streams.
   const bool audio_supported =
-      (media_id.type == content::DesktopMediaID::TYPE_SCREEN &&
+      (media_id.source_type == content::DesktopMediaID::SOURCE_SCREEN &&
        loopback_audio_supported) ||
-      media_id.type == content::DesktopMediaID::TYPE_WEB_CONTENTS;
+      media_id.source_type == content::DesktopMediaID::SOURCE_WEB_CONTENTS;
 
   const bool check_audio_permission =
       !base::CommandLine::ForCurrentProcess()->HasSwitch(
