@@ -2141,19 +2141,29 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
     (NTPTabOpeningPostOpeningAction)action {
   switch (action) {
     case START_VOICE_SEARCH:
-      return ^{
-        [self startVoiceSearchInCurrentBVCWithOriginView:nil];
-      };
-    case START_QR_CODE_SCANNER:
-      return ^{
-        [self.currentBVC.dispatcher showQRScanner];
-      };
-    case FOCUS_OMNIBOX:
-      return ^{
-        [self.currentBVC focusOmnibox];
-      };
-    default:
-      return nil;
+      if (@available(ios, 11)) {
+        return ^{
+          [self startVoiceSearchInCurrentBVCWithOriginView:nil];
+        };
+      } else {
+        return ^{
+          dispatch_after(
+              dispatch_time(DISPATCH_TIME_NOW, (int64_t)(100 * NSEC_PER_MSEC)),
+              dispatch_get_main_queue(), ^{
+                [self startVoiceSearchInCurrentBVCWithOriginView:nil];
+              });
+
+        };
+        case START_QR_CODE_SCANNER:
+          return ^{
+            [self.currentBVC.dispatcher showQRScanner];
+          };
+        case FOCUS_OMNIBOX:
+          return ^{
+            [self.currentBVC focusOmnibox];
+          };
+        default:
+          return nil;
   }
 }
 
