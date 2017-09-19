@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47f6ddc7_e73c7593",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T15:09:02Z",
+      "side": 1,
+      "message": "Should update this description.",
+      "range": {
+        "startLine": 15,
+        "startChar": 31,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "da4cbae2be78b57008c8cf5641c7747c1d7419ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a573826_d057f849",
+        "filename": "content/network/mojo_proxy_resolver_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-09-19T15:09:02Z",
+      "side": 1,
+      "message": "These files (Except for ProxyResolverFactoryMojo/ProxyServiceMojo) are going to eventually end up in chrome/services/proxy_resolver or somesuch?  I don\u0027t think we want the network service to depend on V8 itself, since some potential embedders (Like Cronet) can\u0027t use it, due to its size.",
+      "range": {
+        "startLine": 6,
+        "startChar": 8,
+        "endLine": 6,
+        "endChar": 51
+      },
+      "revId": "da4cbae2be78b57008c8cf5641c7747c1d7419ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
