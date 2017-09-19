@@ -278,6 +278,144 @@
     },
     {
       "key": {
+        "uuid": "b346793d_e1992c2b",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T09:36:53Z",
+      "side": 1,
+      "message": "I guess that check whether a string contains one of terms from some dictionary is common operation here. Consider make a method for that purpose.",
+      "range": {
+        "startLine": 386,
+        "startChar": 4,
+        "endLine": 386,
+        "endChar": 61
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "513aebb8_8e0c7af5",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T09:36:53Z",
+      "side": 1,
+      "message": "OMG, you re-use the same variable name in a nested loop. It is very bad for readability and error-prone.",
+      "range": {
+        "startLine": 398,
+        "startChar": 18,
+        "endLine": 398,
+        "endChar": 19
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b1fecd9_e6bb901c",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T09:36:53Z",
+      "side": 1,
+      "message": "It is not nice that you iterate over an vector and remove elements within the loop. \n\nConsider erase-remove_if pattern for excluding negative elements.  https://cs.chromium.org/chromium/src/components/autofill/content/renderer/form_classifier.cc?rcl\u003d435a341a77e06530162229c0cee93b65be300a38\u0026l\u003d50",
+      "range": {
+        "startLine": 401,
+        "startChar": 10,
+        "endLine": 401,
+        "endChar": 27
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e033bc9e_014b2e6b",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T09:36:53Z",
+      "side": 1,
+      "message": "Initialize the variable once you declare it.\n\nIf you need to re-initialize at every iteration, then declare the variable within the loop.",
+      "range": {
+        "startLine": 428,
+        "startChar": 2,
+        "endLine": 428,
+        "endChar": 15
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e86b76b_4d520fd9",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T09:36:53Z",
+      "side": 1,
+      "message": "strange using of ternary operator :)\n\nstd::string analyzed_group \u003d group \u003d\u003d DEVELOPER_GROUP ? ...",
+      "range": {
+        "startLine": 433,
+        "startChar": 6,
+        "endLine": 437,
+        "endChar": 0
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdaed759_3cc25d80",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T09:36:53Z",
+      "side": 1,
+      "message": "|count| is not a bool. Use explicit comparison with zero. Don\u0027t add hacks/tricks. Try to reduce mental load of code readers.",
+      "range": {
+        "startLine": 439,
+        "startChar": 12,
+        "endLine": 439,
+        "endChar": 18
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f6fba0b_92f34763",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 15
@@ -317,6 +455,29 @@
         "startChar": 2,
         "endLine": 471,
         "endChar": 20
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034cdcbb_438ccd1f",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T09:36:53Z",
+      "side": 1,
+      "message": "const reference would fine here. \n\nAlso try to set as many |const|s as possible (for methods, for variables). On the other side, don\u0027t be crazy about that :)",
+      "range": {
+        "startLine": 491,
+        "startChar": 7,
+        "endLine": 491,
+        "endChar": 26
       },
       "revId": "328a0942081fb127a854ab04896ad513dda237d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
