@@ -36,6 +36,9 @@ class PolicyToolUIHandler : public PolicyUIHandler {
   void ShowErrorMessageToUser(const std::string& message);
 
   base::FilePath GetSessionPath(const base::FilePath::StringType& name) const;
+  base::ListValue GetSessionsList();
+
+  void SetDefaultSessionName();
 
   base::FilePath sessions_dir_;
   base::FilePath::StringType session_name_;

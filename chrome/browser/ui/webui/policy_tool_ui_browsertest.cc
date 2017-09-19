@@ -11,6 +11,7 @@
 #include "base/threading/thread_restrictions.h"
 #include "base/values.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/javascript_dialogs/javascript_dialog_tab_helper.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_features.h"
@@ -244,4 +245,34 @@ IN_PROC_BROWSER_TEST_F(PolicyToolUITest, UnableToCreateDirectoryOrFile) {
                                                  base::File::Flags::FLAG_WRITE);
   not_directory.Close();
   LoadSessionAndWaitForAlert("test_session");
+}
+
+IN_PROC_BROWSER_TEST_F(PolicyToolUITest, DefaultSession) {
+  // Navigate to the tool to make sure the sessions directory is created.
+  ui_test_utils::NavigateToURL(browser(), GURL("chrome://policy-tool"));
+
+  // Check that if there are no sessions, a session with default name is
+  // created.
+  base::ThreadRestrictions::ScopedAllowIO allow_io;
+  EXPECT_TRUE(base::PathExists(
+      GetSessionsDir().Append(FILE_PATH_LITERAL("policy.json"))));
+
+  // Create a session file and load it.
+  base::DictionaryValue expected;
+  expected.SetString("chromePolicies.SessionName.value", "session");
+  std::string file_contents;
+  base::JSONWriter::Write(expected, &file_contents);
+
+  base::WriteFile(GetSessionsDir().Append(FILE_PATH_LITERAL("session.json")),
+                  file_contents.c_str(), file_contents.size());
+  LoadSession("session");
+  std::unique_ptr<base::DictionaryValue> values = ExtractPolicyValues(false);
+  EXPECT_EQ(expected, *values);
+
+  // Open the tool in a new tab and check that it loads the newly created
+  // session (which is the last used session) and not the default session.
+  chrome::NewTab(browser());
+  ui_test_utils::NavigateToURL(browser(), GURL("chrome://policy-tool"));
+  values = ExtractPolicyValues(false);
+  EXPECT_EQ(expected, *values);
 }
