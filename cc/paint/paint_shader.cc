@@ -139,6 +139,51 @@ sk_sp<PaintShader> PaintShader::MakePaintRecord(
 PaintShader::PaintShader(Type type) : shader_type_(type) {}
 PaintShader::~PaintShader() = default;
 
+bool PaintShader::GetRasterizationTileRect(const SkMatrix& ctm,
+                                           SkRect* tile_rect) const {
+  DCHECK_EQ(shader_type_, Type::kPaintRecord);
+
+  // If we are using a fixed scale, the record is rasterized with the original
+  // tile size and scaling is applied to the generated output.
+  if (scaling_behavior_ == ScalingBehavior::kFixedScale) {
+    *tile_rect = tile_;
+    return true;
+  }
+
+  SkMatrix matrix = ctm;
+  if (local_matrix_.has_value())
+    matrix.preConcat(local_matrix_.value());
+
+  SkSize scale;
+  if (!matrix.decomposeScale(&scale)) {
+    // Decomposition failed, use an approximation.
+    scale.set(SkScalarSqrt(matrix.getScaleX() * matrix.getScaleX() +
+                           matrix.getSkewX() * matrix.getSkewX()),
+              SkScalarSqrt(matrix.getScaleY() * matrix.getScaleY() +
+                           matrix.getSkewY() * matrix.getSkewY()));
+  }
+  SkSize scaled_size =
+      SkSize::Make(SkScalarAbs(scale.width() * tile_.width()),
+                   SkScalarAbs(scale.height() * tile_.height()));
+
+  // Clamp the tile size to about 4M pixels.
+  // TODO(khushalsagar): We need to consider the max texture size as well.
+  static const SkScalar kMaxTileArea = 2048 * 2048;
+  SkScalar tile_area = scaled_size.width() * scaled_size.height();
+  if (tile_area > kMaxTileArea) {
+    SkScalar clamp_scale = SkScalarSqrt(kMaxTileArea / tile_area);
+    scaled_size.set(scaled_size.width() * clamp_scale,
+                    scaled_size.height() * clamp_scale);
+  }
+
+  scaled_size = scaled_size.toCeil();
+  if (scaled_size.isEmpty())
+    return false;
+
+  *tile_rect = SkRect::MakeWH(scaled_size.width(), scaled_size.height());
+  return true;
+}
+
 sk_sp<SkShader> PaintShader::GetSkShader() const {
   if (cached_shader_)
     return cached_shader_;
