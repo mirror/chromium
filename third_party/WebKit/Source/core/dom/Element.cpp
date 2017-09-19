@@ -2370,6 +2370,21 @@ ShadowRoot* Element::createShadowRoot(const ScriptState* script_state,
   return CreateShadowRootInternal(ShadowRootType::V0, exception_state);
 }
 
+bool Element::CanAttachShadowRoot(const AtomicString& tag_name) {
+  return IsV0CustomElement() ||
+         GetCustomElementState() != CustomElementState::kUncustomized ||
+         tag_name == HTMLNames::articleTag || tag_name == HTMLNames::asideTag ||
+         tag_name == HTMLNames::blockquoteTag ||
+         tag_name == HTMLNames::bodyTag || tag_name == HTMLNames::divTag ||
+         tag_name == HTMLNames::footerTag || tag_name == HTMLNames::h1Tag ||
+         tag_name == HTMLNames::h2Tag || tag_name == HTMLNames::h3Tag ||
+         tag_name == HTMLNames::h4Tag || tag_name == HTMLNames::h5Tag ||
+         tag_name == HTMLNames::h6Tag || tag_name == HTMLNames::headerTag ||
+         tag_name == HTMLNames::navTag || tag_name == HTMLNames::mainTag ||
+         tag_name == HTMLNames::pTag || tag_name == HTMLNames::sectionTag ||
+         tag_name == HTMLNames::spanTag;
+}
+
 ShadowRoot* Element::attachShadow(const ScriptState* script_state,
                                   const ShadowRootInit& shadow_root_init_dict,
                                   ExceptionState& exception_state) {
@@ -2378,19 +2393,7 @@ ShadowRoot* Element::attachShadow(const ScriptState* script_state,
       HostsUsingFeatures::Feature::kElementAttachShadow);
 
   const AtomicString& tag_name = localName();
-  bool tag_name_is_supported =
-      IsV0CustomElement() ||
-      GetCustomElementState() != CustomElementState::kUncustomized ||
-      tag_name == HTMLNames::articleTag || tag_name == HTMLNames::asideTag ||
-      tag_name == HTMLNames::blockquoteTag || tag_name == HTMLNames::bodyTag ||
-      tag_name == HTMLNames::divTag || tag_name == HTMLNames::footerTag ||
-      tag_name == HTMLNames::h1Tag || tag_name == HTMLNames::h2Tag ||
-      tag_name == HTMLNames::h3Tag || tag_name == HTMLNames::h4Tag ||
-      tag_name == HTMLNames::h5Tag || tag_name == HTMLNames::h6Tag ||
-      tag_name == HTMLNames::headerTag || tag_name == HTMLNames::navTag ||
-      tag_name == HTMLNames::mainTag || tag_name == HTMLNames::pTag ||
-      tag_name == HTMLNames::sectionTag || tag_name == HTMLNames::spanTag;
-  if (!tag_name_is_supported) {
+  if (!CanAttachShadowRoot(tag_name)) {
     exception_state.ThrowDOMException(
         kNotSupportedError, "This element does not support attachShadow");
     return nullptr;
@@ -2416,6 +2419,8 @@ ShadowRoot* Element::attachShadow(const ScriptState* script_state,
     UseCounter::Count(GetDocument(), WebFeature::kElementAttachShadowOpen);
 
   ShadowRoot* shadow_root = CreateShadowRootInternal(type, exception_state);
+  DCHECK(!CanAttachShadowRoot(tag_name));
+  DCHECK(type == ShadowRootType::kOpen);
 
   if (shadow_root_init_dict.hasDelegatesFocus()) {
     shadow_root->SetDelegatesFocus(shadow_root_init_dict.delegatesFocus());
