@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "a3c85272_372237e9",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T22:22:52Z",
+      "side": 1,
+      "message": "It\u0027s correct that you can\u0027t make a non-static data member constexpr.  It turns out std::string can\u0027t be made to work with this, even if you add a constexpr constructor to Response (which was my instinct on how to do this).  You could maybe use const char[] members (and go back to \"\").  C++17\u0027s answer to this is std::string_view, which is basically a standardization of StringPiece -- so another route would be to use StringPiece instead of std::string for this member, though I didn\u0027t look to see if we\u0027d added constexpr constructors for it.\n\nI think this is not worth worrying about :)",
+      "parentUuid": "74014e4a_b7040642",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40cec8ea_259f8565",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
         "patchSetId": 2
@@ -276,6 +294,24 @@
       "side": 1,
       "message": "\u003e TBH, you shouldn\u0027t even need the cast; since the target is an enum rather than an enum class, it should silently coerce.\n\nNope.\n\n../../chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc:373:13: error: cannot initialize a parameter of type \u0027net::HttpStatusCode\u0027 with an lvalue of type \u0027const int\u0027\n            test_case.responses[j].http_response_code,\n            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n../../net/url_request/test_url_fetcher_factory.h:436:39: note: passing argument to parameter \u0027response_code\u0027 here\n                       HttpStatusCode response_code,",
       "parentUuid": "b30b8e0a_fde036aa",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a20fcc2_4e9ad5ed",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T22:22:52Z",
+      "side": 1,
+      "message": "Huh.  I thought that would work.  Apparently you can silently convert enum to int but not the other way, or something.",
+      "parentUuid": "bea57d58_eea7897c",
       "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
