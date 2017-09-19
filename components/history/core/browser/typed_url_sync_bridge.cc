@@ -74,6 +74,22 @@ bool HasTypedUrl(const VisitVector& visits) {
   return typed_url_visit != visits.end();
 }
 
+template <class Source, class Observer>
+class ScopedObserverRemover {
+ public:
+  ScopedObserverRemover(ScopedObserver<Source, Observer>* observer,
+                        Source* const source)
+      : observer_(observer), source_(source) {
+    ;
+    observer_->RemoveAll();
+  }
+  ~ScopedObserverRemover() { observer_->Add(source_); }
+
+ private:
+  ScopedObserver<Source, Observer>* observer_;
+  Source* const source_;
+};
+
 }  // namespace
 
 TypedURLSyncBridge::TypedURLSyncBridge(
@@ -151,11 +167,6 @@ base::Optional<ModelError> TypedURLSyncBridge::MergeSyncData(
                      &updated_synced_urls);
   }
 
-  for (const auto& kv : new_db_urls) {
-    SendTypedURLToProcessor(kv.second, local_visit_vectors[kv.first],
-                            metadata_change_list.get());
-  }
-
   base::Optional<ModelError> error = WriteToHistoryBackend(
       &new_synced_urls, &updated_synced_urls, NULL, &new_synced_visits, NULL);
 
@@ -173,6 +184,11 @@ base::Optional<ModelError> TypedURLSyncBridge::MergeSyncData(
       change_processor()->UpdateStorageKey(entity_change.data(), storage_key,
                                            metadata_change_list.get());
     }
+  }
+
+  for (const auto& kv : new_db_urls) {
+    SendTypedURLToProcessor(kv.second, local_visit_vectors[kv.first],
+                            metadata_change_list.get());
   }
 
   UMA_HISTOGRAM_PERCENTAGE("Sync.TypedUrlMergeAndStartSyncingErrors",
@@ -229,9 +245,12 @@ base::Optional<ModelError> TypedURLSyncBridge::ApplySyncChanges(
                    &updated_synced_urls, &new_synced_urls);
   }
 
-  WriteToHistoryBackend(&new_synced_urls, &updated_synced_urls,
-                        &pending_deleted_urls, &new_synced_visits,
-                        &deleted_visits);
+  base::Optional<ModelError> error = WriteToHistoryBackend(
+      &new_synced_urls, &updated_synced_urls, &pending_deleted_urls,
+      &new_synced_visits, &deleted_visits);
+
+  if (error)
+    return error;
 
   // New entities were either ignored or written to history DB and assigned a
   // storage key. Notify processor about updated storage keys.
@@ -912,6 +931,9 @@ base::Optional<ModelError> TypedURLSyncBridge::WriteToHistoryBackend(
     const std::vector<GURL>* deleted_urls,
     const TypedURLVisitVector* new_visits,
     const VisitVector* deleted_visits) {
+  ScopedObserverRemover<HistoryBackend, HistoryBackendObserver> remover(
+      &history_backend_observer_, history_backend_);
+
   if (deleted_urls && !deleted_urls->empty())
     history_backend_->DeleteURLs(*deleted_urls);
 
