@@ -49,6 +49,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -398,6 +399,50 @@ public class UrlBarTest {
             Assert.assertEquals(
                     "Text w/ Autocomplete", "testing is fun", state.textWithAutocomplete);
         }
+    }
+
+    /**
+     * Ensure that we send cursor position with autocomplete requests.
+     */
+    @Test
+    @SmallTest
+    @Feature({"Omnibox"})
+    @RetryOnFailure
+    public void testSendCursorPosition() throws InterruptedException, TimeoutException {
+        mActivityTestRule.startMainActivityOnBlankPage();
+
+        final String textToBeEntered = "foo";
+
+        //        final CallbackHelper autocompleteHelper = new CallbackHelper();
+        final AtomicInteger cursorPositionUsed = new AtomicInteger();
+        final StubAutocompleteController controller = new StubAutocompleteController() {
+            @Override
+            public void start(Profile profile, String url, String text, int cursorPosition,
+                    boolean preventInlineAutocomplete, boolean focusedFromFakebox) {
+                cursorPositionUsed.set(cursorPosition);
+                //                if (!TextUtils.equals(textToBeEntered, text)) return;
+                //                if (autocompleteHelper.getCallCount() != 0) return;
+
+                //                didPreventInlineAutocomplete.set(preventInlineAutocomplete);
+                //                autocompleteHelper.notifyCalled();
+            }
+        };
+        setAutocompleteController(controller);
+
+        final UrlBar urlBar = getUrlBar();
+        /*
+        toggleFocusAndIgnoreImeOperations(urlBar, true);
+
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                urlBar.getInputConnection().commitText(textToBeEntered, 1);
+            }
+        });
+        autocompleteHelper.waitForCallback(0);
+        Assert.assertFalse(
+                "Inline autocomplete incorrectly prevented.", didPreventInlineAutocomplete.get());
+        */
     }
 
     /**
