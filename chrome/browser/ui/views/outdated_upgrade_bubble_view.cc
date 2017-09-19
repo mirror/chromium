@@ -30,19 +30,20 @@
 
 namespace {
 
-// Fixed width of the description label of the bubble.
-// TODO(mad): Make sure there is enough room for all languages.
-const int kWidthOfDescriptionText = 330;
+// Fixed width of the description label of the bubble. Chosen to obtain the
+// "small" dialog width under Harmony (and not be smaller otherwise).
+constexpr int kWidthOfDescriptionText = 320 - 2 * 16;
 
 // The URL to be used to re-install Chrome when auto-update failed for too long.
-const char kDownloadChromeUrl[] = "https://www.google.com/chrome/?&brand=CHWL"
+constexpr char kDownloadChromeUrl[] =
+    "https://www.google.com/chrome/?&brand=CHWL"
     "&utm_campaign=en&utm_source=en-et-na-us-chrome-bubble&utm_medium=et";
 
 // The maximum number of ignored bubble we track in the NumLaterPerReinstall
 // histogram.
-const int kMaxIgnored = 50;
+constexpr int kMaxIgnored = 50;
 // The number of buckets we want the NumLaterPerReinstall histogram to use.
-const int kNumIgnoredBuckets = 5;
+constexpr int kNumIgnoredBuckets = 5;
 
 // The currently showing bubble.
 OutdatedUpgradeBubbleView* g_upgrade_bubble = nullptr;
@@ -70,16 +71,6 @@ void OutdatedUpgradeBubbleView::ShowBubble(views::View* anchor_view,
           : base::UserMetricsAction("OutdatedUpgradeBubble.ShowNoAU"));
 }
 
-bool OutdatedUpgradeBubbleView::IsAvailable() {
-// This should only work on non-Chrome OS desktop platforms.
-#if defined(OS_WIN) || defined(OS_MACOSX) || \
-    (defined(OS_LINUX) && !defined(OS_CHROMEOS))
-  return true;
-#else
-  return false;
-#endif
-}
-
 OutdatedUpgradeBubbleView::~OutdatedUpgradeBubbleView() {
   // Increment the ignored bubble count (if this bubble wasn't ignored, this
   // increment is offset by a decrement in Accept()).
@@ -99,8 +90,7 @@ base::string16 OutdatedUpgradeBubbleView::GetWindowTitle() const {
   return l10n_util::GetStringUTF16(IDS_UPGRADE_BUBBLE_TITLE);
 }
 
-bool OutdatedUpgradeBubbleView::Cancel() {
-  base::RecordAction(base::UserMetricsAction("OutdatedUpgradeBubble.Later"));
+bool OutdatedUpgradeBubbleView::ShouldShowCloseButton() const {
   return true;
 }
 
@@ -145,29 +135,33 @@ bool OutdatedUpgradeBubbleView::Accept() {
   return true;
 }
 
+bool OutdatedUpgradeBubbleView::Close() {
+  base::RecordAction(base::UserMetricsAction("OutdatedUpgradeBubble.Dismiss"));
+  return true;
+}
+
 void OutdatedUpgradeBubbleView::UpdateButton(views::LabelButton* button,
                                              ui::DialogButton type) {
   BubbleDialogDelegateView::UpdateButton(button, type);
-  if (type == ui::DIALOG_BUTTON_OK) {
-    elevation_icon_setter_.reset(new ElevationIconSetter(
-        button, base::Bind(&OutdatedUpgradeBubbleView::SizeToContents,
-                           base::Unretained(this))));
-  }
+  elevation_icon_setter_.reset(new ElevationIconSetter(
+      button, base::Bind(&OutdatedUpgradeBubbleView::SizeToContents,
+                         base::Unretained(this))));
+}
+
+int OutdatedUpgradeBubbleView::GetDialogButtons() const {
+  return ui::DIALOG_BUTTON_OK;
 }
 
 base::string16 OutdatedUpgradeBubbleView::GetDialogButtonLabel(
     ui::DialogButton button) const {
-  return l10n_util::GetStringUTF16(
-      button == ui::DIALOG_BUTTON_CANCEL
-          ? IDS_LATER
-          : auto_update_enabled_ ? IDS_REINSTALL_APP : IDS_REENABLE_UPDATES);
+  return l10n_util::GetStringUTF16(auto_update_enabled_ ? IDS_REINSTALL_APP
+                                                        : IDS_REENABLE_UPDATES);
 }
 
 void OutdatedUpgradeBubbleView::Init() {
   SetLayoutManager(new views::FillLayout());
-  views::Label* text_label = new views::Label(l10n_util::GetStringUTF16(
-      auto_update_enabled_ ? IDS_UPGRADE_BUBBLE_TEXT
-                           : IDS_UPGRADE_BUBBLE_REENABLE_TEXT));
+  views::Label* text_label =
+      new views::Label(l10n_util::GetStringUTF16(IDS_UPGRADE_BUBBLE_TEXT));
   text_label->SetMultiLine(true);
   text_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
   text_label->SizeToFit(kWidthOfDescriptionText);

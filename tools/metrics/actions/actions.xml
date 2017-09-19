@@ -13900,6 +13900,14 @@ should be able to be added at any place in this file.
   <description>Please enter the description of this user action.</description>
 </action>
 
+<action name="OutdatedUpgradeBubble.Dismiss">
+  <owner>mad@chromium.org</owner>
+  <description>
+    When the user dismisses the outdated upgrade bubble without accepting. E.g.
+    by clicking outside, or by clicking the close [x].
+  </description>
+</action>
+
 <action name="OutdatedUpgradeBubble.EnableAU">
   <owner>mad@chromium.org</owner>
   <description>
@@ -13909,6 +13917,7 @@ should be able to be added at any place in this file.
 </action>
 
 <action name="OutdatedUpgradeBubble.Later">
+  <obsolete>Later button removed (replaced with Dismiss) 09/2017.</obsolete>
   <owner>mad@chromium.org</owner>
   <description>
     When the user clicks on the Later button of the outdated upgrade bubble.

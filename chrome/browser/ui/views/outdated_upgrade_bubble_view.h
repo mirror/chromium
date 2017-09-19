@@ -24,16 +24,14 @@ class OutdatedUpgradeBubbleView : public views::BubbleDialogDelegateView {
                          content::PageNavigator* navigator,
                          bool auto_update_enabled);
 
-  // Identifies if we are running a build that supports the
-  // outdated upgrade bubble view.
-  static bool IsAvailable();
-
   // views::BubbleDialogDelegateView methods.
   void WindowClosing() override;
   base::string16 GetWindowTitle() const override;
-  bool Cancel() override;
+  bool ShouldShowCloseButton() const override;
   bool Accept() override;
+  bool Close() override;
   void UpdateButton(views::LabelButton* button, ui::DialogButton type) override;
+  int GetDialogButtons() const override;
   base::string16 GetDialogButtonLabel(ui::DialogButton button) const override;
   void Init() override;
 
