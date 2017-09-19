@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cb3e0350_77c71a1e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-19T10:21:47Z",
+      "side": 1,
+      "message": "In that case, wouldn\u0027t the check in line 984 already have returned?",
+      "parentUuid": "5bed9252_049a7f93",
+      "range": {
+        "startLine": 989,
+        "startChar": 60,
+        "endLine": 989,
+        "endChar": 70
+      },
+      "revId": "b9e09f65dd5b64fe347ef8f5a84d727e2cf0aea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d569100a_fa2b5c39",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "47e4033c_68aa69ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-19T10:21:47Z",
+      "side": 1,
+      "message": "When I tested it, the `showBottomSheetContent(R.id.action_home)` call in line 95 already did that.",
+      "parentUuid": "d569100a_fa2b5c39",
+      "range": {
+        "startLine": 105,
+        "startChar": 12,
+        "endLine": 105,
+        "endChar": 36
+      },
+      "revId": "b9e09f65dd5b64fe347ef8f5a84d727e2cf0aea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "476d694e_0418e0fb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-18T18:45:52Z",
       "side": 1,
       "message": "The \"placeholder\" is a solid color view that we show when the sheet is opened via omnibox suggestions. I think it\u0027d be appropriate to show mPlaceholderContent rather than null.\n\nMatt, what do you think?",
+      "range": {
+        "startLine": 126,
+        "startChar": 16,
+        "endLine": 127,
+        "endChar": 47
+      },
+      "revId": "b9e09f65dd5b64fe347ef8f5a84d727e2cf0aea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b26f8e8e_bbfea2cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-19T10:21:47Z",
+      "side": 1,
+      "message": "\u003e The \"placeholder\" is a solid color view that we show when the sheet is opened via omnibox suggestions. I think it\u0027d be appropriate to show mPlaceholderContent rather than null.\n\nWell, this is for when the sheet content isn\u0027t visible at all, so technically it doesn\u0027t make a big difference what the content is... I tried that approach initially, to simplify the logic in BottomSheet.showContent(), but even if I immediately end the animation, there is a visible flash.",
+      "parentUuid": "476d694e_0418e0fb",
       "range": {
         "startLine": 126,
         "startChar": 16,
