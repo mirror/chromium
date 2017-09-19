@@ -4,9 +4,10 @@
 
 #include "components/password_manager/core/browser/password_autofill_manager.h"
 
+#include <memory>
+
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
-#include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/test/histogram_tester.h"
@@ -671,8 +672,8 @@ TEST_F(PasswordAutofillManagerTest, PreviewAndFillEmptyUsernameSuggestion) {
 // autofill popup when PasswordAutofillManager::OnShowNotSecureWarning()
 // is called.
 TEST_F(PasswordAutofillManagerTest, ShowStandaloneNotSecureWarning) {
-  auto client = base::MakeUnique<TestPasswordManagerClient>();
-  auto autofill_client = base::MakeUnique<MockAutofillClient>();
+  auto client = std::make_unique<TestPasswordManagerClient>();
+  auto autofill_client = std::make_unique<MockAutofillClient>();
   InitializePasswordAutofillManager(client.get(), autofill_client.get());
 
   gfx::RectF element_bounds;
@@ -711,8 +712,8 @@ TEST_F(PasswordAutofillManagerTest, ShowStandaloneNotSecureWarning) {
 }
 
 TEST_F(PasswordAutofillManagerTest, NonSecurePasswordFieldHttpWarningMessage) {
-  auto client = base::MakeUnique<TestPasswordManagerClient>();
-  auto autofill_client = base::MakeUnique<MockAutofillClient>();
+  auto client = std::make_unique<TestPasswordManagerClient>();
+  auto autofill_client = std::make_unique<MockAutofillClient>();
   InitializePasswordAutofillManager(client.get(), autofill_client.get());
 
   gfx::RectF element_bounds;
@@ -797,8 +798,8 @@ TEST_F(PasswordAutofillManagerTest, NonSecurePasswordFieldHttpWarningMessage) {
 // Tests that the "Login not secure" warning shows up in non-password
 // fields of login forms.
 TEST_F(PasswordAutofillManagerTest, NonSecureUsernameFieldHttpWarningMessage) {
-  auto client = base::MakeUnique<TestPasswordManagerClient>();
-  auto autofill_client = base::MakeUnique<MockAutofillClient>();
+  auto client = std::make_unique<TestPasswordManagerClient>();
+  auto autofill_client = std::make_unique<MockAutofillClient>();
   InitializePasswordAutofillManager(client.get(), autofill_client.get());
 
   gfx::RectF element_bounds;
@@ -853,8 +854,8 @@ TEST_F(PasswordAutofillManagerTest, NonSecureUsernameFieldHttpWarningMessage) {
 }
 
 TEST_F(PasswordAutofillManagerTest, SecurePasswordFieldHttpWarningMessage) {
-  auto client = base::MakeUnique<TestPasswordManagerClient>();
-  auto autofill_client = base::MakeUnique<MockAutofillClient>();
+  auto client = std::make_unique<TestPasswordManagerClient>();
+  auto autofill_client = std::make_unique<MockAutofillClient>();
   InitializePasswordAutofillManager(client.get(), autofill_client.get());
 
   gfx::RectF element_bounds;
@@ -914,8 +915,8 @@ TEST_F(PasswordAutofillManagerTest, ShowedFormNotSecureHistogram) {
   base::HistogramTester histograms;
   SetHttpWarningEnabled();
 
-  auto client = base::MakeUnique<TestPasswordManagerClient>();
-  auto autofill_client = base::MakeUnique<MockAutofillClient>();
+  auto client = std::make_unique<TestPasswordManagerClient>();
+  auto autofill_client = std::make_unique<MockAutofillClient>();
   InitializePasswordAutofillManager(client.get(), autofill_client.get());
 
   // Test that the standalone warning (with no autofill suggestions) records the
@@ -957,8 +958,8 @@ TEST_F(PasswordAutofillManagerTest, ShowedFormNotSecureHistogram) {
 // appearance is disabled.
 TEST_F(PasswordAutofillManagerTest,
        NotShowAllPasswordsOptionOnPasswordFieldWhenFeatureDisabled) {
-  auto client = base::MakeUnique<TestPasswordManagerClient>();
-  auto autofill_client = base::MakeUnique<MockAutofillClient>();
+  auto client = std::make_unique<TestPasswordManagerClient>();
+  auto autofill_client = std::make_unique<MockAutofillClient>();
   InitializePasswordAutofillManager(client.get(), autofill_client.get());
 
   gfx::RectF element_bounds;
@@ -999,10 +1000,10 @@ TEST_F(PasswordAutofillManagerTest, ShowAllPasswordsOptionOnPasswordField) {
   base::HistogramTester histograms;
   ukm::TestAutoSetUkmRecorder test_ukm_recorder;
 
-  auto client = base::MakeUnique<TestPasswordManagerClient>();
-  auto autofill_client = base::MakeUnique<MockAutofillClient>();
+  auto client = std::make_unique<TestPasswordManagerClient>();
+  auto autofill_client = std::make_unique<MockAutofillClient>();
   auto manager =
-      base::MakeUnique<password_manager::PasswordManager>(client.get());
+      std::make_unique<password_manager::PasswordManager>(client.get());
   InitializePasswordAutofillManager(client.get(), autofill_client.get());
 
   ON_CALL(*(client->mock_driver()), GetPasswordManager())
@@ -1096,10 +1097,10 @@ TEST_F(PasswordAutofillManagerTest, ShowStandaloneShowAllPasswords) {
   base::HistogramTester histograms;
   ukm::TestAutoSetUkmRecorder test_ukm_recorder;
 
-  auto client = base::MakeUnique<TestPasswordManagerClient>();
-  auto autofill_client = base::MakeUnique<MockAutofillClient>();
+  auto client = std::make_unique<TestPasswordManagerClient>();
+  auto autofill_client = std::make_unique<MockAutofillClient>();
   auto manager =
-      base::MakeUnique<password_manager::PasswordManager>(client.get());
+      std::make_unique<password_manager::PasswordManager>(client.get());
   InitializePasswordAutofillManager(client.get(), autofill_client.get());
 
   ON_CALL(*(client->mock_driver()), GetPasswordManager())
@@ -1178,8 +1179,8 @@ TEST_F(PasswordAutofillManagerTest, ShowStandaloneShowAllPasswords) {
 // fields of login forms.
 TEST_F(PasswordAutofillManagerTest,
        NotShowAllPasswordsOptionOnNonPasswordField) {
-  auto client = base::MakeUnique<TestPasswordManagerClient>();
-  auto autofill_client = base::MakeUnique<MockAutofillClient>();
+  auto client = std::make_unique<TestPasswordManagerClient>();
+  auto autofill_client = std::make_unique<MockAutofillClient>();
   InitializePasswordAutofillManager(client.get(), autofill_client.get());
 
   gfx::RectF element_bounds;
@@ -1205,7 +1206,7 @@ TEST_F(PasswordAutofillManagerTest,
 // SimpleWebviewDialog doesn't have an autofill client. Nothing should crash if
 // the filling fallback is invoked.
 TEST_F(PasswordAutofillManagerTest, ShowAllPasswordsWithoutAutofillClient) {
-  auto client = base::MakeUnique<TestPasswordManagerClient>();
+  auto client = std::make_unique<TestPasswordManagerClient>();
   InitializePasswordAutofillManager(client.get(), nullptr);
 
   SetManualFallbacksForFillingStandalone(true);
