@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "037d9b5f_2df7b8b6",
+        "filename": "chrome/browser/metrics/upgrade_metrics_provider.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-19T17:06:25Z",
+      "side": 1,
+      "message": "This should be in the private: section",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 26
+      },
+      "revId": "677d56e1e431ecb00f8966542a429d71e95cfc7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "332e963f_f52072d6",
+        "filename": "chrome/browser/metrics/upgrade_metrics_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-19T17:06:25Z",
+      "side": 1,
+      "message": "Add an empty line above this",
+      "range": {
+        "startLine": 15,
+        "startChar": 26,
+        "endLine": 15,
+        "endChar": 0
+      },
+      "revId": "677d56e1e431ecb00f8966542a429d71e95cfc7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6127d126_5e419cb4",
+        "filename": "chrome/browser/metrics/upgrade_metrics_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-19T17:06:25Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "677d56e1e431ecb00f8966542a429d71e95cfc7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179a8189_521bbfe2",
+        "filename": "chrome/browser/upgrade_detector.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-19T17:06:25Z",
+      "side": 1,
+      "message": "Please add a comment mentioning this is used in a histogram and that values shouldn\u0027t be renumbered or removed.",
+      "range": {
+        "startLine": 31,
+        "startChar": 51,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "677d56e1e431ecb00f8966542a429d71e95cfc7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a2a865_dcce6fbf",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 86332,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-09-19T17:06:25Z",
+      "side": 1,
+      "message": "Mention that this is recorded with every UMA log.",
+      "range": {
+        "startLine": 86332,
+        "startChar": 43,
+        "endLine": 86332,
+        "endChar": 48
+      },
+      "revId": "677d56e1e431ecb00f8966542a429d71e95cfc7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
