@@ -24,7 +24,6 @@
 #include "third_party/WebKit/public/platform/WebMediaConstraints.h"
 #include "third_party/WebKit/public/platform/WebMediaDeviceInfo.h"
 #include "third_party/WebKit/public/platform/WebString.h"
-#include "third_party/WebKit/public/web/WebApplyConstraintsRequest.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebUserGestureIndicator.h"
@@ -51,6 +50,34 @@ blink::WebMediaDeviceInfo::MediaDeviceKind ToMediaDeviceKind(
 static int g_next_request_id = 0;
 
 }  // namespace
+
+UserMediaClientImpl::Request::Request(std::unique_ptr<UserMediaRequest> request)
+    : user_media_request_(std::move(request)) {
+  DCHECK(user_media_request_);
+  DCHECK(apply_constraints_request_.IsNull());
+}
+
+UserMediaClientImpl::Request::Request(
+    const blink::WebApplyConstraintsRequest& request)
+    : apply_constraints_request_(request) {
+  DCHECK(!apply_constraints_request_.IsNull());
+  DCHECK(!user_media_request_);
+}
+
+UserMediaClientImpl::Request::Request(Request&& other)
+    : user_media_request_(std::move(other.user_media_request_)),
+      apply_constraints_request_(other.apply_constraints_request_) {
+  DCHECK(!IsApplyConstraints() || !IsUserMedia());
+}
+
+UserMediaClientImpl::Request& UserMediaClientImpl::Request::operator=(
+    Request&& other) = default;
+UserMediaClientImpl::Request::~Request() = default;
+
+std::unique_ptr<UserMediaRequest>
+UserMediaClientImpl::Request::MoveUserMediaRequest() {
+  return std::move(user_media_request_);
+}
 
 UserMediaClientImpl::UserMediaClientImpl(
     RenderFrame* render_frame,
@@ -120,21 +147,22 @@ void UserMediaClientImpl::RequestUserMedia(
       base::MakeUnique<UserMediaRequest>(
           request_id, web_request,
           blink::WebUserGestureIndicator::IsProcessingUserGesture());
-  pending_request_infos_.push_back(std::move(request_info));
-  if (!is_processing_request_) {
-    // TODO(guidou): Invoke directly instead of posting. http://crbug.com/764293
-    base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE,
-        base::BindOnce(&UserMediaClientImpl::MaybeProcessNextRequestInfo,
-                       weak_factory_.GetWeakPtr()));
-  }
+  pending_request_infos_.push_back(Request(std::move(request_info)));
+  if (!is_processing_request_)
+    MaybeProcessNextRequestInfo();
 }
 
 void UserMediaClientImpl::ApplyConstraints(
     const blink::WebApplyConstraintsRequest& web_request) {
-  blink::WebApplyConstraintsRequest request = web_request;
-  request.RequestNotSupported(
-      "applyConstraints not supported for this type of track");
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  int request_id = g_next_request_id++;
+  WebRtcLogMessage(base::StringPrintf(
+      "UMCI::ApplyConstraints. request_id=%d, constraints=%s", request_id,
+      web_request.Constraints().ToString().Utf8().c_str()));
+
+  pending_request_infos_.push_back(Request(web_request));
+  if (!is_processing_request_)
+    MaybeProcessNextRequestInfo();
 }
 
 void UserMediaClientImpl::MaybeProcessNextRequestInfo() {
@@ -142,17 +170,24 @@ void UserMediaClientImpl::MaybeProcessNextRequestInfo() {
   if (is_processing_request_ || pending_request_infos_.empty())
     return;
 
-  std::unique_ptr<UserMediaRequest> current_request =
-      std::move(pending_request_infos_.front());
+  Request current_request = std::move(pending_request_infos_.front());
   pending_request_infos_.pop_front();
   is_processing_request_ = true;
 
   // base::Unretained() is safe here because |this| owns
   // |user_media_processor_|.
-  user_media_processor_->ProcessRequest(
-      std::move(current_request),
-      base::BindOnce(&UserMediaClientImpl::CurrentRequestCompleted,
-                     base::Unretained(this)));
+  if (current_request.IsUserMedia()) {
+    user_media_processor_->ProcessRequest(
+        current_request.MoveUserMediaRequest(),
+        base::BindOnce(&UserMediaClientImpl::CurrentRequestCompleted,
+                       base::Unretained(this)));
+  } else {
+    DCHECK(current_request.IsApplyConstraints());
+    auto web_apply_constraints_request =
+        current_request.apply_constraints_request();
+    web_apply_constraints_request.RequestNotSupported(
+        "applyConstraints not supported for this type of track");
+  }
 }
 
 void UserMediaClientImpl::CurrentRequestCompleted() {
@@ -181,14 +216,15 @@ void UserMediaClientImpl::CancelUserMediaRequest(
   bool did_remove_request = false;
   if (user_media_processor_->DeleteWebRequest(web_request)) {
     did_remove_request = true;
-  }
-
-  for (auto it = pending_request_infos_.begin();
-       it != pending_request_infos_.end(); ++it) {
-    if ((*it)->web_request == web_request) {
-      pending_request_infos_.erase(it);
-      did_remove_request = true;
-      break;
+  } else {
+    for (auto it = pending_request_infos_.begin();
+         it != pending_request_infos_.end(); ++it) {
+      if (it->IsUserMedia() &&
+          it->user_media_request()->web_request == web_request) {
+        pending_request_infos_.erase(it);
+        did_remove_request = true;
+        break;
+      }
     }
   }
 
