@@ -11,9 +11,10 @@
 #include "base/memory/ref_counted.h"
 #include "base/sequenced_task_runner.h"
 #include "components/download/public/clients.h"
+#include "components/keyed_service/core/keyed_service.h"
 
 namespace content {
-class DownloadManager;
+class BrowserContext;
 }  // namespace content
 
 namespace download {
@@ -33,8 +34,17 @@ class TaskScheduler;
 // |background_task_runner| will be used for all disk reads and writes.
 DownloadService* CreateDownloadService(
     std::unique_ptr<DownloadClientMap> clients,
-    content::DownloadManager* download_manager,
+    content::BrowserContext* browser_context,
     const base::FilePath& storage_dir,
+    const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
+    std::unique_ptr<TaskScheduler> task_scheduler);
+
+// Create download service for browser tests.
+std::unique_ptr<KeyedService> CreateDownloadServiceForTest(
+    std::unique_ptr<DownloadClientMap> clients,
+    content::BrowserContext* browser_context,
+    const base::FilePath& files_storage_dir,
+    const base::FilePath& db_storage_dir,
     const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
     std::unique_ptr<TaskScheduler> task_scheduler);
 
