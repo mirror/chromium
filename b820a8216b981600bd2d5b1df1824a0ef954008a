@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "740809ef_068822b5",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-09-19T12:25:05Z",
+      "side": 1,
+      "message": "How about like this? This would be simpler.\n\nbase::BindOnce(\u0026base::SingleThreadTaskRunner::PostTask,\n               task_runner_for_callback, FROM_HERE, std::move(callback));",
+      "revId": "b820a8216b981600bd2d5b1df1824a0ef954008a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
