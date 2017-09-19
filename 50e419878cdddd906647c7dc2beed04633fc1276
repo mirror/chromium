@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "982e52d8_b8576f5e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-19T21:58:40Z",
+      "side": 1,
+      "message": "Do you mean it just needs a path to the CDM library? That\u0027s a one line change in our sandbox profile. In fact, the new sandbox can read the entire bundle contents so once that lands this won\u0027t even be a special case.",
+      "parentUuid": "9b49d1aa_719536f3",
+      "revId": "50e419878cdddd906647c7dc2beed04633fc1276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb0aa549_5f6dcf6e",
         "filename": "content/browser/media/media_interface_proxy.cc",
         "patchSetId": 6
