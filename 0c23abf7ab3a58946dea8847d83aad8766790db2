@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2d38d1c_14b6e351",
+        "filename": "content/common/sandbox_linux/bpf_utility_policy_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-09-19T18:00:48Z",
+      "side": 1,
+      "message": "not quite.  This needs to be a separate case like:\n\ncase __NR_sched_getaffinity:\n  return sandbox::RestrictSchedTarget(GetPolicyPid(), sysno);\n\nlike is done in content/common/sandbox_linux/bpf_ppapi_policy_linux.cc",
+      "range": {
+        "startLine": 45,
+        "startChar": 1,
+        "endLine": 45,
+        "endChar": 32
+      },
+      "revId": "0c23abf7ab3a58946dea8847d83aad8766790db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
