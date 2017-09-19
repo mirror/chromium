@@ -80,7 +80,7 @@ class CONTENT_EXPORT CompositorImpl
   void SetRootLayer(scoped_refptr<cc::Layer> root) override;
   void SetSurface(jobject surface) override;
   void SetWindowBounds(const gfx::Size& size) override;
-  void SetHasTransparentBackground(bool flag) override;
+  void SetBackgroundColor(SkColor background_color) override;
   void SetRequiresAlphaChannel(bool flag) override;
   void SetNeedsComposite() override;
   ui::UIResourceProvider& GetUIResourceProvider() override;
@@ -144,7 +144,6 @@ class CONTENT_EXPORT CompositorImpl
   void DidSwapBuffers();
 
   bool HavePendingReadbacks();
-  void SetBackgroundColor(int color);
 
   viz::FrameSinkId frame_sink_id_;
 
