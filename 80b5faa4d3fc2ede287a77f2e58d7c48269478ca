@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c31b37ae_ffea14d5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 19
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-19T10:27:33Z",
+      "side": 1,
+      "message": "Nit: Strike this verb.",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 11
+      },
+      "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf491fc3_090a8ef8",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-19T10:27:33Z",
+      "side": 1,
+      "message": "Breaks go inside the scope\n\nhttps://google.github.io/styleguide/cppguide.html#Loops_and_Switch_Statements",
+      "range": {
+        "startLine": 934,
+        "startChar": 4,
+        "endLine": 934,
+        "endChar": 12
+      },
+      "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00261718_ab526e27",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-19T10:27:33Z",
+      "side": 1,
+      "message": "Make this an enum. This way readers who see FeaturePromoBubbleView(view, arrow, string, true/false) don\u0027t have to guess what can_activate is.\n\nSomething like...]\n\nenum class ActivationAction {\n  DO_NOT_ACTIVATE,\n  ACTIVATE,\n};",
+      "range": {
+        "startLine": 38,
+        "startChar": 25,
+        "endLine": 38,
+        "endChar": 42
+      },
+      "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fcb1ab5_9ba72d0f",
+        "filename": "chrome/browser/ui/views/feature_promos/new_tab_promo_bubble_view.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-19T10:27:33Z",
+      "side": 1,
+      "message": "Update comment.",
+      "range": {
+        "startLine": 20,
+        "startChar": 28,
+        "endLine": 20,
+        "endChar": 39
+      },
+      "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70410eae_29f1af7c",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-19T10:27:33Z",
+      "side": 1,
+      "message": "Is ShowPromo being called twice with an existing promo displayed? That suggests we should probably DCHECK(!new_tab_promo_) instead of No-op\u0027ing this.",
+      "range": {
+        "startLine": 100,
+        "startChar": 2,
+        "endLine": 100,
+        "endChar": 22
+      },
+      "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "723a0d1a_b03e4c2b",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-19T10:27:33Z",
+      "side": 1,
+      "message": "Nit: new_tab_promo_shown",
+      "range": {
+        "startLine": 112,
+        "startChar": 7,
+        "endLine": 112,
+        "endChar": 29
+      },
+      "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "643bef17_55760b06",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-19T10:27:33Z",
+      "side": 1,
+      "message": "Nit: new_tab_promo.reset();",
+      "range": {
+        "startLine": 113,
+        "startChar": 2,
+        "endLine": 113,
+        "endChar": 27
+      },
+      "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "874826e7_be0a7689",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-09-19T10:27:33Z",
+      "side": 1,
+      "message": ".reset() here too. Why is it important that we unset the new_tab_promo_ during OnWidgetDestroying?",
+      "range": {
+        "startLine": 224,
+        "startChar": 2,
+        "endLine": 224,
+        "endChar": 27
+      },
+      "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
