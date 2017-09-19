@@ -70,6 +70,30 @@
       "revId": "6924add874edab4c5db07dd8e5760da03c6df424",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fba3029e_6bf5df8a",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1140375
+      },
+      "writtenOn": "2017-09-19T11:31:18Z",
+      "side": 1,
+      "message": "To be honest, I don\u0027t mind either... I was just mentioning the rationale, but I would still be glad to change if you think it will make the CL look better.",
+      "parentUuid": "8f892319_d86a7f81",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 29
+      },
+      "revId": "6924add874edab4c5db07dd8e5760da03c6df424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
