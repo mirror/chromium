@@ -839,6 +839,8 @@ component("net") {
       "http/http_cache_lookup_manager.h",
       "http/http_cache_transaction.cc",
       "http/http_cache_transaction.h",
+      "http/http_cache_transaction_writers_common.cc",
+      "http/http_cache_transaction_writers_common.h",
       "http/http_cache_writers.cc",
       "http/http_cache_writers.h",
       "http/http_chunked_decoder.cc",
