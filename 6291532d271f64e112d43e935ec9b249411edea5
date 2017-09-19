@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b62d547a_fd9c83e7",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-19T02:21:46Z",
+      "side": 1,
+      "message": "I\u0027d like this comment to explain the \"why\" more, but I\u0027m not sure I\u0027m sufficiently familiar with this class to give advice. Maybe\n\n// Clear |url_loader_| if it\u0027s not the default one (network). This allows the restarted request to use a new loader, instead of, e.g., reusing the AppCache or service worker loader.\n\nIs it worth it to check default_loader_used_? It may be simpler to just clear url_loader_ always.",
+      "revId": "6291532d271f64e112d43e935ec9b249411edea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b3b4379_020fc2b5",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-19T02:21:46Z",
+      "side": 1,
+      "message": "Do we have an option to refactor it now? This looks like we\u0027re going down the path again of trying to replicate //net stuff in service_worker code, which has bit us before (SSL handling). Can we start putting utility functions in services/net about handling redirects for example?",
+      "revId": "6291532d271f64e112d43e935ec9b249411edea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2ec3d00_43862a20",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-19T02:21:46Z",
+      "side": 1,
+      "message": "nit: return nullptr may be a bit more readable here",
+      "revId": "6291532d271f64e112d43e935ec9b249411edea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce775af_1e13de57",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-19T02:21:46Z",
+      "side": 1,
+      "message": "const for consistency?",
+      "revId": "6291532d271f64e112d43e935ec9b249411edea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ded2e327_2a8934f5",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-19T02:21:46Z",
+      "side": 1,
+      "message": "Ah I found this (and the below) really confusing until I saw net::URLRequestJob::ComputeRedirectInfo(). Can you add a comment to the top of this function like like see the comments in net::URLRequestJob::ComputeRedirectInfo().",
+      "revId": "6291532d271f64e112d43e935ec9b249411edea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4771d3c3_ba0aa162",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-19T02:21:46Z",
+      "side": 1,
+      "message": "This looks iffy... ideally we don\u0027t have much net stuff in service_worker classes.",
+      "revId": "6291532d271f64e112d43e935ec9b249411edea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c2be9aa_e4d7bb95",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-09-19T02:21:46Z",
+      "side": 1,
+      "message": "Is this job done now? Should we set status_ \u003d kCompleted?\n\nI slightly prefer to just inline the MaybeCommitRedirect in this function, as there\u0027s just one callsite.",
+      "revId": "6291532d271f64e112d43e935ec9b249411edea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
