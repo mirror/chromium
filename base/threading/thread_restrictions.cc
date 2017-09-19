@@ -14,35 +14,100 @@ namespace base {
 
 namespace {
 
-LazyInstance<ThreadLocalBoolean>::Leaky
-    g_io_disallowed = LAZY_INSTANCE_INITIALIZER;
+LazyInstance<ThreadLocalBoolean>::Leaky g_blocking_disallowed =
+    LAZY_INSTANCE_INITIALIZER;
 
 LazyInstance<ThreadLocalBoolean>::Leaky
     g_singleton_disallowed = LAZY_INSTANCE_INITIALIZER;
 
-LazyInstance<ThreadLocalBoolean>::Leaky
-    g_wait_disallowed = LAZY_INSTANCE_INITIALIZER;
+LazyInstance<ThreadLocalBoolean>::Leaky g_base_sync_primitives_disallowed =
+    LAZY_INSTANCE_INITIALIZER;
 
 }  // namespace
 
+void AssertBlockingAllowed() {
+  DCHECK(!g_blocking_disallowed.Get().Get())
+      << "Function marked as blocking was called from a scope that disallows "
+         "blocking! If this scope really should be allowed to make blocking "
+         "calls, make sure that it doesn't instantiate a "
+         "ScopedDisallowBlocking. If this task is running inside the "
+         "TaskScheduler, the TaskRunner used to post it needs to have "
+         "MayBlock() in its TaskTraits.";
+}
+
+ScopedDisallowBlocking::ScopedDisallowBlocking()
+    : was_disallowed_(g_blocking_disallowed.Get().Get()) {
+  g_blocking_disallowed.Get().Set(true);
+}
+
+ScopedDisallowBlocking::~ScopedDisallowBlocking() {
+  DCHECK(g_blocking_disallowed.Get().Get());
+  g_blocking_disallowed.Get().Set(was_disallowed_);
+}
+
+ScopedAllowBlocking::ScopedAllowBlocking()
+    : was_disallowed_(g_blocking_disallowed.Get().Get()) {
+  g_blocking_disallowed.Get().Set(false);
+}
+
+ScopedAllowBlocking::~ScopedAllowBlocking() {
+  DCHECK(!g_blocking_disallowed.Get().Get());
+  g_blocking_disallowed.Get().Set(was_disallowed_);
+}
+
+void AssertBaseSyncPrimitivesAllowed() {
+  DCHECK(!g_base_sync_primitives_disallowed.Get().Get())
+      << "Waiting on a //base sync primitive is not allowed on this thread to "
+         "prevent jank and deadlock. If waiting on a //base sync primitive is "
+         "unavoidable, do it within the scope of a "
+         "ScopedAllowBaseSyncPrimitives.";
+}
+
+void DisallowBaseSyncPrimitives() {
+  g_base_sync_primitives_disallowed.Get().Set(true);
+}
+
+ScopedAllowBaseSyncPrimitives::ScopedAllowBaseSyncPrimitives()
+    : was_disallowed_(g_base_sync_primitives_disallowed.Get().Get()) {
+  DCHECK(!g_blocking_disallowed.Get().Get())
+      << "To instantiate a ScopedAllowBaseSyncPrimitives in a scope where "
+         "blocking is disallowed, use the OutsideBlockingScope constructor.";
+  g_base_sync_primitives_disallowed.Get().Set(false);
+}
+
+ScopedAllowBaseSyncPrimitives::ScopedAllowBaseSyncPrimitives(
+    OutsideBlockingScope)
+    : was_disallowed_(g_base_sync_primitives_disallowed.Get().Get()) {
+  g_base_sync_primitives_disallowed.Get().Set(false);
+}
+
+ScopedAllowBaseSyncPrimitives::~ScopedAllowBaseSyncPrimitives() {
+  DCHECK(!g_base_sync_primitives_disallowed.Get().Get());
+  g_base_sync_primitives_disallowed.Get().Set(true);
+}
+
+ScopedAllowBaseSyncPrimitivesForTesting::
+    ScopedAllowBaseSyncPrimitivesForTesting()
+    : was_disallowed_(g_base_sync_primitives_disallowed.Get().Get()) {
+  g_base_sync_primitives_disallowed.Get().Set(false);
+}
+
+ScopedAllowBaseSyncPrimitivesForTesting::
+    ~ScopedAllowBaseSyncPrimitivesForTesting() {
+  DCHECK(!g_base_sync_primitives_disallowed.Get().Get());
+  g_base_sync_primitives_disallowed.Get().Set(true);
+}
+
 // static
 bool ThreadRestrictions::SetIOAllowed(bool allowed) {
-  bool previous_disallowed = g_io_disallowed.Get().Get();
-  g_io_disallowed.Get().Set(!allowed);
+  bool previous_disallowed = g_blocking_disallowed.Get().Get();
+  g_blocking_disallowed.Get().Set(!allowed);
   return !previous_disallowed;
 }
 
 // static
 void ThreadRestrictions::AssertIOAllowed() {
-  if (g_io_disallowed.Get().Get()) {
-    NOTREACHED() << "Function marked as IO-only was called from a thread that "
-                    "disallows IO!  If this thread really should be allowed to "
-                    "make IO calls, adjust the call to "
-                    "base::ThreadRestrictions::SetIOAllowed() in this thread's "
-                    "startup.  If this task is running inside the "
-                    "TaskScheduler, the TaskRunner used to post it needs to "
-                    "have MayBlock() in its TaskTraits.";
-  }
+  AssertBlockingAllowed();
 }
 
 // static
@@ -68,22 +133,17 @@ void ThreadRestrictions::AssertSingletonAllowed() {
 
 // static
 void ThreadRestrictions::DisallowWaiting() {
-  g_wait_disallowed.Get().Set(true);
+  DisallowBaseSyncPrimitives();
 }
 
 // static
 void ThreadRestrictions::AssertWaitAllowed() {
-  if (g_wait_disallowed.Get().Get()) {
-    NOTREACHED() << "Waiting is not allowed to be used on this thread to "
-                 << "prevent jank and deadlock.  If this task is running "
-                    "inside the TaskScheduler, the TaskRunner used to post it "
-                    "needs to have WithBaseSyncPrimitives() in its TaskTraits.";
-  }
+  AssertBaseSyncPrimitivesAllowed();
 }
 
 bool ThreadRestrictions::SetWaitAllowed(bool allowed) {
-  bool previous_disallowed = g_wait_disallowed.Get().Get();
-  g_wait_disallowed.Get().Set(!allowed);
+  bool previous_disallowed = g_base_sync_primitives_disallowed.Get().Get();
+  g_base_sync_primitives_disallowed.Get().Set(!allowed);
   return !previous_disallowed;
 }
 
