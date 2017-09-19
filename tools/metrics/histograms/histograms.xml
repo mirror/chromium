@@ -3419,6 +3419,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.ConfigParseResult" enum="BooleanSuccess">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>Whether DnsConfig was parsed successfully.</summary>
 </histogram>
@@ -3431,6 +3434,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.DNSChangerDetected" enum="BooleanSuccess">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Whether the first valid DnsConfig included a rogue nameserver.
@@ -3766,6 +3772,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="AsyncDNS.ServerIsGood" enum="BooleanSuccess">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     The current server is &quot;good&quot; and does not have to be skipped.
@@ -14066,6 +14075,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.CacheEvicted" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     The time left to expiration of an entry when it is removed while compacting
@@ -14074,6 +14086,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.CacheExpired" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     The time since expiration of an entry when it is removed while compacting
@@ -14082,6 +14097,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.CacheExpiredOnGet" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     The time since expiration of an entry when it is removed on lookup.
@@ -14090,6 +14108,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="DNS.EmptyAddressListAndNoError"
     enum="DNSEmptyAddressListAndNoError">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     Error status when an empty address list was found in OnLookupComplete().
@@ -14209,6 +14230,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.IndependentFailedNavigation" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     When either a pre-resolution was not done recently enough to provide
@@ -14222,6 +14246,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.IndependentNavigation" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     When either a pre-resolution was not done recently enough to provide
@@ -14348,6 +14375,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.PrefetchCacheEviction" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     The duration of time used (most recently) to pre-resolve a hostname, when
@@ -14358,6 +14388,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.PrefetchCacheEvictionL" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     The duration of time used (most recently) to pre-resolve a hostname, when
@@ -14368,6 +14401,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.PrefetchFoundName">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>Replaced by DNS.PrefetchFoundNameL.</summary>
 </histogram>
@@ -14390,11 +14426,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.PrefetchNegativeHit">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>Replaced by DNS.PrefetchNegativeHitL.</summary>
 </histogram>
 
 <histogram name="DNS.PrefetchNegativeHitL" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     The duration of time saved due to DNS pre-resolving in the &quot;name not
@@ -14413,11 +14455,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.PrefetchPositiveHit">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>Replaced by DNS.PrefetchPositiveHitL.</summary>
 </histogram>
 
 <histogram name="DNS.PrefetchPositiveHitL" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     The duration of time saved due to DNS pre-resolving in the &quot;name was
@@ -14434,6 +14482,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.PrefetchQueue" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     The duration of time spent by a proposed resolution waiting in the queue to
@@ -14443,6 +14494,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.PrefetchReferredPositiveHit" units="ms">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     The duration of time saved due to DNS pre-resolving in the &quot;name was
@@ -14473,6 +14527,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.QueueRecycledDeltaOver2">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     When, due to congestion avoidance, a queued pre-resolution is abandoned
@@ -14483,6 +14540,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.QueueRecycledUnder2">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     When, due to congestion avoidance, a queued pre-resolution is abandoned
@@ -14652,6 +14712,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.UnexpectedResolution">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     In some cases, such as when content arrives with embedded references to
@@ -14670,6 +14733,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="DNS.UnexpectedResolutionL">
+  <obsolete>
+    Deprecated as of 9/2017.
+  </obsolete>
   <owner>mgersh@chromium.org</owner>
   <summary>
     In some cases, such as when content arrives with embedded references to
