@@ -1134,6 +1134,180 @@ void ReplaceSelectionCommand::InsertParagraphSeparatorIfNeeds(
   }
 }
 
+Position ReplaceSelectionCommand::MergeStartAndEndIfNeeds(
+    const InsertedNodes& inserted_nodes,
+    bool selection_start_was_start_of_paragraph,
+    bool selection_end_was_end_of_paragraph,
+    bool start_is_inside_mail_blockquote,
+    const ReplacementFragment& fragment,
+    Element* const current_root,
+    EditingState* editing_state) {
+  // Setup m_startOfInsertedContent and m_endOfInsertedContent. This should be
+  // the last two lines of code that access insertedNodes.
+  start_of_inserted_content_ =
+      FirstPositionInOrBeforeNode(inserted_nodes.FirstNodeInserted());
+  end_of_inserted_content_ =
+      LastPositionInOrAfterNode(inserted_nodes.LastLeafInserted());
+
+  // Determine whether or not we should merge the end of inserted content with
+  // what's after it before we do the start merge so that the start merge
+  // doesn't effect our decision.
+  should_merge_end_ = ShouldMergeEnd(selection_end_was_end_of_paragraph);
+
+  if (ShouldMergeStart(selection_start_was_start_of_paragraph,
+                       fragment.HasInterchangeNewlineAtStart(),
+                       start_is_inside_mail_blockquote)) {
+    VisiblePosition start_of_paragraph_to_move =
+        PositionAtStartOfInsertedContent();
+    VisiblePosition destination =
+        PreviousPositionOf(start_of_paragraph_to_move);
+
+    // Helpers for making the VisiblePositions valid again after DOM changes.
+    PositionWithAffinity start_of_paragraph_to_move_position =
+        start_of_paragraph_to_move.ToPositionWithAffinity();
+    PositionWithAffinity destination_position =
+        destination.ToPositionWithAffinity();
+
+    // We need to handle the case where we need to merge the end
+    // but our destination node is inside an inline that is the last in the
+    // block.
+    // We insert a placeholder before the newly inserted content to avoid being
+    // merged into the inline.
+    Node* destination_node = destination.DeepEquivalent().AnchorNode();
+    if (should_merge_end_ &&
+        destination_node != EnclosingInline(destination_node) &&
+        EnclosingInline(destination_node)->nextSibling()) {
+      InsertNodeBefore(HTMLBRElement::Create(GetDocument()),
+                       inserted_nodes.RefNode(), editing_state);
+      if (editing_state->IsAborted())
+        return {};
+    }
+
+    // Merging the the first paragraph of inserted content with the content that
+    // came before the selection that was pasted into would also move content
+    // after the selection that was pasted into if: only one paragraph was being
+    // pasted, and it was not wrapped in a block, the selection that was pasted
+    // into ended at the end of a block and the next paragraph didn't start at
+    // the start of a block.
+    // Insert a line break just after the inserted content to separate it from
+    // what comes after and prevent that from happening.
+    VisiblePosition end_of_inserted_content = PositionAtEndOfInsertedContent();
+    if (StartOfParagraph(end_of_inserted_content).DeepEquivalent() ==
+        start_of_paragraph_to_move_position.GetPosition()) {
+      InsertNodeAt(HTMLBRElement::Create(GetDocument()),
+                   end_of_inserted_content.DeepEquivalent(), editing_state);
+      if (editing_state->IsAborted())
+        return {};
+      // Mutation events (bug 22634) triggered by inserting the <br> might have
+      // removed the content we're about to move
+      if (!start_of_paragraph_to_move_position.IsConnected()) {
+        editing_state->Abort();
+        return {};
+      }
+    }
+
+    GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+    // Making the two VisiblePositions valid again.
+    start_of_paragraph_to_move =
+        CreateVisiblePosition(start_of_paragraph_to_move_position);
+    destination = CreateVisiblePosition(destination_position);
+
+    // FIXME: Maintain positions for the start and end of inserted content
+    // instead of keeping nodes.  The nodes are only ever used to create
+    // positions where inserted content starts/ends.
+    MoveParagraph(start_of_paragraph_to_move,
+                  EndOfParagraph(start_of_paragraph_to_move), destination,
+                  editing_state);
+    if (editing_state->IsAborted())
+      return {};
+
+    GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+    const VisibleSelection& visible_selection_of_insterted_content =
+        EndingVisibleSelection();
+    start_of_inserted_content_ = MostForwardCaretPosition(
+        visible_selection_of_insterted_content.VisibleStart().DeepEquivalent());
+    if (end_of_inserted_content_.IsOrphan()) {
+      end_of_inserted_content_ = MostBackwardCaretPosition(
+          visible_selection_of_insterted_content.VisibleEnd().DeepEquivalent());
+    }
+  }
+
+  Position last_position_to_select;
+  if (fragment.HasInterchangeNewlineAtEnd()) {
+    VisiblePosition end_of_inserted_content = PositionAtEndOfInsertedContent();
+    VisiblePosition next =
+        NextPositionOf(end_of_inserted_content, kCannotCrossEditingBoundary);
+
+    if (selection_end_was_end_of_paragraph ||
+        !IsEndOfParagraph(end_of_inserted_content) || next.IsNull()) {
+      if (TextControlElement* text_control =
+              EnclosingTextControl(current_root)) {
+        if (!inserted_nodes.LastLeafInserted()->nextSibling()) {
+          InsertNodeAfter(text_control->CreatePlaceholderBreakElement(),
+                          inserted_nodes.LastLeafInserted(), editing_state);
+          if (editing_state->IsAborted())
+            return {};
+        }
+        SetEndingSelection(SelectionForUndoStep::From(
+            SelectionInDOMTree::Builder()
+                .Collapse(
+                    Position::AfterNode(*inserted_nodes.LastLeafInserted()))
+                .Build()));
+        // Select up to the paragraph separator that was added.
+        last_position_to_select =
+            EndingVisibleSelection().VisibleStart().DeepEquivalent();
+      } else if (!IsStartOfParagraph(end_of_inserted_content)) {
+        SetEndingSelection(SelectionForUndoStep::From(
+            SelectionInDOMTree::Builder()
+                .Collapse(end_of_inserted_content.DeepEquivalent())
+                .Build()));
+        Element* enclosing_block_element = EnclosingBlock(
+            end_of_inserted_content.DeepEquivalent().AnchorNode());
+        if (IsListItem(enclosing_block_element)) {
+          HTMLLIElement* new_list_item = HTMLLIElement::Create(GetDocument());
+          InsertNodeAfter(new_list_item, enclosing_block_element,
+                          editing_state);
+          if (editing_state->IsAborted())
+            return {};
+          SetEndingSelection(SelectionForUndoStep::From(
+              SelectionInDOMTree::Builder()
+                  .Collapse(Position::FirstPositionInNode(*new_list_item))
+                  .Build()));
+        } else {
+          // Use a default paragraph element (a plain div) for the empty
+          // paragraph, using the last paragraph block's style seems to annoy
+          // users.
+          InsertParagraphSeparator(
+              editing_state, true,
+              !start_is_inside_mail_blockquote &&
+                  HighestEnclosingNodeOfType(
+                      end_of_inserted_content.DeepEquivalent(),
+                      IsMailHTMLBlockquoteElement, kCannotCrossEditingBoundary,
+                      inserted_nodes.FirstNodeInserted()->parentNode()));
+          if (editing_state->IsAborted())
+            return {};
+        }
+
+        GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+
+        // Select up to the paragraph separator that was added.
+        last_position_to_select =
+            EndingVisibleSelection().VisibleStart().DeepEquivalent();
+        UpdateNodesInserted(last_position_to_select.AnchorNode());
+      }
+    } else {
+      // Select up to the beginning of the next paragraph.
+      last_position_to_select = MostForwardCaretPosition(next.DeepEquivalent());
+    }
+  } else {
+    MergeEndIfNeeded(editing_state);
+    if (editing_state->IsAborted())
+      return {};
+  }
+  return last_position_to_select;
+}
+
 void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
   TRACE_EVENT0("blink", "ReplaceSelectionCommand::doApply");
   const VisibleSelection& selection = EndingVisibleSelection();
@@ -1449,167 +1623,12 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
       return;
   }
 
-  // Setup m_startOfInsertedContent and m_endOfInsertedContent. This should be
-  // the last two lines of code that access insertedNodes.
-  start_of_inserted_content_ =
-      FirstPositionInOrBeforeNode(inserted_nodes.FirstNodeInserted());
-  end_of_inserted_content_ =
-      LastPositionInOrAfterNode(inserted_nodes.LastLeafInserted());
-
-  // Determine whether or not we should merge the end of inserted content with
-  // what's after it before we do the start merge so that the start merge
-  // doesn't effect our decision.
-  should_merge_end_ = ShouldMergeEnd(selection_end_was_end_of_paragraph);
-
-  if (ShouldMergeStart(selection_start_was_start_of_paragraph,
-                       fragment.HasInterchangeNewlineAtStart(),
-                       start_is_inside_mail_blockquote)) {
-    VisiblePosition start_of_paragraph_to_move =
-        PositionAtStartOfInsertedContent();
-    VisiblePosition destination =
-        PreviousPositionOf(start_of_paragraph_to_move);
-
-    // Helpers for making the VisiblePositions valid again after DOM changes.
-    PositionWithAffinity start_of_paragraph_to_move_position =
-        start_of_paragraph_to_move.ToPositionWithAffinity();
-    PositionWithAffinity destination_position =
-        destination.ToPositionWithAffinity();
-
-    // We need to handle the case where we need to merge the end
-    // but our destination node is inside an inline that is the last in the
-    // block.
-    // We insert a placeholder before the newly inserted content to avoid being
-    // merged into the inline.
-    Node* destination_node = destination.DeepEquivalent().AnchorNode();
-    if (should_merge_end_ &&
-        destination_node != EnclosingInline(destination_node) &&
-        EnclosingInline(destination_node)->nextSibling()) {
-      InsertNodeBefore(HTMLBRElement::Create(GetDocument()),
-                       inserted_nodes.RefNode(), editing_state);
-      if (editing_state->IsAborted())
-        return;
-    }
-
-    // Merging the the first paragraph of inserted content with the content that
-    // came before the selection that was pasted into would also move content
-    // after the selection that was pasted into if: only one paragraph was being
-    // pasted, and it was not wrapped in a block, the selection that was pasted
-    // into ended at the end of a block and the next paragraph didn't start at
-    // the start of a block.
-    // Insert a line break just after the inserted content to separate it from
-    // what comes after and prevent that from happening.
-    VisiblePosition end_of_inserted_content = PositionAtEndOfInsertedContent();
-    if (StartOfParagraph(end_of_inserted_content).DeepEquivalent() ==
-        start_of_paragraph_to_move_position.GetPosition()) {
-      InsertNodeAt(HTMLBRElement::Create(GetDocument()),
-                   end_of_inserted_content.DeepEquivalent(), editing_state);
-      if (editing_state->IsAborted())
-        return;
-      // Mutation events (bug 22634) triggered by inserting the <br> might have
-      // removed the content we're about to move
-      if (!start_of_paragraph_to_move_position.IsConnected())
-        return;
-    }
-
-    GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-
-    // Making the two VisiblePositions valid again.
-    start_of_paragraph_to_move =
-        CreateVisiblePosition(start_of_paragraph_to_move_position);
-    destination = CreateVisiblePosition(destination_position);
-
-    // FIXME: Maintain positions for the start and end of inserted content
-    // instead of keeping nodes.  The nodes are only ever used to create
-    // positions where inserted content starts/ends.
-    MoveParagraph(start_of_paragraph_to_move,
-                  EndOfParagraph(start_of_paragraph_to_move), destination,
-                  editing_state);
-    if (editing_state->IsAborted())
-      return;
-
-    GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-    const VisibleSelection& visible_selection_of_insterted_content =
-        EndingVisibleSelection();
-    start_of_inserted_content_ = MostForwardCaretPosition(
-        visible_selection_of_insterted_content.VisibleStart().DeepEquivalent());
-    if (end_of_inserted_content_.IsOrphan()) {
-      end_of_inserted_content_ = MostBackwardCaretPosition(
-          visible_selection_of_insterted_content.VisibleEnd().DeepEquivalent());
-    }
-  }
-
-  Position last_position_to_select;
-  if (fragment.HasInterchangeNewlineAtEnd()) {
-    VisiblePosition end_of_inserted_content = PositionAtEndOfInsertedContent();
-    VisiblePosition next =
-        NextPositionOf(end_of_inserted_content, kCannotCrossEditingBoundary);
-
-    if (selection_end_was_end_of_paragraph ||
-        !IsEndOfParagraph(end_of_inserted_content) || next.IsNull()) {
-      if (TextControlElement* text_control =
-              EnclosingTextControl(current_root)) {
-        if (!inserted_nodes.LastLeafInserted()->nextSibling()) {
-          InsertNodeAfter(text_control->CreatePlaceholderBreakElement(),
-                          inserted_nodes.LastLeafInserted(), editing_state);
-          if (editing_state->IsAborted())
-            return;
-        }
-        SetEndingSelection(SelectionForUndoStep::From(
-            SelectionInDOMTree::Builder()
-                .Collapse(
-                    Position::AfterNode(*inserted_nodes.LastLeafInserted()))
-                .Build()));
-        // Select up to the paragraph separator that was added.
-        last_position_to_select =
-            EndingVisibleSelection().VisibleStart().DeepEquivalent();
-      } else if (!IsStartOfParagraph(end_of_inserted_content)) {
-        SetEndingSelection(SelectionForUndoStep::From(
-            SelectionInDOMTree::Builder()
-                .Collapse(end_of_inserted_content.DeepEquivalent())
-                .Build()));
-        Element* enclosing_block_element = EnclosingBlock(
-            end_of_inserted_content.DeepEquivalent().AnchorNode());
-        if (IsListItem(enclosing_block_element)) {
-          HTMLLIElement* new_list_item = HTMLLIElement::Create(GetDocument());
-          InsertNodeAfter(new_list_item, enclosing_block_element,
-                          editing_state);
-          if (editing_state->IsAborted())
-            return;
-          SetEndingSelection(SelectionForUndoStep::From(
-              SelectionInDOMTree::Builder()
-                  .Collapse(Position::FirstPositionInNode(*new_list_item))
-                  .Build()));
-        } else {
-          // Use a default paragraph element (a plain div) for the empty
-          // paragraph, using the last paragraph block's style seems to annoy
-          // users.
-          InsertParagraphSeparator(
-              editing_state, true,
-              !start_is_inside_mail_blockquote &&
-                  HighestEnclosingNodeOfType(
-                      end_of_inserted_content.DeepEquivalent(),
-                      IsMailHTMLBlockquoteElement, kCannotCrossEditingBoundary,
-                      inserted_nodes.FirstNodeInserted()->parentNode()));
-          if (editing_state->IsAborted())
-            return;
-        }
-
-        GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
-
-        // Select up to the paragraph separator that was added.
-        last_position_to_select =
-            EndingVisibleSelection().VisibleStart().DeepEquivalent();
-        UpdateNodesInserted(last_position_to_select.AnchorNode());
-      }
-    } else {
-      // Select up to the beginning of the next paragraph.
-      last_position_to_select = MostForwardCaretPosition(next.DeepEquivalent());
-    }
-  } else {
-    MergeEndIfNeeded(editing_state);
-    if (editing_state->IsAborted())
-      return;
-  }
+  const Position& last_position_to_select = MergeStartAndEndIfNeeds(
+      inserted_nodes, selection_start_was_start_of_paragraph,
+      selection_end_was_end_of_paragraph, start_is_inside_mail_blockquote,
+      fragment, current_root, editing_state);
+  if (editing_state->IsAborted())
+    return;
 
   if (ShouldPerformSmartReplace()) {
     AddSpacesForSmartReplace(editing_state);
