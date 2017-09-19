@@ -22,6 +22,30 @@
       "revId": "0c23abf7ab3a58946dea8847d83aad8766790db2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0123c95d_5bf3d686",
+        "filename": "content/common/sandbox_linux/bpf_utility_policy_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-19T18:23:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2d38d1c_14b6e351",
+      "range": {
+        "startLine": 45,
+        "startChar": 1,
+        "endLine": 45,
+        "endChar": 32
+      },
+      "revId": "0c23abf7ab3a58946dea8847d83aad8766790db2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
