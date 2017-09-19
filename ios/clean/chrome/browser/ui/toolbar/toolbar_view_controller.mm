@@ -9,6 +9,7 @@
 #include "ios/chrome/browser/ui/rtl_geometry.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/clean/chrome/browser/ui/commands/navigation_commands.h"
+#import "ios/clean/chrome/browser/ui/commands/tab_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/tab_grid_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/tab_strip_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h"
@@ -56,6 +57,7 @@
 @synthesize usesTabStrip = _usesTabStrip;
 
 - (instancetype)initWithDispatcher:(id<NavigationCommands,
+                                       TabCommands,
                                        TabGridCommands,
                                        TabHistoryPopupCommands,
                                        TabStripCommands,
@@ -487,6 +489,7 @@
 // The action performed depends on the experimental setting of using the tab
 // strip.
 - (void)tabSwitcherButtonTapped:(id)sender {
+  [self.dispatcher takeTabSnapshot];
   self.usesTabStrip ? [self.dispatcher showTabStrip]
                     : [self.dispatcher showTabGrid];
 }
