@@ -36,6 +36,11 @@ constexpr int kSendBufferSize = 65536;
 // to provide sufficient parallelism to avoid lock overhead in ad-hoc testing.
 constexpr int kNumSendBuffers = 17;
 
+// This function is set by a callback in content if OilPan exists in the
+// current process. This function pointer can be used to hook or unhook the
+// oilpan allocations. It will be null in the browser process.
+content::ContentClient::GCHeapAllocationHookFunction g_hook_gc_heap = nullptr;
+
 class SendBuffer {
  public:
   SendBuffer() : buffer_(new char[kSendBufferSize]) {}
@@ -182,6 +187,14 @@ void HookPartitionFree(void* address) {
   AllocatorShimLogFree(address);
 }
 
+void HookGCAlloc(uint8_t* address, size_t size, const char* type) {
+  AllocatorShimLogAlloc(AllocatorType::kOilpan, address, size, type);
+}
+
+void HookGCFree(uint8_t* address) {
+  AllocatorShimLogFree(address);
+}
+
 }  // namespace
 
 void InitAllocatorShim(MemlogSenderPipe* sender_pipe) {
@@ -199,12 +212,19 @@ void InitAllocatorShim(MemlogSenderPipe* sender_pipe) {
   // PartitionAlloc allocator shim.
   base::PartitionAllocHooks::SetAllocationHook(&HookPartitionAlloc);
   base::PartitionAllocHooks::SetFreeHook(&HookPartitionFree);
+
+  // GC (Oilpan) allocator shim.
+  if (g_hook_gc_heap)
+    g_hook_gc_heap(&HookGCAlloc, &HookGCFree);
 }
 
 void StopAllocatorShimDangerous() {
   g_send_buffers = nullptr;
   base::PartitionAllocHooks::SetAllocationHook(nullptr);
   base::PartitionAllocHooks::SetFreeHook(nullptr);
+
+  if (g_hook_gc_heap)
+    g_hook_gc_heap(nullptr, nullptr);
 }
 
 void AllocatorShimLogAlloc(AllocatorType type,
@@ -272,6 +292,18 @@ void AllocatorShimLogFree(void* address) {
     free_packet.address = (uint64_t)address;
 
     DoSend(address, &free_packet, sizeof(FreePacket));
+  }
+}
+
+void SetGCHeapAllocationHookFunction(
+    content::ContentClient::GCHeapAllocationHookFunction fn) {
+  DCHECK(!g_hook_gc_heap);  // Duplicate call.
+  g_hook_gc_heap = fn;
+
+  if (g_sender_pipe) {
+    // If starting the memlog pipe beat Blink initialization, hook the
+    // functions now.
+    g_hook_gc_heap(&HookGCAlloc, &HookGCFree);
   }
 }
 
