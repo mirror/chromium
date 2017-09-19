@@ -95,19 +95,60 @@ Polymer({
   },
 
   /**
-   * @param {boolean} success
+   * @param {number} result_code
    * @param {string} printerName
    * @private
    */
-  onAddPrinter_: function(success, printerName) {
-    if (success) {
+  onAddPrinter_: function(result_code, printerName) {
+    if (result_code === 1) {
+      // PrinterSetupResult::kSuccess
       this.updateCupsPrintersList_();
       var message = this.$.addPrinterDoneMessage;
       message.textContent =
           loadTimeData.getStringF('printerAddedSuccessfulMessage', printerName);
     } else {
       var message = this.$.addPrinterErrorMessage;
+      var messageText = this.$.addPrinterFailedMessage;
+      switch (result_code) {
+        case 0:
+          // PrinterSetupResult::kFatalError
+          messageText.textContent =
+              loadTimeData.getString('printerAddedFatalErrorMessage');
+          break;
+        case 2:
+          // PrinterSetupResult::kPrinterUnreachable
+          messageText.textContent =
+              loadTimeData.getString('printerAddedPrinterUnreachableMessage');
+          break;
+        case 3:
+          // PrinterSetupResult::kDbusError
+          messageText.textContent =
+              loadTimeData.getString('printerAddedDbusErrorMessage');
+        case 10:
+          // PrinterSetupResult::kPpdTooLarge
+          messageText.textContent =
+              loadTimeData.getString('printerAddedPpdTooLargeMessage');
+          break;
+        case 11:
+          // PrinterSetupResult::kInvalidPpd
+          messageText.textContent =
+              loadTimeData.getString('printerAddedInvalidPpdMessage');
+          break;
+        case 12:
+          // PrinterSetupResult::kPpdNotFound
+          messageText.textContent =
+              loadTimeData.getString('printerAddedPpdNotFoundMessage');
+          break;
+        case 13:
+          // PrinterSetupResult::kPpdUnretievable
+          messageText.textContent =
+              loadTimeData.getString('printerAddedPpdUnretrievableMessage');
+          break;
+        default:
+          break;
+      }
     }
+
     message.hidden = false;
     window.setTimeout(function() {
       message.hidden = true;
