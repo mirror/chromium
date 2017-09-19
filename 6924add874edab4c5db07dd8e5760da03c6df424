@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "cd4e03e6_04796ebb",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-19T16:10:40Z",
+      "side": 1,
+      "message": "needed?",
+      "revId": "6924add874edab4c5db07dd8e5760da03c6df424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "423cba25_2ff63f8c",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
         "patchSetId": 7
@@ -94,6 +111,40 @@
       "revId": "6924add874edab4c5db07dd8e5760da03c6df424",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2fcb13e_c2251077",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-19T16:10:40Z",
+      "side": 1,
+      "message": "Fix line length",
+      "revId": "6924add874edab4c5db07dd8e5760da03c6df424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b58db7f_07fc7026",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-09-19T16:10:40Z",
+      "side": 1,
+      "message": "s/password/exception/",
+      "revId": "6924add874edab4c5db07dd8e5760da03c6df424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
