@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e85eb77_6f995afb",
+        "filename": "components/password_manager/core/browser/password_store_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-09-19T13:08:35Z",
+      "side": 0,
+      "message": "Only non-trivial change in this CL: I moved this down to the expectation call in order to avoid needing a weak raw ptr. Also applies to the other two chunks in this file.",
+      "range": {
+        "startLine": 378,
+        "startChar": 0,
+        "endLine": 379,
+        "endChar": 65
+      },
+      "revId": "54d19130114243bc339f5fb256dcff7ea99a5b7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
