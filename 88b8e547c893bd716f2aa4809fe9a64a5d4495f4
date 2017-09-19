@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "201a8c74_abae002d",
+        "filename": "chromeos/dbus/fake_power_manager_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-19T00:27:04Z",
+      "side": 1,
+      "message": "i\u0027ve also updated the TabletPowerButtonController tests to call this, but i\u0027ll send that in a separate change since UX wants this one to be merged to M62.",
+      "revId": "88b8e547c893bd716f2aa4809fe9a64a5d4495f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
