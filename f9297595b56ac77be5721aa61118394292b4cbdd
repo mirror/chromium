@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cf73dd7_646e2ff5",
+        "filename": "chrome/browser/ui/views/outdated_upgrade_bubble_view.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-19T06:53:01Z",
+      "side": 1,
+      "message": "this has bitten me before .. doesn\u0027t happen on Linux/Mac. And I actually wrote code to prevent this \"double close\" by modifying DialogClientView - https://codereview.chromium.org/2825243002/\n\nbut it\u0027s limited. E.g. doesn\u0027t work for an \"ExtraView\" button (maybe we need ui::DIALOG_BUTTON_ALTERNATE to better support dialogs that want 3 buttons.. ugh - so many things I want to fix)",
+      "revId": "f9297595b56ac77be5721aa61118394292b4cbdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
