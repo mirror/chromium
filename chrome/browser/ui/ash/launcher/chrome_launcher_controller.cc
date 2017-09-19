@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
 
+#include "ash/ash_switches.h"
 #include "ash/multi_profile_uma.h"
 #include "ash/public/cpp/remote_shelf_item_delegate.h"
 #include "ash/public/cpp/shelf_item.h"
@@ -14,6 +15,7 @@
 #include "ash/shelf/shelf.h"
 #include "ash/shell.h"
 #include "ash/strings/grit/ash_strings.h"
+#include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/pattern.h"
 #include "base/strings/string_util.h"
@@ -104,6 +106,18 @@ void SelectItemWithSource(ash::ShelfItemDelegate* delegate,
 bool ItemTypeIsPinned(const ash::ShelfItem& item) {
   return item.type == ash::TYPE_PINNED_APP ||
          item.type == ash::TYPE_BROWSER_SHORTCUT;
+}
+
+// Returns true if Chrome's ShelfModel instance is synchronized with Ash's.
+bool ShouldSynchronizeShelfModels() {
+  // Synchronization is required in the Mash config, since Chrome and Ash run in
+  // separate processes; it's optional via kAshEnableShelfModelSynchronization
+  // in the Classic Ash config, where Chrome can uses Ash's ShelfModel directly.
+  static const bool should_synchronize_shelf_models =
+      ash_util::IsRunningInMash() ||
+      base::CommandLine::ForCurrentProcess()->HasSwitch(
+          ash::switches::kAshEnableShelfModelSynchronization);
+  return should_synchronize_shelf_models;
 }
 
 }  // namespace
@@ -1218,7 +1232,7 @@ void ChromeLauncherController::ReleaseProfile() {
 
 void ChromeLauncherController::OnShelfItemAdded(int32_t index,
                                                 const ash::ShelfItem& item) {
-  DCHECK(ash_util::IsRunningInMash()) << " Unexpected model synchronization";
+  DCHECK(ShouldSynchronizeShelfModels()) << " Unexpected model sync";
   DCHECK(!applying_remote_shelf_model_changes_) << " Unexpected model change";
 
   // Ignore the app list and browser shortcut items; they should already exist.
@@ -1235,7 +1249,7 @@ void ChromeLauncherController::OnShelfItemAdded(int32_t index,
 }
 
 void ChromeLauncherController::OnShelfItemRemoved(const ash::ShelfID& id) {
-  DCHECK(ash_util::IsRunningInMash()) << " Unexpected model synchronization";
+  DCHECK(ShouldSynchronizeShelfModels()) << " Unexpected model sync";
   DCHECK(!applying_remote_shelf_model_changes_) << " Unexpected model change";
   const int index = model_->ItemIndexByID(id);
   DCHECK_GE(index, 0) << " No item found with the id: " << id;
@@ -1248,7 +1262,7 @@ void ChromeLauncherController::OnShelfItemRemoved(const ash::ShelfID& id) {
 
 void ChromeLauncherController::OnShelfItemMoved(const ash::ShelfID& id,
                                                 int32_t index) {
-  DCHECK(ash_util::IsRunningInMash()) << " Unexpected model synchronization";
+  DCHECK(ShouldSynchronizeShelfModels()) << " Unexpected model sync";
   DCHECK(!applying_remote_shelf_model_changes_) << " Unexpected model change";
   const int current_index = model_->ItemIndexByID(id);
   DCHECK_GE(current_index, 0) << " No item found with the id: " << id;
@@ -1266,7 +1280,7 @@ void ChromeLauncherController::OnShelfItemMoved(const ash::ShelfID& id,
 }
 
 void ChromeLauncherController::OnShelfItemUpdated(const ash::ShelfItem& item) {
-  DCHECK(ash_util::IsRunningInMash()) << " Unexpected model synchronization";
+  DCHECK(ShouldSynchronizeShelfModels()) << " Unexpected model sync";
   DCHECK(!applying_remote_shelf_model_changes_) << " Unexpected model change";
   const int index = model_->ItemIndexByID(item.id);
   DCHECK_GE(index, 0) << " No item found with the id: " << item.id;
@@ -1279,7 +1293,7 @@ void ChromeLauncherController::OnShelfItemUpdated(const ash::ShelfItem& item) {
 void ChromeLauncherController::OnShelfItemDelegateChanged(
     const ash::ShelfID& id,
     ash::mojom::ShelfItemDelegatePtr delegate) {
-  DCHECK(ash_util::IsRunningInMash()) << " Unexpected model synchronization";
+  DCHECK(ShouldSynchronizeShelfModels()) << " Unexpected model sync";
   DCHECK(!applying_remote_shelf_model_changes_) << " Unexpected model change";
   base::AutoReset<bool> reset(&applying_remote_shelf_model_changes_, true);
   if (delegate.is_bound()) {
@@ -1297,7 +1311,7 @@ void ChromeLauncherController::OnShelfItemDelegateChanged(
 void ChromeLauncherController::ShelfItemAdded(int index) {
   ash::ShelfItem item = model_->items()[index];
   if (shelf_controller_ && !applying_remote_shelf_model_changes_ &&
-      chromeos::GetAshConfig() == ash::Config::MASH) {
+      ShouldSynchronizeShelfModels()) {
     shelf_controller_->AddShelfItem(index, item);
   }
 
@@ -1349,7 +1363,7 @@ void ChromeLauncherController::ShelfItemRemoved(
     int index,
     const ash::ShelfItem& old_item) {
   if (shelf_controller_ && !applying_remote_shelf_model_changes_ &&
-      chromeos::GetAshConfig() == ash::Config::MASH) {
+      ShouldSynchronizeShelfModels()) {
     shelf_controller_->RemoveShelfItem(old_item.id);
   }
 
@@ -1366,7 +1380,7 @@ void ChromeLauncherController::ShelfItemMoved(int start_index,
                                               int target_index) {
   const ash::ShelfItem& item = model_->items()[target_index];
   if (shelf_controller_ && !applying_remote_shelf_model_changes_ &&
-      chromeos::GetAshConfig() == ash::Config::MASH) {
+      ShouldSynchronizeShelfModels()) {
     shelf_controller_->MoveShelfItem(item.id, target_index);
   }
 
@@ -1381,7 +1395,7 @@ void ChromeLauncherController::ShelfItemChanged(
     const ash::ShelfItem& old_item) {
   const ash::ShelfItem& item = model_->items()[index];
   if (shelf_controller_ && !applying_remote_shelf_model_changes_ &&
-      chromeos::GetAshConfig() == ash::Config::MASH) {
+      ShouldSynchronizeShelfModels()) {
     shelf_controller_->UpdateShelfItem(item);
   }
 
@@ -1399,7 +1413,7 @@ void ChromeLauncherController::ShelfItemDelegateChanged(
     const ash::ShelfID& id,
     ash::ShelfItemDelegate* delegate) {
   if (shelf_controller_ && !applying_remote_shelf_model_changes_ &&
-      chromeos::GetAshConfig() == ash::Config::MASH) {
+      ShouldSynchronizeShelfModels()) {
     shelf_controller_->SetShelfItemDelegate(
         id, delegate ? delegate->CreateInterfacePtrAndBind()
                      : ash::mojom::ShelfItemDelegatePtr());
