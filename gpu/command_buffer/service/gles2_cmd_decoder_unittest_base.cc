@@ -2347,6 +2347,58 @@ void GLES2DecoderPassthroughTestBase::DoBufferSubData(GLenum target,
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
 }
 
+void GLES2DecoderPassthroughTestBase::DoBindTexture(GLenum target,
+                                                    GLuint client_id) {
+  cmds::BindTexture cmd;
+  cmd.Init(target, client_id);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+}
+
+void GLES2DecoderPassthroughTestBase::DoTexImage2D(
+    GLenum target,
+    GLint level,
+    GLenum internal_format,
+    GLsizei width,
+    GLsizei height,
+    GLint border,
+    GLenum format,
+    GLenum type,
+    uint32_t shared_memory_id,
+    uint32_t shared_memory_offset) {
+  cmds::TexImage2D cmd;
+  cmd.Init(target, level, internal_format, width, height, format, type,
+           shared_memory_id, shared_memory_offset);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+}
+
+void GLES2DecoderPassthroughTestBase::DoTexImage3D(
+    GLenum target,
+    GLint level,
+    GLenum internal_format,
+    GLsizei width,
+    GLsizei height,
+    GLsizei depth,
+    GLint border,
+    GLenum format,
+    GLenum type,
+    uint32_t shared_memory_id,
+    uint32_t shared_memory_offset) {
+  cmds::TexImage3D cmd;
+  cmd.Init(target, level, internal_format, width, height, depth, format, type,
+           shared_memory_id, shared_memory_offset);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+}
+
+void GLES2DecoderPassthroughTestBase::DoGetIntegerv(GLenum pname,
+                                                    GLint* result,
+                                                    size_t num_results) {
+  cmds::GetIntegerv cmd;
+  cmd.Init(pname, shared_memory_id_, shared_memory_offset_);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  GLint* cmd_result = GetSharedMemoryAs<GLint*>();
+  std::copy(cmd_result, cmd_result + num_results, result);
+}
+
 // GCC requires these declarations, but MSVC requires they not be present
 #ifndef COMPILER_MSVC
 const size_t GLES2DecoderPassthroughTestBase::kSharedBufferSize;
