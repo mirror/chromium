@@ -16,6 +16,24 @@
       "revId": "2cb57041c9599df74ab836f68d39d58eb1b1d0f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61716497_cb9161fa",
+        "filename": "third_party/WebKit/Source/bindings/scripts/scripts.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-19T10:02:16Z",
+      "side": 1,
+      "message": "We can\u0027t.\n{{source_name_part}} is CamelCase because it\u0027s an interface name, and we want snake_case_${component}_constructors.{idl,h}.",
+      "parentUuid": "d0b9d29d_8e587c4e",
+      "revId": "2cb57041c9599df74ab836f68d39d58eb1b1d0f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
