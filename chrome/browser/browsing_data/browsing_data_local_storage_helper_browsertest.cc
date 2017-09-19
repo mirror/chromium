@@ -62,9 +62,8 @@ class BrowsingDataLocalStorageHelperTest : public InProcessBrowserTest {
     // stores data in the host file system.
     base::FilePath storage_path = GetLocalStoragePathForTestingProfile();
     base::CreateDirectory(storage_path);
-    const base::FilePath::CharType* kFilesToCreate[] = {
-        kTestFile0, kTestFile1, kTestFileInvalid, kTestFileExtension
-    };
+    static constexpr const base::FilePath::CharType* kFilesToCreate[] = {
+        kTestFile0, kTestFile1, kTestFileInvalid, kTestFileExtension};
     for (size_t i = 0; i < arraysize(kFilesToCreate); ++i) {
       base::FilePath file_path = storage_path.Append(kFilesToCreate[i]);
       base::WriteFile(file_path, nullptr, 0);

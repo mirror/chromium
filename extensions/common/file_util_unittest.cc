@@ -226,7 +226,7 @@ TEST_F(FileUtilTest, CheckIllegalFilenamesOnlyReserved) {
   base::ScopedTempDir temp;
   ASSERT_TRUE(temp.CreateUniqueTempDir());
 
-  const base::FilePath::CharType* folders[] = {
+  constexpr const base::FilePath::CharType* folders[] = {
       extensions::kLocaleFolder, extensions::kPlatformSpecificFolder};
 
   for (size_t i = 0; i < arraysize(folders); i++) {
