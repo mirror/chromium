@@ -448,14 +448,13 @@ void URLLoaderImpl::OnConnectionError() {
 
 void URLLoaderImpl::OnResponseBodyStreamClosed(MojoResult result) {
   url_request_.reset();
+  writable_handle_watcher_.Cancel();
   response_body_stream_.reset();
   pending_write_ = nullptr;
   DeleteIfNeeded();
 }
 
 void URLLoaderImpl::OnResponseBodyStreamReady(MojoResult result) {
-  // TODO: Handle a bad |result| value.
-  DCHECK_EQ(result, MOJO_RESULT_OK);
   ReadMore();
 }
 
