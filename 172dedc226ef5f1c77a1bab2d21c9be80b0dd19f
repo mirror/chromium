@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c94507c_b81fce7e",
+        "filename": "content/browser/download/download_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-09-19T16:38:15Z",
+      "side": 1,
+      "message": "Why closed end matters? if a video was downloaded with 3 parallel requests, the first and the third request is half open, the 2nd is closed end, so only the 2nd request will not fetch response body?",
+      "revId": "172dedc226ef5f1c77a1bab2d21c9be80b0dd19f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
