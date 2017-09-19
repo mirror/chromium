@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "34fb7aa4_0831291f",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T10:34:27Z",
+      "side": 1,
+      "message": "My suggestion about treating short words and two-word sentences:\n* |developer_group| and |user_group| will contain NO special symbols.\n* all special words/sentences have NO spaces.\n* In |PossibleUsername| we will also store a set of short tokens. \n* When you check a string and dictionary: if a word from dictionary is short, then check the set. Otherwise, search non-short word in the string.\n\nSketch: \nvector\u003cStringPiece16\u003e tokens \u003d SplitString(name + \"$\" + id);\ndeveloper_group \u003d JoinString(tokens, \"\");\nset\u003cstring16\u003e short_tokens_in_developer_group (or so);\nstd::copy_if(tokens.begin(), tokens.end(), std::inserter(short_tokens), IfTokenIsShort);",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 2
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1272a7a_0fd4a471",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 15
