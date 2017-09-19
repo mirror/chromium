@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "20d23be5_5bdcfc71",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-09-19T22:28:01Z",
+      "side": 1,
+      "message": "For case #1, more specifics:\nThe default argument is null, and that\u0027s how we call it from the relation cache. This way we avoid following aria-labelledby in an infinite loop around the tree.",
+      "parentUuid": "7f514a7e_f4951933",
+      "revId": "fef5ea7b1e6e6edab68e3b36efec61ee5678b2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3797f90a_33f47aa8",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
         "patchSetId": 5
