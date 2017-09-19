@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a47894f4_eb41644c",
+        "filename": "chrome/browser/resources/settings/site_settings/site_list.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-09-19T23:30:46Z",
+      "side": 1,
+      "message": "Is iron-flex used here (err, I see it in the include\u003d\"\", I mean can it just be removed entirely)? That doesn\u0027t need to change in this CL, but if it\u0027s not needed and ya feel like removing it LGTM.",
+      "revId": "2ecfaf25a675699fd8c769ae4e941ec5f91f0179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
