@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "95f36954_a35a7f42",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-19T17:58:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bbceb3e_9eee266c",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 11
+      },
+      "revId": "579d086bcc8ccac03762ac0e97e6a490c62b9ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "015092e2_31ea6241",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsManager.java",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fa11d61b_baba45be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-19T17:58:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "015092e2_31ea6241",
+      "range": {
+        "startLine": 376,
+        "startChar": 12,
+        "endLine": 376,
+        "endChar": 93
+      },
+      "revId": "579d086bcc8ccac03762ac0e97e6a490c62b9ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74ef2ebf_2394e94e",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsRowAdapter.java",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "579d086bcc8ccac03762ac0e97e6a490c62b9ffd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb145b72_3e72382e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsRowAdapter.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-19T17:58:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74ef2ebf_2394e94e",
+      "range": {
+        "startLine": 396,
+        "startChar": 0,
+        "endLine": 396,
+        "endChar": 51
+      },
+      "revId": "579d086bcc8ccac03762ac0e97e6a490c62b9ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
