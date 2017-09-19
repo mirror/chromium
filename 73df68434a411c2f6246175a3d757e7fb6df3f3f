@@ -22,6 +22,30 @@
       "revId": "73df68434a411c2f6246175a3d757e7fb6df3f3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4370b3a0_3ab02015",
+        "filename": "net/http/transport_security_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-19T19:02:34Z",
+      "side": 1,
+      "message": "Done.\n\nThose values shouldn\u0027t be read unless the related flags are set to true at which point the values should be set as well but I\u0027ve updated the CL to initialize them to zero.",
+      "parentUuid": "64bbce8b_59b591ce",
+      "range": {
+        "startLine": 406,
+        "startChar": 11,
+        "endLine": 406,
+        "endChar": 34
+      },
+      "revId": "73df68434a411c2f6246175a3d757e7fb6df3f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

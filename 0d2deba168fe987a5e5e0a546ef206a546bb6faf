@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da536b90_f9fb79f1",
+        "filename": "net/http/transport_security_state.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-19T19:02:34Z",
+      "side": 1,
+      "message": "The bitstream doesn\u0027t have any versioning by itself but because the generator lives in the Chromium repository and the file is generated during a build it inherits the versioning from git.\n\nWhen you checkout an old revision with an older bitstream format the build system would detect the changes to the generator files and re-run the generator when you build //net which would then result in a newly generated bitstream file with the bitstream format your Chromium checkout expects.\n\nThe decoder in Chromium (DecodeHSTSPreloadRaw) and the generator always have a compatible bitstream version for any given Chromium revision. This is enforced by the integration tests.",
+      "parentUuid": "95ff9482_b99d5052",
+      "range": {
+        "startLine": 536,
+        "startChar": 13,
+        "endLine": 536,
+        "endChar": 28
+      },
+      "revId": "0d2deba168fe987a5e5e0a546ef206a546bb6faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97af0c26_e430fb35",
         "filename": "net/http/transport_security_state.cc",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "0d2deba168fe987a5e5e0a546ef206a546bb6faf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ddc000_87aa4c64",
+        "filename": "net/http/transport_security_state.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1146496
+      },
+      "writtenOn": "2017-09-19T19:02:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97af0c26_e430fb35",
+      "range": {
+        "startLine": 549,
+        "startChar": 23,
+        "endLine": 549,
+        "endChar": 24
+      },
+      "revId": "0d2deba168fe987a5e5e0a546ef206a546bb6faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
