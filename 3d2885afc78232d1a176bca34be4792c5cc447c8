@@ -106,6 +106,24 @@
       "revId": "3d2885afc78232d1a176bca34be4792c5cc447c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8430795_b7a0e9b3",
+        "filename": "ui/aura/window.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-09-19T06:28:26Z",
+      "side": 1,
+      "message": "If we don\u0027t call the parent method, then we\u0027d have:\n\nContentsWebView::OnLayerCreated() {\n   // Logic (A)\n}\n\nIt\u0027s good until someone adds in the future:\n\nView::OnLayerCreated() {\n   // Logic (B)\n}\n\nThen the logic (B) will execute for other views, but not for ContentsWebView.\n\nBy the way, this review takes way more time than it should. We really need this to be fixed for ARC. I\u0027m happy to do follow ups if you want to clean up this code further.",
+      "parentUuid": "b217e710_e55aac7d",
+      "revId": "3d2885afc78232d1a176bca34be4792c5cc447c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
