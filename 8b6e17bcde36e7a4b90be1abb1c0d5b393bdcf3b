@@ -81,6 +81,30 @@
       "revId": "8b6e17bcde36e7a4b90be1abb1c0d5b393bdcf3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdaf48b8_d292424c",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1061,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-09-19T12:20:40Z",
+      "side": 1,
+      "message": "If it\u0027s allowed behavior then we need to be able to test it. \n\nOtherwise, we should figure out how a WRITE is getting in after a READ and remove that path. I\u0027d be willing to help out with that.",
+      "parentUuid": "b37c29b2_6f233217",
+      "range": {
+        "startLine": 1060,
+        "startChar": 0,
+        "endLine": 1061,
+        "endChar": 13
+      },
+      "revId": "8b6e17bcde36e7a4b90be1abb1c0d5b393bdcf3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
