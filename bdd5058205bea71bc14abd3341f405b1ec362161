@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "86ae6081_02bac5c2",
+        "filename": "ash/shelf/shelf_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-19T21:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b60ae6c2_4cabd542",
+      "revId": "bdd5058205bea71bc14abd3341f405b1ec362161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0224cbec_9169f617",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "bdd5058205bea71bc14abd3341f405b1ec362161",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b6d3ea9_e2397108",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2714,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-19T21:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0224cbec_9169f617",
+      "revId": "bdd5058205bea71bc14abd3341f405b1ec362161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "aa932a36_8ca2af37",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2721,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-19T21:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cec9a629_3d8916ee",
+      "revId": "bdd5058205bea71bc14abd3341f405b1ec362161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f35c4de1_bc92de70",
         "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "bdd5058205bea71bc14abd3341f405b1ec362161",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eced2f0b_a1ab3d5f",
+        "filename": "chrome/browser/ui/ash/launcher/chrome_launcher_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-19T21:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f35c4de1_bc92de70",
+      "revId": "bdd5058205bea71bc14abd3341f405b1ec362161",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
