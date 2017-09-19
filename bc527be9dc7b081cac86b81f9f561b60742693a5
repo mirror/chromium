@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f4fa95e_77501cfc",
+        "filename": "media/filters/source_buffer_range.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-19T23:38:15Z",
+      "side": 1,
+      "message": "IMHO, it reads better.\nAlso: https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/8dOAMzgR4ao\nAnd our chromium c++11 style prefers \"using\" for new code.\n\nThough I\u0027m not using templatized type aliases here, note that (copied from the thread):\n\n  Another (lesser) use case is that type aliases could be templates too, you can do this:\n\n  template\u003ctypename T\u003e\n  using StringMapT \u003d std::map\u003cstd::string, T\u003e;\n\n  StringMapT\u003cint\u003e string_to_int_map;\n  StringMapT\u003cdouble\u003e string_to_double_map;",
+      "parentUuid": "7faf99ad_332dc6c8",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 29
+      },
+      "revId": "bc527be9dc7b081cac86b81f9f561b60742693a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69dcd506_06fb7e37",
         "filename": "media/filters/source_buffer_range.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "c019b0e0_1cc4fa84",
+        "filename": "media/filters/source_buffer_range.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-19T23:38:15Z",
+      "side": 1,
+      "message": "Yeah, Done. I was hoping to elevate key_frame_map_ into the base, but for speedier engineering, will probably wholesale copy ByDts into ByPts and modify from there going forward (since eventually we\u0027ll drop the ByDts variant and probably merge everything back up into one final SourceBufferRange that does things ByPts).",
+      "parentUuid": "69dcd506_06fb7e37",
+      "range": {
+        "startLine": 173,
+        "startChar": 6,
+        "endLine": 173,
+        "endChar": 30
+      },
+      "revId": "bc527be9dc7b081cac86b81f9f561b60742693a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b72810e_f835e4d3",
         "filename": "media/filters/source_buffer_stream_unittest.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "bc527be9dc7b081cac86b81f9f561b60742693a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1a8beeb_57f75b49",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-09-19T23:38:15Z",
+      "side": 1,
+      "message": "Yes, SBR is incomplete type. The test needs SBRByDTS pieces, too.\nCompile errors without this line are:\n\n../../media/filters/source_buffer_stream_unittest.cc:289:8: error: member access into incomplete type \u0027media::SourceBufferRangeByDts\u0027\n      r-\u003eGetRangeEndTimesForTesting(\u0026highest_pts, \u0026end_time);\n       ^\n../../media/filters/source_buffer_stream.h:35:7: note: forward declaration of \u0027media::SourceBufferRangeByDts\u0027\nclass SourceBufferRangeByDts;\n      ^\n../../media/filters/source_buffer_stream_unittest.cc:301:37: error: member access into incomplete type \u0027media::SourceBufferRangeByDts\u0027\n    EXPECT_EQ(expectation, range_ptr-\u003eIsNextInPresentationSequence(\n                                    ^\n../../media/filters/source_buffer_stream.h:35:7: note: forward declaration of \u0027media::SourceBufferRangeByDts\u0027\nclass SourceBufferRangeByDts;\n      ^\n2 errors generated.",
+      "parentUuid": "4b72810e_f835e4d3",
+      "range": {
+        "startLine": 31,
+        "startChar": 52,
+        "endLine": 31,
+        "endChar": 53
+      },
+      "revId": "bc527be9dc7b081cac86b81f9f561b60742693a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
