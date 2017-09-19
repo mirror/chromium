@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9afdaa54_7eb931ea",
+        "filename": "cc/layers/layer_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-19T19:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e790467c_27b41c7b",
+      "revId": "b2d4eba5de123476c11df8a30793abd36c36d2d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0e0e7e9_500276d0",
         "filename": "cc/layers/layer_unittest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "b2d4eba5de123476c11df8a30793abd36c36d2d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb011aa1_55380e4b",
+        "filename": "cc/layers/layer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1506,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-19T19:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0e0e7e9_500276d0",
+      "revId": "b2d4eba5de123476c11df8a30793abd36c36d2d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3fbdd335_35127c31",
+        "filename": "cc/layers/layer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1543,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-19T19:39:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d061afb_bc4a72a8",
+      "revId": "b2d4eba5de123476c11df8a30793abd36c36d2d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "244cc664_645d5d30",
         "filename": "ui/compositor/layer.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-09-19T17:57:08Z",
       "side": 1,
       "message": "I am confused about this function now. Is this never called? Or is it called from different animations? Cuz this is setting opacity on the cc layer?",
+      "revId": "b2d4eba5de123476c11df8a30793abd36c36d2d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "671cadce_9932bfe8",
+        "filename": "ui/compositor/layer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1127,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-09-19T19:39:34Z",
+      "side": 1,
+      "message": "It is used at the end of a transition https://cs.chromium.org/chromium/src/ui/compositor/layer_animation_element.cc?l\u003d398\u0026rcl\u003d30eb733502be6c433f1b04e9b864b51bcf160cd3 and when an animation is aborted https://cs.chromium.org/chromium/src/ui/compositor/layer_animation_element.cc?rcl\u003d30eb733502be6c433f1b04e9b864b51bcf160cd3\u0026l\u003d390. If confuses me a lot too.",
+      "parentUuid": "244cc664_645d5d30",
       "revId": "b2d4eba5de123476c11df8a30793abd36c36d2d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
