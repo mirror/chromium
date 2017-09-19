@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "64c38768_ac327801",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-19T15:12:46Z",
+      "side": 1,
+      "message": "Matt added that chunk of code to handle the case where the user is slides down the bottom sheet, defocusing the omnibox. Maybe a new code comment to clarify what we\u0027re using that logic for would be helpful?",
+      "parentUuid": "47e4033c_68aa69ff",
+      "range": {
+        "startLine": 105,
+        "startChar": 12,
+        "endLine": 105,
+        "endChar": 36
+      },
+      "revId": "b9e09f65dd5b64fe347ef8f5a84d727e2cf0aea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "476d694e_0418e0fb",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
         "patchSetId": 5
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "\u003e The \"placeholder\" is a solid color view that we show when the sheet is opened via omnibox suggestions. I think it\u0027d be appropriate to show mPlaceholderContent rather than null.\n\nWell, this is for when the sheet content isn\u0027t visible at all, so technically it doesn\u0027t make a big difference what the content is... I tried that approach initially, to simplify the logic in BottomSheet.showContent(), but even if I immediately end the animation, there is a visible flash.",
       "parentUuid": "476d694e_0418e0fb",
+      "range": {
+        "startLine": 126,
+        "startChar": 16,
+        "endLine": 127,
+        "endChar": 47
+      },
+      "revId": "b9e09f65dd5b64fe347ef8f5a84d727e2cf0aea5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a2a783_3816d1f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetContentController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-19T15:12:46Z",
+      "side": 1,
+      "message": "We shouldn\u0027t re-use PLACEHOLDER_ID for mSelectedItemId if we\u0027re not actually showing the placeholder content.\n\nPerhaps we could use something like \"AUXILIARY_CONTENT_ID\" to match Matt\u0027s in-flight change to introduce TYPE_AUXILIARY_CONTENT and use that when the content is set to something the sheet doesn\u0027t know about.",
+      "parentUuid": "b26f8e8e_bbfea2cb",
       "range": {
         "startLine": 126,
         "startChar": 16,
