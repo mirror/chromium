@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "a61c6073_aa70d07f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-19T18:46:55Z",
+      "side": 1,
+      "message": "nit: delete \"will\"",
+      "range": {
+        "startLine": 12,
+        "startChar": 16,
+        "endLine": 12,
+        "endChar": 20
+      },
+      "revId": "090cf248bbd6836dc648dbdc4ffa5754fd8bfd2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f5e7e8b_fd1879aa",
         "filename": "chrome/browser/autocomplete/keyword_extensions_delegate_impl.cc",
         "patchSetId": 5
@@ -13,6 +36,178 @@
       "writtenOn": "2017-09-16T01:02:39Z",
       "side": 1,
       "message": "Nit: I still like using \u0026\u0026 in place of ? (and dropping \" : false\"), but whichever",
+      "revId": "090cf248bbd6836dc648dbdc4ffa5754fd8bfd2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1b189e2_0b82adfe",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-19T18:46:55Z",
+      "side": 1,
+      "message": "auto args \u003d std::make_unique\u003cListValue\u003e();",
+      "range": {
+        "startLine": 177,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 63
+      },
+      "revId": "090cf248bbd6836dc648dbdc4ffa5754fd8bfd2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a35c0191_2111ad22",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-19T18:46:55Z",
+      "side": 1,
+      "message": "std::make_unique, here and in other places.",
+      "range": {
+        "startLine": 178,
+        "startChar": 15,
+        "endLine": 178,
+        "endChar": 31
+      },
+      "revId": "090cf248bbd6836dc648dbdc4ffa5754fd8bfd2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "322f9e9c_89647f47",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-19T18:46:55Z",
+      "side": 1,
+      "message": "nit: an",
+      "range": {
+        "startLine": 68,
+        "startChar": 26,
+        "endLine": 68,
+        "endChar": 27
+      },
+      "revId": "090cf248bbd6836dc648dbdc4ffa5754fd8bfd2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92723b74_24ba270f",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-19T18:46:55Z",
+      "side": 1,
+      "message": ":(\nWould shortening the keyword from \"keyword\" to sth shorter (e.g. \"kw\") help a bit?",
+      "revId": "090cf248bbd6836dc648dbdc4ffa5754fd8bfd2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "396752ce_5dc93389",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-19T18:46:55Z",
+      "side": 1,
+      "message": "Generally for listeners like this, we follow the pattern of:\ndefine listener\ndo some action that satisfies the listener\nlistener.WaitUntilSatisfied()...\n\nSo, this should be moved to line ~139",
+      "revId": "090cf248bbd6836dc648dbdc4ffa5754fd8bfd2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8506bec8_978cf2f3",
+        "filename": "chrome/browser/extensions/api/omnibox/omnibox_api_interactive_test.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-19T18:46:55Z",
+      "side": 1,
+      "message": "nit: s/created/fired",
+      "range": {
+        "startLine": 145,
+        "startChar": 50,
+        "endLine": 145,
+        "endChar": 57
+      },
+      "revId": "090cf248bbd6836dc648dbdc4ffa5754fd8bfd2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba7f9d1b_f1683d3b",
+        "filename": "chrome/test/data/extensions/api_test/omnibox/test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-19T18:46:55Z",
+      "side": 1,
+      "message": "Is this necessary? the message on line 44 above should take care of |delete_suggestion_listener|, and this isn\u0027t probably being read by any code as I can\u0027t see any corresponding ResultCatcher in the c++ side.",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 45,
+        "endChar": 29
+      },
+      "revId": "090cf248bbd6836dc648dbdc4ffa5754fd8bfd2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c112dea_f54f608a",
+        "filename": "chrome/test/data/extensions/api_test/omnibox/test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-09-19T18:46:55Z",
+      "side": 1,
+      "message": "Again, this listener/message probably isn\u0027t necessary.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 34
+      },
       "revId": "090cf248bbd6836dc648dbdc4ffa5754fd8bfd2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
