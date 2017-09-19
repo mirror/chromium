@@ -91,6 +91,53 @@
       "revId": "dc7ad97a8e3b8461e26069c3a523d14bb5191368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d51a2ff_57b4e3d9",
+        "filename": "tools/perf/page_sets/tough_video_cases/video.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-19T21:45:02Z",
+      "side": 1,
+      "message": "We follow google JS guide: https://google.github.io/styleguide/jsguide.html\n\nSo this should be makeBusy()",
+      "parentUuid": "1b431f60_c7e11fd0",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 21
+      },
+      "revId": "dc7ad97a8e3b8461e26069c3a523d14bb5191368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f0d181b_84efea2f",
+        "filename": "tools/perf/page_sets/tough_video_cases/video.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-19T21:45:02Z",
+      "side": 1,
+      "message": "I suppose this will end up posting a task to the main render thread. So what we are doing here is to posting a lot of tasks to make the render thread busy. Maybe we should add a comment to clarify on this just in case this matters for some test cases.",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 16
+      },
+      "revId": "dc7ad97a8e3b8461e26069c3a523d14bb5191368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
