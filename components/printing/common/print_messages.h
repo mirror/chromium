@@ -171,7 +171,8 @@ IPC_STRUCT_TRAITS_BEGIN(PrintMsg_Print_Params)
   // True if print backgrounds is requested by the user.
   IPC_STRUCT_TRAITS_MEMBER(should_print_backgrounds)
 
-  // The document type of printed page(s) from render.
+  // The requested document type of printed page(s).
+  // TODO(weili): change the name to requested_doc_type.
   IPC_STRUCT_TRAITS_MEMBER(printed_doc_type)
 IPC_STRUCT_TRAITS_END()
 
@@ -241,6 +242,9 @@ IPC_STRUCT_BEGIN(PrintHostMsg_DidPreviewDocument_Params)
 
   // The id of the preview request.
   IPC_STRUCT_MEMBER(int, preview_request_id)
+
+  // The document type of printed page(s) from render.
+  IPC_STRUCT_MEMBER(uint32_t, printed_doc_type)
 IPC_STRUCT_END()
 
 // Parameters to describe a rendered preview page.
@@ -256,6 +260,9 @@ IPC_STRUCT_BEGIN(PrintHostMsg_DidPreviewPage_Params)
 
   // The id of the preview request.
   IPC_STRUCT_MEMBER(int, preview_request_id)
+
+  // The document type of printed page(s) from render.
+  IPC_STRUCT_MEMBER(uint32_t, printed_doc_type)
 IPC_STRUCT_END()
 
 // Parameters sent along with the page count.
@@ -298,6 +305,8 @@ IPC_STRUCT_BEGIN(PrintHostMsg_DidPrintPage_Params)
   // The physical offsets of the printer in DPI. Used for PS printing.
   IPC_STRUCT_MEMBER(gfx::Point, physical_offsets)
 
+  // The document type of printed page(s) from render.
+  IPC_STRUCT_MEMBER(uint32_t, printed_doc_type)
 IPC_STRUCT_END()
 
 // TODO(dgn) Rename *ScriptedPrint messages because they are not called only

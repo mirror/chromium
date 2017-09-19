@@ -336,7 +336,9 @@ class PrintRenderFrameHelper
   // Helper methods -----------------------------------------------------------
 
   bool CopyMetafileDataToSharedMem(const PdfMetafileSkia& metafile,
-                                   base::SharedMemoryHandle* shared_mem_handle);
+                                   base::SharedMemoryHandle* shared_mem_handle,
+                                   uint32_t* size,
+                                   uint32_t* type);
 
   // Helper method to get page layout in points and fit to page if needed.
   static void ComputePageLayoutInPointsForCss(

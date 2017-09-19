@@ -14,7 +14,7 @@
 
 namespace printing {
 
-enum class SkiaDocumentType {
+enum class SkiaDocumentType : uint32_t {
   PDF,
   // MSKP is an experimental, fragile, and diagnostic-only document type.
   MSKP,
