@@ -127,6 +127,10 @@ class MediaSessionImpl : public MediaSession,
   // |type| represents the origin of the request.
   CONTENT_EXPORT void Stop(MediaSession::SuspendType suspend_type) override;
 
+  // Compute if the actual playback state is paused by combining the
+  // MediaSessionService declared state and guessed state (audio_focus_state_).
+  CONTENT_EXPORT bool IsActuallyPaused() const override;
+
   // Let the media session start ducking such that the volume multiplier is
   // reduced.
   CONTENT_EXPORT void StartDucking() override;
@@ -252,10 +256,6 @@ class MediaSessionImpl : public MediaSession,
   // Get the volume multiplier, which depends on whether the media session is
   // ducking.
   double GetVolumeMultiplier() const;
-
-  // Compute if the actual playback state is paused by combining the
-  // MediaSessionService declared state and guessed state (audio_focus_state_).
-  bool IsActuallyPaused() const;
 
   // Registers a MediaSessionImpl state change callback.
   CONTENT_EXPORT std::unique_ptr<base::CallbackList<void(State)>::Subscription>
