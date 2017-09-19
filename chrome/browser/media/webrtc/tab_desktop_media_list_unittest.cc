@@ -226,7 +226,7 @@ class TabDesktopMediaListTest : public testing::Test {
 
     for (int i = 0; i < kDefaultSourceCount; ++i) {
       EXPECT_EQ(list_->GetSource(i).id.type,
-                content::DesktopMediaID::TYPE_WEB_CONTENTS);
+                content::DesktopMediaID::SOURCE_WEB_CONTENTS);
     }
 
     observer_.VerifyAndClearExpectations();

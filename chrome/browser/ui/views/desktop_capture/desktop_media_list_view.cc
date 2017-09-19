@@ -173,7 +173,7 @@ void DesktopMediaListView::OnSourceAdded(DesktopMediaList* list, int index) {
 
   source_view->SetName(source.name);
   source_view->SetGroup(kDesktopMediaSourceViewGroupId);
-  if (source.id.type == DesktopMediaID::TYPE_WINDOW) {
+  if (source.id.type == DesktopMediaID::SOURCE_WINDOW) {
     gfx::ImageSkia icon_image = GetWindowIcon(source.id);
 #if defined(USE_ASH)
     // Empty icons are used to represent default icon for aura windows. By
@@ -192,7 +192,7 @@ void DesktopMediaListView::OnSourceAdded(DesktopMediaList* list, int index) {
     parent_->OnMediaListRowsChanged();
 
   // Auto select the first screen.
-  if (index == 0 && source.id.type == DesktopMediaID::TYPE_SCREEN)
+  if (index == 0 && source.id.type == DesktopMediaID::SOURCE_SCREEN)
     source_view->RequestFocus();
 
   PreferredSizeChanged();
