@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ae59910_6b81eeec",
+        "filename": "ash/system/power/tablet_power_button_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-19T05:19:27Z",
+      "side": 0,
+      "message": "this had an unexpected side effect: PowerButtonDisplayController::BrightnessChanged needs to be called in order for the touchscreen status to be updated. i\u0027ll probably add RunUntilIdle calls to the tests that depend on this, since it feels a bit safer to make it explicit instead of depending on this method running the loop.",
+      "revId": "3eba8015f8d2779a0fe402b8fe45aba3e17967a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
