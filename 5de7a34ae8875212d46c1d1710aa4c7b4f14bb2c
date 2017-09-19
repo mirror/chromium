@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58f4728e_6c557174",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/metrics/ImpressionTracker.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-19T13:11:46Z",
+      "side": 1,
+      "message": "Bernhard, while we\u0027re at it: I have a feeling that readability could be improved by moving this boolean out of ImpressionTracker. E.g., having separate mImpressionRecorded in SigninPromoController would add couple LOC, but will be easier to understand for someone who\u0027s not familiar with ImpressionTracker. It will also simplify ImpressionTracker interface; from the current interface I\u0027d expect that it triggers only once and uses wasTriggered to check this. It\u0027s nothing critical, though, so we can leave this as is if you don\u0027t agree with my opinion.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 31
+      },
+      "revId": "5de7a34ae8875212d46c1d1710aa4c7b4f14bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce82a62d_db77ea28",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/SignInPreference.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-19T13:11:46Z",
+      "side": 1,
+      "message": "Nit: since this variable now has nothing to do with personalized promos, I\u0027d rename it to mShowingGenericPromo and set it to false here. Then we could simply remove it along with generic promos.",
+      "range": {
+        "startLine": 162,
+        "startChar": 8,
+        "endLine": 162,
+        "endChar": 21
+      },
+      "revId": "5de7a34ae8875212d46c1d1710aa4c7b4f14bb2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
