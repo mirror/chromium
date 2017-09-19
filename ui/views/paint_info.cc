@@ -6,10 +6,27 @@
 
 namespace views {
 
+namespace {
+
+gfx::Size GetRoundedSize(const ui::PaintContext& context,
+                         const gfx::Rect& bounds) {
+  if (!context.is_pixel_canvas())
+    return bounds.size();
+  return gfx::ScaleToRoundedRect(bounds, context.device_scale_factor()).size();
+}
+
+}  // namespace
+
 // static
 PaintInfo PaintInfo::CreateRootPaintInfo(const ui::PaintContext& root_context,
                                          const gfx::Size& size) {
   return PaintInfo(root_context, size);
+}
+
+// static
+PaintInfo PaintInfo::CreateLayerPaintInfo(const ui::PaintContext& root_context,
+                                          const gfx::Rect& bounds) {
+  return PaintInfo(root_context, bounds);
 }
 
 //  static
@@ -56,9 +73,19 @@ PaintInfo::PaintInfo(const ui::PaintContext& root_context,
                                    : 1.f),
       paint_recording_scale_y_(paint_recording_scale_x_),
       paint_recording_bounds_(
-          gfx::ScaleToRoundedRect(gfx::Rect(size), paint_recording_scale_x_)),
+          gfx::ScaleToEnclosingRect(gfx::Rect(size), paint_recording_scale_x_)),
       context_(root_context, gfx::Vector2d()),
       root_context_(&root_context) {}
+
+PaintInfo::PaintInfo(const ui::PaintContext& layer_context,
+                     const gfx::Rect& bounds)
+    : paint_recording_scale_x_(layer_context.is_pixel_canvas()
+                                   ? layer_context.device_scale_factor()
+                                   : 1.f),
+      paint_recording_scale_y_(paint_recording_scale_x_),
+      paint_recording_bounds_(gfx::Rect(GetRoundedSize(layer_context, bounds))),
+      context_(layer_context, gfx::Vector2d()),
+      root_context_(&layer_context) {}
 
 PaintInfo::PaintInfo(const PaintInfo& parent_paint_info,
                      const gfx::Rect& bounds,
@@ -97,7 +124,6 @@ gfx::Rect PaintInfo::GetSnappedRecordingBounds(
     const gfx::Rect& child_bounds) const {
   if (!IsPixelCanvas())
     return (child_bounds + paint_recording_bounds_.OffsetFromOrigin());
-
   const gfx::Vector2d& child_origin = child_bounds.OffsetFromOrigin();
 
   int right = child_origin.x() + child_bounds.width();
