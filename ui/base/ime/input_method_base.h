@@ -97,6 +97,11 @@ class UI_BASE_IME_EXPORT InputMethodBase
   ui::EventDispatchDetails DispatchKeyEventPostIME(ui::KeyEvent* event) const
       WARN_UNUSED_RESULT;
 
+  virtual ui::EventDispatchDetails DispatchKeyEventPostIME(
+      ui::KeyEvent* event,
+      std::unique_ptr<base::OnceCallback<void(bool)>> ack_callback) const
+      WARN_UNUSED_RESULT;
+
   // Convenience method to notify all observers of TextInputClient changes.
   void NotifyTextInputStateChanged(const TextInputClient* client);
 
@@ -111,6 +116,8 @@ class UI_BASE_IME_EXPORT InputMethodBase
   // This is used in SendKeyEvent.
   bool sending_key_event_;
 
+  internal::InputMethodDelegate* delegate_;
+
  private:
   // InputMethod:
   const std::vector<std::unique_ptr<ui::KeyEvent>>& GetKeyEventsForTesting()
@@ -118,7 +125,6 @@ class UI_BASE_IME_EXPORT InputMethodBase
 
   void SetFocusedTextInputClientInternal(TextInputClient* client);
 
-  internal::InputMethodDelegate* delegate_;
   TextInputClient* text_input_client_;
 
   base::ObserverList<InputMethodObserver> observer_list_;
