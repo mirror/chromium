@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29f0c5ab_d87c1683",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-19T12:53:38Z",
+      "side": 1,
+      "message": "do we need to explain in comment that\nwithout this check, layout will break in iOS9?",
+      "revId": "5ef4905d0f565d7f3809d2aee21f13b189fa53a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
