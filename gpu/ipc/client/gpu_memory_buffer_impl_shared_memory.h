@@ -52,6 +52,7 @@ class GPU_EXPORT GpuMemoryBufferImplSharedMemory : public GpuMemoryBufferImpl {
   // Overridden from gfx::GpuMemoryBuffer:
   bool Map() override;
   void* memory(size_t plane) override;
+  void Flush(size_t plane, off_t offset, size_t bytes) override;
   void Unmap() override;
   int stride(size_t plane) const override;
   gfx::GpuMemoryBufferHandle GetHandle() const override;
