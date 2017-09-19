@@ -363,12 +363,15 @@ bool BrowserTabStripController::IsCompatibleWith(TabStrip* other) const {
 }
 
 void BrowserTabStripController::CreateNewTab() {
-#if BUILDFLAG(ENABLE_DESKTOP_IN_PRODUCT_HELP)
-  feature_engagement::NewTabTrackerFactory::GetInstance()
-      ->GetForProfile(browser_view_->browser()->profile())
-      ->OnNewTabOpened();
-#endif
   model_->delegate()->AddTabAt(GURL(), -1, true);
+#if BUILDFLAG(ENABLE_DESKTOP_IN_PRODUCT_HELP)
+  auto* new_tab_tracker =
+      feature_engagement::NewTabTrackerFactory::GetInstance()->GetForProfile(
+          browser_view_->browser()->profile());
+  new_tab_tracker->OnNewTabOpened();
+  if (new_tab_tracker->CloseBubble())
+    new_tab_tracker->OnPromoClosed();
+#endif
 }
 
 void BrowserTabStripController::CreateNewTabWithLocation(
