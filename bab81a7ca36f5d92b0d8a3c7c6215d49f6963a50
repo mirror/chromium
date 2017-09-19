@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ed18da10_4dbbce9a",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-19T00:35:13Z",
+      "side": 1,
+      "message": "I just realize safe_browsing_blocking_page.cc is using the wrong request context when it calls StartCollectingThreatDetails(...)  \nhttps://cs.chromium.org/chromium/src/chrome/browser/safe_browsing/safe_browsing_blocking_page.cc?rcl\u003dd0cd2b3c0a15b53fa998cc2000a3fb8fab1d16a8\u0026l\u003d140\n\nIt should be using the url_request_context() here.  The profile-\u003eGetRequestContext() does not have the safe browsing cookie jar.",
+      "revId": "bab81a7ca36f5d92b0d8a3c7c6215d49f6963a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7430a5be_b31e6fe6",
         "filename": "components/safe_browsing/triggers/ad_sampler_trigger.cc",
         "patchSetId": 2
