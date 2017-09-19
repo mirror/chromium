@@ -931,6 +931,17 @@ class GLES2DecoderPassthroughTestBase : public testing::Test,
                     GLenum type,
                     uint32_t shared_memory_id,
                     uint32_t shared_memory_offset);
+  void DoTexImage3D(GLenum target,
+                    GLint level,
+                    GLenum internal_format,
+                    GLsizei width,
+                    GLsizei height,
+                    GLsizei depth,
+                    GLint border,
+                    GLenum format,
+                    GLenum type,
+                    uint32_t shared_memory_id,
+                    uint32_t shared_memory_offset);
 
   void DoBindFramebuffer(GLenum target, GLuint client_id);
   void DoFramebufferTexture2D(GLenum target,
@@ -942,8 +953,11 @@ class GLES2DecoderPassthroughTestBase : public testing::Test,
                                  GLenum attachment,
                                  GLenum renderbuffertarget,
                                  GLuint renderbuffer);
+  GLenum DoCheckFramebufferStatus(GLenum target);
 
   void DoBindRenderbuffer(GLenum target, GLuint client_id);
+
+  void DoGetIntegerv(GLenum pname, GLint* result, size_t num_results);
 
   static const size_t kSharedBufferSize = 2048;
   static const uint32_t kSharedMemoryOffset = 132;
