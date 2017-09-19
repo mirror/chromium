@@ -51,6 +51,23 @@
       "revId": "b52a228b546003ea3b26d5236b0eff1b60086c81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e30a4dc_4b1725d0",
+        "filename": "tools/clang/plugins/ChromeClassTester.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-19T01:12:00Z",
+      "side": 1,
+      "message": "Probably we want to enable all checks for //third_party/blink/{common,browser}/.  So this might be \"/third_party/blink/renderer/\".",
+      "revId": "b52a228b546003ea3b26d5236b0eff1b60086c81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
