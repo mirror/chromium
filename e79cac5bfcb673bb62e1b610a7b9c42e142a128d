@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "640770f8_f9fef904",
+        "filename": "content/renderer/render_process_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-09-19T18:06:47Z",
+      "side": 1,
+      "message": "Turns out this is generating a nuisance log message in my local builds:\nError: unrecognized flag --noverify_csa\nTry --help for options\n\nThis is because the flag is defined under an #ifdef \nhttps://cs.chromium.org/chromium/src/v8/src/flag-definitions.h?q\u003dENABLE_VERIFY_CSA\u0026l\u003d386\n\nI\u0027d like to leave this in, nonetheless, as the message is benign, and I\u0027m not certain this compiles the same way in our official builds. I can remove it later if we find this falls out the same way, and is somehow offensive in the shipped binaries.",
+      "range": {
+        "startLine": 144,
+        "startChar": 11,
+        "endLine": 144,
+        "endChar": 24
+      },
+      "revId": "e79cac5bfcb673bb62e1b610a7b9c42e142a128d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
