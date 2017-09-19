@@ -111,8 +111,12 @@ class CC_PAINT_EXPORT PaintShader : public SkRefCnt {
     return image_;
   }
 
+  const sk_sp<PaintRecord>& paint_record() const { return record_; }
+  bool GetRasterizationTileRect(const SkMatrix& ctm, SkRect* tile_rect) const;
+
   SkShader::TileMode tx() const { return tx_; }
   SkShader::TileMode ty() const { return ty_; }
+  SkRect tile() const { return tile_; }
 
   bool IsOpaque() const;
 
