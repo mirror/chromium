@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "a78b2394_72e5444b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-09-19T23:21:30Z",
+      "side": 1,
+      "message": "Yes, I only need the path to the CDM. Note that we also support component-updated CDM, which can live in the user profile, so the CDM doesn\u0027t necessarily live in the bundle. Also because of that, the CDM path will only be known at run time. So can we make that one line change in the sandbox profile at runtime?",
+      "parentUuid": "982e52d8_b8576f5e",
+      "revId": "50e419878cdddd906647c7dc2beed04633fc1276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb0aa549_5f6dcf6e",
         "filename": "content/browser/media/media_interface_proxy.cc",
         "patchSetId": 6
