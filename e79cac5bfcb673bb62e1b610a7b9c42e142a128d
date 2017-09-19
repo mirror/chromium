@@ -22,6 +22,30 @@
       "revId": "e79cac5bfcb673bb62e1b610a7b9c42e142a128d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68a3c13_1f2c26e4",
+        "filename": "content/renderer/render_process_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1200434
+      },
+      "writtenOn": "2017-09-19T21:27:13Z",
+      "side": 1,
+      "message": "Hard-coding flags in here seems like technical debt. Is there a better path here? What would be the ideal way to address this?",
+      "parentUuid": "640770f8_f9fef904",
+      "range": {
+        "startLine": 144,
+        "startChar": 11,
+        "endLine": 144,
+        "endChar": 24
+      },
+      "revId": "e79cac5bfcb673bb62e1b610a7b9c42e142a128d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
