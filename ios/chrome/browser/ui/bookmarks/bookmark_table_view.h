@@ -68,6 +68,7 @@ class PrefRegistrySyncable;
 @interface BookmarkTableView : UIView
 // If the table is in edit mode.
 @property(nonatomic, assign) BOOL editing;
+@property(nonatomic, readonly) UITableView* tableView;
 
 // Shows all sub-folders and sub-urls of a folder node (that is set as the root
 // node) in a UITableView. Note: This class intentionally does not try to
