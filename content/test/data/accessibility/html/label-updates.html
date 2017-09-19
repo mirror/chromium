@@ -1,0 +1,27 @@
+<!--
+@WAIT-FOR:oranges
+@BLINK-DENY:nameFrom*
+-->
+<!DOCTYPE html>
+<html>
+<body>
+  <input id="input1">
+  <label id="label1" aria-hidden="true" for="input1"><span><span>apples</span></span></label>
+
+  <input id="input2">
+  <label id="label2" aria-hidden="true" for="input2"><span><span>grapes</span></span></label>
+</div>
+
+<script>
+  setTimeout(() => {
+    const label1 = document.getElementById('label1');
+    label1.firstElementChild.firstElementChild.innerText = 'oranges';
+
+    const label2 = document.getElementById('label2');
+    var text2 = label2.firstElementChild.firstElementChild.firstNode;
+    text2.deleteData(0,5);  // Delete 'grape'
+    text2.insertData(0,'banana');  // Text should now be 'bananas'
+  }, 1000);
+</script>
+</body>
+</html>

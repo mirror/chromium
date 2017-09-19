@@ -1,0 +1,23 @@
+<!--
+@WAIT-FOR:oranges
+@BLINK-DENY:nameFrom*
+-->
+<!DOCTYPE html>
+<html>
+<body>
+  <p id="text1">apples</label>
+  <p id="text2"><span><span>grapes</span></span></label>
+</div>
+
+<script>
+  setTimeout(() => {
+    const text1 = document.getElementById('text1');
+    text1.firstChild.replaceData(0,4, 'appl'); // oranges -> apples
+
+    const text2 = document.getElementById('text2');
+    var text2data = text2.firstElementChild.firstElementChild.firstChild;
+    text2data.replaceData(0, 5, 'banana');  // grapes -> bananas
+  }, 1000);
+</script>
+</body>
+</html>

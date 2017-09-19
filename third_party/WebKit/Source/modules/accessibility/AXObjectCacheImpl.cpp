@@ -434,8 +434,7 @@ AXObject* AXObjectCacheImpl::GetOrCreate(Node* node) {
   new_obj->Init();
   new_obj->SetLastKnownIsIgnoredValue(new_obj->AccessibilityIsIgnored());
 
-  if (node->IsElementNode())
-    relation_cache_->UpdateTreeIfElementIdIsAriaOwned(ToElement(node));
+  relation_cache_->UpdateRelatedTree(node);
 
   return new_obj;
 }
@@ -644,19 +643,60 @@ void AXObjectCacheImpl::SelectionChanged(Node* node) {
     nearestAncestor->SelectionChanged();
 }
 
+void AXObjectCacheImpl::RelationChanged(Element* element,
+                                        const QualifiedName& attr_name) {
+  AXObject* obj = GetOrCreate(element);
+  if (!obj)
+    return;
+  AXID axid = obj->AxObjectID();
+
+  AOMRelationListProperty prop;
+  QualifiedName use_attr_name = const_cast<QualifiedName&>(attr_name);
+  if (attr_name == aria_labeledbyAttr || attr_name == aria_labelledbyAttr) {
+    // aria-labelledby overrides aria-labeledby if both are used.
+    use_attr_name = element->FastHasAttribute(aria_labelledbyAttr)
+                        ? aria_labelledbyAttr
+                        : aria_labeledbyAttr;
+    prop = AOMRelationListProperty::kLabeledBy;
+  } else if (attr_name == aria_describedbyAttr) {
+    prop = AOMRelationListProperty::kDescribedBy;
+  } else if (attr_name == aria_ownsAttr) {
+    prop = AOMRelationListProperty::kOwns;
+  } else {
+    NOTREACHED();
+    return;
+  }
+
+  // Check AOM property first.
+  HeapVector<Member<Element>> related_elements;
+  Vector<String> related_ids;
+  if (obj->HasAOMProperty(prop, related_elements)) {
+    for (const auto& element : related_elements) {
+      if (element && element->HasID())
+        related_ids.push_back(element->GetIdAttribute());
+    }
+  } else {
+    obj->TokenVectorFromAttribute(related_ids, use_attr_name);
+  }
+  relation_cache_->UpdateReverseRelationMap(axid, related_ids);
+}
+
 void AXObjectCacheImpl::TextChanged(Node* node) {
-  TextChanged(Get(node));
+  TextChanged(Get(node), node);
 }
 
 void AXObjectCacheImpl::TextChanged(LayoutObject* layout_object) {
-  TextChanged(Get(layout_object));
+  TextChanged(Get(layout_object), layout_object->GetNode());
 }
 
-void AXObjectCacheImpl::TextChanged(AXObject* obj) {
-  if (!obj)
-    return;
+void AXObjectCacheImpl::TextChanged(AXObject* obj,
+                                    Node* node_for_relation_update) {
+  if (obj)
+    obj->TextChanged();
 
-  obj->TextChanged();
+  if (node_for_relation_update)
+    relation_cache_->UpdateRelatedTree(node_for_relation_update);
+
   PostNotification(obj, AXObjectCacheImpl::kAXTextChanged);
 }
 
@@ -665,27 +705,33 @@ void AXObjectCacheImpl::UpdateCacheAfterNodeIsAttached(Node* node) {
   // we need an AXLayoutObject, because it was reparented to a location outside
   // of a canvas.
   Get(node);
-  if (node->IsElementNode())
-    relation_cache_->UpdateTreeIfElementIdIsAriaOwned(ToElement(node));
+  relation_cache_->UpdateRelatedTree(node);
 }
 
 void AXObjectCacheImpl::ChildrenChanged(Node* node) {
-  ChildrenChanged(Get(node));
+  ChildrenChanged(Get(node), node);
 }
 
 void AXObjectCacheImpl::ChildrenChanged(LayoutObject* layout_object) {
-  ChildrenChanged(Get(layout_object));
+  if (layout_object) {
+    AXObject* object = Get(layout_object);
+    ChildrenChanged(object, layout_object->GetNode());
+  }
 }
 
 void AXObjectCacheImpl::ChildrenChanged(AccessibleNode* accessible_node) {
-  ChildrenChanged(Get(accessible_node));
+  AXObject* object = Get(accessible_node);
+  if (object)
+    ChildrenChanged(object, object->GetNode());
 }
 
-void AXObjectCacheImpl::ChildrenChanged(AXObject* obj) {
-  if (!obj)
-    return;
+void AXObjectCacheImpl::ChildrenChanged(AXObject* obj,
+                                        Node* node_for_relation_update) {
+  if (obj)
+    obj->ChildrenChanged();
 
-  obj->ChildrenChanged();
+  if (node_for_relation_update)
+    relation_cache_->UpdateRelatedTree(node_for_relation_update);
 }
 
 void AXObjectCacheImpl::NotificationPostTimerFired(TimerBase*) {
@@ -864,11 +910,13 @@ void AXObjectCacheImpl::HandleAttributeChanged(const QualifiedName& attr_name,
     TextChanged(element);
   else if (attr_name == forAttr && isHTMLLabelElement(*element))
     LabelChanged(element);
-  else if (attr_name == idAttr)
-    relation_cache_->UpdateTreeIfElementIdIsAriaOwned(element);
 
   if (!attr_name.LocalName().StartsWith("aria-"))
     return;
+
+  if (attr_name == aria_labeledbyAttr || attr_name == aria_labelledbyAttr ||
+      attr_name == aria_describedbyAttr || attr_name == aria_ownsAttr)
+    RelationChanged(element, attr_name);
 
   if (attr_name == aria_activedescendantAttr)
     HandleActiveDescendantChanged(element);
@@ -893,8 +941,9 @@ void AXObjectCacheImpl::HandleAttributeChanged(const QualifiedName& attr_name,
     PostNotification(element, AXObjectCacheImpl::kAXAriaAttributeChanged);
 }
 
-void AXObjectCacheImpl::LabelChanged(Element* element) {
-  TextChanged(toHTMLLabelElement(element)->control());
+void AXObjectCacheImpl::LabelChanged(Node* node) {
+  DCHECK(isHTMLLabelElement(node));
+  TextChanged(toHTMLLabelElement(node)->control());
 }
 
 void AXObjectCacheImpl::InlineTextBoxesUpdated(
