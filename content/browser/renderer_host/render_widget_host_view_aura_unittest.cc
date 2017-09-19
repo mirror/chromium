@@ -1978,10 +1978,13 @@ TEST_F(RenderWidgetHostViewAuraWheelScrollLatchingEnabledTest,
   base::RunLoop().Run();
 
   input_event = GetInputEventFromMessage(*sink_->GetMessageAt(0));
-  wheel_event = static_cast<const WebMouseWheelEvent*>(input_event);
-  EXPECT_EQ(WebMouseWheelEvent::kPhaseEnded, wheel_event->phase);
-  EXPECT_EQ(0U, wheel_event->delta_x);
-  EXPECT_EQ(0U, wheel_event->delta_y);
+  const WebMouseWheelEvent* wheel_end_event =
+      static_cast<const WebMouseWheelEvent*>(input_event);
+  EXPECT_EQ(WebMouseWheelEvent::kPhaseEnded, wheel_end_event->phase);
+  EXPECT_EQ(0U, wheel_end_event->delta_x);
+  EXPECT_EQ(0U, wheel_end_event->delta_y);
+  EXPECT_GT(wheel_end_event->TimeStampSeconds(),
+            wheel_event->TimeStampSeconds());
   SendInputEventACK(blink::WebInputEvent::kMouseWheel,
                     INPUT_EVENT_ACK_STATE_NOT_CONSUMED);
 
