@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "309499ce_34951ce4",
+        "filename": "ui/views/controls/tree/tree_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-19T16:18:55Z",
+      "side": 1,
+      "message": "Okay, done. This turned out to be a bit of a refactor and I still am not that happy with the various Get*BoundsForNode() functions. It really seems like there should be a TreeViewRowView or something like that that handles the layout within rows. Perhaps later.",
+      "parentUuid": "e3a93c75_10e39392",
+      "range": {
+        "startLine": 917,
+        "startChar": 33,
+        "endLine": 917,
+        "endChar": 67
+      },
+      "revId": "10ae6aaf093f86729bf390845e93a9257fa663ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ad8ba12_f1cff235",
         "filename": "ui/views/controls/tree/tree_view.h",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "10ae6aaf093f86729bf390845e93a9257fa663ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f9d0f0c_71dcba94",
+        "filename": "ui/views/controls/tree/tree_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-19T16:18:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ad8ba12_f1cff235",
+      "range": {
+        "startLine": 46,
+        "startChar": 8,
+        "endLine": 46,
+        "endChar": 23
+      },
+      "revId": "10ae6aaf093f86729bf390845e93a9257fa663ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "91290bd0_86549a78",
+        "filename": "ui/views/controls/tree/tree_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-19T16:18:55Z",
+      "side": 1,
+      "message": "I avoided doing that initially because my imagined use case had the same class owning both the TreeView and the TreeViewDrawingProvider, but it does seem like it would be simpler to have the TreeView own the TreeViewDrawingProvider, so I\u0027ve switched it.",
+      "parentUuid": "d150970e_26ea5034",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 31
+      },
+      "revId": "10ae6aaf093f86729bf390845e93a9257fa663ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51faaabe_80898bb9",
         "filename": "ui/views/controls/tree/tree_view.h",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "8902e9a9_f655476c",
+        "filename": "ui/views/controls/tree/tree_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-19T16:18:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51faaabe_80898bb9",
+      "range": {
+        "startLine": 55,
+        "startChar": 27,
+        "endLine": 55,
+        "endChar": 50
+      },
+      "revId": "10ae6aaf093f86729bf390845e93a9257fa663ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc783395_2da8bd80",
         "filename": "ui/views/controls/tree/tree_view.h",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "10ae6aaf093f86729bf390845e93a9257fa663ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04418232_479a7e2a",
+        "filename": "ui/views/controls/tree/tree_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-19T16:18:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc783395_2da8bd80",
+      "range": {
+        "startLine": 437,
+        "startChar": 18,
+        "endLine": 437,
+        "endChar": 43
+      },
+      "revId": "10ae6aaf093f86729bf390845e93a9257fa663ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
