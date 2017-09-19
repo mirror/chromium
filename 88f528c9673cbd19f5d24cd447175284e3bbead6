@@ -116,6 +116,30 @@
       "revId": "88f528c9673cbd19f5d24cd447175284e3bbead6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d398806_575cde91",
+        "filename": "ui/gfx/canvas.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-19T05:50:07Z",
+      "side": 1,
+      "message": "Since we do expose gfx::Canvas::sk_canvas(), I guess it may be a reasonable expectation that using SkCanvas::save()/restore() should behave similarly to gfx::Canvas::Save()/Restore().\n\nOn the other hand, it also makes sense to require the users of gfx::Canvas to fallback to sk_canvas() only when the Canvas api is not sufficient. Thus, for Save()/Restore(), the users should not directly use SkCanvas api. With this reasoning, it\u0027d make sense to save/restore |image_scale_| in Save()/Restore(), I think. (I guess we would want to make sure it gets saved in all the Canvas::Save* functions?)\n\nI don\u0027t really feel strongly either way. danakj@ may have opinions here.",
+      "parentUuid": "438c34f6_3ca8002e",
+      "range": {
+        "startLine": 147,
+        "startChar": 13,
+        "endLine": 147,
+        "endChar": 17
+      },
+      "revId": "88f528c9673cbd19f5d24cd447175284e3bbead6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
