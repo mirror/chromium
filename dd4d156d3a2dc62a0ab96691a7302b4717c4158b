@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "0842bdf2_418ef2e1",
+        "filename": "third_party/zlib/adler32.c",
+        "patchSetId": 26
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-19T03:07:22Z",
+      "side": 1,
+      "message": "adler32_simd is not a public interface, so there is no need to test it directly.  I updated the bench.cpp tool to test all these odd parameter cases to check that there no conflicting checksums compared to adler32_z().",
+      "parentUuid": "2e71f44f_44b759a5",
+      "revId": "dd4d156d3a2dc62a0ab96691a7302b4717c4158b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "698edf7f_1dc85389",
         "filename": "third_party/zlib/adler32_simd.c",
         "patchSetId": 26
@@ -105,6 +123,24 @@
       "revId": "dd4d156d3a2dc62a0ab96691a7302b4717c4158b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f0c2e8_27d5375a",
+        "filename": "third_party/zlib/adler32_simd.c",
+        "patchSetId": 26
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-09-19T03:07:22Z",
+      "side": 1,
+      "message": "I used the order from alder32.c (not sure why we\u0027d want a different order to that code FWIW).",
+      "parentUuid": "698edf7f_1dc85389",
+      "revId": "dd4d156d3a2dc62a0ab96691a7302b4717c4158b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
