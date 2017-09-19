@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "76cf7fad_0ad209e5",
+        "filename": "ui/base/ime/input_method_chromeos.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-09-19T00:30:14Z",
+      "side": 1,
+      "message": "Thanks Shu Chen. How can I print out the charCode from |event|? I\u0027m only able to print out keyCode \u003d 190 by using event-\u003ekey_code()? I\u0027m trying to reproduce your case by printing the log out and comparing between the original and the patch. Chrome simulator doesn\u0027t support \"。\" for pinyin method, even though I selected pinyin, so I need to do this on chromeos laptop.",
+      "parentUuid": "23112eb9_48682adc",
+      "range": {
+        "startLine": 335,
+        "startChar": 11,
+        "endLine": 335,
+        "endChar": 39
+      },
+      "revId": "ccad71108899ce073ae0638560e9a5fb677c2100",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1566c44_b890ee05",
         "filename": "ui/base/ime/input_method_chromeos.h",
         "patchSetId": 7
