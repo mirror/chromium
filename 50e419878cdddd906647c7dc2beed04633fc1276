@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac066f5b_5d53286a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1137859
+      },
+      "writtenOn": "2017-09-19T21:42:07Z",
+      "side": 1,
+      "message": "Right on Mac we need to just add the resources to the profile, there isn\u0027t going to be any pre-sandbox warmup anymore. It\u0027s not needed since we can whitelist any resource access that\u0027s necessary and appropriate.",
+      "parentUuid": "9106b71d_416b687c",
+      "revId": "50e419878cdddd906647c7dc2beed04633fc1276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb0aa549_5f6dcf6e",
         "filename": "content/browser/media/media_interface_proxy.cc",
         "patchSetId": 6
