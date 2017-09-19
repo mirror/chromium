@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e54b8dcd_363f2702",
+        "filename": "cc/layers/recording_source_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-09-19T22:30:33Z",
+      "side": 1,
+      "message": "s/400/layer_bounds.width()/ maybe?",
+      "revId": "d0097156f5a7c0e0a395126aaa5e93cb282fe301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
