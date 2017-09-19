@@ -34,6 +34,24 @@
       "revId": "e1eac38ac009c52f281d82e3b8699b62169f6a10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d2406b_6b2c839b",
+        "filename": "cc/trees/layer_tree_host_unittest_animation.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1290,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-09-19T22:16:34Z",
+      "side": 1,
+      "message": "I think this patch is fundamentally pursuing an approach where the code is simpler (cease tracking/checking element id presence) at the cost of perhaps ticking animations when their element ids are not present in the layer list/tree.\n\nIf we restore some form of MutatorHostClient::IsElementInList I fear we\u0027ll hit all of the same issues we hit in https://chromium-review.googlesource.com/c/chromium/src/+/522405\n\nI actually just now tried a hack at restoring it, and early-out-ing in ElementAnimations::Has{Active,Pending}Animations if !mutator_host_client()-\u003eIsElementInList(element_id(), {ACTIVE,PENDING}) but it produces ~60 new unit test failures so I\u0027d rather not go deeper down that path unless we think it\u0027s warranted.\n\nOr, maybe I am missing what you are touching on re: no more animation in active list.",
+      "parentUuid": "c94e70f8_c5549442",
+      "revId": "e1eac38ac009c52f281d82e3b8699b62169f6a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
