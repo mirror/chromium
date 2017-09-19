@@ -110,7 +110,8 @@ public class SnippetsBridge implements SuggestionsSource {
     @CategoryStatus
     public int getCategoryStatus(int category) {
         assert mNativeSnippetsBridge != 0;
-        return nativeGetCategoryStatus(mNativeSnippetsBridge, category);
+        return CategoryStatus.AVAILABLE_LOADING;
+//        return nativeGetCategoryStatus(mNativeSnippetsBridge, category);
     }
 
     @Override
@@ -122,6 +123,7 @@ public class SnippetsBridge implements SuggestionsSource {
     @Override
     public List<SnippetArticle> getSuggestionsForCategory(int category) {
         assert mNativeSnippetsBridge != 0;
+        if (isCategoryLoading(getCategoryStatus(category))) return new ArrayList<>();
         return nativeGetSuggestionsForCategory(mNativeSnippetsBridge, category);
     }
 

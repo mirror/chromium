@@ -188,6 +188,9 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
 
             case ItemViewType.CAROUSEL:
                 return new SuggestionsCarousel.ViewHolder(mRecyclerView);
+
+            case ItemViewType.PLACEHOLDER_CARD:
+                return SuggestionsSection.createPlaceholderViewHolder(mRecyclerView, mUiConfig, mContextMenuManager);
         }
 
         assert false : viewType;
@@ -351,7 +354,9 @@ public class NewTabPageAdapter extends Adapter<NewTabPageViewHolder> implements 
 
         // In the modern layout, we only consider articles.
         SuggestionsSection suggestions = mSections.getSection(KnownCategories.ARTICLES);
-        return suggestions == null || !suggestions.hasSuggestions();
+        if (suggestions == null) return true;
+
+        return !suggestions.hasSuggestions() && !suggestions.isLoading();
     }
 
     private int getChildPositionOffset(TreeNode child) {

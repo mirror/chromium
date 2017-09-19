@@ -4,6 +4,8 @@
 
 package org.chromium.chrome.browser.ntp.cards;
 
+import org.chromium.base.Log;
+
 /**
  * Represents a progress indicator for the recycler view. A visibility flag can be set to be used
  * by its associated view holder when it is bound.
@@ -29,6 +31,7 @@ class ProgressItem extends OptionalLeaf {
     }
 
     public void setVisible(boolean visible) {
+        Log.d("DGN", "setProgressVisible: %b", visible);
         setVisibilityInternal(visible);
     }
 }

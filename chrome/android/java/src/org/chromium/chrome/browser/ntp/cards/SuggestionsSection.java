@@ -6,10 +6,13 @@ package org.chromium.chrome.browser.ntp.cards;
 
 import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import org.chromium.base.Callback;
 import org.chromium.base.Log;
+import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ntp.ContextMenuManager;
 import org.chromium.chrome.browser.ntp.NewTabPageUma;
 import org.chromium.chrome.browser.ntp.snippets.CategoryInt;
 import org.chromium.chrome.browser.ntp.snippets.CategoryStatus;
@@ -22,8 +25,11 @@ import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.offlinepages.OfflinePageItem;
 import org.chromium.chrome.browser.suggestions.SuggestionsOfflineModelObserver;
 import org.chromium.chrome.browser.suggestions.SuggestionsRanker;
+import org.chromium.chrome.browser.suggestions.SuggestionsRecyclerView;
 import org.chromium.chrome.browser.suggestions.SuggestionsUiDelegate;
 import org.chromium.chrome.browser.util.FeatureUtilities;
+import org.chromium.chrome.browser.widget.TintedImageView;
+import org.chromium.chrome.browser.widget.displaystyle.UiConfig;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,7 +38,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
 /**
  * A group of suggestions, with a header, a status card, and a progress indicator. This is
  * responsible for tracking whether its suggestions have been saved offline.
@@ -47,6 +52,7 @@ public class SuggestionsSection extends InnerNode {
 
     // Children
     private final SectionHeader mHeader;
+    private final @Nullable PlaceholderContentSuggestion mPlaceholderContentSuggestion;
     private final SuggestionsList mSuggestionsList;
     private final StatusItem mStatus;
     private final ActionItem mMoreButton;
@@ -100,12 +106,14 @@ public class SuggestionsSection extends InnerNode {
         boolean useModern = FeatureUtilities.isChromeHomeModernEnabled();
         if (useModern) {
             mStatus = null;
+            mPlaceholderContentSuggestion = new PlaceholderContentSuggestion();
         } else {
             mStatus = StatusItem.createNoSuggestionsItem(info);
+            mPlaceholderContentSuggestion = null;
         }
         mMoreButton = new ActionItem(this, ranker);
         if (useModern) {
-            addChildren(mHeader, mSuggestionsList, mMoreButton);
+            addChildren(mHeader, mPlaceholderContentSuggestion, mSuggestionsList, mMoreButton);
         } else {
             addChildren(mHeader, mSuggestionsList, mStatus, mMoreButton);
         }
@@ -362,6 +370,10 @@ public class SuggestionsSection extends InnerNode {
         return mSuggestionsList.getItemCount() != 0;
     }
 
+    public boolean isLoading() {
+        return mMoreButton.getState() == ActionItem.State.LOADING;
+    }
+
     public int getSuggestionsCount() {
         return mSuggestionsList.getItemCount();
     }
@@ -529,13 +541,18 @@ public class SuggestionsSection extends InnerNode {
 
     /** Sets the status for the section. Some statuses can cause the suggestions to be cleared. */
     public void setStatus(@CategoryStatus int status) {
+        Log.d(TAG, "setStatus(%d) for category %d", status, mCategoryInfo.getCardLayout());
         if (!SnippetsBridge.isCategoryStatusAvailable(status)) {
             clearData();
             Log.d(TAG, "setStatus: unavailable status, cleared suggestions.");
         }
 
-        mMoreButton.updateState(SnippetsBridge.isCategoryLoading(status) ? ActionItem.State.LOADING
-                                                                         : ActionItem.State.BUTTON);
+        boolean isLoading = SnippetsBridge.isCategoryLoading(status);
+        mMoreButton.updateState(isLoading ? ActionItem.State.LOADING : ActionItem.State.BUTTON);
+        if (FeatureUtilities.isChromeHomeEnabled()) {
+            mPlaceholderContentSuggestion.setVisible(isLoading);
+        }
+
     }
 
     /** Clears the suggestions and related data, resetting the state of the section. */
@@ -616,5 +633,39 @@ public class SuggestionsSection extends InnerNode {
         public Iterable<SnippetArticle> getOfflinableSuggestions() {
             return mSuggestionsList;
         }
+    }
+
+    private static class PlaceholderContentSuggestion extends OptionalLeaf {
+        public void setVisible(boolean visible) { setVisibilityInternal(visible); }
+
+        @Override
+        protected void onBindViewHolder(NewTabPageViewHolder holder) {
+            ((CardViewHolder)holder).onBindViewHolder();
+            ((CardViewHolder) holder).itemView.<TintedImageView>findViewById(R.id.article_thumbnail).setImageResource(R.drawable.ic_snippet_thumbnail_placeholder);
+        }
+
+        @Override
+        protected int getItemViewType() {
+            return ItemViewType.PLACEHOLDER_CARD;
+        }
+
+        @Override
+        protected void visitOptionalItem(NodeVisitor visitor) {}
+    }
+
+    public static NewTabPageViewHolder createPlaceholderViewHolder(SuggestionsRecyclerView recyclerView,
+                                                        UiConfig uiConfig, ContextMenuManager contextMenuManager) {
+        return new CardViewHolder(R.layout.content_suggestions_card_modern, recyclerView,
+                uiConfig, contextMenuManager) {
+            @Override
+            public boolean isDismissable() {
+                return false;
+            }
+
+            @Override
+            public boolean isItemSupported(int menuItemId) {
+                return false;
+            }
+        };
     }
 }
