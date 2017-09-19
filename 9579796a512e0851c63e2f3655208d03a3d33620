@@ -16,6 +16,24 @@
       "revId": "9579796a512e0851c63e2f3655208d03a3d33620",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ff3e452_eac36bdd",
+        "filename": "ash/shelf/shelf_tooltip_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-09-19T21:40:19Z",
+      "side": 1,
+      "message": "In a left-aligned shelf, yes (or probably, I haven\u0027t actually tested on device and it\u0027s basically impossible to hit that pixel on desktop chromeos in a window). I can dig deeper to figure out where these events are coming from if you think it\u0027s worthwhile.",
+      "parentUuid": "5496e8a9_5c8b333c",
+      "revId": "9579796a512e0851c63e2f3655208d03a3d33620",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
