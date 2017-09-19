@@ -249,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "f89bf5c2_f0853afd",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-09-19T22:25:11Z",
+      "side": 1,
+      "message": "I was thinking although this CL changes not too many lines but touches quite amount of files, so adding more code here introducing more complexity. But as you pointed out, test helps people understand CL, so it actually goes to the other direction. I can write test to cover production code in this CL as a start of a broader testing plan.",
+      "parentUuid": "e83118f6_b07fdf0a",
+      "range": {
+        "startLine": 1152,
+        "startChar": 16,
+        "endLine": 1152,
+        "endChar": 22
+      },
+      "revId": "231952ae04922021f5ac00ac7b7ebb463d982fb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66b8d820_00e18da2",
         "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
         "patchSetId": 5
