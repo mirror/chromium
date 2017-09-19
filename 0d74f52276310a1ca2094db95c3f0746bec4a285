@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd2d7dbd_7f66f0d2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-19T12:17:11Z",
+      "side": 1,
+      "message": "I think we could improve readability by splitting this value into two different ones (GENERIC_SIGNIN_PROMO and SYNC_PROMO). Otherwise it\u0027s a bit hard to understand why personalized signin isn\u0027t handled by in SIGNIN_AND_SYNC_PROMO.\n\nAnother benefit of this approach is that it will be super-easy to remove old generic promo when we roll-out personalized to 100%.",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 38
+      },
+      "revId": "0d74f52276310a1ca2094db95c3f0746bec4a285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6609f4_cafd080d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-19T12:17:11Z",
+      "side": 1,
+      "message": "Ditto (please introduce createGenericSigninPromoHolder and createSyncPromoHolder).",
+      "range": {
+        "startLine": 210,
+        "startChar": 43,
+        "endLine": 210,
+        "endChar": 73
+      },
+      "revId": "0d74f52276310a1ca2094db95c3f0746bec4a285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18773062_54beb4e5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-09-19T12:17:11Z",
+      "side": 1,
+      "message": "Ditto. I think it makes sense to introduce PROMO_SIGNIN_GENERIC and PROMO_SYNC to avoid \"Why personalized signin is separate from SIGNIN_AND_SYNC signin\" confusion.",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 33
+      },
+      "revId": "0d74f52276310a1ca2094db95c3f0746bec4a285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
