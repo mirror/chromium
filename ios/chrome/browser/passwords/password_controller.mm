@@ -14,11 +14,14 @@
 
 #include "base/json/json_reader.h"
 #include "base/json/json_writer.h"
+#include "base/mac/bind_objc_block.h"
 #include "base/mac/foundation_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/time/time.h"
+#include "base/timer/timer.h"
 #include "base/values.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/autofill/core/common/password_form_fill_data.h"
@@ -38,6 +41,7 @@
 #import "ios/chrome/browser/passwords/ios_chrome_save_password_infobar_delegate.h"
 #import "ios/chrome/browser/passwords/ios_chrome_update_password_infobar_delegate.h"
 #import "ios/chrome/browser/passwords/js_password_manager.h"
+#import "ios/chrome/browser/passwords/notify_auto_signin_view_controller.h"
 #import "ios/chrome/browser/passwords/password_form_filler.h"
 #import "ios/chrome/browser/passwords/password_generation_agent.h"
 #include "ios/chrome/browser/sync/ios_chrome_profile_sync_service_factory.h"
@@ -61,6 +65,9 @@ using password_manager::PasswordManagerDriver;
 namespace {
 // Types of password infobars to display.
 enum class PasswordInfoBarType { SAVE, UPDATE };
+
+// Duration for notify user auto-sign in dialog being displayed.
+constexpr int kNotifyAutoSigninDuration = 3;  // seconds
 }
 
 @interface PasswordController ()
@@ -274,6 +281,12 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 
   // Bridge to observe WebState from Objective-C.
   std::unique_ptr<web::WebStateObserverBridge> webStateObserverBridge_;
+
+  // UIViewController for "Signing in as ..." notification.
+  NotifyUserAutoSigninViewController* notifyAutoSigninViewController_;
+
+  // Timer for hiding "Signing in as ..." notification.
+  base::OneShotTimer notifyAutoSigninTimer_;
 
   // True indicates that a request for credentials has been sent to the password
   // store.
@@ -703,6 +716,54 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
     (std::unique_ptr<PasswordFormManager>)formToUpdate {
   [self showInfoBarForForm:std::move(formToUpdate)
                infoBarType:PasswordInfoBarType::UPDATE];
+}
+
+// Hides auto sign-in notification. Removes the view from superview and destroys
+// the controller.
+// TODO(crbug.com/435048): Animate disappearance.
+- (void)hideAutosigninNotification {
+  [notifyAutoSigninViewController_ willMoveToParentViewController:nil];
+  [notifyAutoSigninViewController_.view removeFromSuperview];
+  [notifyAutoSigninViewController_ removeFromParentViewController];
+  notifyAutoSigninViewController_ = nil;
+}
+
+// If Tab was hidden, hide auto sign-in notification.
+- (void)wasHidden {
+  [self hideAutosigninNotification];
+}
+
+// Shows auto sign-in notification and schedules hiding it after 3 seconds.
+// TODO(crbug.com/435048): Animate appearance.
+- (void)showAutosigninNotification:
+    (std::unique_ptr<autofill::PasswordForm>)formSignedIn {
+  if (!webStateObserverBridge_ || !webStateObserverBridge_->web_state())
+    return;
+
+  UIViewController* baseViewController =
+      [[UIApplication sharedApplication] keyWindow].rootViewController;
+
+  // If a notification is already being displayed, hides the old one, then shows
+  // the new one.
+  if (notifyAutoSigninViewController_) {
+    notifyAutoSigninTimer_.Stop();
+    [self hideAutosigninNotification];
+  }
+
+  // Creates view controller then shows the subview.
+  notifyAutoSigninViewController_ = [[NotifyUserAutoSigninViewController alloc]
+      initWithUserId:base::SysUTF16ToNSString(formSignedIn->username_value)];
+  [baseViewController addChildViewController:notifyAutoSigninViewController_];
+  [baseViewController.view addSubview:notifyAutoSigninViewController_.view];
+  [notifyAutoSigninViewController_
+      didMoveToParentViewController:baseViewController];
+
+  // Hides notification after 3 seconds.
+  notifyAutoSigninTimer_.Start(
+      FROM_HERE, base::TimeDelta::FromSeconds(kNotifyAutoSigninDuration),
+      base::BindBlockArc(^{
+        [self hideAutosigninNotification];
+      }));
 }
 
 #pragma mark -
