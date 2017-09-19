@@ -60,6 +60,8 @@ extern const base::FilePath::CharType kOfflinePageArchivesDirname[];
 extern const base::FilePath::CharType kOfflinePageMetadataDirname[];
 extern const base::FilePath::CharType kOfflinePagePrefetchStoreDirname[];
 extern const base::FilePath::CharType kOfflinePageRequestQueueDirname[];
+extern const base::FilePath::CharType kPolicyToolDefaultSessionName[];
+extern const base::FilePath::CharType kPolicyToolSessionsDirname[];
 extern const base::FilePath::CharType kPreferencesFilename[];
 extern const base::FilePath::CharType kPreviewsOptOutDBFilename[];
 extern const base::FilePath::CharType kReadmeFilename[];
