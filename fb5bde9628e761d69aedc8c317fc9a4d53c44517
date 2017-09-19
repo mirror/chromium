@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3ebf9e26_ba6e2d00",
+        "filename": "build/android/pylib/gtest/gtest_test_instance.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-19T00:13:08Z",
+      "side": 1,
+      "message": "That is correct, as we don\u0027t otherwise surface the links. This is also what we currently do for instrumentation tests.\n\nCase\u0027s CL linked below significantly reworks how all of this works, hence the TODO to remove it and the TODO in local_device_environment for reconciliation. In the short term, I\u0027d like to handle this in a manner consistent w/ instrumentation tests.\n\nIs that ok w/ you?",
+      "parentUuid": "da08af18_dd2810b6",
+      "revId": "fb5bde9628e761d69aedc8c317fc9a4d53c44517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9404b189_b6a79858",
         "filename": "build/android/pylib/local/device/local_device_environment.py",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "3e88807f_969451e1",
+        "filename": "build/android/pylib/local/device/local_device_environment.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-19T00:13:08Z",
+      "side": 1,
+      "message": "No; I\u0027ve been checking in with Case at least once a week about the status of his open CLs \u0026 asking him to let me know if he realizes he won\u0027t have time to complete them. He is interested in doing so, though.",
+      "parentUuid": "9404b189_b6a79858",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 45
+      },
+      "revId": "fb5bde9628e761d69aedc8c317fc9a4d53c44517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b78c41e_ccb1305d",
         "filename": "build/android/pylib/local/device/local_device_environment.py",
         "patchSetId": 6
@@ -56,6 +98,24 @@
       "revId": "fb5bde9628e761d69aedc8c317fc9a4d53c44517",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "657389c7_498b5dfc",
+        "filename": "build/android/pylib/local/device/local_device_environment.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-19T00:13:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b78c41e_ccb1305d",
+      "revId": "fb5bde9628e761d69aedc8c317fc9a4d53c44517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "ef2a0ecf_9cbefcdd",
+        "filename": "build/android/pylib/local/device/local_device_gtest_run.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-19T00:13:08Z",
+      "side": 1,
+      "message": "I like them!\n\nOn a related note, I miss destructors.",
+      "parentUuid": "f4228c46_98a5838c",
+      "revId": "fb5bde9628e761d69aedc8c317fc9a4d53c44517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3236d888_16fffb07",
         "filename": "build/android/pylib/local/device/local_device_gtest_run.py",
         "patchSetId": 6
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "21ef6627_c6bf7c38",
+        "filename": "build/android/pylib/local/device/local_device_gtest_run.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-19T00:13:08Z",
+      "side": 1,
+      "message": "logcat_url \u003d \u0027\u0027\n\nOptionalPerTestLogcat yields a LogcatdogMonitor regardless of the value of should_save_logcat.",
+      "parentUuid": "3236d888_16fffb07",
+      "revId": "fb5bde9628e761d69aedc8c317fc9a4d53c44517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0abab72d_6cdb8a4f",
         "filename": "build/android/test_wrapper/logdog_wrapper.py",
         "patchSetId": 6
@@ -107,6 +203,24 @@
       "revId": "fb5bde9628e761d69aedc8c317fc9a4d53c44517",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1d2b725_01f38c78",
+        "filename": "build/android/test_wrapper/logdog_wrapper.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-09-19T00:13:08Z",
+      "side": 1,
+      "message": "I believe `logdog_butler serve` runs indefinitely. I talked to Dan since sending this review; he said that SIGTERM should cause it to shut down gracefully.",
+      "parentUuid": "0abab72d_6cdb8a4f",
+      "revId": "fb5bde9628e761d69aedc8c317fc9a4d53c44517",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
