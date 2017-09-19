@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "b6d1178b_518d8b86",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T12:47:46Z",
+      "side": 1,
+      "message": "\u003e string16 We work with non-latin languages as well.\n\nstd::string can encode non-latin characters, but we use string16 for label, names/ ids, placeholder (https://cs.chromium.org/chromium/src/components/autofill/core/common/form_field_data.h?rcl\u003dbbebe805f0e24f6cb7dd909559a8a6ed3e94e380\u0026l\u003d77). Let\u0027s follow it.",
+      "parentUuid": "5c5b7ada_c24b9bde",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 13
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34fb7aa4_0831291f",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 15
