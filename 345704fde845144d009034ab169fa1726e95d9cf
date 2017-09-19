@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "320e32f2_704ebcfd",
+        "filename": "content/network/url_loader_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 361,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-09-19T18:04:07Z",
+      "side": 1,
+      "message": "drive-by: It seems this parameter is always assigned |url_request_-\u003estatus().is_success()|, maybe we could directly use it instead of adding a parameter? (We use url_request_-\u003estatus() in this method already.)",
+      "range": {
+        "startLine": 361,
+        "startChar": 33,
+        "endLine": 361,
+        "endChar": 40
+      },
+      "revId": "345704fde845144d009034ab169fa1726e95d9cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0e7b91b_a67fd4b5",
         "filename": "content/network/url_loader_unittest.cc",
         "patchSetId": 7
