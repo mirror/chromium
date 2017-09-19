@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3692a6f_d468968d",
+        "filename": "third_party/blink/tools/plan_blink_move.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-19T19:15:31Z",
+      "side": 1,
+      "message": "I think that normally, in PEP8 style, it\u0027s suggested to use implicit line continuation in parentheses for line breaks in conditions, and indentation level can be 8 spaces (but this is optional), e.g.\n\n        if (re.match(r\u0027Inspector.*Agent\u0027, basename)\n                or basename \u003d\u003d \u0027InspectorTraceEvents\u0027\n                or basename \u003d\u003d \u0027PlatformTraceEventsAgent\u0027):\n\nhttps://www.python.org/dev/peps/pep-0008/",
+      "revId": "fca46d4613b851fc8772fa7ba6d8e43778aae740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d239f97_e3f48f82",
+        "filename": "third_party/blink/tools/plan_blink_move.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-09-19T19:15:31Z",
+      "side": 1,
+      "message": "If there happen to be files named \"WebKit\" with suffixes cpp, mm, idl, or typemap, those would be renamed too. To make the code match the comment more closely, should this be `if filename \u003d\u003d \u0027WebKit.h\u0027`?",
+      "revId": "fca46d4613b851fc8772fa7ba6d8e43778aae740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
