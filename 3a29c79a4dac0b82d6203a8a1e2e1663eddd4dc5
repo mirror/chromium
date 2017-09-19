@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "7be6e881_3c4b8abc",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletGlobalScope.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-19T01:44:08Z",
+      "side": 1,
+      "message": "Can we make this private (and maybe call it MutateInternal) since consumers should only be calling MutateWithEvent afaict?",
+      "revId": "3a29c79a4dac0b82d6203a8a1e2e1663eddd4dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f247a5f1_21139025",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletProxyClientImpl.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-19T01:44:08Z",
+      "side": 1,
+      "message": "I think proper form would be a TODO, e.g. TODO(petermayo): Schedule a pending mutation rather than blocking on running worklet mutation task.\n\nThis also captures why it\u0027s not as simple as simply not waiting since at a glance it seems like that would work, but we don\u0027t want to queue up lots of mtuate calls, we should have at most one pending. We should also reference a bug with these details to track this.",
+      "revId": "3a29c79a4dac0b82d6203a8a1e2e1663eddd4dc5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12e555d7_8246eb7b",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletThreadTest.cpp",
         "patchSetId": 10
