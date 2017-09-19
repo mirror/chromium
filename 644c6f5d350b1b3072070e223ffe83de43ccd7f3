@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a85a26bc_0ccdd399",
+        "filename": "chrome/browser/media/webrtc/media_stream_devices_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-19T13:32:44Z",
+      "side": 1,
+      "message": "This one makes the media stream bubble (I think that\u0027s what it\u0027s called - the cam icon on the right in the omnibox) show the right thing. Probably also affects some other places, which is prooobably what we want?",
+      "range": {
+        "startLine": 441,
+        "startChar": 36,
+        "endLine": 441,
+        "endChar": 0
+      },
+      "revId": "644c6f5d350b1b3072070e223ffe83de43ccd7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d42465_7f91b2fb",
+        "filename": "chrome/browser/permissions/permission_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 529,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-19T13:32:44Z",
+      "side": 1,
+      "message": "Any idea how I can find out?",
+      "range": {
+        "startLine": 529,
+        "startChar": 48,
+        "endLine": 529,
+        "endChar": 0
+      },
+      "revId": "644c6f5d350b1b3072070e223ffe83de43ccd7f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
