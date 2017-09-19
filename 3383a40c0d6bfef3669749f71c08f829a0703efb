@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "4bfad5ed_d6d17d75",
+        "filename": "content/browser/background_fetch/background_fetch_delegate_proxy.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-19T09:16:17Z",
+      "side": 1,
+      "message": "\u003e \u003e we\u0027ll report back DownloadService INTERNAL_ERROR to the client as a failed fetch\n\u003e \n\u003e Ah interesting. I guess I was assuming we\u0027d just retry these on next startup (or after a backoff timer) rather than bubbling the error up to the client. It\u0027d be useful to know whether these errors are due to transient I/O failures, or whether it could persistently fail.\n\nTo be fair, I haven\u0027t thought that much about it. I suspect if we\u0027re getting INTERNAL_ERROR from the DownloadService, something is very wrong and I\u0027m not sure it\u0027s worth retrying. Hopefully this is not something that happens.\n\n\u003e \u003e There are two ways delegate_ can be nullptr:\n\u003e \n\u003e Yes, I was thinking of case (b). You can add crbug.com/757760 to a TODO about retrying fetches fetches that occurred during shutdown on next startup.\n\nDone.",
+      "parentUuid": "96833c1b_338bddf9",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 18
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b82cec51_7b49639c",
         "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
         "patchSetId": 18
@@ -446,6 +470,30 @@
       "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d0bda12_4a902907",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-09-19T09:16:17Z",
+      "side": 1,
+      "message": "Yeah that makes sense.",
+      "parentUuid": "268c4e0f_bcec43fd",
+      "range": {
+        "startLine": 81,
+        "startChar": 4,
+        "endLine": 81,
+        "endChar": 10
+      },
+      "revId": "3383a40c0d6bfef3669749f71c08f829a0703efb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
