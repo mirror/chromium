@@ -85,7 +85,8 @@ void StubNotificationDisplayService::RemoveAllNotifications(
 void StubNotificationDisplayService::Display(
     NotificationCommon::Type notification_type,
     const std::string& notification_id,
-    const Notification& notification) {
+    const Notification& notification,
+    std::unique_ptr<NotificationCommon::Metadata> metadata) {
   // This mimics notification replacement behaviour; the Close() method on a
   // notification's delegate is not meant to be invoked in this situation.
   Close(notification_type, notification_id);
