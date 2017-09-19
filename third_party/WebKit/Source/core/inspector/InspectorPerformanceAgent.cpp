@@ -17,6 +17,7 @@
 namespace blink {
 
 using protocol::Response;
+using protocol::Maybe;
 
 namespace {
 
@@ -73,6 +74,24 @@ void AppendMetric(protocol::Array<protocol::Performance::Metric>* container,
                          .build());
 }
 }  // namespace
+
+Response InspectorPerformanceAgent::setJavascriptQuota(
+    Maybe<String> action,
+    Maybe<double> totalDurationQuota) {
+  String act = action.fromMaybe(
+      protocol::Performance::OutOfQuotaActionEnum::Notify_once);
+  if (act == protocol::Performance::OutOfQuotaActionEnum::Notify_once)
+    javascript_quota_action_ = NOTIFY_ONCE;
+  else if (act == protocol::Performance::OutOfQuotaActionEnum::Notify_every)
+    javascript_quota_action_ = NOTIFY_EVERY;
+  else if (act ==
+           protocol::Performance::OutOfQuotaActionEnum::Notify_and_terminate)
+    javascript_quota_action_ = NOTIFY_AND_TERMINATE;
+  else
+    return Response::Error("Invalid action value");
+  javascript_quota_left_ = totalDurationQuota.fromMaybe(HUGE_VAL);
+  return Response::OK();
+}
 
 Response InspectorPerformanceAgent::getMetrics(
     std::unique_ptr<protocol::Array<protocol::Performance::Metric>>*
@@ -141,27 +160,41 @@ void InspectorPerformanceAgent::ConsoleTimeStamp(const String& title) {
 }
 
 void InspectorPerformanceAgent::Will(const probe::CallFunction& probe) {
-  if (!script_call_depth_++)
+  if (!script_call_depth_++) {
     script_start_time_ = probe.CaptureStartTime();
+    CheckJavascriptQuota(probe.isolate);
+  }
 }
 
 void InspectorPerformanceAgent::Did(const probe::CallFunction& probe) {
   if (--script_call_depth_)
     return;
-  script_duration_ += probe.Duration();
+  const double duration = probe.Duration();
+  script_duration_ += duration;
   script_start_time_ = 0;
+  if (javascript_quota_left_ != HUGE_VAL) {
+    javascript_quota_left_ -= duration;
+    CheckJavascriptQuota(probe.isolate);
+  }
 }
 
 void InspectorPerformanceAgent::Will(const probe::ExecuteScript& probe) {
-  if (!script_call_depth_++)
+  if (!script_call_depth_++) {
     script_start_time_ = probe.CaptureStartTime();
+    CheckJavascriptQuota(probe.isolate);
+  }
 }
 
 void InspectorPerformanceAgent::Did(const probe::ExecuteScript& probe) {
   if (--script_call_depth_)
     return;
-  script_duration_ += probe.Duration();
+  const double duration = probe.Duration();
+  script_duration_ += duration;
   script_start_time_ = 0;
+  if (javascript_quota_left_ != HUGE_VAL) {
+    javascript_quota_left_ -= duration;
+    CheckJavascriptQuota(probe.isolate);
+  }
 }
 
 void InspectorPerformanceAgent::Will(const probe::RecalculateStyle& probe) {
@@ -194,6 +227,26 @@ void InspectorPerformanceAgent::DidProcessTask(double start_time,
   if (task_start_time_ == start_time)
     task_duration_ += end_time - start_time;
   task_start_time_ = 0;
+}
+
+void InspectorPerformanceAgent::CheckJavascriptQuota(v8::Isolate* isolate) {
+  if (javascript_quota_left_ <= 0) {
+    GetFrontend()->javascriptQuota();
+    switch (javascript_quota_action_) {
+      case NOTIFY_ONCE:
+        javascript_quota_left_ = HUGE_VAL;
+        break;
+      case NOTIFY_EVERY:
+        // nothing
+        break;
+      case NOTIFY_AND_TERMINATE:
+        isolate->TerminateExecution();
+        break;
+      default:
+        DCHECK(false);
+        break;
+    }
+  }
 }
 
 DEFINE_TRACE(InspectorPerformanceAgent) {

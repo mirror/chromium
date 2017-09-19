@@ -461,6 +461,7 @@ v8::MaybeLocal<v8::Script> V8ScriptRunner::CompileScript(
       "v8,devtools.timeline", "v8.compile", "fileName", file_name.Utf8(),
       "data",
       InspectorCompileScriptEvent::Data(file_name, script_start_position));
+
   // TODO(maxlg): probe will use a execution context once
   // DocumentWriteEvaluator::EnsureEvaluationContext provide script state, see
   // https://crbug.com/746961.
@@ -552,7 +553,7 @@ v8::MaybeLocal<v8::Value> V8ScriptRunner::RunCompiledScript(
     }
     v8::MicrotasksScope microtasks_scope(isolate,
                                          v8::MicrotasksScope::kRunMicrotasks);
-    probe::ExecuteScript probe(context);
+    probe::ExecuteScript probe(context, isolate);
     result = script->Run(isolate->GetCurrentContext());
   }
 
@@ -628,7 +629,7 @@ v8::MaybeLocal<v8::Value> V8ScriptRunner::CallAsConstructor(
 
   v8::MicrotasksScope microtasks_scope(isolate,
                                        v8::MicrotasksScope::kRunMicrotasks);
-  probe::CallFunction probe(context, function, depth);
+  probe::CallFunction probe(context, isolate, function, depth);
   v8::MaybeLocal<v8::Value> result =
       constructor->CallAsConstructor(isolate->GetCurrentContext(), argc, argv);
   CHECK(!isolate->IsDead());
@@ -667,7 +668,7 @@ v8::MaybeLocal<v8::Value> V8ScriptRunner::CallFunction(
   CHECK(!ThreadState::Current()->IsWrapperTracingForbidden());
   v8::MicrotasksScope microtasks_scope(isolate,
                                        v8::MicrotasksScope::kRunMicrotasks);
-  probe::CallFunction probe(context, function, depth);
+  probe::CallFunction probe(context, isolate, function, depth);
   v8::MaybeLocal<v8::Value> result =
       function->Call(isolate->GetCurrentContext(), receiver, argc, args);
   CHECK(!isolate->IsDead());
