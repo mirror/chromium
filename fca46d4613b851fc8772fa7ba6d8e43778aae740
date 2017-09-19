@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b558bd0c_4751d5fb",
+        "filename": "third_party/blink/tools/plan_blink_move.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-19T22:20:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3692a6f_d468968d",
+      "revId": "fca46d4613b851fc8772fa7ba6d8e43778aae740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d239f97_e3f48f82",
         "filename": "third_party/blink/tools/plan_blink_move.py",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "fca46d4613b851fc8772fa7ba6d8e43778aae740",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87facd8b_54536b82",
+        "filename": "third_party/blink/tools/plan_blink_move.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-19T22:20:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d239f97_e3f48f82",
+      "revId": "fca46d4613b851fc8772fa7ba6d8e43778aae740",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
