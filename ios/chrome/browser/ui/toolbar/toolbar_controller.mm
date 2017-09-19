@@ -406,6 +406,35 @@ const CGFloat kPopoverAnchorHorizontalPadding = 10.0;
   return nil;
 }
 
+- (void)layoutSubviews {
+    if (IsIPhoneX()) {
+      CGFloat statusBarOffset = [self statusBarOffset];
+      CGRect viewFrame = [view_ frame];
+      viewFrame.size.height = CGRectGetHeight(kToolbarFrame[IPHONE_IDIOM]) +  statusBarOffset;
+      [view_ setFrame:viewFrame];
+
+      CGRect backgroundFrame = [backgroundView_ frame];
+      backgroundFrame.size.height = CGRectGetHeight(kBackgroundViewFrame[IPHONE_IDIOM]) + statusBarOffset;
+      [backgroundView_ setFrame:backgroundFrame];
+
+      CGRect shadowFrame = [shadowView_ frame];
+      shadowFrame.origin.y = CGRectGetMaxY(backgroundFrame);
+      [shadowView_ setFrame:shadowFrame];
+
+      CGRect stackButtonFrame = [stackButton_ frame];
+      stackButtonFrame.origin.y = LayoutRectGetRect(kStackButtonFrame).origin.y + statusBarOffset;
+      [stackButton_ setFrame:stackButtonFrame];
+
+      CGRect toolsMenuButtonFrame = [toolsMenuButton_ frame];
+      toolsMenuButtonFrame.origin.y = LayoutRectGetRect(kToolsMenuButtonFrame[IPHONE_IDIOM]).origin.y + statusBarOffset;
+      [toolsMenuButton_ setFrame:toolsMenuButtonFrame];
+
+      CGRect fullBleedShadowFrame = kFullBleedShadowViewFrame;
+      fullBleedShadowFrame.origin.y = shadowFrame.origin.y;
+      [fullBleedShadowView_ setFrame:fullBleedShadowFrame];
+    }
+}
+
 - (UIFont*)fontForSize:(NSInteger)size {
   return [[MDCTypography fontLoader] boldFontOfSize:size];
 }

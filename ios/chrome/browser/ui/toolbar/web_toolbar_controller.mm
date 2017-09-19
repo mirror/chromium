@@ -1346,6 +1346,21 @@ CGRect RectShiftedDownAndResizedForStatusBar(CGRect rect) {
   return frame;
 }
 
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  if (IsIPhoneX()) {
+    CGRect omniboxBackgroundFrame = [_omniboxBackground frame];
+    omniboxBackgroundFrame.origin.y = LayoutRectGetRect(kOmniboxFrame[IPHONE_IDIOM]).origin.y + StatusBarHeight();
+    [_omniboxBackground setFrame:omniboxBackgroundFrame];
+
+    CGRect clippingViewFrame = [_clippingView frame];
+    clippingViewFrame.size.height = RectShiftedUpAndResizedForStatusBar(kToolbarFrame[IPHONE_IDIOM]).size.height;
+    clippingViewFrame.origin.y = RectShiftedUpAndResizedForStatusBar(kToolbarFrame[IPHONE_IDIOM]).origin.y;
+    [_clippingView setFrame:clippingViewFrame];
+    [self layoutOmnibox];
+  }
+}
+
 #pragma mark -
 #pragma mark ToolbarFrameDelegate methods.
 
