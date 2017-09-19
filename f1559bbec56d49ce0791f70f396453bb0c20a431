@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c25469f_45919105",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-19T19:05:13Z",
+      "side": 1,
+      "message": "Does this need a default constructor that initializes the members?",
+      "revId": "f1559bbec56d49ce0791f70f396453bb0c20a431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28eb8e2a_44318303",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-19T19:05:13Z",
+      "side": 1,
+      "message": "Can you add a comment describing the lifetime semantics of this pointer?\n\nIt looks like UniqueAlloc and UniqueAllocationMap are temporary objects created during a temp, while a lock is held that guarantees that no Backtraces will be created/destroyed, and therefore it\u0027s okay to use a raw pointer?",
+      "revId": "f1559bbec56d49ce0791f70f396453bb0c20a431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ea348dc_ca0d0506",
+        "filename": "chrome/profiling/json_exporter.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-09-19T19:05:13Z",
+      "side": 1,
+      "message": "does this need a default constructor that sets both fields to 0?",
+      "revId": "f1559bbec56d49ce0791f70f396453bb0c20a431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
