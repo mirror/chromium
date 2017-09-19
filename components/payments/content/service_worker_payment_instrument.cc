@@ -141,7 +141,13 @@ bool ServiceWorkerPaymentInstrument::IsValidForModifier(
     const std::vector<std::string>& supported_networks,
     const std::set<autofill::CreditCard::CardType>& supported_types,
     bool supported_types_specified) const {
-  NOTIMPLEMENTED();
+  for (const auto& modifier_supported_method : method) {
+    for (const auto& enabled_method :
+         stored_payment_app_info_->enabled_methods) {
+      if (modifier_supported_method == enabled_method)
+        return true;
+    }
+  }
   return false;
 }
 
