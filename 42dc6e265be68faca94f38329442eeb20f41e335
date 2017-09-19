@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ebdb4b11_346a82e9",
+        "filename": "ios/chrome/browser/passwords/password_controller_js_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-19T12:28:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2c144e3_d19500b8",
+      "range": {
+        "startLine": 334,
+        "startChar": 3,
+        "endLine": 334,
+        "endChar": 8
+      },
+      "revId": "42dc6e265be68faca94f38329442eeb20f41e335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "286e99b4_edf76a11",
         "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "42dc6e265be68faca94f38329442eeb20f41e335",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd8d726e_1c766f2f",
+        "filename": "ios/chrome/browser/passwords/resources/password_controller.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-09-19T12:28:23Z",
+      "side": 1,
+      "message": "Sure it could lead to false positives, but hopefully pretty rare. I\u0027ve checked that currently there are only 2 consumers of didSubmitDocument: AutofillAgent and PasswordsController. \n\nFor Password Manager it\u0027s not the problem, because:\n 1. There is a separate verification of a submission success, we need this event only for indicator as something similar to form submission happened.\n 2. Small numbers of false positives are not a big problem, if it allows to propose saving on many sites (as here). In upstream Chrome there are some much more vague indicators (for example detaching of iframe if the user typed in a password field).\n\nAs far as I understand for Autofill it\u0027s also not a problem, but we need to ask somebody from Autofill team. But I agree that it might be misleading and that\u0027s better to have a separate callback. Moreover I\u0027m planning to increase number of cases that are similar to form submission in order to fix saving on other sites.\n\nAre you ok with the names for new callback?\n document.possibly_submit for \u0027command\u0027\n WebStateImpl::OnDocumentPossiblySubmitted\n WebStateObserver::DocumentPossiblySubmitted\n didPossiblySubmitDocumentWithFormNamed for PasswordsController",
+      "parentUuid": "286e99b4_edf76a11",
+      "range": {
+        "startLine": 117,
+        "startChar": 28,
+        "endLine": 117,
+        "endChar": 34
+      },
+      "revId": "42dc6e265be68faca94f38329442eeb20f41e335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
