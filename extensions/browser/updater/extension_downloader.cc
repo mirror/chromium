@@ -434,6 +434,7 @@ void ExtensionDownloader::ReportStats() const {
 
 void ExtensionDownloader::StartUpdateCheck(
     std::unique_ptr<ManifestFetchData> fetch_data) {
+  LOG(WARNING) << "StartUpdateCheck";
   if (g_test_delegate) {
     g_test_delegate->StartUpdateCheck(this, delegate_, std::move(fetch_data));
     return;
@@ -442,6 +443,7 @@ void ExtensionDownloader::StartUpdateCheck(
   const std::set<std::string>& id_set(fetch_data->extension_ids());
 
   if (!ExtensionsBrowserClient::Get()->IsBackgroundUpdateAllowed()) {
+    LOG(WARNING) << "BackgroundUpdate not allowed";
     NotifyExtensionsDownloadFailed(id_set,
                                    fetch_data->request_ids(),
                                    ExtensionDownloaderDelegate::DISABLED);
@@ -948,6 +950,7 @@ void ExtensionDownloader::NotifyExtensionsDownloadFailed(
     const std::set<std::string>& extension_ids,
     const std::set<int>& request_ids,
     ExtensionDownloaderDelegate::Error error) {
+  LOG(WARNING) << "NotifyExtensionsDownloadFailed";
   for (std::set<std::string>::const_iterator it = extension_ids.begin();
        it != extension_ids.end();
        ++it) {

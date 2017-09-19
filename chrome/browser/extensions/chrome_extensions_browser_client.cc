@@ -333,8 +333,10 @@ ExtensionCache* ChromeExtensionsBrowserClient::GetExtensionCache() {
 }
 
 bool ChromeExtensionsBrowserClient::IsBackgroundUpdateAllowed() {
-  return !base::CommandLine::ForCurrentProcess()->HasSwitch(
+  const bool bg_update = !base::CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kDisableBackgroundNetworking);
+  LOG(WARNING) << "IsBackgroundUpdateAllowed " << bg_update;
+  return bg_update;
 }
 
 bool ChromeExtensionsBrowserClient::IsMinBrowserVersionSupported(
