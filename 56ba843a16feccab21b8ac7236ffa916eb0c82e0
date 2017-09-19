@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b2876f3_53ef8af2",
+        "filename": "third_party/WebKit/Source/core/dom/FrameRequestCallback.idl",
+        "patchSetId": 13
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-19T07:02:52Z",
+      "side": 1,
+      "message": "nit: Insert space after //",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 7
+      },
+      "revId": "56ba843a16feccab21b8ac7236ffa916eb0c82e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b1197ee_d469129e",
+        "filename": "third_party/WebKit/Source/core/dom/FrameRequestCallbackCollection.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-19T07:02:52Z",
+      "side": 1,
+      "message": "nit: Invoke() ?",
+      "range": {
+        "startLine": 36,
+        "startChar": 17,
+        "endLine": 36,
+        "endChar": 23
+      },
+      "revId": "56ba843a16feccab21b8ac7236ffa916eb0c82e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92f1cbac_d8899d51",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-09-19T07:02:52Z",
+      "side": 1,
+      "message": "nit: we usually call base class\u0027 TraceWrappers() at the bottom.",
+      "revId": "56ba843a16feccab21b8ac7236ffa916eb0c82e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
