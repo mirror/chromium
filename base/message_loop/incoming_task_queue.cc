@@ -89,6 +89,27 @@ bool IncomingTaskQueue::IsIdleForTesting() {
   return incoming_queue_.empty();
 }
 
+void IncomingTaskQueue::CheckIsIdleForTesting() {
+  AutoLock lock(incoming_queue_lock_);
+  int i = 0;
+  while (!incoming_queue_.empty()) {
+    LOG(ERROR) << "IncomingTaskQueue not empty as expected:";
+    const PendingTask& task = incoming_queue_.front();
+    LOG(ERROR) << "Task " << i << ":";
+    LOG(ERROR) << "  posted_from: " << task.posted_from.function_name() << ", "
+               << task.posted_from.file_name() << ":"
+               << task.posted_from.line_number();
+    LOG(ERROR) << "  delayed_run_time: " << task.delayed_run_time;
+    for (const void* p : task.task_backtrace)
+      LOG(ERROR) << "  task_backtrace: " << p;
+    // About to CHECK, so it's OK to pop() here (as there's no way to iterate
+    // an std::queue.)
+    incoming_queue_.pop();
+    ++i;
+  }
+  CHECK(i == 0) << "IncomingTaskQueue wasn't empty";
+}
+
 int IncomingTaskQueue::ReloadWorkQueue(TaskQueue* work_queue) {
   // Make sure no tasks are lost.
   DCHECK(work_queue->empty());

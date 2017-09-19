@@ -44,6 +44,10 @@ class BASE_EXPORT IncomingTaskQueue
   // Returns true if the message loop is "idle". Provided for testing.
   bool IsIdleForTesting();
 
+  // CHECKs that the message loop is "idle". Provided for testing. If it is not
+  // empty, information will also be logged about the pending tasks.
+  void CheckIsIdleForTesting();
+
   // Loads tasks from the |incoming_queue_| into |*work_queue|. Must be called
   // from the thread that is running the loop. Returns the number of tasks that
   // require high resolution timers.

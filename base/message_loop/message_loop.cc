@@ -267,6 +267,10 @@ bool MessageLoop::IsIdleForTesting() {
   return incoming_task_queue_->IsIdleForTesting();
 }
 
+void MessageLoop::CheckIsIdleForTesting() {
+  incoming_task_queue_->CheckIsIdleForTesting();
+}
+
 //------------------------------------------------------------------------------
 
 // static
