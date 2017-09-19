@@ -25,7 +25,6 @@
 ] interface DOMImplementation {
     [NewObject, RaisesException] DocumentType createDocumentType(DOMString qualifiedName, DOMString publicId, DOMString systemId);
     [NewObject, RaisesException] XMLDocument createDocument(DOMString? namespaceURI, [TreatNullAs=EmptyString] DOMString qualifiedName, optional DocumentType? doctype = null);
-    // FIXME: createHTMLDocument should return a Document. crbug.com/238368
     [NewObject] Document createHTMLDocument(optional DOMString title);
 
     // useless; always returns true
