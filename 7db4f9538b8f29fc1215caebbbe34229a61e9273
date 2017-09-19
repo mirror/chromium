@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "272eb2ba_345ef5d2",
+        "filename": "net/dns/dns_config_service_win.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 700,
+      "author": {
+        "id": 1000193
+      },
+      "writtenOn": "2017-09-19T23:33:28Z",
+      "side": 1,
+      "message": "I defer to you, but you could alternatively move these into ParseHostsFile and AddLocalhostEntries, which are the two \u0027blocking\u0027 functions.",
+      "revId": "7db4f9538b8f29fc1215caebbbe34229a61e9273",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
