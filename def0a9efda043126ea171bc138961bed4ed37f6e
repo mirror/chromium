@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "841b2f74_67774705",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_home_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-19T13:08:40Z",
+      "side": 1,
+      "message": "Yes, it\u0027s required.\nnew bookmark has 2 places to escape in this class:\nopenAllNodes and dismissWithURL.\nWithout this line, the position will not be cached when open all, all in incognito and single incognito.",
+      "parentUuid": "39196d61_e59a55da",
+      "range": {
+        "startLine": 389,
+        "startChar": 2,
+        "endLine": 389,
+        "endChar": 23
+      },
+      "revId": "def0a9efda043126ea171bc138961bed4ed37f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f6c1dd2c_fc319325",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
         "patchSetId": 2
@@ -69,6 +93,30 @@
       "revId": "def0a9efda043126ea171bc138961bed4ed37f6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e11d8ce4_f76bd6c5",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1939,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-09-19T13:08:40Z",
+      "side": 1,
+      "message": "Because all the tests are assumed to start at root folder, they will break if when a non-root (e.g. MobileBookmarks) position is cached by a previous test.\nI moved this to the end of those tests which will cache a non-root position.\nPTAL again.",
+      "parentUuid": "b12b98d6_f17000ac",
+      "range": {
+        "startLine": 1939,
+        "startChar": 2,
+        "endLine": 1939,
+        "endChar": 53
+      },
+      "revId": "def0a9efda043126ea171bc138961bed4ed37f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
