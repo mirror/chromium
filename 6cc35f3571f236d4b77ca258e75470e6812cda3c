@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1e9b442c_60621ff4",
+        "filename": "components/viz/common/gl_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-19T21:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba5b42c3_8ba5bab1",
+      "range": {
+        "startLine": 213,
+        "startChar": 19,
+        "endLine": 213,
+        "endChar": 30
+      },
+      "revId": "6cc35f3571f236d4b77ca258e75470e6812cda3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "851c8ee6_a6debde7",
         "filename": "components/viz/common/gl_helper.h",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-19T18:54:40Z",
       "side": 1,
       "message": "Are |from| and |to| the src/dst size (for scaling)? I understand that they could be any size with same width/height ratio as src/dst texture size. But why use gfx::Vector2d instead of gfx::Size? Can they be negative?",
+      "range": {
+        "startLine": 313,
+        "startChar": 17,
+        "endLine": 313,
+        "endChar": 33
+      },
+      "revId": "6cc35f3571f236d4b77ca258e75470e6812cda3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1f7843_1dfc6dca",
+        "filename": "components/viz/common/gl_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-19T21:44:53Z",
+      "side": 1,
+      "message": "For this CL, I just set |from| directly from the source width/height, and |to| to the dest size; because the existing use cases only require scaling whole source textures into whole dest textures. However, very soon, that will no longer be the case. In fact, it\u0027s the whole motivation for this change: I need to be able to select subrects to be scaled \"the same way as the whole.\"\n\nAs for the choice of Vector2d: Using gfx::Size would imply there is some exact size being dealt with. Vector2d, conceptually, emphasizes that |from| and |to| are relative things. In future CLs, CopyOutputRequests will reduce the ratios to their smallest form (e.g., 1600:400 would reduce to 4:1). This is important for identifying when we can cache the Scalers, rather than always create and destroy them for each individual frame.\n\nCan they be negative? Sure, but there isn\u0027t a use case right now, AFAIK. Negative values would cause flipping in the X or Y direction (or both). I had considered removing the |vertically_flip_texture| arguments in a lot of the API, but decided it was important to keep them since this was more of a statement of image storage format rather than an actual intention to flip for some client-side rendering purpose.",
+      "parentUuid": "851c8ee6_a6debde7",
       "range": {
         "startLine": 313,
         "startChar": 17,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b83514cc_515c12de",
+        "filename": "components/viz/common/gl_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-19T21:44:53Z",
+      "side": 1,
+      "message": "I think the existing comments cover what you\u0027re asking. If not, what wording would you propose I add to the existing comments?\n\nNo, we can\u0027t (and don\u0027t want to) reset the scaler inside ReadbackYUV(): The |src_texture_size| in the ReadbackYUV call is not the source size. ;) In fact, this argument only exists because of ridiculous limitations in the OpenGL ES 2.0 API: This argument is needed only so that we can compute the texel coordinates when sampling the source texture.\n\nThe actual sampling region of the source texture is back-computed from the |output_rect| argument. In other words, you tell ReadbackYUV() what subregion of the output you want, and it figures out how that maps back to the coordinate system of the source texture, and samples the needed rect from it. Internally, ReadbackYUV() is just telling the Scaler what output_rect it needs, and Scaler back-computes to determine the source rect to sample (see the ScalerImpl class in gl_helper_scaling.cc).",
+      "parentUuid": "2ce820a4_79ba5cf1",
+      "range": {
+        "startLine": 387,
+        "startChar": 5,
+        "endLine": 387,
+        "endChar": 22
+      },
+      "revId": "6cc35f3571f236d4b77ca258e75470e6812cda3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1bb2abd8_cebe4494",
         "filename": "content/browser/renderer_host/delegated_frame_host.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "6cc35f3571f236d4b77ca258e75470e6812cda3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0414655_e8388b13",
+        "filename": "content/browser/renderer_host/delegated_frame_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 703,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-09-19T21:44:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bb2abd8_cebe4494",
+      "range": {
+        "startLine": 703,
+        "startChar": 4,
+        "endLine": 703,
+        "endChar": 20
+      },
+      "revId": "6cc35f3571f236d4b77ca258e75470e6812cda3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
