@@ -19,10 +19,9 @@ enum AuthenticatorStatus {
   NOT_ALLOWED_ERROR,
   NOT_SUPPORTED_ERROR,
   SECURITY_ERROR,
-  NOT_IMPLEMENTED,
 };
 
-// The public key and attestation that is returned by an authenticator's 
+// The public key and attestation that is returned by an authenticator's
 // call to makeCredential.
 struct PublicKeyCredentialInfo {
   // The base64url encoding of |raw_id|.
@@ -49,10 +48,11 @@ struct AuthenticatorResponse {
   array<uint8> authenticator_data;
 
   // Cryptographic signature proving possession of the credential private key.
+  // Returned after generating an assertion.
   array<uint8> signature;
 };
 
-// Information about the relying party and the account held by the user at 
+// Information about the relying party and the account held by the user at
 // that relying party. This information is used by the authenticator to create
 // or retrieve an appropriate public key credential for this account.
 // These fields take arbitrary input.
@@ -60,7 +60,7 @@ struct PublicKeyCredentialEntity {
   // A unique identifier for the entity. An ASCII serialization of an origin
   // for a relying party, and an arbitrary string specified by the relying party
   // for user accounts.
-  string id;
+  string? id;
 
   // Friendly name associated with the entity intended for display.
   // e.g. "Acme Corporation" for a relying party and "john.p.smith@example.com"
@@ -79,6 +79,15 @@ struct PublicKeyCredentialEntity {
 struct PublicKeyCredentialParameters {
   PublicKeyCredentialType type;
   int32 algorithm_identifier;
+};
+
+struct AppIdExtension {
+  string fido_app_id;
+};
+
+struct AuthenticatorExtension {
+  string extension_identifier;
+  AppIdExtension? app_id_extension;
 };
 
 // Parameters passed into calls to MakeCredential.
@@ -100,6 +109,21 @@ struct MakeCredentialOptions {
   array<PublicKeyCredentialDescriptor> exclude_credentials;
 
   // TODO(kpaulhamus): add AuthenticatorSelectionCriteria
+};
+
+// Parameters passed into calls to GetAssertion.
+struct PublicKeyCredentialRequestOptions {
+  // A blob passed from the the relying party server.
+  array<uint8> challenge;
+
+  mojo.common.mojom.TimeDelta adjusted_timeout;
+
+  // An ASCII serialization of an origin claimed by the relying party.
+  string? relying_party_id;
+
+  array<PublicKeyCredentialDescriptor> allow_list;
+
+  array<AuthenticatorExtension> extensions;
 };
 
 enum PublicKeyCredentialType {
@@ -129,7 +153,13 @@ enum AuthenticatorTransport {
 interface Authenticator {
   // Gets the credential info for a new public key credential created by an
   // authenticator for the given |MakeCredentialOptions|
-  // [PublicKeyCredentialInfo] will only be set if status == SUCCESS.   
+  // |PublicKeyCredentialInfo| will only be set if status == SUCCESS.
   MakeCredential(MakeCredentialOptions options)
+      => (AuthenticatorStatus status, PublicKeyCredentialInfo? credential);
+
+  // Uses an existing credential to produce an assertion for the given
+  // |C|
+  // |PublicKeyCredentialInfo| will only be set if status == SUCCESS.
+  GetAssertion(PublicKeyCredentialRequestOptions options)
       => (AuthenticatorStatus status, PublicKeyCredentialInfo? credential);
 };
