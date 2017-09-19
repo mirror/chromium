@@ -2010,7 +2010,9 @@ void RenderWidget::OnOrientationChange() {
   WebWidget* web_widget = GetWebWidget();
   if (web_widget && web_widget->IsWebFrameWidget()) {
     WebFrameWidget* web_frame_widget = static_cast<WebFrameWidget*>(web_widget);
-    web_frame_widget->LocalRoot()->SendOrientationChangeEvent();
+    if (web_frame_widget->LocalRoot()) {
+      web_frame_widget->LocalRoot()->SendOrientationChangeEvent();
+    }
   }
 }
 
