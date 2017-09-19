@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "746bd1b2_a71258ee",
+        "filename": "ui/native_theme/native_theme_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-19T16:15:18Z",
+      "side": 1,
+      "message": "I think a word is missing here, maybe \"Enables flashing of scrollbars...\"",
+      "range": {
+        "startLine": 23,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 25
+      },
+      "revId": "815376850afc4d7e02281019817af16fac6ac8da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c65ec164_fd32763b",
+        "filename": "ui/native_theme/native_theme_features.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-09-19T16:15:18Z",
+      "side": 1,
+      "message": "when do we get to remove this feature flag completely?",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 19
+      },
+      "revId": "815376850afc4d7e02281019817af16fac6ac8da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
