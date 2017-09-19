@@ -22,6 +22,30 @@
       "revId": "f04f70d4bf9e6da210dd5916ef682f9102b6e501",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89df9eec_f0520939",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadForegroundServiceObservers.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-09-19T22:07:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea6c5683_c6bdfaa6",
+      "range": {
+        "startLine": 132,
+        "startChar": 4,
+        "endLine": 134,
+        "endChar": 5
+      },
+      "revId": "f04f70d4bf9e6da210dd5916ef682f9102b6e501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
