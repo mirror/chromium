@@ -23,12 +23,14 @@
 #include "chrome/browser/chromeos/arc/arc_util.h"
 #include "chrome/browser/chromeos/arc/optin/arc_terms_of_service_oobe_negotiator.h"
 #include "chrome/browser/chromeos/arc/test/arc_data_removed_waiter.h"
+#include "chrome/browser/chromeos/login/screens/arc_terms_of_service_screen.h"
 #include "chrome/browser/chromeos/login/screens/arc_terms_of_service_screen_view.h"
 #include "chrome/browser/chromeos/login/screens/arc_terms_of_service_screen_view_observer.h"
 #include "chrome/browser/chromeos/login/ui/login_display_host.h"
 #include "chrome/browser/chromeos/login/users/fake_chrome_user_manager.h"
 #include "chrome/browser/chromeos/login/users/scoped_user_manager_enabler.h"
 #include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
+#include "chrome/browser/chromeos/login/wizard_controller.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/policy/profile_policy_connector.h"
 #include "chrome/browser/policy/profile_policy_connector_factory.h"
@@ -37,6 +39,7 @@
 #include "chrome/browser/ui/app_list/arc/arc_app_list_prefs.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_test.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
+#include "chrome/browser/ui/webui/chromeos/login/arc_terms_of_service_screen_handler.h"
 #include "chrome/test/base/testing_profile.h"
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -65,6 +68,45 @@ namespace arc {
 
 namespace {
 
+class FakeWizardController : public chromeos::WizardController {
+ public:
+  FakeWizardController() {}
+
+  ~FakeWizardController() override {}
+
+  void Init(chromeos::OobeScreen first_screen) {
+    AdvanceToScreen(first_screen);
+  }
+  void AdvanceToScreen(chromeos::OobeScreen screen) {
+    current_screen_ = CreateScreen(screen);
+    SetCurrentScreenForTest(current_screen_);
+  }
+  void SkipToLoginForTesting(const chromeos::LoginScreenContext& context) {}
+  pairing_chromeos::SharkConnectionListener*
+  GetSharkConnectionListenerForTesting() {
+    return nullptr;
+  }
+  void SkipUpdateEnrollAfterEula() {}
+  void EnableUserImageScreenReturnToPreviousHack() {}
+  chromeos::BaseScreen* current_screen() const { return current_screen_; }
+  bool login_screen_started() const { return false; }
+  chromeos::BaseScreen* GetScreen(chromeos::OobeScreen screen) {
+    return nullptr;
+  }
+  chromeos::ScreenManager* screen_manager() { return nullptr; }
+  chromeos::BaseScreen* CreateScreen(chromeos::OobeScreen screen) {
+    if (screen == chromeos::OobeScreen::SCREEN_ARC_TERMS_OF_SERVICE)
+      return new chromeos::ArcTermsOfServiceScreen(
+          this, new chromeos::ArcTermsOfServiceScreenHandler());
+    return nullptr;
+  }
+
+ private:
+  chromeos::BaseScreen* current_screen_;
+
+  DISALLOW_COPY_AND_ASSIGN(FakeWizardController);
+};
+
 class FakeLoginDisplayHost : public chromeos::LoginDisplayHost {
  public:
   FakeLoginDisplayHost() {
@@ -91,8 +133,14 @@ class FakeLoginDisplayHost : public chromeos::LoginDisplayHost {
   void Finalize(base::OnceClosure) override {}
   void OpenProxySettings(const std::string& network_id) override {}
   void SetStatusAreaVisible(bool visible) override {}
-  void StartWizard(chromeos::OobeScreen first_screen) override {}
-  chromeos::WizardController* GetWizardController() override { return nullptr; }
+  void StartWizard(chromeos::OobeScreen first_screen) override {
+    wizard_controller_.reset();
+    wizard_controller_.reset(new FakeWizardController());
+    wizard_controller_->Init(first_screen);
+  }
+  chromeos::WizardController* GetWizardController() override {
+    return wizard_controller_.get();
+  }
   chromeos::AppLaunchController* GetAppLaunchController() override {
     return nullptr;
   }
@@ -111,6 +159,8 @@ class FakeLoginDisplayHost : public chromeos::LoginDisplayHost {
   bool IsVoiceInteractionOobe() override { return false; }
 
  private:
+  std::unique_ptr<FakeWizardController> wizard_controller_;
+
   DISALLOW_COPY_AND_ASSIGN(FakeLoginDisplayHost);
 };
 
@@ -798,6 +848,10 @@ class ArcSessionOobeOptInTest : public ArcSessionManagerTest {
     fake_login_display_host_ = base::MakeUnique<FakeLoginDisplayHost>();
   }
 
+  FakeLoginDisplayHost* login_display_host() {
+    return fake_login_display_host_.get();
+  }
+
   void CloseLoginDisplayHost() { fake_login_display_host_.reset(); }
 
   void AppendEnableArcOOBEOptInSwitch() {
@@ -812,21 +866,16 @@ class ArcSessionOobeOptInTest : public ArcSessionManagerTest {
 };
 
 TEST_F(ArcSessionOobeOptInTest, OobeOptInActive) {
-  // OOBE OptIn is active in case of OOBE is started for new user and ARC OOBE
-  // is enabled by switch.
-  EXPECT_FALSE(ArcSessionManager::IsOobeOptInActive());
-  GetFakeUserManager()->set_current_user_new(true);
+  // OOBE OptIn is active in case of OOBE controller is alive and the Arc Tos
+  // screen is currently showing.
   EXPECT_FALSE(ArcSessionManager::IsOobeOptInActive());
   CreateLoginDisplayHost();
   EXPECT_FALSE(ArcSessionManager::IsOobeOptInActive());
-
-  AppendEnableArcOOBEOptInSwitch();
-  GetFakeUserManager()->set_current_user_new(false);
-  CloseLoginDisplayHost();
+  login_display_host()->StartWizard(
+      chromeos::OobeScreen::SCREEN_VOICE_INTERACTION_VALUE_PROP);
   EXPECT_FALSE(ArcSessionManager::IsOobeOptInActive());
-  GetFakeUserManager()->set_current_user_new(true);
-  EXPECT_FALSE(ArcSessionManager::IsOobeOptInActive());
-  CreateLoginDisplayHost();
+  login_display_host()->StartWizard(
+      chromeos::OobeScreen::SCREEN_ARC_TERMS_OF_SERVICE);
   EXPECT_TRUE(ArcSessionManager::IsOobeOptInActive());
 }
 
@@ -848,6 +897,8 @@ class ArcSessionOobeOptInNegotiatorTest
     GetFakeUserManager()->set_current_user_new(true);
 
     CreateLoginDisplayHost();
+    login_display_host()->StartWizard(
+        chromeos::OobeScreen::SCREEN_ARC_TERMS_OF_SERVICE);
 
     if (IsManagedUser()) {
       policy::ProfilePolicyConnector* const connector =

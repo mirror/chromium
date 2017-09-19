@@ -449,6 +449,15 @@ BaseScreen* WizardController::CreateScreen(OobeScreen screen) {
   return nullptr;
 }
 
+WizardController::WizardController()
+    : host_(nullptr), oobe_ui_(nullptr), weak_factory_(this) {
+  default_controller_ = this;
+}
+
+void WizardController::SetCurrentScreenForTest(BaseScreen* screen) {
+  current_screen_ = screen;
+}
+
 void WizardController::ShowNetworkScreen() {
   VLOG(1) << "Showing network screen.";
   UpdateStatusAreaVisibilityForScreen(OobeScreen::SCREEN_OOBE_NETWORK);
