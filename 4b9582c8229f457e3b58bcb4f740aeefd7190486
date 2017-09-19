@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b0e0366_463dd1e0",
+        "filename": "ios/chrome/browser/ui/browser_view_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 1964,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-09-19T01:08:29Z",
+      "side": 1,
+      "message": "If we want to ship this fix, I\u0027d like to break this function apart so that we don\u0027t need to call insertSubview again every time.",
+      "revId": "4b9582c8229f457e3b58bcb4f740aeefd7190486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
