@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c814b52b_8a33a3d2",
+        "filename": "device/geolocation/location_arbitrator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-09-19T17:44:43Z",
+      "side": 1,
+      "message": "nit: it looks like we can only call this with |true| as an arg. Let\u0027s call it use_mock_system_provider() without any args, and similarly |use_mock_system_provider_|.",
+      "revId": "ce2fea9b9559bd6b7680d7314ed9be58a0f52228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
