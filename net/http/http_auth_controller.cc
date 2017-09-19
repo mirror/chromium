@@ -388,6 +388,11 @@ bool HttpAuthController::HaveAuth() const {
   return handler_.get() && !identity_.invalid;
 }
 
+bool HttpAuthController::NeedsHTTP11() const {
+  return handler_->auth_scheme() == HttpAuth::AUTH_SCHEME_NTLM ||
+         handler_->auth_scheme() == HttpAuth::AUTH_SCHEME_NEGOTIATE;
+}
+
 void HttpAuthController::InvalidateCurrentHandler(
     InvalidateHandlerAction action) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
