@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0ca62067_ce7dba1c",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-19T17:49:20Z",
+      "side": 1,
+      "message": "My vote: having these all be false by default seems more natural and rememberable (hey, that\u0027s a useful word-type thing). That said, if 80+% of the call sites set it to true, then I could see making this exception.",
+      "parentUuid": "93915e7b_e0ba3155",
+      "range": {
+        "startLine": 86,
+        "startChar": 33,
+        "endLine": 86,
+        "endChar": 38
+      },
+      "revId": "1f422a7f8e9e0cd5d5076c601b887d18c3df7557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f838142_c9b4a332",
         "filename": "components/omnibox/browser/autocomplete_input.h",
         "patchSetId": 5
@@ -78,6 +102,24 @@
       "side": 1,
       "message": "I don\u0027t understand \"re-evaluated\". It\u0027s my understanding that this:\n\n  input.set_prevent_inline_autocomplete();\n\nwould generate the exact same code as:\n\n  input.set_prevent_inline_autocomplete(true);\n\nI did feel that it made the code much more readable (cleaner), and furthermore that \"true\" then becomes visibly different from \"false\".\n\nI missed the default constructor. hmm\n\nI\u0027ll give it more thought. I really think it\u0027s better, although if it\u0027s surprising to a team member reading it, then that doesn\u0027t help.",
       "parentUuid": "6f838142_c9b4a332",
+      "revId": "1f422a7f8e9e0cd5d5076c601b887d18c3df7557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665c4201_e0ac8a57",
+        "filename": "components/omnibox/browser/autocomplete_input.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-09-19T17:49:20Z",
+      "side": 1,
+      "message": "I wouldn\u0027t mind living in a world where boolean setters had default\u003dtrue and we said set_foo() or SetFoo(). But this seems surprising to me and I don\u0027t recall seeing this pattern used anywhere else. I would strongly prefer to require an explicit argument.",
+      "parentUuid": "c3daafd0_a5ea69bd",
       "revId": "1f422a7f8e9e0cd5d5076c601b887d18c3df7557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
