@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fb920c78_3a017774",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 4102,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-09-19T12:37:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2c5fed8_1e3c60b3",
+      "range": {
+        "startLine": 4102,
+        "startChar": 11,
+        "endLine": 4102,
+        "endChar": 29
+      },
+      "revId": "4d85279ec739e890dd0166ffb45d74e4facbcb4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b10fe37_8caa0f4f",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-13T18:34:57Z",
       "side": 1,
       "message": "Let\u0027s rename contents_size_ to layout_overflow_size_.  It\u0027s confusing for contents_size_ and ContentsSize() to have the same name but different values.\n\nSome callers of LocalFrameView::ContentsSize might need to be updated to call LayoutView::DocumentRect instead.  Those should be evaluated on a case by case basis.  (Maybe that will fix some of your test failures.)\n\nFor example, the SetContentsSize() method is currently doing\n\n  if (size \u003d\u003d ContentsSize())\n    return;\n\nBut the purpose of SetContentsSize is to set contents_size_ (which is becoming layout_overflow_size_), and to process side effects of that change.  So it should instead check\n\n  if (size \u003d\u003d layout_overflow_size_)\n    return;\n\nAnd also we should rename SetContentsSize to SetLayoutOverflowSize.\n\nDoes that make sense?",
+      "range": {
+        "startLine": 4103,
+        "startChar": 9,
+        "endLine": 4103,
+        "endChar": 23
+      },
+      "revId": "4d85279ec739e890dd0166ffb45d74e4facbcb4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cce257c5_b2af5fd4",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 4103,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-09-19T12:37:51Z",
+      "side": 1,
+      "message": "Agreed. Fixed test failures by modifying ContentsSize call in relevant places. Hopefully it doesn\u0027t need to be modified in remaining places as there are no test failure. If required i can look into those places as well.",
+      "parentUuid": "0b10fe37_8caa0f4f",
       "range": {
         "startLine": 4103,
         "startChar": 9,
@@ -68,6 +116,30 @@
       "revId": "4d85279ec739e890dd0166ffb45d74e4facbcb4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f158f34a_fd689917",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 4139,
+      "author": {
+        "id": 1117045
+      },
+      "writtenOn": "2017-09-19T12:37:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe4648a1_8c7a7229",
+      "range": {
+        "startLine": 4139,
+        "startChar": 26,
+        "endLine": 4139,
+        "endChar": 40
+      },
+      "revId": "4d85279ec739e890dd0166ffb45d74e4facbcb4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
