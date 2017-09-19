@@ -31,6 +31,8 @@ namespace {
 const char kNormalScriptURL[] = "https://example.com/normal.js";
 const char kEmptyScriptURL[] = "https://example.com/empty.js";
 const char kNonExistentScriptURL[] = "https://example.com/nonexistent.js";
+const char kNoMimeTypeScriptURL[] = "https://example.com/no-mime-type.js";
+const char kBadMimeTypeScriptURL[] = "https://example.com/bad-mime-type.js";
 
 // MockHTTPServer is a utility to provide mocked responses for
 // ServiceWorkerScriptURLLoader.
@@ -139,14 +141,23 @@ class ServiceWorkerScriptURLLoaderTest : public testing::Test {
     InitializeStorage();
 
     mock_server_->AddResponse(GURL(kNormalScriptURL),
-                              std::string("HTTP/1.1 200 OK\n\n"),
+                              std::string("HTTP/1.1 200 OK\n"
+                                          "CONTENT-TYPE: text/javascript\n\n"),
                               std::string("this body came from the network"));
     mock_server_->AddResponse(GURL(kEmptyScriptURL),
-                              std::string("HTTP/1.1 200 OK\n\n"),
+                              std::string("HTTP/1.1 200 OK\n"
+                                          "CONTENT-TYPE: text/javascript\n\n"),
                               std::string());
     mock_server_->AddResponse(GURL(kNonExistentScriptURL),
                               std::string("HTTP/1.1 404 Not Found\n\n"),
                               std::string());
+    mock_server_->AddResponse(GURL(kNoMimeTypeScriptURL),
+                              std::string("HTTP/1.1 200 OK\n\n"),
+                              std::string("body with no MIME type"));
+    mock_server_->AddResponse(GURL(kBadMimeTypeScriptURL),
+                              std::string("HTTP/1.1 200 OK\n"
+                                          "CONTENT-TYPE: text/css\n\n"),
+                              std::string("body with bad MIME type"));
 
     // Initialize URLLoaderFactory.
     mojom::URLLoaderFactoryPtr test_loader_factory;
@@ -301,8 +312,37 @@ TEST_F(ServiceWorkerScriptURLLoaderTest, Error_404) {
   DoRequest(script_url);
   client_.RunUntilComplete();
 
-  // The request should be failed because of 404 response.
+  // The request should be failed because of the 404 response.
   EXPECT_EQ(net::ERR_INVALID_RESPONSE, client_.completion_status().error_code);
+  EXPECT_FALSE(client_.has_received_response());
+
+  // The response shouldn't be stored in the storage.
+  EXPECT_FALSE(VerifyStoredResponse(script_url));
+}
+
+TEST_F(ServiceWorkerScriptURLLoaderTest, Error_NoMimeType) {
+  GURL script_url(kNoMimeTypeScriptURL);
+  SetUpRegistration(script_url);
+  DoRequest(script_url);
+  client_.RunUntilComplete();
+
+  // The request should be failed because of the response with no MIME type.
+  EXPECT_EQ(net::ERR_INSECURE_RESPONSE, client_.completion_status().error_code);
+  EXPECT_FALSE(client_.has_received_response());
+
+  // The response shouldn't be stored in the storage.
+  EXPECT_FALSE(VerifyStoredResponse(script_url));
+}
+
+TEST_F(ServiceWorkerScriptURLLoaderTest, Error_BadMimeType) {
+  GURL script_url(kBadMimeTypeScriptURL);
+  SetUpRegistration(script_url);
+  DoRequest(script_url);
+  client_.RunUntilComplete();
+
+  // The request should be failed because of the response with the bad MIME
+  // type.
+  EXPECT_EQ(net::ERR_INSECURE_RESPONSE, client_.completion_status().error_code);
   EXPECT_FALSE(client_.has_received_response());
 
   // The response shouldn't be stored in the storage.

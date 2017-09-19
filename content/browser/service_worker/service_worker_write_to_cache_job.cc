@@ -93,6 +93,13 @@ ServiceWorkerWriteToCacheJob::~ServiceWorkerWriteToCacheJob() {
   DCHECK_EQ(did_notify_started_, did_notify_finished_);
 }
 
+// static
+bool ServiceWorkerWriteToCacheJob::CheckMimeType(const std::string& mime_type) {
+  return mime_type == "application/x-javascript" ||
+         mime_type == "text/javascript" ||
+         mime_type == "application/javascript";
+}
+
 void ServiceWorkerWriteToCacheJob::Start() {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::BindOnce(&ServiceWorkerWriteToCacheJob::StartAsync,
@@ -338,9 +345,7 @@ void ServiceWorkerWriteToCacheJob::OnResponseStarted(net::URLRequest* request,
   if (resource_type_ == RESOURCE_TYPE_SERVICE_WORKER) {
     std::string mime_type;
     request->GetMimeType(&mime_type);
-    if (mime_type != "application/x-javascript" &&
-        mime_type != "text/javascript" &&
-        mime_type != "application/javascript") {
+    if (!CheckMimeType(mime_type)) {
       std::string error_message =
           mime_type.empty()
               ? kNoMIMEError
