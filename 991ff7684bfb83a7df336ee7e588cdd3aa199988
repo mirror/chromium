@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dba48fc_17ee78fa",
+        "filename": "extensions/renderer/event_bindings.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-19T21:58:39Z",
+      "side": 1,
+      "message": "This is only called by JSExtensionBindingsSystem, so maybe remove this function and just call EventBookkeeper there?",
+      "revId": "991ff7684bfb83a7df336ee7e588cdd3aa199988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4326e8c1_8caec4c2",
+        "filename": "extensions/renderer/event_bookkeeper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-19T21:58:39Z",
+      "side": 1,
+      "message": "nit: all_counts.emplace(key, std::make_unique\u003cValueCounter\u003e())",
+      "revId": "991ff7684bfb83a7df336ee7e588cdd3aa199988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0923f3_4602e56e",
+        "filename": "extensions/renderer/event_bookkeeper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-19T21:58:39Z",
+      "side": 1,
+      "message": "nit: This isn\u0027t quite right - it\u0027s a map of event names to a map of context ids to listener counts, right?\n\nI personally find these are sometimes easier when done above the typedefs, e.g.\n\n// A map from context id to listener count.\nusing EventListenerCounts;\n// A map from event name to the listener counts for each context.\nusing AllCounts;\n\netc.\n\nWDYT?",
+      "revId": "991ff7684bfb83a7df336ee7e588cdd3aa199988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89d774da_ffd80bd7",
+        "filename": "extensions/renderer/event_bookkeeper.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-19T21:58:39Z",
+      "side": 1,
+      "message": "Hmm... do we want this to leak?  I could see this being a potential problem for worker threads, because they can be set up and torn down.  Could we instead have this owned by the bookkeeper?",
+      "revId": "991ff7684bfb83a7df336ee7e588cdd3aa199988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "699f16d9_32efaf21",
+        "filename": "extensions/renderer/event_bindings.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-19T21:58:39Z",
+      "side": 1,
+      "message": "We could have the EventBookkeeper owned by the JSBindingsExtensionSystem, which is owned by either the Dispatcher or the WorkerThreadDispatcher (both statically retrievable).  Would that work?\n\nEither way, let\u0027s save it for another patch.  This one\u0027s primarily shuffling code, and it\u0027d be nice to keep it that way. :)",
+      "parentUuid": "1f8718a3_0adddfa2",
+      "revId": "868ae60a735aa4cf5356d34210ced04b8d7fca7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "505004dd_8221f455",
         "filename": "extensions/renderer/event_bookkeeper.h",
         "patchSetId": 1
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "Good q. This is/was preserving the current lazy nature of these variables through LAZY_INSTANCE.. So there wasn\u0027t anything new I was shooting for with this.\n\n1) In the case where these are  never used, then there is a benefit to not construct them at all. But again, I can\u0027t see how an extension can *not* use any event code.\n\n2) For filters, I can see how its corresponding maps will be infrequently used, as most of the events do not use/support filters.\n\nDoes #1 and #2 sound right-ish?\nI\u0027ve changed the code to:\n  make listener_counts_ stack allocated\n  make filter related containers still be dynamic allocated\n  keep unmanaged_listeners_ untouched to retain leaky behavior\n\nThen again, this didn\u0027t make the code simple enough :) So let me know your thoughts.",
       "parentUuid": "365446ca_28ce9e40",
+      "revId": "868ae60a735aa4cf5356d34210ced04b8d7fca7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc93d7f1_b3251f7b",
+        "filename": "extensions/renderer/event_bookkeeper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-19T21:58:39Z",
+      "side": 1,
+      "message": "I\u0027d just make everything stack allocated.  Containers should be extremely easy to construct, stack allocation is much cheaper than dynamic, and I think it just makes it look a bit cleaner overall.",
+      "parentUuid": "a3168b36_520bcf60",
       "revId": "868ae60a735aa4cf5356d34210ced04b8d7fca7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
