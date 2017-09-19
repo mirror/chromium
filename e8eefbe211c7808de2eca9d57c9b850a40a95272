@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "87edab24_60daac55",
+        "filename": "third_party/WebKit/Source/core/dom/Element.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-09-19T13:37:07Z",
+      "side": 1,
+      "message": "I guess the bit that I\u0027m missing is how `(DOMString or TrustedHTML)` maps into `StringOrTrustedHTML`. \nAlso, I would be happier with `setInnerHTMLFromString(const String\u0026 html, ...)`",
+      "parentUuid": "71835677_8b0883a7",
+      "range": {
+        "startLine": 85,
+        "startChar": 142,
+        "endLine": 85,
+        "endChar": 168
+      },
+      "revId": "e8eefbe211c7808de2eca9d57c9b850a40a95272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1eb2fab_1d2ffb06",
         "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.h",
         "patchSetId": 7
