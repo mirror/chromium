@@ -1,0 +1,52 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef ApplyConstraintsRequest_h
+#define ApplyConstraintsRequest_h
+
+#include "modules/ModulesExport.h"
+#include "platform/heap/GarbageCollected.h"
+#include "platform/heap/Visitor.h"
+#include "public/platform/WebMediaConstraints.h"
+
+namespace blink {
+
+class ExecutionContext;
+class MediaTrackConstraints;
+class MediaStreamTrack;
+class ScriptPromiseResolver;
+class WebMediaStreamTrack;
+
+class MODULES_EXPORT ApplyConstraintsRequest final
+    : public GarbageCollectedFinalized<ApplyConstraintsRequest> {
+ public:
+  static ApplyConstraintsRequest* Create(ExecutionContext*,
+                                         MediaStreamTrack*,
+                                         const MediaTrackConstraints&,
+                                         ScriptPromiseResolver*);
+
+  WebMediaStreamTrack Track() const;
+  WebMediaConstraints Constraints() const;
+
+  void RequestSucceeded();
+  void RequestFailed(const String& constraint, const String& message);
+
+  // TODO(guidou): Remove this method. http://crbug.com/338503
+  void RequestNotSupported(const String& message);
+
+  DECLARE_VIRTUAL_TRACE();
+
+ private:
+  ApplyConstraintsRequest(MediaStreamTrack*,
+                          const WebMediaConstraints&,
+                          ScriptPromiseResolver*);
+
+  Member<MediaStreamTrack> track_;
+  WebMediaConstraints constraints_;
+  Member<ScriptPromiseResolver> resolver_;
+};
+
+}  // namespace blink
+
+#endif  // ApplyConstraintsRequest_h
