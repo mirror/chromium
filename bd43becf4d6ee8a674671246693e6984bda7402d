@@ -16,6 +16,24 @@
       "revId": "bd43becf4d6ee8a674671246693e6984bda7402d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f2cdde1_6752f235",
+        "filename": "content/browser/gpu/compositor_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-09-19T21:08:40Z",
+      "side": 0,
+      "message": "No, because we pass the enable switch to the renderer process in RenderProcessHostImpl.",
+      "parentUuid": "5c5f37c5_13654ac4",
+      "revId": "bd43becf4d6ee8a674671246693e6984bda7402d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
