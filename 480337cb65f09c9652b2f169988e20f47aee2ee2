@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3265e3e1_5b2abf0e",
+        "filename": "content/browser/media/session/media_session_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-19T07:43:27Z",
+      "side": 1,
+      "message": "It sounds like you don\u0027t need those as you simply call these two methods from the public ones.",
+      "revId": "480337cb65f09c9652b2f169988e20f47aee2ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911ecc73_487e7c54",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 9746,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-19T07:43:27Z",
+      "side": 1,
+      "message": "s/mlamouri/media-dev/",
+      "revId": "480337cb65f09c9652b2f169988e20f47aee2ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22110b95_e1d26fcb",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 9755,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-09-19T07:43:27Z",
+      "side": 1,
+      "message": "s/mlamouri/media-dev/",
+      "revId": "480337cb65f09c9652b2f169988e20f47aee2ee2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
