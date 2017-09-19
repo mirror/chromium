@@ -981,7 +981,7 @@ void FrameSelection::SetSelectionFromNone() {
   if (HTMLBodyElement* body =
           Traversal<HTMLBodyElement>::FirstChild(*document_element)) {
     SetSelection(SelectionInDOMTree::Builder()
-                     .Collapse(FirstPositionInOrBeforeNode(body))
+                     .Collapse(FirstPositionInOrBeforeNode(*body))
                      .Build());
   }
 }
