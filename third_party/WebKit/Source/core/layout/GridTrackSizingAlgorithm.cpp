@@ -127,25 +127,7 @@ class DefiniteSizeStrategy final : public GridTrackSizingAlgorithmStrategy {
   }
 };
 
-bool GridTrackSizingAlgorithmStrategy::
-    HasOverrideContainingBlockContentSizeForChild(
-        const LayoutBox& child,
-        GridTrackSizingDirection direction) {
-  return direction == kForColumns
-             ? child.HasOverrideContainingBlockLogicalWidth()
-             : child.HasOverrideContainingBlockLogicalHeight();
-}
-
 GridTrackSizingAlgorithmStrategy::~GridTrackSizingAlgorithmStrategy() {}
-
-LayoutUnit
-GridTrackSizingAlgorithmStrategy::OverrideContainingBlockContentSizeForChild(
-    const LayoutBox& child,
-    GridTrackSizingDirection direction) {
-  return direction == kForColumns
-             ? child.OverrideContainingBlockContentLogicalWidth()
-             : child.OverrideContainingBlockContentLogicalHeight();
-}
 
 bool GridTrackSizingAlgorithmStrategy::
     ShouldClearOverrideContainingBlockContentSizeForChild(
@@ -227,9 +209,10 @@ bool GridTrackSizingAlgorithmStrategy::
         GridTrackSizingDirection direction) const {
   LayoutUnit override_size =
       algorithm_.GridAreaBreadthForChild(child, direction);
-  if (HasOverrideContainingBlockContentSizeForChild(child, direction) &&
-      OverrideContainingBlockContentSizeForChild(child, direction) ==
-          override_size)
+  if (GridLayoutUtils::HasOverrideContainingBlockContentSizeForChild(
+          child, direction) &&
+      GridLayoutUtils::OverrideContainingBlockContentSizeForChild(
+          child, direction) == override_size)
     return false;
 
   SetOverrideContainingBlockContentSizeForChild(child, direction,
@@ -397,8 +380,8 @@ LayoutUnit DefiniteSizeStrategy::MinLogicalWidthForChild(
     GridTrackSizingDirection child_inline_direction) const {
   return child.ComputeLogicalWidthUsing(
              kMinSize, child_min_size,
-             OverrideContainingBlockContentSizeForChild(child,
-                                                        child_inline_direction),
+             GridLayoutUtils::OverrideContainingBlockContentSizeForChild(
+                 child, child_inline_direction),
              GetLayoutGrid()) +
          GridLayoutUtils::MarginLogicalWidthForChild(*GetLayoutGrid(), child);
 }
@@ -448,8 +431,8 @@ LayoutUnit IndefiniteSizeStrategy::MinLogicalWidthForChild(
   LayoutUnit margin_logical_width = LayoutUnit();
   return child.ComputeLogicalWidthUsing(
              kMinSize, child_min_size,
-             OverrideContainingBlockContentSizeForChild(child,
-                                                        child_inline_direction),
+             GridLayoutUtils::OverrideContainingBlockContentSizeForChild(
+                 child, child_inline_direction),
              GetLayoutGrid()) +
          margin_logical_width;
 }
