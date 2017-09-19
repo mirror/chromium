@@ -30,6 +30,7 @@
 #include "platform/wtf/Alignment.h"
 #include "platform/wtf/ConditionalDestructor.h"
 #include "platform/wtf/ContainerAnnotations.h"
+#include "platform/wtf/HashTableDeletedValueType.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/NotFound.h"
 #include "platform/wtf/StdLibExtras.h"
@@ -436,6 +437,12 @@ class VectorBufferBase {
   VectorBufferBase(T* buffer, size_t capacity)
       : buffer_(buffer), capacity_(capacity) {}
 
+  VectorBufferBase(HashTableDeletedValueType value)
+      : buffer_(reinterpret_cast<T*>(-1)) {}
+  bool IsHashTableDeletedValue() const {
+    return buffer_ == reinterpret_cast<T*>(-1);
+  }
+
   T* buffer_;
   unsigned capacity_;
   unsigned size_;
@@ -547,6 +554,11 @@ class VectorBuffer : protected VectorBufferBase<T, true, Allocator> {
   using OffsetRange = typename Base::OffsetRange;
 
   VectorBuffer() : Base(InlineBuffer(), inlineCapacity) {}
+
+  VectorBuffer(HashTableDeletedValueType value) : Base(value) {}
+  bool IsHashTableDeletedValue() const {
+    return Base::IsHashTableDeletedValue();
+  }
 
   explicit VectorBuffer(size_t capacity)
       : Base(InlineBuffer(), inlineCapacity) {
@@ -964,6 +976,11 @@ class Vector
   // Create a vector containing the specified number of elements, each of which
   // is copy initialized from the specified value.
   inline Vector(size_t, const T&);
+
+  Vector(HashTableDeletedValueType value) : Base(value) {}
+  bool IsHashTableDeletedValue() const {
+    return Base::IsHashTableDeletedValue();
+  }
 
   // Copying.
   Vector(const Vector&);

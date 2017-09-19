@@ -57,7 +57,7 @@ class CORE_EXPORT WorkerScriptLoader final
 
  public:
   static RefPtr<WorkerScriptLoader> Create() {
-    return AdoptRef(new WorkerScriptLoader());
+    return WTF::AdoptRef(new WorkerScriptLoader());
   }
 
   void LoadSynchronously(ExecutionContext&,
@@ -120,7 +120,7 @@ class CORE_EXPORT WorkerScriptLoader final
   void DidFailRedirectCheck() override;
 
  private:
-  friend class WTF::RefCounted<WorkerScriptLoader>;
+  friend class base::RefCounted<WorkerScriptLoader>;
 
   WorkerScriptLoader();
   ~WorkerScriptLoader() override;
