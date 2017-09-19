@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a7d32cd_2ab8dd89",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-09-19T15:31:43Z",
+      "side": 1,
+      "message": "Is this still required?",
+      "range": {
+        "startLine": 779,
+        "startChar": 30,
+        "endLine": 779,
+        "endChar": 0
+      },
+      "revId": "190dd156c24510b15ba0d65ed4462e5a677f0b09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
