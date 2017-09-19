@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d22178fd_86eeeb33",
+        "filename": "third_party/WebKit/Source/core/html/HTMLInputElement.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1698,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-19T01:30:58Z",
+      "side": 1,
+      "message": "should return SuggestedValue() if it\u0027s not empty.",
+      "revId": "d9fd8548c8c68725c9b476be580a191af587d49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8d8eac9_934b5979",
+        "filename": "third_party/WebKit/Source/core/html/HTMLTextAreaElement.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-19T01:30:58Z",
+      "side": 1,
+      "message": "should return SuggestedValue() if it\u0027s not empty.",
+      "revId": "d9fd8548c8c68725c9b476be580a191af587d49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38a90a1a_a4b94db2",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-19T01:30:58Z",
+      "side": 1,
+      "message": "Why do we update InnerEditorValue with suggested value? We want to stop it, right?",
+      "revId": "d9fd8548c8c68725c9b476be580a191af587d49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e46a07f4_b49efb6f",
+        "filename": "third_party/WebKit/Source/core/html/TextControlElement.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 1025,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-19T01:30:58Z",
+      "side": 1,
+      "message": "Calling UpdatePlaceholderText() should be enough if we change HTML*Element::GetPlaceholderValue().",
+      "revId": "d9fd8548c8c68725c9b476be580a191af587d49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
