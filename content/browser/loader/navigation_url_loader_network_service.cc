@@ -195,6 +195,10 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
   // This could be called multiple times to follow a chain of redirects.
   void Restart() {
+    // If the default loader (network) was not used, clears |url_loader_| here
+    // to create a new loader for the next request at MaybeStartLoader().
+    if (!default_loader_used_)
+      url_loader_.reset();
     handler_index_ = 0;
     received_response_ = false;
     MaybeStartLoader(StartLoaderCallback());

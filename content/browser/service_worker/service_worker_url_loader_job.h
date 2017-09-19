@@ -114,6 +114,9 @@ class CONTENT_EXPORT ServiceWorkerURLLoaderJob : public mojom::URLLoader,
                      mojom::URLLoaderClientPtr client);
   void AfterRead(scoped_refptr<net::IOBuffer> buffer, int bytes);
 
+  // Calls url_loader_client_->OnReceiveRedirect() and returns true if
+  // |response_head_| is a redirect response.
+  bool MaybeCommitRedirect();
   // Calls url_loader_client_->OnReceiveResopnse() with |response_head_|.
   void CommitResponseHeaders();
   // Calls url_loader_client_->OnComplete(). Expected to be called after
