@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "833ebb0d_5e902705",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/LocationBarLayout.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-19T16:44:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3354c8f7_bc4eed3a",
+      "range": {
+        "startLine": 224,
+        "startChar": 12,
+        "endLine": 224,
+        "endChar": 30
+      },
+      "revId": "859dd4fcbdf6f0d9c7974adc969defbfb17e0547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2180dc3_9bdec810",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsSheetVisibilityChangeObserver.java",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-19T16:18:07Z",
       "side": 1,
       "message": "?\n\nI think this check covered by isObservedContentCurrent(), which checks even that they are the same instance",
+      "range": {
+        "startLine": 136,
+        "startChar": 19,
+        "endLine": 136,
+        "endChar": 45
+      },
+      "revId": "859dd4fcbdf6f0d9c7974adc969defbfb17e0547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a940a36d_98fb0272",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsSheetVisibilityChangeObserver.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-09-19T16:44:23Z",
+      "side": 1,
+      "message": "Yeah, it appears I left some debugging in here. Removed.",
+      "parentUuid": "e2180dc3_9bdec810",
       "range": {
         "startLine": 136,
         "startChar": 19,
