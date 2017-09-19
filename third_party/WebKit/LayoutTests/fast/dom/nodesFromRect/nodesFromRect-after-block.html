@@ -1,0 +1,45 @@
+<!doctype html>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<script src="resources/nodesFromRect.js"></script>
+<style>
+  body {
+    margin: 0px;
+  }
+  div {
+    width: 100px;
+    height: 20px;
+    background-color: blue;
+  }
+  div::after {
+    display: block;
+    content: "After content";
+    width: 99px;
+    height: 20px;
+    position: relative;
+    top: 20px;
+    opacity: 0.9;
+  }
+</style>
+<div id="parent"></div>
+<script>
+test(function(t)
+{
+  if (!window.internals)
+    return;
+
+  var parentElement = document.getElementById("parent");
+
+  var nodes = internals.nodesFromRect(document, 50, 20, 10, 10, 10, 10,
+                                      true /* ignoreClipping */,
+                                      false /* allow child-frame content */);
+  var expectedNodes = [
+    'Element node <<pseudo:after>></<pseudo:after>>',
+    'Element node <div id="parent"></div>'
+  ];
+  nodes.forEach(function(currentValue, currentIndex, listObj) {
+    if (currentIndex < expectedNodes.length)
+      assert_equals(format_value(currentValue), expectedNodes[currentIndex]);
+  });
+}, "Test that an area hit test on a after element returns the after");
+</script>

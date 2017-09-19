@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<style>
+  div.target {
+    display: inline-block;
+    overflow: hidden;
+  }
+  div.target:after {
+    display: inline-block;
+    content: url(../css3/background/resources/circle.png);
+    will-change: transform;
+  }
+</style>
+<script src='../resources/testharness.js'></script>
+<script src='../resources/testharnessreport.js'></script>
+<script>
+  function runTest() {
+    if (chrome.gpuBenchmarking) {
+      var handler = function(event) {
+        testHit.step(function () {
+          assert_equals(event.touches.length, 1);
+        });
+      };
+
+      function finishTest() {
+        testHit.done();
+      }
+
+      var testHit = async_test("Verify we do not assert when touching an image used with psuedo after");
+      document.addEventListener('touchstart', handler);
+      chrome.gpuBenchmarking.pointerActionSequence( [
+            {"source": "touch",
+             "actions": [
+              { "name": "pointerDown", "x": 188, "y": 150 },
+              { "name": "pointerUp" } ]}], finishTest);
+    }
+  }
+</script>
+<body onload="runTest()">
+<div class="target"></div>
+</body>
