@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f01042b7_dee56397",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-19T20:41:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d231ec29_ce281161",
+      "range": {
+        "startLine": 27,
+        "startChar": 55,
+        "endLine": 27,
+        "endChar": 75
+      },
+      "revId": "81d5fd01d27a416b0ca71c74ad673ce71c304f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2300450c_c40ca24c",
         "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "436ba769_774bdfaa",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-19T20:41:26Z",
+      "side": 1,
+      "message": "Good point. I assumed that we hide viewport element by set the subtree invisible instead of going to each element and set the visibility. But given that we have non rendering element that could be just a container of other renderable element, it is safer to check all decedents.",
+      "parentUuid": "2300450c_c40ca24c",
+      "range": {
+        "startLine": 62,
+        "startChar": 20,
+        "endLine": 62,
+        "endChar": 21
+      },
+      "revId": "81d5fd01d27a416b0ca71c74ad673ce71c304f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3608d88_005f306e",
         "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-09-19T17:36:11Z",
       "side": 1,
       "message": "I\u0027m working on a patch to query the target velocity of an animation \"GetTargetOpacity\". You can probably just use that when it lands?\n\nSee Ian\u0027s comments here: https://chromium-review.googlesource.com/c/chromium/src/+/669009/2/chrome/browser/vr/elements/transient_element.cc",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 13
+      },
+      "revId": "81d5fd01d27a416b0ca71c74ad673ce71c304f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af36817_e0e1d600",
+        "filename": "chrome/browser/vr/elements/viewport_aware_root.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-09-19T20:41:26Z",
+      "side": 1,
+      "message": "IIUC, GetTargetOpacity returns the target opacity after animation. The children of ViewportAwareRoot(VAR) doesn\u0027t have opacity animation. Only VAR has opacity animation. And all the children inherited opacity from VAR so they appear to have animation too. GetTargetOpacity probably wont help here.",
+      "parentUuid": "d3608d88_005f306e",
       "range": {
         "startLine": 68,
         "startChar": 8,
