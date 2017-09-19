@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02ab4c1a_b967a67b",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXNodeObject.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-19T21:59:19Z",
+      "side": 1,
+      "message": "If we updated these when queried we wouldn\u0027t need to do it\non construction",
+      "revId": "fef5ea7b1e6e6edab68e3b36efec61ee5678b2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2907664_d20865cb",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-19T21:59:19Z",
+      "side": 1,
+      "message": "Is there any case when node_for_relation_update is anything\nother than obj-\u003eGetNode()? If not, why not just have this\nTextChanged take care of that?",
+      "revId": "fef5ea7b1e6e6edab68e3b36efec61ee5678b2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3797f90a_33f47aa8",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-19T21:59:19Z",
+      "side": 1,
+      "message": "So the way I\u0027m envisioning it, a change to aria_labeledbyAttr would trigger TextChanged. Then later when we retrieve the new text for that\nelement it\u0027d update the relations at that time.\n\nThat does mean Blink layout tests might seem to fail if they don\u0027t\npay attention to those notifications, but I think we should maybe\nfix the test runner instead.",
+      "revId": "fef5ea7b1e6e6edab68e3b36efec61ee5678b2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40160596_56d5b3c7",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRelationCache.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-19T21:59:19Z",
+      "side": 1,
+      "message": "Maybe it should just take an Element instead of a Node?",
+      "revId": "fef5ea7b1e6e6edab68e3b36efec61ee5678b2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c40e2922_056ab5ea",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXRelationCache.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-09-19T21:59:19Z",
+      "side": 1,
+      "message": "Note that it\u0027s sometimes problematic to call GetOrCreate in\nthe middle of a layout.\n\nA typical problem we\u0027ve seen is that changing an attribute\ncalls AXObjectCacheImpl::HandleAttributeChanged, and that\ntriggers us doing a lot of work when the DOM and layout\ntrees are in the middle of stuff.\n\nWhat works better is for us to do as little work as possible\nwhen AXObjectCacheImpl::HandleAttributeChanged is called\n(like just post a notification), then update things later\nwhen we respond to the notification (after doing layout).",
+      "revId": "fef5ea7b1e6e6edab68e3b36efec61ee5678b2dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
