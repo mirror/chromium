@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a4074b5a_965da823",
+        "filename": "content/child/web_url_loader_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1072,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-09-19T09:15:39Z",
+      "side": 1,
+      "message": "typo: NaCl",
+      "range": {
+        "startLine": 1072,
+        "startChar": 29,
+        "endLine": 1072,
+        "endChar": 33
+      },
+      "revId": "ca5931113ca3663c79a8f85cd7de55dc27ec2fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
