@@ -99,6 +99,7 @@ void QueryAndStartServiceInUtilityProcess(
     const std::string& service_name,
     const base::string16& process_name,
     service_manager::mojom::ServiceRequest request) {
+  LOG(ERROR) << __func__ << ": " << service_name;
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   ServiceManagerContext::GetConnectorForIOThread()->QueryService(
       service_manager::Identity(service_name),

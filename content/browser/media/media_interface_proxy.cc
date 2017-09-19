@@ -207,7 +207,8 @@ void MediaInterfaceProxy::ConnectToCdmService(const std::string& key_system) {
   // TODO(slan): Use the BrowserContext Connector instead. See crbug.com/638950.
   service_manager::Connector* connector =
       ServiceManagerConnection::GetForProcess()->GetConnector();
-  connector->BindInterface(media::mojom::kCdmServiceName, &media_service);
+  connector->BindInterface(media::mojom::kCdmServiceName, "Widevine",
+                           &media_service);
 
   // PreSandboxStartup() must always be called to ensure sandbox initialization.
   // Also it should be called before CreateInterfaceFactory().
