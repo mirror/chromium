@@ -217,6 +217,11 @@ class TabDragController : public views::WidgetObserver,
   // notifications and resets the delegate of the WebContents.
   void InitTabDragData(Tab* tab, TabDragData* drag_data);
 
+#if defined(USE_ASH)
+  // Toggles fullscreen mode in ash.
+  void AshToggleFullscreen();
+#endif
+
   // Overriden from views::WidgetObserver:
   void OnWidgetBoundsChanged(views::Widget* widget,
                              const gfx::Rect& new_bounds) override;

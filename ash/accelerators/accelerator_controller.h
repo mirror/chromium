@@ -128,6 +128,7 @@ class ASH_EXPORT AcceleratorController : public ui::AcceleratorTarget,
 
   // mojom::AcceleratorController:
   void SetVolumeController(mojom::VolumeControllerPtr controller) override;
+  void ToggleFullscreen() override;
 
  private:
   FRIEND_TEST_ALL_PREFIXES(AcceleratorControllerTest, GlobalAccelerators);

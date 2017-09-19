@@ -916,6 +916,10 @@ void AcceleratorController::SetVolumeController(
   volume_controller_ = std::move(controller);
 }
 
+void AcceleratorController::ToggleFullscreen() {
+  accelerators::ToggleFullscreen();
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // AcceleratorController, private:
 
