@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a40ca55_5f56ff70",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-19T18:59:35Z",
+      "side": 1,
+      "message": "We should not move this into the message-loop.",
+      "revId": "39d42d62fc2f093b7bded1c4222f2055779e69fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86b0d758_2a3d9292",
+        "filename": "ui/aura/keyboard_lock/activator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-19T18:59:35Z",
+      "side": 1,
+      "message": "The callbacks seem to always be called synchronously. Is there a reason this could do with return values instead?",
+      "revId": "39d42d62fc2f093b7bded1c4222f2055779e69fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac66900c_87fa9c76",
+        "filename": "ui/aura/keyboard_lock/platform_hook_win.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-19T18:59:35Z",
+      "side": 1,
+      "message": "I don\u0027t think having the PlatformKeyEventFilter here is necessary/useful. This can construct the ui::KeyEvent, and directly send to KeyEventFilter instead (instead of constructing MSG, which then immediately get converted to ui::KeyEvent).",
+      "revId": "39d42d62fc2f093b7bded1c4222f2055779e69fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
