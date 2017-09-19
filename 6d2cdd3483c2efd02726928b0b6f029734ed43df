@@ -16,6 +16,24 @@
       "revId": "6d2cdd3483c2efd02726928b0b6f029734ed43df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7db3f0c5_ab0ce47f",
+        "filename": "components/payments/core/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-09-19T15:28:25Z",
+      "side": 1,
+      "message": "I\u0027m very careful with base/json/json_reader.h in particular, because it\u0027s dangerous to use it in the browser process to parse untrusted data. So, I\u0027ve placed -base/json/json_reader.h in components/payments/DEPS (browser process) and then explicitly allowed it in components/payments/content/utility/DEPS (utility process).\n\nhttps://cs.chromium.org/chromium/src/components/payments/DEPS?rcl\u003d87fa4e4586949d7a8e659bfda5f96cf38ed2dacb\u0026l\u003d2\n\nhttps://cs.chromium.org/chromium/src/components/payments/content/utility/DEPS?rcl\u003d87fa4e4586949d7a8e659bfda5f96cf38ed2dacb\u0026l\u003d2",
+      "parentUuid": "e2211538_20ca060c",
+      "revId": "6d2cdd3483c2efd02726928b0b6f029734ed43df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
