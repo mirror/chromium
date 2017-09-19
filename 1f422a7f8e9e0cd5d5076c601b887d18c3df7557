@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "d02c7e80_6e6f2ff0",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-19T17:52:37Z",
+      "side": 1,
+      "message": "allow_exact_keyword_match and want_asynchronous_matches are true the vast, vast majority of the time.  (Hence my request.)",
+      "parentUuid": "0ca62067_ce7dba1c",
+      "range": {
+        "startLine": 86,
+        "startChar": 33,
+        "endLine": 86,
+        "endChar": 38
+      },
+      "revId": "1f422a7f8e9e0cd5d5076c601b887d18c3df7557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f838142_c9b4a332",
         "filename": "components/omnibox/browser/autocomplete_input.h",
         "patchSetId": 5
@@ -119,6 +143,24 @@
       "writtenOn": "2017-09-19T17:49:20Z",
       "side": 1,
       "message": "I wouldn\u0027t mind living in a world where boolean setters had default\u003dtrue and we said set_foo() or SetFoo(). But this seems surprising to me and I don\u0027t recall seeing this pattern used anywhere else. I would strongly prefer to require an explicit argument.",
+      "parentUuid": "c3daafd0_a5ea69bd",
+      "revId": "1f422a7f8e9e0cd5d5076c601b887d18c3df7557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e44ab723_e8fdc585",
+        "filename": "components/omnibox/browser/autocomplete_input.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-19T17:52:37Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t understand \"re-evaluated\". It\u0027s my understanding that this:\n\u003e \n\u003e   input.set_prevent_inline_autocomplete();\n\u003e \n\u003e would generate the exact same code as:\n\u003e \n\u003e   input.set_prevent_inline_autocomplete(true);\n\nOh, maybe re-evaluated refers to default constructors that are non-POD.  For example default \u003d base::ASCIITOUTF16(\"foo\").  That\u0027ll get evaluated at every call site.\n\n\u003e I did feel that it made the code much more readable (cleaner), and furthermore that \"true\" then becomes visibly different from \"false\".\n\u003e \n\u003e I missed the default constructor. hmm\n\u003e \n\u003e I\u0027ll give it more thought. I really think it\u0027s better, although if it\u0027s surprising to a team member reading it, then that doesn\u0027t help.\n\nYeah, maybe I\u0027m just not used to reading single-parameter functions with default constructors.  Heck, we don\u0027t use default constructors many places in chrome.\n\nOften I\u0027d read a function SetFoo() as \"do something smart and calculate what foo should be\".  I read set_foo() as something similar, even though I guess from the capitalization I should infer \"does not do anything smart\".  But I feel like the special rules for capitalization for setters and getters then precludes the setter from using default parameters.  (That\u0027s like doing something smart.)\n\nAlso, I couldn\u0027t find any setters in the chrome code base that uses default parameters.\nhttps://cs.chromium.org/search/?q\u003dset_%5Cw%2B%5C(.*%5C%3D.*%5C)+file:h$+-file:third_party+-file:out/Debug/\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
       "parentUuid": "c3daafd0_a5ea69bd",
       "revId": "1f422a7f8e9e0cd5d5076c601b887d18c3df7557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",

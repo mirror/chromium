@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b4d8adac_ad1a80c6",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-19T17:52:37Z",
+      "side": 0,
+      "message": "\u003e I removed the line because it literally does nothing.\n\nUh, doesn\u0027t it guard against possibly setting canonicalized_url_ when input type is invalid?",
+      "parentUuid": "8612bb8c_5b00563e",
+      "range": {
+        "startLine": 114,
+        "startChar": 50,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "f8286f03f2a55332d23c0fd3ccd04f7baf09fee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4bd7825c_9937bf33",
         "filename": "components/omnibox/browser/autocomplete_input.h",
         "patchSetId": 5
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "f35254b8_485e8dcd",
+        "filename": "components/omnibox/browser/autocomplete_input.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-19T17:52:37Z",
+      "side": 0,
+      "message": "\u003e But it\u0027s used in the constructor. Do you mean this?\n\u003e \n\u003e ...,\n\u003e const std::string\u0026 desired_tld \u003d \"\")\n\nI mean remove it from the constructor.  Only rarely does it actually need to be set to something non-empty.",
+      "parentUuid": "bc65f3e0_22689449",
+      "range": {
+        "startLine": 77,
+        "startChar": 20,
+        "endLine": 77,
+        "endChar": 51
+      },
+      "revId": "f8286f03f2a55332d23c0fd3ccd04f7baf09fee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0f7f43e_a319ab05",
         "filename": "components/omnibox/browser/autocomplete_input.h",
         "patchSetId": 5
@@ -131,6 +179,30 @@
       "side": 0,
       "message": "\u0027invalid\u0027 seemed to be used a lot. It avoided a lot of set\u0027s and parameter passing.",
       "parentUuid": "c0f7f43e_a319ab05",
+      "range": {
+        "startLine": 81,
+        "startChar": 24,
+        "endLine": 81,
+        "endChar": 52
+      },
+      "revId": "f8286f03f2a55332d23c0fd3ccd04f7baf09fee1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69807da5_88242fe1",
+        "filename": "components/omnibox/browser/autocomplete_input.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-19T17:52:37Z",
+      "side": 0,
+      "message": "Invalid should only be used in tests, and generally not much even then.  When reviewing tests, I\u0027ve often let test-writers leave it as invalid to mean \"doesn\u0027t matter\".  Maybe I shouldn\u0027t have.  I fully support you changing the value in tests from INVALID to something else (probably new-tab-page-with-omnibox-as-starting-focus or \"other\").  But having invalid in production code shouldn\u0027t happen, and I don\u0027t think we should make it easier for it to happen.",
+      "parentUuid": "af76d4c0_031a1bfd",
       "range": {
         "startLine": 81,
         "startChar": 24,
