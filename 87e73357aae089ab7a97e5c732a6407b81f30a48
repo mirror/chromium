@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1d75e2e8_15854a04",
+        "filename": "ash/session/session_aborted_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-09-19T00:10:25Z",
+      "side": 1,
+      "message": "\u003e +tapted, are you OK with me adding this TODO? The code itself is just being relocated.\n\nno.. it\u0027s unlikely I\u0027ll be picking up CrOS work with all the other platforms I\u0027m swamped in. I\u0027ve made http://crbug.com/766395 and linked to it from go/chrome-harmony-ui . Referencing the crbug in the TODO is probably best.",
+      "parentUuid": "8172ca63_3d10ed82",
+      "range": {
+        "startLine": 27,
+        "startChar": 3,
+        "endLine": 27,
+        "endChar": 15
+      },
+      "revId": "87e73357aae089ab7a97e5c732a6407b81f30a48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40372dfc_8ef363fe",
         "filename": "chrome/browser/chromeos/login/users/chrome_user_manager_impl.cc",
         "patchSetId": 2
