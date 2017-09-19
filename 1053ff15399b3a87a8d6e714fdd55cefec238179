@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc827fb8_d83c4e05",
+        "filename": "chrome/browser/chromeos/chrome_browser_main_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-19T00:10:28Z",
+      "side": 1,
+      "message": "delete this. service_providers is just for LibCrosService, which you\u0027re not using (it\u0027s an old service that we\u0027re trying to get rid of).",
+      "revId": "1053ff15399b3a87a8d6e714fdd55cefec238179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2bb43df_71467f69",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-19T00:10:28Z",
+      "side": 1,
+      "message": "nit: just \"Missing component name string argument\"?",
+      "revId": "1053ff15399b3a87a8d6e714fdd55cefec238179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a155a8ae_2d2206bb",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-19T00:10:28Z",
+      "side": 1,
+      "message": "nit: \"Failed to load component\"",
+      "revId": "1053ff15399b3a87a8d6e714fdd55cefec238179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f4615e_5694cd05",
+        "filename": "chromeos/dbus/services/component_updater_service_provider.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-19T00:10:28Z",
+      "side": 1,
+      "message": "nit: delete blank line between c\u0027tor and d\u0027tor",
+      "revId": "1053ff15399b3a87a8d6e714fdd55cefec238179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1f96e75_e174618c",
+        "filename": "chromeos/dbus/services/org.chromium.ComponentUpdaterService.conf",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-19T00:10:28Z",
+      "side": 1,
+      "message": "nit: copyright headers should use e.g. \"Copyright 2017\", with no \"(c)\", now",
+      "revId": "1053ff15399b3a87a8d6e714fdd55cefec238179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6cdd88_98e9e4ae",
+        "filename": "chromeos/dbus/services/org.chromium.ComponentUpdaterService.conf",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-19T00:10:28Z",
+      "side": 1,
+      "message": "i believe that these are installed to /opt/google/chrome/dbus now.\n\njust delete this line; this should be documented in README.md instead.",
+      "revId": "1053ff15399b3a87a8d6e714fdd55cefec238179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
