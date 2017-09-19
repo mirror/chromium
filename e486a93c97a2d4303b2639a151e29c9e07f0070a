@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac700149_24316dad",
+        "filename": "ui/views/paint_info.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-19T22:49:04Z",
+      "side": 1,
+      "message": "It uses different scaling logic. I used to use the same method with an argument, but I think this is clearer.",
+      "parentUuid": "d8254a80_d8a02b8b",
+      "revId": "e486a93c97a2d4303b2639a151e29c9e07f0070a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee07f2f5_2fa3d18d",
         "filename": "ui/views/paint_info.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-19T07:05:37Z",
       "side": 1,
       "message": "Why not use gfx::ScaleToRoundedRect()? It performs the same operation.\n\npaint_recording_bounds_(gfx::ScaleToRoundedRect(bounds, paint_recording_scale_x))",
+      "revId": "e486a93c97a2d4303b2639a151e29c9e07f0070a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e08c18c6_e18890f0",
+        "filename": "ui/views/paint_info.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-09-19T22:49:04Z",
+      "side": 1,
+      "message": "Ah I didn\u0027t know it exists. I still need a utility function but changed to use ScaleToRoundedRect",
+      "parentUuid": "ee07f2f5_2fa3d18d",
       "revId": "e486a93c97a2d4303b2639a151e29c9e07f0070a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
