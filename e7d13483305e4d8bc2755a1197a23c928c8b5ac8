@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc0660b6_fd274df7",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-19T11:53:05Z",
+      "side": 1,
+      "message": "No blank line",
+      "revId": "e7d13483305e4d8bc2755a1197a23c928c8b5ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7931ba4_ed146b60",
+        "filename": "chrome/browser/password_manager/password_manager_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-09-19T11:53:05Z",
+      "side": 1,
+      "message": "Not sure why you need {} here",
+      "range": {
+        "startLine": 222,
+        "startChar": 3,
+        "endLine": 222,
+        "endChar": 0
+      },
+      "revId": "e7d13483305e4d8bc2755a1197a23c928c8b5ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
