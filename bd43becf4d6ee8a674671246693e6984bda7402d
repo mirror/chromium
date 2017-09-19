@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c5f37c5_13654ac4",
+        "filename": "content/browser/gpu/compositor_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-09-19T21:04:23Z",
+      "side": 0,
+      "message": "nit: should we remove the switch?",
+      "revId": "bd43becf4d6ee8a674671246693e6984bda7402d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
