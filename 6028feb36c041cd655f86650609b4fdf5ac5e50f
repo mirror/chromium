@@ -22,6 +22,30 @@
       "revId": "6028feb36c041cd655f86650609b4fdf5ac5e50f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72c6beca_cfbbc271",
+        "filename": "chrome/browser/ui/views/extensions/extension_installed_bubble_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-09-19T22:02:51Z",
+      "side": 1,
+      "message": "I see, so that\u0027s why the DCHECK was there. That\u0027s good a point, it looks like UpdateAnchorPosition() can still being called after OnWidgetClosing() is called. This can be caused by switching the active space on Mac. I\u0027ll look to how the bubbles are maintained. Thanks!",
+      "parentUuid": "198d1ffb_ebfd958b",
+      "range": {
+        "startLine": 330,
+        "startChar": 2,
+        "endLine": 330,
+        "endChar": 19
+      },
+      "revId": "6028feb36c041cd655f86650609b4fdf5ac5e50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
