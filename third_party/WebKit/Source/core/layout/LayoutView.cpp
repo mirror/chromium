@@ -629,8 +629,19 @@ bool LayoutView::ShouldUsePrintingLayout() const {
 LayoutRect LayoutView::ViewRect() const {
   if (ShouldUsePrintingLayout())
     return LayoutRect(LayoutPoint(), Size());
-  if (frame_view_)
+  if (frame_view_) {
+    if (RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
+      IntPoint scroll_offset = FlooredIntPoint(frame_view_->GetScrollOffset());
+      IntSize content_size = frame_view_->VisibleContentSize();
+      if (HasOverflowClip()) {
+        content_size =
+            frame_view_->LayoutViewportScrollableArea()->ExcludeScrollbars(
+                content_size);
+      }
+      return LayoutRect(scroll_offset, content_size);
+    }
     return LayoutRect(frame_view_->VisibleContentRect());
+  }
   return LayoutRect();
 }
 
@@ -641,10 +652,7 @@ LayoutRect LayoutView::OverflowClipRect(
   if (rect.IsEmpty())
     return LayoutBox::OverflowClipRect(location,
                                        overlay_scrollbar_clip_behavior);
-
   rect.SetLocation(location);
-  if (HasOverflowClip())
-    ExcludeScrollbars(rect, overlay_scrollbar_clip_behavior);
 
   return rect;
 }
