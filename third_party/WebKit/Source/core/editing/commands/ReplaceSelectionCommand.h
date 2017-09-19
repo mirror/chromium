@@ -112,8 +112,14 @@ class CORE_EXPORT ReplaceSelectionCommand final : public CompositeEditCommand {
   bool ShouldMergeStart(bool, bool, bool);
   bool ShouldMergeEnd(bool selection_end_was_end_of_paragraph);
   bool ShouldMerge(const VisiblePosition&, const VisiblePosition&);
-
   void MergeEndIfNeeded(EditingState*);
+  Position MergeStartAndEndIfNeeds(const InsertedNodes&,
+                                   bool,
+                                   bool,
+                                   bool,
+                                   const ReplacementFragment&,
+                                   Element* const,
+                                   EditingState*);
 
   void RemoveUnrenderedTextNodesAtEnds(InsertedNodes&);
 
