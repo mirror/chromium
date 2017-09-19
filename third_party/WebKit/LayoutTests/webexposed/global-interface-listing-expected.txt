@@ -4478,6 +4478,7 @@ interface Navigator
     getter vendor
     getter vendorSub
     getter vr
+    getter webdriver
     getter webkitPersistentStorage
     getter webkitTemporaryStorage
     method cancelKeyboardLock
