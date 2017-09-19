@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "34f312ff_735e10c2",
+        "filename": "third_party/WebKit/Source/core/css/html.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-09-19T09:11:56Z",
+      "side": 1,
+      "message": "Ok! I updated the commit message to reflect that approach.",
+      "parentUuid": "981a7be5_3663aae2",
+      "range": {
+        "startLine": 429,
+        "startChar": 5,
+        "endLine": 429,
+        "endChar": 15
+      },
+      "revId": "5f16d31f2f81570d3e9c03fa3a520538bb14e01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d56cb198_e6af2a00",
         "filename": "third_party/WebKit/Source/core/css/html.css",
         "patchSetId": 4
@@ -153,6 +177,24 @@
       "revId": "5f16d31f2f81570d3e9c03fa3a520538bb14e01e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea2defb_3a3a3041",
+        "filename": "third_party/WebKit/Source/core/css/html.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-09-19T09:11:56Z",
+      "side": 1,
+      "message": "Ok, let\u0027s handle \u003cinput|textarea disabled\u003e later. We can discuss it in crbug.com/764316 .",
+      "parentUuid": "1d6fef65_8ac971e3",
+      "revId": "5f16d31f2f81570d3e9c03fa3a520538bb14e01e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
