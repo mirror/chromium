@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f964f4a_b52dcec1",
+        "filename": "ash/shelf/shelf_background_animator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-19T23:19:43Z",
+      "side": 1,
+      "message": "Just to double-check: Do you want this or SessionController::IsActiveUserSessionStarted()? I think the latter is closer to when the shelf icons will be available, since it becomes true after Profile is available. But I\u0027m not really sure.",
+      "revId": "db3ff4b838f41cb876020de75f5b5fe79a2d708b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f9eb23_a4a71cb5",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-19T23:19:43Z",
+      "side": 1,
+      "message": "Please add a comment (maybe copy/paste from CL description) about why this is a no-op on webui shelf.",
+      "revId": "db3ff4b838f41cb876020de75f5b5fe79a2d708b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59b55571_18e17653",
+        "filename": "ash/wm/lock_state_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-09-19T23:19:43Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "db3ff4b838f41cb876020de75f5b5fe79a2d708b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
