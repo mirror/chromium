@@ -5,12 +5,15 @@
 #include "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h"
 
 #include "base/memory/ptr_util.h"
+#include "base/time/default_clock.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/media/router/discovery/media_sink_service_base.h"
 #include "chrome/common/media_router/discovery/media_sink_internal.h"
 #include "chrome/common/media_router/discovery/media_sink_service.h"
 #include "chrome/common/media_router/media_sink.h"
+#include "components/cast_channel/cast_channel_enum.h"
 #include "components/cast_channel/cast_socket_service.h"
+#include "components/cast_channel/logger.h"
 #include "components/net_log/chrome_net_log.h"
 #include "net/base/backoff_entry.h"
 
@@ -32,6 +35,81 @@ media_router::MediaSinkInternal CreateCastSinkFromDialSink(
   extra_data.capabilities = cast_channel::CastDeviceCapability::NONE;
 
   return media_router::MediaSinkInternal(sink, extra_data);
+}
+
+void RecordError(cast_channel::ChannelError channel_error,
+                 cast_channel::LastError last_error) {
+  media_router::MediaRouterChannelError error_code =
+      media_router::MediaRouterChannelError::UNKNOWN;
+
+  switch (channel_error) {
+    // TODO(amp): Add in errors for transient socket and timeout errors, but
+    // only after X number of occurences.
+    case cast_channel::ChannelError::UNKNOWN:
+      error_code = media_router::MediaRouterChannelError::UNKNOWN;
+      break;
+    case cast_channel::ChannelError::AUTHENTICATION_ERROR:
+      error_code = media_router::MediaRouterChannelError::AUTHENTICATION;
+      break;
+    case cast_channel::ChannelError::CONNECT_ERROR:
+      error_code = media_router::MediaRouterChannelError::CONNECT;
+      break;
+    case cast_channel::ChannelError::CONNECT_TIMEOUT:
+      error_code = media_router::MediaRouterChannelError::CONNECT_TIMEOUT;
+      break;
+    case cast_channel::ChannelError::PING_TIMEOUT:
+      error_code = media_router::MediaRouterChannelError::PING_TIMEOUT;
+      break;
+    default:
+      // Do nothing and let the standard launch failure issue surface.
+      break;
+  }
+
+  // If we have details, we may override the generic error codes set above.
+  // TODO(amp): Expand and refine below as we see more actual reports.
+
+  // General certificate errors
+  if ((last_error.challenge_reply_error ==
+           cast_channel::ChallengeReplyError::PEER_CERT_EMPTY ||
+       last_error.challenge_reply_error ==
+           cast_channel::ChallengeReplyError::FINGERPRINT_NOT_FOUND ||
+       last_error.challenge_reply_error ==
+           cast_channel::ChallengeReplyError::CERT_PARSING_FAILED ||
+       last_error.challenge_reply_error ==
+           cast_channel::ChallengeReplyError::CANNOT_EXTRACT_PUBLIC_KEY) ||  //
+      (last_error.net_return_value <= -200 &&  // CERT_XXX errors
+       last_error.net_return_value > -300) ||
+      last_error.channel_event ==
+          cast_channel::ChannelEvent::SSL_SOCKET_CONNECT_FAILED ||
+      last_error.channel_event ==
+          cast_channel::ChannelEvent::SEND_AUTH_CHALLENGE_FAILED ||
+      last_error.channel_event ==
+          cast_channel::ChannelEvent::AUTH_CHALLENGE_REPLY_INVALID) {
+    error_code = media_router::MediaRouterChannelError::GENERAL_CERTIFICATE;
+  }
+
+  // Certificate timing errors
+  if (last_error.channel_event ==
+          cast_channel::ChannelEvent::SSL_CERT_EXCESSIVE_LIFETIME ||
+      last_error.net_return_value == -201) {  // CERT_DATE_INVALID
+    error_code = media_router::MediaRouterChannelError::CERTIFICATE_TIMING;
+  }
+
+  // Network/firewall access denied
+  if (last_error.net_return_value ==
+      -138) {  // NETWORK_ACCESS_DENIED (firewall)
+    error_code = media_router::MediaRouterChannelError::NETWORK;
+  }
+
+  // Authentication errors (assumed active ssl manipulation)
+  if (last_error.challenge_reply_error ==
+          cast_channel::ChallengeReplyError::CERT_NOT_SIGNED_BY_TRUSTED_CA ||
+      last_error.challenge_reply_error ==
+          cast_channel::ChallengeReplyError::SIGNED_BLOBS_MISMATCH) {
+    error_code = media_router::MediaRouterChannelError::AUTHENTICATION;
+  }
+
+  media_router::CastAnalytics::RecordDeviceChannelError(error_code);
 }
 
 }  // namespace
@@ -91,7 +169,8 @@ CastMediaSinkServiceImpl::CastMediaSinkServiceImpl(
       network_monitor_(network_monitor),
       backoff_policy_(&kBackoffPolicy),
       task_runner_(task_runner),
-      net_log_(g_browser_process->net_log()) {
+      net_log_(g_browser_process->net_log()),
+      clock_(new base::DefaultClock()) {
   DETACH_FROM_SEQUENCE(sequence_checker_);
   DCHECK(cast_socket_service_);
   DCHECK(network_monitor_);
@@ -107,6 +186,11 @@ CastMediaSinkServiceImpl::~CastMediaSinkServiceImpl() {
 void CastMediaSinkServiceImpl::SetTaskRunnerForTest(
     scoped_refptr<base::SequencedTaskRunner> task_runner) {
   task_runner_ = task_runner;
+}
+
+void CastMediaSinkServiceImpl::SetClockForTest(
+    std::unique_ptr<base::Clock> clock) {
+  clock_ = std::move(clock);
 }
 
 // MediaSinkService implementation
@@ -165,6 +249,10 @@ void CastMediaSinkServiceImpl::OnError(const cast_channel::CastSocket& socket,
            << " [error_state]: "
            << cast_channel::ChannelErrorToString(error_state)
            << " [channel_id]: " << socket.id();
+
+  cast_channel::LastError last_error =
+      cast_socket_service_->GetLogger()->GetLastError(socket.id());
+  RecordError(error_state, last_error);
 
   net::IPEndPoint ip_endpoint = socket.ip_endpoint();
   // Need a PostTask() here because RemoveSocket() will release the memory of
@@ -247,13 +335,14 @@ void CastMediaSinkServiceImpl::OpenChannel(
   cast_socket_service_->OpenSocket(
       ip_endpoint, net_log_,
       base::BindOnce(&CastMediaSinkServiceImpl::OnChannelOpened, AsWeakPtr(),
-                     cast_sink, std::move(backoff_entry)),
+                     cast_sink, std::move(backoff_entry), clock_->Now()),
       this);
 }
 
 void CastMediaSinkServiceImpl::OnChannelOpened(
     const MediaSinkInternal& cast_sink,
     std::unique_ptr<net::BackoffEntry> backoff_entry,
+    base::Time start_time,
     cast_channel::CastSocket* socket) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(socket);
@@ -262,6 +351,9 @@ void CastMediaSinkServiceImpl::OnChannelOpened(
   bool succeeded = socket->error_state() == cast_channel::ChannelError::NONE;
   if (backoff_entry)
     backoff_entry->InformOfRequest(succeeded);
+
+  CastAnalytics::RecordDeviceChannelOpenDuration(succeeded,
+                                                 clock_->Now() - start_time);
 
   if (succeeded) {
     OnChannelOpenSucceeded(cast_sink, socket);
@@ -284,6 +376,9 @@ void CastMediaSinkServiceImpl::OnChannelErrorMayRetry(
     DVLOG(1) << "Fail to open channel after all retry attempts: "
              << ip_endpoint.ToString() << " [error_state]: "
              << cast_channel::ChannelErrorToString(error_state);
+
+    CastAnalytics::RecordCastChannelConnectResult(
+        MediaRouterChannelConnectResults::FAILURE);
     return;
   }
 
@@ -306,6 +401,9 @@ void CastMediaSinkServiceImpl::OnChannelOpenSucceeded(
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   DCHECK(socket);
 
+  CastAnalytics::RecordCastChannelConnectResult(
+      MediaRouterChannelConnectResults::SUCCESS);
+
   media_router::CastSinkExtraData extra_data = cast_sink.cast_data();
   extra_data.capabilities = cast_channel::CastDeviceCapability::AUDIO_OUT;
   if (!socket->audio_only())
@@ -317,6 +415,18 @@ void CastMediaSinkServiceImpl::OnChannelOpenSucceeded(
 
   // Add or update existing cast sink.
   auto& ip_address = cast_sink.cast_data().ip_endpoint.address();
+  auto sink_it = current_sinks_map_.find(ip_address);
+  if (sink_it == current_sinks_map_.end()) {
+    if (cast_sink.cast_data().discovered_by_dial) {
+      CastAnalytics::RecordDeviceDiscovery(MediaRouterSinkDiscoveryType::DIAL);
+    } else {
+      CastAnalytics::RecordDeviceDiscovery(MediaRouterSinkDiscoveryType::MDNS);
+    }
+  } else if (sink_it->second.cast_data().discovered_by_dial &&
+             !cast_sink.cast_data().discovered_by_dial) {
+    CastAnalytics::RecordDeviceDiscovery(
+        MediaRouterSinkDiscoveryType::DIALMDNS);
+  }
   current_sinks_map_[ip_address] = cast_sink;
 
   MediaSinkServiceBase::RestartTimer();
@@ -336,6 +446,8 @@ void CastMediaSinkServiceImpl::OnDialSinkAdded(const MediaSinkInternal& sink) {
   if (base::ContainsKey(current_sinks_map_, ip_endpoint.address())) {
     DVLOG(2) << "Sink discovered by mDNS, skip adding [name]: "
              << sink.sink().name();
+    CastAnalytics::RecordDeviceDiscovery(
+        media_router::MediaRouterSinkDiscoveryType::MDNSDIAL);
     return;
   }
 

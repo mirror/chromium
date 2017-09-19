@@ -5,7 +5,9 @@
 #include "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h"
 #include "base/run_loop.h"
 #include "base/strings/stringprintf.h"
+#include "base/test/histogram_tester.h"
 #include "base/test/mock_callback.h"
+#include "base/test/simple_test_clock.h"
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/timer/mock_timer.h"
 #include "chrome/browser/media/router/test_helper.h"
@@ -22,7 +24,9 @@ using ::testing::Return;
 using ::testing::SaveArg;
 using ::testing::WithArgs;
 using ::testing::_;
+using base::Bucket;
 using cast_channel::ChannelError;
+using testing::ElementsAre;
 
 namespace {
 
@@ -154,12 +158,13 @@ TEST_F(CastMediaSinkServiceImplTest, TestOnChannelOpenSucceeded) {
 }
 
 TEST_F(CastMediaSinkServiceImplTest, TestMultipleOnChannelOpenSucceeded) {
-  auto cast_sink1 = CreateCastSink(1);
-  auto cast_sink2 = CreateCastSink(2);
-  auto cast_sink3 = CreateCastSink(3);
-  auto ip_endpoint1 = CreateIPEndPoint(1);
-  auto ip_endpoint2 = CreateIPEndPoint(2);
-  auto ip_endpoint3 = CreateIPEndPoint(3);
+  MediaSinkInternal cast_sink1 = CreateCastSink(1);
+  MediaSinkInternal cast_sink2 = CreateCastSink(2);
+  MediaSinkInternal cast_sink3 = CreateCastSink(3);
+
+  CastSinkExtraData extra_data = cast_sink3.cast_data();
+  extra_data.discovered_by_dial = true;
+  cast_sink3.set_cast_data(extra_data);
 
   cast_channel::MockCastSocket socket2;
   socket2.set_id(2);
@@ -168,8 +173,28 @@ TEST_F(CastMediaSinkServiceImplTest, TestMultipleOnChannelOpenSucceeded) {
 
   // Current round of Dns discovery finds service1 and service 2.
   // Fail to open channel 1.
+  base::HistogramTester tester;
   media_sink_service_impl_.OnChannelOpenSucceeded(cast_sink2, &socket2);
+  EXPECT_THAT(tester.GetAllSamples(CastAnalytics::kHistogramCastDiscoveryType),
+              ElementsAre(Bucket(
+                  static_cast<int>(MediaRouterSinkDiscoveryType::MDNS), 1)));
+
   media_sink_service_impl_.OnChannelOpenSucceeded(cast_sink3, &socket3);
+  EXPECT_THAT(
+      tester.GetAllSamples(CastAnalytics::kHistogramCastDiscoveryType),
+      ElementsAre(
+          Bucket(static_cast<int>(MediaRouterSinkDiscoveryType::DIAL), 1),
+          Bucket(static_cast<int>(MediaRouterSinkDiscoveryType::MDNS), 1)));
+
+  extra_data.discovered_by_dial = false;
+  cast_sink3.set_cast_data(extra_data);
+  media_sink_service_impl_.OnChannelOpenSucceeded(cast_sink3, &socket3);
+  EXPECT_THAT(
+      tester.GetAllSamples(CastAnalytics::kHistogramCastDiscoveryType),
+      ElementsAre(
+          Bucket(static_cast<int>(MediaRouterSinkDiscoveryType::DIAL), 1),
+          Bucket(static_cast<int>(MediaRouterSinkDiscoveryType::MDNS), 1),
+          Bucket(static_cast<int>(MediaRouterSinkDiscoveryType::DIALMDNS), 1)));
 
   // Verify sink content
   EXPECT_CALL(mock_sink_discovered_cb_,
@@ -300,6 +325,11 @@ TEST_F(CastMediaSinkServiceImplTest, TestMultipleOpenChannels) {
   net::IPEndPoint ip_endpoint2 = CreateIPEndPoint(2);
   net::IPEndPoint ip_endpoint3 = CreateIPEndPoint(3);
 
+  base::SimpleTestClock* clock = new base::SimpleTestClock();
+  base::Time start_time = base::Time::Now();
+  clock->SetNow(start_time);
+  media_sink_service_impl_.SetClockForTest(base::WrapUnique(clock));
+
   EXPECT_CALL(*mock_cast_socket_service_,
               OpenSocketInternal(ip_endpoint1, _, _, _));
   EXPECT_CALL(*mock_cast_socket_service_,
@@ -313,7 +343,15 @@ TEST_F(CastMediaSinkServiceImplTest, TestMultipleOpenChannels) {
   cast_channel::MockCastSocket socket2;
   socket2.set_id(2);
   socket2.SetErrorState(cast_channel::ChannelError::NONE);
-  media_sink_service_impl_.OnChannelOpened(cast_sink2, nullptr, &socket2);
+
+  base::TimeDelta delta = base::TimeDelta::FromSeconds(2);
+  clock->Advance(delta);
+  base::HistogramTester tester;
+
+  media_sink_service_impl_.OnChannelOpened(cast_sink2, nullptr, start_time,
+                                           &socket2);
+  tester.ExpectUniqueSample(CastAnalytics::kHistogramCastMdnsChannelOpenSuccess,
+                            delta.InMilliseconds(), 1);
 
   EXPECT_CALL(*mock_cast_socket_service_,
               OpenSocketInternal(ip_endpoint2, _, _, _));
@@ -331,8 +369,10 @@ TEST_F(CastMediaSinkServiceImplTest, TestMultipleOpenChannels) {
   socket3.set_id(3);
   socket1.SetErrorState(cast_channel::ChannelError::NONE);
   socket3.SetErrorState(cast_channel::ChannelError::NONE);
-  media_sink_service_impl_.OnChannelOpened(cast_sink1, nullptr, &socket1);
-  media_sink_service_impl_.OnChannelOpened(cast_sink3, nullptr, &socket3);
+  media_sink_service_impl_.OnChannelOpened(cast_sink1, nullptr, start_time,
+                                           &socket1);
+  media_sink_service_impl_.OnChannelOpened(cast_sink3, nullptr, start_time,
+                                           &socket3);
 
   EXPECT_CALL(mock_sink_discovered_cb_,
               Run(std::vector<MediaSinkInternal>(
@@ -370,8 +410,14 @@ TEST_F(CastMediaSinkServiceImplTest,
   EXPECT_CALL(*mock_cast_socket_service_, OpenSocketInternal(_, _, _, _))
       .Times(0);
 
+  base::HistogramTester tester;
   media_sink_service_impl_.OnError(
       socket, cast_channel::ChannelError::CHANNEL_NOT_OPEN);
+
+  tester.ExpectTotalCount(CastAnalytics::kHistogramCastChannelError, 1);
+  EXPECT_THAT(tester.GetAllSamples(CastAnalytics::kHistogramCastChannelError),
+              ElementsAre(Bucket(
+                  static_cast<int>(MediaRouterChannelError::UNKNOWN), 1)));
   mock_time_task_runner_->RunUntilIdle();
 }
 

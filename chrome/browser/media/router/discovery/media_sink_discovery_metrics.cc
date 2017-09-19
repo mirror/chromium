@@ -59,4 +59,51 @@ void CastDeviceCountMetrics::RecordDeviceCounts(size_t available_device_count,
   UMA_HISTOGRAM_COUNTS_100(kHistogramCastKnownDeviceCount, known_device_count);
 }
 
+// static
+constexpr char const CastAnalytics::kHistogramCastChannelConnectResult[];
+constexpr char const CastAnalytics::kHistogramCastDiscoveryType[];
+constexpr char const CastAnalytics::kHistogramCastChannelError[];
+constexpr char const CastAnalytics::kHistogramCastMdnsChannelOpenSuccess[];
+constexpr char const CastAnalytics::kHistogramCastMdnsChannelOpenFailure[];
+
+// static
+void CastAnalytics::RecordCastChannelConnectResult(
+    MediaRouterChannelConnectResults result) {
+  DCHECK_LT(static_cast<int>(result),
+            static_cast<int>(MediaRouterChannelConnectResults::TOTAL_COUNT));
+  UMA_HISTOGRAM_ENUMERATION(
+      kHistogramCastChannelConnectResult, static_cast<int>(result),
+      static_cast<int>(MediaRouterChannelConnectResults::TOTAL_COUNT));
+}
+
+// static
+void CastAnalytics::RecordDeviceDiscovery(MediaRouterSinkDiscoveryType type) {
+  DCHECK_LT(static_cast<int>(type),
+            static_cast<int>(MediaRouterSinkDiscoveryType::TOTAL_COUNT));
+  UMA_HISTOGRAM_ENUMERATION(
+      kHistogramCastDiscoveryType, static_cast<int>(type),
+      static_cast<int>(MediaRouterSinkDiscoveryType::TOTAL_COUNT));
+}
+
+// static
+void CastAnalytics::RecordDeviceChannelError(
+    MediaRouterChannelError channel_error) {
+  DCHECK_LT(static_cast<int>(channel_error),
+            static_cast<int>(MediaRouterChannelError::TOTAL_COUNT));
+  UMA_HISTOGRAM_ENUMERATION(
+      kHistogramCastChannelError, static_cast<int>(channel_error),
+      static_cast<int>(MediaRouterChannelError::TOTAL_COUNT));
+}
+
+// static
+void CastAnalytics::RecordDeviceChannelOpenDuration(
+    bool success,
+    const base::TimeDelta& duration) {
+  if (success) {
+    UMA_HISTOGRAM_TIMES(kHistogramCastMdnsChannelOpenSuccess, duration);
+  } else {
+    UMA_HISTOGRAM_TIMES(kHistogramCastMdnsChannelOpenFailure, duration);
+  }
+}
+
 }  // namespace media_router

@@ -33495,6 +33495,24 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Various usage counts for media galleries.</summary>
 </histogram>
 
+<histogram name="MediaRouter.Cast.Channel.ConnectResult" enum="BooleanSuccess">
+  <owner>zhaobin@chromium.org</owner>
+  <summary>
+    Whether opening Cast channel succeeds or not. Recorded when all opening
+    channel attempts (including retry attempts) finish.
+  </summary>
+</histogram>
+
+<histogram name="MediaRouter.Cast.Channel.Error"
+    enum="MediaRouterCastChannelError">
+  <owner>zhaobin@chromium.org</owner>
+  <summary>
+    Errors encountered on a Cast channel. Recorded when a Cast channel fails to
+    open, or when an opened channel fails to responde to keepalive ping request
+    and times out.
+  </summary>
+</histogram>
+
 <histogram name="MediaRouter.Cast.Discovery.ConnectedDevicesCount"
     units="devices">
   <owner>zhaobin@chromium.org</owner>
@@ -33509,6 +33527,31 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     The number of known Cast devices. Recorded when browser finishes discovering
     Cast devices. Recording happens roughly once per hour.
+  </summary>
+</histogram>
+
+<histogram name="MediaRouter.Cast.Discovery.Type"
+    enum="MediaRouterCastDiscoveryType">
+  <owner>zhaobin@chromium.org</owner>
+  <summary>
+    Discovery types of media sinks. Recorded when sinks are discovered by Media
+    Router.
+  </summary>
+</histogram>
+
+<histogram name="MediaRouter.Cast.Mdns.Channel.Open_Failure" units="ms">
+  <owner>zhaobin@chromium.org</owner>
+  <summary>
+    Duration in milliseconds taken to fail to open an cast channel. Recorded
+    when one opening channel attempt fails.
+  </summary>
+</histogram>
+
+<histogram name="MediaRouter.Cast.Mdns.Channel.Open_Success" units="ms">
+  <owner>zhaobin@chromium.org</owner>
+  <summary>
+    Duration in milliseconds taken to successfully open an cast channel.
+    Recorded when one opening channel attempt succeeds.
   </summary>
 </histogram>
 
