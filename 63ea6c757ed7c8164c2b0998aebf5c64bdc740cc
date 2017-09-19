@@ -185,6 +185,24 @@
     },
     {
       "key": {
+        "uuid": "64450d3d_808580b7",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-09-19T11:02:36Z",
+      "side": 1,
+      "message": "Done. I removed it after checking json parser.\n\nsafe_json_parser.cc -\u003e safe_json_parser_android.cc -\u003e base::JSONReader::ReadAndReturnError.\n\nIn the end it boils down to StringToDouble, which is a wrapper for |strtod|.",
+      "parentUuid": "0057e2ee_66093c40",
+      "revId": "63ea6c757ed7c8164c2b0998aebf5c64bdc740cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ebd99d4_97fd9207",
         "filename": "components/ntp_snippets/remote/remote_suggestion.h",
         "patchSetId": 3
