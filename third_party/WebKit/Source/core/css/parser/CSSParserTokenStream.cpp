@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "core/css/parser/CSSParserTokenStream.h"
+#include "core/css/parser/CSSParserObserverWrapper.h"
 
 namespace blink {
 
@@ -17,6 +18,16 @@ CSSParserToken CSSParserTokenStream::ConsumeIncludingWhitespace() {
   return result;
 }
 
+bool CSSParserTokenStream::ConsumeCommentOrNothing() {
+  DCHECK(!HasLookAhead());
+  const auto token = tokenizer_.TokenizeSingleWithComments();
+  if (token.GetType() != kCommentToken)
+    return false;
+
+  offset_ = tokenizer_.Offset();
+  return true;
+}
+
 void CSSParserTokenStream::UncheckedConsumeComponentValue(
     unsigned nesting_level) {
   DCHECK(HasLookAhead());
@@ -24,6 +35,23 @@ void CSSParserTokenStream::UncheckedConsumeComponentValue(
   // Have to use internal consume/peek in here because they can read past
   // start/end of blocks
   do {
+    const CSSParserToken& token = UncheckedConsumeInternal();
+    if (token.GetBlockType() == CSSParserToken::kBlockStart)
+      nesting_level++;
+    else if (token.GetBlockType() == CSSParserToken::kBlockEnd)
+      nesting_level--;
+  } while (nesting_level && !PeekInternal().IsEOF());
+}
+
+void CSSParserTokenStream::UncheckedConsumeComponentValueWithOffsets(
+    CSSParserObserverWrapper& wrapper) {
+  DCHECK(HasLookAhead());
+
+  // Have to use internal consume/peek in here because they can read past
+  // start/end of blocks
+  unsigned nesting_level = 0;
+  do {
+    wrapper.AddToken(LookAheadOffset());
     const CSSParserToken& token = UncheckedConsumeInternal();
     if (token.GetBlockType() == CSSParserToken::kBlockStart)
       nesting_level++;
