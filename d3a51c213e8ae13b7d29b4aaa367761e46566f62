@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cb13a58_3ea5d2c9",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSectionTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-19T18:28:59Z",
+      "side": 1,
+      "message": "bauerb@ - what needs to be done to get these tests working with modern? It looks like these tests are failing:\n\norg.chromium.chrome.browser.ntp.cards.SuggestionsSectionTest#testAddSuggestionsNotification\norg.chromium.chrome.browser.ntp.cards.SuggestionsSectionTest#testRemoveSuggestionNotificationWithButton\norg.chromium.chrome.browser.ntp.cards.SuggestionsSectionTest#testGetDismissalGroupWithoutAction\norg.chromium.chrome.browser.ntp.cards.SuggestionsSectionTest#testGetDismissalGroupActionAndHeader\norg.chromium.chrome.browser.ntp.cards.SuggestionsSectionTest#testRemoveSuggestionNotification\norg.chromium.chrome.browser.ntp.cards.SuggestionsSectionTest#testDismissSibling\norg.chromium.chrome.browser.ntp.cards.SuggestionsSectionTest#testGetItemDismissalGroupWithActionItem\norg.chromium.chrome.browser.ntp.cards.SuggestionsSectionTest#testGetDismissalGroupWithoutHeader\norg.chromium.chrome.browser.ntp.cards.SuggestionsSectionTest#testGetItemDismissalGroupWithoutActionItem\norg.chromium.chrome.browser.ntp.cards.SuggestionsSectionTest#testSetStatusNotification\norg.chromium.chrome.browser.ntp.cards.SuggestionsSectionTest#testDismissSection\n\n\n\nI tried running these locally and I\u0027m getting NPE exceptions on all of them when checking if Chrome Home, so I must be doing something wrong. Have you run into this?",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 58
+      },
+      "revId": "d3a51c213e8ae13b7d29b4aaa367761e46566f62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "84d02ce9_17fcfee2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/LayoutManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-19T18:28:59Z",
+      "side": 1,
+      "message": "The ColorUtils method takes a \"useModernDesign\" param so I think this variable is appropriately named.",
+      "parentUuid": "0935baec_acacc658",
+      "range": {
+        "startLine": 409,
+        "startChar": 16,
+        "endLine": 409,
+        "endChar": 31
+      },
+      "revId": "26e4c713d5f671cf83e44bb818178c52b42a9b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c550c30_f4924249",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/scene_layer/ToolbarSceneLayer.java",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-09-19T14:57:13Z",
       "side": 1,
       "message": "nit: just in-line FeatureUtilities.isChromeHomeEnabled() below and update comment.",
+      "range": {
+        "startLine": 158,
+        "startChar": 16,
+        "endLine": 158,
+        "endChar": 31
+      },
+      "revId": "26e4c713d5f671cf83e44bb818178c52b42a9b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dedd4bd_a63bb4cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/scene_layer/ToolbarSceneLayer.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-19T18:28:59Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "1c550c30_f4924249",
       "range": {
         "startLine": 158,
         "startChar": 16,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c9ae6c52_f55537cc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/SuggestionsSection.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-19T18:28:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48478280_0548693f",
+      "range": {
+        "startLine": 100,
+        "startChar": 16,
+        "endLine": 100,
+        "endChar": 25
+      },
+      "revId": "26e4c713d5f671cf83e44bb818178c52b42a9b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d11fb785_22bc4462",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-09-19T14:57:13Z",
       "side": 1,
       "message": "nit: rename",
+      "range": {
+        "startLine": 508,
+        "startChar": 16,
+        "endLine": 508,
+        "endChar": 31
+      },
+      "revId": "26e4c713d5f671cf83e44bb818178c52b42a9b29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "628ab648_5fbda4fb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-09-19T18:28:59Z",
+      "side": 1,
+      "message": "useModernDesign is more appropriate here as well.",
+      "parentUuid": "d11fb785_22bc4462",
       "range": {
         "startLine": 508,
         "startChar": 16,
