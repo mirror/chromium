@@ -40,6 +40,14 @@ namespace task_manager {
 // enabled calculations of the usage of the various resources.
 class TaskManagerInterface {
  public:
+  // Sort key whose ordering groups processes in a user-understandable way.
+  using ProcessSortKey = std::tuple<Task::Type,  // main task type
+                                    int,         // main tab id
+                                    TaskId,      // main task
+                                    int,         // subtask tab id
+                                    Task::Type,  // subtask type
+                                    TaskId>;     // subtask id
+
   // Registers the task manager related prefs.
   static void RegisterPrefs(PrefRegistrySimple* registry);
 
@@ -154,6 +162,16 @@ class TaskManagerInterface {
   // Returns the type of the task with |task_id|.
   virtual Task::Type GetType(TaskId task_id) const = 0;
 
+  // Returns true if the task with |task_id| has a parent -- i.e., if it is a
+  // subframe.
+  virtual bool HasParentTask(TaskId task_id) const = 0;
+
+  // Returns the sort key for this task. The sort key is unique for each
+  // process, and will never change during the task's lifetime, between
+  // OnTaskAdded() and OnTaskToBeReplaced(). Sorting by this key will preserve
+  // the adjacency of same-process Tasks.
+  virtual const ProcessSortKey& GetProcessSortKey(TaskId task_id) const = 0;
+
   // Gets the unique ID of the tab if the task with |task_id| represents a
   // WebContents of a tab. Returns -1 otherwise.
   virtual int GetTabId(TaskId task_id) const = 0;
@@ -218,12 +236,10 @@ class TaskManagerInterface {
   // Returns the keep-alive counter if the Task is an event page, -1 otherwise.
   virtual int GetKeepaliveCount(TaskId task_id) const = 0;
 
-  // Gets the list of task IDs currently tracked by the task manager. Tasks that
-  // share the same process id will always be consecutive. The list will be
-  // sorted in a way that reflects the process tree: the browser process will be
-  // first, followed by the gpu process if it exists. Related processes (e.g., a
-  // subframe process and its parent) will be kept together if possible. Callers
-  // can expect this ordering to be stable when a process is added or removed.
+  // Gets the list of task IDs currently tracked by the task manager. This list
+  // will be ordered by TaskId; same-process tasks are not necessarily
+  // consecutive. To group these tasks into processes, callers should sort the
+  // tasks by their ProcessSortKey (to obtain a logical ordering).
   virtual const TaskIdList& GetTaskIdsList() const = 0;
 
   // Gets the list of task IDs of the tasks that run on the same process as the
@@ -252,6 +268,7 @@ class TaskManagerInterface {
   // Notifying observers of various events.
   void NotifyObserversOnTaskAdded(TaskId id);
   void NotifyObserversOnTaskToBeRemoved(TaskId id);
+  void NotifyObserversOnTaskReplaced(TaskId old_task_id, TaskId new_task_id);
   void NotifyObserversOnRefresh(const TaskIdList& task_ids);
   void NotifyObserversOnRefreshWithBackgroundCalculations(
       const TaskIdList& task_ids);
