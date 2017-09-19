@@ -307,6 +307,10 @@ class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
 
   void SetOptionalExtensionsRequestedForTesting(bool request_extensions);
 
+  // (re-)Initialize state tracking of buffer and texture bindings.
+  void InitializeTrackedTextureBindings();
+  void InitializeTrackedBufferBindings();
+
   void* GetScratchMemory(size_t size);
 
   template <typename T>
@@ -448,6 +452,7 @@ class GPU_EXPORT GLES2DecoderPassthroughImpl : public GLES2Decoder {
 
   // State tracking of currently bound 2D textures (client IDs)
   size_t active_texture_unit_;
+  GLint num_texture_units_;
 
   struct BoundTexture {
     BoundTexture();

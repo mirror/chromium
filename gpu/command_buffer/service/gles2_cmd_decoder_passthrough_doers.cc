@@ -3397,6 +3397,9 @@ error::Error GLES2DecoderPassthroughImpl::DoRequestExtensionCHROMIUM(
   feature_info_->Initialize(feature_info_->context_type(),
                             feature_info_->disallowed_features());
 
+  InitializeTrackedTextureBindings();
+  InitializeTrackedBufferBindings();
+
   return error::kNoError;
 }
 

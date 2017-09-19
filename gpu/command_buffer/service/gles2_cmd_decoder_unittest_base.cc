@@ -2417,6 +2417,40 @@ void GLES2DecoderPassthroughTestBase::DoTexImage2D(
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
 }
 
+void GLES2DecoderPassthroughTestBase::DoTexImage3D(
+    GLenum target,
+    GLint level,
+    GLenum internal_format,
+    GLsizei width,
+    GLsizei height,
+    GLsizei depth,
+    GLint border,
+    GLenum format,
+    GLenum type,
+    uint32_t shared_memory_id,
+    uint32_t shared_memory_offset) {
+  cmds::TexImage3D cmd;
+  cmd.Init(target, level, internal_format, width, height, depth, format, type,
+           shared_memory_id, shared_memory_offset);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+}
+
+void GLES2DecoderPassthroughTestBase::DoCompressedTexImage2D(
+    GLenum target,
+    GLint level,
+    GLenum format,
+    GLsizei width,
+    GLsizei height,
+    GLint border,
+    GLsizei size,
+    uint32_t bucket_id) {
+  CommonDecoder::Bucket* bucket = decoder_->CreateBucket(bucket_id);
+  bucket->SetSize(size);
+  cmds::CompressedTexImage2DBucket cmd;
+  cmd.Init(target, level, format, width, height, bucket_id);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+}
+
 void GLES2DecoderPassthroughTestBase::DoBindFramebuffer(GLenum target,
                                                         GLuint client_id) {
   cmds::BindFramebuffer cmd;
@@ -2445,11 +2479,47 @@ void GLES2DecoderPassthroughTestBase::DoFramebufferRenderbuffer(
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
 }
 
+GLenum GLES2DecoderPassthroughTestBase::DoCheckFramebufferStatus(
+    GLenum target) {
+  auto* result = static_cast<cmds::CheckFramebufferStatus::Result*>(
+      shared_memory_address_);
+  *result = 0;
+  cmds::CheckFramebufferStatus cmd;
+  cmd.Init(GL_FRAMEBUFFER, shared_memory_id_, shared_memory_offset_);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  return *result;
+}
+
 void GLES2DecoderPassthroughTestBase::DoBindRenderbuffer(GLenum target,
                                                          GLuint client_id) {
   cmds::BindRenderbuffer cmd;
   cmd.Init(target, client_id);
   EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+}
+
+void GLES2DecoderPassthroughTestBase::DoGetIntegerv(GLenum pname,
+                                                    GLint* result,
+                                                    size_t num_results) {
+  cmds::GetIntegerv cmd;
+  cmd.Init(pname, shared_memory_id_, shared_memory_offset_);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  cmds::GetIntegerv::Result* cmd_result =
+      GetSharedMemoryAs<cmds::GetIntegerv::Result*>();
+  DCHECK(static_cast<size_t>(cmd_result->GetNumResults()) >= num_results);
+  std::copy(cmd_result->GetData(), cmd_result->GetData() + num_results, result);
+}
+
+void GLES2DecoderPassthroughTestBase::DoGetTexParameteriv(GLenum target,
+                                                          GLenum pname,
+                                                          GLint* result,
+                                                          size_t num_results) {
+  cmds::GetTexParameteriv cmd;
+  cmd.Init(target, pname, shared_memory_id_, shared_memory_offset_);
+  EXPECT_EQ(error::kNoError, ExecuteCmd(cmd));
+  cmds::GetTexParameteriv::Result* cmd_result =
+      GetSharedMemoryAs<cmds::GetTexParameteriv::Result*>();
+  DCHECK(static_cast<size_t>(cmd_result->GetNumResults()) >= num_results);
+  std::copy(cmd_result->GetData(), cmd_result->GetData() + num_results, result);
 }
 
 // GCC requires these declarations, but MSVC requires they not be present

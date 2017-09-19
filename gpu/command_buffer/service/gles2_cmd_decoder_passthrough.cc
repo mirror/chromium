@@ -644,6 +644,10 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
           "GL_NV_pack_subimage",
           "GL_OES_compressed_ETC1_RGB8_texture",
           "GL_OES_depth32",
+          "GL_OES_EGL_image",
+          "GL_OES_EGL_image_external",
+          "GL_OES_EGL_image_external_essl3",
+          "GL_NV_EGL_stream_consumer_external",
           "GL_OES_fbo_render_mipmap",
           "GL_OES_packed_depth_stencil",
           "GL_OES_rgb8_rgba8",
@@ -694,48 +698,13 @@ gpu::ContextResult GLES2DecoderPassthroughImpl::Initialize(
   mailbox_manager_ = group_->mailbox_manager();
 
   // Query information about the texture units
-  GLint num_texture_units = 0;
   api()->glGetIntegervFn(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS,
-                         &num_texture_units);
-
+                         &num_texture_units_);
   active_texture_unit_ = 0;
-  bound_textures_[GL_TEXTURE_2D].resize(num_texture_units);
-  bound_textures_[GL_TEXTURE_CUBE_MAP].resize(num_texture_units);
-  if (feature_info_->gl_version_info().IsAtLeastGLES(3, 0)) {
-    bound_textures_[GL_TEXTURE_2D_ARRAY].resize(num_texture_units);
-    bound_textures_[GL_TEXTURE_3D].resize(num_texture_units);
-  }
-  if (feature_info_->gl_version_info().IsAtLeastGLES(3, 1)) {
-    bound_textures_[GL_TEXTURE_2D_MULTISAMPLE].resize(num_texture_units);
-  }
-  if (feature_info_->feature_flags().oes_egl_image_external ||
-      feature_info_->feature_flags().nv_egl_stream_consumer_external) {
-    bound_textures_[GL_TEXTURE_EXTERNAL_OES].resize(num_texture_units);
-  }
-  if (feature_info_->feature_flags().arb_texture_rectangle) {
-    bound_textures_[GL_TEXTURE_RECTANGLE_ARB].resize(num_texture_units);
-  }
+  InitializeTrackedTextureBindings();
 
   // Initialize the tracked buffer bindings
-  bound_buffers_[GL_ARRAY_BUFFER] = 0;
-  bound_buffers_[GL_ELEMENT_ARRAY_BUFFER] = 0;
-  if (feature_info_->gl_version_info().IsAtLeastGLES(3, 0) ||
-      feature_info_->feature_flags().ext_pixel_buffer_object) {
-    bound_buffers_[GL_PIXEL_PACK_BUFFER] = 0;
-    bound_buffers_[GL_PIXEL_UNPACK_BUFFER] = 0;
-  }
-  if (feature_info_->gl_version_info().IsAtLeastGLES(3, 0)) {
-    bound_buffers_[GL_COPY_READ_BUFFER] = 0;
-    bound_buffers_[GL_COPY_WRITE_BUFFER] = 0;
-    bound_buffers_[GL_TRANSFORM_FEEDBACK_BUFFER] = 0;
-    bound_buffers_[GL_UNIFORM_BUFFER] = 0;
-  }
-  if (feature_info_->gl_version_info().IsAtLeastGLES(3, 1)) {
-    bound_buffers_[GL_ATOMIC_COUNTER_BUFFER] = 0;
-    bound_buffers_[GL_SHADER_STORAGE_BUFFER] = 0;
-    bound_buffers_[GL_DRAW_INDIRECT_BUFFER] = 0;
-    bound_buffers_[GL_DISPATCH_INDIRECT_BUFFER] = 0;
-  }
+  InitializeTrackedBufferBindings();
 
   if (group_->gpu_preferences().enable_gpu_driver_debug_logging &&
       feature_info_->feature_flags().khr_debug) {
@@ -1445,6 +1414,61 @@ void GLES2DecoderPassthroughImpl::SetOptionalExtensionsRequestedForTesting(
   request_optional_extensions_ = request_extensions;
 }
 
+void GLES2DecoderPassthroughImpl::InitializeTrackedTextureBindings() {
+  DCHECK(num_texture_units_ > 0);
+
+  auto initialize_texture_binding_vector = [this](GLenum target) {
+    if (bound_textures_.find(target) == bound_textures_.end()) {
+      bound_textures_[target].resize(num_texture_units_);
+    }
+  };
+
+  initialize_texture_binding_vector(GL_TEXTURE_2D);
+  initialize_texture_binding_vector(GL_TEXTURE_CUBE_MAP);
+  if (feature_info_->gl_version_info().IsAtLeastGLES(3, 0)) {
+    initialize_texture_binding_vector(GL_TEXTURE_2D_ARRAY);
+    initialize_texture_binding_vector(GL_TEXTURE_3D);
+  }
+  if (feature_info_->gl_version_info().IsAtLeastGLES(3, 1)) {
+    initialize_texture_binding_vector(GL_TEXTURE_2D_MULTISAMPLE);
+  }
+  if (feature_info_->feature_flags().oes_egl_image_external ||
+      feature_info_->feature_flags().nv_egl_stream_consumer_external) {
+    initialize_texture_binding_vector(GL_TEXTURE_EXTERNAL_OES);
+  }
+  if (feature_info_->feature_flags().arb_texture_rectangle) {
+    initialize_texture_binding_vector(GL_TEXTURE_RECTANGLE_ARB);
+  }
+}
+
+void GLES2DecoderPassthroughImpl::InitializeTrackedBufferBindings() {
+  auto initialize_buffer_binding = [this](GLenum target) {
+    if (bound_buffers_.find(target) == bound_buffers_.end()) {
+      bound_buffers_[target] = 0;
+    }
+  };
+
+  initialize_buffer_binding(GL_ARRAY_BUFFER);
+  initialize_buffer_binding(GL_ELEMENT_ARRAY_BUFFER);
+  if (feature_info_->gl_version_info().IsAtLeastGLES(3, 0) ||
+      feature_info_->feature_flags().ext_pixel_buffer_object) {
+    initialize_buffer_binding(GL_PIXEL_PACK_BUFFER);
+    initialize_buffer_binding(GL_PIXEL_UNPACK_BUFFER);
+  }
+  if (feature_info_->gl_version_info().IsAtLeastGLES(3, 0)) {
+    initialize_buffer_binding(GL_COPY_READ_BUFFER);
+    initialize_buffer_binding(GL_COPY_WRITE_BUFFER);
+    initialize_buffer_binding(GL_TRANSFORM_FEEDBACK_BUFFER);
+    initialize_buffer_binding(GL_UNIFORM_BUFFER);
+  }
+  if (feature_info_->gl_version_info().IsAtLeastGLES(3, 1)) {
+    initialize_buffer_binding(GL_ATOMIC_COUNTER_BUFFER);
+    initialize_buffer_binding(GL_SHADER_STORAGE_BUFFER);
+    initialize_buffer_binding(GL_DRAW_INDIRECT_BUFFER);
+    initialize_buffer_binding(GL_DISPATCH_INDIRECT_BUFFER);
+  }
+}
+
 void* GLES2DecoderPassthroughImpl::GetScratchMemory(size_t size) {
   if (scratch_memory_.size() < size) {
     scratch_memory_.resize(size, 0);
@@ -1471,6 +1495,9 @@ error::Error GLES2DecoderPassthroughImpl::PatchGetNumericResults(GLenum pname,
     case GL_TEXTURE_BINDING_CUBE_MAP:
     case GL_TEXTURE_BINDING_2D_ARRAY:
     case GL_TEXTURE_BINDING_3D:
+    case GL_TEXTURE_BINDING_2D_MULTISAMPLE:
+    case GL_TEXTURE_BINDING_EXTERNAL_OES:
+    case GL_TEXTURE_BINDING_RECTANGLE_ARB:
       if (!GetClientID(&resources_->texture_id_map, *params, params)) {
         return error::kInvalidArguments;
       }
@@ -1484,6 +1511,10 @@ error::Error GLES2DecoderPassthroughImpl::PatchGetNumericResults(GLenum pname,
     case GL_COPY_READ_BUFFER_BINDING:
     case GL_COPY_WRITE_BUFFER_BINDING:
     case GL_UNIFORM_BUFFER_BINDING:
+    case GL_ATOMIC_COUNTER_BUFFER_BINDING:
+    case GL_SHADER_STORAGE_BUFFER_BINDING:
+    case GL_DRAW_INDIRECT_BUFFER_BINDING:
+    case GL_DISPATCH_INDIRECT_BUFFER_BINDING:
       if (!GetClientID(&resources_->buffer_id_map, *params, params)) {
         return error::kInvalidArguments;
       }
