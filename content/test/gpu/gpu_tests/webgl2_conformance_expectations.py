@@ -691,6 +691,8 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
     self.Flaky('conformance2/textures/image_bitmap_from_image_data/' +
         'tex-2d-srgb8-rgb-unsigned_byte.html',
         ['linux', 'no_passthrough', 'nvidia'], bug=694354)
+    self.Fail('conformance2/attribs/gl-vertex-attrib-normalized-int.html',
+        ['linux', 'nvidia'], bug=766776)
 
     # Linux NVIDIA Quadro P400
     # This test causes a lost device and then the next test fails.
@@ -1007,6 +1009,8 @@ class WebGL2ConformanceExpectations(WebGLConformanceExpectations):
         ['linux', 'amd'], bug=2103) # angle bug ID
 
     # Linux AMD R7 240
+    self.Fail('conformance2/attribs/gl-vertex-attrib-normalized-int.html',
+        ['linux', ('amd', 0x6613)], bug=766776)
     self.Fail('conformance2/textures/canvas/' +
         'tex-2d-rg8ui-rg_integer-unsigned_byte.html',
         ['linux', ('amd', 0x6613)], bug=710392)
