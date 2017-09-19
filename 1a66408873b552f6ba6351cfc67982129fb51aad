@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ae09e330_51191444",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngineTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-09-19T01:35:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48c2e511_364ad044",
+      "revId": "1a66408873b552f6ba6351cfc67982129fb51aad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6aade37_f6e5e27c",
         "filename": "third_party/WebKit/Source/core/css/StyleEngineTest.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-18T23:17:40Z",
       "side": 1,
       "message": "Just double-checking, these tests are written in such a way that they are red if your production change is removed, right?  I find it a bit surprising that they don\u0027t need to specify --use-zoom-for-dsf setting given that your change is supposed to be neutral when the setting is disabled.  (Is --use-zoom-for-dsf the default for C++ unit tests?)",
+      "revId": "1a66408873b552f6ba6351cfc67982129fb51aad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be48f58c_9a55556e",
+        "filename": "third_party/WebKit/Source/core/css/StyleEngineTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-09-19T01:35:01Z",
+      "side": 1,
+      "message": "In C++ unit tests, --use-zoom-for-dsf is not enabled. Indeed, it does not matter, because I defined and used StyleEngineClient class above (see line 676 of the file).\n\nIn the real situation, ChromeClientImpl::WindowToViewportScalar() that I used in ViewportStyleResolver::ViewportLengthValue() calls RenderWidget::ConvertWindowToViewport() and RenderWidget::ConvertWindowToViewport() scales the \"rect\" by DSF only when --use-zoom-for-dsf is enabled.\n\nOn the other hand, in this unit tests, ChromeClientImpl::WindowToViewportScalar() calls StyleEngineClient::ConvertWindowToViewport() instead of RenderWidget::ConvertWindowToViewport(), which always scales the \"rect\" by DSF regardless of enabling --use-zoom-for-dsf.",
+      "parentUuid": "c6aade37_f6e5e27c",
       "revId": "1a66408873b552f6ba6351cfc67982129fb51aad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "1a66408873b552f6ba6351cfc67982129fb51aad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574c9baf_ff226690",
+        "filename": "third_party/WebKit/Source/core/layout/TextAutosizer.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1237911
+      },
+      "writtenOn": "2017-09-19T01:35:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e97ffdc2_247d335c",
+      "revId": "1a66408873b552f6ba6351cfc67982129fb51aad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
