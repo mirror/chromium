@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a0e58eb3_347d6a84",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-19T17:28:24Z",
+      "side": 1,
+      "message": "yes, a different tab should not be affected. I updated the comment, hopefully that is clear.",
+      "parentUuid": "64518d05_72043cf2",
+      "revId": "f852e30f32c535d4a5da4c8d3f2cbace42cc3267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ce5520f_86b21ecc",
         "filename": "chrome/browser/ui/ash/media_client.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-19T07:13:41Z",
       "side": 1,
       "message": "maybe early return instead?",
+      "revId": "f852e30f32c535d4a5da4c8d3f2cbace42cc3267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc6add0_41ba74b8",
+        "filename": "chrome/browser/ui/ash/media_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-09-19T17:28:24Z",
+      "side": 1,
+      "message": "If we do if (!browser) return nullptr, at the end we still need a return nullptr sentence. Probably the current way is better.",
+      "parentUuid": "8ce5520f_86b21ecc",
       "revId": "f852e30f32c535d4a5da4c8d3f2cbace42cc3267",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
