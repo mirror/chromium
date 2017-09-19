@@ -17,16 +17,15 @@ template <typename T>
 struct DefaultSingletonTraits;
 }
 
-namespace ios {
-class ChromeBrowserState;
+namespace web {
+class BrowserState;
 }
 
 // Singleton that owns all SnapshotCaches and associates them with
 // ios::ChromeBrowserState.
 class SnapshotCacheFactory : public BrowserStateKeyedServiceFactory {
  public:
-  static SnapshotCache* GetForBrowserState(
-      ios::ChromeBrowserState* browser_state);
+  static SnapshotCache* GetForBrowserState(web::BrowserState* browser_state);
 
   static SnapshotCacheFactory* GetInstance();
 

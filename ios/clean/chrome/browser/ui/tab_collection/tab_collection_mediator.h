@@ -25,9 +25,6 @@ class WebStateList;
 // The source of snapshot updates.
 @property(nonatomic, weak) SnapshotCache* snapshotCache;
 
-// Takes a snapshot of the active webState and updates the snapshot cache.
-- (void)takeSnapshot;
-
 // Stops observing all objects.
 - (void)disconnect;
 
