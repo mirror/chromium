@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90753a6d_679ce666",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-19T01:00:22Z",
+      "side": 1,
+      "message": "Would you mind adding some unit tests for the new code (unless it is too difficult to do?) Both files you\u0027re modifying are already paired with _unittest.cc.",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2202a9f9_90104212",
+        "filename": "chrome/browser/chromeos/arc/arc_play_store_enabled_preference_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-19T01:00:22Z",
+      "side": 1,
+      "message": "I\u0027m not very familiar with this class but L60-63 should probably be like\n\n if (!ArcSessionManager::IsOobeOptInActive())\n   UpdateArcSessionManager();\n if (is_play_store_enabled)\n   return;\n\n? Is it okay top skip L67-82 completely when an opt-out user signs in?",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56837aba_ccd9fad3",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 768,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-09-19T01:00:22Z",
+      "side": 1,
+      "message": "Just to confirm, this path is taken when the user presses [x] button on the top-right corner of the ToS window too, correct?",
+      "revId": "bc38b304de0998b51dc02b6a3b1e234e960f0c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
