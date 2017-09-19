@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acced09b_ec22fb21",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-19T17:26:54Z",
+      "side": 1,
+      "message": "Comments?",
+      "range": {
+        "startLine": 511,
+        "startChar": 4,
+        "endLine": 511,
+        "endChar": 33
+      },
+      "revId": "5da96957a28e6d119db4852035fda05c12fbbbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12a19908_7f916c0e",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-19T17:26:54Z",
+      "side": 1,
+      "message": "s/Format/Formats",
+      "range": {
+        "startLine": 524,
+        "startChar": 5,
+        "endLine": 524,
+        "endChar": 11
+      },
+      "revId": "5da96957a28e6d119db4852035fda05c12fbbbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a74d263_565a3e49",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-19T17:26:54Z",
+      "side": 1,
+      "message": "nit: Do you need this variable?",
+      "revId": "5da96957a28e6d119db4852035fda05c12fbbbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60a117a_fc5f88ba",
+        "filename": "ios/tools/coverage/coverage.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-09-19T17:26:54Z",
+      "side": 1,
+      "message": "return [build_file_path[2:] for build_file_path in build_file_paths]",
+      "revId": "5da96957a28e6d119db4852035fda05c12fbbbe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
