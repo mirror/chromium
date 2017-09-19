@@ -319,16 +319,16 @@ void BleConnectionManager::RemoveObserver(Observer* observer) {
 }
 
 void BleConnectionManager::OnReceivedAdvertisementFromDevice(
-    const std::string& device_address,
-    const cryptauth::RemoteDevice& remote_device) {
+    const cryptauth::RemoteDevice& remote_device,
+    device::BluetoothDevice* bluetooth_device) {
   ConnectionMetadata* connection_metadata =
       GetConnectionMetadata(remote_device);
   if (!connection_metadata) {
     // If an advertisement  is received from a device that is not registered,
     // ignore it.
     PA_LOG(WARNING) << "Received an advertisement from a device which is not "
-                    << "registered. Bluetooth address: " << device_address
-                    << ", Remote Device ID: "
+                    << "registered. Bluetooth address: "
+                    << bluetooth_device->GetAddress() << ", Remote Device ID: "
                     << remote_device.GetTruncatedDeviceIdForLogs();
     return;
   }
@@ -336,8 +336,8 @@ void BleConnectionManager::OnReceivedAdvertisementFromDevice(
   if (connection_metadata->HasSecureChannel()) {
     PA_LOG(WARNING) << "Received another advertisement from a registered "
                     << "device which is already being actively communicated "
-                    << "with. Bluetooth address: " << device_address
-                    << ", Remote Device ID: "
+                    << "with. Bluetooth address: "
+                    << bluetooth_device->GetAddress() << ", Remote Device ID: "
                     << remote_device.GetTruncatedDeviceIdForLogs();
     return;
   }
@@ -349,8 +349,8 @@ void BleConnectionManager::OnReceivedAdvertisementFromDevice(
   // Create a connection to that device.
   std::unique_ptr<cryptauth::Connection> connection =
       cryptauth::weave::BluetoothLowEnergyWeaveClientConnection::Factory::
-          NewInstance(remote_device, device_address, adapter_,
-                      device::BluetoothUUID(std::string(kGattServerUuid)));
+          NewInstance(remote_device, adapter_,
+                      device::BluetoothUUID(kGattServerUuid), bluetooth_device);
   std::unique_ptr<cryptauth::SecureChannel> secure_channel =
       cryptauth::SecureChannel::Factory::NewInstance(std::move(connection),
                                                      cryptauth_service_);

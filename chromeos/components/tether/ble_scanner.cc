@@ -158,10 +158,10 @@ void BleScanner::DeviceChanged(device::BluetoothAdapter* adapter,
 }
 
 void BleScanner::NotifyReceivedAdvertisementFromDevice(
-    const std::string& device_address,
-    const cryptauth::RemoteDevice& remote_device) {
+    const cryptauth::RemoteDevice& remote_device,
+    device::BluetoothDevice* bluetooth_device) {
   for (auto& observer : observer_list_)
-    observer.OnReceivedAdvertisementFromDevice(device_address, remote_device);
+    observer.OnReceivedAdvertisementFromDevice(remote_device, bluetooth_device);
 }
 
 void BleScanner::NotifyDiscoverySessionStateChanged(
@@ -284,8 +284,7 @@ void BleScanner::CheckForMatchingScanFilters(
   if (!identified_device)
     return;
 
-  NotifyReceivedAdvertisementFromDevice(bluetooth_device->GetAddress(),
-                                        *identified_device);
+  NotifyReceivedAdvertisementFromDevice(*identified_device, bluetooth_device);
 }
 
 }  // namespace tether

@@ -55,14 +55,14 @@ BluetoothLowEnergyWeaveClientConnection::Factory*
 std::unique_ptr<Connection>
 BluetoothLowEnergyWeaveClientConnection::Factory::NewInstance(
     const RemoteDevice& remote_device,
-    const std::string& device_address,
     scoped_refptr<device::BluetoothAdapter> adapter,
-    const device::BluetoothUUID remote_service_uuid) {
+    const device::BluetoothUUID remote_service_uuid,
+    device::BluetoothDevice* bluetooth_device) {
   if (!factory_instance_) {
     factory_instance_ = new Factory();
   }
-  return factory_instance_->BuildInstance(remote_device, device_address,
-                                          adapter, remote_service_uuid);
+  return factory_instance_->BuildInstance(
+      remote_device, adapter, remote_service_uuid, bluetooth_device);
 }
 
 // static
@@ -74,11 +74,11 @@ void BluetoothLowEnergyWeaveClientConnection::Factory::SetInstanceForTesting(
 std::unique_ptr<Connection>
 BluetoothLowEnergyWeaveClientConnection::Factory::BuildInstance(
     const RemoteDevice& remote_device,
-    const std::string& device_address,
     scoped_refptr<device::BluetoothAdapter> adapter,
-    const device::BluetoothUUID remote_service_uuid) {
+    const device::BluetoothUUID remote_service_uuid,
+    device::BluetoothDevice* bluetooth_device) {
   return base::MakeUnique<BluetoothLowEnergyWeaveClientConnection>(
-      remote_device, device_address, adapter, remote_service_uuid);
+      remote_device, adapter, remote_service_uuid, bluetooth_device);
 }
 
 // static
@@ -131,11 +131,11 @@ std::string BluetoothLowEnergyWeaveClientConnection::SubStatusToString(
 BluetoothLowEnergyWeaveClientConnection::
     BluetoothLowEnergyWeaveClientConnection(
         const RemoteDevice& device,
-        const std::string& device_address,
         scoped_refptr<device::BluetoothAdapter> adapter,
-        const device::BluetoothUUID remote_service_uuid)
+        const device::BluetoothUUID remote_service_uuid,
+        device::BluetoothDevice* bluetooth_device)
     : Connection(device),
-      device_address_(device_address),
+      bluetooth_device_(bluetooth_device),
       adapter_(adapter),
       remote_service_({remote_service_uuid, std::string()}),
       packet_generator_(
@@ -717,12 +717,12 @@ std::string BluetoothLowEnergyWeaveClientConnection::GetDeviceAddress() {
   // |gatt_connection_|. Unpaired BLE device addresses are ephemeral and are
   // expected to change periodically.
   return gatt_connection_ ? gatt_connection_->GetDeviceAddress()
-                          : device_address_;
+                          : bluetooth_device_->GetAddress();
 }
 
 device::BluetoothDevice*
 BluetoothLowEnergyWeaveClientConnection::GetBluetoothDevice() {
-  return adapter_->GetDevice(GetDeviceAddress());
+  return bluetooth_device_;
 }
 
 device::BluetoothRemoteGattService*
