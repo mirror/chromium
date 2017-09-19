@@ -2099,11 +2099,15 @@ id<GREYMatcher> TappableBookmarkNodeWithLabel(NSString* label) {
   NSString* titleIdentifier = @"bookmark_editing_text";
 
   // Type the folder title.
-  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(titleIdentifier)]
+  [[EarlGrey
+      selectElementWithMatcher:grey_allOf(grey_accessibilityID(titleIdentifier),
+                                          grey_sufficientlyVisible(), nil)]
       performAction:grey_replaceText(folderTitle)];
 
   // Press the keyboard return key.
-  [[EarlGrey selectElementWithMatcher:grey_accessibilityID(titleIdentifier)]
+  [[EarlGrey
+      selectElementWithMatcher:grey_allOf(grey_accessibilityID(titleIdentifier),
+                                          grey_sufficientlyVisible(), nil)]
       performAction:grey_typeText(@"\n")];
 
   // Wait until the editing textfield is gone.
