@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f61c4e3_9dab6cd6",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-19T14:47:38Z",
+      "side": 1,
+      "message": "How do we ensure that?",
+      "range": {
+        "startLine": 140,
+        "startChar": 38,
+        "endLine": 140,
+        "endChar": 70
+      },
+      "revId": "6086300a1af1aa3cc28e629e22b01c38f9bfaa44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b659dc94_956beb86",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-19T14:47:38Z",
+      "side": 1,
+      "message": "...Description",
+      "range": {
+        "startLine": 191,
+        "startChar": 27,
+        "endLine": 191,
+        "endChar": 37
+      },
+      "revId": "6086300a1af1aa3cc28e629e22b01c38f9bfaa44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453d731c_fe07973c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-19T14:47:38Z",
+      "side": 1,
+      "message": "Can you explain somewhere what the difference between tags and metadata is?",
+      "range": {
+        "startLine": 192,
+        "startChar": 53,
+        "endLine": 192,
+        "endChar": 81
+      },
+      "revId": "6086300a1af1aa3cc28e629e22b01c38f9bfaa44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfc5e5ee_b429dd55",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-19T14:47:38Z",
+      "side": 1,
+      "message": "Add the exception to the thrown AssertionError?",
+      "range": {
+        "startLine": 200,
+        "startChar": 17,
+        "endLine": 200,
+        "endChar": 29
+      },
+      "revId": "6086300a1af1aa3cc28e629e22b01c38f9bfaa44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "525d33d3_edbb8012",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/test/ScreenShooter.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-19T14:47:38Z",
+      "side": 1,
+      "message": "The call site catches an IOException anyway, so you could just throw it from this method.",
+      "range": {
+        "startLine": 207,
+        "startChar": 10,
+        "endLine": 207,
+        "endChar": 31
+      },
+      "revId": "6086300a1af1aa3cc28e629e22b01c38f9bfaa44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
