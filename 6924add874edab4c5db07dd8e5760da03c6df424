@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "16024dd9_7f402cf2",
+        "filename": "chrome/browser/extensions/api/passwords_private/passwords_private_api.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1140375
+      },
+      "writtenOn": "2017-09-19T16:32:25Z",
+      "side": 1,
+      "message": "I\u0027ve included this line in response to a warning from git cl lint:\n\nchrome/browser/extensions/api/passwords_private/passwords_private_delegate_impl.cc:195:  Add #include \u003cutility\u003e for move  [build/include_what_you_use] [4]",
+      "parentUuid": "cd4e03e6_04796ebb",
+      "revId": "6924add874edab4c5db07dd8e5760da03c6df424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "423cba25_2ff63f8c",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
         "patchSetId": 7
@@ -131,6 +149,24 @@
     },
     {
       "key": {
+        "uuid": "203a694b_b7cf99d9",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1140375
+      },
+      "writtenOn": "2017-09-19T16:32:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2fcb13e_c2251077",
+      "revId": "6924add874edab4c5db07dd8e5760da03c6df424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b58db7f_07fc7026",
         "filename": "chrome/common/extensions/api/passwords_private.idl",
         "patchSetId": 7
@@ -142,6 +178,24 @@
       "writtenOn": "2017-09-19T16:10:40Z",
       "side": 1,
       "message": "s/password/exception/",
+      "revId": "6924add874edab4c5db07dd8e5760da03c6df424",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0f4c0fb_8c3407ed",
+        "filename": "chrome/common/extensions/api/passwords_private.idl",
+        "patchSetId": 7
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1140375
+      },
+      "writtenOn": "2017-09-19T16:32:25Z",
+      "side": 1,
+      "message": "Would you elaborate on this comment... I\u0027m not familiar with some of the terms.",
+      "parentUuid": "7b58db7f_07fc7026",
       "revId": "6924add874edab4c5db07dd8e5760da03c6df424",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
