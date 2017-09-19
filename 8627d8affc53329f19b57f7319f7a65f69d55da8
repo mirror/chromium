@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "935f98a8_691b0e97",
+        "filename": "chrome/browser/resources/settings/device_page/power.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-09-19T23:39:20Z",
+      "side": 1,
+      "message": "when this is hidden, it causes the UI to look slightly different from other device pages: there\u0027s a thin gray line separating the \"Power\" heading from the \"When idle\" setting (usually, there\u0027s just empty space separating the heading and the first setting). screenshots at http://www/~derat/no_crawl/20170919/ .\n\npresumably this is caused by the next settings-box div not having a \"first\" class. is there some way to add this dynamically? would it be possible to use .first-child or .first-of-type or something instead?",
+      "revId": "8627d8affc53329f19b57f7319f7a65f69d55da8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
