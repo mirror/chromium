@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c69a46f_d07517c7",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-19T22:13:21Z",
+      "side": 1,
+      "message": "\u003e Nit: DISALLOW_COPY_AND_ASSIGN on these?\n\nSure, did all.",
+      "parentUuid": "9bed7f9e_ee166f43",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09be3b84_1219e92d",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25bc4e25_f40ab856",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-19T22:13:21Z",
+      "side": 1,
+      "message": "\u003e Why a hash map?  Can we just use a std::map?\n\nOkay, switched to std::unordered_map.  (I originally used hash_map to make it clear that order doesn\u0027t matter.  unodered_map does the same thing.)",
+      "parentUuid": "09be3b84_1219e92d",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b3c2441e_c3d8c47f",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-19T22:13:21Z",
+      "side": 1,
+      "message": "Done.  (Makes sense to me.)",
+      "parentUuid": "7d98b7f5_42ddb60b",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "563fc715_6c9bf659",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74014e4a_b7040642",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-19T22:13:21Z",
+      "side": 1,
+      "message": "\u003e Nit: Can this be constexpr?  Or is std::string() not constexpr?\n\nNo, apparently it can\u0027t.\n\n../../chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc:2\n97:22: error: constexpr variable cannot have non-literal type \u0027const Response\u0027\n  constexpr Response kNoResponse \u003d {std::string(), false, 0, std::string()};\n                     ^\n../../chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc:291:23: note: \u0027Response\u0027 is not literal because it has data member \u0027requested_url\u0027 of non-literal type \u0027const std::string\u0027 (aka \u0027const basic_string\u003cchar, char_traits\u003cchar\u003e, allocator\u003cchar\u003e \u003e\u0027)\n    const std::string requested_url;\n\nThat made me want to put constexpr in the Response data structure.  But that doesn\u0027t help.\n../../chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc:291:5: error: non-static data member cannot be constexpr; did you intend to make it const?\n    constexpr std::string requested_url;\n    ^~~~~~~~~\n    const\n\nLeft as is.",
+      "parentUuid": "563fc715_6c9bf659",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f67dedd5_64824243",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-19T22:13:21Z",
+      "side": 1,
+      "message": "\u003e Nit: |fake_responses|?\n\nSure, now |responses|.  (Dropped fake_ already.)",
+      "parentUuid": "40cec8ea_259f8565",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74e44b94_a0dc9b46",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089fb2f4_d0a88916",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-19T22:13:21Z",
+      "side": 1,
+      "message": "\u003e Nit: We typically use std::string() in place of \"\" to init empty strings\n\nYeah, I know.  I just forgot in a few places in this changelist.  (I remembered in others!)",
+      "parentUuid": "74e44b94_a0dc9b46",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "67cb5bf1_a01c2413",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-19T22:13:21Z",
+      "side": 1,
+      "message": "\u003e Nit: Might want to consider range-based for or at least using a ref \"case \u003d cases[i]\" below.  Dunno whether the SCOPED_TRACE helps much, maybe a SCOPED_TRACE of more of the details of the case, if one is needed at all?\n\nThe SCOPED_TRACE helped me a lot.  I think a scoped_trace with all the details would work well, but a scoped trace of just a bit (say the first response) would not help.  I think writing a full scoped_trace output instead of presenting an index would be a pain; I\u0027d rather skip with the index loop.  The range based for seems to make writing the scoped_trace output too much trouble.\n\nAdded a local reference |test_case| instead of |cases[i]|.  Couldn\u0027t use |case| because it\u0027s a reserved word.",
+      "parentUuid": "c0e6c680_cd912399",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b30b8e0a_fde036aa",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea57d58_eea7897c",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-19T22:13:21Z",
+      "side": 1,
+      "message": "\u003e TBH, you shouldn\u0027t even need the cast; since the target is an enum rather than an enum class, it should silently coerce.\n\nNope.\n\n../../chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc:373:13: error: cannot initialize a parameter of type \u0027net::HttpStatusCode\u0027 with an lvalue of type \u0027const int\u0027\n            test_case.responses[j].http_response_code,\n            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n../../net/url_request/test_url_fetcher_factory.h:436:39: note: passing argument to parameter \u0027response_code\u0027 here\n                       HttpStatusCode response_code,",
+      "parentUuid": "b30b8e0a_fde036aa",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "b49918d3_6194fdc5",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-19T22:13:21Z",
+      "side": 1,
+      "message": "\u003e Your CL here (coupled with another one recently) makes me wonder if we should change this lifetime model to expect people to clean up their own observers.  Maybe it would be clearer.\n\nIt would definitely be clearer in this class but not in general.  I think that\u0027s hard to do to make it not own itself.  The observer is created in OpenMatch(), and I can imagine having multiple observers running at the same time.  Keeping track of running observers in the edit model seems like more complexity there, and that\u0027s pretty darn complex as it is.",
+      "parentUuid": "adbef74a_7e97b34a",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d0063a5_bc181c46",
         "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
         "patchSetId": 2
@@ -169,6 +331,24 @@
       "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a1936d6_425aa15c",
+        "filename": "chrome/browser/ui/omnibox/chrome_omnibox_navigation_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-09-19T22:13:21Z",
+      "side": 1,
+      "message": "\u003e Nit: Prefer \u003d to () for unique_ptrs; see https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Variable-initialization\n\nFixed throughout this file.",
+      "parentUuid": "1d0063a5_bc181c46",
+      "revId": "fd3347e8fba9cbaf4a1198f00f2862c68402cb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
