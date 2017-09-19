@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0253ba68_c8c06789",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-19T07:48:54Z",
+      "side": 1,
+      "message": "nit: curlies {}",
+      "revId": "e4131e768dfe5abd99b26a7bcc6dae4f7ae94bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
