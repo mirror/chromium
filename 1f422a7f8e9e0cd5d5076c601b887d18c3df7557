@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "93915e7b_e0ba3155",
+        "filename": "components/omnibox/browser/autocomplete_input.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-19T17:20:54Z",
+      "side": 1,
+      "message": "I set them all to false because I genuinely didn\u0027t see a favorite, and to make remembering easier. Again, I\u0027ll think about it and align everything.",
+      "parentUuid": "3875cd1e_6fb48c5d",
+      "range": {
+        "startLine": 86,
+        "startChar": 33,
+        "endLine": 86,
+        "endChar": 38
+      },
+      "revId": "1f422a7f8e9e0cd5d5076c601b887d18c3df7557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f838142_c9b4a332",
         "filename": "components/omnibox/browser/autocomplete_input.h",
         "patchSetId": 5
@@ -36,6 +60,24 @@
       "writtenOn": "2017-09-19T16:30:06Z",
       "side": 1,
       "message": "here and below:\nI don\u0027t feel a readability improvement from having the default arguments here.  (I looked at the code before making this comment.)  And the style guide lists a downside:\n\u003e Default parameters are re-evaluated at each call site, which can bloat the generated code.\n\nIf you feel strongly that this improves readability, I won\u0027t object.  But I feel for single-parameter setter functions having a default is unnecessary, and, given the quotation above, might as well be avoided.\n\n(The situation is made somewhat more confusing because you have your defaults always set to true.  This does help with understandability--set_XXX makes sense to default to true--but is confusing given only in some of these cases does the value in the the default AutocompleteInput constructor default to true and sometimes it defaults to false.)",
+      "revId": "1f422a7f8e9e0cd5d5076c601b887d18c3df7557",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3daafd0_a5ea69bd",
+        "filename": "components/omnibox/browser/autocomplete_input.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1105777
+      },
+      "writtenOn": "2017-09-19T17:20:54Z",
+      "side": 1,
+      "message": "I don\u0027t understand \"re-evaluated\". It\u0027s my understanding that this:\n\n  input.set_prevent_inline_autocomplete();\n\nwould generate the exact same code as:\n\n  input.set_prevent_inline_autocomplete(true);\n\nI did feel that it made the code much more readable (cleaner), and furthermore that \"true\" then becomes visibly different from \"false\".\n\nI missed the default constructor. hmm\n\nI\u0027ll give it more thought. I really think it\u0027s better, although if it\u0027s surprising to a team member reading it, then that doesn\u0027t help.",
+      "parentUuid": "6f838142_c9b4a332",
       "revId": "1f422a7f8e9e0cd5d5076c601b887d18c3df7557",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
