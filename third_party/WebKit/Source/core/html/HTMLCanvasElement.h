@@ -120,6 +120,9 @@ class CORE_EXPORT HTMLCanvasElement final
                    ExceptionState& exception_state) const {
     return toDataURL(mime_type, ScriptValue(), exception_state);
   }
+  String toDataURL(ExceptionState& exception_state) const {
+    return toDataURL(String(), ScriptValue(), exception_state);
+  }
 
   void toBlob(BlobCallback*,
               const String& mime_type,
@@ -129,6 +132,9 @@ class CORE_EXPORT HTMLCanvasElement final
               const String& mime_type,
               ExceptionState& exception_state) {
     return toBlob(callback, mime_type, ScriptValue(), exception_state);
+  }
+  void toBlob(BlobCallback* callback, ExceptionState& exception_state) {
+    return toBlob(callback, String(), ScriptValue(), exception_state);
   }
 
   // Used for canvas capture.
