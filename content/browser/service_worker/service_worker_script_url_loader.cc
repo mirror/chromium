@@ -134,7 +134,11 @@ void ServiceWorkerScriptURLLoader::OnReceiveResponse(
   response_info->connection_info = response_head.connection_info;
   response_info->socket_address = response_head.socket_address;
 
-  // TODO(nhiroki): Check the response code.
+  if (response_head.headers->response_code() / 100 != 2) {
+    // Non-2XX HTTP status code is handled as an error.
+    CommitCompleted(ResourceRequestCompletionStatus(net::ERR_INVALID_RESPONSE));
+    return;
+  }
 
   // TODO(nhiroki): Check the path restriction.
   // (See ServiceWorkerWriteToCacheJob::CheckPathRestriction())
