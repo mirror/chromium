@@ -22,6 +22,29 @@
       "revId": "e8eefbe211c7808de2eca9d57c9b850a40a95272",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1eb2fab_1d2ffb06",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-09-19T08:11:42Z",
+      "side": 1,
+      "message": "should you also move down kFrameAncestors to make it alphabetical?",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 99,
+        "endChar": 13
+      },
+      "revId": "e8eefbe211c7808de2eca9d57c9b850a40a95272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
