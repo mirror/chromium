@@ -16,6 +16,24 @@
       "revId": "514556293c1a9a9f45d7ecf9f4fc3fd7de7f8c51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac97333_ca1b3f2e",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-09-19T23:12:22Z",
+      "side": 1,
+      "message": "GURL doesn\u0027t accept schemes that can\u0027t be opened as webpages. ipp:// and ipps:// are two of those schemes.",
+      "parentUuid": "c1c307ce_d964f036",
+      "revId": "514556293c1a9a9f45d7ecf9f4fc3fd7de7f8c51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
