@@ -41,6 +41,11 @@ config("compiler") {
     "/FS",  # Preserve previous PDB behavior.
     "/bigobj",  # Some of our files are bigger than the regular limits.
   ]
+  if (!is_clang) {
+    # With VS 2017 you must specify /guard:cf to both the compiler and the
+    # linker.
+    cflags += [ "/guard:cf" ]
+  }
 
   # Force C/C++ mode for the given GN detected file type. This is necessary
   # for precompiled headers where the same source file is compiled in both
