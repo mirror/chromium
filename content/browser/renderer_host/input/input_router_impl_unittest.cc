@@ -1991,8 +1991,10 @@ TEST_F(InputRouterImplTest, TouchActionInCallback) {
                               INPUT_EVENT_ACK_STATE_CONSUMED,
                               cc::TouchAction::kTouchActionNone);
   ASSERT_EQ(1U, disposition_handler_->GetAndResetAckCount());
-  EXPECT_EQ(cc::TouchAction::kTouchActionNone,
-            input_router_->AllowedTouchAction());
+  base::Optional<cc::TouchAction> allowed_touch_action =
+      input_router_->AllowedTouchAction();
+  EXPECT_TRUE(allowed_touch_action.has_value());
+  EXPECT_EQ(cc::TouchAction::kTouchActionNone, allowed_touch_action.value());
 }
 
 namespace {
