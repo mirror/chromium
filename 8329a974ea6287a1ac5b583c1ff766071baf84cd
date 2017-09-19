@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7beb27b1_37c95281",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-19T01:46:43Z",
+      "side": 1,
+      "message": "extension sets were intended to be mutually exclusive; we probably shouldn\u0027t require and extension to be in multiple sets.",
+      "revId": "8329a974ea6287a1ac5b583c1ff766071baf84cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e79e85_a164bfce",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1362,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-19T01:46:43Z",
+      "side": 1,
+      "message": "This seems super subtle.  We need to know the inner logic of ExtensionRegistrar in order to know that RemoveExtension() deactivates the extension.",
+      "revId": "8329a974ea6287a1ac5b583c1ff766071baf84cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ade6a05_65d1a4bb",
+        "filename": "chrome/browser/extensions/extension_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1404,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-19T01:46:43Z",
+      "side": 1,
+      "message": "Why this change?",
+      "revId": "8329a974ea6287a1ac5b583c1ff766071baf84cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02797ee4_8b0e1836",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-19T01:46:43Z",
+      "side": 1,
+      "message": "I find it very confusing that we use totally different syntax than in the registry - how do we know what state extensions are expected to be in?  What\u0027s the motivation for the deviation?",
+      "revId": "8329a974ea6287a1ac5b583c1ff766071baf84cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e0b7a6_bddbff24",
+        "filename": "extensions/browser/extension_registrar.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-09-19T01:46:43Z",
+      "side": 1,
+      "message": "Add notes on lifetime.",
+      "revId": "8329a974ea6287a1ac5b583c1ff766071baf84cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
