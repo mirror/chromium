@@ -56,7 +56,7 @@ void GlRenderLayer::SetTexture(const uint8_t* texture,
                                int height,
                                int stride) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  CHECK(width > 0 && height > 0);
+  CHECK(width > 0 && height >= 0);
   texture_set_ = true;
   glActiveTexture(GL_TEXTURE0 + texture_id_);
   glBindTexture(GL_TEXTURE_2D, texture_handle_);
