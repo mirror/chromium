@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "64a1018e_49b4604d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-19T15:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd2d7dbd_7f66f0d2",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 38
+      },
+      "revId": "0d74f52276310a1ca2094db95c3f0746bec4a285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf6609f4_cafd080d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f7fd474b_6c29d2b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/bookmarks/BookmarkItemsAdapter.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-19T15:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf6609f4_cafd080d",
+      "range": {
+        "startLine": 210,
+        "startChar": 43,
+        "endLine": 210,
+        "endChar": 73
+      },
+      "revId": "0d74f52276310a1ca2094db95c3f0746bec4a285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18773062_54beb4e5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsManager.java",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "0d74f52276310a1ca2094db95c3f0746bec4a285",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c8853f_a59d431a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/RecentTabsManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1227839
+      },
+      "writtenOn": "2017-09-19T15:30:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18773062_54beb4e5",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 33
+      },
+      "revId": "0d74f52276310a1ca2094db95c3f0746bec4a285",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
