@@ -479,6 +479,10 @@ void MemoryDumpManager::UnregisterDumpProviderInternal(
   // to just skip it, without actually invoking the |mdp|, which might be
   // destroyed by the caller soon after this method returns.
   (*mdp_iter)->disabled = true;
+
+  // Make races on MDP destruction more explicit.
+  *const_cast<MemoryDumpProvider**>(&(*mdp_iter)->dump_provider) =
+      reinterpret_cast<MemoryDumpProvider*>(0x0000dead);
   dump_providers_.erase(mdp_iter);
 }
 
@@ -669,6 +673,11 @@ void MemoryDumpManager::InvokeOnMemoryDump(
   // skip the hop and move on. Hence the manual naked -> scoped ptr juggling.
   auto pmd_async_state = WrapUnique(owned_pmd_async_state);
   owned_pmd_async_state = nullptr;
+
+  // Initalizes the ThreadLocalEventBuffer to guarantee that the TRACE_EVENTs
+  // below don't end up re-entering MemoryDumpManager.
+  // See https://crbug.com/766274#c5.
+  TraceLog::GetInstance()->InitializeThreadLocalEventBufferIfSupported();
 
   // Read MemoryDumpProviderInfo thread safety considerations in
   // memory_dump_manager.h when accessing |mdpinfo| fields.
