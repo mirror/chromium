@@ -16,6 +16,24 @@
       "revId": "e1eac38ac009c52f281d82e3b8699b62169f6a10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c94e70f8_c5549442",
+        "filename": "cc/trees/layer_tree_host_unittest_animation.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1290,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-09-19T19:37:37Z",
+      "side": 1,
+      "message": "Currently the patch doesn\u0027t incorporate existence of element id or the state of the property trees into cc::Animation.affects_{active,pending}_elements and the methods that build atop it.\n\nShould it, and if so, in what manner? Hmm.\n\ncc::Animation active/pending state is based on:\n\n1. defaults affects_active/pending_elements to true in ctor\n2. propagates the pending state when animations are activated\n3. sets newly created impl animations\u0027 active state to false in PushNewAnimationsToImplThread and ScrollAnimationApplyAdjustment\n4. sets affects_pending_elements to false when animations are completed in AnimationTicker::RemoveAnimationsCompletedOnMainThread",
+      "parentUuid": "84d759e0_09b04f30",
+      "revId": "e1eac38ac009c52f281d82e3b8699b62169f6a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
