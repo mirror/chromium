@@ -46,6 +46,8 @@ ResultExpr UtilityProcessPolicy::EvaluateSyscall(int sysno) const {
     case __NR_times:
     case __NR_uname:
       return Allow();
+    case __NR_sched_getaffinity:
+      return sandbox::RestrictSchedTarget(GetPolicyPid(), sysno);
     default:
       // Default on the content baseline policy.
       return SandboxBPFBasePolicy::EvaluateSyscall(sysno);
