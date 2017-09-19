@@ -1251,10 +1251,6 @@ void Layer::CreateCcLayer() {
   RecomputePosition();
 }
 
-gfx::Transform Layer::transform() const {
-  return cc_layer_->transform();
-}
-
 void Layer::RecomputeDrawsContentAndUVRect() {
   DCHECK(cc_layer_);
   gfx::Size size(bounds_.size());
