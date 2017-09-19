@@ -3212,11 +3212,6 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kUseSuggestionsEvenIfFewFeatureDescription, kOsAll,
      FEATURE_VALUE_TYPE(suggestions::kUseSuggestionsEvenIfFewFeature)},
 
-    {"capture-thumbnail-on-load-finished",
-     flag_descriptions::kCaptureThumbnailOnLoadFinishedName,
-     flag_descriptions::kCaptureThumbnailOnLoadFinishedDescription, kOsDesktop,
-     FEATURE_VALUE_TYPE(features::kCaptureThumbnailOnLoadFinished)},
-
     {"use-new-accept-language-header",
      flag_descriptions::kUseNewAcceptLanguageHeaderName,
      flag_descriptions::kUseNewAcceptLanguageHeaderDescription, kOsAll,
