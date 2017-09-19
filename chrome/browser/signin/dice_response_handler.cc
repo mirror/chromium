@@ -31,6 +31,10 @@
 #include "google_apis/gaia/gaia_constants.h"
 #include "google_apis/gaia/google_service_auth_error.h"
 
+#include "chrome/browser/signin/dice_tab_helper.h"
+#include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/sync/one_click_signin_sync_starter.h"
+
 const int kDiceTokenFetchTimeoutSeconds = 10;
 
 namespace {
@@ -65,6 +69,19 @@ enum DiceTokenFetchResult {
 
   kDiceTokenFetchResultCount
 };
+
+void StartSync(const std::string& gaia_id,
+               const std::string& email,
+               content::WebContents* web_contents) {
+  DCHECK(web_contents);
+
+  Browser* browser = Browser::FromWebContents(web_contents);
+  Profile* profile = browser->profile();
+  // OneClickSigninSyncStarter is suicidal (it will kill itself once it finishes
+  // enabling sync).
+  new OneClickSigninSyncStarter(profile, browser, gaia_id, email, web_contents,
+                                OneClickSigninSyncStarter::Callback());
+}
 
 class DiceResponseHandlerFactory : public BrowserContextKeyedServiceFactory {
  public:
@@ -133,12 +150,16 @@ DiceResponseHandler::DiceTokenFetcher::DiceTokenFetcher(
     const std::string& gaia_id,
     const std::string& email,
     const std::string& authorization_code,
+    bool should_start_sync,
     SigninClient* signin_client,
     AccountReconcilor* account_reconcilor,
+    content::WebContents* web_contents,
     DiceResponseHandler* dice_response_handler)
-    : gaia_id_(gaia_id),
+    : WebContentsObserver(web_contents),
+      gaia_id_(gaia_id),
       email_(email),
       authorization_code_(authorization_code),
+      should_start_sync_(true),
       dice_response_handler_(dice_response_handler),
       timeout_closure_(
           base::Bind(&DiceResponseHandler::DiceTokenFetcher::OnTimeout,
@@ -174,8 +195,8 @@ void DiceResponseHandler::DiceTokenFetcher::OnClientOAuthSuccess(
   RecordDiceFetchTokenResult(kFetchSuccess);
   gaia_auth_fetcher_.reset();
   timeout_closure_.Cancel();
-  dice_response_handler_->OnTokenExchangeSuccess(this, gaia_id_, email_,
-                                                 result);
+  dice_response_handler_->OnTokenExchangeSuccess(
+      this, gaia_id_, email_, should_start_sync_, web_contents(), result);
   // |this| may be deleted at this point.
 }
 
@@ -218,13 +239,14 @@ DiceResponseHandler::DiceResponseHandler(
 DiceResponseHandler::~DiceResponseHandler() {}
 
 void DiceResponseHandler::ProcessDiceHeader(
-    const signin::DiceResponseParams& dice_params) {
+    const signin::DiceResponseParams& dice_params,
+    content::WebContents* web_contents) {
   DCHECK(signin::IsDiceFixAuthErrorsEnabled());
   switch (dice_params.user_intention) {
     case signin::DiceAction::SIGNIN:
-      ProcessDiceSigninHeader(dice_params.signin_info.gaia_id,
-                              dice_params.signin_info.email,
-                              dice_params.signin_info.authorization_code);
+      ProcessDiceSigninHeader(
+          dice_params.signin_info.gaia_id, dice_params.signin_info.email,
+          dice_params.signin_info.authorization_code, web_contents);
       return;
     case signin::DiceAction::SIGNOUT: {
       const signin::DiceResponseParams::SignoutInfo& signout_info =
@@ -269,10 +291,12 @@ bool DiceResponseHandler::CanGetTokenForAccount(const std::string& gaia_id,
 void DiceResponseHandler::ProcessDiceSigninHeader(
     const std::string& gaia_id,
     const std::string& email,
-    const std::string& authorization_code) {
+    const std::string& authorization_code,
+    content::WebContents* web_contents) {
   DCHECK(!gaia_id.empty());
   DCHECK(!email.empty());
   DCHECK(!authorization_code.empty());
+  // DCHECK(web_contents);
   VLOG(1) << "Start processing Dice signin response";
   RecordDiceResponseHeader(kSignin);
 
@@ -288,10 +312,15 @@ void DiceResponseHandler::ProcessDiceSigninHeader(
       return;  // There is already a request in flight with the same parameters.
     }
   }
-
+  bool should_start_sync = false;
+  if (signin::IsAccountConsistencyDiceEnabled() && web_contents) {
+    DiceTabHelper* tab_helper = DiceTabHelper::FromWebContents(web_contents);
+    should_start_sync =
+        tab_helper && tab_helper->should_start_sync_after_web_signin();
+  }
   token_fetchers_.push_back(base::MakeUnique<DiceTokenFetcher>(
-      gaia_id, email, authorization_code, signin_client_, account_reconcilor_,
-      this));
+      gaia_id, email, authorization_code, should_start_sync, signin_client_,
+      account_reconcilor_, web_contents, this));
 }
 
 void DiceResponseHandler::ProcessDiceSignoutHeader(
@@ -357,17 +386,28 @@ void DiceResponseHandler::DeleteTokenFetcher(DiceTokenFetcher* token_fetcher) {
 
 void DiceResponseHandler::OnTokenExchangeSuccess(
     DiceTokenFetcher* token_fetcher,
-    const std::string& gaia_id,
-    const std::string& email,
+    const std::string gaia_id,
+    const std::string email,
+    bool should_start_sync,
+    content::WebContents* web_contents,
     const GaiaAuthConsumer::ClientOAuthResult& result) {
   if (!CanGetTokenForAccount(gaia_id, email))
     return;
 
   std::string account_id =
       account_tracker_service_->SeedAccountInfo(gaia_id, email);
+  std::string refresh_token = result.refresh_token;
+
   VLOG(1) << "[Dice] OAuth success for account: " << account_id;
-  token_service_->UpdateCredentials(account_id, result.refresh_token);
   DeleteTokenFetcher(token_fetcher);
+
+  // Store the new account and start sync if needed.
+  token_service_->UpdateCredentials(account_id, result.refresh_token);
+  if (!signin_manager_->IsAuthenticated() && should_start_sync &&
+      web_contents) {
+    VLOG(1) << "Start sync after Google web-sign in for account " << account_id;
+    StartSync(gaia_id, email, web_contents);
+  }
 }
 
 void DiceResponseHandler::OnTokenExchangeFailure(

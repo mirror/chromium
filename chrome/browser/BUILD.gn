@@ -2062,6 +2062,8 @@ split_static_library("browser") {
     sources += [
       "signin/dice_response_handler.cc",
       "signin/dice_response_handler.h",
+      "signin/dice_tab_helper.cc",
+      "signin/dice_tab_helper.h",
     ]
   }
   if (enable_spellcheck) {
@@ -4402,6 +4404,8 @@ static_library("test_support") {
     "signin/fake_profile_oauth2_token_service_builder.h",
     "signin/fake_signin_manager_builder.cc",
     "signin/fake_signin_manager_builder.h",
+    "signin/test_utils.cc",
+    "signin/test_utils.h",
     "ssl/ssl_client_auth_requestor_mock.cc",
     "ssl/ssl_client_auth_requestor_mock.h",
     "sync/profile_sync_test_util.cc",
