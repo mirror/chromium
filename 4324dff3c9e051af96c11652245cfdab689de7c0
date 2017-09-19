@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "169bd622_cb16ad1f",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2078,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-09-19T02:23:50Z",
+      "side": 1,
+      "message": "I don\u0027t think we should check user gesture, as it seems to be different from the spec:\n\n\"In a particular user agent, every command must be consistently either supported or not. Specifically, a user agent must not permit one page to see the same command sometimes supported and sometimes not over the course of the same browsing session, unless the user agent has been upgraded or reconfigured in the middle of a session.\"",
+      "range": {
+        "startLine": 2078,
+        "startChar": 6,
+        "endLine": 2078,
+        "endChar": 51
+      },
+      "revId": "4324dff3c9e051af96c11652245cfdab689de7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
