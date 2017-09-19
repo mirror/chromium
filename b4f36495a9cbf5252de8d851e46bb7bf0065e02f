@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc7545ab_b538bf8d",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-19T01:14:17Z",
+      "side": 1,
+      "message": "nit: Could you call this \"_deobfuscator\"? I just couldn\u0027t because it would clash with the import.",
+      "revId": "b4f36495a9cbf5252de8d851e46bb7bf0065e02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f19622_5cb68d44",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-19T01:14:17Z",
+      "side": 1,
+      "message": "nit: use CapsNaming _UpdateMyPads()",
+      "revId": "b4f36495a9cbf5252de8d851e46bb7bf0065e02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d3465ad_0e993119",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-19T01:14:17Z",
+      "side": 1,
+      "message": "nit: log -\u003e parsed_line",
+      "revId": "b4f36495a9cbf5252de8d851e46bb7bf0065e02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62804993_e3c1b815",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-19T01:14:17Z",
+      "side": 1,
+      "message": "nit: move this function to be a sibling of get_pid_style()",
+      "revId": "b4f36495a9cbf5252de8d851e46bb7bf0065e02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b6dc6a7_c45e4a41",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-19T01:14:17Z",
+      "side": 1,
+      "message": "This misses printing of ActivityManager line before fast\u003dFalse. Tried this out and I think it\u0027s worth special-casing this line:\n\nI ActivityManager: Start proc 2399:org.chromium.chrome/u0a221 for activity org.chromium.chrome/com.google.android.apps.chrome.Main\n\n2399 is the PID, so just see if the pid is in my_pids.\n\n\nAlso - we should print these lines not based on |fast|, but rather based on whether any lines have already been printed.\n\nAlso also - we could consider parsing the pids out of this log message to populate my_pids, but I\u0027m afraid that would cause us to pick up previous instances. Perhaps just add them if we\u0027ve already printed a line? I\u0027m thinking this would enable us to pick up short-lived renderers / utility processes.",
+      "revId": "b4f36495a9cbf5252de8d851e46bb7bf0065e02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15060225_bbcdd62c",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-19T01:14:17Z",
+      "side": 1,
+      "message": "nit: elif fast:",
+      "revId": "b4f36495a9cbf5252de8d851e46bb7bf0065e02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1976ddd2_a28be2cf",
+        "filename": "build/android/apk_operations.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-09-19T01:14:17Z",
+      "side": 1,
+      "message": "you need to have \"deobfuscate \u003d None\" before \"if mapping_path\" or else you get a UnboundLocalError when you use it below and mapping_path is None.",
+      "revId": "b4f36495a9cbf5252de8d851e46bb7bf0065e02f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
