@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64bbce8b_59b591ce",
+        "filename": "net/http/transport_security_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1001532
+      },
+      "writtenOn": "2017-09-19T18:41:13Z",
+      "side": 1,
+      "message": "Should the uint32_2 and size_t\u0027d be zeroed as well?",
+      "range": {
+        "startLine": 406,
+        "startChar": 11,
+        "endLine": 406,
+        "endChar": 34
+      },
+      "revId": "73df68434a411c2f6246175a3d757e7fb6df3f3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
