@@ -41,10 +41,11 @@
 #include "ui/views/widget/widget.h"
 
 #if defined(USE_ASH)
-#include "ash/accelerators/accelerator_commands.h"  // nogncheck
 #include "ash/shell.h"                   // nogncheck
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"  // nogncheck
 #include "ash/wm/window_state.h"  // nogncheck
+#include "content/public/common/service_manager_connection.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "ui/wm/core/coordinate_conversion.h"  // nogncheck
 #endif
 
@@ -1533,7 +1534,7 @@ void TabDragController::MaximizeAttachedWindow() {
   if (was_source_fullscreen_) {
     // In fullscreen mode it is only possible to get here if the source
     // was in "immersive fullscreen" mode, so toggle it back on.
-    ash::accelerators::ToggleFullscreen();
+    GetAttachedBrowserWidget()->SetFullscreen(true);
   }
 #endif
 }
