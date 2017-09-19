@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a466ed99_5c5106e5",
+        "filename": "components/arc/test/fake_arc_session.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-09-19T13:26:34Z",
+      "side": 1,
+      "message": "Note: naming is not consistent with the vars below, but I\u0027m planning to rework on is_for_login_screen in a following CL, so I just kept this as is.",
+      "revId": "82e70067921d2a56b72de5d9d93cf5ccd08e64bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
