@@ -44,6 +44,7 @@
 #include "core/dom/Text.h"
 #include "core/dom/events/ScopedEventQueue.h"
 #include "core/editing/EditingStyleUtilities.h"
+#include "core/editing/EditingTriState.h"
 #include "core/editing/EditingUtilities.h"
 #include "core/editing/InputMethodController.h"
 #include "core/editing/RenderedPosition.h"
@@ -875,11 +876,12 @@ bool Editor::SelectionStartHasStyle(CSSPropertyID property_id,
       EditingStyleUtilities::CreateStyleAtSelectionStart(
           GetFrame().Selection().ComputeVisibleSelectionInDOMTreeDeprecated(),
           property_id == CSSPropertyBackgroundColor, style_to_check->Style());
-  return style_to_check->TriStateOfStyle(style_at_start);
+  return style_to_check->TriStateOfStyle(style_at_start) !=
+         EditingTriState::kFalse;
 }
 
-TriState Editor::SelectionHasStyle(CSSPropertyID property_id,
-                                   const String& value) const {
+EditingTriState Editor::SelectionHasStyle(CSSPropertyID property_id,
+                                          const String& value) const {
   return EditingStyle::Create(property_id, value)
       ->TriStateOfStyle(
           GetFrame().Selection().ComputeVisibleSelectionInDOMTreeDeprecated());
