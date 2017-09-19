@@ -113,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "71d9d095_8d8a78ee",
+        "filename": "content/browser/shared_worker/shared_worker_service_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-19T04:32:28Z",
+      "side": 1,
+      "message": "Yeah I realized that my comment was confusing. And it\u0027s really really great that the messy part is going away, thanks!",
+      "parentUuid": "a0a6d8d2_a80b0e3f",
+      "revId": "cfabf0cf48b63b8ffb343acdfd31ce6abe19ddff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f9f26168_e506c284",
         "filename": "content/browser/shared_worker/shared_worker_service_impl_unittest.cc",
         "patchSetId": 10
