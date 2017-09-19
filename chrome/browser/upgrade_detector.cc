@@ -52,6 +52,8 @@ gfx::Image UpgradeDetector::GetIcon() {
     case UPGRADE_ANNOYANCE_CRITICAL:
       color = gfx::kGoogleRed700;
       break;
+    case UPGRADE_ANNOYANCE_COUNT:
+      NOTREACHED();
   }
   DCHECK_NE(gfx::kPlaceholderColor, color);
 
