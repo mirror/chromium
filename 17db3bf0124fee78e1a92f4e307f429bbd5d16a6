@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e798a0ed_59ca7a6c",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-19T06:46:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2bc177e9_9d320bac",
+      "revId": "17db3bf0124fee78e1a92f4e307f429bbd5d16a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e881625_431d2c9b",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
         "patchSetId": 3
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "I\u0027m a bit confused - Is \"empty\" ReferrerScriptInfo a valid concept? Is it clearly mapped to an empty handle argument in v8::ScriptOrigin::ScriptOrigin?\n\nIf both answers are \"yes\", it may be good to have IsEmpty predicate in ReferrerScriptInfo and use it here, like \"referrer_info.IsEmpty() ? empty handle : toV8HostDefinedOptions(isolate)\".\n\nOtherwise, I think we should distinguish ReferrerScriptInfo{} and the default argument - in that case I prefer WTF::Optional to pointer.",
       "parentUuid": "1e881625_431d2c9b",
+      "revId": "17db3bf0124fee78e1a92f4e307f429bbd5d16a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c896e494_71adaa95",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ScriptRunner.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-09-19T06:46:39Z",
+      "side": 1,
+      "message": "Added a mini-optimization which ToV8 will return an empty handle if it is passed a default value.\n\n\u003e I\u0027m a bit confused - Is \"empty\" ReferrerScriptInfo a valid concept?\nNo. The referrer_info will be required eventually on all callers in future.",
+      "parentUuid": "e0d79280_3c01edd2",
       "revId": "17db3bf0124fee78e1a92f4e307f429bbd5d16a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
