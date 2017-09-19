@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b4b3f78f_68637749",
+        "filename": "chrome/browser/resources/print_preview/settings/settings_box.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-19T06:00:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38c7416a_52467de6",
+      "revId": "f7215a68186f858aa488d6582c3cae8c5ddceee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e61a3194_1c418868",
         "filename": "chrome/browser/resources/print_preview/settings/settings_box.css",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-09-19T01:45:01Z",
       "side": 1,
       "message": "These 7px seem to make the top of the number input misaligned with the left column. Do we need this?\n\nAlso in general, it seems that the number input and the checkbox are also mis-aligned a bit, which I think is caused by [1]. Can we simply remove top/bottom margins and paddings to fix the alignment, and add a \"align-items: center\" in .settings-box below? This also changes the overall height of the number input, which looks a bit odd when expands too much vertically.\n\nEssentially I am proposing https://imgur.com/a/xhdyu which seems to have better alignment. What do you think (you can seed diff from this patch at https://pastebin.com/jmtT9bnr).\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/resources/print_preview/print_preview.css?q\u003dprint_preview.css\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d70-74",
+      "revId": "f7215a68186f858aa488d6582c3cae8c5ddceee9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98aea022_ee9ff41a",
+        "filename": "chrome/browser/resources/print_preview/settings/settings_box.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1182404
+      },
+      "writtenOn": "2017-09-19T06:00:51Z",
+      "side": 1,
+      "message": "I removed all the margins/paddings, but this leads to the checkbox causing the label and number input to shift in the English UI. I added 2.5px top and bottom margin for the number input to prevent this while keeping the center alignment - let me know what you think. Also had to adjust the padding number for the double-row sections (pages, scaling, and other options).",
+      "parentUuid": "e61a3194_1c418868",
       "revId": "f7215a68186f858aa488d6582c3cae8c5ddceee9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
