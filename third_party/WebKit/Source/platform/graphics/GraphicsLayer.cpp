@@ -1217,6 +1217,8 @@ void GraphicsLayer::didChangeScrollbarsHidden(bool hidden) {
     scrollable_area_->SetScrollbarsHidden(hidden);
 }
 
+void GraphicsLayer::DidChangeLayerOpacity(float, float) {}
+
 PaintController& GraphicsLayer::GetPaintController() const {
   CHECK(DrawsContent());
   if (!paint_controller_)
