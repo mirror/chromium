@@ -19,6 +19,7 @@
 #include "build/build_config.h"
 #include "chrome/browser/task_manager/providers/task.h"
 #include "chrome/browser/task_manager/sampling/task_group_sampler.h"
+#include "chrome/browser/task_manager/task_manager_interface.h"
 #include "chrome/browser/task_manager/task_manager_observer.h"
 
 namespace gpu {
@@ -33,9 +34,13 @@ class SharedSampler;
 // process. This class lives on the UI thread.
 class TaskGroup {
  public:
+  // A key by which TaskGroups may be sorted.
+  using SortKey = TaskManagerInterface::ProcessSortKey;
+
   TaskGroup(
       base::ProcessHandle proc_handle,
       base::ProcessId proc_id,
+      const SortKey& sort_key,
       const base::Closure& on_background_calculations_done,
       const scoped_refptr<SharedSampler>& shared_sampler,
       const scoped_refptr<base::SequencedTaskRunner>& blocking_pool_runner);
@@ -63,6 +68,10 @@ class TaskGroup {
 
   const base::ProcessHandle& process_handle() const { return process_handle_; }
   const base::ProcessId& process_id() const { return process_id_; }
+
+  const TaskManagerInterface::ProcessSortKey& sort_key() const {
+    return sort_key_;
+  }
 
   const std::vector<Task*>& tasks() const { return tasks_; }
   size_t num_tasks() const { return tasks().size(); }
@@ -136,8 +145,11 @@ class TaskGroup {
   void OnBackgroundRefreshTypeFinished(int64_t finished_refresh_type);
 
   // The process' handle and ID.
-  base::ProcessHandle process_handle_;
-  base::ProcessId process_id_;
+  const base::ProcessHandle process_handle_;
+  const base::ProcessId process_id_;
+
+  // The key that controls the model ordering of this group.
+  const SortKey sort_key_;
 
   // This is a callback into the TaskManagerImpl to inform it that the
   // background calculations for this TaskGroup has finished.

@@ -78,11 +78,13 @@ int GetNaClDebugStubPortOnIoThread(int process_id) {
 TaskGroup::TaskGroup(
     base::ProcessHandle proc_handle,
     base::ProcessId proc_id,
+    const TaskGroup::SortKey& sort_key,
     const base::Closure& on_background_calculations_done,
     const scoped_refptr<SharedSampler>& shared_sampler,
     const scoped_refptr<base::SequencedTaskRunner>& blocking_pool_runner)
     : process_handle_(proc_handle),
       process_id_(proc_id),
+      sort_key_(sort_key),
       on_background_calculations_done_(on_background_calculations_done),
       worker_thread_sampler_(nullptr),
       shared_sampler_(shared_sampler),
