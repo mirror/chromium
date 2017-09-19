@@ -34,6 +34,24 @@
       "revId": "6d2cdd3483c2efd02726928b0b6f029734ed43df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cf9f6a21_e9e9f77c",
+        "filename": "components/payments/core/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-09-19T15:30:38Z",
+      "side": 1,
+      "message": "I see thanks. Then LGTM for this. I suggest \".*_unittest\\.cc\" so you don\u0027t have to do this for each test in the future.",
+      "parentUuid": "7db3f0c5_ab0ce47f",
+      "revId": "6d2cdd3483c2efd02726928b0b6f029734ed43df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
