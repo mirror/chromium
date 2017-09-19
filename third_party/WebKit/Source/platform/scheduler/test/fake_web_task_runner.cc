@@ -39,7 +39,7 @@ class FakeWebTaskRunner::Data : public WTF::ThreadSafeRefCounted<Data> {
  private:
   ~Data() {}
 
-  friend ThreadSafeRefCounted<Data>;
+  friend base::RefCountedThreadSafe<Data>;
   DISALLOW_COPY_AND_ASSIGN(Data);
 };
 
@@ -68,7 +68,8 @@ class FakeWebTaskRunner::BaseTaskRunner : public base::SingleThreadTaskRunner {
 };
 
 FakeWebTaskRunner::FakeWebTaskRunner()
-    : data_(AdoptRef(new Data)), base_task_runner_(new BaseTaskRunner(data_)) {}
+    : data_(WTF::AdoptRef(new Data)),
+      base_task_runner_(new BaseTaskRunner(data_)) {}
 
 FakeWebTaskRunner::FakeWebTaskRunner(
     RefPtr<Data> data,

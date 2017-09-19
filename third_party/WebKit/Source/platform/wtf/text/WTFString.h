@@ -495,13 +495,6 @@ class WTF_EXPORT String {
     return impl_ ? impl_->CharactersSizeInBytes() : 0;
   }
 
-  // Hash table deleted values, which are only constructed and never copied or
-  // destroyed.
-  String(WTF::HashTableDeletedValueType) : impl_(WTF::kHashTableDeletedValue) {}
-  bool IsHashTableDeletedValue() const {
-    return impl_.IsHashTableDeletedValue();
-  }
-
 #ifndef NDEBUG
   // For use in the debugger.
   void Show() const;

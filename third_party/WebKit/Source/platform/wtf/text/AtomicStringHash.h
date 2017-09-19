@@ -49,6 +49,11 @@ struct AtomicStringHash {
 // AtomicStringHash is the default hash for AtomicString
 template <>
 struct HashTraits<AtomicString> : SimpleClassHashTraits<AtomicString> {
+  static_assert(sizeof(void*) == sizeof(AtomicString),
+                "Unexpected String size."
+                " AtomicString needs to be single pointer to support deleted"
+                " value.");
+
   // Unlike other types, we can return a const reference for AtomicString's
   // empty value (g_null_atom).
   typedef const AtomicString& PeekOutType;
@@ -58,6 +63,15 @@ struct HashTraits<AtomicString> : SimpleClassHashTraits<AtomicString> {
 
   static const bool kHasIsEmptyValueFunction = true;
   static bool IsEmptyValue(const AtomicString& value) { return value.IsNull(); }
+
+  static bool IsDeletedValue(const AtomicString& value) {
+    return *reinterpret_cast<void* const*>(&value) ==
+           reinterpret_cast<const void*>(-1);
+  }
+
+  static void ConstructDeletedValue(AtomicString& slot, bool zero_value) {
+    *reinterpret_cast<void**>(&slot) = reinterpret_cast<void*>(-1);
+  }
 };
 
 }  // namespace WTF

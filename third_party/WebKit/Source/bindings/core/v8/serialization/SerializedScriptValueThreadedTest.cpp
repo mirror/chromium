@@ -71,7 +71,7 @@ TEST(SerializedScriptValueThreadedTest,
             done->Signal();
           },
           CrossThreadUnretained(&worker_thread), CrossThreadUnretained(&done),
-          Passed(RefPtr<SerializedScriptValue>(serialized))));
+          WTF::Passed(RefPtr<SerializedScriptValue>(serialized))));
   done.Wait();
 
   // Now destroy the value on the main thread.
