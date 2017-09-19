@@ -95,6 +95,29 @@
     },
     {
       "key": {
+        "uuid": "ff5aa722_80a0b641",
+        "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T15:03:14Z",
+      "side": 1,
+      "message": "Please format these arrays as well. Formatted arrays look nicer :)",
+      "range": {
+        "startLine": 65,
+        "startChar": 18,
+        "endLine": 65,
+        "endChar": 36
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1272a7a_0fd4a471",
         "filename": "components/autofill/content/renderer/html_based_username_detector.cc",
         "patchSetId": 15
@@ -525,6 +548,98 @@
         "startChar": 7,
         "endLine": 491,
         "endChar": 26
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc26b9c1_cbc669b3",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T15:03:14Z",
+      "side": 1,
+      "message": "Can we use a single method (AddTextField or so) for label, placeholder, name, id?\n\nIf the argument is nullptr, then we don\u0027t append HTML with this argument.",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 3
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99038fc7_3d26ecc0",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T15:03:14Z",
+      "side": 1,
+      "message": "Thanks for so detailed tests. IMHO, the tests are even over-designed a bit, but it is fine :) Don\u0027t remove them. Some engineers in our team like such tests :)\n\nIt is hard to see what is missing.\n\nI would take a look at the final implementation and check whether there is a test for each essential peace of logic.",
+      "range": {
+        "startLine": 338,
+        "startChar": 0,
+        "endLine": 339,
+        "endChar": 69
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b44fecc4_427f5b97",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T15:03:14Z",
+      "side": 1,
+      "message": "definition is needed or simply say that you are looking in name and id attributes.",
+      "range": {
+        "startLine": 345,
+        "startChar": 46,
+        "endLine": 345,
+        "endChar": 62
+      },
+      "revId": "328a0942081fb127a854ab04896ad513dda237d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6f70c46_77fede2f",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-09-19T15:03:14Z",
+      "side": 1,
+      "message": "I would remove \"we\".",
+      "range": {
+        "startLine": 354,
+        "startChar": 9,
+        "endLine": 354,
+        "endChar": 16
       },
       "revId": "328a0942081fb127a854ab04896ad513dda237d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
