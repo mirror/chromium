@@ -927,6 +927,12 @@
       invalidate: "MediaControls",
     },
 
+    // Whether Blink is controlled by automation.
+    {
+      name: "automationControlled",
+      initial: false,
+    },
+
     // Whether we should not update selection attributes when mutating selection range.
     // TODO(changwan): remove this flag when we no longer support Android M.
     {

@@ -96,6 +96,10 @@
       status: "experimental",
     },
     {
+      name: "AutomationControlled",
+      status: "test",
+    },
+    {
       name: "AutoplayMutedVideos",
       settable_from_internals: true,
     },

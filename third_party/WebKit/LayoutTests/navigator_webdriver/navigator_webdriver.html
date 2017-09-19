@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<script>
+
+test(function() {
+    assert_true("webdriver" in window.navigator);
+}, "Test that NavigatorWebDriver API is present in window");
+
+test(function() {
+    assert_true(navigator.webdriver, "navigator.webdriver");
+    var descriptor = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(navigator), "webdriver");
+    assert_true(descriptor !== undefined, "aaa");
+    assert_true(descriptor.configurable, "bbb");
+    assert_true(descriptor.enumerable, "ccc");
+    assert_true(descriptor.set === undefined, "ddd");
+}, "Test that the webdriver descriptor has expected properties");
+
+</script>
+</body>
+</html>

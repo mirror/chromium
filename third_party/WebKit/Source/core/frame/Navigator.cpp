@@ -86,6 +86,12 @@ bool Navigator::cookieEnabled() const {
   return CookiesEnabled(GetFrame()->GetDocument());
 }
 
+bool Navigator::webdriver() const {
+  if (!GetFrame())
+    return false;
+  return true;
+}
+
 Vector<String> Navigator::languages() {
   Vector<String> languages;
   languages_changed_ = false;
