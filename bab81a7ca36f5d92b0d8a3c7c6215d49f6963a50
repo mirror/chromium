@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "46aa3d07_0c6aafff",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-09-19T14:50:06Z",
+      "side": 1,
+      "message": "I created crbug.com/766685 for this, will fix it in a followup CL.",
+      "parentUuid": "ed18da10_4dbbce9a",
+      "revId": "bab81a7ca36f5d92b0d8a3c7c6215d49f6963a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7430a5be_b31e6fe6",
         "filename": "components/safe_browsing/triggers/ad_sampler_trigger.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "bab81a7ca36f5d92b0d8a3c7c6215d49f6963a50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee2de72_293c4974",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-09-19T14:50:06Z",
+      "side": 1,
+      "message": "Nice, I thought base::unretained was only for params - much cleaner now without having triggermanager refcounted.\n\nAs for specifying traits - if I\u0027m reading correctly, the default shutdown behaviour is SKIP_ON_SHUTDOWN. So if the the user closes the window before this task starts executing it will be skipped (we won\u0027t block shutdown for 5s). If the task is already running it will be allowed to finish (which involves creating the report and sending it, which is consistent with the security interstitial works AFAICT).",
+      "parentUuid": "7430a5be_b31e6fe6",
+      "revId": "bab81a7ca36f5d92b0d8a3c7c6215d49f6963a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
