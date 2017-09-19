@@ -41,10 +41,13 @@
 #include "ui/views/widget/widget.h"
 
 #if defined(USE_ASH)
-#include "ash/accelerators/accelerator_commands.h"  // nogncheck
+#include "ash/public/interfaces/accelerator_controller.mojom.h"
+#include "ash/public/interfaces/constants.mojom.h"
 #include "ash/shell.h"                   // nogncheck
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"  // nogncheck
 #include "ash/wm/window_state.h"  // nogncheck
+#include "content/public/common/service_manager_connection.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "ui/wm/core/coordinate_conversion.h"  // nogncheck
 #endif
 
@@ -419,6 +422,17 @@ void TabDragController::InitTabDragData(Tab* tab,
       drag_data->source_model_index);
   drag_data->pinned = source_tabstrip_->IsTabPinned(tab);
 }
+
+#if defined(USE_ASH)
+void TabDragController::AshToggleFullscreen() {
+  service_manager::Connector* connector =
+      content::ServiceManagerConnection::GetForProcess()->GetConnector();
+  ash::mojom::AcceleratorControllerPtr accelerator_controller_ptr;
+  connector->BindInterface(ash::mojom::kServiceName,
+                           &accelerator_controller_ptr);
+  accelerator_controller_ptr->ToggleFullscreen();
+}
+#endif
 
 void TabDragController::OnWidgetBoundsChanged(views::Widget* widget,
                                               const gfx::Rect& new_bounds) {
@@ -1533,7 +1547,7 @@ void TabDragController::MaximizeAttachedWindow() {
   if (was_source_fullscreen_) {
     // In fullscreen mode it is only possible to get here if the source
     // was in "immersive fullscreen" mode, so toggle it back on.
-    ash::accelerators::ToggleFullscreen();
+    AshToggleFullscreen();
   }
 #endif
 }

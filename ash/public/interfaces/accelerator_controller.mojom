@@ -13,4 +13,7 @@ interface AcceleratorController {
   // owns the D-Bus CrasAudioHandler implementation. Also the accessibility
   // manager in chrome needs to know about volume changes.
   SetVolumeController(VolumeController controller);
+
+  // Toggles the fullscreen state.
+  ToggleFullscreen();
 };
