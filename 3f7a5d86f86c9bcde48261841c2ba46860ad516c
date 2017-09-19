@@ -22,6 +22,30 @@
       "revId": "3f7a5d86f86c9bcde48261841c2ba46860ad516c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52c46e9_d909c015",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-19T17:23:59Z",
+      "side": 1,
+      "message": "I think it\u0027s fine to set delay to 0 in test. \nBut if you want to test the non-zero delay. then you might need GetDeferredQuitTaskForRunLoop to wait for the delayed task to finish. \n\nThough I only see it be used in browser tests.  for example,\nhttps://cs.chromium.org/chromium/src/chrome/browser/ui/views/ash/tab_scrubber_browsertest.cc?rcl\u003d01b28422bcb168e52fc1039112f1329937c85321\u0026l\u003d256",
+      "parentUuid": "514d5343_454d70ca",
+      "range": {
+        "startLine": 170,
+        "startChar": 29,
+        "endLine": 170,
+        "endChar": 48
+      },
+      "revId": "3f7a5d86f86c9bcde48261841c2ba46860ad516c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

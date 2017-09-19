@@ -69,6 +69,24 @@
       "revId": "bab81a7ca36f5d92b0d8a3c7c6215d49f6963a50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "044c72c0_19245491",
+        "filename": "components/safe_browsing/triggers/ad_sampler_trigger.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-09-19T17:23:59Z",
+      "side": 1,
+      "message": "You\u0027re right. the default trait is SKIP_ON_SHUTDOWN.",
+      "parentUuid": "8ee2de72_293c4974",
+      "revId": "bab81a7ca36f5d92b0d8a3c7c6215d49f6963a50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
