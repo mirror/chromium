@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "608d1c1c_046436de",
+        "filename": "net/dns/dns_query.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-09-19T11:05:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e9e850b_b0e5d902",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 17
+      },
+      "revId": "2d758e20ab83d67762cfb57841316d25f7f96690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c87beaa7_9fa5860c",
         "filename": "net/dns/record_rdata.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "2d758e20ab83d67762cfb57841316d25f7f96690",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c840b330_54f8a943",
+        "filename": "net/dns/record_rdata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-09-19T11:05:43Z",
+      "side": 1,
+      "message": "Oops, overlooked the shadowing that was happening here. I\u0027ve prefixed all of these vars with \"opt_\".",
+      "parentUuid": "c87beaa7_9fa5860c",
+      "range": {
+        "startLine": 294,
+        "startChar": 22,
+        "endLine": 294,
+        "endChar": 26
+      },
+      "revId": "2d758e20ab83d67762cfb57841316d25f7f96690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0badb82b_3f4b554b",
+        "filename": "net/dns/record_rdata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-09-19T11:05:43Z",
+      "side": 1,
+      "message": "They\u0027re actually synonymous, but for consistency with the other funcs I\u0027ve changed this.",
+      "parentUuid": "25159c36_5edc4ca0",
+      "range": {
+        "startLine": 298,
+        "startChar": 13,
+        "endLine": 298,
+        "endChar": 20
+      },
+      "revId": "2d758e20ab83d67762cfb57841316d25f7f96690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5ea7063_62048517",
         "filename": "net/dns/record_rdata.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "2d758e20ab83d67762cfb57841316d25f7f96690",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f2eea5c_ef896e1f",
+        "filename": "net/dns/record_rdata.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1130929
+      },
+      "writtenOn": "2017-09-19T11:05:43Z",
+      "side": 1,
+      "message": "Fixed, been writing too much Go lately!",
+      "parentUuid": "c5ea7063_62048517",
+      "range": {
+        "startLine": 317,
+        "startChar": 20,
+        "endLine": 317,
+        "endChar": 27
+      },
+      "revId": "2d758e20ab83d67762cfb57841316d25f7f96690",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
