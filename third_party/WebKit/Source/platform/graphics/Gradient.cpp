@@ -104,20 +104,26 @@ void Gradient::FillSkiaStops(ColorBuffer& colors, OffsetBuffer& pos) const {
     // 0.0 comes through cleanly and people aren't likely to want a gradient
     // with a stop at (0 + epsilon).
     pos.push_back(WebCoreFloatToSkScalar(0));
+    colors.push_back(MakeSkColor(stops_.front().color));
+    /*
     if (color_filter_) {
       colors.push_back(
           color_filter_->filterColor(MakeSkColor(stops_.front().color)));
     } else {
       colors.push_back(MakeSkColor(stops_.front().color));
     }
+    */
   }
 
   for (const auto& stop : stops_) {
     pos.push_back(WebCoreFloatToSkScalar(stop.stop));
+    colors.push_back(MakeSkColor(stop.color));
+    /*
     if (color_filter_)
       colors.push_back(color_filter_->filterColor(MakeSkColor(stop.color)));
     else
       colors.push_back(MakeSkColor(stop.color));
+    */
   }
 
   // Copy the last stop to 1.0 if needed. See comment above about this float
@@ -167,10 +173,12 @@ sk_sp<PaintShader> Gradient::CreateShaderInternal(
 }
 
 void Gradient::ApplyToFlags(PaintFlags& flags, const SkMatrix& local_matrix) {
-  if (!cached_shader_ || local_matrix != cached_shader_->GetLocalMatrix() ||
-      flags.getColorFilter().get() != color_filter_.get()) {
-    color_filter_ = flags.getColorFilter();
-    flags.setColorFilter(nullptr);
+  if (!cached_shader_ || local_matrix != cached_shader_->GetLocalMatrix()) {
+    //    || flags.getColorFilter().get() != color_filter_.get()) {
+
+    //color_filter_ = flags.getColorFilter();
+    //flags.setColorFilter(nullptr);
+
     cached_shader_ = CreateShaderInternal(local_matrix);
   }
 
