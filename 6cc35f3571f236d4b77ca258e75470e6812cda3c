@@ -191,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "bef6c39b_78cd9266",
+        "filename": "components/viz/common/gl_helper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-09-19T23:59:11Z",
+      "side": 1,
+      "message": "Discussed offline. I agree that this design is good to handle the multiple CopyOutputRequests and only read back the damage sub rects. Thanks for all the explanation. :)",
+      "parentUuid": "934f1557_1a5abcc3",
+      "range": {
+        "startLine": 387,
+        "startChar": 5,
+        "endLine": 387,
+        "endChar": 22
+      },
+      "revId": "6cc35f3571f236d4b77ca258e75470e6812cda3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bb2abd8_cebe4494",
         "filename": "content/browser/renderer_host/delegated_frame_host.cc",
         "patchSetId": 3
