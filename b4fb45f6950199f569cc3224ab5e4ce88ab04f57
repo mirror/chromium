@@ -45,6 +45,52 @@
       "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e13b695e_86dbcb45",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-19T02:44:50Z",
+      "side": 1,
+      "message": "referecence -- \u003e reference.\nThis provider context is for WINDOW, does it own the passed reference?",
+      "range": {
+        "startLine": 182,
+        "startChar": 22,
+        "endLine": 182,
+        "endChar": 0
+      },
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe170ef6_ced18d35",
+        "filename": "content/child/service_worker/service_worker_provider_context_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1223459
+      },
+      "writtenOn": "2017-09-19T02:44:50Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 208,
+        "startChar": 22,
+        "endLine": 208,
+        "endChar": 23
+      },
+      "revId": "b4fb45f6950199f569cc3224ab5e4ce88ab04f57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
