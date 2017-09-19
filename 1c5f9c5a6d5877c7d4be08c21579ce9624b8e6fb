@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "67e9bee0_ee2f6960",
+        "filename": "chrome/browser/task_manager/providers/task_provider_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-09-19T20:24:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a677d9c_03d458e0",
+      "range": {
+        "startLine": 29,
+        "startChar": 34,
+        "endLine": 29,
+        "endChar": 42
+      },
+      "revId": "1c5f9c5a6d5877c7d4be08c21579ce9624b8e6fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15841750_821ff726",
         "filename": "chrome/browser/task_manager/providers/web_contents/web_contents_task_provider.cc",
         "patchSetId": 8
