@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b6847dc_dc2f5fa6",
+        "filename": "ios/chrome/browser/drag_and_drop/drag_and_drop_flag.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-19T15:33:35Z",
+      "side": 1,
+      "message": "This function is not necessary, it\u0027s a one liner. Please test the flag directly.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 28
+      },
+      "revId": "30be591d288716174a54d5fef005d5e37d9c0a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee2a4b2_6ea0fa10",
+        "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-19T15:33:35Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 87,
+        "startChar": 11,
+        "endLine": 87,
+        "endChar": 34
+      },
+      "revId": "30be591d288716174a54d5fef005d5e37d9c0a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4003410_b353963e",
+        "filename": "ios/chrome/browser/ios_chrome_flag_descriptions.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-19T15:33:35Z",
+      "side": 1,
+      "message": "As the comment above asks, please move those in alphabetical order in the file.",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 44
+      },
+      "revId": "30be591d288716174a54d5fef005d5e37d9c0a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e345dfa_8ac85b76",
+        "filename": "ios/chrome/browser/ui/tabs/tab_strip_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-19T15:33:35Z",
+      "side": 1,
+      "message": "Can you use \u0026\u0026 instead of nesting a if inside a if?",
+      "range": {
+        "startLine": 423,
+        "startChar": 0,
+        "endLine": 423,
+        "endChar": 36
+      },
+      "revId": "30be591d288716174a54d5fef005d5e37d9c0a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f427d29_6d97cf78",
+        "filename": "ios/chrome/browser/ui/tabs/tab_view.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-19T15:33:35Z",
+      "side": 1,
+      "message": "Same.",
+      "range": {
+        "startLine": 147,
+        "startChar": 11,
+        "endLine": 147,
+        "endChar": 20
+      },
+      "revId": "30be591d288716174a54d5fef005d5e37d9c0a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15b8dab9_baf4b8f6",
+        "filename": "ios/chrome/browser/ui/toolbar/web_toolbar_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-09-19T15:33:35Z",
+      "side": 1,
+      "message": "same.",
+      "range": {
+        "startLine": 683,
+        "startChar": 0,
+        "endLine": 683,
+        "endChar": 32
+      },
+      "revId": "30be591d288716174a54d5fef005d5e37d9c0a03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
