@@ -32,6 +32,14 @@
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/native_widget_types.h"
 
+/*
+#if defined(USE_AURA)
+namespace aura {
+class Window;
+}
+#endif
+*/
+
 namespace viz {
 class CompositorFrameSinkSupport;
 }
@@ -314,6 +322,12 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
   // Used to trigger a non-crashing stack dump when this class is destructed
   // without calling Destroy() first.
   bool destroy_was_called_;
+
+  /*
+#if defined(USE_AURA)
+  std::unique_ptr<aura::Window> window_;
+#endif
+  */
 
   base::WeakPtrFactory<RenderWidgetHostViewChildFrame> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostViewChildFrame);

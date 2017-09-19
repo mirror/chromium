@@ -275,7 +275,7 @@ class CONTENT_EXPORT RenderWidget
   bool WillHandleGestureEvent(const blink::WebGestureEvent& event) override;
   bool WillHandleMouseEvent(const blink::WebMouseEvent& event) override;
 
-  // RenderWidgetScreenMetricsDelegate
+  // RenderWidgetScreenMetricsEmulatorDelegate
   void Redraw() override;
   void Resize(const ResizeParams& resize_params) override;
   void SetScreenMetricsEmulationParameters(
@@ -538,6 +538,13 @@ class CONTENT_EXPORT RenderWidget
   // Called when the device scale factor is changed, or the layer tree is
   // initialized.
   virtual void OnDeviceScaleFactorChanged();
+#if defined(USE_AURA)
+  void OnEmbedWindowTreeClient(
+      const viz::FrameSinkId& frame_sink_id,
+      mojo::MessagePipeHandle window_tree_client_handle);
+  void OnGetWindowTreeClient(
+      mojo::MessagePipeHandle window_tree_client_request);
+#endif
 
   void OnRepaint(gfx::Size size_to_paint);
   void OnSetTextDirection(blink::WebTextDirection direction);
