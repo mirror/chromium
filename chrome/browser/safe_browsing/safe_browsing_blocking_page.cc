@@ -23,6 +23,7 @@
 #include "content/public/browser/interstitial_page.h"
 #include "content/public/browser/navigation_entry.h"
 #include "content/public/browser/web_contents.h"
+#include "net/url_request/url_request_context_getter.h"
 
 using content::BrowserThread;
 using content::InterstitialPage;
@@ -137,7 +138,10 @@ SafeBrowsingBlockingPage::SafeBrowsingBlockingPage(
             ->trigger_manager()
             ->StartCollectingThreatDetails(
                 TriggerType::SECURITY_INTERSTITIAL, web_contents,
-                unsafe_resources[0], profile->GetRequestContext(),
+                unsafe_resources[0],
+                g_browser_process->safe_browsing_service()
+                    ->url_request_context()
+                    .get(),
                 HistoryServiceFactory::GetForProfile(
                     profile, ServiceAccessType::EXPLICIT_ACCESS),
                 sb_error_ui()->get_error_display_options());

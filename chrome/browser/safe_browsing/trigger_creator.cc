@@ -43,7 +43,7 @@ void TriggerCreator::MaybeCreateTriggersForWebContents(
                                               TriggerType::AD_SAMPLE)) {
     safe_browsing::AdSamplerTrigger::CreateForWebContents(
         web_contents, trigger_manager, profile->GetPrefs(),
-        profile->GetRequestContext(),
+        g_browser_process->safe_browsing_service()->url_request_context().get(),
         HistoryServiceFactory::GetForProfile(
             profile, ServiceAccessType::EXPLICIT_ACCESS));
   }
