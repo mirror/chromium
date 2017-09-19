@@ -1,0 +1,418 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fc44691_6bb7d9e4",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 840,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-19T22:24:53Z",
+      "side": 1,
+      "message": "It\u0027s weird enough to add a non-writing transaction to writers that I think it deserves a comment (here and in ProcessDoneHeadersQueue() below).",
+      "range": {
+        "startLine": 840,
+        "startChar": 19,
+        "endLine": 840,
+        "endChar": 23
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ee6c22e_48805e4f",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-19T22:24:53Z",
+      "side": 1,
+      "message": "This might be worth talking about in the next in-person meeting, but I\u0027d feel more comfortable if this conditional indirected through writers.  What I interpret as going on in this function is that the HttpCacheTransaction is telling the cache/the entry that it\u0027s done with it, but what the means is dependent on whether it\u0027s within writers.  In the abstract I sorta feel like if HC::T is in writers, it should be calling something on writers to say its done rather than calling the cache directly, but I can also see the argument that the entry is our intermediary in talking to the writers object.  But in that case, let\u0027s indirect at this point in to the writers object rather than making several calls into methods on writers and then calling a cache method that is implicitly called by HC::W?",
+      "range": {
+        "startLine": 898,
+        "startChar": 13,
+        "endLine": 898,
+        "endChar": 20
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3208809_3f04e711",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-19T22:24:53Z",
+      "side": 1,
+      "message": "nit: More accurately, if there are other writers this will be a no-op.",
+      "range": {
+        "startLine": 909,
+        "startChar": 11,
+        "endLine": 909,
+        "endChar": 12
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42ca7a3d_e758c1cf",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-19T22:24:53Z",
+      "side": 1,
+      "message": "nit, thought (not even suggestion, completely up to you): I wonder if this function would read better if we pulled the success case all the way up as an early return, then the !ShouldKeepEntry(), then this code (this assumes inlining ImpactQueuedTransactions).  This would look something like:\n\nif (success) {\n  entry-\u003ereaders.insert(...)\n  ProcessQueuedTransactions(...)\n  return;\n}\n\nif (!entry-\u003ewriters-\u003eShouldKeepEntry()) {\n  ProcessEntryFailure(...)\n  return;\n}\n\n// Handle keeping the entry in the case of failure\n[Contents of this conditional]\n\nAs I say, completely up to you; just a thought.",
+      "range": {
+        "startLine": 928,
+        "startChar": 7,
+        "endLine": 928,
+        "endChar": 14
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f2d09fa_7905a889",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-19T22:24:53Z",
+      "side": 1,
+      "message": "DCHECK?",
+      "range": {
+        "startLine": 964,
+        "startChar": 16,
+        "endLine": 964,
+        "endChar": 17
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d00db487_0df8dc64",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 1137,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-19T22:24:53Z",
+      "side": 1,
+      "message": "Why isn\u0027t this a change in behavior?  It\u0027s better code :-} (since OK is not a boolean) but I think OK\u0027s value is zero, and true\u0027s value is 1, so I\u0027d think this would change behavior in those places that rely on the result from this function.",
+      "range": {
+        "startLine": 1137,
+        "startChar": 11,
+        "endLine": 1137,
+        "endChar": 15
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e5c03a_1cbc4ebb",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-19T22:24:53Z",
+      "side": 1,
+      "message": "nit, suggestion: \"Called when a transaction not indirecting through HttpCache::Writers ...\"",
+      "range": {
+        "startLine": 424,
+        "startChar": 16,
+        "endLine": 424,
+        "endChar": 17
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7ea5d3_824c4bf3",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 438,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-19T22:24:53Z",
+      "side": 1,
+      "message": "nit, suggestion: This is called in two locations, so from a pure LOC count I think it\u0027s a wash as to whether it\u0027s in a helper function or included directly at those two locations.  At one of those locations (WritersDoneWritingToEntry) if you inlined in, you could pull the ProcessEntryFailure up above the adding of idle writers to readers, make it an early return, and avoid conditionals for the success cases.  Overall, I think the code would be cleaner and easier to read with the inlining, but up to you.",
+      "range": {
+        "startLine": 438,
+        "startChar": 7,
+        "endLine": 438,
+        "endChar": 31
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa28087b_36407604",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-19T22:24:53Z",
+      "side": 1,
+      "message": "nit, suggestion: I think it\u0027s not legal to call this function with transaction \u003d\u003d nullptr, so I don\u0027t think you need the first part of this DCHECK.",
+      "range": {
+        "startLine": 102,
+        "startChar": 10,
+        "endLine": 102,
+        "endChar": 29
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae329aa_c815bd33",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-19T22:24:53Z",
+      "side": 1,
+      "message": "Similar to the above, I don\u0027t think you need the second part of this conditional (protected by the DCHECK()) (nit, suggestion).",
+      "range": {
+        "startLine": 108,
+        "startChar": 6,
+        "endLine": 108,
+        "endChar": 25
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8c2527c_62a49103",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-19T22:24:53Z",
+      "side": 1,
+      "message": "I\u0027m a bit uncomfortable with this, as what I interpret it as meaning is \"If we\u0027re done with the state machine *or* in the final stages of that state machine waiting for the response back from writing the truncated response to the cache, reset the state for empty writers\".  I\u0027d rather have a simpler invariant of \"Don\u0027t reset the state while the state machines still on\"; is there a reason not to structure things that way?\n\nI think this would just mean putting a check for all_writers_.empty() in DoCacheWriteTruncatedResponseComplete() that reset the state (and removing the check here).  I could imagine that that might make us subject to races where a new transaction is added to writers between this point and the completion of the truncated response write, but if that\u0027s the case, I\u0027m confused as to why we\u0027re not subject to the same races elsewhere in the state machine?",
+      "range": {
+        "startLine": 202,
+        "startChar": 29,
+        "endLine": 202,
+        "endChar": 68
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b57197_8657b59a",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-19T22:24:53Z",
+      "side": 1,
+      "message": "Hmmm.  To me, this is implicitly taking responsibility for something that I think is reasonably considered the callers responsibility.  HttpCache::Writers is acting on behalf of the HC::T, and shouldn\u0027t have to know if the HC::T is being destroyed--that\u0027s above its pay grade :-}.  It\u0027s the HC::T\u0027s responsibility to make sure that if it\u0027s destroyed, the HC::W won\u0027t have a dangling pointer to it.  In this case I think that\u0027s done by making the callback passed into HC::W be wrapped around a weak pointer.  So I think we can skip the callback reset here?",
+      "range": {
+        "startLine": 213,
+        "startChar": 7,
+        "endLine": 213,
+        "endChar": 16
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a1f84c_ce2ed377",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-19T22:24:53Z",
+      "side": 1,
+      "message": "I don\u0027t care, but I am curious: Why the change of insertion strategy?",
+      "range": {
+        "startLine": 258,
+        "startChar": 24,
+        "endLine": 258,
+        "endChar": 35
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f9aa4f_28e7d601",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-19T22:24:53Z",
+      "side": 1,
+      "message": "So this seems dangerous, to unilaterally set the state when we might already be in the middle of the state machine (if the active_transaction_ had called read and then we cancelled externally, I\u0027d presume it\u0027d call into HC::DoneWithEntry, which would call into TruncateEntry()).  Why is this safe?",
+      "range": {
+        "startLine": 317,
+        "startChar": 23,
+        "endLine": 317,
+        "endChar": 53
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6037a9e_92d6a673",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-19T22:24:53Z",
+      "side": 1,
+      "message": "nitty nit: I think this comment is best positioned two lines up, right after the execution of the callback.  It has implications for anything that follows that line, but those implications aren\u0027t particularly for the lines immediately following this line.",
+      "range": {
+        "startLine": 415,
+        "startChar": 21,
+        "endLine": 415,
+        "endChar": 25
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1392ce60_1b2bf431",
+        "filename": "net/http/http_cache_writers.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-19T22:24:53Z",
+      "side": 1,
+      "message": "This looks like the comment is out of date?  (Referring to sending nullptr to a routine no longer being called?)",
+      "range": {
+        "startLine": 596,
+        "startChar": 16,
+        "endLine": 596,
+        "endChar": 34
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236ac0d5_e8e3a11b",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-19T22:24:53Z",
+      "side": 1,
+      "message": "Thought (possibly for in-person discussion, but wanted to record it): I\u0027m not sure what the long-term usage of this function will look like (currently it\u0027s just a single call from HC::AddTransactionToWriters() AFAICT) but being exclusive seems like a different enough use of HC::W that maybe it should have its own method?  But if this is just going to turn into a conditional at every call site (even if there\u0027s just one call site) I\u0027m not in favor--I\u0027m bringing it up more in case we\u0027ll be calling it with/without exclusive from different locations.",
+      "range": {
+        "startLine": 74,
+        "startChar": 27,
+        "endLine": 74,
+        "endChar": 39
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b68f547_bdedb965",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-09-19T22:24:53Z",
+      "side": 1,
+      "message": "Could this boolean be handled by just calling {Maybe}SetNetworkReadOnly after calling AddTransaction()?  AddTransaction() DCHECKs that the passed transaction is the only one on writers, so presumably that that information is known to the caller.  (Just trying to minimize API surface.)",
+      "range": {
+        "startLine": 75,
+        "startChar": 27,
+        "endLine": 75,
+        "endChar": 44
+      },
+      "revId": "70b5e555b66c1fb70654c3e6b452d83c6f723821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
