@@ -8,10 +8,12 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Pair;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.MathUtils;
@@ -26,6 +28,8 @@ public class TileGridLayout extends FrameLayout {
     public static final int PADDING_START_PX = 0;
     public static final int PADDING_END_PX = 0;
 
+    /** Whether tiles should be spread across all the available width or clustered in its center. */
+    private final boolean mUseFullWidth;
     private final int mVerticalSpacing;
     private final int mMinHorizontalSpacing;
     private final int mMaxHorizontalSpacing;
@@ -44,15 +48,19 @@ public class TileGridLayout extends FrameLayout {
     public TileGridLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        mUseFullWidth = FeatureUtilities.isChromeHomeModernEnabled();
+
         Resources res = getResources();
         mVerticalSpacing = FeatureUtilities.isChromeHomeModernEnabled()
                 ? res.getDimensionPixelOffset(R.dimen.tile_grid_layout_vertical_spacing_modern)
                 : res.getDimensionPixelOffset(R.dimen.tile_grid_layout_vertical_spacing);
         mMinHorizontalSpacing =
                 res.getDimensionPixelOffset(R.dimen.tile_grid_layout_min_horizontal_spacing);
-        mMaxHorizontalSpacing =
-                res.getDimensionPixelOffset(R.dimen.tile_grid_layout_max_horizontal_spacing);
-        mMaxWidth = res.getDimensionPixelOffset(R.dimen.tile_grid_layout_max_width);
+        mMaxHorizontalSpacing = mUseFullWidth
+                ? Integer.MAX_VALUE
+                : res.getDimensionPixelOffset(R.dimen.tile_grid_layout_max_horizontal_spacing);
+        mMaxWidth = mUseFullWidth ? Integer.MAX_VALUE
+                                  : res.getDimensionPixelOffset(R.dimen.tile_grid_layout_max_width);
     }
 
     /**
@@ -85,7 +93,7 @@ public class TileGridLayout extends FrameLayout {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int totalWidth = resolveSize(mMaxWidth, widthMeasureSpec);
+        int totalWidth = Math.min(MeasureSpec.getSize(widthMeasureSpec), mMaxWidth);
         int childCount = getChildCount();
         if (childCount == 0) {
             setMeasuredDimension(totalWidth, resolveSize(0, heightMeasureSpec));
@@ -108,18 +116,12 @@ public class TileGridLayout extends FrameLayout {
                 (gridWidth + mMinHorizontalSpacing) / (childWidth + mMinHorizontalSpacing), 1,
                 mMaxColumns);
 
-        // Ensure column spacing isn't greater than mMaxHorizontalSpacing.
+        // Determine how much padding to use between and around the tiles.
         int gridWidthMinusColumns = Math.max(0, gridWidth - numColumns * childWidth);
-        int gridSidePadding = gridWidthMinusColumns - mMaxHorizontalSpacing * (numColumns - 1);
-
-        int gridStart = 0;
-        float horizontalSpacing;
-        if (gridSidePadding > 0) {
-            horizontalSpacing = mMaxHorizontalSpacing;
-            gridStart = gridSidePadding / 2;
-        } else {
-            horizontalSpacing = (float) gridWidthMinusColumns / Math.max(1, numColumns - 1);
-        }
+        Pair<Integer, Integer> gridProperties =
+                computeHorizontalDimensions(mUseFullWidth, gridWidthMinusColumns, numColumns);
+        int gridStart = gridProperties.first;
+        int horizontalSpacing = gridProperties.second;
 
         // Limit the number of rows to mMaxRows.
         int visibleChildCount = Math.min(childCount, mMaxRows * numColumns);
@@ -181,6 +183,43 @@ public class TileGridLayout extends FrameLayout {
         }
 
         return orderedChildren;
+    }
+
+    /**
+     * @param spreadTiles Whether to spread the tiles with the same space between and around them.
+     * @param availableWidth The space available to spread between and around the tiles.
+     * @param numColumns The number of columns to be organised.
+     * @return The [gridStart, horizontalSpacing] pair of dimensions.
+     */
+    @VisibleForTesting
+    Pair<Integer, Integer> computeHorizontalDimensions(
+            boolean spreadTiles, int availableWidth, int numColumns) {
+        int gridStart;
+        float horizontalSpacing;
+        if (spreadTiles) {
+            // identically sized spacers are added both between and around the tiles.
+            int spacerCount = numColumns + 1;
+            horizontalSpacing = (float) availableWidth / spacerCount;
+            gridStart = Math.round(horizontalSpacing);
+            if (horizontalSpacing < mMinHorizontalSpacing) {
+                return computeHorizontalDimensions(false, availableWidth, numColumns);
+            }
+        } else {
+            // Ensure column spacing isn't greater than mMaxHorizontalSpacing.
+            int gridSidePadding = availableWidth - mMaxHorizontalSpacing * (numColumns - 1);
+            if (gridSidePadding > 0) {
+                horizontalSpacing = mMaxHorizontalSpacing;
+                gridStart = gridSidePadding / 2;
+            } else {
+                horizontalSpacing = (float) availableWidth / Math.max(1, numColumns - 1);
+                gridStart = 0;
+            }
+        }
+
+        assert horizontalSpacing >= mMinHorizontalSpacing;
+        assert horizontalSpacing <= mMaxHorizontalSpacing;
+
+        return Pair.create(gridStart, Math.round(horizontalSpacing));
     }
 
     @Nullable
