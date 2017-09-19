@@ -1,0 +1,12 @@
+CONSOLE ERROR: line 4: Error while parsing the 'allowedActivationDelegation' attribute: 'test' is an invalid activation delegation value.
+CONSOLE MESSAGE: line 14: Testing on: http://localhost:8000/media/autoplay/resources/nested-iframe-1a.html
+CONSOLE WARNING: line 18: Failed to execute 'play' on 'HTMLMediaElement': API can only be initiated by a user gesture.
+CONSOLE MESSAGE: line 14: Testing on: http://127.0.0.1:8000/media/autoplay/resources/nested-iframe-2.html
+CONSOLE WARNING: line 18: Failed to execute 'play' on 'HTMLMediaElement': API can only be initiated by a user gesture.
+
+
+============== Back Forward List ==============
+curr->  http://127.0.0.1:8000/media/autoplay/document-user-activation-iframe-delegation-no-media.html
+            http://localhost:8000/media/autoplay/resources/nested-iframe-1a.html (in frame "<!--framePath //<!--frame0-->-->")
+                http://127.0.0.1:8000/media/autoplay/resources/nested-iframe-2.html (in frame "<!--framePath //<!--frame0-->/<!--frame0-->-->")
+===============================================

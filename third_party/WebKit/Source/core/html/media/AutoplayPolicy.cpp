@@ -8,12 +8,16 @@
 #include "core/dom/ElementVisibilityObserver.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/frame/ContentSettingsClient.h"
+#include "core/frame/FrameOwner.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/RemoteFrame.h"
+#include "core/frame/RemoteFrameOwner.h"
 #include "core/frame/Settings.h"
 #include "core/html/HTMLMediaElement.h"
 #include "core/html/media/AutoplayUmaHelper.h"
 #include "platform/runtime_enabled_features.h"
 #include "platform/wtf/Assertions.h"
+#include "public/platform/ActivationDelegationFlags.h"
 #include "public/platform/WebMediaPlayer.h"
 #include "public/web/WebSettings.h"
 
@@ -24,6 +28,25 @@ namespace {
 bool IsDocumentCrossOrigin(const Document& document) {
   const LocalFrame* frame = document.GetFrame();
   return frame && frame->IsCrossOriginSubframe();
+}
+
+bool ShouldDelegateMediaActivation(const Frame& frame) {
+  return frame.Owner() && (frame.Owner()->GetActivationDelegationFlags() &
+                           kActivationDelegationMedia);
+}
+
+bool HasReceivedUserGesture(const Frame& frame) {
+  // Check if the current frame has received a user gesture.
+  if (frame.HasReceivedUserGesture() ||
+      frame.HasReceivedUserGestureBeforeNavigation()) {
+    return true;
+  }
+
+  // If activation delegation is enabled then check if the parent frame is
+  // allowed to play.
+  const Frame* parent = frame.Tree().Parent();
+  return parent && ShouldDelegateMediaActivation(frame) &&
+         HasReceivedUserGesture(*parent);
 }
 
 // Returns whether |document| is whitelisted for autoplay. If true, the user
@@ -84,8 +107,7 @@ AutoplayPolicy::Type AutoplayPolicy::GetAutoplayPolicyForDocument(
 bool AutoplayPolicy::IsDocumentAllowedToPlay(const Document& document) {
   if (!document.GetFrame())
     return false;
-  return document.GetFrame()->HasReceivedUserGesture() ||
-         document.GetFrame()->HasReceivedUserGestureBeforeNavigation();
+  return HasReceivedUserGesture(*document.GetFrame());
 }
 
 AutoplayPolicy::AutoplayPolicy(HTMLMediaElement* element)

@@ -167,6 +167,11 @@ crbug.com/650348 virtual/mojo-loading/http/tests/webaudio/autoplay-crossorigin.h
 # https://crbug.com/745881: Image diff in test due to font rendering issues.
 crbug.com/745881 [ Win ] fast/text/ellipsis-in-relative-inline.html [ Failure ]
 
+# These tests don't work in --site-per-process.
+crbug.com/767389 http/tests/media/autoplay/document-user-activation-iframe-delegation-no-media.html [ Failure ]
+crbug.com/767389 http/tests/media/autoplay/document-user-activation-iframe-delegation-no-gesture.html [ Failure ]
+crbug.com/767389 http/tests/media/autoplay/document-user-activation-navigation-iframe-delegation.html [ Failure ]
+
 # TODO(lukasza, alexmos): Triage these failures.
 Bug(none) fast/frames/cached-frame-counter.html [ Timeout ]
 Bug(none) fast/frames/frame-limit.html [ Timeout ]
