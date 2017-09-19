@@ -100,6 +100,14 @@ cr.define('settings', function() {
       multidevice: false,
     };
     // </if>
+  } else {
+    // <if expr="chromeos">
+    pageVisibility = {
+      appearance: {
+        setWallpaper: true,
+      },
+    };
+    // </if>
   }
 
   return {pageVisibility: pageVisibility};
