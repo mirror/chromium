@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0fa213ca_7aed63ad",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-19T12:33:43Z",
+      "side": 1,
+      "message": "Yes, thanks for pointing this.",
+      "parentUuid": "fe9ed224_4fdd1203",
+      "revId": "1dca2827c78e2ed83ec64d98b1efd24191c94e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78ad34f9_a4700cb9",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
         "patchSetId": 9
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7bc88bd8_9a0dbf47",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmark_table_view.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-19T12:33:43Z",
+      "side": 1,
+      "message": "What do you mean by input method? This will be called whenever the k/b is shown.",
+      "parentUuid": "78ad34f9_a4700cb9",
+      "revId": "1dca2827c78e2ed83ec64d98b1efd24191c94e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf0adc44_bfc9e700",
         "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
         "patchSetId": 9
@@ -50,6 +86,24 @@
       "revId": "1dca2827c78e2ed83ec64d98b1efd24191c94e83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b27bb32f_9a0fbabb",
+        "filename": "ios/chrome/browser/ui/bookmarks/bookmarks_new_generation_egtest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 2112,
+      "author": {
+        "id": 1181484
+      },
+      "writtenOn": "2017-09-19T12:33:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf0adc44_bfc9e700",
+      "revId": "1dca2827c78e2ed83ec64d98b1efd24191c94e83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
