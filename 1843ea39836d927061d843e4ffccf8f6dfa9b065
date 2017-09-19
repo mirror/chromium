@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8408c6bd_bb345f2a",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T02:35:48Z",
+      "side": 1,
+      "message": "Are there scroll views we don\u0027t want this enabled for?  I\u0027m wondering if it should just be on all the time.",
+      "revId": "1843ea39836d927061d843e4ffccf8f6dfa9b065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8739e601_53b74548",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T02:35:48Z",
+      "side": 1,
+      "message": "It seems a little sad that we always heap-allocate all four of these though likely none of them will ever be used.  Wonder if we should try to dynamically allocate them.  That\u0027d avoid the need for manual deletion too.",
+      "revId": "1843ea39836d927061d843e4ffccf8f6dfa9b065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "940aa52c_9285d055",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T02:35:48Z",
+      "side": 1,
+      "message": "Having an enum whose sole purpose is to call this function seems like overkill.\n\nI wonder if we should just do something akin to the following on the caller side, which would eliminate the enum and be shorter overall (and to me clearer since I don\u0027t have to follow as much control flow):\n\n  gfx::Rect bounds \u003d GetContentsBounds();\n  // These temps just make the below calls less verbose, do what you want\n  const int x \u003d bounds.x();\n  const int y \u003d bounds.y();\n  const int w \u003d bounds.width();\n  const int h \u003d bounds.height();\n  const int t \u003d Separator::kThickness;\n  more_content_top_.SetBounds(x, y, w, t);\n  more_content_left_.SetBounds(x, y, t, h);\n  more_content_bottom_.SetBounds(x, bounds.bottom() - t, w, t);\n  more_content_right_.SetBounds(bounds.right() - t, y, t, h);",
+      "revId": "1843ea39836d927061d843e4ffccf8f6dfa9b065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a87ca6_a85ebff0",
+        "filename": "ui/views/controls/scroll_view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T02:35:48Z",
+      "side": 1,
+      "message": "Nit: Indent 2 more (and I would do this in all caps, since I missed it the first couple times)",
+      "revId": "1843ea39836d927061d843e4ffccf8f6dfa9b065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dda55bb_ab6f556d",
+        "filename": "ui/views/controls/scroll_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-09-19T02:35:48Z",
+      "side": 1,
+      "message": "Nit: Could be named unix_hacker()-style and inlined (non-virtual simple setter)",
+      "revId": "1843ea39836d927061d843e4ffccf8f6dfa9b065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
