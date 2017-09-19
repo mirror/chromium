@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ff344f7_9cea2723",
+        "filename": "content/browser/indexed_db/indexed_db_database.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1384,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-09-19T23:45:11Z",
+      "side": 1,
+      "message": "Names (databases, stores, indexes) can be arbitrary 16-bit code unit sequences supplied by script. It\u0027s valid to have a name like \"abc\\uDC00\\uFFFF\\u0100\\u1234\\uD800\\uDC00\\uFFFD\" as the name of a store.\n\nThe docs for UTF16ToASCII say: \"Converts to 7-bit ASCII by truncating. The result must be known to be ASCII beforehand.\" so this isn\u0027t supported use of this function. Also, by converting to ASCII (truncating) you\u0027ll either get incorrect matches (e.g. if \"\\u0141\" and \"\\u0041\" compare the same) or miss updates (if they are converted differently on the renderer and browser side).",
+      "revId": "9a68678dea35ef59669215ef6054a2e344b57715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
