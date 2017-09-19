@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "036182b7_294ec3ad",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-09-19T14:13:52Z",
+      "side": 1,
+      "message": "Remind me why we need this list? Can\u0027t we just have ShellSurfaceWidget::OnKeyEvent process all key events now that we have the key ack mechanism that can prevent this from being called until the client had a chance to ack the key event? If anything, if some key bindings are reserved, shouldn\u0027t we handle that in pre-target handler in keyboard.cc? \n\nI think letting ShellSurfaceWidget::OnKeyEvent process all events would also solve the current bug where standard chrome key bindings are not working for simple wayland test clients that are not creating a keyboard instance.",
+      "range": {
+        "startLine": 78,
+        "startChar": 18,
+        "endLine": 78,
+        "endChar": 39
+      },
+      "revId": "842cb2c7bfe737b12747173ebd0484ae043e0fcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
