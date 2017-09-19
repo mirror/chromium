@@ -258,6 +258,30 @@
       "revId": "dc7ad97a8e3b8461e26069c3a523d14bb5191368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a591ca_7e0d0ea8",
+        "filename": "tools/perf/page_sets/tough_video_cases/video.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-09-19T23:40:40Z",
+      "side": 1,
+      "message": "Note that this not posting \"a lot of tasks\". It actually doesn\u0027t start the new task until after the previous task completed (since javascript is single-threaded and that while loop that hubbe wrote does not give up control at any point.) I suggested a change to clarify this.",
+      "parentUuid": "74b93bfb_6cefe370",
+      "range": {
+        "startLine": 49,
+        "startChar": 6,
+        "endLine": 49,
+        "endChar": 16
+      },
+      "revId": "dc7ad97a8e3b8461e26069c3a523d14bb5191368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

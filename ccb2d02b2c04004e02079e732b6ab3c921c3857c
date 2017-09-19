@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79f41aa3_49f83f71",
+        "filename": "tools/perf/page_sets/tough_video_cases/video.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-09-19T23:40:40Z",
+      "side": 1,
+      "message": "renderer",
+      "range": {
+        "startLine": 48,
+        "startChar": 22,
+        "endLine": 48,
+        "endChar": 29
+      },
+      "revId": "ccb2d02b2c04004e02079e732b6ab3c921c3857c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b05240ae_86d2e9f9",
+        "filename": "tools/perf/page_sets/tough_video_cases/video.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-09-19T23:40:40Z",
+      "side": 1,
+      "message": "It might be easier to read this if you call setTimeout after the busy loop. That clarifies to readers that the next makeBusy won\u0027t happen until the existing one finishes. (I know the code works as written, but I\u0027m hoping to make it easier to understand).",
+      "revId": "ccb2d02b2c04004e02079e732b6ab3c921c3857c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
