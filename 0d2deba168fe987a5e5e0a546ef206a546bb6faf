@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95ff9482_b99d5052",
+        "filename": "net/http/transport_security_state.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1001532
+      },
+      "writtenOn": "2017-09-19T16:59:35Z",
+      "side": 1,
+      "message": "Non-blocking question if the answer is no: Is there any notion of versioning of the bitstream file?\n\nIf yes, this will break on old versions.",
+      "range": {
+        "startLine": 536,
+        "startChar": 13,
+        "endLine": 536,
+        "endChar": 28
+      },
+      "revId": "0d2deba168fe987a5e5e0a546ef206a546bb6faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97af0c26_e430fb35",
+        "filename": "net/http/transport_security_state.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1001532
+      },
+      "writtenOn": "2017-09-19T16:59:35Z",
+      "side": 1,
+      "message": "I think a PreloadResult default constructor which flips bits to false may be safer than this. For example, if a new field is entered, you\u0027ll need to make sure to both parse in the non-simple case and clear in the simple case. Default constructor of false would only override when parsed explicitly.",
+      "range": {
+        "startLine": 549,
+        "startChar": 23,
+        "endLine": 549,
+        "endChar": 24
+      },
+      "revId": "0d2deba168fe987a5e5e0a546ef206a546bb6faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc95d9e_dd156b7a",
+        "filename": "net/http/transport_security_state_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2442,
+      "author": {
+        "id": 1001532
+      },
+      "writtenOn": "2017-09-19T16:59:35Z",
+      "side": 1,
+      "message": "I like how the build config runs the generator on the json files for these tests to get a good integration test.",
+      "range": {
+        "startLine": 2442,
+        "startChar": 14,
+        "endLine": 2442,
+        "endChar": 36
+      },
+      "revId": "0d2deba168fe987a5e5e0a546ef206a546bb6faf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
