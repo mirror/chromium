@@ -94,6 +94,10 @@ const char kAshShelfColorSchemeNormalVibrant[] = "normal_vibrant";
 const char kAshShelfColorSchemeDarkMuted[] = "dark_muted";
 const char kAshShelfColorSchemeDarkVibrant[] = "dark_vibrant";
 
+// Enables shelf model synchronization between Ash and Chrome in Classic Ash.
+const char kAshEnableShelfModelSynchronization[] =
+    "ash-enable-shelf-model-synchronization";
+
 // Enables the heads-up display for tracking touch points.
 const char kAshTouchHud[] = "ash-touch-hud";
 
