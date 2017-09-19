@@ -72,6 +72,7 @@ class GpuState;
 }
 namespace net {
 class NetworkChangeNotifierMac;
+class OSCPScopedAllowBaseSyncPrimitives;
 namespace internal {
 class AddressTrackerLinux;
 }
@@ -245,6 +246,7 @@ class BASE_EXPORT ScopedAllowBaseSyncPrimitives {
                            ScopedAllowBaseSyncPrimitivesResetsState);
   FRIEND_TEST_ALL_PREFIXES(ThreadRestrictionsTest,
                            ScopedAllowBaseSyncPrimitivesWithBlockingDisallowed);
+  friend class net::OSCPScopedAllowBaseSyncPrimitives;
   friend class ScopedAllowBaseSyncPrimitivesForTesting;
 
 #if DCHECK_IS_ON()
