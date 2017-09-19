@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "35a967da_560347ac",
+        "filename": "chrome/browser/vr/animation_player.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-09-19T14:51:08Z",
+      "side": 1,
+      "message": "Yep, consistency was what I was going for. If I start a new file I do curly braces.",
+      "parentUuid": "80b56ed6_fa554c52",
+      "revId": "5d549981151cd6dfc3c781679f99fdb65af9598c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1617b80a_fcce8ab7",
         "filename": "chrome/browser/vr/animation_player_unittest.cc",
         "patchSetId": 5
