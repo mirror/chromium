@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33e888e9_99a25d27",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingInputsUpdaterTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-19T02:02:43Z",
+      "side": 1,
+      "message": "Being a scroller causes a PaintLayer, but I guess the PaintLayer destruction when it was no longer scrollable would clean up the stale pointers.",
+      "range": {
+        "startLine": 25,
+        "startChar": 5,
+        "endLine": 25,
+        "endChar": 27
+      },
+      "revId": "0bffb28e2baad9dd8f09f0a300cd7c01b5bf155a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f701a43b_bbfb257f",
+        "filename": "third_party/WebKit/Source/core/paint/compositing/CompositingInputsUpdaterTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-19T02:02:43Z",
+      "side": 1,
+      "message": "To make this assertion a bit stronger, maybe check that the sticky is in the sticky constraints (i.e. the sticky layer is actually referenced from this scroller).",
+      "revId": "0bffb28e2baad9dd8f09f0a300cd7c01b5bf155a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
