@@ -157,6 +157,7 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
     [self.navigationBar setBackTarget:self
                                action:@selector(navigationBarBack:)];
   } else {
+    [self registerForKeyboardNotifications];
     [self setupNavigationBar];
   }
 }
@@ -1530,6 +1531,49 @@ std::vector<GURL> GetUrlsToOpen(const std::vector<const BookmarkNode*>& nodes) {
   [alert addAction:moveAction];
   [alert addAction:cancelAction];
   return alert;
+}
+
+#pragma mark - Keyboard
+
+- (void)registerForKeyboardNotifications {
+  [[NSNotificationCenter defaultCenter]
+      addObserver:self
+         selector:@selector(keyboardWasShown:)
+             name:UIKeyboardDidShowNotification
+           object:nil];
+
+  [[NSNotificationCenter defaultCenter]
+      addObserver:self
+         selector:@selector(keyboardWillBeHidden:)
+             name:UIKeyboardWillHideNotification
+           object:nil];
+}
+
+- (void)keyboardWasShown:(NSNotification*)aNotification {
+  NSDictionary* info = [aNotification userInfo];
+  CGSize kbSize =
+      [[info objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+
+  UIEdgeInsets previousContentInsets =
+      [self.bookmarksTableView tableView].contentInset;
+
+  // Shift the content inset by the height of the keyboard so we can scoll to
+  // the bottom of the content that is potentially behind the keyboard.
+  UIEdgeInsets contentInsets =
+      UIEdgeInsetsMake(previousContentInsets.top, 0.0, kbSize.height, 0.0);
+  [self.bookmarksTableView tableView].contentInset = contentInsets;
+  [self.bookmarksTableView tableView].scrollIndicatorInsets = contentInsets;
+}
+
+// Called when the UIKeyboardWillHideNotification is sent
+- (void)keyboardWillBeHidden:(NSNotification*)aNotification {
+  UIEdgeInsets previousContentInsets =
+      [self.bookmarksTableView tableView].contentInset;
+  // Restore the content inset now that the keyboard has been hidden.
+  UIEdgeInsets contentInsets =
+      UIEdgeInsetsMake(previousContentInsets.top, 0, 0, 0);
+  [self.bookmarksTableView tableView].contentInset = contentInsets;
+  [self.bookmarksTableView tableView].scrollIndicatorInsets = contentInsets;
 }
 
 @end
