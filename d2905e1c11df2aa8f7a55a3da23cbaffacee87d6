@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "fe489ee7_b462bb8f",
+        "filename": "build/config/compiler/compiler.gni",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-09-19T03:32:58Z",
+      "side": 1,
+      "message": "We\u0027ve done some investigations, https://bugs.chromium.org/p/chromium/issues/detail?id\u003d722473 still want to do it probably, but it needs work.",
+      "parentUuid": "aec111d0_2aae300d",
+      "revId": "d2905e1c11df2aa8f7a55a3da23cbaffacee87d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c500403d_a8430b34",
         "filename": "build/config/compiler/compiler.gni",
         "patchSetId": 3
