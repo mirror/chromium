@@ -191,6 +191,7 @@ net::RequestPriority ConvertWebKitPriorityToNetPriority(
 // Extracts info from a data scheme URL |url| into |info| and |data|. Returns
 // net::OK if successful. Returns a net error code otherwise.
 int GetInfoFromDataURL(const GURL& url,
+                       const std::string method,
                        ResourceResponseInfo* info,
                        std::string* data) {
   // Assure same time for all time fields of data: URLs.
@@ -209,10 +210,15 @@ int GetInfoFromDataURL(const GURL& url,
   if (result != net::OK)
     return result;
 
+  if (method == "HEAD") {
+    data->clear();
+    info->content_length = 0;
+  } else {
+    info->content_length = data->length();
+  }
   info->headers = headers;
   info->mime_type.swap(mime_type);
   info->charset.swap(charset);
-  info->content_length = data->length();
   info->encoded_data_length = 0;
   info->encoded_body_length = 0;
 
@@ -395,6 +401,7 @@ class WebURLLoaderImpl::Context : public base::RefCounted<Context> {
   WebURLLoaderImpl* loader_;
 
   WebURL url_;
+  std::string method_;
   bool use_stream_on_response_;
   // Controls SetSecurityStyleAndDetails() in PopulateURLResponse(). Initially
   // set to WebURLRequest::ReportRawHeaders() in Start() and gets updated in
@@ -527,6 +534,7 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
   DCHECK(request_id_ == -1);
 
   url_ = request.Url();
+  method_ = request.HttpMethod().Latin1();
   use_stream_on_response_ = request.UseStreamOnResponse();
   report_raw_headers_ = request.ReportRawHeaders();
 
@@ -535,8 +543,8 @@ void WebURLLoaderImpl::Context::Start(const WebURLRequest& request,
       // This is a sync load. Do the work now.
       sync_load_response->url = url_;
       sync_load_response->error_code =
-          GetInfoFromDataURL(sync_load_response->url, sync_load_response,
-                             &sync_load_response->data);
+          GetInfoFromDataURL(sync_load_response->url, method_,
+                             sync_load_response, &sync_load_response->data);
     } else {
       task_runner_->PostTask(FROM_HERE,
                              base::BindOnce(&Context::HandleDataURL, this));
@@ -985,7 +993,7 @@ void WebURLLoaderImpl::Context::HandleDataURL() {
   ResourceResponseInfo info;
   std::string data;
 
-  int error_code = GetInfoFromDataURL(url_, &info, &data);
+  int error_code = GetInfoFromDataURL(url_, method_, &info, &data);
 
   if (error_code == net::OK) {
     OnReceivedResponse(info);
