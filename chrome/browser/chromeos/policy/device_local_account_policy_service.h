@@ -66,6 +66,7 @@ class DeviceLocalAccountPolicyBroker
           external_data_manager,
       const base::Closure& policy_updated_callback,
       const scoped_refptr<base::SequencedTaskRunner>& task_runner,
+      const scoped_refptr<base::SequencedTaskRunner>& purge_cache_task_runner,
       AffiliatedInvalidationServiceProvider* invalidation_service_provider);
   ~DeviceLocalAccountPolicyBroker() override;
 
@@ -138,6 +139,7 @@ class DeviceLocalAccountPolicyBroker
   std::unique_ptr<ComponentCloudPolicyService> component_policy_service_;
   base::Closure policy_update_callback_;
   std::unique_ptr<AffiliatedCloudPolicyInvalidator> invalidator_;
+  const scoped_refptr<base::SequencedTaskRunner> purge_cache_task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(DeviceLocalAccountPolicyBroker);
 };
@@ -266,6 +268,7 @@ class DeviceLocalAccountPolicyService {
 
   const scoped_refptr<base::SequencedTaskRunner> store_background_task_runner_;
   const scoped_refptr<base::SequencedTaskRunner> extension_cache_task_runner_;
+  const scoped_refptr<base::SequencedTaskRunner> purge_cache_task_runner_;
 
   std::unique_ptr<DeviceLocalAccountExternalDataService> external_data_service_;
 
