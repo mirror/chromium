@@ -82,10 +82,6 @@ DefaultRendererFactory::CreateVideoDecoders(
                                             media_log_, request_overlay_info_cb,
                                             &video_decoders);
     }
-
-    video_decoders.push_back(base::MakeUnique<GpuVideoDecoder>(
-        gpu_factories, request_overlay_info_cb, target_color_space,
-        media_log_));
   }
 
 #if !defined(MEDIA_DISABLE_LIBVPX)
