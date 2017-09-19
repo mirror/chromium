@@ -663,6 +663,30 @@
     },
     {
       "key": {
+        "uuid": "8d96b021_b16b36f2",
+        "filename": "ios/chrome/browser/passwords/password_controller.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-09-19T14:43:19Z",
+      "side": 1,
+      "message": "Yes, you need to have a specific view controller handle this; we don\u0027t allow arbitrary UI to be stuck onto the root view controller.",
+      "parentUuid": "9158fc51_9c59985a",
+      "range": {
+        "startLine": 744,
+        "startChar": 52,
+        "endLine": 744,
+        "endChar": 70
+      },
+      "revId": "faac40a7e29385ed3fcd687b6befa0e55b12bbf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29e9d8e4_52f7f0eb",
         "filename": "ios/chrome/browser/passwords/password_controller.mm",
         "patchSetId": 16
