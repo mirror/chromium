@@ -75,10 +75,6 @@ class OfflinePageModelImpl : public OfflinePageModel, public KeyedService {
   void DeletePagesByClientIds(const std::vector<ClientId>& client_ids,
                               const DeletePageCallback& callback) override;
 
-  void GetPagesMatchingQuery(
-      std::unique_ptr<OfflinePageModelQuery> query,
-      const MultipleOfflinePageItemCallback& callback) override;
-
   void GetPagesByClientIds(
       const std::vector<ClientId>& client_ids,
       const MultipleOfflinePageItemCallback& callback) override;
@@ -104,9 +100,19 @@ class OfflinePageModelImpl : public OfflinePageModel, public KeyedService {
       const GURL& url,
       URLSearchMode url_search_mode,
       const MultipleOfflinePageItemCallback& callback) override;
+  void GetPagesRemovedOnCacheReset(
+      const MultipleOfflinePageItemCallback& callback) override;
+  void GetPagesByNamespace(
+      const std::string& name_space,
+      const MultipleOfflinePageItemCallback& callback) override;
+  void GetPagesSupportedByDownloads(
+      const MultipleOfflinePageItemCallback& callback) override;
   ClientPolicyController* GetPolicyController() override;
 
   // Methods for testing only:
+  void GetPagesMatchingQuery(std::unique_ptr<OfflinePageModelQuery> query,
+                             const MultipleOfflinePageItemCallback& callback);
+
   OfflinePageMetadataStore* GetStoreForTesting();
   void set_testing_clock(base::Clock* clock) { testing_clock_ = clock; }
 
