@@ -10,6 +10,7 @@
 #include <algorithm>
 
 #include "base/atomic_sequence_num.h"
+#include "base/debug/stack_trace.h"
 #include "base/location.h"
 #include "base/metrics/histogram.h"
 #include "base/single_thread_task_runner.h"
@@ -34,7 +35,6 @@
 #include "third_party/skia/include/core/SkImageFilter.h"
 #include "ui/gfx/geometry/rect_conversions.h"
 #include "ui/gfx/geometry/vector2d_conversions.h"
-
 namespace cc {
 
 base::AtomicSequenceNumber g_next_layer_id;
@@ -200,6 +200,14 @@ bool Layer::IsPropertyChangeAllowed() const {
     return true;
 
   return !layer_tree_host_->in_paint_layer_contents();
+}
+
+void Layer::SetOpacityInternal(float new_opacity) {
+  float old_opacity = inputs_.opacity;
+  inputs_.opacity = new_opacity;
+  base::debug::StackTrace().Print();
+  if (new_opacity != old_opacity && inputs_.client)
+    inputs_.client->DidChangeLayerOpacity(old_opacity, new_opacity);
 }
 
 sk_sp<SkPicture> Layer::GetPicture() const {
@@ -504,7 +512,7 @@ void Layer::SetOpacity(float opacity) {
   // We need to force a property tree rebuild when opacity changes from 1 to a
   // non-1 value or vice-versa as render surfaces can change.
   bool force_rebuild = opacity == 1.f || inputs_.opacity == 1.f;
-  inputs_.opacity = opacity;
+  SetOpacityInternal(opacity);
   SetSubtreePropertyChanged();
   if (layer_tree_host_ && !force_rebuild) {
     PropertyTrees* property_trees = layer_tree_host_->property_trees();
@@ -1329,7 +1337,7 @@ void Layer::OnFilterAnimated(const FilterOperations& filters) {
 }
 
 void Layer::OnOpacityAnimated(float opacity) {
-  inputs_.opacity = opacity;
+  SetOpacityInternal(opacity);
 }
 
 TransformNode* Layer::GetTransformNode() const {
