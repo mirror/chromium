@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d62f4a09_41de10be",
+        "filename": "media/gpu/android/android_video_surface_chooser_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-09-19T17:35:44Z",
+      "side": 1,
+      "message": "did you get it into a state where this actually happened?\n\nit should be set in Initialize by AVDA::StartSurfaceChooser.  it should not be null if Choose is called, unless something else is broken.\n\nif it is null somehow, then i think that we have other problems.  likely nobody has called SurfaceChooser::Initialize, but has called Choose.  that shouldn\u0027t happen.",
+      "revId": "2caf88b468fe914532fe0f344de1523497e91dca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
