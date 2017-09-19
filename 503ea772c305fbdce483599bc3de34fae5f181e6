@@ -33,6 +33,24 @@
       "revId": "503ea772c305fbdce483599bc3de34fae5f181e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0afe941f_1801c298",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_v8_context_snapshot_external_references.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-09-19T10:23:19Z",
+      "side": 1,
+      "message": "This code will be removed after the great mv because we can update strings in INCLUDES after the great mv. Don\u0027t you accept such temporal usage of re?",
+      "parentUuid": "7f974be6_8895ae93",
+      "revId": "503ea772c305fbdce483599bc3de34fae5f181e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
