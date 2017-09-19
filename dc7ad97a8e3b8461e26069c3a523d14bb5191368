@@ -68,6 +68,29 @@
       "revId": "dc7ad97a8e3b8461e26069c3a523d14bb5191368",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a1b7dad_6ddaa624",
+        "filename": "tools/perf/page_sets/tough_video_cases/video.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-09-19T20:12:39Z",
+      "side": 1,
+      "message": "We have similar code at https://cs.corp.google.com/piper///depot/google3/chrome/videostack/testing/av_analysis/play_video/webdriver.py?l\u003d16\n\nThe difference is that that existing code will make JS busy in intervals: busy, then free, then busy, then free, etc. Probably your approach is fine.",
+      "range": {
+        "startLine": 48,
+        "startChar": 7,
+        "endLine": 48,
+        "endChar": 25
+      },
+      "revId": "dc7ad97a8e3b8461e26069c3a523d14bb5191368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
