@@ -15,9 +15,11 @@
 
 namespace base {
 class DictionaryValue;
+class Value;
 }
 
 namespace extensions {
+class Extension;
 
 // This class unpacks an extension.  It is designed to be used in a sandboxed
 // child process.  We parse various bits of the extension, then report back to
@@ -53,11 +55,15 @@ class Unpacker {
   base::DictionaryValue* parsed_manifest() { return parsed_manifest_.get(); }
   base::DictionaryValue* parsed_catalogs() { return parsed_catalogs_.get(); }
 
-  std::unique_ptr<base::DictionaryValue> TakeParsedManifest() {
-    return std::move(parsed_manifest_);
-  }
+  std::unique_ptr<base::DictionaryValue> TakeParsedManifest();
+  std::unique_ptr<base::Value> TakeParsedJSONRuleset();
 
  private:
+  // Reads the Declarative Net Request API JSON ruleset for |extension| if it
+  // provided one. Returns false and populates |error_message_| in case of an
+  // error.
+  bool ReadJSONRulesetIfNeeded(const Extension* extension);
+
   // Write the decoded images to kDecodedImagesFilename.  We do this instead
   // of sending them over IPC, since they are so large.  Returns true on
   // success.
@@ -100,6 +106,10 @@ class Unpacker {
 
   // The parsed version of the manifest JSON contained in the extension.
   std::unique_ptr<base::DictionaryValue> parsed_manifest_;
+
+  // The parsed version of the Declarative Net Request API ruleset. Null if the
+  // extension did not provide one.
+  std::unique_ptr<base::Value> parsed_json_ruleset_;
 
   // A list of decoded images and the paths where those images came from.  Paths
   // are relative to the manifest file.
