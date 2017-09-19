@@ -69,6 +69,24 @@
       "revId": "e0fa76d1225cfe5f0e7b71223be3178315ce817a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be4ae06_7a900d6b",
+        "filename": "chrome/browser/chromeos/arc/accessibility/arc_accessibility_helper_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-19T04:10:16Z",
+      "side": 1,
+      "message": "Sure. But can we not set the property at that time, instead of each time during [de]activation? (which, as you explain, can sometimes be wrong too, if it happens too early, iiuc)",
+      "parentUuid": "9a38298e_6da4a442",
+      "revId": "e0fa76d1225cfe5f0e7b71223be3178315ce817a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
