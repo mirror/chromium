@@ -46,6 +46,30 @@
       "revId": "bf63e08bb059c2050dc13bc2c5d6a416038ab2c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "764c5cc0_d2e9d0ba",
+        "filename": "net/base/net_string_util.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-09-19T14:53:12Z",
+      "side": 1,
+      "message": "The username as used in the NTLM code shouldn\u0027t depend on the system locale. Otherwise the username would depend on where the user is logging in from. The user locale isn\u0027t quite right either since an NTLM handshake should be possible without loading a use profile.\n\nI also couldn\u0027t find anything in MS docs other than references to \"usernames are case insensitive.\" As Zentaro points out, this is a very old protocol. The article at https://msdn.microsoft.com/en-us/library/bb726984.aspx says:\n\n  \"A Microsoft Windows NT version 4.0 or earlier logon name is given to all accounts, which by default is set to the first 20 characters of the Windows 2000 logon name. The Windows NT version 4.0 or earlier logon name must be unique throughout a domain.\"\n\nI\u0027d say the implementation is the documentation here and see how MS\u0027s stack deals with this. Try out a few usernames that are very long or have locale sensitive characters, and examine the tokens coming out of a Windows box.\n\nUnless we can find something definitive about which locale to use, I\u0027m fine with using the default.",
+      "parentUuid": "14720b67_21ac6835",
+      "range": {
+        "startLine": 41,
+        "startChar": 31,
+        "endLine": 41,
+        "endChar": 55
+      },
+      "revId": "bf63e08bb059c2050dc13bc2c5d6a416038ab2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
