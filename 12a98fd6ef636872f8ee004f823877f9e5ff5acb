@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "502dd9c3_82b9cb42",
+        "filename": "content/test/gpu/gpu_tests/webgl2_conformance_expectations.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-09-19T21:09:33Z",
+      "side": 1,
+      "message": "Linux NVidia is paththrough only. Can you add that modifier?",
+      "range": {
+        "startLine": 694,
+        "startChar": 28,
+        "endLine": 694,
+        "endChar": 35
+      },
+      "revId": "12a98fd6ef636872f8ee004f823877f9e5ff5acb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
