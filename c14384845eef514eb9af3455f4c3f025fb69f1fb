@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "635ebda6_7ea6167a",
+        "filename": "chrome/browser/ui/webui/site_settings_helper_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-19T01:07:54Z",
+      "side": 1,
+      "message": "nit: indent comment",
+      "revId": "c14384845eef514eb9af3455f4c3f025fb69f1fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8203fa70_b707aa82",
         "filename": "chrome/test/data/webui/settings/site_details_tests.js",
         "patchSetId": 14

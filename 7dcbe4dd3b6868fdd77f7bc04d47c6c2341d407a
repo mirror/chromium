@@ -34,6 +34,24 @@
       "revId": "7dcbe4dd3b6868fdd77f7bc04d47c6c2341d407a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3d962326_d1017851",
+        "filename": "chrome/browser/resources/settings/site_settings/constants.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-19T01:07:54Z",
+      "side": 0,
+      "message": "Ok - I don\u0027t fully understand but I\u0027ll trust other reviewers :)",
+      "parentUuid": "2ebc8906_afb15a7e",
+      "revId": "7dcbe4dd3b6868fdd77f7bc04d47c6c2341d407a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

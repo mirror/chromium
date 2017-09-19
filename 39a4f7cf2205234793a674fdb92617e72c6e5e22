@@ -349,6 +349,24 @@
       "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93e62da2_62906e01",
+        "filename": "chrome/test/data/webui/settings/site_details_permission_tests.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-09-19T01:07:54Z",
+      "side": 1,
+      "message": "Sorry, you\u0027re right. I\u0027m not sure what I was thinking \u003d\\",
+      "parentUuid": "aaeddf49_80e8a1f5",
+      "revId": "39a4f7cf2205234793a674fdb92617e72c6e5e22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
