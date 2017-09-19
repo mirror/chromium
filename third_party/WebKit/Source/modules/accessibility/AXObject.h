@@ -369,6 +369,8 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   bool HasAOMPropertyOrARIAAttribute(AOMStringProperty,
                                      AtomicString& result) const;
 
+  void TokenVectorFromAttribute(Vector<String>&, const QualifiedName&) const;
+
   virtual void GetSparseAXAttributes(AXSparseAttributeClient&) const {}
 
   // Determine subclass type.
@@ -863,7 +865,6 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
                           AXObjectSet& visited,
                           HeapVector<Member<Element>>& elements,
                           AXRelatedObjectVector* related_objects) const;
-  void TokenVectorFromAttribute(Vector<String>&, const QualifiedName&) const;
   void ElementsFromAttribute(HeapVector<Member<Element>>& elements,
                              const QualifiedName&) const;
   void AriaLabelledbyElementVector(HeapVector<Member<Element>>& elements) const;
