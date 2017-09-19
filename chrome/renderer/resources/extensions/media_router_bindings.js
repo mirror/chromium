@@ -323,24 +323,27 @@ define('media_router_bindings', [
    * Registers the Media Router Provider Manager with the Media Router.
    * @return {!Promise<Object>} Instance ID and config for the Media Router.
    */
-  MediaRouter.prototype.start = function() {
+  MediaRouter.prototype.start =
+      function() {
     return this.service_.registerMediaRouteProvider(
+        'extension',
         this.mediaRouteProviderBinding_.createInterfacePtrAndBind());
   }
 
-  /**
-   * Sets the service delegate methods.
-   * @param {Object} handlers
-   */
-  MediaRouter.prototype.setHandlers = function(handlers) {
+      /**
+       * Sets the service delegate methods.
+       * @param {Object} handlers
+       */
+      MediaRouter.prototype.setHandlers =
+          function(handlers) {
     this.mrpm_.setHandlers(handlers);
   }
 
-  /**
-   * The keep alive status.
-   * @return {boolean}
-   */
-  MediaRouter.prototype.getKeepAlive = function() {
+          /**
+           * The keep alive status.
+           * @return {boolean}
+           */
+          MediaRouter.prototype.getKeepAlive = function() {
     return this.keepAlive_ != null;
   };
 
@@ -351,9 +354,9 @@ define('media_router_bindings', [
    * @param {!Array<!MediaSink>} sinks
    * @param {!Array<string>} origins
    */
-  MediaRouter.prototype.onSinksReceived = function(sourceUrn, sinks,
-      origins) {
-    this.service_.onSinksReceived(sourceUrn, sinks.map(sinkToMojo_),
+  MediaRouter.prototype.onSinksReceived = function(sourceUrn, sinks, origins) {
+    this.service_.onSinksReceived(
+        'extension', sourceUrn, sinks.map(sinkToMojo_),
         origins.map(stringToMojoOrigin_));
   };
 
@@ -445,12 +448,10 @@ define('media_router_bindings', [
    * @param {Array<string>=} joinableRouteIds The active set of joinable
    *     media routes.
    */
-  MediaRouter.prototype.onRoutesUpdated =
-      function(routes, sourceUrn = '', joinableRouteIds = []) {
+  MediaRouter.prototype.onRoutesUpdated = function(
+      routes, sourceUrn = '', joinableRouteIds = []) {
     this.service_.onRoutesUpdated(
-        routes.map(routeToMojo_),
-        sourceUrn,
-        joinableRouteIds);
+        'extension', routes.map(routeToMojo_), sourceUrn, joinableRouteIds);
   };
 
   /**
@@ -459,7 +460,7 @@ define('media_router_bindings', [
    *     The new sink availability.
    */
   MediaRouter.prototype.onSinkAvailabilityUpdated = function(availability) {
-    this.service_.onSinkAvailabilityUpdated(availability);
+    this.service_.onSinkAvailabilityUpdated('extension', availability);
   };
 
   /**

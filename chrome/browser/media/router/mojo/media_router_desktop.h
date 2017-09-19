@@ -77,6 +77,7 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
   // Notifies |request_manager_| that the Mojo connection to MediaRouteProvider
   // is valid.
   void RegisterMediaRouteProvider(
+      const std::string& provider_name,
       mojom::MediaRouteProviderPtr media_route_provider_ptr,
       mojom::MediaRouter::RegisterMediaRouteProviderCallback callback) override;
 
@@ -104,7 +105,7 @@ class MediaRouterDesktop : public MediaRouterMojoImpl {
 
   // MediaRouteProvider proxy that forwards calls to the MRPM in the component
   // extension.
-  ExtensionMediaRouteProviderProxy extension_provider_;
+  std::unique_ptr<ExtensionMediaRouteProviderProxy> extension_provider_;
 
   // Binds |this| to a Mojo connection stub for mojom::MediaRouter.
   // TODO(takumif): Move this to MediaRouterMojoImpl.

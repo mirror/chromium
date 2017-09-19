@@ -66,10 +66,13 @@ MediaRouterDesktop::MediaRouterDesktop(content::BrowserContext* context,
     : MediaRouterMojoImpl(context),
       request_manager_(
           EventPageRequestManagerFactory::GetApiForBrowserContext(context)),
-      extension_provider_(context, mojo::MakeRequest(&media_route_provider_)),
       binding_(this),
       weak_factory_(this) {
   DCHECK(request_manager_);
+  mojom::MediaRouteProviderPtr extension_provider_ptr;
+  extension_provider_ = base::MakeUnique<ExtensionMediaRouteProviderProxy>(
+      context, mojo::MakeRequest(&extension_provider_ptr));
+  media_route_providers_["extension"] = std::move(extension_provider_ptr);
 #if defined(OS_WIN)
   if (check_firewall == FirewallCheck::RUN) {
     CanFirewallUseLocalPorts(
@@ -80,9 +83,18 @@ MediaRouterDesktop::MediaRouterDesktop(content::BrowserContext* context,
 }
 
 void MediaRouterDesktop::RegisterMediaRouteProvider(
+    const std::string& provider_name,
     mojom::MediaRouteProviderPtr media_route_provider_ptr,
     mojom::MediaRouter::RegisterMediaRouteProviderCallback callback) {
-  extension_provider_.RegisterMediaRouteProvider(
+  LOG(ERROR) << "_____ RegisterMRP()";
+  if (provider_name != "extension") {
+    MediaRouterMojoImpl::RegisterMediaRouteProvider(
+        provider_name, std::move(media_route_provider_ptr),
+        std::move(callback));
+    return;
+  }
+
+  extension_provider_->RegisterMediaRouteProvider(
       std::move(media_route_provider_ptr));
 
   auto config = mojom::MediaRouteProviderConfig::New();
@@ -112,21 +124,22 @@ void MediaRouterDesktop::RegisterMediaRouteProvider(
     auto callback =
         base::BindOnce(&MediaRouterDesktop::OnMediaControllerCreated,
                        weak_factory_.GetWeakPtr(), route_id);
-    media_route_provider_->CreateMediaRouteController(
+    media_route_providers_["extension"]->CreateMediaRouteController(
         route_id, route_controller->CreateControllerRequest(),
         route_controller->BindObserverPtr(), std::move(callback));
   }
   request_manager_->OnMojoConnectionsReady();
+  LOG(ERROR) << "_____ done RegisterMRP()";
 }
 
 void MediaRouterDesktop::BindToMojoRequest(
     mojo::InterfaceRequest<mojom::MediaRouter> request,
     const extensions::Extension& extension) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  binding_.Bind(std::move(request));
-  binding_.set_connection_error_handler(base::BindOnce(
-      &MediaRouterDesktop::OnConnectionError, base::Unretained(this)));
+  MediaRouterMojoImpl::BindToMojoRequest(std::move(request));
+  // binding_.Bind(std::move(request));
+  // binding_.set_connection_error_handler(base::BindOnce(
+  //     &MediaRouterDesktop::OnConnectionError, base::Unretained(this)));
 
   request_manager_->SetExtensionId(extension.id());
   if (!provider_version_was_recorded_) {
