@@ -53,7 +53,10 @@ OmniboxPopupViewMac::OmniboxPopupViewMac(OmniboxView* omnibox_view,
                                          OmniboxEditModel* edit_model,
                                          NSTextField* field)
     : omnibox_view_(omnibox_view),
-      model_(new OmniboxPopupModel(this, edit_model)),
+      model_(new OmniboxPopupModel(this,
+                                   edit_model,
+                                   edit_model->client(),
+                                   edit_model->autocomplete_controller())),
       field_(field),
       popup_(nil),
       target_popup_frame_(NSZeroRect) {
