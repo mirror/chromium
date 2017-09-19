@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<!--
+@MAC-ALLOW:AXEnabled*
+@WIN-ALLOW:UNAVAILABLE
+-->
+<form>
+  <input type="checkbox" aria-disabled="false">
+  <fieldset disabled>
+    <input type="radio" aria-disabled="true">
+  </fieldset>
+</form>
+<script>
+  function go() {
+    document.querySelector('input[type=checkbox]').accessibleNode.disabled = true;
+    document.querySelector('input[type=radio]').accessibleNode.disabled = false;
+    document.querySelector('fieldset').accessibleNode.disabled = false;
+  }
+</script>

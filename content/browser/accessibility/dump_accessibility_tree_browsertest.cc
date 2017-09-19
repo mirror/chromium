@@ -67,9 +67,6 @@ class DumpAccessibilityTreeTest : public DumpAccessibilityTestBase {
     // Enable <dialog>, which is used in some tests.
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kEnableExperimentalWebPlatformFeatures);
-    // Enable accessibility object model, used in other tests.
-    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
-        switches::kEnableBlinkFeatures, "AccessibilityObjectModel");
   }
 
   void RunAriaTest(const base::FilePath::CharType* file_path) {

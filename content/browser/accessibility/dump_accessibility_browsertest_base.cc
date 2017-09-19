@@ -83,6 +83,9 @@ DumpAccessibilityTestBase::~DumpAccessibilityTestBase() {
 void DumpAccessibilityTestBase::SetUpCommandLine(
     base::CommandLine* command_line) {
   IsolateAllSitesForTesting(command_line);
+  // Enable accessibility object model, used in some tests.
+  base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+      switches::kEnableBlinkFeatures, "AccessibilityObjectModel");
 }
 
 void DumpAccessibilityTestBase::SetUpOnMainThread() {
