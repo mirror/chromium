@@ -36,9 +36,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import org.chromium.base.Callback;
+import org.chromium.base.ContextUtils;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.base.test.util.Feature;
 import org.chromium.chrome.browser.ChromeFeatureList;
@@ -72,9 +74,12 @@ import java.util.TreeSet;
 @RunWith(LocalRobolectricTestRunner.class)
 @Config(manifest = Config.NONE)
 // TODO(bauerb): Enable these tests with the modern layout.
+// clang-format off
 @Features({
+        @Features.Register(value = ChromeFeatureList.CHROME_HOME, enabled = false),
         @Features.Register(value = ChromeFeatureList.CHROME_HOME_MODERN_LAYOUT, enabled = false)
 })
+// clang-format on
 public class SuggestionsSectionTest {
     @Rule
     public DisableHistogramsRule mDisableHistogramsRule = new DisableHistogramsRule();
@@ -101,6 +106,7 @@ public class SuggestionsSectionTest {
     @Before
     public void setUp() {
         RecordUserAction.setDisabledForTests(true);
+        ContextUtils.initApplicationContextForTests(RuntimeEnvironment.application);
         MockitoAnnotations.initMocks(this);
 
         mBridge = new FakeOfflinePageBridge();
@@ -113,7 +119,7 @@ public class SuggestionsSectionTest {
         when(mUiDelegate.getEventReporter()).thenReturn(mock(SuggestionsEventReporter.class));
 
         // Set empty variation params for the test.
-        CardsVariationParameters.setTestVariationParams(new HashMap<String, String>());
+        CardsVariationParameters.setTestVariationParams(new HashMap<>());
     }
 
     @After
@@ -182,8 +188,7 @@ public class SuggestionsSectionTest {
     @Feature({"Ntp"})
     public void testAddSuggestionsNotification() {
         final int suggestionCount = 5;
-        List<SnippetArticle> snippets = createDummySuggestions(suggestionCount,
-                TEST_CATEGORY_ID);
+        List<SnippetArticle> snippets = createDummySuggestions(suggestionCount, TEST_CATEGORY_ID);
 
         SuggestionsSection section = createSectionWithFetchAction(false);
         // Simulate initialisation by the adapter. Here we don't care about the notifications, since
@@ -203,8 +208,7 @@ public class SuggestionsSectionTest {
     @Feature({"Ntp"})
     public void testSetStatusNotification() {
         final int suggestionCount = 5;
-        List<SnippetArticle> snippets = createDummySuggestions(suggestionCount,
-                TEST_CATEGORY_ID);
+        List<SnippetArticle> snippets = createDummySuggestions(suggestionCount, TEST_CATEGORY_ID);
         SuggestionsSection section = createSectionWithFetchAction(false);
 
         // Simulate initialisation by the adapter. Here we don't care about the notifications, since
@@ -434,16 +438,16 @@ public class SuggestionsSectionTest {
         SuggestionsSection section = createSection(info);
         section.setStatus(CategoryStatus.AVAILABLE);
         section.appendSuggestions(createDummySuggestions(suggestionCount, TEST_CATEGORY_ID), true);
-        assertFalse(section.getProgressItemForTesting().isVisible());
+        assertEquals(ActionItem.State.BUTTON, section.getActionItemForTesting().getState());
 
         // Tap the button
         verifyAction(section, ContentSuggestionsAdditionalAction.FETCH);
-        assertTrue(section.getProgressItemForTesting().isVisible());
+        assertEquals(ActionItem.State.LOADING, section.getActionItemForTesting().getState());
 
         // Simulate receiving suggestions.
         section.setStatus(CategoryStatus.AVAILABLE);
         section.appendSuggestions(createDummySuggestions(suggestionCount, TEST_CATEGORY_ID), false);
-        assertFalse(section.getProgressItemForTesting().isVisible());
+        assertEquals(ActionItem.State.BUTTON, section.getActionItemForTesting().getState());
     }
 
     /**
@@ -464,7 +468,7 @@ public class SuggestionsSectionTest {
         section.setStatus(CategoryStatus.AVAILABLE);
         section.appendSuggestions(createDummySuggestions(suggestionCount, REMOTE_TEST_CATEGORY),
                 /*keepSectionSize=*/true);
-        assertFalse(section.getProgressItemForTesting().isVisible());
+        assertEquals(ActionItem.State.BUTTON, section.getActionItemForTesting().getState());
         assertEquals(10, section.getSuggestionsCount());
         assertTrue(section.getCategoryInfo().isRemote());
 
