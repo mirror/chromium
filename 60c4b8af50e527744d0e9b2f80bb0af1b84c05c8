@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efcbc9ac_2eb7fcb2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-19T19:15:01Z",
+      "side": 1,
+      "message": "Is there a design doc / proposal for this one? There already is JS API Quota that limits the use of certain power user features this is clashing with.",
+      "revId": "60c4b8af50e527744d0e9b2f80bb0af1b84c05c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20dc8f1a_e889d046",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptModule.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-19T19:15:01Z",
+      "side": 1,
+      "message": "Here and below: you should not need it - calls are sync and isolate can be derived from ExecutionContext + thread.",
+      "revId": "60c4b8af50e527744d0e9b2f80bb0af1b84c05c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce2c4e5e_1ddd7e1f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-19T19:15:01Z",
+      "side": 1,
+      "message": "Is is meant to be a part of this change? If you are now terminating isolate in unexpected places, more places will break.",
+      "revId": "60c4b8af50e527744d0e9b2f80bb0af1b84c05c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61d49e2c_ecebfb3d",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPerformanceAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-19T19:15:01Z",
+      "side": 1,
+      "message": "This is going to be inherently racy. Do you want to specify quota for the page load?",
+      "revId": "60c4b8af50e527744d0e9b2f80bb0af1b84c05c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6c63d8_e8f847e6",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPerformanceAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-19T19:15:01Z",
+      "side": 1,
+      "message": "Are you sure you want to bind this feature set to the one of performance agent?",
+      "revId": "60c4b8af50e527744d0e9b2f80bb0af1b84c05c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea27ed3_365722d3",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-09-19T19:15:01Z",
+      "side": 1,
+      "message": "How is this going to be used? You are also computing CPU quota, not just JS - all forced layouts and recalcs will contribute to it.",
+      "revId": "60c4b8af50e527744d0e9b2f80bb0af1b84c05c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
