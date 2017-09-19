@@ -19,6 +19,7 @@
 #include "base/strings/string16.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/timer/timer.h"
 #include "base/values.h"
 #include "components/autofill/core/common/password_form.h"
 #include "components/autofill/core/common/password_form_fill_data.h"
@@ -42,11 +43,16 @@
 #import "ios/chrome/browser/passwords/password_generation_agent.h"
 #include "ios/chrome/browser/sync/ios_chrome_profile_sync_service_factory.h"
 #import "ios/chrome/browser/ui/commands/application_commands.h"
+#include "ios/chrome/grit/ios_strings.h"
 #import "ios/web/public/origin_util.h"
 #include "ios/web/public/url_scheme_util.h"
 #import "ios/web/public/web_state/js/crw_js_injection_receiver.h"
 #import "ios/web/public/web_state/web_state.h"
 #include "url/gurl.h"
+
+#include "base/mac/bind_objc_block.h"
+#include "base/time/time.h"
+#include "ios/chrome/browser/passwords/notify_auto_signin_view_controller.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -61,6 +67,9 @@ using password_manager::PasswordManagerDriver;
 namespace {
 // Types of password infobars to display.
 enum class PasswordInfoBarType { SAVE, UPDATE };
+
+// Duration for notify user auto-sign in dialog being displayed.
+constexpr int kNotifyAutoSigninDuration = 3000;  // milliseconds
 }
 
 @interface PasswordController ()
@@ -274,6 +283,12 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
 
   // Bridge to observe WebState from Objective-C.
   std::unique_ptr<web::WebStateObserverBridge> webStateObserverBridge_;
+
+  // UIViewController for "Signing in as ..." notification.
+  NotifyUserAutoSigninViewController* notifyAutoSigninViewController_;
+
+  // Timer for hiding "Signing in as ..." notification.
+  base::OneShotTimer notifyAutoSigninTimer_;
 
   // True indicates that a request for credentials has been sent to the password
   // store.
@@ -703,6 +718,52 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
     (std::unique_ptr<PasswordFormManager>)formToUpdate {
   [self showInfoBarForForm:std::move(formToUpdate)
                infoBarType:PasswordInfoBarType::UPDATE];
+}
+
+// Hides auto sign-in notification. Removes the view from superview and destroys
+// the controller.
+- (void)hideAutosigninNotification {
+  [notifyAutoSigninViewController_ willMoveToParentViewController:nil];
+  [notifyAutoSigninViewController_.view removeFromSuperview];
+  [notifyAutoSigninViewController_ removeFromParentViewController];
+  notifyAutoSigninViewController_ = nil;
+}
+
+// If Tab was hidden, hide auto sign-in notification.
+- (void)wasHidden {
+  [self hideAutosigninNotification];
+}
+
+// Shows auto sign-in notification and schedules hiding it after 3 seconds.
+- (void)showAutosigninNotification:
+    (std::unique_ptr<autofill::PasswordForm>)formSignedIn {
+  if (!webStateObserverBridge_ || !webStateObserverBridge_->web_state())
+    return;
+
+  UIViewController* baseViewController =
+      [[UIApplication sharedApplication] keyWindow].rootViewController;
+
+  // If a notification is already being displayed, hides the old one, then shows
+  // the new one.
+  if (notifyAutoSigninViewController_) {
+    notifyAutoSigninTimer_.Stop();
+    [self hideAutosigninNotification];
+  }
+
+  // Creates view controller then shows the subview.
+  notifyAutoSigninViewController_ = [[NotifyUserAutoSigninViewController alloc]
+      initWithUserId:base::SysUTF16ToNSString(formSignedIn->username_value)];
+  [baseViewController addChildViewController:notifyAutoSigninViewController_];
+  [baseViewController.view addSubview:notifyAutoSigninViewController_.view];
+  [notifyAutoSigninViewController_
+      didMoveToParentViewController:baseViewController];
+
+  // Hides after 3 seconds.
+  notifyAutoSigninTimer_.Start(
+      FROM_HERE, base::TimeDelta::FromMilliseconds(kNotifyAutoSigninDuration),
+      base::BindBlockArc(^{
+        [self hideAutosigninNotification];
+      }));
 }
 
 #pragma mark -
