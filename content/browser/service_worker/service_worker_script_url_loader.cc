@@ -21,7 +21,7 @@ namespace {
 
 // Buffer size for reading script data from network. We chose this size because
 // the AppCache uses this.
-const size_t kReadBufferSize = 32768;
+const uint32_t kReadBufferSize = 32768;
 
 }  // namespace
 
@@ -296,10 +296,12 @@ void ServiceWorkerScriptURLLoader::MaybeStartNetworkConsumerHandleWatcher() {
 void ServiceWorkerScriptURLLoader::OnNetworkDataAvailable(MojoResult) {
   DCHECK(network_consumer_.is_valid());
   scoped_refptr<network::MojoToNetPendingBuffer> pending_buffer;
-  uint32_t available = 0;
+  uint32_t bytes_available = 0;
   MojoResult result = network::MojoToNetPendingBuffer::BeginRead(
-      &network_consumer_, &pending_buffer, &available);
+      &network_consumer_, &pending_buffer, &bytes_available);
   switch (result) {
+    case MOJO_RESULT_OK:
+      break;
     case MOJO_RESULT_FAILED_PRECONDITION:
       // Closed by peer. This indicates all the data from the network service
       // are read or there is an error. In the error case, the reason is
@@ -311,60 +313,65 @@ void ServiceWorkerScriptURLLoader::OnNetworkDataAvailable(MojoResult) {
     case MOJO_RESULT_SHOULD_WAIT:
       network_watcher_.ArmOrNotify();
       return;
-    case MOJO_RESULT_OK:
-      break;
     default:
-      // TODO(nhiroki): Currently we handle a few limited cases. Audit other
-      // cases.
       NOTREACHED() << static_cast<int>(result);
       return;
   }
 
-  // Read the received data to |buffer|.
-  size_t bytes_to_be_read = std::min<size_t>(kReadBufferSize, available);
-  auto buffer = base::MakeRefCounted<network::MojoToNetIOBuffer>(
-      pending_buffer.get(), bytes_to_be_read);
-
-  WriteData(std::move(buffer), bytes_to_be_read, std::move(pending_buffer));
+  WriteData(std::move(pending_buffer), bytes_available);
 }
 
 void ServiceWorkerScriptURLLoader::WriteData(
-    scoped_refptr<net::IOBuffer> buffer,
-    size_t available_bytes,
-    scoped_refptr<network::MojoToNetPendingBuffer> pending_buffer) {
-  uint32_t bytes_written = available_bytes;
+    scoped_refptr<network::MojoToNetPendingBuffer> pending_buffer,
+    uint32_t bytes_available) {
+  // Cap the buffer size up to |kReadBufferSize|. The remainings will be written
+  // next time.
+  uint32_t bytes_written = std::min<uint32_t>(kReadBufferSize, bytes_available);
+
+  auto buffer = base::MakeRefCounted<network::MojoToNetIOBuffer>(
+      pending_buffer.get(), bytes_written);
   MojoResult result = client_producer_->WriteData(
-      buffer->data(), &bytes_written, MOJO_WRITE_DATA_FLAG_ALL_OR_NONE);
+      buffer->data(), &bytes_written, MOJO_WRITE_DATA_FLAG_NONE);
   switch (result) {
+    case MOJO_RESULT_OK:
+      break;
     case MOJO_RESULT_FAILED_PRECONDITION:
       CommitCompleted(ResourceRequestCompletionStatus(net::ERR_FAILED));
       return;
-    case MOJO_RESULT_OK:
-      break;
+    case MOJO_RESULT_SHOULD_WAIT:
+      // No data was written to |client_producer_| because the pipe was full.
+      // Retry when the pipe becomes ready again.
+      pending_buffer->CompleteRead(0);
+      network_consumer_ = pending_buffer->ReleaseHandle();
+      network_watcher_.ArmOrNotify();
+      return;
     default:
-      // TODO(nhiroki): Currently we handle a few limited cases. Audit other
-      // cases.
       NOTREACHED() << static_cast<int>(result);
       return;
   }
 
+  // Write the buffer in the service worker script storage up to the size we
+  // successfully wrote to the data pipe (i.e., |bytes_written|).
+  static_assert(std::numeric_limits<uint32_t>::max() <=
+                    std::numeric_limits<size_t>::max(),
+                "static_cast<size_t>(uint32_t) should not overflow.");
   net::Error error = cache_writer_->MaybeWriteData(
-      buffer.get(), bytes_written,
+      buffer.get(), static_cast<size_t>(bytes_written),
       base::Bind(&ServiceWorkerScriptURLLoader::OnWriteDataComplete,
-                 weak_factory_.GetWeakPtr(), bytes_written,
-                 make_scoped_refptr(pending_buffer.get())));
+                 weak_factory_.GetWeakPtr(),
+                 make_scoped_refptr(pending_buffer.get()), bytes_written));
   if (error == net::ERR_IO_PENDING) {
     // OnWriteDataComplete() will be called asynchronously.
     return;
   }
   // MaybeWriteData() doesn't run the callback if it finishes synchronously, so
   // explicitly call it here.
-  OnWriteDataComplete(available_bytes, std::move(pending_buffer), error);
+  OnWriteDataComplete(std::move(pending_buffer), bytes_written, error);
 }
 
 void ServiceWorkerScriptURLLoader::OnWriteDataComplete(
-    size_t bytes_written,
     scoped_refptr<network::MojoToNetPendingBuffer> pending_buffer,
+    uint32_t bytes_written,
     net::Error error) {
   DCHECK_NE(net::ERR_IO_PENDING, error);
   if (error != net::OK) {
@@ -375,7 +382,6 @@ void ServiceWorkerScriptURLLoader::OnWriteDataComplete(
   pending_buffer->CompleteRead(bytes_written);
   // Get the consumer handle from a previous read operation if we have one.
   network_consumer_ = pending_buffer->ReleaseHandle();
-  pending_buffer = nullptr;
   network_watcher_.ArmOrNotify();
 }
 
