@@ -885,13 +885,24 @@ TEST_F(GLRendererTest, ActiveTextureState) {
   // During initialization we are allowed to set any texture parameters.
   EXPECT_CALL(*context, texParameteri(_, _, _)).Times(AnyNumber());
 
+  std::unique_ptr<TextureStateTrackingContext> child_context_owned(
+      new TextureStateTrackingContext);
+
+  auto child_context_provider =
+      cc::TestContextProvider::Create(std::move(child_context_owned));
+  ASSERT_TRUE(child_context_provider->BindToCurrentThread());
+  auto child_resource_provider =
+      cc::FakeResourceProvider::Create<cc::LayerTreeResourceProvider>(
+          child_context_provider.get(), shared_bitmap_manager.get());
+
   cc::RenderPass* root_pass =
       AddRenderPass(&render_passes_in_draw_order_, 1, gfx::Rect(100, 100),
                     gfx::Transform(), cc::FilterOperations());
   gpu::SyncToken mailbox_sync_token;
-  AddOneOfEveryQuadType(root_pass, resource_provider.get(), 0,
-                        &mailbox_sync_token);
+  AddOneOfEveryQuadType(root_pass, resource_provider.get(),
+                        child_resource_provider.get(), 0, &mailbox_sync_token);
 
+  EXPECT_EQ(12u, resource_provider->num_resources());
   renderer.DecideRenderPassAllocationsForFrame(render_passes_in_draw_order_);
 
   // Set up expected texture filter state transitions that match the quads
@@ -900,10 +911,11 @@ TEST_F(GLRendererTest, ActiveTextureState) {
   {
     InSequence sequence;
 
-    // The sync points for all quads are waited on first. This sync point is
-    // for a texture quad drawn later in the frame.
+    mailbox_sync_token.SetVerifyFlush();
+    EXPECT_CALL(*context, waitSyncToken(_)).Times(2);
     EXPECT_CALL(*context, waitSyncToken(MatchesSyncToken(mailbox_sync_token)))
         .Times(1);
+    EXPECT_CALL(*context, waitSyncToken(_)).Times(7);
 
     // yuv_quad is drawn with the default linear filter.
     EXPECT_CALL(*context, drawElements(_, _, _, _));
@@ -914,21 +926,14 @@ TEST_F(GLRendererTest, ActiveTextureState) {
                                         GL_NEAREST));
     EXPECT_CALL(*context, texParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER,
                                         GL_NEAREST));
-    EXPECT_CALL(*context, drawElements(_, _, _, _));
-
-    // transformed_tile_quad uses GL_LINEAR.
-    EXPECT_CALL(*context, drawElements(_, _, _, _));
-
-    // scaled_tile_quad also uses GL_LINEAR.
-    EXPECT_CALL(*context, drawElements(_, _, _, _));
-
     // The remaining quads also use GL_LINEAR because nearest neighbor
     // filtering is currently only used with tile quads.
-    EXPECT_CALL(*context, drawElements(_, _, _, _)).Times(5);
+    EXPECT_CALL(*context, drawElements(_, _, _, _)).Times(8);
   }
 
   gfx::Size viewport_size(100, 100);
   DrawFrame(&renderer, viewport_size);
+
   Mock::VerifyAndClearExpectations(context);
 }
 
