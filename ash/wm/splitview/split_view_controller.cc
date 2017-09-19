@@ -4,6 +4,8 @@
 
 #include "ash/wm/splitview/split_view_controller.h"
 
+#include <cmath>
+
 #include "ash/ash_switches.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/screen_util.h"
@@ -448,11 +450,16 @@ gfx::Rect SplitViewController::GetLeftWindowBoundsInScreen(
     aura::Window* window) {
   const gfx::Rect display_bounds_in_screen =
       GetDisplayWorkAreaBoundsInScreen(window);
+  const int divider_width =
+      SplitViewDivider::GetDividerSize(display_bounds_in_screen,
+                                       false /* is_dragging */)
+          .width();
   divider_position_ = (divider_position_ < 0)
                           ? GetDefaultDividerPosition(window)
                           : divider_position_;
   return gfx::Rect(display_bounds_in_screen.x(), display_bounds_in_screen.y(),
-                   divider_position_ - display_bounds_in_screen.x(),
+                   divider_position_ - std::floor(divider_width / 2.f) -
+                       display_bounds_in_screen.x(),
                    display_bounds_in_screen.height());
 }
 
@@ -460,25 +467,26 @@ gfx::Rect SplitViewController::GetRightWindowBoundsInScreen(
     aura::Window* window) {
   const gfx::Rect display_bounds_in_screen =
       GetDisplayWorkAreaBoundsInScreen(window);
-  const gfx::Size divider_size = SplitViewDivider::GetDividerSize(
-      display_bounds_in_screen, false /* is_dragging */);
+  const int divider_width =
+      SplitViewDivider::GetDividerSize(display_bounds_in_screen,
+                                       false /* is_dragging */)
+          .width();
   divider_position_ = (divider_position_ < 0)
                           ? GetDefaultDividerPosition(window)
                           : divider_position_;
-  return gfx::Rect(
-      divider_position_ + divider_size.width(), display_bounds_in_screen.y(),
-      display_bounds_in_screen.x() + display_bounds_in_screen.width() -
-          divider_position_ - divider_size.width(),
-      display_bounds_in_screen.height());
+  return gfx::Rect(divider_position_ + std::ceil(divider_width / 2.f),
+                   display_bounds_in_screen.y(),
+                   display_bounds_in_screen.x() +
+                       display_bounds_in_screen.width() - divider_position_ -
+                       std::ceil(divider_width / 2.f),
+                   display_bounds_in_screen.height());
 }
 
 int SplitViewController::GetDefaultDividerPosition(aura::Window* window) const {
   const gfx::Rect work_area_bounds_in_screen =
       GetDisplayWorkAreaBoundsInScreen(window);
-  const gfx::Size divider_size = SplitViewDivider::GetDividerSize(
-      work_area_bounds_in_screen, false /* is_dragging */);
   return work_area_bounds_in_screen.x() +
-         (work_area_bounds_in_screen.width() - divider_size.width()) * 0.5f;
+         work_area_bounds_in_screen.width() * 0.5f;
 }
 
 void SplitViewController::UpdateBlackScrim(
