@@ -124,16 +124,7 @@ public class LogcatExtractionRunnable implements Runnable {
     @Override
     public void run() {
         Log.i(TAG, "Trying to extract logcat for minidump %s.", mMinidumpFile.getName());
-        CrashFileManager fileManager =
-                new CrashFileManager(ContextUtils.getApplicationContext().getCacheDir());
-        File fileToUpload = mMinidumpFile;
-        try {
-            List<String> logcat = getElidedLogcat();
-            fileToUpload = new MinidumpLogcatPrepender(fileManager, mMinidumpFile, logcat).run();
-            Log.i(TAG, "Succeeded extracting logcat to %s.", fileToUpload.getName());
-        } catch (IOException | InterruptedException e) {
-            Log.w(TAG, e.toString());
-        }
+        File fileToUpload = attachLogcatToMinidump();
 
         // Regardless of success, initiate the upload. That way, even if there are errors augmenting
         // the minidump with logcat data, the service can still upload the unaugmented minidump.
@@ -152,6 +143,20 @@ public class LogcatExtractionRunnable implements Runnable {
                 }
             }
         }
+    }
+
+    File attachLogcatToMinidump() {
+        CrashFileManager fileManager =
+                new CrashFileManager(ContextUtils.getApplicationContext().getCacheDir());
+        File fileToUpload = mMinidumpFile;
+        try {
+            List<String> logcat = getElidedLogcat();
+            fileToUpload = new MinidumpLogcatPrepender(fileManager, mMinidumpFile, logcat).run();
+            Log.i(TAG, "Succeeded extracting logcat to %s.", fileToUpload.getName());
+        } catch (IOException | InterruptedException e) {
+            Log.w(TAG, e.toString());
+        }
+        return fileToUpload;
     }
 
     private List<String> getElidedLogcat() throws IOException, InterruptedException {
