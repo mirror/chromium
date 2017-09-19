@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42c1c83b_354680ca",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-19T00:39:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2685225c_235af7b1",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 6
+      },
+      "revId": "c989102d9dc23a91811d987ddf930a2abed13a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8e29d1d_bd317613",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f3752534_170894de",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-19T00:39:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8e29d1d_bd317613",
+      "range": {
+        "startLine": 176,
+        "startChar": 36,
+        "endLine": 176,
+        "endChar": 55
+      },
+      "revId": "c989102d9dc23a91811d987ddf930a2abed13a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3105f0a_811f6430",
         "filename": "chrome/browser/chromeos/login/wizard_controller.h",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "c989102d9dc23a91811d987ddf930a2abed13a25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3ec9001_a1573141",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-09-19T00:39:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c3105f0a_811f6430",
+      "range": {
+        "startLine": 133,
+        "startChar": 7,
+        "endLine": 133,
+        "endChar": 33
+      },
+      "revId": "c989102d9dc23a91811d987ddf930a2abed13a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
