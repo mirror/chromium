@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b32faaf_128fe175",
+        "filename": "tools/perf/page_sets/tough_video_cases.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-09-19T19:55:36Z",
+      "side": 1,
+      "message": "How about \"busy_js\" to match https://cs.corp.google.com/piper///depot/google3/chrome/videostack/testing/av_analysis/desktop_test_suite.py?q\u003dBusyJS\u0026l\u003d217 ?",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 9
+      },
+      "revId": "dc7ad97a8e3b8461e26069c3a523d14bb5191368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c78f056c_4c19a443",
+        "filename": "tools/perf/page_sets/tough_video_cases.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-09-19T19:55:36Z",
+      "side": 1,
+      "message": "how about \"busyjs\"?",
+      "range": {
+        "startLine": 435,
+        "startChar": 62,
+        "endLine": 435,
+        "endChar": 66
+      },
+      "revId": "dc7ad97a8e3b8461e26069c3a523d14bb5191368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b431f60_c7e11fd0",
+        "filename": "tools/perf/page_sets/tough_video_cases/video.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1149061
+      },
+      "writtenOn": "2017-09-19T19:55:36Z",
+      "side": 1,
+      "message": "This function name seems out-of-style with the names of the functions above. I\u0027m not sure what the convention is for chromium JS function names, but at least we should be consistent within the file.",
+      "range": {
+        "startLine": 48,
+        "startChar": 12,
+        "endLine": 48,
+        "endChar": 21
+      },
+      "revId": "dc7ad97a8e3b8461e26069c3a523d14bb5191368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
