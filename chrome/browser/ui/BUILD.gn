@@ -136,6 +136,7 @@ split_static_library("ui") {
     "passwords/password_manager_porter.h",
     "passwords/password_manager_presenter.cc",
     "passwords/password_manager_presenter.h",
+    "passwords/password_store_interface.h",
     "passwords/password_ui_view.h",
     "permission_bubble/permission_prompt.h",
     "platform_keys_certificate_selector_chromeos.h",

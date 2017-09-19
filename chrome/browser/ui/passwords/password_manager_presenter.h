@@ -14,6 +14,7 @@
 
 #include "base/macros.h"
 #include "chrome/browser/ui/passwords/password_manager_porter.h"
+#include "chrome/browser/ui/passwords/password_store_interface.h"
 #include "components/password_manager/core/browser/password_store.h"
 #include "components/password_manager/core/browser/password_store_consumer.h"
 #include "components/prefs/pref_member.h"
@@ -34,7 +35,8 @@ class PasswordUIView;
 // interact with PasswordStore. It provides completion callbacks for
 // PasswordStore operations and updates the view on PasswordStore changes.
 class PasswordManagerPresenter
-    : public password_manager::PasswordStore::Observer {
+    : public password_manager::PasswordStore::Observer,
+      public PasswordStoreInterface {
  public:
   // |password_view| the UI view that owns this presenter, must not be NULL.
   explicit PasswordManagerPresenter(PasswordUIView* password_view);
@@ -52,9 +54,9 @@ class PasswordManagerPresenter
   // Gets the password entry at |index|.
   const autofill::PasswordForm* GetPassword(size_t index);
 
-  // Gets all password entries.
-  virtual std::vector<std::unique_ptr<autofill::PasswordForm>>
-  GetAllPasswords();
+  // PasswordStoreInterface:
+  std::vector<std::unique_ptr<autofill::PasswordForm>> GetAllPasswords()
+      override;
 
   // Gets the password exception entry at |index|.
   const autofill::PasswordForm* GetPasswordException(size_t index);

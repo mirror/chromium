@@ -10,10 +10,11 @@
 #include "chrome/browser/password_manager/password_store_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/chrome_select_file_policy.h"
-#include "chrome/browser/ui/passwords/password_manager_presenter.h"
+#include "chrome/browser/ui/passwords/password_store_interface.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/password_manager/core/browser/export/password_exporter.h"
+#include "components/password_manager/core/browser/password_store.h"
 #include "content/public/browser/web_contents.h"
 #include "net/base/filename_util.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -75,8 +76,8 @@ void PasswordImportConsumer::ConsumePassword(
 }  // namespace
 
 PasswordManagerPorter::PasswordManagerPorter(
-    PasswordManagerPresenter* password_manager_presenter)
-    : password_manager_presenter_(password_manager_presenter) {}
+    PasswordStoreInterface* password_store_interface)
+    : password_store_interface_(password_store_interface) {}
 
 PasswordManagerPorter::~PasswordManagerPorter() {}
 
@@ -125,11 +126,7 @@ void PasswordManagerPorter::PresentFileSelector(
 void PasswordManagerPorter::FileSelected(const base::FilePath& path,
                                          int index,
                                          void* params) {
-  // We are unable to cast directly from void* to Type: reinterpret_cast will
-  // only convert between pointers and static_cast only from integral types to
-  // enums (for those types that are relevant to this example), which
-  // necessitates the use of two casts.
-  switch (static_cast<Type>(reinterpret_cast<uintptr_t>(params))) {
+  switch (reinterpret_cast<uintptr_t>(params)) {
     case PASSWORD_IMPORT:
       ImportPasswordsFromPath(path);
       break;
@@ -151,7 +148,7 @@ void PasswordManagerPorter::ImportPasswordsFromPath(
 
 void PasswordManagerPorter::ExportPasswordsToPath(const base::FilePath& path) {
   std::vector<std::unique_ptr<autofill::PasswordForm>> password_list =
-      password_manager_presenter_->GetAllPasswords();
+      password_store_interface_->GetAllPasswords();
   UMA_HISTOGRAM_COUNTS("PasswordManager.ExportedPasswordsPerUserInCSV",
                        password_list.size());
   password_manager::PasswordExporter::Export(path, std::move(password_list));

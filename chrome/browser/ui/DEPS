@@ -10,7 +10,6 @@ include_rules = [
   "+components/version_ui",
   "+components/webapks_ui",
   "-chrome/browser/ui/views",
-  "+content/test/test_web_contents.h",
   "+mash/public/interfaces",
   "+services/device/public/interfaces",
 ]
