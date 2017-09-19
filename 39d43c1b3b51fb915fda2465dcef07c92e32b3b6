@@ -16,6 +16,24 @@
       "revId": "39d43c1b3b51fb915fda2465dcef07c92e32b3b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3335536a_e1c72438",
+        "filename": "chrome/browser/ui/views/cookie_info_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-09-19T17:58:30Z",
+      "side": 1,
+      "message": "I chatted with bettes@ and he was okay with leaving this string there but removing the \u003c\u003e around it, so I\u0027ve done that.",
+      "parentUuid": "c1e8fdb4_4f39153e",
+      "revId": "39d43c1b3b51fb915fda2465dcef07c92e32b3b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
