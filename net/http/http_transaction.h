@@ -124,6 +124,8 @@ class NET_EXPORT_PRIVATE HttpTransaction {
                    const CompletionCallback& callback) = 0;
 
   // Stops further caching of this request by the HTTP cache, if there is any.
+  // Note that StopCaching will only be successful if there is only one
+  // transaction reading the cached data at that time.
   virtual void StopCaching() = 0;
 
   // Gets the full request headers sent to the server.  This is guaranteed to
