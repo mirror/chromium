@@ -22,6 +22,30 @@
       "revId": "bf63e08bb059c2050dc13bc2c5d6a416038ab2c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14720b67_21ac6835",
+        "filename": "net/base/net_string_util.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-09-19T13:41:25Z",
+      "side": 1,
+      "message": "It is used for uppercasing a windows username for NTLM. The spec does not specify the method for uppercasing - only that the username can be unicode.\n\nI can\u0027t find any definitive answer. This is the same question but also without a definitive answer https://stackoverflow.com/questions/21929549/what-locale-does-windows-use-to-check-usernames\n\nThat seems to imply this happens using the System Locale (rather than user locale). The alternative is just pick en_US. There\u0027s also the notion of \"invariant culture\" in windows - https://msdn.microsoft.com/en-us/library/system.globalization.cultureinfo.invariantculture(v\u003dvs.110).aspx\n\nWhatever the underlying native equivalent of this is. However the note at the end says not to use the invariant culture for making security decisions.\n\nGiven how old NTLM is - it wouldn\u0027t be surprising if it was locale dependent.\n\nI suppose we could also just pick en_US, since at least that would be deterministic. \n\nI would imagine given the ambiguity that probably a lot of other things break if you happen to have a username that uppercases differently by locale and so it might not be common.\n\n@asanka - any insight?",
+      "parentUuid": "d9f05d08_b7039d04",
+      "range": {
+        "startLine": 41,
+        "startChar": 31,
+        "endLine": 41,
+        "endChar": 55
+      },
+      "revId": "bf63e08bb059c2050dc13bc2c5d6a416038ab2c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
