@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d791440f_5a299c6d",
+        "filename": "chrome/installer/mini_installer/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-19T13:51:04Z",
+      "side": 1,
+      "message": "should this be in an \"if (use_v8_context_snapshot) {\" block down closer to line 210?",
+      "revId": "009bb8f650cbe1c7a40365ed9c704660670ee8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd3e972e_78945e80",
+        "filename": "chrome/installer/mini_installer/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-19T13:51:04Z",
+      "side": 1,
+      "message": "should this also be in an \"if (use_v8_context_snapshot) {\" block below?",
+      "revId": "009bb8f650cbe1c7a40365ed9c704660670ee8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "183f892a_0ef071d5",
+        "filename": "chrome/tools/build/win/FILES.cfg",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-09-19T13:51:04Z",
+      "side": 1,
+      "message": "v8_context_snapshot.bin",
+      "range": {
+        "startLine": 121,
+        "startChar": 17,
+        "endLine": 121,
+        "endChar": 38
+      },
+      "revId": "009bb8f650cbe1c7a40365ed9c704660670ee8b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
