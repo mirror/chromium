@@ -217,12 +217,13 @@ class CommitBeforeSwapAckSentHelper
 
  private:
   // DidCommitProvisionalLoadInterceptor:
-  void WillDispatchDidCommitProvisionalLoad(
+  bool WillDispatchDidCommitProvisionalLoad(
       RenderFrameHost* render_frame_host,
       ::FrameHostMsg_DidCommitProvisionalLoad_Params*) override {
     base::MessageLoop::ScopedNestableTaskAllower allow(
         base::MessageLoop::current());
     FrameWatcher(web_contents()).WaitFrames(1);
+    return true;
   }
 
   DISALLOW_COPY_AND_ASSIGN(CommitBeforeSwapAckSentHelper);
