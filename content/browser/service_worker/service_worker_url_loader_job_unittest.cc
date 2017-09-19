@@ -13,6 +13,7 @@
 #include "content/public/common/resource_response.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/test_url_loader_client.h"
+#include "mojo/common/data_pipe_drainer.h"
 #include "mojo/common/data_pipe_utils.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/http/http_util.h"
@@ -21,13 +22,32 @@
 #include "net/test/test_data_directory.h"
 #include "services/network/public/interfaces/fetch_api.mojom.h"
 #include "storage/browser/blob/blob_data_builder.h"
+#include "storage/browser/blob/blob_data_handle.h"
+#include "storage/browser/blob/blob_impl.h"
 #include "storage/browser/blob/blob_storage_context.h"
+#include "storage/public/interfaces/blobs.mojom.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/service_worker_registration.mojom.h"
 
 namespace content {
 
 namespace {
+
+class DataPipeReader : public mojo::common::DataPipeDrainer::Client {
+ public:
+  DataPipeReader(std::string* data_out, base::OnceClosure done_callback)
+      : data_out_(data_out), done_callback_(std::move(done_callback)) {}
+
+  void OnDataAvailable(const void* data, size_t num_bytes) override {
+    data_out_->append(static_cast<const char*>(data), num_bytes);
+  }
+
+  void OnDataComplete() override { std::move(done_callback_).Run(); }
+
+ private:
+  std::string* data_out_;
+  base::OnceClosure done_callback_;
+};
 
 void ReceiveStartLoaderCallback(StartLoaderCallback* out_callback,
                                 StartLoaderCallback callback) {
@@ -247,6 +267,24 @@ class Helper : public EmbeddedWorkerTestHelper {
     base::RunLoop().RunUntilIdle();
   }
 
+  // Tells this helper to test blob request. And use ReadingBlobrequest() after
+  // use StartRequest(). This method read blob request.
+  void TestBlobRequest() { response_mode_ = ResponseMode::kBlobRequest; }
+  std::string ReadBlobRequest() {
+    mojo::DataPipe pipe;
+    (*blob_handle_)->ReadAll(std::move(pipe.producer_handle), nullptr);
+
+    std::string received;
+    {
+      base::RunLoop loop;
+      DataPipeReader reader(&received, loop.QuitClosure());
+      mojo::common::DataPipeDrainer drainer(&reader,
+                                            std::move(pipe.consumer_handle));
+      loop.Run();
+    }
+    return received;
+  }
+
  protected:
   void OnFetchEvent(
       int embedded_worker_id,
@@ -333,6 +371,11 @@ class Helper : public EmbeddedWorkerTestHelper {
             base::Time::Now());
         // Now the caller must call FinishWaitUntil() to finish the event.
         return;
+      case ResponseMode::kBlobRequest:
+        response_callback->OnFallback(base::Time::Now());
+        std::move(finish_callback).Run(SERVICE_WORKER_OK, base::Time::Now());
+        blob_handle_ = request.blob;
+        return;
     }
     NOTREACHED();
   }
@@ -345,7 +388,8 @@ class Helper : public EmbeddedWorkerTestHelper {
     kFallbackResponse,
     kNavigationPreloadResponse,
     kFailFetchEventDispatch,
-    kEarlyResponse
+    kEarlyResponse,
+    kBlobRequest
   };
 
   ResponseMode response_mode_ = ResponseMode::kDefault;
@@ -359,6 +403,9 @@ class Helper : public EmbeddedWorkerTestHelper {
 
   // For ResponseMode::kEarlyResponse.
   FetchCallback finish_callback_;
+
+  // For ResponseMode::kTestBlobRequest.
+  scoped_refptr<storage::BlobHandle> blob_handle_;
 
   DISALLOW_COPY_AND_ASSIGN(Helper);
 };
@@ -451,15 +498,14 @@ class ServiceWorkerURLLoaderJobTest
   // kHandledRequest was returned, the request is ongoing and the caller can use
   // functions like client_.RunUntilComplete() to wait for completion.
   JobResult StartRequest() {
-    ResourceRequest request;
-    request.url = GURL("https://www.example.com/");
-    request.method = "GET";
+    request_.url = GURL("https://www.example.com/");
+    request_.method = "GET";
 
     // Start a ServiceWorkerURLLoaderJob. It should return a
     // StartLoaderCallback.
     StartLoaderCallback callback;
     job_ = base::MakeUnique<ServiceWorkerURLLoaderJob>(
-        base::BindOnce(&ReceiveStartLoaderCallback, &callback), this, request,
+        base::BindOnce(&ReceiveStartLoaderCallback, &callback), this, request_,
         make_scoped_refptr<URLLoaderFactoryGetter>(
             helper_->context()->loader_factory_getter()),
         GetBlobStorageContext());
@@ -473,6 +519,14 @@ class ServiceWorkerURLLoaderJobTest
                             client_.CreateInterfacePtr());
 
     return JobResult::kHandledRequest;
+  }
+
+  void MakeBlobRequestBody(const std::string kData) {
+    scoped_refptr<ResourceRequestBody> request_body =
+        base::MakeRefCounted<ResourceRequestBody>();
+
+    request_body->AppendBytes(kData.c_str(), kData.length());
+    request_.request_body = request_body;
   }
 
   void ExpectResponseInfo(const ResourceResponseHead& info,
@@ -523,6 +577,7 @@ class ServiceWorkerURLLoaderJobTest
   bool was_main_resource_load_failed_called_ = false;
   std::unique_ptr<ServiceWorkerURLLoaderJob> job_;
   mojom::URLLoaderPtr loader_;
+  ResourceRequest request_;
 };
 
 TEST_F(ServiceWorkerURLLoaderJobTest, Basic) {
@@ -535,6 +590,23 @@ TEST_F(ServiceWorkerURLLoaderJobTest, Basic) {
   const ResourceResponseHead& info = client_.response_head();
   EXPECT_EQ(200, info.headers->response_code());
   ExpectResponseInfo(info, *CreateResponseInfoFromServiceWorker());
+}
+
+TEST_F(ServiceWorkerURLLoaderJobTest, BlobRequest) {
+  const std::string kData = "BlobRequest";
+  helper_->TestBlobRequest();
+
+  // Set request.request_body
+  MakeBlobRequestBody(kData);
+
+  // Service worker responds with network fallback. Since this test needs only
+  // blob request, it is not related with responds.
+  JobResult result = StartRequest();
+  EXPECT_EQ(JobResult::kDidNotHandleRequest, result);
+
+  // Read blob data
+  std::string received = helper_->ReadBlobRequest();
+  EXPECT_EQ(kData, received);
 }
 
 TEST_F(ServiceWorkerURLLoaderJobTest, BlobResponse) {
