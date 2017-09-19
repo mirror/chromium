@@ -1919,7 +1919,7 @@
 
     'official': {
       'mixins': ['official_optimize'],
-      'gn_args': 'is_chrome_branded=true',
+      'gn_args': 'is_chrome_branded=true treat_warnings_as_errors=false',
     },
 
     'official_optimize': {

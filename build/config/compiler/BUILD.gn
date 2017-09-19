@@ -216,16 +216,6 @@ config("compiler") {
         cflags += [ "-fstack-protector" ]
       }
     }
-
-    # Linker warnings.
-    if (fatal_linker_warnings && !(is_chromeos && current_cpu == "arm") &&
-        !(is_android && use_order_profiling) && !is_mac && !is_ios &&
-        current_os != "aix") {
-      # TODO(jochen): Enable this on chromeos on arm. http://crbug.com/356580
-      # TODO(lizeb,pasko): Fix link errors when linking with order_profiling=1
-      # crbug.com/485542
-      ldflags += [ "-Wl,--fatal-warnings" ]
-    }
   }
 
   # Eliminate build metadata (__DATE__, __TIME__ and __TIMESTAMP__) for
@@ -427,18 +417,6 @@ config("compiler") {
   # ------------------------------------
   if (is_clang) {
     cflags += [ "-fcolor-diagnostics" ]
-  }
-
-  # TODO(hans): Remove this once Clang generates better optimized debug info by
-  # default. https://crbug.com/765793
-  if (is_clang && !is_nacl && current_toolchain == host_toolchain &&
-      target_os != "chromeos") {
-    cflags += [
-      "-Xclang",
-      "-mllvm",
-      "-Xclang",
-      "-instcombine-lower-dbg-declare=1",
-    ]
   }
 
   # Print absolute paths in diagnostics. There is no precedent for doing this
