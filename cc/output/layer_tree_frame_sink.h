@@ -72,7 +72,8 @@ class CC_EXPORT LayerTreeFrameSink {
 
   // Constructor for Vulkan-based resources.
   explicit LayerTreeFrameSink(
-      scoped_refptr<viz::VulkanContextProvider> vulkan_context_provider);
+      scoped_refptr<viz::VulkanContextProvider> vulkan_context_provider,
+      viz::SharedBitmapManager* shared_bitmap_manager);
 
   virtual ~LayerTreeFrameSink();
 
