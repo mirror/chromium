@@ -84,12 +84,32 @@ void CollectAllocatorDumps(const base::trace_event::ProcessMemoryDump& source,
   }
 }
 
+void AddEdges(const base::trace_event::ProcessMemoryDump& source,
+              GlobalDump& global_dump) {
+  for (auto& guid_to_edge : source.allocator_dumps_edges_for_testing()) {
+    auto& edge = guid_to_edge.second;
+    auto& nodes_by_guid = global_dump.nodes_by_guid();
+
+    // Find the source and target nodes in the global map by guid.
+    auto source = nodes_by_guid.find(edge.source);
+    auto target = nodes_by_guid.find(edge.target);
+    if (source == nodes_by_guid.end() || target == nodes_by_guid.end()) {
+      continue;  // TODO add a log message here.
+    }
+
+    // Unlike the JS code, we can assume only ownership edges exist.
+    global_dump.AddNodeOwnershipEdge(source->second, target->second,
+                                     edge.importance);
+  }
+}
+
 }  // namespace
 
 std::unique_ptr<GlobalDump> ProcessGlobalDump(
     std::map<ProcessId, ProcessMemoryDump> process_dumps) {
   auto global_dump = std::make_unique<GlobalDump>();
 
+  // First pass: collect all the dumps into trees for processes.
   for (auto& id_to_dump : process_dumps) {
     auto* container_dump =
         global_dump->CreateContainerForProcess(id_to_dump.first);
@@ -97,6 +117,13 @@ std::unique_ptr<GlobalDump> ProcessGlobalDump(
     // Collect the allocator dumps into three maps.
     CollectAllocatorDumps(id_to_dump.second, *global_dump, *container_dump);
   }
+
+  // Second pass: generate the graph of edges between them.
+  for (auto& id_to_dump : process_dumps) {
+    // Add edges to the nodes.
+    AddEdges(id_to_dump.second, *global_dump);
+  }
+
   return global_dump;
 }
 

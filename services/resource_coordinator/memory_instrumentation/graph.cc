@@ -24,6 +24,19 @@ void GlobalDump::InsertNodeToGuidMap(const MemoryAllocatorDumpGuid& guid,
   nodes_by_guid_.emplace(guid, node);
 }
 
+bool GlobalDump::AddNodeOwnershipEdge(DumpNode* owner,
+                                      DumpNode* owned,
+                                      int importance) {
+  all_edges_.push_back(std::make_unique<DumpEdge>(owner, owned, importance));
+
+  // TODO(lalitm): add a check that there is no existing owner and return false
+  // when that happens.
+  DumpEdge* edge = all_edges_.rbegin()->get();
+  owner->SetOwnsEdge(edge);
+  owned->AddOwnedByEdge(edge);
+  return true;
+}
+
 DumpNode* GlobalDump::CreateNode(ContainerDump* container_dump) {
   all_nodes_.push_back(std::make_unique<DumpNode>(container_dump));
   return all_nodes_.rbegin()->get();
@@ -75,6 +88,14 @@ void DumpNode::PushChild(std::string subpath, DumpNode* node) {
   children_.emplace(subpath, node);
 }
 
+void DumpNode::SetOwnsEdge(DumpEdge* owns_edge) {
+  owns_edge_ = owns_edge;
+}
+
+void DumpNode::AddOwnedByEdge(DumpEdge* edge) {
+  owned_by_edges_.push_back(edge);
+}
+
 void DumpNode::AddEntry(std::string name,
                         DumpNode::Entry::Units units,
                         uint64_t value) {
@@ -95,5 +116,8 @@ DumpNode::Entry::Entry(Entry::Units units, std::string value)
       units(units),
       value_string(value),
       value_uint64(0) {}
+
+DumpEdge::DumpEdge(DumpNode* source, DumpNode* target, int priority)
+    : source_(source), target_(target), priority_(priority), weak_(false) {}
 
 }  // namespace memory_instrumentation
