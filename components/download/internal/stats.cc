@@ -20,6 +20,27 @@ namespace {
 // bucket.
 const int64_t kMaxFileSizeKB = 4 * 1024 * 1024; /* 4GB */
 
+// Enum used by UMA metrics to track various reasons of pausing a download.
+enum class PauseReason {
+  // The download was paused. The reason can be anything.
+  ANY = 0,
+
+  // The download was paused due to unsatisfied device criteria.
+  UNMET_DEVICE_CRITERIA = 1,
+
+  // The download was paused by client.
+  PAUSE_BY_CLIENT = 2,
+
+  // The download was paused due to external download.
+  EXTERNAL_DOWNLOAD = 3,
+
+  // The download was paused due to navigation.
+  EXTERNAL_NAVIGATION = 4,
+
+  // The count of entries for the enum.
+  COUNT = 5,
+};
+
 // Converts DownloadTaskType to histogram suffix.
 // Should maps to suffix string in histograms.xml.
 std::string TaskTypeToHistogramSuffix(DownloadTaskType task_type) {
@@ -223,6 +244,34 @@ void LogDownloadCompletion(CompletionType type,
 
   name.append(".").append(CompletionTypeToHistogramSuffix(type));
   base::UmaHistogramCustomCounts(name, file_size_kb, 1, kMaxFileSizeKB, 50);
+}
+
+void LogDownloadPauseReason(bool unmet_device_criteria,
+                            bool pause_by_client,
+                            bool external_navigation,
+                            bool external_download) {
+  base::UmaHistogramEnumeration("Download.Service.PauseReason",
+                                PauseReason::ANY, PauseReason::COUNT);
+  if (unmet_device_criteria) {
+    base::UmaHistogramEnumeration("Download.Service.PauseReason",
+                                  PauseReason::UNMET_DEVICE_CRITERIA,
+                                  PauseReason::COUNT);
+  }
+  if (pause_by_client) {
+    base::UmaHistogramEnumeration("Download.Service.PauseReason",
+                                  PauseReason::PAUSE_BY_CLIENT,
+                                  PauseReason::COUNT);
+  }
+  if (external_navigation) {
+    base::UmaHistogramEnumeration("Download.Service.PauseReason",
+                                  PauseReason::EXTERNAL_NAVIGATION,
+                                  PauseReason::COUNT);
+  }
+  if (external_download) {
+    base::UmaHistogramEnumeration("Download.Service.PauseReason",
+                                  PauseReason::EXTERNAL_DOWNLOAD,
+                                  PauseReason::COUNT);
+  }
 }
 
 void LogModelOperationResult(ModelAction action, bool success) {
