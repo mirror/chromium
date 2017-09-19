@@ -223,8 +223,6 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
   CGFloat visibleHeight_;
   // The height of this infobar when fully visible.
   CGFloat targetHeight_;
-  // View containing |imageView_|. Exists to apply drop shadows to the view.
-  UIView* imageViewContainer_;
   // View containing the icon.
   UIImageView* imageView_;
   // Close button.
@@ -280,21 +278,23 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
 // Returns the width reserved for the icon.
 - (CGFloat)leftMarginOnFirstLine {
   CGFloat leftMargin = 0;
-  if (imageViewContainer_) {
+  if (imageView_) {
+    leftMargin += [self frameOfIcon].origin.x;
     leftMargin += [self frameOfIcon].size.width;
     // The margin between the label and the icon is the same as the margin
     // between the edge of the screen and the icon.
-    leftMargin += 2 * [self frameOfIcon].origin.x;
+    leftMargin += kCloseButtonLeftMargin;
   } else {
     leftMargin += kLeftMarginOnFirstLineWhenIconAbsent;
+    leftMargin += SafeAreaInsetsForView(self).left;
   }
   return leftMargin;
 }
 
 // Returns the width reserved for the close button.
 - (CGFloat)rightMarginOnFirstLine {
-  return
-      [closeButton_ imageView].image.size.width + kCloseButtonInnerPadding * 2;
+  return [closeButton_ imageView].image.size.width +
+         kCloseButtonInnerPadding * 2 + SafeAreaInsetsForView(self).right;
 }
 
 // Returns the horizontal space available between the icon and the close
@@ -427,7 +427,8 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
         CGFloat leftOfRightmostButton =
             [self layoutWideButtonAlignRight:button1_
                                    rightEdge:CGRectGetWidth(self.bounds) -
-                                             kButtonMargin
+                                             kButtonMargin -
+                                             SafeAreaInsetsForView(self).right
                                            y:heightOfFirstLine];
         [self layoutWideButtonAlignRight:button2_
                                rightEdge:leftOfRightmostButton - kButtonSpacing
@@ -452,10 +453,11 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
     if (layout) {
       // Where is there is just one button it is positioned aligned right in the
       // available space.
-      [self
-          layoutWideButtonAlignRight:button
-                           rightEdge:CGRectGetWidth(self.bounds) - kButtonMargin
-                                   y:heightOfFirstLine];
+      [self layoutWideButtonAlignRight:button
+                             rightEdge:CGRectGetWidth(self.bounds) -
+                                       kButtonMargin -
+                                       SafeAreaInsetsForView(self).right
+                                     y:heightOfFirstLine];
     }
     return kButtonHeight;
   }
@@ -613,6 +615,13 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
     if (heightOfButtons > 0)
       requiredHeight += heightOfButtons + kButtonMargin;
   }
+  // Take into account the account the bottom safe area.
+  // The top inset should be 0 because the infobar is bottom aligned and does
+  // not reach anywhere near the top of the screen.
+  DCHECK(SafeAreaInsetsForView(self).top == 0);
+  CGFloat bottomSafeAreaInset = SafeAreaInsetsForView(self).bottom;
+  requiredHeight += bottomSafeAreaInset;
+
   return requiredHeight;
 }
 
@@ -623,7 +632,7 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
 
 - (void)layoutSubviews {
   // Lays out the position of the icon.
-  [imageViewContainer_ setFrame:[self frameOfIcon]];
+  [imageView_ setFrame:[self frameOfIcon]];
   targetHeight_ = [self computeRequiredHeightAndLayoutSubviews:YES];
 
   if (delegate_)
@@ -674,12 +683,11 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
 }
 
 - (void)addLeftIcon:(UIImage*)image {
-  if (!imageViewContainer_) {
-    imageViewContainer_ = [[UIView alloc] init];
-    [self addSubview:imageViewContainer_];
+  if (imageView_) {
+    [imageView_ removeFromSuperview];
   }
   imageView_ = [[UIImageView alloc] initWithImage:image];
-  [imageViewContainer_ addSubview:imageView_];
+  [self addSubview:imageView_];
 }
 
 - (NSString*)stripMarkersFromString:(NSString*)string {
@@ -863,7 +871,8 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
   CGSize closeButtonSize = [closeButton_ imageView].image.size;
   closeButtonSize.width += kCloseButtonInnerPadding * 2;
   closeButtonSize.height += kCloseButtonInnerPadding * 2;
-  CGFloat x = CGRectGetMaxX(self.frame) - closeButtonSize.width;
+  CGFloat x = CGRectGetMaxX(self.frame) - closeButtonSize.width -
+              SafeAreaInsetsForView(self).left;
   // Aligns the close button at the top (height includes touch padding).
   CGFloat y = 0;
   if (singleLineMode) {
@@ -877,7 +886,7 @@ enum InfoBarButtonPosition { ON_FIRST_LINE, CENTER, LEFT, RIGHT };
 - (CGRect)frameOfIcon {
   CGSize iconSize = [imageView_ image].size;
   CGFloat y = kButtonsTopMargin;
-  CGFloat x = kCloseButtonLeftMargin;
+  CGFloat x = kCloseButtonLeftMargin + SafeAreaInsetsForView(self).right;
   return CGRectMake(AlignValueToPixel(x), AlignValueToPixel(y), iconSize.width,
                     iconSize.height);
 }
