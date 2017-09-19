@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "32934857_edc75d10",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchPrefs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-19T00:19:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c5e09c2d_9fcb6548",
+      "revId": "943ab0118f74307d6c3369b1ae59b2f0da30f10e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86fba901_3ff3c3b3",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchPrefs.java",
         "patchSetId": 1
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "2 of 4 already haven notification in their names. So it seems that adding notification_ is a bit redundant.",
       "parentUuid": "86fba901_3ff3c3b3",
+      "revId": "943ab0118f74307d6c3369b1ae59b2f0da30f10e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55605d60_1bc51f41",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/offlinepages/prefetch/PrefetchPrefs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-09-19T00:19:44Z",
+      "side": 1,
+      "message": "I get that point, but this is a global namespace, and prefetch is overloaded in Chrome, so the prefix |prefetch_| seems insufficient to me.\n\nThe one with notification not the second word (prefetch_ignored_notification_counter) could be written as prefetch_notification_ignored_counter without loss of meaning.\n\nBut if you prefer a different prefix, that\u0027d be fine too.",
+      "parentUuid": "173f3cb9_ce804d2e",
       "revId": "943ab0118f74307d6c3369b1ae59b2f0da30f10e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
