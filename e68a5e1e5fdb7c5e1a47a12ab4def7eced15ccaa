@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "2628bc0a_f3c86ef8",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-19T01:44:03Z",
+      "side": 1,
+      "message": "What\u0027s this change for?",
+      "revId": "e68a5e1e5fdb7c5e1a47a12ab4def7eced15ccaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "614dee38_2987ec69",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-19T01:44:03Z",
+      "side": 1,
+      "message": "Can RecordAddToHomescreenManifestAndIconTimeout make sure the metrics has started - or prevent this weird call to GetData some other way?",
+      "revId": "e68a5e1e5fdb7c5e1a47a12ab4def7eced15ccaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ac83bb00_2aeff866",
         "filename": "chrome/browser/android/webapps/add_to_homescreen_data_fetcher_unittest.cc",
         "patchSetId": 9
@@ -41,6 +75,63 @@
         "startChar": 27,
         "endLine": 1008,
         "endChar": 77
+      },
+      "revId": "e68a5e1e5fdb7c5e1a47a12ab4def7eced15ccaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05da01da_6599b4bb",
+        "filename": "chrome/browser/installable/installable_metrics.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-19T01:44:03Z",
+      "side": 1,
+      "message": "Could you add a comment about how this is known to be a non PWA? It isn\u0027t clear to me but am guessing it depends on exactly how this class is used.",
+      "revId": "e68a5e1e5fdb7c5e1a47a12ab4def7eced15ccaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b314b69_936ea886",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-19T01:44:03Z",
+      "side": 1,
+      "message": "Nit: This records the state of the installability check when the Android menu is opened.",
+      "revId": "e68a5e1e5fdb7c5e1a47a12ab4def7eced15ccaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c20beb_5321a9ef",
+        "filename": "chrome/browser/installable/installable_metrics.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-09-19T01:44:03Z",
+      "side": 1,
+      "message": "Similar to above",
+      "range": {
+        "startLine": 56,
+        "startChar": 31,
+        "endLine": 56,
+        "endChar": 34
       },
       "revId": "e68a5e1e5fdb7c5e1a47a12ab4def7eced15ccaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
