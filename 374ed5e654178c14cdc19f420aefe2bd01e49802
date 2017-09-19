@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69a42f6f_9880f93d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-09-19T02:35:08Z",
+      "side": 1,
+      "message": "nit: can update this now",
+      "range": {
+        "startLine": 12,
+        "startChar": 23,
+        "endLine": 12,
+        "endChar": 26
+      },
+      "revId": "374ed5e654178c14cdc19f420aefe2bd01e49802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
