@@ -172,6 +172,7 @@ const CGFloat kBookmarkTableCellImagePadding = 16.0;
 - (BOOL)textFieldShouldReturn:(UITextField*)textField {
   [self.textDelegate textDidChangeTo:self.titleText.text];
   self.titleText.userInteractionEnabled = NO;
+  //[self.titleText resignFirstResponder];
   return YES;
 }
 
