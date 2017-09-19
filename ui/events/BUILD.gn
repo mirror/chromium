@@ -130,6 +130,7 @@ component("events") {
     "gestures/gesture_types.h",
     "keycodes/platform_key_map_win.cc",
     "keycodes/platform_key_map_win.h",
+    "key_event_filter.h",
     "null_event_targeter.cc",
     "null_event_targeter.h",
     "scoped_target_handler.cc",
@@ -143,13 +144,13 @@ component("events") {
 
   public_deps = [
     ":events_base",
+    "//skia",
     "//ui/latency",
   ]
   deps = [
     ":dom_keycode_converter",
     ":gesture_detection",
     "//base/third_party/dynamic_annotations",
-    "//skia",
     "//ui/display",
     "//ui/gfx",
     "//ui/gfx/geometry",

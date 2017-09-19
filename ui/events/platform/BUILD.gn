@@ -29,3 +29,16 @@ component("platform") {
     sources -= [ "platform_event_source_stub.cc" ]
   }
 }
+
+component("key_event_filter") {
+  sources = [
+    "key_event_filter.h",
+    "platform_key_event_filter.cc",
+    "platform_key_event_filter.h",
+  ]
+
+  deps = [
+    "//base",
+    "//ui/events",
+  ]
+}
