@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1442857_65fe5941",
+        "filename": "ui/events/devices/x11/touch_factory_x11.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-09-19T18:13:11Z",
+      "side": 1,
+      "message": "AddPointerDevicesFromString",
+      "revId": "875a648de4ebea83712ce9e47608113ae0123a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
