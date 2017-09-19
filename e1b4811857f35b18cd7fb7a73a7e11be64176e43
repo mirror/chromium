@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "b14ddfa9_57b3f7cb",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-19T20:03:01Z",
+      "side": 1,
+      "message": "so I completely misunderstood onWidgetDestroying. For some reason I thought that it happens when the new tab button is also destroyed. I should have put in some logging statements earlier to realize this. I agree with you to remove those calls otherwise there\u0027s two duplicate calls for OnPromoClosed. Decided to make this return void too as we don\u0027t need the return value anymore. Sorry for so much back and forth on this!",
+      "parentUuid": "d04ffa47_f15a2e18",
+      "revId": "e1b4811857f35b18cd7fb7a73a7e11be64176e43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "456228d6_1f2e58e2",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 17

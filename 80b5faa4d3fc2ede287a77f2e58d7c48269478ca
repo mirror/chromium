@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6460f9b8_d5768bc9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 19
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-19T20:03:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c31b37ae_ffea14d5",
+      "range": {
+        "startLine": 30,
+        "startChar": 8,
+        "endLine": 30,
+        "endChar": 11
+      },
+      "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf491fc3_090a8ef8",
         "filename": "chrome/browser/ui/tabs/tab_strip_model.cc",
         "patchSetId": 19
@@ -45,6 +69,30 @@
       "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ca22f4_dfcaebcf",
+        "filename": "chrome/browser/ui/tabs/tab_strip_model.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-19T20:03:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf491fc3_090a8ef8",
+      "range": {
+        "startLine": 934,
+        "startChar": 4,
+        "endLine": 934,
+        "endChar": 12
+      },
+      "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e367753e_5c8945a0",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-19T20:03:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00261718_ab526e27",
+      "range": {
+        "startLine": 38,
+        "startChar": 25,
+        "endLine": 38,
+        "endChar": 42
+      },
+      "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fcb1ab5_9ba72d0f",
         "filename": "chrome/browser/ui/views/feature_promos/new_tab_promo_bubble_view.h",
         "patchSetId": 19
@@ -91,6 +163,30 @@
       "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "238241ec_b5e5cadf",
+        "filename": "chrome/browser/ui/views/feature_promos/new_tab_promo_bubble_view.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-19T20:03:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fcb1ab5_9ba72d0f",
+      "range": {
+        "startLine": 20,
+        "startChar": 28,
+        "endLine": 20,
+        "endChar": 39
+      },
+      "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "4412d311_b0ff505e",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-19T20:03:01Z",
+      "side": 1,
+      "message": "technically it should never be called twice, it was more of a sanity check",
+      "parentUuid": "70410eae_29f1af7c",
+      "range": {
+        "startLine": 100,
+        "startChar": 2,
+        "endLine": 100,
+        "endChar": 22
+      },
+      "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "723a0d1a_b03e4c2b",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 19
@@ -137,6 +257,30 @@
       "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "921d1927_229e0e9f",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-19T20:03:01Z",
+      "side": 1,
+      "message": "Decided to take out this part since it\u0027s not need anymore",
+      "parentUuid": "723a0d1a_b03e4c2b",
+      "range": {
+        "startLine": 112,
+        "startChar": 7,
+        "endLine": 112,
+        "endChar": 29
+      },
+      "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "1ec5be97_23b5bf9c",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-19T20:03:01Z",
+      "side": 1,
+      "message": "same as above",
+      "parentUuid": "643bef17_55760b06",
+      "range": {
+        "startLine": 113,
+        "startChar": 2,
+        "endLine": 113,
+        "endChar": 27
+      },
+      "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "874826e7_be0a7689",
         "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
         "patchSetId": 19
@@ -174,6 +342,30 @@
       "writtenOn": "2017-09-19T10:27:33Z",
       "side": 1,
       "message": ".reset() here too. Why is it important that we unset the new_tab_promo_ during OnWidgetDestroying?",
+      "range": {
+        "startLine": 224,
+        "startChar": 2,
+        "endLine": 224,
+        "endChar": 27
+      },
+      "revId": "80b5faa4d3fc2ede287a77f2e58d7c48269478ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f7ab263_acd8eb1e",
+        "filename": "chrome/browser/ui/views/tabs/new_tab_button.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1223632
+      },
+      "writtenOn": "2017-09-19T20:03:01Z",
+      "side": 1,
+      "message": "new_tab_promo_ isn\u0027t a unique_ptr so I can\u0027t call reset() on it unless I am misunderstanding something. Previously I was using the new_tab_promo_ as a way to tell whether or not I closed the Bubble from the other callers, but I don\u0027t do that anymore now. I was also using it in the DCHECK for ShowPromo otherwise overlapping promos may happen. However, this won\u0027t ever happen due to finch params only showing it once. I could just take this part out and the DCHECK if you\u0027d like?",
+      "parentUuid": "874826e7_be0a7689",
       "range": {
         "startLine": 224,
         "startChar": 2,
