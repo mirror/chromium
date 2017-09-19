@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f56120a_d8218f5a",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-19T07:22:52Z",
+      "side": 1,
+      "message": "This should always be updated whenever previous_frame_had_main_thread_animations_ is set to true. Right now it looks like this will compute the accumulated time since the first frame of the animation since it only updates the time on the first frame which had main thread animations.",
+      "revId": "6e96199304097135a51fc0d4475831874ca0d42a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "846a811b_8f17ce8d",
+        "filename": "cc/scheduler/compositor_timing_history.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 935,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-19T07:22:52Z",
+      "side": 1,
+      "message": "We might be able to move updating this new active tree draw time out of this if condition (since it is drawn any time used_new_active_tree is true) and re-use it, but having a separate variable for safety is fine.",
+      "revId": "6e96199304097135a51fc0d4475831874ca0d42a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "287be6e4_f132d05e",
+        "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-19T07:22:52Z",
+      "side": 1,
+      "message": "We don\u0027t actually know that we chose not to composite it vs it not being compositable right?",
+      "revId": "6e96199304097135a51fc0d4475831874ca0d42a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3e5d195_c27ef87c",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-19T07:22:52Z",
+      "side": 1,
+      "message": "This comment isn\u0027t very clear, update how?",
+      "revId": "6e96199304097135a51fc0d4475831874ca0d42a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d8b21eb_7978ac4c",
+        "filename": "third_party/WebKit/Source/core/animation/DocumentAnimations.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-19T07:22:52Z",
+      "side": 1,
+      "message": "Avoid code duplication: i.e.\nif (document.View()) {\n  if (CompositorAnimationHost* host \u003d document.View()-\u003eGetCompositorAnimationHost()) {\n    int main_thread_animation_count \u003d 0;\n    int compositable_animation_count \u003d 0;\n    if (document.Timeline().HasAnimations()) {\n      main_thread_animation_count \u003d document.Timeline().PendingAnimationsCount();\n      compositable_animation_count \u003d document.Timeline().MainThreadCompositableAnimationsCount();\n    }\n    host-\u003eSetMainThreadAnimationsCount(main_thread_animation_count);\n    host-\u003eSetMainThreadCompositableAnimationsCount(compositable_animaion_count);\n  }\n}",
+      "revId": "6e96199304097135a51fc0d4475831874ca0d42a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66caf344_b1185848",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 25
+      },
+      "lineNbr": 70253,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-09-19T07:22:52Z",
+      "side": 1,
+      "message": "nit: The main thread ones are the draw times of BeginImplFrames of new trees only.",
+      "revId": "6e96199304097135a51fc0d4475831874ca0d42a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
