@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c215936_f22785de",
+        "filename": "third_party/WebKit/Source/core/editing/EditingTriState.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-19T03:45:48Z",
+      "side": 1,
+      "message": "Could you change to |enum class| to utilize forward declaration and avoid\nincluding EditingTrisate.h to reduce compilation time?\n\nenum class EditingTriState { kFalse, kTrue, kMixed };",
+      "revId": "1f4654933909d75c78501cdc347f876c084def8d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
