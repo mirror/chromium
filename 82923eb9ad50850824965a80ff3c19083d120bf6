@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "823c6236_7161ac28",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1123,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-19T12:18:02Z",
+      "side": 1,
+      "message": "\u0027until never\u0027 may sound that we\u0027re saving that forever, but hope that this description would clarify...",
+      "revId": "82923eb9ad50850824965a80ff3c19083d120bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8351478d_95656e36",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 811,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-19T12:18:02Z",
+      "side": 1,
+      "message": "Can we also document the default behavior?",
+      "revId": "82923eb9ad50850824965a80ff3c19083d120bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93990561_002ff4c5",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 5728,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-19T12:18:02Z",
+      "side": 1,
+      "message": "If frame\u0027s null should we also just clear resources?",
+      "revId": "82923eb9ad50850824965a80ff3c19083d120bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81b02fa6_c25ec3fe",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-09-19T12:18:02Z",
+      "side": 1,
+      "message": "Should we call this in ClearContext too?",
+      "revId": "82923eb9ad50850824965a80ff3c19083d120bf6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
