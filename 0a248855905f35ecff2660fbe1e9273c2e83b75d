@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "88382c54_e9b733e0",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 969,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-09-19T07:33:25Z",
+      "side": 1,
+      "message": "jochen@ is okay with creating a new directory for this.",
+      "parentUuid": "fd2e6121_543b23af",
+      "revId": "0a248855905f35ecff2660fbe1e9273c2e83b75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "801c4403_52aa2e01",
         "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "02710304_112c14fc",
+        "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-09-19T07:33:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "801c4403_52aa2e01",
+      "revId": "0a248855905f35ecff2660fbe1e9273c2e83b75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91734297_7c92d8f4",
         "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller.h",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-09-12T10:07:29Z",
       "side": 1,
       "message": "I don\u0027t think you need this as `web_contents()` should be available t WebContentsUserData\u003cT\u003e.",
+      "revId": "0a248855905f35ecff2660fbe1e9273c2e83b75d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0c5acfe_d0f622cc",
+        "filename": "chrome/browser/picture_in_picture/picture_in_picture_window_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1121784
+      },
+      "writtenOn": "2017-09-19T07:33:25Z",
+      "side": 1,
+      "message": "web_contents() is not available via WebContentsUserData. The subclasses declare their own web_contents().",
+      "parentUuid": "91734297_7c92d8f4",
       "revId": "0a248855905f35ecff2660fbe1e9273c2e83b75d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
