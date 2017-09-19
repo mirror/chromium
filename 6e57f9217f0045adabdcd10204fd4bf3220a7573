@@ -16,6 +16,24 @@
       "revId": "6e57f9217f0045adabdcd10204fd4bf3220a7573",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe6eb87_f3f924a6",
+        "filename": "chrome/browser/media/router/mojo/extension_media_route_provider_proxy.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-09-19T19:15:55Z",
+      "side": 1,
+      "message": "Done. Removing MRDesktop::request_manager_ in a separate patch, as discussed offline.",
+      "parentUuid": "44679dcd_cb71dacd",
+      "revId": "6e57f9217f0045adabdcd10204fd4bf3220a7573",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
