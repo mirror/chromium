@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<div id="log"></div>
+
+<form>
+<input id="ccname" name="ccname" autocomplete="cc-name" autofocus="">
+<input id="cardnumber" name="cardnumber" autocomplete="cc-number">
+<input id="cvc" name="cvc" autocomplete="cc-csc">
+<input id="ccexp" name="ccexp" autocomplete="cc-exp">
+<input type="submit">
+</form>
+<button onclick="document.forms[0].classList.toggle('hidden')">Hide form</button>
+<div id="info" style="position:absolute;left:400px"></div>
+<script>
+test(function() {
+    assert_true(window.internals != null, 'This test requires internals object');
+
+    // Setup the JavaScript function that tries to access to the suggested values.
+    function grabField(field) {
+        // Simulate the user attempting to modify the suggested value.
+        field.focus();
+        field.setSelectionRange(0,0);
+        var result = document.execCommand('insertText', false, ' ');
+
+        var val = field.value.trim();
+        field.value='';
+        assert_equals(val, '', 'The JavaScript should not be able to access the suggested values.');
+    }
+
+    // Set some suggested values.
+    var ccname = document.getElementById('ccname');
+    var cardnumber = document.getElementById('cardnumber');
+    var cvc = document.getElementById('cvc');
+    var ccexp = document.getElementById('ccexp');
+    internals.setSuggestedValue(ccname, 'suggested ccname');
+    internals.setSuggestedValue(cardnumber, 'suggested cardnumber');
+    internals.setSuggestedValue(cvc, 'suggested cvc');
+    internals.setSuggestedValue(ccexp, 'suggested ccexp');
+
+    // Try to grab the suggested values in the fields.
+    grabField(document.forms[0].elements[0]);
+    grabField(document.forms[0].elements[1]);
+    grabField(document.forms[0].elements[2]);
+    grabField(document.forms[0].elements[3]);
+
+}, "JavaScript should not be able to access the suggested values.");
+
+</script>

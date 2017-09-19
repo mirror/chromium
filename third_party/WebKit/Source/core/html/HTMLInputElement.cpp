@@ -1052,15 +1052,12 @@ void HTMLInputElement::SetValueForUser(const String& value) {
   setValue(value, kDispatchChangeEvent);
 }
 
-const String& HTMLInputElement::SuggestedValue() const {
-  return suggested_value_;
-}
-
 void HTMLInputElement::SetSuggestedValue(const String& value) {
   if (!input_type_->CanSetSuggestedValue())
     return;
+
+  TextControlElement::SetSuggestedValue(SanitizeValue(value));
   needs_to_update_view_value_ = true;
-  suggested_value_ = SanitizeValue(value);
   SetNeedsStyleRecalc(
       kSubtreeStyleChange,
       StyleChangeReasonForTracing::Create(StyleChangeReason::kControlValue));
@@ -1685,8 +1682,8 @@ bool HTMLInputElement::SupportsPlaceholder() const {
   return input_type_->SupportsPlaceholder();
 }
 
-void HTMLInputElement::UpdatePlaceholderText() {
-  return input_type_view_->UpdatePlaceholderText();
+String HTMLInputElement::GetPlaceholderValue() const {
+  return !SuggestedValue().IsEmpty() ? SuggestedValue() : StrippedPlaceholder();
 }
 
 bool HTMLInputElement::SupportsAutocapitalize() const {

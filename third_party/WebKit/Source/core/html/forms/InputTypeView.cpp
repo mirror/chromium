@@ -161,8 +161,6 @@ void InputTypeView::ListAttributeTargetChanged() {}
 
 void InputTypeView::UpdateClearButtonVisibility() {}
 
-void InputTypeView::UpdatePlaceholderText() {}
-
 AXObject* InputTypeView::PopupRootAXObject() {
   return nullptr;
 }
