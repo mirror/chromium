@@ -26,6 +26,7 @@
 #include "chrome/browser/chromeos/arc/policy/arc_android_management_checker.h"
 #include "chrome/browser/chromeos/arc/policy/arc_policy_util.h"
 #include "chrome/browser/chromeos/login/ui/login_display_host.h"
+#include "chrome/browser/chromeos/login/wizard_controller.h"
 #include "chrome/browser/lifetime/application_lifetime.h"
 #include "chrome/browser/policy/profile_policy_connector.h"
 #include "chrome/browser/policy/profile_policy_connector_factory.h"
@@ -162,17 +163,17 @@ ArcSessionManager* ArcSessionManager::Get() {
 
 // static
 bool ArcSessionManager::IsOobeOptInActive() {
-  // ARC OOBE OptIn is optional for now. Test if it exists and login host is
-  // active.
-  if (!user_manager::UserManager::Get()->IsCurrentUserNew())
+  // ARC OOBE OptIn is optional for now. Check if it is enabled and currently
+  // showing.
+  chromeos::LoginDisplayHost* host = chromeos::LoginDisplayHost::default_host();
+  if (!host)
     return false;
-  if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
-          chromeos::switches::kEnableArcOOBEOptIn)) {
+  const chromeos::WizardController* wizard_controller =
+      host->GetWizardController();
+  if (!wizard_controller)
     return false;
-  }
-  if (!chromeos::LoginDisplayHost::default_host())
-    return false;
-  return true;
+  return wizard_controller->current_screen()->screen_id() ==
+         chromeos::OobeScreen::SCREEN_ARC_TERMS_OF_SERVICE;
 }
 
 // static
