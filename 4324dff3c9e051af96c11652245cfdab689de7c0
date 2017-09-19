@@ -22,6 +22,30 @@
       "revId": "4324dff3c9e051af96c11652245cfdab689de7c0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c599ca3_2b3f34ca",
+        "filename": "third_party/WebKit/Source/core/editing/commands/EditorCommand.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2078,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-09-19T03:41:43Z",
+      "side": 1,
+      "message": "I think we should have UserGestureIndicator::ProcessingUserGesture() for\nreturning true for handling Ctrl+C/Ctrl+X.\n\nWebKit also does so L1161-L1162[1]\n\n1153\tstatic bool defaultValueForSupportedCopyCut(Frame\u0026 frame)\n1154\t{\n1155\t    auto\u0026 settings \u003d frame.settings();\n1156\t    if (settings.javaScriptCanAccessClipboard())\n1157\t        return true;\n1158\t   \n1159\t    switch (settings.clipboardAccessPolicy()) {\n1160\t    case ClipboardAccessPolicy::Allow:\n1161\t    case ClipboardAccessPolicy::RequiresUserGesture:\n1162\t        return true;\n1163\t    case ClipboardAccessPolicy::Deny:\n1164\t        return false;\n1165\t    }\n1166\t\n1167\t    ASSERT_NOT_REACHED();\n1168\t    return false;\n1169\t}\n\n[1] https://trac.webkit.org/browser/webkit/trunk/Source/WebCore/editing/EditorCommand.cpp",
+      "parentUuid": "169bd622_cb16ad1f",
+      "range": {
+        "startLine": 2078,
+        "startChar": 6,
+        "endLine": 2078,
+        "endChar": 51
+      },
+      "revId": "4324dff3c9e051af96c11652245cfdab689de7c0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
