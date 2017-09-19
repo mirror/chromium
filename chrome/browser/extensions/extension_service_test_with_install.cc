@@ -78,6 +78,7 @@ std::vector<base::string16> ExtensionServiceTestWithInstall::GetErrors() {
   return ret_val;
 }
 
+// static
 void ExtensionServiceTestWithInstall::PackCRX(const base::FilePath& dir_path,
                                               const base::FilePath& pem_path,
                                               const base::FilePath& crx_path) {
