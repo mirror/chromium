@@ -19,6 +19,121 @@
     },
     {
       "key": {
+        "uuid": "1269fb22_f69d4fcb",
+        "filename": "content/browser/android/selection_popup_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-19T18:21:25Z",
+      "side": 1,
+      "message": "Unless there is a context switch, could you keep the same variable name instead of flipping it into another?\nafter_adjust is somewhat weird grammatically because its after + verb.\nHow about renaming it to from_selection_adjustment and pass it all the way to the Java code?",
+      "range": {
+        "startLine": 153,
+        "startChar": 32,
+        "endLine": 153,
+        "endChar": 44
+      },
+      "revId": "231952ae04922021f5ac00ac7b7ebb463d982fb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9df56c4_0ff03534",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1150,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-19T18:21:25Z",
+      "side": 1,
+      "message": "We should also check that selection offsets remain the same as when classification started. Otherwise, we shouldn\u0027t trigger selection adjustment.",
+      "range": {
+        "startLine": 1150,
+        "startChar": 17,
+        "endLine": 1150,
+        "endChar": 31
+      },
+      "revId": "231952ae04922021f5ac00ac7b7ebb463d982fb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e72472d6_4b3949a4",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1151,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-19T18:21:25Z",
+      "side": 1,
+      "message": "remove? The assertion here doesn\u0027t make much sense.",
+      "range": {
+        "startLine": 1151,
+        "startChar": 16,
+        "endLine": 1151,
+        "endChar": 32
+      },
+      "revId": "231952ae04922021f5ac00ac7b7ebb463d982fb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9e5d2f_c37f2a7b",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/SelectionPopupController.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1152,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-19T18:21:25Z",
+      "side": 1,
+      "message": "How about setting mClassificationResult as null here?\n\nuser updates selection -\u003e onClassified() -\u003e adjust sent -\u003e user updates selection -\u003e onClassified()\n-\u003e adjust updates selection -\u003e adjust updates selection\n\nThis is a valid path but the second onClassified() causes assertion failure?\n\nIt seems that this type of interactions are very difficult to reason about.\nCould you add robolectric tests for this class?\nRobolectric test is currently the only way to mock out dependencies. Here is an example:\nhttps://cs.chromium.org/chromium/src/content/public/android/junit/src/org/chromium/content/browser/input/ThreadedInputConnectionTest.java?q\u003dthreadedinputconnectiontest\u0026sq\u003dpackage:chromium\u0026l\u003d1",
+      "range": {
+        "startLine": 1152,
+        "startChar": 16,
+        "endLine": 1152,
+        "endChar": 22
+      },
+      "revId": "231952ae04922021f5ac00ac7b7ebb463d982fb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66b8d820_00e18da2",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/webcontents/WebContentsImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-09-19T18:21:25Z",
+      "side": 1,
+      "message": "If contextual search is the only other caller, why don\u0027t we merge the call path and have CS pass \u0027false\u0027 as parameter?",
+      "range": {
+        "startLine": 372,
+        "startChar": 16,
+        "endLine": 372,
+        "endChar": 48
+      },
+      "revId": "231952ae04922021f5ac00ac7b7ebb463d982fb0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0392b7d_2ebb8415",
         "filename": "content/public/android/java/src/org/chromium/content_public/browser/WebContents.java",
         "patchSetId": 5
