@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d737904a_53e04698",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 554,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-19T15:21:48Z",
+      "side": 1,
+      "message": "Looks like the call to isVrShellEnabled in onNewIntentWithNative for auto-present intents will now fail on Samsung devices. That should no longer be calling this (it was calling this because we use \"Vr Shell\" to show the splash screen.",
+      "range": {
+        "startLine": 554,
+        "startChar": 12,
+        "endLine": 554,
+        "endChar": 36
+      },
+      "revId": "6f742356f4bdb15dde4a5e23c4bca6c1f562ef2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47810e79_afa13a99",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 566,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-19T15:21:48Z",
+      "side": 1,
+      "message": "use Build.VERSION_CODES constant?",
+      "range": {
+        "startLine": 566,
+        "startChar": 36,
+        "endLine": 566,
+        "endChar": 38
+      },
+      "revId": "6f742356f4bdb15dde4a5e23c4bca6c1f562ef2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c12287_4a94fa3b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-19T15:21:48Z",
+      "side": 1,
+      "message": "Is it safe to assume that the device will use the mode with the highest physical width as the vr mode?",
+      "range": {
+        "startLine": 572,
+        "startChar": 21,
+        "endLine": 572,
+        "endChar": 28
+      },
+      "revId": "6f742356f4bdb15dde4a5e23c4bca6c1f562ef2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2146f55_661cee79",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 577,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-09-19T15:21:48Z",
+      "side": 1,
+      "message": "I don\u0027t fully understand this. How does checking if the current size matches that of what we think the vr mode size is tell us that the device \"changes\" density in VR? It could always be in that mode no?",
+      "range": {
+        "startLine": 577,
+        "startChar": 24,
+        "endLine": 577,
+        "endChar": 33
+      },
+      "revId": "6f742356f4bdb15dde4a5e23c4bca6c1f562ef2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
