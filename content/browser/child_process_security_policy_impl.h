@@ -88,9 +88,15 @@ class CONTENT_EXPORT ChildProcessSecurityPolicyImpl
                                const std::string& filesystem_id) override;
   bool HasWebUIBindings(int child_id) override;
   void GrantSendMidiSysExMessage(int child_id) override;
-  bool CanAccessDataForOrigin(int child_id, const GURL& url) override;
   bool HasSpecificPermissionForOrigin(int child_id,
                                       const url::Origin& origin) override;
+  bool ContainsOrigin(int child_id, const url::Origin& origin) override;
+
+  // Returns true if the process is permitted to read and modify the data for
+  // the given origin. This is currently used for cookies and passwords.
+  // Does not affect cookies attached to or set by network requests.
+  // Only might return false if the --site-per-process flag is used.
+  bool CanAccessCookiesForURL(int child_id, const GURL& url);
 
   // Returns if |child_id| can read all of the |files|.
   bool CanReadAllFiles(int child_id, const std::vector<base::FilePath>& files);
@@ -276,6 +282,8 @@ class CONTENT_EXPORT ChildProcessSecurityPolicyImpl
   //       represents a stricter subset. It must also be used for
   //       renderer-initiated navigations.
   bool CanRedirectToURL(const GURL& url);
+
+  void MarkAsContainingOrigin(int child_id, const url::Origin& origin);
 
  private:
   friend class ChildProcessSecurityPolicyInProcessBrowserTest;

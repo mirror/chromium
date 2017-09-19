@@ -194,12 +194,6 @@ class ChildProcessSecurityPolicy {
   // Grants permission to send system exclusive message to any MIDI devices.
   virtual void GrantSendMidiSysExMessage(int child_id) = 0;
 
-  // Returns true if the process is permitted to read and modify the data for
-  // the given origin. This is currently used for cookies and passwords.
-  // Does not affect cookies attached to or set by network requests.
-  // Only might return false if the --site-per-process flag is used.
-  virtual bool CanAccessDataForOrigin(int child_id, const GURL& gurl) = 0;
-
   // Returns true if GrantOrigin was called earlier with the same parameters.
   //
   // TODO(alexmos): This currently exists to support checking whether a
@@ -208,6 +202,9 @@ class ChildProcessSecurityPolicy {
   // check is superseded by a UI thread check.  See https://crbug.com/656752.
   virtual bool HasSpecificPermissionForOrigin(int child_id,
                                               const url::Origin& origin) = 0;
+
+  // Returns true if |child_id| ever has committed a document from |origin|.
+  virtual bool ContainsOrigin(int child_id, const url::Origin& origin) = 0;
 };
 
 }  // namespace content
