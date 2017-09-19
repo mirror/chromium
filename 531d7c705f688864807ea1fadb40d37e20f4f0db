@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a916189_a7a12054",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-19T09:05:17Z",
+      "side": 1,
+      "message": "This one at least can be a lambda :)",
+      "range": {
+        "startLine": 127,
+        "startChar": 16,
+        "endLine": 128,
+        "endChar": 34
+      },
+      "revId": "531d7c705f688864807ea1fadb40d37e20f4f0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b98ef7_769f43a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/cards/ActionItem.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-09-19T09:05:17Z",
+      "side": 1,
+      "message": "Would it be worth making these default methods on SnackbarController?",
+      "range": {
+        "startLine": 133,
+        "startChar": 32,
+        "endLine": 133,
+        "endChar": 85
+      },
+      "revId": "531d7c705f688864807ea1fadb40d37e20f4f0db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
