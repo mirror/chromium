@@ -21,7 +21,6 @@
 #include "ui/base/cocoa/base_view.h"
 #include "ui/gfx/geometry/size.h"
 
-@class FocusTracker;
 @class WebDragDest;
 @class WebDragSource;
 
@@ -140,20 +139,11 @@ class WebContentsViewMac : public WebContentsView,
       RenderWidgetHostViewCreateFunction create_render_widget_host_view);
 
  private:
-  // Returns the fullscreen view, if one exists; otherwise, returns the content
-  // native view. This ensures that the view currently attached to a NSWindow is
-  // being used to query or set first responder state.
-  gfx::NativeView GetNativeViewForFocus() const;
-
   // The WebContentsImpl whose contents we display.
   WebContentsImpl* web_contents_;
 
   // The Cocoa NSView that lives in the view hierarchy.
   base::scoped_nsobject<WebContentsViewCocoa> cocoa_view_;
-
-  // Keeps track of which NSView has focus so we can restore the focus when
-  // focus returns.
-  base::scoped_nsobject<FocusTracker> focus_tracker_;
 
   // Our optional delegate.
   std::unique_ptr<WebContentsViewDelegate> delegate_;
